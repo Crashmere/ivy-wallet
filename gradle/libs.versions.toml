@@ -21,10 +21,6 @@ version-name = "2025.07.17"
 version-code = "206"
 jvm-target = "17"
 
-
-# Linters
-detekt = "1.23.6" # https://detekt.dev/docs/gettingstarted/gradle/
-
 [libraries]
 android-gradle-plugin = { module = "com.android.tools.build:gradle", version = "8.5.2" }
 
@@ -33,7 +29,6 @@ kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", v
 kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
 kotlin-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlin-coroutines" }
 kotlin-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlin-coroutines" }
-kotlin-coroutines-googleplay-temp = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-play-services", version.ref = "kotlin-coroutines" }
 kotlinx-collections-immutable = { module = "org.jetbrains.kotlinx:kotlinx-collections-immutable", version.ref = "kotlinx-collections" }
 
 # KotlinX Serialization
@@ -103,13 +98,6 @@ hilt-work = { module = "androidx.hilt:hilt-work", version = "1.2.0" }
 hilt-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt" }
 hilt-gradle-plugin = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "hilt" }
 
-# Google
-google-services-plugin = { module = "com.google.gms:google-services", version = "4.4.2" }
-google-play-update = { module = "com.google.android.play:app-update", version = "2.1.0" }
-google-play-services = { module = "com.google.android.gms:play-services-tasks", version = "18.2.0" }
-google-play-review = { module = "com.google.android.play:review-ktx", version = "2.0.1" }
-firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics", version = "19.0.3" }
-firebase-crashlytics-gradle-plugin = { module = "com.google.firebase:firebase-crashlytics-gradle", version = "3.0.2" }
 firebase-firestore = { module = "com.google.firebase:firebase-firestore", version = "25.1.4" }
 
 # AndroidX
@@ -132,19 +120,8 @@ keval = { module = "com.notkamui.libs:keval", version = "1.1.1" }
 opencsv-csv = { module = "com.opencsv:opencsv", version = "5.9" }
 opencsv-apache-commons = { module = "org.apache.commons:commons-lang3", version = "3.16.0" }
 
-# Linters
-detekt-gradle-plugin = { module = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin", version.ref = "detekt" }
-detekt-ruleset-compiler = { module = "com.braisgabin.detekt:kotlin-compiler-wrapper", version = "0.0.4" }
-detekt-ruleset-ktlint = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
-detekt-ruleset-compose = { module = "io.nlopez.compose.rules:detekt", version = "0.4.10" }
-detekt-ruleset-ivy-explicit = { module = "com.github.Ivy-Apps:detekt-explicit", version = "v0.0.8" }
-slack-lint-compose = { module = "com.slack.lint.compose:compose-lint-checks", version = "1.3.1" }
-
 # KSP
 ksp-plugin = { module = "com.google.devtools.ksp:com.google.devtools.ksp.gradle.plugin", version = "2.0.20-1.0.24" }
-
-# Modules Graph
-module-graph-plugin = { module = "com.jraska.module.graph.assertion:plugin", version = "2.6.0" }
 
 
 [bundles]
@@ -155,7 +132,6 @@ kotlin = [
 ]
 kotlin-android = [
     "kotlin-coroutines-android",
-    "kotlin-coroutines-googleplay-temp",
 ]
 arrow = [
     "arrowkt-core",
@@ -210,14 +186,6 @@ glance = [
     "glance-appwidget",
     "glance-material3"
 ]
-google = [
-    "google-play-update",
-    "google-play-services",
-    "google-play-review"
-]
-firebase = [
-    "firebase-crashlytics"
-]
 hilt = [
     "hilt",
     "hilt-work"
@@ -231,6 +199,3 @@ opencsv = [
     "opencsv-apache-commons"
 ]
 
-[plugins]
-gradleWrapperUpgrade = { id = "org.gradle.wrapper-upgrade", version = "0.11.4" }
-koverPlugin = { id = "org.jetbrains.kotlinx.kover", version = "0.8.3" }

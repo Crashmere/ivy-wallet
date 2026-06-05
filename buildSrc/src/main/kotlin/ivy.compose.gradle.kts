@@ -30,6 +30,4 @@ composeCompiler {
 
 dependencies {
     implementation(libs.bundles.compose)
-
-    lintChecks(libs.slack.lint.compose)
 }

@@ -29,7 +29,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
-import com.google.android.play.core.review.ReviewManagerFactory
 import com.ivy.IvyNavGraph
 import com.ivy.base.legacy.Theme
 import com.ivy.base.time.TimeConverter
@@ -433,29 +432,10 @@ class RootActivity : AppCompatActivity(), RootScreen {
         get() = BuildConfig.VERSION_CODE
 
     override fun reviewIvyWallet(dismissReviewCard: Boolean) {
-        val manager = ReviewManagerFactory.create(this)
-        val request = manager.requestReviewFlow()
-        request.addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                // We got the ReviewInfo object
-                val reviewInfo = task.result
-                reviewInfo.let { review ->
-                    val flow = manager.launchReviewFlow(this, review!!)
-                    flow.addOnCompleteListener {
-                        // The flow has finished. The API does not indicate whether the user
-                        // reviewed or not, or even whether the review dialog was shown. Thus, no
-                        // matter the result, we continue our app flow.
-                        if (dismissReviewCard) {
-                            customerJourneyLogic.dismissCard(CustomerJourneyCardsProvider.rateUsCard())
-                        }
-
-                        openGooglePlayAppPage(packageName)
-                    }
-                }
-            } else {
-                openGooglePlayAppPage(packageName)
-            }
+        if (dismissReviewCard) {
+            customerJourneyLogic.dismissCard(CustomerJourneyCardsProvider.rateUsCard())
         }
+        openGooglePlayAppPage(packageName)
     }
 
     override fun <T> pinWidget(widget: Class<T>) {

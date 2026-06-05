@@ -6,9 +6,6 @@ plugins {
     id("dagger.hilt.android.plugin")
     id("org.jetbrains.kotlin.plugin.serialization")
     id("com.google.devtools.ksp")
-    id("com.google.gms.google-services")
-    id("com.google.firebase.crashlytics")
-    id("io.gitlab.arturbosch.detekt")
 }
 
 android {
@@ -117,7 +114,6 @@ android {
         htmlOutput = file("${project.rootDir}/build/reports/lint/lint.html")
         xmlReport = true
         xmlOutput = file("${project.rootDir}/build/reports/lint/lint.xml")
-        baseline = file("lint-baseline.xml")
     }
 }
 
@@ -162,8 +158,6 @@ dependencies {
     implementation(libs.bundles.arrow)
     implementation(libs.bundles.compose)
     implementation(libs.bundles.activity)
-    implementation(libs.bundles.google)
-    implementation(libs.bundles.firebase)
     implementation(libs.datastore)
     implementation(libs.androidx.security)
     implementation(libs.androidx.biometrics)
@@ -183,6 +177,4 @@ dependencies {
 
     testImplementation(libs.bundles.testing)
     testImplementation(libs.androidx.work.testing)
-
-    lintChecks(libs.slack.lint.compose)
 }
