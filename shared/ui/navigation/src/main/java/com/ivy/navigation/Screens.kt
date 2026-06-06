@@ -137,5 +137,3 @@ data object ExchangeRatesScreen : Screen {
 data object FeaturesScreen : Screen
 
 data object DisclaimerScreen : Screen
-
-data object PollScreen : Screen

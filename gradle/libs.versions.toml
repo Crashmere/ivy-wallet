@@ -98,8 +98,6 @@ hilt-work = { module = "androidx.hilt:hilt-work", version = "1.2.0" }
 hilt-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt" }
 hilt-gradle-plugin = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "hilt" }
 
-firebase-firestore = { module = "com.google.firebase:firebase-firestore", version = "25.1.4" }
-
 # AndroidX
 androidx-security = { module = "androidx.security:security-crypto", version = "1.0.0" }
 androidx-biometrics = { module = "androidx.biometric:biometric", version = "1.2.0-alpha05" }
