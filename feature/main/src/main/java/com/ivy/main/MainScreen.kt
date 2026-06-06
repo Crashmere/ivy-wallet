@@ -9,12 +9,10 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.ivy.accounts.AccountsTab
 import com.ivy.base.model.TransactionType
 import com.ivy.home.HomeTab
-import com.ivy.legacy.IvyWalletPreview
 import com.ivy.legacy.data.model.MainTab
 import com.ivy.legacy.ivyWalletCtx
 import com.ivy.legacy.utils.onScreenStart
@@ -122,20 +120,4 @@ private fun BoxWithConstraintsScope.UI(
             accountModalData = null
         }
     )
-}
-
-@ExperimentalAnimationApi
-@ExperimentalFoundationApi
-@Preview
-@Composable
-private fun PreviewMainScreen() {
-    IvyWalletPreview {
-        UI(
-            screen = MainScreen,
-            tab = MainTab.HOME,
-            baseCurrency = "BGN",
-            selectTab = {},
-            onCreateAccount = { }
-        )
-    }
 }

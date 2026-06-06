@@ -24,7 +24,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
@@ -238,9 +237,13 @@ private fun ColumnScope.CloseButton() {
     }
 }
 
-@Preview
+/** For screenshot testing */
 @Composable
-private fun Preview(theme: Theme = Theme.LIGHT) {
+fun BalanceScreenUiTest(isDark: Boolean) {
+    val theme = when (isDark) {
+        true -> Theme.DARK
+        false -> Theme.LIGHT
+    }
     IvyWalletPreview(theme) {
         UI(
             state = BalanceState(
@@ -252,14 +255,4 @@ private fun Preview(theme: Theme = Theme.LIGHT) {
             )
         )
     }
-}
-
-/** For screenshot testing */
-@Composable
-fun BalanceScreenUiTest(isDark: Boolean) {
-    val theme = when (isDark) {
-        true -> Theme.DARK
-        false -> Theme.LIGHT
-    }
-    Preview(theme)
 }

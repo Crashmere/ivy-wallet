@@ -18,7 +18,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ivy.base.legacy.Theme
 import com.ivy.design.utils.IvyComponentPreview
@@ -29,7 +28,6 @@ import com.ivy.legacy.utils.densityScope
 import com.ivy.legacy.utils.keyboardOnlyWindowInsets
 import com.ivy.legacy.utils.keyboardVisibleState
 import com.ivy.legacy.utils.selectEndTextFieldValue
-import com.ivy.navigation.IvyPreview
 import com.ivy.navigation.SearchScreen
 import com.ivy.navigation.screenScopedViewModel
 import com.ivy.ui.R
@@ -125,10 +123,12 @@ private fun SearchUi(
     }
 }
 
-@Preview
+/** For screenshot testing */
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun Preview(isDark: Boolean = false) {
-    IvyPreview(isDark) {
+fun SearchUiTest(isDark: Boolean) {
+    val theme = if (isDark) Theme.DARK else Theme.LIGHT
+    IvyComponentPreview(theme = theme) {
         SearchUi(
             uiState = SearchState(
                 searchQuery = "",
@@ -140,15 +140,5 @@ private fun Preview(isDark: Boolean = false) {
             ),
             onEvent = {}
         )
-    }
-}
-
-/** For screenshot testing */
-@OptIn(ExperimentalFoundationApi::class)
-@Composable
-fun SearchUiTest(isDark: Boolean) {
-    val theme = if (isDark) Theme.DARK else Theme.LIGHT
-    IvyComponentPreview(theme = theme) {
-        Preview(isDark)
     }
 }
