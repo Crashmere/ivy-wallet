@@ -11,6 +11,7 @@
 - 已将原 `:feature:features` 独立英文页面合并进设置页，改为面向个人使用的偏好设置。
 - 已整顿设置页结构：数据管理、记账规则、系统行为保留为一级分组，外观与显示、输入与列表改为二级菜单。
 - 已移除设置页顶部匿名账户名称入口和首页问候语。
+- 已精简数据导入页：删除第三方 App 导入模板和教程，只保留 Ivy 备份恢复与手动 CSV 导入。
 - 保留应用功能源码、功能测试源码、截图测试源码、Gradle wrapper、本地数据管理能力和当前主要记账功能。
 - 当前本机已通过项目本地 Android SDK 编译 demo APK，并成功安装到已连接手机。
 
@@ -48,18 +49,9 @@
 - `shared/ui/core` 中不再使用的 GitHub 图标、开源卡片组件和对应截图测试。
 - 多语言资源中不再使用的开源、分享、评分、Telegram 和推广求助文案。
 - Android 桌面小组件模块 `:widget:add-transaction`、`:widget:balance`、`:widget:shared-base`，以及首页小组件引导卡、Manifest receiver、启动广播、余额刷新接线和 Glance 依赖。
+- `:feature:import-data` 中的第三方 App 来源列表、导入说明页、旧 CSV 模板映射、第三方 App logo 和教程文案；保留备份恢复与手动 CSV 映射导入。
 
 ## 下一批建议清理：需要按个人使用习惯确认
-
-### `:feature:import-data`
-
-CSV 和其他 App 数据导入功能。
-
-清理前需要确认：
-
-- 是否需要迁移历史数据。
-- 是否保留 Ivy Wallet 自身备份文件导入。
-- 是否保留导入说明里跳转其他 App 商店页的能力。
 
 ### `shared:data:core` 中的 backup/import 相关代码
 
@@ -69,9 +61,10 @@ CSV 和其他 App 数据导入功能。
 
 - 是否仍需要导出备份。
 - 是否仍需要恢复备份。
-- 是否保留相关功能测试和兼容性测试。
+- 是否继续保留手动 CSV 导入所依赖的 `CSVRow`、`ImportResult` 和相关测试。
+- 是否保留备份兼容性测试。
 
 ## 建议执行顺序
 
-1. 评估 `import-data` 是否还需要保留。
-2. 最后评估 backup/import 能力。
+1. 评估 backup/import 核心能力是否继续保留完整兼容性。
+2. 再检查 `temp:legacy-code` 中剩余的旧 UI 组件和旧领域逻辑。
