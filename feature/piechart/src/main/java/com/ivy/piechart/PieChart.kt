@@ -9,9 +9,6 @@ import android.view.MotionEvent
 import android.view.View
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -22,15 +19,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.ivy.base.legacy.toEpochMilli
 import com.ivy.base.model.TransactionType
 import com.ivy.data.model.Category
-import com.ivy.data.model.CategoryId
-import com.ivy.data.model.primitive.ColorInt
-import com.ivy.data.model.primitive.NotBlankTrimmedString
 import com.ivy.design.l0_system.UI
 import com.ivy.legacy.utils.drawColoredShadow
 import com.ivy.legacy.utils.timeNowUTC
@@ -38,15 +31,10 @@ import com.ivy.ui.R
 import com.ivy.wallet.ui.theme.Black
 import com.ivy.wallet.ui.theme.Gradient
 import com.ivy.wallet.ui.theme.Gray
-import com.ivy.wallet.ui.theme.Green
-import com.ivy.wallet.ui.theme.IvyDark
-import com.ivy.wallet.ui.theme.RedLight
 import com.ivy.wallet.ui.theme.components.IvyIcon
 import com.ivy.wallet.ui.theme.toComposeColor
 import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.persistentListOf
 import timber.log.Timber
-import java.util.UUID
 import kotlin.math.acos
 import kotlin.math.sqrt
 
@@ -274,70 +262,5 @@ private class PieChartView(context: Context) : View(context) {
     ) {
         fun contains(angle: Double): Boolean =
             angle > startAngle && angle < endAngle
-    }
-}
-
-@Preview
-@Composable
-private fun Preview() {
-    com.ivy.legacy.IvyWalletComponentPreview {
-        Column(
-            Modifier.fillMaxSize()
-        ) {
-            Spacer(Modifier.weight(1f))
-
-            PieChart(
-                type = TransactionType.EXPENSE,
-                categoryAmounts = persistentListOf(
-                    CategoryAmount(
-                        category = Category(
-                            name = NotBlankTrimmedString.unsafe("Bills"),
-                            color = ColorInt(Green.toArgb()),
-                            icon = null,
-                            id = CategoryId(UUID.randomUUID()),
-                            orderNum = 0.0,
-                            ),
-                        amount = 791.0
-                    ),
-                    CategoryAmount(
-                        category = Category(
-                            name = NotBlankTrimmedString.unsafe("Shisha"),
-                            color = ColorInt(Green.toArgb()),
-                            icon = null,
-                            id = CategoryId(UUID.randomUUID()),
-                            orderNum = 0.0,
-                            ),
-                        amount = 411.93
-                    ),
-                    CategoryAmount(
-                        category = Category(
-                            name = NotBlankTrimmedString.unsafe("Food & Drink"),
-                            color = ColorInt(IvyDark.toArgb()),
-                            icon = null,
-                            id = CategoryId(UUID.randomUUID()),
-                            orderNum = 0.0,
-                        ),
-                        amount = 260.03
-                    ),
-                    CategoryAmount(
-                        category = Category(
-                            name = NotBlankTrimmedString.unsafe("Gifts"),
-                            color = ColorInt(RedLight.toArgb()),
-                            icon = null,
-                            id = CategoryId(UUID.randomUUID()),
-                            orderNum = 0.0,
-                        ),
-                        amount = 160.0
-                    ),
-                    CategoryAmount(
-                        category = null,
-                        amount = 497.0
-                    ),
-                ),
-                selectedCategory = null
-            )
-
-            Spacer(Modifier.weight(1f))
-        }
     }
 }
