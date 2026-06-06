@@ -17,6 +17,7 @@
 - 已删除 app/feature 模块中仅服务 IDE 预览的 Compose `@Preview` 示例函数；保留截图测试入口，并改为普通测试内容函数。
 - 已删除 `temp:old-design` 旧设计组件中仅服务 IDE 预览的 Compose `@Preview` 示例函数；保留仍被截图测试和旧包装复用的预览 helper。
 - 已删除 `temp:old-design` 中确认无外部引用的旧组件：`l2_components`、`l3_ivyComponents` 和旧 shape building block。
+- 已删除 `temp:old-design` 中无引用的旧 `Background`、`IvyPadding` 和 padding helper，并简化仍被调用的 `IvyText`。
 - 保留应用功能源码、功能测试源码、截图测试源码、Gradle wrapper、本地数据管理能力和当前主要记账功能。
 - 当前本机已通过项目本地 Android SDK 编译 demo APK，并成功安装到已连接手机。
 
@@ -60,11 +61,13 @@
 - app/feature 模块中的 Compose `@Preview` 示例函数；保留功能代码、功能测试和截图测试入口。
 - `temp:old-design` 旧设计组件中的 Compose `@Preview` 示例函数；保留真实组件和仍被复用的预览 helper。
 - `temp:old-design` 中无引用的旧 l2/l3 组件和旧 shape building block；保留仍被当前功能引用的旧设计基础能力。
+- `temp:old-design` 中无引用的旧 `Background`、`IvyPadding` 和 padding helper；保留仍被 CSV 导入、借贷逻辑和颜色选择器使用的旧颜色列表常量。
 
 ## 已确认保留
 
 - `shared:data:core` 中的本地备份、恢复、zip/json/csv 导入导出能力。
 - `:feature:import-data` 中的手动 CSV 导入流程。
+- `temp:old-design` 中的 `IVY_COLOR_PICKER_COLORS_*` 旧颜色列表常量；当前仍被 CSV 导入、借贷逻辑和旧颜色选择器使用。
 - 功能测试和截图测试源码。
 
 ## 建议执行顺序
