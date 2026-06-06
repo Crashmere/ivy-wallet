@@ -11,12 +11,12 @@ import com.ivy.base.model.TransactionType
 import com.ivy.data.db.dao.read.SettingsDao
 import com.ivy.frp.test.TestIdlingResource
 import com.ivy.legacy.IvyWalletCtx
+import com.ivy.legacy.InitialDataSetup
 import com.ivy.legacy.utils.ioThread
 import com.ivy.legacy.utils.readOnly
 import com.ivy.navigation.EditTransactionScreen
 import com.ivy.navigation.MainScreen
 import com.ivy.navigation.Navigation
-import com.ivy.navigation.OnboardingScreen
 import com.ivy.ui.R
 import com.ivy.wallet.domain.deprecated.logic.notification.TransactionReminderLogic
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -38,6 +38,7 @@ class RootViewModel @Inject constructor(
     private val settingsDao: SettingsDao,
     private val sharedPrefs: SharedPrefs,
     private val transactionReminderLogic: TransactionReminderLogic,
+    private val initialDataSetup: InitialDataSetup,
 ) : ViewModel() {
 
     companion object {
@@ -74,10 +75,11 @@ class RootViewModel @Inject constructor(
                 // initial app locked state
                 _appLocked.value = appLockEnabled
 
-                if (isOnboardingCompleted()) {
+                if (isInitialSetupCompleted()) {
                     navigateOnboardedUser(intent)
                 } else {
-                    nav.navigateTo(OnboardingScreen)
+                    initialDataSetup.setupDefaults(systemDarkMode)
+                    navigateOnboardedUser(intent)
                 }
             }
 
@@ -135,8 +137,8 @@ class RootViewModel @Inject constructor(
         }
     }
 
-    private fun isOnboardingCompleted(): Boolean {
-        return sharedPrefs.getBoolean(SharedPrefs.ONBOARDING_COMPLETED, false)
+    private fun isInitialSetupCompleted(): Boolean {
+        return sharedPrefs.getBoolean(SharedPrefs.INITIAL_SETUP_COMPLETED, false)
     }
 
     // App Lock & UserInactivity --------------------------------------------------------------------

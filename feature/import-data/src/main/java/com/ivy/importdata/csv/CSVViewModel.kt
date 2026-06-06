@@ -432,8 +432,8 @@ class CSVViewModel @Inject constructor(
                 uiState = UIState.Idle
             }
 
-            is CSVEvent.FinishImport -> {
-                handleFinishImport(event)
+            CSVEvent.FinishImport -> {
+                handleFinishImport()
             }
         }
     }
@@ -553,16 +553,7 @@ class CSVViewModel @Inject constructor(
         }
     }
 
-    private fun handleFinishImport(event: CSVEvent.FinishImport) {
-        if (event.launchedFromOnboarding) {
-            val importSuccess = (uiState as? UIState.Result)?.importResult
-                ?.transactionsImported?.let { it > 0 } ?: false
-            event.onboardingViewModel.importFinished(
-                success = importSuccess
-            )
-            nav.back()
-        }
-
+    private fun handleFinishImport() {
         nav.back()
         resetState()
     }

@@ -12,7 +12,7 @@ class SharedPrefs @Inject constructor(
     companion object {
         private const val PREFS_FILENAME = "ivy_wallet_prefs"
 
-        const val ONBOARDING_COMPLETED = "onboarding_completed"
+        const val INITIAL_SETUP_COMPLETED = "onboarding_completed"
 
         // -------------------------------------- UX ------------------------------------------------
         const val LAST_SELECTED_ACCOUNT_ID = "last_selected_account_id"

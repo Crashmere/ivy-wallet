@@ -43,23 +43,17 @@ import com.ivy.design.l0_system.style
 import com.ivy.design.utils.thenIf
 import com.ivy.importdata.csvimport.flow.ImportProcessing
 import com.ivy.importdata.csvimport.flow.ImportResultUI
-import com.ivy.navigation.CSVScreen
-import com.ivy.onboarding.viewmodel.OnboardingViewModel
 import com.ivy.ui.R
 import kotlin.math.abs
 
 @Composable
-fun CSVScreen(
-    screen: CSVScreen,
-) {
+fun CSVScreen() {
     val viewModel: CSVViewModel = viewModel()
     val state = viewModel.uiState()
-    val onboardingViewModel: OnboardingViewModel = viewModel()
 
     when (val ui = state.uiState) {
         UIState.Idle -> ImportUI(
             state = state,
-            launchedFromOnboarding = screen.launchedFromOnboarding,
             onEvent = viewModel::onEvent
         )
 
@@ -67,15 +61,9 @@ fun CSVScreen(
         is UIState.Result -> ImportResultUI(
             result = ui.importResult,
             isManualCsvImport = true,
-            launchedFromOnboarding = screen.launchedFromOnboarding,
             onTryAgain = null,
             onFinish = {
-                viewModel.onEvent(
-                    CSVEvent.FinishImport(
-                        launchedFromOnboarding = screen.launchedFromOnboarding,
-                        onboardingViewModel = onboardingViewModel,
-                    )
-                )
+                viewModel.onEvent(CSVEvent.FinishImport)
             }
         )
     }
@@ -84,7 +72,6 @@ fun CSVScreen(
 @Composable
 private fun ImportUI(
     state: CSVState,
-    launchedFromOnboarding: Boolean,
     onEvent: (CSVEvent) -> Unit,
 ) {
     LazyColumn(
@@ -104,23 +91,12 @@ private fun ImportUI(
                     onEvent(CSVEvent.FilePicked(it))
                 }
             )
-            if (!launchedFromOnboarding) {
-                Spacer8()
-                Text(
-                    text = stringResource(R.string.warning_import_csv_file).trimIndent(),
-                    style = UI.typo.c.colorAs(UI.colors.red),
-                    fontWeight = FontWeight.Bold,
-                )
-            } else {
-                Spacer8()
-                Spacer8()
-                Text(
-                    modifier = Modifier.padding(horizontal = 8.dp),
-                    text = stringResource(R.string.import_a_csv_file_to_continue),
-                    style = UI.typo.b2,
-                    fontWeight = FontWeight.SemiBold,
-                )
-            }
+            Spacer8()
+            Text(
+                text = stringResource(R.string.warning_import_csv_file).trimIndent(),
+                style = UI.typo.c.colorAs(UI.colors.red),
+                fontWeight = FontWeight.Bold,
+            )
         }
         if (state.csv != null) {
             spacer8()

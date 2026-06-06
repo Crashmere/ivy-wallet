@@ -14,13 +14,12 @@ import com.ivy.importdata.csvimport.flow.ImportResultUI
 import com.ivy.importdata.csvimport.flow.instructions.ImportInstructions
 import com.ivy.legacy.domain.deprecated.logic.csv.model.ImportType
 import com.ivy.navigation.ImportScreen
-import com.ivy.onboarding.viewmodel.OnboardingViewModel
 import com.ivy.data.backup.ImportResult
 
 @OptIn(ExperimentalStdlibApi::class)
 @ExperimentalFoundationApi
 @Composable
-fun BoxWithConstraintsScope.ImportCSVScreen(screen: ImportScreen) {
+fun BoxWithConstraintsScope.ImportCSVScreen() {
     val viewModel: ImportViewModel = viewModel()
 
     val importStep by viewModel.importStep.observeAsState(ImportStep.IMPORT_FROM)
@@ -28,15 +27,12 @@ fun BoxWithConstraintsScope.ImportCSVScreen(screen: ImportScreen) {
     val importProgressPercent by viewModel.importProgressPercent.observeAsState(0)
     val importResult by viewModel.importResult.observeAsState()
 
-    val onboardingViewModel: OnboardingViewModel = viewModel()
-
     com.ivy.legacy.utils.onScreenStart {
-        viewModel.start(screen)
+        viewModel.start(ImportScreen)
     }
     val context = LocalContext.current
 
     UI(
-        screen = screen,
         importStep = importStep,
         importType = importType,
         importProgressPercent = importProgressPercent,
@@ -44,26 +40,14 @@ fun BoxWithConstraintsScope.ImportCSVScreen(screen: ImportScreen) {
 
         onChooseImportType = viewModel::setImportType,
         onUploadCSVFile = { viewModel.uploadFile(context) },
-        onSkip = {
-            viewModel.skip(
-                screen = screen,
-                onboardingViewModel = onboardingViewModel
-            )
-        },
-        onFinish = {
-            viewModel.finish(
-                screen = screen,
-                onboardingViewModel = onboardingViewModel
-            )
-        }
+        onSkip = viewModel::skip,
+        onFinish = viewModel::finish,
     )
 }
 
 @ExperimentalFoundationApi
 @Composable
 private fun BoxWithConstraintsScope.UI(
-    screen: ImportScreen,
-
     importStep: ImportStep,
     importType: ImportType?,
     importProgressPercent: Int,
@@ -77,8 +61,7 @@ private fun BoxWithConstraintsScope.UI(
     when (importStep) {
         ImportStep.IMPORT_FROM -> {
             ImportFrom(
-                hasSkip = screen.launchedFromOnboarding,
-                launchedFromOnboarding = screen.launchedFromOnboarding,
+                hasSkip = false,
                 onSkip = onSkip,
                 onImportFrom = onChooseImportType
             )
@@ -86,7 +69,7 @@ private fun BoxWithConstraintsScope.UI(
 
         ImportStep.INSTRUCTIONS -> {
             ImportInstructions(
-                hasSkip = screen.launchedFromOnboarding,
+                hasSkip = false,
                 importType = importType!!,
                 onSkip = onSkip,
                 onUploadClick = onUploadCSVFile
@@ -102,7 +85,6 @@ private fun BoxWithConstraintsScope.UI(
         ImportStep.RESULT -> {
             ImportResultUI(
                 result = importResult!!,
-                launchedFromOnboarding = screen.launchedFromOnboarding,
             ) {
                 onFinish()
             }
@@ -116,7 +98,6 @@ private fun BoxWithConstraintsScope.UI(
 private fun Preview() {
     com.ivy.legacy.IvyWalletPreview {
         UI(
-            screen = ImportScreen(launchedFromOnboarding = true),
             importStep = ImportStep.IMPORT_FROM,
             importType = null,
             importProgressPercent = 0,

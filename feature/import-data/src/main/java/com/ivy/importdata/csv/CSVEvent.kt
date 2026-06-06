@@ -1,7 +1,6 @@
 package com.ivy.importdata.csv
 
 import android.net.Uri
-import com.ivy.onboarding.viewmodel.OnboardingViewModel
 
 sealed interface CSVEvent {
     data class FilePicked(val uri: Uri) : CSVEvent
@@ -34,8 +33,5 @@ sealed interface CSVEvent {
     data object Continue : CSVEvent
     data object ResetState : CSVEvent
 
-    data class FinishImport(
-        val launchedFromOnboarding: Boolean,
-        val onboardingViewModel: OnboardingViewModel
-    ) : CSVEvent
+    data object FinishImport : CSVEvent
 }

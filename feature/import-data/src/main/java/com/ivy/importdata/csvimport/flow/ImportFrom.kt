@@ -32,7 +32,6 @@ import com.ivy.design.l0_system.style
 import com.ivy.legacy.domain.deprecated.logic.csv.model.ImportType
 import com.ivy.navigation.CSVScreen
 import com.ivy.navigation.navigation
-import com.ivy.onboarding.components.OnboardingToolbar
 import com.ivy.ui.R
 import com.ivy.wallet.ui.theme.components.GradientCutBottom
 import com.ivy.wallet.ui.theme.components.IvyIcon
@@ -41,7 +40,6 @@ import com.ivy.wallet.ui.theme.components.IvyIcon
 @Composable
 fun BoxWithConstraintsScope.ImportFrom(
     hasSkip: Boolean,
-    launchedFromOnboarding: Boolean,
 
     onSkip: () -> Unit = {},
     onImportFrom: (ImportType) -> Unit = {},
@@ -56,12 +54,11 @@ fun BoxWithConstraintsScope.ImportFrom(
     ) {
         stickyHeader {
             val nav = navigation()
-            OnboardingToolbar(
+            ImportToolbar(
                 hasSkip = hasSkip,
                 onBack = { nav.onBackPressed() },
                 onSkip = onSkip
             )
-            // onboarding toolbar include paddingBottom 16.dp
         }
 
         item {
@@ -73,7 +70,7 @@ fun BoxWithConstraintsScope.ImportFrom(
                     .height(64.dp)
                     .padding(horizontal = 16.dp),
                 onClick = {
-                    nav.navigateTo(CSVScreen(launchedFromOnboarding))
+                    nav.navigateTo(CSVScreen)
                 }
             ) {
                 Text(
@@ -164,7 +161,6 @@ private fun Preview() {
     com.ivy.legacy.IvyWalletPreview {
         ImportFrom(
             hasSkip = true,
-            launchedFromOnboarding = false,
         )
     }
 }

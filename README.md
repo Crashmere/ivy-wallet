@@ -39,6 +39,7 @@
 - onboarding 欢迎页里的 `#opensource` 原仓库入口。
 - 免责声明页里的开源仓库展示卡片。
 - 首次启动免责声明阻塞页 `:feature:disclaimer`，以及对应的启动跳转、导航入口、`LegalRepository` 和 `LocalLegalDataSource`。
+- 首次启动 onboarding 模块 `:feature:onboarding`，改为自动初始化默认设置、账户和分类后直接进入主页。
 
 ### 构建和数据残留
 
@@ -49,16 +50,6 @@
 - Android 桌面小组件模块 `:widget:add-transaction`、`:widget:balance`、`:widget:shared-base`，以及首页小组件引导卡、Manifest receiver、启动广播、余额刷新接线和 Glance 依赖。
 
 ## 下一批建议清理：需要按个人使用习惯确认
-
-### `:feature:onboarding`
-
-首次启动引导，包含货币、账户和分类初始化流程。
-
-清理前需要确认：
-
-- 新安装后是否仍需要初始化默认数据。
-- 是否改为直接进入主界面。
-- 是否依赖导入数据或手动创建账户来完成初始化。
 
 ### `:feature:import-data`
 
@@ -82,5 +73,5 @@ CSV 和其他 App 数据导入功能。
 
 ## 建议执行顺序
 
-1. 评估是否简化或删除 `onboarding`。
-2. 最后评估 `import-data` 和 backup/import 能力。
+1. 评估 `import-data` 是否还需要保留。
+2. 最后评估 backup/import 能力。

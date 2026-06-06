@@ -20,7 +20,6 @@ import com.ivy.data.repository.TransactionRepository
 import com.ivy.legacy.utils.ioThread
 import com.ivy.navigation.MainScreen
 import com.ivy.navigation.Navigation
-import com.ivy.navigation.OnboardingScreen
 import javax.inject.Inject
 
 @Deprecated("Migrate to an UseCase in the domain layer.")
@@ -39,7 +38,8 @@ class LogoutLogic @Inject constructor(
     private val writeBudgetDao: WriteBudgetDao,
     private val writeLoanDao: WriteLoanDao,
     private val writeLoanRecordDao: WriteLoanRecordDao,
-    private val exchangeRatesRepository: ExchangeRatesRepository
+    private val exchangeRatesRepository: ExchangeRatesRepository,
+    private val initialDataSetup: InitialDataSetup,
 ) {
     suspend fun logout() {
         ioThread {
@@ -50,9 +50,10 @@ class LogoutLogic @Inject constructor(
             sharedPrefs.removeAll()
         }
 
+        initialDataSetup.setupDefaults(systemDarkMode = false)
         dataObserver.post(DataWriteEvent.AllDataChange)
         navigation.resetBackStack()
-        navigation.navigateTo(OnboardingScreen)
+        navigation.navigateTo(MainScreen)
     }
 
     private suspend fun deleteAllData() {

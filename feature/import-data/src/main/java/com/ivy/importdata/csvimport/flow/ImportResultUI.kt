@@ -39,7 +39,6 @@ import kotlinx.collections.immutable.persistentListOf
 @Composable
 fun ImportResultUI(
     result: ImportResult,
-    launchedFromOnboarding: Boolean,
     isManualCsvImport: Boolean = false,
     onTryAgain: (() -> Unit)? = null,
     onFinish: () -> Unit,
@@ -114,7 +113,7 @@ fun ImportResultUI(
                     .height(52.dp)
                     .padding(horizontal = 16.dp),
                 onClick = {
-                    nav.navigateTo(CSVScreen(launchedFromOnboarding = launchedFromOnboarding))
+                    nav.navigateTo(CSVScreen)
                 }
             ) {
                 Text(
@@ -275,7 +274,6 @@ private fun Preview() {
                 categoriesImported = 13,
                 failedRows = persistentListOf()
             ),
-            launchedFromOnboarding = false,
         ) {
         }
     }

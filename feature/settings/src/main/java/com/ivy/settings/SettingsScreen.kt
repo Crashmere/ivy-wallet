@@ -259,7 +259,6 @@ private fun BoxWithConstraintsScope.UI(
 
                 Spacer(Modifier.width(32.dp))
             }
-            // onboarding toolbar include paddingBottom 16.dp
         }
 
         item {
@@ -283,11 +282,7 @@ private fun BoxWithConstraintsScope.UI(
                         onExportToCSV = onExportToCSV,
                         onBackupData = onBackupData,
                     ) {
-                        nav.navigateTo(
-                            ImportScreen(
-                                launchedFromOnboarding = false
-                            )
-                        )
+                        nav.navigateTo(ImportScreen)
                     }
                 }
 

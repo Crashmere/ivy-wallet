@@ -33,10 +33,10 @@ import androidx.compose.ui.unit.dp
 import com.ivy.design.l0_system.UI
 import com.ivy.design.l0_system.style
 import com.ivy.importdata.csvimport.flow.ImportSteps
+import com.ivy.importdata.csvimport.flow.ImportToolbar
 import com.ivy.legacy.domain.deprecated.logic.csv.model.ImportType
 import com.ivy.legacy.utils.drawColoredShadow
 import com.ivy.navigation.navigation
-import com.ivy.onboarding.components.OnboardingToolbar
 import com.ivy.ui.R
 import com.ivy.wallet.ui.theme.GradientIvy
 import com.ivy.wallet.ui.theme.Gray
@@ -63,12 +63,11 @@ fun BoxWithConstraintsScope.ImportInstructions(
     ) {
         stickyHeader {
             val nav = navigation()
-            OnboardingToolbar(
+            ImportToolbar(
                 hasSkip = hasSkip,
                 onBack = { nav.onBackPressed() },
                 onSkip = onSkip
             )
-            // onboarding toolbar include paddingBottom 16.dp
         }
 
         item {

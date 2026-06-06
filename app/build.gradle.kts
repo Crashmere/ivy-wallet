@@ -127,7 +127,6 @@ dependencies {
     implementation(projects.feature.importData)
     implementation(projects.feature.loans)
     implementation(projects.feature.main)
-    implementation(projects.feature.onboarding)
     implementation(projects.feature.piechart)
     implementation(projects.feature.plannedPayments)
     implementation(projects.feature.reports)

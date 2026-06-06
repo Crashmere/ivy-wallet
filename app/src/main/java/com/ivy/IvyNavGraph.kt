@@ -8,7 +8,7 @@ import com.ivy.balance.BalanceScreen
 import com.ivy.budgets.BudgetScreen
 import com.ivy.categories.CategoriesScreen
 import com.ivy.exchangerates.ExchangeRatesScreen
-import com.ivy.importdata.csv.CSVScreen
+import com.ivy.importdata.csv.CSVScreen as CSVImportScreen
 import com.ivy.importdata.csvimport.ImportCSVScreen
 import com.ivy.loans.loan.LoansScreen
 import com.ivy.loans.loandetails.LoanDetailsScreen
@@ -24,7 +24,6 @@ import com.ivy.navigation.ImportScreen
 import com.ivy.navigation.LoanDetailsScreen
 import com.ivy.navigation.LoansScreen
 import com.ivy.navigation.MainScreen
-import com.ivy.navigation.OnboardingScreen
 import com.ivy.navigation.PieChartStatisticScreen
 import com.ivy.navigation.PlannedPaymentsScreen
 import com.ivy.navigation.ReportScreen
@@ -32,7 +31,6 @@ import com.ivy.navigation.Screen
 import com.ivy.navigation.SearchScreen
 import com.ivy.navigation.SettingsScreen
 import com.ivy.navigation.TransactionsScreen
-import com.ivy.onboarding.OnboardingScreen
 import com.ivy.piechart.PieChartStatisticScreen
 import com.ivy.planned.edit.EditPlannedScreen
 import com.ivy.planned.list.PlannedPaymentsScreen
@@ -53,7 +51,6 @@ fun BoxWithConstraintsScope.IvyNavGraph(screen: Screen?) {
         }
 
         is MainScreen -> MainScreen(screen = screen)
-        is OnboardingScreen -> OnboardingScreen(screen = screen)
         is ExchangeRatesScreen -> ExchangeRatesScreen()
         is EditTransactionScreen -> EditTransactionScreen(screen = screen)
         is TransactionsScreen -> TransactionsScreen(screen = screen)
@@ -63,12 +60,12 @@ fun BoxWithConstraintsScope.IvyNavGraph(screen: Screen?) {
         is PlannedPaymentsScreen -> PlannedPaymentsScreen(screen = screen)
         is EditPlannedScreen -> EditPlannedScreen(screen = screen)
         is BalanceScreen -> BalanceScreen(screen = screen)
-        is ImportScreen -> ImportCSVScreen(screen = screen)
+        ImportScreen -> ImportCSVScreen()
         is ReportScreen -> ReportScreen(screen = screen)
         is BudgetScreen -> BudgetScreen(screen = screen)
         is LoansScreen -> LoansScreen(screen = screen)
         is LoanDetailsScreen -> LoanDetailsScreen(screen = screen)
         is SearchScreen -> SearchScreen(screen = screen)
-        is CSVScreen -> CSVScreen(screen = screen)
+        CSVScreen -> CSVImportScreen()
     }
 }

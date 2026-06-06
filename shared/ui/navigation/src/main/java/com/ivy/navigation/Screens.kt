@@ -11,14 +11,7 @@ data object MainScreen : Screen {
         get() = true
 }
 
-data object OnboardingScreen : Screen {
-    override val isLegacy: Boolean
-        get() = true
-}
-
-data class CSVScreen(
-    val launchedFromOnboarding: Boolean
-) : Screen {
+data object CSVScreen : Screen {
     override val isLegacy: Boolean
         get() = true
 }
@@ -95,9 +88,7 @@ data object SettingsScreen : Screen {
         get() = true
 }
 
-data class ImportScreen(
-    val launchedFromOnboarding: Boolean
-) : Screen {
+data object ImportScreen : Screen {
     override val isLegacy: Boolean
         get() = true
 }

@@ -13,7 +13,6 @@ import com.ivy.legacy.utils.asLiveData
 import com.ivy.base.legacy.getFileName
 import com.ivy.navigation.ImportScreen
 import com.ivy.navigation.Navigation
-import com.ivy.onboarding.viewmodel.OnboardingViewModel
 import com.ivy.wallet.domain.deprecated.logic.csv.CSVMapper
 import com.ivy.wallet.domain.deprecated.logic.csv.CSVNormalizer
 import com.ivy.data.file.FileSystem
@@ -166,29 +165,12 @@ class ImportViewModel @Inject constructor(
         _importStep.value = ImportStep.INSTRUCTIONS
     }
 
-    fun skip(
-        screen: ImportScreen,
-        onboardingViewModel: OnboardingViewModel
-    ) {
-        if (screen.launchedFromOnboarding) {
-            onboardingViewModel.importSkip()
-        }
-
+    fun skip() {
         nav.back()
         resetState()
     }
 
-    fun finish(
-        screen: ImportScreen,
-        onboardingViewModel: OnboardingViewModel
-    ) {
-        if (screen.launchedFromOnboarding) {
-            val importSuccess = importResult.value?.transactionsImported?.let { it > 0 } ?: false
-            onboardingViewModel.importFinished(
-                success = importSuccess
-            )
-        }
-
+    fun finish() {
         nav.back()
         resetState()
     }
