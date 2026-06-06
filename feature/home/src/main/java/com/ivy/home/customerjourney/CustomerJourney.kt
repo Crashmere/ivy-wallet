@@ -18,7 +18,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ivy.design.l0_system.UI
 import com.ivy.design.l0_system.style
@@ -26,7 +25,6 @@ import com.ivy.domain.RootScreen
 import com.ivy.legacy.ivyWalletCtx
 import com.ivy.legacy.rootScreen
 import com.ivy.legacy.utils.drawColoredShadow
-import com.ivy.navigation.IvyPreview
 import com.ivy.navigation.navigation
 import com.ivy.ui.R
 import com.ivy.wallet.ui.theme.Gradient
@@ -157,17 +155,5 @@ fun CustomerJourneyCard(
 
             Spacer(Modifier.height(20.dp))
         }
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewCard() {
-    IvyPreview {
-        CustomerJourneyCard(
-            cardData = CustomerJourneyCardsProvider.adjustBalanceCard(),
-            onCTA = { },
-            onDismiss = {}
-        )
     }
 }

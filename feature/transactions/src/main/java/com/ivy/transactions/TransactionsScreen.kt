@@ -32,7 +32,6 @@ import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ivy.base.legacy.Theme
 import com.ivy.base.legacy.Transaction
@@ -64,7 +63,6 @@ import com.ivy.legacy.utils.rememberInteractionSource
 import com.ivy.legacy.utils.rememberSwipeListenerState
 import com.ivy.legacy.utils.setStatusBarDarkTextCompat
 import com.ivy.navigation.EditTransactionScreen
-import com.ivy.navigation.IvyPreview
 import com.ivy.navigation.PieChartStatisticScreen
 import com.ivy.navigation.TransactionsScreen
 import com.ivy.navigation.navigation
@@ -823,140 +821,48 @@ private fun Item(
     }
 }
 
-@Preview
 @Composable
-private fun BoxWithConstraintsScope.Preview_empty() {
-    IvyPreview {
-        UI(
-            period = TimePeriod.currentMonth(
-                startDayOfMonth = 1
-            ), // preview
-            baseCurrency = "BGN",
-            currency = "BGN",
+private fun BoxWithConstraintsScope.TransactionsScreenTestContent() {
+    UI(
+        period = TimePeriod(month = Month.monthsList().first(), year = 2023),
+        baseCurrency = "BGN",
+        currency = "BGN",
 
-            categories = persistentListOf(),
-            accounts = persistentListOf(),
+        categories = persistentListOf(),
+        accounts = persistentListOf(),
 
-            balance = 1314.578,
-            balanceBaseCurrency = null,
-            income = 8000.0,
-            expenses = 6000.0,
+        balance = 1314.578,
+        balanceBaseCurrency = null,
+        income = 8000.0,
+        expenses = 6000.0,
 
-            history = persistentListOf(),
-            category = null,
-            account = Account("DSK", color = GreenDark.toArgb(), icon = "pet"),
-            onSetPeriod = { },
-            onPreviousMonth = {},
-            onNextMonth = {},
-            onDelete = {},
-            onEditAccount = { _, _ -> },
-            onEditCategory = {},
-            updateAccountNameConfirmation = {},
-            enableDeletionButton = true,
-            deleteModal1Visible = false,
-            onDeleteModal1Visible = {},
-            skipAllModalVisible = false,
-            onSkipAllModalVisible = {},
-            onChoosePeriodModal = {},
-            choosePeriodModal = null,
-            screen = TransactionsScreen(),
-            shouldShowAccountSpecificColorInTransactions = false
-        )
-    }
-}
-
-@Preview
-@Composable
-private fun BoxWithConstraintsScope.Preview_crypto() {
-    IvyPreview {
-        UI(
-            period = TimePeriod.currentMonth(
-                startDayOfMonth = 1
-            ), // preview
-            baseCurrency = "BGN",
-            currency = "ADA",
-
-            categories = persistentListOf(),
-            accounts = persistentListOf(),
-
-            balance = 1314.578,
-            balanceBaseCurrency = 2879.28,
-            income = 8000.0,
-            expenses = 6000.0,
-
-            history = persistentListOf(),
-            category = null,
-            account = Account(
-                name = "DSK",
-                color = GreenDark.toArgb(),
-                icon = "pet",
-                includeInBalance = false
-            ),
-            onSetPeriod = { },
-            onPreviousMonth = {},
-            onNextMonth = {},
-            onDelete = {},
-            onEditAccount = { _, _ -> },
-            onEditCategory = {},
-            updateAccountNameConfirmation = {},
-            enableDeletionButton = true,
-            deleteModal1Visible = false,
-            onDeleteModal1Visible = {},
-            skipAllModalVisible = false,
-            onSkipAllModalVisible = {},
-            onChoosePeriodModal = {},
-            choosePeriodModal = null,
-            screen = TransactionsScreen(),
-            shouldShowAccountSpecificColorInTransactions = false
-        )
-    }
-}
-
-@Preview
-@Composable
-private fun BoxWithConstraintsScope.Preview_empty_upcoming() {
-    IvyPreview {
-        UI(
-            period = TimePeriod(month = Month.monthsList().first(), year = 2023),
-            baseCurrency = "BGN",
-            currency = "BGN",
-
-            categories = persistentListOf(),
-            accounts = persistentListOf(),
-
-            balance = 1314.578,
-            balanceBaseCurrency = null,
-            income = 8000.0,
-            expenses = 6000.0,
-
-            history = persistentListOf(),
-            category = null,
-            account = Account("DSK", color = GreenDark.toArgb(), icon = "pet"),
-            onSetPeriod = { },
-            onPreviousMonth = {},
-            onNextMonth = {},
-            onDelete = {},
-            onEditAccount = { _, _ -> },
-            onEditCategory = {},
-            upcoming = persistentListOf(
-                Transaction(
-                    UUID(1L, 2L),
-                    TransactionType.EXPENSE,
-                    BigDecimal.valueOf(10L)
-                )
-            ),
-            updateAccountNameConfirmation = {},
-            enableDeletionButton = true,
-            deleteModal1Visible = false,
-            onDeleteModal1Visible = {},
-            skipAllModalVisible = false,
-            onSkipAllModalVisible = {},
-            onChoosePeriodModal = {},
-            choosePeriodModal = null,
-            screen = TransactionsScreen(),
-            shouldShowAccountSpecificColorInTransactions = false
-        )
-    }
+        history = persistentListOf(),
+        category = null,
+        account = Account("DSK", color = GreenDark.toArgb(), icon = "pet"),
+        onSetPeriod = { },
+        onPreviousMonth = {},
+        onNextMonth = {},
+        onDelete = {},
+        onEditAccount = { _, _ -> },
+        onEditCategory = {},
+        upcoming = persistentListOf(
+            Transaction(
+                UUID(1L, 2L),
+                TransactionType.EXPENSE,
+                BigDecimal.valueOf(10L)
+            )
+        ),
+        updateAccountNameConfirmation = {},
+        enableDeletionButton = true,
+        deleteModal1Visible = false,
+        onDeleteModal1Visible = {},
+        skipAllModalVisible = false,
+        onSkipAllModalVisible = {},
+        onChoosePeriodModal = {},
+        choosePeriodModal = null,
+        screen = TransactionsScreen(),
+        shouldShowAccountSpecificColorInTransactions = false
+    )
 }
 
 /** For screenshot testing */
@@ -968,6 +874,6 @@ fun TransactionsUiTest(isDark: Boolean) {
         false -> Theme.LIGHT
     }
     IvyWalletPreview(theme) {
-        Preview_empty_upcoming()
+        TransactionsScreenTestContent()
     }
 }

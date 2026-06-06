@@ -40,7 +40,6 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
@@ -61,7 +60,6 @@ import com.ivy.legacy.utils.toDensityPx
 import com.ivy.legacy.utils.verticalSwipeListener
 import com.ivy.navigation.BudgetScreen
 import com.ivy.navigation.CategoriesScreen
-import com.ivy.navigation.IvyPreview
 import com.ivy.navigation.LoansScreen
 import com.ivy.navigation.PlannedPaymentsScreen
 import com.ivy.navigation.ReportScreen
@@ -501,47 +499,6 @@ private fun MoreMenuButton(
                 fontWeight = FontWeight.ExtraBold,
                 textAlign = TextAlign.Center
             )
-        )
-    }
-}
-
-@Preview
-@Composable
-private fun BoxWithConstraintsScope.Preview_Expanded() {
-    IvyPreview {
-        MoreMenu(
-            expanded = true,
-            balance = 7523.43,
-            buffer = 5000.0,
-            currency = "BGN",
-            theme = Theme.LIGHT,
-            setExpanded = {
-            },
-            onSwitchTheme = {},
-            onBufferClick = {},
-            onCurrencyClick = {}
-        )
-    }
-}
-
-@Preview
-@Composable
-private fun BoxWithConstraintsScope.Preview() {
-    IvyPreview {
-        var expanded by remember { mutableStateOf(false) }
-
-        MoreMenu(
-            expanded = expanded,
-            balance = 7523.43,
-            buffer = 5000.0,
-            currency = "BGN",
-            theme = Theme.LIGHT,
-            setExpanded = {
-                expanded = it
-            },
-            onSwitchTheme = {},
-            onBufferClick = {},
-            onCurrencyClick = {}
         )
     }
 }
