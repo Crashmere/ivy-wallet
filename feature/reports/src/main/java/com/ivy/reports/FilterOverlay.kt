@@ -31,28 +31,21 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.layout.layout
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import com.ivy.base.model.TransactionType
 import com.ivy.data.model.Category
-import com.ivy.data.model.CategoryId
 import com.ivy.data.model.Tag
 import com.ivy.data.model.TagId
-import com.ivy.data.model.primitive.ColorInt
-import com.ivy.data.model.primitive.IconAsset
-import com.ivy.data.model.primitive.NotBlankTrimmedString
 import com.ivy.design.api.LocalTimeConverter
 import com.ivy.design.api.LocalTimeFormatter
 import com.ivy.design.api.LocalTimeProvider
 import com.ivy.design.l0_system.UI
 import com.ivy.design.l0_system.style
 import com.ivy.domain.legacy.ui.theme.components.ListItem
-import com.ivy.legacy.IvyWalletPreview
 import com.ivy.legacy.datamodel.Account
 import com.ivy.legacy.ivyWalletCtx
 import com.ivy.legacy.ui.component.tags.AddTagButton
@@ -62,12 +55,7 @@ import com.ivy.legacy.utils.springBounce
 import com.ivy.ui.R
 import com.ivy.wallet.ui.theme.GradientGreen
 import com.ivy.wallet.ui.theme.Green
-import com.ivy.wallet.ui.theme.GreenDark
-import com.ivy.wallet.ui.theme.GreenLight
-import com.ivy.wallet.ui.theme.IvyDark
-import com.ivy.wallet.ui.theme.Purple1Dark
 import com.ivy.wallet.ui.theme.Red
-import com.ivy.wallet.ui.theme.Red3Light
 import com.ivy.wallet.ui.theme.components.CloseButton
 import com.ivy.wallet.ui.theme.components.GradientCutBottom
 import com.ivy.wallet.ui.theme.components.IvyButton
@@ -1056,66 +1044,4 @@ private fun FilterTitleText(
             color = if (active) UI.colors.pureInverse else inactiveColor
         )
     )
-}
-
-@Preview
-@Composable
-private fun Preview() {
-    IvyWalletPreview {
-        val acc1 = Account("Cash", color = Green.toArgb())
-        val acc2 = Account("DSK", color = GreenDark.toArgb())
-        val cat1 = Category(
-            name = NotBlankTrimmedString.unsafe("Science"),
-            color = ColorInt(Purple1Dark.toArgb()),
-            icon = IconAsset.unsafe("atom"),
-            id = CategoryId(UUID.randomUUID()),
-            orderNum = 0.0,
-        )
-
-        FilterOverlay(
-            visible = true,
-
-            baseCurrency = "BGN",
-            accounts = listOf(
-                acc1,
-                acc2,
-                Account("phyre", color = GreenLight.toArgb(), icon = "cash"),
-                Account("Revolut", color = IvyDark.toArgb()),
-            ),
-            categories = listOf(
-                cat1,
-                Category(
-                    name = NotBlankTrimmedString.unsafe("Pet"),
-                    color = ColorInt(Red3Light.toArgb()),
-                    icon = IconAsset.unsafe("pet"),
-                    id = CategoryId(UUID.randomUUID()),
-                    orderNum = 0.0,
-                ),
-                Category(
-                    name = NotBlankTrimmedString.unsafe("Home"),
-                    color = ColorInt(Green.toArgb()),
-                    icon = null,
-                    id = CategoryId(UUID.randomUUID()),
-                    orderNum = 0.0,
-                ),
-            ),
-
-            filter = ReportFilter.emptyFilter("BGN").copy(
-                accounts = listOf(
-                    acc1,
-                    acc2
-                ),
-                categories = listOf(
-                    cat1
-                ),
-                minAmount = null,
-                maxAmount = 13256.27,
-            ),
-            onClose = { },
-            allTags = persistentListOf(),
-            onSetFilter = {
-            },
-            onTagSearch = { }
-        )
-    }
 }

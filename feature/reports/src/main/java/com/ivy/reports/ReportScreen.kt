@@ -22,7 +22,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -401,9 +400,8 @@ private fun Toolbar(
 }
 
 @ExperimentalFoundationApi
-@Preview
 @Composable
-private fun Preview(theme: Theme = Theme.LIGHT) {
+private fun ReportScreenTestContent(theme: Theme = Theme.LIGHT) {
     IvyWalletPreview(theme) {
         val acc1 = Account("Cash", color = Green.toArgb())
         val acc2 = Account("DSK", color = GreenDark.toArgb())
@@ -462,9 +460,8 @@ private fun Preview(theme: Theme = Theme.LIGHT) {
 }
 
 @ExperimentalFoundationApi
-@Preview
 @Composable
-private fun Preview_NO_FILTER(theme: Theme = Theme.LIGHT) {
+private fun ReportScreenNoFilterTestContent(theme: Theme = Theme.LIGHT) {
     IvyWalletPreview(theme) {
         val acc1 = Account("Cash", color = Green.toArgb())
         val acc2 = Account("DSK", color = GreenDark.toArgb())
@@ -529,7 +526,7 @@ private fun Preview_NO_FILTER(theme: Theme = Theme.LIGHT) {
 @Composable
 fun ReportUiTest(isDark: Boolean) {
     val theme = if (isDark) Theme.DARK else Theme.LIGHT
-    Preview(theme)
+    ReportScreenTestContent(theme)
 }
 
 /** For screenshot testing */
@@ -537,5 +534,5 @@ fun ReportUiTest(isDark: Boolean) {
 @Composable
 fun ReportNoFilterUiTest(isDark: Boolean) {
     val theme = if (isDark) Theme.DARK else Theme.LIGHT
-    Preview_NO_FILTER(theme)
+    ReportScreenNoFilterTestContent(theme)
 }
