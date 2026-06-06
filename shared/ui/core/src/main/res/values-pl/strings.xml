@@ -246,10 +246,7 @@
     <string name="hide_balance_description">Kliknij na ukryte saldo, aby je podświetlić na 5 sekund</string>
     <string name="hide_income">Ukryj przychód</string>
     <string name="hide_income_description">Kliknij na ukryty przychód, aby je podświetlić na 5 sekund</string>
-    <string name="other">Inne</string>
     <string name="rate_us_on_google_play">Oceń nas w Google Play</string>
-    <string name="share_ivy_wallet">Udostępnij Ivy Wallet</string>
-    <string name="product">Produkt</string>
     <string name="danger_zone">Strefa zagrożenia</string>
     <string name="delete_all_user_data">Usuń wszystkie dane</string>
     <string name="delete_all_user_data_question">Usunąć wszystkie dane?</string>
@@ -261,11 +258,7 @@
     <string name="exporting_data">Eksportuję dane</string>
     <string name="exporting_data_description">Proszę czekać, eksportuję dane...</string>
     <string name="start_date_of_month">Pierwszy dzień miesiąca</string>
-    <string name="ivy_telegram">Ivy Telegram</string>
-    <string name="help_center">Centrum pomocy</string>
     <string name="roadmap">Roadmap</string>
-    <string name="request_a_feature">Poproś o dodanie nowych funkcji</string>
-    <string name="contact_support">Skontaktuj się z supportem</string>
     <string name="account_uppercase">KONTO</string>
     <string name="logout">Wyloguj</string>
     <string name="login">Zaloguj</string>
@@ -395,8 +388,6 @@
     <string name="make_ivy_wallet_better_description">Chcesz ulepszyć Ivy Wallet? Napisz nam recenzję. Tylko w ten sposób możemy rozwijać to, czego pragniesz i potrzebujesz. Pomaga nam to również zająć wyższą pozycję w Sklepie Play, dzięki czemu możemy wydawać pieniądze na produkt, a nie na marketing.\n\Dokładamy naszych starań.\nIvy Team</string>
     <string name="we_need_your_help">Potrzebujemy Twojej pomocy!</string>
     <string name="we_need_your_help_description">Jesteśmy tylko projektantami i programistami pracującymi nad aplikacją po godzinach pracy. Obecnie inwestujemy dużo czasu i pieniędzy, aby generować tylko straty i zmęczenie. Jeśli chcesz, żebyśmy się dalej rozwijali Ivy Wallet proszę podziel się nim z przyjaciółmi i rodziną.\n\nP.S. Recenzję w Sklepie Play!</string>
-    <string name="ivy_wallet_is_opensource">Ivy Wallet jest open-source!</string>
-    <string name="ivy_wallet_is_opensource_description">Ivy Wallet\'s kod jest otwarty i każdy może go zobaczyć. Wierzymy, że przejrzystość i etyka są koniecznością dla każdego oprogramowania. Jeśli podoba Ci się nasza praca i chcesz ulepszyć aplikację, możesz dołączyć się do naszego publicznego repozytorium Github.</string>
     <string name="contribute">Weź w tym udział</string>
     <string name="adjust_balance">Dostosuj saldo</string>
     <string name="authentication_required">Uwierzytelnianie wymagane</string>

@@ -243,10 +243,7 @@
     <string name="show_notifications">ಅಧಿಸೂಚನೆಗಳನ್ನು ತೋರಿಸಿ</string>
     <string name="hide_balance">ಮೊತ್ತವನ್ನು ಮರೆಮಾಡಿ</string>
     <string name="hide_balance_description">5 ಸೆಕೆಂಡುಗಳವರೆಗೆ ಮೊತ್ತವನ್ನು ತೋರಿಸಲು ಗುಪ್ತ ಮೊತ್ತವನ್ನು ಮರೆಮಾಡಿ ಕ್ಲಿಕ್ ಮಾಡಿ</string>
-    <string name="other">ಇತರೆ</string>
     <string name="rate_us_on_google_play">ಗೂಗಲ್ ಪ್ಲೇ ನಲ್ಲಿ ನಮಗೆ ರೇಟ್ ಮಾಡಿ</string>
-    <string name="share_ivy_wallet">Ivy ವಾಲೆಟ್ ಅನ್ನು ಶೇರ್ ಮಾಡಿ</string>
-    <string name="product">ಉತ್ಪನ್ನ</string>
     <string name="danger_zone">ಅಪಾಯದ ವಲಯ</string>
     <string name="delete_all_user_data">ಎಲ್ಲಾ ಬಳಕೆದಾರರ ಡೇಟಾವನ್ನು ಅಳಿಸಿ</string>
     <string name="delete_all_user_data_question">ಎಲ್ಲಾ ಬಳಕೆದಾರರ ಡೇಟಾವನ್ನು ಅಳಿಸುವುದೇ?</string>
@@ -258,11 +255,7 @@
     <string name="exporting_data">ಡೇಟಾವನ್ನು ರಫ್ತು ಮಾಡಲಾಗುತ್ತಿದೆ</string>
     <string name="exporting_data_description">ದಯವಿಟ್ಟು ನಿರೀಕ್ಷಿಸಿ, ಡೇಟಾವನ್ನು ರಫ್ತು ಮಾಡಲಾಗುತ್ತಿದೆ</string>
     <string name="start_date_of_month">ತಿಂಗಳ ಪ್ರಾರಂಭ ದಿನಾಂಕ</string>
-    <string name="ivy_telegram">Ivy ಟೆಲಿಗ್ರಾಮ್</string>
-    <string name="help_center">ಸಹಾಯ ಕೇಂದ್ರ</string>
     <string name="roadmap">ಮಾರ್ಗ ನಕ್ಷೆ</string>
-    <string name="request_a_feature">ವೈಶಿಷ್ಟ್ಯಕ್ಕಾಗಿ ವಿನಂತಿಸಿ</string>
-    <string name="contact_support">ಬೆಂಬಲಕ್ಕಾಗಿ ಸಂಪರ್ಕಿಸಿ</string>
     <string name="account_uppercase">ಖಾತೆ</string>
     <string name="logout">ಲಾಗ್ಔಟ್</string>
     <string name="login">ಲಾಗಿನ್</string>
@@ -392,8 +385,6 @@
     <string name="make_ivy_wallet_better_description">Ivy ವಾಲೆಟ್ ಅನ್ನು ಉತ್ತಮಗೊಳಿಸಲು ಬಯಸುವಿರಾ? ನಮಗೆ ವಿಮರ್ಶೆಯನ್ನು ಬರೆಯಿರಿ. ನಿಮಗೆ ಬೇಕಾದುದನ್ನು ಮತ್ತು ಅಗತ್ಯವಿರುವದನ್ನು ಅಭಿವೃದ್ಧಿಪಡಿಸಲು ನಮಗೆ ಇರುವ ಏಕೈಕ ಮಾರ್ಗವಾಗಿದೆ. ಅಲ್ಲದೆ ಇದು ಪ್ಲೇಸ್ಟೋರ್ ನಲ್ಲಿ ಉನ್ನತ ಶ್ರೇಣಿಯನ್ನು ಪಡೆಯಲು ನಮಗೆ ಸಹಾಯ ಮಾಡುತ್ತದೆ ಆದ್ದರಿಂದ ನಾವು ಮಾರ್ಕೆಟಿಂಗ್‌ಗಿಂತ ಉತ್ಪನ್ನದ ಮೇಲೆ ಹಣವನ್ನು ಖರ್ಚು ಮಾಡಬಹುದು.\n\nನಾವು ನಮ್ಮ ಕೈಲಾದಷ್ಟು ಮಾಡುತ್ತೇವೆ.\nIvy ತಂಡ</string>
     <string name="we_need_your_help">ನಮಗೆ ನಿಮ್ಮ ಸಹಾಯ ಬೇಕು!</string>
     <string name="we_need_your_help_description">ನಾವು ಕೇವಲ ಡಿಸೈನರ್ ಮತ್ತು ನಮ್ಮ 9–5 ಉದ್ಯೋಗಗಳ ನಂತರ ಅಪ್ಲಿಕೇಶನ್‌ನಲ್ಲಿ ಕೆಲಸ ಮಾಡುವ ಡೆವಲಪರ್ ಆಗಿದ್ದೇವೆ. ಪ್ರಸ್ತುತ, ನಾವು ನಷ್ಟ ಮತ್ತು ಬಳಲಿಕೆಯನ್ನು ಸೃಷ್ಟಿಸಲು ಸಾಕಷ್ಟು ಸಮಯ ಮತ್ತು ಹಣವನ್ನು ಹೂಡಿಕೆ ಮಾಡುತ್ತೇವೆ. ನಾವು Ivy ವಾಲೆಟ್ ಅನ್ನು ಅಭಿವೃದ್ಧಿಪಡಿಸುವುದನ್ನು ಮುಂದುವರಿಸಬೇಕೆಂದು ನೀವು ಬಯಸಿದರೆ ದಯವಿಟ್ಟು ಅದನ್ನು ಸ್ನೇಹಿತರು ಮತ್ತು ಕುಟುಂಬದೊಂದಿಗೆ ಹಂಚಿಕೊಳ್ಳಿ.\n\nP.S. ಗೂಗಲ್ ಪ್ಲೇಸ್ಟೋರ್ ವಿಮರ್ಶೆಗಳು ಸಹ ಬಹಳಷ್ಟು ಸಹಾಯ ಮಾಡುತ್ತವೆ!</string>
-    <string name="ivy_wallet_is_opensource">Ivy ವ್ಯಾಲೆಟ್ ಮುಕ್ತ ಸಂಪನ್ಮೂಲ ಆಗಿದೆ!</string>
-    <string name="ivy_wallet_is_opensource_description">Ivy ವ್ಯಾಲೆಟ್ ನ ಕೋಡ್ ತೆರೆದಿದೆ ಮತ್ತು ಪ್ರತಿಯೊಬ್ಬರೂ ಅದನ್ನು ನೋಡಬಹುದು. ಪ್ರತಿಯೊಂದು ಸಾಫ್ಟ್‌ವೇರ್ ಉತ್ಪನ್ನಕ್ಕೂ ಪಾರದರ್ಶಕತೆ ಮತ್ತು ನೈತಿಕತೆ ಅತ್ಯಗತ್ಯ ಎಂದು ನಾವು ನಂಬುತ್ತೇವೆ. ನೀವು ನಮ್ಮ ಕೆಲಸವನ್ನು ಇಷ್ಟಪಟ್ಟರೆ ಮತ್ತು ಅಪ್ಲಿಕೇಶನ್ ಅನ್ನು ಉತ್ತಮಗೊಳಿಸಲು ಬಯಸಿದರೆ ನೀವು ನಮ್ಮ ಸಾರ್ವಜನಿಕ ಗಿಟ್ ಹಬ್ ರೆಪೊಸಿಟರಿಯಲ್ಲಿ ಕೊಡುಗೆ ನೀಡಬಹುದು.</string>
     <string name="contribute">ಕೊಡುಗೆ ನೀಡಿ</string>
     <string name="adjust_balance">ಮೊತ್ತವನ್ನು ಹೊಂದಿಸಿ</string>
     <string name="authentication_required">ದೃಢೀಕರಣದ ಅಗತ್ಯವಿದೆ</string>

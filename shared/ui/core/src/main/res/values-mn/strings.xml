@@ -243,10 +243,7 @@
     <string name="show_notifications">Мэдэгдэл харуулах</string>
     <string name="hide_balance">Дүн нуух</string>
     <string name="hide_balance_description">Нуугдсан дүн дээр дарвал 5 секунд харагдана</string>
-    <string name="other">Бусад</string>
     <string name="rate_us_on_google_play">Google Play дээр үнэлгээ өгөх</string>
-    <string name="share_ivy_wallet">Ivy Хэтэвчийг түгээх</string>
-    <string name="product">Бүтээгдэхүүн</string>
     <string name="danger_zone">Аюултай бүс</string>
     <string name="delete_all_user_data">Бүх мэдээллийг устгах</string>
     <string name="delete_all_user_data_question">Бүх мэдээллийг устгах уу?</string>
@@ -258,11 +255,7 @@
     <string name="exporting_data">Мэдээлэл экспортолж байна</string>
     <string name="exporting_data_description">Түр хүлээнэ үү, мэдээлэл экспортолж байна</string>
     <string name="start_date_of_month">Сар эхлэх өдөр</string>
-    <string name="ivy_telegram">Ivy Telegram</string>
-    <string name="help_center">Тусламжийн төв</string>
     <string name="roadmap">Хөгжүүлэлтийн төлөвлөгөө</string>
-    <string name="request_a_feature">Санал хүсэлт илгээх</string>
-    <string name="contact_support">Зөвлөхтэй холбогдох</string>
     <string name="account_uppercase">ДАНС</string>
     <string name="logout">Гарах</string>
     <string name="login">Нэвтрэх</string>
@@ -392,8 +385,6 @@
     <string name="make_ivy_wallet_better_description">Ivy Хэтэвчийг сайжруулмаар байна уу? Тэгвэл та сэтгэгдлээ үлдээгээрэй. Энэ нь бид таныг сонсож, аппаа хөгжүүлэх цорын ганц боломж юм. Мөн PlayStore дээр өндөр үнэлгээ өгөөрэй. Тэгвэл бид сурталчилгаандаа биш аппдаа илүү их мөнгө зарцуулах боломжтой болно.\n\nБид хичээж байна.\nIvy хамт олон</string>
     <string name="we_need_your_help">Бидэнд тусламж хэрэгтэй байна!</string>
     <string name="we_need_your_help_description">Бид бүтэн цагийн ажлынхаа дараа цаг гаргаж ажилладаг хөгжүүлэгч болон дизайнер. Одоогоор бид их хэмжээний мөнгө, цаг хугацаа зарцуулж байгаа ч алдагдал хүлээж, ядарч байна. Хэрэв та биднийг Ivy Хэтэвч-г үргэлжлүүлж хөжгүүлэхийг хүсвэл ойр дотны хүмүүстээ түгээгээрэй.\n\nP.S. Google PlayStore дээр үнэлгээ өгвөл их нэмэртэй шүү!</string>
-    <string name="ivy_wallet_is_opensource">Ivy Хэтэвч бол нээлттэй эхийн апп!</string>
-    <string name="ivy_wallet_is_opensource_description">Ivy Хэтэвчийн эх код нь нээлттэй бөгөөд хэн бүхэн харж болно. Бид ёс зүй болон ил тод байдал ямар ч программ хангамжид чухал гэж үздэг. Хэрэв танд бидний бүтээл таалагдаж байвал аппын GitHub репо-р дамжуулж хөгжүүлэлтэд оролцох боломжтой шүү.</string>
     <string name="contribute">Хуруу нэмэх</string>
     <string name="adjust_balance">Үлдэгдэл өөрчлөх</string>
     <string name="authentication_required">Нэвтрэх шаардлагатай</string>

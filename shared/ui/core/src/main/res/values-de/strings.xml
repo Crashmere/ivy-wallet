@@ -245,10 +245,7 @@
     <string name="hide_balance_description">Klicke auf die ausgeblendete Bilanz, um den Wert für 5s anzuzeigen</string>
     <string name="hide_income">Einnahmen ausblenden</string>
     <string name="hide_income_description">Klicke auf die ausgeblendete Einnahme, um den Wert für 5s anzuzeigen</string>
-    <string name="other">Ander</string>
     <string name="rate_us_on_google_play">Bewerte uns auf Google Play</string>
-    <string name="share_ivy_wallet">Ivy Wallet teilen</string>
-    <string name="product">Produkt</string>
     <string name="danger_zone">Danger-Zone</string>
     <string name="delete_all_user_data">Alle Benutzerdaten löschen</string>
     <string name="delete_all_user_data_question">Alle Benutzerdaten löschen?</string>
@@ -260,11 +257,7 @@
     <string name="exporting_data">Daten wird exportiert</string>
     <string name="exporting_data_description">Bitte warten, Daten wird exportiert</string>
     <string name="start_date_of_month">Startdatum des Monats</string>
-    <string name="ivy_telegram">Ivy Telegram</string>
-    <string name="help_center">Hilfszentrum</string>
     <string name="roadmap">Entwicklungsplan</string>
-    <string name="request_a_feature">Eine Funktion anfordern</string>
-    <string name="contact_support">Support kontaktieren</string>
     <string name="account_uppercase">KONTO</string>
     <string name="logout">Abmelden</string>
     <string name="login">Anmelden</string>
@@ -393,8 +386,6 @@
     <string name="make_ivy_wallet_better_description">Willst du Ivy Wallet besser machen? Schreib uns eine Bewertung. Das ist der einzige Weg für uns, das zu entwickeln, was du willst und brauchst. Außerdem hilft es uns, im PlayStore besser zu ranken, so dass wir mehr Geld für das Produkt als für Marketing ausgeben können.\n\nWir tun unser Bestes.\nIvy Team</string>
     <string name="we_need_your_help">Wir brauchen deine Hilfe!</string>
     <string name="we_need_your_help_description">Wir sind nur ein Designer und ein Entwickler, die nach ihren 9–5 Jobs an der App arbeiten. Derzeit investieren wir eine Menge Zeit und Geld, um nur Verluste und Erschöpfung zu erzeugen. Wenn du möchtest, dass wir Ivy Wallet weiter entwickeln, dann teile es bitte mit Freund*innen und Familie.\n\nP.S. Google PlayStore Bewertungen helfen auch sehr!</string>
-    <string name="ivy_wallet_is_opensource">Ivy Wallet ist Open-Source!</string>
-    <string name="ivy_wallet_is_opensource_description">Der Code von Ivy Wallet ist offen und jeder kann ihn einsehen. Wir glauben, dass Transparenz und Ethik ein Muss für jedes Softwareprodukt sind. Wenn dir unsere Arbeit gefällt und du die App besser machen willst, kannst du in unserem öffentlichen Github-Repository mitarbeiten.</string>
     <string name="contribute">Beitragen</string>
     <string name="adjust_balance">Bilanz anpassen</string>
     <string name="authentication_required">Authentifizierung erforderlich</string>
@@ -467,7 +458,6 @@
     <string name="join_now">Jetzt beitreten</string>
     <string name="enter_with_offline_account">MIT OFFLINE KONTO FORTFAHREN</string>
     <string name="your_data_will_be_saved_only_locally">Deine Daten werden nur lokal auf dem Gerät gespeichert. Die Daten können verloren gehen, wenn du die App löscht oder zu einem anderen Gerät wechselst. Um Datenverlust zu vermeiden, empfehlen wir eine regelmäßige Sicherung in den Einstellungen durchzuführen.</string>
-    <string name="report_bug">Fehler melden</string>
     <string name="selected_text">Ausgewählt</string>
     <string name="this_transaction_is_associated_with_loan">* Diese Transaktion ist verbundenen mit Kredit : %1$s</string>
     <string name="this_transaction_is_associated_with_loan_record">* Diese Transaktion ist verbundenen mit einer Darlehensaufzeichnung für Kredit : %1$s</string>

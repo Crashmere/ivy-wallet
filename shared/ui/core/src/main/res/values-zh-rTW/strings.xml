@@ -248,10 +248,7 @@
     <string name="hide_balance_description">點選隱藏餘額 5 秒即可顯示</string>
     <string name="hide_income">隱藏收入</string>
     <string name="hide_income_description">點選隱藏收入 5 秒即可顯示</string>
-    <string name="other">其他</string>
     <string name="rate_us_on_google_play">在 Google Play 評價我們</string>
-    <string name="share_ivy_wallet">分享 Ivy Wallet</string>
-    <string name="product">產品</string>
     <string name="danger_zone">危險區域</string>
     <string name="delete_all_user_data">刪除所有用戶資料</string>
     <string name="delete_all_user_data_question">刪除所有用戶資料?</string>
@@ -263,12 +260,7 @@
     <string name="exporting_data">匯出資料</string>
     <string name="exporting_data_description">請稍候，正在匯出資料</string>
     <string name="start_date_of_month">月份的開始日期</string>
-    <string name="ivy_telegram">Ivy Telegram 群組</string>
-    <string name="help_center">幫助中心</string>
     <string name="roadmap">路線圖</string>
-    <string name="report_bug">報告錯誤</string>
-    <string name="request_a_feature">請求功能</string>
-    <string name="contact_support">社區支持</string>
     <string name="account_uppercase">帳戶</string>
     <string name="logout">登出</string>
     <string name="login">登入</string>
@@ -398,8 +390,6 @@
     <string name="make_ivy_wallet_better_description">您想讓 Ivy Wallet 變得更好嗎?給我們寫評論。這是我們實現您的需求的唯一方法。它還幫助我們在 Play 商店中排名更高，這樣我們就可以把錢花在產品上，而不是行銷上。\n\n我們盡力而為。\nIvy wallet 團隊。</string>
     <string name="we_need_your_help">我們需要您的幫助!</string>
     <string name="we_need_your_help_description">我們需要您的支持來不斷改進該應用程式。請與您的朋友和家人分享 Ivy Wallet，並考慮在 Google Play 商店上留下評論。您的貢獻將幫助我們繼續我們的使命。</string>
-    <string name="ivy_wallet_is_opensource">Ivy Wallet 開源了!</string>
-    <string name="ivy_wallet_is_opensource_description">Ivy Wallet 的程式碼是公開的，每個人都可以看到。我們相信透明度和道德對於任何軟體產品都是必須的。如果您喜歡我們的工作並希望使應用程式變得更好，您可以為我們的公共 Github 儲存庫做出貢獻。</string>
     <string name="contribute">貢獻</string>
     <string name="adjust_balance">調整平衡</string>
     <string name="authentication_required">需要身份驗證</string>
