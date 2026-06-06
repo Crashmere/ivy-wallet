@@ -475,7 +475,6 @@
     <string name="join_now">Tham gia ngay</string>
     <string name="it_looks_like_that_you_are_enjoying_telegram">Có vẻ như bạn đang yêu thích Ivy Wallet! Nếu bạn chưa tham gia, hãy tham gia Cộng đồng Ivy trên Telegram thông qua lời mời và giúp ứng dụng của chúng tôi trở nên tốt hơn :)</string>
     <string name="please_type_category_name">Vui lòng nhập \"%1$s\" để xóa danh mục của bạn.</string>
-    <string name="releases">Phiên bản</string>
     <string name="enter_with_offline_account">TRUY CẬP VỚI TÀI KHOẢN NGOẠI TUYẾN</string>
     <string name="your_data_will_be_saved_only_locally">Dữ liệu của bạn sẽ chỉ được lưu trữ trên bộ nhớ điện thoại của bạn. Bạn có nguy cơ mất dữ liệu nếu gỡ bỏ ứng dụng hoặc thay đổi thiết bị. Để tránh mất dữ liệu, chúng tôi khuyên bạn nên xuất bản sao lưu từ cài đặt thường xuyên.</string>
     <string name="you_owe">Bạn nợ: %1$s</string>

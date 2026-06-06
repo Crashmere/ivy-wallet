@@ -476,7 +476,6 @@
     <string name="join_now">Inscreva-se agora</string>
     <string name="it_looks_like_that_you_are_enjoying_telegram">Parece que você está gostando da Ivy Wallet! Se ainda não o fez, sinta-se à vontade para participar da nossa comunidade Ivy Telegram, apenas para convidados, e melhorar nosso aplicativo :)</string>
     <string name="please_type_category_name">Por favor digite \"%1$s\" para excluir sua categoria.</string>
-    <string name="releases">Lançamentos</string>
     <string name="enter_with_offline_account">ENTRAR COM CONTA OFFLINE</string>
     <string name="your_data_will_be_saved_only_locally">Seus dados serão salvos apenas localmente no seu telefone. Você corre o risco de perder seus dados se desinstalar o aplicativo ou trocar de dispositivo. Para evitar a perda de dados, recomendamos exportar regularmente o backup das configurações.</string>
     <string name="you_owe">Você deve: %1$s</string>

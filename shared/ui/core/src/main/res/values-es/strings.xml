@@ -245,7 +245,6 @@
     <string name="exchange_rates">Tasas de cambio</string>
     <string name="attributions">Atribuciones</string>
     <string name="advanced_features">Funciones avanzadas</string>
-    <string name="releases">Versiones</string>
     <string name="hide_balance">Ocultar saldo</string>
     <string name="hide_balance_description">Toca en el saldo oculto para mostrarlo por 5 segundos</string>
     <string name="hide_income">Ocultar ingresos</string>

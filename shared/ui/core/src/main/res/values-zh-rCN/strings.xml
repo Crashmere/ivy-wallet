@@ -476,7 +476,6 @@
     <string name="join_now">立即加入</string>
     <string name="it_looks_like_that_you_are_enjoying_telegram">看起来您正在享受 Ivy Wallet！如果您还没有加入我们的邀请制 Ivy Telegram 社区，请随时加入并共同改进我们的应用程序 :)</string>
     <string name="please_type_category_name">请键入“%1$s”以删除您的类别。</string>
-    <string name="releases">发布日志</string>
     <string name="enter_with_offline_account">离线账户登录</string>
     <string name="your_data_will_be_saved_only_locally">您的数据将仅在手机本地保存。如果您卸载应用程序或更换设备，您将面临数据丢失的风险。为了防止数据丢失，我们建议定期从设置中导出备份。</string>
     <string name="you_owe">您借入：%1$s</string>

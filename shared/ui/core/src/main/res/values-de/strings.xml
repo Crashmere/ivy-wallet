@@ -466,7 +466,6 @@
     <string name="contributions_number">%1$s Beiträge</string>
     <string name="ivy_community">Ivy Community</string>
     <string name="join_now">Jetzt beitreten</string>
-    <string name="releases">Versionen</string>
     <string name="enter_with_offline_account">MIT OFFLINE KONTO FORTFAHREN</string>
     <string name="your_data_will_be_saved_only_locally">Deine Daten werden nur lokal auf dem Gerät gespeichert. Die Daten können verloren gehen, wenn du die App löscht oder zu einem anderen Gerät wechselst. Um Datenverlust zu vermeiden, empfehlen wir eine regelmäßige Sicherung in den Einstellungen durchzuführen.</string>
     <string name="report_bug">Fehler melden</string>

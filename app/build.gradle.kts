@@ -135,7 +135,6 @@ dependencies {
     implementation(projects.feature.plannedPayments)
     implementation(projects.feature.poll.impl)
     implementation(projects.feature.poll.public)
-    implementation(projects.feature.releases)
     implementation(projects.feature.reports)
     implementation(projects.feature.search)
     implementation(projects.feature.settings)

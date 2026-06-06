@@ -475,7 +475,6 @@
     <string name="join_now">Unisciti ora</string>
     <string name="it_looks_like_that_you_are_enjoying_telegram">Sembra che Ivy Wallet ti stia piacendo! Se non l\'hai ancora fatto, sentiti libero di unirti alla nostra Community solo su invito su Telegram e di migliorare la nostra app :)</string>
     <string name="please_type_category_name">Digita \"%1$s\" per eliminare la categoria</string>
-    <string name="releases">Versioni</string>
     <string name="enter_with_offline_account">ACCEDI CON UN ACCOUNT OFFLINE</string>
     <string name="your_data_will_be_saved_only_locally">I tuoi dati saranno salvati localmente sul tuo dispositivo. Rischi di perdere i tuoi dati se disinstalli l\'app o se cambi dispositivo. Per prevenire perdite di dati, raccomandiamo di esportare regolarmente un backup dalle impostazioni.</string>
     <string name="you_owe">Sei in debito di: %1$s</string>

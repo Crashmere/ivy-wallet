@@ -51,8 +51,6 @@ import com.ivy.navigation.AttributionsScreen
 import com.ivy.navigation.ExchangeRatesScreen
 import com.ivy.navigation.FeaturesScreen
 import com.ivy.navigation.ImportScreen
-import com.ivy.navigation.Navigation
-import com.ivy.navigation.ReleasesScreen
 import com.ivy.navigation.navigation
 import com.ivy.navigation.screenScopedViewModel
 import com.ivy.ui.R
@@ -192,9 +190,7 @@ private fun BoxWithConstraintsScope.UI(
 
                 val rootScreen = rootScreen()
                 Text(
-                    modifier = Modifier.clickable {
-                        nav.navigateTo(ReleasesScreen)
-                    },
+                    modifier = Modifier,
                     text = "${rootScreen.buildVersionName} (${rootScreen.buildVersionCode})",
                     style = UI.typo.nC.style(
                         color = UI.colors.gray,
@@ -451,10 +447,6 @@ private fun BoxWithConstraintsScope.UI(
 
             Spacer(Modifier.height(12.dp))
 
-            Releases(nav = nav)
-
-            Spacer(Modifier.height(12.dp))
-
             ReportBug()
 
             Spacer(Modifier.height(12.dp))
@@ -699,17 +691,6 @@ private fun ContactSupport() {
         text = stringResource(R.string.contact_support),
     ) {
         rootActivity.openUrlInBrowser(Constants.URL_IVY_TELEGRAM_INVITE)
-    }
-}
-
-@Composable
-private fun Releases(nav: Navigation) {
-    SettingsDefaultButton(
-        icon = R.drawable.ic_vue_money_tag,
-        text = stringResource(R.string.releases),
-        iconPadding = 8.dp
-    ) {
-        nav.navigateTo(ReleasesScreen)
     }
 }
 
