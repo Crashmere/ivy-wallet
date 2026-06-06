@@ -17,21 +17,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.Category
-import com.ivy.data.model.CategoryId
-import com.ivy.data.model.primitive.ColorInt
-import com.ivy.data.model.primitive.IconAsset
-import com.ivy.data.model.primitive.NotBlankTrimmedString
 import com.ivy.design.l0_system.UI
 import com.ivy.design.l0_system.style
 import com.ivy.domain.legacy.ui.theme.components.ListItem
-import com.ivy.legacy.IvyWalletPreview
 import com.ivy.legacy.datamodel.Account
 import com.ivy.legacy.datamodel.Budget
 import com.ivy.legacy.legacy.ui.theme.modal.ModalNameInput
@@ -39,9 +32,6 @@ import com.ivy.legacy.utils.isNotNullOrBlank
 import com.ivy.legacy.utils.selectEndTextFieldValue
 import com.ivy.ui.R
 import com.ivy.wallet.domain.deprecated.logic.model.CreateBudgetData
-import com.ivy.wallet.ui.theme.Green
-import com.ivy.wallet.ui.theme.Purple1Dark
-import com.ivy.wallet.ui.theme.Red3Light
 import com.ivy.wallet.ui.theme.modal.DeleteModal
 import com.ivy.wallet.ui.theme.modal.IvyModal
 import com.ivy.wallet.ui.theme.modal.ModalAddSave
@@ -260,98 +250,6 @@ private fun CategoriesRow(
 
         item {
             Spacer(Modifier.width(24.dp))
-        }
-    }
-}
-
-@Preview
-@Composable
-private fun Preview_create() {
-    IvyWalletPreview {
-        val cat1 = Category(
-            name = NotBlankTrimmedString.unsafe("Science"),
-            color = ColorInt(Purple1Dark.toArgb()),
-            icon = IconAsset.unsafe("atom"),
-            id = CategoryId(UUID.randomUUID()),
-            orderNum = 0.0,
-        )
-
-        BudgetModal(
-            modal = BudgetModalData(
-                budget = null,
-                baseCurrency = "BGN",
-                categories = listOf(
-                    cat1,
-                    Category(
-                        name = NotBlankTrimmedString.unsafe("Pet"),
-                        color = ColorInt(Red3Light.toArgb()),
-                        icon = IconAsset.unsafe("pet"),
-                        id = CategoryId(UUID.randomUUID()),
-                        orderNum = 0.0,
-                    ),
-                    Category(
-                        name = NotBlankTrimmedString.unsafe("Home"),
-                        color = ColorInt(Green.toArgb()),
-                        icon = null,
-                        id = CategoryId(UUID.randomUUID()),
-                        orderNum = 0.0,
-                    ),
-                ),
-                accounts = emptyList()
-            ),
-            onCreate = {},
-            onEdit = {},
-            onDelete = {}
-        ) {
-        }
-    }
-}
-
-@Preview
-@Composable
-private fun Preview_edit() {
-    IvyWalletPreview {
-        val cat1 = Category(
-            name = NotBlankTrimmedString.unsafe("Science"),
-            color = ColorInt(Purple1Dark.toArgb()),
-            icon = IconAsset.unsafe("atom"),
-            id = CategoryId(UUID.randomUUID()),
-            orderNum = 0.0,
-        )
-
-        BudgetModal(
-            modal = BudgetModalData(
-                budget = Budget(
-                    name = "Shopping",
-                    amount = 1250.0,
-                    accountIdsSerialized = null,
-                    categoryIdsSerialized = null,
-                    orderId = 0.0
-                ),
-                baseCurrency = "BGN",
-                categories = listOf(
-                    cat1,
-                    Category(
-                        name = NotBlankTrimmedString.unsafe("Pet"),
-                        color = ColorInt(Red3Light.toArgb()),
-                        icon = IconAsset.unsafe("pet"),
-                        id = CategoryId(UUID.randomUUID()),
-                        orderNum = 0.0,
-                    ),
-                    Category(
-                        name = NotBlankTrimmedString.unsafe("Home"),
-                        color = ColorInt(Green.toArgb()),
-                        icon = null,
-                        id = CategoryId(UUID.randomUUID()),
-                        orderNum = 0.0,
-                    ),
-                ),
-                accounts = emptyList()
-            ),
-            onCreate = {},
-            onEdit = {},
-            onDelete = {}
-        ) {
         }
     }
 }

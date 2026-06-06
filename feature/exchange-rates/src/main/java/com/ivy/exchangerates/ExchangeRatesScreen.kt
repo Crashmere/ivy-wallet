@@ -16,7 +16,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.ivy.base.legacy.Theme
@@ -186,9 +185,13 @@ private fun SearchField(
     )
 }
 
-@Preview
+/** For screenshot testing */
 @Composable
-private fun Preview(theme: Theme = Theme.LIGHT) {
+fun ExchangeRatesScreenUiTest(isDark: Boolean) {
+    val theme = when (isDark) {
+        true -> Theme.DARK
+        false -> Theme.LIGHT
+    }
     IvyWalletPreview(theme) {
         UI(
             state = RatesState(
@@ -215,14 +218,4 @@ private fun Preview(theme: Theme = Theme.LIGHT) {
             onEvent = {}
         )
     }
-}
-
-/** For screenshot testing */
-@Composable
-fun ExchangeRatesScreenUiTest(isDark: Boolean) {
-    val theme = when (isDark) {
-        true -> Theme.DARK
-        false -> Theme.LIGHT
-    }
-    Preview(theme)
 }
