@@ -207,28 +207,6 @@ fun BoxWithConstraintsScope.OnboardingSplashLogin(
             )
         )
 
-        val uriHandler = LocalUriHandler.current
-        Text(
-            modifier = Modifier
-                .animateXCenterToLeft(
-                    ivyContext = ivyContext,
-                    percentTransition = percentTransition
-                )
-                .clickable {
-                    openUrl(
-                        uriHandler = uriHandler,
-                        url = Constants.URL_IVY_WALLET_REPO
-                    )
-                }
-                .padding(vertical = 8.dp)
-                .padding(end = 8.dp),
-            text = stringResource(R.string.opensource),
-            style = UI.typo.c.style(
-                color = Green,
-                fontWeight = FontWeight.Bold
-            )
-        )
-
         LoginSection(
             percentTransition = percentTransition,
             onSkip = onSkip

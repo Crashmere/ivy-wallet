@@ -6,9 +6,12 @@
 
 - 已删除 GitHub workflow、Issue/PR 模板、CI 辅助模块、Fastlane 发布配置、开发规范文档、Detekt 配置、lint baseline、脚本和生成图等外围资产。
 - 已移除 Detekt、Kover、模块图、Gradle wrapper 自动升级、Google Services、Crashlytics、Google Play Review、Compose lint 等构建或发布相关接线。
-- 已删除 contributors、releases、attributions、poll 等社区/远程反馈模块。
+- 已删除 contributors、releases、attributions、poll 等社区、发布说明、致谢和远程反馈模块。
+- 已删除原项目开源展示、GitHub 仓库入口、分享 Ivy、Google Play 评分卡、Telegram/推广求助文案和 GitHub 自动备份迁移残留。
 - 已将原 `:feature:features` 独立英文页面合并进设置页，改为面向个人使用的偏好设置。
-- 保留应用功能源码、功能测试源码、截图测试源码和 Gradle wrapper。
+- 已整顿设置页结构：数据管理、记账规则、系统行为保留为一级分组，外观与显示、输入与列表改为二级菜单。
+- 已移除设置页顶部匿名账户名称入口和首页问候语。
+- 保留应用功能源码、功能测试源码、截图测试源码、Gradle wrapper、本地数据管理能力和当前主要记账功能。
 - 当前本机已通过项目本地 Android SDK 编译 demo APK，并成功安装到已连接手机。
 
 ## 后续清理原则
@@ -16,67 +19,34 @@
 - 优先删除和个人记账无关的社区、推广、远程反馈、发布信息和原项目展示功能。
 - 保留真实记账功能、数据模型、数据库、导入导出、功能测试和截图测试，除非确认个人使用场景不再需要。
 - 每一轮清理后都尽量保持 Gradle module include、app 依赖、导航入口和设置页入口一致，避免留下不可达或不可编译的残留。
+- 对启动流程、数据库迁移、导入导出和桌面小组件这类会影响个人数据或系统集成的内容，先确认使用习惯，再动手删除。
 
-## 第一批建议清理：基本确定无用
+## 已完成的主要清理
 
-### `:feature:contributors`
+### 社区和发布相关内容
 
-贡献者页面，用于展示 GitHub 贡献者和仓库信息。个人使用不需要保留。
+- GitHub workflow、Issue/PR 模板、社区规范、开发规范、发布脚本和 Fastlane 配置。
+- `:feature:contributors`
+- `:feature:releases`
+- `:feature:attributions`
+- `:feature:poll:impl` 和 `:feature:poll:public`
 
-清理时需要同步处理：
+### 设置页和推广入口
 
-- 从 `settings.gradle.kts` 移除 `:feature:contributors`
-- 从 `app/build.gradle.kts` 移除对应依赖
-- 从 `app/src/main/java/com/ivy/IvyNavGraph.kt` 移除 `ContributorsScreen`
-- 从 `feature/settings` 中移除 Contributors 设置入口
+- 设置页贡献者、发布日志、开源致谢、投票问卷、外部推广和原高级特性独立页面。
+- 首页 customer journey 中的外部反馈/评分相关卡片。
+- 首页更多菜单里的 GitHub 开源卡片和分享 Ivy 入口。
+- onboarding 欢迎页里的 `#opensource` 原仓库入口。
+- 免责声明页里的开源仓库展示卡片。
 
-### `:feature:releases`
+### 构建和数据残留
 
-版本发布说明页面，会访问 GitHub releases。个人分支不再跟随原项目发布节奏，可删除。
+- Google Services、Crashlytics、Google Play Review、Firebase Firestore 相关接线。
+- GitHub 自动备份清理迁移、迁移管理器空壳和 `DatastoreKeys.GITHUB_*`。
+- `shared/ui/core` 中不再使用的 GitHub 图标、开源卡片组件和对应截图测试。
+- 多语言资源中不再使用的开源、分享、评分、Telegram 和推广求助文案。
 
-清理时需要同步处理：
-
-- 从 `settings.gradle.kts` 移除 `:feature:releases`
-- 从 `app/build.gradle.kts` 移除对应依赖
-- 从 `app/src/main/java/com/ivy/IvyNavGraph.kt` 移除 `ReleasesScreen`
-- 从 `feature/settings` 中移除 Releases 设置入口
-
-### `:feature:poll:impl` 和 `:feature:poll:public`
-
-投票/问卷功能，当前实现依赖 Firebase Firestore。该功能主要服务原项目远程反馈收集，个人使用不需要。
-
-清理时需要同步处理：
-
-- 从 `settings.gradle.kts` 移除 `:feature:poll:impl` 和 `:feature:poll:public`
-- 从 `app/build.gradle.kts` 移除对应依赖
-- 从 `feature/home/build.gradle.kts` 移除 `projects.feature.poll.public`
-- 从首页 customer journey 逻辑中移除 poll card 和 `PollRepository` 依赖
-- 从 `app/src/main/java/com/ivy/IvyNavGraph.kt` 移除 `PollScreen`
-- 从 `shared:ui:navigation` 移除 `PollScreen`
-- 从 `gradle/libs.versions.toml` 移除 `firebase-firestore`
-
-### `:feature:attributions`
-
-开源库和技术栈致谢页。个人本地使用通常不需要展示该页面。
-
-清理时需要同步处理：
-
-- 从 `settings.gradle.kts` 移除 `:feature:attributions`
-- 从 `app/build.gradle.kts` 移除对应依赖
-- 从 `app/src/main/java/com/ivy/IvyNavGraph.kt` 移除 `AttributionsScreen`
-- 从 `feature/settings` 中移除 Attributions 设置入口
-
-## 第二批建议清理：需要按个人使用习惯确认
-
-### `:feature:disclaimer`
-
-首次启动免责声明确认页。个人使用可以考虑删除，但需要先调整启动流程。
-
-清理前需要确认：
-
-- 是否仍需要首次启动时阻塞进入 App
-- 是否保留 `LegalRepository` 和 `LocalLegalDataSource`
-- `RootViewModel` 中跳转 `DisclaimerScreen` 的逻辑如何替换
+## 下一批建议清理：需要按个人使用习惯确认
 
 ### `:widget:add-transaction`、`:widget:balance`、`:widget:shared-base`
 
@@ -84,9 +54,21 @@ Android 桌面小组件，包括快速添加交易和余额展示。
 
 清理前需要确认：
 
-- 是否使用桌面 widget
-- `RootActivity.setupApp()` 中的 widget broadcast 是否删除
-- `AndroidManifest.xml` 中相关 receiver/service 声明是否删除
+- 是否使用桌面 widget。
+- `RootActivity.setupApp()` 中的 widget broadcast 是否删除。
+- `AndroidManifest.xml` 中相关 receiver/service 声明是否删除。
+- 首页 customer journey 中的“添加小组件”提示卡是否删除。
+
+### `:feature:disclaimer`
+
+首次启动免责声明确认页。个人使用可以考虑删除，但需要先调整启动流程。
+
+清理前需要确认：
+
+- 是否仍需要首次启动时阻塞进入 App。
+- 是否保留 `LegalRepository` 和 `LocalLegalDataSource`。
+- `RootViewModel` 中跳转 `DisclaimerScreen` 的逻辑如何替换。
+- 条款和隐私政策链接是否一并删除。
 
 ### `:feature:onboarding`
 
@@ -94,9 +76,9 @@ Android 桌面小组件，包括快速添加交易和余额展示。
 
 清理前需要确认：
 
-- 新安装后是否仍需要初始化默认数据
-- 是否改为直接进入主界面
-- 是否依赖导入数据或手动创建账户来完成初始化
+- 新安装后是否仍需要初始化默认数据。
+- 是否改为直接进入主界面。
+- 是否依赖导入数据或手动创建账户来完成初始化。
 
 ### `:feature:import-data`
 
@@ -104,8 +86,9 @@ CSV 和其他 App 数据导入功能。
 
 清理前需要确认：
 
-- 是否需要迁移历史数据
-- 是否保留 Ivy Wallet 自身备份文件导入
+- 是否需要迁移历史数据。
+- 是否保留 Ivy Wallet 自身备份文件导入。
+- 是否保留导入说明里跳转其他 App 商店页的能力。
 
 ### `shared:data:core` 中的 backup/import 相关代码
 
@@ -113,22 +96,13 @@ CSV 和其他 App 数据导入功能。
 
 清理前需要确认：
 
-- 是否仍需要导出备份
-- 是否仍需要恢复备份
-- 是否保留相关功能测试和兼容性测试
-
-## 第三批建议清理：非模块残留
-
-这些不是独立 Gradle 模块，但仍包含原项目社区、推广或远程服务残留。
-
-- `temp/legacy-code/src/main/java/com/ivy/legacy/Constants.kt` 中的 GitHub、Telegram、Sponsor、Google Play、隐私政策链接
-- `feature/settings/SettingsScreen.kt` 中可能残留的原项目推广入口
-- `shared/ui/core` 中的 GitHub 开源卡片和相关资源
-- `app/src/main/java/com/ivy/wallet/migrations/impl/DisableGitHubAutoBackupMigration.kt`
-- `shared/data/core/src/main/java/com/ivy/data/datastore/DatastoreKeys.kt` 中的 `GITHUB_*` key
+- 是否仍需要导出备份。
+- 是否仍需要恢复备份。
+- 是否保留相关功能测试和兼容性测试。
 
 ## 建议执行顺序
 
-1. 删除 GitHub、Telegram、Sponsor、Google Play 等 URL 常量和开源卡片。
-2. 按个人习惯决定是否删除 `widget/*`。
-3. 最后评估 `disclaimer`、`onboarding`、`import-data` 和 backup/import 能力。
+1. 如果不使用桌面小组件，优先删除 `widget/*` 和首页小组件提示卡。
+2. 再评估是否删除 `disclaimer`，同时处理条款/隐私政策链接。
+3. 然后评估是否简化或删除 `onboarding`。
+4. 最后评估 `import-data` 和 backup/import 能力。

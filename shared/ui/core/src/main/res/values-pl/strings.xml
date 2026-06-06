@@ -94,7 +94,6 @@
     <string name="created_on">Utworzony</string>
     <string name="cashflow">Obroty: %1$s%2$s %3$s</string>
     <string name="search_transactions">Szukaj transakcji</string>
-    <string name="ivy_wallet_open_source">Ivy Wallet jest open-source</string>
     <string name="savings_goal">Cel oszczędzania</string>
     <string name="quick_access">Szybki dostęp</string>
     <string name="settings">Ustawienia</string>
@@ -102,7 +101,6 @@
     <string name="dark_mode">Tryb ciemny</string>
     <string name="auto_mode">Tryb automatyczny</string>
     <string name="planned_payments">Zaplanowane\nPłatności</string>
-    <string name="share_ivy">Udostępnij Ivy</string>
     <string name="reports">Zgłoszenia</string>
     <string name="loans">Pożyczki</string>
     <string name="set_currency">Ustaw walutę</string>
@@ -160,7 +158,6 @@
     <string name="suggestions">Sugestie</string>
     <string name="set">Ustaw</string>
     <string name="your_personal_money_manager">Twoja personalna aplikacja do zarządzania finansami</string>
-    <string name="opensource">#opensource</string>
     <string name="google_error_try_again">Błąd. Spróbuj ponownie: %1$s</string>
     <string name="google_signing_in">Logowanie…</string>
     <string name="google_signing_in_success">Sukces!</string>
@@ -242,7 +239,6 @@
     <string name="hide_balance_description">Kliknij na ukryte saldo, aby je podświetlić na 5 sekund</string>
     <string name="hide_income">Ukryj przychód</string>
     <string name="hide_income_description">Kliknij na ukryty przychód, aby je podświetlić na 5 sekund</string>
-    <string name="rate_us_on_google_play">Oceń nas w Google Play</string>
     <string name="danger_zone">Strefa zagrożenia</string>
     <string name="delete_all_user_data">Usuń wszystkie dane</string>
     <string name="delete_all_user_data_question">Usunąć wszystkie dane?</string>
@@ -373,15 +369,10 @@
     <string name="set_a_budget_description">Ivy Wallet nie tylko pomaga pasywnie śledzić wydatki, ale także proaktywnie kreować swoją przyszłość finansową poprzez ustalanie budżetów i trzymanie się ich.</string>
     <string name="expenses_piechart_description">Możesz zobaczyć strukturę wydatków według kategorii! Wypróbuj, dotknij szaro-czarnego przycisku Wydatki tuż pod saldem.</string>
     <string name="expenses_piechart">Wykres kołowy wydatków</string>
-    <string name="review_ivy_wallet">Zrecenzuj Ivy Wallet</string>
-    <string name="review_ivy_wallet_description">Podziel się swoją opinią! Pomóż Ivy Wallet stać się lepszym i rozwijać, pisząc nam recenzję. Komplementy, pomysły i krytyka są mile widziane! Dołożymy wszelkich starań.\n\nPozdrawiamy,\nIvy Team</string>
     <string name="help_us_grow">Pomóż nam się rozwijać, abyśmy mogli inwestować więcej w rozwój i ulepszać aplikację dla Ciebie. Udostępniając Ivy Wallet, uszczęśliwisz dwóch programistów, a także pomożesz przyjacielowi przejąć kontrolę nad ich finansami.</string>
     <string name="share_with_friends">Podziel się ze znajomymi</string>
     <string name="make_a_report_description">Możesz generować raporty, aby uzyskać szczegółowe informacje na temat swoich dochodów i wydatków. Filtruj transakcje według typu, okresu, kategorii, kont, kwoty, słów kluczowych i innych, aby uzyskać lepszy wgląd w swoje finanse.</string>
     <string name="make_a_report">Stwórz raport</string>
-    <string name="make_ivy_wallet_better_description">Chcesz ulepszyć Ivy Wallet? Napisz nam recenzję. Tylko w ten sposób możemy rozwijać to, czego pragniesz i potrzebujesz. Pomaga nam to również zająć wyższą pozycję w Sklepie Play, dzięki czemu możemy wydawać pieniądze na produkt, a nie na marketing.\n\Dokładamy naszych starań.\nIvy Team</string>
-    <string name="we_need_your_help">Potrzebujemy Twojej pomocy!</string>
-    <string name="we_need_your_help_description">Jesteśmy tylko projektantami i programistami pracującymi nad aplikacją po godzinach pracy. Obecnie inwestujemy dużo czasu i pieniędzy, aby generować tylko straty i zmęczenie. Jeśli chcesz, żebyśmy się dalej rozwijali Ivy Wallet proszę podziel się nim z przyjaciółmi i rodziną.\n\nP.S. Recenzję w Sklepie Play!</string>
     <string name="contribute">Weź w tym udział</string>
     <string name="adjust_balance">Dostosuj saldo</string>
     <string name="authentication_required">Uwierzytelnianie wymagane</string>

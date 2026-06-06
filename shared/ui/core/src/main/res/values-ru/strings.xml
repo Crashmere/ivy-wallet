@@ -94,7 +94,6 @@
     <string name="created_on">Создано</string>
     <string name="cashflow">Денежный поток: %1$s%2$s %3$s</string>
     <string name="search_transactions">Поиск транзакций</string>
-    <string name="ivy_wallet_open_source">Ivy Wallet — open-source проект</string>
     <string name="savings_goal">Цель накоплений</string>
     <string name="quick_access">Быстрый доступ</string>
     <string name="settings">Настройки</string>
@@ -102,7 +101,6 @@
     <string name="dark_mode">Тёмная\nтема</string>
     <string name="auto_mode">Системная\nтема</string>
     <string name="planned_payments">Запланированные платежи</string>
-    <string name="share_ivy">Поделись Ivy</string>
     <string name="reports">Отчёты</string>
     <string name="loans">Кредиты</string>
     <string name="set_currency">Установите валюту</string>
@@ -159,7 +157,6 @@
     <string name="suggestions">Предложения</string>
     <string name="set">Установить</string>
     <string name="your_personal_money_manager">Ваш личный финансовый менеджер</string>
-    <string name="opensource">#opensource</string>
     <string name="google_error_try_again">Ошибка. Попробуйте снова: %1$s</string>
     <string name="google_signing_in">Выполняется вход…</string>
     <string name="google_signing_in_success">Успешно!</string>
@@ -239,7 +236,6 @@
     <string name="show_notifications">Показывать уведомления</string>
     <string name="hide_balance">Скрыть баланс</string>
     <string name="hide_balance_description">Нажмите на скрытый баланс, чтобы показать его на 5 секунд</string>
-    <string name="rate_us_on_google_play">Оцените нас в Google Play</string>
     <string name="danger_zone">Опасная зона</string>
     <string name="delete_all_user_data">Удалить все данные пользователя</string>
     <string name="delete_all_user_data_question">Удалить все данные пользователя?</string>
@@ -370,15 +366,10 @@
     <string name="set_a_budget_description">Ivy Wallet помогает не только пассивно отслеживать ваш бюджет, но и проактивно создавать ваше финансовое будущее, задавая бюджеты и придерживаясь его.</string>
     <string name="expenses_piechart_description">Вы можете видеть структуру ваших расходов по категориям! Попробуйте, нажмите на серую/чёрную кнопку \"Расходы\" прямо под вашим балансом.</string>
     <string name="expenses_piechart">Круговая диаграмма Расходов</string>
-    <string name="review_ivy_wallet">Оцените Ivy Wallet</string>
-    <string name="review_ivy_wallet_description">Поделитесь обратной связью! Помогите Ivy Wallet стать лучше и вырасти, оставив нам отзыв. Комплименты, идеи и критика приветствуются! Мы очень стараемся.\n\С наилучшими пожеланиями,\nКоманда Ivy.</string>
     <string name="help_us_grow">Помогите нам расти, чтобы мы могли больше вкладываться в разработку и делать приложение лучше для вас. Если вы поделитесь Ivy Wallet, вы обрадуете двух разработчиков и поможете друзьям взять под контроль их финансы.</string>
     <string name="share_with_friends">Поделитесь с друзьями</string>
     <string name="make_a_report_description">Вы можете генерировать отчёты, чтобы получить глубокое понимание ваших доходов и трат. Фильтруйте ваши транзакции по типу, периоду времени, категории, учётным записям, количеству, ключевым словам и многому другому, чтобы получить более репрезентативную картину ваших финансов.</string>
     <string name="make_a_report">Сделайте отчёт</string>
-    <string name="make_ivy_wallet_better_description">Хотите сделать Ivy Wallet лучше? Напишите отзыв. Для нас это единственный способ разрабатывать именно то, что вы хотите и что вам нужно. Также, это помогает нам подняться в рейтинге в PlayStore, что помогает нам больше вкладываться в разработку, и меньше - в рекламу.\n\nМы очень стараемся.\nКоманда Ivy.</string>
-    <string name="we_need_your_help">Нам нужна ваша помощь!</string>
-    <string name="we_need_your_help_description">Мы всего лишь разработчик и дизайнер, работающие над приложение после основной работы. На данный момент мы вложили много денег и времени, но не получили ничего. Если вы хотите, чтобы мы продолжали разработку Ivy Wallet, пожалуйста, поделитесь ссылкой на приложение с друзьями и родственниками.\n\nP.S. отзывы в Google PlayStore тоже очень помогают!</string>
     <string name="contribute">Внести свой вклад</string>
     <string name="adjust_balance">Скорректировать баланс</string>
     <string name="authentication_required">Аутентификация не удалась</string>

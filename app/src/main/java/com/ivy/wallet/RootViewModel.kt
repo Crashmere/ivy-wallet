@@ -21,7 +21,6 @@ import com.ivy.navigation.Navigation
 import com.ivy.navigation.OnboardingScreen
 import com.ivy.ui.R
 import com.ivy.wallet.domain.deprecated.logic.notification.TransactionReminderLogic
-import com.ivy.wallet.migrations.MigrationsManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -41,7 +40,6 @@ class RootViewModel @Inject constructor(
     private val settingsDao: SettingsDao,
     private val sharedPrefs: SharedPrefs,
     private val transactionReminderLogic: TransactionReminderLogic,
-    private val migrationsManager: MigrationsManager,
     private val legalRepo: LegalRepository,
 ) : ViewModel() {
 
@@ -90,10 +88,6 @@ class RootViewModel @Inject constructor(
             }
 
             TestIdlingResource.decrement()
-        }
-
-        viewModelScope.launch {
-            migrationsManager.executeMigrations()
         }
     }
 

@@ -94,7 +94,6 @@
     <string name="created_on">创建于</string>
     <string name="cashflow">现金流：%1$s%2$s %3$s</string>
     <string name="search_transactions">搜索交易</string>
-    <string name="ivy_wallet_open_source">Ivy Wallet 是开源的</string>
     <string name="savings_goal">储蓄目标</string>
     <string name="quick_access">快速访问</string>
     <string name="settings">设置</string>
@@ -102,7 +101,6 @@
     <string name="dark_mode">暗色模式</string>
     <string name="auto_mode">自动模式</string>
     <string name="planned_payments">计划支付</string>
-    <string name="share_ivy">分享 Ivy</string>
     <string name="reports">报告</string>
     <string name="loans">贷款</string>
     <string name="set_currency">设置货币</string>
@@ -159,7 +157,6 @@
     <string name="suggestions">建议</string>
     <string name="set">确认</string>
     <string name="your_personal_money_manager">您的个人理财助手</string>
-    <string name="opensource">#开源</string>
     <string name="google_error_try_again">错误。请重试：%1$s</string>
     <string name="google_signing_in">正在登录……</string>
     <string name="google_signing_in_success">登录成功！</string>
@@ -262,7 +259,6 @@
     <string name="category_search_bar_description">在分类页显示搜索框</string>
     <string name="sort_categories_list">分类按 A-Z 排序</string>
     <string name="sort_categories_list_description">新增或编辑交易时按字母顺序显示分类</string>
-    <string name="rate_us_on_google_play">在 Google Play 上给我们评分</string>
     <string name="danger_zone">危险设定</string>
     <string name="delete_all_user_data">删除所有用户数据</string>
     <string name="delete_all_user_data_question">确认删除所有用户数据？</string>
@@ -393,15 +389,10 @@
     <string name="set_a_budget_description">Ivy Wallet 不仅能记录您的支出，还可以通过设定和坚持预算来主动协助管理您的财务。</string>
     <string name="expenses_piechart_description">您可以通过类别查看您的支出结构！尝试点击余额下方的灰色/黑色“支出”按钮。</string>
     <string name="expenses_piechart">支出饼图</string>
-    <string name="review_ivy_wallet">评论</string>
-    <string name="review_ivy_wallet_description">提交您的反馈！通过留下评论帮助 Ivy Wallet 改进和发展。我们欢迎赞美、想法和批评！您的意见对我们不断改进应用程序的努力至关重要。\n\n祝好，\nIvy 团队</string>
     <string name="help_us_grow">帮助我们成长，这样我们就可以更多地投资于开发，为您提供更好的应用程序。通过与朋友分享 Ivy Wallet，所有贡献者都会感到高兴，并帮助朋友掌控自己的财务状况。</string>
     <string name="share_with_friends">与朋友分享</string>
     <string name="make_a_report_description">您可以生成报告，深入了解您的收入和支出情况。通过按类型、时间段、类别、账户、金额、关键词等筛选交易，更好地掌握您的财务状况。</string>
     <string name="make_a_report">生成报告</string>
-    <string name="make_ivy_wallet_better_description">您想让 Ivy Wallet 变得更好吗？请给我们留下评价。这是我们能够实现您需求的唯一途径。同时，它还能帮助我们在应用商店中排名更高，这样我们就可以将资金投入产品开发而不是市场营销。\n\n我们会尽力而为。\nIvy 团队</string>
-    <string name="we_need_your_help">我们需要您的帮助！</string>
-    <string name="we_need_your_help_description">我们需要您的支持来持续改进应用程序。请与您的朋友和家人分享 Ivy Wallet，并考虑在 Google Play 商店上留下评论。您的贡献将帮助我们继续我们的使命。</string>
     <string name="contribute">贡献</string>
     <string name="adjust_balance">调整余额</string>
     <string name="authentication_required">需要身份验证</string>
@@ -475,10 +466,8 @@
     <string name="one_contribution">1 个贡献</string>
     <string name="contributions_number">%1$s 个贡献</string>
     <string name="you_can_see_a_piechart">通过点击上方适当的卡片，您可以查看收入和支出的饼图！</string>
-    <string name="it_looks_like_that_you_are_enjoying">看起来您正在享受 Ivy Wallet！欢迎加入我们的邀请制的 Ivy Telegram 社区，共同改进我们的应用程序 :)</string>
     <string name="ivy_community">Ivy 社区</string>
     <string name="join_now">立即加入</string>
-    <string name="it_looks_like_that_you_are_enjoying_telegram">看起来您正在享受 Ivy Wallet！如果您还没有加入我们的邀请制 Ivy Telegram 社区，请随时加入并共同改进我们的应用程序 :)</string>
     <string name="please_type_category_name">请键入“%1$s”以删除您的类别。</string>
     <string name="enter_with_offline_account">离线账户登录</string>
     <string name="your_data_will_be_saved_only_locally">您的数据将仅在手机本地保存。如果您卸载应用程序或更换设备，您将面临数据丢失的风险。为了防止数据丢失，我们建议定期从设置中导出备份。</string>

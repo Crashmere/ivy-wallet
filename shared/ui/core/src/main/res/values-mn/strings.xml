@@ -94,7 +94,6 @@
     <string name="created_on">Үүссэн огноо</string>
     <string name="cashflow">Урсгал: %1$s%2$s %3$s</string>
     <string name="search_transactions">Гүйлгээ хайх</string>
-    <string name="ivy_wallet_open_source">Ivy Хэтэвч бол open-source апп</string>
     <string name="savings_goal">Хадгаламжийн зорилт</string>
     <string name="quick_access">Шуурхай цэс</string>
     <string name="settings">Тохиргоо</string>
@@ -102,7 +101,6 @@
     <string name="dark_mode">Харанхуй горим</string>
     <string name="auto_mode">Систем (auto)</string>
     <string name="planned_payments">Төлөвлөгөөт\nтөлбөрүүд</string>
-    <string name="share_ivy">Ivy-г түгээх</string>
     <string name="reports">Тайлангууд</string>
     <string name="loans">Зээл</string>
     <string name="set_currency">Тэмдэгт тохируулах</string>
@@ -159,7 +157,6 @@
     <string name="suggestions">Санал болгох</string>
     <string name="set">Тохируулах</string>
     <string name="your_personal_money_manager">Таны хувийн санхүүч</string>
-    <string name="opensource">#нээлттэй_эхийн</string>
     <string name="google_error_try_again">Алдаа. Дахин оролдоно уу: %1$s</string>
     <string name="google_signing_in">Нэвтэрч байна…</string>
     <string name="google_signing_in_success">Амжилттай!</string>
@@ -239,7 +236,6 @@
     <string name="show_notifications">Мэдэгдэл харуулах</string>
     <string name="hide_balance">Дүн нуух</string>
     <string name="hide_balance_description">Нуугдсан дүн дээр дарвал 5 секунд харагдана</string>
-    <string name="rate_us_on_google_play">Google Play дээр үнэлгээ өгөх</string>
     <string name="danger_zone">Аюултай бүс</string>
     <string name="delete_all_user_data">Бүх мэдээллийг устгах</string>
     <string name="delete_all_user_data_question">Бүх мэдээллийг устгах уу?</string>
@@ -370,15 +366,10 @@
     <string name="set_a_budget_description">Ivy Хэтэвч танд зөвхөн өөрийн санхүүгээ хянахад туслаад зогсохгүй, төсөв үүсгэж, түүнийгээ мөрдөхөд тусалдаг.</string>
     <string name="expenses_piechart_description">Зарлагуудаа ангиллаар нь задалж хараарай! Дансны үлдэгдлийн доор байгаа Зардлууд гэсэн саарал товчин дээр дараад туршаад үзээрэй.</string>
     <string name="expenses_piechart">Зарлагын PieChart</string>
-    <string name="review_ivy_wallet">Ivy Хэтэвч-г үнэлэх</string>
-    <string name="review_ivy_wallet_description">Санал бодлоо хуваалцаач! Ivy Хэтэвчийг илүү сайн болоход нэмэр болж сэтгэгдлээ үлдээгээрэй. Магтаал, шинэ санаа, шүүмж, бүгд нээлттэй! Бид хичээж байна.\n\Амжилт,\nIvy-н хамт олон</string>
     <string name="help_us_grow">Биднийг дэмжиж аппаа илүү сайжруулахад туслаарай. Ivy Хэтэвчийг найздаа түгээснээр та түүнд санхүүгээ хянахад туслахаас гадна хоёр хөгжүүлэгчийг их баярлуулна шүү.</string>
     <string name="share_with_friends">Найзууддаа түгээх</string>
     <string name="make_a_report_description">Та өөрийн орлого зарлагын талаар дэлгэрэнгүй тайлан үүсгэх боломжтой. Гүйлгээний төрөл, хугацаа, ангилал, данс, дүн, түлхүүр үгс зэргээг шүүж өөрийн санхүүгийн нарийвчилсан мэдээллийг аваарай.</string>
     <string name="make_a_report">Тайлан гаргах</string>
-    <string name="make_ivy_wallet_better_description">Ivy Хэтэвчийг сайжруулмаар байна уу? Тэгвэл та сэтгэгдлээ үлдээгээрэй. Энэ нь бид таныг сонсож, аппаа хөгжүүлэх цорын ганц боломж юм. Мөн PlayStore дээр өндөр үнэлгээ өгөөрэй. Тэгвэл бид сурталчилгаандаа биш аппдаа илүү их мөнгө зарцуулах боломжтой болно.\n\nБид хичээж байна.\nIvy хамт олон</string>
-    <string name="we_need_your_help">Бидэнд тусламж хэрэгтэй байна!</string>
-    <string name="we_need_your_help_description">Бид бүтэн цагийн ажлынхаа дараа цаг гаргаж ажилладаг хөгжүүлэгч болон дизайнер. Одоогоор бид их хэмжээний мөнгө, цаг хугацаа зарцуулж байгаа ч алдагдал хүлээж, ядарч байна. Хэрэв та биднийг Ivy Хэтэвч-г үргэлжлүүлж хөжгүүлэхийг хүсвэл ойр дотны хүмүүстээ түгээгээрэй.\n\nP.S. Google PlayStore дээр үнэлгээ өгвөл их нэмэртэй шүү!</string>
     <string name="contribute">Хуруу нэмэх</string>
     <string name="adjust_balance">Үлдэгдэл өөрчлөх</string>
     <string name="authentication_required">Нэвтрэх шаардлагатай</string>

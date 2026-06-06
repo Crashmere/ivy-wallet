@@ -94,7 +94,6 @@
     <string name="created_on">Được tạo vào</string>
     <string name="cashflow">Dòng tiền: %1$s%2$s %3$s</string>
     <string name="search_transactions">Tìm giao dịch</string>
-    <string name="ivy_wallet_open_source">Ivy Wallet là mã nguồn mở</string>
     <string name="savings_goal">Mục tiêu tiết kiệm</string>
     <string name="quick_access">Truy cập nhanh</string>
     <string name="settings">Cài đặt</string>
@@ -102,7 +101,6 @@
     <string name="dark_mode">Chế độ tối</string>
     <string name="auto_mode">Chế độ tự động</string>
     <string name="planned_payments">Thanh toán\ntheo kế hoạch</string>
-    <string name="share_ivy">Chia sẻ Ivy</string>
     <string name="reports">Báo cáo</string>
     <string name="loans">Vay nợ</string>
     <string name="set_currency">Chọn loại tiền tệ</string>
@@ -159,7 +157,6 @@
     <string name="suggestions">Gợi ý</string>
     <string name="set">Đặt</string>
     <string name="your_personal_money_manager">Quản lý tài chính cá nhân của bạn</string>
-    <string name="opensource">#manguonmo</string>
     <string name="google_error_try_again">Lỗi. Thử lại: %1$s</string>
     <string name="google_signing_in">Đang đăng nhập…</string>
     <string name="google_signing_in_success">Thành công!</string>
@@ -241,7 +238,6 @@
     <string name="hide_balance_description">Chạm vào số dư bị ẩn để hiển thị trong 5 giây</string>
     <string name="hide_income">Ẩn khoản thu</string>
     <string name="hide_income_description">Nhấn vào khoản thu bị ẩn để hiển thị trong 5 giây</string>
-    <string name="rate_us_on_google_play">Đánh giá Iyv trên Google Play</string>
     <string name="danger_zone">Nguy hiểm</string>
     <string name="delete_all_user_data">Xóa tất cả các dữ liệu người dùng</string>
     <string name="delete_all_user_data_question">Xóa tất cả các dữ liệu người dùng?</string>
@@ -372,15 +368,10 @@
     <string name="set_a_budget_description">Ivy Wallet không chỉ giúp bạn theo dõi chi tiêu một cách chủ động mà còn giúp bạn quản lý tài chính trong tương lại bằng cách thiết lập và tuân thủ ngân sách.</string>
     <string name="expenses_piechart_description">Bạn có thể xem cơ cấu chi tiêu của mình theo danh mục! Hãy thử bằng cách nhấn vào nút Chi phí màu xám/đen ngay bên dưới số dư của bạn.</string>
     <string name="expenses_piechart">Biểu đồ chi phí</string>
-    <string name="review_ivy_wallet">Để lại đánh giá</string>
-    <string name="review_ivy_wallet_description">Hãy cho chúng tôi biết được đánh giá của bạn! Sẽ là sự hỗ trợ rất lớn cho Ivy Wallet để cải thiện và phát triển bằng cách để lại đánh giá. Chúng tôi hoan nghênh những lời khen ngợi, ý tưởng và những lời phê bình! Ý kiến đóng góp của bạn là vô giá trong nỗ lực không ngừng của chúng tôi nhằm nâng cao ứng dụng.\n\nCảm ơn,\nIvy Team</string>
     <string name="help_us_grow">Hãy giúp chúng tôi lớn mạnh hơn nữa để chúng tôi có thể đầu tư nhiều hơn vào việc phát triển và cải thiện ứng dụng này. Bằng cách chia sẻ Ivy Wallet, điều đó sẽ giúp cho tất cả những người đóng góp xây dựng Ivy Wallet cảm thấy hạn phúc và cũng sẽ giúp được bạn của chúng ta kiểm soát tài chính của họ tốt hơn.</string>
     <string name="share_with_friends">Chia sẻ với bạn bè</string>
     <string name="make_a_report_description">Bạn có thể tạo báo cáo để hiểu sâu hơn về thu nhập và chi tiêu của mình. Phân loại các giao dịch của bạn theo loại, khoảng thời gian, danh mục, tài khoản, số tiền, từ khóa, v.v. để xử lý tốt hơn về tài chính của bạn.</string>
     <string name="make_a_report">Tạo một báo cáo</string>
-    <string name="make_ivy_wallet_better_description">Bạn muốn Ivy Wallet trở nên tốt hơn? Hãy để lại một đánh giá. Đó là cách duy nhất để chúng ta có thể hiểu được nhau. Nó cũng giúp Ivy Wallet xếp hạng cao hơn trong Play Store để Ivy Team có thể tập trung nhiều hơn cho phát triển sản phẩm thay vì marketing.\n\nĐội ngũ chúng tôi cố gắng hết sức.\nIvy Team</string>
-    <string name="we_need_your_help">Chung tôi cần sự hỗ trợ của bạn!</string>
-    <string name="we_need_your_help_description">Chúng tôi cần sự hỗ trợ của bạn để tiếp tục cải thiện ứng dụng. Vui lòng chia sẻ Ivy Wallet với bạn bè và gia đình của bạn và để lại đánh giá trên Google Play Store. Những đóng góp của bạn sẽ giúp chúng tôi tiếp tục sứ mệnh của mình.</string>
     <string name="contribute">Đóng góp</string>
     <string name="adjust_balance">Điều chỉnh số dư</string>
     <string name="authentication_required">Yêu cầu xác thực</string>
@@ -454,10 +445,8 @@
     <string name="one_contribution">1 đóng góp</string>
     <string name="contributions_number">%1$s đóng góp</string>
     <string name="you_can_see_a_piechart">Bạn có thể xem Biểu đồ tròn cho các chi phí của mình! Nhấp vào thẻ Chi phí ở đầu trang của bảng điều khiển.</string>
-    <string name="it_looks_like_that_you_are_enjoying">Có vẻ như bạn đang thích Ivy Wallet! Vui lòng tham gia Cộng đồng Ivy Telegram của chúng tôi và làm cho ứng dụng của chúng tôi tốt hơn :)</string>
     <string name="ivy_community">Cộng đồng Ivy</string>
     <string name="join_now">Tham gia ngay</string>
-    <string name="it_looks_like_that_you_are_enjoying_telegram">Có vẻ như bạn đang yêu thích Ivy Wallet! Nếu bạn chưa tham gia, hãy tham gia Cộng đồng Ivy trên Telegram thông qua lời mời và giúp ứng dụng của chúng tôi trở nên tốt hơn :)</string>
     <string name="please_type_category_name">Vui lòng nhập \"%1$s\" để xóa danh mục của bạn.</string>
     <string name="enter_with_offline_account">TRUY CẬP VỚI TÀI KHOẢN NGOẠI TUYẾN</string>
     <string name="your_data_will_be_saved_only_locally">Dữ liệu của bạn sẽ chỉ được lưu trữ trên bộ nhớ điện thoại của bạn. Bạn có nguy cơ mất dữ liệu nếu gỡ bỏ ứng dụng hoặc thay đổi thiết bị. Để tránh mất dữ liệu, chúng tôi khuyên bạn nên xuất bản sao lưu từ cài đặt thường xuyên.</string>

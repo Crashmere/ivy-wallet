@@ -93,7 +93,6 @@
     <string name="created_on">पर बनाया गया</string>
     <string name="cashflow">कैशफ़्लो: %1$s%2$s %3$s</string>
     <string name="search_transactions">लेनदेन खोजें</string>
-    <string name="ivy_wallet_open_source">Ivy वॉलेट ओपन सोर्स हैं</string>
     <string name="savings_goal">बचत लक्ष्य</string>
     <string name="quick_access">क्विक ऐक्सेस</string>
     <string name="settings">सेटिंग्स</string>
@@ -101,7 +100,6 @@
     <string name="dark_mode">डार्क मोड</string>
     <string name="auto_mode">आटोमेटिक मोड</string>
     <string name="planned_payments">आयोजित भुगतान</string>
-    <string name="share_ivy">शेयर Ivy</string>
     <string name="reports">रिपोर्ट्स</string>
     <string name="loans">लोन्स</string>
     <string name="set_currency">करेंसी सेट करें</string>
@@ -155,7 +153,6 @@
     <string name="suggestions">सुझाव</string>
     <string name="set">संग्रह</string>
     <string name="your_personal_money_manager">आपका व्यक्तिगत मनी मैनेजर</string>
-    <string name="opensource">#ओपनसोर्स</string>
     <string name="google_error_try_again">एरर। पुन: प्रयास करें: %1$s</string>
     <string name="google_signing_in">साइनिंग इन…</string>
     <string name="google_signing_in_success">सफलता!</string>
@@ -209,11 +206,8 @@
     <string name="authentication_required">प्रमाणीकरण आवश्यक</string>
     <string name="adjust_balance">बैलेंस एडजस्ट करें</string>
     <string name="contribute">योगदान करें</string>
-    <string name="we_need_your_help_description">हम सारे डिज़ाइनर और डेवलपर हैं जोकि 9–5 नौकरियों के बाद ऐप पर काम कर रहे हैं। बहुत समय और पैसा लगाने के बाद भी वर्तमान में हमे केवल नुकसान और थकावट हो रही है। यदि आप चाहते हैं कि हम Ivy वॉलेट विकसित करते रहें, तो कृपया इसे मित्रों और परिवार के साथ शेयर करें। P.S. Google PlayStore के रिव्यु भी बहुत मदद करते हैं!</string>
-    <string name="we_need_your_help">हमें आपकी सहायता की आवश्यकता है!</string>
     <string name="make_a_report">रिपोर्ट बनाये</string>
     <string name="share_with_friends">दोस्तों के साथ शेयर करें</string>
-    <string name="review_ivy_wallet">Ivy वॉलेट को रिव्यु करें</string>
     <string name="expenses_piechart">व्यय पाई चार्ट</string>
     <string name="expenses_piechart_description">आप श्रेणियों के आधार पर अपने खर्चे की संरचना देख सकते हैं! इसे आज़माएं, अपनी शेष राशि के ठीक नीचे ग्रे/काले व्यय बटन पर टैप करें।</string>
     <string name="set_a_budget_description">आइवी वॉलेट न केवल आपको अपने खर्चों को निष्क्रिय रूप से ट्रैक करने में मदद करता है, बल्कि बजट निर्धारित करके और उन पर टिके रहकर आपके वित्तीय भविष्य को भी सक्रिय रूप से तैयार करता है।</string>
@@ -341,7 +335,6 @@
     <string name="delete_all_user_data_question">सारा यूजर डेटा डिलीट करें?</string>
     <string name="delete_all_user_data">सारा यूजर डेटा डिलीट करें</string>
     <string name="danger_zone">खतरा क्षेत्र</string>
-    <string name="rate_us_on_google_play">हमें Google Play पर रेट करें</string>
     <string name="hide_balance_description">५ सेकंड के लिए शेष राशि दिखाने के लिए हिडन बैलेंस पर क्लिक करें</string>
     <string name="hide_balance">बैलेंस छुपाएं</string>
     <string name="show_notifications">सूचनाएं दिखाएं</string>
@@ -411,10 +404,8 @@
     <string name="revoult">Revolut</string>
     <string name="adjust_initial_balance_description"><![CDATA[आइए आरंभ करें। \"खाते\" पर जाएं -> किसी खाते पर टैप करें -> उसके शेष पर टैप करें -> वर्तमान शेष राशि दर्ज करें। बस इतना ही!]]></string>
     <string name="widget_description">Ivy वॉलेट में एक विजेट है जो आपको अपने होम स्क्रीन से 1-क्लिक के साथ आय/व्यय/हस्तांतरण लेनदेन जोड़ने देता है\n\n नोट: यदि विजेट जोड़ने वाला बटन काम नहीं करता है, तो कृपया इसे अपने लॉन्चर के विजेट मेनू से मैन्युअल रूप से जोड़ें।</string>
-    <string name="review_ivy_wallet_description">हमें अपनी प्रतिक्रिया दें! हमें एक समीक्षा लिखकर Ivy वॉलेट को बेहतर बनाने और बढ़ने में मदद करें। प्रशंसा, विचार और आलोचनाओं का स्वागत है! हम अपनी तरफ से अच्छे प्रयास करते रहेंगे हैं।\nप्रोत्साहित करना,\nआइवी टीम</string>
     <string name="help_us_grow">हमें बढ़ने में मदद करें ताकि हम विकास में अधिक निवेश कर सकें और ऐप को आपके लिए बेहतर बना सकें। आइवी वॉलेट साझा करके आप दो डेवलपर्स को खुश करेंगे और एक दोस्त को उनके वित्त पर नियंत्रण रखने में भी मदद करेंगे।</string>
     <string name="make_a_report_description">आप अपनी आय और खर्च के बारे में गहन जानकारी प्राप्त करने के लिए रिपोर्ट तैयार कर सकते हैं। अपने वित्त के बारे में बेहतर दृष्टिकोण प्राप्त करने के लिए अपने लेन-देन को प्रकार, समय अवधि, श्रेणी, खातों, राशि, कीवर्ड आदि के आधार पर फ़िल्टर करें।</string>
-    <string name="make_ivy_wallet_better_description">आइवी वॉलेट को बेहतर बनाना चाहते हैं? हमें एक समीक्षा लिखें। आप जो चाहते हैं उसे विकसित करने का यही एकमात्र तरीका है। साथ ही हमें PlayStore में उच्च रैंक देने में मदद करें ताकि हम मार्केटिंग के बजाय उत्पाद पर पैसा खर्च कर सकें।\\nहम अपनी तरफ से हमेशाअच्छा करते रहेंगे।\\n Ivy टीम</string>
     <string name="transfers_as_income_expense_description">खाता स्थानान्तरण को खाता स्क्रीन में आय या व्यय के रूप में मानता है</string>
     <string name="switch_to_offline_mode">ऑफ़लाइन मोड में स्विच करें</string>
     <string name="delete_all_user_cloud_data_warning">चेतावनी! यह क्रिया %1$s के लिए आपके सभी क्लाउड-संग्रहीत डेटा को स्थायी रूप से हटा देगी, आपके स्थानीय ऐप में संग्रहीत ऑफ़लाइन डेटा बना रहेगा।</string>

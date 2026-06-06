@@ -94,7 +94,6 @@
     <string name="created_on">Създадено на</string>
     <string name="cashflow">Печалба: %1$s%2$s %3$s</string>
     <string name="search_transactions">Търси транзацкии</string>
-    <string name="ivy_wallet_open_source">Ivy Wallet е open-source</string>
     <string name="savings_goal">Спестовна цел</string>
     <string name="quick_access">Бърз достъп</string>
     <string name="settings">Найстройки</string>
@@ -102,7 +101,6 @@
     <string name="dark_mode">Черна тема</string>
     <string name="auto_mode">Автоматична</string>
     <string name="planned_payments">Планирани\nПлащания</string>
-    <string name="share_ivy">Сподели Ivy</string>
     <string name="reports">Репорти</string>
     <string name="loans">Заеми</string>
     <string name="set_currency">Задай валута</string>
@@ -159,7 +157,6 @@
     <string name="suggestions">Предложения</string>
     <string name="set">Задай</string>
     <string name="your_personal_money_manager">Твоят финансов помощник</string>
-    <string name="opensource">#opensource</string>
     <string name="google_error_try_again">Грешка. Опитай пак: %1$s</string>
     <string name="google_signing_in">Вписване…</string>
     <string name="google_signing_in_success">Успех!</string>
@@ -239,7 +236,6 @@
     <string name="show_notifications">Известия</string>
     <string name="hide_balance">Скрий баланс</string>
     <string name="hide_balance_description">Натиснете на скрития баланс, за да го видите.</string>
-    <string name="rate_us_on_google_play">Оценете ни в Google Play</string>
     <string name="danger_zone">Опасна зона</string>
     <string name="delete_all_user_data">Изтрий всички данни</string>
     <string name="delete_all_user_data_question">Изтриване?</string>
@@ -370,15 +366,10 @@
     <string name="set_a_budget_description">Ivy Wallet not only helps you to passively track your expenses but also proactively create your financial future by setting budgets and sticking to them.</string>
     <string name="expenses_piechart_description">You can see your expenses structure by categories! Try it, tap the gray/black Expenses button just below your balance.</string>
     <string name="expenses_piechart">Expenses PieChart</string>
-    <string name="review_ivy_wallet">Review Ivy Wallet</string>
-    <string name="review_ivy_wallet_description">Give us your feedback! Help Ivy Wallet become better and grow by writing us a review. Compliments, ideas, and critics are all welcome! We do our best.\n\nCheers,\nIvy Team</string>
     <string name="help_us_grow">Help us grow so we can invest more in development and make the app better for you. By sharing Ivy Wallet you\'ll make two developers happy and also help a friend to take control of their finances.</string>
     <string name="share_with_friends">Share with friends</string>
     <string name="make_a_report_description">You can generate reports to get deep insights about your income and spending. Filter your transactions by type, time period, category, accounts, amount, keywords and more to gain better view on your finances.</string>
     <string name="make_a_report">Make a report</string>
-    <string name="make_ivy_wallet_better_description">Want to make Ivy Wallet better? Write us a review. That\'s the only way for us to develop what you want and need. Also it help us rank higher in the PlayStore so we can spend money on the product rather than marketing.\n\nWe do our best.\nIvy Team</string>
-    <string name="we_need_your_help">We need your help!</string>
-    <string name="we_need_your_help_description">We\'re just a designer and a developer working on the app after our 9–5 jobs. Currently, we invest a lot of time and money to generate only losses and exhaustion. If you want us to keep developing Ivy Wallet please share it with friends and family.\n\nP.S. Google PlayStore reviews also helps a lot!</string>
     <string name="contribute">Contribute</string>
     <string name="adjust_balance">Задай баланс</string>
     <string name="authentication_required">Authentication required</string>

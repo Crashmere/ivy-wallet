@@ -94,7 +94,6 @@
     <string name="created_on">تم الانشاء في</string>
     <string name="cashflow">تدفق المال: %1$s%2$s %3$s</string>
     <string name="search_transactions">ابحث المعاملات</string>
-    <string name="ivy_wallet_open_source">مفتوح المصدر Ivy Wallet</string>
     <string name="savings_goal">هدف التوفير</string>
     <string name="quick_access">الوصول السريع</string>
     <string name="settings">الاعدادات</string>
@@ -102,7 +101,6 @@
     <string name="dark_mode">الوضغ الليلي</string>
     <string name="auto_mode">الوضع التلقائي</string>
     <string name="planned_payments">المدفوعات\n المخططة</string>
-    <string name="share_ivy">شارك التطبيق</string>
     <string name="reports">التقارير</string>
     <string name="loans">القروض</string>
     <string name="set_currency">تحديد العملة</string>
@@ -159,7 +157,6 @@
     <string name="suggestions">مقترحات</string>
     <string name="set">تحديد</string>
     <string name="your_personal_money_manager">مدير أموالك الشخصي</string>
-    <string name="opensource">مفتوح_المصدر#</string>
     <string name="google_error_try_again">حدث خطأ, حاول مجددًا:\n %1$s</string>
     <string name="google_signing_in">يتم تسجيل الدخول…</string>
     <string name="google_signing_in_success">تم بنجاح!</string>
@@ -239,7 +236,6 @@
     <string name="show_notifications">إظهار التنبيهات</string>
     <string name="hide_balance">إخفاء الرصيد</string>
     <string name="hide_balance_description">إضغط على الرصيد المخفي لإظهاره لمدة 5ث</string>
-    <string name="rate_us_on_google_play">Google Play قيمنا على</string>
     <string name="danger_zone">المنطقة الخطرة</string>
     <string name="delete_all_user_data">احذف كل بيانات المستخدم</string>
     <string name="delete_all_user_data_question">هل تريد حذف كل البيانات؟</string>
@@ -370,15 +366,10 @@
     <string name="set_a_budget_description">Ivy Wallet \nلا تساعدك على تتبع نفقاتك فحسب ، بل تساعدك أيضًا في إنشاء مستقبلك المالي بشكل استباقي من خلال تحديد الميزانيات والالتزام بها.</string>
     <string name="expenses_piechart_description">يمكنك أن ترى مخطط النفقات الخاصة بك حسب الفئات! جربه ، اضغط على زر الإنفاق الرمادي/الأسود الموجود أسفل رصيدك مباشرة.</string>
     <string name="expenses_piechart">إحصائيات الإنفاق</string>
-    <string name="review_ivy_wallet">Ivy Wallet قيم</string>
-    <string name="review_ivy_wallet_description">أعطنا تقييمك! ساعد Ivy Wallet في أن تصبح أفضل وتنمو من خلال كتابة مراجعة لنا. المجاملات والأفكار والنقاد مرحب بهم! نفعل أفضل ما بوسعنا\n فريق التطبيق</string>
     <string name="help_us_grow">ساعدنا على النمو حتى نتمكن من استثمار المزيد في التطوير وجعل التطبيق أفضل لك. عبر خلال مشاركة التطبيق ، ستجعل اثنين من المطورين سعداء وتساعد أيضًا صديقًا على إدارة امواله.</string>
     <string name="share_with_friends">شارك مع الاصدقاء</string>
     <string name="make_a_report_description">يمكنك إنشاء تقارير للحصول على رؤى عميقة حول دخلك وإنفاقك. قم بتصفية معاملاتك حسب النوع والفترة الزمنية والفئة والحسابات والمبلغ والكلمات المفتاحية والمزيد للحصول على عرض أفضل لأموالك.</string>
     <string name="make_a_report">إنشاء سجل</string>
-    <string name="make_ivy_wallet_better_description">هل تريد تحسين Ivy Wallet؟ اكتب لنا مراجعة. هذه هي الطريقة الوحيدة لتطوير ما تريده وتحتاجه. كما أنها تساعدنا في الحصول على مرتبة أعلى في PlayStore حتى نتمكن من إنفاق الأموال على المنتج بدلاً من التسويق. \n\n نحن نبذل قصارى جهدنا. \ n Ivy Team</string>
-    <string name="we_need_your_help">نحتاج مساعدتك!</string>
-    <string name="we_need_your_help_description">نحن مجرد مصمم ومطور نعمل على التطبيق بعد وظائفنا. في الوقت الحالي ، نستثمر الكثير من الوقت والمال لتوليد الخسائر والإرهاق فقط. إذا كنت تريد منا الاستمرار في تطوير Ivy Wallet ، فيرجى مشاركتها مع الأصدقاء والعائلة. \n\n ملاحظة. تساعد مراجعات Google PlayStore أيضًا كثيرًا!</string>
     <string name="contribute">ساهم</string>
     <string name="adjust_balance">أضبط الرصيد</string>
     <string name="authentication_required">تأكيد الهوية مطلوب</string>

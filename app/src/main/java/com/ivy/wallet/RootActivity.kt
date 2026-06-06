@@ -37,8 +37,6 @@ import com.ivy.design.api.IvyDesign
 import com.ivy.design.api.IvyUI
 import com.ivy.design.system.IvyMaterial3Theme
 import com.ivy.domain.RootScreen
-import com.ivy.home.customerjourney.CustomerJourneyCardsProvider
-import com.ivy.legacy.Constants
 import com.ivy.legacy.IvyWalletCtx
 import com.ivy.legacy.appDesign
 import com.ivy.legacy.utils.activityForResultLauncher
@@ -66,9 +64,6 @@ class RootActivity : AppCompatActivity(), RootScreen {
 
     @Inject
     lateinit var navigation: Navigation
-
-    @Inject
-    lateinit var customerJourneyLogic: CustomerJourneyCardsProvider
 
     @Inject
     lateinit var timeConverter: TimeConverter
@@ -374,18 +369,6 @@ class RootActivity : AppCompatActivity(), RootScreen {
         }
     }
 
-    override fun shareIvyWallet() {
-        val share = Intent.createChooser(
-            Intent().apply {
-                action = Intent.ACTION_SEND
-                putExtra(Intent.EXTRA_TEXT, Constants.URL_IVY_WALLET_GOOGLE_PLAY)
-                type = "text/plain"
-            },
-            null
-        )
-        startActivity(share)
-    }
-
     @Suppress("SwallowedException")
     override fun openGooglePlayAppPage(appId: String) {
         try {
@@ -430,13 +413,6 @@ class RootActivity : AppCompatActivity(), RootScreen {
         get() = BuildConfig.VERSION_NAME
     override val buildVersionCode: Int
         get() = BuildConfig.VERSION_CODE
-
-    override fun reviewIvyWallet(dismissReviewCard: Boolean) {
-        if (dismissReviewCard) {
-            customerJourneyLogic.dismissCard(CustomerJourneyCardsProvider.rateUsCard())
-        }
-        openGooglePlayAppPage(packageName)
-    }
 
     override fun <T> pinWidget(widget: Class<T>) {
         val appWidgetManager: AppWidgetManager = this.getSystemService(AppWidgetManager::class.java)
