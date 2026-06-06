@@ -38,6 +38,7 @@
 - 首页更多菜单里的 GitHub 开源卡片和分享 Ivy 入口。
 - onboarding 欢迎页里的 `#opensource` 原仓库入口。
 - 免责声明页里的开源仓库展示卡片。
+- 首次启动免责声明阻塞页 `:feature:disclaimer`，以及对应的启动跳转、导航入口、`LegalRepository` 和 `LocalLegalDataSource`。
 
 ### 构建和数据残留
 
@@ -48,17 +49,6 @@
 - Android 桌面小组件模块 `:widget:add-transaction`、`:widget:balance`、`:widget:shared-base`，以及首页小组件引导卡、Manifest receiver、启动广播、余额刷新接线和 Glance 依赖。
 
 ## 下一批建议清理：需要按个人使用习惯确认
-
-### `:feature:disclaimer`
-
-首次启动免责声明确认页。个人使用可以考虑删除，但需要先调整启动流程。
-
-清理前需要确认：
-
-- 是否仍需要首次启动时阻塞进入 App。
-- 是否保留 `LegalRepository` 和 `LocalLegalDataSource`。
-- `RootViewModel` 中跳转 `DisclaimerScreen` 的逻辑如何替换。
-- 条款和隐私政策链接是否一并删除。
 
 ### `:feature:onboarding`
 
@@ -92,6 +82,5 @@ CSV 和其他 App 数据导入功能。
 
 ## 建议执行顺序
 
-1. 评估是否删除 `disclaimer`，同时处理条款/隐私政策链接。
-2. 然后评估是否简化或删除 `onboarding`。
-3. 最后评估 `import-data` 和 backup/import 能力。
+1. 评估是否简化或删除 `onboarding`。
+2. 最后评估 `import-data` 和 backup/import 能力。

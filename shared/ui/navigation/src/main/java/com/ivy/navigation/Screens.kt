@@ -133,5 +133,3 @@ data object ExchangeRatesScreen : Screen {
     override val isLegacy: Boolean
         get() = true
 }
-
-data object DisclaimerScreen : Screen
