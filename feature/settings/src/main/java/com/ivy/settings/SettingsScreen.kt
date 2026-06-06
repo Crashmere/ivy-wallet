@@ -34,7 +34,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -1084,9 +1083,8 @@ private fun SettingsDefaultButton(
 }
 
 @ExperimentalFoundationApi
-@Preview
 @Composable
-private fun Preview(theme: Theme = Theme.LIGHT) {
+private fun SettingsScreenTestContent(theme: Theme = Theme.LIGHT) {
     IvyWalletPreview(theme) {
         UI(
             theme = Theme.AUTO,
@@ -1107,5 +1105,5 @@ fun SettingsUiTest(isDark: Boolean) {
         true -> Theme.DARK
         false -> Theme.LIGHT
     }
-    Preview(theme)
+    SettingsScreenTestContent(theme)
 }
