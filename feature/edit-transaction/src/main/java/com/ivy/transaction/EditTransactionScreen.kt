@@ -28,7 +28,6 @@ import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ivy.base.legacy.Theme
 import com.ivy.base.model.TransactionType
@@ -653,14 +652,12 @@ private fun shouldFocusTitle(
 
 private fun shouldFocusAmount(amount: Double) = amount == 0.0
 
-/** For Preview purpose **/
 private val testDateTime = LocalDateTime.of(2023, 4, 27, 0, 35)
     .toInstant(ZoneOffset.UTC)
 
 @ExperimentalFoundationApi
-@Preview
 @Composable
-private fun BoxWithConstraintsScope.Preview(isDark: Boolean = false) {
+private fun BoxWithConstraintsScope.EditTransactionScreenTestContent(isDark: Boolean = false) {
     IvyPreview(isDark) {
         UI(
             screen = EditTransactionScreen(null, TransactionType.EXPENSE),
@@ -714,6 +711,6 @@ fun EditTransactionScreenUiTest(isDark: Boolean) {
         false -> Theme.LIGHT
     }
     IvyWalletPreview(theme) {
-        Preview(isDark)
+        EditTransactionScreenTestContent(isDark)
     }
 }
