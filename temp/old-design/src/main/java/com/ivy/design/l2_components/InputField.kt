@@ -19,7 +19,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.widget.addTextChangedListener
 import com.ivy.design.l0_system.*
@@ -283,16 +282,5 @@ private fun cursorDrawable(
 //            <solid android:color="#FFFFFF"  />
         setSize(widthDp.dpToPx(context).roundToInt(), 16.dpToPx(context))
         setColor(color.toArgb())
-    }
-}
-
-@Preview
-@Composable
-private fun Preview() {
-    IvyComponentPreview {
-        InputField(
-            initialText = "Test"
-        ) {
-        }
     }
 }

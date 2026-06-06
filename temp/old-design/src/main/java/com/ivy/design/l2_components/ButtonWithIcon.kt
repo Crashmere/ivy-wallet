@@ -4,8 +4,6 @@ import androidx.annotation.DrawableRes
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -13,10 +11,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.ivy.design.R
 import com.ivy.design.l0_system.Transparent
 import com.ivy.design.l0_system.UI
 import com.ivy.design.l0_system.White
@@ -26,7 +22,6 @@ import com.ivy.design.l1_buildingBlocks.SpacerHor
 import com.ivy.design.l1_buildingBlocks.data.Background
 import com.ivy.design.l1_buildingBlocks.data.background
 import com.ivy.design.l1_buildingBlocks.data.clipBackground
-import com.ivy.design.utils.IvyComponentPreview
 import com.ivy.design.utils.padding
 
 @Deprecated("Old design system. Use `:ivy-design` and Material3")
@@ -93,62 +88,4 @@ fun Button(
 @Deprecated("Old design system. Use `:ivy-design` and Material3")
 enum class Mode {
     WRAP_CONTENT, FILL_MAX_WIDTH
-}
-
-@Preview
-@Composable
-private fun Preview_IconLeft_Wrap() {
-    IvyComponentPreview {
-        Button(
-            text = "Button",
-            mode = Mode.WRAP_CONTENT,
-            iconLeft = R.drawable.ic_android_black_24dp
-        ) {
-        }
-    }
-}
-
-@Preview
-@Composable
-private fun Preview_IconRight_Wrap() {
-    IvyComponentPreview {
-        Button(
-            text = "Button",
-            mode = Mode.WRAP_CONTENT,
-            iconRight = R.drawable.ic_android_black_24dp
-        ) {
-        }
-    }
-}
-
-@Preview
-@Composable
-private fun Preview_IconLeft_FillMax() {
-    IvyComponentPreview {
-        Button(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 24.dp),
-            text = "Button",
-            mode = Mode.FILL_MAX_WIDTH,
-            iconLeft = R.drawable.ic_android_black_24dp
-        ) {
-        }
-    }
-}
-
-@Preview
-@Composable
-private fun Preview_IconRight_FillMax() {
-    IvyComponentPreview {
-        Button(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 24.dp),
-            text = "Button",
-            mode = Mode.FILL_MAX_WIDTH,
-            iconRight = R.drawable.ic_android_black_24dp
-        ) {
-        }
-    }
 }

@@ -6,12 +6,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.ivy.design.l0_system.UI
 import com.ivy.design.l0_system.colorAs
-import com.ivy.design.utils.IvyComponentPreview
 
 @Deprecated("Old design system. Use `:ivy-design` and Material3")
 @Composable
@@ -55,20 +53,4 @@ fun ScreenTitle(
         text = text,
         style = textStyle
     )
-}
-
-@Preview
-@Composable
-private fun Preview_Large() {
-    IvyComponentPreview {
-        ScreenTitleLarge(text = "Home")
-    }
-}
-
-@Preview
-@Composable
-private fun Preview_Standard() {
-    IvyComponentPreview {
-        ScreenTitle(text = "Home")
-    }
 }

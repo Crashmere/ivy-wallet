@@ -15,6 +15,7 @@
 - 已清理 `temp:legacy-code` 中一批无引用旧代码：Crashlytics 空壳、旧 FRP ViewModel/Composable、孤立旧 modal、旧图表/输入组件和无引用工具类型。
 - 已删除 `temp:legacy-code` 中仅服务 IDE 预览的 Compose `@Preview` 示例函数。
 - 已删除 app/feature 模块中仅服务 IDE 预览的 Compose `@Preview` 示例函数；保留截图测试入口，并改为普通测试内容函数。
+- 已删除 `temp:old-design` 旧设计组件中仅服务 IDE 预览的 Compose `@Preview` 示例函数；保留仍被截图测试和旧包装复用的预览 helper。
 - 保留应用功能源码、功能测试源码、截图测试源码、Gradle wrapper、本地数据管理能力和当前主要记账功能。
 - 当前本机已通过项目本地 Android SDK 编译 demo APK，并成功安装到已连接手机。
 
@@ -56,6 +57,7 @@
 - `temp:legacy-code` 中无引用的 Crashlytics 工具空壳、旧 FRP View 层封装、旧名称/月选择弹窗、旧折线图、旧 checklist 输入框和无引用工具类型。
 - `temp:legacy-code` 中的 Compose `@Preview` 示例函数；保留真实运行时组件。
 - app/feature 模块中的 Compose `@Preview` 示例函数；保留功能代码、功能测试和截图测试入口。
+- `temp:old-design` 旧设计组件中的 Compose `@Preview` 示例函数；保留真实组件和仍被复用的预览 helper。
 
 ## 已确认保留
 
@@ -66,4 +68,4 @@
 ## 建议执行顺序
 
 1. 继续检查 `temp:legacy-code` 中剩余的旧 UI 组件和旧领域逻辑，优先处理确认无引用的部分。
-2. 检查 `temp:old-design` 中剩余的旧设计系统预览和无引用组件；只删除确认不参与当前运行时功能的内容。
+2. 继续检查 `temp:old-design` 中的无引用旧组件，并逐步减少 feature 模块对 `temp:old-design` 和 `temp:legacy-code` 的直接依赖。

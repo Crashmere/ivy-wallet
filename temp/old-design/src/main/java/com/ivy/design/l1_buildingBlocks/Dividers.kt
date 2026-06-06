@@ -6,11 +6,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.ivy.design.l0_system.UI
-import com.ivy.design.utils.IvyComponentPreview
 import com.ivy.design.utils.thenWhen
 
 @Deprecated("Old design system. Use `:ivy-design` and Material3")
@@ -106,86 +104,4 @@ sealed class DividerSize {
 
     @Deprecated("Old design system. Use `:ivy-design` and Material3")
     data class FillMax(val padding: Dp) : DividerSize()
-}
-
-@Preview
-@Composable
-private fun PreviewHorizontalDivider_fillMax() {
-    IvyComponentPreview {
-        DividerH(
-            size = DividerSize.FillMax(
-                padding = 16.dp
-            )
-        )
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewHorizontalDivider_fixed() {
-    IvyComponentPreview {
-        DividerH(
-            size = DividerSize.Fixed(
-                size = 32.dp
-            )
-        )
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewVerticalDivider_fillMax() {
-    IvyComponentPreview {
-        DividerV(
-            size = DividerSize.FillMax(
-                padding = 16.dp
-            )
-        )
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewVerticalDivider_fixed() {
-    IvyComponentPreview {
-        DividerV(
-            size = DividerSize.Fixed(
-                size = 16.dp
-            )
-        )
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewDivider() {
-    IvyComponentPreview {
-        Row {
-            SpacerHor(16.dp)
-
-            Divider(
-                modifier = Modifier
-                    .weight(1f)
-                    .height(2.dp)
-            )
-
-            SpacerHor(16.dp)
-
-            Divider(
-                modifier = Modifier
-                    .weight(1f)
-                    .height(2.dp)
-            )
-
-            SpacerHor(16.dp)
-
-            Divider(
-                modifier = Modifier
-                    .weight(1f)
-                    .height(2.dp)
-            )
-
-            SpacerHor(16.dp)
-        }
-    }
 }

@@ -13,14 +13,12 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ivy.design.R
 import com.ivy.design.l0_system.UI
 import com.ivy.design.l0_system.style
 import com.ivy.design.l1_buildingBlocks.IvyIcon
 import com.ivy.design.l1_buildingBlocks.SpacerHor
-import com.ivy.design.utils.IvyComponentPreview
 import com.ivy.design.utils.clickableNoIndication
 import com.ivy.design.utils.rememberInteractionSource
 
@@ -77,17 +75,5 @@ fun CheckboxWithText(
             text = text,
             style = textStyle
         )
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewIvyCheckboxWithText() {
-    IvyComponentPreview {
-        CheckboxWithText(
-            text = "Default category",
-            checked = false,
-        ) {
-        }
     }
 }

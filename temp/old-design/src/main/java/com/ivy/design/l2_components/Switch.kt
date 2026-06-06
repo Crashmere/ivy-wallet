@@ -13,12 +13,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ivy.design.l0_system.UI
 import com.ivy.design.l1_buildingBlocks.SpacerHor
 import com.ivy.design.l1_buildingBlocks.SpacerWeight
-import com.ivy.design.utils.IvyComponentPreview
 import com.ivy.design.utils.springBounce
 
 @Deprecated("Old design system. Use `:ivy-design` and Material3")
@@ -72,19 +70,5 @@ fun Switch(
         }
 
         SpacerHor(width = 4.dp)
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewIvySwitch() {
-    IvyComponentPreview {
-        var enabled by remember {
-            mutableStateOf(false)
-        }
-
-        Switch(enabled = enabled) {
-            enabled = it
-        }
     }
 }

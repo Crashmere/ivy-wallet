@@ -8,11 +8,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.ivy.design.l0_system.UI
-import com.ivy.design.utils.IvyComponentPreview
 
 @Deprecated("Old design system. Use `:ivy-design` and Material3")
 @Composable
@@ -48,31 +45,6 @@ fun ShapeOutlined(
                 color = borderColor,
                 width = borderWidth,
                 shape = shape
-            )
+        )
     )
-}
-
-@Preview
-@Composable
-private fun Preview_Circle() {
-    IvyComponentPreview {
-        Shape(
-            size = 32.dp,
-            shape = UI.shapes.circle,
-            color = UI.colors.primary
-        )
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewOutlined() {
-    IvyComponentPreview {
-        ShapeOutlined(
-            size = 64.dp,
-            shape = UI.shapes.r3,
-            borderWidth = 2.dp,
-            borderColor = UI.colors.gray
-        )
-    }
 }
