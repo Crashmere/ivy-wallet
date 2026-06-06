@@ -30,7 +30,6 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.ivy.base.legacy.Theme
@@ -889,43 +888,10 @@ private fun NoLoanRecordsEmptyState() {
     }
 }
 
-@Preview
-@Composable
-private fun Preview_Empty() {
-    IvyWalletPreview {
-        UI(
-            LoanDetailsScreenState(
-                baseCurrency = "BGN",
-                loan = Loan(
-                    name = "Loan 1",
-                    amount = 4023.54,
-                    color = Red.toArgb(),
-                    type = LoanType.LEND,
-                    dateTime = LocalDateTime.now()
-                ),
-                displayLoanRecords = persistentListOf(),
-                amountPaid = 3821.00,
-                loanTotalAmount = 4023.54,
-                loanAmountPaid = 100.0,
-                accounts = persistentListOf(),
-                selectedLoanAccount = null,
-                createLoanTransaction = false,
-                isDeleteModalVisible = false,
-                loanModalData = null,
-                loanRecordModalData = null,
-                waitModalVisible = false,
-                dateTime = Instant.now()
-            )
-        ) {}
-    }
-}
-
-/** For Preview purpose **/
 private val testDateTime = LocalDateTime.of(2023, 4, 27, 0, 35)
 
-@Preview
 @Composable
-private fun Preview_Records(theme: Theme = Theme.LIGHT) {
+private fun LoanDetailsScreenTestContent(theme: Theme = Theme.LIGHT) {
     IvyWalletPreview(theme) {
         UI(
             LoanDetailsScreenState(
@@ -988,5 +954,5 @@ fun LoanDetailScreenUiTest(isDark: Boolean) {
         true -> Theme.DARK
         false -> Theme.LIGHT
     }
-    Preview_Records(theme)
+    LoanDetailsScreenTestContent(theme)
 }

@@ -5,11 +5,9 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.BoxWithConstraintsScope
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
@@ -24,17 +22,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.layout
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import com.ivy.design.l0_system.UI
 import com.ivy.design.l0_system.style
-import com.ivy.legacy.IvyWalletPreview
 import com.ivy.legacy.ivyWalletCtx
 import com.ivy.legacy.utils.navigationBarInset
 import com.ivy.legacy.utils.toDensityPx
 import com.ivy.ui.R
-import com.ivy.wallet.ui.theme.Blue
 import com.ivy.wallet.ui.theme.GradientPurple
 import com.ivy.wallet.ui.theme.Green
 import com.ivy.wallet.ui.theme.Purple
@@ -109,7 +104,6 @@ internal fun BoxWithConstraintsScope.LoanBottomBar(
         onAdd()
     }
 }
-
 @Composable
 private fun RowScope.Tab(
     @DrawableRes icon: Int,
@@ -144,24 +138,5 @@ private fun RowScope.Tab(
                 )
             )
         }
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewTabularBottomBar() {
-    IvyWalletPreview {
-        Column(
-            Modifier
-                .fillMaxSize()
-                .background(Blue)
-        ) {
-        }
-
-        LoanBottomBar(
-            tab = LoanTab.PENDING,
-            selectTab = {},
-            onAdd = {}
-        )
     }
 }

@@ -28,7 +28,6 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -438,12 +437,10 @@ private fun NoLoansEmptyState(
     }
 }
 
-/** For Preview purpose **/
 private val testDateTime = LocalDateTime.of(2023, 4, 20, 0, 35)
 
-@Preview
 @Composable
-private fun Preview(theme: Theme = Theme.LIGHT) {
+private fun LoanScreenTestContent(theme: Theme = Theme.LIGHT) {
     val state = LoanScreenState(
         baseCurrency = "BGN",
         selectedTab = LoanTab.PENDING,
@@ -500,5 +497,5 @@ fun LoanScreenUiTest(isDark: Boolean) {
         true -> Theme.DARK
         false -> Theme.LIGHT
     }
-    Preview(theme)
+    LoanScreenTestContent(theme)
 }
