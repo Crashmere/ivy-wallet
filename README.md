@@ -16,6 +16,7 @@
 - 已删除 `temp:legacy-code` 中仅服务 IDE 预览的 Compose `@Preview` 示例函数。
 - 已删除 app/feature 模块中仅服务 IDE 预览的 Compose `@Preview` 示例函数；保留截图测试入口，并改为普通测试内容函数。
 - 已删除 `temp:old-design` 旧设计组件中仅服务 IDE 预览的 Compose `@Preview` 示例函数；保留仍被截图测试和旧包装复用的预览 helper。
+- 已删除 `temp:old-design` 中确认无外部引用的旧组件：`l2_components`、`l3_ivyComponents` 和旧 shape building block。
 - 保留应用功能源码、功能测试源码、截图测试源码、Gradle wrapper、本地数据管理能力和当前主要记账功能。
 - 当前本机已通过项目本地 Android SDK 编译 demo APK，并成功安装到已连接手机。
 
@@ -58,6 +59,7 @@
 - `temp:legacy-code` 中的 Compose `@Preview` 示例函数；保留真实运行时组件。
 - app/feature 模块中的 Compose `@Preview` 示例函数；保留功能代码、功能测试和截图测试入口。
 - `temp:old-design` 旧设计组件中的 Compose `@Preview` 示例函数；保留真实组件和仍被复用的预览 helper。
+- `temp:old-design` 中无引用的旧 l2/l3 组件和旧 shape building block；保留仍被当前功能引用的旧设计基础能力。
 
 ## 已确认保留
 
@@ -68,4 +70,4 @@
 ## 建议执行顺序
 
 1. 继续检查 `temp:legacy-code` 中剩余的旧 UI 组件和旧领域逻辑，优先处理确认无引用的部分。
-2. 继续检查 `temp:old-design` 中的无引用旧组件，并逐步减少 feature 模块对 `temp:old-design` 和 `temp:legacy-code` 的直接依赖。
+2. 继续缩小 `temp:old-design` 的保留范围，优先从只有少量引用的旧 building block 和 feature 侧直接依赖入手。
