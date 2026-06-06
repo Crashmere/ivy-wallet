@@ -361,8 +361,6 @@
     <string name="create_first_planned_payment">Erstelle deine erste geplante Zahlung</string>
     <string name="create_first_planned_payment_description">Automatisiere die Verfolgung von wiederkehrenden Transaktionen wie Abonnements, Miete, Gehalt usw. Behalte den Überblick über deine Finanzen, indem du weißt, wie viel du im Voraus bezahlen/bekommen musst.</string>
     <string name="did_you_know">Wusstest du schon?</string>
-    <string name="widget_description">Ivy Wallet verfügt über ein cooles Widget, mit dem du EINNAHMEN-/AUSGABEN-/ÜBERTRAGSTRANSAKTIONEN mit nur einem Klick von deiner Startseite aus hinzufügen kannst\n\nHinweis: Wenn die Schaltfläche "Widget hinzufügen" nicht funktioniert, füge es bitte manuell über das Menü "Widgets" deines Launchers hinzu.</string>
-    <string name="add_widget">Widget hinzufügen</string>
     <string name="set_a_budget">Ein Budget festlegen</string>
     <string name="set_a_budget_description">Ivy Wallet hilft dir nicht nur, deine Ausgaben passiv zu verfolgen, sondern auch proaktiv deine finanzielle Zukunft zu gestalten, indem du Budgets festlegst und dich an sie hältst.</string>
     <string name="expenses_piechart_description">Du kannst deine Ausgabenstruktur nach Kategorien sehen! Probiere es aus: Tippe auf die graue/schwarze Schaltfläche Ausgaben direkt unter deiner Bilanz.</string>

@@ -363,8 +363,6 @@
     <string name="create_first_planned_payment">Utwórz swoją pierwszą zaplanowaną płatność</string>
     <string name="create_first_planned_payment_description">Zautomatyzuj śledzenie powtarzających się transakcji, takich jak abonamenty, czynsz, wynagrodzenie itp. Bądź o krok przed swoimi finansami, wiedząc, ile musisz zapłacić/otrzymać z góry.</string>
     <string name="did_you_know">Czy wiedziałeś?</string>
-    <string name="widget_description">Ivy Wallet ma fajny widżet, który pozwala dodawać transakcje DOCHODU/WYDATKU/PRZELEWU jednym kliknięciem z pulpitu\n\nUwaga: jeśli przycisk „Dodaj widżet” nie działa, dodaj go ręcznie z widżetów w aplikacji pulpitu.</string>
-    <string name="add_widget">Dodaj widżet</string>
     <string name="set_a_budget">Ustaw budżet</string>
     <string name="set_a_budget_description">Ivy Wallet nie tylko pomaga pasywnie śledzić wydatki, ale także proaktywnie kreować swoją przyszłość finansową poprzez ustalanie budżetów i trzymanie się ich.</string>
     <string name="expenses_piechart_description">Możesz zobaczyć strukturę wydatków według kategorii! Wypróbuj, dotknij szaro-czarnego przycisku Wydatki tuż pod saldem.</string>

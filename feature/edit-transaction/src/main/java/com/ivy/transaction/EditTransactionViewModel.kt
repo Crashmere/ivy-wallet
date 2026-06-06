@@ -12,7 +12,6 @@ import androidx.lifecycle.viewModelScope
 import com.ivy.base.Toaster
 import com.ivy.base.legacy.SharedPrefs
 import com.ivy.base.legacy.Transaction
-import com.ivy.base.legacy.refreshWidget
 import com.ivy.base.model.TransactionType
 import com.ivy.base.time.TimeConverter
 import com.ivy.base.time.TimeProvider
@@ -56,7 +55,6 @@ import com.ivy.wallet.domain.deprecated.logic.currency.ExchangeRatesLogic
 import com.ivy.wallet.domain.deprecated.logic.loantrasactions.LoanTransactionsLogic
 import com.ivy.wallet.domain.deprecated.logic.model.CreateAccountData
 import com.ivy.wallet.domain.deprecated.logic.model.CreateCategoryData
-import com.ivy.widget.balance.WalletBalanceWidgetReceiver
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.collections.immutable.ImmutableList
@@ -636,7 +634,6 @@ class EditTransactionViewModel @Inject constructor(
                     associateTagToTransaction(it, id)
                 }
 
-                refreshWidget(WalletBalanceWidgetReceiver::class.java)
             }
 
             closeScreen()
@@ -751,7 +748,6 @@ class EditTransactionViewModel @Inject constructor(
                     transactionRepo.save(it)
                 }
 
-                refreshWidget(WalletBalanceWidgetReceiver::class.java)
             }
 
             if (closeScreen) {

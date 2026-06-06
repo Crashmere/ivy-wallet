@@ -364,8 +364,6 @@
     <string name="create_first_planned_payment">Crea tu primer pago planificado</string>
     <string name="create_first_planned_payment_description">Automatice el seguimiento de transacciones recurrentes como sus suscripciones, alquiler, salario, etc. Manténgase al tanto de sus finanzas al saber cuánto tiene que pagar/obtener por adelantado.</string>
     <string name="did_you_know">¿Sabías?</string>
-    <string name="widget_description">Ivy Wallet tiene un widget genial que le permite agregar transacciones de INGRESOS/GASTOS/TRANSFERENCIAS con 1 clic desde su hogar\n\nNota: si el botón "Agregar widget" no funciona, agréguelo manualmente desde su lanzador\' menú de widgets.</string>
-    <string name="add_widget">Añadir widget</string>
     <string name="set_a_budget">Establecer un presupuesto</string>
     <string name="set_a_budget_description">Ivy Wallet no solo lo ayuda a realizar un seguimiento pasivo de sus gastos, sino que también crea proactivamente su futuro financiero estableciendo presupuestos y ajustándose a ellos.</string>
     <string name="expenses_piechart_description">¡Puedes ver tu estructura de gastos por categorías! Pruébelo, toque el botón Gastos gris/negro justo debajo de su saldo.</string>

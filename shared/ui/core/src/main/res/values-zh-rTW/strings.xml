@@ -365,8 +365,6 @@
     <string name="create_first_planned_payment">建立您的第一個經常交易</string>
     <string name="create_first_planned_payment_description">追蹤您的常規交易，例如訂閱、租金和薪水。透過事先了解您所欠或預計收到的金額來掌握您的財務狀況。</string>
     <string name="did_you_know">你知道嗎?</string>
-    <string name="widget_description">Ivy Wallet 有一個很酷的小部件，讓您只需從主畫面點擊一下即可新增交易。\n\n注意: 如果 "新增小工具" 按鈕不起作用，請從啟動器的小工具選單中手動新增。</string>
-    <string name="add_widget">新增小工具</string>
     <string name="set_a_budget">設定預算</string>
     <string name="set_a_budget_description">Ivy Wallet 不僅可以幫助您被動追蹤支出，還可以透過設定和遵守預算來主動管理您的財務未來。</string>
     <string name="expenses_piechart_description">您可以按類別查看您的支出結構!請點擊餘額下方的灰色/黑色支出按鈕進行嘗試。</string>

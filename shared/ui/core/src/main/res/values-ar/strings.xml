@@ -360,8 +360,6 @@
     <string name="create_first_planned_payment">قم بإنشاء أول دفعة مخططة</string>
     <string name="create_first_planned_payment_description">قم بأتمتة المعاملات المتكررة مثل الاشتراكات, الايجار, الراتب, الخ.. كن في معرفة بأموالك من خلال معرفة المبلغ الذي يتعين عليك دفعه/الحصول عليه مقدمًا</string>
     <string name="did_you_know">هل كنت تعلم؟</string>
-    <string name="widget_description">Ivy Wallet \nلديها تطبيقات مصغرة (ويدجت) رائعة تتيح لك إضافة دخل/إنفاق/تحويل بضغطة واحدة فقط من الشاشة الرئيسية \n\n ملاحظ: اذا لم يعمل زر \"إضافة تطبيق مصغر\" يرجى اضافته يدويا عن طريق قائمة التطبيقات المصغرة في شاشتك الرئيسية</string>
-    <string name="add_widget">إضافة تطبيق مصغر</string>
     <string name="set_a_budget">تحديد ميزانية</string>
     <string name="set_a_budget_description">Ivy Wallet \nلا تساعدك على تتبع نفقاتك فحسب ، بل تساعدك أيضًا في إنشاء مستقبلك المالي بشكل استباقي من خلال تحديد الميزانيات والالتزام بها.</string>
     <string name="expenses_piechart_description">يمكنك أن ترى مخطط النفقات الخاصة بك حسب الفئات! جربه ، اضغط على زر الإنفاق الرمادي/الأسود الموجود أسفل رصيدك مباشرة.</string>

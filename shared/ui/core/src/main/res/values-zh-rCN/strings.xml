@@ -383,8 +383,6 @@
     <string name="create_first_planned_payment">创建您的第一个计划支付</string>
     <string name="create_first_planned_payment_description">跟踪您的常规交易，如订阅、租金和工资。提前了解您欠款或预期收入的金额，以便更好地掌握您的财务状况。</string>
     <string name="did_you_know">您知道吗？</string>
-    <string name="widget_description">Ivy Wallet 有一个很酷的小部件，可以让您从主屏幕上轻松添加交易。\n\n注意：如果“添加小部件”按钮无法使用，请从启动器的小部件菜单手动添加。</string>
-    <string name="add_widget">添加小部件</string>
     <string name="set_a_budget">设定预算</string>
     <string name="set_a_budget_description">Ivy Wallet 不仅能记录您的支出，还可以通过设定和坚持预算来主动协助管理您的财务。</string>
     <string name="expenses_piechart_description">您可以通过类别查看您的支出结构！尝试点击余额下方的灰色/黑色“支出”按钮。</string>

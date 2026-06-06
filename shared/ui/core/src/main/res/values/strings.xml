@@ -386,8 +386,6 @@
     <string name="create_first_planned_payment">Create your first planned payment</string>
     <string name="create_first_planned_payment_description">Track your recurring transactions, like subscriptions, rent, and paychecks. Stay on top of your finances by being aware of how much you owe or expect to receive.</string>
     <string name="did_you_know">Did you know?</string>
-    <string name="widget_description">Ivy Wallet offers a convenient widget that allows you to add transactions with just one tap from your home screen.\n\nNote: If the "Add widget" button isn\’t working, please add it manually from your launcher\’s widgets menu.</string>
-    <string name="add_widget">Add widget</string>
     <string name="set_a_budget">Set a budget</string>
     <string name="set_a_budget_description">Ivy Wallet not only helps you passively track your spending, but also empowers you to actively manage your financial future by setting and sticking to budgets.</string>
     <string name="expenses_piechart_description">You can view your spending breakdown by category! Give it a try by tapping the gray/black Expenses button located just below your balance.</string>

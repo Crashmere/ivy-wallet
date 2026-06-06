@@ -363,8 +363,6 @@
     <string name="create_first_planned_payment">Buat pembayaran terencana pertama Anda</string>
     <string name="create_first_planned_payment_description">Automatisasi pelacakan transaksi berulang seperti langganan, sewa, gaji, dll. Tetap unggul dalam keuangan dengan mengetahui berapa banyak yang harus Anda bayar/dapatkan di muka.</string>
     <string name="did_you_know">Tahukah Anda?</string>
-    <string name="widget_description">Ivy Wallet memiliki widget keren yang memungkinkan Anda menambahkan transaksi PENDAPATAN/PENGELUARAN/PENYALURAN dengan 1 klik dari beranda Anda\n\nCatatan: Jika tombol "Tambah widget" tidak berfungsi, tambahkan secara manual dari menu widget peluncur Anda.</string>
-    <string name="add_widget">Tambahkan widget</string>
     <string name="set_a_budget">Tetapkan anggaran</string>
     <string name="set_a_budget_description">Ivy Wallet tidak hanya membantu Anda melacak pengeluaran secara pasif tetapi juga proaktif membuat masa depan keuangan Anda dengan menetapkan anggaran dan mematuhinya.</string>
     <string name="expenses_piechart_description">Anda dapat melihat struktur pengeluaran Anda berdasarkan kategori! Cobalah, ketuk tombol Pengeluaran abu-abu/hitam tepat di bawah saldo Anda.</string>

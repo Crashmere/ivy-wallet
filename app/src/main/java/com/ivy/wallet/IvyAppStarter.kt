@@ -19,7 +19,7 @@ class IvyAppStarter @Inject constructor(
     override fun defaultStart() {
         context.startActivity(
             getRootIntent().apply {
-                applyWidgetStartFlags()
+                applyStartFlags()
             }
         )
     }
@@ -28,12 +28,12 @@ class IvyAppStarter @Inject constructor(
         context.startActivity(
             getRootIntent().apply {
                 putExtra(RootViewModel.EXTRA_ADD_TRANSACTION_TYPE, type)
-                applyWidgetStartFlags()
+                applyStartFlags()
             }
         )
     }
 
-    private fun Intent.applyWidgetStartFlags() {
+    private fun Intent.applyStartFlags() {
         flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
     }
 }

@@ -142,8 +142,6 @@ dependencies {
     implementation(projects.shared.ui.navigation)
     implementation(projects.temp.legacyCode)
     implementation(projects.temp.oldDesign)
-    implementation(projects.widget.addTransaction)
-    implementation(projects.widget.balance)
 
     implementation(libs.bundles.kotlin)
     implementation(libs.bundles.kotlin.android)

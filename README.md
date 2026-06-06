@@ -19,7 +19,7 @@
 - 优先删除和个人记账无关的社区、推广、远程反馈、发布信息和原项目展示功能。
 - 保留真实记账功能、数据模型、数据库、导入导出、功能测试和截图测试，除非确认个人使用场景不再需要。
 - 每一轮清理后都尽量保持 Gradle module include、app 依赖、导航入口和设置页入口一致，避免留下不可达或不可编译的残留。
-- 对启动流程、数据库迁移、导入导出和桌面小组件这类会影响个人数据或系统集成的内容，先确认使用习惯，再动手删除。
+- 对启动流程、数据库迁移、导入导出这类会影响个人数据或首次使用体验的内容，先确认使用习惯，再动手删除。
 
 ## 已完成的主要清理
 
@@ -45,19 +45,9 @@
 - GitHub 自动备份清理迁移、迁移管理器空壳和 `DatastoreKeys.GITHUB_*`。
 - `shared/ui/core` 中不再使用的 GitHub 图标、开源卡片组件和对应截图测试。
 - 多语言资源中不再使用的开源、分享、评分、Telegram 和推广求助文案。
+- Android 桌面小组件模块 `:widget:add-transaction`、`:widget:balance`、`:widget:shared-base`，以及首页小组件引导卡、Manifest receiver、启动广播、余额刷新接线和 Glance 依赖。
 
 ## 下一批建议清理：需要按个人使用习惯确认
-
-### `:widget:add-transaction`、`:widget:balance`、`:widget:shared-base`
-
-Android 桌面小组件，包括快速添加交易和余额展示。
-
-清理前需要确认：
-
-- 是否使用桌面 widget。
-- `RootActivity.setupApp()` 中的 widget broadcast 是否删除。
-- `AndroidManifest.xml` 中相关 receiver/service 声明是否删除。
-- 首页 customer journey 中的“添加小组件”提示卡是否删除。
 
 ### `:feature:disclaimer`
 
@@ -102,7 +92,6 @@ CSV 和其他 App 数据导入功能。
 
 ## 建议执行顺序
 
-1. 如果不使用桌面小组件，优先删除 `widget/*` 和首页小组件提示卡。
-2. 再评估是否删除 `disclaimer`，同时处理条款/隐私政策链接。
-3. 然后评估是否简化或删除 `onboarding`。
-4. 最后评估 `import-data` 和 backup/import 能力。
+1. 评估是否删除 `disclaimer`，同时处理条款/隐私政策链接。
+2. 然后评估是否简化或删除 `onboarding`。
+3. 最后评估 `import-data` 和 backup/import 能力。

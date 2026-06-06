@@ -365,8 +365,6 @@
     <string name="create_first_planned_payment">Crea o teu primeiro pago planificado</string>
     <string name="create_first_planned_payment_description">Fai un seguimento das túas transaccións periódicas, como subscricións, alugueres e nóminas. Mantente ao tanto das túas finanzas sabendo con antelación canto debes ou esperas recibir.</string>
     <string name="did_you_know">Sabías que?</string>
-    <string name="widget_description">Ivy Wallet ten un widget xenial que che permite engadir transaccións cun só toque dende a pantalla de inicio.\n\nNota: Se o botón "Engadir widget" non funciona, engádeo manualmente dende o menú de widgets do teu lanzador.</string>
-    <string name="add_widget">Engadir widget</string>
     <string name="set_a_budget">Establecer un orzamento</string>
     <string name="set_a_budget_description">Ivy Wallet axúdache non só a seguir os teus gastos, senón tamén a xestionar proactivamente o teu futuro financeiro establecendo e cumprindo os orzamentos.</string>
     <string name="expenses_piechart_description">Podes ver a túa estrutura de gastos por categorías. Próbao tocando o botón gris/negro de Gastos xusto debaixo do teu saldo.</string>

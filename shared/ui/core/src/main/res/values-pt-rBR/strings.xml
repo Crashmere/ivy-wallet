@@ -362,8 +362,6 @@
     <string name="create_first_planned_payment">Crie seu primeiro pagamento planejado</string>
     <string name="create_first_planned_payment_description">Acompanhe suas transações regulares, como assinaturas, aluguel e contracheques. Fique por dentro de suas finanças sabendo antecipadamente quanto você deve ou espera receber.</string>
     <string name="did_you_know">Você sabia?</string>
-    <string name="widget_description">A Ivy Wallet tem um widget interessante que permite adicionar transações com um único toque na tela inicial.\n\nObservação: se o botão "Adicionar widget" não funcionar, adicione-o manualmente no menu de widgets do seu iniciador.</string>
-    <string name="add_widget">Adicionar widget</string>
     <string name="set_a_budget">Definir um orçamento</string>
     <string name="set_a_budget_description">A Ivy Wallet ajuda você não apenas a monitorar passivamente suas despesas, mas também a gerenciar proativamente seu futuro financeiro, definindo e cumprindo orçamentos.</string>
     <string name="expenses_piechart_description">Você pode ver sua estrutura de despesas por categoria! Experimente tocando no botão cinza/preto de Despesas logo abaixo do seu saldo.</string>
