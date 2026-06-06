@@ -19,10 +19,8 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import com.ivy.design.l0_system.UI
 import com.ivy.design.l0_system.style
-import com.ivy.legacy.IvyWalletComponentPreview
 import com.ivy.legacy.utils.hideKeyboard
 import com.ivy.legacy.utils.isNotNullOrBlank
 
@@ -87,17 +85,5 @@ fun IvyNumberTextField(
                 }
             )
         )
-    }
-}
-
-@Preview
-@Composable
-private fun Preview() {
-    IvyWalletComponentPreview {
-        IvyNumberTextField(
-            value = TextFieldValue(),
-            hint = "0"
-        ) {
-        }
     }
 }

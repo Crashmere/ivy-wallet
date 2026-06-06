@@ -6,12 +6,10 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.BoxWithConstraintsScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -23,24 +21,20 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
-import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.layout.layout
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -48,7 +42,6 @@ import com.ivy.legacy.datamodel.Account
 import com.ivy.design.l0_system.UI
 import com.ivy.design.l0_system.style
 import com.ivy.frp.test.TestingContext
-import com.ivy.legacy.IvyWalletPreview
 import com.ivy.legacy.ivyWalletCtx
 import com.ivy.legacy.utils.addKeyboardListener
 import com.ivy.legacy.utils.clickableNoIndication
@@ -69,11 +62,7 @@ import com.ivy.legacy.utils.rememberSwipeListenerState
 import com.ivy.ui.R
 import com.ivy.wallet.domain.data.IvyCurrency
 import com.ivy.wallet.ui.theme.Gradient
-import com.ivy.wallet.ui.theme.Green
-import com.ivy.wallet.ui.theme.GreenDark
-import com.ivy.wallet.ui.theme.GreenLight
 import com.ivy.wallet.ui.theme.Ivy
-import com.ivy.wallet.ui.theme.IvyDark
 import com.ivy.wallet.ui.theme.components.ActionsRow
 import com.ivy.wallet.ui.theme.components.BalanceRow
 import com.ivy.wallet.ui.theme.components.CircleButton
@@ -82,14 +71,23 @@ import com.ivy.wallet.ui.theme.components.IvyButton
 import com.ivy.wallet.ui.theme.components.IvyIcon
 import com.ivy.wallet.ui.theme.findContrastTextColor
 import com.ivy.wallet.ui.theme.modal.DURATION_MODAL_ANIM
-import com.ivy.wallet.ui.theme.modal.ModalSave
-import com.ivy.wallet.ui.theme.modal.ModalSet
 import com.ivy.wallet.ui.theme.modal.edit.AmountModal
 import com.ivy.wallet.ui.theme.toComposeColor
 import kotlinx.coroutines.launch
 import java.util.Locale
 import java.util.UUID
 import kotlin.math.roundToInt
+import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.graphics.toArgb
+import com.ivy.wallet.ui.theme.Green
+import com.ivy.wallet.ui.theme.GreenDark
+import com.ivy.wallet.ui.theme.GreenLight
+import com.ivy.wallet.ui.theme.IvyDark
+import com.ivy.wallet.ui.theme.modal.ModalSave
+import com.ivy.wallet.ui.theme.modal.ModalSet
 
 @Deprecated("Old design system. Use `:ivy-design` and Material3")
 const val SWIPE_UP_EXPANDED_THRESHOLD = 200
@@ -788,82 +786,5 @@ private fun LabelAccountMini(
                 fontWeight = FontWeight.ExtraBold
             )
         )
-    }
-}
-
-@Preview
-@Composable
-private fun Preview() {
-    IvyWalletPreview {
-        val acc1 = Account("Cash", color = Green.toArgb())
-
-        BoxWithConstraints(
-            modifier = Modifier
-                .fillMaxSize()
-        ) {
-            EditBottomSheet(
-                amountModalShown = false,
-                setAmountModalShown = {},
-                initialTransactionId = null,
-                type = TransactionType.INCOME,
-                ActionButton = {
-                    ModalSet {
-                    }
-                },
-                accounts = listOf(
-                    acc1,
-                    Account("DSK", color = GreenDark.toArgb()),
-                    Account("phyre", color = GreenLight.toArgb()),
-                    Account("Revolut", color = IvyDark.toArgb()),
-                ),
-                selectedAccount = acc1,
-                toAccount = null,
-                amount = 12350.0,
-                currency = "BGN",
-                onAmountChanged = {},
-                onSelectedAccountChanged = {},
-                onToAccountChanged = {},
-                onAddNewAccount = {}
-            )
-        }
-    }
-}
-
-@Preview
-@Composable
-private fun Preview_Transfer() {
-    IvyWalletPreview {
-        val acc1 = Account("Cash", color = Green.toArgb())
-        val acc2 = Account("DSK", color = GreenDark.toArgb())
-
-        BoxWithConstraints(
-            modifier = Modifier
-                .fillMaxSize()
-        ) {
-            EditBottomSheet(
-                amountModalShown = false,
-                setAmountModalShown = {},
-                initialTransactionId = UUID.randomUUID(),
-                ActionButton = {
-                    ModalSave {
-                    }
-                },
-                type = TransactionType.TRANSFER,
-                accounts = listOf(
-                    acc1,
-                    acc2,
-                    Account("phyre", color = GreenLight.toArgb(), icon = "cash"),
-                    Account("Revolut", color = IvyDark.toArgb()),
-                ),
-                selectedAccount = acc1,
-                toAccount = acc2,
-                amount = 12350.0,
-                currency = "BGN",
-                onAmountChanged = {},
-                onSelectedAccountChanged = {},
-                onToAccountChanged = {},
-                onAddNewAccount = {}
-            )
-        }
     }
 }

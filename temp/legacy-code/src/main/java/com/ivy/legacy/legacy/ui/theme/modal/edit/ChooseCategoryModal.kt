@@ -14,36 +14,26 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.Category
-import com.ivy.data.model.CategoryId
-import com.ivy.data.model.primitive.ColorInt
-import com.ivy.data.model.primitive.NotBlankTrimmedString
 import com.ivy.design.l0_system.UI
 import com.ivy.design.l0_system.style
 import com.ivy.design.utils.thenIf
-import com.ivy.legacy.IvyWalletPreview
 import com.ivy.legacy.utils.drawColoredShadow
 import com.ivy.legacy.utils.hideKeyboard
 import com.ivy.legacy.utils.onScreenStart
 import com.ivy.ui.R
 import com.ivy.wallet.ui.theme.Gradient
 import com.ivy.wallet.ui.theme.Ivy
-import com.ivy.wallet.ui.theme.Orange
-import com.ivy.wallet.ui.theme.Red
 import com.ivy.wallet.ui.theme.components.ItemIconSDefaultIcon
 import com.ivy.wallet.ui.theme.components.IvyBorderButton
 import com.ivy.wallet.ui.theme.components.IvyCircleButton
@@ -54,6 +44,14 @@ import com.ivy.wallet.ui.theme.modal.ModalSkip
 import com.ivy.wallet.ui.theme.modal.ModalTitle
 import com.ivy.wallet.ui.theme.toComposeColor
 import java.util.UUID
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.graphics.toArgb
+import com.ivy.data.model.CategoryId
+import com.ivy.data.model.primitive.ColorInt
+import com.ivy.data.model.primitive.NotBlankTrimmedString
+import com.ivy.wallet.ui.theme.Orange
+import com.ivy.wallet.ui.theme.Red
 
 @Deprecated("Old design system. Use `:ivy-design` and Material3")
 @Suppress("ParameterNaming")
@@ -283,43 +281,3 @@ fun AddNewButton(
 
 @Deprecated("Old design system. Use `:ivy-design` and Material3")
 private class AddNewCategory
-
-@ExperimentalFoundationApi
-@Preview
-@Composable
-private fun PreviewChooseCategoryModal() {
-    IvyWalletPreview {
-        val categories = mutableListOf(
-            Category(
-                name = NotBlankTrimmedString.unsafe("Test"),
-                color = ColorInt(Ivy.toArgb()),
-                icon = null,
-                id = CategoryId(UUID.randomUUID()),
-                orderNum = 0.0,
-            ),
-            Category(
-                name = NotBlankTrimmedString.unsafe("Second"),
-                color = ColorInt(Orange.toArgb()),
-                icon = null,
-                id = CategoryId(UUID.randomUUID()),
-                orderNum = 0.0,
-            ),
-            Category(
-                name = NotBlankTrimmedString.unsafe("Third"),
-                color = ColorInt(Red.toArgb()),
-                icon = null,
-                id = CategoryId(UUID.randomUUID()),
-                orderNum = 0.0,
-            ),
-        )
-
-        ChooseCategoryModal(
-            visible = true,
-            initialCategory = categories.first(),
-            categories = categories,
-            showCategoryModal = { },
-            onCategoryChanged = { }
-        ) {
-        }
-    }
-}

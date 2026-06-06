@@ -5,7 +5,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -16,16 +15,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ivy.design.l0_system.UI
 import com.ivy.design.l0_system.style
-import com.ivy.legacy.IvyWalletComponentPreview
 import com.ivy.legacy.utils.drawColoredShadow
 import com.ivy.design.utils.thenIf
 import com.ivy.ui.R
 import com.ivy.wallet.ui.theme.Gradient
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.ui.text.input.TextFieldValue
 import com.ivy.wallet.ui.theme.GradientIvy
 
 @Deprecated("Old design system. Use `:ivy-design` and Material3")
@@ -93,37 +91,5 @@ fun OnboardingButton(
                 contentDescription = "next"
             )
         }
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewOnboardingTextField() {
-    IvyWalletComponentPreview {
-        IvyOutlinedTextField(
-            modifier = Modifier.padding(horizontal = 24.dp),
-            value = TextFieldValue("iliyan.germanov971@gmail.com"),
-            hint = "Enter email",
-            onValueChanged = {}
-        )
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewOnboardingButton() {
-    IvyWalletComponentPreview {
-        OnboardingButton(
-            modifier = Modifier
-                .padding(horizontal = 24.dp)
-                .fillMaxWidth(),
-            text = "Login",
-            backgroundGradient = GradientIvy,
-            hasNext = true,
-            textColor = UI.colors.pure,
-            iconStart = null,
-            enabled = false,
-            onClick = { }
-        )
     }
 }

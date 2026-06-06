@@ -10,10 +10,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -24,12 +22,10 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ivy.design.l0_system.UI
 import com.ivy.design.l0_system.style
 import com.ivy.domain.legacy.ui.IvyColorPicker
-import com.ivy.legacy.IvyWalletPreview
 import com.ivy.legacy.datamodel.Account
 import com.ivy.legacy.utils.isNotNullOrBlank
 import com.ivy.legacy.utils.onScreenStart
@@ -49,6 +45,8 @@ import com.ivy.wallet.ui.theme.modal.ModalAddSave
 import com.ivy.wallet.ui.theme.modal.ModalAmountSection
 import com.ivy.wallet.ui.theme.modal.ModalTitle
 import java.util.UUID
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 
 @Deprecated("Old design system. Use `:ivy-design` and Material3")
 data class AccountModalData(
@@ -334,22 +332,5 @@ private fun AccountCurrency(
         )
 
         Spacer(Modifier.width(24.dp))
-    }
-}
-
-@Preview
-@Composable
-private fun Preview() {
-    IvyWalletPreview {
-        AccountModal(
-            modal = AccountModalData(
-                account = null,
-                baseCurrency = "BGN",
-                balance = 0.0
-            ),
-            onCreateAccount = { },
-            onEditAccount = { _, _ -> }
-        ) {
-        }
     }
 }

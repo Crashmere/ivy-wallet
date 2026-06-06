@@ -2,19 +2,17 @@ package com.ivy.wallet.ui.theme.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.ivy.design.l0_system.UI
-import com.ivy.legacy.IvyWalletComponentPreview
 import com.ivy.wallet.ui.theme.*
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.ui.unit.dp
 
 @Deprecated("Old design system. Use `:ivy-design` and Material3")
 @Composable
@@ -48,19 +46,4 @@ fun ProgressBar(
                 )
             },
     )
-}
-
-@Preview
-@Composable
-private fun Preview() {
-    IvyWalletComponentPreview {
-        ProgressBar(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(24.dp)
-                .padding(horizontal = 16.dp),
-            notFilledColor = Gray,
-            percent = 0.6
-        )
-    }
 }

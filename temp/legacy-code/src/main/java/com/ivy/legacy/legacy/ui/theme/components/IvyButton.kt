@@ -5,10 +5,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,19 +18,19 @@ import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.ivy.design.l0_system.UI
 import com.ivy.design.l0_system.style
-import com.ivy.legacy.IvyWalletComponentPreview
 import com.ivy.legacy.utils.drawColoredShadow
 import com.ivy.design.utils.thenIf
-import com.ivy.ui.R
 import com.ivy.wallet.ui.theme.Gradient
 import com.ivy.wallet.ui.theme.GradientIvy
 import com.ivy.wallet.ui.theme.Ivy
 import com.ivy.wallet.ui.theme.White
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.wrapContentSize
+import com.ivy.ui.R
 
 @Deprecated("Old design system. Use `:ivy-design` and Material3")
 @Composable
@@ -178,70 +176,4 @@ private fun IconEnd(
     )
 
     Spacer(modifier = Modifier.width(iconEdgePadding))
-}
-
-@Preview
-@Composable
-private fun PreviewIvyButtonWrapContentWithIconStart() {
-    IvyWalletComponentPreview {
-        IvyButton(
-            modifier = Modifier
-                .padding(horizontal = 24.dp)
-                .wrapContentSize(),
-            iconStart = R.drawable.ic_plus,
-            text = "Add new",
-            wrapContentMode = true
-        ) {
-        }
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewIvyButtonFillMaxWidthWithIconStart() {
-    IvyWalletComponentPreview {
-        IvyButton(
-            modifier = Modifier
-                .padding(horizontal = 24.dp)
-                .fillMaxWidth(),
-            iconStart = R.drawable.ic_plus,
-            text = "Add new",
-            wrapContentMode = false
-        ) {
-        }
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewIvyButtonWrapContentWithIconEnd() {
-    IvyWalletComponentPreview {
-        IvyButton(
-            modifier = Modifier
-                .padding(horizontal = 24.dp)
-                .wrapContentSize(),
-            backgroundGradient = Gradient(Ivy, Ivy),
-            iconEnd = R.drawable.ic_onboarding_next_arrow,
-            text = "Category 1",
-            wrapContentMode = true
-        ) {
-        }
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewIvyButtonFillMaxWidthWithIconEnd() {
-    IvyWalletComponentPreview {
-        IvyButton(
-            modifier = Modifier
-                .padding(horizontal = 24.dp)
-                .fillMaxWidth(),
-            backgroundGradient = Gradient(Ivy, Ivy),
-            iconEnd = R.drawable.ic_onboarding_next_arrow,
-            text = "Category 1",
-            wrapContentMode = false
-        ) {
-        }
-    }
 }

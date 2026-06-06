@@ -16,11 +16,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ivy.design.l0_system.UI
 import com.ivy.design.l0_system.style
-import com.ivy.legacy.IvyWalletComponentPreview
 import com.ivy.legacy.utils.clickableNoIndication
 import com.ivy.legacy.utils.rememberInteractionSource
 import com.ivy.ui.R
@@ -78,17 +76,5 @@ fun IvyCheckboxWithText(
                 fontWeight = FontWeight.SemiBold
             )
         )
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewIvyCheckboxWithText() {
-    IvyWalletComponentPreview {
-        IvyCheckboxWithText(
-            text = "Default category",
-            checked = false,
-        ) {
-        }
     }
 }

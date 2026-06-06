@@ -11,14 +11,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ivy.design.l0_system.UI
 import com.ivy.design.l0_system.style
-import com.ivy.legacy.IvyWalletComponentPreview
 import com.ivy.legacy.utils.format
 import com.ivy.legacy.utils.shortenAmount
 import com.ivy.legacy.utils.shouldShortAmount
@@ -199,45 +197,4 @@ private fun Currency(
             ).copy(fontSize = currencyFontSize)
         }
     )
-}
-
-@Preview
-@Composable
-private fun Preview_Default() {
-    IvyWalletComponentPreview {
-        BalanceRow(
-            textColor = UI.colors.pureInverse,
-            currency = "BGN",
-            balance = 3520000.60,
-            balanceAmountPrefix = null,
-            shortenBigNumbers = true
-        )
-    }
-}
-
-@Preview
-@Composable
-private fun Preview_Medium() {
-    IvyWalletComponentPreview {
-        BalanceRowMedium(
-            textColor = UI.colors.pureInverse,
-            currency = "BGN",
-            balance = 3520.60,
-            balanceAmountPrefix = null
-        )
-    }
-}
-
-@Preview
-@Composable
-private fun Preview_Mini() {
-    IvyWalletComponentPreview {
-        BalanceRowMini(
-            textColor = UI.colors.pureInverse,
-            currency = "BGN",
-            balance = 3520.60,
-            balanceAmountPrefix = null,
-            shortenBigNumbers = true
-        )
-    }
 }

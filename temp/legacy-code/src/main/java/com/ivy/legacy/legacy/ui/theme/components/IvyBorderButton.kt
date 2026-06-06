@@ -18,14 +18,12 @@ import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.ivy.design.l0_system.UI
 import com.ivy.design.l0_system.style
-import com.ivy.legacy.IvyWalletComponentPreview
-import com.ivy.ui.R
 import com.ivy.wallet.ui.theme.Gradient
+import com.ivy.ui.R
 
 @Deprecated("Old design system. Use `:ivy-design` and Material3")
 @Composable
@@ -147,16 +145,4 @@ private fun IconEnd(
     )
 
     Spacer(modifier = Modifier.width(12.dp))
-}
-
-@Preview
-@Composable
-private fun PreviewIvyBorderButton() {
-    IvyWalletComponentPreview {
-        IvyBorderButton(
-            text = "New label",
-            iconStart = R.drawable.ic_label_hashtag
-        ) {
-        }
-    }
 }

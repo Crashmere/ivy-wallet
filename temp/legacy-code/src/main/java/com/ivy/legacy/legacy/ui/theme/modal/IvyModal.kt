@@ -19,15 +19,12 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -36,13 +33,11 @@ import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import com.ivy.design.l0_system.UI
 import com.ivy.design.utils.rememberInteractionSource
-import com.ivy.legacy.IvyWalletPreview
 import com.ivy.legacy.ivyWalletCtx
 import com.ivy.legacy.utils.addKeyboardListener
 import com.ivy.legacy.utils.consumeClicks
@@ -60,6 +55,9 @@ import com.ivy.wallet.ui.theme.gradientCutBackgroundTop
 import com.ivy.wallet.ui.theme.mediumBlur
 import java.util.UUID
 import kotlin.math.roundToInt
+import androidx.compose.material3.Text
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 
 @Deprecated("Old design system. Use `:ivy-design` and Material3")
 private const val DURATION_BACKGROUND_BLUR_ANIM = 400
@@ -315,31 +313,6 @@ fun ModalActionsRow(
             PrimaryAction()
 
             Spacer(Modifier.width(24.dp))
-        }
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewIvyModal_minimal() {
-    IvyWalletPreview {
-        IvyModal(
-            id = UUID.randomUUID(),
-            visible = true,
-            PrimaryAction = {
-                ModalSave {
-                }
-            },
-            dismiss = {}
-        ) {
-            Spacer(modifier = Modifier.height(20.dp))
-
-            Text(
-                modifier = Modifier.padding(horizontal = 24.dp),
-                text = "My first Ivy Modal"
-            )
-
-            ModalPreviewActionRowSpacer()
         }
     }
 }

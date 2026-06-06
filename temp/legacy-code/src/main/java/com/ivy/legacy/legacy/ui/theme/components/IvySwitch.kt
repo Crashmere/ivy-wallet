@@ -11,10 +11,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ivy.design.l0_system.UI
-import com.ivy.legacy.IvyWalletComponentPreview
 import com.ivy.legacy.utils.springBounce
 import com.ivy.wallet.ui.theme.Gray
 import com.ivy.wallet.ui.theme.Green
@@ -66,19 +64,5 @@ fun IvySwitch(
         }
 
         Spacer(Modifier.width(4.dp))
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewIvySwitch() {
-    IvyWalletComponentPreview {
-        var enabled by remember {
-            mutableStateOf(false)
-        }
-
-        IvySwitch(enabled = enabled) {
-            enabled = it
-        }
     }
 }

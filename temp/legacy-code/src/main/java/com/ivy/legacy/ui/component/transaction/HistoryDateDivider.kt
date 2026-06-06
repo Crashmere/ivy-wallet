@@ -12,20 +12,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.ivy.design.l0_system.UI
 import com.ivy.design.l0_system.style
-import com.ivy.legacy.IvyWalletComponentPreview
 import com.ivy.legacy.utils.dateNowLocal
-import com.ivy.legacy.utils.dateNowUTC
 import com.ivy.legacy.utils.format
 import com.ivy.legacy.utils.formatLocal
 import com.ivy.ui.R
 import com.ivy.wallet.ui.theme.Gray
 import com.ivy.wallet.ui.theme.Green
 import java.time.LocalDate
+import com.ivy.legacy.utils.dateNowUTC
 
 @Deprecated("Old design system. Use `:ivy-design` and Material3")
 @Composable
@@ -95,46 +93,4 @@ fun HistoryDateDivider(
     }
 
     Spacer(Modifier.height(4.dp))
-}
-
-@Preview
-@Composable
-private fun Preview_Today() {
-    IvyWalletComponentPreview {
-        HistoryDateDivider(
-            date = dateNowUTC(),
-            spacerTop = 32.dp,
-            baseCurrency = "BGN",
-            income = 13.50,
-            expenses = 256.13
-        )
-    }
-}
-
-@Preview
-@Composable
-private fun Preview_Yesterday() {
-    IvyWalletComponentPreview {
-        HistoryDateDivider(
-            date = dateNowUTC().minusDays(1),
-            spacerTop = 32.dp,
-            baseCurrency = "BGN",
-            income = 13.50,
-            expenses = 256.13
-        )
-    }
-}
-
-@Preview
-@Composable
-private fun Preview_OneYear_Ago() {
-    IvyWalletComponentPreview {
-        HistoryDateDivider(
-            date = dateNowUTC().minusYears(1),
-            spacerTop = 32.dp,
-            baseCurrency = "BGN",
-            income = 13.50,
-            expenses = 256.13
-        )
-    }
 }

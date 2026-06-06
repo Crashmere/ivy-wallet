@@ -10,12 +10,10 @@ import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
@@ -27,21 +25,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ivy.base.legacy.LegacyTag
 import com.ivy.base.legacy.Transaction
 import com.ivy.base.model.TransactionType
 import com.ivy.data.model.Category
 import com.ivy.data.model.CategoryId
-import com.ivy.data.model.primitive.ColorInt
-import com.ivy.data.model.primitive.IconAsset
-import com.ivy.data.model.primitive.NotBlankTrimmedString
 import com.ivy.design.api.LocalTimeConverter
 import com.ivy.design.api.LocalTimeFormatter
 import com.ivy.design.api.LocalTimeProvider
@@ -50,7 +43,6 @@ import com.ivy.design.l0_system.UI
 import com.ivy.design.l0_system.style
 import com.ivy.design.l1_buildingBlocks.IvyText
 import com.ivy.design.l1_buildingBlocks.SpacerHor
-import com.ivy.legacy.IvyWalletPreview
 import com.ivy.legacy.data.AppBaseData
 import com.ivy.legacy.datamodel.Account
 import com.ivy.legacy.utils.capitalizeLocal
@@ -64,7 +56,6 @@ import com.ivy.navigation.navigation
 import com.ivy.ui.R
 import com.ivy.ui.time.TimeFormatter
 import com.ivy.wallet.domain.data.IvyCurrency
-import com.ivy.wallet.ui.theme.Blue
 import com.ivy.wallet.ui.theme.Gradient
 import com.ivy.wallet.ui.theme.GradientGreen
 import com.ivy.wallet.ui.theme.GradientIvy
@@ -72,9 +63,7 @@ import com.ivy.wallet.ui.theme.GradientOrangeRevert
 import com.ivy.wallet.ui.theme.GradientRed
 import com.ivy.wallet.ui.theme.Gray
 import com.ivy.wallet.ui.theme.Green
-import com.ivy.wallet.ui.theme.GreenDark
 import com.ivy.wallet.ui.theme.Ivy
-import com.ivy.wallet.ui.theme.IvyDark
 import com.ivy.wallet.ui.theme.Orange
 import com.ivy.wallet.ui.theme.Red
 import com.ivy.wallet.ui.theme.White
@@ -86,8 +75,17 @@ import com.ivy.wallet.ui.theme.gradientExpenses
 import com.ivy.wallet.ui.theme.toComposeColor
 import com.ivy.wallet.ui.theme.wallet.AmountCurrencyB1
 import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.persistentListOf
 import java.time.LocalDateTime
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.ui.graphics.toArgb
+import com.ivy.data.model.primitive.ColorInt
+import com.ivy.data.model.primitive.IconAsset
+import com.ivy.data.model.primitive.NotBlankTrimmedString
+import com.ivy.wallet.ui.theme.Blue
+import com.ivy.wallet.ui.theme.GreenDark
+import com.ivy.wallet.ui.theme.IvyDark
+import kotlinx.collections.immutable.persistentListOf
 import java.time.ZoneOffset
 import java.util.UUID
 
@@ -650,266 +648,3 @@ private data class AmountTypeStyle(
     val iconTint: Color,
     val textColor: Color
 )
-
-@Preview
-@Composable
-private fun PreviewUpcomingExpense() {
-    IvyWalletPreview {
-        LazyColumn(Modifier.fillMaxSize()) {
-            val cash = Account(name = "Cash", Green.toArgb())
-            val food = Category(
-                name = NotBlankTrimmedString.unsafe("Food"),
-                color = ColorInt(Blue.toArgb()),
-                icon = null,
-                id = CategoryId(UUID.randomUUID()),
-                orderNum = 0.0,
-            )
-
-            item {
-                TransactionCard(
-                    baseData = AppBaseData(
-                        baseCurrency = "BGN",
-                        categories = persistentListOf(food),
-                        accounts = persistentListOf(cash)
-                    ),
-                    transaction = Transaction(
-                        accountId = cash.id,
-                        title = "Lidl pazar",
-                        categoryId = food.id.value,
-                        amount = 250.75.toBigDecimal(),
-                        dueDate = timeNowUTC().plusDays(5).toInstant(ZoneOffset.UTC),
-                        dateTime = null,
-                        type = TransactionType.EXPENSE,
-                    ),
-                    shouldShowAccountSpecificColorInTransactions = false,
-                    onPayOrGet = {},
-                ) {
-                }
-            }
-        }
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewUpcomingExpenseBadgeSecondRow() {
-    IvyWalletPreview {
-        LazyColumn(Modifier.fillMaxSize()) {
-            val cash = Account(name = "Cash", Green.toArgb())
-            val food = Category(
-                name = NotBlankTrimmedString.unsafe("Food-Travel-Entertaiment-Food"),
-                color = ColorInt(Blue.toArgb()),
-                icon = null,
-                id = CategoryId(UUID.randomUUID()),
-                orderNum = 0.0,
-            )
-
-            item {
-                TransactionCard(
-                    baseData = AppBaseData(
-                        baseCurrency = "BGN",
-                        categories = persistentListOf(food),
-                        accounts = persistentListOf(cash)
-                    ),
-                    transaction = Transaction(
-                        accountId = cash.id,
-                        title = "Lidl pazar",
-                        categoryId = food.id.value,
-                        amount = 250.75.toBigDecimal(),
-                        dueDate = timeNowUTC().plusDays(5).toInstant(ZoneOffset.UTC),
-                        dateTime = null,
-                        type = TransactionType.EXPENSE,
-                    ),
-                    shouldShowAccountSpecificColorInTransactions = false,
-                    onPayOrGet = {},
-                ) {
-                }
-            }
-        }
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewOverdueExpense() {
-    IvyWalletPreview {
-        LazyColumn(Modifier.fillMaxSize()) {
-            val cash = Account(name = "Cash", color = Green.toArgb())
-            val food = Category(
-                name = NotBlankTrimmedString.unsafe("Rent"),
-                color = ColorInt(Green.toArgb()),
-                icon = null,
-                id = CategoryId(UUID.randomUUID()),
-                orderNum = 0.0,
-            )
-
-            item {
-                TransactionCard(
-                    baseData = AppBaseData(
-                        baseCurrency = "BGN",
-                        categories = persistentListOf(food),
-                        accounts = persistentListOf(cash)
-                    ),
-                    transaction = Transaction(
-                        accountId = cash.id,
-                        title = "Rent",
-                        categoryId = food.id.value,
-                        amount = 500.0.toBigDecimal(),
-                        dueDate = timeNowUTC().minusDays(5).toInstant(ZoneOffset.UTC),
-                        dateTime = null,
-                        type = TransactionType.EXPENSE
-                    ),
-                    shouldShowAccountSpecificColorInTransactions = false,
-                    onPayOrGet = {},
-                ) {
-                }
-            }
-        }
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewNormalExpense() {
-    IvyWalletPreview {
-        LazyColumn(Modifier.fillMaxSize()) {
-            val cash = Account(name = "Cash", color = Green.toArgb())
-            val food = Category(
-                name = NotBlankTrimmedString.unsafe("Bitovi"),
-                color = ColorInt(Orange.toArgb()),
-                icon = IconAsset.unsafe("groceries"),
-                id = CategoryId(UUID.randomUUID()),
-                orderNum = 0.0,
-            )
-
-            item {
-                TransactionCard(
-                    baseData = AppBaseData(
-                        baseCurrency = "BGN",
-                        categories = persistentListOf(food),
-                        accounts = persistentListOf(cash)
-                    ),
-                    transaction = Transaction(
-                        accountId = cash.id,
-                        title = "Близкия магазин",
-                        categoryId = food.id.value,
-                        amount = 32.51.toBigDecimal(),
-                        dateTime = timeNowUTC().toInstant(ZoneOffset.UTC),
-                        type = TransactionType.EXPENSE
-                    ),
-                    shouldShowAccountSpecificColorInTransactions = false,
-                    onPayOrGet = {},
-                ) {
-                }
-            }
-        }
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewIncome() {
-    IvyWalletPreview {
-        LazyColumn(Modifier.fillMaxSize()) {
-            val cash = Account(name = "DSK Bank", color = Green.toArgb())
-            val category = Category(
-                name = NotBlankTrimmedString.unsafe("Salary"),
-                color = ColorInt(GreenDark.toArgb()),
-                icon = null,
-                id = CategoryId(UUID.randomUUID()),
-                orderNum = 0.0,
-            )
-
-            item {
-                TransactionCard(
-                    baseData = AppBaseData(
-                        baseCurrency = "BGN",
-                        categories = persistentListOf(category),
-                        accounts = persistentListOf(cash)
-                    ),
-                    transaction = Transaction(
-                        accountId = cash.id,
-                        title = "Qredo Salary May",
-                        categoryId = category.id.value,
-                        amount = 8049.70.toBigDecimal(),
-                        dateTime = timeNowUTC().toInstant(ZoneOffset.UTC),
-                        type = TransactionType.INCOME
-                    ),
-                    shouldShowAccountSpecificColorInTransactions = false,
-                    onPayOrGet = {},
-                ) {
-                }
-            }
-        }
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewTransfer() {
-    IvyWalletPreview {
-        LazyColumn(Modifier.fillMaxSize()) {
-            val acc1 = Account(name = "DSK Bank", color = Green.toArgb(), icon = "bank")
-            val acc2 = Account(name = "Revolut", color = IvyDark.toArgb(), icon = "revolut")
-
-            item {
-                TransactionCard(
-                    baseData = AppBaseData(
-                        baseCurrency = "BGN",
-                        categories = persistentListOf(),
-                        accounts = persistentListOf(acc1, acc2)
-                    ),
-                    transaction = Transaction(
-                        accountId = acc1.id,
-                        toAccountId = acc2.id,
-                        title = "Top-up revolut",
-                        amount = 1000.0.toBigDecimal(),
-                        dateTime = timeNowUTC().toInstant(ZoneOffset.UTC),
-                        type = TransactionType.TRANSFER
-                    ),
-                    shouldShowAccountSpecificColorInTransactions = false,
-                    onPayOrGet = {},
-                ) {
-                }
-            }
-        }
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewTransfer_differentCurrency() {
-    IvyWalletPreview {
-        LazyColumn(Modifier.fillMaxSize()) {
-            val acc1 = Account(name = "DSK Bank", color = Green.toArgb(), icon = "bank")
-            val acc2 = Account(
-                name = "Revolut",
-                currency = "EUR",
-                color = IvyDark.toArgb(),
-                icon = "revolut"
-            )
-
-            item {
-                TransactionCard(
-                    baseData = AppBaseData(
-                        baseCurrency = "BGN",
-                        categories = persistentListOf(),
-                        accounts = persistentListOf(acc1, acc2)
-                    ),
-                    transaction = Transaction(
-                        accountId = acc1.id,
-                        toAccountId = acc2.id,
-                        title = "Top-up revolut",
-                        amount = 1000.0.toBigDecimal(),
-                        toAmount = 510.toBigDecimal(),
-                        dateTime = timeNowUTC().toInstant(ZoneOffset.UTC),
-                        type = TransactionType.TRANSFER
-                    ),
-                    shouldShowAccountSpecificColorInTransactions = true,
-                    onPayOrGet = {},
-                ) {
-                }
-            }
-        }
-    }
-}

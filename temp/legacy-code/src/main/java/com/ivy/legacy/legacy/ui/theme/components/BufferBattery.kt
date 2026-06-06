@@ -2,11 +2,9 @@ package com.ivy.wallet.ui.theme.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -20,12 +18,10 @@ import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ivy.design.l0_system.UI
 import com.ivy.design.l0_system.style
 import com.ivy.design.utils.thenIf
-import com.ivy.legacy.IvyWalletComponentPreview
 import com.ivy.ui.R
 import com.ivy.wallet.ui.theme.Green
 import com.ivy.wallet.ui.theme.Ivy
@@ -34,6 +30,8 @@ import com.ivy.wallet.ui.theme.Red
 import com.ivy.wallet.ui.theme.White
 import com.ivy.wallet.ui.theme.wallet.AmountCurrencyB2Row
 import kotlin.math.abs
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 
 @Deprecated("Old design system. Use `:ivy-design` and Material3")
 @Composable
@@ -132,186 +130,6 @@ fun BufferBattery(
                 amount = abs(leftToSpend),
                 currency = currency,
                 textColor = textColor
-            )
-        }
-    }
-}
-
-@Preview
-@Composable
-private fun Preview_buffer_0() {
-    IvyWalletComponentPreview {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(UI.colors.medium),
-            contentAlignment = Alignment.Center
-        ) {
-            BufferBattery(
-                modifier = Modifier.padding(horizontal = 32.dp),
-                buffer = 0.0,
-                balance = 100000.0,
-                currency = "BGN"
-            )
-        }
-    }
-}
-
-@Preview
-@Composable
-private fun Preview_buffer_balance_0() {
-    IvyWalletComponentPreview {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(UI.colors.medium),
-            contentAlignment = Alignment.Center
-        ) {
-            BufferBattery(
-                modifier = Modifier.padding(horizontal = 32.dp),
-                buffer = 5000.0,
-                balance = 0.0,
-                currency = "BGN"
-            )
-        }
-    }
-}
-
-@Preview
-@Composable
-private fun Preview_buffer_very_low() {
-    IvyWalletComponentPreview {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(UI.colors.medium),
-            contentAlignment = Alignment.Center
-        ) {
-            BufferBattery(
-                modifier = Modifier.padding(horizontal = 32.dp),
-                buffer = 5000.0,
-                balance = 100000.0,
-                currency = "BGN"
-            )
-        }
-    }
-}
-
-@Preview
-@Composable
-private fun Preview_buffer_25() {
-    IvyWalletComponentPreview {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(UI.colors.medium),
-            contentAlignment = Alignment.Center
-        ) {
-            BufferBattery(
-                modifier = Modifier.padding(horizontal = 32.dp),
-                buffer = 5000.0,
-                balance = 20000.0,
-                currency = "BGN"
-            )
-        }
-    }
-}
-
-@Preview
-@Composable
-private fun Preview_buffer_50() {
-    IvyWalletComponentPreview {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(UI.colors.medium),
-            contentAlignment = Alignment.Center
-        ) {
-            BufferBattery(
-                modifier = Modifier.padding(horizontal = 32.dp),
-                buffer = 5000.0,
-                balance = 10000.0,
-                currency = "BGN"
-            )
-        }
-    }
-}
-
-@Preview
-@Composable
-private fun Preview_buffer_75() {
-    IvyWalletComponentPreview {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(UI.colors.medium),
-            contentAlignment = Alignment.Center
-        ) {
-            BufferBattery(
-                modifier = Modifier.padding(horizontal = 32.dp),
-                buffer = 5000.0,
-                balance = 7500.0,
-                currency = "BGN"
-            )
-        }
-    }
-}
-
-@Preview
-@Composable
-private fun Preview_buffer_90() {
-    IvyWalletComponentPreview {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(UI.colors.medium),
-            contentAlignment = Alignment.Center
-        ) {
-            BufferBattery(
-                modifier = Modifier.padding(horizontal = 32.dp),
-                buffer = 5000.0,
-                balance = 5500.0,
-                currency = "BGN"
-            )
-        }
-    }
-}
-
-@Preview
-@Composable
-private fun Preview_buffer_100() {
-    IvyWalletComponentPreview {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(UI.colors.medium),
-            contentAlignment = Alignment.Center
-        ) {
-            BufferBattery(
-                modifier = Modifier.padding(horizontal = 32.dp),
-                buffer = 5000.0,
-                balance = 5000.0,
-                currency = "BGN"
-            )
-        }
-    }
-}
-
-@Preview
-@Composable
-private fun Preview_buffer_125() {
-    IvyWalletComponentPreview {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(UI.colors.medium),
-            contentAlignment = Alignment.Center
-        ) {
-            BufferBattery(
-                modifier = Modifier.padding(horizontal = 32.dp),
-                buffer = 5000.0,
-                balance = 2500.0,
-                currency = "BGN"
             )
         }
     }

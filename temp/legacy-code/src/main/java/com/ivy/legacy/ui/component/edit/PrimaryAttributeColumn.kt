@@ -16,17 +16,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ivy.design.l0_system.UI
 import com.ivy.design.l0_system.style
-import com.ivy.legacy.IvyWalletComponentPreview
 import com.ivy.legacy.utils.clickableNoIndication
 import com.ivy.legacy.utils.rememberInteractionSource
-import com.ivy.ui.R
 import com.ivy.wallet.ui.theme.components.IvyIcon
+import androidx.compose.ui.res.stringResource
+import com.ivy.ui.R
 
 @Deprecated("Old design system. Use `:ivy-design` and Material3")
 @Composable
@@ -67,37 +65,5 @@ fun PrimaryAttributeColumn(
         }
 
         Content()
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewPrimaryAttributeColumn() {
-    IvyWalletComponentPreview {
-        PrimaryAttributeColumn(
-            icon = R.drawable.ic_description,
-            title = stringResource(R.string.description),
-            onClick = { }
-        ) {
-            Spacer(Modifier.height(12.dp))
-
-            Text(
-                modifier = Modifier.padding(horizontal = 24.dp),
-                text = "This mode is not recommended for production use,\n" +
-                        "as no stability/compatibility guarantees are given on\n" +
-                        "compiler or generated code. Use it at your own risk!\n" +
-                        "\n" +
-                        "\n" +
-                        "Deprecated Gradle features were used in this build, making it incompatible with Gradle 8.0.\n" +
-                        "Use '--warning-mode all' to show the individual deprecation warnings.\n" +
-                        "See https://docs.gradle.org/7.0-rc-1/userguide/command_line_interface.html#sec:command_line_warnings",
-                style = UI.typo.b2.style(
-                    color = UI.colors.pureInverse,
-                    fontWeight = FontWeight.Medium
-                )
-            )
-
-            Spacer(Modifier.height(20.dp))
-        }
     }
 }

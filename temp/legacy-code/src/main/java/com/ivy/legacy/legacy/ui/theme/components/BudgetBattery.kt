@@ -2,11 +2,9 @@ package com.ivy.legacy.legacy.ui.theme.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -20,12 +18,10 @@ import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ivy.design.l0_system.UI
 import com.ivy.design.l0_system.style
 import com.ivy.design.utils.thenIf
-import com.ivy.legacy.IvyWalletComponentPreview
 import com.ivy.legacy.utils.format
 import com.ivy.ui.R
 import com.ivy.wallet.ui.theme.Green
@@ -36,6 +32,8 @@ import com.ivy.wallet.ui.theme.White
 import com.ivy.wallet.ui.theme.components.IvyIcon
 import com.ivy.wallet.ui.theme.wallet.AmountCurrencyB2Row
 import kotlin.math.abs
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 
 @Deprecated("Old design system. Use `:ivy-design` and Material3")
 @Composable
@@ -157,206 +155,6 @@ fun BudgetBattery(
                     fontWeight = FontWeight.ExtraBold,
                     color = captionTextColor
                 )
-            )
-        }
-    }
-}
-
-@Preview
-@Composable
-private fun Preview_budget_0() {
-    IvyWalletComponentPreview {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(UI.colors.medium),
-            contentAlignment = Alignment.Center
-        ) {
-            BudgetBattery(
-                modifier = Modifier.padding(horizontal = 32.dp),
-                budget = 0.0,
-                expenses = 100.45,
-                currency = "BGN"
-            )
-        }
-    }
-}
-
-@Preview
-@Composable
-private fun Preview_expenses_0() {
-    IvyWalletComponentPreview {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(UI.colors.medium),
-            contentAlignment = Alignment.Center
-        ) {
-            BudgetBattery(
-                modifier = Modifier.padding(horizontal = 32.dp),
-                budget = 1000.0,
-                expenses = 0.0,
-                currency = "BGN"
-            )
-        }
-    }
-}
-
-@Preview
-@Composable
-private fun Preview_spent_very_low() {
-    IvyWalletComponentPreview {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(UI.colors.medium),
-            contentAlignment = Alignment.Center
-        ) {
-            BudgetBattery(
-                modifier = Modifier.padding(horizontal = 32.dp),
-                expenses = 5000.0,
-                budget = 100000.0,
-                currency = "BGN"
-            )
-        }
-    }
-}
-
-@Preview
-@Composable
-private fun Preview_buffer_25() {
-    IvyWalletComponentPreview {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(UI.colors.medium),
-            contentAlignment = Alignment.Center
-        ) {
-            BudgetBattery(
-                modifier = Modifier.padding(horizontal = 32.dp),
-                expenses = 5000.0,
-                budget = 20000.0,
-                currency = "BGN"
-            )
-        }
-    }
-}
-
-@Preview
-@Composable
-private fun Preview_buffer_50() {
-    IvyWalletComponentPreview {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(UI.colors.medium),
-            contentAlignment = Alignment.Center
-        ) {
-            BudgetBattery(
-                modifier = Modifier.padding(horizontal = 32.dp),
-                expenses = 5000.0,
-                budget = 10000.0,
-                currency = "BGN"
-            )
-        }
-    }
-}
-
-@Preview
-@Composable
-private fun Preview_buffer_75() {
-    IvyWalletComponentPreview {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(UI.colors.medium),
-            contentAlignment = Alignment.Center
-        ) {
-            BudgetBattery(
-                modifier = Modifier.padding(horizontal = 32.dp),
-                expenses = 5000.0,
-                budget = 7500.0,
-                currency = "BGN"
-            )
-        }
-    }
-}
-
-@Preview
-@Composable
-private fun Preview_buffer_90() {
-    IvyWalletComponentPreview {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(UI.colors.medium),
-            contentAlignment = Alignment.Center
-        ) {
-            BudgetBattery(
-                modifier = Modifier.padding(horizontal = 32.dp),
-                expenses = 5000.0,
-                budget = 5500.0,
-                currency = "BGN"
-            )
-        }
-    }
-}
-
-@Preview
-@Composable
-private fun Preview_buffer_100() {
-    IvyWalletComponentPreview {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(UI.colors.medium),
-            contentAlignment = Alignment.Center
-        ) {
-            BudgetBattery(
-                modifier = Modifier.padding(horizontal = 32.dp),
-                expenses = 5000.0,
-                budget = 5000.0,
-                currency = "BGN"
-            )
-        }
-    }
-}
-
-@Preview
-@Composable
-private fun Preview_buffer_125() {
-    IvyWalletComponentPreview {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(UI.colors.medium),
-            contentAlignment = Alignment.Center
-        ) {
-            BudgetBattery(
-                modifier = Modifier.padding(horizontal = 32.dp),
-                expenses = 5000.0,
-                budget = 2500.0,
-                currency = "BGN"
-            )
-        }
-    }
-}
-
-@Preview
-@Composable
-private fun Preview_expenses_negative() {
-    IvyWalletComponentPreview {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(UI.colors.medium),
-            contentAlignment = Alignment.Center
-        ) {
-            BudgetBattery(
-                modifier = Modifier.padding(horizontal = 32.dp),
-                expenses = -348.54,
-                budget = 1000.0,
-                currency = "BGN"
             )
         }
     }

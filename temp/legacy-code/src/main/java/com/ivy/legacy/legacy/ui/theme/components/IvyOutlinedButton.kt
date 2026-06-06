@@ -18,13 +18,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.ivy.design.l0_system.UI
 import com.ivy.design.l0_system.style
 import com.ivy.design.utils.thenIf
-import com.ivy.legacy.IvyWalletComponentPreview
 import com.ivy.ui.R
 import com.ivy.wallet.ui.theme.Green
 
@@ -141,19 +139,5 @@ fun IvyOutlinedButtonFillMaxWidth(
                 tint = Color.Transparent,
             )
         }
-    }
-}
-
-@Preview
-@Composable
-private fun Preview_FillMaxWidth() {
-    IvyWalletComponentPreview {
-        IvyOutlinedButtonFillMaxWidth(
-            modifier = Modifier.padding(horizontal = 16.dp),
-            text = "Import backup file",
-            iconStart = R.drawable.ic_export_csv,
-            textColor = Green,
-            iconTint = Green,
-        ) {}
     }
 }

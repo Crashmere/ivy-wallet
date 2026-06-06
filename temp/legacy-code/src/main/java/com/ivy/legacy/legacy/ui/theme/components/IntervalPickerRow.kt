@@ -12,21 +12,17 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.IntervalType
 import com.ivy.design.l0_system.UI
 import com.ivy.design.l0_system.style
-import com.ivy.legacy.IvyWalletComponentPreview
 import com.ivy.legacy.forDisplay
 import com.ivy.legacy.utils.capitalizeLocal
 import com.ivy.legacy.utils.isNotNullOrBlank
@@ -35,6 +31,8 @@ import com.ivy.ui.R
 import com.ivy.wallet.ui.theme.Gradient
 import com.ivy.wallet.ui.theme.GradientIvy
 import com.ivy.wallet.ui.theme.White
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 
 private const val RepeatIntervalCharLimit = 5
 
@@ -165,18 +163,5 @@ private fun RowScope.IntervalTypeSelector(
         )
 
         Spacer(Modifier.width(20.dp))
-    }
-}
-
-@Preview
-@Composable
-private fun Preview() {
-    IvyWalletComponentPreview {
-        IntervalPickerRow(
-            intervalN = 1,
-            intervalType = IntervalType.WEEK,
-            onSetIntervalN = {}
-        ) {
-        }
     }
 }

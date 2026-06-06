@@ -15,10 +15,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -26,7 +24,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ivy.design.l0_system.UI
 import com.ivy.design.l0_system.style
@@ -34,7 +31,6 @@ import com.ivy.design.l1_buildingBlocks.DividerW
 import com.ivy.design.l1_buildingBlocks.IvyText
 import com.ivy.design.l1_buildingBlocks.SpacerHor
 import com.ivy.design.l1_buildingBlocks.SpacerVer
-import com.ivy.legacy.IvyWalletPreview
 import com.ivy.legacy.utils.hideKeyboard
 import com.ivy.legacy.utils.onScreenStart
 import com.ivy.design.utils.thenIf
@@ -45,6 +41,8 @@ import com.ivy.wallet.ui.theme.dynamicContrast
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 import java.util.UUID
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 
 @Deprecated("Old design system. Use `:ivy-design` and Material3")
 private const val ICON_PICKER_ICONS_PER_ROW = 5
@@ -326,20 +324,6 @@ private fun Section(
     }
 
     SpacerVer(height = 20.dp)
-}
-
-@Preview
-@Composable
-private fun ChooseIconModal() {
-    IvyWalletPreview {
-        ChooseIconModal(
-            visible = true,
-            initialIcon = "gift",
-            color = Ivy,
-            dismiss = {}
-        ) {
-        }
-    }
 }
 
 data class IconPickerSection(val title: String)

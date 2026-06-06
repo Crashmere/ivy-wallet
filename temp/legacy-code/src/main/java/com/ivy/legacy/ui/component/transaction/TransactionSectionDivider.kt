@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
@@ -17,20 +16,19 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ivy.design.l0_system.UI
 import com.ivy.design.l0_system.style
-import com.ivy.legacy.IvyWalletComponentPreview
 import com.ivy.legacy.utils.clickableNoIndication
 import com.ivy.legacy.utils.format
 import com.ivy.legacy.utils.rememberInteractionSource
 import com.ivy.legacy.utils.springBounce
 import com.ivy.ui.R
-import com.ivy.wallet.ui.theme.Orange
-import com.ivy.wallet.ui.theme.Red
 import com.ivy.wallet.ui.theme.components.IvyDividerDot
 import com.ivy.wallet.ui.theme.components.IvyIcon
+import androidx.compose.runtime.getValue
+import com.ivy.wallet.ui.theme.Orange
+import com.ivy.wallet.ui.theme.Red
 
 @Deprecated("Old design system. Use `:ivy-design` and Material3")
 @Composable
@@ -150,54 +148,6 @@ private fun SectionDividerIncomeExpenseRow(
                     color = UI.colors.pureInverse
                 )
             )
-        }
-    }
-}
-
-@Preview
-@Composable
-private fun Preview_Income_Expenses() {
-    IvyWalletComponentPreview {
-        SectionDivider(
-            expanded = true,
-            title = "Upcoming",
-            titleColor = Orange,
-            baseCurrency = "BGN",
-            income = 8043.23,
-            expenses = 923.87
-        ) {
-        }
-    }
-}
-
-@Preview
-@Composable
-private fun Preview_Expenses() {
-    IvyWalletComponentPreview {
-        SectionDivider(
-            expanded = true,
-            title = "Overdue",
-            titleColor = Red,
-            baseCurrency = "BGN",
-            income = 0.0,
-            expenses = 923.87
-        ) {
-        }
-    }
-}
-
-@Preview
-@Composable
-private fun Preview_Income() {
-    IvyWalletComponentPreview {
-        SectionDivider(
-            expanded = true,
-            title = "Upcoming",
-            titleColor = Orange,
-            baseCurrency = "BGN",
-            income = 8043.23,
-            expenses = 0.0
-        ) {
         }
     }
 }

@@ -5,7 +5,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.BoxWithConstraintsScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
@@ -19,10 +18,8 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -33,7 +30,6 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
@@ -41,7 +37,6 @@ import androidx.compose.ui.unit.sp
 import com.ivy.design.l0_system.UI
 import com.ivy.design.l0_system.style
 import com.ivy.domain.di.FeaturesEntryPoint
-import com.ivy.legacy.IvyWalletPreview
 import com.ivy.legacy.utils.amountToDouble
 import com.ivy.legacy.utils.amountToDoubleOrNull
 import com.ivy.legacy.utils.format
@@ -55,10 +50,13 @@ import com.ivy.wallet.ui.theme.Red
 import com.ivy.wallet.ui.theme.components.IvyIcon
 import com.ivy.wallet.ui.theme.modal.IvyModal
 import com.ivy.wallet.ui.theme.modal.ModalPositiveButton
-import com.ivy.wallet.ui.theme.modal.modalPreviewActionRowHeight
 import dagger.hilt.android.EntryPointAccessors
 import java.util.UUID
 import kotlin.math.truncate
+import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+import com.ivy.wallet.ui.theme.modal.modalPreviewActionRowHeight
 
 @SuppressLint("ComposeModifierMissing")
 @Suppress("ParameterNaming")
@@ -487,23 +485,4 @@ private fun circleButtonModifier(
         .background(UI.colors.pure, UI.shapes.rFull)
         .border(2.dp, UI.colors.medium, UI.shapes.rFull)
         .wrapContentHeight()
-}
-
-@Preview
-@Composable
-private fun Preview() {
-    IvyWalletPreview {
-        BoxWithConstraints(
-            modifier = Modifier.padding(bottom = modalPreviewActionRowHeight())
-        ) {
-            AmountModal(
-                id = UUID.randomUUID(),
-                visible = true,
-                currency = "BGN",
-                initialAmount = null,
-                dismiss = { }
-            ) {
-            }
-        }
-    }
 }

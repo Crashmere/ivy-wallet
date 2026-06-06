@@ -2,7 +2,6 @@ package com.ivy.wallet.ui.edit.core
 
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -10,7 +9,6 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
@@ -21,12 +19,10 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ivy.base.model.TransactionType
 import com.ivy.design.l0_system.UI
 import com.ivy.design.l0_system.style
-import com.ivy.legacy.IvyWalletComponentPreview
 import com.ivy.legacy.utils.keyboardVisibleState
 import com.ivy.legacy.utils.selectEndTextFieldValue
 import com.ivy.ui.R
@@ -34,6 +30,8 @@ import com.ivy.wallet.domain.deprecated.logic.SUGGESTIONS_LIMIT
 import com.ivy.wallet.ui.theme.components.IvyTitleTextField
 import kotlinx.coroutines.launch
 import java.util.UUID
+import androidx.compose.foundation.layout.Column
+import androidx.compose.runtime.getValue
 
 @Deprecated("Old design system. Use `:ivy-design` and Material3")
 @Suppress("ParameterNaming")
@@ -126,27 +124,4 @@ private fun Suggestion(
             fontWeight = FontWeight.Medium
         )
     )
-}
-
-@Preview
-@Composable
-private fun PreviewTitleWithSuggestions() {
-    IvyWalletComponentPreview {
-        Column {
-            Title(
-                type = TransactionType.EXPENSE,
-                titleFocus = FocusRequester(),
-                initialTransactionId = null,
-                titleTextFieldValue = selectEndTextFieldValue(""),
-                setTitleTextFieldValue = {},
-                suggestions = setOf(
-                    "Tabu",
-                    "Harem",
-                    "Club 35"
-                ),
-                onTitleChanged = {}
-            ) {
-            }
-        }
-    }
 }

@@ -19,25 +19,21 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.IntervalType
 import com.ivy.design.api.LocalTimeConverter
 import com.ivy.design.api.LocalTimeProvider
 import com.ivy.design.l0_system.UI
 import com.ivy.design.l0_system.style
-import com.ivy.legacy.IvyWalletPreview
 import com.ivy.legacy.data.model.FromToTimeRange
 import com.ivy.legacy.data.model.LastNTimeRange
 import com.ivy.legacy.data.model.Month.Companion.fromMonthValue
@@ -62,6 +58,8 @@ import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 import java.util.UUID
 import java.util.concurrent.TimeUnit
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 
 @Deprecated("Old design system. Use `:ivy-design` and Material3")
 data class ChoosePeriodModalData(
@@ -536,61 +534,5 @@ private fun ColumnScope.AllTime(
                 )
             }
         )
-    }
-}
-
-@Preview
-@Composable
-private fun Preview_MonthSelected() {
-    IvyWalletPreview {
-        ChoosePeriodModal(
-            modal = ChoosePeriodModalData(
-                period = TimePeriod(
-                    month = fromMonthValue(3)
-                )
-            ),
-            dismiss = {}
-        ) {
-        }
-    }
-}
-
-@Suppress("MagicNumber")
-@Preview
-@Composable
-private fun Preview_FromTo() {
-    IvyWalletPreview {
-        ChoosePeriodModal(
-            modal = ChoosePeriodModalData(
-                period = TimePeriod(
-                    fromToRange = FromToTimeRange(
-                        from = LocalTimeProvider.current.utcNow(),
-                        to = LocalTimeProvider.current.utcNow()
-                            .plusSeconds(TimeUnit.DAYS.toSeconds(36L))
-                    )
-                )
-            ),
-            dismiss = {}
-        ) {
-        }
-    }
-}
-
-@Preview
-@Composable
-private fun Preview_LastN() {
-    IvyWalletPreview {
-        ChoosePeriodModal(
-            modal = ChoosePeriodModalData(
-                period = TimePeriod(
-                    lastNRange = LastNTimeRange(
-                        periodN = 1,
-                        periodType = IntervalType.WEEK
-                    )
-                )
-            ),
-            dismiss = {}
-        ) {
-        }
     }
 }

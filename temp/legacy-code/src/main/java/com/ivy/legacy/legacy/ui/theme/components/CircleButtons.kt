@@ -12,11 +12,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.ivy.design.l0_system.UI
-import com.ivy.legacy.IvyWalletComponentPreview
 import com.ivy.ui.R
 import com.ivy.wallet.ui.theme.Gradient
 
@@ -116,46 +114,4 @@ fun BackButton(
         contentDescription = "back",
         onClick = onClick,
     )
-}
-
-@Preview
-@Composable
-private fun PreviewCloseButton() {
-    IvyWalletComponentPreview {
-        CloseButton {
-        }
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewBackButton() {
-    IvyWalletComponentPreview {
-        BackButton {
-        }
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewCircleButtonFilled() {
-    IvyWalletComponentPreview {
-        CircleButtonFilled(
-            icon = R.drawable.ic_sort_by_alpha_24,
-            onClick = {},
-            clickAreaPadding = 12.dp,
-        )
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewCircleButtonFilledGradient() {
-    IvyWalletComponentPreview {
-        CircleButtonFilledGradient(
-            icon = R.drawable.ic_sort_by_alpha_24,
-            onClick = {},
-            iconPadding = 12.dp,
-        )
-    }
 }

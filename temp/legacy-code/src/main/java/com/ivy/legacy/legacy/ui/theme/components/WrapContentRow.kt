@@ -1,25 +1,23 @@
 package com.ivy.wallet.ui.theme.components
 
+import androidx.compose.foundation.layout.width
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.Layout
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
+import com.ivy.design.l0_system.UI
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.toArgb
-import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.ivy.design.l0_system.UI
-import com.ivy.legacy.IvyWalletPreview
 import com.ivy.legacy.datamodel.Category
 
 @Deprecated("Old design system. Use `:ivy-design` and Material3")
@@ -81,44 +79,6 @@ fun <T> WrapContentRow(
                 placeable.place(x, y)
                 x += placeable.width + horizontalMarginBetweenItems.roundToPx()
             }
-        }
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewWrapContentRow() {
-    IvyWalletPreview {
-        WrapContentRow(
-            modifier = Modifier
-                .padding(horizontal = 16.dp, vertical = 24.dp)
-                .background(UI.colors.red),
-            items = listOf(
-                Category("Todo", UI.colors.primary.toArgb()),
-                Category("Ivy", UI.colors.primary.toArgb()),
-                Category("Qredo", UI.colors.primary.toArgb()),
-                Category("Home", UI.colors.primary.toArgb()),
-                Category("Inspiration", UI.colors.primary.toArgb()),
-                Category("Business and marketing", UI.colors.primary.toArgb()),
-                Category("Testdfsgdfgdf", UI.colors.primary.toArgb()),
-            ),
-            verticalMarginBetweenRows = 8.dp
-        ) {
-            Text(
-                modifier = Modifier
-                    .clip(RoundedCornerShape(8.dp))
-                    .background(UI.colors.medium, RoundedCornerShape(8.dp))
-                    .clickable(onClick = { })
-                    .padding(horizontal = 20.dp, vertical = 12.dp),
-                text = it.name,
-                style = TextStyle(
-                    color = UI.colors.mediumInverse,
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.SemiBold
-                )
-            )
-
-            Spacer(modifier = Modifier.width(8.dp))
         }
     }
 }

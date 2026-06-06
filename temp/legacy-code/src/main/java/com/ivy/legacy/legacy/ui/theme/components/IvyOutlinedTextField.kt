@@ -22,11 +22,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ivy.design.l0_system.UI
 import com.ivy.design.l0_system.style
-import com.ivy.legacy.IvyWalletComponentPreview
 import com.ivy.legacy.utils.isNotNullOrBlank
 import com.ivy.design.utils.thenIf
 
@@ -102,19 +100,6 @@ fun IvyOutlinedTextField(
             visualTransformation = visualTransformation,
             keyboardActions = keyboardActions,
             keyboardOptions = keyboardOptions
-        )
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewOutlineTextField() {
-    IvyWalletComponentPreview {
-        IvyOutlinedTextField(
-            modifier = Modifier.padding(horizontal = 24.dp),
-            value = TextFieldValue(),
-            hint = "Hint",
-            onValueChanged = {}
         )
     }
 }

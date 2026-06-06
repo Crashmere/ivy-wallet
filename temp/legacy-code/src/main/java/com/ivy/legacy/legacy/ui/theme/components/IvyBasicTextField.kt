@@ -19,10 +19,8 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import com.ivy.design.l0_system.UI
 import com.ivy.design.l0_system.style
-import com.ivy.legacy.IvyWalletComponentPreview
 import com.ivy.legacy.utils.hideKeyboard
 import com.ivy.legacy.utils.isNotNullOrBlank
 import com.ivy.legacy.utils.selectEndTextFieldValue
@@ -83,30 +81,6 @@ fun IvyBasicTextField(
                     hideKeyboard(view)
                 }
             )
-        )
-    }
-}
-
-@Preview
-@Composable
-private fun Preview_Hint() {
-    IvyWalletComponentPreview {
-        IvyBasicTextField(
-            value = selectEndTextFieldValue(""),
-            hint = "Search transactions",
-            onValueChanged = {}
-        )
-    }
-}
-
-@Preview
-@Composable
-private fun Preview_Filled() {
-    IvyWalletComponentPreview {
-        IvyBasicTextField(
-            value = selectEndTextFieldValue("sfds"),
-            hint = "Okay",
-            onValueChanged = {}
         )
     }
 }
