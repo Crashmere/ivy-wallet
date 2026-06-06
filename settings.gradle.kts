@@ -13,7 +13,6 @@ dependencyResolutionManagement {
 rootProject.name = "IvyWallet"
 include(":app")
 include(":feature:accounts")
-include(":feature:attributions")
 include(":feature:balance")
 include(":feature:budgets")
 include(":feature:categories")

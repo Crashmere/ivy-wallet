@@ -457,7 +457,6 @@
     <string name="this_transaction_is_associated_with_loan_record">* Giao dịch này được liên kết với Bản ghi của Khoản vay : %1$s</string>
     <string name="note_transaction_associated_with_loan_record_of_loan">Lưu ý: Giao dịch này được liên kết với Bản ghi của Khoản vay : %1$s\nBạn đang cố gắng thay đổi tài khoản được liên kết với bản ghi khoản vay sang tài khoản có loại tiền tệ khác\n Bản ghi khoản vay sẽ được tính lại dựa trên tỷ giá hối đoái của ngày hôm nay</string>
     <string name="note_you_are_trying_to_change_the_account_associated_with_the_loan">Lưu ý: Bạn đang cố gắng thay đổi tài khoản được liên kết với khoản vay: %1$s bằng tài khoản có loại tiền tệ khác, \nTất cả hồ sơ khoản vay sẽ được tính lại dựa trên tỷ giá hối đoái của ngày hôm nay</string>
-    <string name="attributions">Thông tin nguồn gốc</string>
     <string name="icons">Biểu tượng</string>
     <string name="fonts">Phông chữ</string>
     <string name="tech_stack">Công nghệ sử dụng</string>

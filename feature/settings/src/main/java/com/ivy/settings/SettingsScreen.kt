@@ -47,7 +47,6 @@ import com.ivy.legacy.Constants
 import com.ivy.legacy.IvyWalletPreview
 import com.ivy.legacy.rootScreen
 import com.ivy.legacy.utils.drawColoredShadow
-import com.ivy.navigation.AttributionsScreen
 import com.ivy.navigation.ExchangeRatesScreen
 import com.ivy.navigation.FeaturesScreen
 import com.ivy.navigation.ImportScreen
@@ -462,10 +461,6 @@ private fun BoxWithConstraintsScope.UI(
 
             Spacer(Modifier.height(12.dp))
 
-            Attributions()
-
-            Spacer(Modifier.height(12.dp))
-
             TCAndPrivacyPolicy()
         }
 
@@ -691,19 +686,6 @@ private fun ContactSupport() {
         text = stringResource(R.string.contact_support),
     ) {
         rootActivity.openUrlInBrowser(Constants.URL_IVY_TELEGRAM_INVITE)
-    }
-}
-
-@Composable
-private fun Attributions() {
-    val nav = navigation()
-
-    SettingsDefaultButton(
-        icon = R.drawable.ic_vue_location_global,
-        text = stringResource(R.string.attributions),
-        iconPadding = 6.dp
-    ) {
-        nav.navigateTo(AttributionsScreen)
     }
 }
 

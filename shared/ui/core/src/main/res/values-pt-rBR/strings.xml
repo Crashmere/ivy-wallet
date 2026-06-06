@@ -458,7 +458,6 @@
     <string name="this_transaction_is_associated_with_loan_record">* Esta transação está associada a um Registro de Empréstimo de Empréstimo: %1$s</string>
     <string name="note_transaction_associated_with_loan_record_of_loan">Nota: Esta transação está associada a um Registro de Empréstimo de Empréstimo: %1$s\nVocê está tentando alterar a conta associada ao registro de empréstimo para uma conta de moeda diferente\n O Registro de Empréstimo irá ser recalculado com base nas taxas de câmbio atuais</string>
     <string name="note_you_are_trying_to_change_the_account_associated_with_the_loan">Nota: Você está tentando alterar a conta associada ao empréstimo: %1$s com uma conta de moeda diferente, \nTodos os registros do empréstimo serão recalculados com base na moeda de hoje taxas de câmbio</string>
-    <string name="attributions">Atribuições</string>
     <string name="icons">Ícones</string>
     <string name="fonts">Fontes</string>
     <string name="tech_stack">Pilha de tecnologia</string>

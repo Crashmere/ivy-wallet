@@ -457,7 +457,6 @@
     <string name="this_transaction_is_associated_with_loan">* Questa transazione è associata al Prestito : %1$s</string>
     <string name="this_transaction_is_associated_with_loan_record">* Questa transazione è associata a un Registrazione del Prestito: %1$s.</string>
     <string name="note_transaction_associated_with_loan_record_of_loan">Nota: Questa transazione è associata a un Registrazione del Prestito : %1$s\nStai cercando di cambiare il conto associato alla registrazione del prestito con un conto di valuta diversa\n La registrazione del prestito verrà ricalcolata in base ai tassi di cambio della valuta odierna.</string>
-    <string name="attributions">Riconoscimenti</string>
     <string name="icons">Icone</string>
     <string name="fonts">Caratteri</string>
     <string name="tech_stack">Tecnologie utilizzate</string>

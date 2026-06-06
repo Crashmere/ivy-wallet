@@ -461,7 +461,6 @@
     <string name="this_transaction_is_associated_with_loan_record">* Esta transacción está asociada a un rexistro de préstamo de: %1$s</string>
     <string name="note_transaction_associated_with_loan_record_of_loan">Nota: Esta transacción está asociada a un rexistro de préstamo de: %1$s\nEstás intentando cambiar a conta asociada ao rexistro de préstamo a unha conta dunha moeda diferente\n O rexistro do préstamo recalcularase segundo as taxas de cambio de hoxe.</string>
     <string name="note_you_are_trying_to_change_the_account_associated_with_the_loan">Nota: Estás intentando cambiar a conta asociada ao préstamo: %1$s cunha conta dunha moeda diferente, \ntódolos rexistros do préstamo recalcularanse segundo as taxas de cambio de hoxe.</string>
-    <string name="attributions">Atribucións</string>
     <string name="icons">Iconas</string>
     <string name="fonts">Fontes</string>
     <string name="tech_stack">Tecnoloxía</string>

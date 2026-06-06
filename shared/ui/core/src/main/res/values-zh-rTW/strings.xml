@@ -461,7 +461,6 @@
     <string name="this_transaction_is_associated_with_loan_record">* 此交易與借貸的借貸記錄相關聯: %1$s</string>
     <string name="note_transaction_associated_with_loan_record_of_loan">注意: 此交易與借貸的借貸記錄關聯: %1$s\n您正在嘗試將與借貸記錄關聯的帳戶更改為不同貨幣的帳戶\n借貸記錄將根據今天重新計算\的貨幣匯率</string>
     <string name="note_you_are_trying_to_change_the_account_associated_with_the_loan">注意: 您正在嘗試將與借貸關聯的帳戶: %1$s 更改為不同貨幣的帳戶，\n所有借貸記錄將根據今天的貨幣匯率重新計算</string>
-    <string name="attributions">屬性</string>
     <string name="icons">圖示</string>
     <string name="fonts">字體</string>
     <string name="tech_stack">技術堆疊</string>
