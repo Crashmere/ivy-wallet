@@ -236,10 +236,8 @@
     <string name="set_filter">Atur Filter</string>
     <string name="export">Ekspor</string>
     <string name="no_transactions_for_query">Anda tidak memiliki transaksi untuk kueri "%1$s".</string>
-    <string name="import_export"><![CDATA[Impor & Ekspor]]></string>
     <string name="backup_data">Cadangkan Data</string>
     <string name="import_data">Impor Data</string>
-    <string name="app_settings">Pengaturan Aplikasi</string>
     <string name="lock_app">Kunci aplikasi</string>
     <string name="show_notifications">Tampilkan notifikasi</string>
     <string name="hide_balance">Sembunyikan saldo</string>

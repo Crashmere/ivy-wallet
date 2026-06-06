@@ -15,6 +15,14 @@ sealed interface SettingsEvent {
     data class SetTransfersAsIncomeExpense(val treatTransfersAsIncomeExpense: Boolean) :
         SettingsEvent
 
+    data class SetCompactAccountsMode(val enabled: Boolean) : SettingsEvent
+    data class SetHideAccountTotalBalance(val enabled: Boolean) : SettingsEvent
+    data class SetCompactCategoriesMode(val enabled: Boolean) : SettingsEvent
+    data class SetShowAccountColorsInTransactions(val enabled: Boolean) : SettingsEvent
+    data class SetShowTitleSuggestions(val enabled: Boolean) : SettingsEvent
+    data class SetStandardKeypadLayout(val enabled: Boolean) : SettingsEvent
+    data class SetShowCategorySearchBar(val enabled: Boolean) : SettingsEvent
+    data class SetSortCategoriesAscending(val enabled: Boolean) : SettingsEvent
     data class SetStartDateOfMonth(val startDate: Int) : SettingsEvent
     data object DeleteCloudUserData : SettingsEvent
     data object DeleteAllUserData : SettingsEvent

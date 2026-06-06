@@ -235,15 +235,12 @@
     <string name="set_filter">Establecer filtro</string>
     <string name="export">Exportar</string>
     <string name="no_transactions_for_query">No tienes transacciones para la consulta "%1$s".</string>
-    <string name="import_export"><![CDATA[Importación y exportación]]></string>
     <string name="backup_data">Respaldo de datos</string>
     <string name="import_data">Importar datos</string>
-    <string name="app_settings">Ajustes de Aplicación</string>
     <string name="tap_to_switch_theme">Toca para cambiar el tema</string>
     <string name="lock_app">Bloquear la aplicación</string>
     <string name="show_notifications">Mostrar notificaciones</string>
     <string name="exchange_rates">Tasas de cambio</string>
-    <string name="advanced_features">Funciones avanzadas</string>
     <string name="hide_balance">Ocultar saldo</string>
     <string name="hide_balance_description">Toca en el saldo oculto para mostrarlo por 5 segundos</string>
     <string name="hide_income">Ocultar ingresos</string>

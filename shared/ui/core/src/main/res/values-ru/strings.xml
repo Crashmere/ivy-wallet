@@ -235,10 +235,8 @@
     <string name="set_filter">Установить фильтр</string>
     <string name="export">Экспорт</string>
     <string name="no_transactions_for_query">По вашему запросу не нашлось ни одной транзакции: %1$s.</string>
-    <string name="import_export"><![CDATA[Импорт и Экспорт]]></string>
     <string name="backup_data">Бэкап данных</string>
     <string name="import_data">Импорт данных</string>
-    <string name="app_settings">Настройки приложения</string>
     <string name="lock_app">Заблокировать приложение</string>
     <string name="show_notifications">Показывать уведомления</string>
     <string name="hide_balance">Скрыть баланс</string>

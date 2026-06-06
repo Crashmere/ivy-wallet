@@ -235,10 +235,8 @@
     <string name="set_filter">Шүүх</string>
     <string name="export">Экспортлох</string>
     <string name="no_transactions_for_query">"%1$s" хайлтад тохирох гүйлгээ олдсонгүй.</string>
-    <string name="import_export"><![CDATA[Сэргээх & нөөцлөх]]></string>
     <string name="backup_data">Мэдээлэл нөөцлөх</string>
     <string name="import_data">Мэдээлэл сэргээх</string>
-    <string name="app_settings">Аппын тохиргоо</string>
     <string name="lock_app">Апп түгжих</string>
     <string name="show_notifications">Мэдэгдэл харуулах</string>
     <string name="hide_balance">Дүн нуух</string>

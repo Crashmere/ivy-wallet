@@ -6,8 +6,10 @@
 
 - 已删除 GitHub workflow、Issue/PR 模板、CI 辅助模块、Fastlane 发布配置、开发规范文档、Detekt 配置、lint baseline、脚本和生成图等外围资产。
 - 已移除 Detekt、Kover、模块图、Gradle wrapper 自动升级、Google Services、Crashlytics、Google Play Review、Compose lint 等构建或发布相关接线。
+- 已删除 contributors、releases、attributions、poll 等社区/远程反馈模块。
+- 已将原 `:feature:features` 独立英文页面合并进设置页，改为面向个人使用的偏好设置。
 - 保留应用功能源码、功能测试源码、截图测试源码和 Gradle wrapper。
-- 当前构建验证曾运行到 Android 任务依赖解析阶段，但本机未配置 Android SDK，需通过 `ANDROID_HOME` 或 `local.properties` 中的 `sdk.dir` 补齐后再继续验证。
+- 当前本机已通过项目本地 Android SDK 编译 demo APK，并成功安装到已连接手机。
 
 ## 后续清理原则
 
@@ -63,19 +65,6 @@
 - 从 `app/build.gradle.kts` 移除对应依赖
 - 从 `app/src/main/java/com/ivy/IvyNavGraph.kt` 移除 `AttributionsScreen`
 - 从 `feature/settings` 中移除 Attributions 设置入口
-
-### `:feature:features`
-
-内部 feature flags 的展示和切换页面。页面本身偏开发/实验管理，个人使用中可以先删除入口和 UI 模块。
-
-注意：不要直接删除 `shared/domain/features`，因为账户、搜索、交易、金额格式化等业务代码仍依赖 `Features`。
-
-清理时需要同步处理：
-
-- 从 `settings.gradle.kts` 移除 `:feature:features`
-- 从 `app/build.gradle.kts` 移除对应依赖
-- 从 `app/src/main/java/com/ivy/IvyNavGraph.kt` 移除 `FeaturesScreen`
-- 从 `feature/settings` 中移除 Custom Features 设置入口
 
 ## 第二批建议清理：需要按个人使用习惯确认
 
@@ -133,16 +122,13 @@ CSV 和其他 App 数据导入功能。
 这些不是独立 Gradle 模块，但仍包含原项目社区、推广或远程服务残留。
 
 - `temp/legacy-code/src/main/java/com/ivy/legacy/Constants.kt` 中的 GitHub、Telegram、Sponsor、Google Play、隐私政策链接
-- `feature/settings/SettingsScreen.kt` 中的 Rate us、Share Ivy Wallet、GitHub、Telegram、Contributors、Releases、Attributions、Features 等设置项
+- `feature/settings/SettingsScreen.kt` 中可能残留的原项目推广入口
 - `shared/ui/core` 中的 GitHub 开源卡片和相关资源
 - `app/src/main/java/com/ivy/wallet/migrations/impl/DisableGitHubAutoBackupMigration.kt`
 - `shared/data/core/src/main/java/com/ivy/data/datastore/DatastoreKeys.kt` 中的 `GITHUB_*` key
 
 ## 建议执行顺序
 
-1. 删除 `contributors`、`releases`、`attributions`、`poll`。
-2. 清理 Settings 页面中的社区、推广、发布和原项目入口。
-3. 删除 GitHub、Telegram、Sponsor、Google Play 等 URL 常量和开源卡片。
-4. 按个人习惯决定是否删除 `widget/*`。
-5. 最后评估 `disclaimer`、`onboarding`、`import-data` 和 backup/import 能力。
-
+1. 删除 GitHub、Telegram、Sponsor、Google Play 等 URL 常量和开源卡片。
+2. 按个人习惯决定是否删除 `widget/*`。
+3. 最后评估 `disclaimer`、`onboarding`、`import-data` 和 backup/import 能力。

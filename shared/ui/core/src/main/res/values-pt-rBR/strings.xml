@@ -235,10 +235,8 @@
     <string name="set_filter">Definir filtro</string>
     <string name="export">Exportar</string>
     <string name="no_transactions_for_query">Você não tem nenhuma transação para a consulta "%1$s".</string>
-    <string name="import_export"><![CDATA[Importar e exportar]]></string>
     <string name="backup_data">Dados de backup</string>
     <string name="import_data">Importar dados</string>
-    <string name="app_settings">Configurações do aplicativo</string>
     <string name="lock_app">Bloquear aplicativo</string>
     <string name="show_notifications">Mostrar notificações</string>
     <string name="hide_balance">Ocultar saldo</string>
@@ -476,6 +474,5 @@
     <string name="warning_import_csv_file">"\n!!!⚠️AVISO: A importação pode duplicar transações!!!\nTransações duplicadas NÃO podem ser excluídas facilmente e você precisará remover manualmente cada uma delas! \nMotivo: podemos Não analisamos IDs de transação porque o Ivy Wallet funciona apenas com UUID e outros aplicativos não.\nSe você está começando do zero, não se preocupe. Por favor, ignore esta mensagem."</string>
     <string name="select_tags">Selecionar tags</string>
     <string name="language">Linguagem</string>
-    <string name="advanced_features">Configurações avançadas</string>
     <string name="budget_exceeded_info">Orçamento excedido por %1$s %2$s</string>
 </resources>

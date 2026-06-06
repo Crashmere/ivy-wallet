@@ -350,10 +350,8 @@
     <string name="hide_balance">बैलेंस छुपाएं</string>
     <string name="show_notifications">सूचनाएं दिखाएं</string>
     <string name="lock_app">लॉक ऐप</string>
-    <string name="app_settings">एप्लिकेशन सेटिंग</string>
     <string name="import_data">इम्पोर्ट आंकड़ा</string>
     <string name="backup_data">बैकअप डेटा</string>
-    <string name="import_export"><![CDATA[इम्पोर्ट और एक्सपोर्ट]]></string>
     <string name="no_transactions_for_query">%1$s क्वेरी के लिए आपका कोई लेन-देन नहीं है।</string>
     <string name="export">एक्सपोर्ट करें</string>
     <string name="set_filter">फ़िल्टर सेट करें</string>

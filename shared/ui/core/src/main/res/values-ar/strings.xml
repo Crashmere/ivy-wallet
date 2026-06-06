@@ -235,10 +235,8 @@
     <string name="set_filter">تحديد التصفيات</string>
     <string name="export">تصدير</string>
     <string name="no_transactions_for_query">لا يوجد لديك عمليات تطابق "%1$s"</string>
-    <string name="import_export">التصدير و الاستيراد</string>
     <string name="backup_data">نسخ إحتياطي للبيانات</string>
     <string name="import_data">استيراد البيانات</string>
-    <string name="app_settings">إعدادات التطبيق</string>
     <string name="lock_app">أقفل التطبيق</string>
     <string name="show_notifications">إظهار التنبيهات</string>
     <string name="hide_balance">إخفاء الرصيد</string>

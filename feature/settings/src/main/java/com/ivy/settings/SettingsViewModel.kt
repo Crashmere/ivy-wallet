@@ -20,6 +20,8 @@ import com.ivy.data.db.dao.read.SettingsDao
 import com.ivy.data.db.dao.write.WriteSettingsDao
 import com.ivy.data.model.primitive.AssetCode
 import com.ivy.domain.RootScreen
+import com.ivy.domain.features.BoolFeature
+import com.ivy.domain.features.Features
 import com.ivy.domain.usecase.csv.ExportCsvUseCase
 import com.ivy.domain.usecase.exchange.SyncExchangeRatesUseCase
 import com.ivy.frp.monad.Res
@@ -53,6 +55,7 @@ class SettingsViewModel @Inject constructor(
     private val startDayOfMonthAct: StartDayOfMonthAct,
     private val updateStartDayOfMonthAct: UpdateStartDayOfMonthAct,
     private val syncExchangeRatesUseCase: SyncExchangeRatesUseCase,
+    private val features: Features,
     private val settingsAct: SettingsAct,
     private val updateSettingsAct: UpdateSettingsAct,
     private val settingsWriter: WriteSettingsDao,
@@ -68,6 +71,14 @@ class SettingsViewModel @Inject constructor(
     private val hideCurrentBalance = mutableStateOf(false)
     private val hideIncome = mutableStateOf(false)
     private val treatTransfersAsIncomeExpense = mutableStateOf(false)
+    private val compactAccountsMode = mutableStateOf(false)
+    private val hideAccountTotalBalance = mutableStateOf(false)
+    private val compactCategoriesMode = mutableStateOf(false)
+    private val showAccountColorsInTransactions = mutableStateOf(false)
+    private val showTitleSuggestions = mutableStateOf(true)
+    private val standardKeypadLayout = mutableStateOf(false)
+    private val showCategorySearchBar = mutableStateOf(true)
+    private val sortCategoriesAscending = mutableStateOf(false)
     private val startDateOfMonth = mutableIntStateOf(1)
     private val progressState = mutableStateOf(false)
 
@@ -85,6 +96,14 @@ class SettingsViewModel @Inject constructor(
             showNotifications = getShowNotifications(),
             hideCurrentBalance = getHideCurrentBalance(),
             treatTransfersAsIncomeExpense = getTreatTransfersAsIncomeExpense(),
+            compactAccountsMode = getCompactAccountsMode(),
+            hideAccountTotalBalance = getHideAccountTotalBalance(),
+            compactCategoriesMode = getCompactCategoriesMode(),
+            showAccountColorsInTransactions = getShowAccountColorsInTransactions(),
+            showTitleSuggestions = getShowTitleSuggestions(),
+            standardKeypadLayout = getStandardKeypadLayout(),
+            showCategorySearchBar = getShowCategorySearchBar(),
+            sortCategoriesAscending = getSortCategoriesAscending(),
             startDateOfMonth = getStartDateOfMonth(),
             progressState = getProgressState(),
             hideIncome = getHideIncome(),
@@ -101,6 +120,7 @@ class SettingsViewModel @Inject constructor(
         initializeHideCurrentBalance()
         initializeHideIncome()
         initializeTransfersAsIncomeExpense()
+        initializeFeaturePreferences()
         initializeStartDateOfMonth()
     }
 
@@ -149,6 +169,18 @@ class SettingsViewModel @Inject constructor(
             sharedPrefs.getBoolean(SharedPrefs.TRANSFERS_AS_INCOME_EXPENSE, false)
     }
 
+    private suspend fun initializeFeaturePreferences() {
+        compactAccountsMode.value = features.compactAccountsMode.isEnabled(context)
+        hideAccountTotalBalance.value = features.hideTotalBalance.isEnabled(context)
+        compactCategoriesMode.value = features.compactCategoriesMode.isEnabled(context)
+        showAccountColorsInTransactions.value =
+            features.showAccountColorsInTransactions.isEnabled(context)
+        showTitleSuggestions.value = features.showTitleSuggestions.isEnabled(context)
+        standardKeypadLayout.value = features.standardKeypadLayout.isEnabled(context)
+        showCategorySearchBar.value = features.showCategorySearchBar.isEnabled(context)
+        sortCategoriesAscending.value = features.sortCategoriesAscending.isEnabled(context)
+    }
+
     private suspend fun initializeStartDateOfMonth() {
         startDateOfMonth.intValue = startDayOfMonthAct(Unit)
     }
@@ -194,6 +226,46 @@ class SettingsViewModel @Inject constructor(
     }
 
     @Composable
+    private fun getCompactAccountsMode(): Boolean {
+        return compactAccountsMode.value
+    }
+
+    @Composable
+    private fun getHideAccountTotalBalance(): Boolean {
+        return hideAccountTotalBalance.value
+    }
+
+    @Composable
+    private fun getCompactCategoriesMode(): Boolean {
+        return compactCategoriesMode.value
+    }
+
+    @Composable
+    private fun getShowAccountColorsInTransactions(): Boolean {
+        return showAccountColorsInTransactions.value
+    }
+
+    @Composable
+    private fun getShowTitleSuggestions(): Boolean {
+        return showTitleSuggestions.value
+    }
+
+    @Composable
+    private fun getStandardKeypadLayout(): Boolean {
+        return standardKeypadLayout.value
+    }
+
+    @Composable
+    private fun getShowCategorySearchBar(): Boolean {
+        return showCategorySearchBar.value
+    }
+
+    @Composable
+    private fun getSortCategoriesAscending(): Boolean {
+        return sortCategoriesAscending.value
+    }
+
+    @Composable
     private fun getStartDateOfMonth(): String {
         return startDateOfMonth.intValue.toString()
     }
@@ -226,6 +298,54 @@ class SettingsViewModel @Inject constructor(
 
             is SettingsEvent.SetTransfersAsIncomeExpense -> setTransfersAsIncomeExpense(
                 event.treatTransfersAsIncomeExpense
+            )
+
+            is SettingsEvent.SetCompactAccountsMode -> setFeaturePreference(
+                feature = features.compactAccountsMode,
+                state = compactAccountsMode,
+                enabled = event.enabled
+            )
+
+            is SettingsEvent.SetHideAccountTotalBalance -> setFeaturePreference(
+                feature = features.hideTotalBalance,
+                state = hideAccountTotalBalance,
+                enabled = event.enabled
+            )
+
+            is SettingsEvent.SetCompactCategoriesMode -> setFeaturePreference(
+                feature = features.compactCategoriesMode,
+                state = compactCategoriesMode,
+                enabled = event.enabled
+            )
+
+            is SettingsEvent.SetShowAccountColorsInTransactions -> setFeaturePreference(
+                feature = features.showAccountColorsInTransactions,
+                state = showAccountColorsInTransactions,
+                enabled = event.enabled
+            )
+
+            is SettingsEvent.SetShowTitleSuggestions -> setFeaturePreference(
+                feature = features.showTitleSuggestions,
+                state = showTitleSuggestions,
+                enabled = event.enabled
+            )
+
+            is SettingsEvent.SetStandardKeypadLayout -> setFeaturePreference(
+                feature = features.standardKeypadLayout,
+                state = standardKeypadLayout,
+                enabled = event.enabled
+            )
+
+            is SettingsEvent.SetShowCategorySearchBar -> setFeaturePreference(
+                feature = features.showCategorySearchBar,
+                state = showCategorySearchBar,
+                enabled = event.enabled
+            )
+
+            is SettingsEvent.SetSortCategoriesAscending -> setFeaturePreference(
+                feature = features.sortCategoriesAscending,
+                state = sortCategoriesAscending,
+                enabled = event.enabled
             )
 
             is SettingsEvent.SetStartDateOfMonth -> setStartDateOfMonth(event.startDate)
@@ -359,6 +479,18 @@ class SettingsViewModel @Inject constructor(
                 SharedPrefs.TRANSFERS_AS_INCOME_EXPENSE,
                 treatTransfersAsIncomeExpense.value
             )
+        }
+    }
+
+    private fun setFeaturePreference(
+        feature: BoolFeature,
+        state: androidx.compose.runtime.MutableState<Boolean>,
+        enabled: Boolean
+    ) {
+        state.value = enabled
+
+        viewModelScope.launch {
+            feature.set(context, enabled)
         }
     }
 

@@ -235,10 +235,8 @@
     <string name="set_filter">Задай Филтър</string>
     <string name="export">Експортиране</string>
     <string name="no_transactions_for_query">Няма транзакции за тази заявка: "%1$s".</string>
-    <string name="import_export"><![CDATA[Import & Export]]></string>
     <string name="backup_data">Backup Data</string>
     <string name="import_data">Импортиране</string>
-    <string name="app_settings">Найстроки</string>
     <string name="lock_app">Заключване</string>
     <string name="show_notifications">Известия</string>
     <string name="hide_balance">Скрий баланс</string>

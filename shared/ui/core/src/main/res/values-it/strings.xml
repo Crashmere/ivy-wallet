@@ -236,10 +236,8 @@
     <string name="set_filter">Imposta Filtro</string>
     <string name="export">Esporta</string>
     <string name="no_transactions_for_query">Non hai nessuna transazione corrispondente alla ricerca di \"%1$s\".</string>
-    <string name="import_export"><![CDATA[Importa ed esporta]]></string>
     <string name="backup_data">Backup dei dati</string>
     <string name="import_data">Importa i dati</string>
-    <string name="app_settings">Impostazioni dell\'App</string>
     <string name="lock_app">Blocca l\'app</string>
     <string name="show_notifications">Mostra le notifiche</string>
     <string name="hide_balance">Nascondi saldo</string>

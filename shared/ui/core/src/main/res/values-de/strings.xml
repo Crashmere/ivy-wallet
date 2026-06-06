@@ -235,10 +235,8 @@
     <string name="set_filter">Filter festlegen</string>
     <string name="export">Exportieren</string>
     <string name="no_transactions_for_query">Du hast keine Transaktionen für die Abfrage "%1$s".</string>
-    <string name="import_export"><![CDATA[Importieren & Exportieren]]></string>
     <string name="backup_data">Daten sichern</string>
     <string name="import_data">Daten importieren</string>
-    <string name="app_settings">App-Einstellungen</string>
     <string name="lock_app">App sperren</string>
     <string name="show_notifications">Benachrichtigungen anzeigen</string>
     <string name="hide_balance">Bilanz ausblenden</string>

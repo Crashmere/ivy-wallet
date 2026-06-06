@@ -134,6 +134,4 @@ data object ExchangeRatesScreen : Screen {
         get() = true
 }
 
-data object FeaturesScreen : Screen
-
 data object DisclaimerScreen : Screen

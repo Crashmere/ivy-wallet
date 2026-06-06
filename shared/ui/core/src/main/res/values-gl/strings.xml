@@ -238,10 +238,8 @@
     <string name="set_filter">Establecer filtro</string>
     <string name="export">Exportar</string>
     <string name="no_transactions_for_query">Non tes ningunha transacción para a consulta "%1$s".</string>
-    <string name="import_export"><![CDATA[Importar e Exportar]]></string>
     <string name="backup_data">Copia de seguridade dos datos</string>
     <string name="import_data">Importar datos</string>
-    <string name="app_settings">Axustes da aplicación</string>
     <string name="lock_app">Bloquear aplicación</string>
     <string name="show_notifications">Amosar notificacións</string>
     <string name="hide_balance">Ocultar saldo</string>
@@ -480,5 +478,4 @@
     <string name="select_tags">Seleccionar etiquetas</string>
     <string name="bill_paid">A túa factura de %1$s %2$s foi pagada</string>
     <string name="language">Lingua</string>
-    <string name="advanced_features">Funcionalidades avanzadas</string>
 </resources>

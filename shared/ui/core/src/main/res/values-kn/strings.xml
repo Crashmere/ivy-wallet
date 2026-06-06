@@ -235,10 +235,8 @@
     <string name="set_filter">ಫಿಲ್ಟರ್ ಅನ್ನು ಹೊಂದಿಸಿ</string>
     <string name="export">ರಫ್ತು ಮಾಡಿ</string>
     <string name="no_transactions_for_query">ನೀವು "%1$s" ಗೆ ಯಾವುದೇ ವಹಿವಾಟುಗಳನ್ನು ಹೊಂದಿಲ್ಲ.</string>
-    <string name="import_export"><![CDATA[ಆಮದು ಮತ್ತು ರಫ್ತು]]></string>
     <string name="backup_data">ನಿಮ್ಮ ಡೇಟಾವನ್ನು ಬ್ಯಾಕಪ್ ಮಾಡಿ</string>
     <string name="import_data">ಡೇಟಾವನ್ನು ಆಮದು ಮಾಡಿ</string>
-    <string name="app_settings">ಅಪ್ಲಿಕೇಶನ್ ಸೆಟ್ಟಿಂಗ್‌ಗಳು</string>
     <string name="lock_app">ಅಪ್ಲಿಕೇಶನ್ ಲಾಕ್ ಮಾಡಿ</string>
     <string name="show_notifications">ಅಧಿಸೂಚನೆಗಳನ್ನು ತೋರಿಸಿ</string>
     <string name="hide_balance">ಮೊತ್ತವನ್ನು ಮರೆಮಾಡಿ</string>

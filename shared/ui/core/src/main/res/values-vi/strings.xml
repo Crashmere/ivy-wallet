@@ -235,10 +235,8 @@
     <string name="set_filter">Đặt bộ lọc</string>
     <string name="export">Xuất</string>
     <string name="no_transactions_for_query">Bạn không có bất kỳ giao dịch nào cho truy vấn "%1$s".</string>
-    <string name="import_export"><![CDATA[Nhập & Xuất]]></string>
     <string name="backup_data">Sao lưu dữ liệu</string>
     <string name="import_data">Nhập dữ liệu</string>
-    <string name="app_settings">Cài đặt ứng dụng</string>
     <string name="lock_app">Khóa ứng dụng</string>
     <string name="show_notifications">Hiện thông báo</string>
     <string name="hide_balance">Ẩn số dư</string>
