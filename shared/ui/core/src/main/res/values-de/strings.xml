@@ -92,8 +92,6 @@
     <string name="confirm_account_change_description">Hinweis: Wenn du versuchst, das mit dem Darlehen verknüpfte Konto durch ein Konto in einer anderen Währung zu ersetzen, werden alle Darlehenseinträge auf der Grundlage des heutigen Wechselkurses neu berechnet.</string>
     <string name="confirm">Bestätigen</string>
     <string name="created_on">Erstellt am</string>
-    <string name="hi">Hi</string>
-    <string name="hi_name">Hi %1$s</string>
     <string name="cashflow">Cashflow: %1$s%2$s %3$s</string>
     <string name="search_transactions">Transaktionen suchen</string>
     <string name="ivy_wallet_open_source">Ivy Wallet ist Open-Source</string>
@@ -256,14 +254,12 @@
     <string name="exporting_data_description">Bitte warten, Daten wird exportiert</string>
     <string name="start_date_of_month">Startdatum des Monats</string>
     <string name="roadmap">Entwicklungsplan</string>
-    <string name="account_uppercase">KONTO</string>
     <string name="logout">Abmelden</string>
     <string name="login">Anmelden</string>
     <string name="syncing">Synchronisierung läuft…</string>
     <string name="data_synced_to_cloud">Daten mit der Cloud synchronisiert</string>
     <string name="tap_to_sync">Tippe zum Synchronisieren</string>
     <string name="sync_failed">Synchronisierung fehlgeschlagen. Tippe zum Synchronisieren</string>
-    <string name="anonymous">Anonym</string>
     <string name="export_to_csv">In CSV exportieren</string>
     <string name="left_to_spend">Übrig zum Ausgeben</string>
     <string name="budget_exceeded_by">Budget überschritten um</string>

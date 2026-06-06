@@ -91,8 +91,6 @@
     <string name="confirm_account_change_description">नोट: आप किसी भिन्न मुद्रा वाले खाते से ऋण से जुड़े खाते को बदलने का प्रयास कर रहे हैं, आज की विनिमय दरों के आधार पर सभी ऋण रिकॉर्ड की पुन: गणना की जाएगी</string>
     <string name="confirm">पुष्टि करें</string>
     <string name="created_on">पर बनाया गया</string>
-    <string name="hi">नमस्ते</string>
-    <string name="hi_name">नमस्ते %1$s</string>
     <string name="cashflow">कैशफ़्लो: %1$s%2$s %3$s</string>
     <string name="search_transactions">लेनदेन खोजें</string>
     <string name="ivy_wallet_open_source">Ivy वॉलेट ओपन सोर्स हैं</string>
@@ -325,14 +323,12 @@
     <string name="buffer_exceeded_by">बफर इतने से अधिक हो गया</string>
     <string name="left_to_spend">खर्च करने के लिए छोड़ दिया गया</string>
     <string name="export_to_csv">CSV को एक्सपोर्ट करें</string>
-    <string name="anonymous">अनाम</string>
     <string name="sync_failed">सिंक विफ। सिंक करने के लिए टैप करें</string>
     <string name="tap_to_sync">सिंक करने के लिए टैप करें</string>
     <string name="data_synced_to_cloud">क्लाउड से डाटा सिंक कर दिया गया</string>
     <string name="syncing">सिंक किया जा रहा है…</string>
     <string name="login">लॉग इन करें</string>
     <string name="logout">लॉग आउट</string>
-    <string name="account_uppercase">खाता</string>
     <string name="roadmap">रोडमैप</string>
     <string name="start_date_of_month">महीने की शुरुआत की तारीख</string>
     <string name="exporting_data_description">कृपया प्रतीक्षा करें, डेटा एक्सपोर्ट किया जा रहा है</string>

@@ -92,8 +92,6 @@
     <string name="confirm_account_change_description">ملاحظة: انت تحاول ان تغير حساب مرتبط بقرض من حساب بعملة مختلفة, \n سجلات القرض سوف يتم اعادة حسابها وفقا لأسعار الصرف اليوم</string>
     <string name="confirm">تأكيد</string>
     <string name="created_on">تم الانشاء في</string>
-    <string name="hi">أهلا</string>
-    <string name="hi_name">أهلا %1$s</string>
     <string name="cashflow">تدفق المال: %1$s%2$s %3$s</string>
     <string name="search_transactions">ابحث المعاملات</string>
     <string name="ivy_wallet_open_source">مفتوح المصدر Ivy Wallet</string>
@@ -254,14 +252,12 @@
     <string name="exporting_data_description">الرجاء الانتظار, يتم تصدير البيانات</string>
     <string name="start_date_of_month">تاريخ بداية الشهر</string>
     <string name="roadmap">الخطة</string>
-    <string name="account_uppercase">الحساب</string>
     <string name="logout">تسجيل الخروج</string>
     <string name="login">تسجيل الدخول</string>
     <string name="syncing">يتم المزامنة…</string>
     <string name="data_synced_to_cloud">تمت مزامنة البيانات للسحابة</string>
     <string name="tap_to_sync">أضغط للمزامنة</string>
     <string name="sync_failed">فشلت عملية المزامنة. أضغط للمزامنة</string>
-    <string name="anonymous">مجهول</string>
     <string name="export_to_csv">CSV التصدير لملف</string>
     <string name="left_to_spend">المتبقي للإنفاق</string>
     <string name="budget_exceeded_by">تجاوزت عن الميزانية ب</string>

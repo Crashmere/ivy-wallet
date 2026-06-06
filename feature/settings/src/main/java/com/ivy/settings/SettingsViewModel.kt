@@ -64,7 +64,6 @@ class SettingsViewModel @Inject constructor(
 ) : ComposeViewModel<SettingsState, SettingsEvent>() {
 
     private val currencyCode = mutableStateOf("")
-    private val name = mutableStateOf("")
     private val currentTheme = mutableStateOf<Theme>(Theme.AUTO)
     private val lockApp = mutableStateOf(false)
     private val showNotifications = mutableStateOf(true)
@@ -90,7 +89,6 @@ class SettingsViewModel @Inject constructor(
 
         return SettingsState(
             currencyCode = getCurrencyCode(),
-            name = getName(),
             currentTheme = getCurrentTheme(),
             lockApp = getLockApp(),
             showNotifications = getShowNotifications(),
@@ -113,7 +111,6 @@ class SettingsViewModel @Inject constructor(
 
     private suspend fun onStart() {
         initializeCurrency()
-        initializeName()
         initializeCurrentTheme()
         initializeLockApp()
         initializeShowNotifications()
@@ -130,14 +127,6 @@ class SettingsViewModel @Inject constructor(
         }
 
         currencyCode.value = settings.currency
-    }
-
-    private suspend fun initializeName() {
-        val settings = ioThread {
-            settingsDao.findFirst()
-        }
-
-        name.value = settings.name
     }
 
     private suspend fun initializeCurrentTheme() {
@@ -188,11 +177,6 @@ class SettingsViewModel @Inject constructor(
     @Composable
     private fun getCurrencyCode(): String {
         return currencyCode.value
-    }
-
-    @Composable
-    private fun getName(): String {
-        return name.value
     }
 
     @Composable
@@ -282,7 +266,6 @@ class SettingsViewModel @Inject constructor(
     override fun onEvent(event: SettingsEvent) {
         when (event) {
             is SettingsEvent.SetCurrency -> setCurrency(event.newCurrency)
-            is SettingsEvent.SetName -> setName(event.newName)
             is SettingsEvent.ExportToCsv -> exportToCSV(event.rootScreen)
             is SettingsEvent.BackupData -> exportToZip(event.rootScreen)
             SettingsEvent.SwitchTheme -> switchTheme()
@@ -369,20 +352,6 @@ class SettingsViewModel @Inject constructor(
                 AssetCode.from(newCurrency).onRight {
                     syncExchangeRatesUseCase.sync(it)
                 }
-            }
-        }
-    }
-
-    private fun setName(newName: String) {
-        name.value = newName
-
-        viewModelScope.launch {
-            ioThread {
-                settingsWriter.save(
-                    settingsDao.findFirst().copy(
-                        name = newName
-                    )
-                )
             }
         }
     }

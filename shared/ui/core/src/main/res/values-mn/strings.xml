@@ -92,8 +92,6 @@
     <string name="confirm_account_change_description">Санамж: Та зээлийн тооцоотой холбогдсон дансыг өөр мөнгөн тэмдэгтэй дансаар солих гэж байна, \nХолбогдох бүх тооцоо өнөөдрийн валютын ханшаар дахин бодогдох болно </string>
     <string name="confirm">Батлах</string>
     <string name="created_on">Үүссэн огноо</string>
-    <string name="hi">Сайн уу?</string>
-    <string name="hi_name">Сайн уу, %1$s</string>
     <string name="cashflow">Урсгал: %1$s%2$s %3$s</string>
     <string name="search_transactions">Гүйлгээ хайх</string>
     <string name="ivy_wallet_open_source">Ivy Хэтэвч бол open-source апп</string>
@@ -254,14 +252,12 @@
     <string name="exporting_data_description">Түр хүлээнэ үү, мэдээлэл экспортолж байна</string>
     <string name="start_date_of_month">Сар эхлэх өдөр</string>
     <string name="roadmap">Хөгжүүлэлтийн төлөвлөгөө</string>
-    <string name="account_uppercase">ДАНС</string>
     <string name="logout">Гарах</string>
     <string name="login">Нэвтрэх</string>
     <string name="syncing">Нөөцөлж байна…</string>
     <string name="data_synced_to_cloud">Мэдээллийг үүлэнд нөөцөллөө</string>
     <string name="tap_to_sync">Нөөцлөх</string>
     <string name="sync_failed">Нөөцлөхөд алдаа гарлаа. Дарж дахин оролд</string>
-    <string name="anonymous">Нэргүй</string>
     <string name="export_to_csv">CSV хэлбэрээр хадгалах</string>
     <string name="left_to_spend">Зарцуулах боломжтой дүн</string>
     <string name="budget_exceeded_by">Төсөв хэтэрсэн дүн</string>

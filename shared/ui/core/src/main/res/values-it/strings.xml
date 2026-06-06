@@ -92,8 +92,6 @@
     <string name="confirm_account_change_description">Nota: Stai cercando di modificare il conto associato al prestito con un conto di valuta diversa, \nTutti i record del prestito saranno ricalcolati in base ai tassi di cambio di oggi </string>
     <string name="confirm">Conferma</string>
     <string name="created_on">Creato il</string>
-    <string name="hi">Ciao</string>
-    <string name="hi_name">Ciao %1$s</string>
     <string name="cashflow">Flusso di cassa: %1$s%2$s %3$s</string>
     <string name="search_transactions">Cerca transazioni</string>
     <string name="ivy_wallet_open_source">Ivy Wallet è open-source</string>
@@ -257,14 +255,12 @@
     <string name="exporting_data_description">Attendi, esportazione dei dati in corso</string>
     <string name="start_date_of_month">Data di inizio del mese</string>
     <string name="roadmap">Roadmap</string>
-    <string name="account_uppercase">ACCOUNT</string>
     <string name="logout">Esci</string>
     <string name="login">Accedi</string>
     <string name="syncing">Sincronizzazione…</string>
     <string name="data_synced_to_cloud">Dati sincronizzati nel cloud</string>
     <string name="tap_to_sync">Tocca per sincronizzare</string>
     <string name="sync_failed">Sincronizzazione non riuscita. Tocca per sincronizzare</string>
-    <string name="anonymous">Anonimo</string>
     <string name="export_to_csv">Esporta in CSV</string>
     <string name="left_to_spend">Rimangono da spendere</string>
     <string name="budget_exceeded_by">Budget superato di</string>

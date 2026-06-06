@@ -92,8 +92,6 @@
     <string name="confirm_account_change_description">ಗಮನಿಸಿ: ನೀವು ವಿವಿಧ ಕರೆನ್ಸಿಯ ಖಾತೆಯೊಂದಿಗೆ ಸಾಲದೊಂದಿಗೆ ಸಂಯೋಜಿತವಾಗಿರುವ ಖಾತೆಯನ್ನು ಬದಲಾಯಿಸಲು ಪ್ರಯತ್ನಿಸುತ್ತಿರುವಿರಿ, \nಇಂದಿನ ವಿನಿಮಯ ದರಗಳ ಆಧಾರದ ಮೇಲೆ ಎಲ್ಲಾ ಸಾಲದ ದಾಖಲೆಗಳನ್ನು ಮರು ಲೆಕ್ಕಾಚಾರ ಮಾಡಲಾಗುತ್ತದೆ.</string>
     <string name="confirm">ದೃಢೀಕರಿಸಿ</string>
     <string name="created_on">ಈ ಸಮಯದಲ್ಲಿ ರಚಿಸಲಾಗಿದೆ</string>
-    <string name="hi">ನಮಸ್ಕಾರ</string>
-    <string name="hi_name">ನಮಸ್ಕಾರ %1$s</string>
     <string name="cashflow">ಹಣದ ಹರಿವು: %1$s%2$s %3$s</string>
     <string name="search_transactions">ವಹಿವಾಟುಗಳನ್ನು ಹುಡುಕಿ</string>
     <string name="ivy_wallet_open_source">Ivy ವ್ಯಾಲೆಟ್ ಮುಕ್ತ ಸಂಪನ್ಮೂಲ ಆಗಿದೆ</string>
@@ -254,14 +252,12 @@
     <string name="exporting_data_description">ದಯವಿಟ್ಟು ನಿರೀಕ್ಷಿಸಿ, ಡೇಟಾವನ್ನು ರಫ್ತು ಮಾಡಲಾಗುತ್ತಿದೆ</string>
     <string name="start_date_of_month">ತಿಂಗಳ ಪ್ರಾರಂಭ ದಿನಾಂಕ</string>
     <string name="roadmap">ಮಾರ್ಗ ನಕ್ಷೆ</string>
-    <string name="account_uppercase">ಖಾತೆ</string>
     <string name="logout">ಲಾಗ್ಔಟ್</string>
     <string name="login">ಲಾಗಿನ್</string>
     <string name="syncing">ಸಿಂಕ್ ಮಾಡಲಾಗುತ್ತಿದೆ…</string>
     <string name="data_synced_to_cloud">ಡೇಟಾವನ್ನು ಕ್ಲೌಡ್‌ಗೆ ಸಿಂಕ್ ಮಾಡಲಾಗಿದೆ</string>
     <string name="tap_to_sync">ಸಿಂಕ್ ಮಾಡಲು ಟ್ಯಾಪ್ ಮಾಡಿ</string>
     <string name="sync_failed">ಸಿಂಕ್ ವಿಫಲವಾಗಿದೆ. ಸಿಂಕ್ ಮಾಡಲು ಟ್ಯಾಪ್ ಮಾಡಿ</string>
-    <string name="anonymous">ಅನಾಮಧೇಯ</string>
     <string name="export_to_csv">CSV ಗೆ ರಫ್ತು ಮಾಡಿ</string>
     <string name="left_to_spend">ಖರ್ಚು ಮಾಡಲು ಉಳಿದಿರುವ ಮೊತ್ತ</string>
     <string name="budget_exceeded_by">ಬಜೆಟ್ ಈ ಮೊತ್ತವನ್ನು ಮೀರಿದೆ</string>

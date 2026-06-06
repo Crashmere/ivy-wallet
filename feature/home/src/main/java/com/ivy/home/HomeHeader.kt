@@ -27,7 +27,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.ivy.base.model.TransactionType
 import com.ivy.design.api.LocalTimeConverter
@@ -43,7 +42,6 @@ import com.ivy.legacy.utils.clickableNoIndication
 import com.ivy.legacy.utils.drawColoredShadow
 import com.ivy.legacy.utils.format
 import com.ivy.legacy.utils.horizontalSwipeListener
-import com.ivy.legacy.utils.isNotNullOrBlank
 import com.ivy.legacy.utils.rememberInteractionSource
 import com.ivy.legacy.utils.rememberSwipeListenerState
 import com.ivy.legacy.utils.springBounce
@@ -67,7 +65,6 @@ import kotlin.math.absoluteValue
 @Composable
 internal fun HomeHeader(
     expanded: Boolean,
-    name: String,
     period: TimePeriod,
     currency: String,
     balance: Double,
@@ -91,7 +88,6 @@ internal fun HomeHeader(
 
         HeaderStickyRow(
             percentExpanded = percentExpanded,
-            name = name,
             period = period,
             currency = currency,
             balance = balance,
@@ -118,7 +114,6 @@ internal fun HomeHeader(
 @Composable
 private fun HeaderStickyRow(
     percentExpanded: Float,
-    name: String,
     period: TimePeriod,
     currency: String,
     balance: Double,
@@ -140,26 +135,6 @@ private fun HeaderStickyRow(
             modifier = Modifier.weight(1f),
             contentAlignment = Alignment.CenterStart,
         ) {
-            Text(
-                modifier = Modifier
-                    .alpha(percentExpanded)
-                    .testTag("home_greeting_text"),
-                text = if (name.isNotNullOrBlank()) {
-                    stringResource(
-                        R.string.hi_name,
-                        name,
-                    )
-                } else {
-                    stringResource(R.string.hi)
-                },
-                style = UI.typo.b1.style(
-                    fontWeight = FontWeight.ExtraBold,
-                    color = UI.colors.pureInverse,
-                ),
-                overflow = TextOverflow.Ellipsis,
-                maxLines = 1,
-            )
-
             // Balance mini row
             if (percentExpanded < 1f) {
                 BalanceRowMini(

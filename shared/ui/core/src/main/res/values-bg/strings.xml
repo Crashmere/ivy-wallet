@@ -92,8 +92,6 @@
     <string name="confirm_account_change_description">Важно: You are trying to change the account associated with the loan with an account of different currency, \nAll the loan records will be re-calculated based on today\'s exchanges rates </string>
     <string name="confirm">Потвърди</string>
     <string name="created_on">Създадено на</string>
-    <string name="hi">Хей</string>
-    <string name="hi_name">Хей %1$s</string>
     <string name="cashflow">Печалба: %1$s%2$s %3$s</string>
     <string name="search_transactions">Търси транзацкии</string>
     <string name="ivy_wallet_open_source">Ivy Wallet е open-source</string>
@@ -254,14 +252,12 @@
     <string name="exporting_data_description">Моля изчакайте</string>
     <string name="start_date_of_month">Начална дата на месец</string>
     <string name="roadmap">План</string>
-    <string name="account_uppercase">АКАУНТ</string>
     <string name="logout">Изход</string>
     <string name="login">Вход</string>
     <string name="syncing">Синхронизация…</string>
     <string name="data_synced_to_cloud">Успешна синхронизация</string>
     <string name="tap_to_sync">Синхронизиране</string>
     <string name="sync_failed">Неуспешно. Натиснете за синх.</string>
-    <string name="anonymous">Анонимен</string>
     <string name="export_to_csv">Ескпортиране в CSV</string>
     <string name="left_to_spend">Оставащи</string>
     <string name="budget_exceeded_by">Надвишен с</string>

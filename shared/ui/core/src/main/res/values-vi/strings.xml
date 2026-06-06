@@ -92,8 +92,6 @@
     <string name="confirm_account_change_description">Lưu ý: Bạn đang cố gắng thay đổi tài khoản được liên kết với khoản vay bằng tài khoản có loại tiền tệ khác, \nTất cả bản ghi khoản vay sẽ được tính lại dựa trên tỷ giá hối đoái của ngày hôm nay </string>
     <string name="confirm">Xác nhận</string>
     <string name="created_on">Được tạo vào</string>
-    <string name="hi">Xin chào</string>
-    <string name="hi_name">Xin chào %1$s</string>
     <string name="cashflow">Dòng tiền: %1$s%2$s %3$s</string>
     <string name="search_transactions">Tìm giao dịch</string>
     <string name="ivy_wallet_open_source">Ivy Wallet là mã nguồn mở</string>
@@ -256,14 +254,12 @@
     <string name="exporting_data_description">Vui lòng đợi, đang xuất dữ liệu</string>
     <string name="start_date_of_month">Ngày bắt đầu của tháng</string>
     <string name="roadmap">Lộ trình</string>
-    <string name="account_uppercase">TÀI KHOẢN</string>
     <string name="logout">Đăng xuất</string>
     <string name="login">Đăng nhập</string>
     <string name="syncing">Đang đồng bộ…</string>
     <string name="data_synced_to_cloud">Dữ liệu đã được đồng bộ hóa với cloud</string>
     <string name="tap_to_sync">Nhấn để đồng bộ</string>
     <string name="sync_failed">Đồng bộ hóa không thành công. Nhấn để thử lại</string>
-    <string name="anonymous">Vô danh</string>
     <string name="export_to_csv">Xuất ra CSV</string>
     <string name="left_to_spend">Số dư còn lại</string>
     <string name="budget_exceeded_by">Vượt quá ngân sách</string>

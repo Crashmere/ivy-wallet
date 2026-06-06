@@ -60,7 +60,6 @@ import com.ivy.wallet.ui.theme.components.IvyToolbar
 import com.ivy.wallet.ui.theme.modal.ChooseStartDateOfMonthModal
 import com.ivy.wallet.ui.theme.modal.CurrencyModal
 import com.ivy.wallet.ui.theme.modal.DeleteModal
-import com.ivy.wallet.ui.theme.modal.NameModal
 import com.ivy.wallet.ui.theme.modal.ProgressModal
 import java.util.Locale
 
@@ -91,14 +90,10 @@ fun BoxWithConstraintsScope.SettingsScreen() {
         standardKeypadLayout = uiState.standardKeypadLayout,
         showCategorySearchBar = uiState.showCategorySearchBar,
         sortCategoriesAscending = uiState.sortCategoriesAscending,
-        nameLocalAccount = uiState.name,
         startDateOfMonth = uiState.startDateOfMonth.toInt(),
         languageOptionVisible = uiState.languageOptionVisible,
         onSetCurrency = {
             viewModel.onEvent(SettingsEvent.SetCurrency(it))
-        },
-        onSetName = {
-            viewModel.onEvent(SettingsEvent.SetName(it))
         },
         onBackupData = {
             viewModel.onEvent(SettingsEvent.BackupData(rootScreen))
@@ -168,7 +163,6 @@ private fun BoxWithConstraintsScope.UI(
     theme: Theme,
     onSwitchTheme: () -> Unit,
     lockApp: Boolean,
-    nameLocalAccount: String?,
     languageOptionVisible: Boolean,
     onSetCurrency: (String) -> Unit,
     startDateOfMonth: Int = 1,
@@ -185,7 +179,6 @@ private fun BoxWithConstraintsScope.UI(
     standardKeypadLayout: Boolean = false,
     showCategorySearchBar: Boolean = true,
     sortCategoriesAscending: Boolean = false,
-    onSetName: (String) -> Unit = {},
     onBackupData: () -> Unit = {},
     onExportToCSV: () -> Unit = {},
     onSetLockApp: (Boolean) -> Unit = {},
@@ -207,7 +200,6 @@ private fun BoxWithConstraintsScope.UI(
     onSwitchLanguage: () -> Unit = {}
 ) {
     var currencyModalVisible by remember { mutableStateOf(false) }
-    var nameModalVisible by remember { mutableStateOf(false) }
     var chooseStartDateOfMonthVisible by remember { mutableStateOf(false) }
     var deleteCloudDataModalVisible by remember { mutableStateOf(false) }
     var deleteAllDataModalVisible by remember { mutableStateOf(false) }
@@ -254,12 +246,6 @@ private fun BoxWithConstraintsScope.UI(
             )
 
             Spacer(Modifier.height(24.dp))
-
-            AccountCard(
-                nameLocalAccount = nameLocalAccount,
-            ) {
-                nameModalVisible = true
-            }
         }
 
         item {
@@ -526,14 +512,6 @@ private fun BoxWithConstraintsScope.UI(
         onSetCurrency(it)
     }
 
-    NameModal(
-        visible = nameModalVisible,
-        name = nameLocalAccount ?: "",
-        dismiss = { nameModalVisible = false }
-    ) {
-        onSetName(it)
-    }
-
     ChooseStartDateOfMonthModal(
         visible = chooseStartDateOfMonthVisible,
         selectedStartDateOfMonth = startDateOfMonth,
@@ -708,81 +686,6 @@ private fun AppSwitch(
 }
 
 @Composable
-private fun AccountCard(
-    nameLocalAccount: String?,
-    onCardClick: () -> Unit
-) {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp)
-            .fillMaxWidth()
-            .clip(UI.shapes.r2)
-            .background(UI.colors.medium, UI.shapes.r2)
-            .clickable {
-                onCardClick()
-            }
-    ) {
-        Spacer(Modifier.height(16.dp))
-
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .testTag("settings_profile_card"),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Spacer(Modifier.width(24.dp))
-
-            Text(
-                text = stringResource(R.string.account_uppercase),
-                style = UI.typo.c.style(
-                    fontWeight = FontWeight.Black,
-                    color = UI.colors.gray
-                )
-            )
-        }
-
-        Spacer(Modifier.height(4.dp))
-
-        AccountCardLocalAccount(
-            name = nameLocalAccount,
-        )
-
-        Spacer(Modifier.height(24.dp))
-    }
-}
-
-@Composable
-private fun AccountCardLocalAccount(
-    name: String?
-) {
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Spacer(Modifier.width(20.dp))
-        IvyIconScaled(
-            icon = R.drawable.ic_local_account,
-            iconScale = IconScale.M
-        )
-
-        Spacer(Modifier.width(12.dp))
-
-        Text(
-            modifier = Modifier
-                .weight(1f)
-                .testTag("local_account_name"),
-            text = if (!name.isNullOrBlank()) name else stringResource(R.string.anonymous),
-            style = UI.typo.b2.style(
-                fontWeight = FontWeight.Bold
-            )
-        )
-
-        Spacer(Modifier.width(12.dp))
-    }
-}
-
-@Composable
 private fun ExportCSV(
     onExportToCSV: () -> Unit
 ) {
@@ -873,44 +776,6 @@ private fun SettingsButtonRow(
         verticalAlignment = Alignment.CenterVertically
     ) {
         content()
-    }
-}
-
-@Composable
-private fun AccountCardButton(
-    @DrawableRes icon: Int,
-    text: String,
-    onClick: () -> Unit
-) {
-    Row(
-        modifier = Modifier
-            .clip(UI.shapes.rFull)
-            .background(UI.colors.pure, UI.shapes.rFull)
-            .clickable {
-                onClick()
-            },
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Spacer(Modifier.width(12.dp))
-
-        IvyIconScaled(
-            icon = icon,
-            iconScale = IconScale.M
-        )
-
-        Spacer(Modifier.width(4.dp))
-
-        Text(
-            modifier = Modifier
-                .padding(vertical = 10.dp),
-            text = text,
-            style = UI.typo.b2.style(
-                fontWeight = FontWeight.Bold,
-                color = UI.colors.pureInverse
-            )
-        )
-
-        Spacer(Modifier.width(24.dp))
     }
 }
 
@@ -1015,7 +880,6 @@ private fun SettingsDefaultButton(
 private fun Preview(theme: Theme = Theme.LIGHT) {
     IvyWalletPreview(theme) {
         UI(
-            nameLocalAccount = null,
             theme = Theme.AUTO,
             onSwitchTheme = {},
             lockApp = false,

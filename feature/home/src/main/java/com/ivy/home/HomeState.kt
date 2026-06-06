@@ -15,7 +15,6 @@ import java.math.BigDecimal
 @Immutable
 data class HomeState(
     val theme: Theme,
-    val name: String,
 
     val period: TimePeriod,
     val baseData: AppBaseData,

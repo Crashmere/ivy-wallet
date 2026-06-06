@@ -92,8 +92,6 @@
     <string name="confirm_account_change_description">Catatan: Anda mencoba mengganti akun yang terkait dengan pinjaman dengan akun mata uang berbeda, \nSemua catatan pinjaman akan dihitung ulang berdasarkan nilai tukar hari ini </string>
     <string name="confirm">Konfirmasi</string>
     <string name="created_on">Dibuat pada</string>
-    <string name="hi">Hai</string>
-    <string name="hi_name">Hai %1$s</string>
     <string name="cashflow">Cashflow: %1$s%2$s %3$s</string>
     <string name="search_transactions">Cari transaksi</string>
     <string name="ivy_wallet_open_source">Ivy Wallet adalah sumber terbuka</string>
@@ -257,14 +255,12 @@
     <string name="exporting_data_description">Harap tunggu, mengekspor data</string>
     <string name="start_date_of_month">Tanggal Mulai Bulan</string>
     <string name="roadmap">Rencana</string>
-    <string name="account_uppercase">AKUN</string>
     <string name="logout">Keluar</string>
     <string name="login">Masuk</string>
     <string name="syncing">Menyinkronkan…</string>
     <string name="data_synced_to_cloud">Data disinkronkan ke cloud</string>
     <string name="tap_to_sync">Ketuk untuk menyinkronkan</string>
     <string name="sync_failed">Sinkronisasi gagal. Ketuk untuk menyinkronkan</string>
-    <string name="anonymous">Anonim</string>
     <string name="export_to_csv">Ekspor ke CSV</string>
     <string name="left_to_spend">Sisa yang dapat dihabiskan</string>
     <string name="budget_exceeded_by">Anggaran melebihi oleh</string>

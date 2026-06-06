@@ -92,8 +92,6 @@
     <string name="confirm_account_change_description">注意：您正在尝试将与贷款关联的账户更改为具有不同货币的账户，所有贷款记录将根据今天的汇率重新计算</string>
     <string name="confirm">确认</string>
     <string name="created_on">创建于</string>
-    <string name="hi">你好</string>
-    <string name="hi_name">你好 %1$s</string>
     <string name="cashflow">现金流：%1$s%2$s %3$s</string>
     <string name="search_transactions">搜索交易</string>
     <string name="ivy_wallet_open_source">Ivy Wallet 是开源的</string>
@@ -277,14 +275,12 @@
     <string name="exporting_data_description">请稍候，正在导出数据</string>
     <string name="start_date_of_month">每月开始日期</string>
     <string name="roadmap">路线图</string>
-    <string name="account_uppercase">账户</string>
     <string name="logout">注销</string>
     <string name="login">登录</string>
     <string name="syncing">同步中……</string>
     <string name="data_synced_to_cloud">数据已同步到云端</string>
     <string name="tap_to_sync">点击同步</string>
     <string name="sync_failed">同步失败。点击同步</string>
-    <string name="anonymous">匿名</string>
     <string name="export_to_csv">导出为 CSV</string>
     <string name="left_to_spend">剩余可用</string>
     <string name="budget_exceeded_by">超出预算</string>

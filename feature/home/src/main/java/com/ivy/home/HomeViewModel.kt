@@ -95,7 +95,6 @@ class HomeViewModel @Inject constructor(
     private val features: Features
 ) : ComposeViewModel<HomeState, HomeEvent>() {
     private var currentTheme by mutableStateOf(Theme.AUTO)
-    private var name by mutableStateOf("")
     private var period by mutableStateOf(ivyContext.selectedPeriod)
     private var baseData by mutableStateOf(
         AppBaseData(
@@ -141,7 +140,6 @@ class HomeViewModel @Inject constructor(
 
         return HomeState(
             theme = getTheme(),
-            name = getName(),
             period = getPeriod(),
             baseData = getBaseData(),
             history = getHistory(),
@@ -166,11 +164,6 @@ class HomeViewModel @Inject constructor(
     @Composable
     private fun getTheme(): Theme {
         return currentTheme
-    }
-
-    @Composable
-    private fun getName(): String {
-        return name
     }
 
     @Composable
@@ -274,7 +267,6 @@ class HomeViewModel @Inject constructor(
         val hideIncome = shouldHideIncomeAct(Unit)
 
         currentTheme = settings.theme
-        name = settings.name
         period = timePeriod
         this.hideBalance = hideBalance
         this.hideIncome = hideIncome
