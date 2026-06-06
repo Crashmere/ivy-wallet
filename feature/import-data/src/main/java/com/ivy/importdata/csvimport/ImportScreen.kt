@@ -71,5 +71,3 @@ private fun BoxWithConstraintsScope.UI(
         }
     }
 }
-
-@ExperimentalFoundationApi

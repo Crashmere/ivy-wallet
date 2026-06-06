@@ -418,5 +418,3 @@ private fun shouldFocusRecurring(
 }
 
 private fun shouldFocusAmount(amount: Double) = amount == 0.0
-
-@ExperimentalFoundationApi
