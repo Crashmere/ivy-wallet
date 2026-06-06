@@ -122,7 +122,6 @@
     <string name="from_date">De %1$s</string>
     <string name="to_date">Para %1$s</string>
     <string name="range">Faixa</string>
-    <string name="what_is_your_name">Qual o seu nome?</string>
     <string name="enter">Confirmar</string>
     <string name="set">Definir</string>
     <string name="import_csv_file">Importar arquivo CSV</string>
@@ -261,7 +260,6 @@
     <string name="enter_record_amount_uppercase">INSERIR VALOR DO REGISTRO</string>
     <string name="record_deletion_warning">Tem certeza de que deseja excluir o registro "%1$s"?</string>
     <string name="account_change_warning">"Se você tentar alterar a conta associada ao registro do empréstimo para uma em uma moeda diferente, todos os registros do empréstimo serão recalculados com base nas taxas de câmbio atuais."</string>
-    <string name="edit_name">Editar nome</string>
     <string name="plan_for">Planejar</string>
     <string name="one_time">Uma vez</string>
     <string name="multiple_times">Várias vezes</string>

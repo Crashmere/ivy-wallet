@@ -121,7 +121,6 @@
     <string name="from_date">ಈ ದಿನಾಂಕದಿಂದ %1$s</string>
     <string name="to_date">ಈ ದಿನಾಂಕದವರೆಗೆ %1$s</string>
     <string name="range">ವ್ಯಾಪ್ತಿ</string>
-    <string name="what_is_your_name">ನಿಮ್ಮ ಹೆಸರೇನು?</string>
     <string name="enter">ನಮೂದಿಸಿ</string>
     <string name="set">ಸ್ಥಾಪಿಸಿ</string>
     <string name="import_csv_file">CSV ಫೈಲ್ ಅನ್ನು ಆಮದು ಮಾಡಿ</string>
@@ -258,7 +257,6 @@
     <string name="enter_record_amount_uppercase">ದಾಖಲೆ ಮೊತ್ತವನ್ನು ನಮೂದಿಸಿ</string>
     <string name="record_deletion_warning">"%1$s" ದಾಖಲೆಯನ್ನು ಅಳಿಸಲು ನೀವು ಖಚಿತವಾಗಿ ಬಯಸುವಿರಾ?</string>
     <string name="account_change_warning">"ಗಮನಿಸಿ: ನೀವು ವಿವಿಧ ಕರೆನ್ಸಿಯ ಖಾತೆಯೊಂದಿಗೆ ಸಾಲದ ದಾಖಲೆಯೊಂದಿಗೆ ಸಂಬಂಧಿಸಿದ ಖಾತೆಯನ್ನು ಬದಲಾಯಿಸಲು ಪ್ರಯತ್ನಿಸುತ್ತಿರುವಿರಿ.\nಇಂದಿನ ವಿನಿಮಯ ದರಗಳ ಆಧಾರದ ಮೇಲೆ ಮೊತ್ತವನ್ನು ಮರು ಲೆಕ್ಕಾಚಾರ ಮಾಡಲಾಗುತ್ತದೆ"</string>
-    <string name="edit_name">ಹೆಸರು ಎಡಿಟ್ ಮಾಡಿ</string>
     <string name="plan_for">ಗಾಗಿ ಯೋಜನೆ</string>
     <string name="one_time">ಒಂದು ಬಾರಿ</string>
     <string name="multiple_times">ಹಲವಾರು ಬಾರಿ</string>

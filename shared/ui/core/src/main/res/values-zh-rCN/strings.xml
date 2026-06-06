@@ -122,7 +122,6 @@
     <string name="from_date">从 %1$s</string>
     <string name="to_date">至 %1$s</string>
     <string name="range">范围</string>
-    <string name="what_is_your_name">您叫什么名字？</string>
     <string name="enter">输入</string>
     <string name="set">确认</string>
     <string name="import_csv_file">导入 CSV 文件</string>
@@ -284,7 +283,6 @@
     <string name="enter_record_amount_uppercase">输入记录金额</string>
     <string name="record_deletion_warning">确定要删除“%1$s”记录吗？</string>
     <string name="account_change_warning">"如果您尝试将贷款记录关联的账户更改为不同货币的账户，所有贷款记录将根据当天的汇率重新计算。"</string>
-    <string name="edit_name">编辑名称</string>
     <string name="plan_for">计划</string>
     <string name="one_time">一次性</string>
     <string name="multiple_times">多次</string>

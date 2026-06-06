@@ -122,7 +122,6 @@
     <string name="from_date">Da %1$s</string>
     <string name="to_date">A %1$s</string>
     <string name="range">Range</string>
-    <string name="what_is_your_name">Come ti chiami?</string>
     <string name="enter">Invia</string>
     <string name="set">Imposta</string>
     <string name="import_csv_file">Importa un file CSV</string>
@@ -261,7 +260,6 @@
     <string name="enter_record_amount_uppercase">INSERISCI L\'IMPORTO DELLA REGISTRAZIONE</string>
     <string name="record_deletion_warning">Sei sicuro di voler eliminare la registrazione \"%1$s\"?</string>
     <string name="account_change_warning">"Nota: Stai cercando di modificare il conto associato alla registrazione del prestito con un conto di valuta diversa, \nL'importo sarà ricalcolato in base ai tassi di cambio di oggi "</string>
-    <string name="edit_name">Modifica il nome</string>
     <string name="plan_for">Pianifica per</string>
     <string name="one_time">Una volta</string>
     <string name="multiple_times">Più volte</string>

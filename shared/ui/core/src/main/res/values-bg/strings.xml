@@ -121,7 +121,6 @@
     <string name="from_date">От %1$s</string>
     <string name="to_date">До %1$s</string>
     <string name="range">Период</string>
-    <string name="what_is_your_name">What\'s your name?</string>
     <string name="enter">Задай</string>
     <string name="set">Задай</string>
     <string name="import_csv_file">Импортирай CSV файл</string>
@@ -258,7 +257,6 @@
     <string name="enter_record_amount_uppercase">СТОЙНОСТ НА ЗАПИСА</string>
     <string name="record_deletion_warning">Сигурни ли сте, че искате да изтриете този запис: "%1$s"?</string>
     <string name="account_change_warning">"Важно: You are trying to change the account associated with the loan record with an account of different currency\nThe amount will be re-calculated based on today's exchanges rates "</string>
-    <string name="edit_name">Смени име</string>
     <string name="plan_for">Планирано за</string>
     <string name="one_time">Еднократно</string>
     <string name="multiple_times">Многократно</string>

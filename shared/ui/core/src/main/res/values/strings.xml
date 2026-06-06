@@ -124,7 +124,6 @@
     <string name="from_date">From %1$s</string>
     <string name="to_date">To %1$s</string>
     <string name="range">Range</string>
-    <string name="what_is_your_name">What\'s your name?</string>
     <string name="enter">Enter</string>
     <string name="set">Set</string>
     <string name="import_csv_file">Import CSV file</string>
@@ -286,7 +285,6 @@
     <string name="enter_record_amount_uppercase">ENTER RECORD AMOUNT</string>
     <string name="record_deletion_warning">Are you sure you want to delete the "%1$s" record?</string>
     <string name="account_change_warning">"If you attempt to change the account associated with the loan record to one in a different currency, all loan records will be recalculated based on today\'s exchange rates."</string>
-    <string name="edit_name">Edit name</string>
     <string name="plan_for">Plan for</string>
     <string name="one_time">One time</string>
     <string name="multiple_times">Multiple times</string>

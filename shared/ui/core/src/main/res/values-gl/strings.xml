@@ -124,7 +124,6 @@
     <string name="from_date">Desde %1$s</string>
     <string name="to_date">Ata %1$s</string>
     <string name="range">Rango</string>
-    <string name="what_is_your_name">Como te chamas?</string>
     <string name="enter">Entrar</string>
     <string name="set">Establecer</string>
     <string name="import_csv_file">Importar ficheiro CSV</string>
@@ -263,7 +262,6 @@
     <string name="enter_record_amount_uppercase">INTRODUCE O IMPORTE DO REXISTRO</string>
     <string name="record_deletion_warning">Estás seguro de que queres eliminar o rexistro "%1$s"?</string>
     <string name="account_change_warning">"Se tentas cambiar a conta asociada ao rexistro do préstamo a unha dunha moeda diferente, tódolos rexistros do préstamo recalcularanse segundo as taxas de cambio de hoxe."</string>
-    <string name="edit_name">Editar nome</string>
     <string name="plan_for">Planificar para</string>
     <string name="one_time">Unha vez</string>
     <string name="multiple_times">Múltiples veces</string>

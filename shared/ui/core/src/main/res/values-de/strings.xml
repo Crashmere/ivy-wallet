@@ -122,7 +122,6 @@
     <string name="from_date">Von %1$s</string>
     <string name="to_date">Bis %1$s</string>
     <string name="range">Bereich</string>
-    <string name="what_is_your_name">Wie heißt du?</string>
     <string name="enter">Eingeben</string>
     <string name="set">Festlegen</string>
     <string name="import_csv_file">CSV-Datei importieren</string>
@@ -260,7 +259,6 @@
     <string name="enter_record_amount_uppercase">EINTRAGSBETRAG EINGEBEN</string>
     <string name="record_deletion_warning">Bist du sicher, dass du den Eintrag "%1$s" löschen willst?</string>
     <string name="account_change_warning">"Hinweis: Du versuchst, das mit dem Darlehenseintrag verknüpfte Konto durch ein Konto mit einer anderen Währung zu ersetzen.\nDer Betrag wird auf der Grundlage des heutigen Wechselkurses neu berechnet."</string>
-    <string name="edit_name">Name bearbeiten</string>
     <string name="plan_for">Plan für</string>
     <string name="one_time">Einmalig</string>
     <string name="multiple_times">Wiederkehrend</string>

@@ -121,7 +121,6 @@
     <string name="from_date">От %1$s</string>
     <string name="to_date">До %1$s</string>
     <string name="range">Диапазон</string>
-    <string name="what_is_your_name">Как вас зовут?</string>
     <string name="enter">Ввести</string>
     <string name="set">Установить</string>
     <string name="import_csv_file">Загрузите CSV файл</string>
@@ -258,7 +257,6 @@
     <string name="enter_record_amount_uppercase">ВВЕДИТЕ СУММУ ЗАПИСИ</string>
     <string name="record_deletion_warning">Вы уверены, что вы хотите удалить %1$s запись?</string>
     <string name="account_change_warning">"Примечание: Вы пытаетесь изменить счёт, связанный с записью о кредите, связанном с другой валютой.\nСумма будет пересчитана на основе сегодняшнего обменного курса "</string>
-    <string name="edit_name">Редактировать имя</string>
     <string name="plan_for">Запланировать на</string>
     <string name="one_time">Один раз</string>
     <string name="multiple_times">Много раз</string>

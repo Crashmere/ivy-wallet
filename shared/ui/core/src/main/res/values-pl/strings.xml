@@ -122,7 +122,6 @@
     <string name="from_date">Od %1$s</string>
     <string name="to_date">Do %1$s</string>
     <string name="range">Zakres</string>
-    <string name="what_is_your_name">Jak masz na imię?</string>
     <string name="enter">Enter</string>
     <string name="set">Ustaw</string>
     <string name="import_csv_file">Importuj plik CSV</string>
@@ -261,7 +260,6 @@
     <string name="enter_record_amount_uppercase">WPROWADŹ KWOTĘ REKORDU</string>
     <string name="record_deletion_warning">Jesteś pewny, że chcesz usunąć ten "%1$s" rekord?</string>
     <string name="account_change_warning">"Uwaga: Próbujesz zmienić konto powiązane z pożyczką na konto w innej walucie, \nWszystkie rekordy pożyczek zostaną przeliczone na podstawie dzisiejszych kursów wymiany "</string>
-    <string name="edit_name">Edytuj nazwę</string>
     <string name="plan_for">Zaplanuj na</string>
     <string name="one_time">Jednorazowo</string>
     <string name="multiple_times">Kilka razy</string>

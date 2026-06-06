@@ -122,7 +122,6 @@
     <string name="from_date">Dari %1$s</string>
     <string name="to_date">Ke %1$s</string>
     <string name="range">Rentang</string>
-    <string name="what_is_your_name">Apa nama Anda?</string>
     <string name="enter">Masukkan</string>
     <string name="set">Setel</string>
     <string name="import_csv_file">Impor File CSV</string>
@@ -261,7 +260,6 @@
     <string name="enter_record_amount_uppercase">MASUKKAN JUMLAH CATATAN</string>
     <string name="record_deletion_warning">Apakah Anda yakin ingin menghapus catatan "%1$s"?</string>
     <string name="account_change_warning">"Catatan: Anda mencoba mengganti akun yang terkait dengan catatan pinjaman dengan akun yang memiliki mata uang berbeda, \nJumlahnya akan dihitung ulang berdasarkan nilai tukar saat ini "</string>
-    <string name="edit_name">Edit nama</string>
     <string name="plan_for">Rencanakan untuk</string>
     <string name="one_time">Sekali</string>
     <string name="multiple_times">Beberapa kali</string>

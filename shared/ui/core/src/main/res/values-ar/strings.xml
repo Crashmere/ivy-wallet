@@ -121,7 +121,6 @@
     <string name="from_date">من %1$s</string>
     <string name="to_date">إلى %1$s</string>
     <string name="range">المجال</string>
-    <string name="what_is_your_name">ما اسمك؟</string>
     <string name="enter">إدخال</string>
     <string name="set">تحديد</string>
     <string name="import_csv_file">CSV إستيراد ملف</string>
@@ -258,7 +257,6 @@
     <string name="enter_record_amount_uppercase">أدخل قيمة السجل</string>
     <string name="record_deletion_warning">هل انت متأكد من حذف السجل "%1$s"؟</string>
     <string name="account_change_warning">"ملاحظة: انت تحاول ان تغير حساب مرتبط بقرض من حساب بعملة مختلفة, \n سجلات القرض سوف يتم اعادة حسابها وفقا لأسعار الصرف اليوم"</string>
-    <string name="edit_name">تعديل الاسم</string>
     <string name="plan_for">خطط ل</string>
     <string name="one_time">مرة واحدة</string>
     <string name="multiple_times">مرات متعددة</string>

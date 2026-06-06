@@ -121,7 +121,6 @@
     <string name="from_date">%1$s से</string>
     <string name="to_date">%1$s तक</string>
     <string name="range">सीमा</string>
-    <string name="what_is_your_name">आपका क्या नाम है?</string>
     <string name="enter">दाखिल करना</string>
     <string name="set">संग्रह</string>
     <string name="import_csv_file">CSV फाइल इम्पोर्ट करे</string>
@@ -221,7 +220,6 @@
     <string name="multiple_times">कई बार</string>
     <string name="one_time">एक बार</string>
     <string name="plan_for">योजना बनाएं</string>
-    <string name="edit_name">नाम एडिट करें</string>
     <string name="account_change_warning">नोट: आप लोन रिकॉर्ड से जुड़े खाते को किसी भिन्न करेंसी वाले खाते से बदलने का प्रयास कर रहे है। राशि की गणना आज की विनिमय दरों के आधार पर की जाएगी</string>
     <string name="record_deletion_warning">क्या आप वाकई %1$s रिकॉर्ड हटाना चाहते हैं?</string>
     <string name="enter_record_amount_uppercase">रिकॉर्ड राशि दर्ज करें</string>

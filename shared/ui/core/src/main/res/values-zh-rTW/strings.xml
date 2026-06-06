@@ -124,7 +124,6 @@
     <string name="from_date">來自%1$s</string>
     <string name="to_date">至%1$s</string>
     <string name="range">範圍</string>
-    <string name="what_is_your_name">你叫什麼名字?</string>
     <string name="enter">輸入</string>
     <string name="set">設定</string>
     <string name="import_csv_file">導入 CSV 檔案</string>
@@ -265,7 +264,6 @@
     <string name="enter_record_amount_uppercase">輸入記錄金額</string>
     <string name="record_deletion_warning">您確定要刪除 "%1$s" 記錄嗎?</string>
     <string name="account_change_warning">"如果您嘗試將與借貸記錄關聯的帳戶更改為其他貨幣的帳戶，則所有借貸記錄將根據今天的匯率重新計算。"</string>
-    <string name="edit_name">編輯名稱</string>
     <string name="plan_for">計劃</string>
     <string name="one_time">一次</string>
     <string name="multiple_times">多次</string>

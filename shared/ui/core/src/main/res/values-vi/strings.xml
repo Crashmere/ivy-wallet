@@ -122,7 +122,6 @@
     <string name="from_date">Từ ngày %1$s</string>
     <string name="to_date">đến ngày %1$s</string>
     <string name="range">Phạm vi</string>
-    <string name="what_is_your_name">Bạn tên là gì?</string>
     <string name="enter">Nhập</string>
     <string name="set">Đặt</string>
     <string name="import_csv_file">Tải lên tệp CSV</string>
@@ -261,7 +260,6 @@
     <string name="enter_record_amount_uppercase">NHẬP SỐ TIỀN</string>
     <string name="record_deletion_warning">Bạn có chắc chắn muốn xóa bản ghi "%1$s" không?</string>
     <string name="account_change_warning">"Nếu bạn cố gắng thay đổi tài khoản liên kết với bản ghi vay sang một tài khoản có đơn vị tiền tệ khác, tất cả các bản ghi vay sẽ được tính toán lại dựa trên tỷ giá hối đoái của ngày hôm nay."</string>
-    <string name="edit_name">Sửa tên</string>
     <string name="plan_for">Kế hoạch</string>
     <string name="one_time">Một lần</string>
     <string name="multiple_times">Nhiều lần</string>

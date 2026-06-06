@@ -121,7 +121,6 @@
     <string name="from_date">%1$s-с</string>
     <string name="to_date">%1$s хүртэл</string>
     <string name="range">Хугацаа</string>
-    <string name="what_is_your_name">Таны нэр?</string>
     <string name="enter">Оруулах</string>
     <string name="set">Тохируулах</string>
     <string name="import_csv_file">CSV файлаас сэргээх</string>
@@ -258,7 +257,6 @@
     <string name="enter_record_amount_uppercase">Тооцооны дүн</string>
     <string name="record_deletion_warning">Та "%1$s" тооцоог устгахдаа итгэлтэй байна уу?</string>
     <string name="account_change_warning">"Санамж: Та зээлийн тооцоотой холбогдсон дансыг өөр мөнгөн тэмдэгтэй дансаар солих гэж байна\nДүн өнөөдрийн валютын ханшаар бодогдох болно "</string>
-    <string name="edit_name">Нэр өөрчлөх</string>
     <string name="plan_for">Төлөвлөгөөт гүйлгээ</string>
     <string name="one_time">Нэг удаа</string>
     <string name="multiple_times">Олон удаа</string>

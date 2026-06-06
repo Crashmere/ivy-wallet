@@ -12,6 +12,7 @@
 - 已整顿设置页结构：数据管理、记账规则、系统行为保留为一级分组，外观与显示、输入与列表改为二级菜单。
 - 已移除设置页顶部匿名账户名称入口和首页问候语。
 - 已精简数据导入页：删除第三方 App 导入模板和教程，只保留 Ivy 备份恢复与手动 CSV 导入。
+- 已清理 `temp:legacy-code` 中一批无引用旧代码：Crashlytics 空壳、旧 FRP ViewModel/Composable、孤立旧 modal、旧图表/输入组件和无引用工具类型。
 - 保留应用功能源码、功能测试源码、截图测试源码、Gradle wrapper、本地数据管理能力和当前主要记账功能。
 - 当前本机已通过项目本地 Android SDK 编译 demo APK，并成功安装到已连接手机。
 
@@ -50,6 +51,7 @@
 - 多语言资源中不再使用的开源、分享、评分、Telegram 和推广求助文案。
 - Android 桌面小组件模块 `:widget:add-transaction`、`:widget:balance`、`:widget:shared-base`，以及首页小组件引导卡、Manifest receiver、启动广播、余额刷新接线和 Glance 依赖。
 - `:feature:import-data` 中的第三方 App 来源列表、导入说明页、旧 CSV 模板映射、第三方 App logo 和教程文案；保留备份恢复与手动 CSV 映射导入。
+- `temp:legacy-code` 中无引用的 Crashlytics 工具空壳、旧 FRP View 层封装、旧名称/月选择弹窗、旧折线图、旧 checklist 输入框和无引用工具类型。
 
 ## 下一批建议清理：需要按个人使用习惯确认
 
@@ -67,4 +69,4 @@
 ## 建议执行顺序
 
 1. 评估 backup/import 核心能力是否继续保留完整兼容性。
-2. 再检查 `temp:legacy-code` 中剩余的旧 UI 组件和旧领域逻辑。
+2. 继续检查 `temp:legacy-code` 中剩余的旧 UI 组件和旧领域逻辑，优先处理确认无引用的部分。
