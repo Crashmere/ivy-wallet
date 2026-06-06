@@ -10,7 +10,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ivy.base.model.TransactionType
 import com.ivy.data.model.Category
@@ -21,7 +20,6 @@ import com.ivy.data.model.primitive.NotBlankTrimmedString
 import com.ivy.design.l0_system.Purple
 import com.ivy.design.l0_system.UI
 import com.ivy.design.l0_system.style
-import com.ivy.legacy.IvyWalletPreview
 import com.ivy.legacy.datamodel.Account
 import com.ivy.legacy.datamodel.PlannedPaymentRule
 import com.ivy.legacy.utils.timeNowUTC
@@ -102,66 +100,4 @@ private fun BoxWithConstraintsScope.UI(
             )
         }
     )
-}
-
-@Preview
-@Composable
-private fun Preview() {
-    IvyWalletPreview {
-        val account = Account(name = "Cash", Green.toArgb())
-        val food = Category(
-            name = NotBlankTrimmedString.unsafe("Food"),
-            color = ColorInt(Purple.toArgb()),
-            icon = null,
-            id = CategoryId(UUID.randomUUID()),
-            orderNum = 0.0,
-        )
-        val shisha = Category(
-            name = NotBlankTrimmedString.unsafe("Shisha"),
-            color = ColorInt(Orange.toArgb()),
-            icon = null,
-            id = CategoryId(UUID.randomUUID()),
-            orderNum = 0.0,
-        )
-
-        UI(
-            PlannedPaymentsScreenState(
-                currency = "BGN",
-                accounts = persistentListOf(account),
-                categories = persistentListOf(food, shisha),
-                oneTimePlannedPayment = persistentListOf(
-                    PlannedPaymentRule(
-                        accountId = account.id,
-                        title = "Lidl pazar",
-                        categoryId = food.id.value,
-                        amount = 250.75,
-                        startDate = timeNowUTC().plusDays(5).toInstant(ZoneOffset.UTC),
-                        oneTime = true,
-                        intervalType = null,
-                        intervalN = null,
-                        type = TransactionType.EXPENSE
-                    )
-                ),
-                oneTimeExpenses = 250.75,
-                oneTimeIncome = 0.0,
-                recurringPlannedPayment = persistentListOf(
-                    PlannedPaymentRule(
-                        accountId = account.id,
-                        title = "Tabu",
-                        categoryId = shisha.id.value,
-                        amount = 1025.5,
-                        startDate = timeNowUTC().plusDays(5).toInstant(ZoneOffset.UTC),
-                        oneTime = false,
-                        intervalType = IntervalType.MONTH,
-                        intervalN = 1,
-                        type = TransactionType.EXPENSE
-                    )
-                ),
-                recurringExpenses = 1025.5,
-                recurringIncome = 0.0,
-                isOneTimePaymentsExpanded = true,
-                isRecurringPaymentsExpanded = true
-            )
-        )
-    }
 }

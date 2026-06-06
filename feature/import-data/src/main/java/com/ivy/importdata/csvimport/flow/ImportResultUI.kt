@@ -15,7 +15,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ivy.data.backup.ImportResult
 import com.ivy.design.l0_system.UI
@@ -259,22 +258,5 @@ private fun FailedSectionUI(
                 color = Gray
             )
         )
-    }
-}
-
-@Preview(device = "id:pixel_3", showBackground = true, showSystemUi = true)
-@Composable
-private fun Preview() {
-    com.ivy.legacy.IvyWalletPreview {
-        ImportResultUI(
-            result = ImportResult(
-                rowsFound = 356,
-                transactionsImported = 320,
-                accountsImported = 4,
-                categoriesImported = 13,
-                failedRows = persistentListOf()
-            ),
-        ) {
-        }
     }
 }

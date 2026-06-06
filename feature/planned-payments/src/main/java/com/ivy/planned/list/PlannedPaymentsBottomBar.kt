@@ -9,11 +9,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.ivy.design.l0_system.UI
-import com.ivy.legacy.IvyWalletPreview
 import com.ivy.legacy.utils.navigationBarInset
 import com.ivy.legacy.utils.toDensityDp
 import com.ivy.ui.R
@@ -52,17 +50,5 @@ fun BoxWithConstraintsScope.PlannedPaymentsBottomBar(
         }
 
         Spacer(Modifier.width(20.dp))
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewBottomBar() {
-    IvyWalletPreview {
-        PlannedPaymentsBottomBar(
-            bottomInset = 16.dp,
-            onAdd = {},
-            onClose = {}
-        )
     }
 }

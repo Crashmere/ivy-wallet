@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.BoxWithConstraintsScope
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.ivy.data.backup.ImportResult
 import com.ivy.importdata.csvimport.flow.ImportFrom
@@ -74,14 +73,3 @@ private fun BoxWithConstraintsScope.UI(
 }
 
 @ExperimentalFoundationApi
-@Preview
-@Composable
-private fun Preview() {
-    com.ivy.legacy.IvyWalletPreview {
-        UI(
-            importStep = ImportStep.IMPORT_FROM,
-            importProgressPercent = 0,
-            importResult = null
-        )
-    }
-}

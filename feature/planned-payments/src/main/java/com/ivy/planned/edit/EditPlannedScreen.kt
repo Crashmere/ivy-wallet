@@ -22,12 +22,10 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ivy.base.model.TransactionType
 import com.ivy.data.model.Category
 import com.ivy.data.model.IntervalType
-import com.ivy.legacy.IvyWalletPreview
 import com.ivy.legacy.datamodel.Account
 import com.ivy.legacy.utils.onScreenStart
 import com.ivy.navigation.EditPlannedScreen
@@ -422,35 +420,3 @@ private fun shouldFocusRecurring(
 private fun shouldFocusAmount(amount: Double) = amount == 0.0
 
 @ExperimentalFoundationApi
-@Preview
-@Composable
-private fun Preview() {
-    IvyWalletPreview {
-        UI(
-            screen = EditPlannedScreen(null, TransactionType.EXPENSE),
-            EditPlannedScreenState(
-                oneTime = false,
-                startDate = null,
-                intervalN = null,
-                intervalType = null,
-                initialTitle = "",
-                currency = "BGN",
-                description = null,
-                category = null,
-                account = Account(name = "phyre", Orange.toArgb()),
-                amount = 0.0,
-                transactionType = TransactionType.INCOME,
-                categories = persistentListOf(),
-                accounts = persistentListOf(),
-                categoryModalVisible = false,
-                categoryModalData = null,
-                accountModalData = null,
-                descriptionModalVisible = false,
-                deleteTransactionModalVisible = false,
-                recurringRuleModalData = null,
-                transactionTypeModalVisible = false,
-                amountModalVisible = false
-            )
-        ) {}
-    }
-}

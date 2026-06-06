@@ -23,7 +23,6 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ivy.base.model.TransactionType
 import com.ivy.data.model.Category
@@ -34,7 +33,6 @@ import com.ivy.data.model.primitive.NotBlankTrimmedString
 import com.ivy.design.api.LocalTimeConverter
 import com.ivy.design.l0_system.UI
 import com.ivy.design.l0_system.style
-import com.ivy.legacy.IvyWalletPreview
 import com.ivy.legacy.datamodel.Account
 import com.ivy.legacy.datamodel.PlannedPaymentRule
 import com.ivy.legacy.forDisplay
@@ -266,119 +264,5 @@ private fun RuleTextRow(
         }
 
         Spacer(Modifier.width(24.dp))
-    }
-}
-
-@Preview
-@Composable
-private fun Preview_oneTime() {
-    IvyWalletPreview {
-        LazyColumn(Modifier.fillMaxSize()) {
-            val cash = Account(name = "Cash", Green.toArgb())
-            val food = Category(
-                name = NotBlankTrimmedString.unsafe("Food"),
-                color = ColorInt(Blue.toArgb()),
-                icon = null,
-                id = CategoryId(UUID.randomUUID()),
-                orderNum = 0.0,
-            )
-
-            item {
-                Spacer(Modifier.height(68.dp))
-
-                PlannedPaymentCard(
-                    baseCurrency = "BGN",
-                    categories = persistentListOf(food),
-                    accounts = persistentListOf(cash),
-                    plannedPayment = PlannedPaymentRule(
-                        accountId = cash.id,
-                        title = "Lidl pazar",
-                        categoryId = food.id.value,
-                        amount = 250.75,
-                        startDate = timeNowUTC().plusDays(5).toInstant(ZoneOffset.UTC),
-                        oneTime = true,
-                        intervalType = null,
-                        intervalN = null,
-                        type = TransactionType.EXPENSE
-                    )
-                ) {}
-            }
-        }
-    }
-}
-
-@Preview
-@Composable
-private fun Preview_recurring() {
-    IvyWalletPreview {
-        LazyColumn(Modifier.fillMaxSize()) {
-            val account = Account(name = "Revolut", Blue.toArgb())
-            val shisha = Category(
-                name = NotBlankTrimmedString.unsafe("Shisha"),
-                color = ColorInt(Orange.toArgb()),
-                icon = null,
-                id = CategoryId(UUID.randomUUID()),
-                orderNum = 0.0,
-            )
-
-            item {
-                Spacer(Modifier.height(68.dp))
-
-                PlannedPaymentCard(
-                    baseCurrency = "BGN",
-                    categories = persistentListOf(shisha),
-                    accounts = persistentListOf(account),
-                    plannedPayment = PlannedPaymentRule(
-                        accountId = account.id,
-                        title = "Tabu",
-                        categoryId = shisha.id.value,
-                        amount = 250.75,
-                        startDate = timeNowUTC().plusDays(5).toInstant(ZoneOffset.UTC),
-                        oneTime = false,
-                        intervalType = IntervalType.MONTH,
-                        intervalN = 1,
-                        type = TransactionType.EXPENSE
-                    )
-                ) {}
-            }
-        }
-    }
-}
-
-@Preview
-@Composable
-private fun Preview_recurringError() {
-    IvyWalletPreview {
-        LazyColumn(Modifier.fillMaxSize()) {
-            val account = Account(name = "Revolut", Blue.toArgb())
-            val shisha = Category(
-                name = NotBlankTrimmedString.unsafe("Shisha"),
-                color = ColorInt(Orange.toArgb()),
-                icon = null,
-                id = CategoryId(UUID.randomUUID()),
-                orderNum = 0.0,
-            )
-
-            item {
-                Spacer(Modifier.height(68.dp))
-
-                PlannedPaymentCard(
-                    baseCurrency = "BGN",
-                    categories = persistentListOf(shisha),
-                    accounts = persistentListOf(account),
-                    plannedPayment = PlannedPaymentRule(
-                        accountId = account.id,
-                        title = "Tabu",
-                        categoryId = shisha.id.value,
-                        amount = 250.75,
-                        startDate = timeNowUTC().plusDays(5).toInstant(ZoneOffset.UTC),
-                        oneTime = false,
-                        intervalType = null,
-                        intervalN = null,
-                        type = TransactionType.EXPENSE
-                    ),
-                ) {}
-            }
-        }
     }
 }
