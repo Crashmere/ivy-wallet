@@ -1,6 +1,8 @@
 package com.ivy.settings
 
 import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -62,6 +64,12 @@ import com.ivy.wallet.ui.theme.modal.CurrencyModal
 import com.ivy.wallet.ui.theme.modal.DeleteModal
 import com.ivy.wallet.ui.theme.modal.ProgressModal
 import java.util.Locale
+
+private enum class SettingsPage(@StringRes val title: Int) {
+    Main(R.string.settings),
+    DisplayPreferences(R.string.display_preferences),
+    InputAndLists(R.string.input_and_lists)
+}
 
 @ExperimentalFoundationApi
 @Composable
@@ -204,7 +212,11 @@ private fun BoxWithConstraintsScope.UI(
     var deleteCloudDataModalVisible by remember { mutableStateOf(false) }
     var deleteAllDataModalVisible by remember { mutableStateOf(false) }
     var deleteAllDataModalFinalVisible by remember { mutableStateOf(false) }
+    var settingsPage by remember { mutableStateOf(SettingsPage.Main) }
     val nav = navigation()
+    BackHandler(enabled = settingsPage != SettingsPage.Main) {
+        settingsPage = SettingsPage.Main
+    }
 
     LazyColumn(
         modifier = Modifier
@@ -215,7 +227,13 @@ private fun BoxWithConstraintsScope.UI(
     ) {
         stickyHeader {
             IvyToolbar(
-                onBack = { nav.onBackPressed() },
+                onBack = {
+                    if (settingsPage == SettingsPage.Main) {
+                        nav.onBackPressed()
+                    } else {
+                        settingsPage = SettingsPage.Main
+                    }
+                },
             ) {
                 Spacer(Modifier.weight(1f))
 
@@ -239,7 +257,7 @@ private fun BoxWithConstraintsScope.UI(
 
             Text(
                 modifier = Modifier.padding(start = 32.dp),
-                text = stringResource(R.string.settings),
+                text = stringResource(settingsPage.title),
                 style = UI.typo.h2.style(
                     fontWeight = FontWeight.Black
                 )
@@ -248,253 +266,110 @@ private fun BoxWithConstraintsScope.UI(
             Spacer(Modifier.height(24.dp))
         }
 
-        item {
-            SettingsSectionDivider(text = stringResource(R.string.accounting_rules))
-
-            Spacer(Modifier.height(16.dp))
-
-            CurrencyButton(currency = currencyCode) {
-                currencyModalVisible = true
-            }
-
-            Spacer(Modifier.height(12.dp))
-
-            StartDateOfMonth(
-                startDateOfMonth = startDateOfMonth
-            ) {
-                chooseStartDateOfMonthVisible = true
-            }
-
-            Spacer(Modifier.height(12.dp))
-
-            AppSwitch(
-                lockApp = treatTransfersAsIncomeExpense,
-                onSetLockApp = onSetTreatTransfersAsIncExp,
-                text = stringResource(R.string.transfers_as_income_expense),
-                description = stringResource(R.string.transfers_as_income_expense_description),
-                icon = R.drawable.ic_custom_transfer_m
-            )
-        }
-
-        item {
-            SettingsSectionDivider(text = stringResource(R.string.display_preferences))
-
-            Spacer(Modifier.height(16.dp))
-
-            AppThemeButton(
-                icon = when (theme) {
-                    Theme.LIGHT -> R.drawable.home_more_menu_light_mode
-                    Theme.DARK -> R.drawable.home_more_menu_dark_mode
-                    Theme.AMOLED_DARK -> R.drawable.home_more_menu_amoled_dark_mode
-                    Theme.AUTO -> R.drawable.home_more_menu_auto_mode
-                },
-                label = when (theme) {
-                    Theme.LIGHT -> stringResource(R.string.light_mode)
-                    Theme.DARK -> stringResource(R.string.dark_mode)
-                    Theme.AMOLED_DARK -> stringResource(R.string.amoled_mode)
-                    Theme.AUTO -> stringResource(R.string.auto_mode)
-                }
-            ) {
-                onSwitchTheme()
-            }
-
-            Spacer(Modifier.height(12.dp))
-
-            AppSwitch(
-                lockApp = hideCurrentBalance,
-                onSetLockApp = onSetHideCurrentBalance,
-                text = stringResource(R.string.hide_balance),
-                description = stringResource(R.string.hide_balance_description),
-                icon = R.drawable.ic_hide_m
-            )
-
-            Spacer(Modifier.height(12.dp))
-
-            AppSwitch(
-                lockApp = hideIncome,
-                onSetLockApp = onSetHideIncome,
-                text = stringResource(R.string.hide_income),
-                description = stringResource(R.string.hide_income_description),
-                icon = R.drawable.ic_hide_m
-            )
-
-            Spacer(Modifier.height(12.dp))
-
-            AppSwitch(
-                lockApp = compactAccountsMode,
-                onSetLockApp = onSetCompactAccountsMode,
-                text = stringResource(R.string.compact_account_cards),
-                description = stringResource(R.string.compact_account_cards_description),
-                icon = R.drawable.ic_custom_account_m
-            )
-
-            Spacer(Modifier.height(12.dp))
-
-            AppSwitch(
-                lockApp = hideAccountTotalBalance,
-                onSetLockApp = onSetHideAccountTotalBalance,
-                text = stringResource(R.string.hide_account_total_balance),
-                description = stringResource(R.string.hide_account_total_balance_description),
-                icon = R.drawable.ic_hide_m
-            )
-
-            Spacer(Modifier.height(12.dp))
-
-            AppSwitch(
-                lockApp = compactCategoriesMode,
-                onSetLockApp = onSetCompactCategoriesMode,
-                text = stringResource(R.string.compact_category_cards),
-                description = stringResource(R.string.compact_category_cards_description),
-                icon = R.drawable.ic_custom_category_m
-            )
-
-            Spacer(Modifier.height(12.dp))
-
-            AppSwitch(
-                lockApp = showAccountColorsInTransactions,
-                onSetLockApp = onSetShowAccountColorsInTransactions,
-                text = stringResource(R.string.colorful_account_labels),
-                description = stringResource(R.string.colorful_account_labels_description),
-                icon = R.drawable.ic_custom_palette_m
-            )
-        }
-
-        item {
-            SettingsSectionDivider(text = stringResource(R.string.input_and_lists))
-
-            Spacer(Modifier.height(16.dp))
-
-            AppSwitch(
-                lockApp = showTitleSuggestions,
-                onSetLockApp = onSetShowTitleSuggestions,
-                text = stringResource(R.string.previous_title_suggestions),
-                description = stringResource(R.string.previous_title_suggestions_description),
-                icon = R.drawable.ic_custom_document_m
-            )
-
-            Spacer(Modifier.height(12.dp))
-
-            AppSwitch(
-                lockApp = standardKeypadLayout,
-                onSetLockApp = onSetStandardKeypadLayout,
-                text = stringResource(R.string.standard_keypad_layout),
-                description = stringResource(R.string.standard_keypad_layout_description),
-                icon = R.drawable.ic_custom_calculator_m
-            )
-
-            Spacer(Modifier.height(12.dp))
-
-            AppSwitch(
-                lockApp = showCategorySearchBar,
-                onSetLockApp = onSetShowCategorySearchBar,
-                text = stringResource(R.string.category_search_bar),
-                description = stringResource(R.string.category_search_bar_description),
-                icon = R.drawable.ic_search
-            )
-
-            Spacer(Modifier.height(12.dp))
-
-            AppSwitch(
-                lockApp = sortCategoriesAscending,
-                onSetLockApp = onSetSortCategoriesAscending,
-                text = stringResource(R.string.sort_categories_list),
-                description = stringResource(R.string.sort_categories_list_description),
-                icon = R.drawable.ic_sort_by_alpha_24
-            )
-        }
-
-        item {
-            SettingsSectionDivider(text = stringResource(R.string.system_behavior))
-
-            Spacer(Modifier.height(16.dp))
-
-            AppSwitch(
-                lockApp = lockApp,
-                onSetLockApp = onSetLockApp,
-                text = stringResource(R.string.lock_app),
-                icon = R.drawable.ic_custom_fingerprint_m
-            )
-
-            Spacer(Modifier.height(12.dp))
-
-            AppSwitch(
-                lockApp = showNotifications,
-                onSetLockApp = onSetShowNotifications,
-                text = stringResource(R.string.show_notifications),
-                icon = R.drawable.ic_notification_m
-            )
-
-            Spacer(Modifier.height(12.dp))
-
-            if (languageOptionVisible) {
-                SettingsDefaultButton(
-                    icon = R.drawable.ic_vue_location_global,
-                    iconPadding = 6.dp,
-                    text = stringResource(R.string.language),
-                    description = Locale.getDefault().displayName
-                ) {
-                    onSwitchLanguage()
+        when (settingsPage) {
+            SettingsPage.Main -> {
+                item {
+                    DataManagementSection(
+                        onExportToCSV = onExportToCSV,
+                        onBackupData = onBackupData,
+                    ) {
+                        nav.navigateTo(
+                            ImportScreen(
+                                launchedFromOnboarding = false
+                            )
+                        )
+                    }
                 }
 
-                Spacer(Modifier.height(12.dp))
-            }
-
-            SettingsDefaultButton(
-                icon = R.drawable.ic_currency,
-                text = stringResource(R.string.exchange_rates),
-            ) {
-                nav.navigateTo(ExchangeRatesScreen)
-            }
-        }
-
-        item {
-            SettingsSectionDivider(text = stringResource(R.string.data_management))
-
-            Spacer(Modifier.height(16.dp))
-
-            ExportCSV {
-                onExportToCSV()
-            }
-
-            Spacer(Modifier.height(12.dp))
-
-            SettingsDefaultButton(
-                icon = R.drawable.ic_vue_security_shield,
-                text = stringResource(R.string.backup_data),
-                iconPadding = 8.dp
-            ) {
-                onBackupData()
-            }
-
-            Spacer(Modifier.height(12.dp))
-
-            SettingsPrimaryButton(
-                icon = R.drawable.ic_export_csv,
-                text = stringResource(R.string.import_data),
-                backgroundGradient = GradientGreen
-            ) {
-                nav.navigateTo(
-                    ImportScreen(
-                        launchedFromOnboarding = false
+                item {
+                    AccountingRulesSection(
+                        currencyCode = currencyCode,
+                        startDateOfMonth = startDateOfMonth,
+                        treatTransfersAsIncomeExpense = treatTransfersAsIncomeExpense,
+                        onSetTreatTransfersAsIncExp = onSetTreatTransfersAsIncExp,
+                        onCurrencyClick = {
+                            currencyModalVisible = true
+                        },
+                        onStartDateClick = {
+                            chooseStartDateOfMonthVisible = true
+                        }
                     )
-                )
+                }
+
+                item {
+                    SystemBehaviorSection(
+                        lockApp = lockApp,
+                        showNotifications = showNotifications,
+                        languageOptionVisible = languageOptionVisible,
+                        onSetLockApp = onSetLockApp,
+                        onSetShowNotifications = onSetShowNotifications,
+                        onSwitchLanguage = onSwitchLanguage,
+                    ) {
+                        nav.navigateTo(ExchangeRatesScreen)
+                    }
+                }
+
+                item {
+                    Spacer(Modifier.height(32.dp))
+
+                    SettingsSubMenuButton(
+                        icon = R.drawable.ic_custom_palette_m,
+                        text = stringResource(R.string.display_preferences)
+                    ) {
+                        settingsPage = SettingsPage.DisplayPreferences
+                    }
+
+                    Spacer(Modifier.height(12.dp))
+
+                    SettingsSubMenuButton(
+                        icon = R.drawable.ic_custom_document_m,
+                        text = stringResource(R.string.input_and_lists)
+                    ) {
+                        settingsPage = SettingsPage.InputAndLists
+                    }
+                }
+
+                item {
+                    DangerZoneSection {
+                        deleteAllDataModalVisible = true
+                    }
+                }
             }
-        }
 
-        item {
-            SettingsSectionDivider(
-                text = stringResource(R.string.danger_zone),
-                color = Red
-            )
+            SettingsPage.DisplayPreferences -> {
+                item {
+                    DisplayPreferencesSection(
+                        theme = theme,
+                        hideCurrentBalance = hideCurrentBalance,
+                        hideIncome = hideIncome,
+                        compactAccountsMode = compactAccountsMode,
+                        hideAccountTotalBalance = hideAccountTotalBalance,
+                        compactCategoriesMode = compactCategoriesMode,
+                        showAccountColorsInTransactions = showAccountColorsInTransactions,
+                        onSwitchTheme = onSwitchTheme,
+                        onSetHideCurrentBalance = onSetHideCurrentBalance,
+                        onSetHideIncome = onSetHideIncome,
+                        onSetCompactAccountsMode = onSetCompactAccountsMode,
+                        onSetHideAccountTotalBalance = onSetHideAccountTotalBalance,
+                        onSetCompactCategoriesMode = onSetCompactCategoriesMode,
+                        onSetShowAccountColorsInTransactions = onSetShowAccountColorsInTransactions
+                    )
+                }
+            }
 
-            Spacer(Modifier.height(16.dp))
-
-            SettingsPrimaryButton(
-                icon = R.drawable.ic_delete,
-                text = stringResource(R.string.delete_all_user_data),
-                backgroundGradient = Gradient.solid(Red)
-            ) {
-                deleteAllDataModalVisible = true
+            SettingsPage.InputAndLists -> {
+                item {
+                    InputAndListsSection(
+                        showTitleSuggestions = showTitleSuggestions,
+                        standardKeypadLayout = standardKeypadLayout,
+                        showCategorySearchBar = showCategorySearchBar,
+                        sortCategoriesAscending = sortCategoriesAscending,
+                        onSetShowTitleSuggestions = onSetShowTitleSuggestions,
+                        onSetStandardKeypadLayout = onSetStandardKeypadLayout,
+                        onSetShowCategorySearchBar = onSetShowCategorySearchBar,
+                        onSetSortCategoriesAscending = onSetSortCategoriesAscending
+                    )
+                }
             }
         }
 
@@ -566,6 +441,295 @@ private fun BoxWithConstraintsScope.UI(
         description = stringResource(R.string.exporting_data_description),
         visible = progressState
     )
+}
+
+@Composable
+private fun DataManagementSection(
+    onExportToCSV: () -> Unit,
+    onBackupData: () -> Unit,
+    onImportData: () -> Unit
+) {
+    SettingsSectionDivider(text = stringResource(R.string.data_management))
+
+    Spacer(Modifier.height(16.dp))
+
+    ExportCSV {
+        onExportToCSV()
+    }
+
+    Spacer(Modifier.height(12.dp))
+
+    SettingsDefaultButton(
+        icon = R.drawable.ic_vue_security_shield,
+        text = stringResource(R.string.backup_data),
+        iconPadding = 8.dp
+    ) {
+        onBackupData()
+    }
+
+    Spacer(Modifier.height(12.dp))
+
+    SettingsPrimaryButton(
+        icon = R.drawable.ic_export_csv,
+        text = stringResource(R.string.import_data),
+        backgroundGradient = GradientGreen
+    ) {
+        onImportData()
+    }
+}
+
+@Composable
+private fun AccountingRulesSection(
+    currencyCode: String,
+    startDateOfMonth: Int,
+    treatTransfersAsIncomeExpense: Boolean,
+    onSetTreatTransfersAsIncExp: (Boolean) -> Unit,
+    onCurrencyClick: () -> Unit,
+    onStartDateClick: () -> Unit
+) {
+    SettingsSectionDivider(text = stringResource(R.string.accounting_rules))
+
+    Spacer(Modifier.height(16.dp))
+
+    CurrencyButton(currency = currencyCode) {
+        onCurrencyClick()
+    }
+
+    Spacer(Modifier.height(12.dp))
+
+    StartDateOfMonth(
+        startDateOfMonth = startDateOfMonth
+    ) {
+        onStartDateClick()
+    }
+
+    Spacer(Modifier.height(12.dp))
+
+    AppSwitch(
+        lockApp = treatTransfersAsIncomeExpense,
+        onSetLockApp = onSetTreatTransfersAsIncExp,
+        text = stringResource(R.string.transfers_as_income_expense),
+        description = stringResource(R.string.transfers_as_income_expense_description),
+        icon = R.drawable.ic_custom_transfer_m
+    )
+}
+
+@Composable
+private fun SystemBehaviorSection(
+    lockApp: Boolean,
+    showNotifications: Boolean,
+    languageOptionVisible: Boolean,
+    onSetLockApp: (Boolean) -> Unit,
+    onSetShowNotifications: (Boolean) -> Unit,
+    onSwitchLanguage: () -> Unit,
+    onExchangeRatesClick: () -> Unit
+) {
+    SettingsSectionDivider(text = stringResource(R.string.system_behavior))
+
+    Spacer(Modifier.height(16.dp))
+
+    AppSwitch(
+        lockApp = lockApp,
+        onSetLockApp = onSetLockApp,
+        text = stringResource(R.string.lock_app),
+        icon = R.drawable.ic_custom_fingerprint_m
+    )
+
+    Spacer(Modifier.height(12.dp))
+
+    AppSwitch(
+        lockApp = showNotifications,
+        onSetLockApp = onSetShowNotifications,
+        text = stringResource(R.string.show_notifications),
+        icon = R.drawable.ic_notification_m
+    )
+
+    Spacer(Modifier.height(12.dp))
+
+    if (languageOptionVisible) {
+        SettingsDefaultButton(
+            icon = R.drawable.ic_vue_location_global,
+            iconPadding = 6.dp,
+            text = stringResource(R.string.language),
+            description = Locale.getDefault().displayName
+        ) {
+            onSwitchLanguage()
+        }
+
+        Spacer(Modifier.height(12.dp))
+    }
+
+    SettingsDefaultButton(
+        icon = R.drawable.ic_currency,
+        text = stringResource(R.string.exchange_rates),
+    ) {
+        onExchangeRatesClick()
+    }
+}
+
+@Composable
+private fun DisplayPreferencesSection(
+    theme: Theme,
+    hideCurrentBalance: Boolean,
+    hideIncome: Boolean,
+    compactAccountsMode: Boolean,
+    hideAccountTotalBalance: Boolean,
+    compactCategoriesMode: Boolean,
+    showAccountColorsInTransactions: Boolean,
+    onSwitchTheme: () -> Unit,
+    onSetHideCurrentBalance: (Boolean) -> Unit,
+    onSetHideIncome: (Boolean) -> Unit,
+    onSetCompactAccountsMode: (Boolean) -> Unit,
+    onSetHideAccountTotalBalance: (Boolean) -> Unit,
+    onSetCompactCategoriesMode: (Boolean) -> Unit,
+    onSetShowAccountColorsInTransactions: (Boolean) -> Unit
+) {
+    AppThemeButton(
+        icon = when (theme) {
+            Theme.LIGHT -> R.drawable.home_more_menu_light_mode
+            Theme.DARK -> R.drawable.home_more_menu_dark_mode
+            Theme.AMOLED_DARK -> R.drawable.home_more_menu_amoled_dark_mode
+            Theme.AUTO -> R.drawable.home_more_menu_auto_mode
+        },
+        label = when (theme) {
+            Theme.LIGHT -> stringResource(R.string.light_mode)
+            Theme.DARK -> stringResource(R.string.dark_mode)
+            Theme.AMOLED_DARK -> stringResource(R.string.amoled_mode)
+            Theme.AUTO -> stringResource(R.string.auto_mode)
+        }
+    ) {
+        onSwitchTheme()
+    }
+
+    Spacer(Modifier.height(12.dp))
+
+    AppSwitch(
+        lockApp = hideCurrentBalance,
+        onSetLockApp = onSetHideCurrentBalance,
+        text = stringResource(R.string.hide_balance),
+        description = stringResource(R.string.hide_balance_description),
+        icon = R.drawable.ic_hide_m
+    )
+
+    Spacer(Modifier.height(12.dp))
+
+    AppSwitch(
+        lockApp = hideIncome,
+        onSetLockApp = onSetHideIncome,
+        text = stringResource(R.string.hide_income),
+        description = stringResource(R.string.hide_income_description),
+        icon = R.drawable.ic_hide_m
+    )
+
+    Spacer(Modifier.height(12.dp))
+
+    AppSwitch(
+        lockApp = compactAccountsMode,
+        onSetLockApp = onSetCompactAccountsMode,
+        text = stringResource(R.string.compact_account_cards),
+        description = stringResource(R.string.compact_account_cards_description),
+        icon = R.drawable.ic_custom_account_m
+    )
+
+    Spacer(Modifier.height(12.dp))
+
+    AppSwitch(
+        lockApp = hideAccountTotalBalance,
+        onSetLockApp = onSetHideAccountTotalBalance,
+        text = stringResource(R.string.hide_account_total_balance),
+        description = stringResource(R.string.hide_account_total_balance_description),
+        icon = R.drawable.ic_hide_m
+    )
+
+    Spacer(Modifier.height(12.dp))
+
+    AppSwitch(
+        lockApp = compactCategoriesMode,
+        onSetLockApp = onSetCompactCategoriesMode,
+        text = stringResource(R.string.compact_category_cards),
+        description = stringResource(R.string.compact_category_cards_description),
+        icon = R.drawable.ic_custom_category_m
+    )
+
+    Spacer(Modifier.height(12.dp))
+
+    AppSwitch(
+        lockApp = showAccountColorsInTransactions,
+        onSetLockApp = onSetShowAccountColorsInTransactions,
+        text = stringResource(R.string.colorful_account_labels),
+        description = stringResource(R.string.colorful_account_labels_description),
+        icon = R.drawable.ic_custom_palette_m
+    )
+}
+
+@Composable
+private fun InputAndListsSection(
+    showTitleSuggestions: Boolean,
+    standardKeypadLayout: Boolean,
+    showCategorySearchBar: Boolean,
+    sortCategoriesAscending: Boolean,
+    onSetShowTitleSuggestions: (Boolean) -> Unit,
+    onSetStandardKeypadLayout: (Boolean) -> Unit,
+    onSetShowCategorySearchBar: (Boolean) -> Unit,
+    onSetSortCategoriesAscending: (Boolean) -> Unit
+) {
+    AppSwitch(
+        lockApp = showTitleSuggestions,
+        onSetLockApp = onSetShowTitleSuggestions,
+        text = stringResource(R.string.previous_title_suggestions),
+        description = stringResource(R.string.previous_title_suggestions_description),
+        icon = R.drawable.ic_custom_document_m
+    )
+
+    Spacer(Modifier.height(12.dp))
+
+    AppSwitch(
+        lockApp = standardKeypadLayout,
+        onSetLockApp = onSetStandardKeypadLayout,
+        text = stringResource(R.string.standard_keypad_layout),
+        description = stringResource(R.string.standard_keypad_layout_description),
+        icon = R.drawable.ic_custom_calculator_m
+    )
+
+    Spacer(Modifier.height(12.dp))
+
+    AppSwitch(
+        lockApp = showCategorySearchBar,
+        onSetLockApp = onSetShowCategorySearchBar,
+        text = stringResource(R.string.category_search_bar),
+        description = stringResource(R.string.category_search_bar_description),
+        icon = R.drawable.ic_search
+    )
+
+    Spacer(Modifier.height(12.dp))
+
+    AppSwitch(
+        lockApp = sortCategoriesAscending,
+        onSetLockApp = onSetSortCategoriesAscending,
+        text = stringResource(R.string.sort_categories_list),
+        description = stringResource(R.string.sort_categories_list_description),
+        icon = R.drawable.ic_sort_by_alpha_24
+    )
+}
+
+@Composable
+private fun DangerZoneSection(
+    onDeleteAllDataClick: () -> Unit
+) {
+    SettingsSectionDivider(
+        text = stringResource(R.string.danger_zone),
+        color = Red
+    )
+
+    Spacer(Modifier.height(16.dp))
+
+    SettingsPrimaryButton(
+        icon = R.drawable.ic_delete,
+        text = stringResource(R.string.delete_all_user_data),
+        backgroundGradient = Gradient.solid(Red)
+    ) {
+        onDeleteAllDataClick()
+    }
 }
 
 @Composable
@@ -851,6 +1015,46 @@ private fun SettingsSectionDivider(
                 fontWeight = FontWeight.Bold
             )
         )
+    }
+}
+
+@Composable
+private fun SettingsSubMenuButton(
+    @DrawableRes icon: Int,
+    text: String,
+    onClick: () -> Unit,
+) {
+    SettingsButtonRow(
+        backgroundGradient = Gradient.solid(UI.colors.medium),
+        onClick = onClick
+    ) {
+        Spacer(Modifier.width(12.dp))
+
+        IvyIconScaled(
+            icon = icon,
+            tint = UI.colors.pureInverse,
+            iconScale = IconScale.M
+        )
+
+        Spacer(Modifier.width(8.dp))
+
+        Text(
+            modifier = Modifier
+                .weight(1f)
+                .padding(top = 20.dp, bottom = 20.dp, end = 8.dp),
+            text = text,
+            style = UI.typo.b2.style(
+                color = UI.colors.pureInverse,
+                fontWeight = FontWeight.Bold
+            )
+        )
+
+        IvyIconScaled(
+            icon = R.drawable.ic_arrow_right,
+            iconScale = IconScale.M
+        )
+
+        Spacer(Modifier.width(24.dp))
     }
 }
 
