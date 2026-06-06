@@ -269,7 +269,6 @@
     <string name="report_bug">Informar dun erro</string>
     <string name="request_a_feature">Solicitar unha funcionalidade</string>
     <string name="contact_support">Soporte da comunidade</string>
-    <string name="project_contributors">Contribuíntes</string>
     <string name="account_uppercase">CONTA</string>
     <string name="logout">Pechar sesión</string>
     <string name="login">Iniciar sesión</string>
@@ -469,7 +468,6 @@
     <string name="tap_to_switch_theme">Toca para cambiar o tema</string>
     <string name="do_not_use_for_backup_purposes">⚠\uFE0F Non usar con fins de copia de seguridade</string>
     <string name="done">Feito</string>
-    <string name="contributors_number">%1$s Contribuíntes</string>
     <string name="error">Erro</string>
     <string name="loading">Cargando…</string>
     <string name="try_again">Téntao de novo</string>

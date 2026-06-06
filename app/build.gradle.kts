@@ -122,7 +122,6 @@ dependencies {
     implementation(projects.feature.balance)
     implementation(projects.feature.budgets)
     implementation(projects.feature.categories)
-    implementation(projects.feature.contributors)
     implementation(projects.feature.disclaimer)
     implementation(projects.feature.editTransaction)
     implementation(projects.feature.exchangeRates)

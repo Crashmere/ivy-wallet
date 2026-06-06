@@ -265,7 +265,6 @@
     <string name="roadmap">Lộ trình</string>
     <string name="request_a_feature">Yêu cầu một tính năng</string>
     <string name="contact_support">Liên hệ hỗ trợ</string>
-    <string name="project_contributors">Người đóng góp</string>
     <string name="account_uppercase">TÀI KHOẢN</string>
     <string name="logout">Đăng xuất</string>
     <string name="login">Đăng nhập</string>
@@ -465,7 +464,6 @@
     <string name="tap_to_switch_theme">Nhấn để chuyển chủ đề</string>
     <string name="do_not_use_for_backup_purposes">⚠\uFE0F Không sử dụng cho mục đích sao lưu</string>
     <string name="done">Xong</string>
-    <string name="contributors_number">%1$s Người đóng góp</string>
     <string name="error">Lỗi</string>
     <string name="loading">Đang tải…</string>
     <string name="try_again">Thử lại</string>

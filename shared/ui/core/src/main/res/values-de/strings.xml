@@ -265,7 +265,6 @@
     <string name="roadmap">Entwicklungsplan</string>
     <string name="request_a_feature">Eine Funktion anfordern</string>
     <string name="contact_support">Support kontaktieren</string>
-    <string name="project_contributors">Mitwirkende</string>
     <string name="account_uppercase">KONTO</string>
     <string name="logout">Abmelden</string>
     <string name="login">Anmelden</string>
@@ -460,7 +459,6 @@
     <string name="tap_to_switch_theme">Tippe um das Design zu wechseln</string>
     <string name="do_not_use_for_backup_purposes">⚠\uFE0F Nicht als Backup verwenden!</string>
     <string name="done">Fertig</string>
-    <string name="contributors_number">%1$s Mitwirkende</string>
     <string name="error">Fehler</string>
     <string name="loading">Lade…</string>
     <string name="try_again">Erneut versuchen</string>

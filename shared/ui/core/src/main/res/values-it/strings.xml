@@ -266,7 +266,6 @@
     <string name="roadmap">Roadmap</string>
     <string name="request_a_feature">Richiedi una funzionalità</string>
     <string name="contact_support">Contatta il supporto</string>
-    <string name="project_contributors">Contributori del progetto</string>
     <string name="account_uppercase">ACCOUNT</string>
     <string name="logout">Esci</string>
     <string name="login">Accedi</string>
@@ -465,7 +464,6 @@
     <string name="tap_to_switch_theme">Tocca per cambiare tema</string>
     <string name="do_not_use_for_backup_purposes">⚠\uFE0F Non utilizzare per il backup</string>
     <string name="done">Fatto</string>
-    <string name="contributors_number">%1$s Contributori</string>
     <string name="error">Errore</string>
     <string name="loading">Caricamento…</string>
     <string name="try_again">Riprova</string>
