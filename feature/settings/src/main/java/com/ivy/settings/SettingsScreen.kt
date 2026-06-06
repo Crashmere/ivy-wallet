@@ -20,6 +20,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -213,12 +214,21 @@ private fun BoxWithConstraintsScope.UI(
     var deleteAllDataModalVisible by remember { mutableStateOf(false) }
     var deleteAllDataModalFinalVisible by remember { mutableStateOf(false) }
     var settingsPage by remember { mutableStateOf(SettingsPage.Main) }
+    val mainListState = rememberLazyListState()
+    val displayPreferencesListState = rememberLazyListState()
+    val inputAndListsListState = rememberLazyListState()
+    val currentListState = when (settingsPage) {
+        SettingsPage.Main -> mainListState
+        SettingsPage.DisplayPreferences -> displayPreferencesListState
+        SettingsPage.InputAndLists -> inputAndListsListState
+    }
     val nav = navigation()
     BackHandler(enabled = settingsPage != SettingsPage.Main) {
         settingsPage = SettingsPage.Main
     }
 
     LazyColumn(
+        state = currentListState,
         modifier = Modifier
             .fillMaxSize()
             .statusBarsPadding()
