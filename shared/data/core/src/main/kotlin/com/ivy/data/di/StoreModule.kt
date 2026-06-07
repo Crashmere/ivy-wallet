@@ -23,7 +23,7 @@ import com.ivy.data.repository.ExchangeRatesRepository
 import com.ivy.data.repository.LoanRecordStoreImpl
 import com.ivy.data.repository.LoanStoreImpl
 import com.ivy.data.repository.PlannedPaymentRuleStoreImpl
-import com.ivy.data.repository.SettingsRepository
+import com.ivy.data.repository.RoomSettingsStore
 import com.ivy.data.repository.TagRepository
 import com.ivy.data.repository.TransactionRepository
 import com.ivy.data.datastore.DataStorePreferenceToggleStore
@@ -55,7 +55,7 @@ abstract class StoreModule {
     abstract fun bindCurrencyStore(repository: CurrencyRepository): CurrencyStore
 
     @Binds
-    abstract fun bindSettingsStore(repository: SettingsRepository): SettingsStore
+    abstract fun bindSettingsStore(store: RoomSettingsStore): SettingsStore
 
     @Binds
     abstract fun bindExchangeRateStore(repository: ExchangeRatesRepository): ExchangeRateStore
