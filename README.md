@@ -11,9 +11,10 @@
 - 删除不再需要的功能模块和入口：contributors、releases、attributions、poll、disclaimer、onboarding、widget，以及第三方 App 导入模板和教程。
 - 整顿设置页：合并原高级特性页，改成个人偏好设置；重排设置分组；删除匿名账户入口和首页问候语。
 - 精简测试和预览基础设施：删除 Paparazzi 截图测试、快照图片、仅服务 IDE 的 Compose `@Preview` 示例函数和预览 helper。
-- 持续清理 `temp:legacy-code` 与 `temp:old-design` 中确认无引用的旧代码、工具、组件和残留模型。
+- 持续清理 `temp:legacy-code` 中确认无引用的旧代码、工具、组件和残留模型。
 - 删除空的 `:shared:data:core-testing` 模块，并把测试专用 `FakeRepositoryMemo` 从生产源码移入测试源集。
 - 删除未引用的第三方导入 logo、widget 预览/图标、推广/分享/捐赠图片，以及 `help_us_grow` 多语言推广文案。
+- 删除 `:temp:old-design` 模块；旧设计 API 先迁入 `shared:ui:core` 作为兼容层，后续再逐步替换旧包名和旧组件。
 
 当前仍保留：
 
@@ -55,21 +56,21 @@
 
 现状：
 
-- 大多数 `feature:*` 同时依赖 `:temp:legacy-code` 和 `:temp:old-design`。
+- 大多数 `feature:*` 仍依赖 `:temp:legacy-code`。
 - `temp:legacy-code` 里混杂旧数据模型、旧 domain action、旧 UI 组件、modal、工具函数、通知 worker、启动初始化逻辑。
-- `temp:old-design` 虽然只剩少量文件，但仍提供全局颜色、旧 `IvyUI`、旧 `IvyContext`、基础 building block 和 Compose helper。
+- 旧设计系统源码已经迁入 `shared:ui:core` 作为兼容层，仍保留 `com.ivy.design.*` 包名和旧 `IvyUI`、`IvyContext`、`UI.colors` 等概念。
 
 问题：
 
 - 新代码很容易继续引用 legacy API。
 - 无法从模块依赖上判断哪些是真正公共能力，哪些只是迁移残留。
-- 删除 `temp` 会牵一发动全身。
+- 删除 `temp:legacy-code` 仍会牵一发动全身。
 
 目标：
 
 - 把仍有价值的代码迁到正确模块。
 - 把旧名字、旧 package、旧设计系统概念逐步消掉。
-- 最终删除 `:temp:legacy-code` 和 `:temp:old-design`。
+- 最终删除 `:temp:legacy-code`，并把 `shared:ui:core` 里的旧设计兼容包替换为更清晰的 Material3/UI core API。
 
 ### 2. 构建约定插件过度通用
 
@@ -329,7 +330,8 @@
 - 已把 `utils/Compose.kt`、`utils/Keyboard.kt`、`Spacers.kt`、`ColumnRoot.kt`、`IvyText.kt` 从 `temp:old-design` 移到 `shared:ui:core`。
 - 这些文件暂时保留 `com.ivy.design.*` 包名，以降低迁移成本；后续在旧设计模块清空后再统一改包名。
 - 在 `shared:ui:core` 补齐 `colorControlNormal` attr，让仍使用该 attr 的旧 drawable 可以通过独立资源校验。
-- `IvyIcon`、`Dividers`、`IvyTheme/UI` 等依赖旧主题上下文的文件暂时保留在 `temp:old-design`，下一步分组处理。
+- 已把剩余旧设计 Kotlin 源码整体迁入 `shared:ui:core`，并删除 `:temp:old-design` 模块依赖。
+- 旧模块中的字体是 `shared:ui:core` 的重复资源；旧模块中的未引用 drawable 不迁移。
 
 完成标准：
 
@@ -577,9 +579,9 @@ shared:ui:core
 3. **测试 helper 归位**
    - 新建或整理 `shared:test-support`。
    - 移动 fake DAO、test dispatcher、test resource provider、test time converter。
-4. **迁移 `temp:old-design`**
-   - 从颜色常量和基础 Compose helper 开始。
-   - 每迁一组，移除对应 feature 依赖。
+4. **收尾旧设计兼容层**
+   - `:temp:old-design` 已删除。
+   - 后续改包名、替换 `UI.colors`/`IvyUI`/旧 building block。
 5. **迁移 `temp:legacy-code`**
    - 从工具函数和 modal 开始。
    - 再处理旧 domain action。
