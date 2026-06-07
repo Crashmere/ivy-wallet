@@ -1,6 +1,5 @@
 package com.ivy.base.model.legacy
 
-import androidx.compose.runtime.Immutable
 import com.ivy.base.model.TransactionType
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
@@ -14,7 +13,6 @@ typealias LegacyTransaction = Transaction
 
 @Suppress("DataClassDefaultValues")
 @Deprecated("Legacy data model. Will be deleted")
-@Immutable
 data class Transaction(
     // TODO: Remove default values & introduce Transaction#dummy() method
     val accountId: UUID,

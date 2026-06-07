@@ -10,5 +10,4 @@ android {
 
 dependencies {
     implementation(libs.androidx.lifecycle.livedata.core)
-    implementation(libs.compose.runtime)
 }
