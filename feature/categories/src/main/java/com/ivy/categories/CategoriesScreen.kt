@@ -64,11 +64,11 @@ import com.ivy.legacy.ui.component.IvyIcon
 import com.ivy.legacy.ui.component.ReorderButton
 import com.ivy.legacy.ui.component.ReorderModalSingleType
 import com.ivy.legacy.ui.theme.findContrastTextColor
-import com.ivy.wallet.ui.theme.modal.IvyModal
-import com.ivy.wallet.ui.theme.modal.ModalSet
-import com.ivy.wallet.ui.theme.modal.ModalTitle
-import com.ivy.wallet.ui.theme.modal.edit.CategoryModal
-import com.ivy.wallet.ui.theme.modal.edit.CategoryModalData
+import com.ivy.legacy.ui.modal.IvyModal
+import com.ivy.legacy.ui.modal.ModalSet
+import com.ivy.legacy.ui.modal.ModalTitle
+import com.ivy.legacy.ui.modal.edit.CategoryModal
+import com.ivy.legacy.ui.modal.edit.CategoryModalData
 import com.ivy.legacy.ui.theme.toComposeColor
 import com.ivy.wallet.ui.theme.wallet.AmountCurrencyB1
 import kotlinx.collections.immutable.ImmutableList

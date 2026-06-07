@@ -1,4 +1,4 @@
-package com.ivy.wallet.ui.theme.modal.edit
+package com.ivy.legacy.ui.modal.edit
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.BoxWithConstraintsScope
@@ -26,9 +26,9 @@ import com.ivy.data.model.currency.normalizeExpression
 import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.Gray
 import com.ivy.legacy.ui.theme.Red
-import com.ivy.wallet.ui.theme.modal.IvyModal
-import com.ivy.wallet.ui.theme.modal.ModalSet
-import com.ivy.wallet.ui.theme.modal.ModalTitle
+import com.ivy.legacy.ui.modal.IvyModal
+import com.ivy.legacy.ui.modal.ModalSet
+import com.ivy.legacy.ui.modal.ModalTitle
 import com.notkamui.keval.Keval
 import java.util.UUID
 import androidx.compose.runtime.getValue

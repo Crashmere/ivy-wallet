@@ -1,4 +1,4 @@
-package com.ivy.wallet.ui.theme.modal.edit
+package com.ivy.legacy.ui.modal.edit
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
@@ -48,15 +48,15 @@ import com.ivy.ui.legacy.onScreenStart
 import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.Red
 import com.ivy.legacy.ui.component.IvyIcon
-import com.ivy.wallet.ui.theme.modal.IvyModal
-import com.ivy.wallet.ui.theme.modal.ModalPositiveButton
+import com.ivy.legacy.ui.modal.IvyModal
+import com.ivy.legacy.ui.modal.ModalPositiveButton
 import dagger.hilt.android.EntryPointAccessors
 import java.util.UUID
 import kotlin.math.truncate
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
-import com.ivy.wallet.ui.theme.modal.modalPreviewActionRowHeight
+import com.ivy.legacy.ui.modal.modalPreviewActionRowHeight
 
 @SuppressLint("ComposeModifierMissing")
 @Suppress("ParameterNaming")

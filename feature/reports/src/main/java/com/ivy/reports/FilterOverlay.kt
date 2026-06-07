@@ -65,11 +65,11 @@ import com.ivy.legacy.ui.component.IvyDividerLine
 import com.ivy.legacy.ui.component.IvyOutlinedButton
 import com.ivy.legacy.ui.component.IvyOutlinedButtonFillMaxWidth
 import com.ivy.legacy.ui.component.WrapContentRow
-import com.ivy.wallet.ui.theme.modal.AddKeywordModal
-import com.ivy.wallet.ui.theme.modal.AddModalBackHandling
-import com.ivy.wallet.ui.theme.modal.ChoosePeriodModal
-import com.ivy.wallet.ui.theme.modal.ChoosePeriodModalData
-import com.ivy.wallet.ui.theme.modal.edit.AmountModal
+import com.ivy.legacy.ui.modal.AddKeywordModal
+import com.ivy.legacy.ui.modal.AddModalBackHandling
+import com.ivy.legacy.ui.modal.ChoosePeriodModal
+import com.ivy.legacy.ui.modal.ChoosePeriodModalData
+import com.ivy.legacy.ui.modal.edit.AmountModal
 import com.ivy.legacy.ui.theme.toComposeColor
 import com.ivy.wallet.ui.theme.wallet.AmountCurrencyB1Row
 import kotlinx.collections.immutable.ImmutableList

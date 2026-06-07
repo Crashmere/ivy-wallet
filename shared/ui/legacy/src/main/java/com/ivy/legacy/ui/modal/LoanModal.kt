@@ -1,4 +1,4 @@
-package com.ivy.wallet.ui.theme.modal
+package com.ivy.legacy.ui.modal
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -59,10 +59,10 @@ import com.ivy.legacy.ui.component.ItemIconSDefaultIcon
 import com.ivy.legacy.ui.component.IvyCheckboxWithText
 import com.ivy.legacy.ui.component.IvyIcon
 import com.ivy.legacy.ui.theme.findContrastTextColor
-import com.ivy.wallet.ui.theme.modal.edit.AccountModal
-import com.ivy.wallet.ui.theme.modal.edit.AccountModalData
-import com.ivy.wallet.ui.theme.modal.edit.AmountModal
-import com.ivy.wallet.ui.theme.modal.edit.IconNameRow
+import com.ivy.legacy.ui.modal.edit.AccountModal
+import com.ivy.legacy.ui.modal.edit.AccountModalData
+import com.ivy.legacy.ui.modal.edit.AmountModal
+import com.ivy.legacy.ui.modal.edit.IconNameRow
 import com.ivy.legacy.ui.theme.toComposeColor
 import kotlinx.coroutines.launch
 import java.time.Instant

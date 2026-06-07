@@ -61,7 +61,7 @@ import com.ivy.legacy.ui.component.IvyCircleButton
 import com.ivy.legacy.ui.component.IvyIcon
 import com.ivy.legacy.ui.component.IvyOutlinedButton
 import com.ivy.legacy.ui.theme.gradientExpenses
-import com.ivy.wallet.ui.theme.modal.AddModalBackHandling
+import com.ivy.legacy.ui.modal.AddModalBackHandling
 import com.ivy.legacy.ui.theme.pureBlur
 import java.util.UUID
 import kotlin.math.abs

@@ -61,10 +61,10 @@ import com.ivy.legacy.ui.theme.Red
 import com.ivy.legacy.ui.theme.White
 import com.ivy.legacy.ui.component.IvySwitch
 import com.ivy.legacy.ui.component.IvyToolbar
-import com.ivy.wallet.ui.theme.modal.ChooseStartDateOfMonthModal
-import com.ivy.wallet.ui.theme.modal.CurrencyModal
-import com.ivy.wallet.ui.theme.modal.DeleteModal
-import com.ivy.wallet.ui.theme.modal.ProgressModal
+import com.ivy.legacy.ui.modal.ChooseStartDateOfMonthModal
+import com.ivy.legacy.ui.modal.CurrencyModal
+import com.ivy.legacy.ui.modal.DeleteModal
+import com.ivy.legacy.ui.modal.ProgressModal
 import java.util.Locale
 
 private enum class SettingsPage(@StringRes val title: Int) {

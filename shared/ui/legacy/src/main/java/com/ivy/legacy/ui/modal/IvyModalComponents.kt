@@ -1,4 +1,4 @@
-package com.ivy.wallet.ui.theme.modal
+package com.ivy.legacy.ui.modal
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.padding

@@ -1,4 +1,4 @@
-package com.ivy.wallet.ui.theme.modal.edit
+package com.ivy.legacy.ui.modal.edit
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -39,9 +39,9 @@ import com.ivy.legacy.ui.component.IvyBorderButton
 import com.ivy.legacy.ui.component.IvyCircleButton
 import com.ivy.legacy.ui.component.WrapContentRow
 import com.ivy.legacy.ui.theme.findContrastTextColor
-import com.ivy.wallet.ui.theme.modal.IvyModal
-import com.ivy.wallet.ui.theme.modal.ModalSkip
-import com.ivy.wallet.ui.theme.modal.ModalTitle
+import com.ivy.legacy.ui.modal.IvyModal
+import com.ivy.legacy.ui.modal.ModalSkip
+import com.ivy.legacy.ui.modal.ModalTitle
 import com.ivy.legacy.ui.theme.toComposeColor
 import java.util.UUID
 import androidx.compose.runtime.getValue

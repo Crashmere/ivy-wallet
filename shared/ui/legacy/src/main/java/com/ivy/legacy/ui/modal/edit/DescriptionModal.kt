@@ -1,4 +1,4 @@
-package com.ivy.wallet.ui.theme.modal.edit
+package com.ivy.legacy.ui.modal.edit
 
 import androidx.compose.foundation.layout.BoxWithConstraintsScope
 import androidx.compose.foundation.layout.Spacer
@@ -31,8 +31,8 @@ import com.ivy.ui.legacy.rememberInteractionSource
 import com.ivy.ui.legacy.selectEndTextFieldValue
 import com.ivy.ui.R
 import com.ivy.legacy.ui.component.IvyDescriptionTextField
-import com.ivy.wallet.ui.theme.modal.IvyModal
-import com.ivy.wallet.ui.theme.modal.ModalDynamicPrimaryAction
+import com.ivy.legacy.ui.modal.IvyModal
+import com.ivy.legacy.ui.modal.ModalDynamicPrimaryAction
 import java.util.UUID
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue

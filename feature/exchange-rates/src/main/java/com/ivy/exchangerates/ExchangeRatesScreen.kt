@@ -35,7 +35,7 @@ import com.ivy.exchangerates.modal.AddRateModal
 import com.ivy.legacy.ui.SearchInput
 import com.ivy.ui.legacy.selectEndTextFieldValue
 import com.ivy.navigation.navigation
-import com.ivy.wallet.ui.theme.modal.edit.AmountModal
+import com.ivy.legacy.ui.modal.edit.AmountModal
 import java.util.UUID
 
 @Composable

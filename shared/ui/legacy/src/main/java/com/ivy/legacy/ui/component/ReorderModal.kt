@@ -30,7 +30,7 @@ import com.ivy.data.model.Reorderable
 import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.GradientGreen
 import com.ivy.legacy.ui.theme.White
-import com.ivy.wallet.ui.theme.modal.IvyModal
+import com.ivy.legacy.ui.modal.IvyModal
 import java.util.*
 
 @Deprecated("Old design system. Use `:ivy-design` and Material3")

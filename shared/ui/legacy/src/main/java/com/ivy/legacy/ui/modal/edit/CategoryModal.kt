@@ -1,4 +1,4 @@
-package com.ivy.wallet.ui.theme.modal.edit
+package com.ivy.legacy.ui.modal.edit
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
@@ -46,10 +46,10 @@ import com.ivy.legacy.ui.theme.Ivy
 import com.ivy.legacy.ui.component.ItemIconMDefaultIcon
 import com.ivy.legacy.ui.component.IvyNameTextField
 import com.ivy.legacy.ui.theme.dynamicContrast
-import com.ivy.wallet.ui.theme.modal.ChooseIconModal
-import com.ivy.wallet.ui.theme.modal.IvyModal
-import com.ivy.wallet.ui.theme.modal.ModalAddSave
-import com.ivy.wallet.ui.theme.modal.ModalTitle
+import com.ivy.legacy.ui.modal.ChooseIconModal
+import com.ivy.legacy.ui.modal.IvyModal
+import com.ivy.legacy.ui.modal.ModalAddSave
+import com.ivy.legacy.ui.modal.ModalTitle
 import java.util.UUID
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue

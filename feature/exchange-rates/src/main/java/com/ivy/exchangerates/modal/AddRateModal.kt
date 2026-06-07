@@ -22,10 +22,10 @@ import com.ivy.exchangerates.RatesEvent
 import com.ivy.exchangerates.data.RateUi
 import com.ivy.ui.legacy.selectEndTextFieldValue
 import com.ivy.legacy.ui.component.IvyNameTextField
-import com.ivy.wallet.ui.theme.modal.IvyModal
-import com.ivy.wallet.ui.theme.modal.ModalAdd
-import com.ivy.wallet.ui.theme.modal.ModalTitle
-import com.ivy.wallet.ui.theme.modal.edit.AmountModal
+import com.ivy.legacy.ui.modal.IvyModal
+import com.ivy.legacy.ui.modal.ModalAdd
+import com.ivy.legacy.ui.modal.ModalTitle
+import com.ivy.legacy.ui.modal.edit.AmountModal
 import java.util.UUID
 
 @Composable

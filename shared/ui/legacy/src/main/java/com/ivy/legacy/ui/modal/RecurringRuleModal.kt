@@ -1,4 +1,4 @@
-package com.ivy.wallet.ui.theme.modal
+package com.ivy.legacy.ui.modal
 
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background

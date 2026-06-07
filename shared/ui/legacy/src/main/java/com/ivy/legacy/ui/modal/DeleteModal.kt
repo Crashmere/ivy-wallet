@@ -1,4 +1,4 @@
-package com.ivy.wallet.ui.theme.modal
+package com.ivy.legacy.ui.modal
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.BoxWithConstraintsScope

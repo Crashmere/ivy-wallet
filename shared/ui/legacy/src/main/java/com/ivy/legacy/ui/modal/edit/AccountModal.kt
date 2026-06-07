@@ -1,4 +1,4 @@
-package com.ivy.wallet.ui.theme.modal.edit
+package com.ivy.legacy.ui.modal.edit
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -38,12 +38,12 @@ import com.ivy.wallet.domain.deprecated.logic.model.CreateAccountData
 import com.ivy.legacy.ui.theme.Gray
 import com.ivy.legacy.ui.theme.Ivy
 import com.ivy.legacy.ui.component.IvyCheckboxWithText
-import com.ivy.wallet.ui.theme.modal.ChooseIconModal
-import com.ivy.wallet.ui.theme.modal.CurrencyModal
-import com.ivy.wallet.ui.theme.modal.IvyModal
-import com.ivy.wallet.ui.theme.modal.ModalAddSave
-import com.ivy.wallet.ui.theme.modal.ModalAmountSection
-import com.ivy.wallet.ui.theme.modal.ModalTitle
+import com.ivy.legacy.ui.modal.ChooseIconModal
+import com.ivy.legacy.ui.modal.CurrencyModal
+import com.ivy.legacy.ui.modal.IvyModal
+import com.ivy.legacy.ui.modal.ModalAddSave
+import com.ivy.legacy.ui.modal.ModalAmountSection
+import com.ivy.legacy.ui.modal.ModalTitle
 import java.util.UUID
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue

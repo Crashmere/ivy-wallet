@@ -32,13 +32,13 @@ import com.ivy.base.legacy.isNotNullOrBlank
 import com.ivy.ui.legacy.selectEndTextFieldValue
 import com.ivy.ui.R
 import com.ivy.wallet.domain.deprecated.logic.model.CreateBudgetData
-import com.ivy.wallet.ui.theme.modal.DeleteModal
-import com.ivy.wallet.ui.theme.modal.IvyModal
-import com.ivy.wallet.ui.theme.modal.ModalAddSave
-import com.ivy.wallet.ui.theme.modal.ModalAmountSection
-import com.ivy.wallet.ui.theme.modal.ModalDelete
-import com.ivy.wallet.ui.theme.modal.ModalTitle
-import com.ivy.wallet.ui.theme.modal.edit.AmountModal
+import com.ivy.legacy.ui.modal.DeleteModal
+import com.ivy.legacy.ui.modal.IvyModal
+import com.ivy.legacy.ui.modal.ModalAddSave
+import com.ivy.legacy.ui.modal.ModalAmountSection
+import com.ivy.legacy.ui.modal.ModalDelete
+import com.ivy.legacy.ui.modal.ModalTitle
+import com.ivy.legacy.ui.modal.edit.AmountModal
 import com.ivy.legacy.ui.theme.toComposeColor
 import java.util.UUID
 

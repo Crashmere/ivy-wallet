@@ -67,7 +67,7 @@ import com.ivy.legacy.ui.component.ItemIconMDefaultIcon
 import com.ivy.legacy.ui.component.IvyOutlinedButton
 import com.ivy.legacy.ui.theme.findContrastTextColor
 import com.ivy.legacy.ui.theme.gradientExpenses
-import com.ivy.wallet.ui.theme.modal.ChoosePeriodModal
+import com.ivy.legacy.ui.modal.ChoosePeriodModal
 import com.ivy.legacy.ui.theme.pureBlur
 import com.ivy.legacy.ui.theme.toComposeColor
 import com.ivy.wallet.ui.theme.wallet.AmountCurrencyB1Row

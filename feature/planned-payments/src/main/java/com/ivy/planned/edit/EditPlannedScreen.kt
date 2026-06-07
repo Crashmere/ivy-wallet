@@ -39,16 +39,16 @@ import com.ivy.wallet.ui.edit.core.Title
 import com.ivy.wallet.ui.edit.core.Toolbar
 import com.ivy.legacy.ui.theme.Orange
 import com.ivy.legacy.ui.component.ChangeTransactionTypeModal
-import com.ivy.wallet.ui.theme.modal.DeleteModal
-import com.ivy.wallet.ui.theme.modal.ModalSet
-import com.ivy.wallet.ui.theme.modal.RecurringRuleModal
-import com.ivy.wallet.ui.theme.modal.RecurringRuleModalData
-import com.ivy.wallet.ui.theme.modal.edit.AccountModal
-import com.ivy.wallet.ui.theme.modal.edit.AccountModalData
-import com.ivy.wallet.ui.theme.modal.edit.CategoryModal
-import com.ivy.wallet.ui.theme.modal.edit.CategoryModalData
-import com.ivy.wallet.ui.theme.modal.edit.ChooseCategoryModal
-import com.ivy.wallet.ui.theme.modal.edit.DescriptionModal
+import com.ivy.legacy.ui.modal.DeleteModal
+import com.ivy.legacy.ui.modal.ModalSet
+import com.ivy.legacy.ui.modal.RecurringRuleModal
+import com.ivy.legacy.ui.modal.RecurringRuleModalData
+import com.ivy.legacy.ui.modal.edit.AccountModal
+import com.ivy.legacy.ui.modal.edit.AccountModalData
+import com.ivy.legacy.ui.modal.edit.CategoryModal
+import com.ivy.legacy.ui.modal.edit.CategoryModalData
+import com.ivy.legacy.ui.modal.edit.ChooseCategoryModal
+import com.ivy.legacy.ui.modal.edit.DescriptionModal
 import kotlinx.collections.immutable.persistentListOf
 import java.time.LocalDateTime
 

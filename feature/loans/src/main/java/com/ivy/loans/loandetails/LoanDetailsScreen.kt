@@ -73,10 +73,10 @@ import com.ivy.legacy.ui.component.getCustomIconIdS
 import com.ivy.legacy.ui.theme.dynamicContrast
 import com.ivy.legacy.ui.theme.findContrastTextColor
 import com.ivy.legacy.ui.theme.isDarkColor
-import com.ivy.wallet.ui.theme.modal.DeleteModal
-import com.ivy.wallet.ui.theme.modal.LoanModal
-import com.ivy.wallet.ui.theme.modal.LoanRecordModal
-import com.ivy.wallet.ui.theme.modal.ProgressModal
+import com.ivy.legacy.ui.modal.DeleteModal
+import com.ivy.legacy.ui.modal.LoanModal
+import com.ivy.legacy.ui.modal.LoanRecordModal
+import com.ivy.legacy.ui.modal.ProgressModal
 import com.ivy.legacy.ui.theme.toComposeColor
 
 @Composable

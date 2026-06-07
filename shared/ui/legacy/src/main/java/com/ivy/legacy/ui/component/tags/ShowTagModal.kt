@@ -42,10 +42,10 @@ import com.ivy.legacy.ui.theme.Gradient
 import com.ivy.legacy.ui.component.IvyBorderButton
 import com.ivy.legacy.ui.component.IvyCircleButton
 import com.ivy.legacy.ui.theme.findContrastTextColor
-import com.ivy.wallet.ui.theme.modal.DeleteModal
-import com.ivy.wallet.ui.theme.modal.IvyModal
-import com.ivy.wallet.ui.theme.modal.ModalPositiveButton
-import com.ivy.wallet.ui.theme.modal.ModalTitle
+import com.ivy.legacy.ui.modal.DeleteModal
+import com.ivy.legacy.ui.modal.IvyModal
+import com.ivy.legacy.ui.modal.ModalPositiveButton
+import com.ivy.legacy.ui.modal.ModalTitle
 import com.ivy.ui.R
 import com.ivy.legacy.ui.component.WrapContentRow
 import kotlinx.collections.immutable.ImmutableList

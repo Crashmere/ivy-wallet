@@ -70,8 +70,8 @@ import com.ivy.legacy.ui.component.ItemIconSDefaultIcon
 import com.ivy.legacy.ui.component.IvyButton
 import com.ivy.legacy.ui.component.IvyIcon
 import com.ivy.legacy.ui.theme.findContrastTextColor
-import com.ivy.wallet.ui.theme.modal.DURATION_MODAL_ANIM
-import com.ivy.wallet.ui.theme.modal.edit.AmountModal
+import com.ivy.legacy.ui.modal.DURATION_MODAL_ANIM
+import com.ivy.legacy.ui.modal.edit.AmountModal
 import com.ivy.legacy.ui.theme.toComposeColor
 import kotlinx.coroutines.launch
 import java.util.Locale
@@ -86,8 +86,8 @@ import com.ivy.legacy.ui.theme.Green
 import com.ivy.legacy.ui.theme.GreenDark
 import com.ivy.legacy.ui.theme.GreenLight
 import com.ivy.legacy.ui.theme.IvyDark
-import com.ivy.wallet.ui.theme.modal.ModalSave
-import com.ivy.wallet.ui.theme.modal.ModalSet
+import com.ivy.legacy.ui.modal.ModalSave
+import com.ivy.legacy.ui.modal.ModalSet
 
 @Deprecated("Old design system. Use `:ivy-design` and Material3")
 const val SWIPE_UP_EXPANDED_THRESHOLD = 200
