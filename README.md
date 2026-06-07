@@ -293,6 +293,7 @@
 - `shared:data:core` 的 DataStore 依赖已从 `api` 收窄为 `implementation`；DataStore 绑定仍由 data core 提供，但不再通过 data core 传递暴露给其他模块。
 - `ivy.module` 不再默认启用 kotlinx serialization；当前 `ivy.feature` 页面模块没有序列化源码引用，序列化能力只保留在 `shared:base` 和 `shared:data:core` 等实际需要的模块中。
 - app 模块已移除 Kotlin serialization 插件；应用壳本身没有序列化源码，序列化继续由 `shared:base` 和 `shared:data:core` 提供。
+- 空壳 `ivy.module` 约定插件已删除；`ivy.feature` 现在直接组合 `ivy.android-library`、`ivy.hilt` 和 `ivy.compose`，模块能力来源更直观。
 
 ### 阶段 3：测试支持代码归位
 

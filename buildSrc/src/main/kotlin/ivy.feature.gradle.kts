@@ -1,4 +1,5 @@
 plugins {
-    id("ivy.module")
+    id("ivy.android-library")
+    id("ivy.hilt")
     id("ivy.compose")
 }
