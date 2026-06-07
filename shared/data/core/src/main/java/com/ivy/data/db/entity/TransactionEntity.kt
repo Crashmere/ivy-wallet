@@ -3,8 +3,8 @@ package com.ivy.data.db.entity
 import androidx.annotation.Keep
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.ivy.base.kotlinxserialization.KSerializerInstant
-import com.ivy.base.kotlinxserialization.KSerializerUUID
+import com.ivy.data.db.serializer.KSerializerInstant
+import com.ivy.data.db.serializer.KSerializerUUID
 import com.ivy.base.model.TransactionType
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

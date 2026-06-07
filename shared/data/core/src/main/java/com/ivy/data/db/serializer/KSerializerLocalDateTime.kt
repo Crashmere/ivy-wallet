@@ -1,4 +1,4 @@
-package com.ivy.base.kotlinxserialization
+package com.ivy.data.db.serializer
 
 import androidx.annotation.Keep
 import com.ivy.base.time.epochMilliToUtcLocalDateTime

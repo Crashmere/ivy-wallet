@@ -1,4 +1,4 @@
-package com.ivy.base.kotlinxserialization
+package com.ivy.data.db.serializer
 
 import androidx.annotation.Keep
 import kotlinx.serialization.KSerializer
