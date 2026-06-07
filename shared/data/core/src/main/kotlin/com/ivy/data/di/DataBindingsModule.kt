@@ -7,7 +7,9 @@ import com.ivy.data.api.BufferAmountStore
 import com.ivy.data.api.backup.BackupStore
 import com.ivy.data.api.BudgetStore
 import com.ivy.data.api.CategoryStore
+import com.ivy.data.api.CategorySortOrderStore
 import com.ivy.data.api.CurrencyStore
+import com.ivy.data.api.CustomerJourneyCardStore
 import com.ivy.data.api.DataChangePublisher
 import com.ivy.data.api.ExchangeRateStore
 import com.ivy.data.api.file.TextFileStore
@@ -63,6 +65,16 @@ abstract class DataBindingsModule {
     abstract fun bindLastSelectedAccountStore(
         store: SharedPrefsAppPreferenceStore
     ): LastSelectedAccountStore
+
+    @Binds
+    abstract fun bindCategorySortOrderStore(
+        store: SharedPrefsAppPreferenceStore
+    ): CategorySortOrderStore
+
+    @Binds
+    abstract fun bindCustomerJourneyCardStore(
+        store: SharedPrefsAppPreferenceStore
+    ): CustomerJourneyCardStore
 
     @Binds
     abstract fun bindBackupStore(defaultBackupStore: DefaultBackupStore): BackupStore

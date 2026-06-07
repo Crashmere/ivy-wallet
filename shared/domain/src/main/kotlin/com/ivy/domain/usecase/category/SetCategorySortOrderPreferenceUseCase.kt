@@ -1,12 +1,12 @@
 package com.ivy.domain.usecase.category
 
-import com.ivy.data.api.AppPreferenceStore
+import com.ivy.data.api.CategorySortOrderStore
 import javax.inject.Inject
 
 class SetCategorySortOrderPreferenceUseCase @Inject constructor(
-    private val appPreferences: AppPreferenceStore,
+    private val categorySortOrderStore: CategorySortOrderStore,
 ) {
     operator fun invoke(sortOrder: Int) {
-        appPreferences.categorySortOrder = sortOrder
+        categorySortOrderStore.categorySortOrder = sortOrder
     }
 }

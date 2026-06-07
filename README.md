@@ -846,6 +846,7 @@
 - 偏好开关 DataStore 不再通过独立 Hilt module 暴露裸 `DataStore<Preferences>`；`DataStorePreferenceToggleStore` 在 data-core 内部直接使用应用 `Context` 取得同一个 `ivy_wallet_datastore_v1` 文件。
 - 首次启动完成状态已从泛化 `AppPreferenceStore` 拆到 `InitialSetupStore`；启动流程只依赖初始化状态端口，底层仍读写同一个 SharedPreferences key。
 - 最后选择账户 ID 已从泛化 `AppPreferenceStore` 拆到 `LastSelectedAccountStore`；账户选择用例只依赖自己的偏好端口，原 SharedPreferences key 不变。
+- 分类排序偏好和首页客户旅程卡片 dismissed 状态已分别拆到 `CategorySortOrderStore` 与 `CustomerJourneyCardStore`；分类/首页用例不再依赖完整 `AppPreferenceStore`。
 
 建议顺序：
 

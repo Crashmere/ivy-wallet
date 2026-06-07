@@ -13,11 +13,5 @@ interface AppPreferenceStore {
 
     var transfersAsIncomeExpense: Boolean
 
-    var categorySortOrder: Int
-
-    fun isCustomerJourneyCardDismissed(cardId: String): Boolean
-
-    fun dismissCustomerJourneyCard(cardId: String)
-
     fun clearAll()
 }
