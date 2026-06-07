@@ -30,7 +30,6 @@ import com.ivy.data.model.CategoryId
 import com.ivy.data.model.IntervalType
 import com.ivy.data.model.primitive.ColorInt
 import com.ivy.data.model.primitive.NotBlankTrimmedString
-import com.ivy.ui.time.LocalTimeConverter
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
 import com.ivy.data.model.legacy.Account
@@ -53,7 +52,9 @@ import com.ivy.legacy.ui.theme.findContrastTextColor
 import com.ivy.legacy.ui.theme.toComposeColor
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
+import java.time.Instant
 import java.time.LocalDateTime
+import java.time.ZoneId
 import java.util.Locale
 import java.util.UUID
 
@@ -95,9 +96,7 @@ fun LazyItemScope.PlannedPaymentCard(
 
         RuleTextRow(
             oneTime = plannedPayment.oneTime,
-            startDate = with(LocalTimeConverter.current) {
-                plannedPayment.startDate?.toLocalDateTime()
-            },
+            startDate = plannedPayment.startDate?.toLocalDateTimeInSystemZone(),
             intervalN = plannedPayment.intervalN,
             intervalType = plannedPayment.intervalType
         )
@@ -127,6 +126,9 @@ fun LazyItemScope.PlannedPaymentCard(
         Spacer(Modifier.height(24.dp))
     }
 }
+
+private fun Instant.toLocalDateTimeInSystemZone() =
+    atZone(ZoneId.systemDefault()).toLocalDateTime()
 
 @Composable
 private fun PlannedPaymentHeaderRow(

@@ -8,7 +8,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
 import com.ivy.data.model.TransactionType
-import com.ivy.base.time.TimeConverter
 import com.ivy.data.model.Category
 import com.ivy.data.model.CategoryId
 import com.ivy.data.model.IntervalType
@@ -38,7 +37,9 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.launch
+import java.time.Instant
 import java.time.LocalDateTime
+import java.time.ZoneId
 import javax.inject.Inject
 
 @Stable
@@ -56,7 +57,6 @@ class EditPlannedViewModel @Inject constructor(
     private val createAccountWithBalanceUseCase: CreateAccountWithBalanceUseCase,
     private val getLegacyAccountUseCase: GetLegacyAccountUseCase,
     private val getLegacyAccountsUseCase: GetLegacyAccountsUseCase,
-    private val timeConverter: TimeConverter,
 ) : ComposeViewModel<EditPlannedScreenState, EditPlannedScreenEvent>() {
 
     private var transactionType by mutableStateOf(TransactionType.INCOME)
@@ -301,7 +301,7 @@ class EditPlannedViewModel @Inject constructor(
         this.title = rule.title
 
         transactionType = rule.type
-        startDate = with(timeConverter) { rule.startDate?.toLocalDateTime() }
+        startDate = rule.startDate?.toLocalDateTimeInSystemZone()
         intervalN = rule.intervalN
         oneTime = rule.oneTime
         intervalType = rule.intervalType
@@ -330,7 +330,7 @@ class EditPlannedViewModel @Inject constructor(
         intervalType: IntervalType?
     ) {
         loadedRule = loadedRule().copy(
-            startDate = with(timeConverter) { startDate.toUTC() },
+            startDate = startDate.toInstantInSystemZone(),
             intervalN = intervalN,
             intervalType = intervalType,
             oneTime = oneTime
@@ -416,7 +416,7 @@ class EditPlannedViewModel @Inject constructor(
             try {
                 loadedRule = loadedRule().copy(
                     type = transactionType ?: error("no transaction type"),
-                    startDate = with(timeConverter) { startDate?.toUTC() }
+                    startDate = startDate?.toInstantInSystemZone()
                         ?: error("no startDate"),
                     intervalN = intervalN ?: error("no intervalN"),
                     intervalType = intervalType ?: error("no intervalType"),
@@ -505,4 +505,10 @@ class EditPlannedViewModel @Inject constructor(
     }
 
     private fun loadedRule() = loadedRule ?: error("Loaded transaction is null")
+
+    private fun Instant.toLocalDateTimeInSystemZone() =
+        atZone(ZoneId.systemDefault()).toLocalDateTime()
+
+    private fun LocalDateTime.toInstantInSystemZone() =
+        atZone(ZoneId.systemDefault()).toInstant()
 }
