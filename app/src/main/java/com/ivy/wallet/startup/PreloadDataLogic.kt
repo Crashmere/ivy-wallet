@@ -1,6 +1,4 @@
 package com.ivy.wallet.startup
-
-import arrow.core.raise.either
 import com.ivy.base.resource.ResourceProvider
 import com.ivy.data.model.Account
 import com.ivy.data.model.AccountId
@@ -32,7 +30,7 @@ class PreloadDataLogic @Inject constructor(
                 name = NotBlankTrimmedString.unsafe(resourceProvider.getString(R.string.cash)),
                 asset = baseCurrency,
                 color = ColorInt(Green),
-                icon = IconAsset.from("cash").getOrNull(),
+                icon = IconAsset.unsafe("cash"),
                 includeInBalance = true,
                 orderNum = 0.0,
             )
@@ -43,7 +41,7 @@ class PreloadDataLogic @Inject constructor(
                 name = NotBlankTrimmedString.unsafe(resourceProvider.getString(R.string.bank)),
                 asset = baseCurrency,
                 color = ColorInt(IvyDark),
-                icon = IconAsset.from("bank").getOrNull(),
+                icon = IconAsset.unsafe("bank"),
                 includeInBalance = true,
                 orderNum = 1.0,
             )
@@ -125,19 +123,15 @@ class PreloadDataLogic @Inject constructor(
     private suspend fun preloadCategory(
         data: DefaultCategory,
     ) {
-        val category: Category? = either {
+        saveCategoryUseCase(
             Category(
-                name = NotBlankTrimmedString.from(data.name).bind(),
+                name = NotBlankTrimmedString.unsafe(data.name),
                 color = ColorInt(data.color),
-                icon = IconAsset.from(data.icon).getOrNull(),
+                icon = IconAsset.unsafe(data.icon),
                 orderNum = categoryOrderNum++,
                 id = CategoryId(UUID.randomUUID()),
             )
-        }.getOrNull()
-
-        if (category != null) {
-            saveCategoryUseCase(category)
-        }
+        )
     }
 }
 
