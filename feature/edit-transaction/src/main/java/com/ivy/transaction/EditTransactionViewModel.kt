@@ -23,6 +23,8 @@ import com.ivy.domain.preferences.toggles.PreferenceToggles
 import com.ivy.domain.preferences.AppPreferences
 import com.ivy.domain.usecase.category.GetCategoriesUseCase
 import com.ivy.domain.usecase.category.GetCategoryUseCase
+import com.ivy.domain.usecase.category.CreateCategoryUseCase
+import com.ivy.domain.usecase.category.UpdateCategoryUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.domain.usecase.loan.GetLoanUseCase
 import com.ivy.domain.usecase.tag.AssociateTagToTransactionUseCase
@@ -56,7 +58,6 @@ import com.ivy.ui.time.impl.DateTimePicker
 import com.ivy.domain.usecase.account.GetLegacyAccountUseCase
 import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
 import com.ivy.legacy.domain.data.CustomExchangeRateState
-import com.ivy.legacy.domain.logic.CategoryCreator
 import com.ivy.legacy.domain.logic.PlannedPaymentsLogic
 import com.ivy.legacy.domain.logic.currency.ExchangeRatesLogic
 import com.ivy.legacy.domain.logic.loantransactions.LoanTransactionsLogic
@@ -93,7 +94,8 @@ class EditTransactionViewModel @Inject constructor(
     private val nav: Navigation,
     private val appPreferences: AppPreferences,
     private val exchangeRatesLogic: ExchangeRatesLogic,
-    private val categoryCreator: CategoryCreator,
+    private val createCategoryUseCase: CreateCategoryUseCase,
+    private val updateCategoryUseCase: UpdateCategoryUseCase,
     private val createAccountWithBalanceUseCase: CreateAccountWithBalanceUseCase,
     private val plannedPaymentsLogic: PlannedPaymentsLogic,
     private val suggestTransactionTitlesUseCase: SuggestTransactionTitlesUseCase,
@@ -650,7 +652,7 @@ class EditTransactionViewModel @Inject constructor(
 
     private fun createCategory(data: CreateCategoryData) {
         viewModelScope.launch {
-            categoryCreator.createCategory(data) {
+            createCategoryUseCase(data)?.let {
                 categories = sortCategories()
 
                 // Select the newly created category
@@ -684,7 +686,7 @@ class EditTransactionViewModel @Inject constructor(
 
     private fun editCategory(updatedCategory: Category) {
         viewModelScope.launch {
-            categoryCreator.editCategory(updatedCategory) {
+            if (updateCategoryUseCase(updatedCategory)) {
                 categories = sortCategories()
             }
         }

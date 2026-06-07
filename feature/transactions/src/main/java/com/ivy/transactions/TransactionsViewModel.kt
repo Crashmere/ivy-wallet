@@ -25,6 +25,7 @@ import com.ivy.domain.usecase.account.GetAccountUseCase
 import com.ivy.domain.usecase.category.DeleteCategoryUseCase
 import com.ivy.domain.usecase.category.GetCategoriesUseCase
 import com.ivy.domain.usecase.category.GetCategoryUseCase
+import com.ivy.domain.usecase.category.UpdateCategoryUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.domain.usecase.exchange.ExchangeAmountUseCase
 import com.ivy.domain.usecase.transaction.MapTransactionsToLegacyUseCase
@@ -52,7 +53,6 @@ import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
 import com.ivy.domain.usecase.account.UpdateAccountWithBalanceUseCase
 import com.ivy.domain.usecase.transaction.BuildLegacyTransactionHistoryItemsUseCase
 import com.ivy.domain.usecase.transaction.CalculateLegacyTransactionsIncomeExpenseUseCase
-import com.ivy.legacy.domain.logic.CategoryCreator
 import com.ivy.legacy.domain.logic.PlannedPaymentsLogic
 import com.ivy.legacy.domain.logic.WalletAccountLogic
 import com.ivy.legacy.domain.logic.WalletCategoryLogic
@@ -75,7 +75,7 @@ class TransactionsViewModel @Inject constructor(
     private val nav: Navigation,
     private val accountLogic: WalletAccountLogic,
     private val categoryLogic: WalletCategoryLogic,
-    private val categoryCreator: CategoryCreator,
+    private val updateCategoryUseCase: UpdateCategoryUseCase,
     private val updateAccountWithBalanceUseCase: UpdateAccountWithBalanceUseCase,
     private val plannedPaymentsLogic: PlannedPaymentsLogic,
     private val appPreferences: AppPreferences,
@@ -743,8 +743,8 @@ class TransactionsViewModel @Inject constructor(
 
     private fun editCategory(updatedCategory: Category) {
         viewModelScope.launch {
-            categoryCreator.editCategory(updatedCategory) {
-                category.value = it
+            if (updateCategoryUseCase(updatedCategory)) {
+                category.value = updatedCategory
             }
         }
     }

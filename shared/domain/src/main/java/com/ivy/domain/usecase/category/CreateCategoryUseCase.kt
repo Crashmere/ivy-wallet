@@ -1,30 +1,31 @@
-package com.ivy.legacy.domain.logic
+package com.ivy.domain.usecase.category
+
 import arrow.core.raise.either
+import com.ivy.base.threading.DispatchersProvider
 import com.ivy.data.model.Category
 import com.ivy.data.model.CategoryId
+import com.ivy.data.model.legacy.CreateCategoryData
 import com.ivy.data.model.primitive.ColorInt
 import com.ivy.data.model.primitive.IconAsset
 import com.ivy.data.model.primitive.NotBlankTrimmedString
 import com.ivy.data.repository.CategoryRepository
-import com.ivy.base.coroutines.ioThread
-import com.ivy.data.model.legacy.CreateCategoryData
 import com.ivy.legacy.domain.pure.util.nextOrderNum
+import kotlinx.coroutines.withContext
 import java.util.UUID
 import javax.inject.Inject
 
-class CategoryCreator @Inject constructor(
+class CreateCategoryUseCase @Inject constructor(
     private val categoryRepository: CategoryRepository,
+    private val saveCategoryUseCase: SaveCategoryUseCase,
+    private val dispatchers: DispatchersProvider
 ) {
-    suspend fun createCategory(
-        data: CreateCategoryData,
-        onRefreshUI: suspend (Category) -> Unit
-    ) {
+    suspend operator fun invoke(data: CreateCategoryData): Category? {
         val name = data.name
-        if (name.isBlank()) return
+        if (name.isBlank()) return null
 
-        try {
-            val newCategory = ioThread {
-                val newCategory: Category? = either {
+        return try {
+            withContext(dispatchers.io) {
+                val newCategory = either {
                     Category(
                         name = NotBlankTrimmedString.from(name.trim()).bind(),
                         color = ColorInt(data.color),
@@ -35,31 +36,13 @@ class CategoryCreator @Inject constructor(
                 }.getOrNull()
 
                 if (newCategory != null) {
-                    categoryRepository.save(newCategory)
+                    saveCategoryUseCase(newCategory)
                 }
                 newCategory
             }
-
-            newCategory?.let { onRefreshUI(it) }
         } catch (e: Exception) {
             e.printStackTrace()
-        }
-    }
-
-    suspend fun editCategory(
-        updatedCategory: Category,
-        onRefreshUI: suspend (Category) -> Unit
-    ) {
-        if (updatedCategory.name.value.isBlank()) return
-
-        try {
-            ioThread {
-                categoryRepository.save(updatedCategory)
-            }
-
-            onRefreshUI(updatedCategory)
-        } catch (e: Exception) {
-            e.printStackTrace()
+            null
         }
     }
 }

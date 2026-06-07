@@ -24,8 +24,8 @@ import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.preferences.asEnabledState
 import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
 import com.ivy.domain.usecase.category.CalculateCategoryIncomeWithAccountFiltersUseCase
+import com.ivy.domain.usecase.category.CreateCategoryUseCase
 import com.ivy.legacy.domain.data.SortOrder
-import com.ivy.legacy.domain.logic.CategoryCreator
 import com.ivy.data.model.legacy.CreateCategoryData
 import com.ivy.legacy.ui.modal.edit.CategoryModalData
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -42,7 +42,7 @@ import javax.inject.Inject
 @Stable
 @HiltViewModel
 class CategoriesViewModel @Inject constructor(
-    private val categoryCreator: CategoryCreator,
+    private val createCategoryUseCase: CreateCategoryUseCase,
     private val getCategoriesUseCase: GetCategoriesUseCase,
     private val saveCategoryUseCase: SaveCategoryUseCase,
     private val periodState: PeriodState,
@@ -244,7 +244,7 @@ class CategoriesViewModel @Inject constructor(
     }
 
     private suspend fun createCategory(data: CreateCategoryData) {
-        categoryCreator.createCategory(data) {
+        if (createCategoryUseCase(data) != null) {
             loadCategories()
         }
     }

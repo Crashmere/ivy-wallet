@@ -26,7 +26,8 @@ import com.ivy.ui.ComposeViewModel
 import com.ivy.domain.usecase.account.CreateAccountWithBalanceUseCase
 import com.ivy.domain.usecase.account.GetLegacyAccountUseCase
 import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
-import com.ivy.legacy.domain.logic.CategoryCreator
+import com.ivy.domain.usecase.category.CreateCategoryUseCase
+import com.ivy.domain.usecase.category.UpdateCategoryUseCase
 import com.ivy.data.model.legacy.CreateAccountData
 import com.ivy.data.model.legacy.CreateCategoryData
 import com.ivy.legacy.ui.modal.RecurringRuleModalData
@@ -50,7 +51,8 @@ class EditPlannedViewModel @Inject constructor(
     private val savePlannedPaymentRuleUseCase: SavePlannedPaymentRuleUseCase,
     private val deletePlannedPaymentRuleUseCase: DeletePlannedPaymentRuleUseCase,
     private val nav: Navigation,
-    private val categoryCreator: CategoryCreator,
+    private val createCategoryUseCase: CreateCategoryUseCase,
+    private val updateCategoryUseCase: UpdateCategoryUseCase,
     private val createAccountWithBalanceUseCase: CreateAccountWithBalanceUseCase,
     private val getLegacyAccountUseCase: GetLegacyAccountUseCase,
     private val getLegacyAccountsUseCase: GetLegacyAccountsUseCase,
@@ -471,7 +473,7 @@ class EditPlannedViewModel @Inject constructor(
 
     private fun createCategory(data: CreateCategoryData) {
         viewModelScope.launch {
-            categoryCreator.createCategory(data) {
+            createCategoryUseCase(data)?.let {
                 categories = getCategoriesUseCase().toImmutableList()
 
                 updateCategory(it)
@@ -481,7 +483,7 @@ class EditPlannedViewModel @Inject constructor(
 
     private fun editCategory(updatedCategory: Category) {
         viewModelScope.launch {
-            categoryCreator.editCategory(updatedCategory) {
+            if (updateCategoryUseCase(updatedCategory)) {
                 categories = getCategoriesUseCase().toImmutableList()
             }
         }
