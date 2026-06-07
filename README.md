@@ -596,6 +596,7 @@
 - `RootScreen` 已被 `FileSharer`、`BuildInfoProvider` 拆分替代，首页客户旅程卡片也不再为了未使用的参数依赖 Activity 平台接口。
 - `FileSharer` 和 `BuildInfoProvider` 已通过 `LocalFileSharer/LocalBuildInfoProvider` 由 app 根部显式提供；设置页和报表页不再通过 `LocalContext.current as ...` 强转 Activity 获取平台服务。
 - `Features` 和功能开关 DataStore 已通过 `LocalFeatures/LocalFeatureDataStore` 由 app 根部显式提供；旧金额键盘不再用 Hilt `EntryPointAccessors` 从 application 反查依赖。
+- 锁屏页不再通过 `LocalContext.current` 自行检查系统锁屏状态；`RootActivity` 从 app 平台层提供 `hasLockScreen` 检查函数，UI 只负责触发认证或继续进入应用。
 
 ### 阶段 9：feature 模块收敛
 
@@ -743,4 +744,4 @@ shared:ui:core
 
 1. 继续评估 `SettingsEntity` 是否可以拆成更明确的本地偏好表或迁入 DataStore；这一步需要和备份恢复格式一起规划。
 2. 继续数据库只读审计：明确剩余 `isDeleted` 哪些是本地软删除语义，哪些可以改成直接删除。
-3. 继续收敛平台桥接：剩余 `LocalContext.current` 主要集中在锁屏能力检查、动态图标资源查找和少量 Android framework 访问；后续优先处理锁屏/语言设置这类可抽成窄接口的部分。
+3. 继续收敛平台桥接：源码中的 `LocalContext.current` 目前只剩动态图标资源查找；这部分依赖 Android `Resources.getIdentifier()` 支撑自定义分类/账户图标，暂时保留。

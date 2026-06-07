@@ -25,6 +25,7 @@ import com.ivy.wallet.platform.ActivityFileSharer
 import com.ivy.wallet.platform.ActivityResultFilePicker
 import com.ivy.wallet.platform.BiometricAuthenticator
 import com.ivy.wallet.platform.SecureWindowController
+import com.ivy.wallet.platform.hasLockScreen as deviceHasLockScreen
 import com.ivy.wallet.platform.registerActivityResultLaunchers
 import com.ivy.wallet.platform.registerMaterialDatePicker
 import dagger.hilt.android.AndroidEntryPoint
@@ -93,6 +94,7 @@ class RootActivity : AppCompatActivity(),
                 fileSharer = this,
                 viewModel = viewModel,
                 intent = intent,
+                hasLockScreen = { deviceHasLockScreen(this) },
                 onShowOSBiometricsModal = {
                     authenticateWithOSBiometricsModal(
                         biometricPromptCallback = viewModel.handleBiometricAuthResult()

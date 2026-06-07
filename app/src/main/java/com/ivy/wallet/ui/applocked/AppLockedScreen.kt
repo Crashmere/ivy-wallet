@@ -1,7 +1,6 @@
 package com.ivy.wallet.ui.applocked
 
 import android.annotation.SuppressLint
-import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.BoxWithConstraintsScope
@@ -22,7 +21,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -31,7 +29,6 @@ import androidx.compose.ui.unit.dp
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
 import com.ivy.ui.R
-import com.ivy.wallet.platform.hasLockScreen
 import com.ivy.legacy.ui.theme.Gray
 import com.ivy.legacy.ui.theme.White
 import com.ivy.legacy.ui.component.IvyButton
@@ -40,6 +37,7 @@ import com.ivy.legacy.ui.component.IvyButton
 @Composable
 @Suppress("LongMethod", "FunctionNaming")
 fun BoxWithConstraintsScope.AppLockedScreen(
+    hasLockScreen: () -> Boolean,
     onShowOSBiometricsModal: () -> Unit,
     onContinueWithoutAuthentication: () -> Unit
 ) {
@@ -90,7 +88,6 @@ fun BoxWithConstraintsScope.AppLockedScreen(
         )
         val latestOnShowOSBiometricsModal by rememberUpdatedState(onShowOSBiometricsModal)
 
-        val context = LocalContext.current
         IvyButton(
             modifier = Modifier
                 .fillMaxWidth()
@@ -104,7 +101,7 @@ fun BoxWithConstraintsScope.AppLockedScreen(
             wrapContentMode = false
         ) {
             osAuthentication(
-                context = context,
+                hasLockScreen = hasLockScreen,
                 onShowOSBiometricsModal = latestOnShowOSBiometricsModal,
                 onContinueWithoutAuthentication = latestOnContinueWithoutAuthentication
             )
@@ -114,7 +111,7 @@ fun BoxWithConstraintsScope.AppLockedScreen(
         // To automatically launch the biometric screen on load of this composable
         LaunchedEffect(true) {
             osAuthentication(
-                context = context,
+                hasLockScreen = hasLockScreen,
                 onShowOSBiometricsModal = latestOnShowOSBiometricsModal,
                 onContinueWithoutAuthentication = latestOnContinueWithoutAuthentication
             )
@@ -123,11 +120,11 @@ fun BoxWithConstraintsScope.AppLockedScreen(
 }
 
 private fun osAuthentication(
-    context: Context,
+    hasLockScreen: () -> Boolean,
     onShowOSBiometricsModal: () -> Unit,
     onContinueWithoutAuthentication: () -> Unit
 ) {
-    if (hasLockScreen(context)) {
+    if (hasLockScreen()) {
         onShowOSBiometricsModal()
     } else {
         onContinueWithoutAuthentication()

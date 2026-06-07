@@ -51,6 +51,7 @@ fun RootContent(
     fileSharer: FileSharer,
     viewModel: RootViewModel,
     intent: Intent,
+    hasLockScreen: () -> Boolean,
     onShowOSBiometricsModal: () -> Unit,
 ) {
     CompositionLocalProvider(
@@ -80,6 +81,7 @@ fun RootContent(
                     themeState = themeState,
                 ) {
                     AppLockedScreen(
+                        hasLockScreen = hasLockScreen,
                         onShowOSBiometricsModal = onShowOSBiometricsModal,
                         onContinueWithoutAuthentication = {
                             viewModel.unlockApp()
