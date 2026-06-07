@@ -9,9 +9,8 @@ import com.ivy.design.l0_system.Gradient
 import com.ivy.design.l0_system.Ivy
 import com.ivy.design.l0_system.Orange
 import com.ivy.design.l0_system.Red
-import com.ivy.legacy.IvyWalletCtx
-import com.ivy.legacy.data.model.MainTab
 import com.ivy.navigation.EditPlannedScreen
+import com.ivy.navigation.MainTab
 import com.ivy.navigation.PieChartStatisticScreen
 import com.ivy.ui.R
 import javax.inject.Inject
@@ -21,7 +20,6 @@ class CustomerJourneyCardsProvider @Inject constructor(
   private val transactionRepository: TransactionRepository,
   private val plannedPaymentRuleDao: PlannedPaymentRuleDao,
   private val sharedPrefs: SharedPrefs,
-  private val ivyContext: IvyWalletCtx,
 ) {
 
   suspend fun loadCards(): List<CustomerJourneyCardModel> {
@@ -32,8 +30,7 @@ class CustomerJourneyCardsProvider @Inject constructor(
       .filter {
         it.condition(
           trnCount,
-          plannedPaymentsCount,
-          ivyContext
+          plannedPaymentsCount
         ) && !isCardDismissed(it)
       }
   }
@@ -59,7 +56,7 @@ class CustomerJourneyCardsProvider @Inject constructor(
 
     fun adjustBalanceCard() = CustomerJourneyCardModel(
       id = "adjust_balance",
-      condition = { trnCount, _, _ ->
+      condition = { trnCount, _ ->
         trnCount == 0L
       },
       title = stringRes(R.string.adjust_initial_balance),
@@ -68,14 +65,14 @@ class CustomerJourneyCardsProvider @Inject constructor(
       ctaIcon = R.drawable.ic_custom_account_s,
       background = Gradient.solid(Ivy),
       hasDismiss = false,
-      onAction = { _, ivyContext, _ ->
-        ivyContext.selectMainTab(MainTab.ACCOUNTS)
+      onAction = { _, mainTabState, _ ->
+        mainTabState.select(MainTab.ACCOUNTS)
       }
     )
 
     fun addPlannedPaymentCard() = CustomerJourneyCardModel(
       id = "add_planned_payment",
-      condition = { trnCount, plannedPaymentCount, _ ->
+      condition = { trnCount, plannedPaymentCount ->
         trnCount >= 1 && plannedPaymentCount == 0L
       },
       title = stringRes(R.string.create_first_planned_payment),
@@ -96,7 +93,7 @@ class CustomerJourneyCardsProvider @Inject constructor(
 
     fun didYouKnow_expensesPieChart() = CustomerJourneyCardModel(
       id = "expenses_pie_chart",
-      condition = { trnCount, _, _ ->
+      condition = { trnCount, _ ->
         trnCount >= 7
       },
       title = stringRes(R.string.did_you_know),

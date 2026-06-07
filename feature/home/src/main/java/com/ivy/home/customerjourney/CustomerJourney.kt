@@ -22,9 +22,9 @@ import androidx.compose.ui.unit.dp
 import com.ivy.design.l0_system.UI
 import com.ivy.design.l0_system.style
 import com.ivy.domain.RootScreen
-import com.ivy.legacy.ivyWalletCtx
 import com.ivy.legacy.rootScreen
 import com.ivy.ui.legacy.drawColoredShadow
+import com.ivy.navigation.LocalMainTabState
 import com.ivy.navigation.navigation
 import com.ivy.ui.R
 import com.ivy.wallet.ui.theme.Gradient
@@ -40,7 +40,7 @@ fun CustomerJourney(
     modifier: Modifier = Modifier,
     onDismiss: (CustomerJourneyCardModel) -> Unit,
 ) {
-    val ivyContext = ivyWalletCtx()
+    val mainTabState = LocalMainTabState.current
     val nav = navigation()
     if (LocalContext.current is RootScreen) {
         val rootScreen = rootScreen()
@@ -59,7 +59,7 @@ fun CustomerJourney(
                     onDismiss(card)
                 }
             ) {
-                card.onAction(nav, ivyContext, rootScreen)
+                card.onAction(nav, mainTabState, rootScreen)
             }
         }
     } else {

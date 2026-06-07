@@ -1,4 +1,4 @@
-package com.ivy.legacy.data.model
+package com.ivy.navigation
 
 import androidx.compose.runtime.Immutable
 

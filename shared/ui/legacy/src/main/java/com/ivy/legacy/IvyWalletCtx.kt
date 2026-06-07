@@ -1,8 +1,5 @@
 package com.ivy.legacy
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import com.ivy.base.legacy.SharedPrefs
 import com.ivy.design.IvyContext
 import javax.inject.Inject
@@ -56,23 +53,6 @@ class IvyWalletCtx @Inject constructor() : IvyContext() {
         selectedPeriod = period
     }
 
-    @Deprecated("Legacy code. Don't use it, please.")
-    var mainTab by mutableStateOf(com.ivy.legacy.data.model.MainTab.HOME)
-        private set
-
-    @Deprecated("Legacy code. Don't use it, please.")
-    fun selectMainTab(tab: com.ivy.legacy.data.model.MainTab) {
-        mainTab = tab
-    }
-
-    @Deprecated("Legacy code. Don't use it, please.")
-    var moreMenuExpanded = false
-        private set
-
-    @Deprecated("Legacy code. Don't use it, please.")
-    fun setMoreMenuExpanded(expanded: Boolean) {
-        moreMenuExpanded = expanded
-    }
     // ------------------------------------------ State ---------------------------------------------
 
 }

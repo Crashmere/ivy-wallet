@@ -26,7 +26,6 @@ import com.ivy.legacy.IvyWalletCtx
 import com.ivy.legacy.data.AppBaseData
 import com.ivy.legacy.data.BufferInfo
 import com.ivy.legacy.data.LegacyDueSection
-import com.ivy.legacy.data.model.MainTab
 import com.ivy.legacy.data.model.TimePeriod
 import com.ivy.legacy.data.model.toUTCCloseTimeRange
 import com.ivy.legacy.datamodel.Account
@@ -37,7 +36,9 @@ import com.ivy.legacy.domain.action.viewmodel.home.ShouldHideIncomeAct
 import com.ivy.base.legacy.dateNowUTC
 import com.ivy.base.legacy.ioThread
 import com.ivy.navigation.BalanceScreen
+import com.ivy.navigation.MainTab
 import com.ivy.navigation.MainScreen
+import com.ivy.navigation.MainTabState
 import com.ivy.navigation.Navigation
 import com.ivy.ui.ComposeViewModel
 import com.ivy.wallet.domain.action.account.AccountsAct
@@ -88,7 +89,8 @@ class HomeViewModel @Inject constructor(
     private val transactionMapper: TransactionMapper,
     private val timeProvider: TimeProvider,
     private val timeConverter: TimeConverter,
-    private val features: Features
+    private val features: Features,
+    private val mainTabState: MainTabState
 ) : ComposeViewModel<HomeState, HomeEvent>() {
     private var currentTheme by mutableStateOf(Theme.AUTO)
     private var period by mutableStateOf(ivyContext.selectedPeriod)
@@ -404,7 +406,7 @@ class HomeViewModel @Inject constructor(
             nav.navigateTo(BalanceScreen)
         } else {
             // doesn't have transactions lead him to adjust balance
-            ivyContext.selectMainTab(MainTab.ACCOUNTS)
+            mainTabState.select(MainTab.ACCOUNTS)
             nav.navigateTo(MainScreen)
         }
     }

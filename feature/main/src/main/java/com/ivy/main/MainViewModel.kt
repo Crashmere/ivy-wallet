@@ -6,12 +6,12 @@ import androidx.lifecycle.viewModelScope
 import com.ivy.data.repository.CurrencyRepository
 import com.ivy.domain.usecase.exchange.SyncExchangeRatesUseCase
 import com.ivy.frp.test.TestIdlingResource
-import com.ivy.legacy.IvyWalletCtx
-import com.ivy.legacy.data.model.MainTab
 import com.ivy.wallet.domain.deprecated.logic.AccountCreator
 import com.ivy.base.legacy.asLiveData
 import com.ivy.base.legacy.ioThread
+import com.ivy.navigation.MainTab
 import com.ivy.navigation.MainScreen
+import com.ivy.navigation.MainTabState
 import com.ivy.navigation.Navigation
 import com.ivy.wallet.domain.deprecated.logic.model.CreateAccountData
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,7 +20,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val ivyContext: IvyWalletCtx,
+    val mainTabState: MainTabState,
     private val nav: Navigation,
     private val syncExchangeRatesUseCase: SyncExchangeRatesUseCase,
     private val accountCreator: AccountCreator,
@@ -32,8 +32,8 @@ class MainViewModel @Inject constructor(
 
     fun start(screen: MainScreen) {
         nav.onBackPressed[screen] = {
-            if (ivyContext.mainTab == MainTab.ACCOUNTS) {
-                ivyContext.selectMainTab(MainTab.HOME)
+            if (mainTabState.selectedTab == MainTab.ACCOUNTS) {
+                mainTabState.select(MainTab.HOME)
                 true
             } else {
                 // Exiting (the backstack will close the app)
@@ -56,8 +56,10 @@ class MainViewModel @Inject constructor(
         }
     }
 
+    fun selectedTab(): MainTab = mainTabState.selectedTab
+
     fun selectTab(tab: MainTab) {
-        ivyContext.selectMainTab(tab)
+        mainTabState.select(tab)
     }
 
     fun createAccount(data: CreateAccountData) {

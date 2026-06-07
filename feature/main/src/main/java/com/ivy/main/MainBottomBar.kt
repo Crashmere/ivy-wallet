@@ -42,8 +42,8 @@ import androidx.compose.ui.zIndex
 import com.ivy.design.l0_system.UI
 import com.ivy.design.l0_system.style
 import com.ivy.design.utils.thenIf
-import com.ivy.legacy.data.model.MainTab
 import com.ivy.legacy.ivyWalletCtx
+import com.ivy.navigation.MainTab
 import com.ivy.ui.legacy.clickableNoIndication
 import com.ivy.ui.legacy.densityScope
 import com.ivy.ui.legacy.lerp

@@ -34,6 +34,8 @@ import com.ivy.ui.legacy.clickableNoIndication
 import com.ivy.ui.legacy.horizontalSwipeListener
 import com.ivy.ui.legacy.rememberInteractionSource
 import com.ivy.ui.legacy.rememberSwipeListenerState
+import com.ivy.navigation.LocalMainTabState
+import com.ivy.navigation.MainTab
 import com.ivy.navigation.TransactionsScreen
 import com.ivy.navigation.navigation
 import com.ivy.navigation.screenScopedViewModel
@@ -65,7 +67,7 @@ private fun BoxWithConstraintsScope.UI(
     onEvent: (AccountsEvent) -> Unit = {}
 ) {
     val nav = navigation()
-    val ivyContext = com.ivy.legacy.ivyWalletCtx()
+    val mainTabState = LocalMainTabState.current
     val listState = rememberScrollPositionListState(
         key = "accounts_lazy_column"
     )
@@ -78,10 +80,10 @@ private fun BoxWithConstraintsScope.UI(
                 sensitivity = 200,
                 state = rememberSwipeListenerState(),
                 onSwipeLeft = {
-                    ivyContext.selectMainTab(com.ivy.legacy.data.model.MainTab.HOME)
+                    mainTabState.select(MainTab.HOME)
                 },
                 onSwipeRight = {
-                    ivyContext.selectMainTab(com.ivy.legacy.data.model.MainTab.HOME)
+                    mainTabState.select(MainTab.HOME)
                 }
             ),
         state = listState

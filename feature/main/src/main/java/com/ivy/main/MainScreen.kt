@@ -4,6 +4,7 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.BoxWithConstraintsScope
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
@@ -13,11 +14,11 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.ivy.accounts.AccountsTab
 import com.ivy.base.model.TransactionType
 import com.ivy.home.HomeTab
-import com.ivy.legacy.data.model.MainTab
-import com.ivy.legacy.ivyWalletCtx
 import com.ivy.ui.legacy.onScreenStart
 import com.ivy.navigation.EditPlannedScreen
 import com.ivy.navigation.EditTransactionScreen
+import com.ivy.navigation.LocalMainTabState
+import com.ivy.navigation.MainTab
 import com.ivy.navigation.MainScreen
 import com.ivy.navigation.navigation
 import com.ivy.wallet.domain.deprecated.logic.model.CreateAccountData
@@ -36,14 +37,15 @@ fun BoxWithConstraintsScope.MainScreen(screen: MainScreen) {
         viewModel.start(screen)
     }
 
-    val ivyContext = ivyWalletCtx()
-    UI(
-        screen = screen,
-        tab = ivyContext.mainTab,
-        baseCurrency = currency,
-        selectTab = viewModel::selectTab,
-        onCreateAccount = viewModel::createAccount
-    )
+    CompositionLocalProvider(LocalMainTabState provides viewModel.mainTabState) {
+        UI(
+            screen = screen,
+            tab = viewModel.selectedTab(),
+            baseCurrency = currency,
+            selectTab = viewModel::selectTab,
+            onCreateAccount = viewModel::createAccount
+        )
+    }
 }
 
 @ExperimentalAnimationApi

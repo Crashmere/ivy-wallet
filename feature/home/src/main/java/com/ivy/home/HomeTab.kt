@@ -38,7 +38,6 @@ import com.ivy.home.customerjourney.CustomerJourneyCardModel
 import com.ivy.legacy.data.AppBaseData
 import com.ivy.legacy.data.BufferInfo
 import com.ivy.legacy.data.LegacyDueSection
-import com.ivy.legacy.data.model.MainTab
 import com.ivy.legacy.data.model.Month
 import com.ivy.legacy.data.model.TimePeriod
 import com.ivy.legacy.ivyWalletCtx
@@ -48,6 +47,8 @@ import com.ivy.ui.legacy.horizontalSwipeListener
 import com.ivy.ui.legacy.rememberSwipeListenerState
 import com.ivy.ui.legacy.verticalSwipeListener
 import com.ivy.navigation.screenScopedViewModel
+import com.ivy.navigation.LocalMainTabState
+import com.ivy.navigation.MainTab
 import com.ivy.ui.R
 import com.ivy.ui.rememberScrollPositionListState
 import com.ivy.data.model.currency.IvyCurrency
@@ -82,17 +83,17 @@ fun BoxWithConstraintsScope.HomeUi(
 ) {
     val ivyContext = ivyWalletCtx()
     val datePicker = LocalDatePicker.current
+    val mainTabState = LocalMainTabState.current
 
     var bufferModalData: BufferModalData? by remember { mutableStateOf(null) }
     var currencyModalVisible by remember { mutableStateOf(false) }
     var choosePeriodModal: ChoosePeriodModalData? by remember {
         mutableStateOf(null)
     }
-    var moreMenuExpanded by remember { mutableStateOf(ivyContext.moreMenuExpanded) }
+    var moreMenuExpanded by remember { mutableStateOf(false) }
     var skipAllModalVisible by remember { mutableStateOf(false) }
     val setMoreMenuExpanded = { expanded: Boolean ->
         moreMenuExpanded = expanded
-        ivyContext.setMoreMenuExpanded(expanded)
     }
 
     val baseCurrency = uiState.baseData.baseCurrency
@@ -112,10 +113,10 @@ fun BoxWithConstraintsScope.HomeUi(
                 sensitivity = SWIPE_HORIZONTAL_THRESHOLD,
                 state = rememberSwipeListenerState(),
                 onSwipeLeft = {
-                    ivyContext.selectMainTab(MainTab.ACCOUNTS)
+                    mainTabState.select(MainTab.ACCOUNTS)
                 },
                 onSwipeRight = {
-                    ivyContext.selectMainTab(MainTab.ACCOUNTS)
+                    mainTabState.select(MainTab.ACCOUNTS)
                 }
             )
     ) {
