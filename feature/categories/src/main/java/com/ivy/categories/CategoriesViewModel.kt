@@ -23,7 +23,7 @@ import com.ivy.base.coroutines.ioThread
 import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.preferences.asEnabledState
 import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
-import com.ivy.legacy.domain.action.category.LegacyCategoryIncomeWithAccountFiltersAct
+import com.ivy.domain.usecase.category.CalculateCategoryIncomeWithAccountFiltersUseCase
 import com.ivy.legacy.domain.data.SortOrder
 import com.ivy.legacy.domain.logic.CategoryCreator
 import com.ivy.data.model.legacy.CreateCategoryData
@@ -50,7 +50,7 @@ class CategoriesViewModel @Inject constructor(
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
     private val getLegacyAccountsUseCase: GetLegacyAccountsUseCase,
     private val getLegacyTransactionsForAccountsUseCase: GetLegacyTransactionsForAccountsUseCase,
-    private val categoryIncomeWithAccountFiltersAct: LegacyCategoryIncomeWithAccountFiltersAct,
+    private val calculateCategoryIncomeWithAccountFiltersUseCase: CalculateCategoryIncomeWithAccountFiltersUseCase,
     private val preferenceToggles: PreferenceToggles,
     private val preferenceToggleRepository: PreferenceToggleRepository,
     private val timeProvider: TimeProvider,
@@ -173,13 +173,11 @@ class CategoriesViewModel @Inject constructor(
     private suspend fun loadCategories() {
         com.ivy.base.coroutines.scopedIOThread { scope ->
             val categories = getCategoriesUseCase().mapAsync(scope) {
-                val catIncomeExpense = categoryIncomeWithAccountFiltersAct(
-                    LegacyCategoryIncomeWithAccountFiltersAct.Input(
-                        transactions = transactions,
-                        accountFilterList = allAccounts,
-                        category = it,
-                        baseCurrency = baseCurrency.value
-                    )
+                val catIncomeExpense = calculateCategoryIncomeWithAccountFiltersUseCase(
+                    transactions = transactions,
+                    accountFilterList = allAccounts,
+                    category = it,
+                    baseCurrency = baseCurrency.value
                 )
 
                 CategoryData(

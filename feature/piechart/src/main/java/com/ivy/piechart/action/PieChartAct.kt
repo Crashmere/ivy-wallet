@@ -22,8 +22,8 @@ import com.ivy.data.model.legacy.Account
 import com.ivy.piechart.CategoryAmount
 import com.ivy.ui.R
 import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
-import com.ivy.legacy.domain.action.category.LegacyCategoryIncomeWithAccountFiltersAct
-import com.ivy.legacy.domain.action.transaction.LegacyCalcTrnsIncomeExpenseAct
+import com.ivy.domain.usecase.category.CalculateCategoryIncomeWithAccountFiltersUseCase
+import com.ivy.domain.usecase.transaction.CalculateLegacyTransactionsIncomeExpenseUseCase
 import com.ivy.legacy.domain.pure.account.filterExcluded
 import com.ivy.data.model.legacy.IncomeExpenseTransferPair
 import kotlinx.collections.immutable.ImmutableList
@@ -35,9 +35,9 @@ import javax.inject.Inject
 class PieChartAct @Inject constructor(
     private val getLegacyAccountsUseCase: GetLegacyAccountsUseCase,
     private val getLegacyTransactionsForAccountsUseCase: GetLegacyTransactionsForAccountsUseCase,
-    private val calcTrnsIncomeExpenseAct: LegacyCalcTrnsIncomeExpenseAct,
+    private val calculateLegacyTransactionsIncomeExpenseUseCase: CalculateLegacyTransactionsIncomeExpenseUseCase,
     private val getCategoriesUseCase: GetCategoriesUseCase,
-    private val categoryIncomeWithAccountFiltersAct: LegacyCategoryIncomeWithAccountFiltersAct,
+    private val calculateCategoryIncomeWithAccountFiltersUseCase: CalculateCategoryIncomeWithAccountFiltersUseCase,
     private val resourceProvider: ResourceProvider,
 ) : FPAction<PieChartAct.Input, PieChartAct.Output>() {
 
@@ -71,12 +71,10 @@ class PieChartAct @Inject constructor(
         val accountsUsed = it.first
         val transactions = it.second
 
-        val incomeExpenseTransfer = calcTrnsIncomeExpenseAct(
-            LegacyCalcTrnsIncomeExpenseAct.Input(
-                transactions = transactions,
-                accounts = accountsUsed,
-                baseCurrency = baseCurrency
-            )
+        val incomeExpenseTransfer = calculateLegacyTransactionsIncomeExpenseUseCase(
+            transactions = transactions,
+            accounts = accountsUsed,
+            baseCurrency = baseCurrency
         )
 
         val categoryAmounts = suspend {
@@ -167,13 +165,11 @@ class PieChartAct @Inject constructor(
                 }
             }
 
-            val catIncomeExpense = categoryIncomeWithAccountFiltersAct(
-                LegacyCategoryIncomeWithAccountFiltersAct.Input(
-                    transactions = trans,
-                    accountFilterList = accUsed,
-                    category = category,
-                    baseCurrency = baseCurrency
-                )
+            val catIncomeExpense = calculateCategoryIncomeWithAccountFiltersUseCase(
+                transactions = trans,
+                accountFilterList = accUsed,
+                category = category,
+                baseCurrency = baseCurrency
             )
 
             CategoryAmount(

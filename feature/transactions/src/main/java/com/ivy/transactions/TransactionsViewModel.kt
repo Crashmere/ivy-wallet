@@ -50,8 +50,8 @@ import com.ivy.domain.usecase.account.CalculateAccountIncomeExpenseUseCase
 import com.ivy.domain.usecase.account.GetAccountTransactionsUseCase
 import com.ivy.domain.usecase.account.GetLegacyAccountUseCase
 import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
-import com.ivy.legacy.domain.action.transaction.LegacyCalcTrnsIncomeExpenseAct
-import com.ivy.legacy.domain.action.transaction.LegacyTrnsWithDateDivsAct
+import com.ivy.domain.usecase.transaction.BuildLegacyTransactionHistoryItemsUseCase
+import com.ivy.domain.usecase.transaction.CalculateLegacyTransactionsIncomeExpenseUseCase
 import com.ivy.legacy.domain.logic.CategoryCreator
 import com.ivy.legacy.domain.logic.PlannedPaymentsLogic
 import com.ivy.legacy.domain.logic.WalletAccountLogic
@@ -82,7 +82,7 @@ class TransactionsViewModel @Inject constructor(
     private val getLegacyAccountsUseCase: GetLegacyAccountsUseCase,
     private val getLegacyAccountUseCase: GetLegacyAccountUseCase,
     private val getAccountTransactionsUseCase: GetAccountTransactionsUseCase,
-    private val trnsWithDateDivsAct: LegacyTrnsWithDateDivsAct,
+    private val buildLegacyTransactionHistoryItemsUseCase: BuildLegacyTransactionHistoryItemsUseCase,
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
     private val getAccountUseCase: GetAccountUseCase,
     private val deleteAccountUseCase: DeleteAccountUseCase,
@@ -91,7 +91,7 @@ class TransactionsViewModel @Inject constructor(
     private val deleteCategoryUseCase: DeleteCategoryUseCase,
     private val calculateAccountBalanceUseCase: CalculateAccountBalanceUseCase,
     private val calculateAccountIncomeExpenseUseCase: CalculateAccountIncomeExpenseUseCase,
-    private val calcTrnsIncomeExpenseAct: LegacyCalcTrnsIncomeExpenseAct,
+    private val calculateLegacyTransactionsIncomeExpenseUseCase: CalculateLegacyTransactionsIncomeExpenseUseCase,
     private val exchangeAmountUseCase: ExchangeAmountUseCase,
     private val mapTransactionsToLegacyUseCase: MapTransactionsToLegacyUseCase,
     private val mapTransactionsToLegacyWithTagsUseCase: MapTransactionsToLegacyWithTagsUseCase,
@@ -373,14 +373,12 @@ class TransactionsViewModel @Inject constructor(
         income.doubleValue = incomeExpensePair.income.toDouble()
         expenses.doubleValue = incomeExpensePair.expense.toDouble()
 
-        history.value = trnsWithDateDivsAct(
-            LegacyTrnsWithDateDivsAct.Input(
-                baseCurrency = baseCurrency.value,
-                transactions = mapTransactionsToLegacyWithTagsUseCase(
-                    getAccountTransactionsUseCase(
-                        accountId = AccountId(initialAccount.id),
-                        range = range.toCloseTimeRange()
-                    )
+        history.value = buildLegacyTransactionHistoryItemsUseCase(
+            baseCurrency = baseCurrency.value,
+            transactions = mapTransactionsToLegacyWithTagsUseCase(
+                getAccountTransactionsUseCase(
+                    accountId = AccountId(initialAccount.id),
+                    range = range.toCloseTimeRange()
                 )
             )
         ).toImmutableList()
@@ -625,22 +623,18 @@ class TransactionsViewModel @Inject constructor(
                     ) && it.type == TransactionType.TRANSFER
         }
 
-        val historyIncomeExpense = calcTrnsIncomeExpenseAct(
-            LegacyCalcTrnsIncomeExpenseAct.Input(
-                transactions = trans,
-                accounts = accountFilterList.mapNotNull { accID -> accounts.value.find { it.id == accID } },
-                baseCurrency = baseCurrency.value
-            )
+        val historyIncomeExpense = calculateLegacyTransactionsIncomeExpenseUseCase(
+            transactions = trans,
+            accounts = accountFilterList.mapNotNull { accID -> accounts.value.find { it.id == accID } },
+            baseCurrency = baseCurrency.value
         )
 
         income.doubleValue = historyIncomeExpense.transferIncome.toDouble()
         expenses.doubleValue = historyIncomeExpense.transferExpense.toDouble()
         balance.doubleValue = income.doubleValue - expenses.doubleValue
-        history.value = trnsWithDateDivsAct(
-            LegacyTrnsWithDateDivsAct.Input(
-                baseCurrency = baseCurrency.value,
-                transactions = transactions
-            )
+        history.value = buildLegacyTransactionHistoryItemsUseCase(
+            baseCurrency = baseCurrency.value,
+            transactions = transactions
         ).toImmutableList()
     }
 

@@ -48,8 +48,8 @@ import com.ivy.ui.platform.FilePicker
 import com.ivy.ui.platform.FileSharer
 import com.ivy.ui.preferences.asEnabledState
 import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
-import com.ivy.legacy.domain.action.transaction.CalcTrnsIncomeExpenseAct
-import com.ivy.legacy.domain.action.transaction.TrnsWithDateDivsAct
+import com.ivy.domain.usecase.transaction.BuildTransactionHistoryItemsUseCase
+import com.ivy.domain.usecase.transaction.CalculateTransactionsIncomeExpenseUseCase
 import com.ivy.legacy.domain.logic.PlannedPaymentsLogic
 import com.ivy.data.model.legacy.IncomeExpenseTransferPair
 import com.ivy.legacy.domain.pure.exchange.ExchangeData
@@ -83,8 +83,8 @@ class ReportViewModel @Inject constructor(
     private val exchangeAmountUseCase: ExchangeAmountUseCase,
     private val getLegacyAccountsUseCase: GetLegacyAccountsUseCase,
     private val getCategoriesUseCase: GetCategoriesUseCase,
-    private val trnsWithDateDivsAct: TrnsWithDateDivsAct,
-    private val calcTrnsIncomeExpenseAct: CalcTrnsIncomeExpenseAct,
+    private val buildTransactionHistoryItemsUseCase: BuildTransactionHistoryItemsUseCase,
+    private val calculateTransactionsIncomeExpenseUseCase: CalculateTransactionsIncomeExpenseUseCase,
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
     private val getTransactionsUseCase: GetTransactionsUseCase,
     private val getTransactionsByTagsUseCase: GetTransactionsByTagsUseCase,
@@ -265,20 +265,16 @@ class ReportViewModel @Inject constructor(
                 .sortedByDescending { it.time }
 
             val historyWithDateDividers = scope.async {
-                trnsWithDateDivsAct(
-                    TrnsWithDateDivsAct.Input(
-                        baseCurrency = baseCurrency,
-                        transactions = tempHistory
-                    )
+                buildTransactionHistoryItemsUseCase(
+                    baseCurrency = baseCurrency,
+                    transactions = tempHistory
                 )
             }
 
-            historyIncomeExpense = calcTrnsIncomeExpenseAct(
-                CalcTrnsIncomeExpenseAct.Input(
-                    transactions = tempHistory,
-                    accounts = tempAccounts,
-                    baseCurrency = baseCurrency
-                )
+            historyIncomeExpense = calculateTransactionsIncomeExpenseUseCase(
+                transactions = tempHistory,
+                accounts = tempAccounts,
+                baseCurrency = baseCurrency
             )
 
             val tempIncome = historyIncomeExpense.income.toDouble() +
@@ -302,12 +298,10 @@ class ReportViewModel @Inject constructor(
                 .sortedBy { it.time }
                 .toImmutableList()
 
-            val upcomingIncomeExpense = calcTrnsIncomeExpenseAct(
-                CalcTrnsIncomeExpenseAct.Input(
-                    transactions = upcomingTransactionsList,
-                    accounts = tempAccounts,
-                    baseCurrency = baseCurrency
-                )
+            val upcomingIncomeExpense = calculateTransactionsIncomeExpenseUseCase(
+                transactions = upcomingTransactionsList,
+                accounts = tempAccounts,
+                baseCurrency = baseCurrency
             )
             // Overdue
             val overdue = transactionsList.filter {
@@ -316,12 +310,10 @@ class ReportViewModel @Inject constructor(
             }.sortedByDescending {
                 it.time
             }.toImmutableList()
-            val overdueIncomeExpense = calcTrnsIncomeExpenseAct(
-                CalcTrnsIncomeExpenseAct.Input(
-                    transactions = overdue,
-                    accounts = tempAccounts,
-                    baseCurrency = baseCurrency
-                )
+            val overdueIncomeExpense = calculateTransactionsIncomeExpenseUseCase(
+                transactions = overdue,
+                accounts = tempAccounts,
+                baseCurrency = baseCurrency
             )
 
             setReportValues(

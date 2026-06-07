@@ -50,7 +50,7 @@ import com.ivy.ui.navigation.Navigation
 import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.preferences.asEnabledState
 import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
-import com.ivy.legacy.domain.action.transaction.HistoryWithDateDivsAct
+import com.ivy.domain.usecase.transaction.GetTransactionHistoryItemsUseCase
 import com.ivy.legacy.domain.action.viewmodel.home.OverdueAct
 import com.ivy.legacy.domain.action.viewmodel.home.UpcomingAct
 import com.ivy.legacy.domain.logic.PlannedPaymentsLogic
@@ -73,7 +73,7 @@ class HomeViewModel @Inject constructor(
     private val nav: Navigation,
     private val plannedPaymentsLogic: PlannedPaymentsLogic,
     private val customerJourneyLogic: CustomerJourneyCardsProvider,
-    private val historyWithDateDivsAct: HistoryWithDateDivsAct,
+    private val getTransactionHistoryItemsUseCase: GetTransactionHistoryItemsUseCase,
     private val calculateWalletIncomeExpenseUseCase: CalculateWalletIncomeExpenseUseCase,
     private val calculateWalletBalanceUseCase: CalculateWalletBalanceUseCase,
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
@@ -359,11 +359,9 @@ class HomeViewModel @Inject constructor(
     ): Pair<String, ClosedTimeRange> {
         val (baseCurrency, timeRange) = input
 
-        history = historyWithDateDivsAct(
-            HistoryWithDateDivsAct.Input(
-                range = timeRange,
-                baseCurrency = baseCurrency
-            )
+        history = getTransactionHistoryItemsUseCase(
+            range = timeRange,
+            baseCurrency = baseCurrency
         )
 
         return baseCurrency to timeRange

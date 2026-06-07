@@ -17,8 +17,8 @@ import com.ivy.data.model.legacy.Account
 import com.ivy.base.currency.getDefaultFIATCurrency
 import com.ivy.base.coroutines.ioThread
 import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
+import com.ivy.domain.usecase.transaction.BuildTransactionHistoryItemsUseCase
 import com.ivy.domain.usecase.transaction.GetTransactionsUseCase
-import com.ivy.legacy.domain.action.transaction.TrnsWithDateDivsAct
 import com.ivy.ui.preferences.asEnabledState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
@@ -30,7 +30,7 @@ import javax.inject.Inject
 @Stable
 @HiltViewModel
 class SearchViewModel @Inject constructor(
-    private val trnsWithDateDivsAct: TrnsWithDateDivsAct,
+    private val buildTransactionHistoryItemsUseCase: BuildTransactionHistoryItemsUseCase,
     private val getLegacyAccountsUseCase: GetLegacyAccountsUseCase,
     private val getCategoriesUseCase: GetCategoriesUseCase,
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
@@ -86,11 +86,9 @@ class SearchViewModel @Inject constructor(
                         transaction.title.matchesQuery(normalizedQuery) ||
                                 transaction.description.matchesQuery(normalizedQuery)
                     }
-                trnsWithDateDivsAct(
-                    TrnsWithDateDivsAct.Input(
-                        baseCurrency = getBaseCurrencyCode(),
-                        transactions = filteredTransactions
-                    )
+                buildTransactionHistoryItemsUseCase(
+                    baseCurrency = getBaseCurrencyCode(),
+                    transactions = filteredTransactions
                 ).toImmutableList()
             }
 
