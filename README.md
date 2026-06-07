@@ -685,6 +685,7 @@
 - 交易提醒 Worker 的“今天是否已经记账”判断已改走 `CountTodayTransactionsUseCase`；app 通知 Worker 不再直接注入 `TransactionDao`，数据层新增按时间范围计数查询，避免为了计数加载完整交易列表。
 - 编辑交易页的标题建议逻辑已从旧 `SmartTitleSuggestionsLogic` 迁到正式 `SuggestTransactionTitlesUseCase`；按标题、分类和账户使用频次生成建议的规则保持不变。
 - 文本文件读写已抽成 `TextFileStore` 基础端口，data core 的 Android `FileSystem` 负责实现；CSV 导出和手动 CSV 读取不再直接依赖 data core 文件类，备份导入导出后续单独拆分。
+- 新增薄模块 `shared:data:api` 承载数据层端口；备份导入导出已改为依赖 `BackupStore`，data core 的 `BackupDataUseCase` 只作为实现绑定到该端口，feature 仍只通过 domain use case 使用备份功能。
 
 建议顺序：
 

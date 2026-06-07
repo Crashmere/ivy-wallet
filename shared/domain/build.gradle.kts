@@ -10,6 +10,7 @@ android {
 
 dependencies {
     implementation(projects.shared.base)
+    implementation(projects.shared.data.api)
     implementation(projects.shared.data.core)
 
     implementation(libs.bundles.arrow)

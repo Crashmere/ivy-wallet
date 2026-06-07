@@ -10,6 +10,7 @@ import com.ivy.base.io.zip
 import com.ivy.base.threading.DispatchersProvider
 import com.ivy.data.DataObserver
 import com.ivy.data.DataWriteEvent
+import com.ivy.data.api.backup.BackupStore
 import com.ivy.data.db.dao.read.AccountDao
 import com.ivy.data.db.dao.read.BudgetDao
 import com.ivy.data.db.dao.read.CategoryDao
@@ -75,7 +76,21 @@ class BackupDataUseCase @Inject constructor(
     private val tagAssociationReader: TagAssociationDao,
     private val tagsWriter: WriteTagDao,
     private val tagAssociationWriter: WriteTagAssociationDao
-) {
+) : BackupStore {
+    override suspend fun exportBackup(outputFile: Uri) {
+        exportToFile(zipFileUri = outputFile)
+    }
+
+    override suspend fun importBackup(
+        backupFile: Uri,
+        onProgress: suspend (Double) -> Unit,
+    ): ImportResult {
+        return importBackupFile(
+            backupFileUri = backupFile,
+            onProgress = onProgress,
+        )
+    }
+
     suspend fun exportToFile(
         zipFileUri: Uri
     ) {
