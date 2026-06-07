@@ -1,6 +1,5 @@
 package com.ivy.reports
 
-import com.ivy.legacy.ui.preferences.asEnabledState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Stable
@@ -25,6 +24,7 @@ import com.ivy.data.model.Transaction
 import com.ivy.data.model.Transfer
 import com.ivy.data.model.primitive.ColorInt
 import com.ivy.data.model.primitive.NotBlankTrimmedString
+import com.ivy.domain.preferences.toggles.PreferenceToggleRepository
 import com.ivy.domain.preferences.toggles.PreferenceToggles
 import com.ivy.domain.usecase.category.GetCategoriesUseCase
 import com.ivy.domain.usecase.csv.ExportCsvUseCase
@@ -45,6 +45,7 @@ import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.R
 import com.ivy.ui.platform.FilePicker
 import com.ivy.ui.platform.FileSharer
+import com.ivy.ui.preferences.asEnabledState
 import com.ivy.legacy.domain.action.account.AccountsAct
 import com.ivy.legacy.domain.action.exchange.ExchangeAct
 import com.ivy.legacy.domain.action.transaction.CalcTrnsIncomeExpenseAct
@@ -95,6 +96,7 @@ class ReportViewModel @Inject constructor(
     private val timeProvider: TimeProvider,
     private val timeConverter: TimeConverter,
     private val preferenceToggles: PreferenceToggles,
+    private val preferenceToggleRepository: PreferenceToggleRepository,
     private val filePicker: FilePicker
 ) : ComposeViewModel<ReportScreenState, ReportScreenEvent>() {
     private val unSpecifiedCategory =
@@ -137,7 +139,9 @@ class ReportViewModel @Inject constructor(
 
     @Composable
     fun getShouldShowAccountSpecificColorInTransactions(): Boolean {
-        return preferenceToggles.showAccountColorsInTransactions.asEnabledState()
+        val preference = preferenceToggles.showAccountColorsInTransactions
+        return preferenceToggleRepository.enabledFlow(preference)
+            .asEnabledState(preference.defaultValue)
     }
 
     @Composable

@@ -1,6 +1,5 @@
 package com.ivy.transactions
 
-import com.ivy.legacy.ui.preferences.asEnabledState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.mutableDoubleStateOf
@@ -30,6 +29,7 @@ import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.domain.usecase.transaction.MapTransactionsToLegacyUseCase
 import com.ivy.domain.usecase.transaction.MapTransactionsToLegacyWithTagsUseCase
 import com.ivy.legacy.ui.theme.system.RedLight
+import com.ivy.domain.preferences.toggles.PreferenceToggleRepository
 import com.ivy.domain.preferences.toggles.PreferenceToggles
 import com.ivy.legacy.frp.then
 import com.ivy.legacy.ui.state.PeriodState
@@ -44,6 +44,7 @@ import com.ivy.ui.navigation.Navigation
 import com.ivy.ui.navigation.TransactionsScreen
 import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.R
+import com.ivy.ui.preferences.asEnabledState
 import com.ivy.legacy.domain.action.account.AccTrnsAct
 import com.ivy.legacy.domain.action.account.AccountByIdAct
 import com.ivy.legacy.domain.action.account.AccountsAct
@@ -98,6 +99,7 @@ class TransactionsViewModel @Inject constructor(
     private val resourceProvider: ResourceProvider,
     private val timeProvider: TimeProvider,
     private val timeConverter: TimeConverter,
+    private val preferenceToggleRepository: PreferenceToggleRepository,
     private val preferenceToggles: PreferenceToggles
 ) : ComposeViewModel<TransactionsState, TransactionsEvent>() {
 
@@ -172,7 +174,9 @@ class TransactionsViewModel @Inject constructor(
 
     @Composable
     fun getShouldShowAccountSpecificColorInTransactions(): Boolean {
-        return preferenceToggles.showAccountColorsInTransactions.asEnabledState()
+        val preference = preferenceToggles.showAccountColorsInTransactions
+        return preferenceToggleRepository.enabledFlow(preference)
+            .asEnabledState(preference.defaultValue)
     }
 
     @Composable

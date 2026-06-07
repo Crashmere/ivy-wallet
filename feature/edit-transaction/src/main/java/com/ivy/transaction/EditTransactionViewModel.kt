@@ -1,6 +1,5 @@
 package com.ivy.transaction
 
-import com.ivy.legacy.ui.preferences.asEnabledState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
@@ -33,6 +32,7 @@ import com.ivy.domain.usecase.tag.DeleteTagUseCase
 import com.ivy.domain.usecase.tag.GetTransactionTagIdsUseCase
 import com.ivy.domain.usecase.tag.GetTagsUseCase
 import com.ivy.ui.platform.Toaster
+import com.ivy.ui.preferences.asEnabledState
 import com.ivy.domain.usecase.tag.RemoveTagFromTransactionUseCase
 import com.ivy.domain.usecase.tag.SaveTagUseCase
 import com.ivy.domain.usecase.tag.SearchTagsUseCase
@@ -234,7 +234,11 @@ class EditTransactionViewModel @Inject constructor(
 
     @Composable
     private fun getTitleSuggestions(): ImmutableSet<String> {
-        return if (preferenceToggles.showTitleSuggestions.asEnabledState()) {
+        val preference = preferenceToggles.showTitleSuggestions
+        return if (
+            preferenceToggleRepository.enabledFlow(preference)
+                .asEnabledState(preference.defaultValue)
+        ) {
             titleSuggestions
         } else {
             persistentSetOf()

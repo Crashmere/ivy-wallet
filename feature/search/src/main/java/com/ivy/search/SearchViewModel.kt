@@ -1,6 +1,5 @@
 package com.ivy.search
 
-import com.ivy.legacy.ui.preferences.asEnabledState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Stable
@@ -10,6 +9,7 @@ import com.ivy.base.model.legacy.TransactionHistoryItem
 import com.ivy.data.model.primitive.NotBlankTrimmedString
 import com.ivy.ui.ComposeViewModel
 import com.ivy.data.model.Category
+import com.ivy.domain.preferences.toggles.PreferenceToggleRepository
 import com.ivy.domain.preferences.toggles.PreferenceToggles
 import com.ivy.domain.usecase.category.GetCategoriesUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
@@ -19,6 +19,7 @@ import com.ivy.base.coroutines.ioThread
 import com.ivy.legacy.domain.action.account.AccountsAct
 import com.ivy.legacy.domain.action.transaction.AllTrnsAct
 import com.ivy.legacy.domain.action.transaction.TrnsWithDateDivsAct
+import com.ivy.ui.preferences.asEnabledState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
@@ -34,6 +35,7 @@ class SearchViewModel @Inject constructor(
     private val getCategoriesUseCase: GetCategoriesUseCase,
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
     private val allTrnsAct: AllTrnsAct,
+    private val preferenceToggleRepository: PreferenceToggleRepository,
     private val preferenceToggles: PreferenceToggles
 ) : ComposeViewModel<SearchState, SearchEvent>() {
 
@@ -46,7 +48,9 @@ class SearchViewModel @Inject constructor(
 
     @Composable
     fun getShouldShowAccountSpecificColorInTransactions(): Boolean {
-        return preferenceToggles.showAccountColorsInTransactions.asEnabledState()
+        val preference = preferenceToggles.showAccountColorsInTransactions
+        return preferenceToggleRepository.enabledFlow(preference)
+            .asEnabledState(preference.defaultValue)
     }
 
     @Composable

@@ -393,7 +393,7 @@
 - 已把 `FromToTimeRange.toDisplay(...)` 从 domain 模型上拆成 `shared:ui:legacy` 的 UI 扩展，避免 `shared:domain` 依赖 `TimeFormatter`。
 - 已把 `Month.incrementMonthPeriod` 改成只返回新周期，不再直接更新 `IvyWalletCtx`；各页面/ViewModel 在调用处显式保存选中周期，副作用更清楚。
 - 已把 `ChoosePeriodModal` 和 `PeriodSelector` 迁入 `shared:ui:legacy`，并通过外部 `saveSelectedPeriod`、`pickDate`、`startDateOfMonth` 参数替代内部直接读取 `IvyWalletCtx`。
-- 已把金额输入弹窗、计算器弹窗和缓冲金额弹窗迁入 `shared:ui:legacy`。其中金额键盘仍通过 Hilt EntryPoint 读取“标准键盘布局”偏好，因此 `shared:ui:legacy` 暂时显式依赖 `shared:domain` 和 `keval`；后续偏好设置重构时应改为由调用方或 CompositionLocal 提供键盘布局。
+- 已把金额输入弹窗、计算器弹窗和缓冲金额弹窗迁入 `shared:ui:legacy`。金额键盘的“标准键盘布局”偏好已经改为由 app 根部提供 legacy UI 专用偏好入口，不再把 domain 的 `PreferenceToggles/BoolPreference` 类型暴露给旧 UI；`shared:ui:legacy` 仍因旧账户/借贷弹窗和周期模型暂时依赖 legacy domain 模型，后续按 UI model 边界继续拆。
 - 已把旧 `legacy.datamodel` 整体迁入 `shared:domain`，把旧创建参数模型迁入 `shared:domain`，并把账户/分类/借贷创建参数里的颜色从 Compose `Color` 改为普通 ARGB `Int`，由 UI 弹窗在边界处转换。
 - 已把旧颜色选择器、账户弹窗、分类弹窗、借贷弹窗和借贷记录弹窗迁入 `shared:ui:legacy`。颜色选择器移除了旧付费锁显示分支，不再依赖会员状态。
 - 已把旧 UI 状态模型 `AppBaseData`、`LegacyDueSection`、`BufferInfo`、`EditTransactionDisplayLoan` 迁入 `shared:ui:legacy`，作为迁移期的 UI 兼容数据。
@@ -438,7 +438,7 @@
 - 旧主题枚举已迁到 `com.ivy.base.theme.Theme`，数据库仍通过枚举 `name` 持久化，现有设置值不变；旧 `SharedPrefs` 已迁到 `com.ivy.base.prefs.SharedPrefs`，同一个 `ivy_wallet_prefs` 文件名和 key 保持不变。
 - `shared:base` 中的 `com.ivy.base.legacy` 包已经清空；后续重点从“迁出 legacy 包名”转向“减少 Android SharedPreferences 对 domain/data 的扩散”。
 - 偏好读写已抽出 `PreferenceStore` 接口，`SharedPrefs` 只作为 Android 实现通过 Hilt 绑定；业务 key 集中到 `AppPreferenceKeys`，domain 和数据备份恢复不再直接依赖 `SharedPrefs` 具体类。
-- 偏好 toggle 的 UI 读取边界已从 domain 拆到 `shared:ui:legacy`：`LocalPreferenceDataStore/LocalPreferenceToggles` 和 `BoolPreference.asEnabledState()` 现在属于旧 UI 层，domain 中的 `BoolPreference` 只保留 DataStore 读写定义。
+- 偏好 toggle 的 UI 读取边界已从 domain 拆到 `shared:ui:legacy`：旧金额键盘只接收 legacy UI 专用的键盘布局 Flow，domain 中的 `BoolPreference` 继续只保留 DataStore 读写定义。
 - `shared:domain` 已删除剩余 legacy 数据模型上的 Compose `@Immutable` 注解，并移除 `ivy.compose-runtime` 插件；domain 不再需要 Compose 编译配置。
 - `shared:domain` 已把 Ktor 从 main 依赖降到 androidTest 依赖；汇率同步集成测试仍保留真实网络 client 构造能力。
 - `shared:data:core` 的 AndroidManifest 已删除被 AGP 忽略的 `package` 属性，命名空间统一由模块 `namespace = "com.ivy.data"` 提供。
@@ -575,6 +575,7 @@
 - 已把重置钱包流程改为通过 `AppPreferences.clearAll()` 清空 legacy 偏好；app/feature 层不再直接注入 `SharedPrefs`。
 - 功能开关 `BoolFeature` 不再通过 `Context.dataStore` 读写；根部 `RootContent` 显式提供 `LocalFeatureDataStore` 和 `LocalFeatures`，设置页、编辑交易分类排序、金额格式化和金额键盘都改为使用同一个注入的数据源。
 - 原 `shared/domain/features` 已迁到 `shared/domain/preferences/toggles`，`Features/BoolFeature/FeatureGroup` 重命名为 `PreferenceToggles/BoolPreference/PreferenceGroup`；底层 DataStore key 仍沿用 `feature_...` 前缀，保证已安装设备上的偏好开关不丢失。
+- feature ViewModel 中的偏好开关读取不再依赖 `shared:ui:legacy` 的 CompositionLocal；账户、分类、首页、搜索、交易、报表和编辑交易页改为注入 `PreferenceToggleRepository`，再通过 `shared:ui:core` 的 Flow 状态 helper 在 Compose 状态层读取。
 - 备份恢复仍保留原始 `SharedPrefs` 访问；它需要处理全部历史 key 和外部备份格式，后续与备份格式重构一起处理。`SharedPrefs` 不再用废弃注解制造警告，迁移状态改由本计划追踪。
 
 目标：

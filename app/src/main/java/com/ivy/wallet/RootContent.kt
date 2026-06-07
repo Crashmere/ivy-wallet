@@ -9,14 +9,16 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import com.ivy.IvyNavGraph
 import com.ivy.base.theme.Theme
 import com.ivy.base.time.TimeConverter
 import com.ivy.base.time.TimeProvider
 import com.ivy.domain.preferences.toggles.PreferenceToggleRepository
 import com.ivy.domain.preferences.toggles.PreferenceToggles
-import com.ivy.legacy.ui.preferences.LocalPreferenceToggleRepository
-import com.ivy.legacy.ui.preferences.LocalPreferenceToggles
+import com.ivy.legacy.ui.preferences.LegacyBoolPreference
+import com.ivy.legacy.ui.preferences.LegacyUiPreferences
+import com.ivy.legacy.ui.preferences.LocalLegacyUiPreferences
 import com.ivy.legacy.ui.state.LocalPeriodState
 import com.ivy.legacy.ui.state.PeriodState
 import com.ivy.ui.navigation.Navigation
@@ -53,10 +55,20 @@ fun RootContent(
     hasLockScreen: () -> Boolean,
     onShowOSBiometricsModal: () -> Unit,
 ) {
+    val legacyUiPreferences = remember(preferenceToggles, preferenceToggleRepository) {
+        LegacyUiPreferences(
+            standardKeypadLayout = LegacyBoolPreference(
+                defaultValue = preferenceToggles.standardKeypadLayout.defaultValue,
+                enabledFlow = preferenceToggleRepository.enabledFlow(
+                    preferenceToggles.standardKeypadLayout
+                )
+            )
+        )
+    }
+
     CompositionLocalProvider(
         LocalPeriodState provides periodState,
-        LocalPreferenceToggles provides preferenceToggles,
-        LocalPreferenceToggleRepository provides preferenceToggleRepository,
+        LocalLegacyUiPreferences provides legacyUiPreferences,
         LocalBuildInfoProvider provides buildInfoProvider,
         LocalFileSharer provides fileSharer,
     ) {

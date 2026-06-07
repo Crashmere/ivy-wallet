@@ -1,6 +1,5 @@
 package com.ivy.accounts
 
-import com.ivy.legacy.ui.preferences.asEnabledState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Stable
@@ -11,6 +10,7 @@ import androidx.lifecycle.viewModelScope
 import com.ivy.base.resource.ResourceProvider
 import com.ivy.base.time.TimeConverter
 import com.ivy.base.time.TimeProvider
+import com.ivy.domain.preferences.toggles.PreferenceToggleRepository
 import com.ivy.domain.preferences.toggles.PreferenceToggles
 import com.ivy.domain.preferences.AppPreferences
 import com.ivy.domain.usecase.account.GetAccountsUseCase
@@ -24,6 +24,7 @@ import com.ivy.data.model.currency.format
 import com.ivy.base.coroutines.ioThread
 import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.R
+import com.ivy.ui.preferences.asEnabledState
 import com.ivy.legacy.domain.action.viewmodel.account.AccountDataAct
 import com.ivy.legacy.domain.action.wallet.CalcWalletBalanceAct
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -47,6 +48,7 @@ class AccountsViewModel @Inject constructor(
     private val accountDataAct: AccountDataAct,
     private val observeAccountChangesUseCase: ObserveAccountChangesUseCase,
     private val preferenceToggles: PreferenceToggles,
+    private val preferenceToggleRepository: PreferenceToggleRepository,
     private val timeProvider: TimeProvider,
     private val timeConverter: TimeConverter,
 ) : ComposeViewModel<AccountsState, AccountsEvent>() {
@@ -87,7 +89,9 @@ class AccountsViewModel @Inject constructor(
 
     @Composable
     private fun getHideTotalBalance(): Boolean {
-        return preferenceToggles.hideTotalBalance.asEnabledState()
+        val preference = preferenceToggles.hideTotalBalance
+        return preferenceToggleRepository.enabledFlow(preference)
+            .asEnabledState(preference.defaultValue)
     }
 
     @Composable
@@ -127,7 +131,9 @@ class AccountsViewModel @Inject constructor(
 
     @Composable
     private fun getCompactAccountsMode(): Boolean {
-        return preferenceToggles.compactAccountsMode.asEnabledState()
+        val preference = preferenceToggles.compactAccountsMode
+        return preferenceToggleRepository.enabledFlow(preference)
+            .asEnabledState(preference.defaultValue)
     }
 
     override fun onEvent(event: AccountsEvent) {

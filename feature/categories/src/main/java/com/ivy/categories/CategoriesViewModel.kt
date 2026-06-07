@@ -1,6 +1,5 @@
 package com.ivy.categories
 
-import com.ivy.legacy.ui.preferences.asEnabledState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Stable
@@ -10,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.ivy.base.model.legacy.Transaction
 import com.ivy.base.time.TimeConverter
 import com.ivy.base.time.TimeProvider
+import com.ivy.domain.preferences.toggles.PreferenceToggleRepository
 import com.ivy.domain.preferences.toggles.PreferenceToggles
 import com.ivy.domain.preferences.AppPreferences
 import com.ivy.domain.usecase.category.GetCategoriesUseCase
@@ -22,6 +22,7 @@ import com.ivy.legacy.ui.model.period.TimePeriod
 import com.ivy.legacy.domain.model.Account
 import com.ivy.base.coroutines.ioThread
 import com.ivy.ui.ComposeViewModel
+import com.ivy.ui.preferences.asEnabledState
 import com.ivy.legacy.domain.action.account.AccountsAct
 import com.ivy.legacy.domain.action.category.LegacyCategoryIncomeWithAccountFiltersAct
 import com.ivy.legacy.domain.action.transaction.TrnsWithRangeAndAccFiltersAct
@@ -53,6 +54,7 @@ class CategoriesViewModel @Inject constructor(
     private val trnsWithRangeAndAccFiltersAct: TrnsWithRangeAndAccFiltersAct,
     private val categoryIncomeWithAccountFiltersAct: LegacyCategoryIncomeWithAccountFiltersAct,
     private val preferenceToggles: PreferenceToggles,
+    private val preferenceToggleRepository: PreferenceToggleRepository,
     private val timeProvider: TimeProvider,
     private val timeConverter: TimeConverter,
 ) : ComposeViewModel<CategoriesScreenState, CategoriesScreenEvent>() {
@@ -86,12 +88,16 @@ class CategoriesViewModel @Inject constructor(
 
     @Composable
     private fun getCompactCategoriesMode(): Boolean {
-        return preferenceToggles.compactCategoriesMode.asEnabledState()
+        val preference = preferenceToggles.compactCategoriesMode
+        return preferenceToggleRepository.enabledFlow(preference)
+            .asEnabledState(preference.defaultValue)
     }
 
     @Composable
     private fun getShowCategorySearchBar(): Boolean {
-        return preferenceToggles.showCategorySearchBar.asEnabledState()
+        val preference = preferenceToggles.showCategorySearchBar
+        return preferenceToggleRepository.enabledFlow(preference)
+            .asEnabledState(preference.defaultValue)
     }
 
     @Composable

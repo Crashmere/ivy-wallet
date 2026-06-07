@@ -1,6 +1,5 @@
 package com.ivy.home
 
-import com.ivy.legacy.ui.preferences.asEnabledState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Stable
@@ -14,6 +13,7 @@ import com.ivy.base.model.legacy.TransactionHistoryItem
 import com.ivy.base.time.TimeConverter
 import com.ivy.base.time.TimeProvider
 import com.ivy.data.model.primitive.AssetCode
+import com.ivy.domain.preferences.toggles.PreferenceToggleRepository
 import com.ivy.domain.preferences.toggles.PreferenceToggles
 import com.ivy.domain.usecase.category.GetCategoriesUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
@@ -44,6 +44,7 @@ import com.ivy.ui.navigation.MainScreen
 import com.ivy.ui.navigation.MainTabState
 import com.ivy.ui.navigation.Navigation
 import com.ivy.ui.ComposeViewModel
+import com.ivy.ui.preferences.asEnabledState
 import com.ivy.legacy.domain.action.account.AccountsAct
 import com.ivy.legacy.domain.action.global.StartDayOfMonthAct
 import com.ivy.legacy.domain.action.settings.CalcBufferDiffAct
@@ -97,6 +98,7 @@ class HomeViewModel @Inject constructor(
     private val timeProvider: TimeProvider,
     private val timeConverter: TimeConverter,
     private val preferenceToggles: PreferenceToggles,
+    private val preferenceToggleRepository: PreferenceToggleRepository,
     private val periodState: PeriodState,
     private val mainTabState: MainTabState
 ) : ComposeViewModel<HomeState, HomeEvent>() {
@@ -170,7 +172,9 @@ class HomeViewModel @Inject constructor(
 
     @Composable
     fun getShouldShowAccountSpecificColorInTransactions(): Boolean {
-        return preferenceToggles.showAccountColorsInTransactions.asEnabledState()
+        val preference = preferenceToggles.showAccountColorsInTransactions
+        return preferenceToggleRepository.enabledFlow(preference)
+            .asEnabledState(preference.defaultValue)
     }
 
     @Composable
