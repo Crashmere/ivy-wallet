@@ -49,7 +49,7 @@ import com.ivy.ui.navigation.MainScreen
 import com.ivy.ui.navigation.Navigation
 import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.R
-import com.ivy.ui.time.impl.DateTimePicker
+import com.ivy.ui.time.DateTimePicker
 import com.ivy.domain.usecase.account.GetLegacyAccountUseCase
 import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
 import com.ivy.domain.usecase.account.SetLastSelectedAccountIdUseCase

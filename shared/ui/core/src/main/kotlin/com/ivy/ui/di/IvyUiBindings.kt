@@ -1,12 +1,12 @@
 package com.ivy.ui.di
 
 import com.ivy.ui.time.DevicePreferences
+import com.ivy.ui.time.DateTimePicker
 import com.ivy.ui.time.TimeConverter
 import com.ivy.ui.time.TimeFormatter
 import com.ivy.ui.time.TimeProvider
 import com.ivy.ui.time.impl.AndroidDateTimePicker
 import com.ivy.ui.time.impl.AndroidDevicePreferences
-import com.ivy.ui.time.impl.DateTimePicker
 import com.ivy.ui.time.impl.DeviceTimeProvider
 import com.ivy.ui.time.impl.IvyTimeFormatter
 import com.ivy.ui.time.impl.StandardTimeConverter

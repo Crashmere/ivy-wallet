@@ -808,6 +808,7 @@
 - `shared:ui:legacy` 显式声明 `androidx.core:core-ktx`，不再靠 Compose/ViewModel 传递依赖获得 `doOnLayout`。
 - `hilt-work` 已从公共 Hilt bundle 下放到 app；当前只有交易提醒 Worker 和 app 的 WorkManager 配置需要它。
 - `kotlinx-collections-immutable` 已从公共 Kotlin bundle 移除；它仍由 `shared:data:model` 以 `api` 暴露，因为导入结果和多处 UI 状态仍使用 immutable collection 类型。
+- `DateTimePicker` 接口已从 `com.ivy.ui.time.impl` 归位到 `com.ivy.ui.time`；`impl` 包只保留 Android/Material 日期时间选择器实现。
 - 账户旧读取路径已收敛到 `AccountStore`；旧 legacy 账户模型现在由 data model 账户映射而来，`shared:domain` 主源码不再直接注入 `AccountDao` 或依赖 `AccountEntity` mapper。
 - 旧交易卡片已移除重复账户查找 TODO：渲染前先解析来源/目标账户，再复用同一结果处理点击和币种展示，行为不变但 legacy UI 内部职责更清楚。
 - 新版交易值读取 helper 和账户统计值函数已从 `com.ivy.domain.transaction.legacy` 迁到正式 `com.ivy.domain.transaction` 包；legacy 包继续只承载仍依赖旧交易/账户模型的兼容逻辑。

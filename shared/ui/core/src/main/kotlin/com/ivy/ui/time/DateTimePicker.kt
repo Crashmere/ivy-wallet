@@ -1,4 +1,4 @@
-package com.ivy.ui.time.impl
+package com.ivy.ui.time
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable

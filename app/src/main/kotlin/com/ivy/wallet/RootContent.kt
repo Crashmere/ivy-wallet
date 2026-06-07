@@ -32,7 +32,7 @@ import com.ivy.ui.theme.ThemeState
 import com.ivy.ui.time.TimeConverter
 import com.ivy.ui.time.TimeFormatter
 import com.ivy.ui.time.TimeProvider
-import com.ivy.ui.time.impl.DateTimePicker
+import com.ivy.ui.time.DateTimePicker
 import com.ivy.wallet.ui.applocked.AppLockedScreen
 
 @OptIn(ExperimentalFoundationApi::class, ExperimentalAnimationApi::class)

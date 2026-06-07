@@ -16,7 +16,7 @@ import com.ivy.ui.theme.ThemeState
 import com.ivy.ui.time.TimeConverter
 import com.ivy.ui.time.TimeFormatter
 import com.ivy.ui.time.TimeProvider
-import com.ivy.ui.time.impl.DateTimePicker
+import com.ivy.ui.time.DateTimePicker
 import com.ivy.wallet.platform.ActivityDatePicker
 import com.ivy.wallet.platform.ActivityFileSharer
 import com.ivy.wallet.platform.ActivityResultFilePicker

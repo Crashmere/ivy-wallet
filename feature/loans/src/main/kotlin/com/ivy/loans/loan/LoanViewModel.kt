@@ -23,7 +23,7 @@ import com.ivy.data.model.currency.format
 import com.ivy.data.model.currency.getDefaultFIATCurrency
 import com.ivy.loans.loan.data.DisplayLoan
 import com.ivy.ui.ComposeViewModel
-import com.ivy.ui.time.impl.DateTimePicker
+import com.ivy.ui.time.DateTimePicker
 import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
 import com.ivy.data.model.legacy.CreateAccountData
 import com.ivy.data.model.legacy.CreateLoanData
