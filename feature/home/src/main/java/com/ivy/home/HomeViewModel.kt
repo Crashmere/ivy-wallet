@@ -14,12 +14,12 @@ import com.ivy.base.model.legacy.TransactionHistoryItem
 import com.ivy.base.time.TimeConverter
 import com.ivy.base.time.TimeProvider
 import com.ivy.data.model.primitive.AssetCode
-import com.ivy.data.repository.mapper.TransactionMapper
 import com.ivy.domain.preferences.toggles.PreferenceToggles
 import com.ivy.domain.usecase.category.GetCategoriesUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.domain.usecase.currency.SetBaseCurrencyUseCase
 import com.ivy.domain.usecase.exchange.SyncExchangeRatesUseCase
+import com.ivy.domain.usecase.transaction.MapTransactionsToLegacyUseCase
 import com.ivy.domain.usecase.settings.GetBufferAmountUseCase
 import com.ivy.domain.usecase.settings.GetThemeUseCase
 import com.ivy.domain.usecase.settings.SetBufferAmountUseCase
@@ -36,7 +36,6 @@ import com.ivy.legacy.ui.model.LegacyDueSection
 import com.ivy.legacy.ui.model.period.TimePeriod
 import com.ivy.legacy.domain.model.toUTCCloseTimeRange
 import com.ivy.legacy.domain.model.Account
-import com.ivy.legacy.domain.mapper.toLegacyDomain
 import com.ivy.legacy.domain.action.viewmodel.home.ShouldHideIncomeAct
 import com.ivy.base.coroutines.ioThread
 import com.ivy.ui.navigation.BalanceScreen
@@ -94,7 +93,7 @@ class HomeViewModel @Inject constructor(
     private val shouldHideBalanceAct: ShouldHideBalanceAct,
     private val shouldHideIncomeAct: ShouldHideIncomeAct,
     private val syncExchangeRatesUseCase: SyncExchangeRatesUseCase,
-    private val transactionMapper: TransactionMapper,
+    private val mapTransactionsToLegacyUseCase: MapTransactionsToLegacyUseCase,
     private val timeProvider: TimeProvider,
     private val timeConverter: TimeConverter,
     private val preferenceToggles: PreferenceToggles,
@@ -385,11 +384,7 @@ class HomeViewModel @Inject constructor(
         UpcomingAct.Input(baseCurrency = input.first, range = input.second)
     } then upcomingAct then { result ->
         upcoming = LegacyDueSection(
-            trns = with(transactionMapper) {
-                result.upcomingTrns.map {
-                    it.toEntity().toLegacyDomain()
-                }.toImmutableList()
-            },
+            trns = mapTransactionsToLegacyUseCase(result.upcomingTrns).toImmutableList(),
             stats = result.upcoming,
             expanded = upcoming.expanded
         )
@@ -397,11 +392,7 @@ class HomeViewModel @Inject constructor(
         OverdueAct.Input(baseCurrency = input.first, toRange = input.second.to)
     } then overdueAct thenInvokeAfter { result ->
         overdue = LegacyDueSection(
-            trns = with(transactionMapper) {
-                result.overdueTrns.map {
-                    it.toEntity().toLegacyDomain()
-                }.toImmutableList()
-            },
+            trns = mapTransactionsToLegacyUseCase(result.overdueTrns).toImmutableList(),
             stats = result.overdue,
             expanded = overdue.expanded
         )

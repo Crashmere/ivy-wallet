@@ -2,9 +2,8 @@ package com.ivy.home.customerjourney
 
 import com.ivy.base.model.TransactionType
 import com.ivy.base.resource.ResourceProvider
-import com.ivy.data.db.dao.read.PlannedPaymentRuleDao
-import com.ivy.data.repository.TransactionRepository
 import com.ivy.domain.preferences.AppPreferences
+import com.ivy.domain.usecase.home.GetCustomerJourneyStatsUseCase
 import com.ivy.legacy.ui.theme.system.Gradient
 import com.ivy.legacy.ui.theme.system.Ivy
 import com.ivy.legacy.ui.theme.system.Orange
@@ -16,21 +15,19 @@ import com.ivy.ui.R
 import javax.inject.Inject
 
 class CustomerJourneyCardsProvider @Inject constructor(
-    private val transactionRepository: TransactionRepository,
-    private val plannedPaymentRuleDao: PlannedPaymentRuleDao,
+    private val getCustomerJourneyStatsUseCase: GetCustomerJourneyStatsUseCase,
     private val appPreferences: AppPreferences,
     private val resourceProvider: ResourceProvider,
 ) {
 
     suspend fun loadCards(): List<CustomerJourneyCardModel> {
-        val trnCount = transactionRepository.countHappenedTransactions().value
-        val plannedPaymentsCount = plannedPaymentRuleDao.countPlannedPayments()
+        val stats = getCustomerJourneyStatsUseCase()
 
         return activeCards()
             .filter {
                 it.condition(
-                    trnCount,
-                    plannedPaymentsCount
+                    stats.transactionCount,
+                    stats.plannedPaymentCount
                 ) && !isCardDismissed(it)
             }
     }
