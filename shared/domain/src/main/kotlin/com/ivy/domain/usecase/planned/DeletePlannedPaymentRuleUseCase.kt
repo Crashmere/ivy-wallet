@@ -11,7 +11,7 @@ class DeletePlannedPaymentRuleUseCase @Inject constructor(
 ) {
     suspend operator fun invoke(ruleId: UUID) {
         plannedPaymentRuleStore.deleteById(ruleId)
-        transactionStore.deletedByRecurringRuleIdAndNoDateTime(
+        transactionStore.deleteByRecurringRuleIdAndNoDateTime(
             recurringRuleId = ruleId
         )
     }

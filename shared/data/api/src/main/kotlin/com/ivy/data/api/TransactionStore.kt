@@ -125,7 +125,7 @@ interface TransactionStore {
 
     suspend fun deleteAllByAccountId(accountId: AccountId)
 
-    suspend fun deletedByRecurringRuleIdAndNoDateTime(recurringRuleId: UUID)
+    suspend fun deleteByRecurringRuleIdAndNoDateTime(recurringRuleId: UUID)
 
     suspend fun deleteAll()
 

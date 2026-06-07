@@ -834,6 +834,7 @@
 - domain use case 中注入的 `TransactionStore` 不再命名为 `transactionRepository`，统一改为 `transactionStore`；这是命名层面的边界收敛，读写行为不变。
 - `RoomTransactionStoreTest` 的被测对象也从 `repository/newRepository` 改为 `store/newStore`，避免测试代码继续传播旧仓库命名。
 - data-core 里的备份实现已从 `BackupDataUseCase` 改名为 `DefaultBackupStore`，并继续通过 `BackupStore` 暴露给 domain；ZIP/JSON 备份格式和导入导出行为不变。
+- `TransactionStore` 删除计划付款未来交易的方法已从过去式 `deletedByRecurringRuleIdAndNoDateTime` 改为命令式 `deleteByRecurringRuleIdAndNoDateTime`；DAO SQL 和调用语义不变。
 
 建议顺序：
 

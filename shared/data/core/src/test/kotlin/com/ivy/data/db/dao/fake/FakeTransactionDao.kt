@@ -308,7 +308,7 @@ class FakeTransactionDao : TransactionDao, WriteTransactionDao {
         values.forEach { save(it) }
     }
 
-    override suspend fun deletedByRecurringRuleIdAndNoDateTime(recurringRuleId: UUID) {
+    override suspend fun deleteByRecurringRuleIdAndNoDateTime(recurringRuleId: UUID) {
         items.removeIf { it.recurringRuleId == recurringRuleId }
     }
 

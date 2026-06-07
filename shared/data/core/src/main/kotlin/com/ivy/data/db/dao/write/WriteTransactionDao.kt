@@ -15,7 +15,7 @@ interface WriteTransactionDao {
     suspend fun saveMany(value: List<TransactionEntity>)
 
     @Query("DELETE FROM transactions WHERE recurringRuleId = :recurringRuleId AND dateTime IS NULL")
-    suspend fun deletedByRecurringRuleIdAndNoDateTime(recurringRuleId: UUID)
+    suspend fun deleteByRecurringRuleIdAndNoDateTime(recurringRuleId: UUID)
 
     @Query("DELETE FROM transactions WHERE id = :id")
     suspend fun deleteById(id: UUID)

@@ -14,7 +14,7 @@ class GeneratePlannedPaymentTransactionsUseCase @Inject constructor(
     private val transactionStore: TransactionStore
 ) {
     suspend operator fun invoke(rule: PlannedPaymentRule) {
-        transactionStore.deletedByRecurringRuleIdAndNoDateTime(
+        transactionStore.deleteByRecurringRuleIdAndNoDateTime(
             recurringRuleId = rule.id
         )
 

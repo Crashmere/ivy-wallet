@@ -340,9 +340,9 @@ class RoomTransactionStore @Inject constructor(
         }
     }
 
-    override suspend fun deletedByRecurringRuleIdAndNoDateTime(recurringRuleId: UUID) {
+    override suspend fun deleteByRecurringRuleIdAndNoDateTime(recurringRuleId: UUID) {
         withContext(Dispatchers.IO) {
-            writeTransactionDao.deletedByRecurringRuleIdAndNoDateTime(recurringRuleId)
+            writeTransactionDao.deleteByRecurringRuleIdAndNoDateTime(recurringRuleId)
         }
     }
 
