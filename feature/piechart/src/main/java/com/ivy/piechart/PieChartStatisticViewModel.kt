@@ -18,7 +18,6 @@ import com.ivy.legacy.ui.state.PeriodState
 import com.ivy.legacy.ui.model.period.TimePeriod
 import com.ivy.base.coroutines.ioThread
 import com.ivy.ui.navigation.PieChartStatisticScreen
-import com.ivy.piechart.action.PieChartAct
 import com.ivy.ui.ComposeViewModel
 import com.ivy.legacy.ui.modal.ChoosePeriodModalData
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -36,7 +35,7 @@ import javax.inject.Inject
 class PieChartStatisticViewModel @Inject constructor(
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
     private val periodState: PeriodState,
-    private val pieChartAct: PieChartAct,
+    private val buildPieChartDataUseCase: BuildPieChartDataUseCase,
     private val appPreferences: AppPreferences,
     private val timeProvider: TimeProvider,
     private val timeConverter: TimeConverter,
@@ -201,16 +200,14 @@ class PieChartStatisticViewModel @Inject constructor(
                     treatTransfersAsIncomeExpense
 
         val pieChartActOutput = ioThread {
-            pieChartAct(
-                PieChartAct.Input(
-                    baseCurrency = baseCurrency,
-                    range = range,
-                    type = type,
-                    accountIdFilterList = accountIdFilterList,
-                    treatTransferAsIncExp = treatTransferAsIncExp,
-                    existingTransactions = transactions,
-                    showAccountTransfersCategory = accountIdFilterList.isNotEmpty()
-                )
+            buildPieChartDataUseCase(
+                baseCurrency = baseCurrency,
+                range = range,
+                type = type,
+                accountIdFilterList = accountIdFilterList,
+                treatTransferAsIncExp = treatTransferAsIncExp,
+                existingTransactions = transactions,
+                showAccountTransfersCategory = accountIdFilterList.isNotEmpty()
             )
         }
 

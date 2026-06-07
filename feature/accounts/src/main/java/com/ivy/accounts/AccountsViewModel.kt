@@ -43,7 +43,7 @@ class AccountsViewModel @Inject constructor(
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
     private val getAccountsUseCase: GetAccountsUseCase,
     private val saveAccountUseCase: SaveAccountUseCase,
-    private val accountDataAct: AccountDataAct,
+    private val buildAccountDataUseCase: BuildAccountDataUseCase,
     private val observeAccountChangesUseCase: ObserveAccountChangesUseCase,
     private val preferenceToggles: PreferenceToggles,
     private val preferenceToggleRepository: PreferenceToggleRepository,
@@ -171,13 +171,11 @@ class AccountsViewModel @Inject constructor(
 
         val includeTransfersInCalc = appPreferences.transfersAsIncomeExpense
 
-        val accountsDataList = accountDataAct(
-            AccountDataAct.Input(
-                accounts = accounts,
-                range = range.toCloseTimeRange(),
-                baseCurrency = baseCurrencyCode,
-                includeTransfersInCalc = includeTransfersInCalc
-            )
+        val accountsDataList = buildAccountDataUseCase(
+            accounts = accounts,
+            range = range.toCloseTimeRange(),
+            baseCurrency = baseCurrencyCode,
+            includeTransfersInCalc = includeTransfersInCalc
         )
 
         val totalBalanceWithExcludedAccounts = calculateWalletBalanceUseCase(

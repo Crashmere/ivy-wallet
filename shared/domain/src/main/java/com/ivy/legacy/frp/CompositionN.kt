@@ -1,15 +1,8 @@
 package com.ivy.legacy.frp
 
-import com.ivy.legacy.frp.action.Action
-
 infix fun <A, B, C, D> ((A, B) -> C).then(f: (C) -> D): (A, B) -> D = { a, b ->
     val c = this(a, b)
     f(c)
-}
-
-infix fun <A, B, C, D> ((A, B) -> C).then(act: Action<C, D>): suspend (A, B) -> D = { a, b ->
-    val c = this(a, b)
-    act(c)
 }
 
 suspend infix fun <A, B, C, D> (suspend (A, B) -> C).then(f: suspend (C) -> D): suspend (A, B) -> D =
