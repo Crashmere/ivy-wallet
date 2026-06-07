@@ -3,13 +3,13 @@ package com.ivy.legacy.domain.pure.exchange
 import arrow.core.Option
 import arrow.core.toOption
 import com.ivy.data.model.Transaction
-import com.ivy.data.legacy.getAccountId
-import com.ivy.data.legacy.getValue
 import com.ivy.legacy.frp.Pure
 import com.ivy.legacy.frp.SideEffect
 import com.ivy.legacy.domain.model.Account
 import com.ivy.legacy.domain.pure.account.accountCurrency
 import com.ivy.legacy.domain.pure.transaction.LegacyTrnFunctions
+import com.ivy.legacy.domain.pure.transaction.getAccountId
+import com.ivy.legacy.domain.pure.transaction.getValue
 import com.ivy.legacy.domain.pure.transaction.trnCurrency
 import java.math.BigDecimal
 import java.util.UUID

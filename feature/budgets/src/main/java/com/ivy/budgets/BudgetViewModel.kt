@@ -16,8 +16,6 @@ import com.ivy.data.model.Expense
 import com.ivy.data.model.Income
 import com.ivy.data.model.Transaction
 import com.ivy.data.model.Transfer
-import com.ivy.data.legacy.getAccountId
-import com.ivy.data.legacy.getValue
 import com.ivy.legacy.frp.sumOfSuspend
 import com.ivy.legacy.ui.state.PeriodState
 import com.ivy.legacy.domain.model.FromToTimeRange
@@ -37,6 +35,8 @@ import com.ivy.legacy.domain.action.exchange.ExchangeAct
 import com.ivy.legacy.domain.action.transaction.HistoryTrnsAct
 import com.ivy.legacy.domain.model.CreateBudgetData
 import com.ivy.legacy.domain.pure.exchange.ExchangeData
+import com.ivy.legacy.domain.pure.transaction.getAccountId
+import com.ivy.legacy.domain.pure.transaction.getValue
 import com.ivy.legacy.domain.pure.transaction.trnCurrency
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList

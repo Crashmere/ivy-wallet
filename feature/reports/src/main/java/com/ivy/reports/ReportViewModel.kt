@@ -29,8 +29,6 @@ import com.ivy.data.model.primitive.NotBlankTrimmedString
 import com.ivy.data.repository.TagRepository
 import com.ivy.data.repository.TransactionRepository
 import com.ivy.data.repository.mapper.TransactionMapper
-import com.ivy.data.legacy.getTransactionType
-import com.ivy.data.legacy.getValue
 import com.ivy.domain.preferences.toggles.PreferenceToggles
 import com.ivy.domain.usecase.category.GetCategoriesUseCase
 import com.ivy.domain.usecase.csv.ExportCsvUseCase
@@ -56,6 +54,8 @@ import com.ivy.legacy.domain.action.transaction.TrnsWithDateDivsAct
 import com.ivy.legacy.domain.logic.PlannedPaymentsLogic
 import com.ivy.data.model.legacy.IncomeExpenseTransferPair
 import com.ivy.legacy.domain.pure.exchange.ExchangeData
+import com.ivy.legacy.domain.pure.transaction.getTransactionType
+import com.ivy.legacy.domain.pure.transaction.getValue
 import com.ivy.legacy.domain.pure.transaction.trnCurrency
 import com.ivy.legacy.domain.pure.util.orZero
 import com.ivy.legacy.ui.theme.Gray

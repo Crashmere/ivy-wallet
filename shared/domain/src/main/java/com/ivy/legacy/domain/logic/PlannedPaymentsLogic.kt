@@ -11,7 +11,6 @@ import com.ivy.data.model.IntervalType
 import com.ivy.data.model.TransactionId
 import com.ivy.data.repository.TransactionRepository
 import com.ivy.data.repository.mapper.TransactionMapper
-import com.ivy.data.legacy.settleNow
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.legacy.domain.model.Account
 import com.ivy.legacy.domain.model.PlannedPaymentRule
@@ -20,6 +19,7 @@ import com.ivy.legacy.domain.mapper.toLegacyDomain
 import com.ivy.base.coroutines.ioThread
 import com.ivy.legacy.domain.logic.currency.ExchangeRatesLogic
 import com.ivy.legacy.domain.logic.currency.sumByDoublePlannedInBaseCurrency
+import com.ivy.legacy.domain.pure.transaction.settleNow
 import javax.inject.Inject
 
 class PlannedPaymentsLogic @Inject constructor(

@@ -1,4 +1,4 @@
-package com.ivy.data.legacy
+package com.ivy.legacy.domain.pure.transaction
 
 import com.ivy.base.model.TransactionType
 import com.ivy.data.model.Expense
@@ -30,17 +30,17 @@ fun Transaction.getTransactionType(): TransactionType = when (this) {
 fun Transaction.settleNow(): Transaction {
     val timeNow = Instant.now()
     return when (this) {
-        is Income -> this.copy(
+        is Income -> copy(
             settled = true,
             time = timeNow
         )
 
-        is Expense -> this.copy(
+        is Expense -> copy(
             settled = true,
             time = timeNow
         )
 
-        is Transfer -> this.copy(
+        is Transfer -> copy(
             settled = true,
             time = timeNow
         )

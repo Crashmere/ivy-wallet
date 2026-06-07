@@ -9,7 +9,6 @@ import com.ivy.data.model.Expense
 import com.ivy.data.model.Income
 import com.ivy.data.repository.TransactionRepository
 import com.ivy.data.repository.mapper.TransactionMapper
-import com.ivy.data.legacy.getValue
 import com.ivy.domain.preferences.AppPreferences
 import com.ivy.domain.usecase.currency.GetBaseCurrencyUseCase
 import com.ivy.legacy.domain.model.filterOverdue
@@ -18,6 +17,7 @@ import com.ivy.legacy.domain.model.Account
 import com.ivy.legacy.domain.mapper.toDomain
 import com.ivy.legacy.domain.action.viewmodel.account.AccountDataAct
 import com.ivy.data.model.legacy.ClosedTimeRange
+import com.ivy.legacy.domain.pure.transaction.getValue
 import kotlinx.collections.immutable.toImmutableList
 import javax.inject.Inject
 import kotlin.math.abs
