@@ -277,6 +277,7 @@
 - 过渡用的 `ivy.compose-runtime` 插件已经删除；当前非页面模块不再需要轻量 Compose 编译配置。
 - `ivy.integration.testing` 已从 `ivy.feature` 改为基于 `ivy.android-library`，避免因为集成测试配置把完整 Compose UI 配置带入数据层。
 - `shared:data:core`、`shared:domain` 已从 `ivy.feature` 迁出，改为显式声明基础 Android library、Hilt、Room 或测试配置等各自实际需要的能力。
+- `shared:domain` 已移除空 androidTest 源集使用的 `ivy.integration.testing` 插件；domain 当前只保留 JVM 单元测试，Room migration 和备份恢复这类设备测试继续留在 `shared:data:core`。
 - `shared:domain` 已移除 `ivy.room` 插件；主源码只显式保留 Hilt，测试也不再为了 domain 行为验证创建内存 Room 数据库。
 - `shared:domain` 已移除 Ktor 依赖；汇率同步测试改用 `ExchangeRateStore` fake 验证业务转换与保存行为，真实网络 client 继续留在 data core 实现边界。
 - `ivy.room` 已从 `ivy.module` 改为基于 `ivy.android-library`，不再隐式带入 Hilt 和 kotlinx serialization；`shared:data:core` 改为显式声明这两个依赖。
