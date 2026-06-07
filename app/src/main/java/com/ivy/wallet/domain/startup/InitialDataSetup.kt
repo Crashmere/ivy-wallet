@@ -1,11 +1,11 @@
 package com.ivy.wallet.domain.startup
 
-import com.ivy.base.legacy.SharedPrefs
 import com.ivy.base.legacy.Theme
 import com.ivy.data.db.dao.read.AccountDao
 import com.ivy.data.db.dao.read.SettingsDao
 import com.ivy.data.db.dao.write.WriteSettingsDao
 import com.ivy.data.repository.CategoryRepository
+import com.ivy.domain.preferences.AppPreferences
 import com.ivy.legacy.domain.model.Settings
 import com.ivy.base.legacy.ioThread
 import com.ivy.data.model.currency.IvyCurrency
@@ -18,7 +18,7 @@ class InitialDataSetup @Inject constructor(
     private val settingsWriter: WriteSettingsDao,
     private val accountDao: AccountDao,
     private val categoryRepository: CategoryRepository,
-    private val sharedPrefs: SharedPrefs,
+    private val appPreferences: AppPreferences,
     private val preloadDataLogic: PreloadDataLogic,
     private val transactionReminderLogic: TransactionReminderLogic,
 ) {
@@ -45,7 +45,7 @@ class InitialDataSetup @Inject constructor(
                 preloadDataLogic.preloadCategories()
             }
 
-            sharedPrefs.putBoolean(SharedPrefs.INITIAL_SETUP_COMPLETED, true)
+            appPreferences.initialSetupCompleted = true
             transactionReminderLogic.scheduleReminder()
         }
     }

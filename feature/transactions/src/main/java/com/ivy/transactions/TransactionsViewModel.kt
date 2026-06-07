@@ -7,7 +7,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.graphics.toArgb
 import androidx.lifecycle.viewModelScope
 import arrow.core.toOption
-import com.ivy.base.legacy.SharedPrefs
 import com.ivy.base.legacy.Transaction
 import com.ivy.base.legacy.TransactionHistoryItem
 import com.ivy.base.legacy.stringRes
@@ -27,6 +26,7 @@ import com.ivy.data.repository.CategoryRepository
 import com.ivy.data.repository.TagRepository
 import com.ivy.data.repository.TransactionRepository
 import com.ivy.data.repository.mapper.TransactionMapper
+import com.ivy.domain.preferences.AppPreferences
 import com.ivy.legacy.ui.theme.system.RedLight
 import com.ivy.domain.features.Features
 import com.ivy.frp.then
@@ -81,7 +81,7 @@ class TransactionsViewModel @Inject constructor(
     private val categoryCreator: CategoryCreator,
     private val accountCreator: AccountCreator,
     private val plannedPaymentsLogic: PlannedPaymentsLogic,
-    private val sharedPrefs: SharedPrefs,
+    private val appPreferences: AppPreferences,
     private val accountsAct: AccountsAct,
     private val accTrnsAct: AccTrnsAct,
     private val trnsWithDateDivsAct: LegacyTrnsWithDateDivsAct,
@@ -366,8 +366,7 @@ class TransactionsViewModel @Inject constructor(
             ).orNull()?.toDouble()
         }
 
-        val includeTransfersInCalc =
-            sharedPrefs.getBoolean(SharedPrefs.TRANSFERS_AS_INCOME_EXPENSE, false)
+        val includeTransfersInCalc = appPreferences.transfersAsIncomeExpense
 
         val incomeExpensePair = calcAccIncomeExpenseAct(
             CalcAccIncomeExpenseAct.Input(
@@ -853,7 +852,7 @@ class TransactionsViewModel @Inject constructor(
             accounts.value = accountsAct(Unit)
             initWithTransactions.value = false
             treatTransfersAsIncomeExpense.value =
-                sharedPrefs.getBoolean(SharedPrefs.TRANSFERS_AS_INCOME_EXPENSE, false)
+                appPreferences.transfersAsIncomeExpense
 
             when {
                 screen.accountId != null -> {

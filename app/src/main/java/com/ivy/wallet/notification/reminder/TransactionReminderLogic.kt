@@ -4,9 +4,9 @@ import android.content.Context
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
-import com.ivy.base.legacy.SharedPrefs
 import com.ivy.base.legacy.timeNowLocal
 import com.ivy.base.legacy.toEpochSeconds
+import com.ivy.domain.preferences.AppPreferences
 import dagger.hilt.android.qualifiers.ApplicationContext
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -15,7 +15,7 @@ import javax.inject.Inject
 class TransactionReminderLogic @Inject constructor(
     @ApplicationContext
     private val appContext: Context,
-    private val sharedPrefs: SharedPrefs,
+    private val appPreferences: AppPreferences,
 ) {
     companion object {
         private const val UNIQUE_WORK_NAME_V1 = "transaction_reminder_work"
@@ -68,5 +68,5 @@ class TransactionReminderLogic @Inject constructor(
     }
 
     private fun fetchShowNotifications(): Boolean =
-        sharedPrefs.getBoolean(SharedPrefs.SHOW_NOTIFICATIONS, true)
+        appPreferences.showNotifications
 }

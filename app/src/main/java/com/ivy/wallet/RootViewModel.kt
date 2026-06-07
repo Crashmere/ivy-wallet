@@ -4,11 +4,11 @@ import android.content.Intent
 import androidx.biometric.BiometricPrompt
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ivy.base.legacy.SharedPrefs
 import com.ivy.base.legacy.Theme
 import com.ivy.base.legacy.stringRes
 import com.ivy.base.model.TransactionType
 import com.ivy.data.db.dao.read.SettingsDao
+import com.ivy.domain.preferences.AppPreferences
 import com.ivy.frp.test.TestIdlingResource
 import com.ivy.ui.theme.ThemeState
 import com.ivy.legacy.ui.state.PeriodState
@@ -38,7 +38,7 @@ class RootViewModel @Inject constructor(
     private val periodState: PeriodState,
     private val nav: Navigation,
     private val settingsDao: SettingsDao,
-    private val sharedPrefs: SharedPrefs,
+    private val appPreferences: AppPreferences,
     private val transactionReminderLogic: TransactionReminderLogic,
     private val initialDataSetup: InitialDataSetup,
 ) : ViewModel() {
@@ -63,7 +63,7 @@ class RootViewModel @Inject constructor(
                     ?: if (systemDarkMode) Theme.DARK else Theme.LIGHT
                 themeState.update(theme)
 
-                periodState.initStartDayOfMonth(sharedPrefs = sharedPrefs)
+                periodState.initStartDayOfMonth(startDay = appPreferences.startDayOfMonth)
             }
 
             TestIdlingResource.decrement()
@@ -73,7 +73,7 @@ class RootViewModel @Inject constructor(
             TestIdlingResource.increment()
 
             ioThread {
-                appLockEnabled = sharedPrefs.getBoolean(SharedPrefs.APP_LOCK_ENABLED, false)
+                appLockEnabled = appPreferences.appLockEnabled
                 // initial app locked state
                 _appLocked.value = appLockEnabled
 
@@ -140,7 +140,7 @@ class RootViewModel @Inject constructor(
     }
 
     private fun isInitialSetupCompleted(): Boolean {
-        return sharedPrefs.getBoolean(SharedPrefs.INITIAL_SETUP_COMPLETED, false)
+        return appPreferences.initialSetupCompleted
     }
 
     // App Lock & UserInactivity --------------------------------------------------------------------

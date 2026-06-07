@@ -5,7 +5,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import com.ivy.base.legacy.SharedPrefs
 import com.ivy.legacy.ui.model.period.TimePeriod
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -24,8 +23,8 @@ class PeriodState @Inject constructor() {
         startDayOfMonth = day
     }
 
-    fun initStartDayOfMonth(sharedPrefs: SharedPrefs): Int {
-        startDayOfMonth = sharedPrefs.getInt(SharedPrefs.START_DATE_OF_MONTH, 1)
+    fun initStartDayOfMonth(startDay: Int): Int {
+        startDayOfMonth = startDay
         return startDayOfMonth
     }
 

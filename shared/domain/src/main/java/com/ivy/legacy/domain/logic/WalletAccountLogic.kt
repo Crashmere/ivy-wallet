@@ -1,7 +1,6 @@
 package com.ivy.legacy.domain.logic
 
 import arrow.core.getOrElse
-import com.ivy.base.legacy.SharedPrefs
 import com.ivy.base.legacy.Transaction
 import com.ivy.base.model.TransactionType
 import com.ivy.base.time.TimeProvider
@@ -12,6 +11,7 @@ import com.ivy.data.repository.CurrencyRepository
 import com.ivy.data.repository.TransactionRepository
 import com.ivy.data.repository.mapper.TransactionMapper
 import com.ivy.data.temp.migration.getValue
+import com.ivy.domain.preferences.AppPreferences
 import com.ivy.legacy.domain.model.filterOverdue
 import com.ivy.legacy.domain.model.filterUpcoming
 import com.ivy.legacy.domain.model.Account
@@ -28,7 +28,7 @@ class WalletAccountLogic @Inject constructor(
     private val transactionRepository: TransactionRepository,
     private val transactionMapper: TransactionMapper,
     private val accountDataAct: AccountDataAct,
-    private val sharedPrefs: SharedPrefs,
+    private val appPreferences: AppPreferences,
     private val currencyRepository: CurrencyRepository,
     private val timeProvider: TimeProvider
 ) {
@@ -87,8 +87,7 @@ class WalletAccountLogic @Inject constructor(
             .map { a -> listOf(a) }
             .getOrElse { emptyList() }
 
-        val includeTransfersInCalc =
-            sharedPrefs.getBoolean(SharedPrefs.TRANSFERS_AS_INCOME_EXPENSE, false)
+        val includeTransfersInCalc = appPreferences.transfersAsIncomeExpense
 
         val accountsDataList = accountDataAct(
             AccountDataAct.Input(

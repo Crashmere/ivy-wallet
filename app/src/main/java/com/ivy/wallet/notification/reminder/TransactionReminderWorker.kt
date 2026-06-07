@@ -6,12 +6,12 @@ import androidx.core.app.NotificationCompat
 import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
-import com.ivy.base.legacy.SharedPrefs
 import com.ivy.base.legacy.stringRes
 import com.ivy.base.time.TimeConverter
 import com.ivy.base.time.TimeProvider
 import com.ivy.data.db.dao.read.TransactionDao
 import com.ivy.domain.AppStarter
+import com.ivy.domain.preferences.AppPreferences
 import com.ivy.base.legacy.atEndOfDay
 import com.ivy.ui.R
 import com.ivy.wallet.android.notification.IvyNotificationChannel
@@ -27,7 +27,7 @@ class TransactionReminderWorker @AssistedInject constructor(
     @Assisted params: WorkerParameters,
     private val transactionDao: TransactionDao,
     private val notificationService: NotificationService,
-    private val sharedPrefs: SharedPrefs,
+    private val appPreferences: AppPreferences,
     private val appStarter: AppStarter,
     private val timeProvider: TimeProvider,
     private val timeConverter: TimeConverter,
@@ -82,5 +82,5 @@ class TransactionReminderWorker @AssistedInject constructor(
         ).shuffled().first()
 
     private fun fetchShowNotifications(): Boolean =
-        sharedPrefs.getBoolean(SharedPrefs.SHOW_NOTIFICATIONS, true)
+        appPreferences.showNotifications
 }
