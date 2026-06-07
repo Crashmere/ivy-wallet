@@ -35,7 +35,7 @@ import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.R
 import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
 import com.ivy.data.model.legacy.CreateBudgetData
-import com.ivy.legacy.domain.pure.exchange.ExchangeData
+import com.ivy.domain.exchange.ExchangeData
 import com.ivy.legacy.domain.pure.transaction.getAccountId
 import com.ivy.legacy.domain.pure.transaction.getValue
 import com.ivy.legacy.domain.pure.transaction.trnCurrency

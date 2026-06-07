@@ -1,4 +1,4 @@
-package com.ivy.legacy.domain.pure.exchange
+package com.ivy.domain.exchange
 
 import arrow.core.None
 import arrow.core.Option

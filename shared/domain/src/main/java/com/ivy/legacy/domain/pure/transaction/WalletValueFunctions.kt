@@ -6,9 +6,9 @@ import com.ivy.data.model.Income
 import com.ivy.data.model.Transaction
 import com.ivy.data.model.Transfer
 import com.ivy.data.model.legacy.Account
-import com.ivy.legacy.domain.pure.exchange.ExchangeEffect
-import com.ivy.legacy.domain.pure.exchange.LegacyExchangeTrns
-import com.ivy.legacy.domain.pure.exchange.exchangeInBaseCurrency
+import com.ivy.domain.exchange.ExchangeEffect
+import com.ivy.domain.exchange.LegacyExchangeTrns
+import com.ivy.domain.exchange.exchangeInBaseCurrency
 import java.math.BigDecimal
 
 object WalletValueFunctions {

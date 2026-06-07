@@ -9,7 +9,7 @@ import com.ivy.data.model.Income
 import com.ivy.data.model.Transaction
 import com.ivy.data.model.Transfer
 import com.ivy.data.model.legacy.Account
-import com.ivy.legacy.domain.pure.account.accountCurrency
+import com.ivy.domain.account.accountCurrency
 import java.time.LocalDate
 fun expenses(transactions: List<Transaction>): List<Transaction> {
     return transactions.filterIsInstance<Expense>()

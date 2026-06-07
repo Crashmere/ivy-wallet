@@ -18,9 +18,9 @@ import com.ivy.domain.mapper.legacy.toImmutableLegacyTags
 import com.ivy.domain.mapper.legacy.toLegacyDomain
 import com.ivy.base.time.toEpochSeconds
 import com.ivy.domain.usecase.exchange.LegacyExchangeRatesUseCase
-import com.ivy.legacy.domain.pure.exchange.ExchangeData
-import com.ivy.legacy.domain.pure.exchange.ExchangeTrnArgument
-import com.ivy.legacy.domain.pure.exchange.exchangeInBaseCurrency
+import com.ivy.domain.exchange.ExchangeData
+import com.ivy.domain.exchange.ExchangeTrnArgument
+import com.ivy.domain.exchange.exchangeInBaseCurrency
 import com.ivy.legacy.domain.pure.transaction.LegacyFoldTransactions
 import com.ivy.legacy.domain.pure.transaction.LegacyTrnFunctions
 import com.ivy.legacy.domain.pure.transaction.expenses

@@ -17,7 +17,7 @@ import com.ivy.domain.usecase.category.CalculateCategoryIncomeWithAccountFilters
 import com.ivy.domain.usecase.category.GetCategoriesUseCase
 import com.ivy.domain.usecase.transaction.CalculateLegacyTransactionsIncomeExpenseUseCase
 import com.ivy.domain.usecase.transaction.GetLegacyTransactionsForAccountsUseCase
-import com.ivy.legacy.domain.pure.account.filterExcluded
+import com.ivy.domain.account.filterExcluded
 import com.ivy.legacy.ui.theme.system.RedLight
 import com.ivy.ui.R
 import kotlinx.collections.immutable.ImmutableList

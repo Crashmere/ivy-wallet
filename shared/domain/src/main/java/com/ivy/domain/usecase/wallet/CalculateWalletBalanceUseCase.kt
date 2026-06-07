@@ -11,7 +11,7 @@ import com.ivy.data.model.primitive.NotBlankTrimmedString
 import com.ivy.domain.usecase.account.CalculateAccountBalanceUseCase
 import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
 import com.ivy.domain.usecase.exchange.ExchangeAmountUseCase
-import com.ivy.legacy.domain.pure.exchange.ExchangeData
+import com.ivy.domain.exchange.ExchangeData
 import java.math.BigDecimal
 import javax.inject.Inject
 

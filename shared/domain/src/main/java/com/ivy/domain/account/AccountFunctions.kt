@@ -1,4 +1,4 @@
-package com.ivy.legacy.domain.pure.account
+package com.ivy.domain.account
 
 import com.ivy.data.model.legacy.Account
 

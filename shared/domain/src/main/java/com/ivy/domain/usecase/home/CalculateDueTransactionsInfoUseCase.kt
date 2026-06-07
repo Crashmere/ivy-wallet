@@ -7,8 +7,8 @@ import com.ivy.data.model.legacy.IncomeExpensePair
 import com.ivy.domain.usecase.account.GetLegacyAccountUseCase
 import com.ivy.domain.usecase.exchange.ExchangeAmountUseCase
 import com.ivy.domain.usecase.transaction.GetDueTransactionsUseCase
-import com.ivy.legacy.domain.pure.exchange.ExchangeTrnArgument
-import com.ivy.legacy.domain.pure.exchange.exchangeInBaseCurrency
+import com.ivy.domain.exchange.ExchangeTrnArgument
+import com.ivy.domain.exchange.exchangeInBaseCurrency
 import com.ivy.legacy.domain.pure.transaction.expenses
 import com.ivy.legacy.domain.pure.transaction.incomes
 import com.ivy.legacy.domain.pure.transaction.sumTrns

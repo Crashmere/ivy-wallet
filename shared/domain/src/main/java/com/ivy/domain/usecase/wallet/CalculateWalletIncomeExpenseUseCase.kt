@@ -8,8 +8,8 @@ import com.ivy.data.model.legacy.ClosedTimeRange
 import com.ivy.data.model.legacy.IncomeExpensePair
 import com.ivy.domain.usecase.account.GetAccountTransactionsUseCase
 import com.ivy.domain.usecase.exchange.ExchangeAmountUseCase
-import com.ivy.legacy.domain.pure.account.filterExcluded
-import com.ivy.legacy.domain.pure.exchange.ExchangeData
+import com.ivy.domain.account.filterExcluded
+import com.ivy.domain.exchange.ExchangeData
 import com.ivy.legacy.domain.pure.transaction.AccountValueFunctions
 import com.ivy.legacy.domain.pure.transaction.foldTransactions
 import com.ivy.domain.util.orZero

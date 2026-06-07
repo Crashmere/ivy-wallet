@@ -1,10 +1,10 @@
-package com.ivy.legacy.domain.pure.exchange
+package com.ivy.domain.exchange
 
 import arrow.core.Option
 import arrow.core.toOption
 import com.ivy.data.model.Transaction
 import com.ivy.data.model.legacy.Account
-import com.ivy.legacy.domain.pure.account.accountCurrency
+import com.ivy.domain.account.accountCurrency
 import com.ivy.legacy.domain.pure.transaction.LegacyTrnFunctions
 import com.ivy.legacy.domain.pure.transaction.getAccountId
 import com.ivy.legacy.domain.pure.transaction.getValue

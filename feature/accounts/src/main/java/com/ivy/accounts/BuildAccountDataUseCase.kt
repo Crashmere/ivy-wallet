@@ -6,7 +6,7 @@ import com.ivy.data.model.legacy.ClosedTimeRange
 import com.ivy.domain.usecase.account.CalculateAccountBalanceUseCase
 import com.ivy.domain.usecase.account.CalculateAccountIncomeExpenseUseCase
 import com.ivy.domain.usecase.exchange.ExchangeAmountUseCase
-import com.ivy.legacy.domain.pure.exchange.ExchangeData
+import com.ivy.domain.exchange.ExchangeData
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 import javax.inject.Inject
