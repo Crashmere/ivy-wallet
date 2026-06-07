@@ -1,4 +1,4 @@
-package com.ivy.wallet.domain.deprecated.logic
+package com.ivy.wallet.domain.startup
 
 import arrow.core.raise.either
 import com.ivy.base.legacy.stringRes

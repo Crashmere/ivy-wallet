@@ -1,4 +1,4 @@
-package com.ivy.wallet.domain.deprecated.logic.notification
+package com.ivy.wallet.notification.reminder
 
 import android.content.Context
 import androidx.work.ExistingPeriodicWorkPolicy
@@ -11,7 +11,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-@Deprecated("Use FP style, look into `domain.fp` package")
+@Deprecated("Legacy reminder scheduler. Keep until notification preferences are redesigned.")
 class TransactionReminderLogic @Inject constructor(
     @ApplicationContext
     private val appContext: Context,

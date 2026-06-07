@@ -9,8 +9,7 @@ import com.ivy.data.repository.CategoryRepository
 import com.ivy.legacy.datamodel.Settings
 import com.ivy.base.legacy.ioThread
 import com.ivy.data.model.currency.IvyCurrency
-import com.ivy.wallet.domain.deprecated.logic.PreloadDataLogic
-import com.ivy.wallet.domain.deprecated.logic.notification.TransactionReminderLogic
+import com.ivy.wallet.notification.reminder.TransactionReminderLogic
 import javax.inject.Inject
 
 @Deprecated("Legacy startup setup. Keep until data initialization is redesigned.")

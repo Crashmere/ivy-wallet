@@ -1,4 +1,4 @@
-package com.ivy.wallet.domain.deprecated.logic.notification
+package com.ivy.wallet.notification.reminder
 
 import android.app.PendingIntent
 import android.content.Context
