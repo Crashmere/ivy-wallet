@@ -2,6 +2,7 @@ package com.ivy.data.repository
 
 import com.ivy.base.threading.DispatchersProvider
 import com.ivy.data.DataWriteEvent
+import com.ivy.data.api.CategoryStore
 import com.ivy.data.db.dao.read.CategoryDao
 import com.ivy.data.db.dao.write.WriteCategoryDao
 import com.ivy.data.model.Category
@@ -18,13 +19,13 @@ class CategoryRepository @Inject constructor(
     private val categoryDao: CategoryDao,
     private val dispatchersProvider: DispatchersProvider,
     memoFactory: RepositoryMemoFactory,
-) {
+) : CategoryStore {
     private val memo = memoFactory.createMemo(
         getDataWriteSaveEvent = DataWriteEvent::SaveCategories,
         getDateWriteDeleteEvent = DataWriteEvent::DeleteCategories,
     )
 
-    suspend fun findAll(): List<Category> = memo.findAll(
+    override suspend fun findAll(): List<Category> = memo.findAll(
         findAllOperation = {
             categoryDao.findAll().mapNotNull {
                 with(mapper) { it.toDomain() }.getOrNull()
@@ -33,7 +34,7 @@ class CategoryRepository @Inject constructor(
         sortMemo = { sortedBy(Category::orderNum) }
     )
 
-    suspend fun findById(id: CategoryId): Category? = memo.findById(
+    override suspend fun findById(id: CategoryId): Category? = memo.findById(
         id = id,
         findByIdOperation = {
             categoryDao.findById(id.value)?.let {
@@ -42,7 +43,7 @@ class CategoryRepository @Inject constructor(
         }
     )
 
-    suspend fun findMaxOrderNum(): Double = if (memo.findAllMemoized) {
+    override suspend fun findMaxOrderNum(): Double = if (memo.findAllMemoized) {
         memo.items.maxOfOrNull { (_, acc) -> acc.orderNum } ?: 0.0
     } else {
         withContext(dispatchersProvider.io) {
@@ -50,7 +51,7 @@ class CategoryRepository @Inject constructor(
         }
     }
 
-    suspend fun save(value: Category): Unit = memo.save(
+    override suspend fun save(value: Category): Unit = memo.save(
         value = value,
     ) {
         writeCategoryDao.save(
@@ -58,7 +59,7 @@ class CategoryRepository @Inject constructor(
         )
     }
 
-    suspend fun saveMany(values: List<Category>): Unit = memo.saveMany(
+    override suspend fun saveMany(values: List<Category>): Unit = memo.saveMany(
         values = values,
     ) {
         writeCategoryDao.saveMany(
@@ -66,9 +67,9 @@ class CategoryRepository @Inject constructor(
         )
     }
 
-    suspend fun deleteById(id: CategoryId): Unit = memo.deleteById(id = id) {
+    override suspend fun deleteById(id: CategoryId): Unit = memo.deleteById(id = id) {
         writeCategoryDao.deleteById(id.value)
     }
 
-    suspend fun deleteAll(): Unit = memo.deleteAll(writeCategoryDao::deleteAll)
+    override suspend fun deleteAll(): Unit = memo.deleteAll(writeCategoryDao::deleteAll)
 }

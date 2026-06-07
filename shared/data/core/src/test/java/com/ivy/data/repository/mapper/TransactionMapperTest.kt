@@ -44,7 +44,7 @@ class TransactionMapperTest {
 
     @Before
     fun setup() {
-        mapper = TransactionMapper(accountRepository = accountRepo)
+        mapper = TransactionMapper(accountStore = accountRepo)
     }
 
     // region entity -> domain

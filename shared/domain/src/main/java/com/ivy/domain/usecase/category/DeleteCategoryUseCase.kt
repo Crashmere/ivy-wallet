@@ -1,13 +1,13 @@
 package com.ivy.domain.usecase.category
 
+import com.ivy.data.api.CategoryStore
 import com.ivy.data.model.CategoryId
-import com.ivy.data.repository.CategoryRepository
 import javax.inject.Inject
 
 class DeleteCategoryUseCase @Inject constructor(
-    private val categoryRepository: CategoryRepository
+    private val categoryStore: CategoryStore
 ) {
     suspend operator fun invoke(categoryId: CategoryId) {
-        categoryRepository.deleteById(categoryId)
+        categoryStore.deleteById(categoryId)
     }
 }

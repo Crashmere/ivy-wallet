@@ -33,7 +33,7 @@ class TransactionMapperPropertyTest {
 
     @Before
     fun setup() {
-        mapper = TransactionMapper(accountRepository = accountRepo,)
+        mapper = TransactionMapper(accountStore = accountRepo,)
     }
 
     @Test

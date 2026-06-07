@@ -6,12 +6,12 @@ import com.ivy.base.model.legacy.TransactionHistoryItem
 import com.ivy.base.model.legacy.TransactionHistoryDateDivider
 import com.ivy.base.time.TimeConverter
 import com.ivy.domain.time.convertToLocal
+import com.ivy.data.api.AccountStore
 import com.ivy.data.api.TagStore
 import com.ivy.data.db.dao.read.AccountDao
 import com.ivy.data.model.Tag
 import com.ivy.data.model.TagId
 import com.ivy.data.model.Transaction
-import com.ivy.data.repository.AccountRepository
 import com.ivy.data.repository.mapper.TransactionMapper
 import com.ivy.data.model.legacy.Account
 import com.ivy.domain.mapper.legacy.toImmutableLegacyTags
@@ -29,14 +29,14 @@ suspend fun List<Transaction>.withDateDividers(
     baseCurrencyCode: String,
     accountDao: AccountDao,
     tagStore: TagStore,
-    accountRepository: AccountRepository,
+    accountStore: AccountStore,
 ): List<TransactionHistoryItem> {
     return transactionsWithDateDividers(
         transactions = this,
         baseCurrencyCode = baseCurrencyCode,
         getAccount = { accountId -> accountDao.findById(accountId)?.toLegacyDomain() },
         getTags = { tagsIds -> tagStore.findByIds(tagsIds) },
-        accountRepository = accountRepository,
+        accountStore = accountStore,
         exchange = { data, amount ->
             exchangeRatesLogic.convertAmount(
                 baseCurrency = data.baseCurrency,
@@ -50,13 +50,13 @@ suspend fun List<Transaction>.withDateDividers(
 suspend fun transactionsWithDateDividers(
     transactions: List<Transaction>,
     baseCurrencyCode: String,
-    accountRepository: AccountRepository,
+    accountStore: AccountStore,
     getAccount: suspend (accountId: UUID) -> Account?,
     exchange: suspend (ExchangeData, BigDecimal) -> Option<BigDecimal>,
     getTags: suspend (tagIds: List<TagId>) -> List<Tag> = { emptyList() },
 ): List<TransactionHistoryItem> {
     if (transactions.isEmpty()) return emptyList()
-    val transactionsMapper = TransactionMapper(accountRepository)
+    val transactionsMapper = TransactionMapper(accountStore)
     return transactions
         .groupBy { it.time.convertToLocal().toLocalDate() }
         .filterKeys { it != null }

@@ -689,6 +689,7 @@
 - 基础币种和设置表访问已抽成 `CurrencyStore` 与 `SettingsStore` 端口；domain 的币种/设置 use case 不再直接注入 data core repository，data core 继续保留 Room-backed 实现和内部 mapper 依赖。
 - 汇率读写和远程同步入口已抽成 `ExchangeRateStore` 端口；汇率同步、设置页汇率列表和重置钱包流程不再直接依赖 data core 的 `ExchangeRatesRepository`。
 - 标签读写、标签关联和标签搜索已抽成 `TagStore` 端口；编辑交易、历史列表、按标签筛选和重置钱包流程不再直接依赖 data core 的 `TagRepository`。
+- 账户与分类读写已抽成 `AccountStore/CategoryStore` 端口；对应 domain use case、交易历史构建、借贷同步和重置钱包流程不再直接注入 data core repository，`TransactionMapper` 也改为依赖账户端口。
 
 建议顺序：
 

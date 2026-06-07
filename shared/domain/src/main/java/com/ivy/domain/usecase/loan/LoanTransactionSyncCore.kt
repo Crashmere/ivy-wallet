@@ -17,7 +17,7 @@ import com.ivy.data.model.TransactionId
 import com.ivy.data.model.primitive.ColorInt
 import com.ivy.data.model.primitive.IconAsset
 import com.ivy.data.model.primitive.NotBlankTrimmedString
-import com.ivy.data.repository.CategoryRepository
+import com.ivy.data.api.CategoryStore
 import com.ivy.data.repository.TransactionRepository
 import com.ivy.data.repository.mapper.TransactionMapper
 import com.ivy.domain.usecase.category.GetCategoriesUseCase
@@ -40,7 +40,7 @@ import java.util.UUID
 import javax.inject.Inject
 
 class LoanTransactionSyncCore @Inject constructor(
-    private val categoryRepository: CategoryRepository,
+    private val categoryStore: CategoryStore,
     private val getCategoriesUseCase: GetCategoriesUseCase,
     private val transactionDao: TransactionDao,
     private val loanRecordDao: LoanRecordDao,
@@ -239,7 +239,7 @@ class LoanTransactionSyncCore @Inject constructor(
         if (addCategoryToDb) {
             ioThread {
                 loanCategory?.let {
-                    categoryRepository.save(it)
+                    categoryStore.save(it)
                 }
             }
         }

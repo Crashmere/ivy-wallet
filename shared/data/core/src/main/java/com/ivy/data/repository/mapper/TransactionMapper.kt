@@ -20,12 +20,12 @@ import com.ivy.data.model.getFromAccount
 import com.ivy.data.model.getToAccount
 import com.ivy.data.model.primitive.NotBlankTrimmedString
 import com.ivy.data.model.primitive.PositiveDouble
-import com.ivy.data.repository.AccountRepository
+import com.ivy.data.api.AccountStore
 import java.time.Instant
 import javax.inject.Inject
 
 class TransactionMapper @Inject constructor(
-    private val accountRepository: AccountRepository,
+    private val accountStore: AccountStore,
 ) {
 
     suspend fun TransactionEntity.toDomain(
@@ -44,7 +44,7 @@ class TransactionMapper @Inject constructor(
         val time = mapTime().bind()
 
         val accountId = AccountId(accountId)
-        val sourceAccount = accountRepository.findById(accountId)
+        val sourceAccount = accountStore.findById(accountId)
         ensureNotNull(sourceAccount) { "No source account for transaction: ${this@toDomain}" }
         val fromValue = PositiveValue(
             amount = PositiveDouble.from(amount).bind(),
@@ -97,7 +97,7 @@ class TransactionMapper @Inject constructor(
                             "must be different for transaction: ${this@toDomain}"
                 }
 
-                val toAccount = accountRepository.findById(toAccountId)
+                val toAccount = accountStore.findById(toAccountId)
                 ensureNotNull(toAccount) {
                     "No destination account associated with transaction '${this@toDomain}'"
                 }
