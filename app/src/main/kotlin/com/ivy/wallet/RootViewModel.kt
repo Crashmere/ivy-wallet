@@ -31,7 +31,7 @@ class RootViewModel @Inject constructor(
     private val nav: Navigation,
     private val getTheme: GetThemeUseCase,
     private val getStartDayOfMonth: GetStartDayOfMonthUseCase,
-    private val isInitialSetupCompleted: IsInitialSetupCompletedUseCase,
+    private val isInitialSetupCompletedUseCase: IsInitialSetupCompletedUseCase,
     private val appLockController: AppLockController,
     private val transactionReminderScheduler: TransactionReminderScheduler,
     private val initialDataSetup: InitialDataSetup,
@@ -60,7 +60,7 @@ class RootViewModel @Inject constructor(
             withContext(Dispatchers.IO) {
                 appLockController.initialize()
 
-                if (isInitialSetupCompleted()) {
+                if (isInitialSetupCompletedUseCase()) {
                     navigateOnboardedUser(intent)
                 } else {
                     initialDataSetup.setupDefaults(systemDarkMode)
@@ -110,10 +110,6 @@ class RootViewModel @Inject constructor(
         onAuthSuccess: () -> Unit = {}
     ): BiometricPrompt.AuthenticationCallback {
         return appLockController.handleBiometricAuthResult(onAuthSuccess)
-    }
-
-    private fun isInitialSetupCompleted(): Boolean {
-        return isInitialSetupCompleted()
     }
 
     // App Lock & UserInactivity --------------------------------------------------------------------
