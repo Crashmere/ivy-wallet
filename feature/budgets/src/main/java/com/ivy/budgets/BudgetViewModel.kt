@@ -10,7 +10,6 @@ import androidx.lifecycle.viewModelScope
 import com.ivy.base.time.TimeConverter
 import com.ivy.base.time.TimeProvider
 import com.ivy.budgets.model.DisplayBudget
-import com.ivy.data.db.dao.write.WriteBudgetDao
 import com.ivy.data.model.Category
 import com.ivy.data.model.Expense
 import com.ivy.data.model.Income
@@ -25,6 +24,7 @@ import com.ivy.legacy.domain.model.Budget
 import com.ivy.legacy.domain.logic.BudgetCreator
 import com.ivy.data.model.currency.format
 import com.ivy.base.text.isNotNullOrBlank
+import com.ivy.domain.usecase.budget.ReorderBudgetsUseCase
 import com.ivy.domain.usecase.category.GetCategoriesUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.ui.ComposeViewModel
@@ -49,7 +49,7 @@ import kotlin.math.abs
 @Stable
 @HiltViewModel
 class BudgetViewModel @Inject constructor(
-    private val budgetWriter: WriteBudgetDao,
+    private val reorderBudgetsUseCase: ReorderBudgetsUseCase,
     private val budgetCreator: BudgetCreator,
     private val periodState: PeriodState,
     private val accountsAct: AccountsAct,
@@ -288,15 +288,7 @@ class BudgetViewModel @Inject constructor(
 
     private fun reorder(newOrder: List<DisplayBudget>) {
         viewModelScope.launch {
-            com.ivy.base.coroutines.ioThread {
-                newOrder.forEachIndexed { index, item ->
-                    budgetWriter.save(
-                        item.budget.toEntity().copy(
-                            orderId = index.toDouble(),
-                        )
-                    )
-                }
-            }
+            reorderBudgetsUseCase(newOrder.map(DisplayBudget::budget))
             start()
         }
     }
