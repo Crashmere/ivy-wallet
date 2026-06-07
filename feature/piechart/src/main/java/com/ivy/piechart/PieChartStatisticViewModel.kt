@@ -16,7 +16,6 @@ import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.domain.usecase.settings.GetTransfersAsIncomeExpensePreferenceUseCase
 import com.ivy.legacy.ui.state.PeriodState
 import com.ivy.legacy.ui.model.period.TimePeriod
-import com.ivy.base.coroutines.ioThread
 import com.ivy.ui.navigation.PieChartStatisticScreen
 import com.ivy.ui.ComposeViewModel
 import com.ivy.legacy.ui.modal.ChoosePeriodModalData
@@ -26,6 +25,7 @@ import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.time.ZoneOffset
 import java.util.UUID
 import javax.inject.Inject
@@ -199,7 +199,7 @@ class PieChartStatisticViewModel @Inject constructor(
                     accountIdFilterList.isNotEmpty() &&
                     treatTransfersAsIncomeExpense
 
-        val pieChartActOutput = ioThread {
+        val pieChartActOutput = withContext(Dispatchers.IO) {
             buildPieChartDataUseCase(
                 baseCurrency = baseCurrency,
                 range = range,

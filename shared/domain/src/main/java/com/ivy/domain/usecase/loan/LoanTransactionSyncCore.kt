@@ -24,12 +24,11 @@ import com.ivy.data.model.legacy.LoanRecord
 import com.ivy.domain.mapper.legacy.toDomain
 import com.ivy.domain.mapper.legacy.toLegacy
 import com.ivy.domain.mapper.legacy.toLegacyDomain
-import com.ivy.base.coroutines.computationThread
-import com.ivy.base.coroutines.ioThread
 import com.ivy.domain.usecase.exchange.LegacyExchangeRatesUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.time.Instant
 import java.util.Locale
 import java.util.UUID
@@ -66,7 +65,7 @@ class LoanTransactionSyncCore @Inject constructor(
             return
         }
 
-        ioThread {
+        withContext(Dispatchers.IO) {
             val transactions: List<Transaction?> =
                 if (loanId != null) {
                     transactionRepo.findAllByLoanId(loanId = loanId)
@@ -93,7 +92,7 @@ class LoanTransactionSyncCore @Inject constructor(
     }
 
     suspend fun baseCurrency(): String =
-        ioThread { baseCurrencyCode ?: getBaseCurrencyCode() }
+        withContext(Dispatchers.IO) { baseCurrencyCode ?: getBaseCurrencyCode() }
 
     suspend fun updateAssociatedTransaction(
         createTransaction: Boolean,
@@ -190,7 +189,7 @@ class LoanTransactionSyncCore @Inject constructor(
                 loanRecordId = if (isLoanRecord) loanRecordId else null
             )
 
-        ioThread {
+        withContext(Dispatchers.IO) {
             modifiedTransaction.toDomain(accountStore)?.let {
                 transactionRepo.save(it)
             }
@@ -198,7 +197,7 @@ class LoanTransactionSyncCore @Inject constructor(
     }
 
     private suspend fun deleteTransaction(transaction: Transaction?) {
-        ioThread {
+        withContext(Dispatchers.IO) {
             transaction?.let {
                 transactionRepo.deleteById(TransactionId(it.id))
             }
@@ -210,7 +209,7 @@ class LoanTransactionSyncCore @Inject constructor(
             return existingCategoryId
         }
 
-        val categoryList = ioThread { getCategoriesUseCase() }
+        val categoryList = withContext(Dispatchers.IO) { getCategoriesUseCase() }
 
         var addCategoryToDb = false
 
@@ -229,7 +228,7 @@ class LoanTransactionSyncCore @Inject constructor(
         }
 
         if (addCategoryToDb) {
-            ioThread {
+            withContext(Dispatchers.IO) {
                 loanCategory?.let {
                     categoryStore.save(it)
                 }
@@ -249,7 +248,7 @@ class LoanTransactionSyncCore @Inject constructor(
         accounts: List<Account>,
         reCalculateLoanAmount: Boolean = false,
     ): Double? {
-        return computationThread {
+        return withContext(Dispatchers.Default) {
             val newLoanRecordCurrency =
                 newLoanRecordAccountID.fetchAssociatedCurrencyCode(accountsList = accounts)
 
@@ -267,7 +266,7 @@ class LoanTransactionSyncCore @Inject constructor(
 
                 reCalculateLoanAmount || loanRecordCurrenciesChanged ||
                         oldLonRecordConvertedAmount == null -> {
-                    ioThread {
+                    withContext(Dispatchers.IO) {
                         exchangeRatesLogic.convertAmount(
                             baseCurrency = baseCurrency(),
                             amount = newLoanRecordAmount,
@@ -293,37 +292,37 @@ class LoanTransactionSyncCore @Inject constructor(
         return findAccount(accountsList, this)?.currency ?: baseCurrency()
     }
 
-    suspend fun fetchAccounts() = ioThread {
+    suspend fun fetchAccounts() = withContext(Dispatchers.IO) {
         accountStore.findAll().map { it.toLegacyDomain() }
     }
 
-    suspend fun saveLoanRecords(loanRecords: List<LoanRecord>) = ioThread {
+    suspend fun saveLoanRecords(loanRecords: List<LoanRecord>) = withContext(Dispatchers.IO) {
         loanRecordStore.saveMany(loanRecords)
     }
 
-    suspend fun saveLoanRecords(loanRecord: LoanRecord) = ioThread {
+    suspend fun saveLoanRecords(loanRecord: LoanRecord) = withContext(Dispatchers.IO) {
         loanRecordStore.save(loanRecord)
     }
 
-    suspend fun saveLoan(loan: Loan) = ioThread {
+    suspend fun saveLoan(loan: Loan) = withContext(Dispatchers.IO) {
         loanStore.save(loan)
     }
 
-    suspend fun fetchLoanRecord(loanRecordId: UUID) = ioThread {
+    suspend fun fetchLoanRecord(loanRecordId: UUID) = withContext(Dispatchers.IO) {
         loanRecordStore.findById(loanRecordId)
     }
 
-    suspend fun fetchAllLoanRecords(loanId: UUID) = ioThread {
+    suspend fun fetchAllLoanRecords(loanId: UUID) = withContext(Dispatchers.IO) {
         loanRecordStore.findAllByLoanId(loanId)
     }
 
-    suspend fun fetchLoan(loanId: UUID) = ioThread {
+    suspend fun fetchLoan(loanId: UUID) = withContext(Dispatchers.IO) {
         loanStore.findById(loanId)
     }
 
     suspend fun fetchLoanRecordTransaction(loanRecordId: UUID?): Transaction? {
         return loanRecordId?.let {
-            ioThread {
+            withContext(Dispatchers.IO) {
                 transactionRepo.findLoanRecordTransaction(it)?.toLegacy()
             }
         }

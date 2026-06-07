@@ -38,8 +38,6 @@ import com.ivy.domain.preferences.toggles.PreferenceToggles
 import com.ivy.legacy.ui.state.PeriodState
 import com.ivy.legacy.ui.model.period.TimePeriod
 import com.ivy.data.model.legacy.toCloseTimeRange
-import com.ivy.base.coroutines.computationThread
-import com.ivy.base.coroutines.ioThread
 import com.ivy.base.text.isNotNullOrBlank
 import com.ivy.legacy.ui.selectEndTextFieldValue
 import com.ivy.ui.navigation.Navigation
@@ -66,7 +64,9 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.time.ZoneOffset
 import java.util.UUID
 import javax.inject.Inject
@@ -390,7 +390,7 @@ class TransactionsViewModel @Inject constructor(
             )
         ).toImmutableList()
 
-        val upcomingSummary = ioThread {
+        val upcomingSummary = withContext(Dispatchers.IO) {
             getAccountUpcomingTransactionsSummaryUseCase(AccountId(initialAccount.id), range)
         }
         upcomingIncome.doubleValue = upcomingSummary.income
@@ -398,7 +398,7 @@ class TransactionsViewModel @Inject constructor(
         upcoming.value = mapTransactionsToLegacyUseCase(upcomingSummary.transactions)
             .toImmutableList()
 
-        val overdueSummary = ioThread {
+        val overdueSummary = withContext(Dispatchers.IO) {
             getAccountOverdueTransactionsSummaryUseCase(AccountId(initialAccount.id), range)
         }
         overdueIncome.doubleValue = overdueSummary.income
@@ -409,13 +409,13 @@ class TransactionsViewModel @Inject constructor(
 
     private suspend fun initForCategory(categoryId: UUID, accountFilterList: List<UUID>) {
         val accountFilterSet = accountFilterList.toSet()
-        val initialCategory = ioThread {
+        val initialCategory = withContext(Dispatchers.IO) {
             getCategoryUseCase(CategoryId(categoryId)) ?: error("category not found")
         }
         category.value = initialCategory
         val range = period.value.toRange(periodState.startDayOfMonth, timeConverter, timeProvider)
 
-        val summary = ioThread {
+        val summary = withContext(Dispatchers.IO) {
             getCategoryTransactionsSummaryUseCase(
                 category = initialCategory,
                 range = range,
@@ -430,18 +430,18 @@ class TransactionsViewModel @Inject constructor(
         accountFilterList: List<UUID>,
         transactions: List<Transaction>,
     ) {
-        computationThread {
+        withContext(Dispatchers.Default) {
             initWithTransactions.value = true
 
             val accountFilterSet = accountFilterList.toSet()
-            val initialCategory = ioThread {
+            val initialCategory = withContext(Dispatchers.IO) {
                 getCategoryUseCase(CategoryId(categoryId)) ?: error("category not found")
             }
             category.value = initialCategory
             val range =
                 period.value.toRange(periodState.startDayOfMonth, timeConverter, timeProvider)
 
-            val summary = ioThread {
+            val summary = withContext(Dispatchers.IO) {
                 getCategoryTransactionsSummaryUseCase(
                     category = initialCategory,
                     range = range,
@@ -456,7 +456,7 @@ class TransactionsViewModel @Inject constructor(
     private suspend fun initForUnspecifiedCategory() {
         val range = period.value.toRange(periodState.startDayOfMonth, timeConverter, timeProvider)
 
-        val summary = ioThread {
+        val summary = withContext(Dispatchers.IO) {
             getUnspecifiedCategoryTransactionsSummaryUseCase(range)
         }
         applyCategorySummary(summary)
@@ -594,14 +594,14 @@ class TransactionsViewModel @Inject constructor(
     }
 
     private suspend fun deleteAccount(accountId: UUID) {
-        ioThread {
+        withContext(Dispatchers.IO) {
             deleteAccountUseCase(AccountId(accountId))
             nav.back()
         }
     }
 
     private suspend fun deleteCategory(categoryId: UUID) {
-        ioThread {
+        withContext(Dispatchers.IO) {
             deleteCategoryUseCase(CategoryId(categoryId))
             nav.back()
         }

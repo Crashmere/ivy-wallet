@@ -18,7 +18,6 @@ import com.ivy.domain.usecase.transaction.GetLegacyTransactionsForAccountsUseCas
 import com.ivy.legacy.ui.state.PeriodState
 import com.ivy.legacy.ui.model.period.TimePeriod
 import com.ivy.data.model.legacy.Account
-import com.ivy.base.coroutines.ioThread
 import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.preferences.asEnabledState
 import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
@@ -37,6 +36,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @Stable
@@ -145,7 +145,7 @@ class CategoriesViewModel @Inject constructor(
     }
 
     private suspend fun initialise() {
-        ioThread {
+        withContext(Dispatchers.IO) {
             val range = TimePeriod.currentMonth(
                 startDayOfMonth = periodState.startDayOfMonth,
                 timeProvider = timeProvider,
@@ -167,12 +167,13 @@ class CategoriesViewModel @Inject constructor(
                 getCategorySortOrderPreference()
             )
 
-            this.sortOrder.value = sortOrder
+            this@CategoriesViewModel.sortOrder.value = sortOrder
         }
     }
 
     private suspend fun loadCategories() {
-        com.ivy.base.coroutines.scopedIOThread { scope ->
+        withContext(Dispatchers.IO) {
+            val scope = this
             val categories = getCategoriesUseCase().mapAsync(scope) {
                 val catIncomeExpense = calculateCategoryIncomeWithAccountFiltersUseCase(
                     transactions = transactions,
@@ -190,7 +191,7 @@ class CategoriesViewModel @Inject constructor(
             }
 
             val sortedList = sortList(categories, sortOrder.value).toImmutableList()
-            this.categories.value = sortedList
+            this@CategoriesViewModel.categories.value = sortedList
         }
     }
 
@@ -205,14 +206,14 @@ class CategoriesViewModel @Inject constructor(
         val sortedList = sortList(newOrder, sortOrder).toImmutableList()
 
         if (sortOrder == SortOrder.DEFAULT) {
-            ioThread {
+            withContext(Dispatchers.IO) {
                 sortedList.forEachIndexed { index, categoryData ->
                     saveCategoryUseCase(categoryData.category.copy(orderNum = index.toDouble()))
                 }
             }
         }
 
-        ioThread {
+        withContext(Dispatchers.IO) {
             setCategorySortOrderPreference(sortOrder.orderNum)
         }
 

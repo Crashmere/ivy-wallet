@@ -26,7 +26,6 @@ import com.ivy.domain.usecase.account.CreateAccountWithBalanceUseCase
 import com.ivy.data.model.legacy.Account
 import com.ivy.data.model.legacy.Loan
 import com.ivy.data.model.legacy.LoanRecord
-import com.ivy.base.coroutines.computationThread
 import com.ivy.loans.loan.data.DisplayLoanRecord
 import com.ivy.loans.loandetails.events.DeleteLoanModalEvent
 import com.ivy.loans.loandetails.events.LoanDetailsScreenEvent
@@ -46,7 +45,9 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.time.Instant
 import java.time.LocalDateTime
 import java.util.UUID
@@ -275,7 +276,7 @@ class LoanDetailsViewModel @Inject constructor(
                 }
             }
 
-            computationThread {
+            withContext(Dispatchers.Default) {
                 displayLoanRecords.value =
                     getLoanRecordsUseCase(loanId).map {
                         val hasTransaction = hasLoanRecordTransactionUseCase(it.id)
@@ -296,7 +297,7 @@ class LoanDetailsViewModel @Inject constructor(
                     }.toImmutableList()
             }
 
-            computationThread {
+            withContext(Dispatchers.Default) {
                 // Using a local variable to calculate the amount and then reassigning to
                 // the State variable to reduce the amount of compose re-draws
                 var amtPaid = 0.0
@@ -318,7 +319,7 @@ class LoanDetailsViewModel @Inject constructor(
                 loanInterestAmountPaid.doubleValue = loanInterestAmtPaid
             }
 
-            computationThread {
+            withContext(Dispatchers.Default) {
                 // Calculate total amount of loan borrowed or lent.
                 // That is initial amount + each record that increased the loan.
                 val totalAmount =

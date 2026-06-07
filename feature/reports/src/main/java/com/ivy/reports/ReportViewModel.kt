@@ -42,7 +42,6 @@ import com.ivy.domain.usecase.transaction.MapTransactionsToLegacyUseCase
 import com.ivy.legacy.ui.state.PeriodState
 import com.ivy.data.model.legacy.Account
 import com.ivy.base.time.getISOFormattedDateTime
-import com.ivy.base.coroutines.scopedIOThread
 import com.ivy.base.text.toLowerCaseLocal
 import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.R
@@ -235,7 +234,8 @@ class ReportViewModel @Inject constructor(
     }
 
     private suspend fun setFilter(reportFilter: ReportFilter?) {
-        scopedIOThread { scope ->
+        withContext(Dispatchers.IO) {
+            val scope = this
             if (reportFilter == null) {
                 setReportValues(
                     income = 0.00,
@@ -251,10 +251,10 @@ class ReportViewModel @Inject constructor(
                     transactions = persistentListOf(),
                     balanceValue = 0.00
                 )
-                return@scopedIOThread
+                return@withContext
             }
 
-            if (!reportFilter.validate()) return@scopedIOThread
+            if (!reportFilter.validate()) return@withContext
             val tempAccounts = reportFilter.accounts
             val baseCurrency = baseCurrency
             loading = true

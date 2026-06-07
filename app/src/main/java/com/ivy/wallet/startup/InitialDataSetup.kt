@@ -1,12 +1,13 @@
 package com.ivy.wallet.startup
 
-import com.ivy.base.coroutines.ioThread
 import com.ivy.data.model.currency.IvyCurrency
 import com.ivy.domain.usecase.account.GetAccountsUseCase
 import com.ivy.domain.usecase.category.GetCategoriesUseCase
 import com.ivy.domain.usecase.settings.EnsureSettingsInitializedUseCase
 import com.ivy.domain.usecase.settings.SetInitialSetupCompletedUseCase
 import com.ivy.wallet.notification.reminder.TransactionReminderLogic
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class InitialDataSetup @Inject constructor(
@@ -18,7 +19,7 @@ class InitialDataSetup @Inject constructor(
     private val transactionReminderLogic: TransactionReminderLogic,
 ) {
     suspend fun setupDefaults(systemDarkMode: Boolean) {
-        ioThread {
+        withContext(Dispatchers.IO) {
             val defaultCurrency = IvyCurrency.getDefault()
 
             ensureSettingsInitialized(

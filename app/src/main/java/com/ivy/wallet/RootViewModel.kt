@@ -11,7 +11,6 @@ import com.ivy.domain.usecase.settings.GetThemeUseCase
 import com.ivy.domain.usecase.settings.IsInitialSetupCompletedUseCase
 import com.ivy.ui.theme.ThemeState
 import com.ivy.legacy.ui.state.PeriodState
-import com.ivy.base.coroutines.ioThread
 import com.ivy.ui.navigation.EditTransactionScreen
 import com.ivy.ui.navigation.MainScreen
 import com.ivy.ui.navigation.Navigation
@@ -19,7 +18,9 @@ import com.ivy.wallet.notification.reminder.TransactionReminderLogic
 import com.ivy.wallet.startup.InitialDataSetup
 import com.ivy.wallet.security.AppLockController
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -45,7 +46,7 @@ class RootViewModel @Inject constructor(
     fun start(systemDarkMode: Boolean, intent: Intent) {
         viewModelScope.launch {
 
-            ioThread {
+            withContext(Dispatchers.IO) {
                 val theme = getTheme.withSystemFallback(systemDarkMode)
                 themeState.update(theme)
 
@@ -56,7 +57,7 @@ class RootViewModel @Inject constructor(
 
         viewModelScope.launch {
 
-            ioThread {
+            withContext(Dispatchers.IO) {
                 appLockController.initialize()
 
                 if (isInitialSetupCompleted()) {

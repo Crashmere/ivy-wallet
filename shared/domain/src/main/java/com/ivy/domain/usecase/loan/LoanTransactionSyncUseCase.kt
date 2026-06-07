@@ -7,11 +7,11 @@ import com.ivy.data.model.LoanType
 import com.ivy.data.model.legacy.Account
 import com.ivy.data.model.legacy.Loan
 import com.ivy.data.model.legacy.LoanRecord
-import com.ivy.base.coroutines.computationThread
-import com.ivy.base.coroutines.scopedIOThread
 import com.ivy.data.model.legacy.CreateLoanData
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.withContext
 import java.util.UUID
 import javax.inject.Inject
 
@@ -20,7 +20,7 @@ class LoanTransactionSyncUseCase @Inject constructor(
 ) {
 
     suspend fun createAssociatedLoanTransaction(data: CreateLoanData, loanId: UUID) {
-        computationThread {
+        withContext(Dispatchers.Default) {
             ltCore.updateAssociatedTransaction(
                 createTransaction = data.createLoanTransaction,
                 loanId = loanId,
@@ -39,7 +39,7 @@ class LoanTransactionSyncUseCase @Inject constructor(
         createLoanTransaction: Boolean = false,
         transaction: Transaction?
     ) {
-        computationThread {
+        withContext(Dispatchers.Default) {
             ltCore.updateAssociatedTransaction(
                 createTransaction = createLoanTransaction,
                 loanId = loan.id,
@@ -65,12 +65,12 @@ class LoanTransactionSyncUseCase @Inject constructor(
         loanId: UUID
     ) {
         val accounts = ltCore.fetchAccounts()
-        computationThread {
+        withContext(Dispatchers.Default) {
             if (oldLoanAccountId == newLoanAccountId || oldLoanAccountId.fetchAssociatedCurrencyCode(
                     accounts
                 ) == newLoanAccountId.fetchAssociatedCurrencyCode(accounts)
             ) {
-                return@computationThread
+                return@withContext
             }
 
             val newLoanRecords = calculateLoanRecords(
@@ -88,12 +88,12 @@ class LoanTransactionSyncUseCase @Inject constructor(
         onBackgroundProcessingEnd: suspend () -> Unit = {},
         accountsChanged: Boolean = true
     ) {
-        computationThread {
-            transaction?.loanId ?: return@computationThread
+        withContext(Dispatchers.Default) {
+            transaction?.loanId ?: return@withContext
 
             onBackgroundProcessingStart()
 
-            val loan = ltCore.fetchLoan(transaction.loanId!!) ?: return@computationThread
+            val loan = ltCore.fetchLoan(transaction.loanId!!) ?: return@withContext
 
             if (accountsChanged) {
                 val newLoanRecords: List<LoanRecord> = calculateLoanRecords(
@@ -119,11 +119,11 @@ class LoanTransactionSyncUseCase @Inject constructor(
         newAccountId: UUID?,
         loanId: UUID
     ): List<LoanRecord> {
-        return scopedIOThread { scope ->
+        return withContext(Dispatchers.IO) {
             val loanRecords =
                 ltCore.fetchAllLoanRecords(loanId = loanId)
                     .map { loanRecord ->
-                        scope.async {
+                        async {
                             val convertedAmount: Double? =
                                 ltCore.computeConvertedAmount(
                                     oldLoanRecordAccountId = loanRecord.accountId,

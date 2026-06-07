@@ -46,8 +46,6 @@ import com.ivy.domain.usecase.transaction.SaveLegacyTransactionUseCase
 import com.ivy.domain.usecase.transaction.SuggestTransactionTitlesUseCase
 import com.ivy.legacy.ui.model.EditTransactionDisplayLoan
 import com.ivy.data.model.legacy.Account
-import com.ivy.base.coroutines.computationThread
-import com.ivy.base.coroutines.ioThread
 import com.ivy.base.text.toLowerCaseLocal
 import com.ivy.ui.navigation.EditTransactionScreen
 import com.ivy.ui.navigation.MainScreen
@@ -378,7 +376,7 @@ class EditTransactionViewModel @Inject constructor(
         }
 
         val lastSelectedId = getLastSelectedAccountId()
-        if (lastSelectedId != null && ioThread {
+        if (lastSelectedId != null && withContext(Dispatchers.IO) {
                 accounts.find {
                     it.id == lastSelectedId
                 }
@@ -623,7 +621,7 @@ class EditTransactionViewModel @Inject constructor(
 
     private fun delete() {
         viewModelScope.launch {
-            ioThread {
+            withContext(Dispatchers.IO) {
                 loadedTransaction?.let {
                     deleteTransactionUseCase(TransactionId(it.id))
                 }
@@ -634,7 +632,7 @@ class EditTransactionViewModel @Inject constructor(
 
     private fun duplicate() {
         viewModelScope.launch {
-            ioThread {
+            withContext(Dispatchers.IO) {
                 val id = UUID.randomUUID()
                 loadedTransaction()
                     .copy(
@@ -675,7 +673,7 @@ class EditTransactionViewModel @Inject constructor(
 
     private fun updateTitleSuggestions(title: String? = loadedTransaction().title) {
         viewModelScope.launch {
-            titleSuggestions = ioThread {
+            titleSuggestions = withContext(Dispatchers.IO) {
                 suggestTransactionTitlesUseCase(
                     title = title,
                     categoryId = category?.id?.value,
@@ -712,7 +710,7 @@ class EditTransactionViewModel @Inject constructor(
 
     private suspend fun saveInternal(closeScreen: Boolean) {
         try {
-            ioThread {
+            withContext(Dispatchers.IO) {
                 val amount = amount.toBigDecimal()
 
                 loadedTransaction = loadedTransaction().copy(
@@ -851,7 +849,7 @@ class EditTransactionViewModel @Inject constructor(
         exchangeRate: Double? = null,
         resetRate: Boolean = false
     ) {
-        computationThread {
+        withContext(Dispatchers.Default) computation@ {
             val toAcc = toAccountValue ?: toAccount
             val fromAcc = fromAccount ?: account
 
@@ -860,7 +858,7 @@ class EditTransactionViewModel @Inject constructor(
 
             if (toAcc == null || fromAcc == null || (toAccCurrencyCode == fromAccCurrencyCode)) {
                 customExchangeRateState = CustomExchangeRateState()
-                return@computationThread
+                return@computation
             }
 
             val exRate = exchangeRate

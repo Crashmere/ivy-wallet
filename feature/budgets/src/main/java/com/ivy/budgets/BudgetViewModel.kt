@@ -43,7 +43,9 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import kotlin.math.abs
 
@@ -203,7 +205,7 @@ class BudgetViewModel @Inject constructor(
                 .filter { it.categoryIdsSerialized.isNotNullOrBlank() }
                 .sumOf { it.amount }
 
-            this@BudgetViewModel.budgets.value = com.ivy.base.coroutines.ioThread {
+            this@BudgetViewModel.budgets.value = withContext(Dispatchers.IO) {
                 budgets.map {
                     DisplayBudget(
                         budget = it,

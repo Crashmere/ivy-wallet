@@ -20,7 +20,6 @@ import com.ivy.domain.usecase.settings.GetTransfersAsIncomeExpensePreferenceUseC
 import com.ivy.legacy.ui.state.PeriodState
 import com.ivy.data.model.legacy.toCloseTimeRange
 import com.ivy.data.model.currency.format
-import com.ivy.base.coroutines.ioThread
 import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.R
 import com.ivy.ui.preferences.asEnabledState
@@ -31,6 +30,7 @@ import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @Stable
@@ -144,7 +144,7 @@ class AccountsViewModel @Inject constructor(
     }
 
     private suspend fun reorder(newOrder: List<AccountData>) {
-        ioThread {
+        withContext(Dispatchers.IO) {
             newOrder.mapIndexed { index, accountData ->
                 saveAccountUseCase(accountData.account.copy(orderNum = index.toDouble()))
             }

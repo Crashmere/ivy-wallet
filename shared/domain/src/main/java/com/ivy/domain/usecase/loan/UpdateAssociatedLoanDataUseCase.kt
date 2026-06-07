@@ -1,7 +1,8 @@
 package com.ivy.domain.usecase.loan
 
 import com.ivy.data.model.legacy.Transaction
-import com.ivy.base.coroutines.computationThread
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class UpdateAssociatedLoanDataUseCase @Inject constructor(
@@ -14,9 +15,9 @@ class UpdateAssociatedLoanDataUseCase @Inject constructor(
         onBackgroundProcessingEnd: suspend () -> Unit = {},
         accountsChanged: Boolean = true
     ) {
-        computationThread {
+        withContext(Dispatchers.Default) {
             if (transaction == null) {
-                return@computationThread
+                return@withContext
             }
 
             if (transaction.loanId != null && transaction.loanRecordId == null) {

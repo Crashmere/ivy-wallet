@@ -3,8 +3,9 @@ package com.ivy.domain.usecase.loan
 import com.ivy.data.model.legacy.Transaction
 import com.ivy.data.model.legacy.Loan
 import com.ivy.data.model.legacy.LoanRecord
-import com.ivy.base.coroutines.computationThread
 import com.ivy.data.model.legacy.CreateLoanRecordData
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.util.UUID
 import javax.inject.Inject
 
@@ -16,7 +17,7 @@ class LoanRecordTransactionSyncUseCase @Inject constructor(
         loanRecord: LoanRecord,
         createLoanRecordTransaction: Boolean,
     ) {
-        computationThread {
+        withContext(Dispatchers.Default) {
             val transaction = ltCore.fetchLoanRecordTransaction(loanRecord.id)
             ltCore.updateAssociatedTransaction(
                 createTransaction = createLoanRecordTransaction,
@@ -39,7 +40,7 @@ class LoanRecordTransactionSyncUseCase @Inject constructor(
         loanRecordId: UUID,
         data: CreateLoanRecordData,
     ) {
-        computationThread {
+        withContext(Dispatchers.Default) {
             ltCore.updateAssociatedTransaction(
                 createTransaction = data.createLoanRecordTransaction,
                 loanType = loan.type,
@@ -66,12 +67,12 @@ class LoanRecordTransactionSyncUseCase @Inject constructor(
     ) {
         transaction?.loanId ?: return
         transaction.loanRecordId ?: return
-        computationThread {
+        withContext(Dispatchers.Default) {
             onBackgroundProcessingStart()
 
             val loanRecord =
-                ltCore.fetchLoanRecord(transaction.loanRecordId!!) ?: return@computationThread
-            val loan = ltCore.fetchLoan(transaction.loanId!!) ?: return@computationThread
+                ltCore.fetchLoanRecord(transaction.loanRecordId!!) ?: return@withContext
+            val loan = ltCore.fetchLoan(transaction.loanId!!) ?: return@withContext
 
             val convertedAmount = ltCore.computeConvertedAmount(
                 oldLoanRecordAccountId = loanRecord.accountId,

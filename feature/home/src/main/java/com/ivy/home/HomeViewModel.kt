@@ -40,7 +40,6 @@ import com.ivy.legacy.ui.model.LegacyDueSection
 import com.ivy.legacy.ui.model.period.TimePeriod
 import com.ivy.data.model.legacy.toUTCCloseTimeRange
 import com.ivy.data.model.legacy.Account
-import com.ivy.base.coroutines.ioThread
 import com.ivy.ui.navigation.BalanceScreen
 import com.ivy.ui.navigation.MainTab
 import com.ivy.ui.navigation.MainScreen
@@ -60,8 +59,10 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.math.BigDecimal
 import java.time.ZoneOffset
 import javax.inject.Inject
@@ -397,7 +398,7 @@ class HomeViewModel @Inject constructor(
     }
 
     private suspend fun loadCustomerJourney(unit: Unit) {
-        customerJourneyCards = ioThread {
+        customerJourneyCards = withContext(Dispatchers.IO) {
             customerJourneyLogic.loadCards().toImmutableList()
         }
     }

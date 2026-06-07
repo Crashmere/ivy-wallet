@@ -23,7 +23,6 @@ import com.ivy.data.model.legacy.Account
 import com.ivy.data.model.legacy.Loan
 import com.ivy.data.model.currency.format
 import com.ivy.data.model.currency.getDefaultFIATCurrency
-import com.ivy.base.coroutines.ioThread
 import com.ivy.loans.loan.data.DisplayLoan
 import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.time.impl.DateTimePicker
@@ -37,6 +36,7 @@ import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.time.Instant
 import java.time.LocalDateTime
 import java.util.UUID
@@ -202,7 +202,7 @@ class LoanViewModel @Inject constructor(
             totalOweAmount = 0.0
             totalOwedAmount = 0.0
 
-            allLoans = ioThread {
+            allLoans = withContext(Dispatchers.IO) {
                 getLoansUseCase()
                     .map { loan ->
                         val (amountPaid, loanTotalAmount) = calculateAmountPaidAndTotalAmount(loan)
