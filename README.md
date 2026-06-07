@@ -276,12 +276,12 @@
 - `shared:base` 已退出 `ivy.hilt`，基础时间/线程端口的 Hilt 绑定迁到 app 装配层；Compose runtime 和 kotlinx serialization 也已经移除。`shared:base` 与 `shared:base-testing` 当前已改成纯 JVM/Kotlin 模块，不再需要 Android namespace、manifest 或 SDK 配置。
 - `shared:data:model` 已移除轻量 `compose-runtime`，纯数据模型不再依赖 UI runtime。
 - 过渡用的 `ivy.compose-runtime` 插件已经删除；当前非页面模块不再需要轻量 Compose 编译配置。
-- `ivy.integration.testing` 已从 `ivy.feature` 改为基于 `ivy.android-library`，避免因为集成测试配置把完整 Compose UI 配置带入数据层。
+- `ivy.integration.testing` 已从 `ivy.feature` 迁出并收敛为 instrumentation 测试配置，避免因为集成测试配置把完整 Compose UI 或 Android library 基础配置带入数据层。
 - `shared:data:core`、`shared:domain` 已从 `ivy.feature` 迁出；其中 `shared:data:core` 继续作为 Android 数据实现模块显式声明 Room/Hilt 等能力，`shared:domain` 已进一步改成纯 JVM/Kotlin 模块。
 - `shared:domain` 已移除空 androidTest 源集使用的 `ivy.integration.testing` 插件；domain 当前只保留 JVM 单元测试，Room migration 和备份恢复这类设备测试继续留在 `shared:data:core`。
 - `shared:domain` 已移除 `ivy.room` 和 `ivy.hilt` 插件；主源码只保留 `javax.inject` 构造注入注解供 app 侧 Hilt 图消费，domain 自身不再参与 Hilt 聚合，测试也不再为了 domain 行为验证创建内存 Room 数据库。
 - `shared:domain` 已移除 Ktor 依赖；汇率同步测试改用 `ExchangeRateStore` fake 验证业务转换与保存行为，真实网络 client 继续留在 data core 实现边界。
-- `ivy.room` 已从 `ivy.module` 改为基于 `ivy.android-library`，不再隐式带入 Hilt 和 kotlinx serialization；`shared:data:core` 改为显式声明这两个依赖。
+- `ivy.room` 已从旧 `ivy.module` 迁出并收敛为 Room/KSP/schema 配置，不再隐式带入 Hilt、kotlinx serialization 或 Android library 基础配置；Room 模块必须先显式声明 Android library 能力。
 - `shared:ui:core`、`shared:ui:legacy`、`shared:ui:navigation` 已从 `ivy.feature` 迁到 `ivy.compose`；shared UI 模块不再伪装成 feature。
 - `shared:ui:core`、`shared:ui:legacy`、`shared:ui:navigation` 的 Kotlin 源码已从 `src/main/java` 迁到 `src/main/kotlin`，`shared:ui:core` 测试源码同步迁到 `src/test/kotlin`；包名和运行行为不变，只收敛源集结构。
 - 所有 `feature:*` 模块的 Kotlin 源码已从 `src/main/java` 迁到 `src/main/kotlin`；页面模块继续保持原包名和行为，只让目录结构匹配 Kotlin-only 代码事实。
