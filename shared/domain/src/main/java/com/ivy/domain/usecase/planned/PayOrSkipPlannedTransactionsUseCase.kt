@@ -5,7 +5,7 @@ import com.ivy.data.db.dao.read.PlannedPaymentRuleDao
 import com.ivy.data.db.dao.write.WritePlannedPaymentRuleDao
 import com.ivy.data.model.Transaction
 import com.ivy.data.repository.TransactionRepository
-import com.ivy.legacy.domain.pure.transaction.settleNow
+import com.ivy.domain.transaction.legacy.settleNow
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 

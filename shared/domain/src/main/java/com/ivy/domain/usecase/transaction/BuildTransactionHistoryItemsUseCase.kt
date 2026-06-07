@@ -7,7 +7,7 @@ import com.ivy.data.repository.AccountRepository
 import com.ivy.data.repository.TagRepository
 import com.ivy.domain.usecase.exchange.ExchangeAmountUseCase
 import com.ivy.domain.mapper.legacy.toLegacyDomain
-import com.ivy.legacy.domain.pure.transaction.transactionsWithDateDividers
+import com.ivy.domain.transaction.legacy.transactionsWithDateDividers
 import javax.inject.Inject
 
 class BuildTransactionHistoryItemsUseCase @Inject constructor(

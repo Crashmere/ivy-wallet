@@ -13,7 +13,7 @@ import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.domain.usecase.exchange.LegacyExchangeRatesUseCase
 import com.ivy.domain.usecase.exchange.sumInBaseCurrency
 import com.ivy.domain.mapper.legacy.toLegacy
-import com.ivy.legacy.domain.pure.transaction.LegacyTrnDateDividers
+import com.ivy.domain.transaction.legacy.LegacyTrnDateDividers
 import com.ivy.domain.time.filterOverdueLegacy
 import com.ivy.domain.time.filterUpcomingLegacy
 import javax.inject.Inject

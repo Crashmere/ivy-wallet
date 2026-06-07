@@ -55,9 +55,9 @@ import com.ivy.domain.usecase.transaction.BuildTransactionHistoryItemsUseCase
 import com.ivy.domain.usecase.transaction.CalculateTransactionsIncomeExpenseUseCase
 import com.ivy.data.model.legacy.IncomeExpenseTransferPair
 import com.ivy.domain.exchange.ExchangeData
-import com.ivy.legacy.domain.pure.transaction.getTransactionType
-import com.ivy.legacy.domain.pure.transaction.getValue
-import com.ivy.legacy.domain.pure.transaction.trnCurrency
+import com.ivy.domain.transaction.legacy.getTransactionType
+import com.ivy.domain.transaction.legacy.getValue
+import com.ivy.domain.transaction.legacy.trnCurrency
 import com.ivy.domain.util.orZero
 import com.ivy.legacy.ui.theme.Gray
 import dagger.hilt.android.lifecycle.HiltViewModel

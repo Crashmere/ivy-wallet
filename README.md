@@ -483,6 +483,7 @@
 - upcoming/overdue 交易日期过滤 helper 已从 `com.ivy.legacy.domain.model` 迁到 `com.ivy.domain.time`；legacy model 包不再承载这类业务过滤函数。
 - 通用排序号、Arrow `Option` 归零和 non-empty list 折叠 helper 已从 `com.ivy.legacy.domain.pure.util` 迁到 `com.ivy.domain.util`；这些工具继续服务排序创建、CSV 导入和旧统计折叠，但不再挂在 legacy pure 包下。
 - 账户余额过滤、账户币种 fallback 和汇率换算纯函数已从 `com.ivy.legacy.domain.pure.account/exchange` 迁到 `com.ivy.domain.account` 与 `com.ivy.domain.exchange`；它们仍兼容旧账户/汇率模型，但包边界已经按业务职责归位。
+- 旧交易纯计算、日期分组和新旧交易值桥接函数已从 `com.ivy.legacy.domain.pure.transaction` 迁到 `com.ivy.domain.transaction.legacy`；当前 `shared:domain` 中的 `com.ivy.legacy.domain` 源码已经清空。
 - 账户页展示模型 `AccountData` 和对应 `AccountDataAct` 已从 `shared:domain` 下沉到 `feature:accounts`；账户页专用展示聚合不再占用 shared domain 边界。
 - 纯创建参数 `CreateAccountData`、`CreateCategoryData`、`CreateBudgetData` 已从 `com.ivy.legacy.domain.model` 下沉到 `com.ivy.data.model.legacy`；UI 弹窗、feature event 和 domain creator 继续使用同名参数对象，但不再占用 legacy domain model 包。
 - 旧预算模型 `Budget` 已从 `com.ivy.legacy.domain.model` 下沉到 `com.ivy.data.model.legacy`；数据库转换 `toEntity()` 已移入 legacy domain mapper，预算页和预算相关 use case 继续使用同一模型语义。
@@ -620,7 +621,7 @@
 - 继续清理 feature 的 Gradle 依赖：`:feature:search`、`:feature:piechart`、`:feature:main` 和 `:feature:settings` 已去掉对 `shared:data:core` 的直接依赖；其中 search/main/settings 只补充实际需要的 `shared:data:model` 或 DataStore 依赖，settings 的 ZIP 备份导出改走 `ExportBackupUseCase`。
 - 汇率页的数据边界已收敛：新增 `ObserveExchangeRatesUseCase`、`SaveExchangeRateUseCase` 和 `DeleteExchangeRateUseCase`，`:feature:exchange-rates` 不再直接注入 `ExchangeRatesRepository`，并已去掉对 `shared:data:core` 的直接依赖。
 - 汇率金额换算入口已收敛到 `ExchangeAmountUseCase`，预算、账户、交易、报表、钱包汇总和首页到期交易统计不再依赖旧 `ExchangeAct`；底层仍复用现有 `ExchangeData` 与换算纯函数，行为保持不变。
-- 旧交易桥接函数已从 `shared:data:core` 移到 domain 旧交易纯逻辑包：`getValue/getAccountId/getTransactionType/settleNow` 不再作为数据实现层 API 暴露，预算、报表和旧 domain 逻辑改为从 `com.ivy.legacy.domain.pure.transaction` 使用这些扩展。
+- 旧交易桥接函数已从 `shared:data:core` 移到 domain 旧交易纯逻辑包：`getValue/getAccountId/getTransactionType/settleNow` 不再作为数据实现层 API 暴露，预算、报表和旧 domain 逻辑改为从 `com.ivy.domain.transaction.legacy` 使用这些扩展。
 - 预算页数据边界已收敛：新增 `GetBudgetsUseCase` 和 `ReorderBudgetsUseCase` 封装预算列表读取与排序保存，旧 `BudgetsAct` 已删除；`:feature:budgets` 不再直接注入 `WriteBudgetDao`，并已去掉对 `shared:data:core` 的直接依赖。
 - 预算创建、编辑和删除已从旧 `BudgetCreator` 拆成 `CreateBudgetUseCase`、`UpdateBudgetUseCase` 和 `DeleteBudgetUseCase`；预算页只依赖正式 use case，旧 `BudgetCreator` 已删除。
 - 账户创建和编辑已从旧 `AccountCreator` 拆成 `CreateAccountWithBalanceUseCase` 和 `UpdateAccountWithBalanceUseCase`；主页面、编辑交易、计划付款、借贷和交易详情页不再注入旧 creator，账户保存后自动生成余额调平交易的行为保持不变。

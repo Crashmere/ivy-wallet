@@ -5,10 +5,10 @@ import arrow.core.toOption
 import com.ivy.data.model.Transaction
 import com.ivy.data.model.legacy.Account
 import com.ivy.domain.account.accountCurrency
-import com.ivy.legacy.domain.pure.transaction.LegacyTrnFunctions
-import com.ivy.legacy.domain.pure.transaction.getAccountId
-import com.ivy.legacy.domain.pure.transaction.getValue
-import com.ivy.legacy.domain.pure.transaction.trnCurrency
+import com.ivy.domain.transaction.legacy.LegacyTrnFunctions
+import com.ivy.domain.transaction.legacy.getAccountId
+import com.ivy.domain.transaction.legacy.getValue
+import com.ivy.domain.transaction.legacy.trnCurrency
 import java.math.BigDecimal
 import java.util.UUID
 

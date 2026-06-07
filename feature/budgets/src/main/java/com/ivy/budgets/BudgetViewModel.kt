@@ -36,9 +36,9 @@ import com.ivy.ui.R
 import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
 import com.ivy.data.model.legacy.CreateBudgetData
 import com.ivy.domain.exchange.ExchangeData
-import com.ivy.legacy.domain.pure.transaction.getAccountId
-import com.ivy.legacy.domain.pure.transaction.getValue
-import com.ivy.legacy.domain.pure.transaction.trnCurrency
+import com.ivy.domain.transaction.legacy.getAccountId
+import com.ivy.domain.transaction.legacy.getValue
+import com.ivy.domain.transaction.legacy.trnCurrency
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf

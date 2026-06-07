@@ -6,7 +6,7 @@ import com.ivy.base.time.TimeConverter
 import com.ivy.data.db.dao.read.AccountDao
 import com.ivy.domain.usecase.exchange.ExchangeAmountUseCase
 import com.ivy.domain.mapper.legacy.toLegacyDomain
-import com.ivy.legacy.domain.pure.transaction.LegacyTrnDateDividers
+import com.ivy.domain.transaction.legacy.LegacyTrnDateDividers
 import javax.inject.Inject
 
 class BuildLegacyTransactionHistoryItemsUseCase @Inject constructor(

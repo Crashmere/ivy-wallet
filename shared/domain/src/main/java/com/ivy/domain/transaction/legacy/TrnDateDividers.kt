@@ -1,4 +1,4 @@
-package com.ivy.legacy.domain.pure.transaction
+package com.ivy.domain.transaction.legacy
 
 import arrow.core.Option
 import arrow.core.toOption
@@ -21,11 +21,6 @@ import com.ivy.domain.usecase.exchange.LegacyExchangeRatesUseCase
 import com.ivy.domain.exchange.ExchangeData
 import com.ivy.domain.exchange.ExchangeTrnArgument
 import com.ivy.domain.exchange.exchangeInBaseCurrency
-import com.ivy.legacy.domain.pure.transaction.LegacyFoldTransactions
-import com.ivy.legacy.domain.pure.transaction.LegacyTrnFunctions
-import com.ivy.legacy.domain.pure.transaction.expenses
-import com.ivy.legacy.domain.pure.transaction.incomes
-import com.ivy.legacy.domain.pure.transaction.sumTrns
 import java.math.BigDecimal
 import java.util.UUID
 

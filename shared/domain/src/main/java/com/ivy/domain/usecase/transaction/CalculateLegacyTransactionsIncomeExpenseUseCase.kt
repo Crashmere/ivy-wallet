@@ -5,8 +5,8 @@ import com.ivy.base.model.legacy.Transaction
 import com.ivy.data.model.legacy.Account
 import com.ivy.data.model.legacy.IncomeExpenseTransferPair
 import com.ivy.domain.usecase.exchange.ExchangeAmountUseCase
-import com.ivy.legacy.domain.pure.transaction.LegacyFoldTransactions
-import com.ivy.legacy.domain.pure.transaction.WalletValueFunctionsLegacy
+import com.ivy.domain.transaction.legacy.LegacyFoldTransactions
+import com.ivy.domain.transaction.legacy.WalletValueFunctionsLegacy
 import javax.inject.Inject
 
 class CalculateLegacyTransactionsIncomeExpenseUseCase @Inject constructor(

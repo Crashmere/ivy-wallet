@@ -1,4 +1,4 @@
-package com.ivy.legacy.domain.pure.transaction
+package com.ivy.domain.transaction.legacy
 
 import arrow.core.NonEmptyList
 import arrow.core.nonEmptyListOf

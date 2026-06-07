@@ -4,7 +4,7 @@ import com.ivy.data.model.AccountId
 import com.ivy.data.model.Expense
 import com.ivy.data.model.Income
 import com.ivy.data.model.legacy.FromToTimeRange
-import com.ivy.legacy.domain.pure.transaction.getValue
+import com.ivy.domain.transaction.legacy.getValue
 import javax.inject.Inject
 
 class GetAccountUpcomingTransactionsSummaryUseCase @Inject constructor(

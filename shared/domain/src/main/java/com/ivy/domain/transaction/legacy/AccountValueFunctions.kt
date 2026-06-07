@@ -1,4 +1,4 @@
-package com.ivy.legacy.domain.pure.transaction
+package com.ivy.domain.transaction.legacy
 
 import com.ivy.data.model.Expense
 import com.ivy.data.model.Income
