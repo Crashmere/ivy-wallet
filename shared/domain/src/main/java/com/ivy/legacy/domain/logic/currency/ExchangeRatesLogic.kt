@@ -9,7 +9,6 @@ import com.ivy.legacy.domain.mapper.toLegacyDomain
 import java.util.UUID
 import javax.inject.Inject
 
-@Deprecated("Use FP style, look into `domain.fp` package")
 class ExchangeRatesLogic @Inject constructor(
     private val exchangeRatesDao: ExchangeRatesDao
 ) {
@@ -116,7 +115,6 @@ class ExchangeRatesLogic @Inject constructor(
     }
 }
 
-@Deprecated("Use FP style, look into `domain.fp` package")
 suspend fun Iterable<Transaction>.sumInBaseCurrency(
     exchangeRatesLogic: ExchangeRatesLogic,
     baseCurrency: String,
@@ -133,7 +131,6 @@ suspend fun Iterable<Transaction>.sumInBaseCurrency(
     }
 }
 
-@Deprecated("Use FP style, look into `domain.fp` package")
 suspend fun Iterable<PlannedPaymentRule>.sumByDoublePlannedInBaseCurrency(
     exchangeRatesLogic: ExchangeRatesLogic,
     baseCurrency: String,

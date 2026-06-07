@@ -96,7 +96,6 @@ object WalletValueFunctions {
     }
 }
 
-@Deprecated("Uses legacy Transaction")
 object WalletValueFunctionsLegacy {
     data class Argument(
         val accounts: List<Account>,

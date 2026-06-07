@@ -22,7 +22,6 @@ import com.ivy.legacy.domain.logic.currency.ExchangeRatesLogic
 import com.ivy.legacy.domain.logic.currency.sumByDoublePlannedInBaseCurrency
 import javax.inject.Inject
 
-@Deprecated("Migrate to FP Style")
 class PlannedPaymentsLogic @Inject constructor(
     private val plannedPaymentRuleDao: PlannedPaymentRuleDao,
     private val transactionDao: TransactionDao,
@@ -157,8 +156,7 @@ class PlannedPaymentsLogic @Inject constructor(
         }
     }
 
-    @Deprecated("Uses legacy Transaction")
-    suspend fun payOrGetLegacy(
+        suspend fun payOrGetLegacy(
         transaction: Transaction,
         skipTransaction: Boolean = false,
         onUpdateUI: suspend (paidTransaction: Transaction) -> Unit
@@ -270,8 +268,7 @@ class PlannedPaymentsLogic @Inject constructor(
         onUpdateUI(paidTransactions)
     }
 
-    @Deprecated("Uses legacy Transaction")
-    suspend fun payOrGetLegacy(
+        suspend fun payOrGetLegacy(
         transactions: List<Transaction>,
         skipTransaction: Boolean = false,
         onUpdateUI: suspend (paidTransactions: List<Transaction>) -> Unit

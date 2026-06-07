@@ -10,7 +10,6 @@ import javax.inject.Inject
 
 const val SUGGESTIONS_LIMIT = 10
 
-@Deprecated("Use FP style, look into `domain.fp` package")
 class SmartTitleSuggestionsLogic @Inject constructor(
     private val transactionDao: TransactionDao
 ) {
@@ -90,7 +89,6 @@ class SmartTitleSuggestionsLogic @Inject constructor(
     }
 }
 
-@Deprecated("Use FP style, look into `domain.fp` package")
 private fun List<Transaction>.extractUniqueTitles(
     excludeSuggestions: Set<String>? = null
 ): Set<String> {
@@ -101,7 +99,6 @@ private fun List<Transaction>.extractUniqueTitles(
         .toSet()
 }
 
-@Deprecated("Use FP style, look into `domain.fp` package")
 private suspend fun Set<String>.sortedByMostUsedFirst(countUses: suspend (String) -> Long): Set<String> {
     val titleCountMap = this
         .map {

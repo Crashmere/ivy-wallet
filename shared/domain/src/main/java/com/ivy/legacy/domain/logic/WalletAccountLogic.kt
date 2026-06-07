@@ -23,7 +23,6 @@ import javax.inject.Inject
 import kotlin.math.abs
 import kotlin.math.absoluteValue
 
-@Deprecated("Migrate to FP Style")
 class WalletAccountLogic @Inject constructor(
     private val transactionRepository: TransactionRepository,
     private val transactionMapper: TransactionMapper,

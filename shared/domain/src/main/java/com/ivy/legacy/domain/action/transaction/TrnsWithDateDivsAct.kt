@@ -39,7 +39,6 @@ class TrnsWithDateDivsAct @Inject constructor(
     )
 }
 
-@Deprecated("Uses legacy Transaction")
 class LegacyTrnsWithDateDivsAct @Inject constructor(
     private val accountDao: AccountDao,
     private val exchangeAct: ExchangeAct,

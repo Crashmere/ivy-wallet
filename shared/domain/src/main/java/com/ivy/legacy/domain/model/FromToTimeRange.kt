@@ -38,7 +38,6 @@ data class FromToTimeRange(
         dateTime.isAfter(from()) && dateTime.isBefore(to())
 }
 
-@Deprecated("Uses legacy Transaction")
 fun Iterable<Transaction>.filterUpcomingLegacy(
     timeProvider: TimeProvider,
     timeConverter: TimeConverter,
@@ -61,7 +60,6 @@ fun Iterable<com.ivy.data.model.Transaction>.filterUpcoming(
     }
 }
 
-@Deprecated("Uses legacy Transaction")
 fun Iterable<Transaction>.filterOverdueLegacy(
     timeProvider: TimeProvider,
     timeConverter: TimeConverter,

@@ -55,7 +55,6 @@ fun trnCurrency(
     return accountCurrency(account, baseCurrency).toOption()
 }
 
-@Deprecated("Uses legacy Transaction")
 object LegacyTrnFunctions {
     @Pure
     fun expenses(transactions: List<com.ivy.base.model.legacy.Transaction>): List<com.ivy.base.model.legacy.Transaction> {

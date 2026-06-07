@@ -6,7 +6,6 @@ import com.ivy.data.model.IntervalType
 import java.time.Instant
 import java.util.UUID
 
-@Deprecated("Legacy data model. Will be deleted")
 data class PlannedPaymentRule(
     val startDate: Instant?,
     val intervalN: Int?,

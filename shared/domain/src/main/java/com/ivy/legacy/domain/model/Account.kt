@@ -13,7 +13,6 @@ import com.ivy.data.repository.CurrencyRepository
 import java.util.UUID
 import com.ivy.data.model.Account as DomainAccount
 
-@Deprecated("Legacy data model. Will be deleted")
 data class Account(
     val name: String,
     val color: Int,

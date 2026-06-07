@@ -8,7 +8,6 @@ import com.ivy.legacy.domain.action.transaction.LegacyCalcTrnsIncomeExpenseAct
 import com.ivy.data.model.legacy.IncomeExpenseTransferPair
 import javax.inject.Inject
 
-@Deprecated("Uses legacy Transaction")
 class LegacyCategoryIncomeWithAccountFiltersAct @Inject constructor(
     private val calcTrnsIncomeExpenseAct: LegacyCalcTrnsIncomeExpenseAct
 ) : FPAction<LegacyCategoryIncomeWithAccountFiltersAct.Input, IncomeExpenseTransferPair>() {

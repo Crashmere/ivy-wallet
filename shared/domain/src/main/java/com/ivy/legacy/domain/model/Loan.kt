@@ -6,7 +6,6 @@ import java.time.LocalDateTime
 import java.util.UUID
 
 @Suppress("DataClassDefaultValues")
-@Deprecated("Legacy data model. Will be deleted")
 data class Loan(
     val name: String,
     val amount: Double,

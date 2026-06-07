@@ -583,8 +583,7 @@ class ReportViewModel @Inject constructor(
         }
     }
 
-    @Deprecated("Uses legacy Transaction")
-    private suspend fun payOrGetLegacy(transaction: com.ivy.base.model.legacy.Transaction) {
+        private suspend fun payOrGetLegacy(transaction: com.ivy.base.model.legacy.Transaction) {
         uiThread {
             plannedPaymentsLogic.payOrGetLegacy(transaction = transaction) {
                 start()
@@ -617,8 +616,7 @@ class ReportViewModel @Inject constructor(
         }
     }
 
-    @Deprecated("Uses legacy Transaction")
-    private suspend fun skipTransactionLegacy(transaction: com.ivy.base.model.legacy.Transaction) {
+        private suspend fun skipTransactionLegacy(transaction: com.ivy.base.model.legacy.Transaction) {
         uiThread {
             plannedPaymentsLogic.payOrGetLegacy(
                 transaction = transaction,
@@ -642,8 +640,7 @@ class ReportViewModel @Inject constructor(
         }
     }
 
-    @Deprecated("Uses legacy Transaction")
-    private suspend fun skipTransactionsLegacy(transactions: List<com.ivy.base.model.legacy.Transaction>) {
+        private suspend fun skipTransactionsLegacy(transactions: List<com.ivy.base.model.legacy.Transaction>) {
         uiThread {
             plannedPaymentsLogic.payOrGetLegacy(
                 transactions = transactions,

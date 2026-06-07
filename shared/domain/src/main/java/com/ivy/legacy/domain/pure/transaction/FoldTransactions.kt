@@ -90,7 +90,6 @@ suspend fun <A> sumTrns(
     ).head
 }
 
-@Deprecated("Uses legacy Transaction")
 object LegacyFoldTransactions {
 
     @Pure
@@ -104,8 +103,7 @@ object LegacyFoldTransactions {
         valueFunctionArgument = arg
     )
 
-    @Deprecated("Kept only to stay compatible with legacy.Transaction")
-    @Pure
+        @Pure
     internal tailrec suspend fun <A> sumTransactionsSuspendInternal(
         transactions: List<com.ivy.base.model.legacy.Transaction>,
         valueFunctionArgument: A,
@@ -127,8 +125,7 @@ object LegacyFoldTransactions {
         }
     }
 
-    @Deprecated("Kept only to stay compatible with legacy.Transaction")
-    suspend fun <A> sumTrns(
+        suspend fun <A> sumTrns(
         transactions: List<com.ivy.base.model.legacy.Transaction>,
         valueFunction: suspend (com.ivy.base.model.legacy.Transaction, A) -> BigDecimal,
         argument: A

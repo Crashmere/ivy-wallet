@@ -23,7 +23,6 @@ import com.ivy.legacy.domain.logic.currency.sumInBaseCurrency
 import java.util.UUID
 import javax.inject.Inject
 
-@Deprecated("Migrate to FP Style")
 class WalletCategoryLogic @Inject constructor(
     private val accountDao: AccountDao,
     private val currencyRepository: CurrencyRepository,
@@ -275,8 +274,7 @@ class WalletCategoryLogic @Inject constructor(
             )
     }
 
-    @Deprecated("Uses legacy Transaction")
-    suspend fun upcomingByCategoryLegacy(
+        suspend fun upcomingByCategoryLegacy(
         category: Category,
         range: com.ivy.legacy.domain.model.FromToTimeRange
     ): List<Transaction> {
@@ -302,8 +300,7 @@ class WalletCategoryLogic @Inject constructor(
         ).filterUpcoming(timeProvider)
     }
 
-    @Deprecated("Uses legacy Transaction")
-    suspend fun upcomingUnspecifiedLegacy(range: com.ivy.legacy.domain.model.FromToTimeRange): List<Transaction> {
+        suspend fun upcomingUnspecifiedLegacy(range: com.ivy.legacy.domain.model.FromToTimeRange): List<Transaction> {
         return transactionRepository.findAllDueToBetweenByCategoryUnspecified(
             startDate = range.upcomingFrom(timeProvider),
             endDate = range.to()
@@ -369,8 +366,7 @@ class WalletCategoryLogic @Inject constructor(
             )
     }
 
-    @Deprecated("Uses legacy Transaction")
-    suspend fun overdueByCategoryLegacy(
+        suspend fun overdueByCategoryLegacy(
         category: Category,
         range: com.ivy.legacy.domain.model.FromToTimeRange
     ): List<Transaction> {
@@ -397,8 +393,7 @@ class WalletCategoryLogic @Inject constructor(
             .filterOverdue(timeProvider)
     }
 
-    @Deprecated("Uses legacy Transaction")
-    suspend fun overdueUnspecifiedLegacy(range: com.ivy.legacy.domain.model.FromToTimeRange): List<Transaction> {
+        suspend fun overdueUnspecifiedLegacy(range: com.ivy.legacy.domain.model.FromToTimeRange): List<Transaction> {
         return transactionRepository.findAllDueToBetweenByCategoryUnspecified(
             startDate = range.from(),
             endDate = range.overdueTo(timeProvider)

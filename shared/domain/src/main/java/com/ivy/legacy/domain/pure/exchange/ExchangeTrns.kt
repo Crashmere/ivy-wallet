@@ -42,7 +42,6 @@ suspend fun exchangeInBaseCurrency(
     )
 }
 
-@Deprecated("Uses legacy Transaction")
 @Pure
 suspend fun exchangeInBaseCurrency(
     transaction: com.ivy.base.model.legacy.Transaction,
@@ -116,7 +115,6 @@ suspend fun exchangeInCurrency(
     ).orNull() ?: BigDecimal.ZERO
 }
 
-@Deprecated("Uses legacy Transaction")
 suspend fun exchangeInCurrency(
     transaction: com.ivy.base.model.legacy.Transaction,
     baseCurrency: String,
@@ -136,7 +134,6 @@ suspend fun exchangeInCurrency(
     ).orNull() ?: BigDecimal.ZERO
 }
 
-@Deprecated("Uses legacy Transaction")
 object LegacyExchangeTrns {
 
     @Pure

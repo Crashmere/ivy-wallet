@@ -5,7 +5,6 @@ import com.ivy.base.model.legacy.Transaction
 import com.ivy.data.model.legacy.IncomeExpensePair
 import kotlinx.collections.immutable.ImmutableList
 
-@Deprecated("Uses legacy Transaction")
 @Immutable
 data class LegacyDueSection(
     val trns: ImmutableList<Transaction>,

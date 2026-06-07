@@ -5,7 +5,6 @@ import com.ivy.data.db.entity.LoanRecordEntity
 import java.time.Instant
 import java.util.UUID
 
-@Deprecated("Legacy data model. Will be deleted")
 data class LoanRecord(
     val loanId: UUID,
     val amount: Double,

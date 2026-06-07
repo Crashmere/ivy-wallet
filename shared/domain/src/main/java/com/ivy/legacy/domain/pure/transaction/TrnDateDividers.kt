@@ -32,7 +32,6 @@ import com.ivy.legacy.domain.pure.transaction.sumTrns
 import java.math.BigDecimal
 import java.util.UUID
 
-@Deprecated("Migrate to actions")
 suspend fun List<Transaction>.withDateDividers(
     exchangeRatesLogic: ExchangeRatesLogic,
     baseCurrencyCode: String,
@@ -110,10 +109,8 @@ suspend fun transactionsWithDateDividers(
         }
 }
 
-@Deprecated("Uses legacy Transaction")
 object LegacyTrnDateDividers {
-    @Deprecated("Migrate to actions")
-    suspend fun List<com.ivy.base.model.legacy.Transaction>.withDateDividers(
+        suspend fun List<com.ivy.base.model.legacy.Transaction>.withDateDividers(
         exchangeRatesLogic: ExchangeRatesLogic,
         baseCurrencyCode: String,
         accountDao: AccountDao,

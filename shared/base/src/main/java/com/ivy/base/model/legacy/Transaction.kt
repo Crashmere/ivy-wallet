@@ -12,7 +12,6 @@ import java.util.UUID
 typealias LegacyTransaction = Transaction
 
 @Suppress("DataClassDefaultValues")
-@Deprecated("Legacy data model. Will be deleted")
 data class Transaction(
     // TODO: Remove default values & introduce Transaction#dummy() method
     val accountId: UUID,
