@@ -166,7 +166,7 @@ class AccountsViewModel @Inject constructor(
     }
 
     private suspend fun startInternally() {
-        val period = com.ivy.legacy.data.model.TimePeriod.currentMonth(
+        val period = com.ivy.legacy.ui.model.period.TimePeriod.currentMonth(
             startDayOfMonth = periodState.startDayOfMonth
         ) // this must be monthly
         val range = period.toRange(periodState.startDayOfMonth, timeConverter, timeProvider)

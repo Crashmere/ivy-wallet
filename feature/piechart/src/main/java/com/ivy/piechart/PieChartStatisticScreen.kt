@@ -244,7 +244,7 @@ private fun BoxWithConstraintsScope.UI(
 @Composable
 private fun Header(
     transactionType: TransactionType,
-    period: com.ivy.legacy.data.model.TimePeriod,
+    period: com.ivy.legacy.ui.model.period.TimePeriod,
     startDateOfMonth: Int,
     percentExpanded: Float,
 

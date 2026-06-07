@@ -6,7 +6,7 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import com.ivy.base.legacy.SharedPrefs
-import com.ivy.legacy.data.model.TimePeriod
+import com.ivy.legacy.ui.model.period.TimePeriod
 import javax.inject.Inject
 import javax.inject.Singleton
 

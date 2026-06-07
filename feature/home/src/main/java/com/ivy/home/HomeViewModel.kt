@@ -24,10 +24,10 @@ import com.ivy.home.customerjourney.CustomerJourneyCardModel
 import com.ivy.home.customerjourney.CustomerJourneyCardsProvider
 import com.ivy.design.ThemeState
 import com.ivy.legacy.PeriodState
-import com.ivy.legacy.data.AppBaseData
-import com.ivy.legacy.data.BufferInfo
-import com.ivy.legacy.data.LegacyDueSection
-import com.ivy.legacy.data.model.TimePeriod
+import com.ivy.legacy.ui.model.AppBaseData
+import com.ivy.legacy.ui.model.BufferInfo
+import com.ivy.legacy.ui.model.LegacyDueSection
+import com.ivy.legacy.ui.model.period.TimePeriod
 import com.ivy.legacy.domain.model.toUTCCloseTimeRange
 import com.ivy.legacy.domain.model.Account
 import com.ivy.legacy.domain.model.Settings

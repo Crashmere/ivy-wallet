@@ -1,7 +1,7 @@
 package com.ivy.balance
 
 import androidx.compose.runtime.Immutable
-import com.ivy.legacy.data.model.TimePeriod
+import com.ivy.legacy.ui.model.period.TimePeriod
 
 @Immutable
 data class BalanceState(

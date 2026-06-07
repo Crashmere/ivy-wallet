@@ -36,7 +36,7 @@ import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
 import com.ivy.design.utils.thenIf
 import com.ivy.legacy.LocalPeriodState
-import com.ivy.legacy.data.model.TimePeriod
+import com.ivy.legacy.ui.model.period.TimePeriod
 import com.ivy.legacy.ui.component.transaction.TransactionsDividerLine
 import com.ivy.ui.legacy.clickableNoIndication
 import com.ivy.ui.legacy.drawColoredShadow

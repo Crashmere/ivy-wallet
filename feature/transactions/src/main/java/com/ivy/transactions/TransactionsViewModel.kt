@@ -31,7 +31,7 @@ import com.ivy.design.l0_system.RedLight
 import com.ivy.domain.features.Features
 import com.ivy.frp.then
 import com.ivy.legacy.PeriodState
-import com.ivy.legacy.data.model.TimePeriod
+import com.ivy.legacy.ui.model.period.TimePeriod
 import com.ivy.legacy.domain.model.toCloseTimeRange
 import com.ivy.legacy.domain.mapper.toImmutableLegacyTags
 import com.ivy.legacy.domain.mapper.toLegacyDomain

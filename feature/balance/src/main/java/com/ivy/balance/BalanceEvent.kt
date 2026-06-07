@@ -1,6 +1,6 @@
 package com.ivy.balance
 
-import com.ivy.legacy.data.model.TimePeriod
+import com.ivy.legacy.ui.model.period.TimePeriod
 
 sealed interface BalanceEvent {
     data class OnSetPeriod(val timePeriod: TimePeriod) : BalanceEvent

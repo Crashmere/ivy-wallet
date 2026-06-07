@@ -1,4 +1,4 @@
-package com.ivy.legacy.data.model
+package com.ivy.legacy.ui.model.period
 
 import com.ivy.legacy.domain.model.FromToTimeRange
 import com.ivy.ui.time.TimeFormatter

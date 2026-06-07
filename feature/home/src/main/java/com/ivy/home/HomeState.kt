@@ -4,10 +4,10 @@ import androidx.compose.runtime.Immutable
 import com.ivy.base.legacy.Theme
 import com.ivy.base.legacy.TransactionHistoryItem
 import com.ivy.home.customerjourney.CustomerJourneyCardModel
-import com.ivy.legacy.data.AppBaseData
-import com.ivy.legacy.data.BufferInfo
-import com.ivy.legacy.data.LegacyDueSection
-import com.ivy.legacy.data.model.TimePeriod
+import com.ivy.legacy.ui.model.AppBaseData
+import com.ivy.legacy.ui.model.BufferInfo
+import com.ivy.legacy.ui.model.LegacyDueSection
+import com.ivy.legacy.ui.model.period.TimePeriod
 import com.ivy.legacy.domain.pure.data.IncomeExpensePair
 import kotlinx.collections.immutable.ImmutableList
 import java.math.BigDecimal

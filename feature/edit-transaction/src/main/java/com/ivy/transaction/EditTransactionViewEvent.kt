@@ -5,7 +5,7 @@ import com.ivy.base.model.TransactionType
 import com.ivy.data.model.Category
 import com.ivy.data.model.Tag
 import com.ivy.data.model.TagId
-import com.ivy.legacy.data.EditTransactionDisplayLoan
+import com.ivy.legacy.ui.model.EditTransactionDisplayLoan
 import com.ivy.legacy.domain.model.Account
 import com.ivy.legacy.domain.data.CustomExchangeRateState
 import com.ivy.legacy.domain.model.CreateAccountData

@@ -1,7 +1,7 @@
 package com.ivy.piechart
 
 import com.ivy.data.model.Category
-import com.ivy.legacy.data.model.TimePeriod
+import com.ivy.legacy.ui.model.period.TimePeriod
 import com.ivy.navigation.PieChartStatisticScreen
 
 sealed interface PieChartStatisticEvent {

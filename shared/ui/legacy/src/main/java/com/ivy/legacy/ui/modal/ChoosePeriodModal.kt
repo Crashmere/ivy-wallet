@@ -35,10 +35,10 @@ import com.ivy.design.api.LocalTimeProvider
 import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
 import com.ivy.legacy.domain.model.FromToTimeRange
-import com.ivy.legacy.data.model.LastNTimeRange
-import com.ivy.legacy.data.model.Month.Companion.fromMonthValue
-import com.ivy.legacy.data.model.Month.Companion.monthsList
-import com.ivy.legacy.data.model.TimePeriod
+import com.ivy.legacy.ui.model.period.LastNTimeRange
+import com.ivy.legacy.ui.model.period.Month.Companion.fromMonthValue
+import com.ivy.legacy.ui.model.period.Month.Companion.monthsList
+import com.ivy.legacy.ui.model.period.TimePeriod
 import com.ivy.ui.legacy.addKeyboardListener
 import com.ivy.base.legacy.dateNowUTC
 import com.ivy.ui.legacy.formatDateOnlyWithYear
@@ -244,7 +244,7 @@ private fun ColumnScope.ChooseMonth(
 
 @Deprecated("Old design system. Use `:ivy-design` and Material3")
 data class MonthYear(
-    val month: com.ivy.legacy.data.model.Month,
+    val month: com.ivy.legacy.ui.model.period.Month,
     val year: Int
 ) {
     fun forDisplay(
@@ -497,7 +497,7 @@ private fun ColumnScope.LastNPeriod(
             onSelected(
                 lastNTimeRange?.copy(
                     periodN = it
-                ) ?: com.ivy.legacy.data.model.LastNTimeRange(
+                ) ?: com.ivy.legacy.ui.model.period.LastNTimeRange(
                     periodN = it,
                     periodType = IntervalType.WEEK
                 )
@@ -507,7 +507,7 @@ private fun ColumnScope.LastNPeriod(
             onSelected(
                 lastNTimeRange?.copy(
                     periodType = it
-                ) ?: com.ivy.legacy.data.model.LastNTimeRange(
+                ) ?: com.ivy.legacy.ui.model.period.LastNTimeRange(
                     periodN = 1,
                     periodType = it
                 )

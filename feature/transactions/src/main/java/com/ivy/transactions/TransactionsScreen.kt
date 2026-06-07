@@ -46,10 +46,10 @@ import com.ivy.design.LocalThemeState
 import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
 import com.ivy.design.utils.thenIf
-import com.ivy.legacy.data.AppBaseData
-import com.ivy.legacy.data.LegacyDueSection
-import com.ivy.legacy.data.model.Month
-import com.ivy.legacy.data.model.TimePeriod
+import com.ivy.legacy.ui.model.AppBaseData
+import com.ivy.legacy.ui.model.LegacyDueSection
+import com.ivy.legacy.ui.model.period.Month
+import com.ivy.legacy.ui.model.period.TimePeriod
 import com.ivy.legacy.domain.model.Account
 import com.ivy.legacy.LocalPeriodState
 import com.ivy.legacy.ui.component.IncomeExpensesCards

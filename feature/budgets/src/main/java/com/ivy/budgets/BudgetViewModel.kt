@@ -186,7 +186,7 @@ class BudgetViewModel @Inject constructor(
             val accounts = accountsAct(Unit)
             val baseCurrency = baseCurrencyAct(Unit)
             val startDateOfMonth = periodState.startDayOfMonth
-            val timeRange = com.ivy.legacy.data.model.TimePeriod.currentMonth(
+            val timeRange = com.ivy.legacy.ui.model.period.TimePeriod.currentMonth(
                 startDayOfMonth = startDateOfMonth
             ).toRange(startDateOfMonth = startDateOfMonth, timeConverter, timeProvider)
             val budgets = budgetsAct(Unit)

@@ -26,7 +26,7 @@ import com.ivy.budgets.model.DisplayBudget
 import com.ivy.design.api.LocalTimeFormatter
 import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
-import com.ivy.legacy.data.model.toDisplay
+import com.ivy.legacy.ui.model.period.toDisplay
 import com.ivy.legacy.ui.component.BudgetBattery
 import com.ivy.ui.legacy.clickableNoIndication
 import com.ivy.data.model.currency.format

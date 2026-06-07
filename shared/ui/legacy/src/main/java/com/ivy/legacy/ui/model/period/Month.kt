@@ -1,4 +1,4 @@
-package com.ivy.legacy.data.model
+package com.ivy.legacy.ui.model.period
 
 import androidx.compose.runtime.Immutable
 import com.ivy.base.legacy.stringRes
