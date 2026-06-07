@@ -281,6 +281,7 @@
 - `ivy.room` 已从 `ivy.module` 改为基于 `ivy.android-library`，不再隐式带入 Hilt 和 kotlinx serialization；`shared:data:core` 改为显式声明这两个依赖。
 - `shared:ui:core`、`shared:ui:legacy`、`shared:ui:navigation` 已从 `ivy.feature` 迁到 `ivy.compose`；这一步保留现有 Compose/Hilt 能力，只先消除 shared UI 模块伪装成 feature 的构建命名。
 - `ivy.compose` 已收敛为纯 Android Compose 配置，不再隐式套用 `ivy.module` 或引入未使用的 Molecule 插件；feature 模块继续由 `ivy.feature` 组合 `ivy.module + ivy.compose`，shared UI 模块则显式声明 `ivy.hilt`。
+- 版本目录里的 Compose LiveData 依赖别名已从临时/拼写错误的 `compose-runtime-livedate-temp` 改为 `compose-runtime-livedata`，保留依赖本身不变。
 
 ### 阶段 3：测试支持代码归位
 
