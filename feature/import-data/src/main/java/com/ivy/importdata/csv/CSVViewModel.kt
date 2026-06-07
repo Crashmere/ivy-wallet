@@ -9,6 +9,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ivy.data.api.file.ExternalFile
 import com.ivy.importdata.csv.domain.CSVImporterV2
 import com.ivy.importdata.csv.domain.SAMPLE_SIZE
 import com.ivy.importdata.csv.domain.parseAccount
@@ -472,7 +473,7 @@ class CSVViewModel @Inject constructor(
         charset: Charset = Charsets.UTF_8
     ): List<CSVRow>? {
         return try {
-            val fileContent = readTextFileUseCase(uri, charset) ?: return null
+            val fileContent = readTextFileUseCase(ExternalFile(uri.toString()), charset) ?: return null
             parseCSV(fileContent, normalizeCSV).takeIf { it.isNotEmpty() }
         } catch (e: Exception) {
             if (charset != Charsets.UTF_16) {

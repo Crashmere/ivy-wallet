@@ -2,7 +2,9 @@ package com.ivy.data.file
 
 import android.content.Context
 import android.net.Uri
+import androidx.core.net.toUri
 import arrow.core.Either
+import com.ivy.data.api.file.ExternalFile
 import com.ivy.data.api.file.TextFileStore
 import dagger.hilt.android.qualifiers.ApplicationContext
 import java.io.BufferedReader
@@ -19,20 +21,20 @@ class FileSystem @Inject constructor(
     private val appContext: Context
 ) : TextFileStore {
     override fun writeText(
-        uri: Uri,
+        file: ExternalFile,
         content: String,
     ): Result<Unit> {
-        return when (val result = writeToFile(uri, content)) {
+        return when (val result = writeToFile(file.uri.toUri(), content)) {
             is Either.Left -> Result.failure(result.value.e)
             is Either.Right -> Result.success(result.value)
         }
     }
 
     override fun readText(
-        uri: Uri,
+        file: ExternalFile,
         charset: Charset,
     ): Result<String> {
-        return when (val result = read(uri, charset)) {
+        return when (val result = read(file.uri.toUri(), charset)) {
             is Either.Left -> Result.failure(result.value.e)
             is Either.Right -> Result.success(result.value)
         }

@@ -2,6 +2,7 @@ package com.ivy.importdata.csvimport
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ivy.data.api.file.ExternalFile
 import com.ivy.data.model.importing.ImportResult
 import com.ivy.domain.usecase.backup.ImportBackupUseCase
 import com.ivy.ui.navigation.ImportScreen
@@ -53,7 +54,7 @@ class ImportViewModel @Inject constructor(
 
                 _importStep.value = ImportStep.LOADING
                 _importResult.value = importBackupUseCase(
-                    backupFile = fileUri
+                    backupFile = ExternalFile(fileUri.toString())
                 ) { progressPercent ->
                     _importProgressPercent.value =
                         (progressPercent * 100).roundToInt()

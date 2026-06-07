@@ -1,9 +1,9 @@
 package com.ivy.domain.usecase.csv
 
-import android.net.Uri
 import com.ivy.data.model.TransactionType
 import com.ivy.base.threading.DispatchersProvider
 import com.ivy.base.time.TimeConverter
+import com.ivy.data.api.file.ExternalFile
 import com.ivy.data.api.file.TextFileStore
 import com.ivy.data.model.Account
 import com.ivy.data.model.AccountId
@@ -38,7 +38,7 @@ class ExportCsvUseCase @Inject constructor(
 ) {
 
     suspend fun exportToFile(
-        outputFile: Uri,
+        outputFile: ExternalFile,
         exportScope: suspend () -> List<Transaction> = {
             getTransactionsUseCase()
         }

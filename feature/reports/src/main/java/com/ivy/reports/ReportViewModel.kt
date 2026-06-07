@@ -9,6 +9,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.toArgb
 import androidx.lifecycle.viewModelScope
+import com.ivy.data.api.file.ExternalFile
 import com.ivy.data.model.legacy.LegacyTransaction
 import com.ivy.data.model.legacy.TransactionHistoryItem
 import com.ivy.data.model.TransactionType
@@ -524,7 +525,7 @@ class ReportViewModel @Inject constructor(
                 loading = true
 
                 exportCsvUseCase.exportToFile(
-                    outputFile = fileUri,
+                    outputFile = ExternalFile(fileUri.toString()),
                     exportScope = {
                         filterTransactions(
                             baseCurrency = baseCurrency,

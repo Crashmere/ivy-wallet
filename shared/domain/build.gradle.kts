@@ -9,7 +9,7 @@ android {
 
 dependencies {
     implementation(projects.shared.base)
-    implementation(projects.shared.data.api)
+    api(projects.shared.data.api)
 
     implementation(libs.bundles.arrow)
     implementation(libs.bundles.opencsv)

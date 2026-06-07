@@ -731,6 +731,7 @@
 - 旧 `AppPreferences` 具体类已拆成 `AppPreferenceStore` 端口和 `SharedPrefsAppPreferenceStore` 实现；domain 用例只依赖 data-api 端口，SharedPrefs 读写细节下沉到 data-core。
 - 备份恢复中的偏好读写已改走 `AppPreferenceStore`；备份 JSON 仍保留原 sharedPrefs key 字符串以兼容旧备份文件，但 `BackupDataUseCase` 不再直接读写通用 `PreferenceStore`。
 - 旧 `PreferenceStore/SharedPrefs` 基础层抽象已删除；`SharedPrefsAppPreferenceStore` 在 data-core 内部直接持有 Android SharedPreferences，base 不再暴露偏好存储绑定。
+- 文件读写和备份恢复端口已用 `ExternalFile` 包装外部文件引用；domain 和 data-api 不再公开 Android `Uri`，UI/platform 仍负责文件选择与分享，data-core 实现边界再转换回 Android `Uri`。因为 `ExternalFile` 已进入 domain 用例公开签名，`shared:domain` 对 `shared:data:api` 的依赖显式使用 `api` 暴露，调用方无需直接依赖 data-api 实现模块。
 - `AndroidResourceProvider` 已从 base 移到 app 平台层并由 app Hilt 模块绑定；`ResourceProvider` 抽象也已从 base 迁到 `shared:ui:core` 的 `com.ivy.ui.resource` 包。
 - `ResourceProvider` 接口已去掉 `@StringRes` 注解；资源 ID 在 UI 端口中只作为普通参数，Android 注解仅保留在 app 实现层。
 - 备份 zip/unzip 工具已从 base 下沉到 `shared:data:core` 的备份包；zip 文件读写仍使用 Android `Context/Uri`，但只留在实际负责备份恢复的数据实现层。

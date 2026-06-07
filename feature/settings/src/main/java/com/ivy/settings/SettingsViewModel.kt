@@ -8,6 +8,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.viewModelScope
 import com.ivy.data.model.Theme
 import com.ivy.base.time.TimeProvider
+import com.ivy.data.api.file.ExternalFile
 import com.ivy.data.model.primitive.AssetCode
 import com.ivy.domain.preferences.toggles.BoolPreference
 import com.ivy.domain.preferences.toggles.PreferenceToggleRepository
@@ -364,7 +365,7 @@ class SettingsViewModel @Inject constructor(
         ) { fileUri ->
             viewModelScope.launch {
                 exportCsvUseCase.exportToFile(
-                    outputFile = fileUri
+                    outputFile = ExternalFile(fileUri.toString())
                 )
 
                 fileSharer.shareCSVFile(
@@ -380,7 +381,7 @@ class SettingsViewModel @Inject constructor(
         ) { fileUri ->
             viewModelScope.launch(Dispatchers.IO) {
                 progressState.value = true
-                exportBackupUseCase(fileUri)
+                exportBackupUseCase(ExternalFile(fileUri.toString()))
                 progressState.value = false
 
                 withContext(Dispatchers.Main) {
