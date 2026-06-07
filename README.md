@@ -750,6 +750,7 @@
 - `feature:main` 和备份导入页面的旧 `LiveData` 状态已改为 `StateFlow`；Compose 不再需要 `runtime-livedata` 适配依赖，版本目录中的 LiveData 运行时别名也已删除。
 - 剩余 `uiThread` 调用已改为标准 `withContext(Dispatchers.Main)`，base 中的主线程切换 helper 已删除。
 - `feature:main` 和 `feature:search` 已把旧 `ioThread` helper 改为标准 `withContext(Dispatchers.IO)`，并移除对 `shared:base` 的 Gradle 依赖。
+- 版本目录中未被任何 Gradle 文件或源码使用的 `mockk-android` 与 `androidx-security` 依赖别名已删除。
 - 账户旧读取路径已收敛到 `AccountStore`；旧 legacy 账户模型现在由 data model 账户映射而来，`shared:domain` 主源码不再直接注入 `AccountDao` 或依赖 `AccountEntity` mapper。
 - 旧交易卡片已移除重复账户查找 TODO：渲染前先解析来源/目标账户，再复用同一结果处理点击和币种展示，行为不变但 legacy UI 内部职责更清楚。
 
