@@ -1,12 +1,12 @@
 package com.ivy.domain.usecase.settings
 
-import com.ivy.data.api.AppPreferenceStore
+import com.ivy.data.api.InitialSetupStore
 import javax.inject.Inject
 
 class SetInitialSetupCompletedUseCase @Inject constructor(
-    private val appPreferences: AppPreferenceStore,
+    private val initialSetupStore: InitialSetupStore,
 ) {
     operator fun invoke(completed: Boolean) {
-        appPreferences.initialSetupCompleted = completed
+        initialSetupStore.initialSetupCompleted = completed
     }
 }

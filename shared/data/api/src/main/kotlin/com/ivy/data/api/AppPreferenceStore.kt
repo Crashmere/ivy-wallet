@@ -1,8 +1,6 @@
 package com.ivy.data.api
 
 interface AppPreferenceStore {
-    var initialSetupCompleted: Boolean
-
     var appLockEnabled: Boolean
 
     var startDayOfMonth: Int

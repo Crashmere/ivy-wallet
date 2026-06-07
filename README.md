@@ -844,6 +844,7 @@
 - `RoomCurrencyStore` 已删除进程内基础币种缓存，基础币种读取始终以 `SettingsTable` 当前内容为准；这避免重置、恢复或其他 settings 写入后同一 store 实例继续返回旧币种。
 - data-core 的单绑定 Hilt 模块已收敛到 `DataBindingsModule`：store、备份、文本文件和远程汇率数据源绑定集中在一处，减少只为一个接口存在的装配文件。
 - 偏好开关 DataStore 不再通过独立 Hilt module 暴露裸 `DataStore<Preferences>`；`DataStorePreferenceToggleStore` 在 data-core 内部直接使用应用 `Context` 取得同一个 `ivy_wallet_datastore_v1` 文件。
+- 首次启动完成状态已从泛化 `AppPreferenceStore` 拆到 `InitialSetupStore`；启动流程只依赖初始化状态端口，底层仍读写同一个 SharedPreferences key。
 
 建议顺序：
 
