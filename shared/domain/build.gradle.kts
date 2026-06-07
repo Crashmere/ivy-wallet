@@ -16,8 +16,10 @@ dependencies {
     implementation(libs.bundles.ktor)
     implementation(libs.bundles.opencsv)
 
+    testImplementation(projects.shared.baseTesting)
     testImplementation(projects.shared.data.modelTesting)
 
+    androidTestImplementation(projects.shared.baseTesting)
     androidTestImplementation(libs.bundles.integration.testing)
     androidTestImplementation(libs.mockk.android)
 }

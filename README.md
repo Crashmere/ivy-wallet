@@ -285,8 +285,13 @@
 
 个人维护推荐：
 
-- 优先采用 `:shared:test-support`，名字直接、职责清晰。
+- 优先采用 `:shared:base-testing` 这类测试支持模块，名字直接、职责清晰。
 - 不为了“标准化”引入过复杂的 test fixtures 配置。
+
+当前进展：
+
+- 新增 `:shared:base-testing`，用于承载跨模块复用的基础测试 helper。
+- `shared:data:core`、`shared:domain`、`shared:ui:core` 的测试源集改为显式依赖 `shared:base-testing`。
 
 ### 阶段 4：消灭 `temp:old-design`
 
