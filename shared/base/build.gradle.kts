@@ -9,5 +9,6 @@ android {
 }
 
 dependencies {
+    implementation(libs.bundles.arrow)
     implementation(libs.androidx.lifecycle.livedata.core)
 }

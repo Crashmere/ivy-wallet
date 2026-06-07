@@ -12,6 +12,7 @@ dependencies {
     implementation(projects.shared.base)
     implementation(projects.shared.data.core)
 
+    implementation(libs.bundles.arrow)
     implementation(libs.datastore)
     implementation(libs.bundles.opencsv)
 

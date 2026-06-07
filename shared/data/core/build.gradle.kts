@@ -14,6 +14,7 @@ dependencies {
     implementation(projects.shared.base)
     api(projects.shared.data.model)
 
+    implementation(libs.bundles.arrow)
     api(libs.datastore)
     implementation(libs.bundles.ktor)
 
