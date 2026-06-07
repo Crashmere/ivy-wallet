@@ -23,8 +23,11 @@ import com.ivy.domain.preferences.AppPreferences
 import com.ivy.domain.usecase.account.DeleteAccountUseCase
 import com.ivy.domain.usecase.account.GetAccountUseCase
 import com.ivy.domain.usecase.category.DeleteCategoryUseCase
+import com.ivy.domain.usecase.category.CategoryTransactionsSummary
 import com.ivy.domain.usecase.category.GetCategoriesUseCase
 import com.ivy.domain.usecase.category.GetCategoryUseCase
+import com.ivy.domain.usecase.category.GetCategoryTransactionsSummaryUseCase
+import com.ivy.domain.usecase.category.GetUnspecifiedCategoryTransactionsSummaryUseCase
 import com.ivy.domain.usecase.category.UpdateCategoryUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.domain.usecase.exchange.ExchangeAmountUseCase
@@ -57,7 +60,6 @@ import com.ivy.domain.usecase.planned.PayOrSkipLegacyPlannedTransactionUseCase
 import com.ivy.domain.usecase.planned.PayOrSkipLegacyPlannedTransactionsUseCase
 import com.ivy.domain.usecase.transaction.BuildLegacyTransactionHistoryItemsUseCase
 import com.ivy.domain.usecase.transaction.CalculateLegacyTransactionsIncomeExpenseUseCase
-import com.ivy.legacy.domain.logic.WalletCategoryLogic
 import com.ivy.legacy.domain.pure.exchange.ExchangeData
 import com.ivy.legacy.ui.modal.ChoosePeriodModalData
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -75,7 +77,6 @@ import com.ivy.data.model.legacy.Account as LegacyAccount
 class TransactionsViewModel @Inject constructor(
     private val periodState: PeriodState,
     private val nav: Navigation,
-    private val categoryLogic: WalletCategoryLogic,
     private val updateCategoryUseCase: UpdateCategoryUseCase,
     private val updateAccountWithBalanceUseCase: UpdateAccountWithBalanceUseCase,
     private val payOrSkipLegacyPlannedTransactionUseCase: PayOrSkipLegacyPlannedTransactionUseCase,
@@ -93,6 +94,8 @@ class TransactionsViewModel @Inject constructor(
     private val getCategoriesUseCase: GetCategoriesUseCase,
     private val getCategoryUseCase: GetCategoryUseCase,
     private val deleteCategoryUseCase: DeleteCategoryUseCase,
+    private val getCategoryTransactionsSummaryUseCase: GetCategoryTransactionsSummaryUseCase,
+    private val getUnspecifiedCategoryTransactionsSummaryUseCase: GetUnspecifiedCategoryTransactionsSummaryUseCase,
     private val calculateAccountBalanceUseCase: CalculateAccountBalanceUseCase,
     private val calculateAccountIncomeExpenseUseCase: CalculateAccountIncomeExpenseUseCase,
     private val calculateLegacyTransactionsIncomeExpenseUseCase: CalculateLegacyTransactionsIncomeExpenseUseCase,
@@ -412,52 +415,14 @@ class TransactionsViewModel @Inject constructor(
         category.value = initialCategory
         val range = period.value.toRange(periodState.startDayOfMonth, timeConverter, timeProvider)
 
-        balance.doubleValue = ioThread {
-            categoryLogic.calculateCategoryBalance(initialCategory, range, accountFilterSet)
+        val summary = ioThread {
+            getCategoryTransactionsSummaryUseCase(
+                category = initialCategory,
+                range = range,
+                accountFilterSet = accountFilterSet
+            )
         }
-
-        income.doubleValue = ioThread {
-            categoryLogic.calculateCategoryIncome(initialCategory, range, accountFilterSet)
-        }
-
-        expenses.doubleValue = ioThread {
-            categoryLogic.calculateCategoryExpenses(initialCategory, range, accountFilterSet)
-        }
-
-        history.value = ioThread {
-            categoryLogic.historyByCategoryAccountWithDateDividers(
-                initialCategory,
-                range,
-                accountFilterSet = accountFilterList.toSet(),
-            ).toImmutableList()
-        }
-
-        // Upcoming
-        upcomingIncome.doubleValue = ioThread {
-            categoryLogic.calculateUpcomingIncomeByCategory(initialCategory, range)
-        }
-
-        upcomingExpenses.doubleValue = ioThread {
-            categoryLogic.calculateUpcomingExpensesByCategory(initialCategory, range)
-        }
-
-        upcoming.value = ioThread {
-            categoryLogic.upcomingByCategoryLegacy(initialCategory, range).toImmutableList()
-        }
-
-        // Overdue
-        overdueIncome.doubleValue = ioThread {
-            categoryLogic.calculateOverdueIncomeByCategory(initialCategory, range)
-        }
-
-        overdueExpenses.doubleValue = ioThread {
-            categoryLogic.calculateOverdueExpensesByCategory(initialCategory, range)
-        }
-
-        overdue.value =
-            ioThread {
-                categoryLogic.overdueByCategoryLegacy(initialCategory, range).toImmutableList()
-            }
+        applyCategorySummary(summary)
     }
 
     private suspend fun initForCategoryWithTransactions(
@@ -468,10 +433,6 @@ class TransactionsViewModel @Inject constructor(
         computationThread {
             initWithTransactions.value = true
 
-            val trans = transactions.filter {
-                it.type != TransactionType.TRANSFER && it.categoryId == categoryId
-            }
-
             val accountFilterSet = accountFilterList.toSet()
             val initialCategory = ioThread {
                 getCategoryUseCase(CategoryId(categoryId)) ?: error("category not found")
@@ -480,117 +441,38 @@ class TransactionsViewModel @Inject constructor(
             val range =
                 period.value.toRange(periodState.startDayOfMonth, timeConverter, timeProvider)
 
-            val incomeTrans = transactions.filter {
-                it.categoryId == categoryId && it.type == TransactionType.INCOME
-            }
-
-            val expenseTrans = transactions.filter {
-                it.categoryId == categoryId && it.type == TransactionType.EXPENSE
-            }
-
-            balance.value = ioThread {
-                categoryLogic.calculateCategoryBalance(
-                    initialCategory,
-                    range,
-                    accountFilterSet,
-                    transactions = trans
+            val summary = ioThread {
+                getCategoryTransactionsSummaryUseCase(
+                    category = initialCategory,
+                    range = range,
+                    accountFilterSet = accountFilterSet,
+                    providedTransactions = transactions
                 )
             }
-
-            income.value = ioThread {
-                categoryLogic.calculateCategoryIncome(
-                    incomeTransaction = incomeTrans,
-                    accountFilterSet = accountFilterSet
-                )
-            }
-
-            expenses.doubleValue = ioThread {
-                categoryLogic.calculateCategoryExpenses(
-                    expenseTransactions = expenseTrans,
-                    accountFilterSet = accountFilterSet
-                )
-            }
-
-            history.value = ioThread {
-                categoryLogic.historyByCategoryAccountWithDateDividers(
-                    initialCategory,
-                    range,
-                    accountFilterSet = accountFilterList.toSet(),
-                    transactions = trans
-                ).toImmutableList()
-            }
-
-            // Upcoming
-            upcomingIncome.doubleValue = ioThread {
-                categoryLogic.calculateUpcomingIncomeByCategory(initialCategory, range)
-            }
-
-            upcomingExpenses.doubleValue = ioThread {
-                categoryLogic.calculateUpcomingExpensesByCategory(initialCategory, range)
-            }
-
-            upcoming.value = ioThread {
-                categoryLogic.upcomingByCategoryLegacy(initialCategory, range).toImmutableList()
-            }
-
-            // Overdue
-            overdueIncome.doubleValue = ioThread {
-                categoryLogic.calculateOverdueIncomeByCategory(initialCategory, range)
-            }
-
-            overdueExpenses.doubleValue = ioThread {
-                categoryLogic.calculateOverdueExpensesByCategory(initialCategory, range)
-            }
-
-            overdue.value =
-                ioThread {
-                    categoryLogic.overdueByCategoryLegacy(initialCategory, range).toImmutableList()
-                }
+            applyCategorySummary(summary)
         }
     }
 
     private suspend fun initForUnspecifiedCategory() {
         val range = period.value.toRange(periodState.startDayOfMonth, timeConverter, timeProvider)
 
-        balance.doubleValue = ioThread {
-            categoryLogic.calculateUnspecifiedBalance(range)
+        val summary = ioThread {
+            getUnspecifiedCategoryTransactionsSummaryUseCase(range)
         }
+        applyCategorySummary(summary)
+    }
 
-        income.doubleValue = ioThread {
-            categoryLogic.calculateUnspecifiedIncome(range)
-        }
-
-        expenses.doubleValue = ioThread {
-            categoryLogic.calculateUnspecifiedExpenses(range)
-        }
-
-        history.value = ioThread {
-            categoryLogic.historyUnspecified(range).toImmutableList()
-        }
-
-        // Upcoming
-        upcomingIncome.doubleValue = ioThread {
-            categoryLogic.calculateUpcomingIncomeUnspecified(range)
-        }
-
-        upcomingExpenses.value = ioThread {
-            categoryLogic.calculateUpcomingExpensesUnspecified(range)
-        }
-
-        upcoming.value = ioThread {
-            categoryLogic.upcomingUnspecifiedLegacy(range).toImmutableList()
-        }
-
-        // Overdue
-        overdueIncome.doubleValue = ioThread {
-            categoryLogic.calculateOverdueIncomeUnspecified(range)
-        }
-
-        overdueExpenses.doubleValue = ioThread {
-            categoryLogic.calculateOverdueExpensesUnspecified(range)
-        }
-
-        overdue.value = ioThread { categoryLogic.overdueUnspecifiedLegacy(range).toImmutableList() }
+    private fun applyCategorySummary(summary: CategoryTransactionsSummary) {
+        balance.doubleValue = summary.balance
+        income.doubleValue = summary.income
+        expenses.doubleValue = summary.expenses
+        history.value = summary.history.toImmutableList()
+        upcomingIncome.doubleValue = summary.upcoming.income
+        upcomingExpenses.doubleValue = summary.upcoming.expenses
+        upcoming.value = summary.upcoming.transactions.toImmutableList()
+        overdueIncome.doubleValue = summary.overdue.income
+        overdueExpenses.doubleValue = summary.overdue.expenses
+        overdue.value = summary.overdue.transactions.toImmutableList()
     }
 
     private suspend fun initForAccountTransfersCategory(

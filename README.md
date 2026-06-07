@@ -642,6 +642,7 @@
 - 账户交易读取已收敛到 `GetAccountTransactionsUseCase`；账户余额、账户收支、首页钱包收支和交易详情账户历史不再依赖旧 `AccTrnsAct`，金额折算和统计口径保持不变。
 - 账户余额和账户收支计算已收敛到 `CalculateAccountBalanceUseCase` 与 `CalculateAccountIncomeExpenseUseCase`；账户页、交易详情、钱包账户逻辑和钱包余额汇总不再依赖旧 `CalcAccBalanceAct/CalcAccIncomeExpenseAct`。
 - 账户余额调平和账户详情未来/逾期交易统计已从 `WalletAccountLogic` 拆到 `AdjustAccountBalanceUseCase`、`GetAccountUpcomingTransactionsSummaryUseCase` 和 `GetAccountOverdueTransactionsSummaryUseCase`；账户创建/编辑和交易详情账户页不再注入旧逻辑，`WalletAccountLogic` 已删除。
+- 分类详情页的余额、收入、支出、历史列表、未来交易和逾期交易聚合已从 `WalletCategoryLogic` 拆到 `GetCategoryTransactionsSummaryUseCase` 和 `GetUnspecifiedCategoryTransactionsSummaryUseCase`；交易详情分类页不再注入旧逻辑，`WalletCategoryLogic` 已删除。
 - 钱包级余额和收支计算已收敛到 `CalculateWalletBalanceUseCase` 与 `CalculateWalletIncomeExpenseUseCase`；首页、余额页和账户页不再依赖旧 `CalcWalletBalanceAct/CalcIncomeExpenseAct`。
 - 交易统计和历史列表分组已收敛到普通 use case：搜索、首页、报表、交易详情、分类页和饼图页改用 `BuildTransactionHistoryItemsUseCase`、`BuildLegacyTransactionHistoryItemsUseCase`、`GetTransactionHistoryItemsUseCase`、`CalculateTransactionsIncomeExpenseUseCase`、`CalculateLegacyTransactionsIncomeExpenseUseCase` 和 `CalculateCategoryIncomeWithAccountFiltersUseCase`；旧 `CalcTrnsIncomeExpenseAct`、`TrnsWithDateDivsAct`、`HistoryWithDateDivsAct` 和分类筛选统计 action 已删除。
 - 首页到期交易统计已收敛到 `GetUpcomingTransactionsInfoUseCase`、`GetOverdueTransactionsInfoUseCase` 和公共 `CalculateDueTransactionsInfoUseCase`；旧 `DueTrnsInfoAct`、`UpcomingAct` 和 `OverdueAct` 已删除，`shared:domain` 中不再保留旧 `domain/action` 源码。
