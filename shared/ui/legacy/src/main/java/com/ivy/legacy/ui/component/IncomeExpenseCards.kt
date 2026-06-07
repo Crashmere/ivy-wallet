@@ -21,7 +21,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ivy.base.legacy.Transaction
 import com.ivy.base.legacy.TransactionHistoryItem
-import com.ivy.base.legacy.stringRes
 import com.ivy.base.model.TransactionType
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
@@ -60,7 +59,7 @@ fun IncomeExpensesCards(
         Spacer(Modifier.width(16.dp))
 
         HeaderCard(
-            title = stringRes(R.string.income_uppercase),
+            title = stringResource(R.string.income_uppercase),
             currencyCode = currency,
             amount = income,
             transactionCount = history
@@ -78,7 +77,7 @@ fun IncomeExpensesCards(
         Spacer(Modifier.width(12.dp))
 
         HeaderCard(
-            title = stringRes(R.string.expenses_uppercase),
+            title = stringResource(R.string.expenses_uppercase),
             currencyCode = currency,
             amount = expenses,
             transactionCount = history
@@ -173,7 +172,7 @@ private fun RowScope.HeaderCard(
         )
         Text(
             modifier = Modifier.padding(horizontal = 24.dp),
-            text = stringRes(R.string.transactions),
+            text = stringResource(R.string.transactions),
             style = LegacyTheme.typo.b2.style(
                 color = contrastColor,
                 fontWeight = FontWeight.Normal
