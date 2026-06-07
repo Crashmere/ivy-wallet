@@ -372,7 +372,8 @@
 - 已把旧时间范围兼容模型迁出 `temp:legacy-code`：纯 `ClosedTimeRange`、收入/支出统计值对象迁入 `shared:data:model`；仍带 UI 文案/格式化职责的旧 `TimePeriod`、`Month`、`FromToTimeRange`、`LastNTimeRange`、`MainTab`、`AccountData` 暂时迁入 `shared:ui:legacy` 的 legacy model 区。
 - 已把 `Month.incrementMonthPeriod` 改成只返回新周期，不再直接更新 `IvyWalletCtx`；各页面/ViewModel 在调用处显式保存选中周期，副作用更清楚。
 - 已把 `ChoosePeriodModal` 和 `PeriodSelector` 迁入 `shared:ui:legacy`，并通过外部 `saveSelectedPeriod`、`pickDate`、`startDateOfMonth` 参数替代内部直接读取 `IvyWalletCtx`。
-- 旧 theme 目录在 `temp:legacy-code` 中只剩仍直接依赖旧账户/分类/借贷模型、旧创建参数或 DI 偏好读取的 7 个弹窗/组件，后续需要按业务边界单独迁移。
+- 已把金额输入弹窗、计算器弹窗和缓冲金额弹窗迁入 `shared:ui:legacy`。其中金额键盘仍通过 Hilt EntryPoint 读取“标准键盘布局”偏好，因此 `shared:ui:legacy` 暂时显式依赖 `shared:domain` 和 `keval`；后续偏好设置重构时应改为由调用方或 CompositionLocal 提供键盘布局。
+- 旧 theme 目录在 `temp:legacy-code` 中只剩仍直接依赖旧账户/分类/借贷模型或旧创建参数的 4 个弹窗/组件，后续需要按业务边界单独迁移。
 
 迁移分组：
 
