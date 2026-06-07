@@ -12,8 +12,6 @@ import com.ivy.data.model.Transaction
 import com.ivy.data.repository.AccountRepository
 import com.ivy.data.repository.TagRepository
 import com.ivy.data.repository.mapper.TransactionMapper
-import com.ivy.legacy.domain.pure.Pure
-import com.ivy.legacy.domain.pure.SideEffect
 import com.ivy.data.model.legacy.Account
 import com.ivy.legacy.domain.mapper.toImmutableLegacyTags
 import com.ivy.legacy.domain.mapper.toLegacyDomain
@@ -54,17 +52,12 @@ suspend fun List<Transaction>.withDateDividers(
         }
     )
 }
-
-@Pure
 suspend fun transactionsWithDateDividers(
     transactions: List<Transaction>,
     baseCurrencyCode: String,
     accountRepository: AccountRepository,
-    @SideEffect
     getAccount: suspend (accountId: UUID) -> Account?,
-    @SideEffect
     exchange: suspend (ExchangeData, BigDecimal) -> Option<BigDecimal>,
-    @SideEffect
     getTags: suspend (tagIds: List<TagId>) -> List<Tag> = { emptyList() },
 ): List<TransactionHistoryItem> {
     if (transactions.isEmpty()) return emptyList()
@@ -130,16 +123,11 @@ object LegacyTrnDateDividers {
             timeConverter = timeConverter,
         )
     }
-
-    @Pure
     suspend fun transactionsWithDateDividers(
         transactions: List<com.ivy.base.model.legacy.Transaction>,
         baseCurrencyCode: String,
         timeConverter: TimeConverter,
-
-        @SideEffect
         getAccount: suspend (accountId: UUID) -> Account?,
-        @SideEffect
         exchange: suspend (ExchangeData, BigDecimal) -> Option<BigDecimal>
     ): List<TransactionHistoryItem> {
         if (transactions.isEmpty()) return emptyList()

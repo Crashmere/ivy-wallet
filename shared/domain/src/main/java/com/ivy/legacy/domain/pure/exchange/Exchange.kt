@@ -7,8 +7,6 @@ import arrow.core.raise.option
 import arrow.core.toOption
 import com.ivy.base.text.isNotNullOrBlank
 import com.ivy.data.model.legacy.ExchangeRate
-import com.ivy.legacy.domain.pure.Pure
-import com.ivy.legacy.domain.pure.SideEffect
 import java.math.BigDecimal
 
 data class ExchangeData(
@@ -16,13 +14,9 @@ data class ExchangeData(
     val fromCurrency: Option<String>,
     val toCurrency: String = baseCurrency,
 )
-
-@Pure
 suspend fun exchange(
     data: ExchangeData,
     amount: BigDecimal,
-
-    @SideEffect
     getExchangeRate: suspend (baseCurrency: String, toCurrency: String) -> ExchangeRate?,
 ): Option<BigDecimal> = option {
     if (amount == BigDecimal.ZERO) {
@@ -92,13 +86,9 @@ suspend fun exchange(
         }
     }
 }
-
-@Pure
 private fun String.validateCurrency(): Option<String> {
     return if (this.isNotNullOrBlank()) return Some(this) else None
 }
-
-@Pure
 suspend fun validExchangeRate(
     baseCurrency: String,
     toCurrency: String,
@@ -110,8 +100,6 @@ suspend fun validExchangeRate(
     ).toOption().bind()
         .validateRate().bind()
 }
-
-@Pure
 fun ExchangeRate.validateRate(): Option<BigDecimal> {
     // exchange rate which <= 0 is invalid!
     return if (rate > 0) return Some(rate.toBigDecimal()) else None

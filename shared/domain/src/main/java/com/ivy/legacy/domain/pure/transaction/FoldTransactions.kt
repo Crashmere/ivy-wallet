@@ -3,7 +3,6 @@ package com.ivy.legacy.domain.pure.transaction
 import arrow.core.NonEmptyList
 import arrow.core.nonEmptyListOf
 import com.ivy.data.model.Transaction
-import com.ivy.legacy.domain.pure.Pure
 import com.ivy.legacy.domain.pure.util.mapIndexedNel
 import com.ivy.legacy.domain.pure.util.mapIndexedNelSuspend
 import com.ivy.legacy.domain.pure.util.nonEmptyListOfZeros
@@ -11,8 +10,6 @@ import java.math.BigDecimal
 
 typealias ValueFunction<A> = (Transaction, A) -> BigDecimal
 typealias SuspendValueFunction<A> = suspend (Transaction, A) -> BigDecimal
-
-@Pure
 fun <Arg> foldTransactions(
     transactions: List<Transaction>,
     valueFunctions: NonEmptyList<ValueFunction<Arg>>,
@@ -22,8 +19,6 @@ fun <Arg> foldTransactions(
     transactions = transactions,
     valueFunctions = valueFunctions
 )
-
-@Pure
 internal tailrec fun <A> sumTransactionsInternal(
     transactions: List<Transaction>,
     valueFunctionArgument: A,
@@ -44,8 +39,6 @@ internal tailrec fun <A> sumTransactionsInternal(
         )
     }
 }
-
-@Pure
 suspend fun <Arg> foldTransactionsSuspend(
     transactions: List<Transaction>,
     valueFunctions: NonEmptyList<SuspendValueFunction<Arg>>,
@@ -55,8 +48,6 @@ suspend fun <Arg> foldTransactionsSuspend(
     valueFunctions = valueFunctions,
     valueFunctionArgument = arg
 )
-
-@Pure
 internal tailrec suspend fun <A> sumTransactionsSuspendInternal(
     transactions: List<Transaction>,
     valueFunctionArgument: A,
@@ -91,8 +82,6 @@ suspend fun <A> sumTrns(
 }
 
 object LegacyFoldTransactions {
-
-    @Pure
     suspend fun <Arg> foldTransactionsSuspend(
         transactions: List<com.ivy.base.model.legacy.Transaction>,
         valueFunctions: NonEmptyList<suspend (com.ivy.base.model.legacy.Transaction, Arg) -> BigDecimal>,
@@ -102,8 +91,6 @@ object LegacyFoldTransactions {
         valueFunctions = valueFunctions,
         valueFunctionArgument = arg
     )
-
-        @Pure
     internal tailrec suspend fun <A> sumTransactionsSuspendInternal(
         transactions: List<com.ivy.base.model.legacy.Transaction>,
         valueFunctionArgument: A,
