@@ -1,7 +1,7 @@
 package com.ivy.domain.usecase.transaction
 
 import com.ivy.data.api.TransactionStore
-import com.ivy.data.model.legacy.FromToTimeRange
+import com.ivy.data.model.FromToTimeRange
 import com.ivy.data.model.legacy.Transaction
 import com.ivy.domain.mapper.legacy.toLegacy
 import kotlinx.coroutines.Dispatchers

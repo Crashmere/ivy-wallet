@@ -4,8 +4,8 @@ import arrow.core.nonEmptyListOf
 import arrow.core.toOption
 import com.ivy.data.model.AccountId
 import com.ivy.data.model.legacy.Account
-import com.ivy.data.model.legacy.ClosedTimeRange
-import com.ivy.data.model.legacy.IncomeExpensePair
+import com.ivy.data.model.ClosedTimeRange
+import com.ivy.data.model.IncomeExpensePair
 import com.ivy.domain.usecase.account.GetAccountTransactionsUseCase
 import com.ivy.domain.usecase.exchange.ExchangeAmountUseCase
 import com.ivy.domain.account.legacy.includedLegacyAccounts

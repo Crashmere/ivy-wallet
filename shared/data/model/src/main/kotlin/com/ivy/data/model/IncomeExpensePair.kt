@@ -1,4 +1,4 @@
-package com.ivy.data.model.legacy
+package com.ivy.data.model
 
 import java.math.BigDecimal
 

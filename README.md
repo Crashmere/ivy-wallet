@@ -406,7 +406,7 @@
 - 已把旧弹窗基础层继续收敛到 `shared:ui:legacy`：`IvyModal`、通用 modal action、删除/进度/货币/图标/起始日弹窗、排序弹窗、金额展示、预算/缓冲条、交易类型选择、分类选择和部分通用输入弹窗已迁出 `temp:legacy-code`。
 - 已把旧排序接口从 `com.ivy.wallet.domain.data.Reorderable` 收敛到 `shared:data:model` 的 `com.ivy.data.model.Reorderable`，避免 UI legacy 为了排序弹窗反向依赖 domain。
 - 已把计划付款复用的 `RecurringRuleModal` 通过外部 `pickDate` 回调与 `IvyWalletCtx` 解耦，并迁入 `shared:ui:legacy`。
-- 已把旧时间范围兼容模型迁出 `temp:legacy-code`：纯 `ClosedTimeRange`、收入/支出统计值对象迁入 `shared:data:model`；`FromToTimeRange`、overdue/upcoming 过滤函数和 `AccountData` 已迁入 `shared:domain`；仍带 UI 文案/格式化职责的旧 `TimePeriod`、`Month`、`LastNTimeRange`、`MainTab` 暂时保留在 `shared:ui:legacy` 的 legacy model 区。
+- 已把旧时间范围兼容模型迁出 `temp:legacy-code`：纯 `ClosedTimeRange`、`FromToTimeRange`、收入/支出统计值对象已进入正式 `com.ivy.data.model`；overdue/upcoming 过滤函数和账户页展示聚合已分别迁入 domain/feature 边界；仍带 UI 文案/格式化职责的旧 `TimePeriod`、`Month`、`LastNTimeRange`、`MainTab` 暂时保留在 `shared:ui:legacy` 的 legacy model 区。
 - 已把 `FromToTimeRange.toDisplay(...)` 从 domain 模型上拆成 `shared:ui:legacy` 的 UI 扩展，避免 `shared:domain` 依赖 `TimeFormatter`。
 - 已把 `Month.incrementMonthPeriod` 改成只返回新周期，不再直接更新 `IvyWalletCtx`；各页面/ViewModel 在调用处显式保存选中周期，副作用更清楚。
 - 已把 `ChoosePeriodModal` 和 `PeriodSelector` 迁入 `shared:ui:legacy`，并通过外部 `saveSelectedPeriod`、`pickDate`、`startDateOfMonth` 参数替代内部直接读取 `IvyWalletCtx`。
@@ -485,20 +485,20 @@
 - 已把 `TransactionHistoryDateDivider` 从旧 `com.ivy.wallet.domain.data` 迁到 `com.ivy.base.model.legacy`；它仍服务旧交易列表和旧日期分组，并与 `TransactionHistoryItem` 位于同一基础模型包。`SortOrder/CustomExchangeRateState` 已进一步下沉到对应 feature。
 - 旧创建/编辑参数已从早期的 `com.ivy.wallet.domain.deprecated.logic.model` 迁出；当前 `CreateAccountData`、`CreateBudgetData`、`CreateCategoryData`、`CreateLoanData`、`CreateLoanRecordData`、`EditLoanRecordData` 已归位到正式 `com.ivy.data.model`，旧页面和正式 use case 继续使用同名语义。借贷创建参数内部仍显式引用 legacy 账户/借贷记录模型，待借贷模型整体归位时再收敛。
 - 已把 `shared:domain` 中旧业务逻辑从早期 deprecated/legacy logic 包继续迁出：计划付款、账户统计、分类统计、借贷交易联动和旧汇率换算已进入正式 use case 包；当前不再保留 `com.ivy.legacy.domain.logic` 源码。
-- 已把旧 FPAction/use-case 与 pure helper 从 `com.ivy.wallet.domain.action/pure` 迁到 `com.ivy.legacy.domain.action/pure`，并同步迁移 `ClosedTimeRange`、`IncomeExpensePair`、`IncomeExpenseTransferPair` 的旧统计值对象包名；这些代码仍是旧 domain 兼容层，但不再占用正式 Wallet 产品包名。
+- 已把旧 FPAction/use-case 与 pure helper 从 `com.ivy.wallet.domain.action/pure` 迁到 `com.ivy.legacy.domain.action/pure`；`ClosedTimeRange`、`FromToTimeRange`、`IncomeExpensePair`、`IncomeExpenseTransferPair` 已进一步归位到正式 data model。旧 action/helper 仍是 domain 兼容层，但不再占用正式 Wallet 产品包名。
 - 已把旧 FRP/action helper 从 `shared:base` 物理下沉到 `shared:domain`，仍保留 `com.ivy.legacy.frp` 包名以避免大面积调用方 import churn；`shared:base` 不再承载这批旧 action 组合工具。
 - 旧 UI 专用的 `TestingContext` 已从 `shared:base` 的 FRP 包下沉到 `shared:ui:legacy` 的 `com.ivy.legacy.ui.testing`，基础层不再承载这段只服务旧 Compose UI 测试规避逻辑的全局开关。
 - 旧 FRP 组合 helper 已精简为只保留实际使用的重载，删除历史推导注释和“迁到 FP/FPAction”的过时 TODO；业务含义明确的 TODO 继续保留。
 - 旧 `Res.tryOp()` 已移除没有收益的 `inline/noinline` 组合，避免迁移后 domain 编译持续产生无意义的 inline 性能警告。
-- 旧 domain 逻辑、旧交易模型和旧统计值对象不再用大面积 `@Deprecated` 注解制造编译噪音；当前仍保留这些实现以支撑报表、交易列表、计划付款和旧统计流程，迁移状态通过 `legacy` 包名和 README 计划追踪。
+- 旧 domain 逻辑和旧交易模型不再用大面积 `@Deprecated` 注解制造编译噪音；当前仍保留这些实现以支撑报表、交易列表、计划付款和旧统计流程，迁移状态通过 `legacy` 包名和 README 计划追踪。
 - 旧交易分组仍需要的本地时区转换 helper 已从 `shared:base` 移到 `com.ivy.domain.time`；`shared:base` 不再暴露这段只服务 domain 交易流程的扩展函数。
 - 已清理一批低风险编译警告：保留仍被使用的 `LegacyTag` 和客户旅程卡片 provider，但取消误导性废弃标记；Arrow `orNull()`/旧 `option` DSL、旧 Material `Divider` 和 Kotlin `toUpperCase()` 调用已更新到当前 API。
 - 继续清理低风险废弃 API：旧货币选择器改用 `String.lowercase(Locale)`，旧排序弹窗改用 `bindingAdapterPosition` 并处理 `NO_POSITION`，汇率页箭头图标改用 AutoMirrored 版本。
 - 已把 `com.ivy.legacy.datamodel.temp` 中的旧实体/新模型 mapper 扩展函数迁到 `com.ivy.domain.mapper.legacy`；这些文件仍服务旧数据模型兼容，但不再使用含糊的 `temp` 包名。
 - 旧兼容模型已从早期的 `com.ivy.legacy.datamodel` 迁出，并继续按职责下沉；当前模型本体主要归入 `com.ivy.data.model.legacy`，数据库实体转换保留在 `com.ivy.domain.mapper.legacy`。
-- 已把跨模块混用的旧模型从 `com.ivy.legacy.data.model` 拆出并继续归位：`FromToTimeRange` 已进入 `com.ivy.data.model.legacy`，账户页展示聚合 `AccountData` 已下沉到 `feature:accounts`；UI 侧 `TimePeriod/Month/LastNTimeRange` 暂时保留在旧 UI 包，因为它们仍依赖 UI 文案和时间格式化。
-- 已把 `ClosedTimeRange`、`IncomeExpensePair`、`IncomeExpenseTransferPair` 从旧 `com.ivy.legacy.domain.pure.data` 包归入 `com.ivy.data.model.legacy`；它们仍作为旧统计流程的值对象保留在 `shared:data:model`。
-- 旧时间范围值对象 `FromToTimeRange` 已从 `com.ivy.legacy.domain.model` 下沉到 `com.ivy.data.model.legacy`；upcoming/overdue 交易过滤函数已迁到 `com.ivy.domain.time`，UI 和 feature 不再为了这个纯范围对象引用 legacy domain 包名。
+- 已把跨模块混用的旧模型从 `com.ivy.legacy.data.model` 拆出并继续归位：`FromToTimeRange` 已进入正式 `com.ivy.data.model`，账户页展示聚合 `AccountData` 已下沉到 `feature:accounts`；UI 侧 `TimePeriod/Month/LastNTimeRange` 暂时保留在旧 UI 包，因为它们仍依赖 UI 文案和时间格式化。
+- 已把 `ClosedTimeRange`、`IncomeExpensePair`、`IncomeExpenseTransferPair` 从旧 `com.ivy.legacy.domain.pure.data` 包归入正式 `com.ivy.data.model`；它们仍作为旧统计流程的值对象保留在 `shared:data:model`，但不再使用 legacy 包名。
+- 旧时间范围值对象 `FromToTimeRange` 已从 `com.ivy.legacy.domain.model` 归位到正式 `com.ivy.data.model`；upcoming/overdue 交易过滤函数已迁到 `com.ivy.domain.time`，UI 和 feature 不再为了这个纯范围对象引用 legacy domain 包名。
 - upcoming/overdue 交易日期过滤 helper 已从 `com.ivy.legacy.domain.model` 迁到 `com.ivy.domain.time`；legacy model 包不再承载这类业务过滤函数。
 - 通用排序号、Arrow `Option` 归零和 non-empty list 折叠 helper 已从 `com.ivy.legacy.domain.pure.util` 迁到 `com.ivy.domain.util`；这些工具继续服务排序创建、CSV 导入和旧统计折叠，但不再挂在 legacy pure 包下。
 - 账户余额过滤、账户币种 fallback 和汇率换算纯函数已从 `com.ivy.legacy.domain.pure.account/exchange` 迁到 `com.ivy.domain.account` 与 `com.ivy.domain.exchange`；它们仍兼容旧账户/汇率模型，但包边界已经按业务职责归位。

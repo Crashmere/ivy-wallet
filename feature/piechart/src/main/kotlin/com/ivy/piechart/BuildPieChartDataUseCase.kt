@@ -7,8 +7,8 @@ import com.ivy.ui.resource.ResourceProvider
 import com.ivy.data.model.Category
 import com.ivy.data.model.CategoryId
 import com.ivy.data.model.legacy.Account
-import com.ivy.data.model.legacy.FromToTimeRange
-import com.ivy.data.model.legacy.IncomeExpenseTransferPair
+import com.ivy.data.model.FromToTimeRange
+import com.ivy.data.model.IncomeExpenseTransferPair
 import com.ivy.data.model.primitive.ColorInt
 import com.ivy.data.model.primitive.IconAsset
 import com.ivy.data.model.primitive.NotBlankTrimmedString

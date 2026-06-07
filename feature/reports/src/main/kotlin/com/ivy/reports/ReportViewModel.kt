@@ -48,7 +48,7 @@ import com.ivy.ui.preferences.asEnabledState
 import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
 import com.ivy.domain.usecase.transaction.BuildTransactionHistoryItemsUseCase
 import com.ivy.domain.usecase.transaction.CalculateTransactionsIncomeExpenseUseCase
-import com.ivy.data.model.legacy.IncomeExpenseTransferPair
+import com.ivy.data.model.IncomeExpenseTransferPair
 import com.ivy.domain.exchange.ExchangeData
 import com.ivy.domain.transaction.getTransactionType
 import com.ivy.domain.transaction.getValue

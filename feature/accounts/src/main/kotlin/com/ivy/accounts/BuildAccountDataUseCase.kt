@@ -1,7 +1,7 @@
 package com.ivy.accounts
 
 import com.ivy.data.model.Account
-import com.ivy.data.model.legacy.ClosedTimeRange
+import com.ivy.data.model.ClosedTimeRange
 import com.ivy.domain.usecase.account.CalculateAccountBalanceUseCase
 import com.ivy.domain.usecase.account.CalculateAccountIncomeExpenseUseCase
 import com.ivy.domain.usecase.exchange.ExchangeAmountUseCase

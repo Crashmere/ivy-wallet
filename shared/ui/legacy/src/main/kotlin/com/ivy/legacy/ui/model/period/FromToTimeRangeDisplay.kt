@@ -1,6 +1,6 @@
 package com.ivy.legacy.ui.model.period
 
-import com.ivy.data.model.legacy.FromToTimeRange
+import com.ivy.data.model.FromToTimeRange
 import com.ivy.ui.time.TimeFormatter
 
 fun FromToTimeRange.toDisplay(

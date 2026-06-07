@@ -1,6 +1,6 @@
 package com.ivy.domain.usecase.home
 
-import com.ivy.data.model.legacy.ClosedTimeRange
+import com.ivy.data.model.ClosedTimeRange
 import com.ivy.domain.time.DOMAIN_INSTANT_MIN_SAFE
 import com.ivy.domain.transaction.isOverdue
 import java.time.Instant

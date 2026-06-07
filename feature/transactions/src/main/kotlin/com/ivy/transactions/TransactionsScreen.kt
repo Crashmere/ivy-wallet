@@ -65,7 +65,7 @@ import com.ivy.ui.navigation.navigation
 import com.ivy.ui.navigation.screenScopedViewModel
 import com.ivy.ui.R
 import com.ivy.ui.rememberScrollPositionListState
-import com.ivy.data.model.legacy.IncomeExpensePair
+import com.ivy.data.model.IncomeExpensePair
 import com.ivy.legacy.ui.theme.Gray
 import com.ivy.legacy.ui.theme.GreenDark
 import com.ivy.legacy.ui.component.BalanceRow

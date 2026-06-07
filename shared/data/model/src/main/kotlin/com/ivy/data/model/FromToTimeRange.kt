@@ -1,4 +1,4 @@
-package com.ivy.data.model.legacy
+package com.ivy.data.model
 
 import java.time.Instant
 
@@ -8,10 +8,10 @@ data class FromToTimeRange(
     val to: Instant?,
 ) {
     fun from(): Instant =
-        from ?: legacyMinTime()
+        from ?: safeMinTime()
 
     fun to(): Instant =
-        to ?: legacyMaxTime()
+        to ?: safeMaxTime()
 
     fun upcomingFrom(
         now: Instant
@@ -38,14 +38,14 @@ fun FromToTimeRange.toCloseTimeRangeUnsafe(): ClosedTimeRange {
 
 fun FromToTimeRange.toCloseTimeRange(): ClosedTimeRange {
     return ClosedTimeRange(
-        from = from ?: legacyMinTime(),
-        to = to ?: legacyMaxTime()
+        from = from ?: safeMinTime(),
+        to = to ?: safeMaxTime()
     )
 }
 
 fun FromToTimeRange.toUTCCloseTimeRange(): ClosedTimeRange {
     return ClosedTimeRange(
-        from = from ?: legacyMinTime(),
-        to = to ?: legacyMaxTime()
+        from = from ?: safeMinTime(),
+        to = to ?: safeMaxTime()
     )
 }

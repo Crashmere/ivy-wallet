@@ -16,7 +16,7 @@ import com.ivy.domain.usecase.account.SaveAccountUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.domain.usecase.settings.GetTransfersAsIncomeExpensePreferenceUseCase
 import com.ivy.legacy.ui.state.PeriodState
-import com.ivy.data.model.legacy.toCloseTimeRange
+import com.ivy.data.model.toCloseTimeRange
 import com.ivy.data.model.currency.format
 import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.R

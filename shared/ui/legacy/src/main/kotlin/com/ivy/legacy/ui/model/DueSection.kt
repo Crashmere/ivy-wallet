@@ -2,7 +2,7 @@ package com.ivy.legacy.ui.model
 
 import androidx.compose.runtime.Immutable
 import com.ivy.data.model.legacy.Transaction
-import com.ivy.data.model.legacy.IncomeExpensePair
+import com.ivy.data.model.IncomeExpensePair
 import kotlinx.collections.immutable.ImmutableList
 
 @Immutable

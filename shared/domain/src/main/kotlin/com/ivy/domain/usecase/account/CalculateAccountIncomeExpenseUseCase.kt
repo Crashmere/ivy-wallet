@@ -2,8 +2,8 @@ package com.ivy.domain.usecase.account
 
 import arrow.core.nonEmptyListOf
 import com.ivy.data.model.Account
-import com.ivy.data.model.legacy.ClosedTimeRange
-import com.ivy.data.model.legacy.IncomeExpensePair
+import com.ivy.data.model.ClosedTimeRange
+import com.ivy.data.model.IncomeExpensePair
 import com.ivy.domain.transaction.AccountValueFunctions
 import com.ivy.domain.transaction.foldTransactions
 import com.ivy.domain.time.nowUtc

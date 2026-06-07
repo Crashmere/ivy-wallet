@@ -3,7 +3,7 @@ package com.ivy.domain.usecase.wallet
 import arrow.core.toOption
 import com.ivy.data.model.Account
 import com.ivy.data.model.AccountId
-import com.ivy.data.model.legacy.ClosedTimeRange
+import com.ivy.data.model.ClosedTimeRange
 import com.ivy.data.model.primitive.AssetCode
 import com.ivy.data.model.primitive.ColorInt
 import com.ivy.data.model.primitive.IconAsset

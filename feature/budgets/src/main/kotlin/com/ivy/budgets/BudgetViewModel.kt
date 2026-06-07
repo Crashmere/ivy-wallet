@@ -14,8 +14,8 @@ import com.ivy.data.model.Income
 import com.ivy.data.model.Transaction
 import com.ivy.data.model.Transfer
 import com.ivy.legacy.ui.state.PeriodState
-import com.ivy.data.model.legacy.FromToTimeRange
-import com.ivy.data.model.legacy.toCloseTimeRange
+import com.ivy.data.model.FromToTimeRange
+import com.ivy.data.model.toCloseTimeRange
 import com.ivy.data.model.legacy.Account
 import com.ivy.data.model.Budget
 import com.ivy.data.model.currency.format

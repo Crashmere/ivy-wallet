@@ -2,7 +2,7 @@ package com.ivy.legacy.ui.model.period
 
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.Composable
-import com.ivy.data.model.legacy.FromToTimeRange
+import com.ivy.data.model.FromToTimeRange
 import com.ivy.ui.time.TimeConverter
 import com.ivy.ui.time.TimeFormatter
 import com.ivy.ui.time.TimeProvider

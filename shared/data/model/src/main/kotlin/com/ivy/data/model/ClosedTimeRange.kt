@@ -1,4 +1,4 @@
-package com.ivy.data.model.legacy
+package com.ivy.data.model
 
 import java.time.Instant
 
@@ -10,12 +10,12 @@ data class ClosedTimeRange(
         fun allTimeIvy(
             now: Instant,
         ): ClosedTimeRange = ClosedTimeRange(
-            from = legacyMinTime(),
+            from = safeMinTime(),
             to = now,
         )
 
         fun to(to: Instant): ClosedTimeRange = ClosedTimeRange(
-            from = legacyMinTime(),
+            from = safeMinTime(),
             to = to
         )
     }

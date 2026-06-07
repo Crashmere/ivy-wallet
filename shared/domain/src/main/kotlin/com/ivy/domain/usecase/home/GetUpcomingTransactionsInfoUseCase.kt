@@ -1,6 +1,6 @@
 package com.ivy.domain.usecase.home
 
-import com.ivy.data.model.legacy.ClosedTimeRange
+import com.ivy.data.model.ClosedTimeRange
 import com.ivy.domain.transaction.isUpcoming
 import javax.inject.Inject
 

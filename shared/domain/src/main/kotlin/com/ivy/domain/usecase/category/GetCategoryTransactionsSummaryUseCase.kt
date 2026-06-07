@@ -6,7 +6,7 @@ import com.ivy.data.model.legacy.TransactionHistoryItem
 import com.ivy.data.api.AccountStore
 import com.ivy.data.model.Category
 import com.ivy.data.model.CategoryId
-import com.ivy.data.model.legacy.FromToTimeRange
+import com.ivy.data.model.FromToTimeRange
 import com.ivy.data.api.TransactionStore
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.domain.usecase.exchange.LegacyExchangeRatesUseCase

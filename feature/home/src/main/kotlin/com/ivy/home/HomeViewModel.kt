@@ -36,7 +36,7 @@ import com.ivy.legacy.ui.model.AppBaseData
 import com.ivy.legacy.ui.model.BufferInfo
 import com.ivy.legacy.ui.model.LegacyDueSection
 import com.ivy.legacy.ui.model.period.TimePeriod
-import com.ivy.data.model.legacy.toUTCCloseTimeRange
+import com.ivy.data.model.toUTCCloseTimeRange
 import com.ivy.data.model.legacy.Account
 import com.ivy.ui.navigation.BalanceScreen
 import com.ivy.ui.navigation.MainTab
@@ -51,8 +51,8 @@ import com.ivy.domain.usecase.home.GetUpcomingTransactionsInfoUseCase
 import com.ivy.domain.usecase.planned.PayOrSkipLegacyPlannedTransactionUseCase
 import com.ivy.domain.usecase.planned.PayOrSkipLegacyPlannedTransactionsUseCase
 import com.ivy.domain.usecase.transaction.GetTransactionHistoryItemsUseCase
-import com.ivy.data.model.legacy.ClosedTimeRange
-import com.ivy.data.model.legacy.IncomeExpensePair
+import com.ivy.data.model.ClosedTimeRange
+import com.ivy.data.model.IncomeExpensePair
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
