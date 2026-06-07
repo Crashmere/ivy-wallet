@@ -1,4 +1,4 @@
-package com.ivy.base.legacy
+package com.ivy.base.time
 
 import com.ivy.data.model.IntervalType
 import java.time.Instant

@@ -1,7 +1,7 @@
 package com.ivy.legacy.domain.logic
 
 import com.ivy.base.legacy.Transaction
-import com.ivy.base.legacy.incrementDate
+import com.ivy.base.time.incrementDate
 import com.ivy.data.repository.TransactionRepository
 import com.ivy.data.repository.mapper.TransactionMapper
 import com.ivy.legacy.domain.model.PlannedPaymentRule

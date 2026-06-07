@@ -1,7 +1,7 @@
 package com.ivy.legacy.domain.pure.data
 
 import com.ivy.base.time.TimeProvider
-import com.ivy.base.legacy.ivyMinTime
+import com.ivy.base.time.ivyMinTime
 import java.time.Instant
 
 data class ClosedTimeRange(

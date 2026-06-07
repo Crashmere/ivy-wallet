@@ -4,10 +4,10 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.Composable
 import com.ivy.base.time.TimeConverter
 import com.ivy.base.time.TimeProvider
-import com.ivy.base.legacy.atEndOfDay
-import com.ivy.base.legacy.endOfMonth
-import com.ivy.base.legacy.startOfMonth
-import com.ivy.base.legacy.withDayOfMonthSafe
+import com.ivy.base.time.atEndOfDay
+import com.ivy.base.time.endOfMonth
+import com.ivy.base.time.startOfMonth
+import com.ivy.base.time.withDayOfMonthSafe
 import com.ivy.legacy.domain.model.FromToTimeRange
 import com.ivy.ui.time.TimeFormatter
 import java.time.Instant

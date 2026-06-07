@@ -18,7 +18,7 @@ import com.ivy.frp.then
 import com.ivy.legacy.domain.model.Account
 import com.ivy.legacy.domain.mapper.toImmutableLegacyTags
 import com.ivy.legacy.domain.mapper.toLegacyDomain
-import com.ivy.base.legacy.toEpochSeconds
+import com.ivy.base.time.toEpochSeconds
 import com.ivy.legacy.domain.data.TransactionHistoryDateDivider
 import com.ivy.legacy.domain.logic.currency.ExchangeRatesLogic
 import com.ivy.legacy.domain.pure.exchange.ExchangeData

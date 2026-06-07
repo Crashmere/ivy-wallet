@@ -2,7 +2,7 @@ package com.ivy.legacy.ui.model.period
 
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.Composable
-import com.ivy.base.legacy.incrementDate
+import com.ivy.base.time.incrementDate
 import com.ivy.base.time.TimeProvider
 import com.ivy.data.model.IntervalType
 import com.ivy.legacy.ui.forDisplay

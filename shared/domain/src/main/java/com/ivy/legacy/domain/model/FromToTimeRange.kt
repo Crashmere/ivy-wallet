@@ -4,8 +4,8 @@ import androidx.compose.runtime.Immutable
 import com.ivy.base.legacy.Transaction
 import com.ivy.base.time.TimeConverter
 import com.ivy.base.time.TimeProvider
-import com.ivy.base.legacy.ivyMinTime
-import com.ivy.base.legacy.ivyMaxTime
+import com.ivy.base.time.ivyMinTime
+import com.ivy.base.time.ivyMaxTime
 import com.ivy.legacy.domain.pure.data.ClosedTimeRange
 import java.time.Instant
 import java.time.ZoneOffset

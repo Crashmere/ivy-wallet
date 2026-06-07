@@ -37,7 +37,7 @@ import com.ivy.frp.filterSuspend
 import com.ivy.legacy.ui.state.PeriodState
 import com.ivy.legacy.domain.model.Account
 import com.ivy.legacy.domain.mapper.toLegacy
-import com.ivy.base.legacy.getISOFormattedDateTime
+import com.ivy.base.time.getISOFormattedDateTime
 import com.ivy.base.coroutines.scopedIOThread
 import com.ivy.base.text.toLowerCaseLocal
 import com.ivy.base.coroutines.uiThread

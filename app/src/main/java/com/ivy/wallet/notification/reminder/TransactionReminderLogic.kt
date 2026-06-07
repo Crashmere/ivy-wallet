@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
-import com.ivy.base.legacy.toEpochSeconds
+import com.ivy.base.time.toEpochSeconds
 import com.ivy.base.time.TimeProvider
 import com.ivy.domain.preferences.AppPreferences
 import dagger.hilt.android.qualifiers.ApplicationContext
