@@ -727,10 +727,10 @@
 - 只写不读的 `data_backup_completed` 旧偏好已删除；备份导出仍直接生成 zip 并触发分享，不再写入没有消费方的完成标记。
 - 首页客户旅程卡片关闭状态已收敛到 `IsCustomerJourneyCardDismissedUseCase/DismissCustomerJourneyCardUseCase`；`feature:home` 不再直接拼接或读写客户旅程偏好 key。
 - 重置钱包流程中的旧 app 偏好清空已收敛到 `ClearAppPreferencesUseCase`；app 层重置实现继续负责编排，但不再直接注入 `AppPreferences`。
-- 业务偏好 key 已从 `shared:base` 迁到 `shared:data:api`；base 只保留通用 `PreferenceStore/SharedPrefs`，不再承载应用锁、通知、隐藏余额等业务 key。
+- 业务偏好 key 已从 `shared:base` 迁到 `shared:data:api`；base 不再承载应用锁、通知、隐藏余额等业务 key。
 - 旧 `AppPreferences` 具体类已拆成 `AppPreferenceStore` 端口和 `SharedPrefsAppPreferenceStore` 实现；domain 用例只依赖 data-api 端口，SharedPrefs 读写细节下沉到 data-core。
 - 备份恢复中的偏好读写已改走 `AppPreferenceStore`；备份 JSON 仍保留原 sharedPrefs key 字符串以兼容旧备份文件，但 `BackupDataUseCase` 不再直接读写通用 `PreferenceStore`。
-- `PreferenceStore/SharedPrefs` 接口已按当前实际调用面瘦身，只保留 bool/int/string 读写和全量清空，删除没人使用的 all/has/float/double/long/remove 等方法。
+- 旧 `PreferenceStore/SharedPrefs` 基础层抽象已删除；`SharedPrefsAppPreferenceStore` 在 data-core 内部直接持有 Android SharedPreferences，base 不再暴露偏好存储绑定。
 - 账户旧读取路径已收敛到 `AccountStore`；旧 legacy 账户模型现在由 data model 账户映射而来，`shared:domain` 主源码不再直接注入 `AccountDao` 或依赖 `AccountEntity` mapper。
 - 旧交易卡片已移除重复账户查找 TODO：渲染前先解析来源/目标账户，再复用同一结果处理点击和币种展示，行为不变但 legacy UI 内部职责更清楚。
 

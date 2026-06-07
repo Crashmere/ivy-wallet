@@ -9,7 +9,6 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.ivy.base.TestDispatchersProvider
 import com.ivy.base.di.KotlinxSerializationModule
-import com.ivy.base.prefs.SharedPrefs
 import com.ivy.data.DataObserver
 import com.ivy.data.db.IvyRoomDatabase
 import com.ivy.data.file.FileSystem
@@ -56,7 +55,7 @@ class BackupDataUseCaseAndroidTest {
             settingsDao = db.settingsDao,
             transactionDao = db.transactionDao,
             transactionWriter = db.writeTransactionDao,
-            appPreferenceStore = SharedPrefsAppPreferenceStore(SharedPrefs(appContext)),
+            appPreferenceStore = SharedPrefsAppPreferenceStore(appContext),
             accountRepository = AccountRepository(
                 accountDao = db.accountDao,
                 writeAccountDao = db.writeAccountDao,
