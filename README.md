@@ -633,6 +633,7 @@
 - 重置钱包流程的 DataStore 清空已改走 `DataStorePreferencesRepository.clearAll()`；app 层不再直接注入 AndroidX DataStore，也去掉了自身的 DataStore Gradle 依赖。
 - 偏好开关 key helper 已从 data core 移回 domain 的 `BoolPreference` 内部；`feature_` 前缀保持不变，data core 不再暴露只服务 domain 偏好定义的 `DatastoreKeys`。
 - 删除无调用方的 `DeviceIdUseCase` 和 `DeviceId` 草稿；偏好开关的底层 DataStore 读写方法已收紧为 domain 模块内部 API，外部调用方只能通过 `PreferenceToggleRepository` 访问。
+- 重置钱包流程的数据删除和全量数据变化通知已拆成 `ClearWalletDataUseCase`、`NotifyAllDataChangedUseCase`；app 层的 reset 实现不再直接注入底层 DAO、repository 或 `DataObserver`，只保留重置编排、偏好清空、默认数据重建和导航复位。
 
 建议顺序：
 
