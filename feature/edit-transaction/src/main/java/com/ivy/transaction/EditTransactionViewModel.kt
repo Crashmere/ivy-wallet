@@ -60,7 +60,6 @@ import com.ivy.domain.usecase.account.GetLegacyAccountUseCase
 import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
 import com.ivy.domain.usecase.exchange.LegacyExchangeRatesUseCase
 import com.ivy.domain.usecase.loan.UpdateAssociatedLoanDataUseCase
-import com.ivy.legacy.domain.data.CustomExchangeRateState
 import com.ivy.data.model.legacy.CreateAccountData
 import com.ivy.data.model.legacy.CreateCategoryData
 import dagger.hilt.android.lifecycle.HiltViewModel

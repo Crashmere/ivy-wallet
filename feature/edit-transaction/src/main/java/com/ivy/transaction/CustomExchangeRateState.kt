@@ -1,4 +1,4 @@
-package com.ivy.legacy.domain.data
+package com.ivy.transaction
 
 
 data class CustomExchangeRateState(

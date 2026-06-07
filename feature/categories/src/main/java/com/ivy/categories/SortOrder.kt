@@ -1,4 +1,4 @@
-package com.ivy.legacy.domain.data
+package com.ivy.categories
 
 enum class SortOrder(val orderNum: Int, val displayName: String) {
     DEFAULT(0, "Default"),

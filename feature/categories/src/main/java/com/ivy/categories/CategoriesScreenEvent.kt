@@ -1,6 +1,5 @@
 package com.ivy.categories
 
-import com.ivy.legacy.domain.data.SortOrder
 import com.ivy.data.model.legacy.CreateCategoryData
 import com.ivy.legacy.ui.modal.edit.CategoryModalData
 

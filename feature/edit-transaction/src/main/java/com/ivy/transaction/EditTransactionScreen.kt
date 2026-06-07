@@ -50,7 +50,6 @@ import com.ivy.ui.navigation.EditTransactionScreen
 import com.ivy.ui.navigation.navigation
 import com.ivy.ui.navigation.screenScopedViewModel
 import com.ivy.ui.R
-import com.ivy.legacy.domain.data.CustomExchangeRateState
 import com.ivy.data.model.currency.IvyCurrency
 import com.ivy.data.model.legacy.CreateAccountData
 import com.ivy.data.model.legacy.CreateCategoryData
