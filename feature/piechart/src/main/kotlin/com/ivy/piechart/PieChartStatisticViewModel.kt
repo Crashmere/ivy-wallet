@@ -9,8 +9,6 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
 import com.ivy.data.model.legacy.Transaction
 import com.ivy.data.model.TransactionType
-import com.ivy.base.time.TimeConverter
-import com.ivy.base.time.TimeProvider
 import com.ivy.data.model.Category
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.domain.usecase.settings.GetTransfersAsIncomeExpensePreferenceUseCase
@@ -26,7 +24,6 @@ import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.time.ZoneOffset
 import java.util.UUID
 import javax.inject.Inject
 
@@ -37,8 +34,6 @@ class PieChartStatisticViewModel @Inject constructor(
     private val periodState: PeriodState,
     private val buildPieChartDataUseCase: BuildPieChartDataUseCase,
     private val getTransfersAsIncomeExpensePreference: GetTransfersAsIncomeExpensePreferenceUseCase,
-    private val timeProvider: TimeProvider,
-    private val timeConverter: TimeConverter,
 ) : ComposeViewModel<PieChartStatisticState, PieChartStatisticEvent>() {
 
     private var treatTransfersAsIncomeExpense by mutableStateOf(false)
@@ -192,7 +187,7 @@ class PieChartStatisticViewModel @Inject constructor(
         val accountIdFilterList = accountIdFilterList
         val transactions = transactions
         val baseCurrency = baseCurrency
-        val range = periodValue.toRange(periodState.startDayOfMonth, timeConverter, timeProvider)
+        val range = periodState.rangeOf(periodValue)
 
         val treatTransferAsIncExp =
             getTransfersAsIncomeExpensePreference() &&
@@ -228,14 +223,8 @@ class PieChartStatisticViewModel @Inject constructor(
     }
 
     private suspend fun nextMonth() {
-        val month = period.month
-        val year = period.year ?: currentUtcYear()
-        if (month != null) {
-            val nextPeriod = month.incrementMonthPeriod(
-                increment = 1L,
-                year = year,
-                referenceDate = timeProvider.localDateNow(),
-            )
+        val nextPeriod = periodState.shiftMonth(period, increment = 1L)
+        if (nextPeriod != null) {
             periodState.select(nextPeriod)
             load(
                 periodValue = nextPeriod
@@ -244,23 +233,14 @@ class PieChartStatisticViewModel @Inject constructor(
     }
 
     private suspend fun previousMonth() {
-        val month = period.month
-        val year = period.year ?: currentUtcYear()
-        if (month != null) {
-            val previousPeriod = month.incrementMonthPeriod(
-                increment = -1L,
-                year = year,
-                referenceDate = timeProvider.localDateNow(),
-            )
+        val previousPeriod = periodState.shiftMonth(period, increment = -1L)
+        if (previousPeriod != null) {
             periodState.select(previousPeriod)
             load(
                 periodValue = previousPeriod
             )
         }
     }
-
-    private fun currentUtcYear(): Int =
-        timeProvider.utcNow().atZone(ZoneOffset.UTC).year
 
     private suspend fun configureMonthModal(timePeriod: TimePeriod?) {
         val choosePeriodModalData = if (timePeriod != null) {

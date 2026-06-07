@@ -10,8 +10,6 @@ import androidx.lifecycle.viewModelScope
 import com.ivy.data.model.Theme
 import com.ivy.data.model.legacy.Transaction
 import com.ivy.data.model.legacy.TransactionHistoryItem
-import com.ivy.base.time.TimeConverter
-import com.ivy.base.time.TimeProvider
 import com.ivy.data.model.primitive.AssetCode
 import com.ivy.domain.preferences.toggles.PreferenceToggleRepository
 import com.ivy.domain.preferences.toggles.PreferenceToggles
@@ -64,7 +62,6 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.math.BigDecimal
-import java.time.ZoneOffset
 import javax.inject.Inject
 
 @Stable
@@ -94,8 +91,6 @@ class HomeViewModel @Inject constructor(
     private val syncExchangeRatesUseCase: SyncExchangeRatesUseCase,
     private val hasTransactionsUseCase: HasTransactionsUseCase,
     private val mapTransactionsToLegacyUseCase: MapTransactionsToLegacyUseCase,
-    private val timeProvider: TimeProvider,
-    private val timeConverter: TimeConverter,
     private val preferenceToggles: PreferenceToggles,
     private val preferenceToggleRepository: PreferenceToggleRepository,
     private val periodState: PeriodState,
@@ -287,11 +282,7 @@ class HomeViewModel @Inject constructor(
         // This restores the runtime theme when the user imports a local backup.
         themeState.update(theme = preferences.theme)
 
-        val timeRange = period.toRange(
-            startDateOfMonth = periodState.startDayOfMonth,
-            timeConverter = timeConverter,
-            timeProvider = timeProvider
-        ).toUTCCloseTimeRange()
+        val timeRange = periodState.rangeOf(period).toUTCCloseTimeRange()
 
         val appDataInput = loadAppBaseData(preferences to timeRange)
         val balanceInput = loadIncomeExpenseBalance(appDataInput)
@@ -500,13 +491,7 @@ class HomeViewModel @Inject constructor(
     }
 
     private suspend fun onSelectNextMonth() {
-        val month = period.month
-        val year = period.year ?: currentUtcYear()
-        val period = month?.incrementMonthPeriod(
-            increment = 1L,
-            year = year,
-            referenceDate = timeProvider.localDateNow(),
-        )
+        val period = periodState.shiftMonth(period, increment = 1L)
         if (period != null) {
             periodState.select(period)
             setPeriod(period)
@@ -514,13 +499,7 @@ class HomeViewModel @Inject constructor(
     }
 
     private suspend fun onSelectPreviousMonth() {
-        val month = period.month
-        val year = period.year ?: currentUtcYear()
-        val period = month?.incrementMonthPeriod(
-            increment = -1L,
-            year = year,
-            referenceDate = timeProvider.localDateNow(),
-        )
+        val period = periodState.shiftMonth(period, increment = -1L)
         if (period != null) {
             periodState.select(period)
             setPeriod(period)
@@ -535,7 +514,4 @@ class HomeViewModel @Inject constructor(
     private fun setExpanded(expanded: Boolean) {
         this.expanded = expanded
     }
-
-    private fun currentUtcYear(): Int =
-        timeProvider.utcNow().atZone(ZoneOffset.UTC).year
 }

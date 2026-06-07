@@ -38,9 +38,6 @@ import com.ivy.data.model.legacy.TransactionHistoryItem
 import com.ivy.data.model.TransactionType
 import com.ivy.data.model.Category
 import com.ivy.ui.platform.LocalDatePicker
-import com.ivy.ui.time.LocalTimeConverter
-import com.ivy.ui.time.LocalTimeFormatter
-import com.ivy.ui.time.LocalTimeProvider
 import com.ivy.ui.theme.LocalThemeState
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
@@ -49,6 +46,7 @@ import com.ivy.legacy.ui.model.AppBaseData
 import com.ivy.legacy.ui.model.LegacyDueSection
 import com.ivy.legacy.ui.model.period.Month
 import com.ivy.legacy.ui.model.period.TimePeriod
+import com.ivy.legacy.ui.model.period.displayLong
 import com.ivy.data.model.legacy.Account
 import com.ivy.legacy.ui.state.LocalPeriodState
 import com.ivy.legacy.ui.component.IncomeExpensesCards
@@ -286,18 +284,10 @@ private fun BoxWithConstraintsScope.UI(
             key = "item_stats_lazy_column"
         )
 
-        val timeProvider = LocalTimeProvider.current
-        val timeConverter = LocalTimeConverter.current
-        val timeFormatter = LocalTimeFormatter.current
         val noTransactionsTitle = stringResource(R.string.no_transactions)
         val noTransactionsText = stringResource(
             R.string.no_transactions_for_period,
-            period.toDisplayLong(
-                startDateOfMonth = periodState.startDayOfMonth,
-                timeProvider = timeProvider,
-                timeConverter = timeConverter,
-                timeFormatter = timeFormatter,
-            )
+            period.displayLong(periodState.startDayOfMonth)
         )
         LazyColumn(
             modifier = Modifier

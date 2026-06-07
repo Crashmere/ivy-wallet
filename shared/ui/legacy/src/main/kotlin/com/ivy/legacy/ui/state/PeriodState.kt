@@ -5,13 +5,17 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import com.ivy.base.time.TimeConverter
 import com.ivy.base.time.TimeProvider
+import com.ivy.data.model.legacy.FromToTimeRange
 import com.ivy.legacy.ui.model.period.TimePeriod
+import java.time.ZoneOffset
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class PeriodState @Inject constructor(
+    private val timeConverter: TimeConverter,
     private val timeProvider: TimeProvider,
 ) {
     var startDayOfMonth by mutableIntStateOf(1)
@@ -53,6 +57,24 @@ class PeriodState @Inject constructor(
 
     fun select(period: TimePeriod) {
         selectedPeriod = period
+    }
+
+    fun currentMonth(): TimePeriod = TimePeriod.currentMonth(
+        startDayOfMonth = startDayOfMonth,
+        timeProvider = timeProvider,
+    )
+
+    fun rangeOf(period: TimePeriod = selectedPeriod): FromToTimeRange =
+        period.toRange(startDayOfMonth, timeConverter, timeProvider)
+
+    fun shiftMonth(period: TimePeriod, increment: Long): TimePeriod? {
+        val month = period.month ?: return null
+        val year = period.year ?: timeProvider.utcNow().atZone(ZoneOffset.UTC).year
+        return month.incrementMonthPeriod(
+            increment = increment,
+            year = year,
+            referenceDate = timeProvider.localDateNow(),
+        )
     }
 }
 

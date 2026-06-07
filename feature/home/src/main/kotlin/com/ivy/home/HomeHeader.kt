@@ -29,14 +29,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.TransactionType
-import com.ivy.ui.time.LocalTimeConverter
-import com.ivy.ui.time.LocalTimeFormatter
-import com.ivy.ui.time.LocalTimeProvider
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
 import com.ivy.ui.compose.thenIf
 import com.ivy.legacy.ui.state.LocalPeriodState
 import com.ivy.legacy.ui.model.period.TimePeriod
+import com.ivy.legacy.ui.model.period.displayShort
 import com.ivy.legacy.ui.component.transaction.TransactionsDividerLine
 import com.ivy.legacy.ui.clickableNoIndication
 import com.ivy.legacy.ui.drawColoredShadow
@@ -170,12 +168,7 @@ private fun HeaderStickyRow(
                 },
             ),
             iconStart = R.drawable.ic_calendar,
-            text = period.toDisplayShort(
-                startDateOfMonth = periodState.startDayOfMonth,
-                timeConverter = LocalTimeConverter.current,
-                timeProvider = LocalTimeProvider.current,
-                timeFormatter = LocalTimeFormatter.current,
-            ),
+            text = period.displayShort(periodState.startDayOfMonth),
             minWidth = 130.dp,
         ) {
             onShowMonthModal()

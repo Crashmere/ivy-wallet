@@ -7,8 +7,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.lifecycle.viewModelScope
 import com.ivy.data.model.legacy.Transaction
-import com.ivy.base.time.TimeConverter
-import com.ivy.base.time.TimeProvider
 import com.ivy.domain.preferences.toggles.PreferenceToggleRepository
 import com.ivy.domain.preferences.toggles.PreferenceToggles
 import com.ivy.domain.usecase.category.GetCategoriesUseCase
@@ -16,7 +14,6 @@ import com.ivy.domain.usecase.category.SaveCategoryUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.domain.usecase.transaction.GetLegacyTransactionsForAccountsUseCase
 import com.ivy.legacy.ui.state.PeriodState
-import com.ivy.legacy.ui.model.period.TimePeriod
 import com.ivy.data.model.legacy.Account
 import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.preferences.asEnabledState
@@ -54,8 +51,6 @@ class CategoriesViewModel @Inject constructor(
     private val calculateCategoryIncomeWithAccountFiltersUseCase: CalculateCategoryIncomeWithAccountFiltersUseCase,
     private val preferenceToggles: PreferenceToggles,
     private val preferenceToggleRepository: PreferenceToggleRepository,
-    private val timeProvider: TimeProvider,
-    private val timeConverter: TimeConverter,
 ) : ComposeViewModel<CategoriesScreenState, CategoriesScreenEvent>() {
 
     private val baseCurrency = mutableStateOf("")
@@ -146,14 +141,7 @@ class CategoriesViewModel @Inject constructor(
 
     private suspend fun initialise() {
         withContext(Dispatchers.IO) {
-            val range = TimePeriod.currentMonth(
-                startDayOfMonth = periodState.startDayOfMonth,
-                timeProvider = timeProvider,
-            ).toRange(
-                periodState.startDayOfMonth,
-                timeConverter,
-                timeProvider
-            ) // this must be monthly
+            val range = periodState.rangeOf(periodState.currentMonth()) // this must be monthly
 
             allAccounts = getLegacyAccountsUseCase()
             baseCurrency.value = getBaseCurrencyCode()

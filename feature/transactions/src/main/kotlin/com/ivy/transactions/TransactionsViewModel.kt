@@ -10,8 +10,6 @@ import com.ivy.data.model.legacy.Transaction
 import com.ivy.data.model.legacy.TransactionHistoryItem
 import com.ivy.data.model.TransactionType
 import com.ivy.ui.resource.ResourceProvider
-import com.ivy.base.time.TimeConverter
-import com.ivy.base.time.TimeProvider
 import com.ivy.data.model.AccountId
 import com.ivy.data.model.Category
 import com.ivy.data.model.CategoryId
@@ -65,7 +63,6 @@ import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.time.ZoneOffset
 import java.util.UUID
 import javax.inject.Inject
 import com.ivy.data.model.legacy.Account as LegacyAccount
@@ -101,8 +98,6 @@ class TransactionsViewModel @Inject constructor(
     private val mapTransactionsToLegacyUseCase: MapTransactionsToLegacyUseCase,
     private val mapTransactionsToLegacyWithTagsUseCase: MapTransactionsToLegacyWithTagsUseCase,
     private val resourceProvider: ResourceProvider,
-    private val timeProvider: TimeProvider,
-    private val timeConverter: TimeConverter,
     private val preferenceToggleRepository: PreferenceToggleRepository,
     private val preferenceToggles: PreferenceToggles
 ) : ComposeViewModel<TransactionsState, TransactionsEvent>() {
@@ -348,7 +343,7 @@ class TransactionsViewModel @Inject constructor(
     private suspend fun initForAccount(accountId: UUID) {
         val initialAccount = getLegacyAccountUseCase(accountId) ?: error("account not found")
         account.value = initialAccount
-        val range = period.value.toRange(periodState.startDayOfMonth, timeConverter, timeProvider)
+        val range = periodState.rangeOf(period.value)
 
         if (initialAccount.currency.isNullOrBlank().not()) {
             currency.value = initialAccount.currency!!
@@ -411,7 +406,7 @@ class TransactionsViewModel @Inject constructor(
             getCategoryUseCase(CategoryId(categoryId)) ?: error("category not found")
         }
         category.value = initialCategory
-        val range = period.value.toRange(periodState.startDayOfMonth, timeConverter, timeProvider)
+        val range = periodState.rangeOf(period.value)
 
         val summary = withContext(Dispatchers.IO) {
             getCategoryTransactionsSummaryUseCase(
@@ -436,8 +431,7 @@ class TransactionsViewModel @Inject constructor(
                 getCategoryUseCase(CategoryId(categoryId)) ?: error("category not found")
             }
             category.value = initialCategory
-            val range =
-                period.value.toRange(periodState.startDayOfMonth, timeConverter, timeProvider)
+            val range = periodState.rangeOf(period.value)
 
             val summary = withContext(Dispatchers.IO) {
                 getCategoryTransactionsSummaryUseCase(
@@ -452,7 +446,7 @@ class TransactionsViewModel @Inject constructor(
     }
 
     private suspend fun initForUnspecifiedCategory() {
-        val range = period.value.toRange(periodState.startDayOfMonth, timeConverter, timeProvider)
+        val range = periodState.rangeOf(period.value)
 
         val summary = withContext(Dispatchers.IO) {
             getUnspecifiedCategoryTransactionsSummaryUseCase(range)
@@ -539,14 +533,8 @@ class TransactionsViewModel @Inject constructor(
     }
 
     private fun nextMonth(screen: TransactionsScreen) {
-        val month = period.value.month
-        val year = period.value.year ?: currentUtcYear()
-        if (month != null) {
-            val nextPeriod = month.incrementMonthPeriod(
-                increment = 1L,
-                year = year,
-                referenceDate = timeProvider.localDateNow(),
-            )
+        val nextPeriod = periodState.shiftMonth(period.value, increment = 1L)
+        if (nextPeriod != null) {
             periodState.select(nextPeriod)
             start(
                 screen = screen,
@@ -557,14 +545,8 @@ class TransactionsViewModel @Inject constructor(
     }
 
     private fun previousMonth(screen: TransactionsScreen) {
-        val month = period.value.month
-        val year = period.value.year ?: currentUtcYear()
-        if (month != null) {
-            val previousPeriod = month.incrementMonthPeriod(
-                increment = -1L,
-                year = year,
-                referenceDate = timeProvider.localDateNow(),
-            )
+        val previousPeriod = periodState.shiftMonth(period.value, increment = -1L)
+        if (previousPeriod != null) {
             periodState.select(previousPeriod)
             start(
                 screen = screen,
@@ -573,9 +555,6 @@ class TransactionsViewModel @Inject constructor(
             )
         }
     }
-
-    private fun currentUtcYear(): Int =
-        timeProvider.utcNow().atZone(ZoneOffset.UTC).year
 
     private fun delete(screen: TransactionsScreen) {
         viewModelScope.launch {

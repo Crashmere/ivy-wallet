@@ -7,8 +7,6 @@ import androidx.compose.runtime.mutableDoubleStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewModelScope
-import com.ivy.base.time.TimeConverter
-import com.ivy.base.time.TimeProvider
 import com.ivy.budgets.model.DisplayBudget
 import com.ivy.data.model.Category
 import com.ivy.data.model.Expense
@@ -62,8 +60,6 @@ class BudgetViewModel @Inject constructor(
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
     private val getTransactionsBetweenUseCase: GetTransactionsBetweenUseCase,
     private val exchangeAmountUseCase: ExchangeAmountUseCase,
-    private val timeProvider: TimeProvider,
-    private val timeConverter: TimeConverter,
 ) : ComposeViewModel<BudgetScreenState, BudgetScreenEvent>() {
 
     private val baseCurrency = mutableStateOf("")
@@ -189,11 +185,7 @@ class BudgetViewModel @Inject constructor(
             categories.value = getCategoriesUseCase().toImmutableList()
             val accounts = getLegacyAccountsUseCase()
             val baseCurrency = getBaseCurrencyCode()
-            val startDateOfMonth = periodState.startDayOfMonth
-            val timeRange = com.ivy.legacy.ui.model.period.TimePeriod.currentMonth(
-                startDayOfMonth = startDateOfMonth,
-                timeProvider = timeProvider,
-            ).toRange(startDateOfMonth = startDateOfMonth, timeConverter, timeProvider)
+            val timeRange = periodState.rangeOf(periodState.currentMonth())
             val budgets = getBudgetsUseCase()
 
             appBudgetMax.doubleValue = budgets

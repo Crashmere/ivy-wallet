@@ -25,10 +25,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.legacy.Transaction
 import com.ivy.data.model.legacy.TransactionHistoryItem
-import com.ivy.ui.time.LocalTimeConverter
 import com.ivy.ui.platform.LocalDatePicker
-import com.ivy.ui.time.LocalTimeFormatter
-import com.ivy.ui.time.LocalTimeProvider
 import com.ivy.home.Constants.SWIPE_HORIZONTAL_THRESHOLD
 import com.ivy.home.customerjourney.CustomerJourney
 import com.ivy.home.customerjourney.CustomerJourneyCardModel
@@ -37,6 +34,7 @@ import com.ivy.legacy.ui.model.BufferInfo
 import com.ivy.legacy.ui.model.LegacyDueSection
 import com.ivy.legacy.ui.model.period.Month
 import com.ivy.legacy.ui.model.period.TimePeriod
+import com.ivy.legacy.ui.model.period.displayLong
 import com.ivy.legacy.ui.state.LocalPeriodState
 import com.ivy.legacy.ui.component.transaction.TransactionsDividerLine
 import com.ivy.legacy.ui.component.transaction.transactions
@@ -312,18 +310,10 @@ fun HomeLazyColumn(
         }
     }
 
-    val timeProvider = LocalTimeProvider.current
-    val timeConverter = LocalTimeConverter.current
-    val timeFormatter = LocalTimeFormatter.current
     val noTransactionsTitle = stringResource(R.string.no_transactions)
     val noTransactionsText = stringResource(
         R.string.no_transactions_description,
-        period.toDisplayLong(
-            startDateOfMonth = periodState.startDayOfMonth,
-            timeProvider = timeProvider,
-            timeConverter = timeConverter,
-            timeFormatter = timeFormatter,
-        )
+        period.displayLong(periodState.startDayOfMonth)
     )
     LazyColumn(
         modifier = modifier

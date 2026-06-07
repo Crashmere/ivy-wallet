@@ -787,6 +787,7 @@
 - `shared:data:core` 的仓库、Store 实现和备份导入导出已改为标准 `Dispatchers.IO`，移除 `DispatchersProvider` 构造参数以及对 `shared:base/base-testing` 的依赖；DAO 访问、缓存写入事件、备份 ZIP/JSON 格式和导入进度逻辑保持不变。
 - `shared:domain` 中剩余只服务 use case 外层切线程的 `DispatchersProvider` 注入已移除，账户/分类创建编辑、旧账户/交易读取、计划付款汇总、账户统计和 CSV 导出改用标准 `Dispatchers.IO/Default`；时间端口仍保留在 base，用于现有日期语义。
 - 最后一个 UI 调用方 `Toaster` 已改用标准 `Dispatchers.Main`；`DispatchersProvider/IvyDispatchersProvider/TestDispatchersProvider` 和 app 绑定随之删除，基础层不再保留线程调度端口。
+- `PeriodState` 已承接 legacy 周期的当前月、范围解析和月份前后移动逻辑；账户、分类、预算、余额、首页、交易和饼图页不再直接注入 `TimeProvider/TimeConverter`，并移除对 `shared:base` 的 Gradle 依赖。
 - `com.ivy.base.text` 中的字符串判空、大小写和首字母转换 helper 已删除；调用方改为标准 `isNullOrBlank().not()`、`uppercase/lowercase(Locale.getDefault())` 或局部私有扩展，基础层不再承载通用字符串糖衣。
 - `ResourceProvider` 已从 `shared:base` 迁到 `shared:ui:core`，测试替身也随之从 `base-testing` 移到 ui-core 测试源集；base 不再承载 Android 字符串资源端口。
 - `shared:base` 中无消费方的 `BaseModule` 和 `@AppCoroutineScope` 已删除；应用级协程 scope 绑定不再作为未使用的全局 DI 暴露。

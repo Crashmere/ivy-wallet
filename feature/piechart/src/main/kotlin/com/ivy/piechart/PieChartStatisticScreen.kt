@@ -37,13 +37,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ivy.data.model.TransactionType
 import com.ivy.ui.platform.LocalDatePicker
-import com.ivy.ui.time.LocalTimeConverter
-import com.ivy.ui.time.LocalTimeFormatter
-import com.ivy.ui.time.LocalTimeProvider
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
 import com.ivy.ui.compose.thenIf
 import com.ivy.legacy.ui.state.LocalPeriodState
+import com.ivy.legacy.ui.model.period.TimePeriod
+import com.ivy.legacy.ui.model.period.displayShort
 import com.ivy.legacy.ui.drawColoredShadow
 import com.ivy.data.model.currency.format
 import com.ivy.legacy.ui.horizontalSwipeListener
@@ -244,7 +243,7 @@ private fun BoxWithConstraintsScope.UI(
 @Composable
 private fun Header(
     transactionType: TransactionType,
-    period: com.ivy.legacy.ui.model.period.TimePeriod,
+    period: TimePeriod,
     startDateOfMonth: Int,
     percentExpanded: Float,
 
@@ -300,13 +299,7 @@ private fun Header(
                     }
                 ),
                 iconStart = R.drawable.ic_calendar,
-                text = period.toDisplayShort(
-                    startDateOfMonth = startDateOfMonth,
-                    timeConverter = LocalTimeConverter.current,
-                    timeProvider = LocalTimeProvider.current,
-                    timeFormatter = LocalTimeFormatter.current,
-
-                    ),
+                text = period.displayShort(startDateOfMonth),
             ) {
                 onShowMonthModal()
             }

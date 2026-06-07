@@ -8,8 +8,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
 import com.ivy.ui.resource.ResourceProvider
-import com.ivy.base.time.TimeConverter
-import com.ivy.base.time.TimeProvider
 import com.ivy.domain.preferences.toggles.PreferenceToggleRepository
 import com.ivy.domain.preferences.toggles.PreferenceToggles
 import com.ivy.domain.usecase.account.GetAccountsUseCase
@@ -47,8 +45,6 @@ class AccountsViewModel @Inject constructor(
     private val observeAccountChangesUseCase: ObserveAccountChangesUseCase,
     private val preferenceToggles: PreferenceToggles,
     private val preferenceToggleRepository: PreferenceToggleRepository,
-    private val timeProvider: TimeProvider,
-    private val timeConverter: TimeConverter,
 ) : ComposeViewModel<AccountsState, AccountsEvent>() {
     private var baseCurrency by mutableStateOf("")
     private var accountsData by mutableStateOf(listOf<AccountData>())
@@ -160,11 +156,7 @@ class AccountsViewModel @Inject constructor(
     }
 
     private suspend fun startInternally() {
-        val period = com.ivy.legacy.ui.model.period.TimePeriod.currentMonth(
-            startDayOfMonth = periodState.startDayOfMonth,
-            timeProvider = timeProvider,
-        ) // this must be monthly
-        val range = period.toRange(periodState.startDayOfMonth, timeConverter, timeProvider)
+        val range = periodState.rangeOf(periodState.currentMonth()) // this must be monthly
 
         val baseCurrencyCode = getBaseCurrencyCode()
         val accounts = getAccountsUseCase().toImmutableList()
