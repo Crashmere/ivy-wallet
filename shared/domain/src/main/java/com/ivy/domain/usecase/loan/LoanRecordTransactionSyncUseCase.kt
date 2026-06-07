@@ -1,4 +1,4 @@
-package com.ivy.legacy.domain.logic.loantransactions
+package com.ivy.domain.usecase.loan
 
 import com.ivy.base.model.legacy.Transaction
 import com.ivy.data.model.legacy.Loan
@@ -9,8 +9,8 @@ import com.ivy.data.model.legacy.CreateLoanRecordData
 import java.util.UUID
 import javax.inject.Inject
 
-class LTLoanRecordMapper @Inject constructor(
-    private val ltCore: LoanTransactionsCore
+class LoanRecordTransactionSyncUseCase @Inject constructor(
+    private val ltCore: LoanTransactionSyncCore
 ) {
     suspend fun editAssociatedLoanRecordTransaction(
         loan: Loan,

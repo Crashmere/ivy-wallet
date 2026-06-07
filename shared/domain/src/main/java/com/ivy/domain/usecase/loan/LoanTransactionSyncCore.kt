@@ -1,4 +1,4 @@
-package com.ivy.legacy.domain.logic.loantransactions
+package com.ivy.domain.usecase.loan
 
 import com.ivy.base.model.legacy.Transaction
 import com.ivy.base.model.LoanRecordType
@@ -39,7 +39,7 @@ import java.util.Locale
 import java.util.UUID
 import javax.inject.Inject
 
-class LoanTransactionsCore @Inject constructor(
+class LoanTransactionSyncCore @Inject constructor(
     private val categoryRepository: CategoryRepository,
     private val getCategoriesUseCase: GetCategoriesUseCase,
     private val transactionDao: TransactionDao,

@@ -628,6 +628,7 @@
 - 首页缓冲金额差值已直接内联为 `balance - bufferAmount`，无业务增量的旧 `CalcBufferDiffAct` 已删除。
 - 借贷页数据边界已收敛：新增 `GetLoansUseCase`、`GetLoanUseCase`、`GetLoanRecordsUseCase`、`ReorderLoansUseCase`、`GetLoanTransactionUseCase` 和 `HasLoanRecordTransactionUseCase`，借贷列表和借贷详情不再直接注入 `LoanRecordDao`、`WriteLoanDao`、`TransactionRepository` 或 `TransactionMapper`；旧 `LoansAct/LoanByIdAct` 已删除，`:feature:loans` 已去掉对 `shared:data:core` 的直接依赖。
 - 借贷写入边界已收敛：新增 `CreateLoanUseCase`、`UpdateLoanUseCase`、`DeleteLoanUseCase`、`CreateLoanRecordUseCase`、`UpdateLoanRecordUseCase` 和 `DeleteLoanRecordUseCase`；借贷列表和详情页不再注入旧 `LoanCreator/LoanRecordCreator`，关联交易创建、编辑和删除仍保持原有调用顺序。
+- 借贷关联交易同步已从 `legacy.domain.logic.loantransactions` 迁到 `domain.usecase.loan`：新增 `LoanTransactionSyncUseCase`、`LoanRecordTransactionSyncUseCase`、`UpdateAssociatedLoanDataUseCase` 和内部 `LoanTransactionSyncCore`；借贷页和编辑交易页不再注入旧 `LoanTransactionsLogic` 聚合器。
 - 计划付款编辑页数据边界已收敛：新增 `GetPlannedPaymentRuleUseCase`、`SavePlannedPaymentRuleUseCase`、`DeletePlannedPaymentRuleUseCase` 和 `GetCategoryUseCase`，计划付款保存仍会生成未来交易、删除仍会清理未发生的生成交易，`:feature:planned-payments` 已去掉对 `shared:data:core` 的直接依赖。
 - 计划付款未来交易生成器已从旧 `PlannedPaymentsGenerator` 迁到正式 `GeneratePlannedPaymentTransactionsUseCase`；一次性规则、循环规则、72 条生成上限和跳过已发生交易的规则保持不变。
 - 余额页的计划付款区间金额统计已从 `PlannedPaymentsLogic` 拆到 `CalculatePlannedPaymentsAmountForRangeUseCase`；收入计正、支出计负、转账忽略和基础币种折算规则保持不变。

@@ -58,9 +58,9 @@ import com.ivy.ui.R
 import com.ivy.ui.time.impl.DateTimePicker
 import com.ivy.domain.usecase.account.GetLegacyAccountUseCase
 import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
+import com.ivy.domain.usecase.loan.UpdateAssociatedLoanDataUseCase
 import com.ivy.legacy.domain.data.CustomExchangeRateState
 import com.ivy.legacy.domain.logic.currency.ExchangeRatesLogic
-import com.ivy.legacy.domain.logic.loantransactions.LoanTransactionsLogic
 import com.ivy.data.model.legacy.CreateAccountData
 import com.ivy.data.model.legacy.CreateCategoryData
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -99,7 +99,7 @@ class EditTransactionViewModel @Inject constructor(
     private val createAccountWithBalanceUseCase: CreateAccountWithBalanceUseCase,
     private val payOrSkipLegacyPlannedTransactionUseCase: PayOrSkipLegacyPlannedTransactionUseCase,
     private val suggestTransactionTitlesUseCase: SuggestTransactionTitlesUseCase,
-    private val loanTransactionsLogic: LoanTransactionsLogic,
+    private val updateAssociatedLoanDataUseCase: UpdateAssociatedLoanDataUseCase,
     private val getLegacyAccountsUseCase: GetLegacyAccountsUseCase,
     private val getCategoriesUseCase: GetCategoriesUseCase,
     private val getLegacyTransactionUseCase: GetLegacyTransactionUseCase,
@@ -737,7 +737,7 @@ class EditTransactionViewModel @Inject constructor(
                 )
 
                 if (loadedTransaction?.loanId != null) {
-                    loanTransactionsLogic.updateAssociatedLoanData(
+                    updateAssociatedLoanDataUseCase(
                         loadedTransaction!!.copy(),
                         onBackgroundProcessingStart = {
                             backgroundProcessingStarted = true

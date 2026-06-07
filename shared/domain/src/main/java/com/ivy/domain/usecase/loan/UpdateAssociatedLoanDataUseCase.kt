@@ -1,14 +1,14 @@
-package com.ivy.legacy.domain.logic.loantransactions
+package com.ivy.domain.usecase.loan
 
 import com.ivy.base.model.legacy.Transaction
 import com.ivy.base.coroutines.computationThread
 import javax.inject.Inject
 
-data class LoanTransactionsLogic @Inject constructor(
-    val Loan: LTLoanMapper,
-    val LoanRecord: LTLoanRecordMapper
+class UpdateAssociatedLoanDataUseCase @Inject constructor(
+    private val loanTransactionSyncUseCase: LoanTransactionSyncUseCase,
+    private val loanRecordTransactionSyncUseCase: LoanRecordTransactionSyncUseCase
 ) {
-    suspend fun updateAssociatedLoanData(
+    suspend operator fun invoke(
         transaction: Transaction?,
         onBackgroundProcessingStart: suspend () -> Unit = {},
         onBackgroundProcessingEnd: suspend () -> Unit = {},
@@ -20,14 +20,14 @@ data class LoanTransactionsLogic @Inject constructor(
             }
 
             if (transaction.loanId != null && transaction.loanRecordId == null) {
-                Loan.updateAssociatedLoan(
+                loanTransactionSyncUseCase.updateAssociatedLoan(
                     transaction = transaction,
                     onBackgroundProcessingStart = onBackgroundProcessingStart,
                     onBackgroundProcessingEnd = onBackgroundProcessingEnd,
                     accountsChanged = accountsChanged
                 )
             } else if (transaction.loanId != null && transaction.loanRecordId != null) {
-                LoanRecord.updateAssociatedLoanRecord(
+                loanRecordTransactionSyncUseCase.updateAssociatedLoanRecord(
                     transaction = transaction,
                     onBackgroundProcessingStart = onBackgroundProcessingStart,
                     onBackgroundProcessingEnd = onBackgroundProcessingEnd

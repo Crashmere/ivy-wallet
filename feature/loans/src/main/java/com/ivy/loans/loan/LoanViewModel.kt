@@ -17,6 +17,7 @@ import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.domain.usecase.loan.CreateLoanUseCase
 import com.ivy.domain.usecase.loan.GetLoanRecordsUseCase
 import com.ivy.domain.usecase.loan.GetLoansUseCase
+import com.ivy.domain.usecase.loan.LoanTransactionSyncUseCase
 import com.ivy.domain.usecase.loan.ReorderLoansUseCase
 import com.ivy.data.model.legacy.Account
 import com.ivy.data.model.legacy.Loan
@@ -27,7 +28,6 @@ import com.ivy.loans.loan.data.DisplayLoan
 import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.time.impl.DateTimePicker
 import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
-import com.ivy.legacy.domain.logic.loantransactions.LoanTransactionsLogic
 import com.ivy.data.model.legacy.CreateAccountData
 import com.ivy.data.model.legacy.CreateLoanData
 import com.ivy.legacy.ui.modal.LoanModalData
@@ -51,7 +51,7 @@ class LoanViewModel @Inject constructor(
     private val createLoanUseCase: CreateLoanUseCase,
     private val appPreferences: AppPreferences,
     private val createAccountWithBalanceUseCase: CreateAccountWithBalanceUseCase,
-    private val loanTransactionsLogic: LoanTransactionsLogic,
+    private val loanTransactionSyncUseCase: LoanTransactionSyncUseCase,
     private val getLoansUseCase: GetLoansUseCase,
     private val getLegacyAccountsUseCase: GetLegacyAccountsUseCase,
     private val timeConverter: TimeConverter,
@@ -314,7 +314,7 @@ class LoanViewModel @Inject constructor(
             if (loan != null) {
                 start()
 
-                loanTransactionsLogic.Loan.createAssociatedLoanTransaction(
+                loanTransactionSyncUseCase.createAssociatedLoanTransaction(
                     data = data,
                     loanId = loan.id
                 )

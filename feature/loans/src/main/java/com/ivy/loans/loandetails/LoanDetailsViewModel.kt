@@ -18,6 +18,8 @@ import com.ivy.domain.usecase.loan.GetLoanRecordsUseCase
 import com.ivy.domain.usecase.loan.GetLoanTransactionUseCase
 import com.ivy.domain.usecase.loan.GetLoanUseCase
 import com.ivy.domain.usecase.loan.HasLoanRecordTransactionUseCase
+import com.ivy.domain.usecase.loan.LoanRecordTransactionSyncUseCase
+import com.ivy.domain.usecase.loan.LoanTransactionSyncUseCase
 import com.ivy.domain.usecase.loan.UpdateLoanRecordUseCase
 import com.ivy.domain.usecase.loan.UpdateLoanUseCase
 import com.ivy.domain.usecase.account.CreateAccountWithBalanceUseCase
@@ -35,7 +37,6 @@ import com.ivy.ui.navigation.Navigation
 import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.time.impl.DateTimePicker
 import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
-import com.ivy.legacy.domain.logic.loantransactions.LoanTransactionsLogic
 import com.ivy.data.model.legacy.CreateAccountData
 import com.ivy.data.model.legacy.CreateLoanRecordData
 import com.ivy.data.model.legacy.EditLoanRecordData
@@ -64,7 +65,8 @@ class LoanDetailsViewModel @Inject constructor(
     private val getLoanTransactionUseCase: GetLoanTransactionUseCase,
     private val hasLoanRecordTransactionUseCase: HasLoanRecordTransactionUseCase,
     private val createAccountWithBalanceUseCase: CreateAccountWithBalanceUseCase,
-    private val loanTransactionsLogic: LoanTransactionsLogic,
+    private val loanTransactionSyncUseCase: LoanTransactionSyncUseCase,
+    private val loanRecordTransactionSyncUseCase: LoanRecordTransactionSyncUseCase,
     private val nav: Navigation,
     private val getLegacyAccountsUseCase: GetLegacyAccountsUseCase,
     private val getLoanUseCase: GetLoanUseCase,
@@ -347,14 +349,14 @@ class LoanDetailsViewModel @Inject constructor(
         viewModelScope.launch {
 
             this@LoanDetailsViewModel.loan.value?.let {
-                loanTransactionsLogic.Loan.recalculateLoanRecords(
+                loanTransactionSyncUseCase.recalculateLoanRecords(
                     oldLoanAccountId = it.accountId,
                     newLoanAccountId = loan.accountId,
                     loanId = loan.id
                 )
             }
 
-            loanTransactionsLogic.Loan.editAssociatedLoanTransaction(
+            loanTransactionSyncUseCase.editAssociatedLoanTransaction(
                 loan = loan,
                 createLoanTransaction = createLoanTransaction,
                 transaction = associatedTransaction
@@ -372,7 +374,7 @@ class LoanDetailsViewModel @Inject constructor(
 
         viewModelScope.launch {
 
-            loanTransactionsLogic.Loan.deleteAssociatedLoanTransactions(loan.id)
+            loanTransactionSyncUseCase.deleteAssociatedLoanTransactions(loan.id)
 
             if (deleteLoanUseCase(loan)) {
                 // close screen
@@ -390,7 +392,7 @@ class LoanDetailsViewModel @Inject constructor(
         viewModelScope.launch {
 
             val modifiedData = data.copy(
-                convertedAmount = loanTransactionsLogic.LoanRecord.calculateConvertedAmount(
+                convertedAmount = loanRecordTransactionSyncUseCase.calculateConvertedAmount(
                     data = data,
                     loanAccountId = localLoan.accountId
                 )
@@ -403,7 +405,7 @@ class LoanDetailsViewModel @Inject constructor(
             if (loanRecord != null) {
                 load(loanId = loanId)
 
-                loanTransactionsLogic.LoanRecord.createAssociatedLoanRecordTransaction(
+                loanRecordTransactionSyncUseCase.createAssociatedLoanRecordTransaction(
                     data = modifiedData,
                     loan = localLoan,
                     loanRecordId = loanRecord.id
@@ -419,7 +421,7 @@ class LoanDetailsViewModel @Inject constructor(
 
             val localLoan: Loan = loan.value ?: return@launch
 
-            val convertedAmount = loanTransactionsLogic.LoanRecord.calculateConvertedAmount(
+            val convertedAmount = loanRecordTransactionSyncUseCase.calculateConvertedAmount(
                 loanAccountId = localLoan.accountId,
                 newLoanRecord = editLoanRecordData.newLoanRecord,
                 oldLoanRecord = editLoanRecordData.originalLoanRecord,
@@ -429,7 +431,7 @@ class LoanDetailsViewModel @Inject constructor(
             val modifiedLoanRecord =
                 editLoanRecordData.newLoanRecord.copy(convertedAmount = convertedAmount)
 
-            loanTransactionsLogic.LoanRecord.editAssociatedLoanRecordTransaction(
+            loanRecordTransactionSyncUseCase.editAssociatedLoanRecordTransaction(
                 loan = localLoan,
                 createLoanRecordTransaction = editLoanRecordData.createLoanRecordTransaction,
                 loanRecord = loanRecord,
@@ -451,7 +453,7 @@ class LoanDetailsViewModel @Inject constructor(
                 load(loanId = loanId)
             }
 
-            loanTransactionsLogic.LoanRecord.deleteAssociatedLoanRecordTransaction(loanRecordId = loanRecord.id)
+            loanRecordTransactionSyncUseCase.deleteAssociatedLoanRecordTransaction(loanRecordId = loanRecord.id)
 
         }
     }
