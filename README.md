@@ -439,7 +439,7 @@
 - 第一批 UI 层当前时间读取已停止使用 deprecated 的全局时间函数：饼图点击计时改用 `SystemClock.elapsedRealtime()`，旧交易卡片、日期分隔、日期格式化和周期选择弹窗改为通过 `LocalTimeProvider` 获取当前日期/时间，并删除无调用方的 `getTrueDate()` 桥接函数。
 - 周期模型和 domain 交易过滤已停止使用 deprecated 的全局当前日期函数：`TimePeriod`、`Month`、`PeriodState`、月份切换和 upcoming/overdue 过滤都通过显式传入的 `TimeProvider` 或 `LocalDate` 计算当前周期与今天边界。
 - 已删除 `shared:base` 中旧全局当前时间函数和手写 UTC/local 转换 helper；旧日期展示改为用 `LocalDateTime.toInstant(UTC)` 加标准 `DateTimeFormatter.withZone(...)` 格式化，计划付款页面顺手清理了残留的无用旧时间 import。
-- 旧 `DateTimeUtil` 毫秒转换已从 `com.ivy.base.legacy` 迁到 `com.ivy.base.time`，用 `toUtcEpochMilli()` / `epochMilliToUtcLocalDateTime()` 明确保留原有 UTC 持久化语义；旧 legacy 文件已删除。
+- 旧 `DateTimeUtil` 毫秒转换先从 `com.ivy.base.legacy` 迁出，随后已继续下沉到 `shared:data:core` 的 `com.ivy.data.db`；Room type converter 和 LocalDateTime serializer 仍用 `toUtcEpochMilli()` / `epochMilliToUtcLocalDateTime()` 保留原有 UTC 持久化语义。
 - 旧 `MVVMExt` 已拆出 `com.ivy.base.legacy`：原 LiveData 只读 helper 已删除，仍使用 LiveData 的 ViewModel 直接暴露 `LiveData<T>` 类型；后续 `StateFlow.readOnly()` 与旧 dispatcher helper 也已分别改为标准库 API 和标准协程调度器调用。
 - 字符串本地化大小写/判空 helper 已从 `shared:base:legacy` 拆出；后续无抽象价值的 `com.ivy.base.text` 包也已删除，调用方改用 Kotlin 标准库或文件内局部扩展。默认系统法币 helper 已归位到数据模型层。
 - 其余通用 helper 已继续拆出 `shared:base:legacy`：列表交换迁到 `com.ivy.base.collections`，随机区间数迁到 `com.ivy.base.random`，zip/unzip 迁到 `com.ivy.base.io`，余额正负号 helper 迁到 `com.ivy.ui.money`。
@@ -738,6 +738,7 @@
 - 默认法币函数已从 base 移到 `shared:data:model:currency`，和 `IvyCurrency` 放在同一模型边界；贷款、搜索和 legacy 借贷弹窗只更新导入路径，默认币种 fallback 行为保持不变。
 - 单一消费方的薄 helper 已清理：`MutableStateFlow.readOnly()` 改为标准 `asStateFlow()`，`MutableList.swap()` 改为 `Collections.swap()`，base 不再保留这两个无抽象价值的扩展。
 - Room/备份实体使用的 UUID、Instant、LocalDateTime 序列化器已从 base 下沉到 `shared:data:core` 的 `db.serializer` 包；序列化格式和实体注解保持不变。
+- Room 和备份仍需要的 LocalDateTime/UTC epoch millis 转换 helper 已从 `shared:base` 下沉到 `shared:data:core` 的数据库包；base 不再承载持久化格式工具。
 - `LoanType/IntervalType` 已从 base 物理归位到 `shared:data:model`；`IntervalType.incrementDate` 也迁到同一模型包，计划付款和 legacy 周期 UI 只更新导入路径。
 - `Json` 的 Hilt 提供模块已从 base 移到 `shared:data:core`，由数据层集中配置备份恢复和 Ktor 客户端共用的 kotlinx serialization 行为。
 - legacy 交易展示模型、`TransactionType` 和 `LoanRecordType` 已归位到 `shared:data:model`；base 不再承载交易模型类型，也不再应用 kotlinx serialization 构建插件。

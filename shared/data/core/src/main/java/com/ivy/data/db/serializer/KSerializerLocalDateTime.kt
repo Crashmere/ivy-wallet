@@ -1,8 +1,8 @@
 package com.ivy.data.db.serializer
 
 import androidx.annotation.Keep
-import com.ivy.base.time.epochMilliToUtcLocalDateTime
-import com.ivy.base.time.toUtcEpochMilli
+import com.ivy.data.db.epochMilliToUtcLocalDateTime
+import com.ivy.data.db.toUtcEpochMilli
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
