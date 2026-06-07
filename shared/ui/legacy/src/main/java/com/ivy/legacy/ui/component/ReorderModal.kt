@@ -24,13 +24,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
-import com.ivy.base.random.numberBetween
 import com.ivy.data.model.Reorderable
 import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.GradientGreen
 import com.ivy.legacy.ui.theme.White
 import com.ivy.legacy.ui.modal.IvyModal
 import java.util.Collections
+import java.util.Random
 import java.util.UUID
 
 @Suppress("UNCHECKED_CAST", "ParameterNaming")
@@ -392,4 +392,8 @@ private fun <T : Reorderable> calculateOrderNum(
 
         else -> 0.0
     }
+}
+
+private fun numberBetween(min: Double, max: Double): Double {
+    return Random().nextDouble() * (max - min) + min
 }
