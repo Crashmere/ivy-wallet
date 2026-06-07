@@ -4,9 +4,9 @@ import com.ivy.base.legacy.Theme
 import com.ivy.data.db.dao.read.AccountDao
 import com.ivy.data.db.dao.read.SettingsDao
 import com.ivy.data.db.dao.write.WriteSettingsDao
+import com.ivy.data.db.entity.SettingsEntity
 import com.ivy.data.repository.CategoryRepository
 import com.ivy.domain.preferences.AppPreferences
-import com.ivy.legacy.domain.model.Settings
 import com.ivy.base.legacy.ioThread
 import com.ivy.data.model.currency.IvyCurrency
 import com.ivy.wallet.notification.reminder.TransactionReminderLogic
@@ -28,12 +28,14 @@ class InitialDataSetup @Inject constructor(
 
             if (settingsDao.findFirstOrNull() == null) {
                 settingsWriter.save(
-                    Settings(
+                    SettingsEntity(
                         theme = if (systemDarkMode) Theme.DARK else Theme.LIGHT,
                         name = "",
-                        baseCurrency = defaultCurrency.code,
-                        bufferAmount = 1000.0.toBigDecimal(),
-                    ).toEntity()
+                        currency = defaultCurrency.code,
+                        bufferAmount = 1000.0,
+                        isSynced = true,
+                        isDeleted = false,
+                    )
                 )
             }
 

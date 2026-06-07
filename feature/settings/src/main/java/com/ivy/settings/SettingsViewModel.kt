@@ -14,9 +14,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.viewModelScope
 import com.ivy.base.legacy.Theme
 import com.ivy.data.backup.BackupDataUseCase
-import com.ivy.data.db.dao.read.SettingsDao
-import com.ivy.data.db.dao.write.WriteSettingsDao
 import com.ivy.data.model.primitive.AssetCode
+import com.ivy.data.repository.CurrencyRepository
+import com.ivy.data.repository.LegacySettingsRepository
 import com.ivy.domain.features.BoolFeature
 import com.ivy.domain.features.Features
 import com.ivy.domain.preferences.AppPreferences
@@ -26,9 +26,7 @@ import com.ivy.domain.usecase.exchange.SyncExchangeRatesUseCase
 import com.ivy.frp.monad.Res
 import com.ivy.ui.theme.ThemeState
 import com.ivy.legacy.ui.state.PeriodState
-import com.ivy.legacy.domain.action.settings.UpdateSettingsAct
 import com.ivy.base.legacy.getISOFormattedDateTime
-import com.ivy.base.legacy.ioThread
 import com.ivy.base.legacy.timeNowUTC
 import com.ivy.base.legacy.uiThread
 import com.ivy.ui.ComposeViewModel
@@ -36,7 +34,6 @@ import com.ivy.ui.platform.FilePicker
 import com.ivy.ui.platform.FileSharer
 import com.ivy.legacy.domain.action.global.StartDayOfMonthAct
 import com.ivy.legacy.domain.action.global.UpdateStartDayOfMonthAct
-import com.ivy.legacy.domain.action.settings.SettingsAct
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
@@ -47,9 +44,10 @@ import javax.inject.Inject
 @SuppressLint("StaticFieldLeak")
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
-    private val settingsDao: SettingsDao,
     private val themeState: ThemeState,
     private val periodState: PeriodState,
+    private val currencyRepository: CurrencyRepository,
+    private val legacySettingsRepository: LegacySettingsRepository,
     private val resetWalletDataUseCase: ResetWalletDataUseCase,
     private val appPreferences: AppPreferences,
     private val backupDataUseCase: BackupDataUseCase,
@@ -57,9 +55,6 @@ class SettingsViewModel @Inject constructor(
     private val updateStartDayOfMonthAct: UpdateStartDayOfMonthAct,
     private val syncExchangeRatesUseCase: SyncExchangeRatesUseCase,
     private val features: Features,
-    private val settingsAct: SettingsAct,
-    private val updateSettingsAct: UpdateSettingsAct,
-    private val settingsWriter: WriteSettingsDao,
     private val exportCsvUseCase: ExportCsvUseCase,
     private val filePicker: FilePicker,
     @ApplicationContext private val context: Context
@@ -124,15 +119,11 @@ class SettingsViewModel @Inject constructor(
     }
 
     private suspend fun initializeCurrency() {
-        val settings = ioThread {
-            settingsDao.findFirst()
-        }
-
-        currencyCode.value = settings.currency
+        currencyCode.value = currencyRepository.getBaseCurrencyCode()
     }
 
     private suspend fun initializeCurrentTheme() {
-        currentTheme.value = settingsAct(Unit).theme
+        currentTheme.value = legacySettingsRepository.getTheme()
     }
 
     private fun initializeLockApp() {
@@ -342,16 +333,9 @@ class SettingsViewModel @Inject constructor(
         currencyCode.value = newCurrency
 
         viewModelScope.launch {
-            ioThread {
-                settingsWriter.save(
-                    settingsDao.findFirst().copy(
-                        currency = newCurrency
-                    )
-                )
-                AssetCode.from(newCurrency).onRight {
-                    syncExchangeRatesUseCase.sync(it)
-                }
-            }
+            val assetCode = AssetCode.from(newCurrency).getOrNull() ?: return@launch
+            currencyRepository.setBaseCurrency(assetCode)
+            syncExchangeRatesUseCase.sync(assetCode)
         }
     }
 
@@ -397,11 +381,9 @@ class SettingsViewModel @Inject constructor(
 
     private fun switchTheme() {
         viewModelScope.launch {
-            settingsAct.getSettingsWithNextTheme().run {
-                updateSettingsAct(this)
-                themeState.update(this.theme)
-                currentTheme.value = this.theme
-            }
+            val newTheme = legacySettingsRepository.switchTheme()
+            themeState.update(newTheme)
+            currentTheme.value = newTheme
         }
     }
 

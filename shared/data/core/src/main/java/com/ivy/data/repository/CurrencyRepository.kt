@@ -41,7 +41,7 @@ class CurrencyRepository @Inject constructor(
         return Currency.getInstance(Locale.getDefault())
     }
 
-    suspend fun setBaseBaseCurrency(newCurrency: AssetCode) {
+    suspend fun setBaseCurrency(newCurrency: AssetCode) {
         withContext(dispatchersProvider.io) {
             val currentEntity = settingsDao.findFirstOrNull()
                 ?: SettingsEntity(

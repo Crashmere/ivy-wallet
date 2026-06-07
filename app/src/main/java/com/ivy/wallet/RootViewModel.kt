@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ivy.base.legacy.Theme
 import com.ivy.base.model.TransactionType
-import com.ivy.data.db.dao.read.SettingsDao
+import com.ivy.data.repository.LegacySettingsRepository
 import com.ivy.domain.preferences.AppPreferences
 import com.ivy.ui.theme.ThemeState
 import com.ivy.legacy.ui.state.PeriodState
@@ -27,7 +27,7 @@ class RootViewModel @Inject constructor(
     private val themeState: ThemeState,
     private val periodState: PeriodState,
     private val nav: Navigation,
-    private val settingsDao: SettingsDao,
+    private val legacySettingsRepository: LegacySettingsRepository,
     private val appPreferences: AppPreferences,
     private val appLockController: AppLockController,
     private val transactionReminderLogic: TransactionReminderLogic,
@@ -44,8 +44,9 @@ class RootViewModel @Inject constructor(
         viewModelScope.launch {
 
             ioThread {
-                val theme = settingsDao.findAll().firstOrNull()?.theme
-                    ?: if (systemDarkMode) Theme.DARK else Theme.LIGHT
+                val theme = legacySettingsRepository.getTheme(
+                    fallback = if (systemDarkMode) Theme.DARK else Theme.LIGHT
+                )
                 themeState.update(theme)
 
                 periodState.initStartDayOfMonth(startDay = appPreferences.startDayOfMonth)

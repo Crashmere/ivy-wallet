@@ -14,10 +14,11 @@ import com.ivy.base.time.TimeConverter
 import com.ivy.base.time.TimeProvider
 import com.ivy.data.model.primitive.AssetCode
 import com.ivy.data.repository.CategoryRepository
+import com.ivy.data.repository.CurrencyRepository
+import com.ivy.data.repository.LegacySettingsRepository
 import com.ivy.data.repository.mapper.TransactionMapper
 import com.ivy.domain.features.Features
 import com.ivy.domain.usecase.exchange.SyncExchangeRatesUseCase
-import com.ivy.frp.fixUnit
 import com.ivy.frp.then
 import com.ivy.frp.thenInvokeAfter
 import com.ivy.home.customerjourney.CustomerJourneyCardModel
@@ -30,9 +31,7 @@ import com.ivy.legacy.ui.model.LegacyDueSection
 import com.ivy.legacy.ui.model.period.TimePeriod
 import com.ivy.legacy.domain.model.toUTCCloseTimeRange
 import com.ivy.legacy.domain.model.Account
-import com.ivy.legacy.domain.model.Settings
 import com.ivy.legacy.domain.mapper.toLegacyDomain
-import com.ivy.legacy.domain.action.settings.UpdateSettingsAct
 import com.ivy.legacy.domain.action.viewmodel.home.ShouldHideIncomeAct
 import com.ivy.base.legacy.dateNowUTC
 import com.ivy.base.legacy.ioThread
@@ -45,7 +44,6 @@ import com.ivy.ui.ComposeViewModel
 import com.ivy.legacy.domain.action.account.AccountsAct
 import com.ivy.legacy.domain.action.global.StartDayOfMonthAct
 import com.ivy.legacy.domain.action.settings.CalcBufferDiffAct
-import com.ivy.legacy.domain.action.settings.SettingsAct
 import com.ivy.legacy.domain.action.transaction.HistoryWithDateDivsAct
 import com.ivy.legacy.domain.action.viewmodel.home.HasTrnsAct
 import com.ivy.legacy.domain.action.viewmodel.home.OverdueAct
@@ -75,7 +73,8 @@ class HomeViewModel @Inject constructor(
     private val historyWithDateDivsAct: HistoryWithDateDivsAct,
     private val calcIncomeExpenseAct: CalcIncomeExpenseAct,
     private val calcWalletBalanceAct: CalcWalletBalanceAct,
-    private val settingsAct: SettingsAct,
+    private val currencyRepository: CurrencyRepository,
+    private val legacySettingsRepository: LegacySettingsRepository,
     private val accountsAct: AccountsAct,
     private val categoryRepository: CategoryRepository,
     private val calcBufferDiffAct: CalcBufferDiffAct,
@@ -85,7 +84,6 @@ class HomeViewModel @Inject constructor(
     private val startDayOfMonthAct: StartDayOfMonthAct,
     private val shouldHideBalanceAct: ShouldHideBalanceAct,
     private val shouldHideIncomeAct: ShouldHideIncomeAct,
-    private val updateSettingsAct: UpdateSettingsAct,
     private val syncExchangeRatesUseCase: SyncExchangeRatesUseCase,
     private val transactionMapper: TransactionMapper,
     private val timeProvider: TimeProvider,
@@ -131,6 +129,12 @@ class HomeViewModel @Inject constructor(
     private var hideBalance by mutableStateOf(false)
     private var hideIncome by mutableStateOf(false)
     private var expanded by mutableStateOf(true)
+
+    private data class HomePreferences(
+        val theme: Theme,
+        val baseCurrency: String,
+        val bufferAmount: BigDecimal,
+    )
 
     @Composable
     override fun uiState(): HomeState {
@@ -241,7 +245,7 @@ class HomeViewModel @Inject constructor(
                 is HomeEvent.SetUpcomingExpanded -> setUpcomingExpanded(event.expanded)
                 is HomeEvent.SetOverdueExpanded -> setOverdueExpanded(event.expanded)
                 is HomeEvent.SetBuffer -> setBuffer(event.buffer)
-                is HomeEvent.SetCurrency -> setCurrency(event.currency).fixUnit()
+                is HomeEvent.SetCurrency -> setCurrency(event.currency)
                 HomeEvent.SwitchTheme -> switchTheme()
                 is HomeEvent.DismissCustomerJourneyCard -> dismissCustomerJourneyCard(event.card)
                 is HomeEvent.SetExpanded -> setExpanded(event.expanded)
@@ -262,20 +266,20 @@ class HomeViewModel @Inject constructor(
     private suspend fun reload(
         timePeriod: TimePeriod = periodState.selectedPeriod
     ) = suspend {
-        val settings = settingsAct(Unit)
+        val preferences = loadHomePreferences()
         val hideBalance = shouldHideBalanceAct(Unit)
         val hideIncome = shouldHideIncomeAct(Unit)
 
-        currentTheme = settings.theme
+        currentTheme = preferences.theme
         period = timePeriod
         this.hideBalance = hideBalance
         this.hideIncome = hideIncome
 
         // This restores the runtime theme when the user imports a local backup.
-        themeState.update(theme = settings.theme)
+        themeState.update(theme = preferences.theme)
 
         Pair(
-            settings,
+            preferences,
             period.toRange(
                 startDateOfMonth = periodState.startDayOfMonth,
                 timeConverter = timeConverter,
@@ -286,61 +290,69 @@ class HomeViewModel @Inject constructor(
             ::loadBuffer then ::loadTrnHistory then
             ::loadDueTrns thenInvokeAfter ::loadCustomerJourney
 
+    private suspend fun loadHomePreferences(): HomePreferences {
+        return HomePreferences(
+            theme = legacySettingsRepository.getTheme(),
+            baseCurrency = currencyRepository.getBaseCurrencyCode(),
+            bufferAmount = legacySettingsRepository.getBufferAmount(),
+        )
+    }
+
     private suspend fun loadAppBaseData(
-        input: Pair<Settings, ClosedTimeRange>
-    ): Triple<Settings, ClosedTimeRange, List<Account>> {
-        val (settings, timeRange) = input
+        input: Pair<HomePreferences, ClosedTimeRange>
+    ): Triple<HomePreferences, ClosedTimeRange, List<Account>> {
+        val (preferences, timeRange) = input
         val accounts = accountsAct(Unit)
         val categories = categoryRepository.findAll()
 
         baseData = AppBaseData(
-            baseCurrency = settings.baseCurrency,
+            baseCurrency = preferences.baseCurrency,
             categories = categories.toImmutableList(),
             accounts = accounts.toImmutableList()
         )
 
-        return Triple(settings, timeRange, accounts)
+        return Triple(preferences, timeRange, accounts)
     }
 
     private suspend fun loadIncomeExpenseBalance(
-        input: Triple<Settings, ClosedTimeRange, List<Account>>
-    ): Triple<Settings, ClosedTimeRange, BigDecimal> {
-        val (settings, timeRange, accounts) = input
+        input: Triple<HomePreferences, ClosedTimeRange, List<Account>>
+    ): Triple<HomePreferences, ClosedTimeRange, BigDecimal> {
+        val (preferences, timeRange, accounts) = input
 
         val incomeExpense = calcIncomeExpenseAct(
             CalcIncomeExpenseAct.Input(
-                baseCurrency = settings.baseCurrency,
+                baseCurrency = preferences.baseCurrency,
                 accounts = accounts,
                 range = timeRange
             )
         )
 
         val balanceAmount = calcWalletBalanceAct(
-            CalcWalletBalanceAct.Input(baseCurrency = settings.baseCurrency)
+            CalcWalletBalanceAct.Input(baseCurrency = preferences.baseCurrency)
         )
 
         balance = balanceAmount
         stats = incomeExpense
 
-        return Triple(settings, timeRange, balanceAmount)
+        return Triple(preferences, timeRange, balanceAmount)
     }
 
     private suspend fun loadBuffer(
-        input: Triple<Settings, ClosedTimeRange, BigDecimal>
+        input: Triple<HomePreferences, ClosedTimeRange, BigDecimal>
     ): Pair<String, ClosedTimeRange> {
-        val (settings, timeRange, balance) = input
+        val (preferences, timeRange, balance) = input
 
         buffer = BufferInfo(
-            amount = settings.bufferAmount,
+            amount = preferences.bufferAmount,
             bufferDiff = calcBufferDiffAct(
                 CalcBufferDiffAct.Input(
                     balance = balance,
-                    buffer = settings.bufferAmount
+                    buffer = preferences.bufferAmount
                 )
             )
         )
 
-        return settings.baseCurrency to timeRange
+        return preferences.baseCurrency to timeRange
     }
 
     private suspend fun loadTrnHistory(
@@ -433,33 +445,23 @@ class HomeViewModel @Inject constructor(
 
     private fun switchTheme() {
         viewModelScope.launch {
-            settingsAct.getSettingsWithNextTheme().run {
-                updateSettingsAct(this)
-                themeState.update(this.theme)
-                currentTheme = this.theme
-            }
+            val newTheme = legacySettingsRepository.switchTheme()
+            themeState.update(newTheme)
+            currentTheme = newTheme
         }
     }
 
     private fun setBuffer(newBuffer: Double) {
         viewModelScope.launch {
-            val currentSettings =
-                settingsAct.getSettings().copy(bufferAmount = newBuffer.toBigDecimal())
-            updateSettingsAct(currentSettings)
-            buffer = buffer.copy(amount = currentSettings.bufferAmount)
+            val newAmount = legacySettingsRepository.setBufferAmount(newBuffer.toBigDecimal())
+            buffer = buffer.copy(amount = newAmount)
         }
     }
 
-    private suspend fun setCurrency(newCurrency: String) = settingsAct then {
-        it.copy(
-            baseCurrency = newCurrency
-        )
-    } then updateSettingsAct then {
-        // update exchange rates from POV of the new base currency
-        AssetCode.from(newCurrency).onRight {
-            syncExchangeRatesUseCase.sync(it)
-        }
-    } then {
+    private suspend fun setCurrency(newCurrency: String) {
+        val assetCode = AssetCode.from(newCurrency).getOrNull() ?: return
+        currencyRepository.setBaseCurrency(assetCode)
+        syncExchangeRatesUseCase.sync(assetCode)
         reload()
     }
 
