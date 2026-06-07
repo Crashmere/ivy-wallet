@@ -725,6 +725,7 @@
 - 应用锁开关已收敛到 `GetAppLockEnabledPreferenceUseCase/SetAppLockEnabledPreferenceUseCase`；设置页和 `AppLockController` 不再直接访问 `AppPreferences.appLockEnabled`，运行时锁定状态仍由 app 层 controller 管理。
 - 首次初始化完成、备份完成和月起始日读取已收敛到 settings domain 用例；`RootViewModel`、`InitialDataSetup` 和设置页备份流程不再直接访问对应的 `AppPreferences` 字段，底层 key 与启动/备份行为保持不变。
 - 首页客户旅程卡片关闭状态已收敛到 `IsCustomerJourneyCardDismissedUseCase/DismissCustomerJourneyCardUseCase`；`feature:home` 不再直接拼接或读写客户旅程偏好 key。
+- 重置钱包流程中的旧 app 偏好清空已收敛到 `ClearAppPreferencesUseCase`；app 层重置实现继续负责编排，但不再直接注入 `AppPreferences`。
 - 账户旧读取路径已收敛到 `AccountStore`；旧 legacy 账户模型现在由 data model 账户映射而来，`shared:domain` 主源码不再直接注入 `AccountDao` 或依赖 `AccountEntity` mapper。
 - 旧交易卡片已移除重复账户查找 TODO：渲染前先解析来源/目标账户，再复用同一结果处理点击和币种展示，行为不变但 legacy UI 内部职责更清楚。
 
