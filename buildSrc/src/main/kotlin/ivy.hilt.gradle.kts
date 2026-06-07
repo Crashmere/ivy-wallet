@@ -1,5 +1,5 @@
 plugins {
-    id("ivy.kotlin-android")
+    id("ivy.android-library")
     id("dagger.hilt.android.plugin")
     id("com.google.devtools.ksp")
 }

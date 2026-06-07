@@ -1,5 +1,5 @@
 plugins {
-    id("ivy.kotlin-android")
+    id("ivy.android-library")
     id("org.jetbrains.kotlin.plugin.serialization")
 }
 

@@ -259,6 +259,13 @@
 - 非 Room 模块不应用 Room 插件。
 - `shared:domain` 不直接引入 Ktor 和 Room 插件，除非当前迁移未完成且有明确说明。
 
+当前进展：
+
+- 新增 `ivy.android-library` 作为更清晰的 Android library 基础约定，旧 `ivy.kotlin-android` 暂时保留为兼容别名。
+- `shared:base`、`shared:data:model`、`shared:data:model-testing` 已从 `ivy.feature` 迁出，不再默认启用完整 Compose UI 配置。
+- `shared:base` 仍显式保留 Hilt、kotlinx serialization 和轻量 `compose-runtime`，因为当前源码仍包含 DI 绑定、序列化器和 `@Immutable` 注解。
+- `shared:data:model` 仍显式保留轻量 `compose-runtime`，后续可以把模型层的 Compose 注解替换掉，再彻底移除。
+
 ### 阶段 3：测试支持代码归位
 
 目标：生产源码不再包含测试 fake。
