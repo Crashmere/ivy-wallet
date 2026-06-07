@@ -4,7 +4,7 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 
 object DatastoreKeys {
-    fun ivyFeature(key: String): Preferences.Key<Boolean> {
+    fun preferenceToggle(key: String): Preferences.Key<Boolean> {
         return booleanPreferencesKey("feature_$key")
     }
 }

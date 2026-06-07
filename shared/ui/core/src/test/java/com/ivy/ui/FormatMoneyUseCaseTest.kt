@@ -4,7 +4,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import com.google.testing.junit.testparameterinjector.TestParameter
 import com.google.testing.junit.testparameterinjector.TestParameterInjector
-import com.ivy.domain.features.Features
+import com.ivy.domain.preferences.toggles.PreferenceToggles
 import com.ivy.ui.time.DevicePreferences
 import io.kotest.common.runBlocking
 import io.kotest.matchers.shouldBe
@@ -18,7 +18,7 @@ import java.util.Locale
 @RunWith(TestParameterInjector::class)
 class FormatMoneyUseCaseTest {
 
-    private val features = mockk<Features>()
+    private val preferenceToggles = mockk<PreferenceToggles>()
     private val devicePreferences = mockk<DevicePreferences>()
 
     enum class MoneyFormatterTestCase(
@@ -107,10 +107,10 @@ class FormatMoneyUseCaseTest {
         @TestParameter testCase: MoneyFormatterTestCase
     ): Unit = runBlocking {
         // given
-        val featureDataStore = mockk<DataStore<Preferences>>()
-        every { features.showDecimalNumber } returns mockk { coEvery { isEnabled(any()) } returns testCase.showDecimal }
+        val preferenceDataStore = mockk<DataStore<Preferences>>()
+        every { preferenceToggles.showDecimalNumber } returns mockk { coEvery { isEnabled(any()) } returns testCase.showDecimal }
         every { devicePreferences.locale() } returns testCase.locale
-        formatMoneyUseCase = FormatMoneyUseCase(features, devicePreferences, featureDataStore)
+        formatMoneyUseCase = FormatMoneyUseCase(preferenceToggles, devicePreferences, preferenceDataStore)
 
         // when
         val result = formatMoneyUseCase.format(

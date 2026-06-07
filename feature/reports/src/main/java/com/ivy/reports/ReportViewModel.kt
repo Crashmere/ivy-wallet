@@ -31,7 +31,7 @@ import com.ivy.data.repository.TransactionRepository
 import com.ivy.data.repository.mapper.TransactionMapper
 import com.ivy.data.temp.migration.getTransactionType
 import com.ivy.data.temp.migration.getValue
-import com.ivy.domain.features.Features
+import com.ivy.domain.preferences.toggles.PreferenceToggles
 import com.ivy.domain.usecase.csv.ExportCsvUseCase
 import com.ivy.frp.filterSuspend
 import com.ivy.legacy.ui.state.PeriodState
@@ -90,7 +90,7 @@ class ReportViewModel @Inject constructor(
     private val exportCsvUseCase: ExportCsvUseCase,
     private val timeProvider: TimeProvider,
     private val timeConverter: TimeConverter,
-    private val features: Features,
+    private val preferenceToggles: PreferenceToggles,
     private val filePicker: FilePicker
 ) : ComposeViewModel<ReportScreenState, ReportScreenEvent>() {
     private val unSpecifiedCategory =
@@ -133,7 +133,7 @@ class ReportViewModel @Inject constructor(
 
     @Composable
     fun getShouldShowAccountSpecificColorInTransactions(): Boolean {
-        return features.showAccountColorsInTransactions.asEnabledState()
+        return preferenceToggles.showAccountColorsInTransactions.asEnabledState()
     }
 
     @Composable

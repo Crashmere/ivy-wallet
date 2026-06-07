@@ -15,9 +15,9 @@ import com.ivy.IvyNavGraph
 import com.ivy.base.legacy.Theme
 import com.ivy.base.time.TimeConverter
 import com.ivy.base.time.TimeProvider
-import com.ivy.domain.features.Features
-import com.ivy.domain.features.LocalFeatureDataStore
-import com.ivy.domain.features.LocalFeatures
+import com.ivy.domain.preferences.toggles.PreferenceToggles
+import com.ivy.domain.preferences.toggles.LocalPreferenceDataStore
+import com.ivy.domain.preferences.toggles.LocalPreferenceToggles
 import com.ivy.legacy.ui.state.LocalPeriodState
 import com.ivy.legacy.ui.state.PeriodState
 import com.ivy.navigation.Navigation
@@ -45,8 +45,8 @@ fun RootContent(
     timeFormatter: TimeFormatter,
     dateTimePicker: DateTimePicker,
     datePicker: ActivityDatePicker,
-    features: Features,
-    featureDataStore: DataStore<Preferences>,
+    preferenceToggles: PreferenceToggles,
+    preferenceDataStore: DataStore<Preferences>,
     buildInfoProvider: BuildInfoProvider,
     fileSharer: FileSharer,
     viewModel: RootViewModel,
@@ -56,8 +56,8 @@ fun RootContent(
 ) {
     CompositionLocalProvider(
         LocalPeriodState provides periodState,
-        LocalFeatures provides features,
-        LocalFeatureDataStore provides featureDataStore,
+        LocalPreferenceToggles provides preferenceToggles,
+        LocalPreferenceDataStore provides preferenceDataStore,
         LocalBuildInfoProvider provides buildInfoProvider,
         LocalFileSharer provides fileSharer,
     ) {

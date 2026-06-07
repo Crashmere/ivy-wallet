@@ -30,7 +30,7 @@ import com.ivy.data.repository.TagRepository
 import com.ivy.data.repository.TransactionRepository
 import com.ivy.data.repository.mapper.TagMapper
 import com.ivy.data.repository.mapper.TransactionMapper
-import com.ivy.domain.features.Features
+import com.ivy.domain.preferences.toggles.PreferenceToggles
 import com.ivy.domain.preferences.AppPreferences
 import com.ivy.legacy.ui.model.EditTransactionDisplayLoan
 import com.ivy.legacy.domain.model.Account
@@ -103,8 +103,8 @@ class EditTransactionViewModel @Inject constructor(
     private val transactionMapper: TransactionMapper,
     private val tagRepository: TagRepository,
     private val tagMapper: TagMapper,
-    private val features: Features,
-    private val featureDataStore: DataStore<Preferences>,
+    private val preferenceToggles: PreferenceToggles,
+    private val preferenceDataStore: DataStore<Preferences>,
     private val timeConverter: TimeConverter,
     private val timeProvider: TimeProvider,
     private val dateTimePicker: DateTimePicker,
@@ -224,7 +224,7 @@ class EditTransactionViewModel @Inject constructor(
 
     @Composable
     private fun getTitleSuggestions(): ImmutableSet<String> {
-        return if (features.showTitleSuggestions.asEnabledState()) {
+        return if (preferenceToggles.showTitleSuggestions.asEnabledState()) {
             titleSuggestions
         } else {
             persistentSetOf()
@@ -989,6 +989,6 @@ class EditTransactionViewModel @Inject constructor(
     }
 
     private suspend fun shouldSortCategoriesAscending(): Boolean {
-        return features.sortCategoriesAscending.isEnabled(featureDataStore)
+        return preferenceToggles.sortCategoriesAscending.isEnabled(preferenceDataStore)
     }
 }

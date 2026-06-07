@@ -1,84 +1,84 @@
-package com.ivy.domain.features
+package com.ivy.domain.preferences.toggles
 
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class IvyFeatures @Inject constructor() : Features {
+class IvyPreferenceToggles @Inject constructor() : PreferenceToggles {
 
-    override val sortCategoriesAscending = BoolFeature(
+    override val sortCategoriesAscending = BoolPreference(
         key = "sort_categories_ascending",
-        group = FeatureGroup.Category,
+        group = PreferenceGroup.Category,
         name = "Sort categories list",
         description = "Show categories in ascending order (A-Z) on the transaction entry screen",
         defaultValue = false
     )
 
-    override val compactAccountsMode = BoolFeature(
+    override val compactAccountsMode = BoolPreference(
         key = "compact_account_ui",
-        group = FeatureGroup.Account,
+        group = PreferenceGroup.Account,
         name = "Compact account cards",
         description = "Make the Accounts tab UI more compact and dense",
         defaultValue = false
     )
 
-    override val compactCategoriesMode = BoolFeature(
+    override val compactCategoriesMode = BoolPreference(
         key = "compact_category_ui",
-        group = FeatureGroup.Category,
+        group = PreferenceGroup.Category,
         name = "Compact category cards",
         description = "Simplified design of the Categories screen",
         defaultValue = false
     )
 
-    override val showTitleSuggestions = BoolFeature(
+    override val showTitleSuggestions = BoolPreference(
         key = "show_title_suggestions",
-        group = FeatureGroup.Other,
+        group = PreferenceGroup.Other,
         name = "Show previous title suggestions",
         description = "Suggest past transaction titles when creating a new entry",
         defaultValue = true
     )
 
-    override val showCategorySearchBar = BoolFeature(
+    override val showCategorySearchBar = BoolPreference(
         key = "search_categories",
-        group = FeatureGroup.Category,
+        group = PreferenceGroup.Category,
         name = "Search within categories",
         description = "Display a search bar on the Categories screen",
         defaultValue = true
     )
 
-    override val hideTotalBalance = BoolFeature(
+    override val hideTotalBalance = BoolPreference(
         key = "hide_total_balance",
-        group = FeatureGroup.Account,
+        group = PreferenceGroup.Account,
         name = "Hide account total balance",
         description = "Hide total balance summary on the Accounts screen",
         defaultValue = false
     )
 
-    override val showDecimalNumber = BoolFeature(
+    override val showDecimalNumber = BoolPreference(
         key = "show_decimal_number",
-        group = FeatureGroup.Other,
+        group = PreferenceGroup.Other,
         name = "Show values with decimals",
         description = "Include the decimal part in amounts",
         defaultValue = true
     )
 
-    override val standardKeypadLayout = BoolFeature(
+    override val standardKeypadLayout = BoolPreference(
         key = "enable_standard_keypad_layout",
-        group = FeatureGroup.Other,
+        group = PreferenceGroup.Other,
         name = "Standard keypad layout",
         description = "Replace numeric keypad with standard phone layout",
         defaultValue = false
     )
 
-    override val showAccountColorsInTransactions = BoolFeature(
+    override val showAccountColorsInTransactions = BoolPreference(
         key = "show_account_color",
-        group = FeatureGroup.Other,
+        group = PreferenceGroup.Other,
         name = "Colorful account labels",
         description = "Display account-specific colors in transactions",
         defaultValue = false
     )
 
-    override val allFeatures: List<BoolFeature>
+    override val allPreferences: List<BoolPreference>
         get() = listOf(
             sortCategoriesAscending,
             compactAccountsMode,

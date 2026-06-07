@@ -1,4 +1,4 @@
-package com.ivy.domain.features
+package com.ivy.domain.preferences.toggles
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
@@ -13,19 +13,19 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 
 @Immutable
-class BoolFeature(
+class BoolPreference(
     val key: String,
-    val group: FeatureGroup? = null,
+    val group: PreferenceGroup? = null,
     val name: String? = null,
     val description: String? = null,
     private val defaultValue: Boolean
 ) {
     @Composable
     fun asEnabledState(): Boolean {
-        val dataStore = LocalFeatureDataStore.current
-        val featureFlag = remember(dataStore) { enabledFlow(dataStore) }
+        val dataStore = LocalPreferenceDataStore.current
+        val preferenceValue = remember(dataStore) { enabledFlow(dataStore) }
             .collectAsState(defaultValue).value
-        return featureFlag ?: defaultValue
+        return preferenceValue ?: defaultValue
     }
 
     suspend fun isEnabled(dataStore: DataStore<Preferences>): Boolean =
@@ -33,15 +33,15 @@ class BoolFeature(
 
     fun enabledFlow(dataStore: DataStore<Preferences>): Flow<Boolean?> = dataStore
         .data.map {
-            it[featureKey] ?: defaultValue
+            it[preferenceKey] ?: defaultValue
         }
 
     suspend fun set(dataStore: DataStore<Preferences>, enabled: Boolean) {
         dataStore.edit {
-            it[featureKey] = enabled
+            it[preferenceKey] = enabled
         }
     }
 
-    private val featureKey: Preferences.Key<Boolean>
-        get() = DatastoreKeys.ivyFeature(key)
+    private val preferenceKey: Preferences.Key<Boolean>
+        get() = DatastoreKeys.preferenceToggle(key)
 }

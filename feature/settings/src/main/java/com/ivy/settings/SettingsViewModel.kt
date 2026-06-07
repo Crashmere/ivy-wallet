@@ -19,8 +19,8 @@ import com.ivy.data.backup.BackupDataUseCase
 import com.ivy.data.model.primitive.AssetCode
 import com.ivy.data.repository.CurrencyRepository
 import com.ivy.data.repository.LegacySettingsRepository
-import com.ivy.domain.features.BoolFeature
-import com.ivy.domain.features.Features
+import com.ivy.domain.preferences.toggles.BoolPreference
+import com.ivy.domain.preferences.toggles.PreferenceToggles
 import com.ivy.domain.preferences.AppPreferences
 import com.ivy.domain.usecase.ResetWalletDataUseCase
 import com.ivy.domain.usecase.csv.ExportCsvUseCase
@@ -56,8 +56,8 @@ class SettingsViewModel @Inject constructor(
     private val startDayOfMonthAct: StartDayOfMonthAct,
     private val updateStartDayOfMonthAct: UpdateStartDayOfMonthAct,
     private val syncExchangeRatesUseCase: SyncExchangeRatesUseCase,
-    private val features: Features,
-    private val featureDataStore: DataStore<Preferences>,
+    private val preferenceToggles: PreferenceToggles,
+    private val preferenceDataStore: DataStore<Preferences>,
     private val exportCsvUseCase: ExportCsvUseCase,
     private val filePicker: FilePicker,
     @ApplicationContext private val context: Context
@@ -117,7 +117,7 @@ class SettingsViewModel @Inject constructor(
         initializeHideCurrentBalance()
         initializeHideIncome()
         initializeTransfersAsIncomeExpense()
-        initializeFeaturePreferences()
+        initializeTogglePreferences()
         initializeStartDateOfMonth()
     }
 
@@ -149,16 +149,16 @@ class SettingsViewModel @Inject constructor(
         treatTransfersAsIncomeExpense.value = appPreferences.transfersAsIncomeExpense
     }
 
-    private suspend fun initializeFeaturePreferences() {
-        compactAccountsMode.value = features.compactAccountsMode.isEnabled(featureDataStore)
-        hideAccountTotalBalance.value = features.hideTotalBalance.isEnabled(featureDataStore)
-        compactCategoriesMode.value = features.compactCategoriesMode.isEnabled(featureDataStore)
+    private suspend fun initializeTogglePreferences() {
+        compactAccountsMode.value = preferenceToggles.compactAccountsMode.isEnabled(preferenceDataStore)
+        hideAccountTotalBalance.value = preferenceToggles.hideTotalBalance.isEnabled(preferenceDataStore)
+        compactCategoriesMode.value = preferenceToggles.compactCategoriesMode.isEnabled(preferenceDataStore)
         showAccountColorsInTransactions.value =
-            features.showAccountColorsInTransactions.isEnabled(featureDataStore)
-        showTitleSuggestions.value = features.showTitleSuggestions.isEnabled(featureDataStore)
-        standardKeypadLayout.value = features.standardKeypadLayout.isEnabled(featureDataStore)
-        showCategorySearchBar.value = features.showCategorySearchBar.isEnabled(featureDataStore)
-        sortCategoriesAscending.value = features.sortCategoriesAscending.isEnabled(featureDataStore)
+            preferenceToggles.showAccountColorsInTransactions.isEnabled(preferenceDataStore)
+        showTitleSuggestions.value = preferenceToggles.showTitleSuggestions.isEnabled(preferenceDataStore)
+        standardKeypadLayout.value = preferenceToggles.standardKeypadLayout.isEnabled(preferenceDataStore)
+        showCategorySearchBar.value = preferenceToggles.showCategorySearchBar.isEnabled(preferenceDataStore)
+        sortCategoriesAscending.value = preferenceToggles.sortCategoriesAscending.isEnabled(preferenceDataStore)
     }
 
     private suspend fun initializeStartDateOfMonth() {
@@ -276,50 +276,50 @@ class SettingsViewModel @Inject constructor(
                 event.treatTransfersAsIncomeExpense
             )
 
-            is SettingsEvent.SetCompactAccountsMode -> setFeaturePreference(
-                feature = features.compactAccountsMode,
+            is SettingsEvent.SetCompactAccountsMode -> setBoolPreference(
+                preference = preferenceToggles.compactAccountsMode,
                 state = compactAccountsMode,
                 enabled = event.enabled
             )
 
-            is SettingsEvent.SetHideAccountTotalBalance -> setFeaturePreference(
-                feature = features.hideTotalBalance,
+            is SettingsEvent.SetHideAccountTotalBalance -> setBoolPreference(
+                preference = preferenceToggles.hideTotalBalance,
                 state = hideAccountTotalBalance,
                 enabled = event.enabled
             )
 
-            is SettingsEvent.SetCompactCategoriesMode -> setFeaturePreference(
-                feature = features.compactCategoriesMode,
+            is SettingsEvent.SetCompactCategoriesMode -> setBoolPreference(
+                preference = preferenceToggles.compactCategoriesMode,
                 state = compactCategoriesMode,
                 enabled = event.enabled
             )
 
-            is SettingsEvent.SetShowAccountColorsInTransactions -> setFeaturePreference(
-                feature = features.showAccountColorsInTransactions,
+            is SettingsEvent.SetShowAccountColorsInTransactions -> setBoolPreference(
+                preference = preferenceToggles.showAccountColorsInTransactions,
                 state = showAccountColorsInTransactions,
                 enabled = event.enabled
             )
 
-            is SettingsEvent.SetShowTitleSuggestions -> setFeaturePreference(
-                feature = features.showTitleSuggestions,
+            is SettingsEvent.SetShowTitleSuggestions -> setBoolPreference(
+                preference = preferenceToggles.showTitleSuggestions,
                 state = showTitleSuggestions,
                 enabled = event.enabled
             )
 
-            is SettingsEvent.SetStandardKeypadLayout -> setFeaturePreference(
-                feature = features.standardKeypadLayout,
+            is SettingsEvent.SetStandardKeypadLayout -> setBoolPreference(
+                preference = preferenceToggles.standardKeypadLayout,
                 state = standardKeypadLayout,
                 enabled = event.enabled
             )
 
-            is SettingsEvent.SetShowCategorySearchBar -> setFeaturePreference(
-                feature = features.showCategorySearchBar,
+            is SettingsEvent.SetShowCategorySearchBar -> setBoolPreference(
+                preference = preferenceToggles.showCategorySearchBar,
                 state = showCategorySearchBar,
                 enabled = event.enabled
             )
 
-            is SettingsEvent.SetSortCategoriesAscending -> setFeaturePreference(
-                feature = features.sortCategoriesAscending,
+            is SettingsEvent.SetSortCategoriesAscending -> setBoolPreference(
+                preference = preferenceToggles.sortCategoriesAscending,
                 state = sortCategoriesAscending,
                 enabled = event.enabled
             )
@@ -429,15 +429,15 @@ class SettingsViewModel @Inject constructor(
         }
     }
 
-    private fun setFeaturePreference(
-        feature: BoolFeature,
+    private fun setBoolPreference(
+        preference: BoolPreference,
         state: androidx.compose.runtime.MutableState<Boolean>,
         enabled: Boolean
     ) {
         state.value = enabled
 
         viewModelScope.launch {
-            feature.set(featureDataStore, enabled)
+            preference.set(preferenceDataStore, enabled)
         }
     }
 

@@ -28,7 +28,7 @@ import com.ivy.data.repository.TransactionRepository
 import com.ivy.data.repository.mapper.TransactionMapper
 import com.ivy.domain.preferences.AppPreferences
 import com.ivy.legacy.ui.theme.system.RedLight
-import com.ivy.domain.features.Features
+import com.ivy.domain.preferences.toggles.PreferenceToggles
 import com.ivy.frp.then
 import com.ivy.legacy.ui.state.PeriodState
 import com.ivy.legacy.ui.model.period.TimePeriod
@@ -96,7 +96,7 @@ class TransactionsViewModel @Inject constructor(
     private val tagRepository: TagRepository,
     private val timeProvider: TimeProvider,
     private val timeConverter: TimeConverter,
-    private val features: Features
+    private val preferenceToggles: PreferenceToggles
 ) : ComposeViewModel<TransactionsState, TransactionsEvent>() {
 
     private val period = mutableStateOf(periodState.selectedPeriod)
@@ -170,7 +170,7 @@ class TransactionsViewModel @Inject constructor(
 
     @Composable
     fun getShouldShowAccountSpecificColorInTransactions(): Boolean {
-        return features.showAccountColorsInTransactions.asEnabledState()
+        return preferenceToggles.showAccountColorsInTransactions.asEnabledState()
     }
 
     @Composable

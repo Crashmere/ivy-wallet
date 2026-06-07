@@ -10,7 +10,7 @@ import com.ivy.data.model.primitive.NotBlankTrimmedString
 import com.ivy.ui.ComposeViewModel
 import com.ivy.data.model.Category
 import com.ivy.data.repository.CategoryRepository
-import com.ivy.domain.features.Features
+import com.ivy.domain.preferences.toggles.PreferenceToggles
 import com.ivy.legacy.domain.model.Account
 import com.ivy.base.legacy.getDefaultFIATCurrency
 import com.ivy.base.legacy.ioThread
@@ -33,7 +33,7 @@ class SearchViewModel @Inject constructor(
     private val categoryRepository: CategoryRepository,
     private val baseCurrencyAct: BaseCurrencyAct,
     private val allTrnsAct: AllTrnsAct,
-    private val features: Features
+    private val preferenceToggles: PreferenceToggles
 ) : ComposeViewModel<SearchState, SearchEvent>() {
 
     private val transactions =
@@ -45,7 +45,7 @@ class SearchViewModel @Inject constructor(
 
     @Composable
     fun getShouldShowAccountSpecificColorInTransactions(): Boolean {
-        return features.showAccountColorsInTransactions.asEnabledState()
+        return preferenceToggles.showAccountColorsInTransactions.asEnabledState()
     }
 
     @Composable

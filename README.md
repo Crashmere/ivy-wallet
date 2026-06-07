@@ -511,13 +511,14 @@
 - 已把分类排序、最近选择账户和客户旅程卡片关闭状态迁到 `AppPreferences`，feature 层不再直接注入 `SharedPrefs`。
 - 已把重置钱包流程改为通过 `AppPreferences.clearAll()` 清空 legacy 偏好；app/feature 层不再直接注入 `SharedPrefs`。
 - 功能开关 `BoolFeature` 不再通过 `Context.dataStore` 读写；根部 `RootContent` 显式提供 `LocalFeatureDataStore` 和 `LocalFeatures`，设置页、编辑交易分类排序、金额格式化和金额键盘都改为使用同一个注入的数据源。
+- 原 `shared/domain/features` 已迁到 `shared/domain/preferences/toggles`，`Features/BoolFeature/FeatureGroup` 重命名为 `PreferenceToggles/BoolPreference/PreferenceGroup`；底层 DataStore key 仍沿用 `feature_...` 前缀，保证已安装设备上的偏好开关不丢失。
 - 备份恢复仍保留原始 `SharedPrefs` 访问；它需要处理全部历史 key 和外部备份格式，后续与备份格式重构一起处理。
 
 目标：
 
 - feature 不直接读写 `SharedPrefs`。
 - `SharedPrefs` 最终删除或降级为 DataStore 的内部兼容实现。
-- `shared/domain/features` 改名或收敛为 `preferences`，避免“高级特性”历史语义。
+- 偏好开关继续从旧的“高级特性”语义收敛为普通本地偏好语义，后续可进一步把 DataStore 入口下沉到数据层 repository。
 
 ### 阶段 7：数据层和数据库遗留清理
 

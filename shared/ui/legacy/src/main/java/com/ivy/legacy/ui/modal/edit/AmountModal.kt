@@ -33,7 +33,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.ivy.domain.features.LocalFeatures
+import com.ivy.domain.preferences.toggles.LocalPreferenceToggles
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
 import com.ivy.data.model.currency.amountToDouble
@@ -315,8 +315,8 @@ fun AmountKeyboard(
     FourthRowExtra: (@Composable RowScope.() -> Unit)? = null,
     onBackspace: () -> Unit,
 ) {
-    val features = LocalFeatures.current
-    val isStandardLayout = features.standardKeypadLayout.asEnabledState()
+    val preferenceToggles = LocalPreferenceToggles.current
+    val isStandardLayout = preferenceToggles.standardKeypadLayout.asEnabledState()
 
     // Decide the order of the numbers based on the keypad layout
     val countButtonValues = if (isStandardLayout) {

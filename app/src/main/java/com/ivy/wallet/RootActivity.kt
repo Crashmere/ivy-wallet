@@ -12,7 +12,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import com.ivy.base.time.TimeConverter
 import com.ivy.base.time.TimeProvider
-import com.ivy.domain.features.Features
+import com.ivy.domain.preferences.toggles.PreferenceToggles
 import com.ivy.legacy.ui.state.PeriodState
 import com.ivy.navigation.Navigation
 import com.ivy.ui.platform.BuildInfoProvider
@@ -64,10 +64,10 @@ class RootActivity : AppCompatActivity(),
     lateinit var filePicker: ActivityResultFilePicker
 
     @Inject
-    lateinit var features: Features
+    lateinit var preferenceToggles: PreferenceToggles
 
     @Inject
-    lateinit var featureDataStore: DataStore<Preferences>
+    lateinit var preferenceDataStore: DataStore<Preferences>
 
     private val viewModel: RootViewModel by viewModels()
     private val activityFileSharer by lazy { ActivityFileSharer(this) }
@@ -88,8 +88,8 @@ class RootActivity : AppCompatActivity(),
                 timeFormatter = timeFormatter,
                 dateTimePicker = dateTimePicker,
                 datePicker = datePicker,
-                features = features,
-                featureDataStore = featureDataStore,
+                preferenceToggles = preferenceToggles,
+                preferenceDataStore = preferenceDataStore,
                 buildInfoProvider = this,
                 fileSharer = this,
                 viewModel = viewModel,

@@ -17,7 +17,7 @@ import com.ivy.data.repository.CategoryRepository
 import com.ivy.data.repository.CurrencyRepository
 import com.ivy.data.repository.LegacySettingsRepository
 import com.ivy.data.repository.mapper.TransactionMapper
-import com.ivy.domain.features.Features
+import com.ivy.domain.preferences.toggles.PreferenceToggles
 import com.ivy.domain.usecase.exchange.SyncExchangeRatesUseCase
 import com.ivy.frp.then
 import com.ivy.frp.thenInvokeAfter
@@ -88,7 +88,7 @@ class HomeViewModel @Inject constructor(
     private val transactionMapper: TransactionMapper,
     private val timeProvider: TimeProvider,
     private val timeConverter: TimeConverter,
-    private val features: Features,
+    private val preferenceToggles: PreferenceToggles,
     private val periodState: PeriodState,
     private val mainTabState: MainTabState
 ) : ComposeViewModel<HomeState, HomeEvent>() {
@@ -162,7 +162,7 @@ class HomeViewModel @Inject constructor(
 
     @Composable
     fun getShouldShowAccountSpecificColorInTransactions(): Boolean {
-        return features.showAccountColorsInTransactions.asEnabledState()
+        return preferenceToggles.showAccountColorsInTransactions.asEnabledState()
     }
 
     @Composable

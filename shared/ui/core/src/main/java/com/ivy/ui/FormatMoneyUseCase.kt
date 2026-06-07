@@ -2,7 +2,7 @@ package com.ivy.ui
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
-import com.ivy.domain.features.Features
+import com.ivy.domain.preferences.toggles.PreferenceToggles
 import com.ivy.ui.time.DevicePreferences
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
@@ -14,9 +14,9 @@ const val MILLION = 1_000_000
 const val BILLION = 1_000_000_000
 
 class FormatMoneyUseCase @Inject constructor(
-    private val features: Features,
+    private val preferenceToggles: PreferenceToggles,
     private val devicePreferences: DevicePreferences,
-    private val featureDataStore: DataStore<Preferences>
+    private val preferenceDataStore: DataStore<Preferences>
 ) {
 
     private val locale = devicePreferences.locale()
@@ -35,7 +35,7 @@ class FormatMoneyUseCase @Inject constructor(
             }
             return result
         } else {
-            val showDecimalPoint = features.showDecimalNumber.isEnabled(featureDataStore)
+            val showDecimalPoint = preferenceToggles.showDecimalNumber.isEnabled(preferenceDataStore)
 
             val formatter = when (showDecimalPoint) {
                 true -> withDecimalFormatter

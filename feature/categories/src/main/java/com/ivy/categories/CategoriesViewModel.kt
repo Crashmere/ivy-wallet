@@ -10,7 +10,7 @@ import com.ivy.base.legacy.Transaction
 import com.ivy.base.time.TimeConverter
 import com.ivy.base.time.TimeProvider
 import com.ivy.data.repository.CategoryRepository
-import com.ivy.domain.features.Features
+import com.ivy.domain.preferences.toggles.PreferenceToggles
 import com.ivy.domain.preferences.AppPreferences
 import com.ivy.frp.action.thenMap
 import com.ivy.frp.thenInvokeAfter
@@ -49,7 +49,7 @@ class CategoriesViewModel @Inject constructor(
     private val accountsAct: AccountsAct,
     private val trnsWithRangeAndAccFiltersAct: TrnsWithRangeAndAccFiltersAct,
     private val categoryIncomeWithAccountFiltersAct: LegacyCategoryIncomeWithAccountFiltersAct,
-    private val features: Features,
+    private val preferenceToggles: PreferenceToggles,
     private val timeProvider: TimeProvider,
     private val timeConverter: TimeConverter,
 ) : ComposeViewModel<CategoriesScreenState, CategoriesScreenEvent>() {
@@ -83,12 +83,12 @@ class CategoriesViewModel @Inject constructor(
 
     @Composable
     private fun getCompactCategoriesMode(): Boolean {
-        return features.compactCategoriesMode.asEnabledState()
+        return preferenceToggles.compactCategoriesMode.asEnabledState()
     }
 
     @Composable
     private fun getShowCategorySearchBar(): Boolean {
-        return features.showCategorySearchBar.asEnabledState()
+        return preferenceToggles.showCategorySearchBar.asEnabledState()
     }
 
     @Composable

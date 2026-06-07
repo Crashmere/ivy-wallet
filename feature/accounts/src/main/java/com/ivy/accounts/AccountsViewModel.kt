@@ -14,7 +14,7 @@ import com.ivy.base.time.TimeProvider
 import com.ivy.data.DataObserver
 import com.ivy.data.DataWriteEvent
 import com.ivy.data.repository.AccountRepository
-import com.ivy.domain.features.Features
+import com.ivy.domain.preferences.toggles.PreferenceToggles
 import com.ivy.domain.preferences.AppPreferences
 import com.ivy.legacy.ui.state.PeriodState
 import com.ivy.legacy.domain.model.AccountData
@@ -48,7 +48,7 @@ class AccountsViewModel @Inject constructor(
     private val accountDataAct: AccountDataAct,
     private val accountRepository: AccountRepository,
     private val dataObserver: DataObserver,
-    private val features: Features,
+    private val preferenceToggles: PreferenceToggles,
     private val timeProvider: TimeProvider,
     private val timeConverter: TimeConverter,
 ) : ComposeViewModel<AccountsState, AccountsEvent>() {
@@ -97,7 +97,7 @@ class AccountsViewModel @Inject constructor(
 
     @Composable
     private fun getHideTotalBalance(): Boolean {
-        return features.hideTotalBalance.asEnabledState()
+        return preferenceToggles.hideTotalBalance.asEnabledState()
     }
 
     @Composable
@@ -137,7 +137,7 @@ class AccountsViewModel @Inject constructor(
 
     @Composable
     private fun getCompactAccountsMode(): Boolean {
-        return features.compactAccountsMode.asEnabledState()
+        return preferenceToggles.compactAccountsMode.asEnabledState()
     }
 
     override fun onEvent(event: AccountsEvent) {
