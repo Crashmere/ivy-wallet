@@ -1,7 +1,5 @@
 package com.ivy.wallet.di
 
-import com.ivy.base.threading.DispatchersProvider
-import com.ivy.base.threading.IvyDispatchersProvider
 import com.ivy.base.time.TimeConverter
 import com.ivy.base.time.TimeProvider
 import com.ivy.base.time.impl.DeviceTimeProvider
@@ -60,11 +58,6 @@ abstract class AppBindingsModule {
     abstract fun preferenceToggles(
         preferenceToggles: IvyPreferenceToggles
     ): PreferenceToggles
-
-    @Binds
-    abstract fun dispatchersProvider(
-        dispatchersProvider: IvyDispatchersProvider
-    ): DispatchersProvider
 
     @Binds
     abstract fun timeProvider(
