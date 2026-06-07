@@ -626,6 +626,7 @@
 - `SettingsEntity` 已取消 `@Deprecated` 注解，改为普通注释标明 legacy 表用途；它当前仍服务主题、基础币种、缓冲金额和备份兼容，不再让 Room database 编译产生误导性警告。
 - `Theme` 枚举已取消旧设计系统 `@Deprecated` 注解；它当前是持久化的应用主题偏好，枚举名仍写入 Room 和备份文件。
 - 旧首页判断是否存在交易的 DAO 查询已从 `findAll_LIMIT_1()` 改成 `hasAny()`；这一步不改 schema，只让查询语义更直接并避免读取完整实体。
+- `DeviceIdUseCase` 已停止引用 data core 的 `IvyDataStore` typealias，改为直接依赖标准 `DataStore<Preferences>`；data core 只保留实际 `Context.dataStore` 提供入口。
 
 建议顺序：
 

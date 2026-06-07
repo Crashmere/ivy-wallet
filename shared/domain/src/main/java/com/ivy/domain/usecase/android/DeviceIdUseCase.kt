@@ -1,15 +1,16 @@
 package com.ivy.domain.usecase.android
 
+import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.stringPreferencesKey
-import com.ivy.data.datastore.IvyDataStore
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import java.util.UUID
 import javax.inject.Inject
 
 class DeviceIdUseCase @Inject constructor(
-  private val dataStore: IvyDataStore,
+  private val dataStore: DataStore<Preferences>,
 ) {
   /**
    * Currently a dummy impl that uses a UUID stored in the data store.
