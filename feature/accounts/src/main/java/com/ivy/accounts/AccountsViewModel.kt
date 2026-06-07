@@ -20,7 +20,7 @@ import com.ivy.legacy.IvyWalletCtx
 import com.ivy.legacy.data.model.AccountData
 import com.ivy.legacy.data.model.toCloseTimeRange
 import com.ivy.legacy.utils.format
-import com.ivy.legacy.utils.ioThread
+import com.ivy.base.legacy.ioThread
 import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.R
 import com.ivy.wallet.domain.action.settings.BaseCurrencyAct

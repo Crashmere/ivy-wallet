@@ -13,7 +13,7 @@ import com.ivy.base.time.TimeConverter
 import com.ivy.base.time.TimeProvider
 import com.ivy.ui.ComposeViewModel
 import com.ivy.legacy.data.model.TimePeriod
-import com.ivy.legacy.utils.ioThread
+import com.ivy.base.legacy.ioThread
 import com.ivy.wallet.domain.action.settings.BaseCurrencyAct
 import com.ivy.wallet.domain.action.wallet.CalcWalletBalanceAct
 import com.ivy.wallet.domain.deprecated.logic.PlannedPaymentsLogic

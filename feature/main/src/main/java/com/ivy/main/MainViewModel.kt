@@ -10,8 +10,8 @@ import com.ivy.frp.test.TestIdlingResource
 import com.ivy.legacy.IvyWalletCtx
 import com.ivy.legacy.data.model.MainTab
 import com.ivy.legacy.domain.deprecated.logic.AccountCreator
-import com.ivy.legacy.utils.asLiveData
-import com.ivy.legacy.utils.ioThread
+import com.ivy.base.legacy.asLiveData
+import com.ivy.base.legacy.ioThread
 import com.ivy.navigation.MainScreen
 import com.ivy.navigation.Navigation
 import com.ivy.wallet.domain.deprecated.logic.model.CreateAccountData

@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.ivy.data.backup.BackupDataUseCase
 import com.ivy.data.backup.ImportResult
 import com.ivy.frp.test.TestIdlingResource
-import com.ivy.legacy.utils.asLiveData
+import com.ivy.base.legacy.asLiveData
 import com.ivy.navigation.ImportScreen
 import com.ivy.navigation.Navigation
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -57,7 +57,7 @@ class ImportViewModel @Inject constructor(
                 _importResult.value = backupDataUseCase.importBackupFile(
                     backupFileUri = fileUri
                 ) { progressPercent ->
-                    com.ivy.legacy.utils.uiThread {
+                    com.ivy.base.legacy.uiThread {
                         _importProgressPercent.value =
                             (progressPercent * 100).roundToInt()
                     }

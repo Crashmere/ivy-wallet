@@ -13,7 +13,7 @@ import com.ivy.data.repository.CategoryRepository
 import com.ivy.domain.features.Features
 import com.ivy.legacy.datamodel.Account
 import com.ivy.legacy.utils.getDefaultFIATCurrency
-import com.ivy.legacy.utils.ioThread
+import com.ivy.base.legacy.ioThread
 import com.ivy.wallet.domain.action.account.AccountsAct
 import com.ivy.wallet.domain.action.settings.BaseCurrencyAct
 import com.ivy.wallet.domain.action.transaction.AllTrnsAct

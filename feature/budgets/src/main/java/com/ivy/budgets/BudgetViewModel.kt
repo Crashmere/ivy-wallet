@@ -200,7 +200,7 @@ class BudgetViewModel @Inject constructor(
                 .filter { it.categoryIdsSerialized.isNotNullOrBlank() }
                 .sumOf { it.amount }
 
-            this@BudgetViewModel.budgets.value = com.ivy.legacy.utils.ioThread {
+            this@BudgetViewModel.budgets.value = com.ivy.base.legacy.ioThread {
                 budgets.map {
                     DisplayBudget(
                         budget = it,
@@ -289,7 +289,7 @@ class BudgetViewModel @Inject constructor(
 
     private fun reorder(newOrder: List<DisplayBudget>) {
         viewModelScope.launch {
-            com.ivy.legacy.utils.ioThread {
+            com.ivy.base.legacy.ioThread {
                 newOrder.forEachIndexed { index, item ->
                     budgetWriter.save(
                         item.budget.toEntity().copy(

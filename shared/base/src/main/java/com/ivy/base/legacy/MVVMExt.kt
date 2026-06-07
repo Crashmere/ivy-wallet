@@ -1,4 +1,4 @@
-package com.ivy.legacy.utils
+package com.ivy.base.legacy
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

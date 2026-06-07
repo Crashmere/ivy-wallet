@@ -1,7 +1,7 @@
 package com.ivy.wallet.domain.deprecated.logic.loantrasactions
 
 import com.ivy.base.legacy.Transaction
-import com.ivy.legacy.utils.computationThread
+import com.ivy.base.legacy.computationThread
 import javax.inject.Inject
 
 data class LoanTransactionsLogic @Inject constructor(

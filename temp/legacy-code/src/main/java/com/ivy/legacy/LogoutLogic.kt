@@ -17,7 +17,7 @@ import com.ivy.data.repository.CategoryRepository
 import com.ivy.data.repository.ExchangeRatesRepository
 import com.ivy.data.repository.TagRepository
 import com.ivy.data.repository.TransactionRepository
-import com.ivy.legacy.utils.ioThread
+import com.ivy.base.legacy.ioThread
 import com.ivy.navigation.MainScreen
 import com.ivy.navigation.Navigation
 import javax.inject.Inject

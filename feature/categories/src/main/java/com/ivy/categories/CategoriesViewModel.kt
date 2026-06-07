@@ -16,7 +16,7 @@ import com.ivy.frp.action.thenMap
 import com.ivy.frp.thenInvokeAfter
 import com.ivy.legacy.data.model.TimePeriod
 import com.ivy.legacy.datamodel.Account
-import com.ivy.legacy.utils.ioThread
+import com.ivy.base.legacy.ioThread
 import com.ivy.ui.ComposeViewModel
 import com.ivy.wallet.domain.action.account.AccountsAct
 import com.ivy.wallet.domain.action.category.LegacyCategoryIncomeWithAccountFiltersAct
@@ -168,7 +168,7 @@ class CategoriesViewModel @Inject constructor(
     }
 
     private suspend fun loadCategories() {
-        com.ivy.legacy.utils.scopedIOThread { scope ->
+        com.ivy.base.legacy.scopedIOThread { scope ->
             val categories = categoryRepository.findAll().mapAsync(scope) {
                 val catIncomeExpense = categoryIncomeWithAccountFiltersAct(
                     LegacyCategoryIncomeWithAccountFiltersAct.Input(

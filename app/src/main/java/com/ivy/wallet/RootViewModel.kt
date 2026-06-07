@@ -12,8 +12,8 @@ import com.ivy.data.db.dao.read.SettingsDao
 import com.ivy.frp.test.TestIdlingResource
 import com.ivy.legacy.IvyWalletCtx
 import com.ivy.legacy.InitialDataSetup
-import com.ivy.legacy.utils.ioThread
-import com.ivy.legacy.utils.readOnly
+import com.ivy.base.legacy.ioThread
+import com.ivy.base.legacy.readOnly
 import com.ivy.navigation.EditTransactionScreen
 import com.ivy.navigation.MainScreen
 import com.ivy.navigation.Navigation
