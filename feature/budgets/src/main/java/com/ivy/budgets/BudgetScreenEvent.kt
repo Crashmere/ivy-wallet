@@ -1,7 +1,7 @@
 package com.ivy.budgets
 
 import com.ivy.budgets.model.DisplayBudget
-import com.ivy.legacy.domain.model.Budget
+import com.ivy.data.model.legacy.Budget
 import com.ivy.data.model.legacy.CreateBudgetData
 
 sealed interface BudgetScreenEvent {

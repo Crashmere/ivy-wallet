@@ -476,13 +476,14 @@
 - 已清理一批低风险编译警告：保留仍被使用的 `LegacyTag` 和客户旅程卡片 provider，但取消误导性废弃标记；Arrow `orNull()`/旧 `option` DSL、旧 Material `Divider` 和 Kotlin `toUpperCase()` 调用已更新到当前 API。
 - 继续清理低风险废弃 API：旧货币选择器改用 `String.lowercase(Locale)`，旧排序弹窗改用 `bindingAdapterPosition` 并处理 `NO_POSITION`，汇率页箭头图标改用 AutoMirrored 版本。
 - 已把 `com.ivy.legacy.datamodel.temp` 中的旧实体/新模型 mapper 扩展函数迁到 `com.ivy.legacy.domain.mapper`；这些文件仍服务旧数据模型兼容，但不再使用含糊的 `temp` 包名。
-- 已把旧兼容模型本体从 `com.ivy.legacy.datamodel` 迁到 `com.ivy.legacy.domain.model`，包括旧账户、分类、预算、借贷、计划付款规则、设置和旧交易实体转换扩展；字段和 `toEntity()` 映射保持不变。
+- 已把旧兼容模型本体从 `com.ivy.legacy.datamodel` 迁到 `com.ivy.legacy.domain.model`，包括旧账户、分类、借贷、计划付款规则、设置和旧交易实体转换扩展；字段和映射语义保持不变。
 - 已把 `FromToTimeRange` 和 `AccountData` 从跨模块混用的 `com.ivy.legacy.data.model` 拆到 `com.ivy.legacy.domain.model`；UI 侧 `TimePeriod/Month/LastNTimeRange` 暂时保留在旧 UI 包，因为它们仍依赖 UI 文案和时间格式化。
 - 已把 `ClosedTimeRange`、`IncomeExpensePair`、`IncomeExpenseTransferPair` 从旧 `com.ivy.legacy.domain.pure.data` 包归入 `com.ivy.data.model.legacy`；它们仍作为旧统计流程的值对象保留在 `shared:data:model`。
 - 旧时间范围值对象 `FromToTimeRange` 已从 `com.ivy.legacy.domain.model` 下沉到 `com.ivy.data.model.legacy`；`shared:domain` 原文件只保留 upcoming/overdue 交易过滤函数，UI 和 feature 不再为了这个纯范围对象引用 legacy domain 包名。
 - upcoming/overdue 交易日期过滤 helper 已从 `com.ivy.legacy.domain.model` 迁到 `com.ivy.legacy.domain.time`；legacy model 包不再承载这类业务过滤函数。
 - 账户页展示模型 `AccountData` 和对应 `AccountDataAct` 已从 `shared:domain` 下沉到 `feature:accounts`；`WalletAccountLogic` 改为直接调用余额 action，不再复用账户页专用展示聚合。
 - 纯创建参数 `CreateAccountData`、`CreateCategoryData`、`CreateBudgetData` 已从 `com.ivy.legacy.domain.model` 下沉到 `com.ivy.data.model.legacy`；UI 弹窗、feature event 和 domain creator 继续使用同名参数对象，但不再占用 legacy domain model 包。
+- 旧预算模型 `Budget` 已从 `com.ivy.legacy.domain.model` 下沉到 `com.ivy.data.model.legacy`；数据库转换 `toEntity()` 已移入 legacy domain mapper，预算页、预算排序 use case 和旧预算 creator 继续使用同一模型语义。
 - 已把剩余 UI 兼容状态模型从 `com.ivy.legacy.data` 迁到 `com.ivy.legacy.ui.model`，并把周期选择模型迁到 `com.ivy.legacy.ui.model.period`；`com.ivy.legacy.data.*` 包名已经从源码中清空。
 - 已把新旧交易模型桥接 helper 从 `com.ivy.data.temp.migration` 改名到 `com.ivy.data.legacy`，它们仍用于预算、报表和旧 domain 统计，但不再伪装成临时 migration 工具。
 - 已把旧 UI helper 从 `com.ivy.ui.legacy` 迁到 `com.ivy.legacy.ui`，包括 Compose 扩展、手势、动画、日期/间隔格式化和 Android UI 扩展；功能不变，只让旧 UI 工具回到统一 legacy UI 包根。

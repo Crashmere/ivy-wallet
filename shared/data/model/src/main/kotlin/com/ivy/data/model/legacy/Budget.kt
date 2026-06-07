@@ -1,6 +1,5 @@
-package com.ivy.legacy.domain.model
+package com.ivy.data.model.legacy
 
-import com.ivy.data.db.entity.BudgetEntity
 import java.util.UUID
 
 data class Budget(
@@ -15,16 +14,6 @@ data class Budget(
     val orderId: Double,
     val id: UUID = UUID.randomUUID()
 ) {
-    fun toEntity(): BudgetEntity = BudgetEntity(
-        name = name,
-        amount = amount,
-        categoryIdsSerialized = categoryIdsSerialized,
-        accountIdsSerialized = accountIdsSerialized,
-        isDeleted = isDeleted,
-        orderId = orderId,
-        id = id,
-    )
-
     companion object {
         fun serialize(ids: List<UUID>): String {
             return ids.joinToString(separator = ",")

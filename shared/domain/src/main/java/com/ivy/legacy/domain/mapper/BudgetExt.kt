@@ -1,7 +1,7 @@
 package com.ivy.legacy.domain.mapper
 
 import com.ivy.data.db.entity.BudgetEntity
-import com.ivy.legacy.domain.model.Budget
+import com.ivy.data.model.legacy.Budget
 import java.util.UUID
 
 fun BudgetEntity.toLegacyDomain(): Budget = Budget(
@@ -12,6 +12,16 @@ fun BudgetEntity.toLegacyDomain(): Budget = Budget(
     isDeleted = isDeleted,
     orderId = orderId,
     id = id
+)
+
+fun Budget.toEntity(): BudgetEntity = BudgetEntity(
+    name = name,
+    amount = amount,
+    categoryIdsSerialized = categoryIdsSerialized,
+    accountIdsSerialized = accountIdsSerialized,
+    isDeleted = isDeleted,
+    orderId = orderId,
+    id = id,
 )
 
 fun serialize(ids: List<UUID>): String {

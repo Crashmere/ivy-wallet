@@ -4,7 +4,7 @@ import com.ivy.data.db.dao.read.BudgetDao
 import com.ivy.legacy.frp.action.FPAction
 import com.ivy.legacy.frp.action.thenMap
 import com.ivy.legacy.frp.then
-import com.ivy.legacy.domain.model.Budget
+import com.ivy.data.model.legacy.Budget
 import com.ivy.legacy.domain.mapper.toLegacyDomain
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList

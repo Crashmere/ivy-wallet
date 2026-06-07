@@ -2,9 +2,10 @@ package com.ivy.legacy.domain.logic
 
 import com.ivy.data.db.dao.read.BudgetDao
 import com.ivy.data.db.dao.write.WriteBudgetDao
-import com.ivy.legacy.domain.model.Budget
+import com.ivy.data.model.legacy.Budget
 import com.ivy.base.coroutines.ioThread
 import com.ivy.data.model.legacy.CreateBudgetData
+import com.ivy.legacy.domain.mapper.toEntity
 import com.ivy.legacy.domain.pure.util.nextOrderNum
 import javax.inject.Inject
 

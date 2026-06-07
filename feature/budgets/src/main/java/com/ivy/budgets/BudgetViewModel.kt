@@ -20,7 +20,7 @@ import com.ivy.legacy.ui.state.PeriodState
 import com.ivy.data.model.legacy.FromToTimeRange
 import com.ivy.data.model.legacy.toCloseTimeRange
 import com.ivy.legacy.domain.model.Account
-import com.ivy.legacy.domain.model.Budget
+import com.ivy.data.model.legacy.Budget
 import com.ivy.legacy.domain.logic.BudgetCreator
 import com.ivy.data.model.currency.format
 import com.ivy.base.text.isNotNullOrBlank
