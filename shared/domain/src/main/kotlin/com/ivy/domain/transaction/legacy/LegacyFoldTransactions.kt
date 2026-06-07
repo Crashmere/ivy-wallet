@@ -38,7 +38,7 @@ object LegacyFoldTransactions {
         }
     }
 
-    suspend fun <A> sumTrns(
+    suspend fun <A> sumTransactions(
         transactions: List<com.ivy.data.model.legacy.Transaction>,
         valueFunction: suspend (com.ivy.data.model.legacy.Transaction, A) -> BigDecimal,
         argument: A

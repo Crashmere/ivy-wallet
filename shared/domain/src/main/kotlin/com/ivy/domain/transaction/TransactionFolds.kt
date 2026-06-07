@@ -73,7 +73,7 @@ internal tailrec suspend fun <A> sumTransactionsSuspendInternal(
     }
 }
 
-suspend fun <A> sumTrns(
+suspend fun <A> sumTransactions(
     transactions: List<Transaction>,
     valueFunction: SuspendValueFunction<A>,
     argument: A

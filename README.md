@@ -820,9 +820,9 @@
 - 新版交易筛选和到期判断 helper 已从 legacy 文件拆到 `com.ivy.domain.transaction.TransactionFilters`；旧包内只保留旧交易模型筛选和仍依赖旧账户模型的币种兼容 helper。
 - 新版交易折叠/求和 helper 已从 `legacy/FoldTransactions.kt` 拆到正式 `com.ivy.domain.transaction.TransactionFolds`；legacy 文件只保留旧交易模型折叠对象。
 - 新版钱包收入/支出汇总函数已从 `legacy/WalletValueFunctions.kt` 拆到正式 `com.ivy.domain.transaction.WalletValueFunctions`；legacy 文件只保留旧交易模型汇总对象。
-- 新版交易币种 helper `trnCurrency` 已从 legacy 文件迁到正式 `com.ivy.domain.transaction.TransactionCurrency`；legacy 包中的 `LegacyTrnFunctions` 现在只处理旧交易模型。
+- 新版交易币种 helper 已从旧 `trnCurrency` 改为正式 `transactionCurrency`，并从 legacy 文件迁到 `com.ivy.domain.transaction.TransactionCurrency`；legacy 包中的 `LegacyTransactionFunctions` 现在只处理旧交易模型。
 - 新版交易到旧历史列表 UI item 的桥接函数已从 `legacy/TrnDateDividers.kt` 拆到正式 `com.ivy.domain.transaction.TransactionHistoryItems`；legacy 日期分组对象只保留旧交易模型入口。
-- 旧交易兼容目录中的文件名已和对象名对齐：`LegacyTrnFunctions`、`LegacyFoldTransactions`、`LegacyWalletValueFunctions`、`LegacyTrnDateDividers` 均保留在 `com.ivy.domain.transaction.legacy`，目录中不再混用新版语义文件名。
+- 旧交易兼容目录中的文件名已和对象名对齐：`LegacyTransactionFunctions`、`LegacyFoldTransactions`、`LegacyWalletValueFunctions`、`LegacyTransactionDateDividers` 均保留在 `com.ivy.domain.transaction.legacy`，目录中不再混用新版语义文件名；交易求和 helper 也从 `sumTrns` 改为 `sumTransactions`。
 - 交易汇率换算相关旧缩写继续收敛：`ExchangeTrns.kt` 已改为 `ExchangeTransactions.kt`，`ExchangeTrnArgument`/`LegacyExchangeTrns`/`trnCurrency` 改为完整的 `ExchangeTransactionArgument`/`LegacyExchangeTransactions`/`transactionCurrency` 命名；行为不变。
 - 功能开关偏好门面已从 `PreferenceToggleRepository` 改名为 `PreferenceToggleService`：它只负责把 domain 层 `BoolPreference` 映射到底层 `PreferenceToggleStore`，不再用 repository 命名暗示数据仓库职责。
 - 旧 `Logic` 注入变量名已继续收敛：`LegacyExchangeRatesUseCase` 的调用方统一使用 `exchangeRatesUseCase`，首页客户旅程卡片也改用 `customerJourneyCardsProvider` 命名，避免把 provider/use case 误读成旧 logic 层。

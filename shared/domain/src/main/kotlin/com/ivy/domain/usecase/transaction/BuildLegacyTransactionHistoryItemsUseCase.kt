@@ -6,7 +6,7 @@ import com.ivy.data.api.AccountStore
 import com.ivy.data.model.AccountId
 import com.ivy.domain.usecase.exchange.ExchangeAmountUseCase
 import com.ivy.domain.mapper.legacy.toLegacyDomain
-import com.ivy.domain.transaction.legacy.LegacyTrnDateDividers
+import com.ivy.domain.transaction.legacy.LegacyTransactionDateDividers
 import javax.inject.Inject
 
 class BuildLegacyTransactionHistoryItemsUseCase @Inject constructor(
@@ -17,7 +17,7 @@ class BuildLegacyTransactionHistoryItemsUseCase @Inject constructor(
         baseCurrency: String,
         transactions: List<Transaction>
     ): List<TransactionHistoryItem> {
-        return LegacyTrnDateDividers.transactionsWithDateDividers(
+        return LegacyTransactionDateDividers.transactionsWithDateDividers(
             transactions = transactions,
             baseCurrencyCode = baseCurrency,
             getAccount = { accountId -> accountStore.findById(AccountId(accountId))?.toLegacyDomain() },

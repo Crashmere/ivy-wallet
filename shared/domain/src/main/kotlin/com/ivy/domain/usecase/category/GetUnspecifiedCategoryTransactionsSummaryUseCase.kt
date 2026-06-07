@@ -10,7 +10,7 @@ import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.domain.usecase.exchange.LegacyExchangeRatesUseCase
 import com.ivy.domain.usecase.exchange.sumInBaseCurrency
 import com.ivy.domain.mapper.legacy.toLegacy
-import com.ivy.domain.transaction.legacy.LegacyTrnDateDividers
+import com.ivy.domain.transaction.legacy.LegacyTransactionDateDividers
 import com.ivy.domain.time.filterOverdueLegacy
 import com.ivy.domain.time.filterUpcomingLegacy
 import com.ivy.domain.time.nowUtc
@@ -56,7 +56,7 @@ class GetUnspecifiedCategoryTransactionsSummaryUseCase @Inject constructor(
     }
 
     private suspend fun historyUnspecified(range: FromToTimeRange): List<TransactionHistoryItem> {
-        return with(LegacyTrnDateDividers) {
+        return with(LegacyTransactionDateDividers) {
             transactionRepository
                 .findAllUnspecifiedAndBetween(
                     startDate = range.from(),

@@ -5,7 +5,7 @@ import arrow.core.toOption
 import com.ivy.data.model.Transaction
 import com.ivy.data.model.legacy.Account
 import com.ivy.domain.account.accountCurrency
-import com.ivy.domain.transaction.legacy.LegacyTrnFunctions
+import com.ivy.domain.transaction.legacy.LegacyTransactionFunctions
 import com.ivy.domain.transaction.getAccountId
 import com.ivy.domain.transaction.getValue
 import com.ivy.domain.transaction.transactionCurrency
@@ -137,7 +137,7 @@ object LegacyExchangeTransactions {
         return exchange(
             ExchangeData(
                 baseCurrency = baseCurrency,
-                fromCurrency = LegacyTrnFunctions.transactionCurrency(transaction, accounts, baseCurrency),
+                fromCurrency = LegacyTransactionFunctions.transactionCurrency(transaction, accounts, baseCurrency),
                 toCurrency = toCurrency
             ),
             transaction.amount

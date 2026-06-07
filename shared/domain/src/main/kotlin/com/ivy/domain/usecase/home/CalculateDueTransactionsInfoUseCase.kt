@@ -10,7 +10,7 @@ import com.ivy.domain.exchange.ExchangeTransactionArgument
 import com.ivy.domain.exchange.exchangeInBaseCurrency
 import com.ivy.domain.transaction.expenses
 import com.ivy.domain.transaction.incomes
-import com.ivy.domain.transaction.sumTrns
+import com.ivy.domain.transaction.sumTransactions
 import com.ivy.domain.time.nowLocalDate
 import java.time.LocalDate
 import javax.inject.Inject
@@ -36,12 +36,12 @@ class CalculateDueTransactionsInfoUseCase @Inject constructor(
 
         return DueTransactionsInfo(
             incomeExpense = IncomeExpensePair(
-                income = sumTrns(
+                income = sumTransactions(
                     incomes(dueTransactions),
                     ::exchangeInBaseCurrency,
                     exchangeArg
                 ),
-                expense = sumTrns(
+                expense = sumTransactions(
                     expenses(dueTransactions),
                     ::exchangeInBaseCurrency,
                     exchangeArg

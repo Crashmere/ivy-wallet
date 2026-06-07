@@ -20,7 +20,7 @@ import java.util.UUID
 
 private fun LocalDateTime.toEpochSeconds() = toEpochSecond(ZoneOffset.UTC)
 
-object LegacyTrnDateDividers {
+object LegacyTransactionDateDividers {
     suspend fun List<com.ivy.data.model.legacy.Transaction>.withDateDividers(
         exchangeRatesUseCase: LegacyExchangeRatesUseCase,
         baseCurrencyCode: String,
@@ -69,13 +69,13 @@ object LegacyTrnDateDividers {
                 listOf<TransactionHistoryItem>(
                     TransactionHistoryDateDivider(
                         date = date!!,
-                        income = LegacyFoldTransactions.sumTrns(
-                            LegacyTrnFunctions.incomes(transactionsForDate),
+                        income = LegacyFoldTransactions.sumTransactions(
+                            LegacyTransactionFunctions.incomes(transactionsForDate),
                             ::exchangeInBaseCurrency,
                             arg
                         ).toDouble(),
-                        expenses = LegacyFoldTransactions.sumTrns(
-                            LegacyTrnFunctions.expenses(transactionsForDate),
+                        expenses = LegacyFoldTransactions.sumTransactions(
+                            LegacyTransactionFunctions.expenses(transactionsForDate),
                             ::exchangeInBaseCurrency,
                             arg
                         ).toDouble()

@@ -77,12 +77,12 @@ suspend fun transactionsWithDateDividers(
             listOf<TransactionHistoryItem>(
                 TransactionHistoryDateDivider(
                     date = date!!,
-                    income = sumTrns(
+                    income = sumTransactions(
                         incomes(transactionsForDate),
                         ::exchangeInBaseCurrency,
                         arg
                     ).toDouble(),
-                    expenses = sumTrns(
+                    expenses = sumTransactions(
                         expenses(transactionsForDate),
                         ::exchangeInBaseCurrency,
                         arg
