@@ -46,14 +46,14 @@ class RoomTransactionStoreTest {
     private val writeTransactionDao = mockk<WriteTransactionDao>()
     private val tagStore = mockk<TagStore>(relaxed = true)
 
-    private lateinit var repository: RoomTransactionStore
+    private lateinit var store: RoomTransactionStore
 
     @Before
     fun setup() {
-        repository = newRepository(fakeDao = null)
+        store = newStore(fakeDao = null)
     }
 
-    private fun newRepository(
+    private fun newStore(
         fakeDao: FakeTransactionDao?,
     ): RoomTransactionStore = RoomTransactionStore(
         mapper = mapper,
@@ -71,7 +71,7 @@ class RoomTransactionStoreTest {
         } returns null
 
         // when
-        val transaction = repository.findById(transactionId)
+        val transaction = store.findById(transactionId)
 
         // then
         transaction shouldBe null
@@ -91,7 +91,7 @@ class RoomTransactionStoreTest {
         }
 
         // when
-        val transaction = repository.findById(transactionId)
+        val transaction = store.findById(transactionId)
 
         // then
         transaction shouldBe expectedTransaction
@@ -110,7 +110,7 @@ class RoomTransactionStoreTest {
         }
 
         // when
-        val transaction = repository.findById(transactionId)
+        val transaction = store.findById(transactionId)
 
         // then
         transaction shouldBe null
@@ -119,7 +119,7 @@ class RoomTransactionStoreTest {
     @Test
     fun `find all`() = transactionsTestCase(
         daoMethod = transactionDao::findAll,
-        repoMethod = repository::findAll
+        repoMethod = store::findAll
     )
 
     @Test
@@ -134,7 +134,7 @@ class RoomTransactionStoreTest {
                 )
             },
             repoMethod = {
-                repository.findAllIncomeByAccount(account)
+                store.findAllIncomeByAccount(account)
             },
             mapExpectedResult = { it.filterIsInstance<Income>() }
         )
@@ -152,7 +152,7 @@ class RoomTransactionStoreTest {
                 )
             },
             repoMethod = {
-                repository.findAllExpenseByAccount(account)
+                store.findAllExpenseByAccount(account)
             },
             mapExpectedResult = { it.filterIsInstance<Expense>() }
         )
@@ -170,7 +170,7 @@ class RoomTransactionStoreTest {
                 )
             },
             repoMethod = {
-                repository.findAllTransferByAccount(account)
+                store.findAllTransferByAccount(account)
             },
             mapExpectedResult = { it.filterIsInstance<Transfer>() }
         )
@@ -187,7 +187,7 @@ class RoomTransactionStoreTest {
                 )
             },
             repoMethod = {
-                repository.findAllTransfersToAccount(account)
+                store.findAllTransfersToAccount(account)
             },
             mapExpectedResult = { it.filterIsInstance<Transfer>() }
         )
@@ -201,7 +201,7 @@ class RoomTransactionStoreTest {
                 transactionDao.findByIds(ids.map { it.value })
             },
             repoMethod = {
-                repository.findByIds(ids)
+                store.findByIds(ids)
             }
         )
     }
@@ -219,7 +219,7 @@ class RoomTransactionStoreTest {
                 )
             },
             repoMethod = {
-                repository.findAllBetween(
+                store.findAllBetween(
                     startDate = startDate,
                     endDate = endDate,
                 )
@@ -242,7 +242,7 @@ class RoomTransactionStoreTest {
                 )
             },
             repoMethod = {
-                repository.findAllByAccountAndBetween(
+                store.findAllByAccountAndBetween(
                     accountId = account,
                     startDate = startDate,
                     endDate = endDate,
@@ -266,7 +266,7 @@ class RoomTransactionStoreTest {
                 )
             },
             repoMethod = {
-                repository.findAllToAccountAndBetween(
+                store.findAllToAccountAndBetween(
                     toAccountId = account,
                     startDate = startDate,
                     endDate = endDate,
@@ -290,7 +290,7 @@ class RoomTransactionStoreTest {
                 )
             },
             repoMethod = {
-                repository.findAllDueToBetweenByCategory(
+                store.findAllDueToBetweenByCategory(
                     categoryId = category,
                     startDate = startDate,
                     endDate = endDate,
@@ -312,7 +312,7 @@ class RoomTransactionStoreTest {
                 )
             },
             repoMethod = {
-                repository.findAllDueToBetweenByCategoryUnspecified(
+                store.findAllDueToBetweenByCategoryUnspecified(
                     startDate = startDate,
                     endDate = endDate,
                 )
@@ -335,7 +335,7 @@ class RoomTransactionStoreTest {
                 )
             },
             repoMethod = {
-                repository.findAllDueToBetweenByAccount(
+                store.findAllDueToBetweenByAccount(
                     accountId = account,
                     startDate = startDate,
                     endDate = endDate,
@@ -361,7 +361,7 @@ class RoomTransactionStoreTest {
                 )
             },
             repoMethod = {
-                repository.findAllByCategoryAndTypeAndBetween(
+                store.findAllByCategoryAndTypeAndBetween(
                     categoryId = categoryId.value,
                     type = transactionType,
                     startDate = startDate,
@@ -374,86 +374,86 @@ class RoomTransactionStoreTest {
     @Test
     fun save() = runTest {
         // given
-        repository = newRepository(fakeDao = FakeTransactionDao())
+        store = newStore(fakeDao = FakeTransactionDao())
         val transaction = mockkFakeTransactionMapping()
 
         // when
-        repository.save(transaction)
+        store.save(transaction)
 
         // then
-        val savedTransaction = repository.findById(transaction.id)
+        val savedTransaction = store.findById(transaction.id)
         savedTransaction shouldBe transaction
     }
 
     @Test
     fun saveMany() = runTest {
         // given
-        repository = newRepository(fakeDao = FakeTransactionDao())
+        store = newStore(fakeDao = FakeTransactionDao())
         val transaction1 = mockkFakeTransactionMapping()
         val transaction2 = mockkFakeTransactionMapping()
 
         // when
-        repository.saveMany(listOf(transaction1, transaction2))
+        store.saveMany(listOf(transaction1, transaction2))
 
         // then
-        val savedTransactions = repository.findAll()
+        val savedTransactions = store.findAll()
         savedTransactions.toSet() shouldBe setOf(transaction1, transaction2)
     }
 
     @Test
     fun deleteById() = runTest {
         // given
-        repository = newRepository(fakeDao = FakeTransactionDao())
+        store = newStore(fakeDao = FakeTransactionDao())
         val transaction = mockkFakeTransactionMapping()
-        repository.save(transaction)
+        store.save(transaction)
 
         // when
-        repository.deleteById(transaction.id)
+        store.deleteById(transaction.id)
 
         // then
-        repository.findById(transaction.id) shouldBe null
+        store.findById(transaction.id) shouldBe null
     }
 
     @Test
     fun deleteAllByAccountId() = runTest {
         // given
-        repository = newRepository(fakeDao = FakeTransactionDao())
+        store = newStore(fakeDao = FakeTransactionDao())
         val acc1 = Arb.accountId().next()
         val acc2 = Arb.accountId().next()
         val transactionOneAcc1 = mockkFakeTransactionMapping(account = acc1)
         val transactionTwoAcc1 = mockkFakeTransactionMapping(account = acc1)
         val transactionAcc2 = mockkFakeTransactionMapping(account = acc2)
-        repository.saveMany(listOf(transactionOneAcc1, transactionTwoAcc1, transactionAcc2))
+        store.saveMany(listOf(transactionOneAcc1, transactionTwoAcc1, transactionAcc2))
 
         // when
-        repository.deleteAllByAccountId(accountId = acc1)
+        store.deleteAllByAccountId(accountId = acc1)
 
         // then
-        repository.findAll() shouldBe listOf(transactionAcc2)
+        store.findAll() shouldBe listOf(transactionAcc2)
     }
 
     @Test
     fun countNumberOfTransactions() = runTest {
         // given
-        repository = newRepository(fakeDao = FakeTransactionDao())
+        store = newStore(fakeDao = FakeTransactionDao())
 
-        repository.countHappenedTransactions().value shouldBeGreaterThanOrEqual 0L
+        store.countHappenedTransactions().value shouldBeGreaterThanOrEqual 0L
     }
 
     @Test
     fun deleteAll() = runTest {
         // given
-        repository = newRepository(fakeDao = FakeTransactionDao())
+        store = newStore(fakeDao = FakeTransactionDao())
         val transaction1 = mockkFakeTransactionMapping()
         val transaction2 = mockkFakeTransactionMapping()
         val transaction3 = mockkFakeTransactionMapping()
-        repository.saveMany(listOf(transaction1, transaction2, transaction3))
+        store.saveMany(listOf(transaction1, transaction2, transaction3))
 
         // when
-        repository.deleteAll()
+        store.deleteAll()
 
         // then
-        repository.findAll() shouldBe emptyList()
+        store.findAll() shouldBe emptyList()
     }
 
     private fun mockkFakeTransactionMapping(
