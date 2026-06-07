@@ -17,7 +17,7 @@ import com.ivy.legacy.domain.model.filterUpcoming
 import com.ivy.legacy.domain.model.Account
 import com.ivy.legacy.domain.mapper.toDomain
 import com.ivy.legacy.domain.action.viewmodel.account.AccountDataAct
-import com.ivy.legacy.domain.pure.data.ClosedTimeRange
+import com.ivy.data.model.legacy.ClosedTimeRange
 import kotlinx.collections.immutable.toImmutableList
 import javax.inject.Inject
 import kotlin.math.abs

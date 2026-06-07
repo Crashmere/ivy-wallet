@@ -7,7 +7,7 @@ import com.ivy.base.frp.then
 import com.ivy.legacy.domain.model.Account
 import com.ivy.legacy.domain.action.exchange.ExchangeAct
 import com.ivy.legacy.domain.action.exchange.actInput
-import com.ivy.legacy.domain.pure.data.IncomeExpenseTransferPair
+import com.ivy.data.model.legacy.IncomeExpenseTransferPair
 import com.ivy.legacy.domain.pure.transaction.LegacyFoldTransactions
 import com.ivy.legacy.domain.pure.transaction.WalletValueFunctions
 import com.ivy.legacy.domain.pure.transaction.WalletValueFunctionsLegacy

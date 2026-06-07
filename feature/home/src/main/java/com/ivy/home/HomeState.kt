@@ -8,7 +8,7 @@ import com.ivy.legacy.ui.model.AppBaseData
 import com.ivy.legacy.ui.model.BufferInfo
 import com.ivy.legacy.ui.model.LegacyDueSection
 import com.ivy.legacy.ui.model.period.TimePeriod
-import com.ivy.legacy.domain.pure.data.IncomeExpensePair
+import com.ivy.data.model.legacy.IncomeExpensePair
 import kotlinx.collections.immutable.ImmutableList
 import java.math.BigDecimal
 

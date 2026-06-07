@@ -2,7 +2,7 @@ package com.ivy.legacy.ui.model
 
 import androidx.compose.runtime.Immutable
 import com.ivy.base.model.legacy.Transaction
-import com.ivy.legacy.domain.pure.data.IncomeExpensePair
+import com.ivy.data.model.legacy.IncomeExpensePair
 import kotlinx.collections.immutable.ImmutableList
 
 @Deprecated("Uses legacy Transaction")

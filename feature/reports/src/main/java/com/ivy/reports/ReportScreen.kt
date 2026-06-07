@@ -39,7 +39,7 @@ import com.ivy.navigation.navigation
 import com.ivy.ui.R
 import com.ivy.legacy.ui.platform.fileSharer
 import com.ivy.ui.rememberScrollPositionListState
-import com.ivy.legacy.domain.pure.data.IncomeExpensePair
+import com.ivy.data.model.legacy.IncomeExpensePair
 import com.ivy.legacy.ui.theme.Gray
 import com.ivy.legacy.ui.theme.Green
 import com.ivy.legacy.ui.theme.Orange

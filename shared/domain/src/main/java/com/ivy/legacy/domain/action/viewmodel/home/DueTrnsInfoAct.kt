@@ -9,8 +9,8 @@ import com.ivy.legacy.domain.action.account.AccountByIdAct
 import com.ivy.legacy.domain.action.exchange.ExchangeAct
 import com.ivy.legacy.domain.action.exchange.actInput
 import com.ivy.legacy.domain.action.transaction.DueTrnsAct
-import com.ivy.legacy.domain.pure.data.ClosedTimeRange
-import com.ivy.legacy.domain.pure.data.IncomeExpensePair
+import com.ivy.data.model.legacy.ClosedTimeRange
+import com.ivy.data.model.legacy.IncomeExpensePair
 import com.ivy.legacy.domain.pure.exchange.ExchangeTrnArgument
 import com.ivy.legacy.domain.pure.exchange.exchangeInBaseCurrency
 import com.ivy.legacy.domain.pure.transaction.expenses

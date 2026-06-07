@@ -5,7 +5,7 @@ import com.ivy.base.frp.action.FPAction
 import com.ivy.base.frp.then
 import com.ivy.legacy.domain.model.Account
 import com.ivy.legacy.domain.action.transaction.LegacyCalcTrnsIncomeExpenseAct
-import com.ivy.legacy.domain.pure.data.IncomeExpenseTransferPair
+import com.ivy.data.model.legacy.IncomeExpenseTransferPair
 import javax.inject.Inject
 
 @Deprecated("Uses legacy Transaction")

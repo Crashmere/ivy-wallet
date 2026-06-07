@@ -3,7 +3,7 @@ package com.ivy.legacy.domain.action.transaction
 import com.ivy.data.model.Transaction
 import com.ivy.data.repository.TransactionRepository
 import com.ivy.base.frp.action.FPAction
-import com.ivy.legacy.domain.pure.data.ClosedTimeRange
+import com.ivy.data.model.legacy.ClosedTimeRange
 import javax.inject.Inject
 
 class DueTrnsAct @Inject constructor(

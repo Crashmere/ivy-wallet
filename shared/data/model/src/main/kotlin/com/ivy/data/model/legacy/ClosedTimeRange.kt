@@ -1,4 +1,4 @@
-package com.ivy.legacy.domain.pure.data
+package com.ivy.data.model.legacy
 
 import com.ivy.base.time.TimeProvider
 import com.ivy.base.time.ivyMinTime

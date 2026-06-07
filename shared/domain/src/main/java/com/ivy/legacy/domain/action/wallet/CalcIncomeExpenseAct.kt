@@ -9,8 +9,8 @@ import com.ivy.legacy.domain.model.Account
 import com.ivy.legacy.domain.action.account.AccTrnsAct
 import com.ivy.legacy.domain.action.exchange.ExchangeAct
 import com.ivy.legacy.domain.pure.account.filterExcluded
-import com.ivy.legacy.domain.pure.data.ClosedTimeRange
-import com.ivy.legacy.domain.pure.data.IncomeExpensePair
+import com.ivy.data.model.legacy.ClosedTimeRange
+import com.ivy.data.model.legacy.IncomeExpensePair
 import com.ivy.legacy.domain.pure.exchange.ExchangeData
 import com.ivy.legacy.domain.pure.transaction.AccountValueFunctions
 import com.ivy.legacy.domain.pure.transaction.foldTransactions

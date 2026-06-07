@@ -459,6 +459,7 @@
 - 已把 `com.ivy.legacy.datamodel.temp` 中的旧实体/新模型 mapper 扩展函数迁到 `com.ivy.legacy.domain.mapper`；这些文件仍服务旧数据模型兼容，但不再使用含糊的 `temp` 包名。
 - 已把旧兼容模型本体从 `com.ivy.legacy.datamodel` 迁到 `com.ivy.legacy.domain.model`，包括旧账户、分类、预算、借贷、计划付款规则、设置和旧交易实体转换扩展；字段和 `toEntity()` 映射保持不变。
 - 已把 `FromToTimeRange` 和 `AccountData` 从跨模块混用的 `com.ivy.legacy.data.model` 拆到 `com.ivy.legacy.domain.model`；UI 侧 `TimePeriod/Month/LastNTimeRange` 暂时保留在旧 UI 包，因为它们仍依赖 UI 文案和时间格式化。
+- 已把 `ClosedTimeRange`、`IncomeExpensePair`、`IncomeExpenseTransferPair` 从旧 `com.ivy.legacy.domain.pure.data` 包归入 `com.ivy.data.model.legacy`；它们仍作为旧统计流程的值对象保留在 `shared:data:model`。
 - 已把剩余 UI 兼容状态模型从 `com.ivy.legacy.data` 迁到 `com.ivy.legacy.ui.model`，并把周期选择模型迁到 `com.ivy.legacy.ui.model.period`；`com.ivy.legacy.data.*` 包名已经从源码中清空。
 - 已把新旧交易模型桥接 helper 从 `com.ivy.data.temp.migration` 改名到 `com.ivy.data.legacy`，它们仍用于预算、报表和旧 domain 统计，但不再伪装成临时 migration 工具。
 - 已把旧 UI helper 从 `com.ivy.ui.legacy` 迁到 `com.ivy.legacy.ui`，包括 Compose 扩展、手势、动画、日期/间隔格式化和 Android UI 扩展；功能不变，只让旧 UI 工具回到统一 legacy UI 包根。

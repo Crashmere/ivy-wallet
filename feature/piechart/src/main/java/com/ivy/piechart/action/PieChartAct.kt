@@ -25,7 +25,7 @@ import com.ivy.legacy.domain.action.category.LegacyCategoryIncomeWithAccountFilt
 import com.ivy.legacy.domain.action.transaction.LegacyCalcTrnsIncomeExpenseAct
 import com.ivy.legacy.domain.action.transaction.TrnsWithRangeAndAccFiltersAct
 import com.ivy.legacy.domain.pure.account.filterExcluded
-import com.ivy.legacy.domain.pure.data.IncomeExpenseTransferPair
+import com.ivy.data.model.legacy.IncomeExpenseTransferPair
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 import java.math.BigDecimal

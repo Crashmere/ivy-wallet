@@ -3,7 +3,7 @@ package com.ivy.legacy.domain.action.transaction
 import com.ivy.base.model.legacy.TransactionHistoryItem
 import com.ivy.base.frp.action.FPAction
 import com.ivy.base.frp.then
-import com.ivy.legacy.domain.pure.data.ClosedTimeRange
+import com.ivy.data.model.legacy.ClosedTimeRange
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 import javax.inject.Inject

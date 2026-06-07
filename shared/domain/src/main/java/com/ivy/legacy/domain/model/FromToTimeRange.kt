@@ -5,7 +5,7 @@ import com.ivy.base.time.TimeConverter
 import com.ivy.base.time.TimeProvider
 import com.ivy.base.time.ivyMinTime
 import com.ivy.base.time.ivyMaxTime
-import com.ivy.legacy.domain.pure.data.ClosedTimeRange
+import com.ivy.data.model.legacy.ClosedTimeRange
 import java.time.Instant
 import java.time.ZoneOffset
 

@@ -52,8 +52,8 @@ import com.ivy.legacy.domain.action.viewmodel.home.UpcomingAct
 import com.ivy.legacy.domain.action.wallet.CalcIncomeExpenseAct
 import com.ivy.legacy.domain.action.wallet.CalcWalletBalanceAct
 import com.ivy.legacy.domain.logic.PlannedPaymentsLogic
-import com.ivy.legacy.domain.pure.data.ClosedTimeRange
-import com.ivy.legacy.domain.pure.data.IncomeExpensePair
+import com.ivy.data.model.legacy.ClosedTimeRange
+import com.ivy.data.model.legacy.IncomeExpensePair
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf

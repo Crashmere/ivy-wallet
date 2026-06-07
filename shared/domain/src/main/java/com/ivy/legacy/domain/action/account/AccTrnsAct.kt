@@ -4,7 +4,7 @@ import com.ivy.data.model.AccountId
 import com.ivy.data.model.Transaction
 import com.ivy.data.repository.TransactionRepository
 import com.ivy.base.frp.action.FPAction
-import com.ivy.legacy.domain.pure.data.ClosedTimeRange
+import com.ivy.data.model.legacy.ClosedTimeRange
 import java.util.UUID
 import javax.inject.Inject
 

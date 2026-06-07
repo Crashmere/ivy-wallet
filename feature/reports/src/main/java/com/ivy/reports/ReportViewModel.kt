@@ -52,7 +52,7 @@ import com.ivy.legacy.domain.action.settings.BaseCurrencyAct
 import com.ivy.legacy.domain.action.transaction.CalcTrnsIncomeExpenseAct
 import com.ivy.legacy.domain.action.transaction.TrnsWithDateDivsAct
 import com.ivy.legacy.domain.logic.PlannedPaymentsLogic
-import com.ivy.legacy.domain.pure.data.IncomeExpenseTransferPair
+import com.ivy.data.model.legacy.IncomeExpenseTransferPair
 import com.ivy.legacy.domain.pure.exchange.ExchangeData
 import com.ivy.legacy.domain.pure.transaction.trnCurrency
 import com.ivy.legacy.domain.pure.util.orZero

@@ -15,7 +15,7 @@ import com.ivy.base.frp.fixUnit
 import com.ivy.legacy.domain.action.account.AccountsAct
 import com.ivy.legacy.domain.action.account.CalcAccBalanceAct
 import com.ivy.legacy.domain.action.exchange.ExchangeAct
-import com.ivy.legacy.domain.pure.data.ClosedTimeRange
+import com.ivy.data.model.legacy.ClosedTimeRange
 import com.ivy.legacy.domain.pure.exchange.ExchangeData
 import java.math.BigDecimal
 import javax.inject.Inject
