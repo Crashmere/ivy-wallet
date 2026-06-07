@@ -1,7 +1,7 @@
 package com.ivy.data.repository
 
 import com.ivy.base.threading.DispatchersProvider
-import com.ivy.data.DataWriteEvent
+import com.ivy.data.api.DataWriteEvent
 import com.ivy.data.api.CategoryStore
 import com.ivy.data.db.dao.read.CategoryDao
 import com.ivy.data.db.dao.write.WriteCategoryDao

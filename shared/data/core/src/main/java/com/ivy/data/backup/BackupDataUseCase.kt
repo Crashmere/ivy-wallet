@@ -8,8 +8,8 @@ import com.ivy.base.prefs.PreferenceStore
 import com.ivy.base.io.unzip
 import com.ivy.base.io.zip
 import com.ivy.base.threading.DispatchersProvider
-import com.ivy.data.DataObserver
-import com.ivy.data.DataWriteEvent
+import com.ivy.data.api.DataChangePublisher
+import com.ivy.data.api.DataWriteEvent
 import com.ivy.data.api.backup.BackupStore
 import com.ivy.data.db.dao.read.AccountDao
 import com.ivy.data.db.dao.read.BudgetDao
@@ -71,7 +71,7 @@ class BackupDataUseCase @Inject constructor(
     private val json: Json,
     private val dispatchersProvider: DispatchersProvider,
     private val fileSystem: FileSystem,
-    private val dataObserver: DataObserver,
+    private val dataObserver: DataChangePublisher,
     private val tagsReader: TagDao,
     private val tagAssociationReader: TagAssociationDao,
     private val tagsWriter: WriteTagDao,

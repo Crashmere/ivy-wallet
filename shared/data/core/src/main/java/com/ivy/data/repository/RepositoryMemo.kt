@@ -1,16 +1,16 @@
 package com.ivy.data.repository
 
 import com.ivy.base.threading.DispatchersProvider
-import com.ivy.data.DataObserver
-import com.ivy.data.DataWriteEvent
-import com.ivy.data.DeleteOperation
+import com.ivy.data.api.DataChangePublisher
+import com.ivy.data.api.DataWriteEvent
+import com.ivy.data.api.DeleteOperation
 import com.ivy.data.model.sync.Identifiable
 import com.ivy.data.model.sync.UniqueId
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class RepositoryMemoFactory @Inject constructor(
-    private val dataObserver: DataObserver,
+    private val dataObserver: DataChangePublisher,
     private val dispatchers: DispatchersProvider,
 ) {
     fun <T : Identifiable<TID>, TID : UniqueId> createMemo(
@@ -25,7 +25,7 @@ class RepositoryMemoFactory @Inject constructor(
 }
 
 class RepositoryMemo<T : Identifiable<TID>, TID : UniqueId> internal constructor(
-    private val dataObserver: DataObserver,
+    private val dataObserver: DataChangePublisher,
     private val dispatchers: DispatchersProvider,
     private val getDataWriteSaveEvent: (List<T>) -> DataWriteEvent,
     private val getDataWriteDeleteEvent: (DeleteOperation<TID>) -> DataWriteEvent,

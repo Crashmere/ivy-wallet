@@ -1,8 +1,10 @@
 package com.ivy.data.di
 
+import com.ivy.data.DataObserver
 import com.ivy.data.api.AccountStore
 import com.ivy.data.api.CategoryStore
 import com.ivy.data.api.CurrencyStore
+import com.ivy.data.api.DataChangePublisher
 import com.ivy.data.api.ExchangeRateStore
 import com.ivy.data.api.SettingsStore
 import com.ivy.data.api.TagStore
@@ -22,6 +24,9 @@ import dagger.hilt.components.SingletonComponent
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class StoreModule {
+    @Binds
+    abstract fun bindDataChangePublisher(observer: DataObserver): DataChangePublisher
+
     @Binds
     abstract fun bindAccountStore(repository: AccountRepository): AccountStore
 
