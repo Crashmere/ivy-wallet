@@ -276,9 +276,9 @@
 - `shared:data:model` 已移除轻量 `compose-runtime`，纯数据模型不再依赖 UI runtime。
 - 过渡用的 `ivy.compose-runtime` 插件已经删除；当前非页面模块不再需要轻量 Compose 编译配置。
 - `ivy.integration.testing` 已从 `ivy.feature` 改为基于 `ivy.android-library`，避免因为集成测试配置把完整 Compose UI 配置带入数据层。
-- `shared:data:core`、`shared:domain` 已从 `ivy.feature` 迁出，改为显式声明基础 Android library、Hilt、Room 或集成测试等各自实际需要的能力。
-- `shared:domain` 已移除 `ivy.room` 插件；主源码只显式保留 Hilt，当前只有 androidTest 中的汇率同步测试需要 Room runtime/testing 来创建内存数据库。
-- `shared:domain` 的 Ktor 依赖已从主源码降到 androidTest；主源码只通过 `shared:data:core` 的 repository 边界触发汇率同步，真实 Ktor client 只在汇率同步集成测试里构造。
+- `shared:data:core`、`shared:domain` 已从 `ivy.feature` 迁出，改为显式声明基础 Android library、Hilt、Room 或测试配置等各自实际需要的能力。
+- `shared:domain` 已移除 `ivy.room` 插件；主源码只显式保留 Hilt，测试也不再为了 domain 行为验证创建内存 Room 数据库。
+- `shared:domain` 已移除 Ktor 依赖；汇率同步测试改用 `ExchangeRateStore` fake 验证业务转换与保存行为，真实网络 client 继续留在 data core 实现边界。
 - `ivy.room` 已从 `ivy.module` 改为基于 `ivy.android-library`，不再隐式带入 Hilt 和 kotlinx serialization；`shared:data:core` 改为显式声明这两个依赖。
 - `shared:ui:core`、`shared:ui:legacy`、`shared:ui:navigation` 已从 `ivy.feature` 迁到 `ivy.compose`；shared UI 模块不再伪装成 feature。
 - `ivy.compose` 已收敛为纯 Android Compose 配置，不再隐式套用 `ivy.module` 或引入未使用的 Molecule 插件；feature 模块继续由 `ivy.feature` 组合 `ivy.module + ivy.compose`，需要 Hilt Module 的 shared UI 模块才显式声明 `ivy.hilt`。
@@ -440,7 +440,7 @@
 - 偏好读写已抽出 `PreferenceStore` 接口，`SharedPrefs` 只作为 Android 实现通过 Hilt 绑定；业务 key 集中到 `AppPreferenceKeys`，domain 和数据备份恢复不再直接依赖 `SharedPrefs` 具体类。
 - 偏好 toggle 的 UI 读取边界已从 domain 拆到 `shared:ui:legacy`：旧金额键盘只接收 legacy UI 专用的键盘布局 Flow，domain 中的 `BoolPreference` 继续只保留 DataStore 读写定义。
 - `shared:domain` 已删除剩余 legacy 数据模型上的 Compose `@Immutable` 注解，并移除 `ivy.compose-runtime` 插件；domain 不再需要 Compose 编译配置。
-- `shared:domain` 已把 Ktor 从 main 依赖降到 androidTest 依赖；汇率同步集成测试仍保留真实网络 client 构造能力。
+- `shared:domain` 已完全移除 Ktor/Room 测试依赖；汇率同步验证改为 JVM 单元测试，domain 只关心 `ExchangeRateStore` 端口行为。
 - `shared:data:core` 的 AndroidManifest 已删除被 AGP 忽略的 `package` 属性，命名空间统一由模块 `namespace = "com.ivy.data"` 提供。
 - `shared:data:core` 的测试 fake DAO 已停止使用 Compose Locale helper，并移除 `ivy.compose-runtime` 插件；数据层不再为测试字符串处理引入 Compose 配置。
 - `shared:data:model` 已删除剩余数据类上的 Compose `@Immutable` 注解，并移除 `compose.runtime` 依赖；纯数据模型不再依赖 UI runtime。
@@ -695,7 +695,7 @@
 - 交易读写、到期交易、计划付款关联交易和借贷关联交易已抽成 `TransactionStore` 端口；domain 中的账户、分类、首页、计划付款、借贷、重置和交易 use case 不再直接注入 data core 的 `TransactionRepository`。
 - 交易剩余读路径已继续收敛到 `TransactionStore`；`hasAny()`、智能标题建议查询、按账户/分类标题计数、旧账户交易列表、计划付款金额统计和借贷同步不再直接注入 `TransactionDao`。
 - 交易 legacy/modern 转换已改为基于 data model 和 `AccountStore` 直接完成；`shared:domain` 主源码不再依赖 data core 的 `TransactionMapper` 或 `TransactionEntity`。
-- `shared:domain` 的 Gradle 主依赖已移除 `shared:data:core`；data core 只作为单元测试和 androidTest 依赖保留，用于现有 repository/Room 集成测试。
+- `shared:domain` 的 Gradle 主依赖和测试依赖都已移除 `shared:data:core`；domain 单元测试改用数据端口 mock/fake，不再依赖 repository、Room 或 data core mapper。
 - 数据变化事件已抽成 `DataChangePublisher/DataWriteEvent` 端口；domain 中的账户变更观察和全量数据变更通知不再直接依赖 data core 的 `DataObserver` 实现。
 - 预算读写已抽成 `BudgetStore` 端口；预算创建、更新、删除、排序、列表读取和重置钱包流程不再直接注入 Room 的 `BudgetDao/WriteBudgetDao`，旧 `BudgetExt` 实体 mapper 已删除。
 - 计划付款规则读写已抽成 `PlannedPaymentRuleStore` 端口；首页统计、账户删除、计划付款保存/删除/读取、付或跳过计划付款，以及重置钱包流程不再直接注入 `PlannedPaymentRuleDao/WritePlannedPaymentRuleDao`，旧 `PlannedPaymentRuleExt` 实体 mapper 已删除。
@@ -913,6 +913,7 @@ shared:ui:core
 
 下一步建议执行：
 
-1. 继续清理明显错位的包名和模块边界，优先处理 `shared:ui:legacy` 与 `shared:data:core` 中仍残留的历史命名，并继续收窄 shared 模块的非必要依赖。
-2. 继续评估 `SettingsEntity` 是否可以拆成更明确的本地偏好表或迁入 DataStore；`name/isDeleted` 已删除，剩余 `theme/currency/bufferAmount` 需要和备份恢复格式一起规划。
-3. 继续数据库只读审计：`isDeleted` 目前先保留为本地软删除语义；不再把业务表里的 `isDeleted` 当作纯云同步字段批量删除。
+1. 继续做 shared 模块依赖审计：优先检查 `shared:domain`、`shared:ui:core`、`shared:ui:legacy` 是否还有可显式化或可移除的非必要 Gradle 依赖。
+2. 继续清理明显错位的包名和模块边界，优先处理 `shared:ui:legacy` 与 `shared:data:core` 中仍残留的历史命名，避免新代码继续误用旧 API。
+3. 继续评估 `SettingsEntity` 是否可以拆成更明确的本地偏好表或迁入 DataStore；`name/isDeleted` 已删除，剩余 `theme/currency/bufferAmount` 需要和备份恢复格式一起规划。
+4. 继续数据库只读审计：`isDeleted` 目前先保留为本地软删除语义；不再把业务表里的 `isDeleted` 当作纯云同步字段批量删除。

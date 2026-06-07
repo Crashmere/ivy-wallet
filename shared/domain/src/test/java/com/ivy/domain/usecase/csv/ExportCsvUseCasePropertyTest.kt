@@ -4,15 +4,15 @@ import arrow.core.Some
 import com.ivy.base.TestDispatchersProvider
 import com.ivy.base.io.TextFileStore
 import com.ivy.base.time.impl.TestTimeConverter
+import com.ivy.data.api.AccountStore
+import com.ivy.data.api.CategoryStore
+import com.ivy.data.api.TransactionStore
 import com.ivy.data.model.Transaction
 import com.ivy.data.model.getFromAccount
 import com.ivy.data.model.getToAccount
 import com.ivy.data.model.testing.account
 import com.ivy.data.model.testing.category
 import com.ivy.data.model.testing.transaction
-import com.ivy.data.repository.AccountRepository
-import com.ivy.data.repository.CategoryRepository
-import com.ivy.data.repository.TransactionRepository
 import com.ivy.domain.usecase.account.GetAccountsUseCase
 import com.ivy.domain.usecase.category.GetCategoriesUseCase
 import com.ivy.domain.usecase.transaction.GetTransactionsUseCase
@@ -30,9 +30,9 @@ import org.junit.Test
 
 class ExportCsvUseCasePropertyTest {
 
-    private val accountRepository = mockk<AccountRepository>()
-    private val categoryRepository = mockk<CategoryRepository>(relaxed = true)
-    private val transactionRepository = mockk<TransactionRepository>()
+    private val accountStore = mockk<AccountStore>()
+    private val categoryStore = mockk<CategoryStore>(relaxed = true)
+    private val transactionStore = mockk<TransactionStore>()
     private val textFileStore = mockk<TextFileStore>()
     private val timeConverter = TestTimeConverter()
 
@@ -41,9 +41,9 @@ class ExportCsvUseCasePropertyTest {
     @Before
     fun setup() {
         useCase = ExportCsvUseCase(
-            getAccountsUseCase = GetAccountsUseCase(accountRepository),
-            getCategoriesUseCase = GetCategoriesUseCase(categoryRepository),
-            getTransactionsUseCase = GetTransactionsUseCase(transactionRepository),
+            getAccountsUseCase = GetAccountsUseCase(accountStore),
+            getCategoriesUseCase = GetCategoriesUseCase(categoryStore),
+            getTransactionsUseCase = GetTransactionsUseCase(transactionStore),
             dispatchers = TestDispatchersProvider,
             textFileStore = textFileStore,
             timeConverter = timeConverter
@@ -59,7 +59,7 @@ class ExportCsvUseCasePropertyTest {
             }.map {
                 Arb.account(accountId = Some(it)).next()
             }
-            coEvery { accountRepository.findAll() } returns accounts
+            coEvery { accountStore.findAll() } returns accounts
             val categories = trns
                 .mapNotNull(Transaction::category)
                 .map {
@@ -71,7 +71,7 @@ class ExportCsvUseCasePropertyTest {
                         this
                     }
                 }
-            coEvery { categoryRepository.findAll() } returns categories
+            coEvery { categoryStore.findAll() } returns categories
 
             // when
             val csv = useCase.exportCsv { trns }
