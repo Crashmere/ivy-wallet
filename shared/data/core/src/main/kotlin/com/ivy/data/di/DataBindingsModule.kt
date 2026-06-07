@@ -4,11 +4,13 @@ import com.ivy.data.DataWriteEventBus
 import com.ivy.data.api.AccountStore
 import com.ivy.data.api.AppPreferenceStore
 import com.ivy.data.api.BufferAmountStore
+import com.ivy.data.api.backup.BackupStore
 import com.ivy.data.api.BudgetStore
 import com.ivy.data.api.CategoryStore
 import com.ivy.data.api.CurrencyStore
 import com.ivy.data.api.DataChangePublisher
 import com.ivy.data.api.ExchangeRateStore
+import com.ivy.data.api.file.TextFileStore
 import com.ivy.data.api.LoanRecordStore
 import com.ivy.data.api.LoanStore
 import com.ivy.data.api.PlannedPaymentRuleStore
@@ -18,19 +20,23 @@ import com.ivy.data.api.SettingsResetStore
 import com.ivy.data.api.TagStore
 import com.ivy.data.api.ThemeStore
 import com.ivy.data.api.TransactionStore
+import com.ivy.data.backup.DefaultBackupStore
+import com.ivy.data.datastore.DataStorePreferenceToggleStore
+import com.ivy.data.file.FileSystem
+import com.ivy.data.preferences.SharedPrefsAppPreferenceStore
+import com.ivy.data.remote.RemoteExchangeRatesDataSource
+import com.ivy.data.remote.impl.RemoteExchangeRatesDataSourceImpl
+import com.ivy.data.store.DefaultExchangeRateStore
 import com.ivy.data.store.RoomAccountStore
 import com.ivy.data.store.RoomBudgetStore
 import com.ivy.data.store.RoomCategoryStore
 import com.ivy.data.store.RoomCurrencyStore
-import com.ivy.data.store.DefaultExchangeRateStore
 import com.ivy.data.store.RoomLoanRecordStore
 import com.ivy.data.store.RoomLoanStore
 import com.ivy.data.store.RoomPlannedPaymentRuleStore
 import com.ivy.data.store.RoomSettingsStore
 import com.ivy.data.store.RoomTagStore
 import com.ivy.data.store.RoomTransactionStore
-import com.ivy.data.datastore.DataStorePreferenceToggleStore
-import com.ivy.data.preferences.SharedPrefsAppPreferenceStore
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -38,7 +44,7 @@ import dagger.hilt.components.SingletonComponent
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class StoreModule {
+abstract class DataBindingsModule {
     @Binds
     abstract fun bindDataChangePublisher(eventBus: DataWriteEventBus): DataChangePublisher
 
@@ -49,6 +55,9 @@ abstract class StoreModule {
     abstract fun bindAppPreferenceStore(store: SharedPrefsAppPreferenceStore): AppPreferenceStore
 
     @Binds
+    abstract fun bindBackupStore(defaultBackupStore: DefaultBackupStore): BackupStore
+
+    @Binds
     abstract fun bindBudgetStore(store: RoomBudgetStore): BudgetStore
 
     @Binds
@@ -56,6 +65,14 @@ abstract class StoreModule {
 
     @Binds
     abstract fun bindCurrencyStore(store: RoomCurrencyStore): CurrencyStore
+
+    @Binds
+    abstract fun bindExchangeRatesDataSource(
+        dataSource: RemoteExchangeRatesDataSourceImpl
+    ): RemoteExchangeRatesDataSource
+
+    @Binds
+    abstract fun bindTextFileStore(fileSystem: FileSystem): TextFileStore
 
     @Binds
     abstract fun bindSettingsInitializationStore(
