@@ -1,20 +1,14 @@
 package com.ivy.domain.usecase.planned
 
-import com.ivy.base.threading.DispatchersProvider
-import com.ivy.data.db.dao.read.PlannedPaymentRuleDao
-import com.ivy.domain.mapper.legacy.toLegacyDomain
+import com.ivy.data.api.PlannedPaymentRuleStore
 import com.ivy.data.model.legacy.PlannedPaymentRule
-import kotlinx.coroutines.withContext
 import java.util.UUID
 import javax.inject.Inject
 
 class GetPlannedPaymentRuleUseCase @Inject constructor(
-    private val plannedPaymentRuleDao: PlannedPaymentRuleDao,
-    private val dispatchers: DispatchersProvider
+    private val plannedPaymentRuleStore: PlannedPaymentRuleStore,
 ) {
     suspend operator fun invoke(ruleId: UUID): PlannedPaymentRule? {
-        return withContext(dispatchers.io) {
-            plannedPaymentRuleDao.findById(ruleId)?.toLegacyDomain()
-        }
+        return plannedPaymentRuleStore.findById(ruleId)
     }
 }

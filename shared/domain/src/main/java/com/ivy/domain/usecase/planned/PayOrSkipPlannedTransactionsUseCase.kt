@@ -1,19 +1,14 @@
 package com.ivy.domain.usecase.planned
 
-import com.ivy.base.threading.DispatchersProvider
-import com.ivy.data.db.dao.read.PlannedPaymentRuleDao
-import com.ivy.data.db.dao.write.WritePlannedPaymentRuleDao
-import com.ivy.data.model.Transaction
+import com.ivy.data.api.PlannedPaymentRuleStore
 import com.ivy.data.api.TransactionStore
+import com.ivy.data.model.Transaction
 import com.ivy.domain.transaction.legacy.settleNow
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class PayOrSkipPlannedTransactionsUseCase @Inject constructor(
-    private val plannedPaymentRuleDao: PlannedPaymentRuleDao,
-    private val plannedPaymentRuleWriter: WritePlannedPaymentRuleDao,
+    private val plannedPaymentRuleStore: PlannedPaymentRuleStore,
     private val transactionRepository: TransactionStore,
-    private val dispatchers: DispatchersProvider
 ) {
     suspend operator fun invoke(
         transactions: List<Transaction>,
@@ -28,29 +23,25 @@ class PayOrSkipPlannedTransactionsUseCase @Inject constructor(
             it.settleNow()
         }
 
-        val plannedPaymentRules = withContext(dispatchers.io) {
-            paidTransactions.map { transaction ->
-                transaction.metadata.recurringRuleId?.let {
-                    plannedPaymentRuleDao.findById(it)
-                }
+        val plannedPaymentRules = paidTransactions.map { transaction ->
+            transaction.metadata.recurringRuleId?.let {
+                plannedPaymentRuleStore.findById(it)
             }
         }
 
-        withContext(dispatchers.io) {
-            if (skipTransaction) {
-                paidTransactions.forEach { paidTransaction ->
-                    transactionRepository.deleteById(paidTransaction.id)
-                }
-            } else {
-                paidTransactions.forEach { paidTransaction ->
-                    transactionRepository.save(paidTransaction)
-                }
+        if (skipTransaction) {
+            paidTransactions.forEach { paidTransaction ->
+                transactionRepository.deleteById(paidTransaction.id)
             }
+        } else {
+            paidTransactions.forEach { paidTransaction ->
+                transactionRepository.save(paidTransaction)
+            }
+        }
 
-            plannedPaymentRules.forEach { plannedPaymentRule ->
-                if (plannedPaymentRule != null && plannedPaymentRule.oneTime) {
-                    plannedPaymentRuleWriter.deleteById(plannedPaymentRule.id)
-                }
+        plannedPaymentRules.forEach { plannedPaymentRule ->
+            if (plannedPaymentRule != null && plannedPaymentRule.oneTime) {
+                plannedPaymentRuleStore.deleteById(plannedPaymentRule.id)
             }
         }
 

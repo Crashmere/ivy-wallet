@@ -1,19 +1,14 @@
 package com.ivy.domain.usecase.planned
 
-import com.ivy.base.threading.DispatchersProvider
-import com.ivy.data.db.dao.read.PlannedPaymentRuleDao
-import com.ivy.data.db.dao.write.WritePlannedPaymentRuleDao
-import com.ivy.data.model.Transaction
+import com.ivy.data.api.PlannedPaymentRuleStore
 import com.ivy.data.api.TransactionStore
+import com.ivy.data.model.Transaction
 import com.ivy.domain.transaction.legacy.settleNow
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class PayOrSkipPlannedTransactionUseCase @Inject constructor(
-    private val plannedPaymentRuleDao: PlannedPaymentRuleDao,
-    private val plannedPaymentRuleWriter: WritePlannedPaymentRuleDao,
+    private val plannedPaymentRuleStore: PlannedPaymentRuleStore,
     private val transactionRepository: TransactionStore,
-    private val dispatchers: DispatchersProvider
 ) {
     suspend operator fun invoke(
         transaction: Transaction,
@@ -23,22 +18,18 @@ class PayOrSkipPlannedTransactionUseCase @Inject constructor(
 
         val paidTransaction = transaction.settleNow()
 
-        val plannedPaymentRule = withContext(dispatchers.io) {
-            paidTransaction.metadata.recurringRuleId?.let {
-                plannedPaymentRuleDao.findById(it)
-            }
+        val plannedPaymentRule = paidTransaction.metadata.recurringRuleId?.let {
+            plannedPaymentRuleStore.findById(it)
         }
 
-        withContext(dispatchers.io) {
-            if (skipTransaction) {
-                transactionRepository.deleteById(paidTransaction.id)
-            } else {
-                transactionRepository.save(paidTransaction)
-            }
+        if (skipTransaction) {
+            transactionRepository.deleteById(paidTransaction.id)
+        } else {
+            transactionRepository.save(paidTransaction)
+        }
 
-            if (plannedPaymentRule != null && plannedPaymentRule.oneTime) {
-                plannedPaymentRuleWriter.deleteById(plannedPaymentRule.id)
-            }
+        if (plannedPaymentRule != null && plannedPaymentRule.oneTime) {
+            plannedPaymentRuleStore.deleteById(plannedPaymentRule.id)
         }
 
         return paidTransaction

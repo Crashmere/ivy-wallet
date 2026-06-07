@@ -1,24 +1,19 @@
 package com.ivy.domain.usecase.planned
 
 import com.ivy.base.model.legacy.Transaction
-import com.ivy.base.threading.DispatchersProvider
 import com.ivy.base.time.TimeProvider
-import com.ivy.data.db.dao.read.PlannedPaymentRuleDao
-import com.ivy.data.db.dao.write.WritePlannedPaymentRuleDao
-import com.ivy.data.model.TransactionId
+import com.ivy.data.api.PlannedPaymentRuleStore
 import com.ivy.data.api.TransactionStore
+import com.ivy.data.model.TransactionId
 import com.ivy.data.repository.mapper.TransactionMapper
 import com.ivy.domain.mapper.legacy.toDomain
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class PayOrSkipLegacyPlannedTransactionUseCase @Inject constructor(
-    private val plannedPaymentRuleDao: PlannedPaymentRuleDao,
+    private val plannedPaymentRuleStore: PlannedPaymentRuleStore,
     private val transactionMapper: TransactionMapper,
-    private val plannedPaymentRuleWriter: WritePlannedPaymentRuleDao,
     private val transactionRepository: TransactionStore,
     private val timeProvider: TimeProvider,
-    private val dispatchers: DispatchersProvider
 ) {
     suspend operator fun invoke(
         transaction: Transaction,
@@ -32,24 +27,20 @@ class PayOrSkipLegacyPlannedTransactionUseCase @Inject constructor(
             dateTime = timeProvider.utcNow(),
         )
 
-        val plannedPaymentRule = withContext(dispatchers.io) {
-            paidTransaction.recurringRuleId?.let {
-                plannedPaymentRuleDao.findById(it)
+        val plannedPaymentRule = paidTransaction.recurringRuleId?.let {
+            plannedPaymentRuleStore.findById(it)
+        }
+
+        if (skipTransaction) {
+            transactionRepository.deleteById(TransactionId(paidTransaction.id))
+        } else {
+            paidTransaction.toDomain(transactionMapper)?.let {
+                transactionRepository.save(it)
             }
         }
 
-        withContext(dispatchers.io) {
-            if (skipTransaction) {
-                transactionRepository.deleteById(TransactionId(paidTransaction.id))
-            } else {
-                paidTransaction.toDomain(transactionMapper)?.let {
-                    transactionRepository.save(it)
-                }
-            }
-
-            if (plannedPaymentRule != null && plannedPaymentRule.oneTime) {
-                plannedPaymentRuleWriter.deleteById(plannedPaymentRule.id)
-            }
+        if (plannedPaymentRule != null && plannedPaymentRule.oneTime) {
+            plannedPaymentRuleStore.deleteById(plannedPaymentRule.id)
         }
 
         return paidTransaction

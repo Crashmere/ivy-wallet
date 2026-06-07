@@ -2,8 +2,8 @@ package com.ivy.domain.usecase.planned
 
 import com.ivy.base.model.TransactionType
 import com.ivy.base.threading.DispatchersProvider
+import com.ivy.data.api.PlannedPaymentRuleStore
 import com.ivy.data.db.dao.read.AccountDao
-import com.ivy.data.db.dao.read.PlannedPaymentRuleDao
 import com.ivy.data.model.IntervalType
 import com.ivy.data.model.legacy.Account
 import com.ivy.data.model.legacy.PlannedPaymentRule
@@ -23,7 +23,7 @@ data class PlannedPaymentsOverview(
 )
 
 class GetPlannedPaymentsOverviewUseCase @Inject constructor(
-    private val plannedPaymentRuleDao: PlannedPaymentRuleDao,
+    private val plannedPaymentRuleStore: PlannedPaymentRuleStore,
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
     private val exchangeRatesLogic: LegacyExchangeRatesUseCase,
     private val accountDao: AccountDao,
@@ -31,10 +31,8 @@ class GetPlannedPaymentsOverviewUseCase @Inject constructor(
 ) {
     suspend operator fun invoke(): PlannedPaymentsOverview {
         return withContext(dispatchers.io) {
-            val oneTime = plannedPaymentRuleDao.findAllByOneTime(oneTime = true)
-                .map { it.toLegacyDomain() }
-            val recurring = plannedPaymentRuleDao.findAllByOneTime(oneTime = false)
-                .map { it.toLegacyDomain() }
+            val oneTime = plannedPaymentRuleStore.findAllByOneTime(oneTime = true)
+            val recurring = plannedPaymentRuleStore.findAllByOneTime(oneTime = false)
             val baseCurrency = getBaseCurrencyCode()
             val accounts = accountDao.findAll().map { it.toLegacyDomain() }
 
