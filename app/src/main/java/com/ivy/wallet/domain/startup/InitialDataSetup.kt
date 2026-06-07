@@ -30,10 +30,8 @@ class InitialDataSetup @Inject constructor(
                 settingsWriter.save(
                     SettingsEntity(
                         theme = if (systemDarkMode) Theme.DARK else Theme.LIGHT,
-                        name = "",
                         currency = defaultCurrency.code,
                         bufferAmount = 1000.0,
-                        isDeleted = false,
                     )
                 )
             }

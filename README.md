@@ -542,13 +542,14 @@
 - 删除标签和标签关联表里的 `lastSyncedTime` 云同步时间字段，新增 `Migration131to132_DropTagSyncTime`，数据库版本升到 132；旧备份里的多余字段可被现有 JSON 配置忽略。
 - 删除账户、交易、分类、设置、计划付款、预算、借贷和借贷记录表里的 `isSynced` 云同步状态字段，新增 `Migration132to133_DropIsSynced`，数据库版本升到 133；旧备份里的多余字段继续由 `ignoreUnknownKeys` 兼容。
 - 删除设置页“删除云端数据”入口、空的 `resetCloudUserData()` 用例方法，以及对应多语言云端删除文案；当前分支已经没有云端数据实现，这条链路只会误导用户。
+- 删除 `settings` 表里的旧 `name` 和 `isDeleted` 字段，新增 `Migration133to134_DropSettingsLegacyFields`，数据库版本升到 134；运行时仍保留 `theme/currency/bufferAmount/id`，旧备份里的多余字段继续由 JSON 配置忽略。
 
 建议顺序：
 
 1. 继续评估 `isDeleted` 字段：
    - `isSynced` 已确认是云同步残留并删除。
    - `isDeleted` 仍服务本地查询过滤、测试 fake、历史迁移和计划付款按账户软删除；短期应视为本地软删除语义，不再和云同步残留一起批量删除。
-2. 梳理 `SettingsEntity` 与 `AppPreferences/DataStore` 的职责重叠。
+2. 继续梳理 `SettingsEntity` 与 `AppPreferences/DataStore` 的职责重叠，下一步重点是把 `theme/currency/bufferAmount` 的存储边界拆清楚。
 3. 更新备份恢复数据结构和测试。
 
 风险：
@@ -744,6 +745,6 @@ shared:ui:core
 
 下一步建议执行：
 
-1. 继续评估 `SettingsEntity` 是否可以拆成更明确的本地偏好表或迁入 DataStore；这一步需要和备份恢复格式一起规划。
-2. 继续数据库只读审计：`isDeleted` 目前先保留为本地软删除语义；下一步更适合从 `SettingsEntity` 的 theme/currency/bufferAmount 拆分开始。
+1. 继续评估 `SettingsEntity` 是否可以拆成更明确的本地偏好表或迁入 DataStore；`name/isDeleted` 已删除，剩余 `theme/currency/bufferAmount` 需要和备份恢复格式一起规划。
+2. 继续数据库只读审计：`isDeleted` 目前先保留为本地软删除语义；不再把业务表里的 `isDeleted` 当作纯云同步字段批量删除。
 3. 继续收敛平台桥接：源码中的 `LocalContext.current` 目前只剩动态图标资源查找；这部分依赖 Android `Resources.getIdentifier()` 支撑自定义分类/账户图标，暂时保留。

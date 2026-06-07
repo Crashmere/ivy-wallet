@@ -21,12 +21,6 @@ data class SettingsEntity(
     val currency: String,
     @SerialName("bufferAmount")
     val bufferAmount: Double,
-    @SerialName("name")
-    val name: String,
-
-    @Deprecated("Obsolete field used for cloud sync. Can't be deleted because of backwards compatibility")
-    @SerialName("isDeleted")
-    val isDeleted: Boolean = false,
 
     @PrimaryKey
     @SerialName("id")

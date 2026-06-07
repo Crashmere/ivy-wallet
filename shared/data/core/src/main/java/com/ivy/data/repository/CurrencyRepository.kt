@@ -48,8 +48,6 @@ class CurrencyRepository @Inject constructor(
                     theme = Theme.AUTO,
                     currency = FALLBACK_DEFAULT_CURRENCY,
                     bufferAmount = 0.0,
-                    name = "",
-                    isDeleted = false,
                     id = UUID.randomUUID()
                 )
             baseCurrencyMemo = newCurrency
