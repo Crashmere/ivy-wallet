@@ -780,6 +780,7 @@
 - 新版交易筛选和到期判断 helper 已从 legacy 文件拆到 `com.ivy.domain.transaction.TransactionFilters`；旧包内只保留旧交易模型筛选和仍依赖旧账户模型的币种兼容 helper。
 - 新版交易折叠/求和 helper 已从 `legacy/FoldTransactions.kt` 拆到正式 `com.ivy.domain.transaction.TransactionFolds`；legacy 文件只保留旧交易模型折叠对象。
 - 新版钱包收入/支出汇总函数已从 `legacy/WalletValueFunctions.kt` 拆到正式 `com.ivy.domain.transaction.WalletValueFunctions`；legacy 文件只保留旧交易模型汇总对象。
+- 新版交易币种 helper `trnCurrency` 已从 legacy 文件迁到正式 `com.ivy.domain.transaction.TransactionCurrency`；legacy 包中的 `LegacyTrnFunctions` 现在只处理旧交易模型。
 
 建议顺序：
 

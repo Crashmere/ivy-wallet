@@ -37,7 +37,7 @@ import com.ivy.data.model.legacy.CreateBudgetData
 import com.ivy.domain.exchange.ExchangeData
 import com.ivy.domain.transaction.getAccountId
 import com.ivy.domain.transaction.getValue
-import com.ivy.domain.transaction.legacy.trnCurrency
+import com.ivy.domain.transaction.trnCurrency
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf

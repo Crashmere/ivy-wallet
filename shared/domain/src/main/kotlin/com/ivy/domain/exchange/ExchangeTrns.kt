@@ -8,7 +8,7 @@ import com.ivy.domain.account.accountCurrency
 import com.ivy.domain.transaction.legacy.LegacyTrnFunctions
 import com.ivy.domain.transaction.getAccountId
 import com.ivy.domain.transaction.getValue
-import com.ivy.domain.transaction.legacy.trnCurrency
+import com.ivy.domain.transaction.trnCurrency
 import java.math.BigDecimal
 import java.util.UUID
 
