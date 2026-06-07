@@ -10,13 +10,29 @@ class BiometricAuthenticator(
     private val activity: FragmentActivity
 ) {
     fun authenticate(
-        biometricPromptCallback: BiometricPrompt.AuthenticationCallback
+        onAuthenticationSucceeded: () -> Unit,
+        onAuthenticationFailed: () -> Unit,
+        onAuthenticationError: (errorCode: Int, errString: CharSequence) -> Unit,
     ) {
         val executor = ContextCompat.getMainExecutor(activity)
         val biometricPrompt = BiometricPrompt(
             activity,
             executor,
-            biometricPromptCallback
+            object : BiometricPrompt.AuthenticationCallback() {
+                override fun onAuthenticationSucceeded(
+                    result: BiometricPrompt.AuthenticationResult
+                ) {
+                    onAuthenticationSucceeded()
+                }
+
+                override fun onAuthenticationFailed() {
+                    onAuthenticationFailed()
+                }
+
+                override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
+                    onAuthenticationError(errorCode, errString)
+                }
+            }
         )
 
         val promptInfo = BiometricPrompt.PromptInfo.Builder()

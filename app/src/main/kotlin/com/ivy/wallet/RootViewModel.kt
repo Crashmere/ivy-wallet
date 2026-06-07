@@ -1,7 +1,6 @@
 package com.ivy.wallet
 
 import android.content.Intent
-import androidx.biometric.BiometricPrompt
 import androidx.core.content.IntentCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -92,11 +91,18 @@ class RootViewModel @Inject constructor(
         return false
     }
 
-    @Suppress("EmptyFunctionBlock")
-    fun handleBiometricAuthResult(
+    fun handleBiometricAuthenticationSucceeded(
         onAuthSuccess: () -> Unit = {}
-    ): BiometricPrompt.AuthenticationCallback {
-        return appLockController.handleBiometricAuthResult(onAuthSuccess)
+    ) {
+        appLockController.handleBiometricAuthenticationSucceeded(onAuthSuccess)
+    }
+
+    fun handleBiometricAuthenticationFailed() {
+        appLockController.handleBiometricAuthenticationFailed()
+    }
+
+    fun handleBiometricAuthenticationError(errorCode: Int, errString: CharSequence) {
+        appLockController.handleBiometricAuthenticationError(errorCode, errString)
     }
 
     // App Lock & UserInactivity --------------------------------------------------------------------

@@ -95,7 +95,17 @@ class RootActivity : AppCompatActivity() {
                 intent = intent,
                 hasLockScreen = { deviceHasLockScreen(this) },
                 onShowOSBiometricsModal = {
-                    biometricAuthenticator.authenticate(viewModel.handleBiometricAuthResult())
+                    biometricAuthenticator.authenticate(
+                        onAuthenticationSucceeded = {
+                            viewModel.handleBiometricAuthenticationSucceeded()
+                        },
+                        onAuthenticationFailed = {
+                            viewModel.handleBiometricAuthenticationFailed()
+                        },
+                        onAuthenticationError = { errorCode, errString ->
+                            viewModel.handleBiometricAuthenticationError(errorCode, errString)
+                        }
+                    )
                 }
             )
         }

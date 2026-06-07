@@ -1,6 +1,5 @@
 package com.ivy.wallet.security
 
-import androidx.biometric.BiometricPrompt
 import com.ivy.ui.resource.ResourceProvider
 import com.ivy.domain.usecase.settings.GetAppLockEnabledPreferenceUseCase
 import com.ivy.ui.R
@@ -54,23 +53,17 @@ class AppLockController @Inject constructor(
         _appLocked.value = false
     }
 
-    fun handleBiometricAuthResult(
-        onAuthSuccess: () -> Unit = {}
-    ): BiometricPrompt.AuthenticationCallback {
-        return object : BiometricPrompt.AuthenticationCallback() {
-            override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
-                Timber.d(resourceProvider.getString(R.string.authentication_succeeded))
-                unlockApp()
-                onAuthSuccess()
-            }
+    fun handleBiometricAuthenticationSucceeded(onAuthSuccess: () -> Unit = {}) {
+        Timber.d(resourceProvider.getString(R.string.authentication_succeeded))
+        unlockApp()
+        onAuthSuccess()
+    }
 
-            override fun onAuthenticationFailed() {
-                Timber.d(resourceProvider.getString(R.string.authentication_failed))
-            }
+    fun handleBiometricAuthenticationFailed() {
+        Timber.d(resourceProvider.getString(R.string.authentication_failed))
+    }
 
-            override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
-            }
-        }
+    fun handleBiometricAuthenticationError(errorCode: Int, errString: CharSequence) {
     }
 
     fun startUserInactiveTimeCounter(scope: CoroutineScope) {

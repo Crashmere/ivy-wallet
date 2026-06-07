@@ -901,10 +901,10 @@
 - `AppBuildInfoProvider` 承接版本号、版本名和 debug 状态读取；`RootActivity` 不再为了设置页版本显示实现 `BuildInfoProvider`。
 - `AndroidLocaleSettingsLauncher` 承接 Android 13+ 应用语言设置跳转；设置页 ViewModel 不再直接持有 `Context` 或组装平台 Intent。
 - 账户页和编辑交易页 ViewModel 的字符串读取已改为注入式 `ResourceProvider`；feature ViewModel 不再为了 `getString(...)` 持有 Android `Context` 或保留 `StaticFieldLeak` 抑制。
-- `BiometricAuthenticator` 承接系统生物识别 Prompt 构造。
+- `BiometricAuthenticator` 承接系统生物识别 Prompt 构造，并在 platform 层内部创建 AndroidX `BiometricPrompt.AuthenticationCallback`。
 - `SecureWindowController` 承接应用锁失焦时的 `FLAG_SECURE` 窗口保护。
 - `RootActivity` 已去掉仅转调生物识别认证的私有中转方法，锁屏 UI 回调直接调用 `BiometricAuthenticator`，Activity 不再额外暴露 `BiometricPrompt` 类型。
-- `AppLockController` 承接应用锁启用状态、锁定状态、生物识别结果回调和用户非活跃计时，`RootViewModel` 只保留启动编排和委托方法。
+- `AppLockController` 承接应用锁启用状态、锁定状态、生物识别结果处理和用户非活跃计时，`RootViewModel` 只暴露普通成功/失败事件方法，不再把 AndroidX 生物识别 callback 类型带出 platform 层。
 - `RootContent` 承接根部 Compose 内容、锁屏/主导航切换、旧 UI root 注入和 Material3 theme 包装，`RootActivity` 主要保留生命周期、平台注册和平台能力委托。
 - `RootScreen` 已被 `FileSharer`、`BuildInfoProvider` 拆分替代，首页客户旅程卡片也不再为了未使用的参数依赖 Activity 平台接口。
 - `FileSharer` 和 `BuildInfoProvider` 已通过 `LocalFileSharer/LocalBuildInfoProvider` 由 app 根部显式提供；设置页和报表页不再通过 `LocalContext.current as ...` 强转 Activity 获取平台服务。
