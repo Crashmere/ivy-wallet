@@ -37,7 +37,7 @@ import com.ivy.ui.navigation.PieChartStatisticScreen
 import com.ivy.ui.navigation.ReportScreen
 import com.ivy.ui.navigation.navigation
 import com.ivy.ui.R
-import com.ivy.legacy.ui.platform.fileSharer
+import com.ivy.ui.platform.fileSharer
 import com.ivy.ui.rememberScrollPositionListState
 import com.ivy.data.model.legacy.IncomeExpensePair
 import com.ivy.legacy.ui.theme.Gray

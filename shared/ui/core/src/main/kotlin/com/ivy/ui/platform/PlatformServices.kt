@@ -1,6 +1,7 @@
 package com.ivy.ui.platform
 
 import android.net.Uri
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.compositionLocalOf
 
 interface BuildInfoProvider {
@@ -41,3 +42,9 @@ val LocalBuildInfoProvider = compositionLocalOf<BuildInfoProvider> {
 val LocalFileSharer = compositionLocalOf<FileSharer> {
     error("No LocalFileSharer")
 }
+
+@Composable
+fun buildInfoProvider(): BuildInfoProvider = LocalBuildInfoProvider.current
+
+@Composable
+fun fileSharer(): FileSharer = LocalFileSharer.current

@@ -851,6 +851,7 @@
 - `RootContent` 承接根部 Compose 内容、锁屏/主导航切换、旧 UI root 注入和 Material3 theme 包装，`RootActivity` 主要保留生命周期、平台注册和平台能力委托。
 - `RootScreen` 已被 `FileSharer`、`BuildInfoProvider` 拆分替代，首页客户旅程卡片也不再为了未使用的参数依赖 Activity 平台接口。
 - `FileSharer` 和 `BuildInfoProvider` 已通过 `LocalFileSharer/LocalBuildInfoProvider` 由 app 根部显式提供；设置页和报表页不再通过 `LocalContext.current as ...` 强转 Activity 获取平台服务。
+- `fileSharer()` 和 `buildInfoProvider()` 薄 helper 已从 `shared:ui:legacy` 移到 `shared:ui:core`；设置页和报表页不再为了平台服务 helper 依赖 legacy 桥接包，旧 UI 模块只保留真正的旧组件和旧主题兼容层。
 - `Features` 和功能开关 DataStore 已通过 `LocalFeatures/LocalFeatureDataStore` 由 app 根部显式提供；旧金额键盘不再用 Hilt `EntryPointAccessors` 从 application 反查依赖。
 - 锁屏页不再通过 `LocalContext.current` 自行检查系统锁屏状态；`RootActivity` 从 app 平台层提供 `hasLockScreen` 检查函数，UI 只负责触发认证或继续进入应用。
 - 根启动 intent 的交易类型解析已改用 `IntentCompat.getSerializableExtra()`，不再直接调用新版 Android 中弃用的 `Intent.getSerializableExtra(String)`。
