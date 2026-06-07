@@ -273,7 +273,7 @@
 
 - 新增 `ivy.android-library` 作为更清晰的 Android library 基础约定；旧 `ivy.kotlin-android` 兼容别名已经删除，当前没有模块使用它。
 - `shared:base`、`shared:data:model`、`shared:data:model-testing` 已从 `ivy.feature` 迁出，不再默认启用完整 Compose UI 配置。
-- `shared:base` 已退出 `ivy.hilt`，基础时间/线程端口的 Hilt 绑定迁到 app 装配层；Compose runtime 和 kotlinx serialization 也已经移除。
+- `shared:base` 已退出 `ivy.hilt`，基础时间/线程端口的 Hilt 绑定迁到 app 装配层；Compose runtime 和 kotlinx serialization 也已经移除。`shared:base` 与 `shared:base-testing` 当前已改成纯 JVM/Kotlin 模块，不再需要 Android namespace、manifest 或 SDK 配置。
 - `shared:data:model` 已移除轻量 `compose-runtime`，纯数据模型不再依赖 UI runtime。
 - 过渡用的 `ivy.compose-runtime` 插件已经删除；当前非页面模块不再需要轻量 Compose 编译配置。
 - `ivy.integration.testing` 已从 `ivy.feature` 改为基于 `ivy.android-library`，避免因为集成测试配置把完整 Compose UI 配置带入数据层。

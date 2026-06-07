@@ -1,9 +1,5 @@
 plugins {
-    id("ivy.android-library")
-}
-
-android {
-    namespace = "com.ivy.base"
+    id("ivy.kotlin-library")
 }
 
 dependencies {
