@@ -2,17 +2,31 @@ package com.ivy.domain.usecase.tag
 
 import com.ivy.data.api.TagStore
 import com.ivy.data.model.Tag
+import com.ivy.data.model.TagId
+import com.ivy.data.model.primitive.ColorInt
 import com.ivy.data.model.primitive.NotBlankTrimmedString
-import com.ivy.data.repository.mapper.TagMapper
+import java.time.Instant
+import java.util.UUID
 import javax.inject.Inject
 
 class CreateTagUseCase @Inject constructor(
     private val tagStore: TagStore,
-    private val tagMapper: TagMapper
 ) {
     suspend operator fun invoke(name: NotBlankTrimmedString): Tag {
-        val tag = with(tagMapper) { createNewTag(name = name) }
+        val tag = Tag(
+            id = TagId(UUID.randomUUID()),
+            name = name,
+            description = null,
+            color = ColorInt(TRANSPARENT_COLOR),
+            icon = null,
+            orderNum = 0.0,
+            creationTimestamp = Instant.now(),
+        )
         tagStore.save(tag)
         return tag
+    }
+
+    private companion object {
+        const val TRANSPARENT_COLOR = 0x00000000
     }
 }

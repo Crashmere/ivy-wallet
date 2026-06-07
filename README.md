@@ -690,6 +690,7 @@
 - 汇率读写和远程同步入口已抽成 `ExchangeRateStore` 端口；汇率同步、设置页汇率列表和重置钱包流程不再直接依赖 data core 的 `ExchangeRatesRepository`。
 - 汇率单条查询已收敛到 `ExchangeRateStore.findByBaseCurrencyAndCurrency()`；汇率换算 use case 不再直接注入 `ExchangeRatesDao`，legacy 汇率 mapper 也不再依赖 `ExchangeRateEntity`。
 - 标签读写、标签关联和标签搜索已抽成 `TagStore` 端口；编辑交易、历史列表、按标签筛选和重置钱包流程不再直接依赖 data core 的 `TagRepository`。
+- 标签创建已停止注入 data core 的 `TagMapper`；`CreateTagUseCase` 直接构造 data model `Tag` 并通过 `TagStore` 保存。
 - 账户与分类读写已抽成 `AccountStore/CategoryStore` 端口；对应 domain use case、交易历史构建、借贷同步和重置钱包流程不再直接注入 data core repository，`TransactionMapper` 也改为依赖账户端口。
 - 交易读写、到期交易、计划付款关联交易和借贷关联交易已抽成 `TransactionStore` 端口；domain 中的账户、分类、首页、计划付款、借贷、重置和交易 use case 不再直接注入 data core 的 `TransactionRepository`。
 - 交易剩余读路径已继续收敛到 `TransactionStore`；`hasAny()`、智能标题建议查询、按账户/分类标题计数、旧账户交易列表、计划付款金额统计和借贷同步不再直接注入 `TransactionDao`。
