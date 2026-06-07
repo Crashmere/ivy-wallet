@@ -1,6 +1,7 @@
 package com.ivy.legacy.ui.model.period
 
 import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.Composable
 import com.ivy.base.legacy.incrementDate
 import com.ivy.base.time.TimeProvider
 import com.ivy.data.model.IntervalType
@@ -20,6 +21,7 @@ data class LastNTimeRange(
         intervalN = -periodN.toLong()
     )
 
+    @Composable
     fun forDisplay(): String =
         "$periodN ${periodType.forDisplay(periodN)}"
 }

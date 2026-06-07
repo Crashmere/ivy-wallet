@@ -39,6 +39,7 @@ import com.ivy.legacy.ui.model.period.LastNTimeRange
 import com.ivy.legacy.ui.model.period.Month.Companion.fromMonthValue
 import com.ivy.legacy.ui.model.period.Month.Companion.monthsList
 import com.ivy.legacy.ui.model.period.TimePeriod
+import com.ivy.legacy.ui.model.period.displayName
 import com.ivy.legacy.ui.addKeyboardListener
 import com.ivy.base.legacy.dateNowUTC
 import com.ivy.legacy.ui.formatDateOnlyWithYear
@@ -247,15 +248,17 @@ data class MonthYear(
     val month: com.ivy.legacy.ui.model.period.Month,
     val year: Int
 ) {
+    @Composable
     fun forDisplay(
         currentYear: Int
     ): String {
+        val monthName = month.displayName()
         return if (year != currentYear) {
             // not current year
-            "${month.name}, $year"
+            "$monthName, $year"
         } else {
             // current year
-            month.name
+            monthName
         }
     }
 }

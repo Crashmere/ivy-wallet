@@ -1,6 +1,7 @@
 package com.ivy.legacy.ui.model.period
 
 import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.Composable
 import com.ivy.base.time.TimeConverter
 import com.ivy.base.time.TimeProvider
 import com.ivy.base.legacy.atEndOfDay
@@ -130,6 +131,7 @@ data class TimePeriod(
         from to to
     }
 
+    @Composable
     fun toDisplayShort(
         startDateOfMonth: Int,
         timeConverter: TimeConverter,
@@ -163,6 +165,7 @@ data class TimePeriod(
         }
     }
 
+    @Composable
     fun toDisplayLong(
         startDateOfMonth: Int,
         timeProvider: TimeProvider,
@@ -200,17 +203,19 @@ data class TimePeriod(
         }
     }
 
+    @Composable
     private fun displayMonthStartingOn1st(
         month: Month,
         timeProvider: TimeProvider,
     ): String {
+        val monthName = month.displayName()
         val year = year
         return if (year != null && timeProvider.localNow().year != year) {
             // not this year
-            "${month.name.substring(0, MonthNameAbbreviationLength)}, $year"
+            "${monthName.take(MonthNameAbbreviationLength)}, $year"
         } else {
             // this year
-            month.name
+            monthName
         }
     }
 }

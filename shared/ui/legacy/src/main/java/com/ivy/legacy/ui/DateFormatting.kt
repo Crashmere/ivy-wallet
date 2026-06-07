@@ -1,8 +1,9 @@
 package com.ivy.legacy.ui
 
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
 import com.ivy.base.legacy.convertUTCtoLocal
 import com.ivy.base.legacy.dateNowUTC
-import com.ivy.base.legacy.stringRes
 import com.ivy.ui.R
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -12,6 +13,7 @@ import java.time.format.DateTimeFormatter
 import java.util.Locale
 
 @Deprecated("Use the TimeConverter interface via DI")
+@Composable
 fun LocalDateTime.formatNicely(
     noWeekDay: Boolean = false,
     zone: ZoneId = ZoneOffset.systemDefault()
@@ -31,15 +33,15 @@ fun LocalDateTime.formatNicely(
 
     return when (this.toLocalDate()) {
         today -> {
-            stringRes(R.string.today_date, this.formatLocal(patternNoWeekDay, zone))
+            stringResource(R.string.today_date, this.formatLocal(patternNoWeekDay, zone))
         }
 
         today.minusDays(1) -> {
-            stringRes(R.string.yesterday_date, this.formatLocal(patternNoWeekDay, zone))
+            stringResource(R.string.yesterday_date, this.formatLocal(patternNoWeekDay, zone))
         }
 
         today.plusDays(1) -> {
-            stringRes(R.string.tomorrow_date, this.formatLocal(patternNoWeekDay, zone))
+            stringResource(R.string.tomorrow_date, this.formatLocal(patternNoWeekDay, zone))
         }
 
         else -> {
@@ -64,6 +66,7 @@ fun LocalDate.formatDateWeekDayLong(): String =
     this.formatLocal("EEEE, dd MMM", ZoneOffset.systemDefault())
 
 @Deprecated("Use the TimeConverter interface via DI")
+@Composable
 fun LocalDate.formatNicely(
     pattern: String = "EEE, dd MMM",
     patternNoWeekDay: String = "dd MMM",
@@ -80,19 +83,20 @@ fun LocalDate.formatNicely(
     }
 }
 
+@Composable
 fun LocalDate.closeDay(): String? {
     val today = dateNowUTC()
     return when (this) {
         today -> {
-            stringRes(R.string.today)
+            stringResource(R.string.today)
         }
 
         today.minusDays(1) -> {
-            stringRes(R.string.yesterday)
+            stringResource(R.string.yesterday)
         }
 
         today.plusDays(1) -> {
-            stringRes(R.string.tomorrow)
+            stringResource(R.string.tomorrow)
         }
 
         else -> {
