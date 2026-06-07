@@ -1,6 +1,5 @@
 plugins {
     id("ivy.android-library")
-    id("ivy.hilt")
 }
 
 android {
@@ -8,5 +7,7 @@ android {
 }
 
 dependencies {
+    implementation(libs.javax.inject)
+
     testImplementation(libs.bundles.testing)
 }

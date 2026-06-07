@@ -272,7 +272,7 @@
 
 - 新增 `ivy.android-library` 作为更清晰的 Android library 基础约定；旧 `ivy.kotlin-android` 兼容别名已经删除，当前没有模块使用它。
 - `shared:base`、`shared:data:model`、`shared:data:model-testing` 已从 `ivy.feature` 迁出，不再默认启用完整 Compose UI 配置。
-- `shared:base` 仍显式保留 Hilt，因为当前源码仍包含基础 DI 绑定；Compose runtime 和 kotlinx serialization 已经移除。
+- `shared:base` 已退出 `ivy.hilt`，基础时间/线程端口的 Hilt 绑定迁到 app 装配层；Compose runtime 和 kotlinx serialization 也已经移除。
 - `shared:data:model` 已移除轻量 `compose-runtime`，纯数据模型不再依赖 UI runtime。
 - 过渡用的 `ivy.compose-runtime` 插件已经删除；当前非页面模块不再需要轻量 Compose 编译配置。
 - `ivy.integration.testing` 已从 `ivy.feature` 改为基于 `ivy.android-library`，避免因为集成测试配置把完整 Compose UI 配置带入数据层。
@@ -757,6 +757,7 @@
 - `shared:base` 中无消费方的 `BaseModule` 和 `@AppCoroutineScope` 已删除；应用级协程 scope 绑定不再作为未使用的全局 DI 暴露。
 - 导出 CSV/备份文件名使用的 `yyyyMMdd-HHmm` 时间戳格式已从 `shared:base` 内联到设置页和报表页；基础层不再暴露文件命名专用的时间格式 helper。
 - `shared:base` 中剩余的薄日期扩展已拆除：UTC epoch 秒、月边界和日结束时间等只在具体调用方保留为私有 helper，基础层只继续提供时间端口和安全时间边界。
+- `BaseHiltBindings` 已迁入 app 的绑定模块；`shared:base` 只显式依赖 `javax.inject` 支撑默认实现构造注入，不再参与 Hilt 聚合。
 - 版本目录中未被任何 Gradle 文件或源码使用的 `mockk-android` 与 `androidx-security` 依赖别名已删除。
 - 账户旧读取路径已收敛到 `AccountStore`；旧 legacy 账户模型现在由 data model 账户映射而来，`shared:domain` 主源码不再直接注入 `AccountDao` 或依赖 `AccountEntity` mapper。
 - 旧交易卡片已移除重复账户查找 TODO：渲染前先解析来源/目标账户，再复用同一结果处理点击和币种展示，行为不变但 legacy UI 内部职责更清楚。

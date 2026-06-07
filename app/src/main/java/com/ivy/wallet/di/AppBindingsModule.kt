@@ -1,5 +1,11 @@
 package com.ivy.wallet.di
 
+import com.ivy.base.threading.DispatchersProvider
+import com.ivy.base.threading.IvyDispatchersProvider
+import com.ivy.base.time.TimeConverter
+import com.ivy.base.time.TimeProvider
+import com.ivy.base.time.impl.DeviceTimeProvider
+import com.ivy.base.time.impl.StandardTimeConverter
 import com.ivy.ui.resource.ResourceProvider
 import com.ivy.domain.AppStarter
 import com.ivy.domain.usecase.ResetWalletDataUseCase
@@ -47,4 +53,19 @@ abstract class AppBindingsModule {
     abstract fun resourceProvider(
         resourceProvider: AndroidResourceProvider
     ): ResourceProvider
+
+    @Binds
+    abstract fun dispatchersProvider(
+        dispatchersProvider: IvyDispatchersProvider
+    ): DispatchersProvider
+
+    @Binds
+    abstract fun timeProvider(
+        timeProvider: DeviceTimeProvider
+    ): TimeProvider
+
+    @Binds
+    abstract fun timeConverter(
+        timeConverter: StandardTimeConverter
+    ): TimeConverter
 }
