@@ -392,6 +392,7 @@
 - 已把旧日期选择器桥接从 `IvyWalletCtx` 拆到 `shared:ui:core` 的 `DatePicker` 窄接口，并通过 `LocalDatePicker` 暂时提供给旧 Compose 页面；app 侧仍使用 MaterialDatePicker，只是注册位置改到 `ActivityDatePicker`。
 - 已把主界面首页/账户页的 Tab 状态从 `IvyWalletCtx` 拆到 `shared:ui:navigation` 的 `MainTabState`，并删除首页更多菜单在旧上下文中的全局展开状态。
 - 已把起始日和选中周期从 `IvyWalletCtx` 拆到 `shared:ui:legacy` 的 `PeriodState`，由 app 根部提供 `LocalPeriodState`，首页、交易、余额、饼图、报表、账户、分类、预算和设置页都改用这个明确状态；`IvyWalletCtx` 目前只剩旧设计系统 `IvyContext` 角色。
+- 已把旧全局屏幕宽高从 `IvyContext` 删除：首页更多菜单、主底部栏、借贷底部栏和交易列表底部留白改用当前 Compose `BoxWithConstraintsScope` 的 `maxWidth/maxHeight` 计算布局，`IvyUI` 不再向全局上下文写入屏幕尺寸。
 - 已删除 `:temp:legacy-code` 的 Gradle include、模块 build 文件，以及所有 app/feature 对 `projects.temp.legacyCode` 的依赖声明。
 - 阶段 5 的模块拆解目标已经完成：仓库中不再有被 Gradle include 的 `temp:*` 模块。后续工作转为拆除 `shared:ui:legacy` 中剩余旧上下文、旧设计 API 和旧 UI 兼容模型。
 
@@ -673,6 +674,6 @@ shared:ui:core
 
 下一步建议执行：
 
-1. 继续拆 `shared:ui:legacy` 中的旧全局上下文：下一步优先处理旧设计系统对 `IvyContext` 屏幕宽高、主题和 `UI.colors` 的依赖。
+1. 继续拆 `shared:ui:legacy` 中的旧全局上下文：下一步优先处理旧设计系统对 `IvyContext` 主题状态和 `UI.colors` 的依赖。
 2. 继续替换旧设计兼容 API，例如 `IvyContext`、`IvyWalletDesign`、`UI.colors` 和旧 building block。
 3. 每完成一组跨模块边界调整后运行 `:app:assembleDemo`，确认构建没有被迁移影响；涉及数据库、备份恢复或导入导出时再补充对应测试。

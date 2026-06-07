@@ -464,7 +464,6 @@ private fun SheetHeader(
                 .layout { measurable, constraints ->
                     val placeable = measurable.measure(constraints)
 
-//                    val x = lerp(0, ivyContext.screenWidth, (1f - percentExpanded))
                     val height = placeable.height * percentExpanded
 
                     layout(placeable.width, height.roundToInt()) {

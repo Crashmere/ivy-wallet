@@ -27,7 +27,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
@@ -260,9 +259,9 @@ private fun BoxWithConstraintsScope.UI(
     onSkipAllTransactions: (List<Transaction>) -> Unit = {},
     onChoosePeriodModal: (ChoosePeriodModalData?) -> Unit,
 ) {
-    val ivyContext = ivyWalletCtx()
     val periodState = LocalPeriodState.current
     val datePicker = LocalDatePicker.current
+    val screenHeight = maxHeight
     val itemColor = (account?.color ?: category?.color?.value)?.toComposeColor() ?: Gray
 
     var categoryModalData: CategoryModalData? by remember { mutableStateOf(null) }
@@ -289,7 +288,6 @@ private fun BoxWithConstraintsScope.UI(
         val listState = rememberScrollPositionListState(
             key = "item_stats_lazy_column"
         )
-        val density = LocalDensity.current
 
         val timeProvider = LocalTimeProvider.current
         val timeConverter = LocalTimeConverter.current
@@ -410,9 +408,7 @@ private fun BoxWithConstraintsScope.UI(
                 setOverdueExpanded = setOverdueExpanded,
 
                 history = history,
-                lastItemSpacer = with(density) {
-                    (ivyContext.screenHeight * 0.7f).toDp()
-                },
+                lastItemSpacer = screenHeight * 0.7f,
 
                 onPayOrGet = onPayOrGet,
                 onSkipTransaction = onSkipTransaction,

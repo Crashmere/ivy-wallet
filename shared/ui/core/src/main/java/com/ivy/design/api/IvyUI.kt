@@ -9,7 +9,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalDensity
 import com.ivy.base.time.TimeConverter
 import com.ivy.base.time.TimeProvider
 import com.ivy.design.IvyContext
@@ -61,13 +60,6 @@ fun IvyUI(
         ) {
             WrapWithSurface(includeSurface = includeSurface) {
                 BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
-                    ivyContext.screenWidth = with(LocalDensity.current) {
-                        maxWidth.roundToPx()
-                    }
-                    ivyContext.screenHeight = with(LocalDensity.current) {
-                        maxHeight.roundToPx()
-                    }
-
                     content()
                 }
             }
