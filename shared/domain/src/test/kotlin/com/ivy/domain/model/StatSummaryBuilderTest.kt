@@ -26,7 +26,7 @@ class StatSummaryBuilderTest {
                 value(1.0, AssetCode.EUR)
             ),
             expected = StatSummary(
-                trnCount = count(1),
+                transactionCount = count(1),
                 values = mapOf(AssetCode.EUR to amount(1.0))
             )
         ),
@@ -36,7 +36,7 @@ class StatSummaryBuilderTest {
                 value(42.0, AssetCode.USD),
             ),
             expected = StatSummary(
-                trnCount = count(2),
+                transactionCount = count(2),
                 values = mapOf(
                     AssetCode.EUR to amount(3.14),
                     AssetCode.USD to amount(42.0)
@@ -49,7 +49,7 @@ class StatSummaryBuilderTest {
                 value(4.0, AssetCode.EUR),
             ),
             expected = StatSummary(
-                trnCount = count(2),
+                transactionCount = count(2),
                 values = mapOf(
                     AssetCode.EUR to amount(10.0),
                 )
@@ -62,7 +62,7 @@ class StatSummaryBuilderTest {
                 value(50.0, AssetCode.USD),
             ),
             expected = StatSummary(
-                trnCount = count(3),
+                transactionCount = count(3),
                 values = mapOf(
                     AssetCode.EUR to amount(10.0),
                     AssetCode.USD to amount(50.0),
@@ -76,7 +76,7 @@ class StatSummaryBuilderTest {
                 value(0.5, AssetCode.EUR),
             ),
             expected = StatSummary(
-                trnCount = count(3),
+                transactionCount = count(3),
                 values = mapOf(
                     AssetCode.EUR to amount(10.5),
                 )
@@ -89,7 +89,7 @@ class StatSummaryBuilderTest {
                 value(0.5, AssetCode.GBP),
             ),
             expected = StatSummary(
-                trnCount = count(3),
+                transactionCount = count(3),
                 values = mapOf(
                     AssetCode.EUR to amount(6.0),
                     AssetCode.USD to amount(4.0),
@@ -126,7 +126,7 @@ class StatSummaryBuilderTest {
 
         // then
         statSummary shouldBe StatSummary(
-            trnCount = count(2),
+            transactionCount = count(2),
             values = mapOf(
                 AssetCode.EUR to amount(Double.MAX_VALUE)
             )
@@ -146,7 +146,7 @@ class StatSummaryBuilderTest {
 
         // then
         statSummary shouldBe StatSummary(
-            trnCount = count(3),
+            transactionCount = count(3),
             values = mapOf(
                 AssetCode.EUR to amount(Double.MAX_VALUE)
             )

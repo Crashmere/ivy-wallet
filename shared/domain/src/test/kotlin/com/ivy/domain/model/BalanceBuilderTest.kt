@@ -24,19 +24,19 @@ class BalanceBuilderTest {
         Empty(
             values = AccountStats(
                 income = StatSummary(
-                    trnCount = NonNegativeInt.Zero,
+                    transactionCount = NonNegativeInt.Zero,
                     values = StatSummary.Zero.values
                 ),
                 transfersIn = StatSummary(
-                    trnCount = NonNegativeInt.Zero,
+                    transactionCount = NonNegativeInt.Zero,
                     values = StatSummary.Zero.values
                 ),
                 expense = StatSummary(
-                    trnCount = NonNegativeInt.Zero,
+                    transactionCount = NonNegativeInt.Zero,
                     values = StatSummary.Zero.values
                 ),
                 transfersOut = StatSummary(
-                    trnCount = NonNegativeInt.Zero,
+                    transactionCount = NonNegativeInt.Zero,
                     values = StatSummary.Zero.values
                 ),
             ),
@@ -45,19 +45,19 @@ class BalanceBuilderTest {
         OneDepositFromIncome(
             values = AccountStats(
                 income = StatSummary(
-                    trnCount = count(1),
+                    transactionCount = count(1),
                     values = mapOf(EUR to positiveDouble(1.0))
                 ),
                 transfersIn = StatSummary(
-                    trnCount = NonNegativeInt.Zero,
+                    transactionCount = NonNegativeInt.Zero,
                     values = StatSummary.Zero.values
                 ),
                 expense = StatSummary(
-                    trnCount = NonNegativeInt.Zero,
+                    transactionCount = NonNegativeInt.Zero,
                     values = StatSummary.Zero.values
                 ),
                 transfersOut = StatSummary(
-                    trnCount = NonNegativeInt.Zero,
+                    transactionCount = NonNegativeInt.Zero,
                     values = StatSummary.Zero.values
                 ),
             ),
@@ -68,22 +68,22 @@ class BalanceBuilderTest {
         TwoInDiffCurrencyDepositsFromIncome(
             values = AccountStats(
                 income = StatSummary(
-                    trnCount = count(2),
+                    transactionCount = count(2),
                     values = mapOf(
                         EUR to positiveDouble(3.14),
                         USD to positiveDouble(42.0)
                     )
                 ),
                 transfersIn = StatSummary(
-                    trnCount = NonNegativeInt.Zero,
+                    transactionCount = NonNegativeInt.Zero,
                     values = StatSummary.Zero.values
                 ),
                 expense = StatSummary(
-                    trnCount = NonNegativeInt.Zero,
+                    transactionCount = NonNegativeInt.Zero,
                     values = StatSummary.Zero.values
                 ),
                 transfersOut = StatSummary(
-                    trnCount = NonNegativeInt.Zero,
+                    transactionCount = NonNegativeInt.Zero,
                     values = StatSummary.Zero.values
                 ),
             ),
@@ -95,19 +95,19 @@ class BalanceBuilderTest {
         TwoInSameCurrencyDepositsFromIncomeAndTransfersIn(
             values = AccountStats(
                 income = StatSummary(
-                    trnCount = count(1),
+                    transactionCount = count(1),
                     values = mapOf(EUR to positiveDouble(6.0))
                 ),
                 transfersIn = StatSummary(
-                    trnCount = count(1),
+                    transactionCount = count(1),
                     values = mapOf(EUR to positiveDouble(4.0))
                 ),
                 expense = StatSummary(
-                    trnCount = NonNegativeInt.Zero,
+                    transactionCount = NonNegativeInt.Zero,
                     values = StatSummary.Zero.values
                 ),
                 transfersOut = StatSummary(
-                    trnCount = NonNegativeInt.Zero,
+                    transactionCount = NonNegativeInt.Zero,
                     values = StatSummary.Zero.values
                 ),
             ),
@@ -118,21 +118,21 @@ class BalanceBuilderTest {
         TwoInDiffCurrencyDepositsFromIncomeAndTransfersIn(
             values = AccountStats(
                 income = StatSummary(
-                    trnCount = count(2),
+                    transactionCount = count(2),
                     values = mapOf(
                         EUR to positiveDouble(3.14)
                     )
                 ),
                 transfersIn = StatSummary(
-                    trnCount = count(1),
+                    transactionCount = count(1),
                     values = mapOf(USD to positiveDouble(50.0))
                 ),
                 expense = StatSummary(
-                    trnCount = NonNegativeInt.Zero,
+                    transactionCount = NonNegativeInt.Zero,
                     values = StatSummary.Zero.values
                 ),
                 transfersOut = StatSummary(
-                    trnCount = NonNegativeInt.Zero,
+                    transactionCount = NonNegativeInt.Zero,
                     values = StatSummary.Zero.values
                 ),
             ),
@@ -144,24 +144,24 @@ class BalanceBuilderTest {
         TwoDepositsInDiffCurrencyIncomeAndOneTransferIn(
             values = AccountStats(
                 income = StatSummary(
-                    trnCount = count(2),
+                    transactionCount = count(2),
                     values = mapOf(
                         USD to positiveDouble(50.0),
                         EUR to positiveDouble(3.14)
                     )
                 ),
                 transfersIn = StatSummary(
-                    trnCount = count(1),
+                    transactionCount = count(1),
                     values = mapOf(
                         GBP to positiveDouble(0.5)
                     )
                 ),
                 expense = StatSummary(
-                    trnCount = NonNegativeInt.Zero,
+                    transactionCount = NonNegativeInt.Zero,
                     values = StatSummary.Zero.values
                 ),
                 transfersOut = StatSummary(
-                    trnCount = NonNegativeInt.Zero,
+                    transactionCount = NonNegativeInt.Zero,
                     values = StatSummary.Zero.values
                 ),
             ),
@@ -174,21 +174,21 @@ class BalanceBuilderTest {
         TwoWithdrawalsCurrencyExpensesAndTransferOut(
             values = AccountStats(
                 income = StatSummary(
-                    trnCount = NonNegativeInt.Zero,
+                    transactionCount = NonNegativeInt.Zero,
                     values = emptyMap()
                 ),
                 transfersIn = StatSummary(
-                    trnCount = NonNegativeInt.Zero,
+                    transactionCount = NonNegativeInt.Zero,
                     values = emptyMap()
                 ),
                 expense = StatSummary(
-                    trnCount = count(1),
+                    transactionCount = count(1),
                     values = mapOf(
                         USD to positiveDouble(50.0)
                     )
                 ),
                 transfersOut = StatSummary(
-                    trnCount = count(1),
+                    transactionCount = count(1),
                     values = mapOf(
                         USD to positiveDouble(0.5)
                     )
@@ -201,25 +201,25 @@ class BalanceBuilderTest {
         TwoDepositsAndTwoWithdrawals(
             values = AccountStats(
                 income = StatSummary(
-                    trnCount = count(1),
+                    transactionCount = count(1),
                     values = mapOf(
                         USD to positiveDouble(50.0)
                     )
                 ),
                 transfersIn = StatSummary(
-                    trnCount = count(1),
+                    transactionCount = count(1),
                     values = mapOf(
                         USD to positiveDouble(0.5)
                     )
                 ),
                 expense = StatSummary(
-                    trnCount = count(1),
+                    transactionCount = count(1),
                     values = mapOf(
                         USD to positiveDouble(50.0)
                     )
                 ),
                 transfersOut = StatSummary(
-                    trnCount = count(1),
+                    transactionCount = count(1),
                     values = mapOf(
                         USD to positiveDouble(0.5)
                     )
@@ -230,19 +230,19 @@ class BalanceBuilderTest {
         TwoDepositsAndTwoExpensesInDiffCurrencyAndTwoTransferOutInSame(
             values = AccountStats(
                 income = StatSummary(
-                    trnCount = count(1),
+                    transactionCount = count(1),
                     values = mapOf(
                         USD to positiveDouble(50.0)
                     )
                 ),
                 transfersIn = StatSummary(
-                    trnCount = count(1),
+                    transactionCount = count(1),
                     values = mapOf(
                         USD to positiveDouble(0.5)
                     )
                 ),
                 expense = StatSummary(
-                    trnCount = count(3),
+                    transactionCount = count(3),
                     values = mapOf(
                         USD to positiveDouble(50.0),
                         EUR to positiveDouble(40.0),
@@ -250,7 +250,7 @@ class BalanceBuilderTest {
                     )
                 ),
                 transfersOut = StatSummary(
-                    trnCount = count(1),
+                    transactionCount = count(1),
                     values = mapOf(
                         GBP to positiveDouble(4.45)
                     )
@@ -265,27 +265,27 @@ class BalanceBuilderTest {
         WhenBalanceIsZeroInAtLeastOneCurrency(
             values = AccountStats(
                 income = StatSummary(
-                    trnCount = count(1),
+                    transactionCount = count(1),
                     values = mapOf(
                         USD to positiveDouble(50.0)
                     )
                 ),
                 transfersIn = StatSummary(
-                    trnCount = count(2),
+                    transactionCount = count(2),
                     values = mapOf(
                         USD to positiveDouble(50.0),
                         EUR to positiveDouble(80.0)
                     )
                 ),
                 expense = StatSummary(
-                    trnCount = count(2),
+                    transactionCount = count(2),
                     values = mapOf(
                         USD to positiveDouble(50.0),
                         EUR to positiveDouble(40.0)
                     )
                 ),
                 transfersOut = StatSummary(
-                    trnCount = count(1),
+                    transactionCount = count(1),
                     values = mapOf(
                         USD to positiveDouble(50.0),
                     )

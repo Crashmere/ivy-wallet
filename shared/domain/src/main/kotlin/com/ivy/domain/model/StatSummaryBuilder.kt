@@ -20,7 +20,7 @@ class StatSummaryBuilder {
     }
 
     fun build(): StatSummary = StatSummary(
-        trnCount = NonNegativeInt.unsafe(count),
+        transactionCount = NonNegativeInt.unsafe(count),
         values = values,
     )
 }

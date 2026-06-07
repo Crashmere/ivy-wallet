@@ -46,7 +46,7 @@ import com.ivy.data.db.migration.Migration130to131_DropUsers
 import com.ivy.data.db.migration.Migration131to132_DropTagSyncTime
 import com.ivy.data.db.migration.Migration132to133_DropIsSynced
 import com.ivy.data.db.migration.Migration133to134_DropSettingsLegacyFields
-import com.ivy.data.db.migration.Migration105to106_TrnRecurringRules
+import com.ivy.data.db.migration.Migration105to106_TransactionRecurringRules
 import com.ivy.data.db.migration.Migration106to107_Wishlist
 import com.ivy.data.db.migration.Migration107to108_Sync
 import com.ivy.data.db.migration.Migration108to109_Users
@@ -112,7 +112,7 @@ abstract class IvyRoomDatabase : RoomDatabase() {
         const val DB_NAME = "ivywallet.db"
 
         fun migrations() = arrayOf(
-            Migration105to106_TrnRecurringRules(),
+            Migration105to106_TransactionRecurringRules(),
             Migration106to107_Wishlist(),
             Migration107to108_Sync(),
             Migration108to109_Users(),

@@ -33,21 +33,21 @@ class Migration128to129Test {
         tableName = "transactions",
         dataBeforeMigration = {
             insertTransaction(
-                title = "Trn 1",
+                title = "transaction 1",
                 isDeleted = false,
             )
             insertTransaction(
-                title = "Trn 2",
+                title = "transaction 2",
                 isDeleted = true,
             )
             insertTransaction(
-                title = "Trn 3",
+                title = "transaction 3",
                 isDeleted = true,
             )
         },
         dataAfterMigration = {
             moveToFirst() shouldBe true
-            getString(getColumnIndexOrThrow("title")) shouldBe "Trn 1"
+            getString(getColumnIndexOrThrow("title")) shouldBe "transaction 1"
             moveToNext() shouldBe false
         }
     )

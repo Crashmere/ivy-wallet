@@ -830,6 +830,7 @@
 - CSV 导入页面的交易类型元数据已从 `TrnTypeMetadata` 展开为 `TransactionTypeMetadata`，对应事件 `TypeMetaChange/DataMetaChange` 也改为 `TypeMetadataChange/DateMetadataChange`；导入解析规则和 CSV 字段映射行为不变。
 - app 启动、首页到期交易加载、编辑交易删除弹窗、交易类型 lambda、客户旅程计数、账户统计和 CSV 导出中的局部 `trn/trans` 缩写已展开为 `transaction*` 命名；只改局部符号，不改业务计算。
 - 报表筛选模型中的 `trnTypes/trnType/trnAmountBaseCurrency` 已展开为 `transactionTypes/transactionType/transactionAmountBaseCurrency`；筛选规则和 UI 行为不变。
+- 生产代码中剩余的交易缩写已继续收尾：`StatSummary.trnCount` 改为 `transactionCount`，`RoomTransactionStore.retrieveTrns()` 改为 `retrieveTransactions()`，旧迁移类 `Migration105to106_TrnRecurringRules` 改为完整命名；对应测试局部变量同步展开。
 
 建议顺序：
 

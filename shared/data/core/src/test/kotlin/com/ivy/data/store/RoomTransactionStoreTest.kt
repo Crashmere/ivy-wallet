@@ -71,10 +71,10 @@ class RoomTransactionStoreTest {
         } returns null
 
         // when
-        val trn = repository.findById(transactionId)
+        val transaction = repository.findById(transactionId)
 
         // then
-        trn shouldBe null
+        transaction shouldBe null
     }
 
     @Test
@@ -82,19 +82,19 @@ class RoomTransactionStoreTest {
         // given
         val transactionId = ModelFixtures.TransactionId
         val entity = mockk<TransactionEntity>()
-        val transaction = mockk<Transaction>()
+        val expectedTransaction = mockk<Transaction>()
         coEvery {
             transactionDao.findById(transactionId.value)
         } returns entity
         with(mapper) {
-            coEvery { entity.toDomain(any()) } returns Either.Right(transaction)
+            coEvery { entity.toDomain(any()) } returns Either.Right(expectedTransaction)
         }
 
         // when
-        val trn = repository.findById(transactionId)
+        val transaction = repository.findById(transactionId)
 
         // then
-        trn shouldBe transaction
+        transaction shouldBe expectedTransaction
     }
 
     @Test
@@ -110,10 +110,10 @@ class RoomTransactionStoreTest {
         }
 
         // when
-        val trn = repository.findById(transactionId)
+        val transaction = repository.findById(transactionId)
 
         // then
-        trn shouldBe null
+        transaction shouldBe null
     }
 
     @Test
@@ -347,7 +347,7 @@ class RoomTransactionStoreTest {
     @Test
     fun findAllByCategoryAndTypeAndBetween() {
         val categoryId = ModelFixtures.CategoryId
-        val trnType = TransactionType.EXPENSE
+        val transactionType = TransactionType.EXPENSE
         val startDate = Arb.instant().next()
         val endDate = Arb.instant().next()
 
@@ -355,7 +355,7 @@ class RoomTransactionStoreTest {
             daoMethod = {
                 transactionDao.findAllByCategoryAndTypeAndBetween(
                     categoryId = categoryId.value,
-                    type = trnType,
+                    type = transactionType,
                     startDate = startDate,
                     endDate = endDate,
                 )
@@ -363,7 +363,7 @@ class RoomTransactionStoreTest {
             repoMethod = {
                 repository.findAllByCategoryAndTypeAndBetween(
                     categoryId = categoryId.value,
-                    type = trnType,
+                    type = transactionType,
                     startDate = startDate,
                     endDate = endDate,
                 )
@@ -375,43 +375,43 @@ class RoomTransactionStoreTest {
     fun save() = runTest {
         // given
         repository = newRepository(fakeDao = FakeTransactionDao())
-        val trn = mockkFakeTrnMapping()
+        val transaction = mockkFakeTransactionMapping()
 
         // when
-        repository.save(trn)
+        repository.save(transaction)
 
         // then
-        val savedTrn = repository.findById(trn.id)
-        savedTrn shouldBe trn
+        val savedTransaction = repository.findById(transaction.id)
+        savedTransaction shouldBe transaction
     }
 
     @Test
     fun saveMany() = runTest {
         // given
         repository = newRepository(fakeDao = FakeTransactionDao())
-        val trn1 = mockkFakeTrnMapping()
-        val trn2 = mockkFakeTrnMapping()
+        val transaction1 = mockkFakeTransactionMapping()
+        val transaction2 = mockkFakeTransactionMapping()
 
         // when
-        repository.saveMany(listOf(trn1, trn2))
+        repository.saveMany(listOf(transaction1, transaction2))
 
         // then
-        val savedTrns = repository.findAll()
-        savedTrns.toSet() shouldBe setOf(trn1, trn2)
+        val savedTransactions = repository.findAll()
+        savedTransactions.toSet() shouldBe setOf(transaction1, transaction2)
     }
 
     @Test
     fun deleteById() = runTest {
         // given
         repository = newRepository(fakeDao = FakeTransactionDao())
-        val trn = mockkFakeTrnMapping()
-        repository.save(trn)
+        val transaction = mockkFakeTransactionMapping()
+        repository.save(transaction)
 
         // when
-        repository.deleteById(trn.id)
+        repository.deleteById(transaction.id)
 
         // then
-        repository.findById(trn.id) shouldBe null
+        repository.findById(transaction.id) shouldBe null
     }
 
     @Test
@@ -420,16 +420,16 @@ class RoomTransactionStoreTest {
         repository = newRepository(fakeDao = FakeTransactionDao())
         val acc1 = Arb.accountId().next()
         val acc2 = Arb.accountId().next()
-        val trnOneAcc1 = mockkFakeTrnMapping(account = acc1)
-        val trnTwoAcc1 = mockkFakeTrnMapping(account = acc1)
-        val trnAcc2 = mockkFakeTrnMapping(account = acc2)
-        repository.saveMany(listOf(trnOneAcc1, trnTwoAcc1, trnAcc2))
+        val transactionOneAcc1 = mockkFakeTransactionMapping(account = acc1)
+        val transactionTwoAcc1 = mockkFakeTransactionMapping(account = acc1)
+        val transactionAcc2 = mockkFakeTransactionMapping(account = acc2)
+        repository.saveMany(listOf(transactionOneAcc1, transactionTwoAcc1, transactionAcc2))
 
         // when
         repository.deleteAllByAccountId(accountId = acc1)
 
         // then
-        repository.findAll() shouldBe listOf(trnAcc2)
+        repository.findAll() shouldBe listOf(transactionAcc2)
     }
 
     @Test
@@ -444,10 +444,10 @@ class RoomTransactionStoreTest {
     fun deleteAll() = runTest {
         // given
         repository = newRepository(fakeDao = FakeTransactionDao())
-        val trn1 = mockkFakeTrnMapping()
-        val trn2 = mockkFakeTrnMapping()
-        val trn3 = mockkFakeTrnMapping()
-        repository.saveMany(listOf(trn1, trn2, trn3))
+        val transaction1 = mockkFakeTransactionMapping()
+        val transaction2 = mockkFakeTransactionMapping()
+        val transaction3 = mockkFakeTransactionMapping()
+        repository.saveMany(listOf(transaction1, transaction2, transaction3))
 
         // when
         repository.deleteAll()
@@ -456,19 +456,19 @@ class RoomTransactionStoreTest {
         repository.findAll() shouldBe emptyList()
     }
 
-    private fun mockkFakeTrnMapping(
+    private fun mockkFakeTransactionMapping(
         account: AccountId = Arb.accountId().next()
     ): Transaction {
-        val trn = Arb.transaction(account = Some(account)).next()
+        val transaction = Arb.transaction(account = Some(account)).next()
         val entity = mockk<TransactionEntity>(relaxed = true) {
-            every { id } returns trn.id.value
+            every { id } returns transaction.id.value
             every { accountId } returns account.value
         }
         with(mapper) {
-            every { trn.toEntity() } returns entity
-            coEvery { entity.toDomain(any()) } returns Either.Right(trn)
+            every { transaction.toEntity() } returns entity
+            coEvery { entity.toDomain(any()) } returns Either.Right(transaction)
         }
-        return trn
+        return transaction
     }
 
     private fun transactionsTestCase(
@@ -478,29 +478,29 @@ class RoomTransactionStoreTest {
     ) = runTest {
         checkAll(
             Arb.map(
-                arb = Arb.trnMappingRow(),
+                arb = Arb.transactionMappingRow(),
                 minSize = 0,
                 maxSize = 10,
             )
-        ) { trnMapping ->
+        ) { transactionMapping ->
             // given
-            coEvery { daoMethod() } returns trnMapping.keys.toList()
-            trnMapping.forEach { (entity, mappingRes) ->
+            coEvery { daoMethod() } returns transactionMapping.keys.toList()
+            transactionMapping.forEach { (entity, mappingRes) ->
                 with(mapper) {
                     coEvery { entity.toDomain(any()) } returns mappingRes
                 }
             }
 
             // when
-            val trns = repoMethod()
+            val transactions = repoMethod()
 
             // then
-            val expectedTrns = trnMapping.values.mapNotNull { it.getOrNull() }
-            trns.toSet() shouldBe mapExpectedResult(expectedTrns).toSet()
+            val expectedTransactions = transactionMapping.values.mapNotNull { it.getOrNull() }
+            transactions.toSet() shouldBe mapExpectedResult(expectedTransactions).toSet()
         }
     }
 
-    private fun Arb.Companion.trnMappingRow(): Arb<TrnMappingRow> = arbitrary {
+    private fun Arb.Companion.transactionMappingRow(): Arb<TransactionMappingRow> = arbitrary {
         val isValid = Arb.boolean().bind()
         if (isValid) {
             Arb.validTransactionEntity().bind() to Either.Right(Arb.transaction().bind())
@@ -510,4 +510,4 @@ class RoomTransactionStoreTest {
     }
 }
 
-typealias TrnMappingRow = Pair<TransactionEntity, Either<String, Transaction>>
+typealias TransactionMappingRow = Pair<TransactionEntity, Either<String, Transaction>>

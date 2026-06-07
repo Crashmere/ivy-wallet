@@ -38,7 +38,7 @@ class AccountMapperPropertyTest {
                 val entityOne = accOrig.toEntity()
                 val accTwo = entityOne.toDomain().getOrNull()
 
-                // then: the recovered domain trn must be the same
+                // then: the recovered domain transaction must be the same
                 accTwo.shouldNotBeNull() shouldBe accOrig
 
                 // and when again: domain -> entity

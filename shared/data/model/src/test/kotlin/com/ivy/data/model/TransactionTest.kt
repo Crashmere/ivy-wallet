@@ -12,10 +12,10 @@ class TransactionTest {
     @Test
     fun `getFromAccount - income`() {
         // given
-        val trn = Income
+        val transaction = Income
 
         // when
-        val accountId = trn.getFromAccount()
+        val accountId = transaction.getFromAccount()
 
         // then
         accountId shouldBe AccountId
@@ -24,10 +24,10 @@ class TransactionTest {
     @Test
     fun `getFromAccount - expense`() {
         // given
-        val trn = Expense
+        val transaction = Expense
 
         // when
-        val accountId = trn.getFromAccount()
+        val accountId = transaction.getFromAccount()
 
         // then
         accountId.shouldNotBeNull() shouldBe AccountId
@@ -36,10 +36,10 @@ class TransactionTest {
     @Test
     fun `getFromAccount - transfer`() {
         // given
-        val trn = Transfer
+        val transaction = Transfer
 
         // when
-        val accountId = trn.getFromAccount()
+        val accountId = transaction.getFromAccount()
 
         // then
         accountId shouldBe AccountId
@@ -48,10 +48,10 @@ class TransactionTest {
     @Test
     fun `getToAccount - income`() {
         // given
-        val trn = Income
+        val transaction = Income
 
         // when
-        val accountId = trn.getToAccount()
+        val accountId = transaction.getToAccount()
 
         // then
         accountId shouldBe null
@@ -60,10 +60,10 @@ class TransactionTest {
     @Test
     fun `getToAccount - expense`() {
         // given
-        val trn = Expense
+        val transaction = Expense
 
         // when
-        val accountId = trn.getToAccount()
+        val accountId = transaction.getToAccount()
 
         // then
         accountId shouldBe null
@@ -72,10 +72,10 @@ class TransactionTest {
     @Test
     fun `getToAccount - transfer`() {
         // given
-        val trn = Transfer
+        val transaction = Transfer
 
         // when
-        val accountId = trn.getToAccount()
+        val accountId = transaction.getToAccount()
 
         // then
         accountId shouldBe ToAccountId
@@ -84,10 +84,10 @@ class TransactionTest {
     @Test
     fun `getFromValue - income`() {
         // given
-        val trn = Income
+        val transaction = Income
 
         // when
-        val value = trn.getFromValue()
+        val value = transaction.getFromValue()
 
         // then
         value shouldBe Income.value
@@ -96,10 +96,10 @@ class TransactionTest {
     @Test
     fun `getFromValue - expense`() {
         // given
-        val trn = Expense
+        val transaction = Expense
 
         // when
-        val value = trn.getFromValue()
+        val value = transaction.getFromValue()
 
         // then
         value shouldBe Expense.value
@@ -108,10 +108,10 @@ class TransactionTest {
     @Test
     fun `getFromValue - transfer`() {
         // given
-        val trn = Transfer
+        val transaction = Transfer
 
         // when
-        val value = trn.getFromValue()
+        val value = transaction.getFromValue()
 
         // then
         value shouldBe Transfer.fromValue

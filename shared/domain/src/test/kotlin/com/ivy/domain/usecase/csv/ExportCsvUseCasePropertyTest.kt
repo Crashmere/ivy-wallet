@@ -47,15 +47,15 @@ class ExportCsvUseCasePropertyTest {
 
     @Test
     fun `property - num of row and columns matches the format`() = runTest {
-        checkAll(Arb.list(Arb.transaction())) { trns ->
+        checkAll(Arb.list(Arb.transaction())) { transactions ->
             // given
-            val accounts = trns.flatMap {
+            val accounts = transactions.flatMap {
                 listOfNotNull(it.getFromAccount(), it.getToAccount())
             }.map {
                 Arb.account(accountId = Some(it)).next()
             }
             coEvery { accountStore.findAll() } returns accounts
-            val categories = trns
+            val categories = transactions
                 .mapNotNull(Transaction::category)
                 .map {
                     Arb.category(categoryId = Some(it)).next()
@@ -69,11 +69,11 @@ class ExportCsvUseCasePropertyTest {
             coEvery { categoryStore.findAll() } returns categories
 
             // when
-            val csv = useCase.exportCsv { trns }
+            val csv = useCase.exportCsv { transactions }
 
             // then
             val rows = CsvTestReader().readCsv(csv)
-            rows.size shouldBe trns.size + 1 // +1 for the header
+            rows.size shouldBe transactions.size + 1 // +1 for the header
             rows.forEach { row ->
                 // Matches the expected # of columns
                 val hasExpectedNumOfColumns = row.size == IvyCsvRow.Columns.size

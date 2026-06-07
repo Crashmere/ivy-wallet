@@ -38,32 +38,32 @@ class TransactionMapperPropertyTest {
 
     @Test
     fun `property - domain-entity isomorphism`() = runTest {
-        checkAll(Arb.transaction()) { trnOrig ->
+        checkAll(Arb.transaction()) { transactionOrig ->
             // given
             val account = Arb.account(
-                accountId = Some(trnOrig.getFromAccount()),
-                asset = Some(trnOrig.getFromValue().asset)
+                accountId = Some(transactionOrig.getFromAccount()),
+                asset = Some(transactionOrig.getFromValue().asset)
             ).next()
             coEvery { accountStore.findById(account.id) } returns account
 
-            if (trnOrig is Transfer) {
+            if (transactionOrig is Transfer) {
                 val toAccount = Arb.account(
-                    accountId = Some(trnOrig.toAccount),
-                    asset = Some(trnOrig.toValue.asset)
+                    accountId = Some(transactionOrig.toAccount),
+                    asset = Some(transactionOrig.toValue.asset)
                 ).next()
                 coEvery { accountStore.findById(toAccount.id) } returns toAccount
             }
 
             with(mapper) {
                 // when: domain -> entity -> domain
-                val entityOne = trnOrig.toEntity()
-                val trnTwo = entityOne.toDomain(tags = emptyList()).getOrNull()
+                val entityOne = transactionOrig.toEntity()
+                val transactionTwo = entityOne.toDomain(tags = emptyList()).getOrNull()
 
-                // then: the recovered domain trn must be the same
-                trnTwo.shouldNotBeNull() shouldBe trnOrig
+                // then: the recovered domain transaction must be the same
+                transactionTwo.shouldNotBeNull() shouldBe transactionOrig
 
                 // and when again: domain -> entity
-                val entityTwo = trnTwo.toEntity()
+                val entityTwo = transactionTwo.toEntity()
 
                 // then: the recovered entity must be the same
                 entityTwo shouldBe entityOne

@@ -44,13 +44,13 @@ class AccountStatsUseCasePropertyTest {
     fun `property - ignores irrelevant transactions`() = runTest {
         // given
         val account = ModelFixtures.AccountId
-        val arbIrrelevantTransaction = Arb.transaction().filter { trn ->
-            trn.getFromAccount() != account && trn.getToAccount() != account
+        val arbIrrelevantTransaction = Arb.transaction().filter { transaction ->
+            transaction.getFromAccount() != account && transaction.getToAccount() != account
         }
 
-        checkAll(Arb.list(arbIrrelevantTransaction)) { trns ->
+        checkAll(Arb.list(arbIrrelevantTransaction)) { transactions ->
             // when
-            val stats = useCase.calculate(account, trns)
+            val stats = useCase.calculate(account, transactions)
 
             // then
             stats shouldBe AccountStats.Zero
@@ -59,61 +59,61 @@ class AccountStatsUseCasePropertyTest {
 
     @Test
     fun `property - aggregates incomes for account`() = aggregationTestsCase(
-        arbTrns = { acc, asset -> Arb.nonEmptyIncomes(acc, asset) },
+        arbTransactions = { acc, asset -> Arb.nonEmptyIncomes(acc, asset) },
         extractValue = Income::value,
         expectedResultSelector = AccountStats::income
     )
 
     @Test
     fun `property - aggregates expenses for account`() = aggregationTestsCase(
-        arbTrns = { acc, asset -> Arb.nonEmptyExpenses(acc, asset) },
+        arbTransactions = { acc, asset -> Arb.nonEmptyExpenses(acc, asset) },
         extractValue = Expense::value,
         expectedResultSelector = AccountStats::expense
     )
 
     @Test
     fun `property - aggregates transfer-out for account`() = aggregationTestsCase(
-        arbTrns = { acc, asset -> Arb.nonEmptyTransfersOut(acc, asset) },
+        arbTransactions = { acc, asset -> Arb.nonEmptyTransfersOut(acc, asset) },
         extractValue = Transfer::fromValue,
         expectedResultSelector = AccountStats::transfersOut
     )
 
     @Test
     fun `property - aggregates transfer-in for account`() = aggregationTestsCase(
-        arbTrns = { acc, asset -> Arb.nonEmptyTransfersIn(acc, asset) },
+        arbTransactions = { acc, asset -> Arb.nonEmptyTransfersIn(acc, asset) },
         extractValue = Transfer::toValue,
         expectedResultSelector = AccountStats::transfersIn
     )
 
     private fun <T : Transaction> aggregationTestsCase(
-        arbTrns: (AccountId, AssetCode) -> Arb<NonEmptyList<T>>,
+        arbTransactions: (AccountId, AssetCode) -> Arb<NonEmptyList<T>>,
         extractValue: (T) -> PositiveValue,
         expectedResultSelector: (AccountStats) -> StatSummary,
     ) = runTest {
         // given
         val account = ModelFixtures.AccountId
-        val arbEurTrns = arbTrns(account, AssetCode.EUR)
-        val arbUsdTrns = arbTrns(account, AssetCode.USD)
-        val arbGpbTrns = arbTrns(account, AssetCode.GBP)
+        val arbEurTransactions = arbTransactions(account, AssetCode.EUR)
+        val arbUsdTransactions = arbTransactions(account, AssetCode.USD)
+        val arbGpbTransactions = arbTransactions(account, AssetCode.GBP)
 
         checkAll(
-            arbEurTrns,
-            arbUsdTrns,
-            arbGpbTrns
-        ) { eurTrns, usdTrns, gbpTrns ->
+            arbEurTransactions,
+            arbUsdTransactions,
+            arbGpbTransactions
+        ) { eurTransactions, usdTransactions, gbpTransactions ->
             // given
-            val trns = (eurTrns + usdTrns + gbpTrns).shuffled()
-            val expectedEur = eurTrns.map(extractValue).sum()
-            val expectedUsd = usdTrns.map(extractValue).sum()
-            val expectedGbp = gbpTrns.map(extractValue).sum()
-            val extractedTrnsCount = eurTrns.size + usdTrns.size + gbpTrns.size
+            val transactions = (eurTransactions + usdTransactions + gbpTransactions).shuffled()
+            val expectedEur = eurTransactions.map(extractValue).sum()
+            val expectedUsd = usdTransactions.map(extractValue).sum()
+            val expectedGbp = gbpTransactions.map(extractValue).sum()
+            val extractedTransactionsCount = eurTransactions.size + usdTransactions.size + gbpTransactions.size
 
             // when
-            val accStats = useCase.calculate(account, trns)
+            val accStats = useCase.calculate(account, transactions)
 
             // then
             expectedResultSelector(accStats) shouldBeApprox StatSummary(
-                trnCount = NonNegativeInt.unsafe(extractedTrnsCount),
+                transactionCount = NonNegativeInt.unsafe(extractedTransactionsCount),
                 values = mapOf(
                     AssetCode.EUR to expectedEur,
                     AssetCode.USD to expectedUsd,
