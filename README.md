@@ -96,6 +96,7 @@
 
 - 拆分成更直接的约定插件，例如：
   - `ivy.android-library`
+  - `ivy.kotlin-library`
   - `ivy.android-compose`
   - `ivy.hilt-library`
   - `ivy.room-library`
@@ -291,6 +292,7 @@
 - `ivy.android-library` 不再给所有 Android library 默认添加 Arrow；`shared:data:model` 因公开 `Either/Raise` API 显式用 `api` 暴露 Arrow，其他实际直接使用 Arrow 的模块改为各自声明 `implementation(libs.bundles.arrow)`；旧 FRP helper 移出后，`shared:base` 不再需要 Arrow。
 - `ivy.android-library` 不再给所有 Android library 默认添加 Timber；domain 汇率同步和饼图点击逻辑中的调试日志已删除，当前只保留 app 日志初始化/锁屏认证日志以及 data core 的网络/导入错误日志。
 - `ivy.android-library` 不再给所有 Android library 默认添加整套单元测试依赖；当前有 `src/test` 的 `shared:base`、`shared:data:model`、`shared:data:model-testing`、`shared:data:core`、`shared:domain` 和 `shared:ui:core` 改为在各自模块里显式声明测试 bundle。
+- 新增 `ivy.kotlin-library` 作为纯 JVM/Kotlin 模块约定；`shared:data:model` 和 `shared:data:api` 已从 Android library 改成 JVM 模块，不再需要 namespace、Android manifest、min/compile SDK 或 Android Kotlin runtime。
 - `shared:data:core` 的 DataStore 依赖已从 `api` 收窄为 `implementation`；DataStore 绑定仍由 data core 提供，但不再通过 data core 传递暴露给其他模块。
 - `shared:domain` 已移除 AndroidX DataStore 依赖；偏好开关的存储能力抽成 `PreferenceToggleStore` 端口，DataStore 读写和清空由 `shared:data:core` 实现，domain 只保留业务级 `PreferenceToggleRepository` 和开关元数据。
 - `shared:data:api` 已显式暴露 Arrow 依赖；`ExchangeRateStore` 的公开签名直接使用 `Either`，不再依赖 `shared:data:model` 间接传递 Arrow。
@@ -732,7 +734,7 @@
 - 备份恢复中的偏好读写已改走 `AppPreferenceStore`；备份 JSON 仍保留原 sharedPrefs key 字符串以兼容旧备份文件，但 `BackupDataUseCase` 不再直接读写通用 `PreferenceStore`。
 - 旧 `PreferenceStore/SharedPrefs` 基础层抽象已删除；`SharedPrefsAppPreferenceStore` 在 data-core 内部直接持有 Android SharedPreferences，base 不再暴露偏好存储绑定。
 - 文件读写和备份恢复端口已用 `ExternalFile` 包装外部文件引用；domain 和 data-api 不再公开 Android `Uri`，UI/platform 仍负责文件选择与分享，data-core 实现边界再转换回 Android `Uri`。因为 `ExternalFile` 已进入 domain 用例公开签名，`shared:domain` 对 `shared:data:api` 的依赖显式使用 `api` 暴露，调用方无需直接依赖 data-api 实现模块。
-- 币种模型和本地币种默认值读取已从 Android ICU `Currency` 切到 JDK `java.util.Currency`；`shared:data:model` 与 `shared:data:api` 主源码当前不再直接引用 Android API，后续可以继续评估是否转成更轻的 JVM/Kotlin 模块。
+- 币种模型和本地币种默认值读取已从 Android ICU `Currency` 切到 JDK `java.util.Currency`；`shared:data:model` 与 `shared:data:api` 主源码当前不再直接引用 Android API，并已改成更轻的 JVM/Kotlin 模块。
 - `AndroidResourceProvider` 已从 base 移到 app 平台层并由 app Hilt 模块绑定；`ResourceProvider` 抽象也已从 base 迁到 `shared:ui:core` 的 `com.ivy.ui.resource` 包。
 - `ResourceProvider` 接口已去掉 `@StringRes` 注解；资源 ID 在 UI 端口中只作为普通参数，Android 注解仅保留在 app 实现层。
 - 备份 zip/unzip 工具已从 base 下沉到 `shared:data:core` 的备份包；zip 文件读写仍使用 Android `Context/Uri`，但只留在实际负责备份恢复的数据实现层。

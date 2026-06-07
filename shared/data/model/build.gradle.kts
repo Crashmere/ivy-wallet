@@ -1,10 +1,6 @@
 plugins {
-    id("ivy.android-library")
+    id("ivy.kotlin-library")
     id("ivy.kotlinx-serialization")
-}
-
-android {
-    namespace = "com.ivy.data.model"
 }
 
 dependencies {
