@@ -1,8 +1,8 @@
 package com.ivy.transactions
 
 import androidx.compose.runtime.Immutable
-import com.ivy.base.model.legacy.Transaction
-import com.ivy.base.model.legacy.TransactionHistoryItem
+import com.ivy.data.model.legacy.Transaction
+import com.ivy.data.model.legacy.TransactionHistoryItem
 import com.ivy.data.model.Category
 import com.ivy.legacy.ui.model.period.TimePeriod
 import com.ivy.data.model.legacy.Account

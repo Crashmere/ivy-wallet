@@ -2,8 +2,8 @@ package com.ivy.data.db
 
 import androidx.room.TypeConverter
 import com.ivy.base.theme.Theme
-import com.ivy.base.model.LoanRecordType
-import com.ivy.base.model.TransactionType
+import com.ivy.data.model.LoanRecordType
+import com.ivy.data.model.TransactionType
 import com.ivy.base.time.epochMilliToUtcLocalDateTime
 import com.ivy.base.time.toUtcEpochMilli
 import com.ivy.data.model.IntervalType

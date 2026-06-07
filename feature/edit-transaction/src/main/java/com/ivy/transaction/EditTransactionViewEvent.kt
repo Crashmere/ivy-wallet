@@ -1,7 +1,7 @@
 package com.ivy.transaction
 
 import androidx.compose.runtime.Immutable
-import com.ivy.base.model.TransactionType
+import com.ivy.data.model.TransactionType
 import com.ivy.data.model.Category
 import com.ivy.data.model.Tag
 import com.ivy.data.model.TagId

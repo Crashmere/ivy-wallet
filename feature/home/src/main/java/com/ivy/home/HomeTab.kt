@@ -23,8 +23,8 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.ivy.base.model.legacy.Transaction
-import com.ivy.base.model.legacy.TransactionHistoryItem
+import com.ivy.data.model.legacy.Transaction
+import com.ivy.data.model.legacy.TransactionHistoryItem
 import com.ivy.ui.time.LocalTimeConverter
 import com.ivy.ui.platform.LocalDatePicker
 import com.ivy.ui.time.LocalTimeFormatter

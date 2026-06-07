@@ -1,7 +1,7 @@
 package com.ivy.domain.usecase.transaction
 
 import arrow.core.nonEmptyListOf
-import com.ivy.base.model.legacy.Transaction
+import com.ivy.data.model.legacy.Transaction
 import com.ivy.data.model.legacy.Account
 import com.ivy.data.model.legacy.IncomeExpenseTransferPair
 import com.ivy.domain.usecase.exchange.ExchangeAmountUseCase

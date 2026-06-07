@@ -1,7 +1,7 @@
 package com.ivy.domain.usecase.account
 
 import arrow.core.getOrElse
-import com.ivy.base.model.TransactionType
+import com.ivy.data.model.TransactionType
 import com.ivy.base.time.TimeProvider
 import com.ivy.data.api.AccountStore
 import com.ivy.data.api.TransactionStore
@@ -11,7 +11,7 @@ import java.math.BigDecimal
 import javax.inject.Inject
 import kotlin.math.abs
 import kotlin.math.absoluteValue
-import com.ivy.base.model.legacy.Transaction as LegacyTransaction
+import com.ivy.data.model.legacy.Transaction as LegacyTransaction
 import com.ivy.data.model.legacy.Account as LegacyAccount
 
 class AdjustAccountBalanceUseCase @Inject constructor(

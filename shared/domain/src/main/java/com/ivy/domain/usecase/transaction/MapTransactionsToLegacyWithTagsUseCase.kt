@@ -1,6 +1,6 @@
 package com.ivy.domain.usecase.transaction
 
-import com.ivy.base.model.legacy.LegacyTransaction
+import com.ivy.data.model.legacy.LegacyTransaction
 import com.ivy.data.api.TagStore
 import com.ivy.data.model.Transaction
 import com.ivy.domain.mapper.legacy.toImmutableLegacyTags

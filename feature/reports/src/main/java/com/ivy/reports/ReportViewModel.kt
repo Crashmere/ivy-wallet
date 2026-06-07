@@ -9,9 +9,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.toArgb
 import androidx.lifecycle.viewModelScope
-import com.ivy.base.model.legacy.LegacyTransaction
-import com.ivy.base.model.legacy.TransactionHistoryItem
-import com.ivy.base.model.TransactionType
+import com.ivy.data.model.legacy.LegacyTransaction
+import com.ivy.data.model.legacy.TransactionHistoryItem
+import com.ivy.data.model.TransactionType
 import com.ivy.base.resource.ResourceProvider
 import com.ivy.base.time.TimeConverter
 import com.ivy.base.time.TimeProvider
@@ -566,7 +566,7 @@ class ReportViewModel @Inject constructor(
         }
     }
 
-    private suspend fun payOrGetLegacy(transaction: com.ivy.base.model.legacy.Transaction) {
+    private suspend fun payOrGetLegacy(transaction: com.ivy.data.model.legacy.Transaction) {
         uiThread {
             if (payOrSkipLegacyPlannedTransactionUseCase(transaction) != null) {
                 start()
@@ -600,7 +600,7 @@ class ReportViewModel @Inject constructor(
         }
     }
 
-    private suspend fun skipTransactionLegacy(transaction: com.ivy.base.model.legacy.Transaction) {
+    private suspend fun skipTransactionLegacy(transaction: com.ivy.data.model.legacy.Transaction) {
         uiThread {
             val paidTransaction = payOrSkipLegacyPlannedTransactionUseCase(
                 transaction = transaction,
@@ -626,7 +626,7 @@ class ReportViewModel @Inject constructor(
         }
     }
 
-    private suspend fun skipTransactionsLegacy(transactions: List<com.ivy.base.model.legacy.Transaction>) {
+    private suspend fun skipTransactionsLegacy(transactions: List<com.ivy.data.model.legacy.Transaction>) {
         uiThread {
             val paidTransactions = payOrSkipLegacyPlannedTransactionsUseCase(
                 transactions = transactions,

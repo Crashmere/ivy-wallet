@@ -1,6 +1,6 @@
 package com.ivy.data.repository
 
-import com.ivy.base.model.TransactionType
+import com.ivy.data.model.TransactionType
 import com.ivy.base.threading.DispatchersProvider
 import com.ivy.data.api.TransactionStore
 import com.ivy.data.db.dao.read.TransactionDao

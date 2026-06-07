@@ -1,6 +1,6 @@
 package com.ivy.planned.edit
 
-import com.ivy.base.model.TransactionType
+import com.ivy.data.model.TransactionType
 import com.ivy.data.model.Category
 import com.ivy.data.model.IntervalType
 import com.ivy.data.model.legacy.Account

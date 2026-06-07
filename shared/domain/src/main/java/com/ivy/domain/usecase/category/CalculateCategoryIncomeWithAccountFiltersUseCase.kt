@@ -1,6 +1,6 @@
 package com.ivy.domain.usecase.category
 
-import com.ivy.base.model.legacy.Transaction
+import com.ivy.data.model.legacy.Transaction
 import com.ivy.data.model.Category
 import com.ivy.data.model.legacy.Account
 import com.ivy.data.model.legacy.IncomeExpenseTransferPair

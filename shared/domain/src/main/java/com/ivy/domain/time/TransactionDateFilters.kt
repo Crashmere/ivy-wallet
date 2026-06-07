@@ -1,6 +1,6 @@
 package com.ivy.domain.time
 
-import com.ivy.base.model.legacy.Transaction
+import com.ivy.data.model.legacy.Transaction
 import com.ivy.base.time.TimeConverter
 import com.ivy.base.time.TimeProvider
 import java.time.Instant

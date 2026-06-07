@@ -1,7 +1,7 @@
 package com.ivy.domain.usecase.csv
 
 import android.net.Uri
-import com.ivy.base.model.TransactionType
+import com.ivy.data.model.TransactionType
 import com.ivy.base.threading.DispatchersProvider
 import com.ivy.base.time.TimeConverter
 import com.ivy.data.api.file.TextFileStore

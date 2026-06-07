@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.ivy.data.db.serializer.KSerializerInstant
 import com.ivy.data.db.serializer.KSerializerUUID
-import com.ivy.base.model.TransactionType
+import com.ivy.data.model.TransactionType
 import com.ivy.data.model.IntervalType
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

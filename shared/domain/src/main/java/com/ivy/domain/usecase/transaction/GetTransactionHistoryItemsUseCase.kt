@@ -1,6 +1,6 @@
 package com.ivy.domain.usecase.transaction
 
-import com.ivy.base.model.legacy.TransactionHistoryItem
+import com.ivy.data.model.legacy.TransactionHistoryItem
 import com.ivy.data.model.legacy.ClosedTimeRange
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList

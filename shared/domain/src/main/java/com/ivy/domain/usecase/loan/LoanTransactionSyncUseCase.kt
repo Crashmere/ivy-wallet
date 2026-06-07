@@ -1,8 +1,8 @@
 package com.ivy.domain.usecase.loan
 
-import com.ivy.base.model.legacy.Transaction
-import com.ivy.base.model.LoanRecordType
-import com.ivy.base.model.TransactionType
+import com.ivy.data.model.legacy.Transaction
+import com.ivy.data.model.LoanRecordType
+import com.ivy.data.model.TransactionType
 import com.ivy.data.model.LoanType
 import com.ivy.data.model.legacy.Account
 import com.ivy.data.model.legacy.Loan

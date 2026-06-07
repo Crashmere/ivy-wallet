@@ -8,8 +8,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
 import com.ivy.base.theme.Theme
-import com.ivy.base.model.legacy.Transaction
-import com.ivy.base.model.legacy.TransactionHistoryItem
+import com.ivy.data.model.legacy.Transaction
+import com.ivy.data.model.legacy.TransactionHistoryItem
 import com.ivy.base.time.TimeConverter
 import com.ivy.base.time.TimeProvider
 import com.ivy.data.model.primitive.AssetCode

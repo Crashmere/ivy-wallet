@@ -2,7 +2,7 @@ package com.ivy.domain.transaction.legacy
 
 import arrow.core.Option
 import arrow.core.toOption
-import com.ivy.base.model.TransactionType
+import com.ivy.data.model.TransactionType
 import com.ivy.domain.time.convertToLocal
 import com.ivy.data.model.Expense
 import com.ivy.data.model.Income
@@ -41,14 +41,14 @@ fun trnCurrency(
 }
 
 object LegacyTrnFunctions {
-    fun expenses(transactions: List<com.ivy.base.model.legacy.Transaction>): List<com.ivy.base.model.legacy.Transaction> {
+    fun expenses(transactions: List<com.ivy.data.model.legacy.Transaction>): List<com.ivy.data.model.legacy.Transaction> {
         return transactions.filter { it.type == TransactionType.EXPENSE }
     }
-    fun incomes(transactions: List<com.ivy.base.model.legacy.Transaction>): List<com.ivy.base.model.legacy.Transaction> {
+    fun incomes(transactions: List<com.ivy.data.model.legacy.Transaction>): List<com.ivy.data.model.legacy.Transaction> {
         return transactions.filter { it.type == TransactionType.INCOME }
     }
     fun trnCurrency(
-        transaction: com.ivy.base.model.legacy.Transaction,
+        transaction: com.ivy.data.model.legacy.Transaction,
         accounts: List<Account>,
         baseCurrency: String
     ): Option<String> {

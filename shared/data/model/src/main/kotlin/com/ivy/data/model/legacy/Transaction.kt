@@ -1,6 +1,6 @@
-package com.ivy.base.model.legacy
+package com.ivy.data.model.legacy
 
-import com.ivy.base.model.TransactionType
+import com.ivy.data.model.TransactionType
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import java.math.BigDecimal

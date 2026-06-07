@@ -1,4 +1,4 @@
-package com.ivy.base.model.legacy
+package com.ivy.data.model.legacy
 
 import java.time.LocalDate
 

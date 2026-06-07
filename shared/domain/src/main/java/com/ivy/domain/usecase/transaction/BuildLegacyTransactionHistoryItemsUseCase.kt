@@ -1,7 +1,7 @@
 package com.ivy.domain.usecase.transaction
 
-import com.ivy.base.model.legacy.Transaction
-import com.ivy.base.model.legacy.TransactionHistoryItem
+import com.ivy.data.model.legacy.Transaction
+import com.ivy.data.model.legacy.TransactionHistoryItem
 import com.ivy.base.time.TimeConverter
 import com.ivy.data.api.AccountStore
 import com.ivy.data.model.AccountId

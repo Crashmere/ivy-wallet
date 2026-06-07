@@ -1,6 +1,6 @@
 package com.ivy.domain.usecase.loan
 
-import com.ivy.base.model.legacy.Transaction
+import com.ivy.data.model.legacy.Transaction
 import com.ivy.data.model.legacy.Loan
 import com.ivy.data.model.legacy.LoanRecord
 import com.ivy.base.coroutines.computationThread

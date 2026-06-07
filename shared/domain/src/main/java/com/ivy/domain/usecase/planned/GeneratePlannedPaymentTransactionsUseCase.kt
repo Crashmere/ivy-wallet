@@ -1,6 +1,6 @@
 package com.ivy.domain.usecase.planned
 
-import com.ivy.base.model.legacy.Transaction
+import com.ivy.data.model.legacy.Transaction
 import com.ivy.data.api.AccountStore
 import com.ivy.data.model.legacy.PlannedPaymentRule
 import com.ivy.data.api.TransactionStore

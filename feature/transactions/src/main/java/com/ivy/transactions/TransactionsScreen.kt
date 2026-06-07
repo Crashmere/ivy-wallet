@@ -33,9 +33,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.ivy.base.theme.Theme
-import com.ivy.base.model.legacy.Transaction
-import com.ivy.base.model.legacy.TransactionHistoryItem
-import com.ivy.base.model.TransactionType
+import com.ivy.data.model.legacy.Transaction
+import com.ivy.data.model.legacy.TransactionHistoryItem
+import com.ivy.data.model.TransactionType
 import com.ivy.data.model.Category
 import com.ivy.ui.platform.LocalDatePicker
 import com.ivy.ui.time.LocalTimeConverter

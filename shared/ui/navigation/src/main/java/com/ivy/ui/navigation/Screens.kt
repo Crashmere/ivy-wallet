@@ -1,7 +1,7 @@
 package com.ivy.ui.navigation
 
-import com.ivy.base.model.legacy.Transaction
-import com.ivy.base.model.TransactionType
+import com.ivy.data.model.legacy.Transaction
+import com.ivy.data.model.TransactionType
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import java.util.UUID

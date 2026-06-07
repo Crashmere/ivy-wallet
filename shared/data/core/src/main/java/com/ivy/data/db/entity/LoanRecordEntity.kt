@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.ivy.data.db.serializer.KSerializerInstant
 import com.ivy.data.db.serializer.KSerializerUUID
-import com.ivy.base.model.LoanRecordType
+import com.ivy.data.model.LoanRecordType
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import java.time.Instant

@@ -2,8 +2,8 @@ package com.ivy.domain.transaction.legacy
 
 import arrow.core.Option
 import arrow.core.toOption
-import com.ivy.base.model.legacy.TransactionHistoryItem
-import com.ivy.base.model.legacy.TransactionHistoryDateDivider
+import com.ivy.data.model.legacy.TransactionHistoryItem
+import com.ivy.data.model.legacy.TransactionHistoryDateDivider
 import com.ivy.base.time.TimeConverter
 import com.ivy.domain.time.convertToLocal
 import com.ivy.data.api.AccountStore
@@ -90,7 +90,7 @@ suspend fun transactionsWithDateDividers(
 }
 
 object LegacyTrnDateDividers {
-        suspend fun List<com.ivy.base.model.legacy.Transaction>.withDateDividers(
+        suspend fun List<com.ivy.data.model.legacy.Transaction>.withDateDividers(
         exchangeRatesLogic: LegacyExchangeRatesUseCase,
         baseCurrencyCode: String,
         accountStore: AccountStore,
@@ -112,7 +112,7 @@ object LegacyTrnDateDividers {
         )
     }
     suspend fun transactionsWithDateDividers(
-        transactions: List<com.ivy.base.model.legacy.Transaction>,
+        transactions: List<com.ivy.data.model.legacy.Transaction>,
         baseCurrencyCode: String,
         timeConverter: TimeConverter,
         getAccount: suspend (accountId: UUID) -> Account?,

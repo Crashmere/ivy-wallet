@@ -1,9 +1,7 @@
-package com.ivy.base.model
+package com.ivy.data.model
 
-import androidx.annotation.Keep
 import kotlinx.serialization.Serializable
 
-@Keep
 @Serializable
 enum class LoanRecordType {
     INCREASE, DECREASE

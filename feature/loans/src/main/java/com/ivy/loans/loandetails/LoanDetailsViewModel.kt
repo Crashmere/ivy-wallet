@@ -6,8 +6,8 @@ import androidx.compose.runtime.Stable
 import androidx.compose.runtime.mutableDoubleStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.viewModelScope
-import com.ivy.base.model.legacy.Transaction
-import com.ivy.base.model.LoanRecordType
+import com.ivy.data.model.legacy.Transaction
+import com.ivy.data.model.LoanRecordType
 import com.ivy.base.time.TimeConverter
 import com.ivy.base.time.TimeProvider
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase

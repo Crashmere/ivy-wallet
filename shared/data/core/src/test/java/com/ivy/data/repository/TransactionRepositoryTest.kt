@@ -4,7 +4,7 @@ import arrow.core.Either
 import arrow.core.Some
 import arrow.core.identity
 import com.ivy.base.TestDispatchersProvider
-import com.ivy.base.model.TransactionType
+import com.ivy.data.model.TransactionType
 import com.ivy.data.db.dao.fake.FakeTransactionDao
 import com.ivy.data.db.dao.read.TransactionDao
 import com.ivy.data.db.dao.write.WriteTransactionDao

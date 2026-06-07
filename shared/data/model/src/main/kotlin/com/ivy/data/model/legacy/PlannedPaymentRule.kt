@@ -1,6 +1,6 @@
 package com.ivy.data.model.legacy
 
-import com.ivy.base.model.TransactionType
+import com.ivy.data.model.TransactionType
 import com.ivy.data.model.IntervalType
 import java.time.Instant
 import java.util.UUID

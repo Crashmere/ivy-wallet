@@ -1,6 +1,6 @@
 package com.ivy.reports
 
-import com.ivy.base.model.TransactionType
+import com.ivy.data.model.TransactionType
 import com.ivy.data.model.Category
 import com.ivy.data.model.TagId
 import com.ivy.legacy.ui.model.period.TimePeriod

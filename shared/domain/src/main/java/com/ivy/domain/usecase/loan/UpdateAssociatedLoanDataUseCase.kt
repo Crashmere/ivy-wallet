@@ -1,6 +1,6 @@
 package com.ivy.domain.usecase.loan
 
-import com.ivy.base.model.legacy.Transaction
+import com.ivy.data.model.legacy.Transaction
 import com.ivy.base.coroutines.computationThread
 import javax.inject.Inject
 

@@ -1,6 +1,6 @@
 package com.ivy.domain.usecase.transaction
 
-import com.ivy.base.model.legacy.Transaction
+import com.ivy.data.model.legacy.Transaction
 import com.ivy.data.model.TransactionId
 import com.ivy.data.api.TransactionStore
 import com.ivy.domain.mapper.legacy.toLegacy

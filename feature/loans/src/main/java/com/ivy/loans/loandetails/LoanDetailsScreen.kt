@@ -30,8 +30,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.ivy.base.model.TransactionType
-import com.ivy.base.model.processByType
+import com.ivy.data.model.TransactionType
+import com.ivy.data.model.processByType
 import com.ivy.data.model.LoanType
 import com.ivy.ui.time.LocalTimeFormatter
 import com.ivy.legacy.ui.theme.system.LegacyTheme

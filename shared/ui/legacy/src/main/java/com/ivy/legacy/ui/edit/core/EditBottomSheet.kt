@@ -56,7 +56,7 @@ import com.ivy.legacy.ui.springBounce
 import com.ivy.legacy.ui.testing.TestingContext
 import com.ivy.ui.compose.thenIf
 import com.ivy.legacy.ui.verticalSwipeListener
-import com.ivy.base.model.TransactionType
+import com.ivy.data.model.TransactionType
 import com.ivy.legacy.ui.rememberInteractionSource
 import com.ivy.legacy.ui.rememberSwipeListenerState
 import com.ivy.ui.R

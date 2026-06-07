@@ -740,6 +740,7 @@
 - Room/备份实体使用的 UUID、Instant、LocalDateTime 序列化器已从 base 下沉到 `shared:data:core` 的 `db.serializer` 包；序列化格式和实体注解保持不变。
 - `LoanType/IntervalType` 已从 base 物理归位到 `shared:data:model`；`IntervalType.incrementDate` 也迁到同一模型包，计划付款和 legacy 周期 UI 只更新导入路径。
 - `Json` 的 Hilt 提供模块已从 base 移到 `shared:data:core`，由数据层集中配置备份恢复和 Ktor 客户端共用的 kotlinx serialization 行为。
+- legacy 交易展示模型、`TransactionType` 和 `LoanRecordType` 已归位到 `shared:data:model`；base 不再承载交易模型类型，也不再应用 kotlinx serialization 构建插件。
 - 账户旧读取路径已收敛到 `AccountStore`；旧 legacy 账户模型现在由 data model 账户映射而来，`shared:domain` 主源码不再直接注入 `AccountDao` 或依赖 `AccountEntity` mapper。
 - 旧交易卡片已移除重复账户查找 TODO：渲染前先解析来源/目标账户，再复用同一结果处理点击和币种展示，行为不变但 legacy UI 内部职责更清楚。
 

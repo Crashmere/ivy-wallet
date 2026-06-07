@@ -1,7 +1,7 @@
 package com.ivy.domain
 
 import android.content.Intent
-import com.ivy.base.model.TransactionType
+import com.ivy.data.model.TransactionType
 
 /**
  * A component used to start the **RootActivity** without knowing about it.

@@ -1,6 +1,6 @@
 package com.ivy.domain.usecase.loan
 
-import com.ivy.base.model.legacy.LegacyTransaction
+import com.ivy.data.model.legacy.LegacyTransaction
 import com.ivy.data.api.TransactionStore
 import com.ivy.domain.mapper.legacy.toLegacy
 import java.util.UUID

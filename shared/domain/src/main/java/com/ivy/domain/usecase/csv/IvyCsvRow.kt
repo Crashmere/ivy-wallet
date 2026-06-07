@@ -1,6 +1,6 @@
 package com.ivy.domain.usecase.csv
 
-import com.ivy.base.model.TransactionType
+import com.ivy.data.model.TransactionType
 import com.ivy.data.model.AccountId
 import com.ivy.data.model.CategoryId
 import com.ivy.data.model.TransactionId

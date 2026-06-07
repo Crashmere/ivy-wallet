@@ -1,6 +1,6 @@
 package com.ivy.data
 
-import com.ivy.base.model.TransactionType
+import com.ivy.data.model.TransactionType
 import com.ivy.data.db.entity.TransactionEntity
 import com.ivy.data.model.testing.accountId
 import com.ivy.data.model.testing.maybe
