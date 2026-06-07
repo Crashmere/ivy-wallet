@@ -1,6 +1,5 @@
 package com.ivy.legacy.domain.model
 
-import androidx.compose.runtime.Immutable
 import com.ivy.data.db.entity.LoanEntity
 import com.ivy.data.model.LoanType
 import java.time.LocalDateTime
@@ -8,7 +7,6 @@ import java.util.UUID
 
 @Suppress("DataClassDefaultValues")
 @Deprecated("Legacy data model. Will be deleted")
-@Immutable
 data class Loan(
     val name: String,
     val amount: Double,

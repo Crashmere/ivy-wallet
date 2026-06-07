@@ -1,6 +1,5 @@
 package com.ivy.legacy.domain.model
 
-import androidx.compose.runtime.Immutable
 import com.ivy.base.model.legacy.Transaction
 import com.ivy.base.time.TimeConverter
 import com.ivy.base.time.TimeProvider
@@ -11,7 +10,6 @@ import java.time.Instant
 import java.time.ZoneOffset
 
 @Suppress("DataClassFunctions")
-@Immutable
 data class FromToTimeRange(
     val from: Instant?,
     val to: Instant?,

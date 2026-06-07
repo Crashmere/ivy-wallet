@@ -1,11 +1,9 @@
 package com.ivy.legacy.domain.model
 
-import androidx.compose.runtime.Immutable
 import com.ivy.data.db.entity.BudgetEntity
 import java.util.UUID
 
 @Deprecated("Legacy data model. Will be deleted")
-@Immutable
 data class Budget(
     val name: String,
     val amount: Double,
