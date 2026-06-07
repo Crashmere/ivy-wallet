@@ -40,7 +40,6 @@ import com.ivy.legacy.ui.component.transaction.TypeAmountCurrency
 import com.ivy.legacy.ui.formatDateOnly
 import com.ivy.legacy.ui.formatDateOnlyWithYear
 import com.ivy.base.legacy.isNotNullOrBlank
-import com.ivy.base.legacy.timeNowUTC
 import com.ivy.base.legacy.uppercaseLocal
 import com.ivy.navigation.TransactionsScreen
 import com.ivy.navigation.navigation
@@ -57,7 +56,6 @@ import com.ivy.legacy.ui.theme.toComposeColor
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import java.time.LocalDateTime
-import java.time.ZoneOffset
 import java.util.UUID
 
 @SuppressLint("ComposeModifierMissing")

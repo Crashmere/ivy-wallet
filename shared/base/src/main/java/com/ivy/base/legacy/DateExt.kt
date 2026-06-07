@@ -7,21 +7,8 @@ import java.time.Instant
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
-import java.time.ZoneId
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
-
-@Deprecated("Use the TimeProvider interface via DI")
-fun timeNowLocal(): LocalDateTime = LocalDateTime.now()
-
-@Deprecated("Use the TimeProvider interface via DI")
-fun dateNowLocal(): LocalDate = LocalDate.now()
-
-@Deprecated("Use the TimeProvider interface via DI")
-fun timeNowUTC(): LocalDateTime = LocalDateTime.now(ZoneOffset.UTC)
-
-@Deprecated("Use the TimeProvider interface via DI")
-fun dateNowUTC(): LocalDate = LocalDate.now(ZoneOffset.UTC)
 
 fun LocalDateTime.toEpochSeconds() = this.toEpochSecond(ZoneOffset.UTC)
 
@@ -34,34 +21,6 @@ fun LocalDateTime.format(
     return this.format(
         DateTimeFormatter.ofPattern(pattern)
     )
-}
-
-@Deprecated("Use the TimeConverter interface via DI")
-fun LocalDateTime.convertUTCtoLocal(zone: ZoneId = ZoneOffset.systemDefault()): LocalDateTime {
-    return this.convertUTCto(zone)
-}
-
-@Deprecated("Use the TimeConverter interface via DI")
-fun LocalDateTime.convertUTCto(zone: ZoneId): LocalDateTime {
-    return plusSeconds(atZone(zone).offset.totalSeconds.toLong())
-}
-
-@Deprecated("Use the TimeConverter interface via DI")
-fun LocalTime.convertLocalToUTC(): LocalTime {
-    val offset = timeNowLocal().atZone(ZoneOffset.systemDefault()).offset.totalSeconds.toLong()
-    return this.minusSeconds(offset)
-}
-
-@Deprecated("Use the TimeConverter interface via DI")
-fun LocalTime.convertUTCToLocal(): LocalTime {
-    val offset = timeNowLocal().atZone(ZoneOffset.systemDefault()).offset.totalSeconds.toLong()
-    return this.plusSeconds(offset)
-}
-
-@Deprecated("Use the TimeConverter interface via DI")
-fun LocalDateTime.convertLocalToUTC(): LocalDateTime {
-    val offset = timeNowLocal().atZone(ZoneOffset.systemDefault()).offset.totalSeconds.toLong()
-    return this.minusSeconds(offset)
 }
 
 fun startOfMonth(date: LocalDate, timeConverter: TimeConverter): Instant {

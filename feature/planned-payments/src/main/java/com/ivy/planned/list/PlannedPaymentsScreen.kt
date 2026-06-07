@@ -22,7 +22,6 @@ import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
 import com.ivy.legacy.domain.model.Account
 import com.ivy.legacy.domain.model.PlannedPaymentRule
-import com.ivy.base.legacy.timeNowUTC
 import com.ivy.navigation.EditPlannedScreen
 import com.ivy.navigation.PlannedPaymentsScreen
 import com.ivy.navigation.navigation
@@ -32,7 +31,6 @@ import com.ivy.ui.rememberScrollPositionListState
 import com.ivy.legacy.ui.theme.Green
 import com.ivy.legacy.ui.theme.Orange
 import kotlinx.collections.immutable.persistentListOf
-import java.time.ZoneOffset
 import java.util.UUID
 
 @Composable

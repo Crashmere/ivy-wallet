@@ -2,7 +2,6 @@ package com.ivy.legacy.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
-import com.ivy.base.legacy.convertUTCtoLocal
 import com.ivy.ui.R
 import com.ivy.ui.time.LocalTimeProvider
 import java.time.LocalDate
@@ -109,13 +108,13 @@ fun LocalDateTime.formatLocal(
     pattern: String = "dd MMM yyyy, HH:mm",
     zone: ZoneId = ZoneOffset.systemDefault()
 ): String {
-    val localDateTime = this.convertUTCtoLocal(zone)
-    return localDateTime.atZone(zone).format(
+    return this.toInstant(ZoneOffset.UTC).let { instant ->
         DateTimeFormatter
             .ofPattern(pattern)
             .withLocale(Locale.getDefault())
             .withZone(zone)
-    )
+            .format(instant)
+    }
 }
 
 fun LocalDate.formatLocal(
