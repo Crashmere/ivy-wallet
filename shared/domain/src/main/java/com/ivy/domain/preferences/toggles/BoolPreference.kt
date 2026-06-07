@@ -15,15 +15,15 @@ class BoolPreference(
     val description: String? = null,
     val defaultValue: Boolean
 ) {
-    suspend fun isEnabled(dataStore: DataStore<Preferences>): Boolean =
+    internal suspend fun isEnabled(dataStore: DataStore<Preferences>): Boolean =
         enabledFlow(dataStore).first() ?: defaultValue
 
-    fun enabledFlow(dataStore: DataStore<Preferences>): Flow<Boolean?> = dataStore
+    internal fun enabledFlow(dataStore: DataStore<Preferences>): Flow<Boolean?> = dataStore
         .data.map {
             it[preferenceKey] ?: defaultValue
         }
 
-    suspend fun set(dataStore: DataStore<Preferences>, enabled: Boolean) {
+    internal suspend fun set(dataStore: DataStore<Preferences>, enabled: Boolean) {
         dataStore.edit {
             it[preferenceKey] = enabled
         }
