@@ -21,7 +21,6 @@ import com.ivy.legacy.ui.component.BalanceRow
 import com.ivy.legacy.ui.component.IvyDividerLine
 
 @Suppress("UnusedParameter")
-@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @Composable
 fun ModalAmountSection(
     label: String,

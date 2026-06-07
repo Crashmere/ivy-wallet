@@ -59,7 +59,6 @@ import com.ivy.legacy.ui.modal.modalPreviewActionRowHeight
 
 @SuppressLint("ComposeModifierMissing")
 @Suppress("ParameterNaming")
-@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @Composable
 fun BoxWithConstraintsScope.AmountModal(
     id: UUID,

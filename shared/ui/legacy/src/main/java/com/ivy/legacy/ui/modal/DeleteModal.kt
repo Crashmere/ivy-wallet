@@ -31,7 +31,6 @@ import com.ivy.legacy.ui.component.IvyNameTextField
 import java.util.UUID
 
 @SuppressLint("ComposeModifierMissing")
-@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @Composable
 fun BoxWithConstraintsScope.DeleteModal(
     title: String,

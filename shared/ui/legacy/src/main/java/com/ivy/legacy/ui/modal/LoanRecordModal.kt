@@ -60,7 +60,6 @@ import java.util.UUID
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 
-@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 data class LoanRecordModalData(
     val loanRecord: LoanRecord?,
     val baseCurrency: String,
@@ -73,7 +72,6 @@ data class LoanRecordModalData(
 
 @Suppress("CyclomaticComplexMethod", "LongMethod")
 @SuppressLint("ComposeModifierMissing")
-@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @Composable
 fun BoxWithConstraintsScope.LoanRecordModal(
     modal: LoanRecordModalData?,

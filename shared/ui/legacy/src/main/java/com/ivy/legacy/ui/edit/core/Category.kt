@@ -17,7 +17,6 @@ import com.ivy.legacy.ui.component.getCustomIconIdS
 import com.ivy.legacy.ui.theme.findContrastTextColor
 import com.ivy.legacy.ui.theme.toComposeColor
 
-@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @Composable
 fun Category(
     category: Category?,

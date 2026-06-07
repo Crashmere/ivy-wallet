@@ -23,7 +23,6 @@ import com.ivy.legacy.ui.selectEndTextFieldValue
 import com.ivy.ui.R
 import com.ivy.legacy.ui.component.IvyBasicTextField
 
-@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @Suppress("MagicNumber")
 @Composable
 fun SearchInput(

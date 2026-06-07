@@ -34,7 +34,6 @@ import androidx.compose.runtime.getValue
 
 private const val SUGGESTIONS_LIMIT = 10
 
-@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @Suppress("ParameterNaming")
 @Composable
 fun ColumnScope.Title(

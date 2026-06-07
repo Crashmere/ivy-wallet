@@ -25,7 +25,6 @@ import java.time.Instant
 import com.ivy.ui.time.LocalTimeProvider
 import java.util.concurrent.TimeUnit
 
-@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @Composable
 fun DueDate(
     dueDate: Instant,

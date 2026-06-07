@@ -35,7 +35,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 
 @SuppressLint("ComposeModifierMissing")
-@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @Composable
 fun BoxWithConstraintsScope.CalculatorModal(
       initialAmount: Double?,

@@ -25,7 +25,6 @@ import com.ivy.ui.R
 import com.ivy.data.model.currency.IvyCurrency
 import com.ivy.legacy.ui.theme.Orange
 
-@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @Composable
 fun CustomExchangeRateCard(
     fromCurrencyCode: String,

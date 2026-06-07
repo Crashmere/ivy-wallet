@@ -23,7 +23,6 @@ import com.ivy.legacy.ui.clickableNoIndication
 import com.ivy.legacy.ui.rememberInteractionSource
 import com.ivy.ui.R
 
-@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @Composable
 fun IvyCheckbox(
     modifier: Modifier = Modifier,
@@ -47,7 +46,6 @@ fun IvyCheckbox(
     )
 }
 
-@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @Composable
 fun IvyCheckboxWithText(
     modifier: Modifier = Modifier,

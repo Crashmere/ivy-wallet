@@ -23,7 +23,6 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.doOnLayout
 import kotlin.math.roundToInt
 
-@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @Composable
 fun keyboardVisibleState(): State<Boolean> {
     val rootView = LocalView.current
@@ -41,7 +40,6 @@ fun keyboardVisibleState(): State<Boolean> {
     return keyboardVisible
 }
 
-@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 fun View.addKeyboardListener(keyboardCallback: (visible: Boolean) -> Unit) {
     doOnLayout {
         // get init state of keyboard
@@ -62,7 +60,6 @@ fun View.addKeyboardListener(keyboardCallback: (visible: Boolean) -> Unit) {
     }
 }
 
-@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 fun isKeyboardOpen(rootView: View): Boolean {
     return try {
         WindowInsetsCompat.toWindowInsetsCompat(rootView.rootWindowInsets, rootView)
@@ -73,17 +70,14 @@ fun isKeyboardOpen(rootView: View): Boolean {
     }
 }
 
-@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 fun convertDpToPixel(context: Context, dp: Float): Float {
     return dp * (context.resources.displayMetrics.densityDpi.toFloat() / DisplayMetrics.DENSITY_DEFAULT)
 }
 
-@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 fun convertDpToPixel(context: Context, dp: Int): Int {
     return convertDpToPixel(context, dp.toFloat()).roundToInt()
 }
 
-@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @SuppressLint("ComposableNaming")
 @Composable
 fun setStatusBarDarkTextCompat(darkText: Boolean) {
@@ -93,7 +87,6 @@ fun setStatusBarDarkTextCompat(darkText: Boolean) {
     )
 }
 
-@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 fun setStatusBarDarkTextCompat(view: View, darkText: Boolean) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
         view.windowInsetsController?.setStatusBarDarkText(darkText)
@@ -103,7 +96,6 @@ fun setStatusBarDarkTextCompat(view: View, darkText: Boolean) {
     }
 }
 
-@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @RequiresApi(Build.VERSION_CODES.R)
 fun WindowInsetsController.setStatusBarDarkText(darkText: Boolean) {
     setSystemBarsAppearance(
@@ -112,7 +104,6 @@ fun WindowInsetsController.setStatusBarDarkText(darkText: Boolean) {
     )
 }
 
-@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @Suppress("DEPRECATION")
 fun setStatusBarDarkTextOld(window: Window, darkText: Boolean) {
     window.decorView.systemUiVisibility = if (darkText) {
@@ -122,27 +113,22 @@ fun setStatusBarDarkTextOld(window: Window, darkText: Boolean) {
     }
 }
 
-@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 fun lerp(start: Int, end: Int, @FloatRange(from = 0.0, to = 1.0) fraction: Float): Int {
     return ((start + fraction * (end - start)).roundToInt())
 }
 
-@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 fun lerp(start: Float, end: Float, @FloatRange(from = 0.0, to = 1.0) fraction: Float): Float {
     return (start + fraction * (end - start))
 }
 
-@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 fun lerp(start: Double, end: Double, @FloatRange(from = 0.0, to = 1.0) fraction: Double): Double {
     return (start + fraction * (end - start))
 }
 
-@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 fun colorLerp(start: Color, end: Color, fraction: Float): Color {
     return Color(ArgbEvaluator().evaluate(fraction, start.toArgb(), end.toArgb()) as Int)
 }
 
-@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 fun hideKeyboard(view: View) {
     try {
         val imm: InputMethodManager =

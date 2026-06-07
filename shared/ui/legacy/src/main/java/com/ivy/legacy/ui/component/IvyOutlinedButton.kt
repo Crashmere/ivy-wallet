@@ -26,7 +26,6 @@ import com.ivy.ui.compose.thenIf
 import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.Green
 
-@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @Composable
 fun IvyOutlinedButton(
     modifier: Modifier = Modifier,

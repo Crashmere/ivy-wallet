@@ -14,16 +14,12 @@ import androidx.core.view.WindowCompat
 import com.ivy.base.theme.Theme
 import com.ivy.ui.theme.IvyMaterial3Theme
 
-@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 val LocalIvyColors = compositionLocalOf<IvyColors> { error("No IvyColors") }
 
-@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 val LocalIvyTypography = compositionLocalOf<IvyTypography> { error("No IvyTypography") }
 
-@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 val LocalIvyShapes = compositionLocalOf<IvyShapes> { error("No IvyShapes") }
 
-@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 object LegacyTheme {
     val colors: IvyColors
         @Composable
@@ -41,7 +37,6 @@ object LegacyTheme {
         get() = LocalIvyShapes.current
 }
 
-@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @Composable
 fun IvyTheme(
     theme: Theme,

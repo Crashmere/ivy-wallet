@@ -2,7 +2,6 @@ package com.ivy.legacy.ui.theme.system
 
 import androidx.compose.ui.text.TextStyle
 
-@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 interface IvyTypography {
     val h1: TextStyle
     val h2: TextStyle

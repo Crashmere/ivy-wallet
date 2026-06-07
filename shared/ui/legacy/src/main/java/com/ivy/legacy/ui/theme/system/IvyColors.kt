@@ -2,7 +2,6 @@ package com.ivy.legacy.ui.theme.system
 
 import androidx.compose.ui.graphics.Color
 
-@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 interface IvyColors {
     val pure: Color
     val pureInverse: Color

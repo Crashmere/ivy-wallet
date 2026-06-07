@@ -18,7 +18,6 @@ import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.Gradient
 
-@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @Composable
 fun CloseButton(
     modifier: Modifier = Modifier,
@@ -32,7 +31,6 @@ fun CloseButton(
     )
 }
 
-@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @Composable
 fun CircleButton(
     modifier: Modifier = Modifier,
@@ -56,7 +54,6 @@ fun CircleButton(
     )
 }
 
-@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @Composable
 fun CircleButtonFilled(
     modifier: Modifier = Modifier,
@@ -79,7 +76,6 @@ fun CircleButtonFilled(
     )
 }
 
-@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @Composable
 fun CircleButtonFilledGradient(
     modifier: Modifier = Modifier,
@@ -102,7 +98,6 @@ fun CircleButtonFilledGradient(
     )
 }
 
-@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @Composable
 fun BackButton(
     modifier: Modifier = Modifier,

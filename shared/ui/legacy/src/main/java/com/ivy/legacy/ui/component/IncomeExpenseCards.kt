@@ -36,7 +36,6 @@ import com.ivy.legacy.ui.component.IvyButton
 import com.ivy.legacy.ui.theme.findContrastTextColor
 import com.ivy.legacy.ui.theme.isDarkColor
 
-@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @Suppress("ParameterNaming")
 @Composable
 fun IncomeExpensesCards(

@@ -59,7 +59,6 @@ import java.util.Locale
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 
-@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @Suppress("ParameterNaming")
 @Composable
 fun CurrencyPicker(
@@ -134,7 +133,6 @@ fun CurrencyPicker(
     }
 }
 
-@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @Composable
 private fun SearchInput(
     searchTextFieldValue: TextFieldValue,

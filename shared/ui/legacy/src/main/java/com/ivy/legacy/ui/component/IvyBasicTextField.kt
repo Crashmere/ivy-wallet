@@ -25,7 +25,6 @@ import com.ivy.legacy.ui.hideKeyboard
 import com.ivy.base.text.isNotNullOrBlank
 import com.ivy.legacy.ui.selectEndTextFieldValue
 
-@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @Suppress("ParameterNaming")
 @Composable
 fun IvyBasicTextField(

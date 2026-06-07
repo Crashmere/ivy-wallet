@@ -19,7 +19,6 @@ import com.ivy.legacy.ui.component.DeleteButton
 import com.ivy.legacy.ui.component.IvyOutlinedButton
 
 @SuppressLint("ComposeModifierMissing")
-@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @Composable
 fun ItemStatisticToolbar(
     contrastColor: Color,

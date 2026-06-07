@@ -24,7 +24,6 @@ import com.ivy.legacy.ui.theme.system.style
 import com.ivy.legacy.ui.hideKeyboard
 import com.ivy.base.text.isNotNullOrBlank
 
-@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @Suppress("ParameterNaming")
 @Composable
 fun IvyNumberTextField(

@@ -9,7 +9,6 @@ import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.GradientRed
 import com.ivy.legacy.ui.theme.White
 
-@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @Composable
 fun DeleteButton(
     modifier: Modifier = Modifier,

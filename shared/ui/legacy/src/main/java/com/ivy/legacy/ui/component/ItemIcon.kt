@@ -18,7 +18,6 @@ import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.ui.compose.thenWhen
 import com.ivy.base.text.toLowerCaseLocal
 
-@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @Composable
 fun ItemIconMDefaultIcon(
     modifier: Modifier = Modifier,
@@ -41,7 +40,6 @@ fun ItemIconMDefaultIcon(
     )
 }
 
-@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @Composable
 fun ItemIconM(
     modifier: Modifier = Modifier,
@@ -61,7 +59,6 @@ fun ItemIconM(
     )
 }
 
-@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @Composable
 fun ItemIconSDefaultIcon(
     modifier: Modifier = Modifier,
@@ -84,7 +81,6 @@ fun ItemIconSDefaultIcon(
     )
 }
 
-@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @Composable
 fun ItemIconS(
     modifier: Modifier = Modifier,
@@ -104,7 +100,6 @@ fun ItemIconS(
     )
 }
 
-@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @Composable
 private fun ItemIcon(
     modifier: Modifier = Modifier,
@@ -159,7 +154,6 @@ private fun ItemIcon(
     }
 }
 
-@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @DrawableRes
 @Composable
 fun getCustomIconIdS(
@@ -174,7 +168,6 @@ fun getCustomIconIdS(
     )?.iconId ?: defaultIcon
 }
 
-@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 fun getCustomIconId(
     context: Context,
     iconName: String?,
@@ -221,7 +214,6 @@ fun getCustomIconId(
     }
 }
 
-@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 data class IconInfo(
     @DrawableRes
     val iconId: Int,
@@ -229,12 +221,10 @@ data class IconInfo(
     val newFormat: Boolean
 )
 
-@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 enum class IconStyle {
     L, M, S, UNKNOWN
 }
 
-@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 fun fallbackToNewIconFormat(
     iconStyle: IconStyle,
     context: Context,

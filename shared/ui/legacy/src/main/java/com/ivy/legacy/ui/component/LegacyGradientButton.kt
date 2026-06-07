@@ -26,7 +26,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.ui.text.input.TextFieldValue
 import com.ivy.legacy.ui.theme.GradientIvy
 
-@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @Composable
 fun LegacyGradientButton(
     modifier: Modifier = Modifier,

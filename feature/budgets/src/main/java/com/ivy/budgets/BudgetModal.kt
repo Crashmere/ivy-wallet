@@ -42,7 +42,6 @@ import com.ivy.legacy.ui.modal.edit.AmountModal
 import com.ivy.legacy.ui.theme.toComposeColor
 import java.util.UUID
 
-@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 data class BudgetModalData(
     val budget: Budget?,
 
@@ -54,7 +53,6 @@ data class BudgetModalData(
     val autoFocusKeyboard: Boolean = true,
 )
 
-@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @Composable
 fun BoxWithConstraintsScope.BudgetModal(
     modal: BudgetModalData?,

@@ -47,7 +47,6 @@ import java.util.UUID
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 
-@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 data class AccountModalData(
     val account: Account?,
     val baseCurrency: String,
@@ -58,7 +57,6 @@ data class AccountModalData(
     val id: UUID = UUID.randomUUID()
 )
 
-@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @Composable
 fun BoxWithConstraintsScope.AccountModal(
     modal: AccountModalData?,

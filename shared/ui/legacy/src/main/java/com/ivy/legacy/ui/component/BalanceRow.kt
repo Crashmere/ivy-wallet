@@ -21,7 +21,6 @@ import com.ivy.data.model.currency.format
 import com.ivy.data.model.currency.shortenAmount
 import com.ivy.data.model.currency.shouldShortAmount
 
-@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @Composable
 fun BalanceRowMedium(
     currency: String,

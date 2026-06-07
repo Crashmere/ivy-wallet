@@ -36,7 +36,6 @@ import androidx.compose.runtime.setValue
 
 private const val RepeatIntervalCharLimit = 5
 
-@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @Composable
 fun IntervalPickerRow(
     intervalN: Int,

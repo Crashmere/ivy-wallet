@@ -20,34 +20,29 @@ import androidx.core.graphics.Insets
 import androidx.core.view.WindowInsetsCompat
 import com.ivy.ui.navigation.navigation
 
-@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @Composable
 fun windowInsets(): WindowInsetsCompat {
     val rootView = LocalView.current
     return WindowInsetsCompat.toWindowInsetsCompat(rootView.rootWindowInsets, rootView)
 }
 
-@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @Composable
 fun statusBarInset(): Int {
     val windowInsets = windowInsets()
     return windowInsets.getInsets(WindowInsetsCompat.Type.statusBars()).top
 }
 
-@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @Composable
 fun navigationBarInset(): Int {
     return navigationBarInsets().bottom
 }
 
-@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @Composable
 fun navigationBarInsets(): Insets {
     val windowInsets = windowInsets()
     return windowInsets.getInsets(WindowInsetsCompat.Type.navigationBars())
 }
 
-@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @Composable
 fun keyboardOnlyWindowInsets(): Insets {
     val windowInsets = windowInsets()
@@ -56,13 +51,11 @@ fun keyboardOnlyWindowInsets(): Insets {
     )
 }
 
-@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @Composable
 fun <T> densityScope(densityScope: @Composable Density.() -> T): T {
     return with(LocalDensity.current) { densityScope() }
 }
 
-@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @SuppressLint("ComposableNaming")
 @Composable
 fun onScreenStart(
@@ -80,13 +73,11 @@ fun onScreenStart(
 @Composable
 fun rememberInteractionSource(): MutableInteractionSource = remember { MutableInteractionSource() }
 
-@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 fun Modifier.consumeClicks(interactionSource: MutableInteractionSource) =
     clickableNoIndication(interactionSource) {
         // consume click
     }
 
-@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 fun Modifier.clickableNoIndication(
     interactionSource: MutableInteractionSource,
     onClick: () -> Unit
@@ -99,7 +90,6 @@ fun Modifier.clickableNoIndication(
     )
 }
 
-@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 fun Modifier.drawColoredShadow(
     color: Color,
     alpha: Float = 0.15f,
@@ -132,20 +122,16 @@ fun Modifier.drawColoredShadow(
     }
 }
 
-@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 fun selectEndTextFieldValue(text: String?) = TextFieldValue(
     text = text ?: "",
     selection = TextRange(text?.length ?: 0)
 )
 
-@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @Composable
 fun Dp.toDensityPx() = densityScope { toPx() }
 
-@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @Composable
 fun Int.toDensityDp() = densityScope { toDp() }
 
-@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @Composable
 fun Float.toDensityDp() = densityScope { toDp() }

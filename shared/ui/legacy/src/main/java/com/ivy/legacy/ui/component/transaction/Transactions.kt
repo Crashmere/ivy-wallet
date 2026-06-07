@@ -37,7 +37,6 @@ import com.ivy.legacy.ui.theme.White
 import com.ivy.legacy.ui.component.IvyButton
 import com.ivy.legacy.ui.component.IvyIcon
 
-@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 fun LazyListScope.transactions(
     baseData: AppBaseData,
 

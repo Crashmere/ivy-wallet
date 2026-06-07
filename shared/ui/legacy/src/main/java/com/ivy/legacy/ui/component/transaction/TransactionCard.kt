@@ -86,7 +86,6 @@ import java.time.ZoneOffset
 import java.util.UUID
 
 @Suppress("CyclomaticComplexMethod", "LongMethod")
-@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @Composable
 fun TransactionCard(
     baseData: AppBaseData,

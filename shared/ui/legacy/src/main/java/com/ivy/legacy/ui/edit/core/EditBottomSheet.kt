@@ -89,11 +89,9 @@ import com.ivy.legacy.ui.theme.IvyDark
 import com.ivy.legacy.ui.modal.ModalSave
 import com.ivy.legacy.ui.modal.ModalSet
 
-@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 const val SWIPE_UP_EXPANDED_THRESHOLD = 200
 
 @Suppress("LongMethod", "LongParameterList", "UnusedParameter", "ParameterNaming")
-@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @Composable
 fun BoxWithConstraintsScope.EditBottomSheet(
     initialTransactionId: UUID?,

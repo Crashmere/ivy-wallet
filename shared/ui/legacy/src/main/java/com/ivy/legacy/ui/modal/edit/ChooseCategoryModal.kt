@@ -53,7 +53,6 @@ import com.ivy.data.model.primitive.NotBlankTrimmedString
 import com.ivy.legacy.ui.theme.Orange
 import com.ivy.legacy.ui.theme.Red
 
-@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @Suppress("ParameterNaming")
 @ExperimentalFoundationApi
 @Composable
@@ -258,7 +257,6 @@ private fun CategoryButton(
     }
 }
 
-@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @Composable
 fun AddNewButton(
     modifier: Modifier = Modifier,
@@ -279,5 +277,4 @@ fun AddNewButton(
     )
 }
 
-@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 private class AddNewCategory

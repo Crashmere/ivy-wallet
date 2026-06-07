@@ -33,7 +33,6 @@ import com.ivy.legacy.ui.component.IvyIcon
 import com.ivy.legacy.ui.component.AmountCurrencyB2Row
 import kotlin.math.abs
 
-@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @Composable
 fun BudgetBattery(
     modifier: Modifier = Modifier,

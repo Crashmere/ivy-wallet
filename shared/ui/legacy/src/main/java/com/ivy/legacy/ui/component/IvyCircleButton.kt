@@ -20,7 +20,6 @@ import com.ivy.legacy.ui.theme.White
 import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.GradientRed
 
-@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @Composable
 fun IvyCircleButton(
     modifier: Modifier = Modifier,
