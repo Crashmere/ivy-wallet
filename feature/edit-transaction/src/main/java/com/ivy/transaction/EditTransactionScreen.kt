@@ -54,11 +54,11 @@ import com.ivy.wallet.domain.data.CustomExchangeRateState
 import com.ivy.data.model.currency.IvyCurrency
 import com.ivy.wallet.domain.deprecated.logic.model.CreateAccountData
 import com.ivy.wallet.domain.deprecated.logic.model.CreateCategoryData
-import com.ivy.wallet.ui.edit.core.Category
-import com.ivy.wallet.ui.edit.core.DueDate
-import com.ivy.wallet.ui.edit.core.EditBottomSheet
-import com.ivy.wallet.ui.edit.core.Title
-import com.ivy.wallet.ui.edit.core.Toolbar
+import com.ivy.legacy.ui.edit.core.Category
+import com.ivy.legacy.ui.edit.core.DueDate
+import com.ivy.legacy.ui.edit.core.EditBottomSheet
+import com.ivy.legacy.ui.edit.core.Title
+import com.ivy.legacy.ui.edit.core.Toolbar
 import com.ivy.legacy.ui.component.AddPrimaryAttributeButton
 import com.ivy.legacy.ui.component.ChangeTransactionTypeModal
 import com.ivy.legacy.ui.component.CustomExchangeRateCard

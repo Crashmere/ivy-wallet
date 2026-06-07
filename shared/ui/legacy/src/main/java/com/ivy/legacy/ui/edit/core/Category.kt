@@ -1,4 +1,4 @@
-package com.ivy.wallet.ui.edit.core
+package com.ivy.legacy.ui.edit.core
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable

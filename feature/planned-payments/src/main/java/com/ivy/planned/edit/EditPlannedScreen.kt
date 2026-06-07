@@ -32,11 +32,11 @@ import com.ivy.ui.legacy.onScreenStart
 import com.ivy.navigation.EditPlannedScreen
 import com.ivy.navigation.screenScopedViewModel
 import com.ivy.ui.R
-import com.ivy.wallet.ui.edit.core.Category
+import com.ivy.legacy.ui.edit.core.Category
 import com.ivy.legacy.ui.component.edit.core.Description
-import com.ivy.wallet.ui.edit.core.EditBottomSheet
-import com.ivy.wallet.ui.edit.core.Title
-import com.ivy.wallet.ui.edit.core.Toolbar
+import com.ivy.legacy.ui.edit.core.EditBottomSheet
+import com.ivy.legacy.ui.edit.core.Title
+import com.ivy.legacy.ui.edit.core.Toolbar
 import com.ivy.legacy.ui.theme.Orange
 import com.ivy.legacy.ui.component.ChangeTransactionTypeModal
 import com.ivy.legacy.ui.modal.DeleteModal

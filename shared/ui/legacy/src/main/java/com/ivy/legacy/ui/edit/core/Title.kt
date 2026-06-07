@@ -1,4 +1,4 @@
-package com.ivy.wallet.ui.edit.core
+package com.ivy.legacy.ui.edit.core
 
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.clickable
