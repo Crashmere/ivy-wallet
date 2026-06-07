@@ -9,7 +9,6 @@ import com.ivy.data.model.primitive.AssetCode
 import com.ivy.data.model.primitive.ColorInt
 import com.ivy.data.model.primitive.IconAsset
 import com.ivy.data.model.primitive.NotBlankTrimmedString
-import com.ivy.data.repository.CurrencyRepository
 import java.util.UUID
 import com.ivy.data.model.Account as DomainAccount
 
@@ -37,15 +36,15 @@ data class Account(
     )
 
     @Suppress("DataClassFunctions")
-    suspend fun toDomainAccount(
-        currencyRepository: CurrencyRepository
+    fun toDomainAccount(
+        baseCurrency: AssetCode
     ): Either<String, DomainAccount> {
         return either {
             Account(
                 id = AccountId(id),
                 name = NotBlankTrimmedString.from(name).bind(),
                 asset = currency?.let(AssetCode::from)?.bind()
-                    ?: currencyRepository.getBaseCurrency(),
+                    ?: baseCurrency,
                 color = ColorInt(color),
                 icon = icon?.let(IconAsset::from)?.getOrNull(),
                 includeInBalance = includeInBalance,

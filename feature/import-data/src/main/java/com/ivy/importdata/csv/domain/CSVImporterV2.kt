@@ -10,14 +10,15 @@ import com.ivy.data.backup.ImportResult
 import com.ivy.data.db.dao.read.AccountDao
 import com.ivy.data.model.Category
 import com.ivy.data.model.CategoryId
+import com.ivy.data.model.primitive.AssetCode
 import com.ivy.data.model.primitive.ColorInt
 import com.ivy.data.model.primitive.IconAsset
 import com.ivy.data.model.primitive.NotBlankTrimmedString
 import com.ivy.data.repository.AccountRepository
 import com.ivy.data.repository.CategoryRepository
-import com.ivy.data.repository.CurrencyRepository
 import com.ivy.data.repository.TransactionRepository
 import com.ivy.data.repository.mapper.TransactionMapper
+import com.ivy.domain.usecase.currency.GetBaseCurrencyUseCase
 import com.ivy.legacy.ui.theme.IVY_COLOR_PICKER_COLORS_FREE
 import com.ivy.importdata.csv.ImportantFields
 import com.ivy.importdata.csv.OptionalFields
@@ -41,7 +42,7 @@ class CSVImporterV2 @Inject constructor(
     private val transactionMapper: TransactionMapper,
     private val accountDao: AccountDao,
     private val categoryRepository: CategoryRepository,
-    private val currencyRepository: CurrencyRepository,
+    private val getBaseCurrency: GetBaseCurrencyUseCase,
     private val accountRepository: AccountRepository,
     private val timeConverter: TimeConverter,
 ) {
@@ -71,7 +72,7 @@ class CSVImporterV2 @Inject constructor(
         categories = categoryRepository.findAll()
         val initialCategoriesCount = categories.size
 
-        val baseCurrency = currencyRepository.getBaseCurrencyCode()
+        val baseCurrency = getBaseCurrency()
 
         val failedRows = mutableListOf<CSVRow>()
 
@@ -126,7 +127,7 @@ class CSVImporterV2 @Inject constructor(
     }
 
     private suspend fun mapToTransaction(
-        baseCurrency: String,
+        baseCurrency: AssetCode,
         row: CSVRowNew,
         importantFields: ImportantFields,
         transferFields: TransferFields,
@@ -240,7 +241,7 @@ class CSVImporterV2 @Inject constructor(
     }
 
     private suspend fun mapAccount(
-        baseCurrency: String,
+        baseCurrency: AssetCode,
         accountNameString: String?,
         color: Int?,
         icon: String?,
@@ -275,14 +276,14 @@ class CSVImporterV2 @Inject constructor(
         val newAccount = Account(
             name = accountNameString,
             currency = mapCurrency(
-                baseCurrency = baseCurrency,
+                baseCurrency = baseCurrency.code,
                 currencyCode = currencyRawString
             ),
             color = colorArgb,
             icon = icon,
             orderNum = orderNum ?: accountDao.findMaxOrderNum().nextOrderNum()
         )
-        val domainAccount = newAccount.toDomainAccount(currencyRepository).getOrNull()
+        val domainAccount = newAccount.toDomainAccount(baseCurrency).getOrNull()
             ?: return null
         accountRepository.save(domainAccount)
         accounts = accountDao.findAll().map { it.toLegacyDomain() }

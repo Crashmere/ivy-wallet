@@ -8,9 +8,9 @@ import com.ivy.base.time.TimeProvider
 import com.ivy.data.db.dao.read.AccountDao
 import com.ivy.data.model.Category
 import com.ivy.data.model.CategoryId
-import com.ivy.data.repository.CurrencyRepository
 import com.ivy.data.repository.TransactionRepository
 import com.ivy.data.repository.mapper.TransactionMapper
+import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.legacy.domain.model.filterOverdue
 import com.ivy.legacy.domain.model.filterOverdueLegacy
 import com.ivy.legacy.domain.model.filterUpcoming
@@ -25,7 +25,7 @@ import javax.inject.Inject
 
 class WalletCategoryLogic @Inject constructor(
     private val accountDao: AccountDao,
-    private val currencyRepository: CurrencyRepository,
+    private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
     private val exchangeRatesLogic: ExchangeRatesLogic,
     private val transactionRepository: TransactionRepository,
     private val transactionMapper: TransactionMapper,
@@ -39,7 +39,7 @@ class WalletCategoryLogic @Inject constructor(
         accountFilterSet: Set<UUID> = emptySet(),
         transactions: List<Transaction> = emptyList()
     ): Double {
-        val baseCurrency = currencyRepository.getBaseCurrencyCode()
+        val baseCurrency = getBaseCurrencyCode()
         val accounts = accountDao.findAll().map { it.toLegacyDomain() }
 
         return historyByCategory(
@@ -80,7 +80,7 @@ class WalletCategoryLogic @Inject constructor(
             }
             .sumInBaseCurrency(
                 exchangeRatesLogic = exchangeRatesLogic,
-                baseCurrency = currencyRepository.getBaseCurrencyCode(),
+                baseCurrency = getBaseCurrencyCode(),
                 accountDao = accountDao
             )
     }
@@ -95,7 +95,7 @@ class WalletCategoryLogic @Inject constructor(
             }
             .sumInBaseCurrency(
                 exchangeRatesLogic = exchangeRatesLogic,
-                baseCurrency = currencyRepository.getBaseCurrencyCode(),
+                baseCurrency = getBaseCurrencyCode(),
                 accountDao = accountDao
             )
     }
@@ -120,7 +120,7 @@ class WalletCategoryLogic @Inject constructor(
             }
             .sumInBaseCurrency(
                 exchangeRatesLogic = exchangeRatesLogic,
-                baseCurrency = currencyRepository.getBaseCurrencyCode(),
+                baseCurrency = getBaseCurrencyCode(),
                 accountDao = accountDao
             )
     }
@@ -135,7 +135,7 @@ class WalletCategoryLogic @Inject constructor(
             }
             .sumInBaseCurrency(
                 exchangeRatesLogic = exchangeRatesLogic,
-                baseCurrency = currencyRepository.getBaseCurrencyCode(),
+                baseCurrency = getBaseCurrencyCode(),
                 accountDao = accountDao
             )
     }
@@ -153,7 +153,7 @@ class WalletCategoryLogic @Inject constructor(
             ).map { it.toLegacy(transactionMapper) }
             .sumInBaseCurrency(
                 exchangeRatesLogic = exchangeRatesLogic,
-                baseCurrency = currencyRepository.getBaseCurrencyCode(),
+                baseCurrency = getBaseCurrencyCode(),
                 accountDao = accountDao
             )
     }
@@ -167,7 +167,7 @@ class WalletCategoryLogic @Inject constructor(
             ).map { it.toLegacy(transactionMapper) }
             .sumInBaseCurrency(
                 exchangeRatesLogic = exchangeRatesLogic,
-                baseCurrency = currencyRepository.getBaseCurrencyCode(),
+                baseCurrency = getBaseCurrencyCode(),
                 accountDao = accountDao
             )
     }
@@ -185,7 +185,7 @@ class WalletCategoryLogic @Inject constructor(
                 }
                 .withDateDividers(
                     exchangeRatesLogic = exchangeRatesLogic,
-                    baseCurrencyCode = currencyRepository.getBaseCurrencyCode(),
+                    baseCurrencyCode = getBaseCurrencyCode(),
                     accountDao = accountDao,
                     timeConverter = timeConverter,
                 )
@@ -221,7 +221,7 @@ class WalletCategoryLogic @Inject constructor(
                 ).map { it.toLegacy(transactionMapper) }
                 .withDateDividers(
                     exchangeRatesLogic = exchangeRatesLogic,
-                    baseCurrencyCode = currencyRepository.getBaseCurrencyCode(),
+                    baseCurrencyCode = getBaseCurrencyCode(),
                     accountDao = accountDao,
                     timeConverter = timeConverter,
                 )
@@ -236,7 +236,7 @@ class WalletCategoryLogic @Inject constructor(
             .filter { it.type == TransactionType.INCOME }
             .sumInBaseCurrency(
                 exchangeRatesLogic = exchangeRatesLogic,
-                baseCurrency = currencyRepository.getBaseCurrencyCode(),
+                baseCurrency = getBaseCurrencyCode(),
                 accountDao = accountDao
             )
     }
@@ -249,7 +249,7 @@ class WalletCategoryLogic @Inject constructor(
             .filter { it.type == TransactionType.EXPENSE }
             .sumInBaseCurrency(
                 exchangeRatesLogic = exchangeRatesLogic,
-                baseCurrency = currencyRepository.getBaseCurrencyCode(),
+                baseCurrency = getBaseCurrencyCode(),
                 accountDao = accountDao
             )
     }
@@ -259,7 +259,7 @@ class WalletCategoryLogic @Inject constructor(
             .filter { it.type == TransactionType.INCOME }
             .sumInBaseCurrency(
                 exchangeRatesLogic = exchangeRatesLogic,
-                baseCurrency = currencyRepository.getBaseCurrencyCode(),
+                baseCurrency = getBaseCurrencyCode(),
                 accountDao = accountDao
             )
     }
@@ -269,7 +269,7 @@ class WalletCategoryLogic @Inject constructor(
             .filter { it.type == TransactionType.EXPENSE }
             .sumInBaseCurrency(
                 exchangeRatesLogic = exchangeRatesLogic,
-                baseCurrency = currencyRepository.getBaseCurrencyCode(),
+                baseCurrency = getBaseCurrencyCode(),
                 accountDao = accountDao
             )
     }
@@ -328,7 +328,7 @@ class WalletCategoryLogic @Inject constructor(
             .filter { it.type == TransactionType.INCOME }
             .sumInBaseCurrency(
                 exchangeRatesLogic = exchangeRatesLogic,
-                baseCurrency = currencyRepository.getBaseCurrencyCode(),
+                baseCurrency = getBaseCurrencyCode(),
                 accountDao = accountDao
             )
     }
@@ -341,7 +341,7 @@ class WalletCategoryLogic @Inject constructor(
             .filter { it.type == TransactionType.EXPENSE }
             .sumInBaseCurrency(
                 exchangeRatesLogic = exchangeRatesLogic,
-                baseCurrency = currencyRepository.getBaseCurrencyCode(),
+                baseCurrency = getBaseCurrencyCode(),
                 accountDao = accountDao
             )
     }
@@ -351,7 +351,7 @@ class WalletCategoryLogic @Inject constructor(
             .filter { it.type == TransactionType.INCOME }
             .sumInBaseCurrency(
                 exchangeRatesLogic = exchangeRatesLogic,
-                baseCurrency = currencyRepository.getBaseCurrencyCode(),
+                baseCurrency = getBaseCurrencyCode(),
                 accountDao = accountDao
             )
     }
@@ -361,7 +361,7 @@ class WalletCategoryLogic @Inject constructor(
             .filter { it.type == TransactionType.EXPENSE }
             .sumInBaseCurrency(
                 exchangeRatesLogic = exchangeRatesLogic,
-                baseCurrency = currencyRepository.getBaseCurrencyCode(),
+                baseCurrency = getBaseCurrencyCode(),
                 accountDao = accountDao
             )
     }

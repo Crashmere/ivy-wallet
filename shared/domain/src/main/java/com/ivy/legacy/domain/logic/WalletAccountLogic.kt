@@ -7,11 +7,11 @@ import com.ivy.base.time.TimeProvider
 import com.ivy.data.model.AccountId
 import com.ivy.data.model.Expense
 import com.ivy.data.model.Income
-import com.ivy.data.repository.CurrencyRepository
 import com.ivy.data.repository.TransactionRepository
 import com.ivy.data.repository.mapper.TransactionMapper
 import com.ivy.data.legacy.getValue
 import com.ivy.domain.preferences.AppPreferences
+import com.ivy.domain.usecase.currency.GetBaseCurrencyUseCase
 import com.ivy.legacy.domain.model.filterOverdue
 import com.ivy.legacy.domain.model.filterUpcoming
 import com.ivy.legacy.domain.model.Account
@@ -28,7 +28,7 @@ class WalletAccountLogic @Inject constructor(
     private val transactionMapper: TransactionMapper,
     private val accountDataAct: AccountDataAct,
     private val appPreferences: AppPreferences,
-    private val currencyRepository: CurrencyRepository,
+    private val getBaseCurrency: GetBaseCurrencyUseCase,
     private val timeProvider: TimeProvider
 ) {
 
@@ -79,7 +79,8 @@ class WalletAccountLogic @Inject constructor(
     suspend fun calculateAccountBalance(
         account: Account
     ): Double {
-        val accountList = account.toDomainAccount(currencyRepository)
+        val baseCurrency = getBaseCurrency()
+        val accountList = account.toDomainAccount(baseCurrency)
             .map { a -> listOf(a) }
             .getOrElse { emptyList() }
 
@@ -89,7 +90,7 @@ class WalletAccountLogic @Inject constructor(
             AccountDataAct.Input(
                 accounts = accountList.toImmutableList(),
                 range = ClosedTimeRange.allTimeIvy(timeProvider),
-                baseCurrency = currencyRepository.getBaseCurrency().code,
+                baseCurrency = baseCurrency.code,
                 includeTransfersInCalc = includeTransfersInCalc
             )
         )

@@ -18,9 +18,9 @@ import com.ivy.data.model.primitive.ColorInt
 import com.ivy.data.model.primitive.IconAsset
 import com.ivy.data.model.primitive.NotBlankTrimmedString
 import com.ivy.data.repository.CategoryRepository
-import com.ivy.data.repository.CurrencyRepository
 import com.ivy.data.repository.TransactionRepository
 import com.ivy.data.repository.mapper.TransactionMapper
+import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.legacy.domain.model.Account
 import com.ivy.legacy.domain.model.Loan
 import com.ivy.legacy.domain.model.LoanRecord
@@ -42,7 +42,7 @@ class LoanTransactionsCore @Inject constructor(
     private val transactionDao: TransactionDao,
     private val loanRecordDao: LoanRecordDao,
     private val loanDao: LoanDao,
-    private val currencyRepository: CurrencyRepository,
+    private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
     private val accountsDao: AccountDao,
     private val exchangeRatesLogic: ExchangeRatesLogic,
     private val transactionRepo: TransactionRepository,
@@ -98,7 +98,7 @@ class LoanTransactionsCore @Inject constructor(
     }
 
     suspend fun baseCurrency(): String =
-        ioThread { baseCurrencyCode ?: currencyRepository.getBaseCurrencyCode() }
+        ioThread { baseCurrencyCode ?: getBaseCurrencyCode() }
 
     suspend fun updateAssociatedTransaction(
         createTransaction: Boolean,

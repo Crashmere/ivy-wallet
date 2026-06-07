@@ -8,8 +8,8 @@ import com.ivy.data.model.primitive.ColorInt
 import com.ivy.data.model.primitive.IconAsset
 import com.ivy.data.model.primitive.NotBlankTrimmedString
 import com.ivy.data.repository.AccountRepository
-import com.ivy.data.repository.CurrencyRepository
 import com.ivy.base.coroutines.ioThread
+import com.ivy.domain.usecase.currency.GetBaseCurrencyUseCase
 import com.ivy.legacy.domain.model.CreateAccountData
 import com.ivy.legacy.domain.pure.util.nextOrderNum
 import java.util.UUID
@@ -20,7 +20,7 @@ class AccountCreator @Inject constructor(
     private val accountLogic: WalletAccountLogic,
     private val accountDao: AccountDao,
     private val accountRepository: AccountRepository,
-    private val currencyRepository: CurrencyRepository,
+    private val getBaseCurrency: GetBaseCurrencyUseCase,
 ) {
 
     suspend fun createAccount(
@@ -66,7 +66,7 @@ class AccountCreator @Inject constructor(
         onRefreshUI: suspend () -> Unit
     ) {
         ioThread {
-            val account = legacyAccount.toDomainAccount(currencyRepository).getOrNull()
+            val account = legacyAccount.toDomainAccount(getBaseCurrency()).getOrNull()
                 ?: return@ioThread
             accountRepository.save(account)
 
