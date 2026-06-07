@@ -22,7 +22,7 @@ import androidx.compose.ui.text.style.TextAlign
 import com.ivy.design.l0_system.UI
 import com.ivy.design.l0_system.style
 import com.ivy.legacy.utils.hideKeyboard
-import com.ivy.legacy.utils.isNotNullOrBlank
+import com.ivy.base.legacy.isNotNullOrBlank
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
 import androidx.compose.ui.unit.dp

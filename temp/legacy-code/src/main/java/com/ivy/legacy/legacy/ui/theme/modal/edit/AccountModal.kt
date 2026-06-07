@@ -27,7 +27,7 @@ import com.ivy.design.l0_system.UI
 import com.ivy.design.l0_system.style
 import com.ivy.domain.legacy.ui.IvyColorPicker
 import com.ivy.legacy.datamodel.Account
-import com.ivy.legacy.utils.isNotNullOrBlank
+import com.ivy.base.legacy.isNotNullOrBlank
 import com.ivy.legacy.utils.onScreenStart
 import com.ivy.legacy.utils.selectEndTextFieldValue
 import com.ivy.legacy.utils.toLowerCaseLocal

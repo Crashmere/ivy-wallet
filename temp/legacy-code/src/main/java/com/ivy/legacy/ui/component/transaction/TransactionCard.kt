@@ -48,7 +48,7 @@ import com.ivy.legacy.datamodel.Account
 import com.ivy.legacy.utils.capitalizeLocal
 import com.ivy.legacy.utils.dateNowUTC
 import com.ivy.legacy.utils.format
-import com.ivy.legacy.utils.isNotNullOrBlank
+import com.ivy.base.legacy.isNotNullOrBlank
 import com.ivy.legacy.utils.timeNowUTC
 import com.ivy.navigation.Navigation
 import com.ivy.navigation.TransactionsScreen

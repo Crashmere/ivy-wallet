@@ -25,7 +25,7 @@ import com.ivy.design.l0_system.UI
 import com.ivy.design.l0_system.style
 import com.ivy.legacy.forDisplay
 import com.ivy.legacy.utils.capitalizeLocal
-import com.ivy.legacy.utils.isNotNullOrBlank
+import com.ivy.base.legacy.isNotNullOrBlank
 import com.ivy.legacy.utils.selectEndTextFieldValue
 import com.ivy.ui.R
 import com.ivy.wallet.ui.theme.Gradient

@@ -39,7 +39,7 @@ import com.ivy.legacy.domain.deprecated.logic.AccountCreator
 import com.ivy.base.legacy.computationThread
 import com.ivy.legacy.utils.dateNowUTC
 import com.ivy.base.legacy.ioThread
-import com.ivy.legacy.utils.isNotNullOrBlank
+import com.ivy.base.legacy.isNotNullOrBlank
 import com.ivy.legacy.utils.selectEndTextFieldValue
 import com.ivy.navigation.Navigation
 import com.ivy.navigation.TransactionsScreen

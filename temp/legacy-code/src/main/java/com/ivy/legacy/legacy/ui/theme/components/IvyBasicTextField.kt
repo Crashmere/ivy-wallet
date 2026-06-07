@@ -22,7 +22,7 @@ import androidx.compose.ui.text.style.TextAlign
 import com.ivy.design.l0_system.UI
 import com.ivy.design.l0_system.style
 import com.ivy.legacy.utils.hideKeyboard
-import com.ivy.legacy.utils.isNotNullOrBlank
+import com.ivy.base.legacy.isNotNullOrBlank
 import com.ivy.legacy.utils.selectEndTextFieldValue
 
 @Deprecated("Old design system. Use `:ivy-design` and Material3")
