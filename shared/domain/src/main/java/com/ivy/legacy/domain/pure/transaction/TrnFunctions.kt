@@ -8,7 +8,7 @@ import com.ivy.data.model.Expense
 import com.ivy.data.model.Income
 import com.ivy.data.model.Transaction
 import com.ivy.data.model.Transfer
-import com.ivy.legacy.frp.Pure
+import com.ivy.legacy.domain.pure.Pure
 import com.ivy.data.model.legacy.Account
 import com.ivy.legacy.domain.pure.account.accountCurrency
 import java.time.LocalDate

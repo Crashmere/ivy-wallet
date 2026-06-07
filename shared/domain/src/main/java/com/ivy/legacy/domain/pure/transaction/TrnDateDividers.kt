@@ -12,8 +12,8 @@ import com.ivy.data.model.Transaction
 import com.ivy.data.repository.AccountRepository
 import com.ivy.data.repository.TagRepository
 import com.ivy.data.repository.mapper.TransactionMapper
-import com.ivy.legacy.frp.Pure
-import com.ivy.legacy.frp.SideEffect
+import com.ivy.legacy.domain.pure.Pure
+import com.ivy.legacy.domain.pure.SideEffect
 import com.ivy.data.model.legacy.Account
 import com.ivy.legacy.domain.mapper.toImmutableLegacyTags
 import com.ivy.legacy.domain.mapper.toLegacyDomain
