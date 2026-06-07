@@ -22,7 +22,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -95,17 +94,9 @@ private fun BoxWithConstraintsScope.UI(
     onEvent: (CategoriesScreenEvent) -> Unit = {}
 ) {
     val nav = navigation()
-    val ivyContext = com.ivy.legacy.ivyWalletCtx()
-    var listState = rememberLazyListState()
-    if (!state.categories.isEmpty()) {
-        listState = rememberScrollPositionListState(
-            key = "categories_lazy_column",
-            initialFirstVisibleItemIndex = ivyContext.categoriesListState?.firstVisibleItemIndex
-                ?: 0,
-            initialFirstVisibleItemScrollOffset = ivyContext.categoriesListState?.firstVisibleItemScrollOffset
-                ?: 0
-        )
-    }
+    val listState = rememberScrollPositionListState(
+        key = "categories_lazy_column"
+    )
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()

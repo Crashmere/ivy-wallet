@@ -118,11 +118,7 @@ fun BoxWithConstraintsScope.HomeUi(
             )
     ) {
         val listState = rememberScrollPositionListState(
-            key = "home_lazy_column",
-            initialFirstVisibleItemIndex = ivyContext.transactionsListState
-                ?.firstVisibleItemIndex ?: 0,
-            initialFirstVisibleItemScrollOffset = ivyContext.transactionsListState
-                ?.firstVisibleItemScrollOffset ?: 0
+            key = "home_lazy_column"
         )
 
         HomeHeader(

@@ -33,7 +33,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.ivy.design.l0_system.UI
 import com.ivy.design.l0_system.style
 import com.ivy.loans.humanReadableType
-import com.ivy.legacy.ivyWalletCtx
 import com.ivy.base.legacy.getDefaultFIATCurrency
 import com.ivy.ui.legacy.horizontalSwipeListener
 import com.ivy.ui.legacy.rememberSwipeListenerState
@@ -100,11 +99,7 @@ private fun BoxWithConstraintsScope.UI(
         Spacer(Modifier.height(8.dp))
 
         val scrollState = rememberScrollPositionListState(
-            key = "loans_lazy_column",
-            initialFirstVisibleItemIndex = ivyWalletCtx()
-                .loanListState?.firstVisibleItemIndex ?: 0,
-            initialFirstVisibleItemScrollOffset = ivyWalletCtx()
-                .loanListState?.firstVisibleItemScrollOffset ?: 0
+            key = "loans_lazy_column"
         )
 
         val loans = if (state.selectedTab == LoanTab.PENDING) {

@@ -16,7 +16,6 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -67,15 +66,9 @@ private fun BoxWithConstraintsScope.UI(
 ) {
     val nav = navigation()
     val ivyContext = com.ivy.legacy.ivyWalletCtx()
-    var listState = rememberLazyListState()
-    if (!state.accountsData.isEmpty()) {
-        listState = rememberScrollPositionListState(
-            key = "accounts_lazy_column",
-            initialFirstVisibleItemIndex = ivyContext.accountsListState?.firstVisibleItemIndex ?: 0,
-            initialFirstVisibleItemScrollOffset = ivyContext.accountsListState?.firstVisibleItemScrollOffset
-                ?: 0
-        )
-    }
+    val listState = rememberScrollPositionListState(
+        key = "accounts_lazy_column"
+    )
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
