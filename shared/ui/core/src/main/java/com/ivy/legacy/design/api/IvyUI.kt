@@ -7,30 +7,18 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.Modifier
 import com.ivy.base.time.TimeConverter
 import com.ivy.base.time.TimeProvider
 import com.ivy.legacy.design.l0_system.IvyTheme
 import com.ivy.ui.platform.DatePicker
+import com.ivy.ui.platform.LocalDatePicker
 import com.ivy.ui.theme.LocalThemeState
 import com.ivy.ui.theme.ThemeState
+import com.ivy.ui.time.LocalTimeConverter
+import com.ivy.ui.time.LocalTimeFormatter
+import com.ivy.ui.time.LocalTimeProvider
 import com.ivy.ui.time.TimeFormatter
-
-@Suppress("CompositionLocalAllowlist")
-@Deprecated("Used only for time migration to Instant. Never use it in new code!")
-val LocalTimeConverter = compositionLocalOf<TimeConverter> { error("No LocalTimeConverter") }
-
-@Suppress("CompositionLocalAllowlist")
-@Deprecated("Used only for time migration to Instant. Never use it in new code!")
-val LocalTimeProvider = compositionLocalOf<TimeProvider> { error("No LocalTimeProvider") }
-
-@Suppress("CompositionLocalAllowlist")
-@Deprecated("Used only for time migration to Instant. Never use it in new code!")
-val LocalTimeFormatter = compositionLocalOf<TimeFormatter> { error("No LocalTimeFormatter") }
-
-@Suppress("CompositionLocalAllowlist")
-val LocalDatePicker = compositionLocalOf<DatePicker> { error("No LocalDatePicker") }
 
 @SuppressLint("ComposeModifierMissing")
 @Composable

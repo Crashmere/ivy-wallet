@@ -33,7 +33,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.ivy.base.model.TransactionType
 import com.ivy.base.model.processByType
 import com.ivy.data.model.LoanType
-import com.ivy.legacy.design.api.LocalTimeFormatter
+import com.ivy.ui.time.LocalTimeFormatter
 import com.ivy.legacy.design.l0_system.LegacyTheme
 import com.ivy.legacy.design.l0_system.style
 import com.ivy.legacy.domain.model.Account

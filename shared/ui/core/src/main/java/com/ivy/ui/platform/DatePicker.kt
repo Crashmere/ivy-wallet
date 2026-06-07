@@ -1,6 +1,10 @@
 package com.ivy.ui.platform
 
+import androidx.compose.runtime.compositionLocalOf
 import java.time.LocalDate
+
+@Suppress("CompositionLocalAllowlist")
+val LocalDatePicker = compositionLocalOf<DatePicker> { error("No LocalDatePicker") }
 
 interface DatePicker {
     fun pickDate(

@@ -33,8 +33,8 @@ import com.ivy.base.model.TransactionType
 import com.ivy.data.model.Category
 import com.ivy.data.model.Tag
 import com.ivy.data.model.TagId
-import com.ivy.legacy.design.api.LocalDatePicker
-import com.ivy.legacy.design.api.LocalTimeConverter
+import com.ivy.ui.platform.LocalDatePicker
+import com.ivy.ui.time.LocalTimeConverter
 import com.ivy.legacy.design.l0_system.LegacyTheme
 import com.ivy.legacy.design.l0_system.style
 import com.ivy.ui.platform.hideKeyboard

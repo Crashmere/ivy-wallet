@@ -15,14 +15,14 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.ivy.legacy.design.api.LocalTimeFormatter
+import com.ivy.ui.time.LocalTimeFormatter
 import com.ivy.legacy.design.l0_system.LegacyTheme
 import com.ivy.legacy.design.l0_system.style
 import com.ivy.ui.R
 import com.ivy.ui.time.TimeFormatter
 import com.ivy.legacy.ui.component.IvyIcon
 import java.time.Instant
-import com.ivy.legacy.design.api.LocalTimeProvider
+import com.ivy.ui.time.LocalTimeProvider
 import java.util.concurrent.TimeUnit
 
 @Deprecated("Old design system. Use `:ivy-design` and Material3")

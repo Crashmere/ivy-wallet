@@ -30,7 +30,7 @@ import com.ivy.data.model.CategoryId
 import com.ivy.data.model.IntervalType
 import com.ivy.data.model.primitive.ColorInt
 import com.ivy.data.model.primitive.NotBlankTrimmedString
-import com.ivy.legacy.design.api.LocalTimeConverter
+import com.ivy.ui.time.LocalTimeConverter
 import com.ivy.legacy.design.l0_system.LegacyTheme
 import com.ivy.legacy.design.l0_system.style
 import com.ivy.legacy.domain.model.Account

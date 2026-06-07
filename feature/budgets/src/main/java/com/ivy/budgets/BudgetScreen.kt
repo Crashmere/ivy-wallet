@@ -23,7 +23,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ivy.budgets.model.DisplayBudget
-import com.ivy.legacy.design.api.LocalTimeFormatter
+import com.ivy.ui.time.LocalTimeFormatter
 import com.ivy.legacy.design.l0_system.LegacyTheme
 import com.ivy.legacy.design.l0_system.style
 import com.ivy.legacy.ui.model.period.toDisplay

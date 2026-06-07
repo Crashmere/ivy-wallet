@@ -30,7 +30,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import com.ivy.base.model.LoanRecordType
 import com.ivy.data.model.primitive.NotBlankTrimmedString
-import com.ivy.legacy.design.api.LocalTimeConverter
+import com.ivy.ui.time.LocalTimeConverter
 import com.ivy.legacy.design.l0_system.LegacyTheme
 import com.ivy.legacy.design.l0_system.style
 import com.ivy.ui.compose.thenIf

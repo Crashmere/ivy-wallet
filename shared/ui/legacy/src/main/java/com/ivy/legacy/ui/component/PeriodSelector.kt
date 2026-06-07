@@ -20,9 +20,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.ivy.legacy.design.api.LocalTimeConverter
-import com.ivy.legacy.design.api.LocalTimeFormatter
-import com.ivy.legacy.design.api.LocalTimeProvider
+import com.ivy.ui.time.LocalTimeConverter
+import com.ivy.ui.time.LocalTimeFormatter
+import com.ivy.ui.time.LocalTimeProvider
 import com.ivy.legacy.design.l0_system.LegacyTheme
 import com.ivy.legacy.design.l0_system.style
 import com.ivy.legacy.ui.model.period.TimePeriod

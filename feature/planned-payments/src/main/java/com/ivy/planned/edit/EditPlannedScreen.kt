@@ -26,7 +26,7 @@ import androidx.compose.ui.unit.dp
 import com.ivy.base.model.TransactionType
 import com.ivy.data.model.Category
 import com.ivy.data.model.IntervalType
-import com.ivy.legacy.design.api.LocalDatePicker
+import com.ivy.ui.platform.LocalDatePicker
 import com.ivy.legacy.domain.model.Account
 import com.ivy.ui.legacy.onScreenStart
 import com.ivy.navigation.EditPlannedScreen

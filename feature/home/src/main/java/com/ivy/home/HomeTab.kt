@@ -26,10 +26,10 @@ import androidx.compose.ui.unit.dp
 import com.ivy.base.legacy.Transaction
 import com.ivy.base.legacy.TransactionHistoryItem
 import com.ivy.base.legacy.stringRes
-import com.ivy.legacy.design.api.LocalTimeConverter
-import com.ivy.legacy.design.api.LocalDatePicker
-import com.ivy.legacy.design.api.LocalTimeFormatter
-import com.ivy.legacy.design.api.LocalTimeProvider
+import com.ivy.ui.time.LocalTimeConverter
+import com.ivy.ui.platform.LocalDatePicker
+import com.ivy.ui.time.LocalTimeFormatter
+import com.ivy.ui.time.LocalTimeProvider
 import com.ivy.frp.forward
 import com.ivy.frp.then2
 import com.ivy.home.Constants.SWIPE_HORIZONTAL_THRESHOLD
