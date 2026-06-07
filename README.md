@@ -380,7 +380,8 @@
 - 已把 `SortOrder`、`CustomExchangeRateState`、`TransactionHistoryDateDivider` 迁入 `shared:domain`，它们本来已经以 `com.ivy.wallet.domain.data` 包名被 feature 使用。
 - 已把编辑交易/计划付款复用的底部表单组件迁入 `shared:ui:legacy`；`EditBottomSheet` 改用 Compose 屏幕高度，不再为了底部操作条位置读取 `IvyWalletCtx`。
 - 已把旧 domain 层对 `IvyWalletCtx` 的直接依赖拆掉：账户/分类缓存 action 已删除，起始日 action 只负责读写偏好，调用方显式更新旧 UI 上下文；借贷交易逻辑去掉固定为 true 的付费判断分支。
-- `temp:legacy-code` 的 UI 源码目录已经没有 Kotlin 文件，旧 domain 源码也不再反向依赖 `IvyWalletCtx`。下一步应把旧 action/creator/logic 迁入 `shared:domain`，再继续拆全局 `IvyWalletCtx`。
+- 已把大部分旧 `domain/action`、`domain/pure` 和旧汇率换算逻辑迁入 `shared:domain`。仍暂留 `temp:legacy-code` 的 action 只剩 `AccountDataAct` 与 `TrnsWithRangeAndAccFiltersAct`，原因是它们仍输入/输出 `shared:ui:legacy` 中的旧 UI 兼容模型。
+- `temp:legacy-code` 的 UI 源码目录已经没有 Kotlin 文件，旧 domain 源码也不再反向依赖 `IvyWalletCtx`。下一步应把 `PreloadDataLogic` 等仍依赖 UI 资源/旧表单模型的 deprecated logic 拆到合适模块，再继续拆全局 `IvyWalletCtx`。
 
 迁移分组：
 
