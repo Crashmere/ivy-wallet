@@ -8,11 +8,11 @@ import javax.inject.Inject
 
 class DeleteAccountUseCase @Inject constructor(
     private val accountStore: AccountStore,
-    private val transactionRepository: TransactionStore,
+    private val transactionStore: TransactionStore,
     private val plannedPaymentRuleStore: PlannedPaymentRuleStore,
 ) {
     suspend operator fun invoke(accountId: AccountId) {
-        transactionRepository.deleteAllByAccountId(accountId)
+        transactionStore.deleteAllByAccountId(accountId)
         plannedPaymentRuleStore.deleteByAccountId(accountId = accountId.value)
         accountStore.deleteById(accountId)
     }

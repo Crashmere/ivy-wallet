@@ -9,7 +9,7 @@ import javax.inject.Inject
 
 class GetTransactionsByTagsUseCase @Inject constructor(
     private val tagStore: TagStore,
-    private val transactionRepository: TransactionStore
+    private val transactionStore: TransactionStore
 ) {
     suspend operator fun invoke(tagIds: List<TagId>): List<Transaction> {
         val transactionIds = tagStore.findByAllAssociatedIdForTagId(tagIds)
@@ -19,6 +19,6 @@ class GetTransactionsByTagsUseCase @Inject constructor(
             .distinct()
             .toList()
 
-        return transactionRepository.findByIds(transactionIds)
+        return transactionStore.findByIds(transactionIds)
     }
 }

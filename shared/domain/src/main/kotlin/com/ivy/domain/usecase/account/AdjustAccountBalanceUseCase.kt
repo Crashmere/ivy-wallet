@@ -15,7 +15,7 @@ import com.ivy.data.model.legacy.Transaction as LegacyTransaction
 import com.ivy.data.model.legacy.Account as LegacyAccount
 
 class AdjustAccountBalanceUseCase @Inject constructor(
-    private val transactionRepository: TransactionStore,
+    private val transactionStore: TransactionStore,
     private val accountStore: AccountStore,
     private val calculateAccountBalanceUseCase: CalculateAccountBalanceUseCase,
     private val getBaseCurrency: GetBaseCurrencyUseCase,
@@ -70,7 +70,7 @@ class AdjustAccountBalanceUseCase @Inject constructor(
             dateTime = nowUtc(),
             accountId = account.id,
         ).toDomain(accountStore)?.let {
-            transactionRepository.save(it)
+            transactionStore.save(it)
         }
     }
 }

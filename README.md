@@ -831,6 +831,7 @@
 - app 启动、首页到期交易加载、编辑交易删除弹窗、交易类型 lambda、客户旅程计数、账户统计和 CSV 导出中的局部 `trn/trans` 缩写已展开为 `transaction*` 命名；只改局部符号，不改业务计算。
 - 报表筛选模型中的 `trnTypes/trnType/trnAmountBaseCurrency` 已展开为 `transactionTypes/transactionType/transactionAmountBaseCurrency`；筛选规则和 UI 行为不变。
 - 生产代码中剩余的交易缩写已继续收尾：`StatSummary.trnCount` 改为 `transactionCount`，`RoomTransactionStore.retrieveTrns()` 改为 `retrieveTransactions()`，旧迁移类 `Migration105to106_TrnRecurringRules` 改为完整命名；对应测试局部变量同步展开。
+- domain use case 中注入的 `TransactionStore` 不再命名为 `transactionRepository`，统一改为 `transactionStore`；这是命名层面的边界收敛，读写行为不变。
 
 建议顺序：
 

@@ -20,7 +20,7 @@ class GetUnspecifiedCategoryTransactionsSummaryUseCase @Inject constructor(
     private val accountStore: AccountStore,
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
     private val exchangeRatesUseCase: LegacyExchangeRatesUseCase,
-    private val transactionRepository: TransactionStore,
+    private val transactionStore: TransactionStore,
 ) {
     suspend operator fun invoke(range: FromToTimeRange): CategoryTransactionsSummary {
         val income = calculateUnspecifiedIncome(range)
@@ -36,7 +36,7 @@ class GetUnspecifiedCategoryTransactionsSummaryUseCase @Inject constructor(
     }
 
     private suspend fun calculateUnspecifiedIncome(range: FromToTimeRange): Double {
-        return transactionRepository
+        return transactionStore
             .findAllUnspecifiedAndTypeAndBetween(
                 type = TransactionType.INCOME,
                 startDate = range.from(),
@@ -46,7 +46,7 @@ class GetUnspecifiedCategoryTransactionsSummaryUseCase @Inject constructor(
     }
 
     private suspend fun calculateUnspecifiedExpenses(range: FromToTimeRange): Double {
-        return transactionRepository
+        return transactionStore
             .findAllUnspecifiedAndTypeAndBetween(
                 type = TransactionType.EXPENSE,
                 startDate = range.from(),
@@ -57,7 +57,7 @@ class GetUnspecifiedCategoryTransactionsSummaryUseCase @Inject constructor(
 
     private suspend fun historyUnspecified(range: FromToTimeRange): List<TransactionHistoryItem> {
         return with(LegacyTransactionDateDividers) {
-            transactionRepository
+            transactionStore
                 .findAllUnspecifiedAndBetween(
                     startDate = range.from(),
                     endDate = range.to()
@@ -71,7 +71,7 @@ class GetUnspecifiedCategoryTransactionsSummaryUseCase @Inject constructor(
     }
 
     private suspend fun upcomingUnspecified(range: FromToTimeRange): CategoryDueTransactionsSummary {
-        val transactions = transactionRepository.findAllDueToBetweenByCategoryUnspecified(
+        val transactions = transactionStore.findAllDueToBetweenByCategoryUnspecified(
             startDate = range.upcomingFrom(nowUtc()),
             endDate = range.to()
         ).map {
@@ -86,7 +86,7 @@ class GetUnspecifiedCategoryTransactionsSummaryUseCase @Inject constructor(
     }
 
     private suspend fun overdueUnspecified(range: FromToTimeRange): CategoryDueTransactionsSummary {
-        val transactions = transactionRepository.findAllDueToBetweenByCategoryUnspecified(
+        val transactions = transactionStore.findAllDueToBetweenByCategoryUnspecified(
             startDate = range.from(),
             endDate = range.overdueTo(nowUtc())
         ).map {

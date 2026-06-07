@@ -7,17 +7,17 @@ import com.ivy.data.api.TransactionStore
 import javax.inject.Inject
 
 class GetAccountTransactionsUseCase @Inject constructor(
-    private val transactionRepository: TransactionStore
+    private val transactionStore: TransactionStore
 ) {
     suspend operator fun invoke(
         accountId: AccountId,
         range: ClosedTimeRange
     ): List<Transaction> {
-        return transactionRepository.findAllByAccountAndBetween(
+        return transactionStore.findAllByAccountAndBetween(
             accountId = accountId,
             startDate = range.from,
             endDate = range.to
-        ) + transactionRepository.findAllToAccountAndBetween(
+        ) + transactionStore.findAllToAccountAndBetween(
             toAccountId = accountId,
             startDate = range.from,
             endDate = range.to

@@ -7,10 +7,10 @@ import java.util.UUID
 import javax.inject.Inject
 
 class GetLoanTransactionUseCase @Inject constructor(
-    private val transactionRepository: TransactionStore,
+    private val transactionStore: TransactionStore,
 ) {
     suspend operator fun invoke(loanId: UUID): LegacyTransaction? {
-        return transactionRepository.findLoanTransaction(loanId)
+        return transactionStore.findLoanTransaction(loanId)
             ?.toLegacy()
     }
 }

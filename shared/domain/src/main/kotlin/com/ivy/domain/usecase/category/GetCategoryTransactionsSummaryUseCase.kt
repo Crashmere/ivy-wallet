@@ -24,7 +24,7 @@ class GetCategoryTransactionsSummaryUseCase @Inject constructor(
     private val accountStore: AccountStore,
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
     private val exchangeRatesUseCase: LegacyExchangeRatesUseCase,
-    private val transactionRepository: TransactionStore,
+    private val transactionStore: TransactionStore,
 ) {
     suspend operator fun invoke(
         category: Category,
@@ -107,7 +107,7 @@ class GetCategoryTransactionsSummaryUseCase @Inject constructor(
         accountFilterSet: Set<UUID>,
         transactions: List<Transaction>?
     ): Double {
-        val incomeTransactions = transactions ?: transactionRepository
+        val incomeTransactions = transactions ?: transactionStore
             .findAllByCategoryAndTypeAndBetween(
                 categoryId = category.id.value,
                 type = TransactionType.INCOME,
@@ -124,7 +124,7 @@ class GetCategoryTransactionsSummaryUseCase @Inject constructor(
         accountFilterSet: Set<UUID>,
         transactions: List<Transaction>?
     ): Double {
-        val expenseTransactions = transactions ?: transactionRepository
+        val expenseTransactions = transactions ?: transactionStore
             .findAllByCategoryAndTypeAndBetween(
                 categoryId = category.id.value,
                 type = TransactionType.EXPENSE,
@@ -161,7 +161,7 @@ class GetCategoryTransactionsSummaryUseCase @Inject constructor(
         accountFilterSet: Set<UUID>,
         transactions: List<Transaction>?
     ): List<Transaction> {
-        val resolvedTransactions = transactions ?: transactionRepository
+        val resolvedTransactions = transactions ?: transactionStore
             .findAllByCategoryAndBetween(
                 categoryId = category.id.value,
                 startDate = range.from(),
@@ -177,7 +177,7 @@ class GetCategoryTransactionsSummaryUseCase @Inject constructor(
         category: Category,
         range: FromToTimeRange
     ): CategoryDueTransactionsSummary {
-        val transactions = transactionRepository.findAllDueToBetweenByCategory(
+        val transactions = transactionStore.findAllDueToBetweenByCategory(
             categoryId = CategoryId(category.id.value),
             startDate = range.upcomingFrom(nowUtc()),
             endDate = range.to()
@@ -196,7 +196,7 @@ class GetCategoryTransactionsSummaryUseCase @Inject constructor(
         category: Category,
         range: FromToTimeRange
     ): CategoryDueTransactionsSummary {
-        val transactions = transactionRepository.findAllDueToBetweenByCategory(
+        val transactions = transactionStore.findAllDueToBetweenByCategory(
             categoryId = CategoryId(category.id.value),
             startDate = range.from(),
             endDate = range.overdueTo(nowUtc())

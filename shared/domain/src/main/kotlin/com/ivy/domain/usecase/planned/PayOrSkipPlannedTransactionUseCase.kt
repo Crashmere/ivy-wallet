@@ -8,7 +8,7 @@ import javax.inject.Inject
 
 class PayOrSkipPlannedTransactionUseCase @Inject constructor(
     private val plannedPaymentRuleStore: PlannedPaymentRuleStore,
-    private val transactionRepository: TransactionStore,
+    private val transactionStore: TransactionStore,
 ) {
     suspend operator fun invoke(
         transaction: Transaction,
@@ -23,9 +23,9 @@ class PayOrSkipPlannedTransactionUseCase @Inject constructor(
         }
 
         if (skipTransaction) {
-            transactionRepository.deleteById(paidTransaction.id)
+            transactionStore.deleteById(paidTransaction.id)
         } else {
-            transactionRepository.save(paidTransaction)
+            transactionStore.save(paidTransaction)
         }
 
         if (plannedPaymentRule != null && plannedPaymentRule.oneTime) {

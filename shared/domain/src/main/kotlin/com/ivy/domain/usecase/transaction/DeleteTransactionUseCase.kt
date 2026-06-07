@@ -5,9 +5,9 @@ import com.ivy.data.api.TransactionStore
 import javax.inject.Inject
 
 class DeleteTransactionUseCase @Inject constructor(
-    private val transactionRepository: TransactionStore
+    private val transactionStore: TransactionStore
 ) {
     suspend operator fun invoke(transactionId: TransactionId) {
-        transactionRepository.deleteById(transactionId)
+        transactionStore.deleteById(transactionId)
     }
 }

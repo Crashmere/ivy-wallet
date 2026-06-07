@@ -9,13 +9,13 @@ import com.ivy.domain.time.nowUtc
 import javax.inject.Inject
 
 class GetAccountUpcomingTransactionsUseCase @Inject constructor(
-    private val transactionRepository: TransactionStore,
+    private val transactionStore: TransactionStore,
 ) {
     suspend operator fun invoke(
         accountId: AccountId,
         range: FromToTimeRange
     ): List<Transaction> {
-        return transactionRepository.findAllDueToBetweenByAccount(
+        return transactionStore.findAllDueToBetweenByAccount(
             accountId = accountId,
             startDate = range.upcomingFrom(nowUtc()),
             endDate = range.to()

@@ -6,10 +6,10 @@ import com.ivy.data.api.TransactionStore
 import javax.inject.Inject
 
 class GetTransactionsBetweenUseCase @Inject constructor(
-    private val transactionRepository: TransactionStore
+    private val transactionStore: TransactionStore
 ) {
     suspend operator fun invoke(range: ClosedTimeRange): List<Transaction> {
-        return transactionRepository.findAllBetween(
+        return transactionStore.findAllBetween(
             startDate = range.from,
             endDate = range.to
         )

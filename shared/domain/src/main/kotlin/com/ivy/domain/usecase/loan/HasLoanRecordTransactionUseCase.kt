@@ -5,9 +5,9 @@ import java.util.UUID
 import javax.inject.Inject
 
 class HasLoanRecordTransactionUseCase @Inject constructor(
-    private val transactionRepository: TransactionStore
+    private val transactionStore: TransactionStore
 ) {
     suspend operator fun invoke(loanRecordId: UUID): Boolean {
-        return transactionRepository.findLoanRecordTransaction(loanRecordId) != null
+        return transactionStore.findLoanRecordTransaction(loanRecordId) != null
     }
 }

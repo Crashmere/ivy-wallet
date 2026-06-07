@@ -12,11 +12,11 @@ private fun LocalDate.atEndOfDay(): LocalDateTime =
     atTime(23, 59, 59)
 
 class CountTodayTransactionsUseCase @Inject constructor(
-    private val transactionRepository: TransactionStore,
+    private val transactionStore: TransactionStore,
 ) {
     suspend operator fun invoke(): NonNegativeLong {
         val today = nowLocalDate()
-        return transactionRepository.countBetween(
+        return transactionStore.countBetween(
             startDate = today.atStartOfDay().toUtcInstant(),
             endDate = today.atEndOfDay().toUtcInstant(),
         )

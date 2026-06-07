@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 class ClearWalletDataUseCase @Inject constructor(
     private val accountStore: AccountStore,
-    private val transactionRepository: TransactionStore,
+    private val transactionStore: TransactionStore,
     private val categoryStore: CategoryStore,
     private val tagStore: TagStore,
     private val settingsStore: SettingsStore,
@@ -26,7 +26,7 @@ class ClearWalletDataUseCase @Inject constructor(
 ) {
     suspend operator fun invoke() {
         accountStore.deleteAll()
-        transactionRepository.deleteAll()
+        transactionStore.deleteAll()
         categoryStore.deleteAll()
         tagStore.deleteAll()
         settingsStore.deleteAll()

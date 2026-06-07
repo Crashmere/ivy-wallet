@@ -5,12 +5,12 @@ import com.ivy.data.api.TransactionStore
 import javax.inject.Inject
 
 class GetCustomerJourneyStatsUseCase @Inject constructor(
-    private val transactionRepository: TransactionStore,
+    private val transactionStore: TransactionStore,
     private val plannedPaymentRuleStore: PlannedPaymentRuleStore
 ) {
     suspend operator fun invoke(): CustomerJourneyStats {
         return CustomerJourneyStats(
-            transactionCount = transactionRepository.countHappenedTransactions().value,
+            transactionCount = transactionStore.countHappenedTransactions().value,
             plannedPaymentCount = plannedPaymentRuleStore.countPlannedPayments()
         )
     }

@@ -11,10 +11,10 @@ import javax.inject.Inject
 
 class GeneratePlannedPaymentTransactionsUseCase @Inject constructor(
     private val accountStore: AccountStore,
-    private val transactionRepository: TransactionStore
+    private val transactionStore: TransactionStore
 ) {
     suspend operator fun invoke(rule: PlannedPaymentRule) {
-        transactionRepository.deletedByRecurringRuleIdAndNoDateTime(
+        transactionStore.deletedByRecurringRuleIdAndNoDateTime(
             recurringRuleId = rule.id
         )
 
@@ -26,7 +26,7 @@ class GeneratePlannedPaymentTransactionsUseCase @Inject constructor(
     }
 
     private suspend fun generateOneTime(rule: PlannedPaymentRule) {
-        val transactions = transactionRepository.findAllByRecurringRuleId(
+        val transactions = transactionStore.findAllByRecurringRuleId(
             recurringRuleId = rule.id
         )
 
@@ -40,7 +40,7 @@ class GeneratePlannedPaymentTransactionsUseCase @Inject constructor(
         val startDate = rule.startDate!!
         val endDate = startDate.plusSeconds(94_608_000)
 
-        val transactions = transactionRepository.findAllByRecurringRuleId(
+        val transactions = transactionStore.findAllByRecurringRuleId(
             recurringRuleId = rule.id
         )
         var transactionsToSkip = transactions.size
@@ -87,7 +87,7 @@ class GeneratePlannedPaymentTransactionsUseCase @Inject constructor(
             dateTime = null,
             toAccountId = null,
         ).toDomain(accountStore)?.let {
-            transactionRepository.save(it)
+            transactionStore.save(it)
         }
     }
 

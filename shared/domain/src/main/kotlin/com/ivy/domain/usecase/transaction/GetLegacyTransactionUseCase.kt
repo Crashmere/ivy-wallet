@@ -8,10 +8,10 @@ import java.util.UUID
 import javax.inject.Inject
 
 class GetLegacyTransactionUseCase @Inject constructor(
-    private val transactionRepository: TransactionStore,
+    private val transactionStore: TransactionStore,
 ) {
     suspend operator fun invoke(id: UUID): Transaction? {
-        return transactionRepository.findById(TransactionId(id))
+        return transactionStore.findById(TransactionId(id))
             ?.toLegacy()
     }
 }

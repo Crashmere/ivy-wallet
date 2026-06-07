@@ -7,11 +7,11 @@ import javax.inject.Inject
 
 class DeletePlannedPaymentRuleUseCase @Inject constructor(
     private val plannedPaymentRuleStore: PlannedPaymentRuleStore,
-    private val transactionRepository: TransactionStore,
+    private val transactionStore: TransactionStore,
 ) {
     suspend operator fun invoke(ruleId: UUID) {
         plannedPaymentRuleStore.deleteById(ruleId)
-        transactionRepository.deletedByRecurringRuleIdAndNoDateTime(
+        transactionStore.deletedByRecurringRuleIdAndNoDateTime(
             recurringRuleId = ruleId
         )
     }

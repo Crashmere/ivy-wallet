@@ -12,7 +12,7 @@ import javax.inject.Inject
 class PayOrSkipLegacyPlannedTransactionsUseCase @Inject constructor(
     private val plannedPaymentRuleStore: PlannedPaymentRuleStore,
     private val accountStore: AccountStore,
-    private val transactionRepository: TransactionStore,
+    private val transactionStore: TransactionStore,
 ) {
     suspend operator fun invoke(
         transactions: List<Transaction>,
@@ -38,12 +38,12 @@ class PayOrSkipLegacyPlannedTransactionsUseCase @Inject constructor(
 
         if (skipTransaction) {
             paidTransactions.forEach { paidTransaction ->
-                transactionRepository.deleteById(TransactionId(paidTransaction.id))
+                transactionStore.deleteById(TransactionId(paidTransaction.id))
             }
         } else {
             paidTransactions.forEach { paidTransaction ->
                 paidTransaction.toDomain(accountStore)?.let {
-                    transactionRepository.save(it)
+                    transactionStore.save(it)
                 }
             }
         }
