@@ -37,7 +37,6 @@ import com.ivy.legacy.domain.mapper.toImmutableLegacyTags
 import com.ivy.legacy.domain.mapper.toLegacyDomain
 import com.ivy.legacy.domain.logic.AccountCreator
 import com.ivy.base.legacy.computationThread
-import com.ivy.base.legacy.dateNowUTC
 import com.ivy.base.legacy.ioThread
 import com.ivy.base.legacy.isNotNullOrBlank
 import com.ivy.legacy.ui.selectEndTextFieldValue
@@ -64,6 +63,7 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.launch
+import java.time.ZoneOffset
 import java.util.UUID
 import javax.inject.Inject
 import com.ivy.legacy.domain.model.Account as LegacyAccount
@@ -697,7 +697,7 @@ class TransactionsViewModel @Inject constructor(
 
     private fun nextMonth(screen: TransactionsScreen) {
         val month = period.value.month
-        val year = period.value.year ?: dateNowUTC().year
+        val year = period.value.year ?: currentUtcYear()
         if (month != null) {
             val nextPeriod = month.incrementMonthPeriod(1L, year)
             periodState.select(nextPeriod)
@@ -711,7 +711,7 @@ class TransactionsViewModel @Inject constructor(
 
     private fun previousMonth(screen: TransactionsScreen) {
         val month = period.value.month
-        val year = period.value.year ?: dateNowUTC().year
+        val year = period.value.year ?: currentUtcYear()
         if (month != null) {
             val previousPeriod = month.incrementMonthPeriod(-1L, year)
             periodState.select(previousPeriod)
@@ -722,6 +722,9 @@ class TransactionsViewModel @Inject constructor(
             )
         }
     }
+
+    private fun currentUtcYear(): Int =
+        timeProvider.utcNow().atZone(ZoneOffset.UTC).year
 
     private fun delete(screen: TransactionsScreen) {
         viewModelScope.launch {

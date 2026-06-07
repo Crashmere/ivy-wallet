@@ -27,6 +27,7 @@ import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.time.ZoneOffset
 import java.util.UUID
 import javax.inject.Inject
 
@@ -231,7 +232,7 @@ class PieChartStatisticViewModel @Inject constructor(
 
     private suspend fun nextMonth() {
         val month = period.month
-        val year = period.year ?: com.ivy.base.legacy.dateNowUTC().year
+        val year = period.year ?: currentUtcYear()
         if (month != null) {
             val nextPeriod = month.incrementMonthPeriod(1L, year)
             periodState.select(nextPeriod)
@@ -243,7 +244,7 @@ class PieChartStatisticViewModel @Inject constructor(
 
     private suspend fun previousMonth() {
         val month = period.month
-        val year = period.year ?: com.ivy.base.legacy.dateNowUTC().year
+        val year = period.year ?: currentUtcYear()
         if (month != null) {
             val previousPeriod = month.incrementMonthPeriod(-1L, year)
             periodState.select(previousPeriod)
@@ -252,6 +253,9 @@ class PieChartStatisticViewModel @Inject constructor(
             )
         }
     }
+
+    private fun currentUtcYear(): Int =
+        timeProvider.utcNow().atZone(ZoneOffset.UTC).year
 
     private suspend fun configureMonthModal(timePeriod: TimePeriod?) {
         val choosePeriodModalData = if (timePeriod != null) {

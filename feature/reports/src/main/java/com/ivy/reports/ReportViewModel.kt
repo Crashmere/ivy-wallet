@@ -39,7 +39,6 @@ import com.ivy.legacy.domain.model.Account
 import com.ivy.legacy.domain.mapper.toLegacy
 import com.ivy.base.legacy.getISOFormattedDateTime
 import com.ivy.base.legacy.scopedIOThread
-import com.ivy.base.legacy.timeNowUTC
 import com.ivy.base.legacy.toLowerCaseLocal
 import com.ivy.base.legacy.uiThread
 import com.ivy.ui.ComposeViewModel
@@ -70,6 +69,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.math.BigDecimal
 import java.time.ZoneId
+import java.time.ZoneOffset
 import java.util.UUID
 import javax.inject.Inject
 
@@ -283,7 +283,7 @@ class ReportViewModel @Inject constructor(
 
             val accountFilterIdList = scope.async { reportFilter.accounts.map { it.id } }
 
-            val timeNowUTC = timeNowUTC()
+            val timeNowUTC = utcNow()
 
             // Upcoming
             val upcomingTransactionsList = transactionsList
@@ -530,9 +530,7 @@ class ReportViewModel @Inject constructor(
         if (!filter.validate()) return
 
         filePicker.createFile(
-            "IvyWalletReport-${
-                timeNowUTC().getISOFormattedDateTime()
-            }.csv"
+            "IvyWalletReport-${utcTimestamp()}.csv"
         ) { fileUri ->
             viewModelScope.launch {
                 loading = true
@@ -560,6 +558,13 @@ class ReportViewModel @Inject constructor(
     private fun setUpcomingExpandedValue(expanded: Boolean) {
         upcomingExpanded = expanded
     }
+
+    private fun utcNow() =
+        timeProvider.utcNow()
+            .atZone(ZoneOffset.UTC)
+            .toLocalDateTime()
+
+    private fun utcTimestamp(): String = utcNow().getISOFormattedDateTime()
 
     private fun setOverdueExpandedValue(expanded: Boolean) {
         overdueExpanded = expanded

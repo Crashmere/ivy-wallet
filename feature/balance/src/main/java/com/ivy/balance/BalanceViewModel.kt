@@ -20,6 +20,7 @@ import com.ivy.legacy.domain.action.wallet.CalcWalletBalanceAct
 import com.ivy.legacy.domain.logic.PlannedPaymentsLogic
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import java.time.ZoneOffset
 import javax.inject.Inject
 
 @Stable
@@ -95,7 +96,7 @@ class BalanceViewModel @Inject constructor(
 
     private fun nextMonth() {
         val month = period.month
-        val year = period.year ?: com.ivy.base.legacy.dateNowUTC().year
+        val year = period.year ?: currentUtcYear()
         numberOfMonthsAhead += 1
         if (month != null) {
             val nextPeriod = month.incrementMonthPeriod(1L, year = year)
@@ -108,7 +109,7 @@ class BalanceViewModel @Inject constructor(
 
     private fun previousMonth() {
         val month = period.month
-        val year = period.year ?: com.ivy.base.legacy.dateNowUTC().year
+        val year = period.year ?: currentUtcYear()
         numberOfMonthsAhead -= 1
         if (month != null) {
             val previousPeriod = month.incrementMonthPeriod(-1L, year = year)
@@ -118,4 +119,7 @@ class BalanceViewModel @Inject constructor(
             )
         }
     }
+
+    private fun currentUtcYear(): Int =
+        timeProvider.utcNow().atZone(ZoneOffset.UTC).year
 }

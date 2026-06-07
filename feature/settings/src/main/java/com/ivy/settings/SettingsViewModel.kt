@@ -15,6 +15,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.lifecycle.viewModelScope
 import com.ivy.base.legacy.Theme
+import com.ivy.base.time.TimeProvider
 import com.ivy.data.backup.BackupDataUseCase
 import com.ivy.data.model.primitive.AssetCode
 import com.ivy.data.repository.CurrencyRepository
@@ -29,7 +30,6 @@ import com.ivy.frp.monad.Res
 import com.ivy.ui.theme.ThemeState
 import com.ivy.legacy.ui.state.PeriodState
 import com.ivy.base.legacy.getISOFormattedDateTime
-import com.ivy.base.legacy.timeNowUTC
 import com.ivy.base.legacy.uiThread
 import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.platform.FilePicker
@@ -40,6 +40,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.time.ZoneOffset
 import javax.inject.Inject
 
 @Stable
@@ -60,6 +61,7 @@ class SettingsViewModel @Inject constructor(
     private val preferenceDataStore: DataStore<Preferences>,
     private val exportCsvUseCase: ExportCsvUseCase,
     private val filePicker: FilePicker,
+    private val timeProvider: TimeProvider,
     @ApplicationContext private val context: Context
 ) : ComposeViewModel<SettingsState, SettingsEvent>() {
 
@@ -343,9 +345,7 @@ class SettingsViewModel @Inject constructor(
 
     private fun exportToCSV(fileSharer: FileSharer) {
         filePicker.createFile(
-            "IvyWalletExport_${
-                timeNowUTC().getISOFormattedDateTime()
-            }.csv"
+            "IvyWalletExport_${utcTimestamp()}.csv"
         ) { fileUri ->
             viewModelScope.launch {
                 exportCsvUseCase.exportToFile(
@@ -361,9 +361,7 @@ class SettingsViewModel @Inject constructor(
 
     private fun exportToZip(fileSharer: FileSharer) {
         filePicker.createFile(
-            "IvyWalletBackup_${
-                timeNowUTC().getISOFormattedDateTime()
-            }.zip"
+            "IvyWalletBackup_${utcTimestamp()}.zip"
         ) { fileUri ->
             viewModelScope.launch(Dispatchers.IO) {
                 progressState.value = true
@@ -380,6 +378,12 @@ class SettingsViewModel @Inject constructor(
             }
         }
     }
+
+    private fun utcTimestamp(): String =
+        timeProvider.utcNow()
+            .atZone(ZoneOffset.UTC)
+            .toLocalDateTime()
+            .getISOFormattedDateTime()
 
     private fun switchTheme() {
         viewModelScope.launch {

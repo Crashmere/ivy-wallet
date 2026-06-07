@@ -33,7 +33,6 @@ import com.ivy.legacy.domain.model.toUTCCloseTimeRange
 import com.ivy.legacy.domain.model.Account
 import com.ivy.legacy.domain.mapper.toLegacyDomain
 import com.ivy.legacy.domain.action.viewmodel.home.ShouldHideIncomeAct
-import com.ivy.base.legacy.dateNowUTC
 import com.ivy.base.legacy.ioThread
 import com.ivy.navigation.BalanceScreen
 import com.ivy.navigation.MainTab
@@ -61,6 +60,7 @@ import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.math.BigDecimal
+import java.time.ZoneOffset
 import javax.inject.Inject
 
 @Stable
@@ -500,7 +500,7 @@ class HomeViewModel @Inject constructor(
 
     private suspend fun onSelectNextMonth() {
         val month = period.month
-        val year = period.year ?: dateNowUTC().year
+        val year = period.year ?: currentUtcYear()
         val period = month?.incrementMonthPeriod(1L, year = year)
         if (period != null) {
             periodState.select(period)
@@ -510,7 +510,7 @@ class HomeViewModel @Inject constructor(
 
     private suspend fun onSelectPreviousMonth() {
         val month = period.month
-        val year = period.year ?: dateNowUTC().year
+        val year = period.year ?: currentUtcYear()
         val period = month?.incrementMonthPeriod(-1L, year = year)
         if (period != null) {
             periodState.select(period)
@@ -526,4 +526,7 @@ class HomeViewModel @Inject constructor(
     private fun setExpanded(expanded: Boolean) {
         this.expanded = expanded
     }
+
+    private fun currentUtcYear(): Int =
+        timeProvider.utcNow().atZone(ZoneOffset.UTC).year
 }
