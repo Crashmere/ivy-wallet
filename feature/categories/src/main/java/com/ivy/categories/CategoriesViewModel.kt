@@ -11,7 +11,6 @@ import com.ivy.base.time.TimeConverter
 import com.ivy.base.time.TimeProvider
 import com.ivy.domain.preferences.toggles.PreferenceToggleRepository
 import com.ivy.domain.preferences.toggles.PreferenceToggles
-import com.ivy.domain.preferences.AppPreferences
 import com.ivy.domain.usecase.category.GetCategoriesUseCase
 import com.ivy.domain.usecase.category.SaveCategoryUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
@@ -25,6 +24,8 @@ import com.ivy.ui.preferences.asEnabledState
 import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
 import com.ivy.domain.usecase.category.CalculateCategoryIncomeWithAccountFiltersUseCase
 import com.ivy.domain.usecase.category.CreateCategoryUseCase
+import com.ivy.domain.usecase.category.GetCategorySortOrderPreferenceUseCase
+import com.ivy.domain.usecase.category.SetCategorySortOrderPreferenceUseCase
 import com.ivy.data.model.legacy.CreateCategoryData
 import com.ivy.legacy.ui.modal.edit.CategoryModalData
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -45,7 +46,8 @@ class CategoriesViewModel @Inject constructor(
     private val getCategoriesUseCase: GetCategoriesUseCase,
     private val saveCategoryUseCase: SaveCategoryUseCase,
     private val periodState: PeriodState,
-    private val appPreferences: AppPreferences,
+    private val getCategorySortOrderPreference: GetCategorySortOrderPreferenceUseCase,
+    private val setCategorySortOrderPreference: SetCategorySortOrderPreferenceUseCase,
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
     private val getLegacyAccountsUseCase: GetLegacyAccountsUseCase,
     private val getLegacyTransactionsForAccountsUseCase: GetLegacyTransactionsForAccountsUseCase,
@@ -162,7 +164,7 @@ class CategoriesViewModel @Inject constructor(
             )
 
             val sortOrder = SortOrder.from(
-                appPreferences.categorySortOrder
+                getCategorySortOrderPreference()
             )
 
             this.sortOrder.value = sortOrder
@@ -211,7 +213,7 @@ class CategoriesViewModel @Inject constructor(
         }
 
         ioThread {
-            appPreferences.categorySortOrder = sortOrder.orderNum
+            setCategorySortOrderPreference(sortOrder.orderNum)
         }
 
         this.categories.value = sortedList
