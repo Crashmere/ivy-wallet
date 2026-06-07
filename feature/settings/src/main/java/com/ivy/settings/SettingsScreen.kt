@@ -43,7 +43,6 @@ import com.ivy.design.l0_system.style
 import com.ivy.design.l1_buildingBlocks.IconScale
 import com.ivy.design.l1_buildingBlocks.IvyIconScaled
 import com.ivy.design.utils.thenIf
-import com.ivy.legacy.IvyWalletPreview
 import com.ivy.legacy.rootScreen
 import com.ivy.legacy.utils.drawColoredShadow
 import com.ivy.navigation.ExchangeRatesScreen
@@ -1080,30 +1079,4 @@ private fun SettingsDefaultButton(
     ) {
         onClick()
     }
-}
-
-@ExperimentalFoundationApi
-@Composable
-private fun SettingsScreenTestContent(theme: Theme = Theme.LIGHT) {
-    IvyWalletPreview(theme) {
-        UI(
-            theme = Theme.AUTO,
-            onSwitchTheme = {},
-            lockApp = false,
-            currencyCode = "BGN",
-            onSetCurrency = {},
-            languageOptionVisible = true
-        )
-    }
-}
-
-/** For screenshot testing */
-@OptIn(ExperimentalFoundationApi::class)
-@Composable
-fun SettingsUiTest(isDark: Boolean) {
-    val theme = when (isDark) {
-        true -> Theme.DARK
-        false -> Theme.LIGHT
-    }
-    SettingsScreenTestContent(theme)
 }

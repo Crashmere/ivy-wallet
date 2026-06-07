@@ -17,7 +17,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -25,20 +24,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.ivy.base.legacy.Theme
 import com.ivy.base.legacy.stringRes
 import com.ivy.base.model.TransactionType
-import com.ivy.data.model.Category
-import com.ivy.data.model.CategoryId
-import com.ivy.data.model.primitive.ColorInt
-import com.ivy.data.model.primitive.IconAsset
-import com.ivy.data.model.primitive.NotBlankTrimmedString
 import com.ivy.design.l0_system.UI
 import com.ivy.design.l0_system.style
-import com.ivy.legacy.IvyWalletPreview
 import com.ivy.legacy.data.AppBaseData
 import com.ivy.legacy.data.LegacyDueSection
-import com.ivy.legacy.datamodel.Account
 import com.ivy.legacy.ui.component.IncomeExpensesCards
 import com.ivy.legacy.ui.component.transaction.TransactionsDividerLine
 import com.ivy.legacy.ui.component.transaction.transactions
@@ -52,12 +43,7 @@ import com.ivy.ui.rememberScrollPositionListState
 import com.ivy.wallet.domain.pure.data.IncomeExpensePair
 import com.ivy.wallet.ui.theme.Gray
 import com.ivy.wallet.ui.theme.Green
-import com.ivy.wallet.ui.theme.GreenDark
-import com.ivy.wallet.ui.theme.GreenLight
-import com.ivy.wallet.ui.theme.IvyDark
 import com.ivy.wallet.ui.theme.Orange
-import com.ivy.wallet.ui.theme.Purple1Dark
-import com.ivy.wallet.ui.theme.Red3Light
 import com.ivy.wallet.ui.theme.components.BackButtonType
 import com.ivy.wallet.ui.theme.components.BalanceRow
 import com.ivy.wallet.ui.theme.components.CircleButtonFilled
@@ -67,9 +53,7 @@ import com.ivy.wallet.ui.theme.components.IvyIcon
 import com.ivy.wallet.ui.theme.components.IvyOutlinedButton
 import com.ivy.wallet.ui.theme.components.IvyToolbar
 import com.ivy.wallet.ui.theme.pureBlur
-import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
-import java.util.UUID
 
 @ExperimentalFoundationApi
 @Composable
@@ -397,142 +381,4 @@ private fun Toolbar(
 
         Spacer(Modifier.width(24.dp))
     }
-}
-
-@ExperimentalFoundationApi
-@Composable
-private fun ReportScreenTestContent(theme: Theme = Theme.LIGHT) {
-    IvyWalletPreview(theme) {
-        val acc1 = Account("Cash", color = Green.toArgb())
-        val acc2 = Account("DSK", color = GreenDark.toArgb())
-        val cat1 = Category(
-            name = NotBlankTrimmedString.unsafe("Science"),
-            color = ColorInt(Purple1Dark.toArgb()),
-            icon = IconAsset.unsafe("atom"),
-            id = CategoryId(UUID.randomUUID()),
-            orderNum = 0.0,
-        )
-        val state = ReportScreenState(
-            baseCurrency = "BGN",
-            balance = -6405.66,
-            income = 2000.0,
-            expenses = 8405.66,
-            upcomingIncome = 4800.23,
-            upcomingExpenses = 0.0,
-            overdueIncome = 2335.12,
-            overdueExpenses = 0.0,
-            history =
-            persistentListOf(),
-            upcomingTransactions = persistentListOf(),
-            overdueTransactions = persistentListOf(),
-
-            upcomingExpanded = true,
-            overdueExpanded = true,
-            filter = ReportFilter.emptyFilter("BGN"),
-            loading = false,
-            accounts = persistentListOf(
-                acc1,
-                acc2,
-                Account("phyre", color = GreenLight.toArgb(), icon = "cash"),
-                Account("Revolut", color = IvyDark.toArgb()),
-            ),
-            categories = persistentListOf(
-                cat1,
-                Category(
-                    name = NotBlankTrimmedString.unsafe("Pet"),
-                    color = ColorInt(Red3Light.toArgb()),
-                    icon = IconAsset.unsafe("pet"),
-                    id = CategoryId(UUID.randomUUID()),
-                    orderNum = 0.0,
-                ),
-                Category(
-                    name = NotBlankTrimmedString.unsafe("Home"),
-                    color = ColorInt(Green.toArgb()),
-                    icon = null,
-                    id = CategoryId(UUID.randomUUID()),
-                    orderNum = 0.0,
-                ),
-            ),
-        )
-
-        UI(state = state)
-    }
-}
-
-@ExperimentalFoundationApi
-@Composable
-private fun ReportScreenNoFilterTestContent(theme: Theme = Theme.LIGHT) {
-    IvyWalletPreview(theme) {
-        val acc1 = Account("Cash", color = Green.toArgb())
-        val acc2 = Account("DSK", color = GreenDark.toArgb())
-        val cat1 = Category(
-            name = NotBlankTrimmedString.unsafe("Science"),
-            color = ColorInt(Purple1Dark.toArgb()),
-            icon = IconAsset.unsafe("atom"),
-            id = CategoryId(UUID.randomUUID()),
-            orderNum = 0.0,
-        )
-        val state = ReportScreenState(
-            baseCurrency = "BGN",
-            balance = 0.0,
-            income = 0.0,
-            expenses = 0.0,
-            upcomingIncome = 0.0,
-            upcomingExpenses = 0.0,
-            overdueIncome = 0.0,
-            overdueExpenses = 0.0,
-
-            history = persistentListOf(),
-            upcomingTransactions = persistentListOf(),
-            overdueTransactions = persistentListOf(),
-
-            upcomingExpanded = true,
-            overdueExpanded = true,
-
-            filter = null,
-            loading = false,
-
-            accounts = persistentListOf(
-                acc1,
-                acc2,
-                Account("phyre", color = GreenLight.toArgb(), icon = "cash"),
-                Account("Revolut", color = IvyDark.toArgb()),
-            ),
-            categories = persistentListOf(
-                cat1,
-                Category(
-                    name = NotBlankTrimmedString.unsafe("Pet"),
-                    color = ColorInt(Red3Light.toArgb()),
-                    icon = IconAsset.unsafe("pet"),
-                    id = CategoryId(UUID.randomUUID()),
-                    orderNum = 0.0,
-                ),
-                Category(
-                    name = NotBlankTrimmedString.unsafe("Home"),
-                    color = ColorInt(Green.toArgb()),
-                    icon = null,
-                    id = CategoryId(UUID.randomUUID()),
-                    orderNum = 0.0,
-                ),
-            ),
-        )
-
-        UI(state = state)
-    }
-}
-
-/** For screenshot testing */
-@OptIn(ExperimentalFoundationApi::class)
-@Composable
-fun ReportUiTest(isDark: Boolean) {
-    val theme = if (isDark) Theme.DARK else Theme.LIGHT
-    ReportScreenTestContent(theme)
-}
-
-/** For screenshot testing */
-@OptIn(ExperimentalFoundationApi::class)
-@Composable
-fun ReportNoFilterUiTest(isDark: Boolean) {
-    val theme = if (isDark) Theme.DARK else Theme.LIGHT
-    ReportScreenNoFilterTestContent(theme)
 }

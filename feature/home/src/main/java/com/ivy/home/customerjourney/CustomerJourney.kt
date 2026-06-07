@@ -42,7 +42,6 @@ fun CustomerJourney(
 ) {
     val ivyContext = ivyWalletCtx()
     val nav = navigation()
-    // Check is added for Paparazzi Test where context is different
     if (LocalContext.current is RootScreen) {
         val rootScreen = rootScreen()
 

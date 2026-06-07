@@ -23,7 +23,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -31,12 +30,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.ivy.base.legacy.Theme
-import com.ivy.data.model.LoanType
 import com.ivy.design.l0_system.UI
 import com.ivy.design.l0_system.style
-import com.ivy.legacy.IvyWalletPreview
-import com.ivy.legacy.datamodel.Loan
 import com.ivy.legacy.humanReadableType
 import com.ivy.legacy.ivyWalletCtx
 import com.ivy.legacy.utils.getDefaultFIATCurrency
@@ -49,7 +44,6 @@ import com.ivy.navigation.LoansScreen
 import com.ivy.navigation.navigation
 import com.ivy.ui.R
 import com.ivy.ui.rememberScrollPositionListState
-import com.ivy.wallet.ui.theme.Blue
 import com.ivy.wallet.ui.theme.Gray
 import com.ivy.wallet.ui.theme.components.BalanceRow
 import com.ivy.wallet.ui.theme.components.CircleButtonFilled
@@ -62,9 +56,6 @@ import com.ivy.wallet.ui.theme.dynamicContrast
 import com.ivy.wallet.ui.theme.findContrastTextColor
 import com.ivy.wallet.ui.theme.modal.LoanModal
 import com.ivy.wallet.ui.theme.toComposeColor
-import kotlinx.collections.immutable.persistentListOf
-import java.time.Instant
-import java.time.LocalDateTime
 
 @Composable
 fun BoxWithConstraintsScope.LoansScreen(screen: LoansScreen) {
@@ -435,67 +426,4 @@ private fun NoLoansEmptyState(
 
         Spacer(Modifier.height(96.dp))
     }
-}
-
-private val testDateTime = LocalDateTime.of(2023, 4, 20, 0, 35)
-
-@Composable
-private fun LoanScreenTestContent(theme: Theme = Theme.LIGHT) {
-    val state = LoanScreenState(
-        baseCurrency = "BGN",
-        selectedTab = LoanTab.PENDING,
-        completedLoans = persistentListOf(
-            DisplayLoan(
-                loan = Loan(
-                    name = "Loan 3",
-                    icon = "bank",
-                    color = Blue.toArgb(),
-                    amount = 7000.0,
-                    type = LoanType.LEND,
-                    dateTime = testDateTime
-                ),
-                loanTotalAmount = 7000.0,
-                amountPaid = 8000.0,
-                percentPaid = 0.8
-            ),
-        ),
-        pendingLoans = persistentListOf(
-            DisplayLoan(
-                loan = Loan(
-                    name = "Loan 3",
-                    icon = "bank",
-                    color = Blue.toArgb(),
-                    amount = 7000.0,
-                    type = LoanType.LEND,
-                    dateTime = testDateTime
-                ),
-                loanTotalAmount = 7000.0,
-                amountPaid = 8000.0,
-                percentPaid = 0.8
-            ),
-        ),
-        accounts = persistentListOf(),
-        totalOweAmount = "1000.00 INR",
-        totalOwedAmount = "1500.0 INR",
-        loanModalData = null,
-        reorderModalVisible = false,
-        selectedAccount = null,
-        paidOffLoanVisibility = true,
-        dateTime = Instant.now()
-    )
-    IvyWalletPreview(theme) {
-        UI(
-            state = state
-        ) {}
-    }
-}
-
-/** For screenshot testing */
-@Composable
-fun LoanScreenUiTest(isDark: Boolean) {
-    val theme = when (isDark) {
-        true -> Theme.DARK
-        false -> Theme.LIGHT
-    }
-    LoanScreenTestContent(theme)
 }

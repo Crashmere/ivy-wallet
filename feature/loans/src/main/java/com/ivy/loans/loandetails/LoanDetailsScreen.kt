@@ -24,23 +24,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Color.Companion.Red
-import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.ivy.base.legacy.Theme
-import com.ivy.base.model.LoanRecordType
 import com.ivy.base.model.TransactionType
 import com.ivy.base.model.processByType
 import com.ivy.data.model.LoanType
 import com.ivy.design.api.LocalTimeFormatter
 import com.ivy.design.l0_system.UI
 import com.ivy.design.l0_system.style
-import com.ivy.legacy.IvyWalletPreview
 import com.ivy.legacy.datamodel.Account
 import com.ivy.legacy.datamodel.Loan
 import com.ivy.legacy.datamodel.LoanRecord
@@ -83,11 +78,6 @@ import com.ivy.wallet.ui.theme.modal.LoanModal
 import com.ivy.wallet.ui.theme.modal.LoanRecordModal
 import com.ivy.wallet.ui.theme.modal.ProgressModal
 import com.ivy.wallet.ui.theme.toComposeColor
-import kotlinx.collections.immutable.persistentListOf
-import java.time.Instant
-import java.time.LocalDateTime
-import java.time.ZoneOffset
-import java.util.UUID
 
 @Composable
 fun BoxWithConstraintsScope.LoanDetailsScreen(screen: LoanDetailsScreen) {
@@ -886,73 +876,4 @@ private fun NoLoanRecordsEmptyState() {
             )
         )
     }
-}
-
-private val testDateTime = LocalDateTime.of(2023, 4, 27, 0, 35)
-
-@Composable
-private fun LoanDetailsScreenTestContent(theme: Theme = Theme.LIGHT) {
-    IvyWalletPreview(theme) {
-        UI(
-            LoanDetailsScreenState(
-                baseCurrency = "BGN",
-                loan = Loan(
-                    name = "Loan 1",
-                    amount = 4023.54,
-                    color = Red.toArgb(),
-                    type = LoanType.LEND,
-                    dateTime = testDateTime,
-                ),
-                displayLoanRecords = persistentListOf(
-                    DisplayLoanRecord(
-                        LoanRecord(
-                            amount = 123.45,
-                            dateTime = testDateTime.minusDays(1).toInstant(ZoneOffset.UTC),
-                            note = "Cash",
-                            loanId = UUID.randomUUID(),
-                            loanRecordType = LoanRecordType.INCREASE
-                        )
-                    ),
-                    DisplayLoanRecord(
-                        LoanRecord(
-                            amount = 0.50,
-                            dateTime = testDateTime.minusYears(1).toInstant(ZoneOffset.UTC),
-                            loanId = UUID.randomUUID(),
-                            loanRecordType = LoanRecordType.DECREASE
-                        )
-                    ),
-                    DisplayLoanRecord(
-                        LoanRecord(
-                            amount = 1000.00,
-                            dateTime = testDateTime.minusMonths(1).toInstant(ZoneOffset.UTC),
-                            note = "Revolut",
-                            loanId = UUID.randomUUID(),
-                            loanRecordType = LoanRecordType.INCREASE
-                        )
-                    ),
-                ),
-                loanTotalAmount = 4023.54,
-                amountPaid = 3821.00,
-                loanAmountPaid = 100.0,
-                accounts = persistentListOf(),
-                selectedLoanAccount = null,
-                createLoanTransaction = false,
-                isDeleteModalVisible = false,
-                loanModalData = null,
-                loanRecordModalData = null,
-                waitModalVisible = false,
-                dateTime = Instant.now()
-            )
-        ) {}
-    }
-}
-
-/** For screenshot testing */
-@Composable
-fun LoanDetailScreenUiTest(isDark: Boolean) {
-    val theme = when (isDark) {
-        true -> Theme.DARK
-        false -> Theme.LIGHT
-    }
-    LoanDetailsScreenTestContent(theme)
 }

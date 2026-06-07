@@ -16,18 +16,19 @@
 - 已删除 `temp:legacy-code` 中仅服务 IDE 预览的 Compose `@Preview` 示例函数。
 - 已删除 `temp:legacy-code` 旧 Compose App 包装中无引用的 `rootActivity` 和组件预览包装 helper。
 - 已精简 `temp:legacy-code` 旧工具包，删除无引用的 Fragment helper、部分动画 preset、URL helper、日期格式化 helper 和金额拆分格式化 helper。
-- 已删除 app/feature 模块中仅服务 IDE 预览的 Compose `@Preview` 示例函数；保留截图测试入口，并改为普通测试内容函数。
-- 已删除 `temp:old-design` 旧设计组件中仅服务 IDE 预览的 Compose `@Preview` 示例函数；保留仍被截图测试和旧包装复用的预览 helper。
+- 已删除 app/feature 模块中仅服务 IDE 预览的 Compose `@Preview` 示例函数。
+- 已删除 app/feature 模块和 `shared/ui/core` 中的 Paparazzi 截图测试入口、快照图片和截图测试目录。
+- 已删除 `temp:old-design` 旧设计组件中仅服务 IDE 预览或截图测试的 Compose 预览 helper。
 - 已删除 `temp:old-design` 中确认无外部引用的旧组件：`l2_components`、`l3_ivyComponents` 和旧 shape building block。
 - 已删除 `temp:old-design` 中无引用的旧 `Background`、`IvyPadding` 和 padding helper，并简化仍被调用的 `IvyText`。
 - 已删除 `temp:old-design` 中无引用的旧 Android、动画、窗口 inset 和 dp/px 工具，并精简 Compose/键盘工具 helper。
-- 保留应用功能源码、功能测试源码、截图测试源码、Gradle wrapper、本地数据管理能力和当前主要记账功能。
+- 保留应用功能源码、功能测试源码、Gradle wrapper、本地数据管理能力和当前主要记账功能。
 - 当前本机已通过项目本地 Android SDK 编译 demo APK，并成功安装到已连接手机。
 
 ## 后续清理原则
 
 - 优先删除和个人记账无关的社区、推广、远程反馈、发布信息和原项目展示功能。
-- 保留真实记账功能、数据模型、数据库、导入导出、功能测试和截图测试，除非确认个人使用场景不再需要。
+- 保留真实记账功能、数据模型、数据库、导入导出和功能测试，除非确认个人使用场景不再需要。
 - 每一轮清理后都尽量保持 Gradle module include、app 依赖、导航入口和设置页入口一致，避免留下不可达或不可编译的残留。
 - 对启动流程、数据库迁移、导入导出这类会影响个人数据或首次使用体验的内容，先确认使用习惯，再动手删除。
 
@@ -61,10 +62,10 @@
 - `:feature:import-data` 中的第三方 App 来源列表、导入说明页、旧 CSV 模板映射、第三方 App logo 和教程文案；保留备份恢复与手动 CSV 映射导入。
 - `temp:legacy-code` 中无引用的 Crashlytics 工具空壳、旧 FRP View 层封装、旧名称/月选择弹窗、旧折线图、旧 checklist 输入框和无引用工具类型。
 - `temp:legacy-code` 中的 Compose `@Preview` 示例函数；保留真实运行时组件。
-- `temp:legacy-code` 旧 Compose App 包装中的无引用 Activity helper 和组件预览包装 helper；保留运行时仍使用的 `ivyWalletCtx`、`rootView`、`rootScreen`、`IvyWalletPreview` 和 `appDesign`。
+- `temp:legacy-code` 旧 Compose App 包装中的无引用 Activity helper 和组件预览包装 helper；保留运行时仍使用的 `ivyWalletCtx`、`rootView`、`rootScreen` 和 `appDesign`。
 - `temp:legacy-code` 旧工具包中无引用的 Fragment 参数/Activity Result helper、动画 preset、URL 打开 helper、日期时间格式化 helper 和金额拆分格式化 helper。
-- app/feature 模块中的 Compose `@Preview` 示例函数；保留功能代码、功能测试和截图测试入口。
-- `temp:old-design` 旧设计组件中的 Compose `@Preview` 示例函数；保留真实组件和仍被复用的预览 helper。
+- app/feature 模块中的 Compose `@Preview` 示例函数和 Paparazzi 截图测试入口；保留功能代码和功能测试。
+- `temp:old-design` 旧设计组件中的 Compose `@Preview` 示例函数和截图测试预览 helper；保留真实组件。
 - `temp:old-design` 中无引用的旧 l2/l3 组件和旧 shape building block；保留仍被当前功能引用的旧设计基础能力。
 - `temp:old-design` 中无引用的旧 `Background`、`IvyPadding` 和 padding helper；保留仍被 CSV 导入、借贷逻辑和颜色选择器使用的旧颜色列表常量。
 - `temp:old-design` 中无引用的旧 Android、动画、窗口 inset、dp/px 和 Compose helper；保留仍被页面调用的 `thenIf`、`thenWhen`、`densityScope`、`rememberInteractionSource` 和 `hideKeyboard`。
@@ -74,7 +75,7 @@
 - `shared:data:core` 中的本地备份、恢复、zip/json/csv 导入导出能力。
 - `:feature:import-data` 中的手动 CSV 导入流程。
 - `temp:old-design` 中的 `IVY_COLOR_PICKER_COLORS_*` 旧颜色列表常量；当前仍被 CSV 导入、借贷逻辑和旧颜色选择器使用。
-- 功能测试和截图测试源码。
+- 功能测试源码。
 
 ## 建议执行顺序
 

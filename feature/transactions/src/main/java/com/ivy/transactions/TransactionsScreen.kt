@@ -46,7 +46,6 @@ import com.ivy.design.l0_system.UI
 import com.ivy.design.l0_system.style
 import com.ivy.design.utils.thenIf
 import com.ivy.legacy.Constants
-import com.ivy.legacy.IvyWalletPreview
 import com.ivy.legacy.data.AppBaseData
 import com.ivy.legacy.data.LegacyDueSection
 import com.ivy.legacy.data.model.Month
@@ -90,8 +89,6 @@ import com.ivy.wallet.ui.theme.toComposeColor
 import com.ivy.wallet.ui.theme.wallet.PeriodSelector
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
-import java.math.BigDecimal
-import java.util.UUID
 
 @Composable
 fun BoxWithConstraintsScope.TransactionsScreen(screen: TransactionsScreen) {
@@ -818,62 +815,5 @@ private fun Item(
                 )
             }
         }
-    }
-}
-
-@Composable
-private fun BoxWithConstraintsScope.TransactionsScreenTestContent() {
-    UI(
-        period = TimePeriod(month = Month.monthsList().first(), year = 2023),
-        baseCurrency = "BGN",
-        currency = "BGN",
-
-        categories = persistentListOf(),
-        accounts = persistentListOf(),
-
-        balance = 1314.578,
-        balanceBaseCurrency = null,
-        income = 8000.0,
-        expenses = 6000.0,
-
-        history = persistentListOf(),
-        category = null,
-        account = Account("DSK", color = GreenDark.toArgb(), icon = "pet"),
-        onSetPeriod = { },
-        onPreviousMonth = {},
-        onNextMonth = {},
-        onDelete = {},
-        onEditAccount = { _, _ -> },
-        onEditCategory = {},
-        upcoming = persistentListOf(
-            Transaction(
-                UUID(1L, 2L),
-                TransactionType.EXPENSE,
-                BigDecimal.valueOf(10L)
-            )
-        ),
-        updateAccountNameConfirmation = {},
-        enableDeletionButton = true,
-        deleteModal1Visible = false,
-        onDeleteModal1Visible = {},
-        skipAllModalVisible = false,
-        onSkipAllModalVisible = {},
-        onChoosePeriodModal = {},
-        choosePeriodModal = null,
-        screen = TransactionsScreen(),
-        shouldShowAccountSpecificColorInTransactions = false
-    )
-}
-
-/** For screenshot testing */
-@OptIn(ExperimentalFoundationApi::class)
-@Composable
-fun TransactionsUiTest(isDark: Boolean) {
-    val theme = when (isDark) {
-        true -> Theme.DARK
-        false -> Theme.LIGHT
-    }
-    IvyWalletPreview(theme) {
-        TransactionsScreenTestContent()
     }
 }

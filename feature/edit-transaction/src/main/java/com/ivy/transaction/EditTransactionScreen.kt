@@ -29,17 +29,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
-import com.ivy.base.legacy.Theme
 import com.ivy.base.model.TransactionType
 import com.ivy.data.model.Category
 import com.ivy.data.model.Tag
 import com.ivy.data.model.TagId
 import com.ivy.design.api.LocalTimeConverter
-import com.ivy.design.l0_system.Orange
 import com.ivy.design.l0_system.UI
 import com.ivy.design.l0_system.style
 import com.ivy.design.utils.hideKeyboard
-import com.ivy.legacy.IvyWalletPreview
 import com.ivy.legacy.data.EditTransactionDisplayLoan
 import com.ivy.legacy.datamodel.Account
 import com.ivy.legacy.ivyWalletCtx
@@ -50,7 +47,6 @@ import com.ivy.legacy.ui.component.tags.ShowTagModal
 import com.ivy.legacy.utils.onScreenStart
 import com.ivy.navigation.EditPlannedScreen
 import com.ivy.navigation.EditTransactionScreen
-import com.ivy.navigation.IvyPreview
 import com.ivy.navigation.navigation
 import com.ivy.navigation.screenScopedViewModel
 import com.ivy.ui.R
@@ -80,11 +76,8 @@ import com.ivy.wallet.ui.theme.modal.edit.ChooseCategoryModal
 import com.ivy.wallet.ui.theme.modal.edit.DescriptionModal
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.ImmutableSet
-import kotlinx.collections.immutable.persistentListOf
-import kotlinx.collections.immutable.persistentSetOf
 import java.time.Instant
 import java.time.LocalDateTime
-import java.time.ZoneOffset
 import java.util.UUID
 import kotlin.math.roundToInt
 
@@ -651,66 +644,3 @@ private fun shouldFocusTitle(
 ): Boolean = titleTextFieldValue.text.isBlank() && type != TransactionType.TRANSFER
 
 private fun shouldFocusAmount(amount: Double) = amount == 0.0
-
-private val testDateTime = LocalDateTime.of(2023, 4, 27, 0, 35)
-    .toInstant(ZoneOffset.UTC)
-
-@ExperimentalFoundationApi
-@Composable
-private fun BoxWithConstraintsScope.EditTransactionScreenTestContent(isDark: Boolean = false) {
-    IvyPreview(isDark) {
-        UI(
-            screen = EditTransactionScreen(null, TransactionType.EXPENSE),
-            initialTitle = "",
-            titleSuggestions = persistentSetOf(),
-            tags = persistentListOf(),
-            transactionAssociatedTags = persistentListOf(),
-            baseCurrency = "BGN",
-            dateTime = testDateTime,
-            description = null,
-            category = null,
-            account = Account(name = "phyre", Orange.toArgb()),
-            toAccount = null,
-            amount = 0.0,
-            dueDate = null,
-            transactionType = TransactionType.INCOME,
-            customExchangeRateState = CustomExchangeRateState(),
-
-            categories = persistentListOf(),
-            accounts = persistentListOf(),
-
-            onDueDateChange = {},
-            onCategoryChange = {},
-            onAccountChange = {},
-            onToAccountChange = {},
-            onDescriptionChange = {},
-            onTitleChange = {},
-            onAmountChange = {},
-
-            onCreateCategory = { },
-            onEditCategory = {},
-            onPayPlannedPayment = {},
-            onSave = {},
-            onSetHasChanges = {},
-            onDelete = {},
-            onDuplicate = {},
-            onCreateAccount = { },
-            onSetDate = {},
-            onSetTime = {},
-            onSetTransactionType = {}
-        )
-    }
-}
-
-/** For screenshot testing */
-@OptIn(ExperimentalFoundationApi::class)
-@Composable
-fun EditTransactionScreenUiTest(isDark: Boolean) {
-    val theme = when (isDark) {
-        true -> Theme.DARK
-        false -> Theme.LIGHT
-    }
-    IvyWalletPreview(theme) {
-        EditTransactionScreenTestContent(isDark)
-    }
-}

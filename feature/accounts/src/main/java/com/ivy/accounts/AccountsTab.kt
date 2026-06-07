@@ -23,22 +23,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.ivy.base.legacy.Theme
-import com.ivy.data.model.Account
-import com.ivy.data.model.AccountId
-import com.ivy.data.model.primitive.AssetCode
-import com.ivy.data.model.primitive.ColorInt
-import com.ivy.data.model.primitive.IconAsset
-import com.ivy.data.model.primitive.NotBlankTrimmedString
 import com.ivy.design.l0_system.UI
 import com.ivy.design.l0_system.style
-import com.ivy.legacy.IvyWalletPreview
 import com.ivy.legacy.data.model.AccountData
 import com.ivy.legacy.utils.clickableNoIndication
 import com.ivy.legacy.utils.horizontalSwipeListener
@@ -49,8 +40,6 @@ import com.ivy.navigation.navigation
 import com.ivy.navigation.screenScopedViewModel
 import com.ivy.ui.R
 import com.ivy.ui.rememberScrollPositionListState
-import com.ivy.wallet.ui.theme.Green
-import com.ivy.wallet.ui.theme.GreenLight
 import com.ivy.wallet.ui.theme.components.BalanceRow
 import com.ivy.wallet.ui.theme.components.BalanceRowMini
 import com.ivy.wallet.ui.theme.components.ItemIconSDefaultIcon
@@ -59,8 +48,6 @@ import com.ivy.wallet.ui.theme.components.ReorderModalSingleType
 import com.ivy.wallet.ui.theme.dynamicContrast
 import com.ivy.wallet.ui.theme.findContrastTextColor
 import com.ivy.wallet.ui.theme.toComposeColor
-import kotlinx.collections.immutable.persistentListOf
-import java.util.UUID
 
 @Composable
 fun BoxWithConstraintsScope.AccountsTab() {
@@ -332,116 +319,4 @@ private fun AccountHeader(
 
         Spacer(Modifier.height(16.dp))
     }
-}
-
-@Composable
-private fun AccountsTabTestContent(
-    theme: Theme,
-    compactModeEnabled: Boolean
-) {
-    IvyWalletPreview(theme = theme) {
-        UI(state = accountsTabTestState(compactModeEnabled))
-    }
-}
-
-private fun accountsTabTestState(compactModeEnabled: Boolean): AccountsState {
-    val acc1 = Account(
-        id = AccountId(UUID.randomUUID()),
-        name = NotBlankTrimmedString.unsafe("Phyre"),
-        color = ColorInt(Green.toArgb()),
-        asset = AssetCode.unsafe("USD"),
-        icon = null,
-        includeInBalance = true,
-        orderNum = 0.0,
-    )
-
-    val acc2 = Account(
-        id = AccountId(UUID.randomUUID()),
-        name = NotBlankTrimmedString.unsafe("DSK"),
-        color = ColorInt(GreenLight.toArgb()),
-        asset = AssetCode.unsafe("USD"),
-        icon = null,
-        includeInBalance = true,
-        orderNum = 0.0,
-    )
-
-    val acc3 = Account(
-        id = AccountId(UUID.randomUUID()),
-        name = NotBlankTrimmedString.unsafe("Revolut"),
-        color = ColorInt(Green.toArgb()),
-        asset = AssetCode.unsafe("USD"),
-        icon = IconAsset.unsafe("revolut"),
-        includeInBalance = true,
-        orderNum = 0.0,
-    )
-
-    val acc4 = Account(
-        id = AccountId(UUID.randomUUID()),
-        name = NotBlankTrimmedString.unsafe("Cash"),
-        color = ColorInt(Green.toArgb()),
-        asset = AssetCode.unsafe("USD"),
-        icon = IconAsset.unsafe("cash"),
-        includeInBalance = true,
-        orderNum = 0.0,
-    )
-    return AccountsState(
-        baseCurrency = "BGN",
-        accountsData = persistentListOf(
-            AccountData(
-                account = acc1,
-                balance = 2125.0,
-                balanceBaseCurrency = null,
-                monthlyExpenses = 920.0,
-                monthlyIncome = 3045.0
-            ),
-            AccountData(
-                account = acc2,
-                balance = 12125.21,
-                balanceBaseCurrency = null,
-                monthlyExpenses = 1350.50,
-                monthlyIncome = 8000.48
-            ),
-            AccountData(
-                account = acc3,
-                balance = 1200.0,
-                balanceBaseCurrency = 1979.64,
-                monthlyExpenses = 750.0,
-                monthlyIncome = 1000.30
-            ),
-            AccountData(
-                account = acc4,
-                balance = 820.0,
-                balanceBaseCurrency = null,
-                monthlyExpenses = 340.0,
-                monthlyIncome = 400.0
-            ),
-        ),
-        totalBalanceWithExcluded = "25.54",
-        totalBalanceWithExcludedText = "BGN 25.54",
-        totalBalanceWithoutExcluded = "25.54",
-        totalBalanceWithoutExcludedText = "BGN 25.54",
-        reorderVisible = false,
-        compactAccountsModeEnabled = compactModeEnabled,
-        hideTotalBalance = false
-    )
-}
-
-/** For screen shot testing **/
-@Composable
-fun AccountsTabNonCompactUITest(dark: Boolean) {
-    val theme = when (dark) {
-        true -> Theme.DARK
-        false -> Theme.LIGHT
-    }
-    AccountsTabTestContent(theme, compactModeEnabled = false)
-}
-
-/** For screen shot testing **/
-@Composable
-fun AccountsTabCompactUITest(dark: Boolean) {
-    val theme = when (dark) {
-        true -> Theme.DARK
-        false -> Theme.LIGHT
-    }
-    AccountsTabTestContent(theme, compactModeEnabled = true)
 }

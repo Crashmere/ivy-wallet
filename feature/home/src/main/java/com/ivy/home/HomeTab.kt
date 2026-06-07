@@ -23,7 +23,6 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.ivy.base.legacy.Theme
 import com.ivy.base.legacy.Transaction
 import com.ivy.base.legacy.TransactionHistoryItem
 import com.ivy.base.legacy.stringRes
@@ -35,7 +34,6 @@ import com.ivy.frp.then2
 import com.ivy.home.Constants.SWIPE_HORIZONTAL_THRESHOLD
 import com.ivy.home.customerjourney.CustomerJourney
 import com.ivy.home.customerjourney.CustomerJourneyCardModel
-import com.ivy.legacy.IvyWalletPreview
 import com.ivy.legacy.data.AppBaseData
 import com.ivy.legacy.data.BufferInfo
 import com.ivy.legacy.data.LegacyDueSection
@@ -60,7 +58,6 @@ import com.ivy.wallet.ui.theme.modal.ChoosePeriodModalData
 import com.ivy.wallet.ui.theme.modal.CurrencyModal
 import com.ivy.wallet.ui.theme.modal.DeleteModal
 import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.persistentListOf
 import java.math.BigDecimal
 
 @ExperimentalAnimationApi
@@ -389,58 +386,5 @@ fun HomeLazyColumn(
             onSkipTransaction = onSkipTransaction,
             onSkipAllTransactions = onSkipAllTransactions
         )
-    }
-}
-
-@ExperimentalAnimationApi
-@ExperimentalFoundationApi
-@Composable
-private fun BoxWithConstraintsScope.HomeTabTestContent() {
-    HomeUi(
-        uiState = HomeState(
-            theme = Theme.AUTO,
-            baseData = AppBaseData(
-                baseCurrency = "",
-                accounts = persistentListOf(),
-                categories = persistentListOf()
-            ),
-            balance = BigDecimal.ZERO,
-            buffer = BufferInfo(
-                amount = BigDecimal.ZERO,
-                bufferDiff = BigDecimal.ZERO,
-            ),
-            customerJourneyCards = persistentListOf(),
-            history = persistentListOf(),
-            stats = IncomeExpensePair.zero(),
-            upcoming = LegacyDueSection(
-                trns = persistentListOf(),
-                stats = IncomeExpensePair.zero(),
-                expanded = false,
-            ),
-            overdue = LegacyDueSection(
-                trns = persistentListOf(),
-                stats = IncomeExpensePair.zero(),
-                expanded = false,
-            ),
-            period = TimePeriod(month = Month.monthsList().first(), year = 2023),
-            hideBalance = false,
-            hideIncome = false,
-            expanded = false,
-            shouldShowAccountSpecificColorInTransactions = false
-        ),
-        onEvent = {}
-    )
-}
-
-/** For screenshot testing */
-@OptIn(ExperimentalFoundationApi::class, ExperimentalAnimationApi::class)
-@Composable
-fun HomeUiTest(isDark: Boolean) {
-    val theme = when (isDark) {
-        true -> Theme.DARK
-        false -> Theme.LIGHT
-    }
-    IvyWalletPreview(theme) {
-        HomeTabTestContent()
     }
 }

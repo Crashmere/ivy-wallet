@@ -2,7 +2,6 @@ package com.ivy.search
 
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -19,8 +18,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.ivy.base.legacy.Theme
-import com.ivy.design.utils.IvyComponentPreview
 import com.ivy.legacy.data.AppBaseData
 import com.ivy.legacy.ui.SearchInput
 import com.ivy.legacy.ui.component.transaction.transactions
@@ -32,7 +29,6 @@ import com.ivy.navigation.SearchScreen
 import com.ivy.navigation.screenScopedViewModel
 import com.ivy.ui.R
 import com.ivy.wallet.ui.theme.modal.DURATION_MODAL_ANIM
-import kotlinx.collections.immutable.persistentListOf
 
 @Composable
 fun SearchScreen(screen: SearchScreen) {
@@ -120,25 +116,5 @@ private fun SearchUi(
                 // add keyboard height margin at bototm so the list can scroll to bottom
             }
         }
-    }
-}
-
-/** For screenshot testing */
-@OptIn(ExperimentalFoundationApi::class)
-@Composable
-fun SearchUiTest(isDark: Boolean) {
-    val theme = if (isDark) Theme.DARK else Theme.LIGHT
-    IvyComponentPreview(theme = theme) {
-        SearchUi(
-            uiState = SearchState(
-                searchQuery = "",
-                transactions = persistentListOf(),
-                baseCurrency = "",
-                accounts = persistentListOf(),
-                categories = persistentListOf(),
-                shouldShowAccountSpecificColorInTransactions = false
-            ),
-            onEvent = {}
-        )
     }
 }
