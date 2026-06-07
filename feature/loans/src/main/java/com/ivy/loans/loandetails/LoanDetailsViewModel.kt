@@ -118,7 +118,7 @@ class LoanDetailsViewModel @Inject constructor(
             is LoanRecordModalEvent -> handleLoanRecordModalEvents(event)
             is LoanModalEvent -> handleLoanModalEvents(event)
             is DeleteLoanModalEvent -> handleDeleteLoanModalEvents(event)
-            is LoanDetailsScreenEvent -> handleLoanDetailsScreenEvents(event)
+            else -> handleLoanDetailsScreenEvents(event)
         }
     }
 

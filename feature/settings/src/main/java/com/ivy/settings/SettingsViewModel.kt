@@ -12,7 +12,6 @@ import com.ivy.base.theme.Theme
 import com.ivy.base.time.TimeProvider
 import com.ivy.data.backup.BackupDataUseCase
 import com.ivy.data.model.primitive.AssetCode
-import com.ivy.data.repository.LegacySettingsRepository
 import com.ivy.domain.preferences.AppPreferences
 import com.ivy.domain.preferences.toggles.BoolPreference
 import com.ivy.domain.preferences.toggles.PreferenceToggles
@@ -21,6 +20,8 @@ import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.domain.usecase.currency.SetBaseCurrencyUseCase
 import com.ivy.domain.usecase.csv.ExportCsvUseCase
 import com.ivy.domain.usecase.exchange.SyncExchangeRatesUseCase
+import com.ivy.domain.usecase.settings.GetThemeUseCase
+import com.ivy.domain.usecase.settings.SwitchThemeUseCase
 import com.ivy.legacy.frp.monad.Res
 import com.ivy.ui.theme.ThemeState
 import com.ivy.legacy.ui.state.PeriodState
@@ -45,7 +46,8 @@ class SettingsViewModel @Inject constructor(
     private val periodState: PeriodState,
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
     private val setBaseCurrency: SetBaseCurrencyUseCase,
-    private val legacySettingsRepository: LegacySettingsRepository,
+    private val getTheme: GetThemeUseCase,
+    private val switchThemeUseCase: SwitchThemeUseCase,
     private val resetWalletDataUseCase: ResetWalletDataUseCase,
     private val appPreferences: AppPreferences,
     private val backupDataUseCase: BackupDataUseCase,
@@ -123,7 +125,7 @@ class SettingsViewModel @Inject constructor(
     }
 
     private suspend fun initializeCurrentTheme() {
-        currentTheme.value = legacySettingsRepository.getTheme()
+        currentTheme.value = getTheme()
     }
 
     private fun initializeLockApp() {
@@ -382,7 +384,7 @@ class SettingsViewModel @Inject constructor(
 
     private fun switchTheme() {
         viewModelScope.launch {
-            val newTheme = legacySettingsRepository.switchTheme()
+            val newTheme = switchThemeUseCase()
             themeState.update(newTheme)
             currentTheme.value = newTheme
         }

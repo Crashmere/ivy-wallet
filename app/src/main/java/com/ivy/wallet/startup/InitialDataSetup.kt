@@ -2,17 +2,17 @@ package com.ivy.wallet.startup
 
 import com.ivy.data.db.dao.read.AccountDao
 import com.ivy.data.repository.CategoryRepository
-import com.ivy.data.repository.LegacySettingsRepository
 import com.ivy.base.coroutines.ioThread
 import com.ivy.data.model.currency.IvyCurrency
 import com.ivy.domain.preferences.AppPreferences
+import com.ivy.domain.usecase.settings.EnsureSettingsInitializedUseCase
 import com.ivy.wallet.notification.reminder.TransactionReminderLogic
 import javax.inject.Inject
 
 class InitialDataSetup @Inject constructor(
     private val accountDao: AccountDao,
     private val categoryRepository: CategoryRepository,
-    private val legacySettingsRepository: LegacySettingsRepository,
+    private val ensureSettingsInitialized: EnsureSettingsInitializedUseCase,
     private val appPreferences: AppPreferences,
     private val preloadDataLogic: PreloadDataLogic,
     private val transactionReminderLogic: TransactionReminderLogic,
@@ -21,7 +21,7 @@ class InitialDataSetup @Inject constructor(
         ioThread {
             val defaultCurrency = IvyCurrency.getDefault()
 
-            legacySettingsRepository.ensureInitialized(
+            ensureSettingsInitialized(
                 systemDarkMode = systemDarkMode,
                 currencyCode = defaultCurrency.code,
                 bufferAmount = 1000.0,

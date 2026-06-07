@@ -15,12 +15,15 @@ import com.ivy.base.time.TimeConverter
 import com.ivy.base.time.TimeProvider
 import com.ivy.data.model.primitive.AssetCode
 import com.ivy.data.repository.CategoryRepository
-import com.ivy.data.repository.LegacySettingsRepository
 import com.ivy.data.repository.mapper.TransactionMapper
 import com.ivy.domain.preferences.toggles.PreferenceToggles
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.domain.usecase.currency.SetBaseCurrencyUseCase
 import com.ivy.domain.usecase.exchange.SyncExchangeRatesUseCase
+import com.ivy.domain.usecase.settings.GetBufferAmountUseCase
+import com.ivy.domain.usecase.settings.GetThemeUseCase
+import com.ivy.domain.usecase.settings.SetBufferAmountUseCase
+import com.ivy.domain.usecase.settings.SwitchThemeUseCase
 import com.ivy.legacy.frp.then
 import com.ivy.legacy.frp.thenInvokeAfter
 import com.ivy.home.customerjourney.CustomerJourneyCardModel
@@ -77,7 +80,10 @@ class HomeViewModel @Inject constructor(
     private val calcWalletBalanceAct: CalcWalletBalanceAct,
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
     private val setBaseCurrency: SetBaseCurrencyUseCase,
-    private val legacySettingsRepository: LegacySettingsRepository,
+    private val getThemeUseCase: GetThemeUseCase,
+    private val switchThemeUseCase: SwitchThemeUseCase,
+    private val getBufferAmountUseCase: GetBufferAmountUseCase,
+    private val setBufferAmountUseCase: SetBufferAmountUseCase,
     private val accountsAct: AccountsAct,
     private val categoryRepository: CategoryRepository,
     private val calcBufferDiffAct: CalcBufferDiffAct,
@@ -295,9 +301,9 @@ class HomeViewModel @Inject constructor(
 
     private suspend fun loadHomePreferences(): HomePreferences {
         return HomePreferences(
-            theme = legacySettingsRepository.getTheme(),
+            theme = getThemeUseCase(),
             baseCurrency = getBaseCurrencyCode(),
-            bufferAmount = legacySettingsRepository.getBufferAmount(),
+            bufferAmount = getBufferAmountUseCase(),
         )
     }
 
@@ -448,7 +454,7 @@ class HomeViewModel @Inject constructor(
 
     private fun switchTheme() {
         viewModelScope.launch {
-            val newTheme = legacySettingsRepository.switchTheme()
+            val newTheme = switchThemeUseCase()
             themeState.update(newTheme)
             currentTheme = newTheme
         }
@@ -456,7 +462,7 @@ class HomeViewModel @Inject constructor(
 
     private fun setBuffer(newBuffer: Double) {
         viewModelScope.launch {
-            val newAmount = legacySettingsRepository.setBufferAmount(newBuffer.toBigDecimal())
+            val newAmount = setBufferAmountUseCase(newBuffer.toBigDecimal())
             buffer = buffer.copy(amount = newAmount)
         }
     }
