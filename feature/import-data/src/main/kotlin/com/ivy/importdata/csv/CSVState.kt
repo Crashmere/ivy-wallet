@@ -22,7 +22,7 @@ sealed interface UIState {
 data class ImportantFields(
     val amount: ColumnMapping<Int>,
     val amountStatus: MappingStatus,
-    val type: ColumnMapping<TrnTypeMetadata>,
+    val type: ColumnMapping<TransactionTypeMetadata>,
     val typeStatus: MappingStatus,
     val date: ColumnMapping<DateMetadata>,
     val dateStatus: MappingStatus,
@@ -32,7 +32,7 @@ data class ImportantFields(
     val accountCurrencyStatus: MappingStatus,
 )
 
-data class TrnTypeMetadata(
+data class TransactionTypeMetadata(
     val income: String,
     val expense: String,
     val transfer: String?,

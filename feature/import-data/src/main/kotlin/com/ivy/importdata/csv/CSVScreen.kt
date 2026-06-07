@@ -409,18 +409,18 @@ private fun AmountMetadata(
 // region Type Metadata
 @Composable
 private fun TypeMetadata(
-    metadata: TrnTypeMetadata,
+    metadata: TransactionTypeMetadata,
     onEvent: (CSVEvent) -> Unit,
 ) {
-    val onTypeMetaEvent = { newMeta: TrnTypeMetadata ->
-        onEvent(CSVEvent.TypeMetaChange(newMeta))
+    val onTypeMetadataEvent = { newMetadata: TransactionTypeMetadata ->
+        onEvent(CSVEvent.TypeMetadataChange(newMetadata))
     }
 
     LabelContainsField(
         label = "Income",
         value = metadata.income,
         onValueChange = {
-            onTypeMetaEvent(metadata.copy(income = it))
+            onTypeMetadataEvent(metadata.copy(income = it))
         }
     )
     Spacer8()
@@ -428,7 +428,7 @@ private fun TypeMetadata(
         label = "Expense",
         value = metadata.expense,
         onValueChange = {
-            onTypeMetaEvent(metadata.copy(expense = it))
+            onTypeMetadataEvent(metadata.copy(expense = it))
         }
     )
     Spacer8()
@@ -437,7 +437,7 @@ private fun TypeMetadata(
         label = "Transfer",
         value = metadata.transfer ?: "",
         onValueChange = {
-            onTypeMetaEvent(metadata.copy(transfer = it))
+            onTypeMetadataEvent(metadata.copy(transfer = it))
         }
     )
 }
@@ -479,7 +479,7 @@ private fun DateMetadataUI(
             enabled = metadata == DateMetadata.DateFirst,
             text = "Date/Day (1,2,3...31)",
             onClick = {
-                onEvent(CSVEvent.DataMetaChange(DateMetadata.DateFirst))
+                onEvent(CSVEvent.DateMetadataChange(DateMetadata.DateFirst))
             }
         )
         Spacer8(horizontal = true)
@@ -487,7 +487,7 @@ private fun DateMetadataUI(
             enabled = metadata == DateMetadata.MonthFirst,
             text = "Month (1,2..12 / Jan, Feb..Dec)",
             onClick = {
-                onEvent(CSVEvent.DataMetaChange(DateMetadata.MonthFirst))
+                onEvent(CSVEvent.DateMetadataChange(DateMetadata.MonthFirst))
             }
         )
     }

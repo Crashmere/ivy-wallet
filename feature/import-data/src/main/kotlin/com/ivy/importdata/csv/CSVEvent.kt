@@ -10,11 +10,11 @@ sealed interface CSVEvent {
     data class MapAmount(val index: Int, val name: String) : CSVEvent
     data class AmountMultiplier(val multiplier: Int) : CSVEvent
     data class MapType(val index: Int, val name: String) : CSVEvent
-    data class TypeMetaChange(val meta: TrnTypeMetadata) :
+    data class TypeMetadataChange(val meta: TransactionTypeMetadata) :
         CSVEvent
 
     data class MapDate(val index: Int, val name: String) : CSVEvent
-    data class DataMetaChange(val meta: DateMetadata) :
+    data class DateMetadataChange(val meta: DateMetadata) :
         CSVEvent
 
     data class MapAccount(val index: Int, val name: String) : CSVEvent

@@ -4,7 +4,7 @@ import com.ivy.data.model.TransactionType
 import com.ivy.importdata.csv.CSVRow
 import com.ivy.importdata.csv.ColumnMapping
 import com.ivy.importdata.csv.DateMetadata
-import com.ivy.importdata.csv.TrnTypeMetadata
+import com.ivy.importdata.csv.TransactionTypeMetadata
 import java.text.DecimalFormat
 import java.text.NumberFormat
 import java.time.LocalDate
@@ -59,7 +59,7 @@ private fun parsePositiveDouble(string: String): Double? {
 
 fun parseTransactionType(
     value: String,
-    metadata: TrnTypeMetadata
+    metadata: TransactionTypeMetadata
 ): TransactionType? {
     fun String.tryMeta(metaContains: String): Boolean {
         return metaContains.isNotBlank() &&

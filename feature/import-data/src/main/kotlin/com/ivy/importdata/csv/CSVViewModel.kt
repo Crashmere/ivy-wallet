@@ -75,7 +75,7 @@ class CSVViewModel @Inject constructor(
             name = "",
             index = -1,
             required = true,
-            metadata = TrnTypeMetadata(
+            metadata = TransactionTypeMetadata(
                 income = "",
                 expense = "",
                 transfer = null,
@@ -336,7 +336,7 @@ class CSVViewModel @Inject constructor(
                 )
             }
 
-            is CSVEvent.DataMetaChange -> {
+            is CSVEvent.DateMetadataChange -> {
                 date = date.copy(
                     metadata = event.meta
                 )
@@ -377,7 +377,7 @@ class CSVViewModel @Inject constructor(
                 )
             }
 
-            is CSVEvent.TypeMetaChange -> {
+            is CSVEvent.TypeMetadataChange -> {
                 type = type.copy(
                     metadata = event.meta
                 )
