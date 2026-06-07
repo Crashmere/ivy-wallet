@@ -905,6 +905,7 @@
 - 根启动 intent 的交易类型解析已改用 `IntentCompat.getSerializableExtra()`，不再直接调用新版 Android 中弃用的 `Intent.getSerializableExtra(String)`。
 - `RootViewModel` 的首次初始化判断已去掉同名私有包装函数，注入字段改为 `isInitialSetupCompletedUseCase`，启动编排直接调用 use case，避免函数和依赖同名造成误读。
 - `RootViewModel.start()` 不再用外层 `Dispatchers.IO` 包住 UI 状态更新和导航；主题读取、默认数据初始化等耗时工作由各自用例/初始化器处理，`ThemeState/PeriodState/Navigation` 更新留在主协程。
+- 根启动 Intent extra 已从 `RootViewModel` companion 移到 `RootIntentExtras`；`IvyAppStarter` 不再为了启动协议依赖 ViewModel 常量。
 - 导航返回处理已收窄为 `Navigation.handleRootBack()`、`registerScreenBackHandler()` 和 modal handler 注册方法；页面和旧 modal 不再直接访问导航内部的返回栈和 handler map。
 - `LocalTimeConverter/LocalTimeProvider/LocalTimeFormatter` 现在作为根部显式提供的 UI 时间平台入口保留，不再用废弃注解把当前页面的正常调用标成警告。
 - `RootContent` 接收的旧 Material 日期选择器已从 app 具体实现 `ActivityDatePicker` 收窄为 UI 层 `DatePicker` 接口；Activity 仍负责注册 FragmentManager 相关实现。

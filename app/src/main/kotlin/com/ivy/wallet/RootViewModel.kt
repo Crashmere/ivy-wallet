@@ -35,10 +35,6 @@ class RootViewModel @Inject constructor(
     private val initialDataSetup: InitialDataSetup,
 ) : ViewModel() {
 
-    companion object {
-        const val EXTRA_ADD_TRANSACTION_TYPE = "add_transaction_type_extra"
-    }
-
     val appLocked = appLockController.appLocked
 
     fun start(systemDarkMode: Boolean, intent: Intent) {
@@ -72,10 +68,12 @@ class RootViewModel @Inject constructor(
         val addTransactionType: TransactionType? = try {
             IntentCompat.getSerializableExtra(
                 intent,
-                EXTRA_ADD_TRANSACTION_TYPE,
+                RootIntentExtras.EXTRA_ADD_TRANSACTION_TYPE,
                 TransactionType::class.java
             )
-                ?: TransactionType.valueOf(intent.getStringExtra(EXTRA_ADD_TRANSACTION_TYPE) ?: "")
+                ?: TransactionType.valueOf(
+                    intent.getStringExtra(RootIntentExtras.EXTRA_ADD_TRANSACTION_TYPE) ?: ""
+                )
         } catch (e: IllegalArgumentException) {
             null
         }

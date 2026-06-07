@@ -26,7 +26,7 @@ class IvyAppStarter @Inject constructor(
     override fun addTransactionStart(type: TransactionType) {
         context.startActivity(
             getRootIntent().apply {
-                putExtra(RootViewModel.EXTRA_ADD_TRANSACTION_TYPE, type)
+                putExtra(RootIntentExtras.EXTRA_ADD_TRANSACTION_TYPE, type)
                 applyStartFlags()
             }
         )
