@@ -9,7 +9,6 @@ import androidx.lifecycle.viewModelScope
 import com.ivy.base.theme.Theme
 import com.ivy.base.time.TimeProvider
 import com.ivy.data.model.primitive.AssetCode
-import com.ivy.domain.preferences.AppPreferences
 import com.ivy.domain.preferences.toggles.BoolPreference
 import com.ivy.domain.preferences.toggles.PreferenceToggleRepository
 import com.ivy.domain.preferences.toggles.PreferenceToggles
@@ -27,6 +26,7 @@ import com.ivy.domain.usecase.settings.GetStartDayOfMonthUseCase
 import com.ivy.domain.usecase.settings.GetThemeUseCase
 import com.ivy.domain.usecase.settings.GetTransfersAsIncomeExpensePreferenceUseCase
 import com.ivy.domain.usecase.settings.SetAppLockEnabledPreferenceUseCase
+import com.ivy.domain.usecase.settings.SetDataBackupCompletedPreferenceUseCase
 import com.ivy.domain.usecase.settings.SetHideCurrentBalancePreferenceUseCase
 import com.ivy.domain.usecase.settings.SetHideIncomePreferenceUseCase
 import com.ivy.domain.usecase.settings.SetShowNotificationsPreferenceUseCase
@@ -57,8 +57,8 @@ class SettingsViewModel @Inject constructor(
     private val getTheme: GetThemeUseCase,
     private val switchThemeUseCase: SwitchThemeUseCase,
     private val resetWalletDataUseCase: ResetWalletDataUseCase,
-    private val appPreferences: AppPreferences,
     private val exportBackupUseCase: ExportBackupUseCase,
+    private val setDataBackupCompletedPreference: SetDataBackupCompletedPreferenceUseCase,
     private val getStartDayOfMonth: GetStartDayOfMonthUseCase,
     private val setStartDayOfMonth: SetStartDayOfMonthUseCase,
     private val getAppLockEnabledPreference: GetAppLockEnabledPreferenceUseCase,
@@ -383,7 +383,7 @@ class SettingsViewModel @Inject constructor(
                 exportBackupUseCase(fileUri)
                 progressState.value = false
 
-                appPreferences.dataBackupCompleted = true
+                setDataBackupCompletedPreference(true)
 
                 uiThread {
                     fileSharer.shareZipFile(

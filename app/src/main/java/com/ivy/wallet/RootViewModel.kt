@@ -6,8 +6,9 @@ import androidx.core.content.IntentCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ivy.base.model.TransactionType
-import com.ivy.domain.preferences.AppPreferences
+import com.ivy.domain.usecase.settings.GetStartDayOfMonthUseCase
 import com.ivy.domain.usecase.settings.GetThemeUseCase
+import com.ivy.domain.usecase.settings.IsInitialSetupCompletedUseCase
 import com.ivy.ui.theme.ThemeState
 import com.ivy.legacy.ui.state.PeriodState
 import com.ivy.base.coroutines.ioThread
@@ -28,7 +29,8 @@ class RootViewModel @Inject constructor(
     private val periodState: PeriodState,
     private val nav: Navigation,
     private val getTheme: GetThemeUseCase,
-    private val appPreferences: AppPreferences,
+    private val getStartDayOfMonth: GetStartDayOfMonthUseCase,
+    private val isInitialSetupCompleted: IsInitialSetupCompletedUseCase,
     private val appLockController: AppLockController,
     private val transactionReminderLogic: TransactionReminderLogic,
     private val initialDataSetup: InitialDataSetup,
@@ -47,7 +49,7 @@ class RootViewModel @Inject constructor(
                 val theme = getTheme.withSystemFallback(systemDarkMode)
                 themeState.update(theme)
 
-                periodState.initStartDayOfMonth(startDay = appPreferences.startDayOfMonth)
+                periodState.initStartDayOfMonth(startDay = getStartDayOfMonth())
             }
 
         }
@@ -110,7 +112,7 @@ class RootViewModel @Inject constructor(
     }
 
     private fun isInitialSetupCompleted(): Boolean {
-        return appPreferences.initialSetupCompleted
+        return isInitialSetupCompleted()
     }
 
     // App Lock & UserInactivity --------------------------------------------------------------------
