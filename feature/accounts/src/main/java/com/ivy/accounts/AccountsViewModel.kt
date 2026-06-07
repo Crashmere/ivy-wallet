@@ -16,6 +16,7 @@ import com.ivy.data.DataWriteEvent
 import com.ivy.data.repository.AccountRepository
 import com.ivy.domain.preferences.toggles.PreferenceToggles
 import com.ivy.domain.preferences.AppPreferences
+import com.ivy.domain.usecase.account.GetAccountsUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.legacy.ui.state.PeriodState
 import com.ivy.legacy.domain.model.AccountData
@@ -42,6 +43,7 @@ class AccountsViewModel @Inject constructor(
     private val appPreferences: AppPreferences,
     private val calcWalletBalanceAct: CalcWalletBalanceAct,
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
+    private val getAccountsUseCase: GetAccountsUseCase,
     private val accountDataAct: AccountDataAct,
     private val accountRepository: AccountRepository,
     private val dataObserver: DataObserver,
@@ -170,7 +172,7 @@ class AccountsViewModel @Inject constructor(
         val range = period.toRange(periodState.startDayOfMonth, timeConverter, timeProvider)
 
         val baseCurrencyCode = getBaseCurrencyCode()
-        val accounts = accountRepository.findAll().toImmutableList()
+        val accounts = getAccountsUseCase().toImmutableList()
 
         val includeTransfersInCalc = appPreferences.transfersAsIncomeExpense
 

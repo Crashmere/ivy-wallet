@@ -18,6 +18,7 @@ import com.ivy.data.repository.AccountRepository
 import com.ivy.data.repository.CategoryRepository
 import com.ivy.data.repository.TransactionRepository
 import com.ivy.data.repository.mapper.TransactionMapper
+import com.ivy.domain.usecase.category.GetCategoriesUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyUseCase
 import com.ivy.legacy.ui.theme.IVY_COLOR_PICKER_COLORS_FREE
 import com.ivy.importdata.csv.ImportantFields
@@ -42,6 +43,7 @@ class CSVImporterV2 @Inject constructor(
     private val transactionMapper: TransactionMapper,
     private val accountDao: AccountDao,
     private val categoryRepository: CategoryRepository,
+    private val getCategoriesUseCase: GetCategoriesUseCase,
     private val getBaseCurrency: GetBaseCurrencyUseCase,
     private val accountRepository: AccountRepository,
     private val timeConverter: TimeConverter,
@@ -69,7 +71,7 @@ class CSVImporterV2 @Inject constructor(
         accounts = accountDao.findAll().map { it.toLegacyDomain() }
         val initialAccountsCount = accounts.size
 
-        categories = categoryRepository.findAll()
+        categories = getCategoriesUseCase()
         val initialCategoriesCount = categories.size
 
         val baseCurrency = getBaseCurrency()
@@ -339,7 +341,7 @@ class CSVImporterV2 @Inject constructor(
 
         if (newCategory != null) {
             categoryRepository.save(newCategory)
-            categories = categoryRepository.findAll()
+            categories = getCategoriesUseCase()
         }
 
         return newCategory

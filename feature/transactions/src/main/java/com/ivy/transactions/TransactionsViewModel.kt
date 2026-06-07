@@ -28,6 +28,7 @@ import com.ivy.data.repository.TagRepository
 import com.ivy.data.repository.TransactionRepository
 import com.ivy.data.repository.mapper.TransactionMapper
 import com.ivy.domain.preferences.AppPreferences
+import com.ivy.domain.usecase.category.GetCategoriesUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.legacy.ui.theme.system.RedLight
 import com.ivy.domain.preferences.toggles.PreferenceToggles
@@ -87,6 +88,7 @@ class TransactionsViewModel @Inject constructor(
     private val accTrnsAct: AccTrnsAct,
     private val trnsWithDateDivsAct: LegacyTrnsWithDateDivsAct,
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
+    private val getCategoriesUseCase: GetCategoriesUseCase,
     private val calcAccBalanceAct: CalcAccBalanceAct,
     private val calcAccIncomeExpenseAct: CalcAccIncomeExpenseAct,
     private val calcTrnsIncomeExpenseAct: LegacyCalcTrnsIncomeExpenseAct,
@@ -857,7 +859,7 @@ class TransactionsViewModel @Inject constructor(
             baseCurrency.value = baseCurrencyValue
             currency.value = baseCurrency.value
 
-            categories.value = categoryRepository.findAll().toImmutableList()
+            categories.value = getCategoriesUseCase().toImmutableList()
             accounts.value = accountsAct(Unit)
             initWithTransactions.value = false
             treatTransfersAsIncomeExpense.value =

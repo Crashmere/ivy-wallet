@@ -13,6 +13,7 @@ import com.ivy.base.time.TimeProvider
 import com.ivy.data.repository.CategoryRepository
 import com.ivy.domain.preferences.toggles.PreferenceToggles
 import com.ivy.domain.preferences.AppPreferences
+import com.ivy.domain.usecase.category.GetCategoriesUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.legacy.frp.action.thenMap
 import com.ivy.legacy.frp.thenInvokeAfter
@@ -44,6 +45,7 @@ import javax.inject.Inject
 class CategoriesViewModel @Inject constructor(
     private val categoryCreator: CategoryCreator,
     private val categoryRepository: CategoryRepository,
+    private val getCategoriesUseCase: GetCategoriesUseCase,
     private val periodState: PeriodState,
     private val appPreferences: AppPreferences,
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
@@ -169,7 +171,7 @@ class CategoriesViewModel @Inject constructor(
 
     private suspend fun loadCategories() {
         com.ivy.base.coroutines.scopedIOThread { scope ->
-            val categories = categoryRepository.findAll().mapAsync(scope) {
+            val categories = getCategoriesUseCase().mapAsync(scope) {
                 val catIncomeExpense = categoryIncomeWithAccountFiltersAct(
                     LegacyCategoryIncomeWithAccountFiltersAct.Input(
                         transactions = transactions,

@@ -31,6 +31,7 @@ import com.ivy.data.repository.mapper.TagMapper
 import com.ivy.data.repository.mapper.TransactionMapper
 import com.ivy.domain.preferences.toggles.PreferenceToggles
 import com.ivy.domain.preferences.AppPreferences
+import com.ivy.domain.usecase.category.GetCategoriesUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.domain.usecase.tag.GetTagsUseCase
 import com.ivy.domain.usecase.tag.SearchTagsUseCase
@@ -96,6 +97,7 @@ class EditTransactionViewModel @Inject constructor(
     private val loanTransactionsLogic: LoanTransactionsLogic,
     private val accountsAct: AccountsAct,
     private val categoryRepository: CategoryRepository,
+    private val getCategoriesUseCase: GetCategoriesUseCase,
     private val trnByIdAct: TrnByIdAct,
     private val accountByIdAct: AccountByIdAct,
     private val transactionRepo: TransactionRepository,
@@ -980,7 +982,7 @@ class EditTransactionViewModel @Inject constructor(
     }
 
     private suspend fun sortCategories(): ImmutableList<Category> {
-        val categories = categoryRepository.findAll()
+        val categories = getCategoriesUseCase()
         return if (shouldSortCategoriesAscending()) {
             categories.sortedBy { it.name.value }.toImmutableList()
         } else {

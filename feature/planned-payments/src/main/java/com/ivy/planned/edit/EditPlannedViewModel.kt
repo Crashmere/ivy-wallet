@@ -17,6 +17,7 @@ import com.ivy.data.model.CategoryId
 import com.ivy.data.model.IntervalType
 import com.ivy.data.repository.CategoryRepository
 import com.ivy.data.repository.TransactionRepository
+import com.ivy.domain.usecase.category.GetCategoriesUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.legacy.domain.model.Account
 import com.ivy.legacy.domain.model.PlannedPaymentRule
@@ -47,6 +48,7 @@ import javax.inject.Inject
 class EditPlannedViewModel @Inject constructor(
     private val accountDao: AccountDao,
     private val categoryRepository: CategoryRepository,
+    private val getCategoriesUseCase: GetCategoriesUseCase,
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
     private val nav: Navigation,
     private val plannedPaymentRuleDao: PlannedPaymentRuleDao,
@@ -274,7 +276,7 @@ class EditPlannedViewModel @Inject constructor(
                 return@launch
             }
             this@EditPlannedViewModel.accounts = accounts
-            categories = categoryRepository.findAll().toImmutableList()
+            categories = getCategoriesUseCase().toImmutableList()
 
             reset()
 
@@ -482,7 +484,7 @@ class EditPlannedViewModel @Inject constructor(
     private fun createCategory(data: CreateCategoryData) {
         viewModelScope.launch {
             categoryCreator.createCategory(data) {
-                categories = categoryRepository.findAll().toImmutableList()
+                categories = getCategoriesUseCase().toImmutableList()
 
                 updateCategory(it)
             }
@@ -492,7 +494,7 @@ class EditPlannedViewModel @Inject constructor(
     private fun editCategory(updatedCategory: Category) {
         viewModelScope.launch {
             categoryCreator.editCategory(updatedCategory) {
-                categories = categoryRepository.findAll().toImmutableList()
+                categories = getCategoriesUseCase().toImmutableList()
             }
         }
     }

@@ -20,6 +20,7 @@ import com.ivy.data.model.primitive.NotBlankTrimmedString
 import com.ivy.data.repository.CategoryRepository
 import com.ivy.data.repository.TransactionRepository
 import com.ivy.data.repository.mapper.TransactionMapper
+import com.ivy.domain.usecase.category.GetCategoriesUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.legacy.domain.model.Account
 import com.ivy.legacy.domain.model.Loan
@@ -39,6 +40,7 @@ import javax.inject.Inject
 
 class LoanTransactionsCore @Inject constructor(
     private val categoryRepository: CategoryRepository,
+    private val getCategoriesUseCase: GetCategoriesUseCase,
     private val transactionDao: TransactionDao,
     private val loanRecordDao: LoanRecordDao,
     private val loanDao: LoanDao,
@@ -215,9 +217,7 @@ class LoanTransactionsCore @Inject constructor(
             return existingCategoryId
         }
 
-        val categoryList = ioThread {
-            categoryRepository.findAll()
-        }
+        val categoryList = ioThread { getCategoriesUseCase() }
 
         var addCategoryToDb = false
 

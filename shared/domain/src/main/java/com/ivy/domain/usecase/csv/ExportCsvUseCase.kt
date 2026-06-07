@@ -16,9 +16,9 @@ import com.ivy.data.model.Transaction
 import com.ivy.data.model.Transfer
 import com.ivy.data.model.primitive.NonNegativeDouble
 import com.ivy.data.model.primitive.toNonNegative
-import com.ivy.data.repository.AccountRepository
-import com.ivy.data.repository.CategoryRepository
 import com.ivy.data.repository.TransactionRepository
+import com.ivy.domain.usecase.account.GetAccountsUseCase
+import com.ivy.domain.usecase.category.GetCategoriesUseCase
 import kotlinx.coroutines.withContext
 import org.apache.commons.text.StringEscapeUtils
 import java.text.DecimalFormat
@@ -30,8 +30,8 @@ import javax.inject.Inject
 import kotlin.experimental.ExperimentalTypeInference
 
 class ExportCsvUseCase @Inject constructor(
-    private val accountRepository: AccountRepository,
-    private val categoryRepository: CategoryRepository,
+    private val getAccountsUseCase: GetAccountsUseCase,
+    private val getCategoriesUseCase: GetCategoriesUseCase,
     private val transactionRepository: TransactionRepository,
     private val dispatchers: DispatchersProvider,
     private val fileSystem: FileSystem,
@@ -52,8 +52,8 @@ class ExportCsvUseCase @Inject constructor(
         exportScope: suspend TransactionRepository.() -> List<Transaction>
     ): String = withContext(dispatchers.io) {
         val transactions = transactionRepository.exportScope()
-        val accountsMap = accountRepository.findAll().associateBy(Account::id)
-        val categoriesMap = categoryRepository.findAll().associateBy(Category::id)
+        val accountsMap = getAccountsUseCase().associateBy(Account::id)
+        val categoriesMap = getCategoriesUseCase().associateBy(Category::id)
 
         buildString {
             append(IvyCsvRow.Columns.joinToString(separator = CSV_SEPARATOR))

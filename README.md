@@ -598,6 +598,7 @@
 - 新增 `LegacySettingsRepository`，把仍存放在 `settings` 表中的主题和缓冲金额用窄方法包起来；其上方已补齐 `GetThemeUseCase`、`SwitchThemeUseCase`、`GetBufferAmountUseCase`、`SetBufferAmountUseCase` 和 `EnsureSettingsInitializedUseCase`，设置页、首页、根启动流程和首次默认设置初始化不再直接依赖旧 settings 数据仓库。
 - 首次启动默认设置初始化已下沉到 `EnsureSettingsInitializedUseCase`；`InitialDataSetup` 不再直接构造 `SettingsEntity` 或注入 `SettingsDao/WriteSettingsDao/LegacySettingsRepository`，只负责启动编排、默认账户/分类预置和提醒调度。
 - 分类列表读取开始收敛到正式 domain 用例：新增 `GetCategoriesUseCase`，搜索页、首页、预算页、报表页、计划付款列表和饼图统计 action 不再为了只读分类列表直接注入 `CategoryRepository`；仍需要保存、删除、查询单个分类或创建默认分类的流程暂时保留数据层依赖，后续按写入语义继续拆。
+- 继续扩大分类/账户只读列表边界：账户页、分类页、交易页、编辑交易页、计划付款编辑页、CSV 导入/导出和借贷联动逻辑中的普通分类或账户列表读取已改走 `GetCategoriesUseCase/GetAccountsUseCase`；写入、排序保存、首次初始化是否为空和自动创建 Loans 分类仍保留原仓库入口。
 - 标签列表读取和文本搜索开始收敛到正式 domain 用例：新增 `GetTagsUseCase` 和 `SearchTagsUseCase`，报表筛选和编辑交易里的普通标签列表/搜索不再直接调用 `TagRepository.findAll()/findByText()`；标签保存、删除、交易关联和按标签反查交易仍保留仓库入口，后续按写入和筛选语义继续拆。
 - 删除无调用方的 `SettingsAct`、`UpdateSettingsAct`、旧 `Settings` 模型和 `SettingsEntity.toLegacyDomain()` mapper。
 - `SettingsEntity` 暂时仍保留：首次默认数据、重置钱包、备份恢复格式，以及 `CurrencyRepository/LegacySettingsRepository` 内部仍依赖这张表。
