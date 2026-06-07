@@ -1,10 +1,10 @@
 package com.ivy.legacy.data.model
 
 import androidx.compose.runtime.Immutable
+import com.ivy.base.legacy.incrementDate
 import com.ivy.base.time.TimeProvider
 import com.ivy.data.model.IntervalType
-import com.ivy.legacy.forDisplay
-import com.ivy.legacy.incrementDate
+import com.ivy.ui.legacy.forDisplay
 import java.time.Instant
 
 @Suppress("DataClassFunctions")

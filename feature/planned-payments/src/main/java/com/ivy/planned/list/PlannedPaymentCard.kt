@@ -35,7 +35,7 @@ import com.ivy.design.l0_system.UI
 import com.ivy.design.l0_system.style
 import com.ivy.legacy.datamodel.Account
 import com.ivy.legacy.datamodel.PlannedPaymentRule
-import com.ivy.legacy.forDisplay
+import com.ivy.ui.legacy.forDisplay
 import com.ivy.legacy.ui.component.transaction.TypeAmountCurrency
 import com.ivy.ui.legacy.formatDateOnly
 import com.ivy.ui.legacy.formatDateOnlyWithYear

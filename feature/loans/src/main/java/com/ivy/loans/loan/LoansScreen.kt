@@ -32,7 +32,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.ivy.design.l0_system.UI
 import com.ivy.design.l0_system.style
-import com.ivy.legacy.humanReadableType
+import com.ivy.loans.humanReadableType
 import com.ivy.legacy.ivyWalletCtx
 import com.ivy.base.legacy.getDefaultFIATCurrency
 import com.ivy.ui.legacy.horizontalSwipeListener

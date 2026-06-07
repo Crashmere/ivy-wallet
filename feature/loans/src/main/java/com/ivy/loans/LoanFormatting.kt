@@ -1,4 +1,4 @@
-package com.ivy.legacy
+package com.ivy.loans
 
 import com.ivy.base.legacy.stringRes
 import com.ivy.data.model.LoanType

@@ -23,9 +23,9 @@ import androidx.compose.ui.unit.dp
 import com.ivy.data.model.IntervalType
 import com.ivy.design.l0_system.UI
 import com.ivy.design.l0_system.style
-import com.ivy.legacy.forDisplay
 import com.ivy.base.legacy.capitalizeLocal
 import com.ivy.base.legacy.isNotNullOrBlank
+import com.ivy.ui.legacy.forDisplay
 import com.ivy.ui.legacy.selectEndTextFieldValue
 import com.ivy.ui.R
 import com.ivy.wallet.ui.theme.Gradient

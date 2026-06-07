@@ -45,7 +45,6 @@ import com.ivy.design.api.LocalTimeProvider
 import com.ivy.design.l0_system.UI
 import com.ivy.design.l0_system.style
 import com.ivy.design.utils.thenIf
-import com.ivy.legacy.Constants
 import com.ivy.legacy.data.AppBaseData
 import com.ivy.legacy.data.LegacyDueSection
 import com.ivy.legacy.data.model.Month
@@ -89,6 +88,8 @@ import com.ivy.wallet.ui.theme.toComposeColor
 import com.ivy.wallet.ui.theme.wallet.PeriodSelector
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
+
+private const val CATEGORY_UNSPECIFIED_NAME = "Unspecified"
 
 @Composable
 fun BoxWithConstraintsScope.TransactionsScreen(screen: TransactionsScreen) {
@@ -807,7 +808,7 @@ private fun Item(
                 Spacer(Modifier.width(8.dp))
 
                 Text(
-                    text = Constants.CATEGORY_UNSPECIFIED_NAME,
+                    text = CATEGORY_UNSPECIFIED_NAME,
                     style = UI.typo.b1.style(
                         color = contrastColor,
                         fontWeight = FontWeight.ExtraBold
