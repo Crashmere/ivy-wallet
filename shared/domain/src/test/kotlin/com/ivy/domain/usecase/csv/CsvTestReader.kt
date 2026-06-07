@@ -5,7 +5,7 @@ import com.opencsv.validators.LineValidator
 import com.opencsv.validators.RowValidator
 import java.io.StringReader
 
-class ReadCsvUseCase {
+class CsvTestReader {
 
     fun readCsv(csv: String): List<List<String>> {
         val csvReader = CSVReaderBuilder(StringReader(csv))

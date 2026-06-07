@@ -77,7 +77,7 @@ class ExportCsvUseCasePropertyTest {
             val csv = useCase.exportCsv { trns }
 
             // then
-            val rows = ReadCsvUseCase().readCsv(csv)
+            val rows = CsvTestReader().readCsv(csv)
             rows.size shouldBe trns.size + 1 // +1 for the header
             rows.forEach { row ->
                 // Matches the expected # of columns
