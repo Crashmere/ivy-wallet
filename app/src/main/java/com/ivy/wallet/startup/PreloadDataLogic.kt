@@ -9,16 +9,16 @@ import com.ivy.data.model.CategoryId
 import com.ivy.data.model.primitive.ColorInt
 import com.ivy.data.model.primitive.IconAsset
 import com.ivy.data.model.primitive.NotBlankTrimmedString
-import com.ivy.data.repository.AccountRepository
-import com.ivy.data.repository.CategoryRepository
+import com.ivy.domain.usecase.account.SaveAccountUseCase
+import com.ivy.domain.usecase.category.SaveCategoryUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyUseCase
 import com.ivy.ui.R
 import java.util.UUID
 import javax.inject.Inject
 
 class PreloadDataLogic @Inject constructor(
-    private val categoryRepository: CategoryRepository,
-    private val accountRepository: AccountRepository,
+    private val saveCategoryUseCase: SaveCategoryUseCase,
+    private val saveAccountUseCase: SaveAccountUseCase,
     private val getBaseCurrency: GetBaseCurrencyUseCase,
     private val resourceProvider: ResourceProvider,
 ) {
@@ -26,7 +26,7 @@ class PreloadDataLogic @Inject constructor(
 
     suspend fun preloadAccounts() {
         val baseCurrency = getBaseCurrency()
-        accountRepository.save(
+        saveAccountUseCase(
             Account(
                 id = AccountId(UUID.randomUUID()),
                 name = NotBlankTrimmedString.unsafe(resourceProvider.getString(R.string.cash)),
@@ -37,7 +37,7 @@ class PreloadDataLogic @Inject constructor(
                 orderNum = 0.0,
             )
         )
-        accountRepository.save(
+        saveAccountUseCase(
             Account(
                 id = AccountId(UUID.randomUUID()),
                 name = NotBlankTrimmedString.unsafe(resourceProvider.getString(R.string.bank)),
@@ -136,7 +136,7 @@ class PreloadDataLogic @Inject constructor(
         }.getOrNull()
 
         if (category != null) {
-            categoryRepository.save(category)
+            saveCategoryUseCase(category)
         }
     }
 }
