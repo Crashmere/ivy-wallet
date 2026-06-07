@@ -1,6 +1,5 @@
 package com.ivy.legacy
 
-import android.net.Uri
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -22,9 +21,6 @@ class IvyWalletCtx @Inject constructor() : IvyContext() {
     fun setStartDayOfMonth(day: Int) {
         startDayOfMonth = day
     }
-
-    @Deprecated("Legacy code. Don't use it, please.")
-    var dataBackupCompleted = false
 
     @Deprecated("Legacy code. Don't use it, please.")
     fun initStartDayOfMonthInMemory(sharedPrefs: SharedPrefs): Int {
@@ -100,9 +96,4 @@ class IvyWalletCtx @Inject constructor() : IvyContext() {
     }
     // Activity help -------------------------------------------------------------------------------
 
-    @Deprecated("Legacy code. Don't use it, please.")
-    lateinit var createNewFile: (fileName: String, onCreated: (Uri) -> Unit) -> Unit
-
-    @Deprecated("Legacy code. Don't use it, please.")
-    lateinit var openFile: (onOpened: (Uri) -> Unit) -> Unit
 }

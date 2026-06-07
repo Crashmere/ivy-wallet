@@ -32,6 +32,7 @@ import com.ivy.base.legacy.ioThread
 import com.ivy.base.legacy.timeNowUTC
 import com.ivy.base.legacy.uiThread
 import com.ivy.ui.ComposeViewModel
+import com.ivy.ui.platform.FilePicker
 import com.ivy.wallet.domain.action.global.StartDayOfMonthAct
 import com.ivy.wallet.domain.action.global.UpdateStartDayOfMonthAct
 import com.ivy.wallet.domain.action.settings.SettingsAct
@@ -58,6 +59,7 @@ class SettingsViewModel @Inject constructor(
     private val updateSettingsAct: UpdateSettingsAct,
     private val settingsWriter: WriteSettingsDao,
     private val exportCsvUseCase: ExportCsvUseCase,
+    private val filePicker: FilePicker,
     @ApplicationContext private val context: Context
 ) : ComposeViewModel<SettingsState, SettingsEvent>() {
 
@@ -357,7 +359,7 @@ class SettingsViewModel @Inject constructor(
     }
 
     private fun exportToCSV(rootScreen: RootScreen) {
-        ivyContext.createNewFile(
+        filePicker.createFile(
             "IvyWalletExport_${
                 timeNowUTC().getISOFormattedDateTime()
             }.csv"
@@ -375,7 +377,7 @@ class SettingsViewModel @Inject constructor(
     }
 
     private fun exportToZip(rootScreen: RootScreen) {
-        ivyContext.createNewFile(
+        filePicker.createFile(
             "IvyWalletBackup_${
                 timeNowUTC().getISOFormattedDateTime()
             }.zip"
@@ -386,7 +388,6 @@ class SettingsViewModel @Inject constructor(
                 progressState.value = false
 
                 sharedPrefs.putBoolean(SharedPrefs.DATA_BACKUP_COMPLETED, true)
-                ivyContext.dataBackupCompleted = true
 
                 uiThread {
                     rootScreen.shareZipFile(

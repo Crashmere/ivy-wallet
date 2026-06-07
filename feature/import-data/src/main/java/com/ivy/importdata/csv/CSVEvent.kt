@@ -3,6 +3,8 @@ package com.ivy.importdata.csv
 import android.net.Uri
 
 sealed interface CSVEvent {
+    data object PickFile : CSVEvent
+
     data class FilePicked(val uri: Uri) : CSVEvent
 
     data class MapAmount(val index: Int, val name: String) : CSVEvent

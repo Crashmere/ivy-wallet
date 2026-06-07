@@ -41,6 +41,7 @@ import com.ivy.navigation.NavigationRoot
 import com.ivy.ui.R
 import com.ivy.ui.time.TimeFormatter
 import com.ivy.ui.time.impl.DateTimePicker
+import com.ivy.wallet.platform.ActivityResultFilePicker
 import com.ivy.wallet.platform.activityForResultLauncher
 import com.ivy.wallet.platform.simpleActivityForResultLauncher
 import com.ivy.wallet.ui.applocked.AppLockedScreen
@@ -68,6 +69,9 @@ class RootActivity : AppCompatActivity(), RootScreen {
 
     @Inject
     lateinit var dateTimePicker: DateTimePicker
+
+    @Inject
+    lateinit var filePicker: ActivityResultFilePicker
 
     private lateinit var createFileLauncher: ActivityResultLauncher<String>
     private lateinit var onFileCreated: (fileUri: Uri) -> Unit
@@ -229,7 +233,7 @@ class RootActivity : AppCompatActivity(), RootScreen {
             }
         }
 
-        ivyContext.createNewFile = { fileName, onFileCreatedCallback ->
+        filePicker.registerCreateFileLauncher { fileName, onFileCreatedCallback ->
             onFileCreated = onFileCreatedCallback
 
             createFileLauncher.launch(fileName)
@@ -248,7 +252,7 @@ class RootActivity : AppCompatActivity(), RootScreen {
             }
         }
 
-        ivyContext.openFile = { onFileOpenedCallback ->
+        filePicker.registerOpenFileLauncher { onFileOpenedCallback ->
             onFileOpened = onFileOpenedCallback
 
             openFileLauncher.launch(Unit)

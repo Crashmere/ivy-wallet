@@ -9,6 +9,7 @@ import com.ivy.frp.test.TestIdlingResource
 import com.ivy.base.legacy.asLiveData
 import com.ivy.navigation.ImportScreen
 import com.ivy.navigation.Navigation
+import com.ivy.ui.platform.FilePicker
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -16,7 +17,7 @@ import kotlin.math.roundToInt
 
 @HiltViewModel
 class ImportViewModel @Inject constructor(
-    private val ivyContext: com.ivy.legacy.IvyWalletCtx,
+    private val filePicker: FilePicker,
     private val nav: Navigation,
     private val backupDataUseCase: BackupDataUseCase
 ) : ViewModel() {
@@ -49,7 +50,7 @@ class ImportViewModel @Inject constructor(
     }
 
     fun restoreBackup() {
-        ivyContext.openFile { fileUri ->
+        filePicker.openFile { fileUri ->
             viewModelScope.launch {
                 TestIdlingResource.increment()
 

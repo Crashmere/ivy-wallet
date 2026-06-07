@@ -46,6 +46,7 @@ import com.ivy.base.legacy.toLowerCaseLocal
 import com.ivy.base.legacy.uiThread
 import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.R
+import com.ivy.ui.platform.FilePicker
 import com.ivy.wallet.domain.action.account.AccountsAct
 import com.ivy.wallet.domain.action.exchange.ExchangeAct
 import com.ivy.wallet.domain.action.settings.BaseCurrencyAct
@@ -90,7 +91,8 @@ class ReportViewModel @Inject constructor(
     private val exportCsvUseCase: ExportCsvUseCase,
     private val timeProvider: TimeProvider,
     private val timeConverter: TimeConverter,
-    private val features: Features
+    private val features: Features,
+    private val filePicker: FilePicker
 ) : ComposeViewModel<ReportScreenState, ReportScreenEvent>() {
     private val unSpecifiedCategory =
         Category(
@@ -528,7 +530,7 @@ class ReportViewModel @Inject constructor(
         val filter = filter ?: return
         if (!filter.validate()) return
 
-        ivyContext.createNewFile(
+        filePicker.createFile(
             "IvyWalletReport-${
                 timeNowUTC().getISOFormattedDateTime()
             }.csv"

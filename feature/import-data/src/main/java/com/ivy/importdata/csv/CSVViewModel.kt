@@ -24,6 +24,7 @@ import com.ivy.importdata.csv.domain.parseToAccountCurrency
 import com.ivy.importdata.csv.domain.parseTransactionType
 import com.ivy.navigation.Navigation
 import com.ivy.data.file.FileSystem
+import com.ivy.ui.platform.FilePicker
 import com.opencsv.CSVReaderBuilder
 import com.opencsv.validators.LineValidator
 import com.opencsv.validators.RowValidator
@@ -44,6 +45,7 @@ class CSVViewModel @Inject constructor(
     private val fileReader: FileSystem,
     private val csvImporter: CSVImporterV2,
     private val nav: Navigation,
+    private val filePicker: FilePicker,
 ) : ViewModel() {
 
     private var columns by mutableStateOf<CSVRow?>(null)
@@ -325,6 +327,7 @@ class CSVViewModel @Inject constructor(
 
     private suspend fun handleEvent(event: CSVEvent) {
         when (event) {
+            CSVEvent.PickFile -> pickFile()
             is CSVEvent.FilePicked -> handleFilePicked(event)
             is CSVEvent.AmountMultiplier -> {
                 amount = amount.copy(
@@ -435,6 +438,12 @@ class CSVViewModel @Inject constructor(
             CSVEvent.FinishImport -> {
                 handleFinishImport()
             }
+        }
+    }
+
+    private fun pickFile() {
+        filePicker.openFile { uri ->
+            onEvent(CSVEvent.FilePicked(uri))
         }
     }
 

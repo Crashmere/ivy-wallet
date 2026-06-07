@@ -1,6 +1,5 @@
 package com.ivy.importdata.csv
 
-import android.net.Uri
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.horizontalScroll
@@ -88,7 +87,7 @@ private fun ImportUI(
             Spacer8()
             ImportButton(
                 onFilePick = {
-                    onEvent(CSVEvent.FilePicked(it))
+                    onEvent(CSVEvent.PickFile)
                 }
             )
             Spacer8()
@@ -117,17 +116,14 @@ private fun ImportUI(
 
 @Composable
 private fun ImportButton(
-    onFilePick: (Uri) -> Unit,
+    onFilePick: () -> Unit,
 ) {
-    val ivyContext = com.ivy.legacy.ivyWalletCtx()
     Button(
         modifier = Modifier
             .fillMaxWidth()
             .height(48.dp),
         onClick = {
-            ivyContext.openFile {
-                onFilePick(it)
-            }
+            onFilePick()
         }
     ) {
         Text(
