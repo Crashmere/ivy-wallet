@@ -1,14 +1,14 @@
 package com.ivy.domain.usecase.settings
 
+import com.ivy.data.api.ThemeStore
 import com.ivy.data.model.Theme
-import com.ivy.data.api.SettingsStore
 import javax.inject.Inject
 
 class SwitchThemeUseCase @Inject constructor(
-    private val settingsStore: SettingsStore
+    private val themeStore: ThemeStore
 ) {
     suspend operator fun invoke(): Theme {
-        return settingsStore.setTheme(settingsStore.getTheme().next())
+        return themeStore.setTheme(themeStore.getTheme().next())
     }
 
     private fun Theme.next(): Theme = when (this) {

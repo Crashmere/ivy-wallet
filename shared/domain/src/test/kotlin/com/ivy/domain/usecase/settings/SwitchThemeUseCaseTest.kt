@@ -1,11 +1,11 @@
 package com.ivy.domain.usecase.settings
 
-import com.ivy.data.model.Theme
 import com.ivy.data.api.SettingsStore
+import com.ivy.data.api.ThemeStore
+import com.ivy.data.model.Theme
 import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.test.runTest
 import org.junit.Test
-import java.math.BigDecimal
 
 class SwitchThemeUseCaseTest {
 
@@ -50,7 +50,7 @@ class SwitchThemeUseCaseTest {
 
     private class FakeSettingsStore(
         initialTheme: Theme?,
-    ) : SettingsStore {
+    ) : SettingsStore, ThemeStore {
         private var theme = initialTheme
         var initializedTheme: Theme? = null
 
@@ -71,10 +71,6 @@ class SwitchThemeUseCaseTest {
             this.theme = theme
             return theme
         }
-
-        override suspend fun getBufferAmount(): BigDecimal = BigDecimal.ZERO
-
-        override suspend fun setBufferAmount(amount: BigDecimal): BigDecimal = amount
 
         override suspend fun deleteAll() = Unit
     }

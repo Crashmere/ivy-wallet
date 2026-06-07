@@ -836,13 +836,14 @@
 - data-core 里的备份实现已从 `BackupDataUseCase` 改名为 `DefaultBackupStore`，并继续通过 `BackupStore` 暴露给 domain；ZIP/JSON 备份格式和导入导出行为不变。
 - `TransactionStore` 删除计划付款未来交易的方法已从过去式 `deletedByRecurringRuleIdAndNoDateTime` 改为命令式 `deleteByRecurringRuleIdAndNoDateTime`；DAO SQL 和调用语义不变。
 - 设置初始化链路中的基础币种参数已从泛化 `currencyCode` 改为 `baseCurrencyCode`；这一步不改 `settings.currency` 数据库列，只让初始化边界语义更明确。
+- `SettingsStore` 已拆出 `ThemeStore` 与 `BufferAmountStore` 窄端口；主题和缓冲金额 use case 不再依赖完整设置表能力，底层仍由 `RoomSettingsStore` 读写同一张 `settings` 表，数据库 schema 和备份格式不变。
 
 建议顺序：
 
 1. 继续评估 `isDeleted` 字段：
    - `isSynced` 已确认是云同步残留并删除。
    - `isDeleted` 仍服务本地查询过滤、测试 fake、历史迁移和计划付款按账户软删除；短期应视为本地软删除语义，不再和云同步残留一起批量删除。
-2. 继续梳理 `SettingsEntity` 与 `AppPreferences/DataStore` 的职责重叠，下一步重点是把 `theme/currency/bufferAmount` 的存储边界拆清楚。
+2. 继续评估 `SettingsEntity` 是否需要真正拆表或迁移到 DataStore；`theme/currency/bufferAmount` 的代码端口已拆清，后续若改 schema 必须单独迁移并验证备份兼容性。
 3. 更新备份恢复数据结构和测试。
 
 风险：
@@ -1049,5 +1050,5 @@ shared:ui:core
 
 1. 继续做 shared 模块依赖审计：优先检查 `shared:ui:core`、`shared:ui:legacy`、`shared:data:core` 是否还有可显式化或可移除的非必要 Gradle 依赖。
 2. 继续清理明显错位的包名和模块边界，优先处理 `shared:ui:legacy` 与 `shared:data:core` 中仍残留的历史命名，避免新代码继续误用旧 API。
-3. 继续评估 `SettingsEntity` 是否可以拆成更明确的本地偏好表或迁入 DataStore；`name/isDeleted` 已删除，剩余 `theme/currency/bufferAmount` 需要和备份恢复格式一起规划。
+3. 继续评估 `SettingsEntity` 是否可以拆成更明确的本地偏好表或迁入 DataStore；当前 `theme/currency/bufferAmount` 已有窄端口隔离，下一步若触碰 schema 或备份格式需要单独规划迁移。
 4. 继续数据库只读审计：`isDeleted` 目前先保留为本地软删除语义；不再把业务表里的 `isDeleted` 当作纯云同步字段批量删除。

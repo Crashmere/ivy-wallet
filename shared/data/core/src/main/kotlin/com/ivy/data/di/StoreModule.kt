@@ -3,6 +3,7 @@ package com.ivy.data.di
 import com.ivy.data.DataWriteEventBus
 import com.ivy.data.api.AccountStore
 import com.ivy.data.api.AppPreferenceStore
+import com.ivy.data.api.BufferAmountStore
 import com.ivy.data.api.BudgetStore
 import com.ivy.data.api.CategoryStore
 import com.ivy.data.api.CurrencyStore
@@ -14,6 +15,7 @@ import com.ivy.data.api.PlannedPaymentRuleStore
 import com.ivy.data.api.PreferenceToggleStore
 import com.ivy.data.api.SettingsStore
 import com.ivy.data.api.TagStore
+import com.ivy.data.api.ThemeStore
 import com.ivy.data.api.TransactionStore
 import com.ivy.data.store.RoomAccountStore
 import com.ivy.data.store.RoomBudgetStore
@@ -56,6 +58,12 @@ abstract class StoreModule {
 
     @Binds
     abstract fun bindSettingsStore(store: RoomSettingsStore): SettingsStore
+
+    @Binds
+    abstract fun bindThemeStore(store: RoomSettingsStore): ThemeStore
+
+    @Binds
+    abstract fun bindBufferAmountStore(store: RoomSettingsStore): BufferAmountStore
 
     @Binds
     abstract fun bindExchangeRateStore(store: DefaultExchangeRateStore): ExchangeRateStore

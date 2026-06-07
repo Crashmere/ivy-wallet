@@ -1,6 +1,8 @@
 package com.ivy.data.store
 
+import com.ivy.data.api.BufferAmountStore
 import com.ivy.data.api.SettingsStore
+import com.ivy.data.api.ThemeStore
 import com.ivy.data.model.Theme
 import java.math.BigDecimal
 import javax.inject.Inject
@@ -9,7 +11,7 @@ import javax.inject.Singleton
 @Singleton
 class RoomSettingsStore @Inject constructor(
     private val settingsTable: SettingsTable,
-) : SettingsStore {
+) : SettingsStore, ThemeStore, BufferAmountStore {
     override suspend fun getTheme(fallback: Theme): Theme =
         settingsTable.findOrNull()?.theme ?: fallback
 
