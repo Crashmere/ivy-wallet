@@ -25,8 +25,8 @@ import com.ivy.legacy.ui.densityScope
 import com.ivy.legacy.ui.keyboardOnlyWindowInsets
 import com.ivy.legacy.ui.keyboardVisibleState
 import com.ivy.legacy.ui.selectEndTextFieldValue
-import com.ivy.navigation.SearchScreen
-import com.ivy.navigation.screenScopedViewModel
+import com.ivy.ui.navigation.SearchScreen
+import com.ivy.ui.navigation.screenScopedViewModel
 import com.ivy.ui.R
 import com.ivy.legacy.ui.modal.DURATION_MODAL_ANIM
 

@@ -45,10 +45,10 @@ import com.ivy.legacy.ui.component.edit.core.Description
 import com.ivy.legacy.ui.component.tags.AddTagButton
 import com.ivy.legacy.ui.component.tags.ShowTagModal
 import com.ivy.legacy.ui.onScreenStart
-import com.ivy.navigation.EditPlannedScreen
-import com.ivy.navigation.EditTransactionScreen
-import com.ivy.navigation.navigation
-import com.ivy.navigation.screenScopedViewModel
+import com.ivy.ui.navigation.EditPlannedScreen
+import com.ivy.ui.navigation.EditTransactionScreen
+import com.ivy.ui.navigation.navigation
+import com.ivy.ui.navigation.screenScopedViewModel
 import com.ivy.ui.R
 import com.ivy.legacy.domain.data.CustomExchangeRateState
 import com.ivy.data.model.currency.IvyCurrency

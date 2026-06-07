@@ -46,9 +46,9 @@ import com.ivy.legacy.domain.model.Account
 import com.ivy.base.text.capitalizeLocal
 import com.ivy.data.model.currency.format
 import com.ivy.base.text.isNotNullOrBlank
-import com.ivy.navigation.Navigation
-import com.ivy.navigation.TransactionsScreen
-import com.ivy.navigation.navigation
+import com.ivy.ui.navigation.Navigation
+import com.ivy.ui.navigation.TransactionsScreen
+import com.ivy.ui.navigation.navigation
 import com.ivy.ui.R
 import com.ivy.ui.time.TimeFormatter
 import com.ivy.data.model.currency.IvyCurrency

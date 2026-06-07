@@ -48,11 +48,11 @@ import com.ivy.legacy.ui.drawColoredShadow
 import com.ivy.data.model.currency.format
 import com.ivy.legacy.ui.horizontalSwipeListener
 import com.ivy.legacy.ui.rememberSwipeListenerState
-import com.ivy.navigation.EditTransactionScreen
-import com.ivy.navigation.PieChartStatisticScreen
-import com.ivy.navigation.TransactionsScreen
-import com.ivy.navigation.navigation
-import com.ivy.navigation.screenScopedViewModel
+import com.ivy.ui.navigation.EditTransactionScreen
+import com.ivy.ui.navigation.PieChartStatisticScreen
+import com.ivy.ui.navigation.TransactionsScreen
+import com.ivy.ui.navigation.navigation
+import com.ivy.ui.navigation.screenScopedViewModel
 import com.ivy.ui.R
 import com.ivy.ui.rememberScrollPositionListState
 import com.ivy.legacy.ui.theme.GradientGreen

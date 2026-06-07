@@ -3,8 +3,8 @@ package com.ivy.home.customerjourney
 import androidx.annotation.DrawableRes
 import androidx.compose.runtime.Immutable
 import com.ivy.legacy.ui.theme.system.Gradient
-import com.ivy.navigation.MainTabState
-import com.ivy.navigation.Navigation
+import com.ivy.ui.navigation.MainTabState
+import com.ivy.ui.navigation.Navigation
 
 @Immutable
 data class CustomerJourneyCardModel(

@@ -9,9 +9,9 @@ import com.ivy.legacy.ui.theme.system.Gradient
 import com.ivy.legacy.ui.theme.system.Ivy
 import com.ivy.legacy.ui.theme.system.Orange
 import com.ivy.legacy.ui.theme.system.Red
-import com.ivy.navigation.EditPlannedScreen
-import com.ivy.navigation.MainTab
-import com.ivy.navigation.PieChartStatisticScreen
+import com.ivy.ui.navigation.EditPlannedScreen
+import com.ivy.ui.navigation.MainTab
+import com.ivy.ui.navigation.PieChartStatisticScreen
 import com.ivy.ui.R
 import javax.inject.Inject
 

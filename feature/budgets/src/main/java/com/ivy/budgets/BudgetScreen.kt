@@ -31,9 +31,9 @@ import com.ivy.legacy.ui.component.BudgetBattery
 import com.ivy.legacy.ui.clickableNoIndication
 import com.ivy.data.model.currency.format
 import com.ivy.legacy.ui.rememberInteractionSource
-import com.ivy.navigation.BudgetScreen
-import com.ivy.navigation.navigation
-import com.ivy.navigation.screenScopedViewModel
+import com.ivy.ui.navigation.BudgetScreen
+import com.ivy.ui.navigation.navigation
+import com.ivy.ui.navigation.screenScopedViewModel
 import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.Gray
 import com.ivy.legacy.ui.component.IvyIcon

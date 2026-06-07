@@ -1,4 +1,4 @@
-package com.ivy.navigation
+package com.ivy.ui.navigation
 
 import android.annotation.SuppressLint
 import androidx.compose.runtime.Composable

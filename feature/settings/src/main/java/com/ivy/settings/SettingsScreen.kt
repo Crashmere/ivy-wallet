@@ -49,10 +49,10 @@ import com.ivy.ui.compose.thenIf
 import com.ivy.legacy.ui.platform.buildInfoProvider
 import com.ivy.legacy.ui.platform.fileSharer
 import com.ivy.legacy.ui.drawColoredShadow
-import com.ivy.navigation.ExchangeRatesScreen
-import com.ivy.navigation.ImportScreen
-import com.ivy.navigation.navigation
-import com.ivy.navigation.screenScopedViewModel
+import com.ivy.ui.navigation.ExchangeRatesScreen
+import com.ivy.ui.navigation.ImportScreen
+import com.ivy.ui.navigation.navigation
+import com.ivy.ui.navigation.screenScopedViewModel
 import com.ivy.ui.R
 import com.ivy.data.model.currency.IvyCurrency
 import com.ivy.legacy.ui.theme.Gradient

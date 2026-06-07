@@ -41,9 +41,9 @@ import com.ivy.base.coroutines.computationThread
 import com.ivy.base.coroutines.ioThread
 import com.ivy.base.text.toLowerCaseLocal
 import com.ivy.base.coroutines.uiThread
-import com.ivy.navigation.EditTransactionScreen
-import com.ivy.navigation.MainScreen
-import com.ivy.navigation.Navigation
+import com.ivy.ui.navigation.EditTransactionScreen
+import com.ivy.ui.navigation.MainScreen
+import com.ivy.ui.navigation.Navigation
 import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.R
 import com.ivy.ui.time.impl.DateTimePicker

@@ -47,8 +47,8 @@ import com.ivy.legacy.ui.keyboardOnlyWindowInsets
 import com.ivy.legacy.ui.navigationBarInsets
 import com.ivy.legacy.ui.onScreenStart
 import com.ivy.ui.compose.thenIf
-import com.ivy.navigation.Navigation
-import com.ivy.navigation.navigation
+import com.ivy.ui.navigation.Navigation
+import com.ivy.ui.navigation.navigation
 import com.ivy.legacy.ui.component.ActionsRow
 import com.ivy.legacy.ui.component.CloseButton
 import com.ivy.legacy.ui.theme.gradientCutBackgroundTop

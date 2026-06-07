@@ -28,9 +28,9 @@ import com.ivy.legacy.ui.theme.system.style
 import com.ivy.legacy.domain.model.Account
 import com.ivy.legacy.domain.model.PlannedPaymentRule
 import com.ivy.legacy.ui.component.transaction.SectionDivider
-import com.ivy.navigation.EditPlannedScreen
-import com.ivy.navigation.Navigation
-import com.ivy.navigation.navigation
+import com.ivy.ui.navigation.EditPlannedScreen
+import com.ivy.ui.navigation.Navigation
+import com.ivy.ui.navigation.navigation
 import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.Gray
 import com.ivy.legacy.ui.component.IvyIcon

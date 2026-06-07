@@ -2,7 +2,7 @@ package com.ivy.piechart
 
 import com.ivy.data.model.Category
 import com.ivy.legacy.ui.model.period.TimePeriod
-import com.ivy.navigation.PieChartStatisticScreen
+import com.ivy.ui.navigation.PieChartStatisticScreen
 
 sealed interface PieChartStatisticEvent {
     data class OnStart(val screen: PieChartStatisticScreen) : PieChartStatisticEvent

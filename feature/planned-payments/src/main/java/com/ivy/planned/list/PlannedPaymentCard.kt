@@ -41,8 +41,8 @@ import com.ivy.legacy.ui.formatDateOnly
 import com.ivy.legacy.ui.formatDateOnlyWithYear
 import com.ivy.base.text.isNotNullOrBlank
 import com.ivy.base.text.uppercaseLocal
-import com.ivy.navigation.TransactionsScreen
-import com.ivy.navigation.navigation
+import com.ivy.ui.navigation.TransactionsScreen
+import com.ivy.ui.navigation.navigation
 import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.Blue
 import com.ivy.legacy.ui.theme.Gradient

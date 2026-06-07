@@ -38,9 +38,9 @@ import com.ivy.legacy.ui.horizontalSwipeListener
 import com.ivy.legacy.ui.rememberSwipeListenerState
 import com.ivy.loans.loan.Constants.SWIPE_HORIZONTAL_THRESHOLD
 import com.ivy.loans.loan.data.DisplayLoan
-import com.ivy.navigation.LoanDetailsScreen
-import com.ivy.navigation.LoansScreen
-import com.ivy.navigation.navigation
+import com.ivy.ui.navigation.LoanDetailsScreen
+import com.ivy.ui.navigation.LoansScreen
+import com.ivy.ui.navigation.navigation
 import com.ivy.ui.R
 import com.ivy.ui.rememberScrollPositionListState
 import com.ivy.legacy.ui.theme.Gray

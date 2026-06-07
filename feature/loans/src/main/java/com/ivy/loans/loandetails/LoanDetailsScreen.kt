@@ -54,9 +54,9 @@ import com.ivy.loans.loandetails.events.DeleteLoanModalEvent
 import com.ivy.loans.loandetails.events.LoanDetailsScreenEvent
 import com.ivy.loans.loandetails.events.LoanModalEvent
 import com.ivy.loans.loandetails.events.LoanRecordModalEvent
-import com.ivy.navigation.LoanDetailsScreen
-import com.ivy.navigation.TransactionsScreen
-import com.ivy.navigation.navigation
+import com.ivy.ui.navigation.LoanDetailsScreen
+import com.ivy.ui.navigation.TransactionsScreen
+import com.ivy.ui.navigation.navigation
 import com.ivy.ui.R
 import com.ivy.ui.time.TimeFormatter
 import com.ivy.data.model.currency.IvyCurrency

@@ -11,9 +11,9 @@ import com.ivy.domain.preferences.AppPreferences
 import com.ivy.ui.theme.ThemeState
 import com.ivy.legacy.ui.state.PeriodState
 import com.ivy.base.coroutines.ioThread
-import com.ivy.navigation.EditTransactionScreen
-import com.ivy.navigation.MainScreen
-import com.ivy.navigation.Navigation
+import com.ivy.ui.navigation.EditTransactionScreen
+import com.ivy.ui.navigation.MainScreen
+import com.ivy.ui.navigation.Navigation
 import com.ivy.wallet.notification.reminder.TransactionReminderLogic
 import com.ivy.wallet.domain.startup.InitialDataSetup
 import com.ivy.wallet.security.AppLockController

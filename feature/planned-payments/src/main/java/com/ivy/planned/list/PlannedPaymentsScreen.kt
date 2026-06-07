@@ -22,10 +22,10 @@ import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
 import com.ivy.legacy.domain.model.Account
 import com.ivy.legacy.domain.model.PlannedPaymentRule
-import com.ivy.navigation.EditPlannedScreen
-import com.ivy.navigation.PlannedPaymentsScreen
-import com.ivy.navigation.navigation
-import com.ivy.navigation.screenScopedViewModel
+import com.ivy.ui.navigation.EditPlannedScreen
+import com.ivy.ui.navigation.PlannedPaymentsScreen
+import com.ivy.ui.navigation.navigation
+import com.ivy.ui.navigation.screenScopedViewModel
 import com.ivy.ui.R
 import com.ivy.ui.rememberScrollPositionListState
 import com.ivy.legacy.ui.theme.Green

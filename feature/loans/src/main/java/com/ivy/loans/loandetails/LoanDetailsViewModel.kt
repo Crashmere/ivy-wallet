@@ -27,8 +27,8 @@ import com.ivy.loans.loandetails.events.DeleteLoanModalEvent
 import com.ivy.loans.loandetails.events.LoanDetailsScreenEvent
 import com.ivy.loans.loandetails.events.LoanModalEvent
 import com.ivy.loans.loandetails.events.LoanRecordModalEvent
-import com.ivy.navigation.LoanDetailsScreen
-import com.ivy.navigation.Navigation
+import com.ivy.ui.navigation.LoanDetailsScreen
+import com.ivy.ui.navigation.Navigation
 import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.time.impl.DateTimePicker
 import com.ivy.legacy.domain.action.account.AccountsAct

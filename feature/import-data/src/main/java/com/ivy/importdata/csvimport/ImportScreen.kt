@@ -10,7 +10,7 @@ import com.ivy.data.backup.ImportResult
 import com.ivy.importdata.csvimport.flow.ImportFrom
 import com.ivy.importdata.csvimport.flow.ImportProcessing
 import com.ivy.importdata.csvimport.flow.ImportResultUI
-import com.ivy.navigation.ImportScreen
+import com.ivy.ui.navigation.ImportScreen
 
 @ExperimentalFoundationApi
 @Composable

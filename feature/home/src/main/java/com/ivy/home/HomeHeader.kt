@@ -46,8 +46,8 @@ import com.ivy.legacy.ui.rememberInteractionSource
 import com.ivy.legacy.ui.rememberSwipeListenerState
 import com.ivy.legacy.ui.springBounce
 import com.ivy.legacy.ui.verticalSwipeListener
-import com.ivy.navigation.PieChartStatisticScreen
-import com.ivy.navigation.navigation
+import com.ivy.ui.navigation.PieChartStatisticScreen
+import com.ivy.ui.navigation.navigation
 import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.Gradient
 import com.ivy.legacy.ui.theme.GradientGreen

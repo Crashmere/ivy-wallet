@@ -23,8 +23,8 @@ import com.ivy.legacy.domain.model.PlannedPaymentRule
 import com.ivy.legacy.domain.mapper.toLegacyDomain
 import com.ivy.legacy.domain.logic.AccountCreator
 import com.ivy.base.coroutines.ioThread
-import com.ivy.navigation.EditPlannedScreen
-import com.ivy.navigation.Navigation
+import com.ivy.ui.navigation.EditPlannedScreen
+import com.ivy.ui.navigation.Navigation
 import com.ivy.ui.ComposeViewModel
 import com.ivy.legacy.domain.action.account.AccountsAct
 import com.ivy.legacy.domain.logic.CategoryCreator

@@ -1,4 +1,4 @@
-package com.ivy.navigation
+package com.ivy.ui.navigation
 
 import com.ivy.base.model.legacy.Transaction
 import com.ivy.base.model.TransactionType

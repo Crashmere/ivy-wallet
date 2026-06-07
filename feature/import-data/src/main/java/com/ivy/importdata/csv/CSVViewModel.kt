@@ -22,7 +22,7 @@ import com.ivy.importdata.csv.domain.parseTitle
 import com.ivy.importdata.csv.domain.parseToAccount
 import com.ivy.importdata.csv.domain.parseToAccountCurrency
 import com.ivy.importdata.csv.domain.parseTransactionType
-import com.ivy.navigation.Navigation
+import com.ivy.ui.navigation.Navigation
 import com.ivy.data.file.FileSystem
 import com.ivy.ui.platform.FilePicker
 import com.opencsv.CSVReaderBuilder

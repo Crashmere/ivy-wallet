@@ -20,8 +20,8 @@ import androidx.compose.ui.unit.dp
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
 import com.ivy.legacy.ui.drawColoredShadow
-import com.ivy.navigation.LocalMainTabState
-import com.ivy.navigation.navigation
+import com.ivy.ui.navigation.LocalMainTabState
+import com.ivy.ui.navigation.navigation
 import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.Gradient
 import com.ivy.legacy.ui.component.IvyButton

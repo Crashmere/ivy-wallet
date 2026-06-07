@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.dp
 import com.ivy.base.model.TransactionType
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.asBrush
-import com.ivy.navigation.navigation
+import com.ivy.ui.navigation.navigation
 import com.ivy.ui.R
 import com.ivy.legacy.ui.component.CloseButton
 import com.ivy.legacy.ui.component.DeleteButton

@@ -45,9 +45,9 @@ import com.ivy.legacy.ui.component.transaction.transactions
 import com.ivy.legacy.ui.horizontalSwipeListener
 import com.ivy.legacy.ui.rememberSwipeListenerState
 import com.ivy.legacy.ui.verticalSwipeListener
-import com.ivy.navigation.screenScopedViewModel
-import com.ivy.navigation.LocalMainTabState
-import com.ivy.navigation.MainTab
+import com.ivy.ui.navigation.screenScopedViewModel
+import com.ivy.ui.navigation.LocalMainTabState
+import com.ivy.ui.navigation.MainTab
 import com.ivy.ui.R
 import com.ivy.ui.rememberScrollPositionListState
 import com.ivy.data.model.currency.IvyCurrency

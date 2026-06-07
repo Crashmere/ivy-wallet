@@ -41,8 +41,8 @@ import com.ivy.base.coroutines.computationThread
 import com.ivy.base.coroutines.ioThread
 import com.ivy.base.text.isNotNullOrBlank
 import com.ivy.legacy.ui.selectEndTextFieldValue
-import com.ivy.navigation.Navigation
-import com.ivy.navigation.TransactionsScreen
+import com.ivy.ui.navigation.Navigation
+import com.ivy.ui.navigation.TransactionsScreen
 import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.R
 import com.ivy.legacy.domain.action.account.AccTrnsAct

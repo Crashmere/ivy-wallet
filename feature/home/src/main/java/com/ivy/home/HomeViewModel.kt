@@ -35,11 +35,11 @@ import com.ivy.legacy.domain.model.Account
 import com.ivy.legacy.domain.mapper.toLegacyDomain
 import com.ivy.legacy.domain.action.viewmodel.home.ShouldHideIncomeAct
 import com.ivy.base.coroutines.ioThread
-import com.ivy.navigation.BalanceScreen
-import com.ivy.navigation.MainTab
-import com.ivy.navigation.MainScreen
-import com.ivy.navigation.MainTabState
-import com.ivy.navigation.Navigation
+import com.ivy.ui.navigation.BalanceScreen
+import com.ivy.ui.navigation.MainTab
+import com.ivy.ui.navigation.MainScreen
+import com.ivy.ui.navigation.MainTabState
+import com.ivy.ui.navigation.Navigation
 import com.ivy.ui.ComposeViewModel
 import com.ivy.legacy.domain.action.account.AccountsAct
 import com.ivy.legacy.domain.action.global.StartDayOfMonthAct

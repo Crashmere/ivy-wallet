@@ -6,8 +6,8 @@ import androidx.lifecycle.viewModelScope
 import com.ivy.data.backup.BackupDataUseCase
 import com.ivy.data.backup.ImportResult
 import com.ivy.base.lifecycle.asLiveData
-import com.ivy.navigation.ImportScreen
-import com.ivy.navigation.Navigation
+import com.ivy.ui.navigation.ImportScreen
+import com.ivy.ui.navigation.Navigation
 import com.ivy.ui.platform.FilePicker
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch

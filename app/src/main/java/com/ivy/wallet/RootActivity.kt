@@ -14,7 +14,7 @@ import com.ivy.base.time.TimeConverter
 import com.ivy.base.time.TimeProvider
 import com.ivy.domain.preferences.toggles.PreferenceToggles
 import com.ivy.legacy.ui.state.PeriodState
-import com.ivy.navigation.Navigation
+import com.ivy.ui.navigation.Navigation
 import com.ivy.ui.platform.BuildInfoProvider
 import com.ivy.ui.platform.FileSharer
 import com.ivy.ui.theme.ThemeState

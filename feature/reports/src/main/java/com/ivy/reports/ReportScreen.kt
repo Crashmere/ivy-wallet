@@ -33,9 +33,9 @@ import com.ivy.legacy.ui.component.transaction.TransactionsDividerLine
 import com.ivy.legacy.ui.component.transaction.transactions
 import com.ivy.legacy.ui.clickableNoIndication
 import com.ivy.legacy.ui.rememberInteractionSource
-import com.ivy.navigation.PieChartStatisticScreen
-import com.ivy.navigation.ReportScreen
-import com.ivy.navigation.navigation
+import com.ivy.ui.navigation.PieChartStatisticScreen
+import com.ivy.ui.navigation.ReportScreen
+import com.ivy.ui.navigation.navigation
 import com.ivy.ui.R
 import com.ivy.legacy.ui.platform.fileSharer
 import com.ivy.ui.rememberScrollPositionListState

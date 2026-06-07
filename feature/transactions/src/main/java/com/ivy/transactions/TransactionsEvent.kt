@@ -4,7 +4,7 @@ import com.ivy.base.model.legacy.Transaction
 import com.ivy.data.model.Category
 import com.ivy.legacy.ui.model.period.TimePeriod
 import com.ivy.legacy.domain.model.Account
-import com.ivy.navigation.TransactionsScreen
+import com.ivy.ui.navigation.TransactionsScreen
 import com.ivy.legacy.ui.modal.ChoosePeriodModalData
 
 sealed interface TransactionsEvent {

@@ -1,4 +1,4 @@
-package com.ivy.navigation
+package com.ivy.ui.navigation
 
 /**
  * Marks a screen in the Ivy Wallet's navigation graph.

@@ -18,8 +18,8 @@ import com.ivy.data.repository.TagRepository
 import com.ivy.data.repository.TransactionRepository
 import com.ivy.domain.preferences.AppPreferences
 import com.ivy.domain.usecase.ResetWalletDataUseCase
-import com.ivy.navigation.MainScreen
-import com.ivy.navigation.Navigation
+import com.ivy.ui.navigation.MainScreen
+import com.ivy.ui.navigation.Navigation
 import com.ivy.wallet.domain.startup.InitialDataSetup
 import javax.inject.Inject
 

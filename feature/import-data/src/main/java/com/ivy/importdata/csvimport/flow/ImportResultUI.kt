@@ -21,8 +21,8 @@ import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
 import com.ivy.importdata.csv.Spacer8
 import com.ivy.data.model.currency.format
-import com.ivy.navigation.CSVScreen
-import com.ivy.navigation.navigation
+import com.ivy.ui.navigation.CSVScreen
+import com.ivy.ui.navigation.navigation
 import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.GradientIvy
 import com.ivy.legacy.ui.theme.Gray

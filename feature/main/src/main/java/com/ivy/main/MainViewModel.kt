@@ -8,10 +8,10 @@ import com.ivy.domain.usecase.exchange.SyncExchangeRatesUseCase
 import com.ivy.legacy.domain.logic.AccountCreator
 import com.ivy.base.lifecycle.asLiveData
 import com.ivy.base.coroutines.ioThread
-import com.ivy.navigation.MainTab
-import com.ivy.navigation.MainScreen
-import com.ivy.navigation.MainTabState
-import com.ivy.navigation.Navigation
+import com.ivy.ui.navigation.MainTab
+import com.ivy.ui.navigation.MainScreen
+import com.ivy.ui.navigation.MainTabState
+import com.ivy.ui.navigation.Navigation
 import com.ivy.legacy.domain.model.CreateAccountData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
