@@ -15,6 +15,7 @@
 - 已清理 `temp:legacy-code` 中一批无引用旧代码：Crashlytics 空壳、旧 FRP ViewModel/Composable、孤立旧 modal、旧图表/输入组件和无引用工具类型。
 - 已删除 `temp:legacy-code` 中仅服务 IDE 预览的 Compose `@Preview` 示例函数。
 - 已删除 `temp:legacy-code` 旧 Compose App 包装中无引用的 `rootActivity` 和组件预览包装 helper。
+- 已精简 `temp:legacy-code` 旧工具包，删除无引用的 Fragment helper、部分动画 preset、URL helper、日期格式化 helper 和金额拆分格式化 helper。
 - 已删除 app/feature 模块中仅服务 IDE 预览的 Compose `@Preview` 示例函数；保留截图测试入口，并改为普通测试内容函数。
 - 已删除 `temp:old-design` 旧设计组件中仅服务 IDE 预览的 Compose `@Preview` 示例函数；保留仍被截图测试和旧包装复用的预览 helper。
 - 已删除 `temp:old-design` 中确认无外部引用的旧组件：`l2_components`、`l3_ivyComponents` 和旧 shape building block。
@@ -61,6 +62,7 @@
 - `temp:legacy-code` 中无引用的 Crashlytics 工具空壳、旧 FRP View 层封装、旧名称/月选择弹窗、旧折线图、旧 checklist 输入框和无引用工具类型。
 - `temp:legacy-code` 中的 Compose `@Preview` 示例函数；保留真实运行时组件。
 - `temp:legacy-code` 旧 Compose App 包装中的无引用 Activity helper 和组件预览包装 helper；保留运行时仍使用的 `ivyWalletCtx`、`rootView`、`rootScreen`、`IvyWalletPreview` 和 `appDesign`。
+- `temp:legacy-code` 旧工具包中无引用的 Fragment 参数/Activity Result helper、动画 preset、URL 打开 helper、日期时间格式化 helper 和金额拆分格式化 helper。
 - app/feature 模块中的 Compose `@Preview` 示例函数；保留功能代码、功能测试和截图测试入口。
 - `temp:old-design` 旧设计组件中的 Compose `@Preview` 示例函数；保留真实组件和仍被复用的预览 helper。
 - `temp:old-design` 中无引用的旧 l2/l3 组件和旧 shape building block；保留仍被当前功能引用的旧设计基础能力。

@@ -134,31 +134,6 @@ fun formatInt(number: Int): String {
     return DecimalFormat("#,###,###,###").format(number)
 }
 
-fun decimalPartFormatted(currency: String, value: Double): String {
-    return if (IvyCurrency.fromCode(currency)?.isCrypto == true) {
-        val decimalPartFormatted = value.formatCrypto()
-            .split(localDecimalSeparator())
-            .getOrNull(1) ?: "null"
-        if (decimalPartFormatted.isNotBlank()) {
-            "${localDecimalSeparator()}$decimalPartFormatted"
-        } else {
-            ""
-        }
-    } else {
-        "${localDecimalSeparator()}${decimalPartFormattedFIAT(value)}"
-    }
-}
-
-private fun decimalPartFormattedFIAT(value: Double): String {
-    return DecimalFormat(".00").format(value)
-        .split(localDecimalSeparator())
-        .getOrNull(1)
-        ?: value.toString()
-            .split(localDecimalSeparator())
-            .getOrNull(1)
-        ?: "null"
-}
-
 fun Long.length() = when (this) {
     0L -> 1
     else -> log10(abs(toDouble())).toInt() + 1
@@ -193,18 +168,4 @@ fun formatInputAmount(
     }
 
     return null
-}
-
-/**
-toInt on numbers in the range (-1.0, 0.0) (exclusive of boundaries) will produce a positive int 0
-So, this function append negative sign in that case
- */
-fun integerPartFormatted(value: Double): String {
-    val preciseValue = value.toBigDecimal()
-    val formattedValue = DecimalFormat("###,###").format(preciseValue.toInt())
-    return if (value > -1.0 && value < 0.0) {
-        "-$formattedValue"
-    } else {
-        formattedValue
-    }
 }
