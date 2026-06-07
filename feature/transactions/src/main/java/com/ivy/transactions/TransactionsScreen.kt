@@ -42,7 +42,7 @@ import com.ivy.legacy.design.api.LocalDatePicker
 import com.ivy.legacy.design.api.LocalTimeConverter
 import com.ivy.legacy.design.api.LocalTimeFormatter
 import com.ivy.legacy.design.api.LocalTimeProvider
-import com.ivy.legacy.design.LocalThemeState
+import com.ivy.ui.theme.LocalThemeState
 import com.ivy.legacy.design.l0_system.LegacyTheme
 import com.ivy.legacy.design.l0_system.style
 import com.ivy.ui.compose.thenIf

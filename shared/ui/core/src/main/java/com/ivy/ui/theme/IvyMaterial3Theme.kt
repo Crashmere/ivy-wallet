@@ -1,10 +1,10 @@
-package com.ivy.legacy.design.system
+package com.ivy.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import com.ivy.legacy.design.system.colors.IvyColors
+import com.ivy.ui.theme.colors.IvyColors
 
 @Composable
 fun IvyMaterial3Theme(

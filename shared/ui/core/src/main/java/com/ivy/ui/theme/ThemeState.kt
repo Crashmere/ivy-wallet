@@ -1,4 +1,4 @@
-package com.ivy.legacy.design
+package com.ivy.ui.theme
 
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.getValue

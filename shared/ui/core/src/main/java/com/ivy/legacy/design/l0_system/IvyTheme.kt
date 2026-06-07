@@ -13,7 +13,7 @@ import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 import com.ivy.base.legacy.Theme
 import com.ivy.legacy.design.api.IvyDesign
-import com.ivy.legacy.design.system.IvyMaterial3Theme
+import com.ivy.ui.theme.IvyMaterial3Theme
 
 @Deprecated("Old design system. Use `:ivy-design` and Material3")
 val LocalIvyColors = compositionLocalOf<IvyColors> { error("No IvyColors") }

@@ -10,7 +10,7 @@ import com.ivy.base.legacy.stringRes
 import com.ivy.base.model.TransactionType
 import com.ivy.data.db.dao.read.SettingsDao
 import com.ivy.frp.test.TestIdlingResource
-import com.ivy.legacy.design.ThemeState
+import com.ivy.ui.theme.ThemeState
 import com.ivy.legacy.ui.state.PeriodState
 import com.ivy.base.legacy.ioThread
 import com.ivy.base.legacy.readOnly

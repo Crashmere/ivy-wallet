@@ -11,10 +11,10 @@ import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.Modifier
 import com.ivy.base.time.TimeConverter
 import com.ivy.base.time.TimeProvider
-import com.ivy.legacy.design.LocalThemeState
-import com.ivy.legacy.design.ThemeState
 import com.ivy.legacy.design.l0_system.IvyTheme
 import com.ivy.ui.platform.DatePicker
+import com.ivy.ui.theme.LocalThemeState
+import com.ivy.ui.theme.ThemeState
 import com.ivy.ui.time.TimeFormatter
 
 @Suppress("CompositionLocalAllowlist")
