@@ -10,6 +10,7 @@ import com.ivy.data.api.ExchangeRateStore
 import com.ivy.data.api.LoanRecordStore
 import com.ivy.data.api.LoanStore
 import com.ivy.data.api.PlannedPaymentRuleStore
+import com.ivy.data.api.PreferenceToggleStore
 import com.ivy.data.api.SettingsStore
 import com.ivy.data.api.TagStore
 import com.ivy.data.api.TransactionStore
@@ -24,6 +25,7 @@ import com.ivy.data.repository.PlannedPaymentRuleStoreImpl
 import com.ivy.data.repository.SettingsRepository
 import com.ivy.data.repository.TagRepository
 import com.ivy.data.repository.TransactionRepository
+import com.ivy.data.datastore.DataStorePreferenceToggleStore
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -63,6 +65,11 @@ abstract class StoreModule {
     abstract fun bindPlannedPaymentRuleStore(
         store: PlannedPaymentRuleStoreImpl
     ): PlannedPaymentRuleStore
+
+    @Binds
+    abstract fun bindPreferenceToggleStore(
+        store: DataStorePreferenceToggleStore
+    ): PreferenceToggleStore
 
     @Binds
     abstract fun bindTagStore(repository: TagRepository): TagStore

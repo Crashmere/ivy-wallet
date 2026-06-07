@@ -291,6 +291,7 @@
 - `ivy.android-library` 不再给所有 Android library 默认添加 Timber；app、数据层、domain 中的汇率同步/旧钱包统计，以及饼图页等实际写日志的模块改为各自显式声明日志库依赖。
 - `ivy.android-library` 不再给所有 Android library 默认添加整套单元测试依赖；当前有 `src/test` 的 `shared:base`、`shared:data:model`、`shared:data:model-testing`、`shared:data:core`、`shared:domain` 和 `shared:ui:core` 改为在各自模块里显式声明测试 bundle。
 - `shared:data:core` 的 DataStore 依赖已从 `api` 收窄为 `implementation`；DataStore 绑定仍由 data core 提供，但不再通过 data core 传递暴露给其他模块。
+- `shared:domain` 已移除 AndroidX DataStore 依赖；偏好开关的存储能力抽成 `PreferenceToggleStore` 端口，DataStore 读写和清空由 `shared:data:core` 实现，domain 只保留业务级 `PreferenceToggleRepository` 和开关元数据。
 - `ivy.module` 不再默认启用 kotlinx serialization；当前 `ivy.feature` 页面模块没有序列化源码引用，序列化能力只保留在 `shared:base` 和 `shared:data:core` 等实际需要的模块中。
 - app 模块已移除 Kotlin serialization 插件；应用壳本身没有序列化源码，序列化继续由 `shared:base` 和 `shared:data:core` 提供。
 - 空壳 `ivy.module` 约定插件已删除；`ivy.feature` 现在直接组合 `ivy.android-library`、`ivy.hilt` 和 `ivy.compose`，模块能力来源更直观。
@@ -443,7 +444,7 @@
 - 旧主题枚举已迁到 `com.ivy.base.theme.Theme`，数据库仍通过枚举 `name` 持久化，现有设置值不变；旧 `SharedPrefs` 已迁到 `com.ivy.base.prefs.SharedPrefs`，同一个 `ivy_wallet_prefs` 文件名和 key 保持不变。
 - `shared:base` 中的 `com.ivy.base.legacy` 包已经清空；后续重点从“迁出 legacy 包名”转向“减少 Android SharedPreferences 对 domain/data 的扩散”。
 - 偏好读写已抽出 `PreferenceStore` 接口，`SharedPrefs` 只作为 Android 实现通过 Hilt 绑定；业务 key 集中到 `AppPreferenceKeys`，domain 和数据备份恢复不再直接依赖 `SharedPrefs` 具体类。
-- 偏好 toggle 的 UI 读取边界已从 domain 拆到 `shared:ui:legacy`：旧金额键盘只接收 legacy UI 专用的键盘布局 Flow，domain 中的 `BoolPreference` 继续只保留 DataStore 读写定义。
+- 偏好 toggle 的 UI 读取边界已从 domain 拆到 `shared:ui:legacy`：旧金额键盘只接收 legacy UI 专用的键盘布局 Flow，domain 中的 `BoolPreference` 只保留 key、默认值和分组等元数据。
 - `shared:domain` 已删除剩余 legacy 数据模型上的 Compose `@Immutable` 注解，并移除 `ivy.compose-runtime` 插件；domain 不再需要 Compose 编译配置。
 - `shared:domain` 已完全移除 Ktor/Room 测试依赖；汇率同步验证改为 JVM 单元测试，domain 只关心 `ExchangeRateStore` 端口行为。
 - `shared:data:core` 的 AndroidManifest 已删除被 AGP 忽略的 `package` 属性，命名空间统一由模块 `namespace = "com.ivy.data"` 提供。
@@ -588,9 +589,10 @@
 - 起始日读写已收敛到 `GetStartDayOfMonthUseCase` 和 `SetStartDayOfMonthUseCase`，设置页的 1..31 校验语义保持不变；旧 `StartDayOfMonthAct` 和 `UpdateStartDayOfMonthAct` 已删除。
 - 已把分类排序、最近选择账户和客户旅程卡片关闭状态迁到 `AppPreferences`，feature 层不再直接注入 `SharedPrefs`。
 - 已把重置钱包流程改为通过 `AppPreferences.clearAll()` 清空 legacy 偏好；app/feature 层不再直接注入 `SharedPrefs`。
-- 功能开关 `BoolFeature` 不再通过 `Context.dataStore` 读写；根部 `RootContent` 显式提供 `LocalFeatureDataStore` 和 `LocalFeatures`，设置页、编辑交易分类排序、金额格式化和金额键盘都改为使用同一个注入的数据源。
+- 功能开关 `BoolFeature` 不再通过 `Context.dataStore` 读写；偏好开关已重命名为普通本地偏好，设置页、编辑交易分类排序、金额格式化和金额键盘都改为使用同一个注入的 `PreferenceToggleRepository`。
 - 原 `shared/domain/features` 已迁到 `shared/domain/preferences/toggles`，`Features/BoolFeature/FeatureGroup` 重命名为 `PreferenceToggles/BoolPreference/PreferenceGroup`；底层 DataStore key 仍沿用 `feature_...` 前缀，保证已安装设备上的偏好开关不丢失。
 - feature ViewModel 中的偏好开关读取不再依赖 `shared:ui:legacy` 的 CompositionLocal；账户、分类、首页、搜索、交易、报表和编辑交易页改为注入 `PreferenceToggleRepository`，再通过 `shared:ui:core` 的 Flow 状态 helper 在 Compose 状态层读取。
+- `PreferenceToggleRepository` 已从具体 DataStore 包装改成 domain 级业务仓库；底层 `PreferenceToggleStore` 端口放在 `shared:data:api`，Android DataStore 实现和全量清空放在 `shared:data:core`。
 - 备份恢复仍保留原始 `SharedPrefs` 访问；它需要处理全部历史 key 和外部备份格式，后续与备份格式重构一起处理。`SharedPrefs` 不再用废弃注解制造警告，迁移状态改由本计划追踪。
 
 目标：
@@ -683,9 +685,9 @@
 - 旧 UI 金额输入偏好入口已收窄为 `AmountInputPreferences/LocalAmountInputPreferences`；它现在只表达金额键盘布局偏好，不再使用泛化的 `LegacyUiPreferences` 命名。
 - `shared:ui:legacy` 内部主题默认值和渐变按钮命名已收敛为 `LegacyThemeDefaults` 与 `GradientButton`；legacy 属性继续由模块和包名表达，组件名不再重复历史前缀。
 - 编辑交易页的分类排序偏好读取已改走 `PreferenceToggleRepository`；`:feature:edit-transaction` 不再直接注入 DataStore，也去掉了自身的 DataStore Gradle 依赖。
-- 重置钱包流程的 DataStore 清空已改走 `DataStorePreferencesRepository.clearAll()`；app 层不再直接注入 AndroidX DataStore，也去掉了自身的 DataStore Gradle 依赖。
+- 重置钱包流程的 DataStore 清空已改走 `PreferenceToggleRepository.clearAll()`；app 层不再直接注入 AndroidX DataStore 或命名为 DataStore 的具体 repository，也去掉了自身的 DataStore Gradle 依赖。
 - 偏好开关 key helper 已从 data core 移回 domain 的 `BoolPreference` 内部；`feature_` 前缀保持不变，data core 不再暴露只服务 domain 偏好定义的 `DatastoreKeys`。
-- 删除无调用方的 `DeviceIdUseCase` 和 `DeviceId` 草稿；偏好开关的底层 DataStore 读写方法已收紧为 domain 模块内部 API，外部调用方只能通过 `PreferenceToggleRepository` 访问。
+- 删除无调用方的 `DeviceIdUseCase` 和 `DeviceId` 草稿；偏好开关的底层 DataStore 读写已下沉到 data core 实现，外部调用方只能通过 `PreferenceToggleRepository` 访问。
 - 重置钱包流程的数据删除和全量数据变化通知已拆成 `ClearWalletDataUseCase`、`NotifyAllDataChangedUseCase`；app 层的 reset 实现不再直接注入底层 DAO、repository 或 `DataObserver`，只保留重置编排、偏好清空、默认数据重建和导航复位。
 - 首次默认账户/分类预置已改走 `GetAccountsUseCase/GetCategoriesUseCase` 和 `SaveAccountUseCase/SaveCategoryUseCase`；app 启动编排不再直接注入账户 DAO 或分类/账户 repository，默认内容、颜色、图标和初始化条件保持不变。
 - 交易提醒 Worker 的“今天是否已经记账”判断已改走 `CountTodayTransactionsUseCase`；app 通知 Worker 不再直接注入 `TransactionDao`，数据层新增按时间范围计数查询，避免为了计数加载完整交易列表。

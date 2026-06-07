@@ -1,25 +1,37 @@
 package com.ivy.domain.preferences.toggles
 
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
+import com.ivy.data.api.PreferenceToggleStore
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class PreferenceToggleRepository @Inject constructor(
-    private val dataStore: DataStore<Preferences>
+    private val store: PreferenceToggleStore
 ) {
     suspend fun isEnabled(preference: BoolPreference): Boolean {
-        return preference.isEnabled(dataStore)
+        return store.isEnabled(
+            storageKey = preference.storageKey,
+            defaultValue = preference.defaultValue,
+        )
     }
 
     fun enabledFlow(preference: BoolPreference): Flow<Boolean?> {
-        return preference.enabledFlow(dataStore)
+        return store.enabledFlow(
+            storageKey = preference.storageKey,
+            defaultValue = preference.defaultValue,
+        )
     }
 
     suspend fun set(
         preference: BoolPreference,
         enabled: Boolean,
     ) {
-        preference.set(dataStore, enabled)
+        store.set(
+            storageKey = preference.storageKey,
+            enabled = enabled,
+        )
+    }
+
+    suspend fun clearAll() {
+        store.clearAll()
     }
 }

@@ -13,7 +13,6 @@ dependencies {
     implementation(projects.shared.data.api)
 
     implementation(libs.bundles.arrow)
-    implementation(libs.datastore)
     implementation(libs.bundles.opencsv)
     implementation(libs.timber)
 
