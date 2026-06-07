@@ -1,4 +1,4 @@
-package com.ivy.base.prefs
+package com.ivy.data.api
 
 object AppPreferenceKeys {
     const val INITIAL_SETUP_COMPLETED = "onboarding_completed"

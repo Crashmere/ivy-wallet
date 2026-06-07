@@ -1,7 +1,7 @@
 package com.ivy.domain.preferences
 
-import com.ivy.base.prefs.AppPreferenceKeys
 import com.ivy.base.prefs.PreferenceStore
+import com.ivy.data.api.AppPreferenceKeys
 import javax.inject.Inject
 
 class AppPreferences @Inject constructor(
