@@ -1,10 +1,10 @@
 package com.ivy.home.customerjourney
 
-import com.ivy.base.legacy.SharedPrefs
 import com.ivy.base.legacy.stringRes
 import com.ivy.base.model.TransactionType
 import com.ivy.data.db.dao.read.PlannedPaymentRuleDao
 import com.ivy.data.repository.TransactionRepository
+import com.ivy.domain.preferences.AppPreferences
 import com.ivy.legacy.ui.theme.system.Gradient
 import com.ivy.legacy.ui.theme.system.Ivy
 import com.ivy.legacy.ui.theme.system.Orange
@@ -19,7 +19,7 @@ import javax.inject.Inject
 class CustomerJourneyCardsProvider @Inject constructor(
   private val transactionRepository: TransactionRepository,
   private val plannedPaymentRuleDao: PlannedPaymentRuleDao,
-  private val sharedPrefs: SharedPrefs,
+  private val appPreferences: AppPreferences,
 ) {
 
   suspend fun loadCards(): List<CustomerJourneyCardModel> {
@@ -36,15 +36,11 @@ class CustomerJourneyCardsProvider @Inject constructor(
   }
 
   private fun isCardDismissed(cardData: CustomerJourneyCardModel): Boolean {
-    return sharedPrefs.getBoolean(sharedPrefsKey(cardData), false)
+    return appPreferences.isCustomerJourneyCardDismissed(cardData.id)
   }
 
   fun dismissCard(cardData: CustomerJourneyCardModel) {
-    sharedPrefs.putBoolean(sharedPrefsKey(cardData), true)
-  }
-
-  private fun sharedPrefsKey(cardData: CustomerJourneyCardModel): String {
-    return "${cardData.id}${SharedPrefs._CARD_DISMISSED}"
+    appPreferences.dismissCustomerJourneyCard(cardData.id)
   }
 
   companion object {

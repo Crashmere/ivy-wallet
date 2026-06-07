@@ -497,7 +497,8 @@
 
 - 已新增 `com.ivy.domain.preferences.AppPreferences` 作为 `SharedPrefs` 的业务语义封装，底层仍使用原有 `ivy_wallet_prefs` 文件和原 key，暂不改变存储格式、备份格式或恢复逻辑。
 - 已把设置页、根启动流程、首次启动默认数据、交易提醒、起始日 action、隐藏余额/收入 action，以及账户/交易/饼图/旧账户逻辑里的全局偏好读取迁到 `AppPreferences`。
-- 备份恢复、重置钱包、分类排序、最近选择账户和客户旅程卡片关闭状态仍保留原始 `SharedPrefs` 访问；它们要么需要处理全部历史 key，要么属于局部 UI 状态，后续分批处理。
+- 已把分类排序、最近选择账户和客户旅程卡片关闭状态迁到 `AppPreferences`，feature 层不再直接注入 `SharedPrefs`。
+- 备份恢复和重置钱包仍保留原始 `SharedPrefs` 访问；它们需要处理全部历史 key 或清空整份本地偏好，后续与备份/重置边界一起处理。
 
 目标：
 

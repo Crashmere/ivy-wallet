@@ -10,7 +10,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
 import com.ivy.base.Toaster
-import com.ivy.base.legacy.SharedPrefs
 import com.ivy.base.legacy.Transaction
 import com.ivy.base.model.TransactionType
 import com.ivy.base.time.TimeConverter
@@ -30,6 +29,7 @@ import com.ivy.data.repository.TransactionRepository
 import com.ivy.data.repository.mapper.TagMapper
 import com.ivy.data.repository.mapper.TransactionMapper
 import com.ivy.domain.features.Features
+import com.ivy.domain.preferences.AppPreferences
 import com.ivy.legacy.ui.model.EditTransactionDisplayLoan
 import com.ivy.legacy.domain.model.Account
 import com.ivy.legacy.domain.mapper.toDomain
@@ -86,7 +86,7 @@ class EditTransactionViewModel @Inject constructor(
     private val loanDao: LoanDao,
     private val settingsDao: SettingsDao,
     private val nav: Navigation,
-    private val sharedPrefs: SharedPrefs,
+    private val appPreferences: AppPreferences,
     private val exchangeRatesLogic: ExchangeRatesLogic,
     private val categoryCreator: CategoryCreator,
     private val accountCreator: AccountCreator,
@@ -357,10 +357,7 @@ class EditTransactionViewModel @Inject constructor(
             return screen.accountId!!
         }
 
-        val lastSelectedId = sharedPrefs.getString(
-            SharedPrefs.LAST_SELECTED_ACCOUNT_ID,
-            null
-        )?.let { UUID.fromString(it) }
+        val lastSelectedId = appPreferences.lastSelectedAccountId?.let { UUID.fromString(it) }
         if (lastSelectedId != null && ioThread {
                 accounts.find {
                     it.id == lastSelectedId
@@ -503,7 +500,7 @@ class EditTransactionViewModel @Inject constructor(
             accountsChanged = true
 
             // update last selected account
-            sharedPrefs.putString(SharedPrefs.LAST_SELECTED_ACCOUNT_ID, newAccount.id.toString())
+            appPreferences.lastSelectedAccountId = newAccount.id.toString()
 
             saveIfEditMode()
 

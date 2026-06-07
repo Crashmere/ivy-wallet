@@ -37,4 +37,24 @@ class AppPreferences @Inject constructor(
     var dataBackupCompleted: Boolean
         get() = sharedPrefs.getBoolean(SharedPrefs.DATA_BACKUP_COMPLETED, false)
         set(value) = sharedPrefs.putBoolean(SharedPrefs.DATA_BACKUP_COMPLETED, value)
+
+    var categorySortOrder: Int
+        get() = sharedPrefs.getInt(SharedPrefs.CATEGORY_SORT_ORDER, 0)
+        set(value) = sharedPrefs.putInt(SharedPrefs.CATEGORY_SORT_ORDER, value)
+
+    var lastSelectedAccountId: String?
+        get() = sharedPrefs.getString(SharedPrefs.LAST_SELECTED_ACCOUNT_ID, null)
+        set(value) = sharedPrefs.putString(SharedPrefs.LAST_SELECTED_ACCOUNT_ID, value)
+
+    fun isCustomerJourneyCardDismissed(cardId: String): Boolean {
+        return sharedPrefs.getBoolean(customerJourneyCardDismissedKey(cardId), false)
+    }
+
+    fun dismissCustomerJourneyCard(cardId: String) {
+        sharedPrefs.putBoolean(customerJourneyCardDismissedKey(cardId), true)
+    }
+
+    private fun customerJourneyCardDismissedKey(cardId: String): String {
+        return "$cardId${SharedPrefs._CARD_DISMISSED}"
+    }
 }
