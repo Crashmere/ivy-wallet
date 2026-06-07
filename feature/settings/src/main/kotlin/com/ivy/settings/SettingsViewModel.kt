@@ -13,7 +13,7 @@ import com.ivy.data.model.primitive.AssetCode
 import com.ivy.domain.preferences.toggles.BoolPreference
 import com.ivy.domain.preferences.toggles.PreferenceToggleRepository
 import com.ivy.domain.preferences.toggles.PreferenceToggles
-import com.ivy.domain.usecase.ResetWalletDataUseCase
+import com.ivy.domain.usecase.reset.ResetWalletDataUseCase
 import com.ivy.domain.usecase.backup.ExportBackupUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.domain.usecase.currency.SetBaseCurrencyUseCase

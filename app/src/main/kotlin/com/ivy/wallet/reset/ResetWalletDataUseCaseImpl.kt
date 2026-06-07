@@ -1,7 +1,7 @@
 package com.ivy.wallet.reset
 
 import com.ivy.domain.preferences.toggles.PreferenceToggleRepository
-import com.ivy.domain.usecase.ResetWalletDataUseCase
+import com.ivy.domain.usecase.reset.ResetWalletDataUseCase
 import com.ivy.domain.usecase.reset.ClearAppPreferencesUseCase
 import com.ivy.domain.usecase.reset.ClearWalletDataUseCase
 import com.ivy.domain.usecase.reset.NotifyAllDataChangedUseCase

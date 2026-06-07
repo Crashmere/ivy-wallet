@@ -9,7 +9,7 @@ import com.ivy.base.time.impl.StandardTimeConverter
 import com.ivy.domain.preferences.toggles.IvyPreferenceToggles
 import com.ivy.domain.preferences.toggles.PreferenceToggles
 import com.ivy.ui.resource.ResourceProvider
-import com.ivy.domain.usecase.ResetWalletDataUseCase
+import com.ivy.domain.usecase.reset.ResetWalletDataUseCase
 import com.ivy.ui.platform.DatePicker
 import com.ivy.ui.platform.FilePicker
 import com.ivy.ui.platform.LocaleSettingsLauncher
