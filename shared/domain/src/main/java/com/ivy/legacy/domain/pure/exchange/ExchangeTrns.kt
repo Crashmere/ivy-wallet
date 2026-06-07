@@ -45,7 +45,7 @@ suspend fun exchangeInBaseCurrency(
 @Deprecated("Uses legacy Transaction")
 @Pure
 suspend fun exchangeInBaseCurrency(
-    transaction: com.ivy.base.legacy.Transaction,
+    transaction: com.ivy.base.model.legacy.Transaction,
     arg: ExchangeTrnArgument
 ): BigDecimal {
     val fromCurrency = arg.getAccount(transaction.accountId)?.let {
@@ -118,7 +118,7 @@ suspend fun exchangeInCurrency(
 
 @Deprecated("Uses legacy Transaction")
 suspend fun exchangeInCurrency(
-    transaction: com.ivy.base.legacy.Transaction,
+    transaction: com.ivy.base.model.legacy.Transaction,
     baseCurrency: String,
     trnCurrency: Option<String>,
     toCurrency: String,
@@ -141,7 +141,7 @@ object LegacyExchangeTrns {
 
     @Pure
     suspend fun exchangeInBaseCurrency(
-        transaction: com.ivy.base.legacy.Transaction,
+        transaction: com.ivy.base.model.legacy.Transaction,
         baseCurrency: String,
         accounts: List<Account>,
 
@@ -157,7 +157,7 @@ object LegacyExchangeTrns {
 
     @Pure
     suspend fun exchangeInCurrency(
-        transaction: com.ivy.base.legacy.Transaction,
+        transaction: com.ivy.base.model.legacy.Transaction,
         baseCurrency: String,
         accounts: List<Account>,
         toCurrency: String,

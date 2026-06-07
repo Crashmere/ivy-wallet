@@ -1,7 +1,7 @@
 package com.ivy.piechart.action
 
 import androidx.compose.ui.graphics.toArgb
-import com.ivy.base.legacy.Transaction
+import com.ivy.base.model.legacy.Transaction
 import com.ivy.base.model.TransactionType
 import com.ivy.base.resource.ResourceProvider
 import com.ivy.data.model.Category

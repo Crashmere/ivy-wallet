@@ -1,6 +1,6 @@
 package com.ivy.transactions
 
-import com.ivy.base.legacy.Transaction
+import com.ivy.base.model.legacy.Transaction
 import com.ivy.data.model.Category
 import com.ivy.legacy.ui.model.period.TimePeriod
 import com.ivy.legacy.domain.model.Account

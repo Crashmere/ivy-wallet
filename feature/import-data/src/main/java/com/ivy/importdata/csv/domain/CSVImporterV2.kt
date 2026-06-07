@@ -2,7 +2,7 @@ package com.ivy.importdata.csv.domain
 
 import androidx.compose.ui.graphics.toArgb
 import arrow.core.raise.either
-import com.ivy.base.legacy.Transaction
+import com.ivy.base.model.legacy.Transaction
 import com.ivy.base.model.TransactionType
 import com.ivy.base.time.TimeConverter
 import com.ivy.data.backup.CSVRow

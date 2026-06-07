@@ -1,6 +1,6 @@
 package com.ivy.legacy.domain.action.transaction
 
-import com.ivy.base.legacy.Transaction
+import com.ivy.base.model.legacy.Transaction
 import com.ivy.data.db.dao.read.TransactionDao
 import com.ivy.frp.action.FPAction
 import com.ivy.frp.action.thenFilter

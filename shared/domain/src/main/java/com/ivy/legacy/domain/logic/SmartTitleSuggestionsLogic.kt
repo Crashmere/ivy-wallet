@@ -1,6 +1,6 @@
 package com.ivy.legacy.domain.logic
 
-import com.ivy.base.legacy.Transaction
+import com.ivy.base.model.legacy.Transaction
 import com.ivy.data.db.dao.read.TransactionDao
 import com.ivy.legacy.domain.mapper.toLegacyDomain
 import com.ivy.base.text.capitalizeWords

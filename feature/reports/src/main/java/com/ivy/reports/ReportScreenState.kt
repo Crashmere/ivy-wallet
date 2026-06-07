@@ -1,6 +1,6 @@
 package com.ivy.reports
 
-import com.ivy.base.legacy.TransactionHistoryItem
+import com.ivy.base.model.legacy.TransactionHistoryItem
 import com.ivy.data.model.Category
 import com.ivy.data.model.Tag
 import com.ivy.legacy.domain.model.Account
@@ -19,8 +19,8 @@ data class ReportScreenState(
     val overdueIncome: Double = 0.0,
     val overdueExpenses: Double = 0.0,
     val history: ImmutableList<TransactionHistoryItem> = persistentListOf(),
-    val upcomingTransactions: ImmutableList<com.ivy.base.legacy.Transaction> = persistentListOf(),
-    val overdueTransactions: ImmutableList<com.ivy.base.legacy.Transaction> = persistentListOf(),
+    val upcomingTransactions: ImmutableList<com.ivy.base.model.legacy.Transaction> = persistentListOf(),
+    val overdueTransactions: ImmutableList<com.ivy.base.model.legacy.Transaction> = persistentListOf(),
     val categories: ImmutableList<Category> = persistentListOf(),
     val accounts: ImmutableList<Account> = persistentListOf(),
     val upcomingExpanded: Boolean = false,
@@ -28,7 +28,7 @@ data class ReportScreenState(
     val filter: ReportFilter? = null,
     val loading: Boolean = false,
     val accountIdFilters: ImmutableList<UUID> = persistentListOf(),
-    val transactions: ImmutableList<com.ivy.base.legacy.Transaction> = persistentListOf(),
+    val transactions: ImmutableList<com.ivy.base.model.legacy.Transaction> = persistentListOf(),
     val filterOverlayVisible: Boolean = false,
     val showTransfersAsIncExpCheckbox: Boolean = false,
     val treatTransfersAsIncExp: Boolean = false,

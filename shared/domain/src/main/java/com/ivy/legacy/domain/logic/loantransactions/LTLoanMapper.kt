@@ -1,6 +1,6 @@
 package com.ivy.legacy.domain.logic.loantransactions
 
-import com.ivy.base.legacy.Transaction
+import com.ivy.base.model.legacy.Transaction
 import com.ivy.base.model.LoanRecordType
 import com.ivy.base.model.TransactionType
 import com.ivy.data.model.LoanType

@@ -1,7 +1,7 @@
 package com.ivy.legacy.domain.logic
 
-import com.ivy.base.legacy.Transaction
-import com.ivy.base.legacy.TransactionHistoryItem
+import com.ivy.base.model.legacy.Transaction
+import com.ivy.base.model.legacy.TransactionHistoryItem
 import com.ivy.base.model.TransactionType
 import com.ivy.base.time.TimeConverter
 import com.ivy.base.time.TimeProvider

@@ -7,8 +7,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.graphics.toArgb
 import androidx.lifecycle.viewModelScope
 import arrow.core.toOption
-import com.ivy.base.legacy.Transaction
-import com.ivy.base.legacy.TransactionHistoryItem
+import com.ivy.base.model.legacy.Transaction
+import com.ivy.base.model.legacy.TransactionHistoryItem
 import com.ivy.base.model.TransactionType
 import com.ivy.base.resource.ResourceProvider
 import com.ivy.base.time.TimeConverter

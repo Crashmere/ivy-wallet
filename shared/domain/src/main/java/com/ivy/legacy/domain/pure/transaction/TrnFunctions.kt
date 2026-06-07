@@ -58,18 +58,18 @@ fun trnCurrency(
 @Deprecated("Uses legacy Transaction")
 object LegacyTrnFunctions {
     @Pure
-    fun expenses(transactions: List<com.ivy.base.legacy.Transaction>): List<com.ivy.base.legacy.Transaction> {
+    fun expenses(transactions: List<com.ivy.base.model.legacy.Transaction>): List<com.ivy.base.model.legacy.Transaction> {
         return transactions.filter { it.type == TransactionType.EXPENSE }
     }
 
     @Pure
-    fun incomes(transactions: List<com.ivy.base.legacy.Transaction>): List<com.ivy.base.legacy.Transaction> {
+    fun incomes(transactions: List<com.ivy.base.model.legacy.Transaction>): List<com.ivy.base.model.legacy.Transaction> {
         return transactions.filter { it.type == TransactionType.INCOME }
     }
 
     @Pure
     fun trnCurrency(
-        transaction: com.ivy.base.legacy.Transaction,
+        transaction: com.ivy.base.model.legacy.Transaction,
         accounts: List<Account>,
         baseCurrency: String
     ): Option<String> {

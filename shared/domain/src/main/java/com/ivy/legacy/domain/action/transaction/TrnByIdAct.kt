@@ -1,6 +1,6 @@
 package com.ivy.legacy.domain.action.transaction
 
-import com.ivy.base.legacy.Transaction
+import com.ivy.base.model.legacy.Transaction
 import com.ivy.data.model.TransactionId
 import com.ivy.data.repository.TransactionRepository
 import com.ivy.data.repository.mapper.TransactionMapper

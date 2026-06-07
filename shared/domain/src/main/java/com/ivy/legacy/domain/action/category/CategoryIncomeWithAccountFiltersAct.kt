@@ -33,7 +33,7 @@ class LegacyCategoryIncomeWithAccountFiltersAct @Inject constructor(
     } then calcTrnsIncomeExpenseAct
 
     data class Input(
-        val transactions: List<com.ivy.base.legacy.Transaction>,
+        val transactions: List<com.ivy.base.model.legacy.Transaction>,
         val accountFilterList: List<Account>,
         val category: Category?,
         val baseCurrency: String

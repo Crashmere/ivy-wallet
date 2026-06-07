@@ -1,6 +1,6 @@
 package com.ivy.search
 
-import com.ivy.base.legacy.TransactionHistoryItem
+import com.ivy.base.model.legacy.TransactionHistoryItem
 import com.ivy.data.model.Category
 import com.ivy.legacy.domain.model.Account
 import kotlinx.collections.immutable.ImmutableList

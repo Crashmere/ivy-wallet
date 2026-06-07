@@ -1,7 +1,7 @@
 package com.ivy.legacy.domain.data
 
 import androidx.compose.runtime.Immutable
-import com.ivy.base.legacy.TransactionHistoryItem
+import com.ivy.base.model.legacy.TransactionHistoryItem
 import java.time.LocalDate
 
 @Immutable

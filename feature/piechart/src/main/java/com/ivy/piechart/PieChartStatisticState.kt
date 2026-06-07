@@ -1,7 +1,7 @@
 package com.ivy.piechart
 
 import androidx.compose.runtime.Immutable
-import com.ivy.base.legacy.Transaction
+import com.ivy.base.model.legacy.Transaction
 import com.ivy.base.model.TransactionType
 import com.ivy.legacy.ui.model.period.TimePeriod
 import com.ivy.legacy.ui.modal.ChoosePeriodModalData

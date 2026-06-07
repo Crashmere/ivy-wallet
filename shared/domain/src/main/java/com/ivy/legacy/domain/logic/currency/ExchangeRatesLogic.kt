@@ -1,6 +1,6 @@
 package com.ivy.legacy.domain.logic.currency
 
-import com.ivy.base.legacy.Transaction
+import com.ivy.base.model.legacy.Transaction
 import com.ivy.data.db.dao.read.AccountDao
 import com.ivy.data.db.dao.read.ExchangeRatesDao
 import com.ivy.legacy.domain.model.Account

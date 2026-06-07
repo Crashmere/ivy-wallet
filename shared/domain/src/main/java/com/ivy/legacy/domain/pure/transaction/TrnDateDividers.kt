@@ -2,7 +2,7 @@ package com.ivy.legacy.domain.pure.transaction
 
 import arrow.core.Option
 import arrow.core.toOption
-import com.ivy.base.legacy.TransactionHistoryItem
+import com.ivy.base.model.legacy.TransactionHistoryItem
 import com.ivy.base.time.TimeConverter
 import com.ivy.base.time.convertToLocal
 import com.ivy.data.db.dao.read.AccountDao
@@ -113,7 +113,7 @@ suspend fun transactionsWithDateDividers(
 @Deprecated("Uses legacy Transaction")
 object LegacyTrnDateDividers {
     @Deprecated("Migrate to actions")
-    suspend fun List<com.ivy.base.legacy.Transaction>.withDateDividers(
+    suspend fun List<com.ivy.base.model.legacy.Transaction>.withDateDividers(
         exchangeRatesLogic: ExchangeRatesLogic,
         baseCurrencyCode: String,
         accountDao: AccountDao,
@@ -137,7 +137,7 @@ object LegacyTrnDateDividers {
 
     @Pure
     suspend fun transactionsWithDateDividers(
-        transactions: List<com.ivy.base.legacy.Transaction>,
+        transactions: List<com.ivy.base.model.legacy.Transaction>,
         baseCurrencyCode: String,
         timeConverter: TimeConverter,
 

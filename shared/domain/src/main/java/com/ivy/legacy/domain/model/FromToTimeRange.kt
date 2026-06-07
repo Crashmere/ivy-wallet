@@ -1,7 +1,7 @@
 package com.ivy.legacy.domain.model
 
 import androidx.compose.runtime.Immutable
-import com.ivy.base.legacy.Transaction
+import com.ivy.base.model.legacy.Transaction
 import com.ivy.base.time.TimeConverter
 import com.ivy.base.time.TimeProvider
 import com.ivy.base.time.ivyMinTime
