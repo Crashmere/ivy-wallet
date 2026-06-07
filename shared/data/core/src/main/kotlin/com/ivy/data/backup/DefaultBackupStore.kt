@@ -4,10 +4,10 @@ import android.content.Context
 import android.net.Uri
 import androidx.core.net.toUri
 import com.ivy.data.api.AccountStore
-import com.ivy.data.api.AppPreferenceKeys
 import com.ivy.data.api.BackupSettingsPreferenceStore
 import com.ivy.data.api.DataChangePublisher
 import com.ivy.data.api.DataWriteEvent
+import com.ivy.data.api.SharedPreferenceKeys
 import com.ivy.data.api.backup.BackupStore
 import com.ivy.data.api.file.ExternalFile
 import com.ivy.data.db.dao.read.AccountDao
@@ -144,10 +144,10 @@ class DefaultBackupStore @Inject constructor(
 
     private fun getSharedPrefsData(): HashMap<String, String> {
         val hashmap = HashMap<String, String>()
-        hashmap[AppPreferenceKeys.SHOW_NOTIFICATIONS] = settingsPreferenceStore.showNotifications.toString()
-        hashmap[AppPreferenceKeys.APP_LOCK_ENABLED] = settingsPreferenceStore.appLockEnabled.toString()
-        hashmap[AppPreferenceKeys.HIDE_CURRENT_BALANCE] = settingsPreferenceStore.hideCurrentBalance.toString()
-        hashmap[AppPreferenceKeys.TRANSFERS_AS_INCOME_EXPENSE] =
+        hashmap[SharedPreferenceKeys.SHOW_NOTIFICATIONS] = settingsPreferenceStore.showNotifications.toString()
+        hashmap[SharedPreferenceKeys.APP_LOCK_ENABLED] = settingsPreferenceStore.appLockEnabled.toString()
+        hashmap[SharedPreferenceKeys.HIDE_CURRENT_BALANCE] = settingsPreferenceStore.hideCurrentBalance.toString()
+        hashmap[SharedPreferenceKeys.TRANSFERS_AS_INCOME_EXPENSE] =
             settingsPreferenceStore.transfersAsIncomeExpense.toString()
 
         return hashmap
@@ -294,16 +294,16 @@ class DefaultBackupStore @Inject constructor(
                 async { plannedPaymentRuleWriter.saveMany(completeData.plannedPaymentRules) }
 
             settingsPreferenceStore.showNotifications =
-                (completeData.sharedPrefs[AppPreferenceKeys.SHOW_NOTIFICATIONS] ?: "true").toBoolean()
+                (completeData.sharedPrefs[SharedPreferenceKeys.SHOW_NOTIFICATIONS] ?: "true").toBoolean()
 
             settingsPreferenceStore.appLockEnabled =
-                (completeData.sharedPrefs[AppPreferenceKeys.APP_LOCK_ENABLED] ?: "false").toBoolean()
+                (completeData.sharedPrefs[SharedPreferenceKeys.APP_LOCK_ENABLED] ?: "false").toBoolean()
 
             settingsPreferenceStore.hideCurrentBalance =
-                (completeData.sharedPrefs[AppPreferenceKeys.HIDE_CURRENT_BALANCE] ?: "false").toBoolean()
+                (completeData.sharedPrefs[SharedPreferenceKeys.HIDE_CURRENT_BALANCE] ?: "false").toBoolean()
 
             settingsPreferenceStore.transfersAsIncomeExpense =
-                (completeData.sharedPrefs[AppPreferenceKeys.TRANSFERS_AS_INCOME_EXPENSE] ?: "false").toBoolean()
+                (completeData.sharedPrefs[SharedPreferenceKeys.TRANSFERS_AS_INCOME_EXPENSE] ?: "false").toBoolean()
 
             plannedPayments.await()
             tags.await()

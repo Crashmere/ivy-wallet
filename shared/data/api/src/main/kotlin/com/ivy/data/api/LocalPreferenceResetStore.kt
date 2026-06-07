@@ -1,5 +1,5 @@
 package com.ivy.data.api
 
-interface AppPreferenceResetStore {
+interface LocalPreferenceResetStore {
     fun clearAll()
 }

@@ -454,7 +454,7 @@
 - 日期、时间范围和 `IntervalType` 周期递增 helper 已迁到 `com.ivy.base.time`；旧交易兼容模型 `Transaction/LegacyTransaction/TransactionHistoryItem/LegacyTag` 已迁到 `com.ivy.base.model.legacy`，继续留在 `shared:base` 以保持现有导航和旧 UI 依赖不变。
 - 旧主题枚举已迁到 `com.ivy.data.model.Theme`，数据库仍通过枚举 `name` 持久化，现有设置值不变；旧 `SharedPrefs` 已迁到 `com.ivy.base.prefs.SharedPrefs`，同一个 `ivy_wallet_prefs` 文件名和 key 保持不变。
 - `shared:base` 中的 `com.ivy.base.legacy` 包已经清空；后续重点从“迁出 legacy 包名”转向“减少 Android SharedPreferences 对 domain/data 的扩散”。
-- 偏好读写已抽出 `PreferenceStore` 接口，`SharedPrefs` 只作为 Android 实现通过 Hilt 绑定；业务 key 集中到 `AppPreferenceKeys`，domain 和数据备份恢复不再直接依赖 `SharedPrefs` 具体类。
+- 偏好读写已抽出窄端口，`SharedPrefs` 只作为 Android 实现通过 Hilt 绑定；业务 key 集中到 `SharedPreferenceKeys`，domain 和数据备份恢复不再直接依赖 `SharedPrefs` 具体类。
 - 偏好 toggle 的 UI 读取边界已从 domain 拆到 `shared:ui:legacy`：旧金额键盘只接收 legacy UI 专用的键盘布局 Flow，domain 中的 `BoolPreference` 只保留 key、默认值和分组等元数据。
 - `shared:domain` 已删除剩余 legacy 数据模型上的 Compose `@Immutable` 注解，并移除 `ivy.compose-runtime` 插件；domain 不再需要 Compose 编译配置。
 - `shared:domain` 已完全移除 Ktor/Room 测试依赖；汇率同步验证改为 JVM 单元测试，domain 只关心 `ExchangeRateStore` 端口行为。
@@ -722,7 +722,7 @@
 - data-core 中的事件发布实现已从 `DataObserver` 改名为 `DataWriteEventBus`；它负责发出写入事件，不再用“观察者”命名反向暗示数据流。
 - `KSerializerLocalDateTime` 的泛化 `TODO` 已改成明确兼容说明：它继续服务旧 Room 实体和备份 JSON 中以 UTC epoch millis 编码的 `LocalDateTime`，不作为未完成的新模型迁移入口。
 - `BalanceBuilder` 和 `StatSummaryBuilder` 已从 `com.ivy.domain.usecase` 根包归位到 `com.ivy.domain.model`；对应测试也已移动到 domain model 测试目录。它们是统计聚合辅助对象，不再和可注入业务用例混在同一层级。
-- `ResetWalletDataUseCase` 接口已从 `com.ivy.domain.usecase` 根包移入 `com.ivy.domain.usecase.reset`，和 `ClearWalletDataUseCase`、`ClearAppPreferencesUseCase`、`NotifyAllDataChangedUseCase` 保持同一 reset 边界。
+- `ResetWalletDataUseCase` 接口已从 `com.ivy.domain.usecase` 根包移入 `com.ivy.domain.usecase.reset`，和 `ClearWalletDataUseCase`、`ClearLocalPreferencesUseCase`、`NotifyAllDataChangedUseCase` 保持同一 reset 边界。
 - CSV 导出测试中的反读辅助类已从容易误解为生产用例的 `ReadCsvUseCase` 改名为 `CsvTestReader`，继续只存在于 test 源集。
 - `IconAsset` 的测试文件和测试类已从旧名 `IconIdTest` 改为 `IconAssetTest`，和当前模型名保持一致。
 - `TransactionTest` 已从 primitive 测试包移动到 `com.ivy.data.model` 测试包；它测试的是正式交易模型扩展，不再混入基础值对象测试目录。
@@ -744,11 +744,11 @@
 - 首次初始化完成和月起始日读取已收敛到 settings domain 用例；`RootViewModel` 和 `InitialDataSetup` 不再直接访问对应的 `AppPreferences` 字段，底层 key 与启动行为保持不变。
 - 只写不读的 `data_backup_completed` 旧偏好已删除；备份导出仍直接生成 zip 并触发分享，不再写入没有消费方的完成标记。
 - 首页客户旅程卡片关闭状态已收敛到 `IsCustomerJourneyCardDismissedUseCase/DismissCustomerJourneyCardUseCase`；`feature:home` 不再直接拼接或读写客户旅程偏好 key。
-- 重置钱包流程中的旧 app 偏好清空已收敛到 `ClearAppPreferencesUseCase`；app 层重置实现继续负责编排，但不再直接注入 `AppPreferences`。
+- 重置钱包流程中的本地 SharedPreferences 清空已收敛到 `ClearLocalPreferencesUseCase`；app 层重置实现继续负责编排，但不再直接注入旧偏好实现。
 - 业务偏好 key 已从 `shared:base` 迁到 `shared:data:api`；base 不再承载应用锁、通知、隐藏余额等业务 key。
-- 旧 `AppPreferences` 具体类已拆成多个窄 data-api 端口和 `SharedPrefsAppPreferenceStore` 实现；domain 用例只依赖各自需要的偏好能力，SharedPrefs 读写细节下沉到 data-core。
+- 旧 `AppPreferences` 具体类已拆成多个窄 data-api 端口和 `SharedPrefsPreferenceStore` 实现；domain 用例只依赖各自需要的偏好能力，SharedPrefs 读写细节下沉到 data-core。
 - 备份恢复中的偏好读写已改走备份专用偏好端口；备份 JSON 仍保留原 sharedPrefs key 字符串以兼容旧备份文件，但 `DefaultBackupStore` 不再直接读写通用 `PreferenceStore`。
-- 旧 `PreferenceStore/SharedPrefs` 基础层抽象已删除；`SharedPrefsAppPreferenceStore` 在 data-core 内部直接持有 Android SharedPreferences，base 不再暴露偏好存储绑定。
+- 旧 `PreferenceStore/SharedPrefs` 基础层抽象已删除；`SharedPrefsPreferenceStore` 在 data-core 内部直接持有 Android SharedPreferences，base 不再暴露偏好存储绑定。
 - 文件读写和备份恢复端口已用 `ExternalFile` 包装外部文件引用；domain 和 data-api 不再公开 Android `Uri`，UI/platform 仍负责文件选择与分享，data-core 实现边界再转换回 Android `Uri`。因为 `ExternalFile` 已进入部分 domain 用例公开签名，`shared:domain` 对 `shared:data:api` 的依赖继续使用 `api` 暴露；同时，直接引用 `ExternalFile` 的 `feature:import-data`、`feature:reports` 和 `feature:settings` 已显式声明 `shared:data:api` 依赖，不再靠 domain 的传递依赖获得数据端口类型。
 - App 启动接口 `AppStarter` 已从 domain 下沉到 app 模块；它返回 Android `Intent`，实际只服务通知点击和 app 内启动流程，不再作为共享业务端口暴露。`PreferenceToggles` 的 Hilt 绑定也已迁到 app 装配层，domain 不再持有 Hilt module。
 - 币种模型和本地币种默认值读取已从 Android ICU `Currency` 切到 JDK `java.util.Currency`；`shared:data:model` 与 `shared:data:api` 主源码当前不再直接引用 Android API，并已改成更轻的 JVM/Kotlin 模块。
@@ -847,7 +847,7 @@
 - 首次启动完成状态已从旧泛化 app 偏好端口拆到 `InitialSetupStore`；启动流程只依赖初始化状态端口，底层仍读写同一个 SharedPreferences key。
 - 最后选择账户 ID 已从旧泛化 app 偏好端口拆到 `LastSelectedAccountStore`；账户选择用例只依赖自己的偏好端口，原 SharedPreferences key 不变。
 - 分类排序偏好和首页客户旅程卡片 dismissed 状态已分别拆到 `CategorySortOrderStore` 与 `CustomerJourneyCardStore`；分类/首页用例不再依赖完整 app 偏好端口。
-- App 偏好清空能力已从旧泛化 app 偏好端口拆到 `AppPreferenceResetStore`；重置用例不再依赖设置开关读取能力。
+- 本地偏好清空能力已从旧泛化 app 偏好端口拆到 `LocalPreferenceResetStore`；重置用例不再依赖设置开关读取能力。
 - 设置开关端口已继续拆成 `AppLockPreferenceStore`、`NotificationPreferenceStore`、`BalancePrivacyPreferenceStore`、`StartDayOfMonthStore`、`TransferBehaviorPreferenceStore` 和 `BackupSettingsPreferenceStore`；`SettingsPreferenceStore` 已删除，备份和设置用例只依赖自己需要的偏好能力。
 
 建议顺序：

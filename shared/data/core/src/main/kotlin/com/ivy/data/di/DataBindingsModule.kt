@@ -3,7 +3,6 @@ package com.ivy.data.di
 import com.ivy.data.DataWriteEventBus
 import com.ivy.data.api.AccountStore
 import com.ivy.data.api.AppLockPreferenceStore
-import com.ivy.data.api.AppPreferenceResetStore
 import com.ivy.data.api.BackupSettingsPreferenceStore
 import com.ivy.data.api.BalancePrivacyPreferenceStore
 import com.ivy.data.api.BufferAmountStore
@@ -20,6 +19,7 @@ import com.ivy.data.api.InitialSetupStore
 import com.ivy.data.api.LastSelectedAccountStore
 import com.ivy.data.api.LoanRecordStore
 import com.ivy.data.api.LoanStore
+import com.ivy.data.api.LocalPreferenceResetStore
 import com.ivy.data.api.NotificationPreferenceStore
 import com.ivy.data.api.PlannedPaymentRuleStore
 import com.ivy.data.api.PreferenceToggleStore
@@ -33,7 +33,7 @@ import com.ivy.data.api.TransferBehaviorPreferenceStore
 import com.ivy.data.backup.DefaultBackupStore
 import com.ivy.data.datastore.DataStorePreferenceToggleStore
 import com.ivy.data.file.FileSystem
-import com.ivy.data.preferences.SharedPrefsAppPreferenceStore
+import com.ivy.data.preferences.SharedPrefsPreferenceStore
 import com.ivy.data.remote.RemoteExchangeRatesDataSource
 import com.ivy.data.remote.impl.RemoteExchangeRatesDataSourceImpl
 import com.ivy.data.store.DefaultExchangeRateStore
@@ -63,55 +63,55 @@ abstract class DataBindingsModule {
 
     @Binds
     abstract fun bindAppLockPreferenceStore(
-        store: SharedPrefsAppPreferenceStore
+        store: SharedPrefsPreferenceStore
     ): AppLockPreferenceStore
 
     @Binds
     abstract fun bindNotificationPreferenceStore(
-        store: SharedPrefsAppPreferenceStore
+        store: SharedPrefsPreferenceStore
     ): NotificationPreferenceStore
 
     @Binds
     abstract fun bindBalancePrivacyPreferenceStore(
-        store: SharedPrefsAppPreferenceStore
+        store: SharedPrefsPreferenceStore
     ): BalancePrivacyPreferenceStore
 
     @Binds
     abstract fun bindStartDayOfMonthStore(
-        store: SharedPrefsAppPreferenceStore
+        store: SharedPrefsPreferenceStore
     ): StartDayOfMonthStore
 
     @Binds
     abstract fun bindTransferBehaviorPreferenceStore(
-        store: SharedPrefsAppPreferenceStore
+        store: SharedPrefsPreferenceStore
     ): TransferBehaviorPreferenceStore
 
     @Binds
     abstract fun bindBackupSettingsPreferenceStore(
-        store: SharedPrefsAppPreferenceStore
+        store: SharedPrefsPreferenceStore
     ): BackupSettingsPreferenceStore
 
     @Binds
-    abstract fun bindAppPreferenceResetStore(
-        store: SharedPrefsAppPreferenceStore
-    ): AppPreferenceResetStore
+    abstract fun bindLocalPreferenceResetStore(
+        store: SharedPrefsPreferenceStore
+    ): LocalPreferenceResetStore
 
     @Binds
-    abstract fun bindInitialSetupStore(store: SharedPrefsAppPreferenceStore): InitialSetupStore
+    abstract fun bindInitialSetupStore(store: SharedPrefsPreferenceStore): InitialSetupStore
 
     @Binds
     abstract fun bindLastSelectedAccountStore(
-        store: SharedPrefsAppPreferenceStore
+        store: SharedPrefsPreferenceStore
     ): LastSelectedAccountStore
 
     @Binds
     abstract fun bindCategorySortOrderStore(
-        store: SharedPrefsAppPreferenceStore
+        store: SharedPrefsPreferenceStore
     ): CategorySortOrderStore
 
     @Binds
     abstract fun bindCustomerJourneyCardStore(
-        store: SharedPrefsAppPreferenceStore
+        store: SharedPrefsPreferenceStore
     ): CustomerJourneyCardStore
 
     @Binds

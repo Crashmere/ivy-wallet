@@ -2,7 +2,7 @@ package com.ivy.wallet.reset
 
 import com.ivy.domain.preferences.toggles.PreferenceToggleService
 import com.ivy.domain.usecase.reset.ResetWalletDataUseCase
-import com.ivy.domain.usecase.reset.ClearAppPreferencesUseCase
+import com.ivy.domain.usecase.reset.ClearLocalPreferencesUseCase
 import com.ivy.domain.usecase.reset.ClearWalletDataUseCase
 import com.ivy.domain.usecase.reset.NotifyAllDataChangedUseCase
 import com.ivy.ui.navigation.MainScreen
@@ -15,7 +15,7 @@ import javax.inject.Inject
 class ResetWalletDataUseCaseImpl @Inject constructor(
     private val navigation: Navigation,
     private val clearWalletDataUseCase: ClearWalletDataUseCase,
-    private val clearAppPreferences: ClearAppPreferencesUseCase,
+    private val clearLocalPreferences: ClearLocalPreferencesUseCase,
     private val notifyAllDataChangedUseCase: NotifyAllDataChangedUseCase,
     private val preferenceToggleService: PreferenceToggleService,
     private val initialDataSetup: InitialDataSetup,
@@ -24,7 +24,7 @@ class ResetWalletDataUseCaseImpl @Inject constructor(
         withContext(Dispatchers.IO) {
             clearWalletDataUseCase()
             preferenceToggleService.clearAll()
-            clearAppPreferences()
+            clearLocalPreferences()
         }
 
         initialDataSetup.setupDefaults(systemDarkMode = false)
