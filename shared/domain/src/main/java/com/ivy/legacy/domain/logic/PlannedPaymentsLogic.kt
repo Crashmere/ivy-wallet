@@ -5,7 +5,6 @@ import com.ivy.base.model.TransactionType
 import com.ivy.base.time.TimeProvider
 import com.ivy.data.db.dao.read.AccountDao
 import com.ivy.data.db.dao.read.PlannedPaymentRuleDao
-import com.ivy.data.db.dao.read.TransactionDao
 import com.ivy.data.db.dao.write.WritePlannedPaymentRuleDao
 import com.ivy.data.model.IntervalType
 import com.ivy.data.model.TransactionId
@@ -24,7 +23,6 @@ import javax.inject.Inject
 
 class PlannedPaymentsLogic @Inject constructor(
     private val plannedPaymentRuleDao: PlannedPaymentRuleDao,
-    private val transactionDao: TransactionDao,
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
     private val exchangeRatesLogic: ExchangeRatesLogic,
     private val accountDao: AccountDao,
@@ -35,28 +33,6 @@ class PlannedPaymentsLogic @Inject constructor(
 ) {
     companion object {
         private const val AVG_DAYS_IN_MONTH = 30.436875
-    }
-
-    suspend fun plannedPaymentsAmountFor(range: com.ivy.data.model.legacy.FromToTimeRange): Double {
-        val baseCurrency = getBaseCurrencyCode()
-        val accounts = accountDao.findAll()
-
-        return transactionDao.findAllDueToBetween(
-            startDate = range.from(),
-            endDate = range.to()
-        ).sumOf {
-            val amount = exchangeRatesLogic.amountBaseCurrency(
-                transaction = it.toLegacyDomain(),
-                baseCurrency = baseCurrency,
-                accounts = accounts.map { it.toLegacyDomain() }
-            )
-
-            when (it.type) {
-                TransactionType.INCOME -> amount
-                TransactionType.EXPENSE -> -amount
-                TransactionType.TRANSFER -> 0.0
-            }
-        }
     }
 
     suspend fun oneTime(): List<PlannedPaymentRule> {

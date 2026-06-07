@@ -15,9 +15,8 @@ import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.legacy.ui.state.PeriodState
 import com.ivy.ui.ComposeViewModel
 import com.ivy.legacy.ui.model.period.TimePeriod
-import com.ivy.base.coroutines.ioThread
+import com.ivy.domain.usecase.planned.CalculatePlannedPaymentsAmountForRangeUseCase
 import com.ivy.domain.usecase.wallet.CalculateWalletBalanceUseCase
-import com.ivy.legacy.domain.logic.PlannedPaymentsLogic
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.time.ZoneOffset
@@ -26,7 +25,7 @@ import javax.inject.Inject
 @Stable
 @HiltViewModel
 class BalanceViewModel @Inject constructor(
-    private val plannedPaymentsLogic: PlannedPaymentsLogic,
+    private val calculatePlannedPaymentsAmountForRangeUseCase: CalculatePlannedPaymentsAmountForRangeUseCase,
     private val periodState: PeriodState,
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
     private val calculateWalletBalanceUseCase: CalculateWalletBalanceUseCase,
@@ -75,15 +74,12 @@ class BalanceViewModel @Inject constructor(
                 baseCurrency = baseCurrencyCode
             ).toDouble()
 
-            plannedPaymentsAmount = ioThread {
-                plannedPaymentsLogic.plannedPaymentsAmountFor(
-                    timePeriod.toRange(periodState.startDayOfMonth, timeConverter, timeProvider)
-                    // + positive if Income > Expenses else - negative
-                ) * if (numberOfMonthsAhead >= 0) {
-                    numberOfMonthsAhead.toDouble()
-                } else {
-                    1.0
-                }
+            plannedPaymentsAmount = calculatePlannedPaymentsAmountForRangeUseCase(
+                timePeriod.toRange(periodState.startDayOfMonth, timeConverter, timeProvider)
+            ) * if (numberOfMonthsAhead >= 0) {
+                numberOfMonthsAhead.toDouble()
+            } else {
+                1.0
             }
             balanceAfterPlannedPayments =
                 currentBalance + plannedPaymentsAmount
