@@ -733,6 +733,7 @@
 - `IconAsset.exactName` 已从旧标签 `IconId` 改为 `IconAsset`，只影响校验错误消息前缀，模型校验规则不变。
 - 通用身份接口 `UniqueId/Identifiable` 已从旧 `com.ivy.data.model.sync` 包迁到 `com.ivy.data.model.identity`；它们只表达本地模型身份约束，不再使用云同步语义包名。
 - 主源码中剩余的泛化 `TODO/FIXME/Not implemented` 标记已清空：CSV 导入结果页、交易 tags、金额短格式和 legacy 交易默认值都改成明确的边界说明，不再以待办形式制造认知负担。
+- 报表页计算中的 `temp*` 局部变量已改为 `selectedAccounts/historyTransactions/displayIncome/displayExpenses/displayBalance` 等真实含义；交易页中“临时账户转账分类”的注释也改为 synthetic category 说明。
 - 预算读写已抽成 `BudgetStore` 端口；预算创建、更新、删除、排序、列表读取和重置钱包流程不再直接注入 Room 的 `BudgetDao/WriteBudgetDao`，旧 `BudgetExt` 实体 mapper 已删除。
 - 计划付款规则读写已抽成 `PlannedPaymentRuleStore` 端口；首页统计、账户删除、计划付款保存/删除/读取、付或跳过计划付款，以及重置钱包流程不再直接注入 `PlannedPaymentRuleDao/WritePlannedPaymentRuleDao`，旧 `PlannedPaymentRuleExt` 实体 mapper 已删除。
 - 借贷和借贷记录读写已抽成 `LoanStore/LoanRecordStore` 端口；借贷 CRUD、借贷记录 CRUD、借贷交易同步和重置钱包流程不再直接注入 `LoanDao/LoanRecordDao/WriteLoanDao/WriteLoanRecordDao`，旧 `LoanExt/LoanRecordExt` 实体 mapper 已删除。

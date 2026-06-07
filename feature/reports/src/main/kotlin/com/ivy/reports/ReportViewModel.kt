@@ -258,41 +258,41 @@ class ReportViewModel @Inject constructor(
             }
 
             if (!reportFilter.validate()) return@withContext
-            val tempAccounts = reportFilter.accounts
+            val selectedAccounts = reportFilter.accounts
             val baseCurrency = baseCurrency
             loading = true
 
             val transactionsList = filterTransactions(
                 baseCurrency = baseCurrency,
-                accounts = tempAccounts,
+                accounts = selectedAccounts,
                 filter = reportFilter
             )
 
-            val tempHistory = transactionsList
+            val historyTransactions = transactionsList
                 .sortedByDescending { it.time }
 
             val historyWithDateDividers = scope.async {
                 buildTransactionHistoryItemsUseCase(
                     baseCurrency = baseCurrency,
-                    transactions = tempHistory
+                    transactions = historyTransactions
                 )
             }
 
             historyIncomeExpense = calculateTransactionsIncomeExpenseUseCase(
-                transactions = tempHistory,
-                accounts = tempAccounts,
+                transactions = historyTransactions,
+                accounts = selectedAccounts,
                 baseCurrency = baseCurrency
             )
 
-            val tempIncome = historyIncomeExpense.income.toDouble() +
+            val displayIncome = historyIncomeExpense.income.toDouble() +
                     if (treatTransfersAsIncExp) historyIncomeExpense.transferIncome.toDouble() else 0.0
 
-            val tempExpenses = historyIncomeExpense.expense.toDouble() +
+            val displayExpenses = historyIncomeExpense.expense.toDouble() +
                     if (treatTransfersAsIncExp) historyIncomeExpense.transferExpense.toDouble() else 0.0
 
-            val tempBalance = calculateBalance(historyIncomeExpense).toDouble()
+            val displayBalance = calculateBalance(historyIncomeExpense).toDouble()
 
-            val accountFilterIdList = scope.async { reportFilter.accounts.map { it.id } }
+            val accountFilterIdList = scope.async { selectedAccounts.map { it.id } }
 
             val timeNowUTC = utcNow()
 
@@ -307,7 +307,7 @@ class ReportViewModel @Inject constructor(
 
             val upcomingIncomeExpense = calculateTransactionsIncomeExpenseUseCase(
                 transactions = upcomingTransactionsList,
-                accounts = tempAccounts,
+                accounts = selectedAccounts,
                 baseCurrency = baseCurrency
             )
             // Overdue
@@ -319,24 +319,24 @@ class ReportViewModel @Inject constructor(
             }.toImmutableList()
             val overdueIncomeExpense = calculateTransactionsIncomeExpenseUseCase(
                 transactions = overdue,
-                accounts = tempAccounts,
+                accounts = selectedAccounts,
                 baseCurrency = baseCurrency
             )
 
             setReportValues(
-                income = tempIncome,
-                expense = tempExpenses,
+                income = displayIncome,
+                expense = displayExpenses,
                 upcomingIncomeExpenseTransferPair = upcomingIncomeExpense,
                 overDueIncomeExpenseTransferPair = overdueIncomeExpense,
                 history = historyWithDateDividers.await().toImmutableList(),
                 upcomingTransactions = mapTransactionsToLegacyUseCase(upcomingTransactionsList)
                     .toImmutableList(),
                 overdueTransactions = mapTransactionsToLegacyUseCase(overdue).toImmutableList(),
-                accounts = tempAccounts.toImmutableList(),
+                accounts = selectedAccounts.toImmutableList(),
                 reportFilter = reportFilter,
                 accountIdFilters = accountFilterIdList.await().toImmutableList(),
                 transactions = mapTransactionsToLegacyUseCase(transactionsList).toImmutableList(),
-                balanceValue = tempBalance
+                balanceValue = displayBalance
             )
 
             loading = false

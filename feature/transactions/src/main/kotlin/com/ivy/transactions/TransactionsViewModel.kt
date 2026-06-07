@@ -713,8 +713,8 @@ class TransactionsViewModel @Inject constructor(
                 screen.categoryId != null && screen.transactions.isEmpty() -> {
                     initForCategory(screen.categoryId!!, screen.accountIdFilterList)
                 }
-                // unspecifiedCategory==false is explicitly checked to accommodate for a temp
-                // AccountTransfers Category during Reports Screen
+                // Reports use a synthetic account-transfers category; keep it separate from
+                // the real unspecified-category branch.
                 screen.categoryId != null && screen.transactions.isNotEmpty() &&
                         screen.unspecifiedCategory == false -> {
                     initForCategoryWithTransactions(
