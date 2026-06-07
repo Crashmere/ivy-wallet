@@ -1,138 +1,25 @@
 package com.ivy.legacy.domain.logic
 
 import com.ivy.base.model.legacy.Transaction
-import com.ivy.base.model.TransactionType
 import com.ivy.base.time.TimeProvider
-import com.ivy.data.db.dao.read.AccountDao
 import com.ivy.data.db.dao.read.PlannedPaymentRuleDao
 import com.ivy.data.db.dao.write.WritePlannedPaymentRuleDao
-import com.ivy.data.model.IntervalType
 import com.ivy.data.model.TransactionId
 import com.ivy.data.repository.TransactionRepository
 import com.ivy.data.repository.mapper.TransactionMapper
-import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
-import com.ivy.data.model.legacy.Account
-import com.ivy.data.model.legacy.PlannedPaymentRule
 import com.ivy.legacy.domain.mapper.toDomain
-import com.ivy.legacy.domain.mapper.toLegacyDomain
 import com.ivy.base.coroutines.ioThread
-import com.ivy.legacy.domain.logic.currency.ExchangeRatesLogic
-import com.ivy.legacy.domain.logic.currency.sumByDoublePlannedInBaseCurrency
 import com.ivy.legacy.domain.pure.transaction.settleNow
 import javax.inject.Inject
 
 class PlannedPaymentsLogic @Inject constructor(
     private val plannedPaymentRuleDao: PlannedPaymentRuleDao,
-    private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
-    private val exchangeRatesLogic: ExchangeRatesLogic,
-    private val accountDao: AccountDao,
     private val transactionMapper: TransactionMapper,
     private val plannedPaymentRuleWriter: WritePlannedPaymentRuleDao,
     private val transactionRepository: TransactionRepository,
     private val timeProvider: TimeProvider,
 ) {
-    companion object {
-        private const val AVG_DAYS_IN_MONTH = 30.436875
-    }
-
-    suspend fun oneTime(): List<PlannedPaymentRule> {
-        return plannedPaymentRuleDao.findAllByOneTime(oneTime = true).map { it.toLegacyDomain() }
-    }
-
-    suspend fun oneTimeIncome(): Double {
-        return oneTime()
-            .filter { it.type == TransactionType.INCOME }
-            .sumByDoublePlannedInBaseCurrency(
-                exchangeRatesLogic = exchangeRatesLogic,
-                baseCurrency = getBaseCurrencyCode(),
-                accountDao = accountDao
-            )
-    }
-
-    suspend fun oneTimeExpenses(): Double {
-        return oneTime()
-            .filter { it.type == TransactionType.EXPENSE }
-            .sumByDoublePlannedInBaseCurrency(
-                exchangeRatesLogic = exchangeRatesLogic,
-                baseCurrency = getBaseCurrencyCode(),
-                accountDao = accountDao
-            )
-    }
-
-    suspend fun recurring(): List<PlannedPaymentRule> =
-        plannedPaymentRuleDao.findAllByOneTime(oneTime = false).map { it.toLegacyDomain() }
-
-    suspend fun recurringIncome(): Double {
-        return recurring()
-            .filter { it.type == TransactionType.INCOME }
-            .sumByDoubleRecurringForMonthInBaseCurrency()
-    }
-
-    suspend fun recurringExpenses(): Double {
-        return recurring()
-            .filter { it.type == TransactionType.EXPENSE }
-            .sumByDoubleRecurringForMonthInBaseCurrency()
-    }
-
-    private suspend fun Iterable<PlannedPaymentRule>.sumByDoubleRecurringForMonthInBaseCurrency(): Double {
-        val accounts = accountDao.findAll()
-        val baseCurrency = getBaseCurrencyCode()
-
-        return sumOf {
-            amountForMonthInBaseCurrency(
-                plannedPayment = it,
-                baseCurrency = baseCurrency,
-                accounts = accounts.map { it.toLegacyDomain() }
-            )
-        }
-    }
-
-    private suspend fun amountForMonthInBaseCurrency(
-        plannedPayment: PlannedPaymentRule,
-        baseCurrency: String,
-        accounts: List<Account>
-    ): Double {
-        val amountBaseCurrency = exchangeRatesLogic.amountBaseCurrency(
-            plannedPayment = plannedPayment,
-            baseCurrency = baseCurrency,
-            accounts = accounts,
-        )
-
-        if (plannedPayment.oneTime) {
-            return amountBaseCurrency
-        }
-
-        val intervalN = plannedPayment.intervalN ?: return amountBaseCurrency
-        if (intervalN <= 0) {
-            return amountBaseCurrency
-        }
-
-        return when (plannedPayment.intervalType) {
-            IntervalType.DAY -> {
-                val monthDiff = 1 / AVG_DAYS_IN_MONTH // 0.03%
-
-                (amountBaseCurrency / monthDiff) / intervalN
-            }
-
-            IntervalType.WEEK -> {
-                val monthDiff = 7 / AVG_DAYS_IN_MONTH // 0.22%
-
-                (amountBaseCurrency / monthDiff) / intervalN
-            }
-
-            IntervalType.MONTH -> {
-                amountBaseCurrency / intervalN
-            }
-
-            IntervalType.YEAR -> {
-                amountBaseCurrency / (12 * intervalN)
-            }
-
-            null -> amountBaseCurrency
-        }
-    }
-
-        suspend fun payOrGetLegacy(
+    suspend fun payOrGetLegacy(
         transaction: Transaction,
         skipTransaction: Boolean = false,
         onUpdateUI: suspend (paidTransaction: Transaction) -> Unit
@@ -244,7 +131,7 @@ class PlannedPaymentsLogic @Inject constructor(
         onUpdateUI(paidTransactions)
     }
 
-        suspend fun payOrGetLegacy(
+    suspend fun payOrGetLegacy(
         transactions: List<Transaction>,
         skipTransaction: Boolean = false,
         onUpdateUI: suspend (paidTransactions: List<Transaction>) -> Unit

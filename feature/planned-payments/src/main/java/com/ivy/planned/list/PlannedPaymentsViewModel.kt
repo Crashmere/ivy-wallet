@@ -14,9 +14,8 @@ import com.ivy.domain.usecase.category.GetCategoriesUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.data.model.legacy.Account
 import com.ivy.data.model.legacy.PlannedPaymentRule
-import com.ivy.base.coroutines.ioThread
 import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
-import com.ivy.legacy.domain.logic.PlannedPaymentsLogic
+import com.ivy.domain.usecase.planned.GetPlannedPaymentsOverviewUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
@@ -28,7 +27,7 @@ import javax.inject.Inject
 @HiltViewModel
 class PlannedPaymentsViewModel @Inject constructor(
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
-    private val plannedPaymentsLogic: PlannedPaymentsLogic,
+    private val getPlannedPaymentsOverviewUseCase: GetPlannedPaymentsOverviewUseCase,
     private val getCategoriesUseCase: GetCategoriesUseCase,
     private val getLegacyAccountsUseCase: GetLegacyAccountsUseCase
 ) : ComposeViewModel<PlannedPaymentsScreenState, PlannedPaymentsScreenEvent>() {
@@ -141,15 +140,13 @@ class PlannedPaymentsViewModel @Inject constructor(
             categories = getCategoriesUseCase().toImmutableList()
             accounts = getLegacyAccountsUseCase()
 
-            oneTimePlannedPayment =
-                ioThread { plannedPaymentsLogic.oneTime() }.toImmutableList()
-            oneTimeIncome = ioThread { plannedPaymentsLogic.oneTimeIncome() }
-            oneTimeExpenses = ioThread { plannedPaymentsLogic.oneTimeExpenses() }
-
-            recurringPlannedPayment =
-                ioThread { plannedPaymentsLogic.recurring() }.toImmutableList()
-            recurringIncome = ioThread { plannedPaymentsLogic.recurringIncome() }
-            recurringExpenses = ioThread { plannedPaymentsLogic.recurringExpenses() }
+            val overview = getPlannedPaymentsOverviewUseCase()
+            oneTimePlannedPayment = overview.oneTime.toImmutableList()
+            oneTimeIncome = overview.oneTimeIncome
+            oneTimeExpenses = overview.oneTimeExpenses
+            recurringPlannedPayment = overview.recurring.toImmutableList()
+            recurringIncome = overview.recurringIncome
+            recurringExpenses = overview.recurringExpenses
         }
     }
 }
