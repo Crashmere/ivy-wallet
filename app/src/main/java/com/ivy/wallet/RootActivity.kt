@@ -31,9 +31,8 @@ import com.ivy.base.legacy.Theme
 import com.ivy.base.time.TimeConverter
 import com.ivy.base.time.TimeProvider
 import com.ivy.design.ThemeState
-import com.ivy.design.api.IvyDesign
 import com.ivy.design.api.IvyUI
-import com.ivy.design.api.systems.IvyWalletDesign
+import com.ivy.design.api.systems.DefaultIvyDesign
 import com.ivy.design.system.IvyMaterial3Theme
 import com.ivy.domain.RootScreen
 import com.ivy.legacy.LocalPeriodState
@@ -110,7 +109,7 @@ class RootActivity : AppCompatActivity(), RootScreen {
                     }
                     true -> {
                         IvyUI(
-                            design = appDesign(),
+                            design = DefaultIvyDesign,
                             timeConverter = timeConverter,
                             timeProvider = timeProvider,
                             timeFormatter = timeFormatter,
@@ -133,7 +132,7 @@ class RootActivity : AppCompatActivity(), RootScreen {
                     false -> {
                         NavigationRoot(navigation = navigation) { screen ->
                             IvyUI(
-                                design = appDesign(),
+                                design = DefaultIvyDesign,
                                 includeSurface = screen?.isLegacy ?: true,
                                 timeConverter = timeConverter,
                                 timeProvider = timeProvider,
@@ -399,5 +398,3 @@ class RootActivity : AppCompatActivity(), RootScreen {
         get() = BuildConfig.VERSION_CODE
 
 }
-
-private fun appDesign(): IvyDesign = object : IvyWalletDesign() {}

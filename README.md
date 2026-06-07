@@ -311,7 +311,7 @@
    - `Colors.kt`
    - `IvyColors.kt`
    - `IvyTheme.kt`
-   - `IvyWalletDesign.kt`
+   - `DefaultIvyDesign.kt`（已由旧 `IvyWalletDesign` 抽象类收敛为单例）
    - 目标：迁入 `shared:ui:core`，逐步合并到 Material3 theme。
 2. 颜色选择器常量
    - `IVY_COLOR_PICKER_COLORS_*`
@@ -386,7 +386,7 @@
 - 已把旧 creator、计划付款逻辑、标题建议、账户/分类统计逻辑和借贷交易联动逻辑迁入 `shared:domain`；其中 `AccountCreator`、`BudgetCreator` 也统一改到 `com.ivy.wallet.domain.deprecated.logic` 包名。
 - 已把仍依赖 Android 字符串资源的 `PreloadDataLogic` 从 `temp:legacy-code` 移到 app 默认数据初始化边界，避免 `temp` 继续承载旧业务逻辑。
 - 已把旧全局上下文入口 `IvyWalletCtx`、`ivyWalletCtx()` 和 `rootScreen()` 迁入 `shared:ui:legacy`，随后继续拆分；目前仅保留仍有调用方的 `rootScreen()`。
-- 已继续缩小 `shared:ui:legacy` 的旧全局 API：删除无调用方的 `rootView()`、时间选择器桥接、Google 登录入口和固定为 true 的会员状态；旧设计入口 `appDesign(...)` 只在 `RootActivity` 内部保留为私有兼容函数。
+- 已继续缩小 `shared:ui:legacy` 的旧全局 API：删除无调用方的 `rootView()`、时间选择器桥接、Google 登录入口和固定为 true 的会员状态；RootActivity 直接使用 `DefaultIvyDesign` 作为旧设计兼容入口。
 - 已删除 `IvyWalletCtx` 中无实际写入路径的账户/分类缓存、列表滚动状态缓存和未被调用的 `reset()`；相关页面改为只使用已有的 `rememberScrollPositionListState(key = ...)` 保存滚动位置。
 - 已把备份/恢复/CSV 导入导出使用的文件创建和文件打开能力从 `IvyWalletCtx` 拆到 `shared:ui:core` 的 `FilePicker` 窄接口，由 app 侧 `ActivityResultFilePicker` 负责注册 Android Activity Result；同时删除没有读取方的 `dataBackupCompleted` 旧状态。
 - 已把旧日期选择器桥接从 `IvyWalletCtx` 拆到 `shared:ui:core` 的 `DatePicker` 窄接口，并通过 `LocalDatePicker` 暂时提供给旧 Compose 页面；app 侧仍使用 MaterialDatePicker，只是注册位置改到 `ActivityDatePicker`。
@@ -675,6 +675,6 @@ shared:ui:core
 
 下一步建议执行：
 
-1. 继续替换旧设计兼容 API：下一步优先处理 `IvyWalletDesign`、`UI.colors` 和旧 building block。
+1. 继续替换旧设计兼容 API：下一步优先处理 `UI.colors` 和旧 building block。
 2. 收敛 `shared:ui:legacy` 中仍以 `com.ivy.wallet.ui.theme.*` 命名的旧组件，把通用组件迁到更清晰的 ui core 包名，功能专用组件再下沉到对应 feature。
 3. 每完成一组跨模块边界调整后运行 `:app:assembleDemo`，确认构建没有被迁移影响；涉及数据库、备份恢复或导入导出时再补充对应测试。
