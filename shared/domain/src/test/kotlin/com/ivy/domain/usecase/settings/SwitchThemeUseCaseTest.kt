@@ -35,12 +35,12 @@ class SwitchThemeUseCaseTest {
 
         EnsureSettingsInitializedUseCase(darkStore)(
             systemDarkMode = true,
-            currencyCode = "USD",
+            baseCurrencyCode = "USD",
             bufferAmount = 1000.0,
         )
         EnsureSettingsInitializedUseCase(lightStore)(
             systemDarkMode = false,
-            currencyCode = "USD",
+            baseCurrencyCode = "USD",
             bufferAmount = 1000.0,
         )
 
@@ -58,7 +58,7 @@ class SwitchThemeUseCaseTest {
 
         override suspend fun ensureInitialized(
             defaultTheme: Theme,
-            currencyCode: String,
+            baseCurrencyCode: String,
             bufferAmount: Double,
         ) {
             initializedTheme = defaultTheme

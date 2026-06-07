@@ -835,6 +835,7 @@
 - `RoomTransactionStoreTest` 的被测对象也从 `repository/newRepository` 改为 `store/newStore`，避免测试代码继续传播旧仓库命名。
 - data-core 里的备份实现已从 `BackupDataUseCase` 改名为 `DefaultBackupStore`，并继续通过 `BackupStore` 暴露给 domain；ZIP/JSON 备份格式和导入导出行为不变。
 - `TransactionStore` 删除计划付款未来交易的方法已从过去式 `deletedByRecurringRuleIdAndNoDateTime` 改为命令式 `deleteByRecurringRuleIdAndNoDateTime`；DAO SQL 和调用语义不变。
+- 设置初始化链路中的基础币种参数已从泛化 `currencyCode` 改为 `baseCurrencyCode`；这一步不改 `settings.currency` 数据库列，只让初始化边界语义更明确。
 
 建议顺序：
 

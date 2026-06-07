@@ -9,12 +9,12 @@ internal object LocalSettingsDefaults {
 
     fun entity(
         theme: Theme = Theme.AUTO,
-        currencyCode: String = FALLBACK_CURRENCY_CODE,
+        baseCurrencyCode: String = FALLBACK_CURRENCY_CODE,
         bufferAmount: Double = 0.0,
         id: UUID = UUID.randomUUID(),
     ): SettingsEntity = SettingsEntity(
         theme = theme,
-        currency = currencyCode,
+        currency = baseCurrencyCode,
         bufferAmount = bufferAmount,
         id = id,
     )

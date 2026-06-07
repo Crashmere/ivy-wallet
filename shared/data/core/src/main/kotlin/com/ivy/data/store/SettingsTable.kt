@@ -21,7 +21,7 @@ class SettingsTable @Inject constructor(
 
     suspend fun ensureInitialized(
         defaultTheme: Theme,
-        currencyCode: String,
+        baseCurrencyCode: String,
         bufferAmount: Double,
     ) {
         withContext(Dispatchers.IO) {
@@ -29,7 +29,7 @@ class SettingsTable @Inject constructor(
                 writeSettingsDao.save(
                     LocalSettingsDefaults.entity(
                         theme = defaultTheme,
-                        currencyCode = currencyCode,
+                        baseCurrencyCode = baseCurrencyCode,
                         bufferAmount = bufferAmount,
                     )
                 )

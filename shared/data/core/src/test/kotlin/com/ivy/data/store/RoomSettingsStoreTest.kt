@@ -26,7 +26,7 @@ class RoomSettingsStoreTest {
     fun `ensure initialized stores provided defaults`() = runTest {
         settingsStore.ensureInitialized(
             defaultTheme = Theme.LIGHT,
-            currencyCode = "EUR",
+            baseCurrencyCode = "EUR",
             bufferAmount = 3.5,
         )
 

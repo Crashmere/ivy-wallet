@@ -28,13 +28,13 @@ class SettingsTableTest {
     fun `ensure initialized creates the settings row once`() = runTest {
         table.ensureInitialized(
             defaultTheme = Theme.DARK,
-            currencyCode = "EUR",
+            baseCurrencyCode = "EUR",
             bufferAmount = 12.5,
         )
 
         table.ensureInitialized(
             defaultTheme = Theme.LIGHT,
-            currencyCode = "GBP",
+            baseCurrencyCode = "GBP",
             bufferAmount = 99.0,
         )
 

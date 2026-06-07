@@ -8,7 +8,7 @@ interface SettingsStore {
 
     suspend fun ensureInitialized(
         defaultTheme: Theme,
-        currencyCode: String,
+        baseCurrencyCode: String,
         bufferAmount: Double,
     )
 

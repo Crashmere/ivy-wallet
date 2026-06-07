@@ -24,7 +24,7 @@ class InitialDataSetup @Inject constructor(
 
             ensureSettingsInitialized(
                 systemDarkMode = systemDarkMode,
-                currencyCode = defaultCurrency.code,
+                baseCurrencyCode = defaultCurrency.code,
                 bufferAmount = 1000.0,
             )
 

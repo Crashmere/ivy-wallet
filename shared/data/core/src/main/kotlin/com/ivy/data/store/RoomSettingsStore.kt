@@ -15,12 +15,12 @@ class RoomSettingsStore @Inject constructor(
 
     override suspend fun ensureInitialized(
         defaultTheme: Theme,
-        currencyCode: String,
+        baseCurrencyCode: String,
         bufferAmount: Double,
     ) {
         settingsTable.ensureInitialized(
             defaultTheme = defaultTheme,
-            currencyCode = currencyCode,
+            baseCurrencyCode = baseCurrencyCode,
             bufferAmount = bufferAmount,
         )
     }

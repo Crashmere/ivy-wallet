@@ -9,12 +9,12 @@ class EnsureSettingsInitializedUseCase @Inject constructor(
 ) {
     suspend operator fun invoke(
         systemDarkMode: Boolean,
-        currencyCode: String,
+        baseCurrencyCode: String,
         bufferAmount: Double,
     ) {
         settingsStore.ensureInitialized(
             defaultTheme = systemDefaultTheme(systemDarkMode),
-            currencyCode = currencyCode,
+            baseCurrencyCode = baseCurrencyCode,
             bufferAmount = bufferAmount,
         )
     }
