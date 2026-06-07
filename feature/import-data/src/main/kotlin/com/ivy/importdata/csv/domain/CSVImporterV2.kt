@@ -1,7 +1,6 @@
 package com.ivy.importdata.csv.domain
 
 import androidx.compose.ui.graphics.toArgb
-import arrow.core.raise.either
 import com.ivy.data.model.legacy.Transaction
 import com.ivy.data.model.TransactionType
 import com.ivy.base.time.TimeConverter
@@ -321,20 +320,18 @@ class CSVImporterV2 @Inject constructor(
             IVY_COLOR_PICKER_COLORS_FREE.first()
         }.toArgb()
 
-        val newCategory: Category? = either {
-            Category(
-                id = CategoryId(UUID.randomUUID()),
-                name = NotBlankTrimmedString.from(categoryNameString).bind(),
-                color = ColorInt(colorArgb),
-                icon = icon?.let(IconAsset::from)?.getOrNull(),
-                orderNum = orderNum ?: categories.maxOfOrNull { it.orderNum }.nextOrderNum(),
-            )
-        }.getOrNull()
+        val categoryName = NotBlankTrimmedString.from(categoryNameString).getOrNull()
+            ?: return null
+        val newCategory = Category(
+            id = CategoryId(UUID.randomUUID()),
+            name = categoryName,
+            color = ColorInt(colorArgb),
+            icon = icon?.let(IconAsset::from)?.getOrNull(),
+            orderNum = orderNum ?: categories.maxOfOrNull { it.orderNum }.nextOrderNum(),
+        )
 
-        if (newCategory != null) {
-            saveCategoryUseCase(newCategory)
-            categories = getCategoriesUseCase()
-        }
+        saveCategoryUseCase(newCategory)
+        categories = getCategoriesUseCase()
 
         return newCategory
     }

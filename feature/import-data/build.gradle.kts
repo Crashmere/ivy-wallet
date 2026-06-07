@@ -15,6 +15,5 @@ dependencies {
     implementation(projects.shared.ui.legacy)
     implementation(projects.shared.ui.navigation)
 
-    implementation(libs.bundles.arrow)
     implementation(libs.bundles.opencsv)
 }
