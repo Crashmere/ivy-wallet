@@ -9,15 +9,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.ivy.ui.time.LocalTimeFormatter
-import com.ivy.base.legacy.convertLocalToUTC
-import com.ivy.base.legacy.convertUTCToLocal
 import com.ivy.legacy.ui.formatNicely
-import com.ivy.base.legacy.timeNowUTC
 import com.ivy.ui.R
 import com.ivy.legacy.ui.component.IvyOutlinedButton
-import java.time.LocalDate
 import java.time.LocalDateTime
-import java.time.LocalTime
 
 @Composable
 fun DateTimeRow(
@@ -52,25 +47,4 @@ fun DateTimeRow(
 
         Spacer(Modifier.width(24.dp))
     }
-}
-
-// The timepicker returns time in UTC, but the date picker returns date in LocalTimeZone
-// hence use this method to get both date & time in UTC
-@Deprecated("Rework this to use the TimeConverter API")
-fun getTrueDate(
-    date: LocalDate,
-    time: LocalTime,
-    convert: Boolean = true
-): LocalDateTime {
-    val timeLocal = if (convert) time.convertUTCToLocal() else time
-
-    return timeNowUTC()
-        .withYear(date.year)
-        .withMonth(date.monthValue)
-        .withDayOfMonth(date.dayOfMonth)
-        .withHour(timeLocal.hour)
-        .withMinute(timeLocal.minute)
-        .withSecond(0)
-        .withNano(0)
-        .convertLocalToUTC()
 }

@@ -44,10 +44,8 @@ import com.ivy.legacy.ui.theme.system.style
 import com.ivy.legacy.ui.model.AppBaseData
 import com.ivy.legacy.domain.model.Account
 import com.ivy.base.legacy.capitalizeLocal
-import com.ivy.base.legacy.dateNowUTC
 import com.ivy.data.model.currency.format
 import com.ivy.base.legacy.isNotNullOrBlank
-import com.ivy.base.legacy.timeNowUTC
 import com.ivy.navigation.Navigation
 import com.ivy.navigation.TransactionsScreen
 import com.ivy.navigation.navigation
@@ -560,6 +558,10 @@ fun TypeAmountCurrency(
     amount: Double,
     modifier: Modifier = Modifier
 ) {
+    val timeProvider = LocalTimeProvider.current
+    val now = with(LocalTimeConverter.current) { timeProvider.utcNow().toLocalDateTime() }
+    val todayStart = timeProvider.localDateNow().atStartOfDay()
+
     Row(
         modifier = modifier.testTag("type_amount_currency"),
         verticalAlignment = Alignment.CenterVertically
@@ -578,7 +580,7 @@ fun TypeAmountCurrency(
 
             TransactionType.EXPENSE -> {
                 when {
-                    dueDate != null && dueDate.isAfter(timeNowUTC()) -> {
+                    dueDate != null && dueDate.isAfter(now) -> {
                         // Upcoming Expense
                         AmountTypeStyle(
                             icon = R.drawable.ic_expense,
@@ -588,7 +590,7 @@ fun TypeAmountCurrency(
                         )
                     }
 
-                    dueDate != null && dueDate.isBefore(dateNowUTC().atStartOfDay()) -> {
+                    dueDate != null && dueDate.isBefore(todayStart) -> {
                         // Overdue Expense
                         AmountTypeStyle(
                             icon = R.drawable.ic_overdue,

@@ -14,7 +14,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.ivy.base.legacy.dateNowLocal
 import com.ivy.data.model.currency.format
 import com.ivy.legacy.ui.theme.system.Gray
 import com.ivy.legacy.ui.theme.system.Green
@@ -22,6 +21,7 @@ import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
 import com.ivy.ui.R
 import com.ivy.legacy.ui.formatLocal
+import com.ivy.ui.time.LocalTimeProvider
 import java.time.LocalDate
 
 @Deprecated("Old design system. Use `:ivy-design` and Material3")
@@ -42,7 +42,7 @@ fun HistoryDateDivider(
     ) {
         Spacer(Modifier.width(24.dp))
 
-        val today = dateNowLocal()
+        val today = LocalTimeProvider.current.localDateNow()
 
         Column {
             Text(

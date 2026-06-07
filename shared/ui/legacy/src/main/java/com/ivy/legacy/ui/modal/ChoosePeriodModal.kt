@@ -41,7 +41,6 @@ import com.ivy.legacy.ui.model.period.Month.Companion.monthsList
 import com.ivy.legacy.ui.model.period.TimePeriod
 import com.ivy.legacy.ui.model.period.displayName
 import com.ivy.legacy.ui.addKeyboardListener
-import com.ivy.base.legacy.dateNowUTC
 import com.ivy.legacy.ui.formatDateOnlyWithYear
 import com.ivy.legacy.ui.onScreenStart
 import com.ivy.ui.R
@@ -90,6 +89,7 @@ fun BoxWithConstraintsScope.ChoosePeriodModal(
     }
 
     val modalScrollState = rememberScrollState()
+    val currentDate = LocalTimeProvider.current.localDateNow()
 
     IvyModal(
         id = modal?.id,
@@ -112,7 +112,7 @@ fun BoxWithConstraintsScope.ChoosePeriodModal(
 
         ChooseMonth(
             selectedMonthYear = period?.month?.let {
-                MonthYear(month = it, year = period?.year ?: dateNowUTC().year)
+                MonthYear(month = it, year = period?.year ?: currentDate.year)
             }
         ) {
             period = TimePeriod(
@@ -183,7 +183,8 @@ private fun ColumnScope.ChooseMonth(
 
     Spacer(Modifier.height(24.dp))
 
-    val currentYear = dateNowUTC().year
+    val currentDate = LocalTimeProvider.current.localDateNow()
+    val currentYear = currentDate.year
     val months = remember(currentYear) {
         monthsList()
             .map {
@@ -210,7 +211,7 @@ private fun ColumnScope.ChooseMonth(
             }
         } else {
             val currentMonthYear = MonthYear(
-                month = fromMonthValue(dateNowUTC().monthValue),
+                month = fromMonthValue(currentDate.monthValue),
                 year = currentYear
             )
             val currentMonthIndex = months.indexOf(currentMonthYear)

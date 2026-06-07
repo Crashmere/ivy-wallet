@@ -3,8 +3,8 @@ package com.ivy.legacy.ui
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.ivy.base.legacy.convertUTCtoLocal
-import com.ivy.base.legacy.dateNowUTC
 import com.ivy.ui.R
+import com.ivy.ui.time.LocalTimeProvider
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.ZoneId
@@ -18,7 +18,7 @@ fun LocalDateTime.formatNicely(
     noWeekDay: Boolean = false,
     zone: ZoneId = ZoneOffset.systemDefault()
 ): String {
-    val today = dateNowUTC()
+    val today = LocalTimeProvider.current.localDateNow()
     val isThisYear = today.year == this.year
 
     val patternNoWeekDay = "dd MMM"
@@ -85,7 +85,7 @@ fun LocalDate.formatNicely(
 
 @Composable
 fun LocalDate.closeDay(): String? {
-    val today = dateNowUTC()
+    val today = LocalTimeProvider.current.localDateNow()
     return when (this) {
         today -> {
             stringResource(R.string.today)
