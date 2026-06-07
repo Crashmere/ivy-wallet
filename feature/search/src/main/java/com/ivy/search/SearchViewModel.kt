@@ -15,7 +15,6 @@ import com.ivy.domain.usecase.category.GetCategoriesUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.data.model.legacy.Account
 import com.ivy.data.model.currency.getDefaultFIATCurrency
-import com.ivy.base.coroutines.ioThread
 import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
 import com.ivy.domain.usecase.transaction.BuildTransactionHistoryItemsUseCase
 import com.ivy.domain.usecase.transaction.GetTransactionsUseCase
@@ -24,7 +23,9 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @Stable
@@ -80,7 +81,7 @@ class SearchViewModel @Inject constructor(
         val normalizedQuery = query.lowercase().trim()
 
         viewModelScope.launch {
-            val queryResult = ioThread {
+            val queryResult = withContext(Dispatchers.IO) {
                 val filteredTransactions = getTransactionsUseCase()
                     .filter { transaction ->
                         transaction.title.matchesQuery(normalizedQuery) ||

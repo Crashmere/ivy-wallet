@@ -2,7 +2,6 @@ package com.ivy.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ivy.base.coroutines.ioThread
 import com.ivy.domain.usecase.account.CreateAccountWithBalanceUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyUseCase
 import com.ivy.domain.usecase.exchange.SyncExchangeRatesUseCase
@@ -15,7 +14,9 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -46,7 +47,7 @@ class MainViewModel @Inject constructor(
             val baseCurrency = getBaseCurrency()
             _currency.value = baseCurrency.code
 
-            ioThread {
+            withContext(Dispatchers.IO) {
                 // Sync exchange rates
                 syncExchangeRatesUseCase.sync(baseCurrency)
             }
