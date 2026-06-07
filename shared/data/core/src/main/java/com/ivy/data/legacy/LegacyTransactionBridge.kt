@@ -1,4 +1,4 @@
-package com.ivy.data.temp.migration
+package com.ivy.data.legacy
 
 import com.ivy.base.model.TransactionType
 import com.ivy.data.model.Expense

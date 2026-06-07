@@ -29,8 +29,8 @@ import com.ivy.data.repository.CategoryRepository
 import com.ivy.data.repository.TagRepository
 import com.ivy.data.repository.TransactionRepository
 import com.ivy.data.repository.mapper.TransactionMapper
-import com.ivy.data.temp.migration.getTransactionType
-import com.ivy.data.temp.migration.getValue
+import com.ivy.data.legacy.getTransactionType
+import com.ivy.data.legacy.getValue
 import com.ivy.domain.preferences.toggles.PreferenceToggles
 import com.ivy.domain.usecase.csv.ExportCsvUseCase
 import com.ivy.frp.filterSuspend

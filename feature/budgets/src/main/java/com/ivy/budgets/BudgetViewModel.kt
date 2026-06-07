@@ -17,8 +17,8 @@ import com.ivy.data.model.Income
 import com.ivy.data.model.Transaction
 import com.ivy.data.model.Transfer
 import com.ivy.data.repository.CategoryRepository
-import com.ivy.data.temp.migration.getAccountId
-import com.ivy.data.temp.migration.getValue
+import com.ivy.data.legacy.getAccountId
+import com.ivy.data.legacy.getValue
 import com.ivy.frp.sumOfSuspend
 import com.ivy.legacy.ui.state.PeriodState
 import com.ivy.legacy.domain.model.FromToTimeRange
