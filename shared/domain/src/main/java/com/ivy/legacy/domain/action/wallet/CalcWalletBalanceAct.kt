@@ -9,8 +9,8 @@ import com.ivy.data.model.primitive.IconAsset
 import com.ivy.data.model.primitive.NotBlankTrimmedString
 import com.ivy.legacy.frp.action.FPAction
 import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
+import com.ivy.domain.usecase.account.CalculateAccountBalanceUseCase
 import com.ivy.domain.usecase.exchange.ExchangeAmountUseCase
-import com.ivy.legacy.domain.action.account.CalcAccBalanceAct
 import com.ivy.data.model.legacy.ClosedTimeRange
 import com.ivy.legacy.domain.pure.exchange.ExchangeData
 import java.math.BigDecimal
@@ -18,7 +18,7 @@ import javax.inject.Inject
 
 class CalcWalletBalanceAct @Inject constructor(
     private val getLegacyAccountsUseCase: GetLegacyAccountsUseCase,
-    private val calcAccBalanceAct: CalcAccBalanceAct,
+    private val calculateAccountBalanceUseCase: CalculateAccountBalanceUseCase,
     private val exchangeAmountUseCase: ExchangeAmountUseCase,
 ) : FPAction<CalcWalletBalanceAct.Input, BigDecimal>() {
 
@@ -26,30 +26,29 @@ class CalcWalletBalanceAct @Inject constructor(
         getLegacyAccountsUseCase()
             .filter { withExcluded || it.includeInBalance }
             .fold(BigDecimal.ZERO) { sum, account ->
-                val accountBalance = calcAccBalanceAct(
-                    CalcAccBalanceAct.Input(
-                        account = Account(
-                            id = AccountId(account.id),
-                            name = NotBlankTrimmedString.from(account.name).getOrNull()
-                                ?: error("account name cannot be blank"),
-                            asset = AssetCode.from(account.currency ?: baseCurrency).getOrNull()
-                                ?: error("account currency cannot be blank"),
-                            color = ColorInt(account.color),
-                            icon = account.icon?.let { IconAsset.from(it).getOrNull() },
-                            includeInBalance = account.includeInBalance,
-                            orderNum = account.orderNum,
-                        ),
-                        range = range
-                    )
+                val domainAccount = Account(
+                    id = AccountId(account.id),
+                    name = NotBlankTrimmedString.from(account.name).getOrNull()
+                        ?: error("account name cannot be blank"),
+                    asset = AssetCode.from(account.currency ?: baseCurrency).getOrNull()
+                        ?: error("account currency cannot be blank"),
+                    color = ColorInt(account.color),
+                    icon = account.icon?.let { IconAsset.from(it).getOrNull() },
+                    includeInBalance = account.includeInBalance,
+                    orderNum = account.orderNum,
+                )
+                val accountBalance = calculateAccountBalanceUseCase(
+                    account = domainAccount,
+                    range = range
                 )
 
                 val exchanged = exchangeAmountUseCase(
                     data = ExchangeData(
                         baseCurrency = baseCurrency,
-                        fromCurrency = accountBalance.account.asset.code.toOption(),
+                        fromCurrency = domainAccount.asset.code.toOption(),
                         toCurrency = balanceCurrency
                     ),
-                    amount = accountBalance.balance
+                    amount = accountBalance
                 )
 
                 sum + (exchanged.getOrNull() ?: BigDecimal.ZERO)

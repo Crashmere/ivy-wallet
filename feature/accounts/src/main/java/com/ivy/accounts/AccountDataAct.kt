@@ -3,9 +3,9 @@ package com.ivy.accounts
 import arrow.core.toOption
 import com.ivy.data.model.Account
 import com.ivy.data.model.legacy.ClosedTimeRange
+import com.ivy.domain.usecase.account.CalculateAccountBalanceUseCase
+import com.ivy.domain.usecase.account.CalculateAccountIncomeExpenseUseCase
 import com.ivy.domain.usecase.exchange.ExchangeAmountUseCase
-import com.ivy.legacy.domain.action.account.CalcAccBalanceAct
-import com.ivy.legacy.domain.action.account.CalcAccIncomeExpenseAct
 import com.ivy.legacy.domain.pure.exchange.ExchangeData
 import com.ivy.legacy.frp.action.FPAction
 import com.ivy.legacy.frp.action.thenMap
@@ -16,18 +16,14 @@ import javax.inject.Inject
 
 class AccountDataAct @Inject constructor(
     private val exchangeAmountUseCase: ExchangeAmountUseCase,
-    private val calcAccBalanceAct: CalcAccBalanceAct,
-    private val calcAccIncomeExpenseAct: CalcAccIncomeExpenseAct
+    private val calculateAccountBalanceUseCase: CalculateAccountBalanceUseCase,
+    private val calculateAccountIncomeExpenseUseCase: CalculateAccountIncomeExpenseUseCase
 ) : FPAction<AccountDataAct.Input, ImmutableList<AccountData>>() {
 
     override suspend fun Input.compose(): suspend () -> ImmutableList<AccountData> = suspend {
         accounts
     } thenMap { acc ->
-        val balance = calcAccBalanceAct(
-            CalcAccBalanceAct.Input(
-                account = acc
-            )
-        ).balance
+        val balance = calculateAccountBalanceUseCase(acc)
 
         val balanceBaseCurrency = if (acc.asset.code != baseCurrency) {
             exchangeAmountUseCase(
@@ -41,13 +37,11 @@ class AccountDataAct @Inject constructor(
             null
         }
 
-        val incomeExpensePair = calcAccIncomeExpenseAct(
-            CalcAccIncomeExpenseAct.Input(
-                account = acc,
-                range = range,
-                includeTransfersInCalc = includeTransfersInCalc
-            )
-        ).incomeExpensePair
+        val incomeExpensePair = calculateAccountIncomeExpenseUseCase(
+            account = acc,
+            range = range,
+            includeTransfersInCalc = includeTransfersInCalc
+        )
 
         AccountData(
             account = acc,

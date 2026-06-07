@@ -45,11 +45,11 @@ import com.ivy.ui.navigation.TransactionsScreen
 import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.R
 import com.ivy.ui.preferences.asEnabledState
+import com.ivy.domain.usecase.account.CalculateAccountBalanceUseCase
+import com.ivy.domain.usecase.account.CalculateAccountIncomeExpenseUseCase
 import com.ivy.domain.usecase.account.GetAccountTransactionsUseCase
 import com.ivy.domain.usecase.account.GetLegacyAccountUseCase
 import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
-import com.ivy.legacy.domain.action.account.CalcAccBalanceAct
-import com.ivy.legacy.domain.action.account.CalcAccIncomeExpenseAct
 import com.ivy.legacy.domain.action.transaction.LegacyCalcTrnsIncomeExpenseAct
 import com.ivy.legacy.domain.action.transaction.LegacyTrnsWithDateDivsAct
 import com.ivy.legacy.domain.logic.CategoryCreator
@@ -89,8 +89,8 @@ class TransactionsViewModel @Inject constructor(
     private val getCategoriesUseCase: GetCategoriesUseCase,
     private val getCategoryUseCase: GetCategoryUseCase,
     private val deleteCategoryUseCase: DeleteCategoryUseCase,
-    private val calcAccBalanceAct: CalcAccBalanceAct,
-    private val calcAccIncomeExpenseAct: CalcAccIncomeExpenseAct,
+    private val calculateAccountBalanceUseCase: CalculateAccountBalanceUseCase,
+    private val calculateAccountIncomeExpenseUseCase: CalculateAccountIncomeExpenseUseCase,
     private val calcTrnsIncomeExpenseAct: LegacyCalcTrnsIncomeExpenseAct,
     private val exchangeAmountUseCase: ExchangeAmountUseCase,
     private val mapTransactionsToLegacyUseCase: MapTransactionsToLegacyUseCase,
@@ -351,11 +351,7 @@ class TransactionsViewModel @Inject constructor(
 
         val account = getAccountUseCase(AccountId(accountId)) ?: error("account not found")
 
-        val balanceValue = calcAccBalanceAct(
-            CalcAccBalanceAct.Input(
-                account = account
-            )
-        ).balance.toDouble()
+        val balanceValue = calculateAccountBalanceUseCase(account).toDouble()
         balance.doubleValue = balanceValue
         if (baseCurrency.value != currency.value) {
             balanceBaseCurrency.value = exchangeAmountUseCase(
@@ -369,13 +365,11 @@ class TransactionsViewModel @Inject constructor(
 
         val includeTransfersInCalc = appPreferences.transfersAsIncomeExpense
 
-        val incomeExpensePair = calcAccIncomeExpenseAct(
-            CalcAccIncomeExpenseAct.Input(
-                account = account,
-                range = range.toCloseTimeRange(),
-                includeTransfersInCalc = includeTransfersInCalc
-            )
-        ).incomeExpensePair
+        val incomeExpensePair = calculateAccountIncomeExpenseUseCase(
+            account = account,
+            range = range.toCloseTimeRange(),
+            includeTransfersInCalc = includeTransfersInCalc
+        )
         income.doubleValue = incomeExpensePair.income.toDouble()
         expenses.doubleValue = incomeExpensePair.expense.toDouble()
 

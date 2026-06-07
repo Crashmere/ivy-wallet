@@ -9,8 +9,8 @@ import com.ivy.data.model.Expense
 import com.ivy.data.model.Income
 import com.ivy.data.repository.TransactionRepository
 import com.ivy.data.repository.mapper.TransactionMapper
+import com.ivy.domain.usecase.account.CalculateAccountBalanceUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyUseCase
-import com.ivy.legacy.domain.action.account.CalcAccBalanceAct
 import com.ivy.data.model.legacy.Account
 import com.ivy.legacy.domain.mapper.toDomain
 import com.ivy.legacy.domain.pure.transaction.getValue
@@ -23,7 +23,7 @@ import kotlin.math.absoluteValue
 class WalletAccountLogic @Inject constructor(
     private val transactionRepository: TransactionRepository,
     private val transactionMapper: TransactionMapper,
-    private val calcAccBalanceAct: CalcAccBalanceAct,
+    private val calculateAccountBalanceUseCase: CalculateAccountBalanceUseCase,
     private val getBaseCurrency: GetBaseCurrencyUseCase,
     private val timeProvider: TimeProvider
 ) {
@@ -79,11 +79,7 @@ class WalletAccountLogic @Inject constructor(
         val domainAccount = account.toDomainAccount(baseCurrency)
             .getOrElse { return 0.0 }
 
-        return calcAccBalanceAct(
-            CalcAccBalanceAct.Input(
-                account = domainAccount
-            )
-        ).balance.toDouble()
+        return calculateAccountBalanceUseCase(domainAccount).toDouble()
     }
 
     suspend fun calculateUpcomingIncome(
