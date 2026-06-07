@@ -42,7 +42,6 @@ class TagMapper @Inject constructor() {
             icon = icon?.id,
             orderNum = orderNum,
             dateTime = creationTimestamp,
-            lastSyncedTime = Instant.EPOCH,
             isDeleted = false,
         )
     }
@@ -51,7 +50,6 @@ class TagMapper @Inject constructor() {
         return TagAssociationEntity(
             tagId = id.value,
             associatedId = associatedId.value,
-            lastSyncedTime = Instant.EPOCH,
             isDeleted = false,
         )
     }

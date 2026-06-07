@@ -537,6 +537,7 @@
 - 删除无调用方的 `SettingsAct`、`UpdateSettingsAct`、旧 `Settings` 模型和 `SettingsEntity.toLegacyDomain()` mapper。
 - `SettingsEntity` 暂时仍保留：首次默认数据、重置钱包、备份恢复格式，以及 `CurrencyRepository/LegacySettingsRepository` 内部仍依赖这张表。
 - 删除无调用方的 `data_synced_to_cloud` 多语言文案，云同步用户可见入口继续减少。
+- 删除标签和标签关联表里的 `lastSyncedTime` 云同步时间字段，新增 `Migration131to132_DropTagSyncTime`，数据库版本升到 132；旧备份里的多余字段可被现有 JSON 配置忽略。
 
 建议顺序：
 
@@ -737,5 +738,5 @@ shared:ui:core
 下一步建议执行：
 
 1. 继续评估 `SettingsEntity` 是否可以拆成更明确的本地偏好表或迁入 DataStore；这一步需要和备份恢复格式一起规划。
-2. 继续数据库只读审计：明确剩余 `isSynced/lastSyncedTime` 哪些只是构造字段和备份格式残留。
+2. 继续数据库只读审计：明确剩余 `isSynced` 哪些只是构造字段和备份格式残留。
 3. 继续收敛平台桥接：评估 `FileSharer`、`BuildInfoProvider` 是否需要从 `LocalContext.current as ...` 改成 CompositionLocal。

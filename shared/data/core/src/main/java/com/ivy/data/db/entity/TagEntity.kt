@@ -37,10 +37,5 @@ data class TagEntity(
 
     @Deprecated("Obsolete field used for cloud sync. Can't be deleted because of backwards compatibility")
     @SerialName("isDeleted")
-    val isDeleted: Boolean,
-
-    @Deprecated("Obsolete field used for cloud sync. Can't be deleted because of backwards compatibility")
-    @SerialName("lastSyncTime")
-    @Serializable(with = KSerializerInstant::class)
-    val lastSyncedTime: Instant
+    val isDeleted: Boolean
 )
