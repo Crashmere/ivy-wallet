@@ -301,6 +301,7 @@
 - `shared:domain` 已移除 AndroidX DataStore 依赖；偏好开关的存储能力抽成 `PreferenceToggleStore` 端口，DataStore 读写和清空由 `shared:data:core` 实现，domain 只保留业务级 `PreferenceToggleRepository` 和开关元数据。
 - `shared:data:api` 已显式暴露 Arrow 依赖；`ExchangeRateStore` 的公开签名直接使用 `Either`，不再依赖 `shared:data:model` 间接传递 Arrow。
 - `ExchangeData` 已增加普通字符串工厂方法，账户页和交易页不再为了构造币种 `Option` 直接依赖 Arrow；`feature:accounts` 和 `feature:transactions` 已移除 Arrow Gradle 依赖。
+- 汇率页保存/删除手动汇率时已从 `either/bind` DSL 改为普通顺序校验，`feature:exchange-rates` 不再直接声明 Arrow 依赖；数据模型层仍负责暴露值对象校验结果。
 - `ivy.module` 不再默认启用 kotlinx serialization；当前 `ivy.feature` 页面模块没有序列化源码引用，序列化能力只保留在 `shared:data:model` 和 `shared:data:core` 等实际需要的模块中。
 - app 模块已移除 Kotlin serialization 插件；应用壳本身没有序列化源码，序列化继续由 `shared:data:model` 和 `shared:data:core` 提供。
 - 空壳 `ivy.module` 约定插件已删除；`ivy.feature` 现在只保留 `ivy.hilt` 和 `ivy.compose` 两个页面能力入口，不再重复声明基础 Android library 插件。

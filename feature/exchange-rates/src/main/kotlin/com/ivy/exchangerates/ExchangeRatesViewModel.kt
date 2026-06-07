@@ -9,7 +9,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
-import arrow.core.raise.either
 import com.ivy.base.threading.DispatchersProvider
 import com.ivy.data.model.ExchangeRate
 import com.ivy.data.model.primitive.AssetCode
@@ -95,15 +94,16 @@ class ExchangeRatesViewModel @Inject constructor(
 
     private suspend fun handleRemoveOverride(event: RatesEvent.RemoveOverride) {
         withContext(dispatchers.io) {
-            either {
-                deleteExchangeRateUseCase(
-                    baseCurrency = AssetCode.from(event.rate.from).bind(),
-                    currency = AssetCode.from(event.rate.to).bind()
-                )
-            }.onRight {
-                // Sync to fetch the real rate
-                baseCurrency?.let { syncExchangeRatesUseCase.sync(it) }
-            }.onLeft { toaster.show(it) }
+            val baseCurrency = AssetCode.from(event.rate.from)
+                .fold({ toaster.show(it); return@withContext }, { it })
+            val currency = AssetCode.from(event.rate.to)
+                .fold({ toaster.show(it); return@withContext }, { it })
+
+            deleteExchangeRateUseCase(
+                baseCurrency = baseCurrency,
+                currency = currency
+            )
+            this@ExchangeRatesViewModel.baseCurrency?.let { syncExchangeRatesUseCase.sync(it) }
         }
     }
 
@@ -113,31 +113,41 @@ class ExchangeRatesViewModel @Inject constructor(
 
     private suspend fun handleUpdateRate(event: RatesEvent.UpdateRate) {
         withContext(dispatchers.io) {
-            either {
+            val baseCurrency = AssetCode.from(event.rate.from)
+                .fold({ toaster.show(it); return@withContext }, { it })
+            val currency = AssetCode.from(event.rate.to)
+                .fold({ toaster.show(it); return@withContext }, { it })
+            val rate = PositiveDouble.from(event.newRate)
+                .fold({ toaster.show(it); return@withContext }, { it })
+
+            saveExchangeRateUseCase(
                 ExchangeRate(
-                    baseCurrency = AssetCode.from(event.rate.from).bind(),
-                    currency = AssetCode.from(event.rate.to).bind(),
-                    rate = PositiveDouble.from(event.newRate).bind(),
+                    baseCurrency = baseCurrency,
+                    currency = currency,
+                    rate = rate,
                     manualOverride = true
                 )
-            }.onRight {
-                saveExchangeRateUseCase(it)
-            }.onLeft { toaster.show(it) }
+            )
         }
     }
 
     private suspend fun handleAddRate(event: RatesEvent.AddRate) {
         withContext(dispatchers.io) {
-            either {
+            val baseCurrency = AssetCode.from(event.rate.from)
+                .fold({ toaster.show(it); return@withContext }, { it })
+            val currency = AssetCode.from(event.rate.to)
+                .fold({ toaster.show(it); return@withContext }, { it })
+            val rate = PositiveDouble.from(event.rate.rate)
+                .fold({ toaster.show(it); return@withContext }, { it })
+
+            saveExchangeRateUseCase(
                 ExchangeRate(
-                    baseCurrency = AssetCode.from(event.rate.from).bind(),
-                    currency = AssetCode.from(event.rate.to).bind(),
-                    rate = PositiveDouble.from(event.rate.rate).bind(),
+                    baseCurrency = baseCurrency,
+                    currency = currency,
+                    rate = rate,
                     manualOverride = true
                 )
-            }.onRight {
-                saveExchangeRateUseCase(it)
-            }.onLeft { toaster.show(it) }
+            )
         }
     }
     // endregion
