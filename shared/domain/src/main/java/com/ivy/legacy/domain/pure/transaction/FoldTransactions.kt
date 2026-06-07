@@ -3,9 +3,9 @@ package com.ivy.legacy.domain.pure.transaction
 import arrow.core.NonEmptyList
 import arrow.core.nonEmptyListOf
 import com.ivy.data.model.Transaction
-import com.ivy.legacy.domain.pure.util.mapIndexedNel
-import com.ivy.legacy.domain.pure.util.mapIndexedNelSuspend
-import com.ivy.legacy.domain.pure.util.nonEmptyListOfZeros
+import com.ivy.domain.util.mapIndexedNel
+import com.ivy.domain.util.mapIndexedNelSuspend
+import com.ivy.domain.util.nonEmptyListOfZeros
 import java.math.BigDecimal
 
 typealias ValueFunction<A> = (Transaction, A) -> BigDecimal

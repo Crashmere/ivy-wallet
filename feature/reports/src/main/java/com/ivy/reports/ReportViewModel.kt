@@ -58,7 +58,7 @@ import com.ivy.legacy.domain.pure.exchange.ExchangeData
 import com.ivy.legacy.domain.pure.transaction.getTransactionType
 import com.ivy.legacy.domain.pure.transaction.getValue
 import com.ivy.legacy.domain.pure.transaction.trnCurrency
-import com.ivy.legacy.domain.pure.util.orZero
+import com.ivy.domain.util.orZero
 import com.ivy.legacy.ui.theme.Gray
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList

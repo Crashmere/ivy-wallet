@@ -1,4 +1,4 @@
-package com.ivy.legacy.domain.pure.util
+package com.ivy.domain.util
 
 import arrow.core.NonEmptyList
 import arrow.core.Option

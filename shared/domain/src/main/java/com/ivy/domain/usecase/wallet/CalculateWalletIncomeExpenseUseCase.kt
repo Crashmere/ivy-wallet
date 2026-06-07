@@ -12,7 +12,7 @@ import com.ivy.legacy.domain.pure.account.filterExcluded
 import com.ivy.legacy.domain.pure.exchange.ExchangeData
 import com.ivy.legacy.domain.pure.transaction.AccountValueFunctions
 import com.ivy.legacy.domain.pure.transaction.foldTransactions
-import com.ivy.legacy.domain.pure.util.orZero
+import com.ivy.domain.util.orZero
 import javax.inject.Inject
 
 class CalculateWalletIncomeExpenseUseCase @Inject constructor(

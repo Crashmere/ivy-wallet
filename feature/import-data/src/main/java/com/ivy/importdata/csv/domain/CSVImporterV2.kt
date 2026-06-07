@@ -26,7 +26,7 @@ import com.ivy.data.model.legacy.Account
 import com.ivy.base.text.toLowerCaseLocal
 import com.ivy.data.model.currency.IvyCurrency
 import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
-import com.ivy.legacy.domain.pure.util.nextOrderNum
+import com.ivy.domain.util.nextOrderNum
 import com.ivy.legacy.ui.theme.Green
 import com.ivy.legacy.ui.theme.IvyDark
 import kotlinx.collections.immutable.toImmutableList

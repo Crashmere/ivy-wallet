@@ -9,7 +9,7 @@ import com.ivy.data.model.primitive.AssetCode
 import com.ivy.data.model.primitive.ColorInt
 import com.ivy.data.model.primitive.IconAsset
 import com.ivy.data.model.primitive.NotBlankTrimmedString
-import com.ivy.legacy.domain.pure.util.nextOrderNum
+import com.ivy.domain.util.nextOrderNum
 import kotlinx.coroutines.withContext
 import java.util.UUID
 import javax.inject.Inject
