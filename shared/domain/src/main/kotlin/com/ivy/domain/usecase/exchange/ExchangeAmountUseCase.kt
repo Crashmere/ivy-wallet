@@ -5,7 +5,6 @@ import com.ivy.data.api.ExchangeRateStore
 import com.ivy.data.model.primitive.AssetCode
 import com.ivy.domain.exchange.ExchangeData
 import com.ivy.domain.exchange.exchange
-import com.ivy.domain.mapper.legacy.toLegacyDomain
 import java.math.BigDecimal
 import javax.inject.Inject
 
@@ -26,7 +25,9 @@ class ExchangeAmountUseCase @Inject constructor(
                     null
                 } else {
                     exchangeRateStore.findByBaseCurrencyAndCurrency(base, target)
-                        ?.toLegacyDomain()
+                        ?.rate
+                        ?.value
+                        ?.toBigDecimal()
                 }
             }
         )
