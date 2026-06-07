@@ -1,6 +1,5 @@
 package com.ivy.accounts
 
-import arrow.core.toOption
 import com.ivy.data.model.Account
 import com.ivy.data.model.legacy.ClosedTimeRange
 import com.ivy.domain.usecase.account.CalculateAccountBalanceUseCase
@@ -26,9 +25,9 @@ class BuildAccountDataUseCase @Inject constructor(
             val balance = calculateAccountBalanceUseCase(account)
             val balanceBaseCurrency = if (account.asset.code != baseCurrency) {
                 exchangeAmountUseCase(
-                    data = ExchangeData(
+                    data = ExchangeData.fromCurrencyCode(
                         baseCurrency = baseCurrency,
-                        fromCurrency = account.asset.code.toOption()
+                        fromCurrency = account.asset.code
                     ),
                     amount = balance
                 ).getOrNull()

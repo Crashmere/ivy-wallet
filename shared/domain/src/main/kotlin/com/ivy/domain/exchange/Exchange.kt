@@ -12,7 +12,21 @@ data class ExchangeData(
     val baseCurrency: String,
     val fromCurrency: Option<String>,
     val toCurrency: String = baseCurrency,
-)
+) {
+    companion object {
+        fun fromCurrencyCode(
+            baseCurrency: String,
+            fromCurrency: String?,
+            toCurrency: String = baseCurrency
+        ): ExchangeData {
+            return ExchangeData(
+                baseCurrency = baseCurrency,
+                fromCurrency = fromCurrency.toOption(),
+                toCurrency = toCurrency
+            )
+        }
+    }
+}
 suspend fun exchange(
     data: ExchangeData,
     amount: BigDecimal,

@@ -6,7 +6,6 @@ import androidx.compose.runtime.mutableDoubleStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.graphics.toArgb
 import androidx.lifecycle.viewModelScope
-import arrow.core.toOption
 import com.ivy.data.model.legacy.Transaction
 import com.ivy.data.model.legacy.TransactionHistoryItem
 import com.ivy.data.model.TransactionType
@@ -361,9 +360,9 @@ class TransactionsViewModel @Inject constructor(
         balance.doubleValue = balanceValue
         if (baseCurrency.value != currency.value) {
             balanceBaseCurrency.value = exchangeAmountUseCase(
-                data = ExchangeData(
+                data = ExchangeData.fromCurrencyCode(
                     baseCurrency = baseCurrency.value,
-                    fromCurrency = currency.value.toOption()
+                    fromCurrency = currency.value
                 ),
                 amount = balanceValue.toBigDecimal()
             ).getOrNull()?.toDouble()
