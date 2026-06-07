@@ -93,7 +93,7 @@ suspend fun exchangeInCurrency(
             toCurrency = toCurrency
         ),
         transaction.getValue()
-    ).orNull() ?: BigDecimal.ZERO
+    ).getOrNull() ?: BigDecimal.ZERO
 }
 
 suspend fun exchangeInCurrency(
@@ -112,7 +112,7 @@ suspend fun exchangeInCurrency(
             toCurrency = toCurrency
         ),
         transaction.getValue()
-    ).orNull() ?: BigDecimal.ZERO
+    ).getOrNull() ?: BigDecimal.ZERO
 }
 
 suspend fun exchangeInCurrency(
@@ -131,7 +131,7 @@ suspend fun exchangeInCurrency(
             toCurrency = toCurrency
         ),
         transaction.amount
-    ).orNull() ?: BigDecimal.ZERO
+    ).getOrNull() ?: BigDecimal.ZERO
 }
 
 object LegacyExchangeTrns {
@@ -169,6 +169,6 @@ object LegacyExchangeTrns {
                 toCurrency = toCurrency
             ),
             transaction.amount
-        ).orNull() ?: BigDecimal.ZERO
+        ).getOrNull() ?: BigDecimal.ZERO
     }
 }

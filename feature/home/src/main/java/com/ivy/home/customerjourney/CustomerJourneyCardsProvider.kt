@@ -15,7 +15,6 @@ import com.ivy.ui.navigation.PieChartStatisticScreen
 import com.ivy.ui.R
 import javax.inject.Inject
 
-@Deprecated("Legacy code")
 class CustomerJourneyCardsProvider @Inject constructor(
     private val transactionRepository: TransactionRepository,
     private val plannedPaymentRuleDao: PlannedPaymentRuleDao,

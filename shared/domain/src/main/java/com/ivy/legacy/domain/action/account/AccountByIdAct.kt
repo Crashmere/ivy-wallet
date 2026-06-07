@@ -11,7 +11,6 @@ import javax.inject.Inject
 class AccountByIdAct @Inject constructor(
     private val accountDao: AccountDao
 ) : FPAction<UUID, Account?>() {
-    @Deprecated("Legacy code. Don't use it, please.")
     override suspend fun UUID.compose(): suspend () -> Account? = suspend {
         this // accountId
     } then accountDao::findById then {

@@ -777,7 +777,7 @@ private fun LabelAccountMini(
         Spacer(Modifier.height(2.dp))
 
         Text(
-            text = account?.name?.toUpperCase(Locale.getDefault()) ?: "",
+            text = account?.name?.uppercase(Locale.getDefault()) ?: "",
             style = LegacyTheme.typo.nB2.style(
                 color = LegacyTheme.colors.pureInverse,
                 fontWeight = FontWeight.ExtraBold
