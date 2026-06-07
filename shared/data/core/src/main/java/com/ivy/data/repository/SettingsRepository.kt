@@ -8,7 +8,6 @@ import com.ivy.data.db.dao.write.WriteSettingsDao
 import com.ivy.data.db.entity.SettingsEntity
 import kotlinx.coroutines.withContext
 import java.math.BigDecimal
-import java.util.UUID
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -30,9 +29,9 @@ class SettingsRepository @Inject constructor(
         withContext(dispatchersProvider.io) {
             if (settingsDao.findFirstOrNull() == null) {
                 writeSettingsDao.save(
-                    SettingsEntity(
+                    LocalSettingsDefaults.entity(
                         theme = defaultTheme,
-                        currency = currencyCode,
+                        currencyCode = currencyCode,
                         bufferAmount = bufferAmount,
                     )
                 )
@@ -64,12 +63,6 @@ class SettingsRepository @Inject constructor(
 
     private suspend fun settingsEntityOrDefault(): SettingsEntity {
         return settingsDao.findFirstOrNull()
-            ?: SettingsEntity(
-                theme = Theme.AUTO,
-                currency = CurrencyRepository.FALLBACK_DEFAULT_CURRENCY,
-                bufferAmount = 0.0,
-                id = UUID.randomUUID()
-            )
+            ?: LocalSettingsDefaults.entity()
     }
-
 }

@@ -701,6 +701,7 @@
 - 新增薄模块 `shared:data:api` 承载数据层端口；备份导入导出已改为依赖 `BackupStore`，data core 的 `BackupDataUseCase` 只作为实现绑定到该端口，feature 仍只通过 domain use case 使用备份功能。
 - `BackupDataUseCase` 的泛化 legacy TODO 已改成明确的备份格式兼容说明；这段实现暂时继续承担旧 ZIP/JSON 备份格式和旧本地数据兼容职责，后续拆分时应围绕该边界处理。
 - 基础币种和设置表访问已抽成 `CurrencyStore` 与 `SettingsStore` 端口；domain 的币种/设置 use case 不再直接注入 data core repository，data core 继续保留 Room-backed 实现和内部 mapper 依赖。
+- 设置表默认值已集中到 data core 内部 `LocalSettingsDefaults`；`SettingsRepository` 不再引用 `CurrencyRepository` 的默认币种常量，两个 repository 也不再重复构造默认 `SettingsEntity`。
 - 汇率读写和远程同步入口已抽成 `ExchangeRateStore` 端口；汇率同步、设置页汇率列表和重置钱包流程不再直接依赖 data core 的 `ExchangeRatesRepository`。
 - 汇率单条查询已收敛到 `ExchangeRateStore.findByBaseCurrencyAndCurrency()`；汇率换算 use case 不再直接注入 `ExchangeRatesDao`，legacy 汇率 mapper 也不再依赖 `ExchangeRateEntity`。
 - 标签读写、标签关联和标签搜索已抽成 `TagStore` 端口；编辑交易、历史列表、按标签筛选和重置钱包流程不再直接依赖 data core 的 `TagRepository`。
