@@ -22,23 +22,21 @@ import com.ivy.data.model.Expense
 import com.ivy.data.model.Income
 import com.ivy.data.model.Tag
 import com.ivy.data.model.Transaction
-import com.ivy.data.model.TransactionId
 import com.ivy.data.model.Transfer
 import com.ivy.data.model.primitive.ColorInt
 import com.ivy.data.model.primitive.NotBlankTrimmedString
-import com.ivy.data.repository.TagRepository
-import com.ivy.data.repository.TransactionRepository
-import com.ivy.data.repository.mapper.TransactionMapper
 import com.ivy.domain.preferences.toggles.PreferenceToggles
 import com.ivy.domain.usecase.category.GetCategoriesUseCase
 import com.ivy.domain.usecase.csv.ExportCsvUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.domain.usecase.tag.GetTagsUseCase
 import com.ivy.domain.usecase.tag.SearchTagsUseCase
+import com.ivy.domain.usecase.transaction.GetTransactionsByTagsUseCase
+import com.ivy.domain.usecase.transaction.GetTransactionsUseCase
+import com.ivy.domain.usecase.transaction.MapTransactionsToLegacyUseCase
 import com.ivy.legacy.frp.filterSuspend
 import com.ivy.legacy.ui.state.PeriodState
 import com.ivy.legacy.domain.model.Account
-import com.ivy.legacy.domain.mapper.toLegacy
 import com.ivy.base.time.getISOFormattedDateTime
 import com.ivy.base.coroutines.scopedIOThread
 import com.ivy.base.text.toLowerCaseLocal
@@ -80,7 +78,6 @@ import javax.inject.Inject
 @HiltViewModel
 class ReportViewModel @Inject constructor(
     private val plannedPaymentsLogic: PlannedPaymentsLogic,
-    private val transactionRepository: TransactionRepository,
     private val periodState: PeriodState,
     private val exchangeAct: ExchangeAct,
     private val accountsAct: AccountsAct,
@@ -88,8 +85,9 @@ class ReportViewModel @Inject constructor(
     private val trnsWithDateDivsAct: TrnsWithDateDivsAct,
     private val calcTrnsIncomeExpenseAct: CalcTrnsIncomeExpenseAct,
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
-    private val transactionMapper: TransactionMapper,
-    private val tagRepository: TagRepository,
+    private val getTransactionsUseCase: GetTransactionsUseCase,
+    private val getTransactionsByTagsUseCase: GetTransactionsByTagsUseCase,
+    private val mapTransactionsToLegacyUseCase: MapTransactionsToLegacyUseCase,
     private val getTagsUseCase: GetTagsUseCase,
     private val searchTagsUseCase: SearchTagsUseCase,
     private val exportCsvUseCase: ExportCsvUseCase,
@@ -328,18 +326,13 @@ class ReportViewModel @Inject constructor(
                 upcomingIncomeExpenseTransferPair = upcomingIncomeExpense,
                 overDueIncomeExpenseTransferPair = overdueIncomeExpense,
                 history = historyWithDateDividers.await().toImmutableList(),
-                upcomingTransactions = upcomingTransactionsList.map {
-                    it.toLegacy(transactionMapper)
-                }.toImmutableList(),
-                overdueTransactions = overdue.map {
-                    it.toLegacy(transactionMapper)
-                }.toImmutableList(),
+                upcomingTransactions = mapTransactionsToLegacyUseCase(upcomingTransactionsList)
+                    .toImmutableList(),
+                overdueTransactions = mapTransactionsToLegacyUseCase(overdue).toImmutableList(),
                 accounts = tempAccounts.toImmutableList(),
                 reportFilter = reportFilter,
                 accountIdFilters = accountFilterIdList.await().toImmutableList(),
-                transactions = transactionsList.map {
-                    it.toLegacy(transactionMapper)
-                }.toImmutableList(),
+                transactions = mapTransactionsToLegacyUseCase(transactionsList).toImmutableList(),
                 balanceValue = tempBalance
             )
 
@@ -391,31 +384,13 @@ class ReportViewModel @Inject constructor(
             filter.period?.toRange(periodState.startDayOfMonth, timeConverter, timeProvider)
 
         val transactions = if (filter.includedTags.isNotEmpty()) {
-            tagRepository.findByAllAssociatedIdForTagId(filter.includedTags)
-                .asSequence()
-                .flatMap { it.value }
-                .map { TransactionId(it.associatedId.value) }
-                .distinct()
-                .toList()
-                .let {
-                    transactionRepository.findByIds(it)
-                }
+            getTransactionsByTagsUseCase(filter.includedTags)
         } else {
-            transactionRepository.findAll()
+            getTransactionsUseCase()
         }
 
         val excludeableByTagTransactionsIds = if (filter.excludedTags.isNotEmpty()) {
-            tagRepository.findByAllAssociatedIdForTagId(filter.excludedTags)
-                .asSequence()
-                .flatMap { it.value }
-                .distinct()
-                .map { TransactionId(it.associatedId.value) }
-                .toList()
-                .let {
-                    transactionRepository.findByIds(it)
-                }.map {
-                    it.id
-                }
+            getTransactionsByTagsUseCase(filter.excludedTags).map { it.id }
         } else {
             emptyList()
         }
@@ -423,9 +398,7 @@ class ReportViewModel @Inject constructor(
         return transactions
             .filter { !excludeableByTagTransactionsIds.contains(it.id) }
             .filter {
-                with(transactionMapper) {
-                    filter.trnTypes.contains(it.getTransactionType())
-                }
+                filter.trnTypes.contains(it.getTransactionType())
             }
             .filter {
                 // Filter by Time Period
@@ -454,9 +427,8 @@ class ReportViewModel @Inject constructor(
             .filter { trn ->
                 // Filter by Categories
 
-                filterCategoryIds.contains(trn.category) || with(transactionMapper) {
-                    (trn.getTransactionType() == TransactionType.TRANSFER)
-                }
+                filterCategoryIds.contains(trn.category) ||
+                        trn.getTransactionType() == TransactionType.TRANSFER
             }
             .filterSuspend {
                 // Filter by Amount

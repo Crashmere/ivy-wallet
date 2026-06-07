@@ -40,7 +40,7 @@ class ExportCsvUseCase @Inject constructor(
 
     suspend fun exportToFile(
         outputFile: Uri,
-        exportScope: suspend TransactionRepository.() -> List<Transaction> = {
+        exportScope: suspend () -> List<Transaction> = {
             transactionRepository.findAll()
         }
     ): Either<FileSystem.Failure, Unit> = withContext(dispatchers.io) {
@@ -49,9 +49,9 @@ class ExportCsvUseCase @Inject constructor(
     }
 
     suspend fun exportCsv(
-        exportScope: suspend TransactionRepository.() -> List<Transaction>
+        exportScope: suspend () -> List<Transaction>
     ): String = withContext(dispatchers.io) {
-        val transactions = transactionRepository.exportScope()
+        val transactions = exportScope()
         val accountsMap = getAccountsUseCase().associateBy(Account::id)
         val categoriesMap = getCategoriesUseCase().associateBy(Category::id)
 
