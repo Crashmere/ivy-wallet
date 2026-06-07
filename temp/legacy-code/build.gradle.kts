@@ -1,6 +1,7 @@
 plugins {
-    id("ivy.feature")
-    id("ivy.room")
+    id("ivy.android-library")
+    id("ivy.compose-runtime")
+    id("ivy.hilt")
 }
 
 android {
@@ -10,17 +11,9 @@ android {
 dependencies {
     implementation(projects.shared.base)
     implementation(projects.shared.data.model)
-    implementation(projects.shared.data.core)
     implementation(projects.shared.domain)
     implementation(projects.shared.ui.core)
     implementation(projects.shared.ui.legacy)
-    implementation(projects.shared.ui.navigation)
 
-    implementation(libs.bundles.activity)
-    implementation(libs.bundles.opencsv)
-    implementation(libs.bundles.ktor)
-    implementation(libs.androidx.work)
-    implementation(libs.datastore)
-    implementation(libs.keval)
-    implementation(libs.androidx.recyclerview)
+    implementation(libs.compose.foundation)
 }

@@ -58,7 +58,7 @@
 现状：
 
 - 大多数 `feature:*` 对 `:temp:legacy-code` 的直接业务依赖已经迁走，但 `app` 仍通过旧全局上下文和启动兼容逻辑依赖 `temp`。
-- `temp:legacy-code` 已不再承载旧 UI 组件、通用工具、旧 action 或大部分旧业务逻辑；当前只剩 `IvyWalletCtx`、`IvyComposeApp` 和仍依赖 Android 字符串资源的默认数据预置逻辑。
+- `temp:legacy-code` 已不再承载旧 UI 组件、通用工具、旧 action 或旧业务逻辑；当前只剩 `IvyWalletCtx` 和 `IvyComposeApp` 这两个旧全局上下文入口。
 - 旧设计系统源码已经迁入 `shared:ui:core` 作为兼容层，仍保留 `com.ivy.design.*` 包名和旧 `IvyUI`、`IvyContext`、`UI.colors` 等概念。
 
 问题：
@@ -383,7 +383,9 @@
 - 已把旧 domain 层对 `IvyWalletCtx` 的直接依赖拆掉：账户/分类缓存 action 已删除，起始日 action 只负责读写偏好，调用方显式更新旧 UI 上下文；借贷交易逻辑去掉固定为 true 的付费判断分支。
 - 已把旧 `domain/action`、`domain/pure`、旧汇率换算逻辑、账户数据 action、交易范围过滤 action 迁入 `shared:domain`。
 - 已把旧 creator、计划付款逻辑、标题建议、账户/分类统计逻辑和借贷交易联动逻辑迁入 `shared:domain`；其中 `AccountCreator`、`BudgetCreator` 也统一改到 `com.ivy.wallet.domain.deprecated.logic` 包名。
-- `temp:legacy-code` 的 UI 源码目录已经没有 Kotlin 文件，旧 domain 源码也不再反向依赖 `IvyWalletCtx`。当前 `temp:legacy-code` 只剩 `IvyWalletCtx`、`IvyComposeApp` 和 `PreloadDataLogic`；下一步应把 `PreloadDataLogic` 拆到 app 启动/默认数据初始化边界，再继续拆全局 `IvyWalletCtx`。
+- 已把仍依赖 Android 字符串资源的 `PreloadDataLogic` 从 `temp:legacy-code` 移到 app 默认数据初始化边界，避免 `temp` 继续承载旧业务逻辑。
+- 已把 `temp:legacy-code` 的 Gradle 配置从完整 `ivy.feature`/Room 配置降级为普通 Android library + 轻量 Compose runtime + Hilt，只保留旧全局上下文实际需要的依赖。
+- `temp:legacy-code` 的 UI 源码目录已经没有 Kotlin 文件，旧 domain 源码也不再反向依赖 `IvyWalletCtx`。当前 `temp:legacy-code` 只剩 `IvyWalletCtx` 和 `IvyComposeApp`；下一步应继续拆全局上下文里的状态、日期选择器、文件选择/分享和旧设计入口。
 
 迁移分组：
 
@@ -663,6 +665,6 @@ shared:ui:core
 
 下一步建议执行：
 
-1. 收尾阶段 5：把 `PreloadDataLogic` 从 `temp:legacy-code` 移到 app 启动/默认数据初始化边界，或先把默认账户/分类文案改为由 app 层提供，避免 domain 逻辑依赖 Android 字符串资源。
-2. 继续拆 `IvyWalletCtx` 和 `IvyComposeApp`：把主题、起始日、选中周期、日期选择器、生物识别锁、文件选择/分享等能力拆成更窄的 app/platform 或 UI 状态接口。
+1. 收尾阶段 5：继续拆 `IvyWalletCtx` 和 `IvyComposeApp`，把主题、起始日、选中周期、日期选择器、生物识别锁、文件选择/分享等能力拆成更窄的 app/platform 或 UI 状态接口。
+2. 移除 feature 对 `projects.temp.legacyCode` 的依赖；每拆出一组上下文能力，就同步删除对应 feature 的 temp 依赖声明。
 3. 每完成一组跨模块边界调整后运行 `:app:assembleDemo`，确认构建没有被迁移影响；涉及数据库、备份恢复或导入导出时再补充对应测试。
