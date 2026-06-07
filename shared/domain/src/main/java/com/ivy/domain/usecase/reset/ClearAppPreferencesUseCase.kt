@@ -1,10 +1,10 @@
 package com.ivy.domain.usecase.reset
 
-import com.ivy.domain.preferences.AppPreferences
+import com.ivy.data.api.AppPreferenceStore
 import javax.inject.Inject
 
 class ClearAppPreferencesUseCase @Inject constructor(
-    private val appPreferences: AppPreferences,
+    private val appPreferences: AppPreferenceStore,
 ) {
     operator fun invoke() {
         appPreferences.clearAll()

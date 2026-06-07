@@ -728,6 +728,7 @@
 - 首页客户旅程卡片关闭状态已收敛到 `IsCustomerJourneyCardDismissedUseCase/DismissCustomerJourneyCardUseCase`；`feature:home` 不再直接拼接或读写客户旅程偏好 key。
 - 重置钱包流程中的旧 app 偏好清空已收敛到 `ClearAppPreferencesUseCase`；app 层重置实现继续负责编排，但不再直接注入 `AppPreferences`。
 - 业务偏好 key 已从 `shared:base` 迁到 `shared:data:api`；base 只保留通用 `PreferenceStore/SharedPrefs`，不再承载应用锁、通知、隐藏余额等业务 key。
+- 旧 `AppPreferences` 具体类已拆成 `AppPreferenceStore` 端口和 `SharedPrefsAppPreferenceStore` 实现；domain 用例只依赖 data-api 端口，SharedPrefs 读写细节下沉到 data-core。
 - 账户旧读取路径已收敛到 `AccountStore`；旧 legacy 账户模型现在由 data model 账户映射而来，`shared:domain` 主源码不再直接注入 `AccountDao` 或依赖 `AccountEntity` mapper。
 - 旧交易卡片已移除重复账户查找 TODO：渲染前先解析来源/目标账户，再复用同一结果处理点击和币种展示，行为不变但 legacy UI 内部职责更清楚。
 

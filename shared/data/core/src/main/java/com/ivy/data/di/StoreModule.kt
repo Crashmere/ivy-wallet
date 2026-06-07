@@ -2,6 +2,7 @@ package com.ivy.data.di
 
 import com.ivy.data.DataObserver
 import com.ivy.data.api.AccountStore
+import com.ivy.data.api.AppPreferenceStore
 import com.ivy.data.api.BudgetStore
 import com.ivy.data.api.CategoryStore
 import com.ivy.data.api.CurrencyStore
@@ -26,6 +27,7 @@ import com.ivy.data.repository.SettingsRepository
 import com.ivy.data.repository.TagRepository
 import com.ivy.data.repository.TransactionRepository
 import com.ivy.data.datastore.DataStorePreferenceToggleStore
+import com.ivy.data.preferences.SharedPrefsAppPreferenceStore
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -39,6 +41,9 @@ abstract class StoreModule {
 
     @Binds
     abstract fun bindAccountStore(repository: AccountRepository): AccountStore
+
+    @Binds
+    abstract fun bindAppPreferenceStore(store: SharedPrefsAppPreferenceStore): AppPreferenceStore
 
     @Binds
     abstract fun bindBudgetStore(store: BudgetStoreImpl): BudgetStore

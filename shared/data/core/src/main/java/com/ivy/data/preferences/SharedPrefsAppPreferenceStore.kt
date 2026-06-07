@@ -1,57 +1,58 @@
-package com.ivy.domain.preferences
+package com.ivy.data.preferences
 
 import com.ivy.base.prefs.PreferenceStore
 import com.ivy.data.api.AppPreferenceKeys
+import com.ivy.data.api.AppPreferenceStore
 import javax.inject.Inject
 
-class AppPreferences @Inject constructor(
+class SharedPrefsAppPreferenceStore @Inject constructor(
     private val preferenceStore: PreferenceStore
-) {
-    var initialSetupCompleted: Boolean
+) : AppPreferenceStore {
+    override var initialSetupCompleted: Boolean
         get() = preferenceStore.getBoolean(AppPreferenceKeys.INITIAL_SETUP_COMPLETED, false)
         set(value) = preferenceStore.putBoolean(AppPreferenceKeys.INITIAL_SETUP_COMPLETED, value)
 
-    var appLockEnabled: Boolean
+    override var appLockEnabled: Boolean
         get() = preferenceStore.getBoolean(AppPreferenceKeys.APP_LOCK_ENABLED, false)
         set(value) = preferenceStore.putBoolean(AppPreferenceKeys.APP_LOCK_ENABLED, value)
 
-    var startDayOfMonth: Int
+    override var startDayOfMonth: Int
         get() = preferenceStore.getInt(AppPreferenceKeys.START_DATE_OF_MONTH, 1)
         set(value) = preferenceStore.putInt(AppPreferenceKeys.START_DATE_OF_MONTH, value)
 
-    var showNotifications: Boolean
+    override var showNotifications: Boolean
         get() = preferenceStore.getBoolean(AppPreferenceKeys.SHOW_NOTIFICATIONS, true)
         set(value) = preferenceStore.putBoolean(AppPreferenceKeys.SHOW_NOTIFICATIONS, value)
 
-    var hideCurrentBalance: Boolean
+    override var hideCurrentBalance: Boolean
         get() = preferenceStore.getBoolean(AppPreferenceKeys.HIDE_CURRENT_BALANCE, false)
         set(value) = preferenceStore.putBoolean(AppPreferenceKeys.HIDE_CURRENT_BALANCE, value)
 
-    var hideIncome: Boolean
+    override var hideIncome: Boolean
         get() = preferenceStore.getBoolean(AppPreferenceKeys.HIDE_INCOME, false)
         set(value) = preferenceStore.putBoolean(AppPreferenceKeys.HIDE_INCOME, value)
 
-    var transfersAsIncomeExpense: Boolean
+    override var transfersAsIncomeExpense: Boolean
         get() = preferenceStore.getBoolean(AppPreferenceKeys.TRANSFERS_AS_INCOME_EXPENSE, false)
         set(value) = preferenceStore.putBoolean(AppPreferenceKeys.TRANSFERS_AS_INCOME_EXPENSE, value)
 
-    var categorySortOrder: Int
+    override var categorySortOrder: Int
         get() = preferenceStore.getInt(AppPreferenceKeys.CATEGORY_SORT_ORDER, 0)
         set(value) = preferenceStore.putInt(AppPreferenceKeys.CATEGORY_SORT_ORDER, value)
 
-    var lastSelectedAccountId: String?
+    override var lastSelectedAccountId: String?
         get() = preferenceStore.getString(AppPreferenceKeys.LAST_SELECTED_ACCOUNT_ID, null)
         set(value) = preferenceStore.putString(AppPreferenceKeys.LAST_SELECTED_ACCOUNT_ID, value)
 
-    fun isCustomerJourneyCardDismissed(cardId: String): Boolean {
+    override fun isCustomerJourneyCardDismissed(cardId: String): Boolean {
         return preferenceStore.getBoolean(customerJourneyCardDismissedKey(cardId), false)
     }
 
-    fun dismissCustomerJourneyCard(cardId: String) {
+    override fun dismissCustomerJourneyCard(cardId: String) {
         preferenceStore.putBoolean(customerJourneyCardDismissedKey(cardId), true)
     }
 
-    fun clearAll() {
+    override fun clearAll() {
         preferenceStore.removeAll()
     }
 
