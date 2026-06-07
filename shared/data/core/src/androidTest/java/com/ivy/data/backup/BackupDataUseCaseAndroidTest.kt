@@ -14,6 +14,7 @@ import com.ivy.data.DataObserver
 import com.ivy.data.db.IvyRoomDatabase
 import com.ivy.data.file.FileSystem
 import com.ivy.data.model.importing.ImportResult
+import com.ivy.data.preferences.SharedPrefsAppPreferenceStore
 import com.ivy.data.repository.AccountRepository
 import com.ivy.data.repository.CurrencyRepository
 import com.ivy.data.repository.fake.fakeRepositoryMemoFactory
@@ -55,7 +56,7 @@ class BackupDataUseCaseAndroidTest {
             settingsDao = db.settingsDao,
             transactionDao = db.transactionDao,
             transactionWriter = db.writeTransactionDao,
-            preferenceStore = SharedPrefs(appContext),
+            appPreferenceStore = SharedPrefsAppPreferenceStore(SharedPrefs(appContext)),
             accountRepository = AccountRepository(
                 accountDao = db.accountDao,
                 writeAccountDao = db.writeAccountDao,

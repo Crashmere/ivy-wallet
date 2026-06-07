@@ -3,11 +3,11 @@ package com.ivy.data.backup
 import android.content.Context
 import android.net.Uri
 import androidx.core.net.toUri
-import com.ivy.base.prefs.PreferenceStore
 import com.ivy.base.io.unzip
 import com.ivy.base.io.zip
 import com.ivy.base.threading.DispatchersProvider
 import com.ivy.data.api.AppPreferenceKeys
+import com.ivy.data.api.AppPreferenceStore
 import com.ivy.data.api.DataChangePublisher
 import com.ivy.data.api.DataWriteEvent
 import com.ivy.data.api.backup.BackupStore
@@ -57,7 +57,7 @@ class BackupDataUseCase @Inject constructor(
     private val settingsDao: SettingsDao,
     private val transactionDao: TransactionDao,
     private val transactionWriter: WriteTransactionDao,
-    private val preferenceStore: PreferenceStore,
+    private val appPreferenceStore: AppPreferenceStore,
     private val accountRepository: AccountRepository,
     private val accountMapper: AccountMapper,
     private val categoryWriter: WriteCategoryDao,
@@ -146,17 +146,11 @@ class BackupDataUseCase @Inject constructor(
 
     private fun getSharedPrefsData(): HashMap<String, String> {
         val hashmap = HashMap<String, String>()
-        hashmap[AppPreferenceKeys.SHOW_NOTIFICATIONS] =
-            preferenceStore.getBoolean(AppPreferenceKeys.SHOW_NOTIFICATIONS, true).toString()
-
-        hashmap[AppPreferenceKeys.APP_LOCK_ENABLED] =
-            preferenceStore.getBoolean(AppPreferenceKeys.APP_LOCK_ENABLED, false).toString()
-
-        hashmap[AppPreferenceKeys.HIDE_CURRENT_BALANCE] =
-            preferenceStore.getBoolean(AppPreferenceKeys.HIDE_CURRENT_BALANCE, false).toString()
-
+        hashmap[AppPreferenceKeys.SHOW_NOTIFICATIONS] = appPreferenceStore.showNotifications.toString()
+        hashmap[AppPreferenceKeys.APP_LOCK_ENABLED] = appPreferenceStore.appLockEnabled.toString()
+        hashmap[AppPreferenceKeys.HIDE_CURRENT_BALANCE] = appPreferenceStore.hideCurrentBalance.toString()
         hashmap[AppPreferenceKeys.TRANSFERS_AS_INCOME_EXPENSE] =
-            preferenceStore.getBoolean(AppPreferenceKeys.TRANSFERS_AS_INCOME_EXPENSE, false).toString()
+            appPreferenceStore.transfersAsIncomeExpense.toString()
 
         return hashmap
     }
@@ -301,28 +295,17 @@ class BackupDataUseCase @Inject constructor(
             val plannedPayments =
                 async { plannedPaymentRuleWriter.saveMany(completeData.plannedPaymentRules) }
 
-            preferenceStore.putBoolean(
-                AppPreferenceKeys.SHOW_NOTIFICATIONS,
+            appPreferenceStore.showNotifications =
                 (completeData.sharedPrefs[AppPreferenceKeys.SHOW_NOTIFICATIONS] ?: "true").toBoolean()
-            )
 
-            preferenceStore.putBoolean(
-                AppPreferenceKeys.APP_LOCK_ENABLED,
+            appPreferenceStore.appLockEnabled =
                 (completeData.sharedPrefs[AppPreferenceKeys.APP_LOCK_ENABLED] ?: "false").toBoolean()
-            )
 
-            preferenceStore.putBoolean(
-                AppPreferenceKeys.HIDE_CURRENT_BALANCE,
+            appPreferenceStore.hideCurrentBalance =
                 (completeData.sharedPrefs[AppPreferenceKeys.HIDE_CURRENT_BALANCE] ?: "false").toBoolean()
-            )
 
-            preferenceStore.putBoolean(
-                AppPreferenceKeys.TRANSFERS_AS_INCOME_EXPENSE,
-                (
-                        completeData.sharedPrefs[AppPreferenceKeys.TRANSFERS_AS_INCOME_EXPENSE]
-                            ?: "false"
-                        ).toBoolean()
-            )
+            appPreferenceStore.transfersAsIncomeExpense =
+                (completeData.sharedPrefs[AppPreferenceKeys.TRANSFERS_AS_INCOME_EXPENSE] ?: "false").toBoolean()
 
             plannedPayments.await()
             tags.await()
