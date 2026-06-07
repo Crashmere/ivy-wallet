@@ -15,10 +15,11 @@ import com.ivy.base.time.TimeConverter
 import com.ivy.base.time.TimeProvider
 import com.ivy.data.model.primitive.AssetCode
 import com.ivy.data.repository.CategoryRepository
-import com.ivy.data.repository.CurrencyRepository
 import com.ivy.data.repository.LegacySettingsRepository
 import com.ivy.data.repository.mapper.TransactionMapper
 import com.ivy.domain.preferences.toggles.PreferenceToggles
+import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
+import com.ivy.domain.usecase.currency.SetBaseCurrencyUseCase
 import com.ivy.domain.usecase.exchange.SyncExchangeRatesUseCase
 import com.ivy.legacy.frp.then
 import com.ivy.legacy.frp.thenInvokeAfter
@@ -74,7 +75,8 @@ class HomeViewModel @Inject constructor(
     private val historyWithDateDivsAct: HistoryWithDateDivsAct,
     private val calcIncomeExpenseAct: CalcIncomeExpenseAct,
     private val calcWalletBalanceAct: CalcWalletBalanceAct,
-    private val currencyRepository: CurrencyRepository,
+    private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
+    private val setBaseCurrency: SetBaseCurrencyUseCase,
     private val legacySettingsRepository: LegacySettingsRepository,
     private val accountsAct: AccountsAct,
     private val categoryRepository: CategoryRepository,
@@ -294,7 +296,7 @@ class HomeViewModel @Inject constructor(
     private suspend fun loadHomePreferences(): HomePreferences {
         return HomePreferences(
             theme = legacySettingsRepository.getTheme(),
-            baseCurrency = currencyRepository.getBaseCurrencyCode(),
+            baseCurrency = getBaseCurrencyCode(),
             bufferAmount = legacySettingsRepository.getBufferAmount(),
         )
     }
@@ -461,7 +463,7 @@ class HomeViewModel @Inject constructor(
 
     private suspend fun setCurrency(newCurrency: String) {
         val assetCode = AssetCode.from(newCurrency).getOrNull() ?: return
-        currencyRepository.setBaseCurrency(assetCode)
+        setBaseCurrency(assetCode)
         syncExchangeRatesUseCase.sync(assetCode)
         reload()
     }

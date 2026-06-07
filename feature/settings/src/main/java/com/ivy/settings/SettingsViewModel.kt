@@ -12,12 +12,13 @@ import com.ivy.base.theme.Theme
 import com.ivy.base.time.TimeProvider
 import com.ivy.data.backup.BackupDataUseCase
 import com.ivy.data.model.primitive.AssetCode
-import com.ivy.data.repository.CurrencyRepository
 import com.ivy.data.repository.LegacySettingsRepository
 import com.ivy.domain.preferences.AppPreferences
 import com.ivy.domain.preferences.toggles.BoolPreference
 import com.ivy.domain.preferences.toggles.PreferenceToggles
 import com.ivy.domain.usecase.ResetWalletDataUseCase
+import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
+import com.ivy.domain.usecase.currency.SetBaseCurrencyUseCase
 import com.ivy.domain.usecase.csv.ExportCsvUseCase
 import com.ivy.domain.usecase.exchange.SyncExchangeRatesUseCase
 import com.ivy.legacy.frp.monad.Res
@@ -42,7 +43,8 @@ import javax.inject.Inject
 class SettingsViewModel @Inject constructor(
     private val themeState: ThemeState,
     private val periodState: PeriodState,
-    private val currencyRepository: CurrencyRepository,
+    private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
+    private val setBaseCurrency: SetBaseCurrencyUseCase,
     private val legacySettingsRepository: LegacySettingsRepository,
     private val resetWalletDataUseCase: ResetWalletDataUseCase,
     private val appPreferences: AppPreferences,
@@ -117,7 +119,7 @@ class SettingsViewModel @Inject constructor(
     }
 
     private suspend fun initializeCurrency() {
-        currencyCode.value = currencyRepository.getBaseCurrencyCode()
+        currencyCode.value = getBaseCurrencyCode()
     }
 
     private suspend fun initializeCurrentTheme() {
@@ -331,7 +333,7 @@ class SettingsViewModel @Inject constructor(
 
         viewModelScope.launch {
             val assetCode = AssetCode.from(newCurrency).getOrNull() ?: return@launch
-            currencyRepository.setBaseCurrency(assetCode)
+            setBaseCurrency(assetCode)
             syncExchangeRatesUseCase.sync(assetCode)
         }
     }

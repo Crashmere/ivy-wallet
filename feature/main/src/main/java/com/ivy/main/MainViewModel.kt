@@ -3,7 +3,7 @@ package com.ivy.main
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ivy.data.repository.CurrencyRepository
+import com.ivy.domain.usecase.currency.GetBaseCurrencyUseCase
 import com.ivy.domain.usecase.exchange.SyncExchangeRatesUseCase
 import com.ivy.legacy.domain.logic.AccountCreator
 import com.ivy.base.lifecycle.asLiveData
@@ -23,7 +23,7 @@ class MainViewModel @Inject constructor(
     private val nav: Navigation,
     private val syncExchangeRatesUseCase: SyncExchangeRatesUseCase,
     private val accountCreator: AccountCreator,
-    private val currencyRepository: CurrencyRepository,
+    private val getBaseCurrency: GetBaseCurrencyUseCase,
 ) : ViewModel() {
 
     private val _currency = MutableLiveData<String>()
@@ -42,7 +42,7 @@ class MainViewModel @Inject constructor(
 
         viewModelScope.launch {
 
-            val baseCurrency = currencyRepository.getBaseCurrency()
+            val baseCurrency = getBaseCurrency()
             _currency.value = baseCurrency.code
 
             ioThread {

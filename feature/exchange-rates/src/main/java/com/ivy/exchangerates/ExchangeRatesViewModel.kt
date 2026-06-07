@@ -15,8 +15,8 @@ import com.ivy.base.threading.DispatchersProvider
 import com.ivy.data.model.ExchangeRate
 import com.ivy.data.model.primitive.AssetCode
 import com.ivy.data.model.primitive.PositiveDouble
-import com.ivy.data.repository.CurrencyRepository
 import com.ivy.data.repository.ExchangeRatesRepository
+import com.ivy.domain.usecase.currency.GetBaseCurrencyUseCase
 import com.ivy.domain.usecase.exchange.SyncExchangeRatesUseCase
 import com.ivy.exchangerates.data.RateUi
 import com.ivy.ui.ComposeViewModel
@@ -30,7 +30,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ExchangeRatesViewModel @Inject constructor(
     private val syncExchangeRatesUseCase: SyncExchangeRatesUseCase,
-    private val currencyRepo: CurrencyRepository,
+    private val getBaseCurrency: GetBaseCurrencyUseCase,
     private val exchangeRatesRepo: ExchangeRatesRepository,
     private val dispatchers: DispatchersProvider,
     private val toaster: Toaster,
@@ -47,7 +47,7 @@ class ExchangeRatesViewModel @Inject constructor(
     @Composable
     override fun uiState(): RatesState {
         LaunchedEffect(Unit) {
-            baseCurrency = currencyRepo.getBaseCurrency().also {
+            baseCurrency = getBaseCurrency().also {
                 viewModelScope.launch {
                     syncExchangeRatesUseCase.sync(it)
                 }

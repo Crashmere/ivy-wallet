@@ -16,8 +16,8 @@ import com.ivy.data.model.Category
 import com.ivy.data.model.CategoryId
 import com.ivy.data.model.IntervalType
 import com.ivy.data.repository.CategoryRepository
-import com.ivy.data.repository.CurrencyRepository
 import com.ivy.data.repository.TransactionRepository
+import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.legacy.domain.model.Account
 import com.ivy.legacy.domain.model.PlannedPaymentRule
 import com.ivy.legacy.domain.mapper.toLegacyDomain
@@ -47,7 +47,7 @@ import javax.inject.Inject
 class EditPlannedViewModel @Inject constructor(
     private val accountDao: AccountDao,
     private val categoryRepository: CategoryRepository,
-    private val currencyRepository: CurrencyRepository,
+    private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
     private val nav: Navigation,
     private val plannedPaymentRuleDao: PlannedPaymentRuleDao,
     private val plannedPaymentsGenerator: PlannedPaymentsGenerator,
@@ -321,7 +321,7 @@ class EditPlannedViewModel @Inject constructor(
         currency = account.currency ?: baseCurrency()
     }
 
-    private suspend fun baseCurrency(): String = currencyRepository.getBaseCurrencyCode()
+    private suspend fun baseCurrency(): String = getBaseCurrencyCode()
 
     private fun updateRule(
         startDate: LocalDateTime,

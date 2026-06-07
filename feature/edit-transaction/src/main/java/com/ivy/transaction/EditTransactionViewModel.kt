@@ -25,13 +25,13 @@ import com.ivy.data.model.TransactionId
 import com.ivy.data.model.primitive.AssociationId
 import com.ivy.data.model.primitive.NotBlankTrimmedString
 import com.ivy.data.repository.CategoryRepository
-import com.ivy.data.repository.CurrencyRepository
 import com.ivy.data.repository.TagRepository
 import com.ivy.data.repository.TransactionRepository
 import com.ivy.data.repository.mapper.TagMapper
 import com.ivy.data.repository.mapper.TransactionMapper
 import com.ivy.domain.preferences.toggles.PreferenceToggles
 import com.ivy.domain.preferences.AppPreferences
+import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.legacy.ui.model.EditTransactionDisplayLoan
 import com.ivy.legacy.domain.model.Account
 import com.ivy.legacy.domain.mapper.toDomain
@@ -83,7 +83,7 @@ class EditTransactionViewModel @Inject constructor(
     private val resourceProvider: ResourceProvider,
     private val toaster: Toaster,
     private val loanDao: LoanDao,
-    private val currencyRepository: CurrencyRepository,
+    private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
     private val nav: Navigation,
     private val appPreferences: AppPreferences,
     private val exchangeRatesLogic: ExchangeRatesLogic,
@@ -773,7 +773,7 @@ class EditTransactionViewModel @Inject constructor(
         )
     }
 
-    private suspend fun baseCurrency(): String = currencyRepository.getBaseCurrencyCode()
+    private suspend fun baseCurrency(): String = getBaseCurrencyCode()
 
     private fun closeScreen() {
         if (nav.backStackEmpty()) {

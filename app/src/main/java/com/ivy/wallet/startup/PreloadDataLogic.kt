@@ -11,7 +11,7 @@ import com.ivy.data.model.primitive.IconAsset
 import com.ivy.data.model.primitive.NotBlankTrimmedString
 import com.ivy.data.repository.AccountRepository
 import com.ivy.data.repository.CategoryRepository
-import com.ivy.data.repository.CurrencyRepository
+import com.ivy.domain.usecase.currency.GetBaseCurrencyUseCase
 import com.ivy.ui.R
 import java.util.UUID
 import javax.inject.Inject
@@ -19,13 +19,13 @@ import javax.inject.Inject
 class PreloadDataLogic @Inject constructor(
     private val categoryRepository: CategoryRepository,
     private val accountRepository: AccountRepository,
-    private val currencyRepository: CurrencyRepository,
+    private val getBaseCurrency: GetBaseCurrencyUseCase,
     private val resourceProvider: ResourceProvider,
 ) {
     private var categoryOrderNum = 0.0
 
     suspend fun preloadAccounts() {
-        val baseCurrency = currencyRepository.getBaseCurrency()
+        val baseCurrency = getBaseCurrency()
         accountRepository.save(
             Account(
                 id = AccountId(UUID.randomUUID()),

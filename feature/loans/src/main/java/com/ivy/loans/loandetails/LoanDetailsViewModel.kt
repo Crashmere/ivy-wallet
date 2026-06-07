@@ -11,9 +11,9 @@ import com.ivy.base.model.LoanRecordType
 import com.ivy.base.time.TimeConverter
 import com.ivy.base.time.TimeProvider
 import com.ivy.data.db.dao.read.LoanRecordDao
-import com.ivy.data.repository.CurrencyRepository
 import com.ivy.data.repository.TransactionRepository
 import com.ivy.data.repository.mapper.TransactionMapper
+import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.legacy.domain.model.Account
 import com.ivy.legacy.domain.model.Loan
 import com.ivy.legacy.domain.model.LoanRecord
@@ -57,7 +57,7 @@ class LoanDetailsViewModel @Inject constructor(
     private val loanRecordDao: LoanRecordDao,
     private val loanCreator: LoanCreator,
     private val loanRecordCreator: LoanRecordCreator,
-    private val currencyRepository: CurrencyRepository,
+    private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
     private val transactionRepository: TransactionRepository,
     private val transactionMapper: TransactionMapper,
     private val accountCreator: AccountCreator,
@@ -252,7 +252,7 @@ class LoanDetailsViewModel @Inject constructor(
 
             dateTime.value = timeProvider.utcNow()
 
-            defaultCurrencyCode = currencyRepository.getBaseCurrencyCode().also {
+            defaultCurrencyCode = getBaseCurrencyCode().also {
                 baseCurrency.value = it
             }
 

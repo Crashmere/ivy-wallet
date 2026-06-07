@@ -11,7 +11,7 @@ import androidx.lifecycle.viewModelScope
 import com.ivy.ui.ComposeViewModel
 import com.ivy.data.model.Category
 import com.ivy.data.repository.CategoryRepository
-import com.ivy.data.repository.CurrencyRepository
+import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.legacy.domain.model.Account
 import com.ivy.legacy.domain.model.PlannedPaymentRule
 import com.ivy.base.coroutines.ioThread
@@ -27,7 +27,7 @@ import javax.inject.Inject
 @Stable
 @HiltViewModel
 class PlannedPaymentsViewModel @Inject constructor(
-    private val currencyRepository: CurrencyRepository,
+    private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
     private val plannedPaymentsLogic: PlannedPaymentsLogic,
     private val categoriesRepository: CategoryRepository,
     private val accountsAct: AccountsAct
@@ -136,7 +136,7 @@ class PlannedPaymentsViewModel @Inject constructor(
 
     private fun start() {
         viewModelScope.launch {
-            currency = currencyRepository.getBaseCurrencyCode()
+            currency = getBaseCurrencyCode()
 
             categories = categoriesRepository.findAll().toImmutableList()
             accounts = accountsAct(Unit)

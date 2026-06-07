@@ -13,8 +13,8 @@ import com.ivy.base.time.TimeProvider
 import com.ivy.data.db.dao.read.LoanRecordDao
 import com.ivy.data.db.dao.write.WriteLoanDao
 import com.ivy.data.model.LoanType
-import com.ivy.data.repository.CurrencyRepository
 import com.ivy.domain.preferences.AppPreferences
+import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.legacy.domain.model.Account
 import com.ivy.legacy.domain.model.Loan
 import com.ivy.legacy.domain.logic.AccountCreator
@@ -46,7 +46,7 @@ import javax.inject.Inject
 @HiltViewModel
 class LoanViewModel @Inject constructor(
     private val loanRecordDao: LoanRecordDao,
-    private val currencyRepository: CurrencyRepository,
+    private val getBaseCurrencyCodeUseCase: GetBaseCurrencyCodeUseCase,
     private val loanCreator: LoanCreator,
     private val appPreferences: AppPreferences,
     private val accountCreator: AccountCreator,
@@ -193,7 +193,7 @@ class LoanViewModel @Inject constructor(
 
             dateTime = timeProvider.utcNow()
 
-            defaultCurrencyCode = currencyRepository.getBaseCurrencyCode().also {
+            defaultCurrencyCode = getBaseCurrencyCodeUseCase().also {
                 baseCurrencyCode = it
             }
 
