@@ -1,4 +1,4 @@
-package com.ivy.design.api
+package com.ivy.legacy.design.api
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -11,9 +11,9 @@ import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.Modifier
 import com.ivy.base.time.TimeConverter
 import com.ivy.base.time.TimeProvider
-import com.ivy.design.LocalThemeState
-import com.ivy.design.ThemeState
-import com.ivy.design.l0_system.IvyTheme
+import com.ivy.legacy.design.LocalThemeState
+import com.ivy.legacy.design.ThemeState
+import com.ivy.legacy.design.l0_system.IvyTheme
 import com.ivy.ui.platform.DatePicker
 import com.ivy.ui.time.TimeFormatter
 

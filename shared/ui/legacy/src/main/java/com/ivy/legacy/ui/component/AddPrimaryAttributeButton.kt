@@ -15,8 +15,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.ivy.design.l0_system.LegacyTheme
-import com.ivy.design.l0_system.style
+import com.ivy.legacy.design.l0_system.LegacyTheme
+import com.ivy.legacy.design.l0_system.style
 import com.ivy.ui.R
 
 @Deprecated("Old design system. Use `:ivy-design` and Material3")

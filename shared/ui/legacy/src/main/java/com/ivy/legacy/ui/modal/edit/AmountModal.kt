@@ -34,8 +34,8 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.ivy.design.l0_system.LegacyTheme
-import com.ivy.design.l0_system.style
+import com.ivy.legacy.design.l0_system.LegacyTheme
+import com.ivy.legacy.design.l0_system.style
 import com.ivy.domain.di.FeaturesEntryPoint
 import com.ivy.data.model.currency.amountToDouble
 import com.ivy.data.model.currency.amountToDoubleOrNull

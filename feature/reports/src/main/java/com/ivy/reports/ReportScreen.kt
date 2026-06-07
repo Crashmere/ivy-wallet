@@ -26,8 +26,8 @@ import androidx.compose.ui.zIndex
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.ivy.base.legacy.stringRes
 import com.ivy.base.model.TransactionType
-import com.ivy.design.l0_system.LegacyTheme
-import com.ivy.design.l0_system.style
+import com.ivy.legacy.design.l0_system.LegacyTheme
+import com.ivy.legacy.design.l0_system.style
 import com.ivy.legacy.ui.model.AppBaseData
 import com.ivy.legacy.ui.model.LegacyDueSection
 import com.ivy.legacy.ui.component.IncomeExpensesCards

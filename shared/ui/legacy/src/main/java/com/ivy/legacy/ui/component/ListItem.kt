@@ -16,9 +16,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.ivy.design.l0_system.LegacyTheme
-import com.ivy.design.l0_system.style
-import com.ivy.design.utils.thenIf
+import com.ivy.legacy.design.l0_system.LegacyTheme
+import com.ivy.legacy.design.l0_system.style
+import com.ivy.legacy.design.utils.thenIf
 import com.ivy.legacy.ui.component.ItemIconSDefaultIcon
 import com.ivy.legacy.ui.theme.findContrastTextColor
 

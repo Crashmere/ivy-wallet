@@ -27,8 +27,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.ivy.design.l0_system.LegacyTheme
-import com.ivy.design.l0_system.style
+import com.ivy.legacy.design.l0_system.LegacyTheme
+import com.ivy.legacy.design.l0_system.style
 import com.ivy.legacy.domain.model.AccountData
 import com.ivy.ui.legacy.clickableNoIndication
 import com.ivy.ui.legacy.horizontalSwipeListener

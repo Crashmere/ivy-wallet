@@ -19,9 +19,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.ivy.design.l0_system.LegacyTheme
-import com.ivy.design.l0_system.style
-import com.ivy.design.utils.thenIf
+import com.ivy.legacy.design.l0_system.LegacyTheme
+import com.ivy.legacy.design.l0_system.style
+import com.ivy.legacy.design.utils.thenIf
 import com.ivy.data.model.currency.format
 import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.Green

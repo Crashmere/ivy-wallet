@@ -16,10 +16,10 @@ import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.ivy.design.l0_system.LegacyTheme
-import com.ivy.design.l0_system.style
+import com.ivy.legacy.design.l0_system.LegacyTheme
+import com.ivy.legacy.design.l0_system.style
 import com.ivy.ui.legacy.drawColoredShadow
-import com.ivy.design.utils.thenIf
+import com.ivy.legacy.design.utils.thenIf
 import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.Gradient
 import androidx.compose.foundation.layout.fillMaxWidth

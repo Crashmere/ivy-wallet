@@ -5,10 +5,10 @@ import com.ivy.base.legacy.stringRes
 import com.ivy.base.model.TransactionType
 import com.ivy.data.db.dao.read.PlannedPaymentRuleDao
 import com.ivy.data.repository.TransactionRepository
-import com.ivy.design.l0_system.Gradient
-import com.ivy.design.l0_system.Ivy
-import com.ivy.design.l0_system.Orange
-import com.ivy.design.l0_system.Red
+import com.ivy.legacy.design.l0_system.Gradient
+import com.ivy.legacy.design.l0_system.Ivy
+import com.ivy.legacy.design.l0_system.Orange
+import com.ivy.legacy.design.l0_system.Red
 import com.ivy.navigation.EditPlannedScreen
 import com.ivy.navigation.MainTab
 import com.ivy.navigation.PieChartStatisticScreen

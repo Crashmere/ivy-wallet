@@ -30,10 +30,10 @@ import com.ivy.IvyNavGraph
 import com.ivy.base.legacy.Theme
 import com.ivy.base.time.TimeConverter
 import com.ivy.base.time.TimeProvider
-import com.ivy.design.ThemeState
-import com.ivy.design.api.IvyUI
-import com.ivy.design.api.systems.DefaultIvyDesign
-import com.ivy.design.system.IvyMaterial3Theme
+import com.ivy.legacy.design.ThemeState
+import com.ivy.legacy.design.api.IvyUI
+import com.ivy.legacy.design.api.systems.DefaultIvyDesign
+import com.ivy.legacy.design.system.IvyMaterial3Theme
 import com.ivy.domain.RootScreen
 import com.ivy.legacy.ui.state.LocalPeriodState
 import com.ivy.legacy.ui.state.PeriodState

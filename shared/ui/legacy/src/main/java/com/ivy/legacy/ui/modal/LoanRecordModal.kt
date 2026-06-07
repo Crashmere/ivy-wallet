@@ -30,10 +30,10 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import com.ivy.base.model.LoanRecordType
 import com.ivy.data.model.primitive.NotBlankTrimmedString
-import com.ivy.design.api.LocalTimeConverter
-import com.ivy.design.l0_system.LegacyTheme
-import com.ivy.design.l0_system.style
-import com.ivy.design.utils.thenIf
+import com.ivy.legacy.design.api.LocalTimeConverter
+import com.ivy.legacy.design.l0_system.LegacyTheme
+import com.ivy.legacy.design.l0_system.style
+import com.ivy.legacy.design.utils.thenIf
 import com.ivy.frp.test.TestingContext
 import com.ivy.legacy.domain.model.Account
 import com.ivy.legacy.domain.model.LoanRecord

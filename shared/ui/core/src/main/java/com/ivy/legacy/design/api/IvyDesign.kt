@@ -1,9 +1,9 @@
-package com.ivy.design.api
+package com.ivy.legacy.design.api
 
 import com.ivy.base.legacy.Theme
-import com.ivy.design.l0_system.IvyColors
-import com.ivy.design.l0_system.IvyShapes
-import com.ivy.design.l0_system.IvyTypography
+import com.ivy.legacy.design.l0_system.IvyColors
+import com.ivy.legacy.design.l0_system.IvyShapes
+import com.ivy.legacy.design.l0_system.IvyTypography
 
 @Deprecated("Old design system. Use `:ivy-design` and Material3")
 interface IvyDesign {

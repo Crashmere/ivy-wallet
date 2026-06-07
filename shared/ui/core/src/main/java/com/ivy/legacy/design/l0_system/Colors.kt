@@ -1,4 +1,4 @@
-package com.ivy.design.l0_system
+package com.ivy.legacy.design.l0_system
 
 import androidx.annotation.ColorInt
 import androidx.compose.runtime.Composable

@@ -37,8 +37,8 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
-import com.ivy.design.l0_system.LegacyTheme
-import com.ivy.design.utils.rememberInteractionSource
+import com.ivy.legacy.design.l0_system.LegacyTheme
+import com.ivy.legacy.design.utils.rememberInteractionSource
 import com.ivy.ui.legacy.addKeyboardListener
 import com.ivy.ui.legacy.consumeClicks
 import com.ivy.ui.legacy.densityScope
@@ -46,7 +46,7 @@ import com.ivy.ui.legacy.hideKeyboard
 import com.ivy.ui.legacy.keyboardOnlyWindowInsets
 import com.ivy.ui.legacy.navigationBarInsets
 import com.ivy.ui.legacy.onScreenStart
-import com.ivy.design.utils.thenIf
+import com.ivy.legacy.design.utils.thenIf
 import com.ivy.navigation.Navigation
 import com.ivy.navigation.navigation
 import com.ivy.legacy.ui.component.ActionsRow

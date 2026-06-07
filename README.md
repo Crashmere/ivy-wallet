@@ -60,7 +60,7 @@
 
 - `feature:*` 和 `app` 对 `:temp:legacy-code` 的直接依赖已经迁走，Gradle 中不再 include 旧 `temp` 模块。
 - `:temp:legacy-code` 模块已经删除；旧全局上下文入口暂时迁入 `shared:ui:legacy`，后续继续拆内部职责。
-- 旧设计系统源码已经迁入 `shared:ui:core` 作为兼容层，仍保留 `com.ivy.design.*` 包名和旧 `IvyUI`、`LegacyTheme` 等概念；旧全局 `IvyContext/IvyWalletCtx` 已删除。
+- 旧设计系统源码已经迁入 `shared:ui:core` 作为兼容层，并已统一归到 `com.ivy.legacy.design.*` 包名；旧 `IvyUI`、`LegacyTheme` 等概念仍存在，但不再伪装成正式设计系统。
 
 问题：
 
@@ -335,7 +335,7 @@
 当前进展：
 
 - 已把 `utils/Compose.kt`、`utils/Keyboard.kt`、`Spacers.kt`、`ColumnRoot.kt`、`IvyText.kt` 从 `temp:old-design` 移到 `shared:ui:core`；其中 `Spacers.kt`、`ColumnRoot.kt` 和未使用的旧分隔组件后续已替换为 Compose 原生写法并删除。
-- 这些文件暂时保留 `com.ivy.design.*` 包名，以降低迁移成本；后续在旧设计模块清空后再统一改包名。
+- 这些文件已统一归到 `com.ivy.legacy.design.*` 包名；后续继续替换 `LegacyTheme`、`IvyUI` 和旧 helper。
 - 在 `shared:ui:core` 补齐 `colorControlNormal` attr，让仍使用该 attr 的旧 drawable 可以通过独立资源校验。
 - 已把剩余旧设计 Kotlin 源码整体迁入 `shared:ui:core`，并删除 `:temp:old-design` 模块依赖。
 - 旧模块中的字体是 `shared:ui:core` 的重复资源；旧模块中的未引用 drawable 不迁移。
@@ -343,7 +343,7 @@
 完成标准：
 
 - `rg "projects.temp.oldDesign" -g "build.gradle.kts"` 无 feature/app 依赖。
-- `rg "com.ivy.design"` 只剩新设计系统包，或者完全消失。
+- `rg "com.ivy.design"` 已经从源码中清空。
 - 删除 `:temp:old-design` include 和目录。
 
 ### 阶段 5：拆解 `temp:legacy-code`
@@ -414,6 +414,7 @@
 - 已把 `FromToTimeRange` 和 `AccountData` 从跨模块混用的 `com.ivy.legacy.data.model` 拆到 `com.ivy.legacy.domain.model`；UI 侧 `TimePeriod/Month/LastNTimeRange` 暂时保留在旧 UI 包，因为它们仍依赖 UI 文案和时间格式化。
 - 已把剩余 UI 兼容状态模型从 `com.ivy.legacy.data` 迁到 `com.ivy.legacy.ui.model`，并把周期选择模型迁到 `com.ivy.legacy.ui.model.period`；`com.ivy.legacy.data.*` 包名已经从源码中清空。
 - 已把旧周期状态入口从 `com.ivy.legacy` 根包迁到 `com.ivy.legacy.ui.state`，并把旧 `rootScreen()` 桥接函数迁到 `com.ivy.legacy.ui.platform`；`shared:ui:legacy` 不再通过根包暴露迁移期 API。
+- 已把旧设计兼容层从 `com.ivy.design.*` 迁到 `com.ivy.legacy.design.*`，包括旧 `IvyUI`、`LegacyTheme`、颜色常量、Compose helper 和 Material3 theme 包装；功能和视觉保持不变。
 - 已删除 `:temp:legacy-code` 的 Gradle include、模块 build 文件，以及所有 app/feature 对 `projects.temp.legacyCode` 的依赖声明。
 - 阶段 5 的模块拆解目标已经完成：仓库中不再有被 Gradle include 的 `temp:*` 模块。后续工作转为拆除 `shared:ui:legacy` 中剩余旧上下文、旧设计 API 和旧 UI 兼容模型。
 
@@ -696,5 +697,5 @@ shared:ui:core
 下一步建议执行：
 
 1. 继续替换旧设计兼容 API：下一步盘点 `shared:ui:legacy` 中剩余旧 UI/data 兼容模型，优先处理纯包名归位和可替换的薄 UI 包装；实体字段、备份恢复格式和 Room migration 暂不混入普通包名提交。
-2. 继续收敛旧设计系统包名：优先处理 `com.ivy.design.*` 兼容层的包名归位和薄包装替换，暂不混入视觉重做。
+2. 继续替换旧设计兼容 API：优先从调用面较小的 helper 和 `Local*` 桥接开始，逐步减少 `LegacyTheme`、`IvyUI`、旧颜色常量和旧 modal 组件的使用；暂不混入视觉重做。
 3. 每完成一组跨模块边界调整后运行 `:app:assembleDemo`，确认构建没有被迁移影响；涉及数据库、备份恢复或导入导出时再补充对应测试。

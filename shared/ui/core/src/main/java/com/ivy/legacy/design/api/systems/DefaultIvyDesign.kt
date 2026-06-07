@@ -1,4 +1,4 @@
-package com.ivy.design.api.systems
+package com.ivy.legacy.design.api.systems
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.text.TextStyle
@@ -9,8 +9,8 @@ import androidx.compose.ui.text.style.BaselineShift
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ivy.base.legacy.Theme
-import com.ivy.design.api.IvyDesign
-import com.ivy.design.l0_system.*
+import com.ivy.legacy.design.api.IvyDesign
+import com.ivy.legacy.design.l0_system.*
 import com.ivy.ui.R
 
 @Deprecated("Old design system. Use `:ivy-design` and Material3")

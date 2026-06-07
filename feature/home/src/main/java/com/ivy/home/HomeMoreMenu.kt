@@ -44,9 +44,9 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import com.ivy.base.legacy.Theme
-import com.ivy.design.l0_system.LegacyTheme
-import com.ivy.design.l0_system.style
-import com.ivy.design.utils.thenIf
+import com.ivy.legacy.design.l0_system.LegacyTheme
+import com.ivy.legacy.design.l0_system.style
+import com.ivy.legacy.design.utils.thenIf
 import com.ivy.ui.legacy.clickableNoIndication
 import com.ivy.ui.legacy.colorLerp
 import com.ivy.ui.legacy.lerp

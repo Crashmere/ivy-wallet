@@ -11,7 +11,7 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.ivy.design.l0_system.LegacyTheme
+import com.ivy.legacy.design.l0_system.LegacyTheme
 import com.ivy.ui.legacy.navigationBarInset
 import com.ivy.ui.legacy.toDensityDp
 import com.ivy.ui.R

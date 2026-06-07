@@ -14,7 +14,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.ivy.design.l0_system.LegacyTheme
+import com.ivy.legacy.design.l0_system.LegacyTheme
 import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.Gradient
 

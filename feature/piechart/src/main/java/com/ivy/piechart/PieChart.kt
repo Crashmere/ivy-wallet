@@ -24,7 +24,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import com.ivy.base.legacy.toEpochMilli
 import com.ivy.base.model.TransactionType
 import com.ivy.data.model.Category
-import com.ivy.design.l0_system.LegacyTheme
+import com.ivy.legacy.design.l0_system.LegacyTheme
 import com.ivy.ui.legacy.drawColoredShadow
 import com.ivy.base.legacy.timeNowUTC
 import com.ivy.ui.R

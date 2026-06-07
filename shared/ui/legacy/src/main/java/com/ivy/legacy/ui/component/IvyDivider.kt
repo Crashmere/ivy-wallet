@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.ivy.design.l0_system.LegacyTheme
+import com.ivy.legacy.design.l0_system.LegacyTheme
 
 @Deprecated("Old design system. Use `:ivy-design` and Material3")
 @Composable

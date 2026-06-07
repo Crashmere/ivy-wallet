@@ -1,4 +1,4 @@
-package com.ivy.design.l0_system
+package com.ivy.legacy.design.l0_system
 
 import android.app.Activity
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -12,8 +12,8 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 import com.ivy.base.legacy.Theme
-import com.ivy.design.api.IvyDesign
-import com.ivy.design.system.IvyMaterial3Theme
+import com.ivy.legacy.design.api.IvyDesign
+import com.ivy.legacy.design.system.IvyMaterial3Theme
 
 @Deprecated("Old design system. Use `:ivy-design` and Material3")
 val LocalIvyColors = compositionLocalOf<IvyColors> { error("No IvyColors") }

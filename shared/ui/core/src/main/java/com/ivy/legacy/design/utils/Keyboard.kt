@@ -1,4 +1,4 @@
-package com.ivy.design.utils
+package com.ivy.legacy.design.utils
 
 import android.annotation.SuppressLint
 import android.app.Activity

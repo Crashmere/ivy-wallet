@@ -1,4 +1,4 @@
-package com.ivy.design.utils
+package com.ivy.legacy.design.utils
 
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.runtime.Composable
