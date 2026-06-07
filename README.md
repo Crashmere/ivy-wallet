@@ -416,6 +416,7 @@
 - 第一批 ViewModel 已停止使用 deprecated 的全局 UTC 时间函数：设置导出文件名、首页/余额/交易/饼图的月份切换、报表 upcoming/overdue 判断和报表导出文件名都改为通过注入式 `TimeProvider` 获取当前时间。
 - 第一批非 UI feature 逻辑已停止使用 deprecated 的全局 `stringRes()`：交易页/报表页/饼图中的特殊分类名称，以及首页客户旅程卡片文案都改为通过注入式 `ResourceProvider` 获取字符串资源。
 - 第一批 feature 屏幕层已停止使用 deprecated 的全局 `stringRes()`：首页、交易页和报表页的空状态/标签文案改为 Compose 原生 `stringResource()`，列表构建块继续接收普通字符串参数。
+- feature 源码中的剩余预算类型和借贷类型显示也已停止使用全局 `stringRes()`；这些文案只在 Composable 调用点使用，因此改为 Composable 格式化函数内部调用 `stringResource()`。
 - 已删除旧 building block 中最薄的 `SpacerVer/SpacerHor/SpacerWeight`、`ColumnRoot`、`DividerW/DividerH/DividerV/DividerSize`，相关调用方已改用 Compose 原生 `Spacer`、`Column` 和本地分隔线。
 - 已删除旧 `IvyText` 包装，剩余调用方改用 Material3 `Text`。
 - 已删除旧 `IvyIcon/IvyIconScaled/IconScale` 包装，剩余调用方改用 Material3 `Icon`、`Image` 或本地小函数；`shared:ui:core` 的旧 `l1_buildingBlocks` 包已清空。
