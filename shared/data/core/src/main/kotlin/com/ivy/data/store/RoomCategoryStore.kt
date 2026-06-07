@@ -6,7 +6,7 @@ import com.ivy.data.db.dao.read.CategoryDao
 import com.ivy.data.db.dao.write.WriteCategoryDao
 import com.ivy.data.model.Category
 import com.ivy.data.model.CategoryId
-import com.ivy.data.repository.mapper.CategoryMapper
+import com.ivy.data.mapper.CategoryMapper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject

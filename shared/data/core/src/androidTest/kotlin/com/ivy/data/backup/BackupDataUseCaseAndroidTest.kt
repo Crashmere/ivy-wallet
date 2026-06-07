@@ -16,7 +16,7 @@ import com.ivy.data.preferences.SharedPrefsAppPreferenceStore
 import com.ivy.data.store.RoomAccountStore
 import com.ivy.data.store.RoomCurrencyStore
 import com.ivy.data.store.fake.fakeStoreCacheFactory
-import com.ivy.data.repository.mapper.AccountMapper
+import com.ivy.data.mapper.AccountMapper
 import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.ints.shouldBeGreaterThan
 import kotlinx.coroutines.runBlocking

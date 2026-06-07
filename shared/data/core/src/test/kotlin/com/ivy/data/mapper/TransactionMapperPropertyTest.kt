@@ -1,4 +1,4 @@
-package com.ivy.data.repository.mapper
+package com.ivy.data.mapper
 
 import arrow.core.Some
 import com.ivy.data.db.entity.TransactionEntity

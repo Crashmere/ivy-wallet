@@ -10,7 +10,7 @@ import com.ivy.data.model.primitive.AssetCode
 import com.ivy.data.model.primitive.ColorInt
 import com.ivy.data.model.primitive.NotBlankTrimmedString
 import com.ivy.data.store.fake.fakeStoreCacheFactory
-import com.ivy.data.repository.mapper.AccountMapper
+import com.ivy.data.mapper.AccountMapper
 import io.kotest.matchers.shouldBe
 import io.mockk.coEvery
 import io.mockk.coVerify

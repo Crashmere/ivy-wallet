@@ -1,4 +1,4 @@
-package com.ivy.data.repository.mapper
+package com.ivy.data.mapper
 
 import arrow.core.Either
 import arrow.core.raise.either

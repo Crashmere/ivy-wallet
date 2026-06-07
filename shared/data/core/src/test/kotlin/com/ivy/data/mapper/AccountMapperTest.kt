@@ -1,4 +1,4 @@
-package com.ivy.data.repository.mapper
+package com.ivy.data.mapper
 
 import com.google.testing.junit.testparameterinjector.TestParameter
 import com.google.testing.junit.testparameterinjector.TestParameterInjector

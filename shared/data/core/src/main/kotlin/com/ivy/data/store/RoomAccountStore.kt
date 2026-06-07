@@ -6,7 +6,7 @@ import com.ivy.data.db.dao.read.AccountDao
 import com.ivy.data.db.dao.write.WriteAccountDao
 import com.ivy.data.model.Account
 import com.ivy.data.model.AccountId
-import com.ivy.data.repository.mapper.AccountMapper
+import com.ivy.data.mapper.AccountMapper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject

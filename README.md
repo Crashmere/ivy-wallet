@@ -810,6 +810,7 @@
 - `shared:ui:navigation` 和 `shared:ui:legacy` 已移除最后的 `javax.inject` 依赖；`Navigation/MainTabState/PeriodState` 作为普通状态类由 app 统一提供单例。
 - `SettingsStore` 的 Room 实现已从泛化的 `SettingsRepository` 改名为 `RoomSettingsStore`；外部端口不变，先把设置存储边界表达清楚。
 - data-core 的 Store 实现已整体归位到 `com.ivy.data.store`：账户、分类、币种、标签、交易、预算、借贷、计划付款和设置的 Room 实现统一命名为 `Room*Store`，汇率实现命名为 `DefaultExchangeRateStore`。
+- data-core 的实体/模型转换器已从历史 `repository.mapper` 包迁到 `com.ivy.data.mapper`；主源码中不再使用 `com.ivy.data.repository` 包。
 - data-core 内部的备份导入、账户映射和交易仓库已改为依赖 `AccountStore/CurrencyStore/TagStore` 端口，不再直接依赖对应具体 Repository 实现。
 - 账户旧读取路径已收敛到 `AccountStore`；旧 legacy 账户模型现在由 data model 账户映射而来，`shared:domain` 主源码不再直接注入 `AccountDao` 或依赖 `AccountEntity` mapper。
 - 旧交易卡片已移除重复账户查找 TODO：渲染前先解析来源/目标账户，再复用同一结果处理点击和币种展示，行为不变但 legacy UI 内部职责更清楚。

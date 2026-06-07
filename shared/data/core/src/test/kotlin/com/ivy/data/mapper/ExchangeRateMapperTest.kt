@@ -1,4 +1,4 @@
-package com.ivy.data.repository.mapper
+package com.ivy.data.mapper
 
 import com.ivy.data.db.entity.ExchangeRateEntity
 import com.ivy.data.model.ExchangeRate

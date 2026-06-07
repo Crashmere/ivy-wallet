@@ -16,7 +16,7 @@ import com.ivy.data.di.SerializationModule
 import com.ivy.data.store.RoomAccountStore
 import com.ivy.data.store.RoomCurrencyStore
 import com.ivy.data.store.fake.fakeStoreCacheFactory
-import com.ivy.data.repository.mapper.AccountMapper
+import com.ivy.data.mapper.AccountMapper
 import com.ivy.data.testResource
 import io.kotest.matchers.ints.shouldBeGreaterThan
 import io.kotest.matchers.shouldBe

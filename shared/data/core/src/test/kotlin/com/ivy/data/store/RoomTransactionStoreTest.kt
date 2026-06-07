@@ -19,7 +19,7 @@ import com.ivy.data.model.testing.accountId
 import com.ivy.data.model.testing.transaction
 import com.ivy.data.model.testing.transactionId
 import com.ivy.data.api.TagStore
-import com.ivy.data.repository.mapper.TransactionMapper
+import com.ivy.data.mapper.TransactionMapper
 import com.ivy.data.validTransactionEntity
 import io.kotest.matchers.longs.shouldBeGreaterThanOrEqual
 import io.kotest.matchers.shouldBe

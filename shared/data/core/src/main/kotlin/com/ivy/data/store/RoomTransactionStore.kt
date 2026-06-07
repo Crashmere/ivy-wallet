@@ -17,7 +17,7 @@ import com.ivy.data.model.Transfer
 import com.ivy.data.model.primitive.AssociationId
 import com.ivy.data.model.primitive.NonNegativeLong
 import com.ivy.data.model.primitive.toNonNegative
-import com.ivy.data.repository.mapper.TransactionMapper
+import com.ivy.data.mapper.TransactionMapper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext

@@ -10,7 +10,7 @@ import com.ivy.data.model.Tag
 import com.ivy.data.model.TagAssociation
 import com.ivy.data.model.TagId
 import com.ivy.data.model.primitive.AssociationId
-import com.ivy.data.repository.mapper.TagMapper
+import com.ivy.data.mapper.TagMapper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
