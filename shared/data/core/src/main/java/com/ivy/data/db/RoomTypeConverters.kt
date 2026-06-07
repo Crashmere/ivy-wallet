@@ -2,10 +2,10 @@ package com.ivy.data.db
 
 import androidx.room.TypeConverter
 import com.ivy.base.legacy.Theme
-import com.ivy.base.legacy.epochMilliToDateTime
-import com.ivy.base.legacy.toEpochMilli
 import com.ivy.base.model.LoanRecordType
 import com.ivy.base.model.TransactionType
+import com.ivy.base.time.epochMilliToUtcLocalDateTime
+import com.ivy.base.time.toUtcEpochMilli
 import com.ivy.data.model.IntervalType
 import com.ivy.data.model.LoanType
 import java.time.Instant
@@ -15,10 +15,11 @@ import java.util.*
 @SuppressWarnings("unused")
 class RoomTypeConverters {
     @TypeConverter
-    fun saveDate(localDateTime: LocalDateTime?): Long? = localDateTime?.toEpochMilli()
+    fun saveDate(localDateTime: LocalDateTime?): Long? = localDateTime?.toUtcEpochMilli()
 
     @TypeConverter
-    fun parseDate(timestampMillis: Long?): LocalDateTime? = timestampMillis?.epochMilliToDateTime()
+    fun parseDate(timestampMillis: Long?): LocalDateTime? =
+        timestampMillis?.epochMilliToUtcLocalDateTime()
 
     @TypeConverter
     fun saveUUID(id: UUID?) = id?.toString()

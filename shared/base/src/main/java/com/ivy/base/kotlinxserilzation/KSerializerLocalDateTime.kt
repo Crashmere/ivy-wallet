@@ -1,8 +1,8 @@
 package com.ivy.base.kotlinxserilzation
 
 import androidx.annotation.Keep
-import com.ivy.base.legacy.epochMilliToDateTime
-import com.ivy.base.legacy.toEpochMilli
+import com.ivy.base.time.epochMilliToUtcLocalDateTime
+import com.ivy.base.time.toUtcEpochMilli
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
@@ -19,10 +19,10 @@ object KSerializerLocalDateTime : KSerializer<LocalDateTime> {
     )
 
     override fun deserialize(decoder: Decoder): LocalDateTime {
-        return decoder.decodeLong().epochMilliToDateTime()
+        return decoder.decodeLong().epochMilliToUtcLocalDateTime()
     }
 
     override fun serialize(encoder: Encoder, value: LocalDateTime) {
-        encoder.encodeLong(value.toEpochMilli())
+        encoder.encodeLong(value.toUtcEpochMilli())
     }
 }
