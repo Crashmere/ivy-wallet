@@ -24,8 +24,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
-import com.ivy.base.legacy.numberBetween
-import com.ivy.base.legacy.swap
+import com.ivy.base.random.numberBetween
+import com.ivy.base.collections.swap
 import com.ivy.data.model.Reorderable
 import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.GradientGreen

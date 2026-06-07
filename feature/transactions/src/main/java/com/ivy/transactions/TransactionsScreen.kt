@@ -54,7 +54,7 @@ import com.ivy.legacy.ui.state.LocalPeriodState
 import com.ivy.legacy.ui.component.IncomeExpensesCards
 import com.ivy.legacy.ui.component.ItemStatisticToolbar
 import com.ivy.legacy.ui.component.transaction.transactions
-import com.ivy.base.legacy.balancePrefix
+import com.ivy.base.money.balancePrefix
 import com.ivy.legacy.ui.clickableNoIndication
 import com.ivy.legacy.ui.horizontalSwipeListener
 import com.ivy.legacy.ui.rememberInteractionSource

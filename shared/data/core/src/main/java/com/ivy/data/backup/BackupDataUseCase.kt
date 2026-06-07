@@ -4,8 +4,8 @@ import android.content.Context
 import android.net.Uri
 import androidx.core.net.toUri
 import com.ivy.base.legacy.SharedPrefs
-import com.ivy.base.legacy.unzip
-import com.ivy.base.legacy.zip
+import com.ivy.base.io.unzip
+import com.ivy.base.io.zip
 import com.ivy.base.threading.DispatchersProvider
 import com.ivy.data.DataObserver
 import com.ivy.data.DataWriteEvent

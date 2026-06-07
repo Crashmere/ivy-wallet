@@ -1,4 +1,4 @@
-package com.ivy.base.legacy
+package com.ivy.base.money
 
 fun balancePrefix(
     income: Double,

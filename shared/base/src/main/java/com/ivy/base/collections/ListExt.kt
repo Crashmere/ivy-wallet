@@ -1,6 +1,4 @@
-package com.ivy.base.legacy
-
-import java.util.Random
+package com.ivy.base.collections
 
 fun <T> MutableList<T>.swap(fromIndex: Int, toIndex: Int) {
     val from = this[fromIndex]
@@ -8,8 +6,4 @@ fun <T> MutableList<T>.swap(fromIndex: Int, toIndex: Int) {
 
     this[fromIndex] = to
     this[toIndex] = from
-}
-
-fun numberBetween(min: Double, max: Double): Double {
-    return Random().nextDouble() * (max - min) + min
 }
