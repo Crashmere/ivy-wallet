@@ -570,11 +570,11 @@
 
 ### 阶段 6：偏好设置与本地配置重构
 
-目标：把 `SharedPrefs` 和零散 DataStore key 收敛成明确 repository。
+目标：把 `SharedPrefs` 和零散 DataStore key 收敛成明确的偏好端口和业务服务。
 
-建议建立：
+建议保留/建立：
 
-- `PreferencesRepository`
+- `PreferenceToggleService`
 - `ThemePreference`
 - `PrivacyPreference`
 - `NotificationPreference`
@@ -746,8 +746,8 @@
 - 首页客户旅程卡片关闭状态已收敛到 `IsCustomerJourneyCardDismissedUseCase/DismissCustomerJourneyCardUseCase`；`feature:home` 不再直接拼接或读写客户旅程偏好 key。
 - 重置钱包流程中的旧 app 偏好清空已收敛到 `ClearAppPreferencesUseCase`；app 层重置实现继续负责编排，但不再直接注入 `AppPreferences`。
 - 业务偏好 key 已从 `shared:base` 迁到 `shared:data:api`；base 不再承载应用锁、通知、隐藏余额等业务 key。
-- 旧 `AppPreferences` 具体类已拆成 `AppPreferenceStore` 端口和 `SharedPrefsAppPreferenceStore` 实现；domain 用例只依赖 data-api 端口，SharedPrefs 读写细节下沉到 data-core。
-- 备份恢复中的偏好读写已改走 `AppPreferenceStore`；备份 JSON 仍保留原 sharedPrefs key 字符串以兼容旧备份文件，但 `BackupDataUseCase` 不再直接读写通用 `PreferenceStore`。
+- 旧 `AppPreferences` 具体类已拆成多个窄 data-api 端口和 `SharedPrefsAppPreferenceStore` 实现；domain 用例只依赖各自需要的偏好能力，SharedPrefs 读写细节下沉到 data-core。
+- 备份恢复中的偏好读写已改走备份专用偏好端口；备份 JSON 仍保留原 sharedPrefs key 字符串以兼容旧备份文件，但 `DefaultBackupStore` 不再直接读写通用 `PreferenceStore`。
 - 旧 `PreferenceStore/SharedPrefs` 基础层抽象已删除；`SharedPrefsAppPreferenceStore` 在 data-core 内部直接持有 Android SharedPreferences，base 不再暴露偏好存储绑定。
 - 文件读写和备份恢复端口已用 `ExternalFile` 包装外部文件引用；domain 和 data-api 不再公开 Android `Uri`，UI/platform 仍负责文件选择与分享，data-core 实现边界再转换回 Android `Uri`。因为 `ExternalFile` 已进入部分 domain 用例公开签名，`shared:domain` 对 `shared:data:api` 的依赖继续使用 `api` 暴露；同时，直接引用 `ExternalFile` 的 `feature:import-data`、`feature:reports` 和 `feature:settings` 已显式声明 `shared:data:api` 依赖，不再靠 domain 的传递依赖获得数据端口类型。
 - App 启动接口 `AppStarter` 已从 domain 下沉到 app 模块；它返回 Android `Intent`，实际只服务通知点击和 app 内启动流程，不再作为共享业务端口暴露。`PreferenceToggles` 的 Hilt 绑定也已迁到 app 装配层，domain 不再持有 Hilt module。
@@ -844,11 +844,11 @@
 - `RoomCurrencyStore` 已删除进程内基础币种缓存，基础币种读取始终以 `SettingsTable` 当前内容为准；这避免重置、恢复或其他 settings 写入后同一 store 实例继续返回旧币种。
 - data-core 的单绑定 Hilt 模块已收敛到 `DataBindingsModule`：store、备份、文本文件和远程汇率数据源绑定集中在一处，减少只为一个接口存在的装配文件。
 - 偏好开关 DataStore 不再通过独立 Hilt module 暴露裸 `DataStore<Preferences>`；`DataStorePreferenceToggleStore` 在 data-core 内部直接使用应用 `Context` 取得同一个 `ivy_wallet_datastore_v1` 文件。
-- 首次启动完成状态已从泛化 `AppPreferenceStore` 拆到 `InitialSetupStore`；启动流程只依赖初始化状态端口，底层仍读写同一个 SharedPreferences key。
-- 最后选择账户 ID 已从泛化 `AppPreferenceStore` 拆到 `LastSelectedAccountStore`；账户选择用例只依赖自己的偏好端口，原 SharedPreferences key 不变。
-- 分类排序偏好和首页客户旅程卡片 dismissed 状态已分别拆到 `CategorySortOrderStore` 与 `CustomerJourneyCardStore`；分类/首页用例不再依赖完整 `AppPreferenceStore`。
-- App 偏好清空能力已从 `AppPreferenceStore` 拆到 `AppPreferenceResetStore`；重置用例不再依赖设置开关读取能力。
-- 剩余设置开关端口已从泛化 `AppPreferenceStore` 改名为 `SettingsPreferenceStore`；`AppPreferenceStore` 已删除，备份和设置用例只依赖明确的设置偏好端口。
+- 首次启动完成状态已从旧泛化 app 偏好端口拆到 `InitialSetupStore`；启动流程只依赖初始化状态端口，底层仍读写同一个 SharedPreferences key。
+- 最后选择账户 ID 已从旧泛化 app 偏好端口拆到 `LastSelectedAccountStore`；账户选择用例只依赖自己的偏好端口，原 SharedPreferences key 不变。
+- 分类排序偏好和首页客户旅程卡片 dismissed 状态已分别拆到 `CategorySortOrderStore` 与 `CustomerJourneyCardStore`；分类/首页用例不再依赖完整 app 偏好端口。
+- App 偏好清空能力已从旧泛化 app 偏好端口拆到 `AppPreferenceResetStore`；重置用例不再依赖设置开关读取能力。
+- 设置开关端口已继续拆成 `AppLockPreferenceStore`、`NotificationPreferenceStore`、`BalancePrivacyPreferenceStore`、`StartDayOfMonthStore`、`TransferBehaviorPreferenceStore` 和 `BackupSettingsPreferenceStore`；`SettingsPreferenceStore` 已删除，备份和设置用例只依赖自己需要的偏好能力。
 
 建议顺序：
 
@@ -1029,8 +1029,8 @@ shared:ui:core
    - 从工具函数和 modal 开始。
    - 再处理旧 domain action。
 6. **偏好设置重构**
-   - 建立 `PreferencesRepository`。
-   - 消除 feature 直接访问 `SharedPrefs`。
+   - 继续保持 feature 不直接访问 `SharedPrefs`。
+   - 后续只在确实需要迁移数据格式时再评估 `SettingsEntity`、SharedPrefs 和 DataStore 的归并。
 7. **平台能力拆分**
    - 拆 `RootActivity`。
    - 删除 `RootScreen` 大接口，改用窄平台接口。
@@ -1066,6 +1066,6 @@ shared:ui:core
 
 1. shared 模块依赖审计暂时没有发现可直接删除的低风险依赖；后续在改动具体调用方时继续顺手收缩 Gradle 依赖。
 2. 继续收敛仍在 domain/data-core 中流动的 `legacy` 数据模型，优先选择单一业务边界小步替换，避免一次性重写预算、借贷、计划付款等仍在运行的官方功能。
-3. 继续评估 `SettingsEntity` 是否可以拆成更明确的本地偏好表或迁入 DataStore；当前 `theme/currency/bufferAmount` 已有窄端口隔离，下一步若触碰 schema 或备份格式需要单独规划迁移。
+3. 偏好设置代码边界已基本收窄，短期不再为清理而迁移存储格式；若后续要处理 `SettingsEntity`、SharedPrefs 或 DataStore 归并，必须单独规划 schema/备份兼容迁移。
 4. 继续数据库只读审计：`isDeleted` 目前先保留为本地软删除语义；不再把业务表里的 `isDeleted` 当作纯云同步字段批量删除。
 5. feature 模块合并属于较大结构调整，短期只在实际修改某个功能时收敛依赖；真正合并模块前需要先确认导航、资源和 Hilt 边界。

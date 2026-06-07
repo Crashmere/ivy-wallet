@@ -5,9 +5,9 @@ import android.net.Uri
 import androidx.core.net.toUri
 import com.ivy.data.api.AccountStore
 import com.ivy.data.api.AppPreferenceKeys
+import com.ivy.data.api.BackupSettingsPreferenceStore
 import com.ivy.data.api.DataChangePublisher
 import com.ivy.data.api.DataWriteEvent
-import com.ivy.data.api.SettingsPreferenceStore
 import com.ivy.data.api.backup.BackupStore
 import com.ivy.data.api.file.ExternalFile
 import com.ivy.data.db.dao.read.AccountDao
@@ -56,7 +56,7 @@ class DefaultBackupStore @Inject constructor(
     private val settingsDao: SettingsDao,
     private val transactionDao: TransactionDao,
     private val transactionWriter: WriteTransactionDao,
-    private val settingsPreferenceStore: SettingsPreferenceStore,
+    private val settingsPreferenceStore: BackupSettingsPreferenceStore,
     private val accountStore: AccountStore,
     private val accountMapper: AccountMapper,
     private val categoryWriter: WriteCategoryDao,

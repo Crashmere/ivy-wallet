@@ -1,20 +1,30 @@
 package com.ivy.data.preferences
 
 import android.content.Context
+import com.ivy.data.api.AppLockPreferenceStore
 import com.ivy.data.api.AppPreferenceKeys
 import com.ivy.data.api.AppPreferenceResetStore
+import com.ivy.data.api.BackupSettingsPreferenceStore
+import com.ivy.data.api.BalancePrivacyPreferenceStore
 import com.ivy.data.api.CategorySortOrderStore
 import com.ivy.data.api.CustomerJourneyCardStore
 import com.ivy.data.api.InitialSetupStore
 import com.ivy.data.api.LastSelectedAccountStore
-import com.ivy.data.api.SettingsPreferenceStore
+import com.ivy.data.api.NotificationPreferenceStore
+import com.ivy.data.api.StartDayOfMonthStore
+import com.ivy.data.api.TransferBehaviorPreferenceStore
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
 class SharedPrefsAppPreferenceStore @Inject constructor(
     @ApplicationContext
     context: Context
-) : SettingsPreferenceStore,
+) : AppLockPreferenceStore,
+    NotificationPreferenceStore,
+    BalancePrivacyPreferenceStore,
+    StartDayOfMonthStore,
+    TransferBehaviorPreferenceStore,
+    BackupSettingsPreferenceStore,
     InitialSetupStore,
     LastSelectedAccountStore,
     CategorySortOrderStore,

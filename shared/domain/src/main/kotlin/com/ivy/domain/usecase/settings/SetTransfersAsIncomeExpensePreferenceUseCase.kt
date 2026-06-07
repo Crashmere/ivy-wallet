@@ -1,12 +1,12 @@
 package com.ivy.domain.usecase.settings
 
-import com.ivy.data.api.SettingsPreferenceStore
+import com.ivy.data.api.TransferBehaviorPreferenceStore
 import javax.inject.Inject
 
 class SetTransfersAsIncomeExpensePreferenceUseCase @Inject constructor(
-    private val appPreferences: SettingsPreferenceStore,
+    private val transferBehaviorPreferenceStore: TransferBehaviorPreferenceStore,
 ) {
     operator fun invoke(enabled: Boolean) {
-        appPreferences.transfersAsIncomeExpense = enabled
+        transferBehaviorPreferenceStore.transfersAsIncomeExpense = enabled
     }
 }

@@ -1,12 +1,12 @@
 package com.ivy.domain.usecase.settings
 
-import com.ivy.data.api.SettingsPreferenceStore
+import com.ivy.data.api.BalancePrivacyPreferenceStore
 import javax.inject.Inject
 
 class GetHideCurrentBalancePreferenceUseCase @Inject constructor(
-    private val appPreferences: SettingsPreferenceStore,
+    private val balancePrivacyPreferenceStore: BalancePrivacyPreferenceStore,
 ) {
     operator fun invoke(): Boolean {
-        return appPreferences.hideCurrentBalance
+        return balancePrivacyPreferenceStore.hideCurrentBalance
     }
 }

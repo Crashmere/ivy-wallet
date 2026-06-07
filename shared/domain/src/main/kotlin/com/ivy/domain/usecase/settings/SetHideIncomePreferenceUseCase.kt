@@ -1,12 +1,12 @@
 package com.ivy.domain.usecase.settings
 
-import com.ivy.data.api.SettingsPreferenceStore
+import com.ivy.data.api.BalancePrivacyPreferenceStore
 import javax.inject.Inject
 
 class SetHideIncomePreferenceUseCase @Inject constructor(
-    private val appPreferences: SettingsPreferenceStore,
+    private val balancePrivacyPreferenceStore: BalancePrivacyPreferenceStore,
 ) {
     operator fun invoke(enabled: Boolean) {
-        appPreferences.hideIncome = enabled
+        balancePrivacyPreferenceStore.hideIncome = enabled
     }
 }

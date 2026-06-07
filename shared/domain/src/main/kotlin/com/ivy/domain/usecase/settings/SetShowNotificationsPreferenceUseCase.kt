@@ -1,12 +1,12 @@
 package com.ivy.domain.usecase.settings
 
-import com.ivy.data.api.SettingsPreferenceStore
+import com.ivy.data.api.NotificationPreferenceStore
 import javax.inject.Inject
 
 class SetShowNotificationsPreferenceUseCase @Inject constructor(
-    private val appPreferences: SettingsPreferenceStore,
+    private val notificationPreferenceStore: NotificationPreferenceStore,
 ) {
     operator fun invoke(enabled: Boolean) {
-        appPreferences.showNotifications = enabled
+        notificationPreferenceStore.showNotifications = enabled
     }
 }

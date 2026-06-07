@@ -1,12 +1,12 @@
 package com.ivy.domain.usecase.settings
 
-import com.ivy.data.api.SettingsPreferenceStore
+import com.ivy.data.api.AppLockPreferenceStore
 import javax.inject.Inject
 
 class SetAppLockEnabledPreferenceUseCase @Inject constructor(
-    private val appPreferences: SettingsPreferenceStore,
+    private val appLockPreferenceStore: AppLockPreferenceStore,
 ) {
     operator fun invoke(enabled: Boolean) {
-        appPreferences.appLockEnabled = enabled
+        appLockPreferenceStore.appLockEnabled = enabled
     }
 }

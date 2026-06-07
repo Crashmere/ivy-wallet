@@ -1,12 +1,12 @@
 package com.ivy.domain.usecase.settings
 
-import com.ivy.data.api.SettingsPreferenceStore
+import com.ivy.data.api.StartDayOfMonthStore
 import javax.inject.Inject
 
 class GetStartDayOfMonthUseCase @Inject constructor(
-    private val appPreferences: SettingsPreferenceStore
+    private val startDayOfMonthStore: StartDayOfMonthStore
 ) {
     operator fun invoke(): Int {
-        return appPreferences.startDayOfMonth
+        return startDayOfMonthStore.startDayOfMonth
     }
 }
