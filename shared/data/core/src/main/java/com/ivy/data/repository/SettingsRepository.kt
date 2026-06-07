@@ -44,11 +44,10 @@ class SettingsRepository @Inject constructor(
         }
     }
 
-    override suspend fun switchTheme(): Theme = withContext(dispatchersProvider.io) {
+    override suspend fun setTheme(theme: Theme): Theme = withContext(dispatchersProvider.io) {
         val currentEntity = settingsEntityOrDefault()
-        val newTheme = currentEntity.theme.next()
-        writeSettingsDao.save(currentEntity.copy(theme = newTheme))
-        newTheme
+        writeSettingsDao.save(currentEntity.copy(theme = theme))
+        theme
     }
 
     override suspend fun getBufferAmount(): BigDecimal = withContext(dispatchersProvider.io) {
@@ -77,10 +76,4 @@ class SettingsRepository @Inject constructor(
             )
     }
 
-    private fun Theme.next(): Theme = when (this) {
-        Theme.LIGHT -> Theme.DARK
-        Theme.DARK -> Theme.AMOLED_DARK
-        Theme.AMOLED_DARK -> Theme.AUTO
-        Theme.AUTO -> Theme.LIGHT
-    }
 }

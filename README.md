@@ -715,6 +715,7 @@
 - 计划付款规则读写已抽成 `PlannedPaymentRuleStore` 端口；首页统计、账户删除、计划付款保存/删除/读取、付或跳过计划付款，以及重置钱包流程不再直接注入 `PlannedPaymentRuleDao/WritePlannedPaymentRuleDao`，旧 `PlannedPaymentRuleExt` 实体 mapper 已删除。
 - 借贷和借贷记录读写已抽成 `LoanStore/LoanRecordStore` 端口；借贷 CRUD、借贷记录 CRUD、借贷交易同步和重置钱包流程不再直接注入 `LoanDao/LoanRecordDao/WriteLoanDao/WriteLoanRecordDao`，旧 `LoanExt/LoanRecordExt` 实体 mapper 已删除。
 - 设置表清空已收敛到 `SettingsStore.deleteAll()`；重置钱包流程不再直接注入 `WriteSettingsDao`。
+- 主题切换规则已从 data core 移回 domain：`SettingsStore` 只保留主题读写能力，`SwitchThemeUseCase` 负责 LIGHT/DARK/AMOLED/AUTO 的循环顺序，并补充了单元测试锁定该规则。
 - 账户旧读取路径已收敛到 `AccountStore`；旧 legacy 账户模型现在由 data model 账户映射而来，`shared:domain` 主源码不再直接注入 `AccountDao` 或依赖 `AccountEntity` mapper。
 - 旧交易卡片已移除重复账户查找 TODO：渲染前先解析来源/目标账户，再复用同一结果处理点击和币种展示，行为不变但 legacy UI 内部职责更清楚。
 

@@ -14,7 +14,7 @@ interface SettingsStore {
         bufferAmount: Double,
     )
 
-    suspend fun switchTheme(): Theme
+    suspend fun setTheme(theme: Theme): Theme
 
     suspend fun getBufferAmount(): BigDecimal
 
