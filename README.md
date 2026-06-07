@@ -1055,7 +1055,8 @@ shared:ui:core
 
 下一步建议执行：
 
-1. 继续做 shared 模块依赖审计：优先检查 `shared:ui:core`、`shared:ui:legacy`、`shared:data:core` 是否还有可显式化或可移除的非必要 Gradle 依赖。
-2. 继续清理明显错位的包名和模块边界，优先处理 `shared:ui:legacy` 与 `shared:data:core` 中仍残留的历史命名，避免新代码继续误用旧 API。
+1. shared 模块依赖审计暂时没有发现可直接删除的低风险依赖；后续在改动具体调用方时继续顺手收缩 Gradle 依赖。
+2. 继续收敛仍在 domain/data-core 中流动的 `legacy` 数据模型，优先选择单一业务边界小步替换，避免一次性重写预算、借贷、计划付款等仍在运行的官方功能。
 3. 继续评估 `SettingsEntity` 是否可以拆成更明确的本地偏好表或迁入 DataStore；当前 `theme/currency/bufferAmount` 已有窄端口隔离，下一步若触碰 schema 或备份格式需要单独规划迁移。
 4. 继续数据库只读审计：`isDeleted` 目前先保留为本地软删除语义；不再把业务表里的 `isDeleted` 当作纯云同步字段批量删除。
+5. feature 模块合并属于较大结构调整，短期只在实际修改某个功能时收敛依赖；真正合并模块前需要先确认导航、资源和 Hilt 边界。
