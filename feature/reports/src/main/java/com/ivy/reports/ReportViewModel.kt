@@ -11,8 +11,8 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.lifecycle.viewModelScope
 import com.ivy.base.legacy.LegacyTransaction
 import com.ivy.base.legacy.TransactionHistoryItem
-import com.ivy.base.legacy.stringRes
 import com.ivy.base.model.TransactionType
+import com.ivy.base.resource.ResourceProvider
 import com.ivy.base.time.TimeConverter
 import com.ivy.base.time.TimeProvider
 import com.ivy.data.model.Category
@@ -88,6 +88,7 @@ class ReportViewModel @Inject constructor(
     private val transactionMapper: TransactionMapper,
     private val tagRepository: TagRepository,
     private val exportCsvUseCase: ExportCsvUseCase,
+    private val resourceProvider: ResourceProvider,
     private val timeProvider: TimeProvider,
     private val timeConverter: TimeConverter,
     private val preferenceToggles: PreferenceToggles,
@@ -95,7 +96,7 @@ class ReportViewModel @Inject constructor(
 ) : ComposeViewModel<ReportScreenState, ReportScreenEvent>() {
     private val unSpecifiedCategory =
         Category(
-            name = NotBlankTrimmedString.unsafe(stringRes(R.string.unspecified)),
+            name = NotBlankTrimmedString.unsafe(resourceProvider.getString(R.string.unspecified)),
             color = ColorInt(Gray.toArgb()),
             icon = null,
             id = CategoryId(UUID.randomUUID()),

@@ -1,7 +1,7 @@
 package com.ivy.home.customerjourney
 
-import com.ivy.base.legacy.stringRes
 import com.ivy.base.model.TransactionType
+import com.ivy.base.resource.ResourceProvider
 import com.ivy.data.db.dao.read.PlannedPaymentRuleDao
 import com.ivy.data.repository.TransactionRepository
 import com.ivy.domain.preferences.AppPreferences
@@ -17,91 +17,89 @@ import javax.inject.Inject
 
 @Deprecated("Legacy code")
 class CustomerJourneyCardsProvider @Inject constructor(
-  private val transactionRepository: TransactionRepository,
-  private val plannedPaymentRuleDao: PlannedPaymentRuleDao,
-  private val appPreferences: AppPreferences,
+    private val transactionRepository: TransactionRepository,
+    private val plannedPaymentRuleDao: PlannedPaymentRuleDao,
+    private val appPreferences: AppPreferences,
+    private val resourceProvider: ResourceProvider,
 ) {
 
-  suspend fun loadCards(): List<CustomerJourneyCardModel> {
-    val trnCount = transactionRepository.countHappenedTransactions().value
-    val plannedPaymentsCount = plannedPaymentRuleDao.countPlannedPayments()
+    suspend fun loadCards(): List<CustomerJourneyCardModel> {
+        val trnCount = transactionRepository.countHappenedTransactions().value
+        val plannedPaymentsCount = plannedPaymentRuleDao.countPlannedPayments()
 
-    return ACTIVE_CARDS
-      .filter {
-        it.condition(
-          trnCount,
-          plannedPaymentsCount
-        ) && !isCardDismissed(it)
-      }
-  }
+        return activeCards()
+            .filter {
+                it.condition(
+                    trnCount,
+                    plannedPaymentsCount
+                ) && !isCardDismissed(it)
+            }
+    }
 
-  private fun isCardDismissed(cardData: CustomerJourneyCardModel): Boolean {
-    return appPreferences.isCustomerJourneyCardDismissed(cardData.id)
-  }
+    private fun isCardDismissed(cardData: CustomerJourneyCardModel): Boolean {
+        return appPreferences.isCustomerJourneyCardDismissed(cardData.id)
+    }
 
-  fun dismissCard(cardData: CustomerJourneyCardModel) {
-    appPreferences.dismissCustomerJourneyCard(cardData.id)
-  }
+    fun dismissCard(cardData: CustomerJourneyCardModel) {
+        appPreferences.dismissCustomerJourneyCard(cardData.id)
+    }
 
-  companion object {
-    val ACTIVE_CARDS = listOf(
-      adjustBalanceCard(),
-      addPlannedPaymentCard(),
-      didYouKnow_expensesPieChart()
+    private fun activeCards() = listOf(
+        adjustBalanceCard(),
+        addPlannedPaymentCard(),
+        expensesPieChartCard()
     )
 
-    fun adjustBalanceCard() = CustomerJourneyCardModel(
-      id = "adjust_balance",
-      condition = { trnCount, _ ->
-        trnCount == 0L
-      },
-      title = stringRes(R.string.adjust_initial_balance),
-      description = stringRes(R.string.adjust_initial_balance_description),
-      cta = stringRes(R.string.to_accounts),
-      ctaIcon = R.drawable.ic_custom_account_s,
-      background = Gradient.solid(Ivy),
-      hasDismiss = false,
-      onAction = { _, mainTabState ->
-        mainTabState.select(MainTab.ACCOUNTS)
-      }
+    private fun adjustBalanceCard() = CustomerJourneyCardModel(
+        id = "adjust_balance",
+        condition = { trnCount, _ ->
+            trnCount == 0L
+        },
+        title = resourceProvider.getString(R.string.adjust_initial_balance),
+        description = resourceProvider.getString(R.string.adjust_initial_balance_description),
+        cta = resourceProvider.getString(R.string.to_accounts),
+        ctaIcon = R.drawable.ic_custom_account_s,
+        background = Gradient.solid(Ivy),
+        hasDismiss = false,
+        onAction = { _, mainTabState ->
+            mainTabState.select(MainTab.ACCOUNTS)
+        }
     )
 
-    fun addPlannedPaymentCard() = CustomerJourneyCardModel(
-      id = "add_planned_payment",
-      condition = { trnCount, plannedPaymentCount ->
-        trnCount >= 1 && plannedPaymentCount == 0L
-      },
-      title = stringRes(R.string.create_first_planned_payment),
-      description = stringRes(R.string.create_first_planned_payment_description),
-      cta = stringRes(R.string.add_planned_payment),
-      ctaIcon = R.drawable.ic_planned_payments,
-      background = Gradient.solid(Orange),
-      hasDismiss = true,
-      onAction = { navigation, _ ->
-        navigation.navigateTo(
-          EditPlannedScreen(
-            type = TransactionType.EXPENSE,
-            plannedPaymentRuleId = null
-          )
-        )
-      }
+    private fun addPlannedPaymentCard() = CustomerJourneyCardModel(
+        id = "add_planned_payment",
+        condition = { trnCount, plannedPaymentCount ->
+            trnCount >= 1 && plannedPaymentCount == 0L
+        },
+        title = resourceProvider.getString(R.string.create_first_planned_payment),
+        description = resourceProvider.getString(R.string.create_first_planned_payment_description),
+        cta = resourceProvider.getString(R.string.add_planned_payment),
+        ctaIcon = R.drawable.ic_planned_payments,
+        background = Gradient.solid(Orange),
+        hasDismiss = true,
+        onAction = { navigation, _ ->
+            navigation.navigateTo(
+                EditPlannedScreen(
+                    type = TransactionType.EXPENSE,
+                    plannedPaymentRuleId = null
+                )
+            )
+        }
     )
 
-    fun didYouKnow_expensesPieChart() = CustomerJourneyCardModel(
-      id = "expenses_pie_chart",
-      condition = { trnCount, _ ->
-        trnCount >= 7
-      },
-      title = stringRes(R.string.did_you_know),
-      description = stringRes(R.string.you_can_see_a_piechart),
-      cta = stringRes(R.string.expenses_piechart),
-      ctaIcon = R.drawable.ic_custom_bills_s,
-      background = Gradient.solid(Red),
-      hasDismiss = true,
-      onAction = { navigation, _ ->
-        navigation.navigateTo(PieChartStatisticScreen(type = TransactionType.EXPENSE))
-      }
+    private fun expensesPieChartCard() = CustomerJourneyCardModel(
+        id = "expenses_pie_chart",
+        condition = { trnCount, _ ->
+            trnCount >= 7
+        },
+        title = resourceProvider.getString(R.string.did_you_know),
+        description = resourceProvider.getString(R.string.you_can_see_a_piechart),
+        cta = resourceProvider.getString(R.string.expenses_piechart),
+        ctaIcon = R.drawable.ic_custom_bills_s,
+        background = Gradient.solid(Red),
+        hasDismiss = true,
+        onAction = { navigation, _ ->
+            navigation.navigateTo(PieChartStatisticScreen(type = TransactionType.EXPENSE))
+        }
     )
-
-  }
 }
