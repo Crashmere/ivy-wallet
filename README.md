@@ -580,6 +580,7 @@
 - `BiometricAuthenticator` 承接系统生物识别 Prompt 构造。
 - `SecureWindowController` 承接应用锁失焦时的 `FLAG_SECURE` 窗口保护。
 - `AppLockController` 承接应用锁启用状态、锁定状态、生物识别结果回调和用户非活跃计时，`RootViewModel` 只保留启动编排和委托方法。
+- `RootContent` 承接根部 Compose 内容、锁屏/主导航切换、旧 UI root 注入和 Material3 theme 包装，`RootActivity` 主要保留生命周期、平台注册和平台能力委托。
 - `RootScreen` 已被 `FileSharer`、`BuildInfoProvider` 拆分替代，首页客户旅程卡片也不再为了未使用的参数依赖 Activity 平台接口。
 
 ### 阶段 9：feature 模块收敛
@@ -726,6 +727,6 @@ shared:ui:core
 
 下一步建议执行：
 
-1. 继续减轻 `RootActivity`：评估根部 Compose 内容是否需要拆成 `RootContent`，让 Activity 只负责生命周期和平台注册。
-2. 继续收敛平台桥接：评估 `FileSharer`、`BuildInfoProvider` 是否需要从 `LocalContext.current as ...` 改成 CompositionLocal。
-3. 平台层稳定后再进入数据库遗留清理：先梳理 `UserEntity/UserDao`、`SettingsEntity`、同步字段和备份恢复格式，不直接改 schema。
+1. 继续收敛平台桥接：评估 `FileSharer`、`BuildInfoProvider` 是否需要从 `LocalContext.current as ...` 改成 CompositionLocal。
+2. 平台层稳定后进入数据库遗留清理：先梳理 `UserEntity/UserDao`、`SettingsEntity`、同步字段和备份恢复格式，不直接改 schema。
+3. 数据库清理开始前，先补一轮只读审计，明确哪些字段仍参与本地软删除、备份恢复或迁移。
