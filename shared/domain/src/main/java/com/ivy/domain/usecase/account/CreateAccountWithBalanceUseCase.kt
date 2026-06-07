@@ -9,7 +9,6 @@ import com.ivy.data.model.primitive.AssetCode
 import com.ivy.data.model.primitive.ColorInt
 import com.ivy.data.model.primitive.IconAsset
 import com.ivy.data.model.primitive.NotBlankTrimmedString
-import com.ivy.legacy.domain.logic.WalletAccountLogic
 import com.ivy.legacy.domain.pure.util.nextOrderNum
 import kotlinx.coroutines.withContext
 import java.util.UUID
@@ -18,7 +17,7 @@ import com.ivy.data.model.Account as DomainAccount
 import com.ivy.data.model.legacy.Account as LegacyAccount
 
 class CreateAccountWithBalanceUseCase @Inject constructor(
-    private val accountLogic: WalletAccountLogic,
+    private val adjustAccountBalanceUseCase: AdjustAccountBalanceUseCase,
     private val accountDao: AccountDao,
     private val saveAccountUseCase: SaveAccountUseCase,
     private val dispatchers: DispatchersProvider
@@ -48,7 +47,7 @@ class CreateAccountWithBalanceUseCase @Inject constructor(
                 orderNum = accountDao.findMaxOrderNum().nextOrderNum(),
                 id = account.id.value
             )
-            accountLogic.adjustBalance(
+            adjustAccountBalanceUseCase(
                 account = legacyAccount,
                 actualBalance = 0.0,
                 newBalance = data.balance

@@ -481,7 +481,7 @@
 - 已把 `ClosedTimeRange`、`IncomeExpensePair`、`IncomeExpenseTransferPair` 从旧 `com.ivy.legacy.domain.pure.data` 包归入 `com.ivy.data.model.legacy`；它们仍作为旧统计流程的值对象保留在 `shared:data:model`。
 - 旧时间范围值对象 `FromToTimeRange` 已从 `com.ivy.legacy.domain.model` 下沉到 `com.ivy.data.model.legacy`；`shared:domain` 原文件只保留 upcoming/overdue 交易过滤函数，UI 和 feature 不再为了这个纯范围对象引用 legacy domain 包名。
 - upcoming/overdue 交易日期过滤 helper 已从 `com.ivy.legacy.domain.model` 迁到 `com.ivy.legacy.domain.time`；legacy model 包不再承载这类业务过滤函数。
-- 账户页展示模型 `AccountData` 和对应 `AccountDataAct` 已从 `shared:domain` 下沉到 `feature:accounts`；`WalletAccountLogic` 改为直接调用余额 action，不再复用账户页专用展示聚合。
+- 账户页展示模型 `AccountData` 和对应 `AccountDataAct` 已从 `shared:domain` 下沉到 `feature:accounts`；账户页专用展示聚合不再占用 shared domain 边界。
 - 纯创建参数 `CreateAccountData`、`CreateCategoryData`、`CreateBudgetData` 已从 `com.ivy.legacy.domain.model` 下沉到 `com.ivy.data.model.legacy`；UI 弹窗、feature event 和 domain creator 继续使用同名参数对象，但不再占用 legacy domain model 包。
 - 旧预算模型 `Budget` 已从 `com.ivy.legacy.domain.model` 下沉到 `com.ivy.data.model.legacy`；数据库转换 `toEntity()` 已移入 legacy domain mapper，预算页和预算相关 use case 继续使用同一模型语义。
 - 旧汇率计算仍使用的兼容模型 `ExchangeRate` 已从 `com.ivy.legacy.domain.model` 下沉到 `com.ivy.data.model.legacy`；数据库转换边界保留在 legacy domain mapper。无调用方的旧 `Category` 兼容模型和 mapper 已删除，分类功能继续使用正式 `com.ivy.data.model.Category`。
@@ -641,6 +641,7 @@
 - 交易读取 action 已进一步收敛：搜索改走 `GetTransactionsUseCase`，预算和历史分组改走 `GetTransactionsBetweenUseCase`，首页到期交易改走 `GetDueTransactionsUseCase`，编辑交易按 ID 读取改走 `GetLegacyTransactionUseCase`，分类/饼图的账户过滤读取改走 `GetLegacyTransactionsForAccountsUseCase`；旧 `AllTrnsAct`、`HistoryTrnsAct`、`DueTrnsAct`、`TrnByIdAct` 和 `TrnsWithRangeAndAccFiltersAct` 已删除。
 - 账户交易读取已收敛到 `GetAccountTransactionsUseCase`；账户余额、账户收支、首页钱包收支和交易详情账户历史不再依赖旧 `AccTrnsAct`，金额折算和统计口径保持不变。
 - 账户余额和账户收支计算已收敛到 `CalculateAccountBalanceUseCase` 与 `CalculateAccountIncomeExpenseUseCase`；账户页、交易详情、钱包账户逻辑和钱包余额汇总不再依赖旧 `CalcAccBalanceAct/CalcAccIncomeExpenseAct`。
+- 账户余额调平和账户详情未来/逾期交易统计已从 `WalletAccountLogic` 拆到 `AdjustAccountBalanceUseCase`、`GetAccountUpcomingTransactionsSummaryUseCase` 和 `GetAccountOverdueTransactionsSummaryUseCase`；账户创建/编辑和交易详情账户页不再注入旧逻辑，`WalletAccountLogic` 已删除。
 - 钱包级余额和收支计算已收敛到 `CalculateWalletBalanceUseCase` 与 `CalculateWalletIncomeExpenseUseCase`；首页、余额页和账户页不再依赖旧 `CalcWalletBalanceAct/CalcIncomeExpenseAct`。
 - 交易统计和历史列表分组已收敛到普通 use case：搜索、首页、报表、交易详情、分类页和饼图页改用 `BuildTransactionHistoryItemsUseCase`、`BuildLegacyTransactionHistoryItemsUseCase`、`GetTransactionHistoryItemsUseCase`、`CalculateTransactionsIncomeExpenseUseCase`、`CalculateLegacyTransactionsIncomeExpenseUseCase` 和 `CalculateCategoryIncomeWithAccountFiltersUseCase`；旧 `CalcTrnsIncomeExpenseAct`、`TrnsWithDateDivsAct`、`HistoryWithDateDivsAct` 和分类筛选统计 action 已删除。
 - 首页到期交易统计已收敛到 `GetUpcomingTransactionsInfoUseCase`、`GetOverdueTransactionsInfoUseCase` 和公共 `CalculateDueTransactionsInfoUseCase`；旧 `DueTrnsInfoAct`、`UpcomingAct` 和 `OverdueAct` 已删除，`shared:domain` 中不再保留旧 `domain/action` 源码。

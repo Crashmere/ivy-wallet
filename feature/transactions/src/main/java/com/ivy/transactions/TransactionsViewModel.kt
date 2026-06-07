@@ -50,12 +50,13 @@ import com.ivy.domain.usecase.account.CalculateAccountIncomeExpenseUseCase
 import com.ivy.domain.usecase.account.GetAccountTransactionsUseCase
 import com.ivy.domain.usecase.account.GetLegacyAccountUseCase
 import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
+import com.ivy.domain.usecase.account.GetAccountOverdueTransactionsSummaryUseCase
+import com.ivy.domain.usecase.account.GetAccountUpcomingTransactionsSummaryUseCase
 import com.ivy.domain.usecase.account.UpdateAccountWithBalanceUseCase
 import com.ivy.domain.usecase.planned.PayOrSkipLegacyPlannedTransactionUseCase
 import com.ivy.domain.usecase.planned.PayOrSkipLegacyPlannedTransactionsUseCase
 import com.ivy.domain.usecase.transaction.BuildLegacyTransactionHistoryItemsUseCase
 import com.ivy.domain.usecase.transaction.CalculateLegacyTransactionsIncomeExpenseUseCase
-import com.ivy.legacy.domain.logic.WalletAccountLogic
 import com.ivy.legacy.domain.logic.WalletCategoryLogic
 import com.ivy.legacy.domain.pure.exchange.ExchangeData
 import com.ivy.legacy.ui.modal.ChoosePeriodModalData
@@ -74,7 +75,6 @@ import com.ivy.data.model.legacy.Account as LegacyAccount
 class TransactionsViewModel @Inject constructor(
     private val periodState: PeriodState,
     private val nav: Navigation,
-    private val accountLogic: WalletAccountLogic,
     private val categoryLogic: WalletCategoryLogic,
     private val updateCategoryUseCase: UpdateCategoryUseCase,
     private val updateAccountWithBalanceUseCase: UpdateAccountWithBalanceUseCase,
@@ -86,6 +86,8 @@ class TransactionsViewModel @Inject constructor(
     private val getAccountTransactionsUseCase: GetAccountTransactionsUseCase,
     private val buildLegacyTransactionHistoryItemsUseCase: BuildLegacyTransactionHistoryItemsUseCase,
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
+    private val getAccountUpcomingTransactionsSummaryUseCase: GetAccountUpcomingTransactionsSummaryUseCase,
+    private val getAccountOverdueTransactionsSummaryUseCase: GetAccountOverdueTransactionsSummaryUseCase,
     private val getAccountUseCase: GetAccountUseCase,
     private val deleteAccountUseCase: DeleteAccountUseCase,
     private val getCategoriesUseCase: GetCategoriesUseCase,
@@ -385,33 +387,21 @@ class TransactionsViewModel @Inject constructor(
             )
         ).toImmutableList()
 
-        // Upcoming
-        upcomingIncome.doubleValue = ioThread {
-            accountLogic.calculateUpcomingIncome(initialAccount, range)
+        val upcomingSummary = ioThread {
+            getAccountUpcomingTransactionsSummaryUseCase(AccountId(initialAccount.id), range)
         }
+        upcomingIncome.doubleValue = upcomingSummary.income
+        upcomingExpenses.doubleValue = upcomingSummary.expenses
+        upcoming.value = mapTransactionsToLegacyUseCase(upcomingSummary.transactions)
+            .toImmutableList()
 
-        upcomingExpenses.doubleValue = ioThread {
-            accountLogic.calculateUpcomingExpenses(initialAccount, range)
+        val overdueSummary = ioThread {
+            getAccountOverdueTransactionsSummaryUseCase(AccountId(initialAccount.id), range)
         }
-
-        upcoming.value = ioThread {
-            mapTransactionsToLegacyUseCase(accountLogic.upcoming(initialAccount, range))
-                .toImmutableList()
-        }
-
-        // Overdue
-        overdueIncome.doubleValue = ioThread {
-            accountLogic.calculateOverdueIncome(initialAccount, range)
-        }
-
-        overdueExpenses.doubleValue = ioThread {
-            accountLogic.calculateOverdueExpenses(initialAccount, range)
-        }
-
-        overdue.value = ioThread {
-            mapTransactionsToLegacyUseCase(accountLogic.overdue(initialAccount, range))
-                .toImmutableList()
-        }
+        overdueIncome.doubleValue = overdueSummary.income
+        overdueExpenses.doubleValue = overdueSummary.expenses
+        overdue.value = mapTransactionsToLegacyUseCase(overdueSummary.transactions)
+            .toImmutableList()
     }
 
     private suspend fun initForCategory(categoryId: UUID, accountFilterList: List<UUID>) {
