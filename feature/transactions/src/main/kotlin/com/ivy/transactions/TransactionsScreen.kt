@@ -385,7 +385,7 @@ private fun BoxWithConstraintsScope.UI(
                     categories
                 ),
                 upcoming = LegacyDueSection(
-                    trns = upcoming,
+                    transactions = upcoming,
                     stats = IncomeExpensePair(
                         income = upcomingIncome.toBigDecimal(),
                         expense = upcomingExpenses.toBigDecimal()
@@ -395,7 +395,7 @@ private fun BoxWithConstraintsScope.UI(
                 setUpcomingExpanded = setUpcomingExpanded,
 
                 overdue = LegacyDueSection(
-                    trns = overdue,
+                    transactions = overdue,
                     stats = IncomeExpensePair(
                         income = overdueIncome.toBigDecimal(),
                         expense = overdueExpenses.toBigDecimal()

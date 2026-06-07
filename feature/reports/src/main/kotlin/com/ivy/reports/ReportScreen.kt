@@ -219,7 +219,7 @@ private fun BoxWithConstraintsScope.UI(
                 ),
 
                 upcoming = LegacyDueSection(
-                    trns = state.upcomingTransactions,
+                    transactions = state.upcomingTransactions,
                     stats = IncomeExpensePair(
                         income = state.upcomingIncome.toBigDecimal(),
                         expense = state.upcomingExpenses.toBigDecimal()
@@ -232,7 +232,7 @@ private fun BoxWithConstraintsScope.UI(
                 },
 
                 overdue = LegacyDueSection(
-                    trns = state.overdueTransactions,
+                    transactions = state.overdueTransactions,
                     stats = IncomeExpensePair(
                         income = state.overdueIncome.toBigDecimal(),
                         expense = state.overdueExpenses.toBigDecimal()

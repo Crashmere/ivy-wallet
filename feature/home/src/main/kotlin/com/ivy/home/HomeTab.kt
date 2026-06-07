@@ -255,7 +255,7 @@ fun BoxWithConstraintsScope.HomeUi(
             skipAllModalVisible = false
         }
     ) {
-        onEvent(HomeEvent.SkipAllPlanned(uiState.overdue.trns))
+        onEvent(HomeEvent.SkipAllPlanned(uiState.overdue.transactions))
         skipAllModalVisible = false
     }
 }

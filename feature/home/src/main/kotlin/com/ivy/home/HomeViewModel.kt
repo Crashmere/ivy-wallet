@@ -116,14 +116,14 @@ class HomeViewModel @Inject constructor(
     )
     private var upcoming by mutableStateOf(
         LegacyDueSection(
-            trns = persistentListOf(),
+            transactions = persistentListOf(),
             stats = IncomeExpensePair.zero(),
             expanded = false,
         )
     )
     private var overdue by mutableStateOf(
         LegacyDueSection(
-            trns = persistentListOf(),
+            transactions = persistentListOf(),
             stats = IncomeExpensePair.zero(),
             expanded = false,
         )
@@ -372,7 +372,7 @@ class HomeViewModel @Inject constructor(
             range = timeRange
         )
         upcoming = LegacyDueSection(
-            trns = mapTransactionsToLegacyUseCase(upcomingResult.transactions).toImmutableList(),
+            transactions = mapTransactionsToLegacyUseCase(upcomingResult.transactions).toImmutableList(),
             stats = upcomingResult.incomeExpense,
             expanded = upcoming.expanded
         )
@@ -382,7 +382,7 @@ class HomeViewModel @Inject constructor(
             toRange = timeRange.to
         )
         overdue = LegacyDueSection(
-            trns = mapTransactionsToLegacyUseCase(overdueResult.transactions).toImmutableList(),
+            transactions = mapTransactionsToLegacyUseCase(overdueResult.transactions).toImmutableList(),
             stats = overdueResult.incomeExpense,
             expanded = overdue.expanded
         )

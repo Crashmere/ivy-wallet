@@ -7,7 +7,7 @@ import kotlinx.collections.immutable.ImmutableList
 
 @Immutable
 data class LegacyDueSection(
-    val trns: ImmutableList<Transaction>,
+    val transactions: ImmutableList<Transaction>,
     val expanded: Boolean,
     val stats: IncomeExpensePair
 )
