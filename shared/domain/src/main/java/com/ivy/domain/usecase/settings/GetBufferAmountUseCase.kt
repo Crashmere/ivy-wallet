@@ -1,13 +1,13 @@
 package com.ivy.domain.usecase.settings
 
-import com.ivy.data.repository.LegacySettingsRepository
+import com.ivy.data.repository.SettingsRepository
 import java.math.BigDecimal
 import javax.inject.Inject
 
 class GetBufferAmountUseCase @Inject constructor(
-    private val legacySettingsRepository: LegacySettingsRepository
+    private val settingsRepository: SettingsRepository
 ) {
     suspend operator fun invoke(): BigDecimal {
-        return legacySettingsRepository.getBufferAmount()
+        return settingsRepository.getBufferAmount()
     }
 }

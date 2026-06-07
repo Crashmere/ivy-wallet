@@ -12,7 +12,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class LegacySettingsRepository @Inject constructor(
+class SettingsRepository @Inject constructor(
     private val settingsDao: SettingsDao,
     private val writeSettingsDao: WriteSettingsDao,
     private val dispatchersProvider: DispatchersProvider,

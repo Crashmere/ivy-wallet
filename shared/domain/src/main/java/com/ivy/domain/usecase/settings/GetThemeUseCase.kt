@@ -1,17 +1,17 @@
 package com.ivy.domain.usecase.settings
 
 import com.ivy.base.theme.Theme
-import com.ivy.data.repository.LegacySettingsRepository
+import com.ivy.data.repository.SettingsRepository
 import javax.inject.Inject
 
 class GetThemeUseCase @Inject constructor(
-    private val legacySettingsRepository: LegacySettingsRepository
+    private val settingsRepository: SettingsRepository
 ) {
     suspend operator fun invoke(fallback: Theme = Theme.AUTO): Theme {
-        return legacySettingsRepository.getTheme(fallback)
+        return settingsRepository.getTheme(fallback)
     }
 
     suspend fun withSystemFallback(systemDarkMode: Boolean): Theme {
-        return legacySettingsRepository.getTheme(systemDarkMode)
+        return settingsRepository.getTheme(systemDarkMode)
     }
 }

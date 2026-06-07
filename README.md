@@ -613,8 +613,8 @@
 - 基础货币读取开始从 `SettingsDao` 直连收敛到 `CurrencyRepository`：编辑交易、借贷、计划付款、饼图统计、CSV 导入、旧分类统计、旧计划付款统计、旧借贷交易联动和 `BaseCurrencyAct` 不再直接读取 `settings` 表。
 - 无业务增量的旧 `BaseCurrencyAct` 已删除；余额、账户、预算、分类、搜索、报表和交易页改为通过正式 `GetBaseCurrencyCodeUseCase` 读取基础币种。
 - 基础币种读写进一步收敛为正式 domain 用例：`GetBaseCurrencyUseCase`、`GetBaseCurrencyCodeUseCase`、`SetBaseCurrencyUseCase`。Main、汇率、首页、设置、饼图、计划付款、借贷、编辑交易、CSV 导入、首次默认账户预置和旧账户/分类/计划付款/借贷联动逻辑不再为了基础币种读写直接注入 `CurrencyRepository`；当前只有正式 currency use case 仍依赖数据层仓库。
-- 新增 `LegacySettingsRepository`，把仍存放在 `settings` 表中的主题和缓冲金额用窄方法包起来；其上方已补齐 `GetThemeUseCase`、`SwitchThemeUseCase`、`GetBufferAmountUseCase`、`SetBufferAmountUseCase` 和 `EnsureSettingsInitializedUseCase`，设置页、首页、根启动流程和首次默认设置初始化不再直接依赖旧 settings 数据仓库。
-- 首次启动默认设置初始化已下沉到 `EnsureSettingsInitializedUseCase`；`InitialDataSetup` 不再直接构造 `SettingsEntity` 或注入 `SettingsDao/WriteSettingsDao/LegacySettingsRepository`，只负责启动编排、默认账户/分类预置和提醒调度。
+- 新增 `SettingsRepository`，把仍存放在 `settings` 表中的主题和缓冲金额用窄方法包起来；其上方已补齐 `GetThemeUseCase`、`SwitchThemeUseCase`、`GetBufferAmountUseCase`、`SetBufferAmountUseCase` 和 `EnsureSettingsInitializedUseCase`，设置页、首页、根启动流程和首次默认设置初始化不再直接依赖旧 settings 数据仓库。
+- 首次启动默认设置初始化已下沉到 `EnsureSettingsInitializedUseCase`；`InitialDataSetup` 不再直接构造 `SettingsEntity` 或注入 `SettingsDao/WriteSettingsDao/SettingsRepository`，只负责启动编排、默认账户/分类预置和提醒调度。
 - 分类列表读取开始收敛到正式 domain 用例：新增 `GetCategoriesUseCase`，搜索页、首页、预算页、报表页、计划付款列表和饼图统计 action 不再为了只读分类列表直接注入 `CategoryRepository`；仍需要保存、删除、查询单个分类或创建默认分类的流程暂时保留数据层依赖，后续按写入语义继续拆。
 - 继续扩大分类/账户只读列表边界：账户页、分类页、交易页、编辑交易页、计划付款编辑页、CSV 导入/导出和借贷联动逻辑中的普通分类或账户列表读取已改走 `GetCategoriesUseCase/GetAccountsUseCase` 或迁移期的 `GetLegacyAccountsUseCase/GetLegacyAccountUseCase`；旧 `AccountsAct/AccountByIdAct` 已删除，排序保存、首次初始化是否为空和自动创建 Loans 分类仍保留原仓库入口。
 - 标签列表读取和文本搜索开始收敛到正式 domain 用例：新增 `GetTagsUseCase` 和 `SearchTagsUseCase`，报表筛选和编辑交易里的普通标签列表/搜索不再直接调用 `TagRepository.findAll()/findByText()`；标签保存、删除、交易关联和按标签反查交易仍保留仓库入口，后续按写入和筛选语义继续拆。
@@ -658,7 +658,7 @@
 - `Pure/SideEffect` 注解已迁到 `com.ivy.legacy.domain.pure`，未使用的 `Total/Partial` 注解已删除；`legacy.frp` 包和目录彻底移除。
 - 仅作源码标记的 `Pure/SideEffect` 注解也已删除，旧纯函数不再保留无运行时价值的自定义文档注解。
 - 删除无调用方的 `SettingsAct`、`UpdateSettingsAct`、旧 `Settings` 模型和 `SettingsEntity.toLegacyDomain()` mapper。
-- `SettingsEntity` 暂时仍保留：首次默认数据、重置钱包、备份恢复格式，以及 `CurrencyRepository/LegacySettingsRepository` 内部仍依赖这张表。
+- `SettingsEntity` 暂时仍保留：首次默认数据、重置钱包、备份恢复格式，以及 `CurrencyRepository/SettingsRepository` 内部仍依赖这张表。
 - `ResetWalletDataUseCaseImpl` 仍保留在 app 层实现：它需要同时编排数据清空、偏好清空、默认数据重建和根导航复位；当前不再用废弃注解制造警告，后续若拆分应先拆出数据清空与 app 导航两部分职责。
 - 删除无调用方的 `data_synced_to_cloud` 多语言文案，云同步用户可见入口继续减少。
 - 删除标签和标签关联表里的 `lastSyncedTime` 云同步时间字段，新增 `Migration131to132_DropTagSyncTime`，数据库版本升到 132；旧备份里的多余字段可被现有 JSON 配置忽略。

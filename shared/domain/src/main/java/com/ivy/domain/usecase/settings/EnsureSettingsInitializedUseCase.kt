@@ -1,17 +1,17 @@
 package com.ivy.domain.usecase.settings
 
-import com.ivy.data.repository.LegacySettingsRepository
+import com.ivy.data.repository.SettingsRepository
 import javax.inject.Inject
 
 class EnsureSettingsInitializedUseCase @Inject constructor(
-    private val legacySettingsRepository: LegacySettingsRepository
+    private val settingsRepository: SettingsRepository
 ) {
     suspend operator fun invoke(
         systemDarkMode: Boolean,
         currencyCode: String,
         bufferAmount: Double,
     ) {
-        legacySettingsRepository.ensureInitialized(
+        settingsRepository.ensureInitialized(
             systemDarkMode = systemDarkMode,
             currencyCode = currencyCode,
             bufferAmount = bufferAmount,

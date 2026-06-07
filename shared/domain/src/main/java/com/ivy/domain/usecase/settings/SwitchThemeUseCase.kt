@@ -1,13 +1,13 @@
 package com.ivy.domain.usecase.settings
 
 import com.ivy.base.theme.Theme
-import com.ivy.data.repository.LegacySettingsRepository
+import com.ivy.data.repository.SettingsRepository
 import javax.inject.Inject
 
 class SwitchThemeUseCase @Inject constructor(
-    private val legacySettingsRepository: LegacySettingsRepository
+    private val settingsRepository: SettingsRepository
 ) {
     suspend operator fun invoke(): Theme {
-        return legacySettingsRepository.switchTheme()
+        return settingsRepository.switchTheme()
     }
 }
