@@ -5,21 +5,21 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.compositionLocalOf
 import kotlinx.coroutines.flow.Flow
 
-class LegacyUiPreferences(
-    val standardKeypadLayout: LegacyBoolPreference,
+class AmountInputPreferences(
+    val standardKeypadLayout: UiBoolPreference,
 )
 
-class LegacyBoolPreference(
+class UiBoolPreference(
     val defaultValue: Boolean,
     val enabledFlow: Flow<Boolean?>,
 )
 
 @Suppress("CompositionLocalAllowlist")
-val LocalLegacyUiPreferences = compositionLocalOf<LegacyUiPreferences> {
-    error("No LocalLegacyUiPreferences")
+val LocalAmountInputPreferences = compositionLocalOf<AmountInputPreferences> {
+    error("No LocalAmountInputPreferences")
 }
 
 @Composable
-fun LegacyBoolPreference.asEnabledState(): Boolean {
+fun UiBoolPreference.asEnabledState(): Boolean {
     return enabledFlow.collectAsState(defaultValue).value ?: defaultValue
 }

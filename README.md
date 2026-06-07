@@ -674,6 +674,7 @@
 - `DeviceIdUseCase` 已停止引用 data core 的 `IvyDataStore` typealias，改为直接依赖标准 `DataStore<Preferences>`；data core 只保留实际 `Context.dataStore` 提供入口。
 - 设置页偏好开关读写已收敛到 `PreferenceToggleRepository`；`:feature:settings` 不再直接注入 `DataStore<Preferences>`，并去掉了自身的 DataStore Gradle 依赖，底层开关 key 和存储文件不变。
 - 旧 UI 偏好开关 CompositionLocal 已从 `LocalPreferenceDataStore` 改为 `LocalPreferenceToggleRepository`；`shared:ui:legacy` 不再直接依赖 DataStore，旧 UI 的开关读取仍复用相同 repository 和现有 key。
+- 旧 UI 金额输入偏好入口已收窄为 `AmountInputPreferences/LocalAmountInputPreferences`；它现在只表达金额键盘布局偏好，不再使用泛化的 `LegacyUiPreferences` 命名。
 - 编辑交易页的分类排序偏好读取已改走 `PreferenceToggleRepository`；`:feature:edit-transaction` 不再直接注入 DataStore，也去掉了自身的 DataStore Gradle 依赖。
 - 重置钱包流程的 DataStore 清空已改走 `DataStorePreferencesRepository.clearAll()`；app 层不再直接注入 AndroidX DataStore，也去掉了自身的 DataStore Gradle 依赖。
 - 偏好开关 key helper 已从 data core 移回 domain 的 `BoolPreference` 内部；`feature_` 前缀保持不变，data core 不再暴露只服务 domain 偏好定义的 `DatastoreKeys`。

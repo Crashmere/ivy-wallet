@@ -16,14 +16,14 @@ import com.ivy.base.time.TimeConverter
 import com.ivy.base.time.TimeProvider
 import com.ivy.domain.preferences.toggles.PreferenceToggleRepository
 import com.ivy.domain.preferences.toggles.PreferenceToggles
-import com.ivy.legacy.ui.preferences.LegacyBoolPreference
-import com.ivy.legacy.ui.preferences.LegacyUiPreferences
-import com.ivy.legacy.ui.preferences.LocalLegacyUiPreferences
+import com.ivy.legacy.ui.LegacyUiRoot
+import com.ivy.legacy.ui.preferences.AmountInputPreferences
+import com.ivy.legacy.ui.preferences.LocalAmountInputPreferences
+import com.ivy.legacy.ui.preferences.UiBoolPreference
 import com.ivy.legacy.ui.state.LocalPeriodState
 import com.ivy.legacy.ui.state.PeriodState
 import com.ivy.ui.navigation.Navigation
 import com.ivy.ui.navigation.NavigationRoot
-import com.ivy.legacy.ui.LegacyUiRoot
 import com.ivy.ui.platform.BuildInfoProvider
 import com.ivy.ui.platform.DatePicker
 import com.ivy.ui.platform.FileSharer
@@ -55,9 +55,9 @@ fun RootContent(
     hasLockScreen: () -> Boolean,
     onShowOSBiometricsModal: () -> Unit,
 ) {
-    val legacyUiPreferences = remember(preferenceToggles, preferenceToggleRepository) {
-        LegacyUiPreferences(
-            standardKeypadLayout = LegacyBoolPreference(
+    val amountInputPreferences = remember(preferenceToggles, preferenceToggleRepository) {
+        AmountInputPreferences(
+            standardKeypadLayout = UiBoolPreference(
                 defaultValue = preferenceToggles.standardKeypadLayout.defaultValue,
                 enabledFlow = preferenceToggleRepository.enabledFlow(
                     preferenceToggles.standardKeypadLayout
@@ -68,7 +68,7 @@ fun RootContent(
 
     CompositionLocalProvider(
         LocalPeriodState provides periodState,
-        LocalLegacyUiPreferences provides legacyUiPreferences,
+        LocalAmountInputPreferences provides amountInputPreferences,
         LocalBuildInfoProvider provides buildInfoProvider,
         LocalFileSharer provides fileSharer,
     ) {
