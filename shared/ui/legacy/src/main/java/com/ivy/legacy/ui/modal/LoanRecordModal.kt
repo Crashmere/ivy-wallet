@@ -43,9 +43,9 @@ import com.ivy.base.legacy.getDefaultFIATCurrency
 import com.ivy.ui.legacy.onScreenStart
 import com.ivy.ui.legacy.selectEndTextFieldValue
 import com.ivy.ui.R
-import com.ivy.wallet.domain.deprecated.logic.model.CreateAccountData
-import com.ivy.wallet.domain.deprecated.logic.model.CreateLoanRecordData
-import com.ivy.wallet.domain.deprecated.logic.model.EditLoanRecordData
+import com.ivy.legacy.domain.model.CreateAccountData
+import com.ivy.legacy.domain.model.CreateLoanRecordData
+import com.ivy.legacy.domain.model.EditLoanRecordData
 import com.ivy.legacy.ui.component.ItemIconSDefaultIcon
 import com.ivy.legacy.ui.component.IvyCheckboxWithText
 import com.ivy.legacy.ui.component.IvyIcon

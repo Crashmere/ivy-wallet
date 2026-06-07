@@ -41,7 +41,7 @@ import com.ivy.base.legacy.isNotNullOrBlank
 import com.ivy.ui.legacy.onScreenStart
 import com.ivy.ui.legacy.selectEndTextFieldValue
 import com.ivy.ui.R
-import com.ivy.wallet.domain.deprecated.logic.model.CreateCategoryData
+import com.ivy.legacy.domain.model.CreateCategoryData
 import com.ivy.legacy.ui.theme.Ivy
 import com.ivy.legacy.ui.component.ItemIconMDefaultIcon
 import com.ivy.legacy.ui.component.IvyNameTextField

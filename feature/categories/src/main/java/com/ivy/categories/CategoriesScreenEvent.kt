@@ -1,7 +1,7 @@
 package com.ivy.categories
 
 import com.ivy.legacy.domain.data.SortOrder
-import com.ivy.wallet.domain.deprecated.logic.model.CreateCategoryData
+import com.ivy.legacy.domain.model.CreateCategoryData
 import com.ivy.legacy.ui.modal.edit.CategoryModalData
 
 sealed interface CategoriesScreenEvent {

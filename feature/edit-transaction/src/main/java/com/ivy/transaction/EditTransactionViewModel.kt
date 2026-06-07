@@ -53,8 +53,8 @@ import com.ivy.wallet.domain.deprecated.logic.PlannedPaymentsLogic
 import com.ivy.wallet.domain.deprecated.logic.SmartTitleSuggestionsLogic
 import com.ivy.wallet.domain.deprecated.logic.currency.ExchangeRatesLogic
 import com.ivy.wallet.domain.deprecated.logic.loantrasactions.LoanTransactionsLogic
-import com.ivy.wallet.domain.deprecated.logic.model.CreateAccountData
-import com.ivy.wallet.domain.deprecated.logic.model.CreateCategoryData
+import com.ivy.legacy.domain.model.CreateAccountData
+import com.ivy.legacy.domain.model.CreateCategoryData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.collections.immutable.ImmutableList

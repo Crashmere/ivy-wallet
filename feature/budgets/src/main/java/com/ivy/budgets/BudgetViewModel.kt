@@ -35,7 +35,7 @@ import com.ivy.wallet.domain.action.budget.BudgetsAct
 import com.ivy.wallet.domain.action.exchange.ExchangeAct
 import com.ivy.wallet.domain.action.settings.BaseCurrencyAct
 import com.ivy.wallet.domain.action.transaction.HistoryTrnsAct
-import com.ivy.wallet.domain.deprecated.logic.model.CreateBudgetData
+import com.ivy.legacy.domain.model.CreateBudgetData
 import com.ivy.wallet.domain.pure.exchange.ExchangeData
 import com.ivy.wallet.domain.pure.transaction.trnCurrency
 import dagger.hilt.android.lifecycle.HiltViewModel

@@ -4,8 +4,8 @@ import com.ivy.base.model.TransactionType
 import com.ivy.data.model.Category
 import com.ivy.data.model.IntervalType
 import com.ivy.legacy.datamodel.Account
-import com.ivy.wallet.domain.deprecated.logic.model.CreateAccountData
-import com.ivy.wallet.domain.deprecated.logic.model.CreateCategoryData
+import com.ivy.legacy.domain.model.CreateAccountData
+import com.ivy.legacy.domain.model.CreateCategoryData
 import com.ivy.legacy.ui.modal.RecurringRuleModalData
 import com.ivy.legacy.ui.modal.edit.AccountModalData
 import com.ivy.legacy.ui.modal.edit.CategoryModalData

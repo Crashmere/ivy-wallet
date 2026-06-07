@@ -1,4 +1,4 @@
-package com.ivy.wallet.domain.deprecated.logic.model
+package com.ivy.legacy.domain.model
 
 import com.ivy.data.model.LoanType
 import com.ivy.legacy.datamodel.Account

@@ -12,8 +12,8 @@ import com.ivy.data.repository.CategoryRepository
 import com.ivy.data.repository.CurrencyRepository
 import com.ivy.legacy.datamodel.Account
 import com.ivy.ui.R
-import com.ivy.wallet.domain.deprecated.logic.model.CreateAccountData
-import com.ivy.wallet.domain.deprecated.logic.model.CreateCategoryData
+import com.ivy.legacy.domain.model.CreateAccountData
+import com.ivy.legacy.domain.model.CreateCategoryData
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList

@@ -31,7 +31,7 @@ import com.ivy.legacy.ui.modal.ModalNameInput
 import com.ivy.base.legacy.isNotNullOrBlank
 import com.ivy.ui.legacy.selectEndTextFieldValue
 import com.ivy.ui.R
-import com.ivy.wallet.domain.deprecated.logic.model.CreateBudgetData
+import com.ivy.legacy.domain.model.CreateBudgetData
 import com.ivy.legacy.ui.modal.DeleteModal
 import com.ivy.legacy.ui.modal.IvyModal
 import com.ivy.legacy.ui.modal.ModalAddSave

@@ -1,4 +1,4 @@
-package com.ivy.wallet.domain.deprecated.logic.model
+package com.ivy.legacy.domain.model
 
 data class CreateAccountData(
     val name: String,

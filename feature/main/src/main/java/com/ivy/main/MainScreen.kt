@@ -21,7 +21,7 @@ import com.ivy.navigation.LocalMainTabState
 import com.ivy.navigation.MainTab
 import com.ivy.navigation.MainScreen
 import com.ivy.navigation.navigation
-import com.ivy.wallet.domain.deprecated.logic.model.CreateAccountData
+import com.ivy.legacy.domain.model.CreateAccountData
 import com.ivy.legacy.ui.modal.edit.AccountModal
 import com.ivy.legacy.ui.modal.edit.AccountModalData
 

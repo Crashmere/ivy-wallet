@@ -37,9 +37,9 @@ import com.ivy.wallet.domain.action.loan.LoanByIdAct
 import com.ivy.wallet.domain.deprecated.logic.LoanCreator
 import com.ivy.wallet.domain.deprecated.logic.LoanRecordCreator
 import com.ivy.wallet.domain.deprecated.logic.loantrasactions.LoanTransactionsLogic
-import com.ivy.wallet.domain.deprecated.logic.model.CreateAccountData
-import com.ivy.wallet.domain.deprecated.logic.model.CreateLoanRecordData
-import com.ivy.wallet.domain.deprecated.logic.model.EditLoanRecordData
+import com.ivy.legacy.domain.model.CreateAccountData
+import com.ivy.legacy.domain.model.CreateLoanRecordData
+import com.ivy.legacy.domain.model.EditLoanRecordData
 import com.ivy.legacy.ui.modal.LoanModalData
 import com.ivy.legacy.ui.modal.LoanRecordModalData
 import dagger.hilt.android.lifecycle.HiltViewModel

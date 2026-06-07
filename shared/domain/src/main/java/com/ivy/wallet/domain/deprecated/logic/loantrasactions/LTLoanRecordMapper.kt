@@ -5,7 +5,7 @@ import com.ivy.legacy.datamodel.Loan
 import com.ivy.legacy.datamodel.LoanRecord
 import com.ivy.legacy.datamodel.temp.toLegacyDomain
 import com.ivy.base.legacy.computationThread
-import com.ivy.wallet.domain.deprecated.logic.model.CreateLoanRecordData
+import com.ivy.legacy.domain.model.CreateLoanRecordData
 import java.util.UUID
 import javax.inject.Inject
 

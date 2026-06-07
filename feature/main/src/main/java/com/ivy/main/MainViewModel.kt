@@ -13,7 +13,7 @@ import com.ivy.navigation.MainTab
 import com.ivy.navigation.MainScreen
 import com.ivy.navigation.MainTabState
 import com.ivy.navigation.Navigation
-import com.ivy.wallet.domain.deprecated.logic.model.CreateAccountData
+import com.ivy.legacy.domain.model.CreateAccountData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

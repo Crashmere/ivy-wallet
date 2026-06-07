@@ -29,8 +29,8 @@ import com.ivy.wallet.domain.action.account.AccountsAct
 import com.ivy.wallet.domain.action.loan.LoansAct
 import com.ivy.wallet.domain.deprecated.logic.LoanCreator
 import com.ivy.wallet.domain.deprecated.logic.loantrasactions.LoanTransactionsLogic
-import com.ivy.wallet.domain.deprecated.logic.model.CreateAccountData
-import com.ivy.wallet.domain.deprecated.logic.model.CreateLoanData
+import com.ivy.legacy.domain.model.CreateAccountData
+import com.ivy.legacy.domain.model.CreateLoanData
 import com.ivy.legacy.ui.modal.LoanModalData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList

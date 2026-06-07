@@ -52,8 +52,8 @@ import com.ivy.navigation.screenScopedViewModel
 import com.ivy.ui.R
 import com.ivy.legacy.domain.data.CustomExchangeRateState
 import com.ivy.data.model.currency.IvyCurrency
-import com.ivy.wallet.domain.deprecated.logic.model.CreateAccountData
-import com.ivy.wallet.domain.deprecated.logic.model.CreateCategoryData
+import com.ivy.legacy.domain.model.CreateAccountData
+import com.ivy.legacy.domain.model.CreateCategoryData
 import com.ivy.legacy.ui.edit.core.Category
 import com.ivy.legacy.ui.edit.core.DueDate
 import com.ivy.legacy.ui.edit.core.EditBottomSheet

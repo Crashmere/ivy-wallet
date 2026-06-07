@@ -10,7 +10,7 @@ import com.ivy.legacy.datamodel.LoanRecord
 import com.ivy.legacy.datamodel.temp.toLegacyDomain
 import com.ivy.base.legacy.computationThread
 import com.ivy.base.legacy.scopedIOThread
-import com.ivy.wallet.domain.deprecated.logic.model.CreateLoanData
+import com.ivy.legacy.domain.model.CreateLoanData
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import java.util.UUID

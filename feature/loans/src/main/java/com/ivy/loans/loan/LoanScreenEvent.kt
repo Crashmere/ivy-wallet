@@ -1,8 +1,8 @@
 package com.ivy.loans.loan
 
 import com.ivy.loans.loan.data.DisplayLoan
-import com.ivy.wallet.domain.deprecated.logic.model.CreateAccountData
-import com.ivy.wallet.domain.deprecated.logic.model.CreateLoanData
+import com.ivy.legacy.domain.model.CreateAccountData
+import com.ivy.legacy.domain.model.CreateLoanData
 
 sealed interface LoanScreenEvent {
     data class OnLoanCreate(val createLoanData: CreateLoanData) : LoanScreenEvent
