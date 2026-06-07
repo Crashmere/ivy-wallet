@@ -1,11 +1,11 @@
 package com.ivy.ui.time.impl
 
 import com.ivy.ui.resource.ResourceProvider
-import com.ivy.base.time.TimeConverter
-import com.ivy.base.time.TimeProvider
 import com.ivy.ui.R
 import com.ivy.ui.time.DevicePreferences
+import com.ivy.ui.time.TimeConverter
 import com.ivy.ui.time.TimeFormatter
+import com.ivy.ui.time.TimeProvider
 import java.time.Instant
 import java.time.LocalDate
 import java.time.LocalDateTime

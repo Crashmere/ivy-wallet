@@ -12,8 +12,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import com.ivy.IvyNavGraph
 import com.ivy.data.model.Theme
-import com.ivy.base.time.TimeConverter
-import com.ivy.base.time.TimeProvider
 import com.ivy.domain.preferences.toggles.PreferenceToggleRepository
 import com.ivy.domain.preferences.toggles.PreferenceToggles
 import com.ivy.legacy.ui.LegacyUiRoot
@@ -31,7 +29,9 @@ import com.ivy.ui.platform.LocalBuildInfoProvider
 import com.ivy.ui.platform.LocalFileSharer
 import com.ivy.ui.theme.IvyMaterial3Theme
 import com.ivy.ui.theme.ThemeState
+import com.ivy.ui.time.TimeConverter
 import com.ivy.ui.time.TimeFormatter
+import com.ivy.ui.time.TimeProvider
 import com.ivy.ui.time.impl.DateTimePicker
 import com.ivy.wallet.ui.applocked.AppLockedScreen
 

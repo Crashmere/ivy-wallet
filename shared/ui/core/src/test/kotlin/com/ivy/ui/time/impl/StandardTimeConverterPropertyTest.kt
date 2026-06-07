@@ -1,7 +1,7 @@
-package com.ivy.base.time.impl
+package com.ivy.ui.time.impl
 
-import com.ivy.base.time.TimeConverter
-import com.ivy.base.time.TimeProvider
+import com.ivy.ui.time.TimeConverter
+import com.ivy.ui.time.TimeProvider
 import io.kotest.common.runBlocking
 import io.kotest.matchers.shouldBe
 import io.kotest.property.Arb

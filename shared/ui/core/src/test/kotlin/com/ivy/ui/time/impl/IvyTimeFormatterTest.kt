@@ -2,12 +2,12 @@ package com.ivy.ui.time.impl
 
 import com.google.testing.junit.testparameterinjector.TestParameter
 import com.google.testing.junit.testparameterinjector.TestParameterInjector
-import com.ivy.base.time.TimeConverter
-import com.ivy.base.time.TimeProvider
 import com.ivy.ui.R
 import com.ivy.ui.resource.TestResourceProvider
 import com.ivy.ui.time.DevicePreferences
+import com.ivy.ui.time.TimeConverter
 import com.ivy.ui.time.TimeFormatter.Style
+import com.ivy.ui.time.TimeProvider
 import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk

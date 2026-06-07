@@ -2,10 +2,10 @@ package com.ivy.legacy.ui.model.period
 
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.Composable
-import com.ivy.base.time.TimeConverter
-import com.ivy.base.time.TimeProvider
 import com.ivy.data.model.legacy.FromToTimeRange
+import com.ivy.ui.time.TimeConverter
 import com.ivy.ui.time.TimeFormatter
+import com.ivy.ui.time.TimeProvider
 import java.time.Instant
 import java.time.LocalDate
 import java.time.LocalDateTime

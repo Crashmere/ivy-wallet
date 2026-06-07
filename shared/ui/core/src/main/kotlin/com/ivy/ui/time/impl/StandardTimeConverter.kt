@@ -1,9 +1,9 @@
-package com.ivy.base.time.impl
+package com.ivy.ui.time.impl
 
-import com.ivy.base.time.INSTANT_MAX_SAFE
-import com.ivy.base.time.INSTANT_MIN_SAFE
-import com.ivy.base.time.TimeConverter
-import com.ivy.base.time.TimeProvider
+import com.ivy.ui.time.INSTANT_MAX_SAFE
+import com.ivy.ui.time.INSTANT_MIN_SAFE
+import com.ivy.ui.time.TimeConverter
+import com.ivy.ui.time.TimeProvider
 import java.time.DateTimeException
 import java.time.Instant
 import java.time.LocalDate

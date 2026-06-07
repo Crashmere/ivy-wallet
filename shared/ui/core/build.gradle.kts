@@ -8,7 +8,6 @@ android {
 }
 
 dependencies {
-    implementation(projects.shared.base)
     implementation(projects.shared.data.model)
 
     testImplementation(libs.bundles.testing)

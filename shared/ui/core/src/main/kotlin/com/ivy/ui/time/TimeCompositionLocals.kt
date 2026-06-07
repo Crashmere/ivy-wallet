@@ -1,8 +1,6 @@
 package com.ivy.ui.time
 
 import androidx.compose.runtime.compositionLocalOf
-import com.ivy.base.time.TimeConverter
-import com.ivy.base.time.TimeProvider
 
 @Suppress("CompositionLocalAllowlist")
 val LocalTimeConverter = compositionLocalOf<TimeConverter> { error("No LocalTimeConverter") }

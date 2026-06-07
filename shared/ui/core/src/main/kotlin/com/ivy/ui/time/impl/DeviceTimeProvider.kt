@@ -1,6 +1,6 @@
-package com.ivy.base.time.impl
+package com.ivy.ui.time.impl
 
-import com.ivy.base.time.TimeProvider
+import com.ivy.ui.time.TimeProvider
 import java.time.Instant
 import java.time.LocalDate
 import java.time.LocalDateTime

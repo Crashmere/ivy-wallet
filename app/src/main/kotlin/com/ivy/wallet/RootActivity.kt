@@ -8,14 +8,14 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.biometric.BiometricPrompt
 import androidx.core.view.WindowCompat
-import com.ivy.base.time.TimeConverter
-import com.ivy.base.time.TimeProvider
 import com.ivy.domain.preferences.toggles.PreferenceToggleRepository
 import com.ivy.domain.preferences.toggles.PreferenceToggles
 import com.ivy.legacy.ui.state.PeriodState
 import com.ivy.ui.navigation.Navigation
 import com.ivy.ui.theme.ThemeState
+import com.ivy.ui.time.TimeConverter
 import com.ivy.ui.time.TimeFormatter
+import com.ivy.ui.time.TimeProvider
 import com.ivy.ui.time.impl.DateTimePicker
 import com.ivy.wallet.platform.ActivityDatePicker
 import com.ivy.wallet.platform.ActivityFileSharer

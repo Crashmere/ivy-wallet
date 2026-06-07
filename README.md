@@ -45,14 +45,15 @@
 | 模块 | 目标职责 | 不应包含 |
 | --- | --- | --- |
 | `:app` | Android 应用壳、`Activity`、启动流程、系统权限、生物识别、文件选择、分享、根导航宿主 | 业务计算、数据库访问、旧 UI 组件、跨 feature 业务状态 |
-| `:shared:base` | 纯基础能力：时间、线程等少量跨层端口 | `SharedPrefs` 业务 key、资源抽象、UI 组件、Room、Ktor、Compose |
 | `:shared:data:model` | 纯数据模型和值对象：Account、Transaction、Category、Tag、ExchangeRate、primitive value object | Room DAO、Repository、Android Context、UI 文案 |
 | `:shared:data:core` | 数据实现：Room、DataStore、FileSystem、Repository、备份恢复、远程汇率数据源 | UI 状态、Compose、测试 fake、feature 专用逻辑 |
 | `:shared:domain` | 业务 use case：余额、统计、CSV 导出、汇率换算、设置/偏好业务规则 | Room 插件、Ktor 具体实现、Android Activity 接口、UI 资源 |
-| `:shared:ui:core` | Material3 主题、通用 Compose 组件、图标、资源端口、时间/金额 UI 格式化、UI CompositionLocal | 数据库、Repository 实现、业务写入逻辑 |
+| `:shared:ui:core` | Material3 主题、通用 Compose 组件、图标、资源端口、时间端口/转换/格式化、金额 UI 格式化、UI CompositionLocal | 数据库、Repository 实现、业务写入逻辑 |
 | `:shared:ui:navigation` | 页面 route、导航状态、导航容器 | domain use case、数据层实现、feature 业务逻辑 |
 | `:feature:*` | 用户可感知功能页面和 ViewModel | 公共基础设施、跨模块全局状态、临时兼容代码 |
 | `:temp:*` | 迁移过程中的临时兼容层 | 最终应清空并删除 |
+
+`shared:base` 已经被删除。原先剩余的时间端口只服务 UI 根部、日期选择器和 legacy 周期 UI，已经归入 `shared:ui:core`；后续不再为少量通用 helper 重新建立基础大杂烩模块。
 
 长期可以进一步简化 feature 模块。如果个人维护更重视低心智负担，可以把多个小 feature 合并，最终保留少量大模块。
 
@@ -272,8 +273,8 @@
 当前进展：
 
 - 新增 `ivy.android-library` 作为更清晰的 Android library 基础约定；旧 `ivy.kotlin-android` 兼容别名已经删除，当前没有模块使用它。
-- `shared:base`、`shared:data:model`、`shared:data:model-testing` 已从 `ivy.feature` 迁出，不再默认启用完整 Compose UI 配置。
-- `shared:base` 已退出 `ivy.hilt`，基础时间/线程端口的 Hilt 绑定迁到 app 装配层；Compose runtime 和 kotlinx serialization 也已经移除。`shared:base` 当前已改成纯 JVM/Kotlin 模块，不再需要 Android namespace、manifest 或 SDK 配置。
+- `shared:data:model`、`shared:data:model-testing` 已从 `ivy.feature` 迁出，不再默认启用完整 Compose UI 配置。
+- `shared:base` 已删除；最后剩余的 `TimeProvider/TimeConverter`、设备时间实现和安全时间边界已归入 `shared:ui:core` 的 `com.ivy.ui.time` 包，原测试也迁到 `shared:ui:core/src/test`。
 - `shared:data:model` 已移除轻量 `compose-runtime`，纯数据模型不再依赖 UI runtime。
 - 过渡用的 `ivy.compose-runtime` 插件已经删除；当前非页面模块不再需要轻量 Compose 编译配置。
 - `ivy.integration.testing` 已从 `ivy.feature` 迁出并收敛为 instrumentation 测试配置，避免因为集成测试配置把完整 Compose UI 或 Android library 基础配置带入数据层。
@@ -295,8 +296,8 @@
 - app 模块重新显式依赖 `shared:data:core` 作为运行时数据实现模块；feature/domain 仍只依赖 data 端口，data-core 的 Hilt Module 负责把 Room、DataStore、备份、文件和远程汇率实现绑定进应用图。
 - `ivy.android-library` 不再给所有 Android library 默认添加 Arrow；`shared:data:model` 因公开 `Either/Raise` API 显式用 `api` 暴露 Arrow，其他实际直接使用 Arrow 的模块改为各自声明 `implementation(libs.bundles.arrow)`；旧 FRP helper 移出后，`shared:base` 不再需要 Arrow。
 - `ivy.android-library` 不再给所有 Android library 默认添加 Timber；domain 汇率同步和饼图点击逻辑中的调试日志已删除，当前只保留 app 日志初始化/锁屏认证日志以及 data core 的网络/导入错误日志。
-- `ivy.android-library` 不再给所有 Android library 默认添加整套单元测试依赖；当前有 `src/test` 的 `shared:base`、`shared:data:model`、`shared:data:model-testing`、`shared:data:core`、`shared:domain` 和 `shared:ui:core` 改为在各自模块里显式声明测试 bundle。
-- 新增 `ivy.kotlin-library` 作为纯 JVM/Kotlin 模块约定；`shared:base`、`shared:data:model`、`shared:data:model-testing`、`shared:data:api` 和 `shared:domain` 已从 Android library 改成 JVM 模块，不再需要 namespace、Android manifest、min/compile SDK 或 Android Kotlin runtime。
+- `ivy.android-library` 不再给所有 Android library 默认添加整套单元测试依赖；当前有 `src/test` 的 `shared:data:model`、`shared:data:model-testing`、`shared:data:core`、`shared:domain` 和 `shared:ui:core` 改为在各自模块里显式声明测试 bundle。
+- 新增 `ivy.kotlin-library` 作为纯 JVM/Kotlin 模块约定；`shared:data:model`、`shared:data:model-testing`、`shared:data:api` 和 `shared:domain` 已从 Android library 改成 JVM 模块，不再需要 namespace、Android manifest、min/compile SDK 或 Android Kotlin runtime。
 - `shared:data:core` 的 DataStore 依赖已从 `api` 收窄为 `implementation`；DataStore 绑定仍由 data core 提供，但不再通过 data core 传递暴露给其他模块。
 - `shared:domain` 已移除 AndroidX DataStore 依赖；偏好开关的存储能力抽成 `PreferenceToggleStore` 端口，DataStore 读写和清空由 `shared:data:core` 实现，domain 只保留业务级 `PreferenceToggleRepository` 和开关元数据。
 - `shared:data:api` 已显式暴露 Arrow 依赖；`ExchangeRateStore` 的公开签名直接使用 `Either`，不再依赖 `shared:data:model` 间接传递 Arrow。
@@ -558,7 +559,7 @@
    - `ReorderModal`
    - 目标：通用组件进 `shared:ui:core`；功能专用组件进对应 feature。
 5. 工具函数
-   - 纯 Kotlin：进 `shared:base`。
+   - 纯 Kotlin：优先留在具体消费模块；确实多模块复用时再进入 `shared:domain`、`shared:data:model` 或更明确的业务工具包，不再恢复 `shared:base` 大杂烩。
    - Compose/UI：进 `shared:ui:core`。
    - Android 平台能力：进 `app` 或 platform service。
 6. 启动和全局上下文
@@ -784,7 +785,7 @@
 - `feature:planned-payments` 的计划付款编辑和列表展示也已用局部系统时区转换替代 `TimeConverter/LocalTimeConverter`，移除 `shared:base` Gradle 依赖；计划付款起始时间的本地展示和 UTC 存储规则保持不变。
 - 剩余 `ioThread/scopedIOThread/computationThread` 调用已全部改为标准 `withContext(Dispatchers.IO/Default)`；`shared:base` 中的旧协程 dispatcher helper 文件已删除。
 - `shared:data:core` 的仓库、Store 实现和备份导入导出已改为标准 `Dispatchers.IO`，移除 `DispatchersProvider` 构造参数以及对 `shared:base/base-testing` 的依赖；DAO 访问、缓存写入事件、备份 ZIP/JSON 格式和导入进度逻辑保持不变。
-- `shared:domain` 中剩余只服务 use case 外层切线程的 `DispatchersProvider` 注入已移除，账户/分类创建编辑、旧账户/交易读取、计划付款汇总、账户统计和 CSV 导出改用标准 `Dispatchers.IO/Default`；时间端口仍保留在 base，用于现有日期语义。
+- `shared:domain` 中剩余只服务 use case 外层切线程的 `DispatchersProvider` 注入已移除，账户/分类创建编辑、旧账户/交易读取、计划付款汇总、账户统计和 CSV 导出改用标准 `Dispatchers.IO/Default`；业务日期语义已改用 domain 内部 `java.time` helper。
 - 最后一个 UI 调用方 `Toaster` 已改用标准 `Dispatchers.Main`；`DispatchersProvider/IvyDispatchersProvider/TestDispatchersProvider` 和 app 绑定随之删除，基础层不再保留线程调度端口。
 - `shared:domain` 的账户统计、分类汇总、计划付款、贷款同步、CSV 导出和旧交易历史分组已改用 domain 内部 `java.time` helper；domain 不再注入 `TimeProvider/TimeConverter`，也不再依赖 `shared:base/base-testing`。
 - 无源码消费方的 `:shared:base-testing` 已删除，`shared:ui:core` 移除过时测试依赖；基础测试 helper 不再保留独立模块。
@@ -796,8 +797,8 @@
 - `ResourceProvider` 已从 `shared:base` 迁到 `shared:ui:core`，测试替身也随之从 `base-testing` 移到 ui-core 测试源集；base 不再承载 Android 字符串资源端口。
 - `shared:base` 中无消费方的 `BaseModule` 和 `@AppCoroutineScope` 已删除；应用级协程 scope 绑定不再作为未使用的全局 DI 暴露。
 - 导出 CSV/备份文件名使用的 `yyyyMMdd-HHmm` 时间戳格式已从 `shared:base` 内联到设置页和报表页；基础层不再暴露文件命名专用的时间格式 helper。
-- `shared:base` 中剩余的薄日期扩展已拆除：UTC epoch 秒、月边界和日结束时间等只在具体调用方保留为私有 helper，基础层只继续提供时间端口和安全时间边界。
-- `BaseHiltBindings` 已迁入 app 的绑定模块；`shared:base` 只显式依赖 `javax.inject` 支撑默认实现构造注入，不再参与 Hilt 聚合。
+- `shared:base` 中剩余的薄日期扩展已拆除：UTC epoch 秒、月边界和日结束时间等只在具体调用方保留为私有 helper。
+- `BaseHiltBindings` 已迁入 app 的绑定模块，随后 `shared:base` 完成时间端口收敛并删除；最后的 UI 时间入口、设备时间实现、安全时间边界和对应测试迁入 `shared:ui:core`，app 与 `shared:ui:legacy` 不再声明 `projects.shared.base`。
 - 版本目录中未被任何 Gradle 文件或源码使用的 `mockk-android` 与 `androidx-security` 依赖别名已删除。
 - 账户旧读取路径已收敛到 `AccountStore`；旧 legacy 账户模型现在由 data model 账户映射而来，`shared:domain` 主源码不再直接注入 `AccountDao` 或依赖 `AccountEntity` mapper。
 - 旧交易卡片已移除重复账户查找 TODO：渲染前先解析来源/目标账户，再复用同一结果处理点击和币种展示，行为不变但 legacy UI 内部职责更清楚。
@@ -934,16 +935,13 @@ feature:*
   -> shared:data:model
 
 shared:domain
-  -> shared:base
   -> shared:data:model
 
 shared:data:core
-  -> shared:base
   -> shared:data:model
 
 shared:ui:core
-  -> shared:base
-  -> shared:domain only if unavoidable
+  -> shared:data:model only if needed for UI value formatting
 ```
 
 不希望出现：
@@ -975,7 +973,7 @@ shared:ui:core
    - 删除未引用的第三方导入 logo、widget 预览图、推广/分享文案。
    - 可选：只保留中文和默认资源。
 2. **构建约定插件整理**
-   - 先让 `shared:base`、`shared:data:model` 不再使用 `ivy.feature`。
+   - `shared:base` 已删除；继续检查 `shared:data:model`、`shared:data:api`、`shared:domain` 是否只声明真实需要的能力。
    - 再处理 `shared:data:core`、`shared:domain`。
 3. **测试 helper 归位**
    - 新建或整理 `shared:test-support`。
@@ -1022,7 +1020,7 @@ shared:ui:core
 
 下一步建议执行：
 
-1. 继续做 shared 模块依赖审计：优先检查 `shared:domain`、`shared:ui:core`、`shared:ui:legacy` 是否还有可显式化或可移除的非必要 Gradle 依赖。
+1. 继续做 shared 模块依赖审计：优先检查 `shared:ui:core`、`shared:ui:legacy`、`shared:data:core` 是否还有可显式化或可移除的非必要 Gradle 依赖。
 2. 继续清理明显错位的包名和模块边界，优先处理 `shared:ui:legacy` 与 `shared:data:core` 中仍残留的历史命名，避免新代码继续误用旧 API。
 3. 继续评估 `SettingsEntity` 是否可以拆成更明确的本地偏好表或迁入 DataStore；`name/isDeleted` 已删除，剩余 `theme/currency/bufferAmount` 需要和备份恢复格式一起规划。
 4. 继续数据库只读审计：`isDeleted` 目前先保留为本地软删除语义；不再把业务表里的 `isDeleted` 当作纯云同步字段批量删除。

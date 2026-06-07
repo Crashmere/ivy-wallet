@@ -1,9 +1,5 @@
 package com.ivy.wallet.di
 
-import com.ivy.base.time.TimeConverter
-import com.ivy.base.time.TimeProvider
-import com.ivy.base.time.impl.DeviceTimeProvider
-import com.ivy.base.time.impl.StandardTimeConverter
 import com.ivy.domain.preferences.toggles.IvyPreferenceToggles
 import com.ivy.domain.preferences.toggles.PreferenceToggles
 import com.ivy.ui.resource.ResourceProvider
@@ -11,6 +7,10 @@ import com.ivy.domain.usecase.reset.ResetWalletDataUseCase
 import com.ivy.ui.platform.DatePicker
 import com.ivy.ui.platform.FilePicker
 import com.ivy.ui.platform.LocaleSettingsLauncher
+import com.ivy.ui.time.TimeConverter
+import com.ivy.ui.time.TimeProvider
+import com.ivy.ui.time.impl.DeviceTimeProvider
+import com.ivy.ui.time.impl.StandardTimeConverter
 import com.ivy.wallet.AppStarter
 import com.ivy.wallet.IvyAppStarter
 import com.ivy.wallet.platform.AndroidLocaleSettingsLauncher
