@@ -26,7 +26,7 @@ import com.ivy.base.model.TransactionType
 import com.ivy.data.model.Category
 import com.ivy.design.l0_system.UI
 import com.ivy.ui.legacy.drawColoredShadow
-import com.ivy.legacy.utils.timeNowUTC
+import com.ivy.base.legacy.timeNowUTC
 import com.ivy.ui.R
 import com.ivy.wallet.ui.theme.Black
 import com.ivy.wallet.ui.theme.Gradient

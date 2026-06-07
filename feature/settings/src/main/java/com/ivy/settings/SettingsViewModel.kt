@@ -27,9 +27,9 @@ import com.ivy.frp.monad.Res
 import com.ivy.legacy.IvyWalletCtx
 import com.ivy.legacy.LogoutLogic
 import com.ivy.legacy.domain.action.settings.UpdateSettingsAct
-import com.ivy.legacy.utils.getISOFormattedDateTime
+import com.ivy.base.legacy.getISOFormattedDateTime
 import com.ivy.base.legacy.ioThread
-import com.ivy.legacy.utils.timeNowUTC
+import com.ivy.base.legacy.timeNowUTC
 import com.ivy.base.legacy.uiThread
 import com.ivy.ui.ComposeViewModel
 import com.ivy.wallet.domain.action.global.StartDayOfMonthAct

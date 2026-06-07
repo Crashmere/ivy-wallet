@@ -233,7 +233,7 @@ class PieChartStatisticViewModel @Inject constructor(
 
     private suspend fun nextMonth() {
         val month = period.month
-        val year = period.year ?: com.ivy.legacy.utils.dateNowUTC().year
+        val year = period.year ?: com.ivy.base.legacy.dateNowUTC().year
         if (month != null) {
             load(
                 periodValue = month.incrementMonthPeriod(ivyContext, 1L, year)
@@ -243,7 +243,7 @@ class PieChartStatisticViewModel @Inject constructor(
 
     private suspend fun previousMonth() {
         val month = period.month
-        val year = period.year ?: com.ivy.legacy.utils.dateNowUTC().year
+        val year = period.year ?: com.ivy.base.legacy.dateNowUTC().year
         if (month != null) {
             load(
                 periodValue = month.incrementMonthPeriod(ivyContext, -1L, year)

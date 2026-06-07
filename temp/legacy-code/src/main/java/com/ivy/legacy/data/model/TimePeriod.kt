@@ -3,11 +3,11 @@ package com.ivy.legacy.data.model
 import androidx.compose.runtime.Immutable
 import com.ivy.base.time.TimeConverter
 import com.ivy.base.time.TimeProvider
-import com.ivy.legacy.utils.atEndOfDay
-import com.ivy.legacy.utils.dateNowUTC
-import com.ivy.legacy.utils.endOfMonth
-import com.ivy.legacy.utils.startOfMonth
-import com.ivy.legacy.utils.withDayOfMonthSafe
+import com.ivy.base.legacy.atEndOfDay
+import com.ivy.base.legacy.dateNowUTC
+import com.ivy.base.legacy.endOfMonth
+import com.ivy.base.legacy.startOfMonth
+import com.ivy.base.legacy.withDayOfMonthSafe
 import com.ivy.ui.time.TimeFormatter
 import java.time.Instant
 import java.time.LocalDate

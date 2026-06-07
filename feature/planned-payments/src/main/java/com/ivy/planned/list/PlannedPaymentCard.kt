@@ -37,10 +37,10 @@ import com.ivy.legacy.datamodel.Account
 import com.ivy.legacy.datamodel.PlannedPaymentRule
 import com.ivy.legacy.forDisplay
 import com.ivy.legacy.ui.component.transaction.TypeAmountCurrency
-import com.ivy.legacy.utils.formatDateOnly
-import com.ivy.legacy.utils.formatDateOnlyWithYear
+import com.ivy.ui.legacy.formatDateOnly
+import com.ivy.ui.legacy.formatDateOnlyWithYear
 import com.ivy.base.legacy.isNotNullOrBlank
-import com.ivy.legacy.utils.timeNowUTC
+import com.ivy.base.legacy.timeNowUTC
 import com.ivy.base.legacy.uppercaseLocal
 import com.ivy.navigation.TransactionsScreen
 import com.ivy.navigation.navigation

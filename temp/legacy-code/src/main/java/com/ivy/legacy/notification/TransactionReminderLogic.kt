@@ -5,8 +5,8 @@ import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import com.ivy.base.legacy.SharedPrefs
-import com.ivy.legacy.utils.timeNowLocal
-import com.ivy.legacy.utils.toEpochSeconds
+import com.ivy.base.legacy.timeNowLocal
+import com.ivy.base.legacy.toEpochSeconds
 import dagger.hilt.android.qualifiers.ApplicationContext
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject

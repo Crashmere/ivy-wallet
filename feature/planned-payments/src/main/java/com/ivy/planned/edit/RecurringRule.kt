@@ -21,8 +21,8 @@ import com.ivy.data.model.IntervalType
 import com.ivy.design.l0_system.UI
 import com.ivy.design.l0_system.style
 import com.ivy.legacy.forDisplay
-import com.ivy.legacy.utils.formatDateOnly
-import com.ivy.legacy.utils.timeNowUTC
+import com.ivy.ui.legacy.formatDateOnly
+import com.ivy.base.legacy.timeNowUTC
 import com.ivy.base.legacy.uppercaseLocal
 import com.ivy.ui.R
 import com.ivy.wallet.ui.theme.Orange

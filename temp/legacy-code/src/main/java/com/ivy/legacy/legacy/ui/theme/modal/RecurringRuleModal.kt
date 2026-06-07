@@ -36,9 +36,9 @@ import com.ivy.legacy.IvyWalletCtx
 import com.ivy.legacy.ivyWalletCtx
 import com.ivy.ui.legacy.addKeyboardListener
 import com.ivy.ui.legacy.clickableNoIndication
-import com.ivy.legacy.utils.closeDay
-import com.ivy.legacy.utils.formatDateWeekDayLong
-import com.ivy.legacy.utils.formatNicely
+import com.ivy.ui.legacy.closeDay
+import com.ivy.ui.legacy.formatDateWeekDayLong
+import com.ivy.ui.legacy.formatNicely
 import com.ivy.ui.legacy.hideKeyboard
 import com.ivy.ui.legacy.onScreenStart
 import com.ivy.design.utils.thenIf

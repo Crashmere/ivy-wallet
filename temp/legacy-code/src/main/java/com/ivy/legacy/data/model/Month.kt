@@ -3,7 +3,7 @@ package com.ivy.legacy.data.model
 import androidx.compose.runtime.Immutable
 import com.ivy.base.legacy.stringRes
 import com.ivy.legacy.IvyWalletCtx
-import com.ivy.legacy.utils.dateNowUTC
+import com.ivy.base.legacy.dateNowUTC
 import com.ivy.ui.R
 import java.time.LocalDate
 

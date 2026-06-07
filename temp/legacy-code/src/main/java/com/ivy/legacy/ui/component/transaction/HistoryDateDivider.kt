@@ -16,14 +16,14 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.ivy.design.l0_system.UI
 import com.ivy.design.l0_system.style
-import com.ivy.legacy.utils.dateNowLocal
+import com.ivy.base.legacy.dateNowLocal
 import com.ivy.data.model.currency.format
-import com.ivy.legacy.utils.formatLocal
+import com.ivy.ui.legacy.formatLocal
 import com.ivy.ui.R
 import com.ivy.wallet.ui.theme.Gray
 import com.ivy.wallet.ui.theme.Green
 import java.time.LocalDate
-import com.ivy.legacy.utils.dateNowUTC
+import com.ivy.base.legacy.dateNowUTC
 
 @Deprecated("Old design system. Use `:ivy-design` and Material3")
 @Composable

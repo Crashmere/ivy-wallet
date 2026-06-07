@@ -39,9 +39,9 @@ import com.ivy.frp.filterSuspend
 import com.ivy.legacy.IvyWalletCtx
 import com.ivy.legacy.datamodel.Account
 import com.ivy.legacy.datamodel.temp.toLegacy
-import com.ivy.legacy.utils.getISOFormattedDateTime
+import com.ivy.base.legacy.getISOFormattedDateTime
 import com.ivy.base.legacy.scopedIOThread
-import com.ivy.legacy.utils.timeNowUTC
+import com.ivy.base.legacy.timeNowUTC
 import com.ivy.base.legacy.toLowerCaseLocal
 import com.ivy.base.legacy.uiThread
 import com.ivy.ui.ComposeViewModel

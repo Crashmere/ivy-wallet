@@ -45,7 +45,7 @@ import com.ivy.legacy.ui.component.transaction.TypeAmountCurrency
 import com.ivy.ui.legacy.clickableNoIndication
 import com.ivy.ui.legacy.drawColoredShadow
 import com.ivy.data.model.currency.format
-import com.ivy.legacy.utils.formatNicely
+import com.ivy.ui.legacy.formatNicely
 import com.ivy.base.legacy.isNotNullOrBlank
 import com.ivy.ui.legacy.rememberInteractionSource
 import com.ivy.ui.legacy.setStatusBarDarkTextCompat

@@ -37,7 +37,7 @@ import com.ivy.legacy.datamodel.temp.toImmutableLegacyTags
 import com.ivy.legacy.datamodel.temp.toLegacyDomain
 import com.ivy.legacy.domain.deprecated.logic.AccountCreator
 import com.ivy.base.legacy.computationThread
-import com.ivy.legacy.utils.dateNowUTC
+import com.ivy.base.legacy.dateNowUTC
 import com.ivy.base.legacy.ioThread
 import com.ivy.base.legacy.isNotNullOrBlank
 import com.ivy.ui.legacy.selectEndTextFieldValue

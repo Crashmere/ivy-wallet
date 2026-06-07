@@ -46,10 +46,10 @@ import com.ivy.design.l1_buildingBlocks.SpacerHor
 import com.ivy.legacy.data.AppBaseData
 import com.ivy.legacy.datamodel.Account
 import com.ivy.base.legacy.capitalizeLocal
-import com.ivy.legacy.utils.dateNowUTC
+import com.ivy.base.legacy.dateNowUTC
 import com.ivy.data.model.currency.format
 import com.ivy.base.legacy.isNotNullOrBlank
-import com.ivy.legacy.utils.timeNowUTC
+import com.ivy.base.legacy.timeNowUTC
 import com.ivy.navigation.Navigation
 import com.ivy.navigation.TransactionsScreen
 import com.ivy.navigation.navigation

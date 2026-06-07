@@ -4,9 +4,9 @@ import androidx.compose.runtime.Immutable
 import com.ivy.base.legacy.Transaction
 import com.ivy.base.time.TimeConverter
 import com.ivy.base.time.TimeProvider
-import com.ivy.legacy.utils.ivyMinTime
-import com.ivy.legacy.utils.dateNowUTC
-import com.ivy.legacy.utils.ivyMaxTime
+import com.ivy.base.legacy.ivyMinTime
+import com.ivy.base.legacy.dateNowUTC
+import com.ivy.base.legacy.ivyMaxTime
 import com.ivy.ui.time.TimeFormatter
 import com.ivy.wallet.domain.pure.data.ClosedTimeRange
 import java.time.Instant

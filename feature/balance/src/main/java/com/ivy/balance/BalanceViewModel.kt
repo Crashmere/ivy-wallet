@@ -94,7 +94,7 @@ class BalanceViewModel @Inject constructor(
 
     private fun nextMonth() {
         val month = period.month
-        val year = period.year ?: com.ivy.legacy.utils.dateNowUTC().year
+        val year = period.year ?: com.ivy.base.legacy.dateNowUTC().year
         numberOfMonthsAhead += 1
         if (month != null) {
             start(
@@ -105,7 +105,7 @@ class BalanceViewModel @Inject constructor(
 
     private fun previousMonth() {
         val month = period.month
-        val year = period.year ?: com.ivy.legacy.utils.dateNowUTC().year
+        val year = period.year ?: com.ivy.base.legacy.dateNowUTC().year
         numberOfMonthsAhead -= 1
         if (month != null) {
             start(

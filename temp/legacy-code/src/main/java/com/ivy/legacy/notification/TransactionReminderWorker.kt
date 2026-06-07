@@ -12,7 +12,7 @@ import com.ivy.base.time.TimeConverter
 import com.ivy.base.time.TimeProvider
 import com.ivy.data.db.dao.read.TransactionDao
 import com.ivy.domain.AppStarter
-import com.ivy.legacy.utils.atEndOfDay
+import com.ivy.base.legacy.atEndOfDay
 import com.ivy.ui.R
 import com.ivy.wallet.android.notification.IvyNotificationChannel
 import com.ivy.wallet.android.notification.NotificationService

@@ -9,10 +9,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.ivy.design.api.LocalTimeFormatter
-import com.ivy.legacy.utils.convertLocalToUTC
-import com.ivy.legacy.utils.convertUTCToLocal
-import com.ivy.legacy.utils.formatNicely
-import com.ivy.legacy.utils.timeNowUTC
+import com.ivy.base.legacy.convertLocalToUTC
+import com.ivy.base.legacy.convertUTCToLocal
+import com.ivy.ui.legacy.formatNicely
+import com.ivy.base.legacy.timeNowUTC
 import com.ivy.ui.R
 import com.ivy.wallet.ui.theme.components.IvyOutlinedButton
 import java.time.LocalDate
