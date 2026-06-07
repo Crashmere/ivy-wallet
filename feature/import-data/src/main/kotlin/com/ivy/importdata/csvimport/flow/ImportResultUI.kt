@@ -91,7 +91,7 @@ fun ImportResultUI(
             successPercent = successPercent,
         )
 
-        // TODO: Implement "See failed imports"
+        // The current result screen only summarizes failed rows; detailed failed-row inspection is not wired.
 
         if (!isManualCsvImport) {
             Spacer(modifier = Modifier.height(16.dp))

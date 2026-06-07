@@ -120,7 +120,7 @@ private fun formatShortenedNumber(
 }
 
 fun hasSignificantDecimalPart(number: Double): Boolean {
-    // TODO: Review, might cause trouble when integrating crypto
+    // This threshold is tuned for fiat display; crypto precision needs a separate formatter.
     val intPart = number.toInt()
     return abs(number - intPart) >= 0.009
 }

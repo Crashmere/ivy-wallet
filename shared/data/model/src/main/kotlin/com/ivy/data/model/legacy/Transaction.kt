@@ -13,7 +13,7 @@ typealias LegacyTransaction = Transaction
 
 @Suppress("DataClassDefaultValues")
 data class Transaction(
-    // TODO: Remove default values & introduce Transaction#dummy() method
+    // Default values are kept for legacy UI and tests that still construct partial transactions.
     val accountId: UUID,
     val type: TransactionType,
     val amount: BigDecimal,

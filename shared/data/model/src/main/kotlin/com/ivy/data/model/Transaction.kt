@@ -18,7 +18,7 @@ sealed interface Transaction : Identifiable<TransactionId> {
     val settled: Boolean
     val metadata: TransactionMetadata
 
-    // TODO: Get rid of Tags from the core model because of perf. and complexity
+    // Tags remain on the core model while reports, history and edit flows consume transactions with tags directly.
     val tags: List<TagId>
 }
 
