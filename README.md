@@ -15,6 +15,7 @@
 - 删除空的 `:shared:data:core-testing` 模块，并把测试专用 `FakeRepositoryMemo` 从生产源码移入测试源集。
 - 删除未引用的第三方导入 logo、widget 预览/图标、推广/分享/捐赠图片，以及 `help_us_grow` 多语言推广文案。
 - 删除 `:temp:old-design` 模块；旧设计 API 先迁入 `shared:ui:core` 作为兼容层，后续再逐步替换旧包名和旧组件。
+- 整理部分 Gradle 约定插件：基础 shared 模块、数据核心模块和 domain 模块已经开始脱离面向页面的 `ivy.feature` 配置。
 
 当前仍保留：
 
@@ -266,6 +267,10 @@
 - `shared:base`、`shared:data:model`、`shared:data:model-testing` 已从 `ivy.feature` 迁出，不再默认启用完整 Compose UI 配置。
 - `shared:base` 仍显式保留 Hilt、kotlinx serialization 和轻量 `compose-runtime`，因为当前源码仍包含 DI 绑定、序列化器和 `@Immutable` 注解。
 - `shared:data:model` 仍显式保留轻量 `compose-runtime`，后续可以把模型层的 Compose 注解替换掉，再彻底移除。
+- 新增 `ivy.compose-runtime`，只提供 `@Composable` 编译和 `compose-runtime/ui` 最小依赖，用于当前仍包含 `LocalContext`、`collectAsState` 等轻量 Compose API 的非页面模块。
+- `ivy.integration.testing` 已从 `ivy.feature` 改为基于 `ivy.android-library`，避免因为集成测试配置把完整 Compose UI 配置带入数据层。
+- `shared:data:core`、`shared:domain` 已从 `ivy.feature` 迁出，改为显式声明基础 Android library、轻量 Compose runtime、Room 和集成测试能力。
+- `shared:domain` 当前仍暂时保留 `ivy.room`，后续需要确认 Room 依赖是否只是历史残留，再单独拆除。
 
 ### 阶段 3：测试支持代码归位
 
@@ -621,7 +626,6 @@ shared:ui:core
 
 下一步建议执行：
 
-1. 扫描并删除确认无引用的资源和字符串。
-2. 更新 `README.md` 中资源清理进展。
-3. 做静态检查。
-4. 如果只删资源，不强制编译；如果删除了被资源表引用的内容，再编译 `:app:assembleDemo`。
+1. 收尾阶段 2：检查 `shared:domain` 是否真的需要 Room 插件，并把 `ivy.room` 拆成更窄的 Room-only 配置。
+2. 开始阶段 5：优先从 `temp:legacy-code` 中的纯工具函数、旧 UI helper 和明显可归位的小组件迁移，避免先碰账户余额、导入导出、Room migration 等高风险逻辑。
+3. 每完成一组模块边界调整后运行 `:app:assembleDemo`，确认构建没有被 Gradle 插件收缩影响。

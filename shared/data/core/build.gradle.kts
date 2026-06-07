@@ -1,5 +1,6 @@
 plugins {
-    id("ivy.feature")
+    id("ivy.android-library")
+    id("ivy.compose-runtime")
     id("ivy.room")
     id("ivy.integration.testing")
 }
@@ -18,5 +19,4 @@ dependencies {
     testImplementation(projects.shared.baseTesting)
     testImplementation(projects.shared.data.modelTesting)
     androidTestImplementation(projects.shared.baseTesting)
-    androidTestImplementation(libs.bundles.integration.testing)
 }
