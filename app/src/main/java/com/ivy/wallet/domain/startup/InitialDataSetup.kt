@@ -1,23 +1,18 @@
 package com.ivy.wallet.domain.startup
 
-import com.ivy.base.legacy.Theme
 import com.ivy.data.db.dao.read.AccountDao
-import com.ivy.data.db.dao.read.SettingsDao
-import com.ivy.data.db.dao.write.WriteSettingsDao
-import com.ivy.data.db.entity.SettingsEntity
 import com.ivy.data.repository.CategoryRepository
+import com.ivy.data.repository.LegacySettingsRepository
 import com.ivy.domain.preferences.AppPreferences
 import com.ivy.base.legacy.ioThread
 import com.ivy.data.model.currency.IvyCurrency
 import com.ivy.wallet.notification.reminder.TransactionReminderLogic
 import javax.inject.Inject
 
-@Deprecated("Legacy startup setup. Keep until data initialization is redesigned.")
 class InitialDataSetup @Inject constructor(
-    private val settingsDao: SettingsDao,
-    private val settingsWriter: WriteSettingsDao,
     private val accountDao: AccountDao,
     private val categoryRepository: CategoryRepository,
+    private val legacySettingsRepository: LegacySettingsRepository,
     private val appPreferences: AppPreferences,
     private val preloadDataLogic: PreloadDataLogic,
     private val transactionReminderLogic: TransactionReminderLogic,
@@ -26,15 +21,11 @@ class InitialDataSetup @Inject constructor(
         ioThread {
             val defaultCurrency = IvyCurrency.getDefault()
 
-            if (settingsDao.findFirstOrNull() == null) {
-                settingsWriter.save(
-                    SettingsEntity(
-                        theme = if (systemDarkMode) Theme.DARK else Theme.LIGHT,
-                        currency = defaultCurrency.code,
-                        bufferAmount = 1000.0,
-                    )
-                )
-            }
+            legacySettingsRepository.ensureInitialized(
+                systemDarkMode = systemDarkMode,
+                currencyCode = defaultCurrency.code,
+                bufferAmount = 1000.0,
+            )
 
             if (accountDao.findAll().isEmpty()) {
                 preloadDataLogic.preloadAccounts()

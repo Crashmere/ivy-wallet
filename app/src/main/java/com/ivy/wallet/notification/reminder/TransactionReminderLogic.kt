@@ -11,7 +11,6 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-@Deprecated("Legacy reminder scheduler. Keep until notification preferences are redesigned.")
 class TransactionReminderLogic @Inject constructor(
     @ApplicationContext
     private val appContext: Context,

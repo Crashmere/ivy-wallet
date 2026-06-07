@@ -21,6 +21,28 @@ class LegacySettingsRepository @Inject constructor(
         settingsDao.findFirstOrNull()?.theme ?: fallback
     }
 
+    suspend fun getTheme(systemDarkMode: Boolean): Theme = getTheme(
+        fallback = if (systemDarkMode) Theme.DARK else Theme.LIGHT
+    )
+
+    suspend fun ensureInitialized(
+        systemDarkMode: Boolean,
+        currencyCode: String,
+        bufferAmount: Double,
+    ) {
+        withContext(dispatchersProvider.io) {
+            if (settingsDao.findFirstOrNull() == null) {
+                writeSettingsDao.save(
+                    SettingsEntity(
+                        theme = if (systemDarkMode) Theme.DARK else Theme.LIGHT,
+                        currency = currencyCode,
+                        bufferAmount = bufferAmount,
+                    )
+                )
+            }
+        }
+    }
+
     suspend fun switchTheme(): Theme = withContext(dispatchersProvider.io) {
         val currentEntity = settingsEntityOrDefault()
         val newTheme = currentEntity.theme.next()

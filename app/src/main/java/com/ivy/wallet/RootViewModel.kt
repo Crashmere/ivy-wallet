@@ -4,7 +4,6 @@ import android.content.Intent
 import androidx.biometric.BiometricPrompt
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ivy.base.legacy.Theme
 import com.ivy.base.model.TransactionType
 import com.ivy.data.repository.LegacySettingsRepository
 import com.ivy.domain.preferences.AppPreferences
@@ -44,9 +43,7 @@ class RootViewModel @Inject constructor(
         viewModelScope.launch {
 
             ioThread {
-                val theme = legacySettingsRepository.getTheme(
-                    fallback = if (systemDarkMode) Theme.DARK else Theme.LIGHT
-                )
+                val theme = legacySettingsRepository.getTheme(systemDarkMode)
                 themeState.update(theme)
 
                 periodState.initStartDayOfMonth(startDay = appPreferences.startDayOfMonth)
