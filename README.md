@@ -413,6 +413,7 @@
 - 已把旧兼容模型本体从 `com.ivy.legacy.datamodel` 迁到 `com.ivy.legacy.domain.model`，包括旧账户、分类、预算、借贷、计划付款规则、设置和旧交易实体转换扩展；字段和 `toEntity()` 映射保持不变。
 - 已把 `FromToTimeRange` 和 `AccountData` 从跨模块混用的 `com.ivy.legacy.data.model` 拆到 `com.ivy.legacy.domain.model`；UI 侧 `TimePeriod/Month/LastNTimeRange` 暂时保留在旧 UI 包，因为它们仍依赖 UI 文案和时间格式化。
 - 已把剩余 UI 兼容状态模型从 `com.ivy.legacy.data` 迁到 `com.ivy.legacy.ui.model`，并把周期选择模型迁到 `com.ivy.legacy.ui.model.period`；`com.ivy.legacy.data.*` 包名已经从源码中清空。
+- 已把旧周期状态入口从 `com.ivy.legacy` 根包迁到 `com.ivy.legacy.ui.state`，并把旧 `rootScreen()` 桥接函数迁到 `com.ivy.legacy.ui.platform`；`shared:ui:legacy` 不再通过根包暴露迁移期 API。
 - 已删除 `:temp:legacy-code` 的 Gradle include、模块 build 文件，以及所有 app/feature 对 `projects.temp.legacyCode` 的依赖声明。
 - 阶段 5 的模块拆解目标已经完成：仓库中不再有被 Gradle include 的 `temp:*` 模块。后续工作转为拆除 `shared:ui:legacy` 中剩余旧上下文、旧设计 API 和旧 UI 兼容模型。
 
@@ -695,5 +696,5 @@ shared:ui:core
 下一步建议执行：
 
 1. 继续替换旧设计兼容 API：下一步盘点 `shared:ui:legacy` 中剩余旧 UI/data 兼容模型，优先处理纯包名归位和可替换的薄 UI 包装；实体字段、备份恢复格式和 Room migration 暂不混入普通包名提交。
-2. `legacy.datamodel`、统计计算、借贷联动、备份恢复和数据库迁移暂不混入普通包名提交，避免功能回退难以定位。
+2. 继续收敛旧设计系统包名：优先处理 `com.ivy.design.*` 兼容层的包名归位和薄包装替换，暂不混入视觉重做。
 3. 每完成一组跨模块边界调整后运行 `:app:assembleDemo`，确认构建没有被迁移影响；涉及数据库、备份恢复或导入导出时再补充对应测试。

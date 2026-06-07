@@ -32,7 +32,7 @@ import com.ivy.design.api.LocalDatePicker
 import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
 import com.ivy.data.model.currency.format
-import com.ivy.legacy.LocalPeriodState
+import com.ivy.legacy.ui.state.LocalPeriodState
 import com.ivy.navigation.BalanceScreen
 import com.ivy.navigation.navigation
 import com.ivy.ui.R

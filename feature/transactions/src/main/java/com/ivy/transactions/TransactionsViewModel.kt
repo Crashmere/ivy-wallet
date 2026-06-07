@@ -30,7 +30,7 @@ import com.ivy.data.repository.mapper.TransactionMapper
 import com.ivy.design.l0_system.RedLight
 import com.ivy.domain.features.Features
 import com.ivy.frp.then
-import com.ivy.legacy.PeriodState
+import com.ivy.legacy.ui.state.PeriodState
 import com.ivy.legacy.ui.model.period.TimePeriod
 import com.ivy.legacy.domain.model.toCloseTimeRange
 import com.ivy.legacy.domain.mapper.toImmutableLegacyTags

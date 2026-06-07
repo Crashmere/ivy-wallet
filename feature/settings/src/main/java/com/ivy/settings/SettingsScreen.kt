@@ -46,7 +46,7 @@ import com.ivy.base.legacy.Theme
 import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
 import com.ivy.design.utils.thenIf
-import com.ivy.legacy.rootScreen
+import com.ivy.legacy.ui.platform.rootScreen
 import com.ivy.ui.legacy.drawColoredShadow
 import com.ivy.navigation.ExchangeRatesScreen
 import com.ivy.navigation.ImportScreen

@@ -40,7 +40,7 @@ import com.ivy.legacy.ui.model.BufferInfo
 import com.ivy.legacy.ui.model.LegacyDueSection
 import com.ivy.legacy.ui.model.period.Month
 import com.ivy.legacy.ui.model.period.TimePeriod
-import com.ivy.legacy.LocalPeriodState
+import com.ivy.legacy.ui.state.LocalPeriodState
 import com.ivy.legacy.ui.component.transaction.TransactionsDividerLine
 import com.ivy.legacy.ui.component.transaction.transactions
 import com.ivy.ui.legacy.horizontalSwipeListener

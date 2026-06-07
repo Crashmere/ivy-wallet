@@ -14,7 +14,7 @@ import com.ivy.data.repository.CategoryRepository
 import com.ivy.domain.features.Features
 import com.ivy.frp.action.thenMap
 import com.ivy.frp.thenInvokeAfter
-import com.ivy.legacy.PeriodState
+import com.ivy.legacy.ui.state.PeriodState
 import com.ivy.legacy.ui.model.period.TimePeriod
 import com.ivy.legacy.domain.model.Account
 import com.ivy.base.legacy.ioThread

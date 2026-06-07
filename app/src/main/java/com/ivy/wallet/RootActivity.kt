@@ -35,8 +35,8 @@ import com.ivy.design.api.IvyUI
 import com.ivy.design.api.systems.DefaultIvyDesign
 import com.ivy.design.system.IvyMaterial3Theme
 import com.ivy.domain.RootScreen
-import com.ivy.legacy.LocalPeriodState
-import com.ivy.legacy.PeriodState
+import com.ivy.legacy.ui.state.LocalPeriodState
+import com.ivy.legacy.ui.state.PeriodState
 import com.ivy.navigation.Navigation
 import com.ivy.navigation.NavigationRoot
 import com.ivy.ui.R

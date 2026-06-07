@@ -36,7 +36,7 @@ import com.ivy.domain.RootScreen
 import com.ivy.domain.features.Features
 import com.ivy.domain.usecase.csv.ExportCsvUseCase
 import com.ivy.frp.filterSuspend
-import com.ivy.legacy.PeriodState
+import com.ivy.legacy.ui.state.PeriodState
 import com.ivy.legacy.domain.model.Account
 import com.ivy.legacy.domain.mapper.toLegacy
 import com.ivy.base.legacy.getISOFormattedDateTime

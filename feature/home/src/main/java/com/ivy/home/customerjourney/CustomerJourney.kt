@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.dp
 import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
 import com.ivy.domain.RootScreen
-import com.ivy.legacy.rootScreen
+import com.ivy.legacy.ui.platform.rootScreen
 import com.ivy.ui.legacy.drawColoredShadow
 import com.ivy.navigation.LocalMainTabState
 import com.ivy.navigation.navigation

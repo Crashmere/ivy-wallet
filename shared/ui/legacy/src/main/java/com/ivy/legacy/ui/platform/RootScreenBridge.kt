@@ -1,4 +1,4 @@
-package com.ivy.legacy
+package com.ivy.legacy.ui.platform
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext

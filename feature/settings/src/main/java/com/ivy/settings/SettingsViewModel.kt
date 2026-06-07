@@ -26,7 +26,7 @@ import com.ivy.domain.usecase.csv.ExportCsvUseCase
 import com.ivy.domain.usecase.exchange.SyncExchangeRatesUseCase
 import com.ivy.frp.monad.Res
 import com.ivy.design.ThemeState
-import com.ivy.legacy.PeriodState
+import com.ivy.legacy.ui.state.PeriodState
 import com.ivy.legacy.domain.action.settings.UpdateSettingsAct
 import com.ivy.base.legacy.getISOFormattedDateTime
 import com.ivy.base.legacy.ioThread
