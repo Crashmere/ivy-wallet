@@ -37,8 +37,8 @@ import com.ivy.design.utils.thenIf
 import com.ivy.frp.test.TestingContext
 import com.ivy.legacy.datamodel.Account
 import com.ivy.legacy.datamodel.LoanRecord
-import com.ivy.legacy.legacy.ui.theme.components.DateTimeRow
-import com.ivy.legacy.legacy.ui.theme.modal.ModalNameInput
+import com.ivy.legacy.ui.component.DateTimeRow
+import com.ivy.legacy.ui.modal.ModalNameInput
 import com.ivy.base.legacy.getDefaultFIATCurrency
 import com.ivy.ui.legacy.onScreenStart
 import com.ivy.ui.legacy.selectEndTextFieldValue

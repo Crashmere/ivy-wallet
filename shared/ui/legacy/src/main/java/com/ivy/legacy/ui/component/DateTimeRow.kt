@@ -1,4 +1,4 @@
-package com.ivy.legacy.legacy.ui.theme.components
+package com.ivy.legacy.ui.component
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer

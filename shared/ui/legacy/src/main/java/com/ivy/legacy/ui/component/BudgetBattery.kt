@@ -1,4 +1,4 @@
-package com.ivy.legacy.legacy.ui.theme.components
+package com.ivy.legacy.ui.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -32,8 +32,6 @@ import com.ivy.legacy.ui.theme.White
 import com.ivy.legacy.ui.component.IvyIcon
 import com.ivy.legacy.ui.component.AmountCurrencyB2Row
 import kotlin.math.abs
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
 
 @Deprecated("Old design system. Use `:ivy-design` and Material3")
 @Composable

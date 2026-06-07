@@ -40,13 +40,13 @@ import com.ivy.domain.legacy.ui.IvyColorPicker
 import com.ivy.frp.test.TestingContext
 import com.ivy.legacy.datamodel.Account
 import com.ivy.legacy.datamodel.Loan
-import com.ivy.legacy.legacy.ui.theme.components.DateTimeRow
+import com.ivy.legacy.ui.component.DateTimeRow
 import com.ivy.base.legacy.getDefaultFIATCurrency
 import com.ivy.base.legacy.isNotNullOrBlank
 import com.ivy.ui.legacy.onScreenStart
 import com.ivy.ui.legacy.selectEndTextFieldValue
 import com.ivy.design.utils.thenIf
-import com.ivy.legacy.legacy.ui.theme.modal.ModalNameInput
+import com.ivy.legacy.ui.modal.ModalNameInput
 import com.ivy.ui.R
 import com.ivy.data.model.currency.IvyCurrency
 import com.ivy.wallet.domain.deprecated.logic.model.CreateAccountData

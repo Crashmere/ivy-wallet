@@ -1,4 +1,4 @@
-package com.ivy.legacy.legacy.ui.theme.modal
+package com.ivy.legacy.ui.modal
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
