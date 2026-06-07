@@ -27,6 +27,7 @@ import com.ivy.base.model.TransactionType
 import com.ivy.data.model.Category
 import com.ivy.data.model.IntervalType
 import com.ivy.legacy.datamodel.Account
+import com.ivy.legacy.ivyWalletCtx
 import com.ivy.ui.legacy.onScreenStart
 import com.ivy.navigation.EditPlannedScreen
 import com.ivy.navigation.screenScopedViewModel
@@ -365,8 +366,14 @@ private fun BoxWithConstraintsScope.UI(
         }
     }
 
+    val ivyContext = ivyWalletCtx()
     RecurringRuleModal(
         modal = state.recurringRuleModalData,
+        pickDate = { initialDate, onDatePicked ->
+            ivyContext.datePicker(initialDate = initialDate) {
+                onDatePicked(it.atTime(12, 0))
+            }
+        },
         onRuleChanged = { newStartDate, newOneTime, newIntervalN, newIntervalType ->
             onEvent(
                 EditPlannedScreenEvent.OnRuleChanged(

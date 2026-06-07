@@ -32,8 +32,6 @@ import com.ivy.data.model.IntervalType
 import com.ivy.design.api.LocalTimeProvider
 import com.ivy.design.l0_system.UI
 import com.ivy.design.l0_system.style
-import com.ivy.legacy.IvyWalletCtx
-import com.ivy.legacy.ivyWalletCtx
 import com.ivy.ui.legacy.addKeyboardListener
 import com.ivy.ui.legacy.clickableNoIndication
 import com.ivy.ui.legacy.closeDay
@@ -75,6 +73,7 @@ data class RecurringRuleModalData(
 fun BoxWithConstraintsScope.RecurringRuleModal(
     modal: RecurringRuleModalData?,
 
+    pickDate: (LocalDate, (LocalDateTime) -> Unit) -> Unit,
     dismiss: () -> Unit,
     onRuleChanged: (LocalDateTime, oneTime: Boolean, Int?, IntervalType?) -> Unit,
 ) {
@@ -133,6 +132,7 @@ fun BoxWithConstraintsScope.RecurringRuleModal(
         if (oneTime) {
             OneTime(
                 date = startDate,
+                pickDate = pickDate,
                 onDatePicked = {
                     startDate = it
                 }
@@ -145,6 +145,7 @@ fun BoxWithConstraintsScope.RecurringRuleModal(
 
                 modalScrollState = modalScrollState,
 
+                pickDate = pickDate,
                 onSetStartDate = {
                     startDate = it
                 },
@@ -235,11 +236,15 @@ private fun RowScope.TimesSelectorButton(
 @Suppress("ParameterNaming")
 private fun OneTime(
     date: LocalDateTime,
+    pickDate: (LocalDate, (LocalDateTime) -> Unit) -> Unit,
     onDatePicked: (LocalDateTime) -> Unit
 ) {
     Spacer(Modifier.height(44.dp))
 
-    DateRow(dateTime = date) {
+    DateRow(
+        dateTime = date,
+        pickDate = pickDate
+    ) {
         onDatePicked(it)
     }
 
@@ -254,6 +259,7 @@ private fun MultipleTimes(
 
     modalScrollState: ScrollState,
 
+    pickDate: (LocalDate, (LocalDateTime) -> Unit) -> Unit,
     onSetStartDate: (LocalDateTime) -> Unit,
     onSetIntervalN: (Int) -> Unit,
     onSetIntervalType: (IntervalType) -> Unit
@@ -272,7 +278,10 @@ private fun MultipleTimes(
 
     Spacer(Modifier.height(12.dp))
 
-    DateRow(dateTime = startDate) {
+    DateRow(
+        dateTime = startDate,
+        pickDate = pickDate
+    ) {
         onSetStartDate(it)
     }
 
@@ -324,6 +333,7 @@ private fun MultipleTimes(
 @Suppress("ParameterNaming")
 private fun DateRow(
     dateTime: LocalDateTime,
+    pickDate: (LocalDate, (LocalDateTime) -> Unit) -> Unit,
     onDatePicked: (LocalDateTime) -> Unit
 ) {
     Row(
@@ -333,11 +343,9 @@ private fun DateRow(
     ) {
         Spacer(Modifier.width(32.dp))
 
-        val ivyContext = ivyWalletCtx()
-
         Column(
             modifier = Modifier.clickableNoIndication(rememberInteractionSource()) {
-                ivyContext.pickDate(dateTime.toLocalDate(), onDatePicked)
+                pickDate(dateTime.toLocalDate(), onDatePicked)
             }
         ) {
             val date = dateTime.toLocalDate()
@@ -378,22 +386,9 @@ private fun DateRow(
             backgroundGradient = Gradient.solid(UI.colors.pureInverse),
             tint = UI.colors.pure
         ) {
-            ivyContext.pickDate(dateTime.toLocalDate(), onDatePicked)
+            pickDate(dateTime.toLocalDate(), onDatePicked)
         }
 
         Spacer(Modifier.width(32.dp))
-    }
-}
-
-private fun IvyWalletCtx.pickDate(
-    initialDate: LocalDate,
-    onDatePicked: (
-        LocalDateTime
-    ) -> Unit
-) {
-    datePicker(
-        initialDate = initialDate
-    ) {
-        onDatePicked(it.atTime(12, 0))
     }
 }
