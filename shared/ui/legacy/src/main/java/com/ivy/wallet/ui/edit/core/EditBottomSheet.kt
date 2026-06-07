@@ -31,6 +31,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.layout.layout
 import androidx.compose.ui.layout.onSizeChanged
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
@@ -42,7 +43,6 @@ import com.ivy.legacy.datamodel.Account
 import com.ivy.design.l0_system.UI
 import com.ivy.design.l0_system.style
 import com.ivy.frp.test.TestingContext
-import com.ivy.legacy.ivyWalletCtx
 import com.ivy.ui.legacy.addKeyboardListener
 import com.ivy.ui.legacy.clickableNoIndication
 import com.ivy.ui.legacy.consumeClicks
@@ -255,6 +255,7 @@ fun BoxWithConstraintsScope.EditBottomSheet(
     }
 
     BottomBar(
+        screenHeight = LocalConfiguration.current.screenHeightDp.dp,
         keyboardShown = keyboardShown,
         expanded = expanded,
         internalExpanded = internalExpanded,
@@ -312,6 +313,7 @@ fun BoxWithConstraintsScope.EditBottomSheet(
 
 @Composable
 private fun BottomBar(
+    screenHeight: Dp,
     keyboardShown: Boolean,
     keyboardShownInsetDp: Dp,
     setBottomBarHeight: (Int) -> Unit,
@@ -321,8 +323,6 @@ private fun BottomBar(
     navBarPadding: Dp,
     ActionButton: @Composable () -> Unit
 ) {
-    val ivyContext = ivyWalletCtx()
-
     ActionsRow(
         modifier = Modifier
             .onSizeChanged {
@@ -333,7 +333,7 @@ private fun BottomBar(
 
                 val systemOffsetBottom = keyboardShownInsetDp.toPx()
                 val visibleHeight = placeable.height * 1f
-                val y = ivyContext.screenHeight - visibleHeight - systemOffsetBottom
+                val y = screenHeight.toPx() - visibleHeight - systemOffsetBottom
 
                 layout(placeable.width, placeable.height) {
                     placeable.place(

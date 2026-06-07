@@ -26,12 +26,13 @@ import com.ivy.design.l0_system.style
 import com.ivy.ui.legacy.keyboardVisibleState
 import com.ivy.ui.legacy.selectEndTextFieldValue
 import com.ivy.ui.R
-import com.ivy.wallet.domain.deprecated.logic.SUGGESTIONS_LIMIT
 import com.ivy.wallet.ui.theme.components.IvyTitleTextField
 import kotlinx.coroutines.launch
 import java.util.UUID
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.getValue
+
+private const val SUGGESTIONS_LIMIT = 10
 
 @Deprecated("Old design system. Use `:ivy-design` and Material3")
 @Suppress("ParameterNaming")
