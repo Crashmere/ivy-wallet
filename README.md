@@ -701,6 +701,7 @@
 - 导航返回处理已收窄为 `Navigation.handleRootBack()`、`registerScreenBackHandler()` 和 modal handler 注册方法；页面和旧 modal 不再直接访问导航内部的返回栈和 handler map。
 - `LocalTimeConverter/LocalTimeProvider/LocalTimeFormatter` 现在作为根部显式提供的 UI 时间平台入口保留，不再用废弃注解把当前页面的正常调用标成警告。
 - `RootContent` 接收的旧 Material 日期选择器已从 app 具体实现 `ActivityDatePicker` 收窄为 UI 层 `DatePicker` 接口；Activity 仍负责注册 FragmentManager 相关实现。
+- 交易提醒调度已删除无调用方的 `testNow()` 调试入口和旧 work name 常量，只保留当前实际使用的每日提醒任务。
 
 ### 阶段 9：feature 模块收敛
 
