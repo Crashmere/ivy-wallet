@@ -738,6 +738,7 @@
 - 默认法币函数已从 base 移到 `shared:data:model:currency`，和 `IvyCurrency` 放在同一模型边界；贷款、搜索和 legacy 借贷弹窗只更新导入路径，默认币种 fallback 行为保持不变。
 - 单一消费方的薄 helper 已清理：`MutableStateFlow.readOnly()` 改为标准 `asStateFlow()`，`MutableList.swap()` 改为 `Collections.swap()`，base 不再保留这两个无抽象价值的扩展。
 - Room/备份实体使用的 UUID、Instant、LocalDateTime 序列化器已从 base 下沉到 `shared:data:core` 的 `db.serializer` 包；序列化格式和实体注解保持不变。
+- `LoanType/IntervalType` 已从 base 物理归位到 `shared:data:model`；`IntervalType.incrementDate` 也迁到同一模型包，计划付款和 legacy 周期 UI 只更新导入路径。
 - 账户旧读取路径已收敛到 `AccountStore`；旧 legacy 账户模型现在由 data model 账户映射而来，`shared:domain` 主源码不再直接注入 `AccountDao` 或依赖 `AccountEntity` mapper。
 - 旧交易卡片已移除重复账户查找 TODO：渲染前先解析来源/目标账户，再复用同一结果处理点击和币种展示，行为不变但 legacy UI 内部职责更清楚。
 

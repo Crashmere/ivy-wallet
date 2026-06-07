@@ -1,6 +1,5 @@
-package com.ivy.base.time
+package com.ivy.data.model
 
-import com.ivy.data.model.IntervalType
 import java.time.Instant
 import java.time.ZoneOffset
 import java.time.temporal.ChronoUnit
