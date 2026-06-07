@@ -1,13 +1,12 @@
-package com.ivy.legacy.domain.action.viewmodel.home
+package com.ivy.domain.usecase.home
 
 import com.ivy.base.time.TimeProvider
 import com.ivy.data.model.Transaction
-import com.ivy.domain.usecase.exchange.ExchangeAmountUseCase
-import com.ivy.domain.usecase.transaction.GetDueTransactionsUseCase
-import com.ivy.legacy.frp.action.FPAction
-import com.ivy.domain.usecase.account.GetLegacyAccountUseCase
 import com.ivy.data.model.legacy.ClosedTimeRange
 import com.ivy.data.model.legacy.IncomeExpensePair
+import com.ivy.domain.usecase.account.GetLegacyAccountUseCase
+import com.ivy.domain.usecase.exchange.ExchangeAmountUseCase
+import com.ivy.domain.usecase.transaction.GetDueTransactionsUseCase
 import com.ivy.legacy.domain.pure.exchange.ExchangeTrnArgument
 import com.ivy.legacy.domain.pure.exchange.exchangeInBaseCurrency
 import com.ivy.legacy.domain.pure.transaction.expenses
@@ -16,50 +15,45 @@ import com.ivy.legacy.domain.pure.transaction.sumTrns
 import java.time.LocalDate
 import javax.inject.Inject
 
-class DueTrnsInfoAct @Inject constructor(
+class CalculateDueTransactionsInfoUseCase @Inject constructor(
     private val getDueTransactionsUseCase: GetDueTransactionsUseCase,
     private val getLegacyAccountUseCase: GetLegacyAccountUseCase,
     private val exchangeAmountUseCase: ExchangeAmountUseCase,
     private val timeProvider: TimeProvider
-) : FPAction<DueTrnsInfoAct.Input, DueTrnsInfoAct.Output>() {
-
-    override suspend fun Input.compose(): suspend () -> Output = suspend {
+) {
+    suspend operator fun invoke(
+        range: ClosedTimeRange,
+        baseCurrency: String,
+        dueFilter: (Transaction, LocalDate) -> Boolean
+    ): DueTransactionsInfo {
         val dateNow = timeProvider.localDateNow()
-        val dueTrns = getDueTransactionsUseCase(range).filter {
-            this.dueFilter(it, dateNow)
-        }
-        // We have due transactions in different currencies
+        val dueTransactions = getDueTransactionsUseCase(range)
+            .filter { dueFilter(it, dateNow) }
         val exchangeArg = ExchangeTrnArgument(
             baseCurrency = baseCurrency,
             exchange = exchangeAmountUseCase::invoke,
             getAccount = { getLegacyAccountUseCase(it) }
         )
 
-        Output(
-            dueIncomeExpense = IncomeExpensePair(
+        return DueTransactionsInfo(
+            incomeExpense = IncomeExpensePair(
                 income = sumTrns(
-                    incomes(dueTrns),
+                    incomes(dueTransactions),
                     ::exchangeInBaseCurrency,
                     exchangeArg
                 ),
                 expense = sumTrns(
-                    expenses(dueTrns),
+                    expenses(dueTransactions),
                     ::exchangeInBaseCurrency,
                     exchangeArg
                 )
             ),
-            dueTrns = dueTrns
+            transactions = dueTransactions
         )
     }
-
-    data class Input(
-        val range: ClosedTimeRange,
-        val baseCurrency: String,
-        val dueFilter: (Transaction, LocalDate) -> Boolean
-    )
-
-    data class Output(
-        val dueIncomeExpense: IncomeExpensePair,
-        val dueTrns: List<Transaction>
-    )
 }
+
+data class DueTransactionsInfo(
+    val incomeExpense: IncomeExpensePair,
+    val transactions: List<Transaction>
+)

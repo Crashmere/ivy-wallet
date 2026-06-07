@@ -638,6 +638,7 @@
 - 账户余额和账户收支计算已收敛到 `CalculateAccountBalanceUseCase` 与 `CalculateAccountIncomeExpenseUseCase`；账户页、交易详情、钱包账户逻辑和钱包余额汇总不再依赖旧 `CalcAccBalanceAct/CalcAccIncomeExpenseAct`。
 - 钱包级余额和收支计算已收敛到 `CalculateWalletBalanceUseCase` 与 `CalculateWalletIncomeExpenseUseCase`；首页、余额页和账户页不再依赖旧 `CalcWalletBalanceAct/CalcIncomeExpenseAct`。
 - 交易统计和历史列表分组已收敛到普通 use case：搜索、首页、报表、交易详情、分类页和饼图页改用 `BuildTransactionHistoryItemsUseCase`、`BuildLegacyTransactionHistoryItemsUseCase`、`GetTransactionHistoryItemsUseCase`、`CalculateTransactionsIncomeExpenseUseCase`、`CalculateLegacyTransactionsIncomeExpenseUseCase` 和 `CalculateCategoryIncomeWithAccountFiltersUseCase`；旧 `CalcTrnsIncomeExpenseAct`、`TrnsWithDateDivsAct`、`HistoryWithDateDivsAct` 和分类筛选统计 action 已删除。
+- 首页到期交易统计已收敛到 `GetUpcomingTransactionsInfoUseCase`、`GetOverdueTransactionsInfoUseCase` 和公共 `CalculateDueTransactionsInfoUseCase`；旧 `DueTrnsInfoAct`、`UpcomingAct` 和 `OverdueAct` 已删除，`shared:domain` 中不再保留旧 `domain/action` 源码。
 - 删除无调用方的 `SettingsAct`、`UpdateSettingsAct`、旧 `Settings` 模型和 `SettingsEntity.toLegacyDomain()` mapper。
 - `SettingsEntity` 暂时仍保留：首次默认数据、重置钱包、备份恢复格式，以及 `CurrencyRepository/LegacySettingsRepository` 内部仍依赖这张表。
 - `ResetWalletDataUseCaseImpl` 仍保留在 app 层实现：它需要同时编排数据清空、偏好清空、默认数据重建和根导航复位；当前不再用废弃注解制造警告，后续若拆分应先拆出数据清空与 app 导航两部分职责。

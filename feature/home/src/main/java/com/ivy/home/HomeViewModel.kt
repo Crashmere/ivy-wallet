@@ -50,9 +50,9 @@ import com.ivy.ui.navigation.Navigation
 import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.preferences.asEnabledState
 import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
+import com.ivy.domain.usecase.home.GetOverdueTransactionsInfoUseCase
+import com.ivy.domain.usecase.home.GetUpcomingTransactionsInfoUseCase
 import com.ivy.domain.usecase.transaction.GetTransactionHistoryItemsUseCase
-import com.ivy.legacy.domain.action.viewmodel.home.OverdueAct
-import com.ivy.legacy.domain.action.viewmodel.home.UpcomingAct
 import com.ivy.legacy.domain.logic.PlannedPaymentsLogic
 import com.ivy.data.model.legacy.ClosedTimeRange
 import com.ivy.data.model.legacy.IncomeExpensePair
@@ -85,8 +85,8 @@ class HomeViewModel @Inject constructor(
     private val getStartDayOfMonth: GetStartDayOfMonthUseCase,
     private val getLegacyAccountsUseCase: GetLegacyAccountsUseCase,
     private val getCategoriesUseCase: GetCategoriesUseCase,
-    private val upcomingAct: UpcomingAct,
-    private val overdueAct: OverdueAct,
+    private val getUpcomingTransactionsInfoUseCase: GetUpcomingTransactionsInfoUseCase,
+    private val getOverdueTransactionsInfoUseCase: GetOverdueTransactionsInfoUseCase,
     private val appPreferences: AppPreferences,
     private val syncExchangeRatesUseCase: SyncExchangeRatesUseCase,
     private val hasTransactionsUseCase: HasTransactionsUseCase,
@@ -369,20 +369,25 @@ class HomeViewModel @Inject constructor(
 
     private suspend fun loadDueTrns(
         input: Pair<String, ClosedTimeRange>
-    ): Unit = suspend {
-        UpcomingAct.Input(baseCurrency = input.first, range = input.second)
-    } then upcomingAct then { result ->
+    ) {
+        val (baseCurrency, timeRange) = input
+        val upcomingResult = getUpcomingTransactionsInfoUseCase(
+            baseCurrency = baseCurrency,
+            range = timeRange
+        )
         upcoming = LegacyDueSection(
-            trns = mapTransactionsToLegacyUseCase(result.upcomingTrns).toImmutableList(),
-            stats = result.upcoming,
+            trns = mapTransactionsToLegacyUseCase(upcomingResult.transactions).toImmutableList(),
+            stats = upcomingResult.incomeExpense,
             expanded = upcoming.expanded
         )
-    } then {
-        OverdueAct.Input(baseCurrency = input.first, toRange = input.second.to)
-    } then overdueAct thenInvokeAfter { result ->
+
+        val overdueResult = getOverdueTransactionsInfoUseCase(
+            baseCurrency = baseCurrency,
+            toRange = timeRange.to
+        )
         overdue = LegacyDueSection(
-            trns = mapTransactionsToLegacyUseCase(result.overdueTrns).toImmutableList(),
-            stats = result.overdue,
+            trns = mapTransactionsToLegacyUseCase(overdueResult.transactions).toImmutableList(),
+            stats = overdueResult.incomeExpense,
             expanded = overdue.expanded
         )
     }
