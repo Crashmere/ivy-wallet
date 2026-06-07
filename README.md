@@ -435,6 +435,7 @@
 - 偏好 toggle 的 UI 读取边界已从 domain 拆到 `shared:ui:legacy`：`LocalPreferenceDataStore/LocalPreferenceToggles` 和 `BoolPreference.asEnabledState()` 现在属于旧 UI 层，domain 中的 `BoolPreference` 只保留 DataStore 读写定义。
 - `shared:domain` 已删除剩余 legacy 数据模型上的 Compose `@Immutable` 注解，并移除 `ivy.compose-runtime` 插件；domain 不再需要 Compose 编译配置。
 - `shared:domain` 已把 Ktor 从 main 依赖降到 androidTest 依赖；汇率同步集成测试仍保留真实网络 client 构造能力。
+- `shared:data:core` 的 AndroidManifest 已删除被 AGP 忽略的 `package` 属性，命名空间统一由模块 `namespace = "com.ivy.data"` 提供。
 - `shared:data:core` 的测试 fake DAO 已停止使用 Compose Locale helper，并移除 `ivy.compose-runtime` 插件；数据层不再为测试字符串处理引入 Compose 配置。
 - `shared:data:model` 已删除剩余数据类上的 Compose `@Immutable` 注解，并移除 `compose.runtime` 依赖；纯数据模型不再依赖 UI runtime。
 - `shared:base` 已删除基础枚举和旧交易兼容模型上的 Compose `@Immutable` 注解，并移除 `compose.runtime` 依赖；基础层不再依赖 UI runtime。
