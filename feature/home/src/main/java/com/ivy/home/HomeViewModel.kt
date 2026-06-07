@@ -49,8 +49,6 @@ import com.ivy.wallet.domain.action.viewmodel.home.HasTrnsAct
 import com.ivy.wallet.domain.action.viewmodel.home.OverdueAct
 import com.ivy.wallet.domain.action.viewmodel.home.ShouldHideBalanceAct
 import com.ivy.wallet.domain.action.viewmodel.home.UpcomingAct
-import com.ivy.wallet.domain.action.viewmodel.home.UpdateAccCacheAct
-import com.ivy.wallet.domain.action.viewmodel.home.UpdateCategoriesCacheAct
 import com.ivy.wallet.domain.action.wallet.CalcIncomeExpenseAct
 import com.ivy.wallet.domain.action.wallet.CalcWalletBalanceAct
 import com.ivy.wallet.domain.deprecated.logic.PlannedPaymentsLogic
@@ -86,8 +84,6 @@ class HomeViewModel @Inject constructor(
     private val shouldHideBalanceAct: ShouldHideBalanceAct,
     private val shouldHideIncomeAct: ShouldHideIncomeAct,
     private val updateSettingsAct: UpdateSettingsAct,
-    private val updateAccCacheAct: UpdateAccCacheAct,
-    private val updateCategoriesCacheAct: UpdateCategoriesCacheAct,
     private val syncExchangeRatesUseCase: SyncExchangeRatesUseCase,
     private val transactionMapper: TransactionMapper,
     private val timeProvider: TimeProvider,
@@ -250,12 +246,12 @@ class HomeViewModel @Inject constructor(
     }
 
     private suspend fun start() {
-        suspend {
-            val startDay = startDayOfMonthAct(Unit)
-            ivyContext.initSelectedPeriodInMemory(
-                startDayOfMonth = startDay
-            )
-        } thenInvokeAfter ::reload
+        val startDay = startDayOfMonthAct(Unit)
+        ivyContext.setStartDayOfMonth(startDay)
+        ivyContext.initSelectedPeriodInMemory(
+            startDayOfMonth = startDay
+        )
+        reload()
     }
 
     // -----------------------------------------------------------------------------------
@@ -288,24 +284,19 @@ class HomeViewModel @Inject constructor(
 
     private suspend fun loadAppBaseData(
         input: Pair<Settings, ClosedTimeRange>
-    ): Triple<Settings, ClosedTimeRange, List<Account>> =
-        suspend {} then accountsAct then updateAccCacheAct then { accounts ->
-            accounts
-        } then { accounts ->
-            val retrievedCategories = categoryRepository.findAll()
-            val categories = updateCategoriesCacheAct(retrievedCategories)
-            accounts to categories
-        } thenInvokeAfter { (accounts, categories) ->
-            val (settings, timeRange) = input
+    ): Triple<Settings, ClosedTimeRange, List<Account>> {
+        val (settings, timeRange) = input
+        val accounts = accountsAct(Unit)
+        val categories = categoryRepository.findAll()
 
-            baseData = AppBaseData(
-                baseCurrency = settings.baseCurrency,
-                categories = categories.toImmutableList(),
-                accounts = accounts.toImmutableList()
-            )
+        baseData = AppBaseData(
+            baseCurrency = settings.baseCurrency,
+            categories = categories.toImmutableList(),
+            accounts = accounts.toImmutableList()
+        )
 
-            Triple(settings, timeRange, accounts)
-        }
+        return Triple(settings, timeRange, accounts)
+    }
 
     private suspend fun loadIncomeExpenseBalance(
         input: Triple<Settings, ClosedTimeRange, List<Account>>

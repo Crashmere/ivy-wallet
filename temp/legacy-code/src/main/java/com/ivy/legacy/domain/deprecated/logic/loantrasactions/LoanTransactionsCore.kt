@@ -23,7 +23,6 @@ import com.ivy.data.repository.CategoryRepository
 import com.ivy.data.repository.TransactionRepository
 import com.ivy.data.repository.mapper.TransactionMapper
 import com.ivy.design.IVY_COLOR_PICKER_COLORS_FREE
-import com.ivy.legacy.IvyWalletCtx
 import com.ivy.legacy.datamodel.Account
 import com.ivy.legacy.datamodel.Loan
 import com.ivy.legacy.datamodel.LoanRecord
@@ -43,7 +42,6 @@ import javax.inject.Inject
 class LoanTransactionsCore @Inject constructor(
     private val categoryRepository: CategoryRepository,
     private val transactionDao: TransactionDao,
-    private val ivyContext: IvyWalletCtx,
     private val loanRecordDao: LoanRecordDao,
     private val loanDao: LoanDao,
     private val settingsDao: SettingsDao,
@@ -227,7 +225,7 @@ class LoanTransactionsCore @Inject constructor(
 
         val loanCategory = categoryList.find { category ->
             category.name.value.lowercase(Locale.ENGLISH).contains("loan")
-        } ?: if (ivyContext.isPremium || categoryList.size < 12) {
+        } ?: run {
             addCategoryToDb = true
 
             Category(
@@ -237,8 +235,6 @@ class LoanTransactionsCore @Inject constructor(
                 id = CategoryId(UUID.randomUUID()),
                 orderNum = 0.0,
             )
-        } else {
-            null
         }
 
         if (addCategoryToDb) {

@@ -169,7 +169,9 @@ class SettingsViewModel @Inject constructor(
     }
 
     private suspend fun initializeStartDateOfMonth() {
-        startDateOfMonth.intValue = startDayOfMonthAct(Unit)
+        val startDay = startDayOfMonthAct(Unit)
+        ivyContext.setStartDayOfMonth(startDay)
+        startDateOfMonth.intValue = startDay
     }
 
     @Composable
@@ -465,7 +467,13 @@ class SettingsViewModel @Inject constructor(
             when (val res = updateStartDayOfMonthAct(startDate)) {
                 is Res.Err -> {}
                 is Res.Ok -> {
-                    startDateOfMonth.intValue = res.data
+                    val startDay = res.data
+                    ivyContext.setStartDayOfMonth(startDay)
+                    ivyContext.initSelectedPeriodInMemory(
+                        startDayOfMonth = startDay,
+                        forceReinitialize = true
+                    )
+                    startDateOfMonth.intValue = startDay
                 }
             }
         }

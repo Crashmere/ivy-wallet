@@ -3,13 +3,11 @@ package com.ivy.wallet.domain.action.global
 import com.ivy.frp.action.FPAction
 import com.ivy.frp.monad.Res
 import com.ivy.frp.monad.thenIfSuccess
-import com.ivy.legacy.IvyWalletCtx
 import com.ivy.base.legacy.SharedPrefs
 import javax.inject.Inject
 
 class UpdateStartDayOfMonthAct @Inject constructor(
-    private val sharedPrefs: SharedPrefs,
-    private val ivyWalletCtx: IvyWalletCtx
+    private val sharedPrefs: SharedPrefs
 ) : FPAction<Int, Res<String, Int>>() {
 
     override suspend fun Int.compose(): suspend () -> Res<String, Int> = suspend {
@@ -22,13 +20,6 @@ class UpdateStartDayOfMonthAct @Inject constructor(
         }
     } thenIfSuccess { startDay ->
         sharedPrefs.putInt(SharedPrefs.START_DATE_OF_MONTH, startDay)
-        ivyWalletCtx.setStartDayOfMonth(startDay)
-        Res.Ok(startDay)
-    } thenIfSuccess { startDay ->
-        ivyWalletCtx.initSelectedPeriodInMemory(
-            startDayOfMonth = startDay,
-            forceReinitialize = true
-        )
         Res.Ok(startDay)
     }
 }
