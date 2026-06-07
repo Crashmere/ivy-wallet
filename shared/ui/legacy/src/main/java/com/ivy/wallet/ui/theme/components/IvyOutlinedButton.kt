@@ -20,7 +20,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.ivy.design.l0_system.UI
+import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
 import com.ivy.design.utils.thenIf
 import com.ivy.ui.R
@@ -35,22 +35,22 @@ fun IvyOutlinedButton(
     solidBackground: Boolean = false,
     minWidth: Dp = Dp.Unspecified,
     minHeight: Dp = Dp.Unspecified,
-    iconTint: Color = UI.colors.pureInverse,
-    borderColor: Color = UI.colors.medium,
-    textColor: Color = UI.colors.pureInverse,
+    iconTint: Color = LegacyTheme.colors.pureInverse,
+    borderColor: Color = LegacyTheme.colors.medium,
+    textColor: Color = LegacyTheme.colors.pureInverse,
     padding: Dp = 12.dp,
     onClick: () -> Unit,
 ) {
-    val pure = UI.colors.pure
-    val rFull = UI.shapes.rFull
+    val pure = LegacyTheme.colors.pure
+    val rFull = LegacyTheme.shapes.rFull
     Row(
         modifier = modifier
-            .clip(UI.shapes.rFull)
+            .clip(LegacyTheme.shapes.rFull)
             .clickable(
                 onClick = onClick,
             )
             .defaultMinSize(minWidth, minHeight)
-            .border(2.dp, borderColor, UI.shapes.rFull)
+            .border(2.dp, borderColor, LegacyTheme.shapes.rFull)
             .thenIf(solidBackground) {
                 background(pure, rFull)
             },
@@ -72,7 +72,7 @@ fun IvyOutlinedButton(
         Text(
             modifier = Modifier.padding(vertical = padding, horizontal = 4.dp),
             text = text,
-            style = UI.typo.b2.style(
+            style = LegacyTheme.typo.b2.style(
                 fontWeight = FontWeight.Bold,
                 color = textColor,
             ),
@@ -88,22 +88,22 @@ fun IvyOutlinedButtonFillMaxWidth(
     text: String,
     @DrawableRes iconStart: Int?,
     solidBackground: Boolean = false,
-    iconTint: Color = UI.colors.pureInverse,
-    borderColor: Color = UI.colors.medium,
-    textColor: Color = UI.colors.pureInverse,
+    iconTint: Color = LegacyTheme.colors.pureInverse,
+    borderColor: Color = LegacyTheme.colors.medium,
+    textColor: Color = LegacyTheme.colors.pureInverse,
     padding: Dp = 16.dp,
     onClick: () -> Unit,
 ) {
-    val pure = UI.colors.pure
-    val rFull = UI.shapes.rFull
+    val pure = LegacyTheme.colors.pure
+    val rFull = LegacyTheme.shapes.rFull
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .clip(UI.shapes.rFull)
+            .clip(LegacyTheme.shapes.rFull)
             .clickable(
                 onClick = onClick,
             )
-            .border(2.dp, borderColor, UI.shapes.rFull)
+            .border(2.dp, borderColor, LegacyTheme.shapes.rFull)
             .thenIf(solidBackground) {
                 background(pure, rFull)
             },
@@ -123,7 +123,7 @@ fun IvyOutlinedButtonFillMaxWidth(
         Text(
             modifier = Modifier.padding(vertical = padding),
             text = text,
-            style = UI.typo.b2.style(
+            style = LegacyTheme.typo.b2.style(
                 fontWeight = FontWeight.Bold,
                 color = textColor,
             ),

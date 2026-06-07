@@ -25,7 +25,7 @@ import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.ivy.design.l0_system.UI
+import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
 import com.ivy.design.l1_buildingBlocks.DividerW
 import com.ivy.design.l1_buildingBlocks.IvyText
@@ -283,7 +283,7 @@ private fun Icon(
     ItemIconS(
         modifier = Modifier
             .clip(CircleShape)
-            .border(2.dp, if (selected) color else UI.colors.medium, CircleShape)
+            .border(2.dp, if (selected) color else LegacyTheme.colors.medium, CircleShape)
             .thenIf(selected) {
                 background(color, CircleShape)
             }
@@ -293,7 +293,7 @@ private fun Icon(
             .padding(all = 8.dp)
             .testTag(icon),
         iconName = icon,
-        tint = if (selected) color.dynamicContrast() else UI.colors.mediumInverse
+        tint = if (selected) color.dynamicContrast() else LegacyTheme.colors.mediumInverse
     )
 }
 
@@ -313,8 +313,8 @@ private fun Section(
 
         IvyText(
             text = title,
-            typo = UI.typo.b1.style(
-                color = UI.colors.pureInverse,
+            typo = LegacyTheme.typo.b1.style(
+                color = LegacyTheme.colors.pureInverse,
             )
         )
 

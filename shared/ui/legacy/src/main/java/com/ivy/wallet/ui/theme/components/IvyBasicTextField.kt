@@ -19,7 +19,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
-import com.ivy.design.l0_system.UI
+import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
 import com.ivy.ui.legacy.hideKeyboard
 import com.ivy.base.legacy.isNotNullOrBlank
@@ -31,7 +31,7 @@ import com.ivy.ui.legacy.selectEndTextFieldValue
 fun IvyBasicTextField(
     modifier: Modifier = Modifier,
     value: TextFieldValue,
-    textColor: Color = UI.colors.pureInverse,
+    textColor: Color = LegacyTheme.colors.pureInverse,
     hint: String?,
     visualTransformation: VisualTransformation = VisualTransformation.None,
     keyboardOptions: KeyboardOptions = KeyboardOptions(
@@ -53,8 +53,8 @@ fun IvyBasicTextField(
             Text(
                 modifier = Modifier,
                 text = hint!!,
-                style = UI.typo.b2.style(
-                    color = UI.colors.gray,
+                style = LegacyTheme.typo.b2.style(
+                    color = LegacyTheme.colors.gray,
                     fontWeight = FontWeight.SemiBold,
                     textAlign = TextAlign.Start
                 ),
@@ -67,13 +67,13 @@ fun IvyBasicTextField(
                 .testTag("base_input"),
             value = value,
             onValueChange = onValueChanged,
-            textStyle = UI.typo.b2.style(
+            textStyle = LegacyTheme.typo.b2.style(
                 fontWeight = FontWeight.SemiBold,
-                color = UI.colors.pureInverse,
+                color = LegacyTheme.colors.pureInverse,
                 textAlign = TextAlign.Start
             ),
             singleLine = false,
-            cursorBrush = SolidColor(UI.colors.pureInverse),
+            cursorBrush = SolidColor(LegacyTheme.colors.pureInverse),
             visualTransformation = visualTransformation,
             keyboardOptions = keyboardOptions,
             keyboardActions = keyboardActions ?: KeyboardActions(

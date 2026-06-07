@@ -22,7 +22,7 @@ import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
-import com.ivy.design.l0_system.UI
+import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
 import com.ivy.ui.legacy.hideKeyboard
 import com.ivy.ui.R
@@ -61,7 +61,7 @@ fun BoxWithConstraintsScope.DeleteModal(
         Text(
             modifier = Modifier.padding(horizontal = 32.dp),
             text = title,
-            style = UI.typo.b1.style(
+            style = LegacyTheme.typo.b1.style(
                 color = Red,
                 fontWeight = FontWeight.ExtraBold
             )
@@ -72,8 +72,8 @@ fun BoxWithConstraintsScope.DeleteModal(
         Text(
             modifier = Modifier.padding(horizontal = 32.dp),
             text = description,
-            style = UI.typo.b2.style(
-                color = UI.colors.pureInverse,
+            style = LegacyTheme.typo.b2.style(
+                color = LegacyTheme.colors.pureInverse,
                 fontWeight = FontWeight.Medium
             )
         )
@@ -119,7 +119,7 @@ fun BoxWithConstraintsScope.DeleteConfirmationModal(
         Text(
             modifier = Modifier.padding(horizontal = 32.dp),
             text = title,
-            style = UI.typo.b1.style(
+            style = LegacyTheme.typo.b1.style(
                 color = Red,
                 fontWeight = FontWeight.ExtraBold
             )
@@ -130,8 +130,8 @@ fun BoxWithConstraintsScope.DeleteConfirmationModal(
         Text(
             modifier = Modifier.padding(horizontal = 32.dp),
             text = description,
-            style = UI.typo.b2.style(
-                color = UI.colors.pureInverse,
+            style = LegacyTheme.typo.b2.style(
+                color = LegacyTheme.colors.pureInverse,
                 fontWeight = FontWeight.Medium
             )
         )

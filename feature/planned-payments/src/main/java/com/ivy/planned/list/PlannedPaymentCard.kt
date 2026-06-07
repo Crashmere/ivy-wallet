@@ -31,7 +31,7 @@ import com.ivy.data.model.IntervalType
 import com.ivy.data.model.primitive.ColorInt
 import com.ivy.data.model.primitive.NotBlankTrimmedString
 import com.ivy.design.api.LocalTimeConverter
-import com.ivy.design.l0_system.UI
+import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
 import com.ivy.legacy.datamodel.Account
 import com.ivy.legacy.datamodel.PlannedPaymentRule
@@ -75,13 +75,13 @@ fun LazyItemScope.PlannedPaymentCard(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp)
-            .clip(UI.shapes.r4)
+            .clip(LegacyTheme.shapes.r4)
             .clickable {
                 if (accounts.find { it.id == plannedPayment.accountId } != null) {
                     onClick(plannedPayment)
                 }
             }
-            .background(UI.colors.medium, UI.shapes.r4)
+            .background(LegacyTheme.colors.medium, LegacyTheme.shapes.r4)
             .testTag("planned_payment_card")
     ) {
         val currency = accounts.find { it.id == plannedPayment.accountId }?.currency ?: baseCurrency
@@ -111,9 +111,9 @@ fun LazyItemScope.PlannedPaymentCard(
             Text(
                 modifier = Modifier.padding(horizontal = 24.dp),
                 text = plannedPayment.title!!,
-                style = UI.typo.b1.style(
+                style = LegacyTheme.typo.b1.style(
                     fontWeight = FontWeight.ExtraBold,
-                    color = UI.colors.pureInverse
+                    color = LegacyTheme.colors.pureInverse
                 )
             )
         }
@@ -147,9 +147,9 @@ private fun PlannedPaymentHeaderRow(
 
             IvyIcon(
                 modifier = Modifier
-                    .background(UI.colors.pure, CircleShape),
+                    .background(LegacyTheme.colors.pure, CircleShape),
                 icon = R.drawable.ic_planned_payments,
-                tint = UI.colors.pureInverse
+                tint = LegacyTheme.colors.pureInverse
             )
 
             Spacer(Modifier.width(12.dp))
@@ -165,7 +165,7 @@ private fun PlannedPaymentHeaderRow(
                     ),
                     text = category.name.value,
                     backgroundGradient = Gradient.solid(category.color.value.toComposeColor()),
-                    textStyle = UI.typo.c.style(
+                    textStyle = LegacyTheme.typo.c.style(
                         color = findContrastTextColor(category.color.value.toComposeColor()),
                         fontWeight = FontWeight.ExtraBold
                     ),
@@ -185,12 +185,12 @@ private fun PlannedPaymentHeaderRow(
 
             val account = accounts.find { it.id == plannedPayment.accountId }
             IvyButton(
-                backgroundGradient = Gradient.solid(UI.colors.pure),
+                backgroundGradient = Gradient.solid(LegacyTheme.colors.pure),
                 text = account?.name ?: stringResource(R.string.deleted),
-                iconTint = UI.colors.pureInverse,
+                iconTint = LegacyTheme.colors.pureInverse,
                 iconStart = getCustomIconIdS(account?.icon, R.drawable.ic_custom_account_s),
-                textStyle = UI.typo.c.style(
-                    color = UI.colors.pureInverse,
+                textStyle = LegacyTheme.typo.c.style(
+                    color = LegacyTheme.colors.pureInverse,
                     fontWeight = FontWeight.ExtraBold
                 ),
                 padding = 8.dp,
@@ -225,7 +225,7 @@ private fun RuleTextRow(
         if (oneTime) {
             Text(
                 text = stringResource(R.string.planned_for_uppercase),
-                style = UI.typo.nC.style(
+                style = LegacyTheme.typo.nC.style(
                     color = Orange,
                     fontWeight = FontWeight.SemiBold
                 )
@@ -234,7 +234,7 @@ private fun RuleTextRow(
                 modifier = Modifier.padding(bottom = 1.dp),
                 text = startDate?.toLocalDate()?.formatDateOnlyWithYear()?.uppercaseLocal()
                     ?: stringResource(R.string.null_text),
-                style = UI.typo.nC.style(
+                style = LegacyTheme.typo.nC.style(
                     color = Orange,
                     fontWeight = FontWeight.ExtraBold
                 )
@@ -243,7 +243,7 @@ private fun RuleTextRow(
             val startDateFormatted = startDate?.toLocalDate()?.formatDateOnly()?.uppercaseLocal()
             Text(
                 text = stringResource(R.string.starts_date, startDateFormatted ?: ""),
-                style = UI.typo.nC.style(
+                style = LegacyTheme.typo.nC.style(
                     color = Orange,
                     fontWeight = FontWeight.SemiBold
                 )
@@ -256,7 +256,7 @@ private fun RuleTextRow(
                     intervalN ?: 0,
                     intervalTypeFormatted ?: ""
                 ),
-                style = UI.typo.nC.style(
+                style = LegacyTheme.typo.nC.style(
                     color = Orange,
                     fontWeight = FontWeight.ExtraBold
                 )

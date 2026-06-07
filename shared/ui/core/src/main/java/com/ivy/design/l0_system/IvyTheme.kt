@@ -25,7 +25,7 @@ val LocalIvyTypography = compositionLocalOf<IvyTypography> { error("No IvyTypogr
 val LocalIvyShapes = compositionLocalOf<IvyShapes> { error("No IvyShapes") }
 
 @Deprecated("Old design system. Use `:ivy-design` and Material3")
-object UI {
+object LegacyTheme {
     val colors: IvyColors
         @Composable
         @ReadOnlyComposable

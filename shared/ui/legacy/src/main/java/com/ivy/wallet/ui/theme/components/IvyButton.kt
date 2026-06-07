@@ -20,7 +20,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.ivy.design.l0_system.UI
+import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
 import com.ivy.ui.legacy.drawColoredShadow
 import com.ivy.design.utils.thenIf
@@ -38,7 +38,7 @@ fun IvyButton(
     modifier: Modifier = Modifier,
     text: String,
     backgroundGradient: Gradient = GradientIvy,
-    textStyle: TextStyle = UI.typo.b2.style(
+    textStyle: TextStyle = LegacyTheme.typo.b2.style(
         color = White,
         fontWeight = FontWeight.Bold
     ),
@@ -66,14 +66,14 @@ fun IvyButton(
                     offsetY = 8.dp
                 )
             }
-            .clip(UI.shapes.rFull)
+            .clip(LegacyTheme.shapes.rFull)
             .background(
                 brush = if (enabled) {
                     backgroundGradient.asHorizontalBrush()
                 } else {
-                    SolidColor(UI.colors.gray)
+                    SolidColor(LegacyTheme.colors.gray)
                 },
-                shape = UI.shapes.rFull
+                shape = LegacyTheme.shapes.rFull
             )
             .clickable(onClick = onClick, enabled = enabled),
         verticalAlignment = Alignment.CenterVertically

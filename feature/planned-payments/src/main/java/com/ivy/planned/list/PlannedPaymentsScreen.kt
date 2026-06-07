@@ -18,7 +18,7 @@ import com.ivy.data.model.IntervalType
 import com.ivy.data.model.primitive.ColorInt
 import com.ivy.data.model.primitive.NotBlankTrimmedString
 import com.ivy.design.l0_system.Purple
-import com.ivy.design.l0_system.UI
+import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
 import com.ivy.legacy.datamodel.Account
 import com.ivy.legacy.datamodel.PlannedPaymentRule
@@ -58,9 +58,9 @@ private fun BoxWithConstraintsScope.UI(
             Text(
                 modifier = Modifier.padding(start = 24.dp),
                 text = stringResource(R.string.planned_payments_inline),
-                style = UI.typo.h2.style(
+                style = LegacyTheme.typo.h2.style(
                     fontWeight = FontWeight.ExtraBold,
-                    color = UI.colors.pureInverse
+                    color = LegacyTheme.colors.pureInverse
                 )
             )
 

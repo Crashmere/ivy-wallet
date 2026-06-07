@@ -39,7 +39,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
-import com.ivy.design.l0_system.UI
+import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
 import com.ivy.design.utils.thenIf
 import com.ivy.navigation.MainTab
@@ -150,7 +150,7 @@ fun BoxWithConstraintsScope.BottomBar(
             modifier = Modifier
                 .fillMaxSize()
                 .offset(y = expandedBackgroundOffset)
-                .background(UI.colors.pure.copy(alpha = 0.95f))
+                .background(LegacyTheme.colors.pure.copy(alpha = 0.95f))
                 .clickableNoIndication(rememberInteractionSource()) {
                     // consume click, do nothing
                 }
@@ -240,7 +240,7 @@ fun BoxWithConstraintsScope.BottomBar(
         icon = R.drawable.ic_add,
         backgroundGradient = when (tab) {
             MainTab.HOME -> {
-                if (!expanded) GradientIvy else Gradient.solid(UI.colors.gray)
+                if (!expanded) GradientIvy else Gradient.solid(LegacyTheme.colors.gray)
             }
 
             MainTab.ACCOUNTS -> {
@@ -404,8 +404,8 @@ private fun AddIncomeButton(
             }
             .zIndex(200f),
         text = stringResource(R.string.add_income_uppercase),
-        style = UI.typo.c.style(
-            color = UI.colors.pureInverse,
+        style = LegacyTheme.typo.c.style(
+            color = LegacyTheme.colors.pureInverse,
             fontWeight = FontWeight.ExtraBold,
             textAlign = TextAlign.Center
         )
@@ -490,8 +490,8 @@ private fun AddExpenseButton(
             }
             .zIndex(200f),
         text = stringResource(R.string.add_expense_uppercase),
-        style = UI.typo.c.style(
-            color = UI.colors.pureInverse,
+        style = LegacyTheme.typo.c.style(
+            color = LegacyTheme.colors.pureInverse,
             fontWeight = FontWeight.ExtraBold,
             textAlign = TextAlign.Center
         )
@@ -576,8 +576,8 @@ private fun AddTransferButton(
             }
             .zIndex(200f),
         text = stringResource(R.string.account_transfer),
-        style = UI.typo.c.style(
-            color = UI.colors.pureInverse,
+        style = LegacyTheme.typo.c.style(
+            color = LegacyTheme.colors.pureInverse,
             fontWeight = FontWeight.ExtraBold,
             textAlign = TextAlign.Center
         )
@@ -618,7 +618,7 @@ private fun RowScope.Tab(
     Row(
         modifier = Modifier
             .weight(1f)
-            .clip(UI.shapes.rFull)
+            .clip(LegacyTheme.shapes.rFull)
             .clickable(onClick = onClick)
             .padding(top = 12.dp, bottom = 16.dp)
             .testTag(name.lowercase()),
@@ -627,7 +627,7 @@ private fun RowScope.Tab(
     ) {
         IvyIcon(
             icon = icon,
-            tint = if (selected) selectedColor else UI.colors.pureInverse
+            tint = if (selected) selectedColor else LegacyTheme.colors.pureInverse
         )
 
         if (selected) {
@@ -635,7 +635,7 @@ private fun RowScope.Tab(
 
             Text(
                 text = name,
-                style = UI.typo.c.style(
+                style = LegacyTheme.typo.c.style(
                     fontWeight = FontWeight.Bold,
                     color = selectedColor
                 )

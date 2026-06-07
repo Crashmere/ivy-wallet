@@ -7,7 +7,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.Category
-import com.ivy.design.l0_system.UI
+import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
 import com.ivy.ui.R
 import com.ivy.wallet.ui.theme.Gradient
@@ -31,7 +31,7 @@ fun Category(
         IvyBorderButton(
             modifier = Modifier.padding(start = 24.dp),
             iconStart = R.drawable.ic_plus,
-            iconTint = UI.colors.pureInverse,
+            iconTint = LegacyTheme.colors.pureInverse,
             text = stringResource(R.string.add_category)
         ) {
             onChooseCategory()
@@ -53,7 +53,7 @@ private fun CategoryButton(
             defaultIcon = R.drawable.ic_custom_category_s
         ),
         backgroundGradient = Gradient.from(category.color.value, category.color.value),
-        textStyle = UI.typo.b2.style(
+        textStyle = LegacyTheme.typo.b2.style(
             color = contrastColor,
             fontWeight = FontWeight.Bold
         ),

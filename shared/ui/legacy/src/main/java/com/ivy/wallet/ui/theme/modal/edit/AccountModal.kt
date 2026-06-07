@@ -23,7 +23,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
-import com.ivy.design.l0_system.UI
+import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
 import com.ivy.domain.legacy.ui.IvyColorPicker
 import com.ivy.legacy.datamodel.Account
@@ -302,8 +302,8 @@ private fun AccountCurrency(
     Row(
         modifier = Modifier
             .padding(horizontal = 16.dp)
-            .background(UI.colors.medium, UI.shapes.r4)
-            .clip(UI.shapes.r4)
+            .background(LegacyTheme.colors.medium, LegacyTheme.shapes.r4)
+            .clip(LegacyTheme.shapes.r4)
             .clickable {
                 onClick()
             }
@@ -315,7 +315,7 @@ private fun AccountCurrency(
 
         Text(
             text = currencyCode.toUpperCaseLocal(),
-            style = UI.typo.b1.style(
+            style = LegacyTheme.typo.b1.style(
                 fontWeight = FontWeight.ExtraBold
             )
         )
@@ -325,7 +325,7 @@ private fun AccountCurrency(
         val currencyName = IvyCurrency.fromCode(currencyCode)?.name ?: ""
         Text(
             text = "-$currencyName".toLowerCaseLocal(),
-            style = UI.typo.b2.style(
+            style = LegacyTheme.typo.b2.style(
                 fontWeight = FontWeight.SemiBold,
                 color = Gray
             )

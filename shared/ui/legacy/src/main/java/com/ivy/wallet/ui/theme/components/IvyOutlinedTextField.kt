@@ -23,7 +23,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.ivy.design.l0_system.UI
+import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
 import com.ivy.base.legacy.isNotNullOrBlank
 import com.ivy.design.utils.thenIf
@@ -35,11 +35,11 @@ fun IvyOutlinedTextField(
     modifier: Modifier = Modifier,
     value: TextFieldValue,
     hint: String?,
-    hintColor: Color = UI.colors.gray,
-    backgroundColor: Color = UI.colors.primary,
-    emptyBorderColor: Color = UI.colors.gray,
-    textColor: Color = UI.colors.pureInverse,
-    cursorColor: Color = UI.colors.pureInverse,
+    hintColor: Color = LegacyTheme.colors.gray,
+    backgroundColor: Color = LegacyTheme.colors.primary,
+    emptyBorderColor: Color = LegacyTheme.colors.gray,
+    textColor: Color = LegacyTheme.colors.pureInverse,
+    cursorColor: Color = LegacyTheme.colors.pureInverse,
     visualTransformation: VisualTransformation = VisualTransformation.None,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
@@ -47,14 +47,14 @@ fun IvyOutlinedTextField(
     onValueChanged: (TextFieldValue) -> Unit
 ) {
     val isEmpty = value.text.isBlank()
-    val rFull = UI.shapes.rFull
+    val rFull = LegacyTheme.shapes.rFull
     Box(
         modifier = modifier
-            .clip(UI.shapes.rFull)
+            .clip(LegacyTheme.shapes.rFull)
             .border(
                 width = 2.dp,
                 color = if (isEmpty) emptyBorderColor else backgroundColor,
-                shape = UI.shapes.rFull
+                shape = LegacyTheme.shapes.rFull
             )
             .thenIf(validateInput(value)) {
                 background(backgroundColor.copy(alpha = 0.1f), rFull)
@@ -73,7 +73,7 @@ fun IvyOutlinedTextField(
                     .padding(vertical = 16.dp),
                 text = hint!!,
                 textAlign = TextAlign.Center,
-                style = UI.typo.b2.style(
+                style = LegacyTheme.typo.b2.style(
                     color = hintColor,
                     fontWeight = FontWeight.SemiBold
                 )
@@ -90,7 +90,7 @@ fun IvyOutlinedTextField(
                 .padding(vertical = 16.dp, horizontal = 24.dp),
             value = value,
             onValueChange = onValueChanged,
-            textStyle = UI.typo.b2.style(
+            textStyle = LegacyTheme.typo.b2.style(
                 color = textColor,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center

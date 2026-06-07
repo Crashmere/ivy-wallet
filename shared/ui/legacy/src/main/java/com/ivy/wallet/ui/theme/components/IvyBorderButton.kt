@@ -20,7 +20,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.ivy.design.l0_system.UI
+import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
 import com.ivy.wallet.ui.theme.Gradient
 import com.ivy.ui.R
@@ -30,14 +30,14 @@ import com.ivy.ui.R
 fun IvyBorderButton(
     modifier: Modifier = Modifier,
     text: String,
-    textStyle: TextStyle = UI.typo.b2.style(
-        color = UI.colors.pureInverse,
+    textStyle: TextStyle = LegacyTheme.typo.b2.style(
+        color = LegacyTheme.colors.pureInverse,
         fontWeight = FontWeight.Bold
     ),
-    backgroundGradient: Gradient = Gradient.solid(UI.colors.mediumInverse),
+    backgroundGradient: Gradient = Gradient.solid(LegacyTheme.colors.mediumInverse),
     @DrawableRes iconStart: Int? = null,
     @DrawableRes iconEnd: Int? = null,
-    iconTint: Color = UI.colors.pureInverse,
+    iconTint: Color = LegacyTheme.colors.pureInverse,
     enabled: Boolean = true,
     wrapContentMode: Boolean = true,
 
@@ -46,15 +46,15 @@ fun IvyBorderButton(
 ) {
     Row(
         modifier = modifier
-            .clip(UI.shapes.rFull)
+            .clip(LegacyTheme.shapes.rFull)
             .border(
                 width = 2.dp,
                 brush = if (enabled) {
                     backgroundGradient.asHorizontalBrush()
                 } else {
-                    SolidColor(UI.colors.gray)
+                    SolidColor(LegacyTheme.colors.gray)
                 },
-                shape = UI.shapes.rFull
+                shape = LegacyTheme.shapes.rFull
             )
             .clickable(onClick = onClick, enabled = enabled),
         verticalAlignment = Alignment.CenterVertically

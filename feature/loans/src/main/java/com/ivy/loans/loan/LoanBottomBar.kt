@@ -24,7 +24,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
-import com.ivy.design.l0_system.UI
+import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
 import com.ivy.ui.legacy.navigationBarInset
 import com.ivy.ui.legacy.toDensityPx
@@ -115,7 +115,7 @@ private fun RowScope.Tab(
     Row(
         modifier = Modifier
             .weight(1f)
-            .clip(UI.shapes.rFull)
+            .clip(LegacyTheme.shapes.rFull)
             .clickable(onClick = onClick)
             .padding(top = 12.dp, bottom = 16.dp)
             .testTag(name.lowercase()),
@@ -124,7 +124,7 @@ private fun RowScope.Tab(
     ) {
         IvyIcon(
             icon = icon,
-            tint = if (selected) selectedColor else UI.colors.pureInverse
+            tint = if (selected) selectedColor else LegacyTheme.colors.pureInverse
         )
 
         if (selected) {
@@ -132,7 +132,7 @@ private fun RowScope.Tab(
 
             Text(
                 text = name,
-                style = UI.typo.c.style(
+                style = LegacyTheme.typo.c.style(
                     fontWeight = FontWeight.Bold,
                     color = selectedColor
                 )

@@ -44,7 +44,7 @@ import com.ivy.design.api.LocalDatePicker
 import com.ivy.design.api.LocalTimeConverter
 import com.ivy.design.api.LocalTimeFormatter
 import com.ivy.design.api.LocalTimeProvider
-import com.ivy.design.l0_system.UI
+import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
 import com.ivy.domain.legacy.ui.theme.components.ListItem
 import com.ivy.legacy.datamodel.Account
@@ -153,7 +153,7 @@ fun BoxWithConstraintsScope.FilterOverlay(
                         )
                     }
                 }
-                .background(UI.colors.pure)
+                .background(LegacyTheme.colors.pure)
                 .systemBarsPadding()
                 .verticalScroll(rememberScrollState()),
         ) {
@@ -178,7 +178,7 @@ fun BoxWithConstraintsScope.FilterOverlay(
                         start = 32.dp
                     ),
                     text = stringResource(R.string.filter),
-                    style = UI.typo.h2.style(
+                    style = LegacyTheme.typo.h2.style(
                         fontWeight = FontWeight.ExtraBold
                     )
                 )
@@ -193,7 +193,7 @@ fun BoxWithConstraintsScope.FilterOverlay(
                         }
                         .padding(all = 4.dp), // expand click area
                     text = stringResource(R.string.clean_filter),
-                    style = UI.typo.b2.style(
+                    style = LegacyTheme.typo.b2.style(
                         fontWeight = FontWeight.Bold,
                         color = Color.Gray
                     )
@@ -490,7 +490,7 @@ fun ColumnScope.TagsFilter(
     Text(
         modifier = Modifier.padding(start = 32.dp),
         text = stringResource(R.string.includes_uppercase),
-        style = UI.typo.b2.style(
+        style = LegacyTheme.typo.b2.style(
             fontWeight = FontWeight.ExtraBold
         )
     )
@@ -505,7 +505,7 @@ fun ColumnScope.TagsFilter(
     Text(
         modifier = Modifier.padding(start = 32.dp),
         text = stringResource(R.string.excludes_uppercase),
-        style = UI.typo.b2.style(
+        style = LegacyTheme.typo.b2.style(
             fontWeight = FontWeight.ExtraBold
         )
     )
@@ -827,7 +827,7 @@ private fun ListFilterTitle(
                 }
                 .padding(all = 4.dp), // expand click area
             text = if (itemsSelected > 0) stringResource(R.string.clear_all) else stringResource(R.string.select_all),
-            style = UI.typo.b2.style(
+            style = LegacyTheme.typo.b2.style(
                 fontWeight = FontWeight.Bold,
                 color = Color.Gray
             )
@@ -866,7 +866,7 @@ private fun AmountFilter(
         ) {
             Text(
                 text = stringResource(R.string.from),
-                style = UI.typo.b2.style(
+                style = LegacyTheme.typo.b2.style(
                     fontWeight = FontWeight.ExtraBold
                 )
             )
@@ -887,7 +887,7 @@ private fun AmountFilter(
         ) {
             Text(
                 text = stringResource(R.string.to),
-                style = UI.typo.b2.style(
+                style = LegacyTheme.typo.b2.style(
                     fontWeight = FontWeight.ExtraBold
                 )
             )
@@ -922,7 +922,7 @@ private fun KeywordsFilter(
     Text(
         modifier = Modifier.padding(start = 32.dp),
         text = stringResource(R.string.includes_uppercase),
-        style = UI.typo.b2.style(
+        style = LegacyTheme.typo.b2.style(
             fontWeight = FontWeight.ExtraBold
         )
     )
@@ -938,7 +938,7 @@ private fun KeywordsFilter(
             is String -> {
                 Keyword(
                     keyword = item,
-                    borderColor = UI.colors.pureInverse
+                    borderColor = LegacyTheme.colors.pureInverse
                 ) {
                     // Remove keyword
                     onSetFilter(
@@ -963,7 +963,7 @@ private fun KeywordsFilter(
     Text(
         modifier = Modifier.padding(start = 32.dp),
         text = stringResource(R.string.excludes_uppercase),
-        style = UI.typo.b2.style(
+        style = LegacyTheme.typo.b2.style(
             fontWeight = FontWeight.ExtraBold
         )
     )
@@ -979,7 +979,7 @@ private fun KeywordsFilter(
             is String -> {
                 Keyword(
                     keyword = item,
-                    borderColor = UI.colors.pureInverse
+                    borderColor = LegacyTheme.colors.pureInverse
                 ) {
                     // Remove keyword
                     onSetFilter(
@@ -1052,9 +1052,9 @@ private fun FilterTitleText(
     Text(
         modifier = Modifier.padding(start = 32.dp),
         text = text,
-        style = UI.typo.b1.style(
+        style = LegacyTheme.typo.b1.style(
             fontWeight = FontWeight.Medium,
-            color = if (active) UI.colors.pureInverse else inactiveColor
+            color = if (active) LegacyTheme.colors.pureInverse else inactiveColor
         )
     )
 }

@@ -18,7 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.ivy.design.l0_system.UI
+import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
 import com.ivy.design.l1_buildingBlocks.ColumnRoot
 import com.ivy.design.l1_buildingBlocks.DividerW
@@ -129,9 +129,9 @@ private fun BoxWithConstraintsScope.UI(
                         .fillMaxWidth()
                         .padding(horizontal = 16.dp),
                     text = "${it.from}-${it.to}",
-                    style = UI.typo.nH2.style(
+                    style = LegacyTheme.typo.nH2.style(
                         textAlign = TextAlign.Center,
-                        color = UI.colors.primary
+                        color = LegacyTheme.colors.primary
                     )
                 )
             }
@@ -154,7 +154,7 @@ private fun LazyListScope.ratesSection(
             SpacerHor(width = 16.dp)
             Text(
                 text = text,
-                style = UI.typo.h2
+                style = LegacyTheme.typo.h2
             )
             SpacerHor(width = 16.dp)
             DividerW()

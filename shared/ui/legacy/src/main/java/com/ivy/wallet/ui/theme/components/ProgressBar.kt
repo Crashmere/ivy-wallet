@@ -7,7 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
-import com.ivy.design.l0_system.UI
+import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.wallet.ui.theme.*
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -18,13 +18,13 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun ProgressBar(
     modifier: Modifier = Modifier,
-    notFilledColor: Color = UI.colors.pure,
+    notFilledColor: Color = LegacyTheme.colors.pure,
     positiveProgress: Boolean = true,
     percent: Double
 ) {
     Spacer(
         modifier = modifier
-            .clip(UI.shapes.r4)
+            .clip(LegacyTheme.shapes.r4)
             .background(notFilledColor)
             .drawBehind {
                 drawRect(

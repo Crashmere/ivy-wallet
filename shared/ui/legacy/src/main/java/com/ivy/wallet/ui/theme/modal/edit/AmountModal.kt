@@ -34,7 +34,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.ivy.design.l0_system.UI
+import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
 import com.ivy.domain.di.FeaturesEntryPoint
 import com.ivy.data.model.currency.amountToDouble
@@ -105,7 +105,7 @@ fun BoxWithConstraintsScope.AmountModal(
                     .testTag("btn_calculator")
                     .padding(all = 4.dp),
                 icon = R.drawable.ic_custom_calculator_m,
-                tint = UI.colors.pureInverse
+                tint = LegacyTheme.colors.pureInverse
             )
 
             Spacer(Modifier.width(16.dp))
@@ -201,17 +201,17 @@ fun AmountCurrency(
 
         Text(
             text = amount.ifBlank { "0" },
-            style = UI.typo.nH2.style(
+            style = LegacyTheme.typo.nH2.style(
                 fontWeight = FontWeight.Bold,
-                color = UI.colors.pureInverse
+                color = LegacyTheme.colors.pureInverse
             )
         )
         Spacer(Modifier.width(4.dp))
         Text(
             text = currency,
-            style = UI.typo.nH2.style(
+            style = LegacyTheme.typo.nH2.style(
                 fontWeight = FontWeight.Normal,
-                color = UI.colors.pureInverse
+                color = LegacyTheme.colors.pureInverse
             )
         )
 
@@ -451,7 +451,7 @@ fun CircleNumberButton(
 fun KeypadCircleButton(
     text: String,
     testTag: String,
-    textColor: Color = UI.colors.pureInverse,
+    textColor: Color = LegacyTheme.colors.pureInverse,
     fontSize: TextUnit = 32.sp,
     btnSize: Dp = 80.dp,
     onClick: () -> Unit,
@@ -461,7 +461,7 @@ fun KeypadCircleButton(
             .testTag(testTag),
         text = text,
         fontSize = fontSize,
-        style = UI.typo.nH2.style(
+        style = LegacyTheme.typo.nH2.style(
             color = textColor,
             fontWeight = FontWeight.Bold
         ).copy(
@@ -482,7 +482,7 @@ private fun circleButtonModifier(
         .clickable(
             onClick = onClick
         )
-        .background(UI.colors.pure, UI.shapes.rFull)
-        .border(2.dp, UI.colors.medium, UI.shapes.rFull)
+        .background(LegacyTheme.colors.pure, LegacyTheme.shapes.rFull)
+        .border(2.dp, LegacyTheme.colors.medium, LegacyTheme.shapes.rFull)
         .wrapContentHeight()
 }

@@ -32,7 +32,7 @@ import com.ivy.base.model.TransactionType
 import com.ivy.design.api.LocalTimeConverter
 import com.ivy.design.api.LocalTimeFormatter
 import com.ivy.design.api.LocalTimeProvider
-import com.ivy.design.l0_system.UI
+import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
 import com.ivy.design.utils.thenIf
 import com.ivy.legacy.LocalPeriodState
@@ -255,7 +255,7 @@ fun CashFlowInfo(
                     cashflow.format(currency),
                     currency,
                 ),
-                style = UI.typo.nB2.style(
+                style = LegacyTheme.typo.nB2.style(
                     color = if (cashflow < 0) Gray else Green,
                 ),
             )
@@ -310,8 +310,8 @@ private fun IncomeExpenses(
         HeaderCard(
             percentVisible = percentExpanded,
             icon = R.drawable.ic_expense,
-            backgroundGradient = Gradient(UI.colors.pureInverse, UI.colors.gray),
-            textColor = UI.colors.pure,
+            backgroundGradient = Gradient(LegacyTheme.colors.pureInverse, LegacyTheme.colors.gray),
+            textColor = LegacyTheme.colors.pure,
             label = stringResource(R.string.expenses),
             currency = currency,
             amount = monthlyExpenses.absoluteValue,
@@ -346,7 +346,7 @@ private fun RowScope.HeaderCard(
             .thenIf(percentVisible == 1f) {
                 drawColoredShadow(backgroundGradient.startColor)
             }
-            .clip(UI.shapes.r4)
+            .clip(LegacyTheme.shapes.r4)
             .background(backgroundGradient.asHorizontalBrush())
             .testTag(testTag)
             .clickable(
@@ -369,7 +369,7 @@ private fun RowScope.HeaderCard(
 
             Text(
                 text = label,
-                style = UI.typo.c.style(
+                style = LegacyTheme.typo.c.style(
                     color = textColor,
                     fontWeight = FontWeight.ExtraBold,
                 ),

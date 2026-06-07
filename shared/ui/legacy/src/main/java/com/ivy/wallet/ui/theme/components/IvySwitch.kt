@@ -12,7 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
-import com.ivy.design.l0_system.UI
+import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.ui.legacy.springBounce
 import com.ivy.wallet.ui.theme.Gray
 import com.ivy.wallet.ui.theme.Green
@@ -32,8 +32,8 @@ fun IvySwitch(
     Row(
         modifier = modifier
             .width(40.dp)
-            .clip(UI.shapes.rFull)
-            .border(2.dp, color, UI.shapes.rFull)
+            .clip(LegacyTheme.shapes.rFull)
+            .border(2.dp, color, LegacyTheme.shapes.rFull)
             .clickable {
                 onEnabledChange(!enabled)
             }

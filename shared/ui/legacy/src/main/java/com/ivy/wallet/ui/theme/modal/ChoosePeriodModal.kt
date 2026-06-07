@@ -32,7 +32,7 @@ import androidx.compose.ui.unit.dp
 import com.ivy.data.model.IntervalType
 import com.ivy.design.api.LocalTimeConverter
 import com.ivy.design.api.LocalTimeProvider
-import com.ivy.design.l0_system.UI
+import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
 import com.ivy.legacy.data.model.FromToTimeRange
 import com.ivy.legacy.data.model.LastNTimeRange
@@ -174,8 +174,8 @@ private fun ColumnScope.ChooseMonth(
         modifier = Modifier
             .padding(start = 32.dp),
         text = stringResource(R.string.choose_month),
-        style = UI.typo.b1.style(
-            color = if (selectedMonthYear != null) UI.colors.pureInverse else Gray,
+        style = LegacyTheme.typo.b1.style(
+            color = if (selectedMonthYear != null) LegacyTheme.colors.pureInverse else Gray,
             fontWeight = FontWeight.ExtraBold
         )
     )
@@ -267,13 +267,13 @@ private fun MonthButton(
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
 ) {
-    val background = if (selected) GradientIvy else Gradient.solid(UI.colors.medium)
+    val background = if (selected) GradientIvy else Gradient.solid(LegacyTheme.colors.medium)
     Text(
         modifier = modifier
-            .clip(UI.shapes.rFull)
+            .clip(LegacyTheme.shapes.rFull)
             .background(
                 brush = background.asHorizontalBrush(),
-                shape = UI.shapes.rFull
+                shape = LegacyTheme.shapes.rFull
             )
             .clickable {
                 onClick()
@@ -283,7 +283,7 @@ private fun MonthButton(
                 vertical = 12.dp,
             ),
         text = text,
-        style = UI.typo.b2.style(
+        style = LegacyTheme.typo.b2.style(
             fontWeight = FontWeight.Bold,
             color = if (selected) White else Gray
         )
@@ -306,8 +306,8 @@ private fun ColumnScope.FromToRange(
         modifier = Modifier
             .padding(start = 32.dp),
         text = stringResource(R.string.or_custom_range),
-        style = UI.typo.b1.style(
-            color = if (timeRange != null) UI.colors.pureInverse else Gray,
+        style = LegacyTheme.typo.b1.style(
+            color = if (timeRange != null) LegacyTheme.colors.pureInverse else Gray,
             fontWeight = FontWeight.ExtraBold
         )
     )
@@ -376,8 +376,8 @@ private fun IntervalFromToDate(
         modifier = Modifier
             .padding(horizontal = 24.dp)
             .fillMaxWidth()
-            .clip(UI.shapes.rFull)
-            .border(2.dp, UI.colors.medium, UI.shapes.rFull)
+            .clip(LegacyTheme.shapes.rFull)
+            .border(2.dp, LegacyTheme.colors.medium, LegacyTheme.shapes.rFull)
             .clickable {
                 pickDate(
                     if (border == IntervalBorder.TO) {
@@ -415,9 +415,9 @@ private fun IntervalFromToDate(
                     R.string.to
                 )
             },
-            style = UI.typo.b2.style(
+            style = LegacyTheme.typo.b2.style(
                 fontWeight = FontWeight.ExtraBold,
-                color = if (dateTime != null) Green else UI.colors.pureInverse
+                color = if (dateTime != null) Green else LegacyTheme.colors.pureInverse
             )
         )
 
@@ -430,9 +430,9 @@ private fun IntervalFromToDate(
         Text(
             text = dateTime?.toLocalDate()?.formatDateOnlyWithYear()
                 ?: stringResource(R.string.add_date),
-            style = UI.typo.nB2.style(
+            style = LegacyTheme.typo.nB2.style(
                 fontWeight = FontWeight.Bold,
-                color = if (dateTime != null) UI.colors.pureInverse else Gray
+                color = if (dateTime != null) LegacyTheme.colors.pureInverse else Gray
             )
         )
 
@@ -482,8 +482,8 @@ private fun ColumnScope.LastNPeriod(
         modifier = Modifier
             .padding(start = 32.dp),
         text = stringResource(R.string.or_in_the_last),
-        style = UI.typo.b1.style(
-            color = if (lastNTimeRange != null) UI.colors.pureInverse else Gray,
+        style = LegacyTheme.typo.b1.style(
+            color = if (lastNTimeRange != null) LegacyTheme.colors.pureInverse else Gray,
             fontWeight = FontWeight.ExtraBold
         )
     )
@@ -530,8 +530,8 @@ private fun ColumnScope.AllTime(
         modifier = Modifier
             .padding(start = 32.dp),
         text = stringResource(R.string.or_all_time),
-        style = UI.typo.b1.style(
-            color = if (active) UI.colors.pureInverse else Gray,
+        style = LegacyTheme.typo.b1.style(
+            color = if (active) LegacyTheme.colors.pureInverse else Gray,
             fontWeight = FontWeight.ExtraBold
         )
     )

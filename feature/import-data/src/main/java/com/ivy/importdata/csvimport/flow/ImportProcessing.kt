@@ -16,7 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.ivy.design.l0_system.UI
+import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
 import com.ivy.ui.R
 import com.ivy.wallet.ui.theme.GradientGreen
@@ -37,7 +37,7 @@ fun ImportProcessing(
 
         Text(
             text = stringResource(R.string.please_wait),
-            style = UI.typo.h2.style(
+            style = LegacyTheme.typo.h2.style(
                 fontWeight = FontWeight.Black
             )
         )
@@ -46,7 +46,7 @@ fun ImportProcessing(
 
         Text(
             text = "$progressPercent%",
-            style = UI.typo.b2.style(
+            style = LegacyTheme.typo.b2.style(
                 color = Gray,
                 fontWeight = FontWeight.Bold
             )
@@ -62,7 +62,7 @@ fun ImportProcessing(
 
         Text(
             text = stringResource(R.string.importing_the_csv_file),
-            style = UI.typo.b2.style(
+            style = LegacyTheme.typo.b2.style(
                 fontWeight = FontWeight.Bold
             )
         )
@@ -86,7 +86,7 @@ private fun ProgressBar(
             .fillMaxWidth()
             .height(32.dp)
             .padding(horizontal = 24.dp)
-            .background(UI.colors.medium, UI.shapes.rFull),
+            .background(LegacyTheme.colors.medium, LegacyTheme.shapes.rFull),
         verticalAlignment = Alignment.CenterVertically
     ) {
         if (progressPercent > 0) {
@@ -94,7 +94,7 @@ private fun ProgressBar(
                 modifier = Modifier
                     .weight(progressPercent.toFloat())
                     .height(32.dp)
-                    .background(GradientGreen.asHorizontalBrush(), UI.shapes.rFull),
+                    .background(GradientGreen.asHorizontalBrush(), LegacyTheme.shapes.rFull),
             )
         }
 

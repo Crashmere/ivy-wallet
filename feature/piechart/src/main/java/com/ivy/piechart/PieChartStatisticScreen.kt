@@ -40,7 +40,7 @@ import com.ivy.design.api.LocalDatePicker
 import com.ivy.design.api.LocalTimeConverter
 import com.ivy.design.api.LocalTimeFormatter
 import com.ivy.design.api.LocalTimeProvider
-import com.ivy.design.l0_system.UI
+import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
 import com.ivy.design.utils.thenIf
 import com.ivy.legacy.LocalPeriodState
@@ -159,7 +159,7 @@ private fun BoxWithConstraintsScope.UI(
                 } else {
                     stringResource(R.string.income)
                 },
-                style = UI.typo.b1.style(
+                style = LegacyTheme.typo.b1.style(
                     fontWeight = FontWeight.ExtraBold
                 )
             )
@@ -330,7 +330,7 @@ private fun Header(
                     icon = R.drawable.ic_plus,
                     backgroundGradient = backgroundGradient,
                     tint = if (transactionType == TransactionType.EXPENSE) {
-                        UI.colors.pure
+                        LegacyTheme.colors.pure
                     } else {
                         White
                     }
@@ -372,7 +372,7 @@ private fun CategoryAmountCard(
 
         else -> false
     }
-    val backgroundColor = if (selectedState) categoryColor else UI.colors.medium
+    val backgroundColor = if (selectedState) categoryColor else LegacyTheme.colors.medium
 
     val textColor = findContrastTextColor(
         backgroundColor = backgroundColor
@@ -385,8 +385,8 @@ private fun CategoryAmountCard(
             .thenIf(selectedState) {
                 drawColoredShadow(backgroundColor)
             }
-            .clip(UI.shapes.r3)
-            .background(backgroundColor, UI.shapes.r3)
+            .clip(LegacyTheme.shapes.r3)
+            .background(backgroundColor, LegacyTheme.shapes.r3)
             .clickable {
                 onClick()
             }
@@ -424,7 +424,7 @@ private fun CategoryAmountCard(
                         .weight(1f)
                         .padding(end = 16.dp),
                     text = category?.name?.value ?: stringResource(R.string.unspecified),
-                    style = UI.typo.b2.style(
+                    style = LegacyTheme.typo.b2.style(
                         color = textColor,
                         fontWeight = FontWeight.Bold,
                         textAlign = TextAlign.Start
@@ -466,8 +466,8 @@ private fun PercentText(
         } else {
             stringResource(R.string.percent, "0")
         },
-        style = UI.typo.nB2.style(
-            color = if (selectedState) contrastColor else UI.colors.pureInverse,
+        style = LegacyTheme.typo.nB2.style(
+            color = if (selectedState) contrastColor else LegacyTheme.colors.pureInverse,
             fontWeight = FontWeight.Normal
         )
     )

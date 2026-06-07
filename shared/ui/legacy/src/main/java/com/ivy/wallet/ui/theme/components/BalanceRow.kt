@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.ivy.design.l0_system.UI
+import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
 import com.ivy.data.model.currency.format
 import com.ivy.data.model.currency.shortenAmount
@@ -27,7 +27,7 @@ fun BalanceRowMedium(
     currency: String,
     balance: Double,
     modifier: Modifier = Modifier,
-    textColor: Color = UI.colors.pureInverse,
+    textColor: Color = LegacyTheme.colors.pureInverse,
     balanceAmountPrefix: String? = null,
     currencyUpfront: Boolean = true,
     shortenBigNumbers: Boolean = false,
@@ -55,7 +55,7 @@ fun BalanceRowMini(
     currency: String,
     balance: Double,
     modifier: Modifier = Modifier,
-    textColor: Color = UI.colors.pureInverse,
+    textColor: Color = LegacyTheme.colors.pureInverse,
     balanceAmountPrefix: String? = null,
     currencyUpfront: Boolean = true,
     shortenBigNumbers: Boolean = false,
@@ -85,7 +85,7 @@ fun BalanceRow(
     currency: String,
     balance: Double,
     modifier: Modifier = Modifier,
-    textColor: Color = UI.colors.pureInverse,
+    textColor: Color = LegacyTheme.colors.pureInverse,
     hiddenMode: Boolean = false,
     spacerCurrency: Dp = 12.dp,
     currencyFontSize: TextUnit? = null,
@@ -135,12 +135,12 @@ fun BalanceRow(
                 Text(
                     text = balanceCurrencyText,
                     style = if (balanceFontSize == null) {
-                        UI.typo.nH1.style(
+                        LegacyTheme.typo.nH1.style(
                             fontWeight = FontWeight.ExtraBold,
                             color = textColor
                         )
                     } else {
-                        UI.typo.nH1.style(
+                        LegacyTheme.typo.nH1.style(
                             fontWeight = FontWeight.ExtraBold,
                             color = textColor
                         ).copy(fontSize = balanceFontSize)
@@ -161,12 +161,12 @@ fun BalanceRow(
                         else -> integerPartFormatted
                     },
                     style = if (balanceFontSize == null) {
-                        UI.typo.nH1.style(
+                        LegacyTheme.typo.nH1.style(
                             fontWeight = FontWeight.ExtraBold,
                             color = textColor
                         )
                     } else {
-                        UI.typo.nH1.style(
+                        LegacyTheme.typo.nH1.style(
                             fontWeight = FontWeight.ExtraBold,
                             color = textColor
                         ).copy(fontSize = balanceFontSize)
@@ -186,12 +186,12 @@ private fun Currency(
     Text(
         text = currency,
         style = if (currencyFontSize == null) {
-            UI.typo.h1.style(
+            LegacyTheme.typo.h1.style(
                 fontWeight = FontWeight.Light,
                 color = textColor
             )
         } else {
-            UI.typo.h1.style(
+            LegacyTheme.typo.h1.style(
                 fontWeight = FontWeight.Light,
                 color = textColor
             ).copy(fontSize = currencyFontSize)

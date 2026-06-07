@@ -25,7 +25,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.ivy.design.l0_system.UI
+import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
 import com.ivy.ui.legacy.hideKeyboard
 import com.ivy.base.legacy.isNotNullOrBlank
@@ -40,7 +40,7 @@ fun ColumnScope.IvyTitleTextField(
     modifier: Modifier = Modifier,
     dividerModifier: Modifier = Modifier,
     value: TextFieldValue,
-    textColor: Color = UI.colors.pureInverse,
+    textColor: Color = LegacyTheme.colors.pureInverse,
     hint: String?,
     visualTransformation: VisualTransformation = VisualTransformation.None,
     keyboardOptions: KeyboardOptions = KeyboardOptions(
@@ -62,8 +62,8 @@ fun ColumnScope.IvyTitleTextField(
             Text(
                 modifier = Modifier,
                 text = hint!!,
-                style = UI.typo.h2.style(
-                    color = UI.colors.gray,
+                style = LegacyTheme.typo.h2.style(
+                    color = LegacyTheme.colors.gray,
                     fontWeight = FontWeight.Black,
                     textAlign = TextAlign.Start
                 ),
@@ -77,13 +77,13 @@ fun ColumnScope.IvyTitleTextField(
                 .testTag("input_field"),
             value = value,
             onValueChange = onValueChanged,
-            textStyle = UI.typo.h2.style(
+            textStyle = LegacyTheme.typo.h2.style(
                 color = textColor,
                 fontWeight = FontWeight.Black,
                 textAlign = TextAlign.Start
             ),
             singleLine = false,
-            cursorBrush = SolidColor(UI.colors.pureInverse),
+            cursorBrush = SolidColor(LegacyTheme.colors.pureInverse),
             visualTransformation = visualTransformation,
             keyboardOptions = keyboardOptions,
             keyboardActions = keyboardActions ?: KeyboardActions(
@@ -100,6 +100,6 @@ fun ColumnScope.IvyTitleTextField(
         modifier = dividerModifier
             .fillMaxWidth()
             .height(2.dp)
-            .background(UI.colors.medium, UI.shapes.rFull),
+            .background(LegacyTheme.colors.medium, LegacyTheme.shapes.rFull),
     )
 }

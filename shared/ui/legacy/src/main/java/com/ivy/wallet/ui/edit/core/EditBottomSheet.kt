@@ -40,7 +40,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ivy.legacy.datamodel.Account
-import com.ivy.design.l0_system.UI
+import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
 import com.ivy.frp.test.TestingContext
 import com.ivy.ui.legacy.addKeyboardListener
@@ -170,17 +170,17 @@ fun BoxWithConstraintsScope.EditBottomSheet(
             .statusBarsPadding()
             .padding(top = 24.dp)
 //            .drawColoredShadow(
-//                color = UI.colors.mediumInverse,
-//                alpha = if (UI.colors.isLight) 0.3f else 0.2f,
+//                color = LegacyTheme.colors.mediumInverse,
+//                alpha = if (LegacyTheme.colors.isLight) 0.3f else 0.2f,
 //                borderRadius = 24.dp,
 //                shadowRadius = 24.dp
 //            )
             .border(
                 width = 2.dp,
-                color = UI.colors.medium,
-                shape = UI.shapes.r2Top
+                color = LegacyTheme.colors.medium,
+                shape = LegacyTheme.shapes.r2Top
             )
-            .background(UI.colors.pure, UI.shapes.r2Top)
+            .background(LegacyTheme.colors.pure, LegacyTheme.shapes.r2Top)
             .verticalSwipeListener(
                 sensitivity = SWIPE_UP_EXPANDED_THRESHOLD,
                 state = rememberSwipeListenerState(),
@@ -286,8 +286,8 @@ fun BoxWithConstraintsScope.EditBottomSheet(
             Text(
                 modifier = Modifier.padding(start = 32.dp),
                 text = stringResource(R.string.account),
-                style = UI.typo.b1.style(
-                    color = UI.colors.pureInverse,
+                style = LegacyTheme.typo.b1.style(
+                    color = LegacyTheme.colors.pureInverse,
                     fontWeight = FontWeight.ExtraBold
                 )
             )
@@ -345,7 +345,7 @@ private fun BottomBar(
 //            .gradientCutBackground()
             .padding(bottom = 12.dp)
             .padding(bottom = navBarPadding),
-        lineColor = UI.colors.medium
+        lineColor = LegacyTheme.colors.medium
     ) {
         Spacer(Modifier.width(24.dp))
 
@@ -408,7 +408,7 @@ private fun TransferRowMini(
             iconStart = R.drawable.ic_accounts,
             backgroundGradient = Gradient.solid(fromColor),
             iconTint = fromContrastColor,
-            textStyle = UI.typo.b2.style(
+            textStyle = LegacyTheme.typo.b2.style(
                 color = fromContrastColor,
                 fontWeight = FontWeight.ExtraBold
             ),
@@ -419,7 +419,7 @@ private fun TransferRowMini(
 
         IvyIcon(
             icon = R.drawable.ic_arrow_right,
-            tint = UI.colors.pureInverse
+            tint = LegacyTheme.colors.pureInverse
         )
 
         val toColor = toAccount?.color?.toComposeColor() ?: Ivy
@@ -429,7 +429,7 @@ private fun TransferRowMini(
             iconStart = R.drawable.ic_accounts,
             backgroundGradient = Gradient.solid(toColor),
             iconTint = toContrastColor,
-            textStyle = UI.typo.b2.style(
+            textStyle = LegacyTheme.typo.b2.style(
                 color = toContrastColor,
                 fontWeight = FontWeight.ExtraBold
             ),
@@ -480,8 +480,8 @@ private fun SheetHeader(
             Text(
                 modifier = Modifier.padding(start = 32.dp),
                 text = label,
-                style = UI.typo.b1.style(
-                    color = UI.colors.pureInverse,
+                style = LegacyTheme.typo.b1.style(
+                    color = LegacyTheme.colors.pureInverse,
                     fontWeight = FontWeight.ExtraBold
                 )
             )
@@ -502,8 +502,8 @@ private fun SheetHeader(
                 Text(
                     modifier = Modifier.padding(start = 32.dp),
                     text = stringResource(R.string.to),
-                    style = UI.typo.b1.style(
-                        color = UI.colors.pureInverse,
+                    style = LegacyTheme.typo.b1.style(
+                        color = LegacyTheme.colors.pureInverse,
                         fontWeight = FontWeight.ExtraBold
                     )
                 )
@@ -590,14 +590,14 @@ private fun Account(
 ) {
     val accountColor = account.color.toComposeColor()
     val textColor =
-        if (selected) findContrastTextColor(accountColor) else UI.colors.pureInverse
+        if (selected) findContrastTextColor(accountColor) else LegacyTheme.colors.pureInverse
 
-    val medium = UI.colors.medium
-    val rFull = UI.shapes.rFull
+    val medium = LegacyTheme.colors.medium
+    val rFull = LegacyTheme.shapes.rFull
 
     Row(
         modifier = Modifier
-            .clip(UI.shapes.rFull)
+            .clip(LegacyTheme.shapes.rFull)
             .thenIf(!selected) {
                 border(2.dp, medium, rFull)
             }
@@ -622,7 +622,7 @@ private fun Account(
         Text(
             modifier = Modifier.padding(vertical = 10.dp),
             text = account.name,
-            style = UI.typo.b2.style(
+            style = LegacyTheme.typo.b2.style(
                 color = textColor,
                 fontWeight = FontWeight.ExtraBold
             )
@@ -638,8 +638,8 @@ private fun AddAccount(
 ) {
     Row(
         modifier = Modifier
-            .clip(UI.shapes.rFull)
-            .border(2.dp, UI.colors.medium, UI.shapes.rFull)
+            .clip(LegacyTheme.shapes.rFull)
+            .border(2.dp, LegacyTheme.colors.medium, LegacyTheme.shapes.rFull)
             .clickable(onClick = onClick)
             .padding(8.dp),
         verticalAlignment = Alignment.CenterVertically
@@ -648,7 +648,7 @@ private fun AddAccount(
 
         IvyIcon(
             icon = R.drawable.ic_plus,
-            tint = UI.colors.pureInverse
+            tint = LegacyTheme.colors.pureInverse
         )
 
         Spacer(Modifier.width(4.dp))
@@ -656,8 +656,8 @@ private fun AddAccount(
         Text(
             modifier = Modifier.padding(vertical = 10.dp),
             text = stringResource(R.string.add_account),
-            style = UI.typo.b2.style(
-                color = UI.colors.pureInverse,
+            style = LegacyTheme.typo.b2.style(
+                color = LegacyTheme.colors.pureInverse,
                 fontWeight = FontWeight.ExtraBold
             )
         )
@@ -717,8 +717,8 @@ private fun Amount(
             if (showConvertedAmountText != null) {
                 Text(
                     text = showConvertedAmountText,
-                    style = UI.typo.nB2.style(
-                        color = UI.colors.pureInverse,
+                    style = LegacyTheme.typo.nB2.style(
+                        color = LegacyTheme.colors.pureInverse,
                         fontWeight = FontWeight.SemiBold
                     )
                 )
@@ -770,8 +770,8 @@ private fun LabelAccountMini(
     ) {
         Text(
             text = label,
-            style = UI.typo.nC.style(
-                color = UI.colors.mediumInverse,
+            style = LegacyTheme.typo.nC.style(
+                color = LegacyTheme.colors.mediumInverse,
                 fontWeight = FontWeight.Medium
             )
         )
@@ -780,8 +780,8 @@ private fun LabelAccountMini(
 
         Text(
             text = account?.name?.toUpperCase(Locale.getDefault()) ?: "",
-            style = UI.typo.nB2.style(
-                color = UI.colors.pureInverse,
+            style = LegacyTheme.typo.nB2.style(
+                color = LegacyTheme.colors.pureInverse,
                 fontWeight = FontWeight.ExtraBold
             )
         )

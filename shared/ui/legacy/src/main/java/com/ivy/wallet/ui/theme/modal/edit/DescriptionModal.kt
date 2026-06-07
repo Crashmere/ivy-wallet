@@ -22,7 +22,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import com.ivy.design.l0_system.UI
+import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
 import com.ivy.design.utils.hideKeyboard
 import com.ivy.ui.legacy.clickableNoIndication
@@ -83,8 +83,8 @@ fun BoxWithConstraintsScope.DescriptionModal(
             modifier = Modifier
                 .padding(start = 32.dp),
             text = stringResource(R.string.description),
-            style = UI.typo.b1.style(
-                color = UI.colors.pureInverse,
+            style = LegacyTheme.typo.b1.style(
+                color = LegacyTheme.colors.pureInverse,
                 fontWeight = FontWeight.ExtraBold
             )
         )

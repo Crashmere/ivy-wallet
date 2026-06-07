@@ -18,7 +18,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.IntervalType
-import com.ivy.design.l0_system.UI
+import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
 import com.ivy.ui.legacy.forDisplay
 import com.ivy.ui.legacy.formatDateOnly
@@ -86,8 +86,8 @@ private fun RecurringRuleCard(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp)
-            .clip(UI.shapes.r4)
-            .background(UI.colors.medium, UI.shapes.r4)
+            .clip(LegacyTheme.shapes.r4)
+            .background(LegacyTheme.colors.medium, LegacyTheme.shapes.r4)
             .clickable(onClick = onClick)
             .padding(vertical = 20.dp),
         verticalAlignment = Alignment.CenterVertically
@@ -101,9 +101,9 @@ private fun RecurringRuleCard(
         Column {
             Text(
                 text = if (oneTime) stringResource(R.string.planned_for) else stringResource(R.string.planned_start_at),
-                style = UI.typo.b2.style(
+                style = LegacyTheme.typo.b2.style(
                     fontWeight = FontWeight.ExtraBold,
-                    color = UI.colors.pureInverse
+                    color = LegacyTheme.colors.pureInverse
                 )
             )
 
@@ -113,7 +113,7 @@ private fun RecurringRuleCard(
                 val intervalTypeLabel = intervalType.forDisplay(intervalN).uppercaseLocal()
                 Text(
                     text = stringResource(R.string.repeats_every, intervalN, intervalTypeLabel),
-                    style = UI.typo.c.style(
+                    style = LegacyTheme.typo.c.style(
                         fontWeight = FontWeight.ExtraBold,
                         color = Orange
                     )
@@ -125,7 +125,7 @@ private fun RecurringRuleCard(
 
         Text(
             text = startDate.toLocalDate().formatDateOnly(),
-            style = UI.typo.nB2.style(
+            style = LegacyTheme.typo.nB2.style(
                 fontWeight = FontWeight.ExtraBold
             )
         )

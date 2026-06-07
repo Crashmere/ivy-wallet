@@ -10,7 +10,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.ivy.design.l0_system.UI
+import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
 import com.ivy.legacy.ui.component.edit.PrimaryAttributeColumn
 import com.ivy.base.legacy.isNotNullOrBlank
@@ -57,7 +57,7 @@ private fun DescriptionText(
                 .padding(horizontal = 24.dp)
                 .testTag("trn_description"),
             text = description,
-            style = UI.typo.nB2.style(
+            style = LegacyTheme.typo.nB2.style(
                 textAlign = TextAlign.Left
             ),
         )

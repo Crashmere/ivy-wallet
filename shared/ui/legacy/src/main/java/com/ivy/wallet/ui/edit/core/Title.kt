@@ -21,7 +21,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import com.ivy.base.model.TransactionType
-import com.ivy.design.l0_system.UI
+import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
 import com.ivy.ui.legacy.keyboardVisibleState
 import com.ivy.ui.legacy.selectEndTextFieldValue
@@ -121,7 +121,7 @@ private fun Suggestion(
             .padding(horizontal = 24.dp)
             .padding(vertical = 12.dp),
         text = suggestion,
-        style = UI.typo.b2.style(
+        style = LegacyTheme.typo.b2.style(
             fontWeight = FontWeight.Medium
         )
     )

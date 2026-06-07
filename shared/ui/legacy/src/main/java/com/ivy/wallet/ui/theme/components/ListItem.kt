@@ -16,7 +16,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.ivy.design.l0_system.UI
+import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
 import com.ivy.design.utils.thenIf
 import com.ivy.wallet.ui.theme.components.ItemIconSDefaultIcon
@@ -32,14 +32,14 @@ fun ListItem(
     onClick: (selected: Boolean) -> Unit
 ) {
     val textColor =
-        if (selectedColor != null) findContrastTextColor(selectedColor) else UI.colors.pureInverse
+        if (selectedColor != null) findContrastTextColor(selectedColor) else LegacyTheme.colors.pureInverse
 
-    val medium = UI.colors.medium
-    val rFull = UI.shapes.rFull
+    val medium = LegacyTheme.colors.medium
+    val rFull = LegacyTheme.shapes.rFull
 
     Row(
         modifier = Modifier
-            .clip(UI.shapes.rFull)
+            .clip(LegacyTheme.shapes.rFull)
             .thenIf(selectedColor == null) {
                 border(2.dp, medium, rFull)
             }
@@ -66,7 +66,7 @@ fun ListItem(
         Text(
             modifier = Modifier.padding(vertical = 10.dp),
             text = text,
-            style = UI.typo.b2.style(
+            style = LegacyTheme.typo.b2.style(
                 color = textColor,
                 fontWeight = FontWeight.ExtraBold
             )

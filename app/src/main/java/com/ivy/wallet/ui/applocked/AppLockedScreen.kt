@@ -28,7 +28,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.ivy.design.l0_system.UI
+import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
 import com.ivy.ui.R
 import com.ivy.wallet.platform.hasLockScreen
@@ -53,11 +53,11 @@ fun BoxWithConstraintsScope.AppLockedScreen(
 
         Text(
             modifier = Modifier
-                .background(UI.colors.medium, UI.shapes.rFull)
+                .background(LegacyTheme.colors.medium, LegacyTheme.shapes.rFull)
                 .padding(vertical = 12.dp)
                 .padding(horizontal = 32.dp),
             text = stringResource(R.string.app_locked),
-            style = UI.typo.b2.style(
+            style = LegacyTheme.typo.b2.style(
                 fontWeight = FontWeight.ExtraBold,
             )
         )
@@ -68,7 +68,7 @@ fun BoxWithConstraintsScope.AppLockedScreen(
             modifier = Modifier
                 .size(width = 96.dp, height = 138.dp),
             painter = painterResource(id = R.drawable.ic_fingerprint),
-            colorFilter = ColorFilter.tint(UI.colors.medium),
+            colorFilter = ColorFilter.tint(LegacyTheme.colors.medium),
             contentScale = ContentScale.FillBounds,
             contentDescription = "unlock icon"
         )
@@ -77,7 +77,7 @@ fun BoxWithConstraintsScope.AppLockedScreen(
 
         Text(
             text = stringResource(R.string.authenticate_text),
-            style = UI.typo.b2.style(
+            style = LegacyTheme.typo.b2.style(
                 fontWeight = FontWeight.SemiBold,
                 color = Gray
             )
@@ -96,7 +96,7 @@ fun BoxWithConstraintsScope.AppLockedScreen(
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp),
             text = stringResource(R.string.unlock),
-            textStyle = UI.typo.b2.style(
+            textStyle = LegacyTheme.typo.b2.style(
                 color = White,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center

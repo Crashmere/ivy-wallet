@@ -40,7 +40,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.ivy.design.l0_system.UI
+import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
 import com.ivy.legacy.ui.SearchInput
 import com.ivy.base.legacy.balancePrefix
@@ -115,8 +115,8 @@ private fun BoxWithConstraintsScope.UI(
 
                 Text(
                     text = stringResource(R.string.categories),
-                    style = UI.typo.h2.style(
-                        color = UI.colors.pureInverse,
+                    style = LegacyTheme.typo.h2.style(
+                        color = LegacyTheme.colors.pureInverse,
                         fontWeight = FontWeight.ExtraBold
                     )
                 )
@@ -198,7 +198,7 @@ private fun BoxWithConstraintsScope.UI(
                 .padding(end = 24.dp)
                 .padding(vertical = 8.dp),
             text = item.category.name.value,
-            style = UI.typo.b1.style(
+            style = LegacyTheme.typo.b1.style(
                 color = item.category.color.value.toComposeColor(),
                 fontWeight = FontWeight.Bold
             )
@@ -263,8 +263,8 @@ private fun DefaultCategoryCard(
         modifier = Modifier
             .padding(horizontal = 16.dp)
             .fillMaxWidth()
-            .clip(UI.shapes.r4)
-            .border(2.dp, UI.colors.medium, UI.shapes.r4)
+            .clip(LegacyTheme.shapes.r4)
+            .border(2.dp, LegacyTheme.colors.medium, LegacyTheme.shapes.r4)
             .clickable(
                 onClick = onClick
             )
@@ -304,7 +304,7 @@ private fun CompactCategoryCard(
     Box(
         modifier = Modifier
             .padding(horizontal = 16.dp)
-            .border(2.dp, UI.colors.medium, UI.shapes.r4)
+            .border(2.dp, LegacyTheme.colors.medium, LegacyTheme.shapes.r4)
             .clickable(
                 onClick = onClick
             ),
@@ -339,7 +339,7 @@ private fun CompactCategoryCard(
             ) {
                 Text(
                     text = category.name.value,
-                    style = UI.typo.b2.style(
+                    style = LegacyTheme.typo.b2.style(
                         fontWeight = FontWeight.Bold
                     )
                 )
@@ -355,16 +355,16 @@ private fun CompactCategoryCard(
 
                     Text(
                         text = "$balancePrefixValue$currencyFormatted",
-                        style = UI.typo.nB1.style(
-                            color = UI.colors.pureInverse,
+                        style = LegacyTheme.typo.nB1.style(
+                            color = LegacyTheme.colors.pureInverse,
                             fontWeight = FontWeight.Bold
                         )
                     )
                     Spacer(modifier = Modifier.width(4.dp))
                     Text(
                         text = currency,
-                        style = UI.typo.nB2.style(
-                            color = UI.colors.pureInverse,
+                        style = LegacyTheme.typo.nB2.style(
+                            color = LegacyTheme.colors.pureInverse,
                             fontWeight = FontWeight.Medium
                         )
                     )
@@ -380,8 +380,8 @@ fun AddedSpent(
     monthlyExpenses: Double,
     currency: String,
     modifier: Modifier = Modifier,
-    textColor: Color = UI.colors.pureInverse,
-    dividerColor: Color = UI.colors.medium,
+    textColor: Color = LegacyTheme.colors.pureInverse,
+    dividerColor: Color = LegacyTheme.colors.medium,
     center: Boolean = true,
     dividerSpacer: Dp? = null,
 
@@ -415,7 +415,7 @@ fun AddedSpent(
             modifier = Modifier
                 .width(2.dp)
                 .height(48.dp)
-                .background(dividerColor, UI.shapes.rFull)
+                .background(dividerColor, LegacyTheme.shapes.rFull)
         )
 
         if (center) {
@@ -453,7 +453,7 @@ private fun LabelAmount(
     ) {
         Text(
             text = label,
-            style = UI.typo.c.style(
+            style = LegacyTheme.typo.c.style(
                 color = textColor,
                 fontWeight = FontWeight.ExtraBold
             )
@@ -488,7 +488,7 @@ private fun CategoryHeader(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .background(category.color.value.toComposeColor(), UI.shapes.r4Top)
+            .background(category.color.value.toComposeColor(), LegacyTheme.shapes.r4Top)
     ) {
         Spacer(Modifier.height(16.dp))
 
@@ -507,7 +507,7 @@ private fun CategoryHeader(
 
             Text(
                 text = category.name.value,
-                style = UI.typo.b1.style(
+                style = LegacyTheme.typo.b1.style(
                     color = contrastColor,
                     fontWeight = FontWeight.ExtraBold
                 )
@@ -604,10 +604,10 @@ private fun SelectTypeButton(
             .padding(horizontal = 16.dp)
             .fillMaxWidth()
             .height(64.dp)
-            .clip(UI.shapes.r4)
+            .clip(LegacyTheme.shapes.r4)
             .background(
-                brush = if (selected) selectedGradient.asHorizontalBrush() else SolidColor(UI.colors.medium),
-                shape = UI.shapes.r4
+                brush = if (selected) selectedGradient.asHorizontalBrush() else SolidColor(LegacyTheme.colors.medium),
+                shape = LegacyTheme.shapes.r4
             )
             .clickable {
                 onClick()
@@ -617,7 +617,7 @@ private fun SelectTypeButton(
     ) {
         Spacer(Modifier.width(16.dp))
 
-        val textColor = if (selected) textSelectedColor else UI.colors.pureInverse
+        val textColor = if (selected) textSelectedColor else LegacyTheme.colors.pureInverse
 
         IvyIcon(
             icon = icon,
@@ -630,7 +630,7 @@ private fun SelectTypeButton(
         Text(
             modifier = Modifier.wrapContentHeight(),
             text = text,
-            style = UI.typo.b1.style(
+            style = LegacyTheme.typo.b1.style(
                 color = textColor
             ),
             textAlign = TextAlign.Center,
@@ -646,7 +646,7 @@ private fun SelectTypeButton(
 
             Text(
                 text = stringResource(R.string.selected_text),
-                style = UI.typo.b2.style(
+                style = LegacyTheme.typo.b2.style(
                     fontWeight = FontWeight.SemiBold,
                     color = textSelectedColor
                 )

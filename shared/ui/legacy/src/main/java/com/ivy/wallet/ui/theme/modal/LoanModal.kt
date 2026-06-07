@@ -34,7 +34,7 @@ import androidx.compose.ui.unit.dp
 import com.ivy.data.model.LoanType
 import com.ivy.data.model.primitive.NotBlankTrimmedString
 import com.ivy.design.api.LocalTimeConverter
-import com.ivy.design.l0_system.UI
+import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
 import com.ivy.domain.legacy.ui.IvyColorPicker
 import com.ivy.frp.test.TestingContext
@@ -236,8 +236,8 @@ fun BoxWithConstraintsScope.LoanModal(
         Text(
             modifier = Modifier.padding(horizontal = 32.dp),
             text = stringResource(R.string.note),
-            style = UI.typo.b2.style(
-                color = UI.colors.pureInverse,
+            style = LegacyTheme.typo.b2.style(
+                color = LegacyTheme.colors.pureInverse,
                 fontWeight = FontWeight.ExtraBold
             )
         )
@@ -258,8 +258,8 @@ fun BoxWithConstraintsScope.LoanModal(
         Text(
             modifier = Modifier.padding(horizontal = 32.dp),
             text = stringResource(R.string.associated_account),
-            style = UI.typo.b2.style(
-                color = UI.colors.pureInverse,
+            style = LegacyTheme.typo.b2.style(
+                color = LegacyTheme.colors.pureInverse,
                 fontWeight = FontWeight.ExtraBold
             )
         )
@@ -447,14 +447,14 @@ private fun Account(
 ) {
     val accountColor = account.color.toComposeColor()
     val textColor =
-        if (selected) findContrastTextColor(accountColor) else UI.colors.pureInverse
+        if (selected) findContrastTextColor(accountColor) else LegacyTheme.colors.pureInverse
 
-    val medium = UI.colors.medium
-    val rFull = UI.shapes.rFull
+    val medium = LegacyTheme.colors.medium
+    val rFull = LegacyTheme.shapes.rFull
 
     Row(
         modifier = Modifier
-            .clip(UI.shapes.rFull)
+            .clip(LegacyTheme.shapes.rFull)
             .thenIf(!selected) {
                 border(2.dp, medium, rFull)
             }
@@ -478,7 +478,7 @@ private fun Account(
         Text(
             modifier = Modifier.padding(vertical = 10.dp),
             text = account.name,
-            style = UI.typo.b2.style(
+            style = LegacyTheme.typo.b2.style(
                 color = textColor,
                 fontWeight = FontWeight.ExtraBold
             )
@@ -496,8 +496,8 @@ private fun AddAccount(
 ) {
     Row(
         modifier = Modifier
-            .clip(UI.shapes.rFull)
-            .border(2.dp, UI.colors.medium, UI.shapes.rFull)
+            .clip(LegacyTheme.shapes.rFull)
+            .border(2.dp, LegacyTheme.colors.medium, LegacyTheme.shapes.rFull)
             .clickable(onClick = onClick),
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -505,7 +505,7 @@ private fun AddAccount(
 
         IvyIcon(
             icon = R.drawable.ic_plus,
-            tint = UI.colors.pureInverse
+            tint = LegacyTheme.colors.pureInverse
         )
 
         Spacer(Modifier.width(4.dp))
@@ -513,8 +513,8 @@ private fun AddAccount(
         Text(
             modifier = Modifier.padding(vertical = 10.dp),
             text = stringResource(R.string.add_account),
-            style = UI.typo.b2.style(
-                color = UI.colors.pureInverse,
+            style = LegacyTheme.typo.b2.style(
+                color = LegacyTheme.colors.pureInverse,
                 fontWeight = FontWeight.ExtraBold
             )
         )
@@ -534,8 +534,8 @@ private fun ColumnScope.LoanTypePicker(
     Text(
         modifier = Modifier.padding(horizontal = 32.dp),
         text = stringResource(R.string.loan_type),
-        style = UI.typo.b2.style(
-            color = UI.colors.pureInverse,
+        style = LegacyTheme.typo.b2.style(
+            color = LegacyTheme.colors.pureInverse,
             fontWeight = FontWeight.ExtraBold
         )
     )
@@ -546,7 +546,7 @@ private fun ColumnScope.LoanTypePicker(
         modifier = Modifier
             .padding(horizontal = 24.dp)
             .fillMaxWidth()
-            .background(UI.colors.medium, UI.shapes.r2),
+            .background(LegacyTheme.colors.medium, LegacyTheme.shapes.r2),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Spacer(Modifier.width(8.dp))
@@ -577,11 +577,11 @@ private fun RowScope.SelectorButton(
     label: String,
     onClick: () -> Unit
 ) {
-    val rFull = UI.shapes.rFull
+    val rFull = LegacyTheme.shapes.rFull
     Text(
         modifier = Modifier
             .weight(1f)
-            .clip(UI.shapes.rFull)
+            .clip(LegacyTheme.shapes.rFull)
             .clickable {
                 onClick()
             }
@@ -591,7 +591,7 @@ private fun RowScope.SelectorButton(
             }
             .padding(vertical = 8.dp),
         text = label,
-        style = UI.typo.b2.style(
+        style = LegacyTheme.typo.b2.style(
             color = if (selected) White else Gray,
             fontWeight = FontWeight.ExtraBold,
             textAlign = TextAlign.Center

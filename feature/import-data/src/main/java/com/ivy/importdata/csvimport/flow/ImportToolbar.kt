@@ -11,7 +11,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.ivy.design.l0_system.UI
+import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
 import com.ivy.ui.R
 import com.ivy.wallet.ui.theme.Gray
@@ -29,11 +29,11 @@ fun ImportToolbar(
 
             Text(
                 modifier = Modifier
-                    .clip(UI.shapes.rFull)
+                    .clip(LegacyTheme.shapes.rFull)
                     .clickable { onSkip() }
                     .padding(all = 16.dp),
                 text = stringResource(R.string.skip),
-                style = UI.typo.b2.style(
+                style = LegacyTheme.typo.b2.style(
                     color = Gray,
                     fontWeight = FontWeight.Bold
                 )

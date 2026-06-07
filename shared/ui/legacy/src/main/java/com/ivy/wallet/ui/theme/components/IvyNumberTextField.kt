@@ -19,7 +19,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
-import com.ivy.design.l0_system.UI
+import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
 import com.ivy.ui.legacy.hideKeyboard
 import com.ivy.base.legacy.isNotNullOrBlank
@@ -33,7 +33,7 @@ fun IvyNumberTextField(
     value: TextFieldValue,
     hint: String?,
     fontWeight: FontWeight = FontWeight.ExtraBold,
-    textColor: Color = UI.colors.pureInverse,
+    textColor: Color = LegacyTheme.colors.pureInverse,
     hintColor: Color = Color.Gray,
     visualTransformation: VisualTransformation = VisualTransformation.None,
     keyboardOptions: KeyboardOptions? = null,
@@ -51,7 +51,7 @@ fun IvyNumberTextField(
                 modifier = textModifier,
                 text = hint!!,
                 textAlign = TextAlign.Start,
-                style = UI.typo.nB2.style(
+                style = LegacyTheme.typo.nB2.style(
                     color = hintColor,
                     fontWeight = fontWeight,
                     textAlign = TextAlign.Center
@@ -65,13 +65,13 @@ fun IvyNumberTextField(
                 .testTag("base_number_input"),
             value = value,
             onValueChange = onValueChanged,
-            textStyle = UI.typo.nB2.style(
+            textStyle = LegacyTheme.typo.nB2.style(
                 color = textColor,
                 fontWeight = fontWeight,
                 textAlign = TextAlign.Center
             ),
             singleLine = true,
-            cursorBrush = SolidColor(UI.colors.pureInverse),
+            cursorBrush = SolidColor(LegacyTheme.colors.pureInverse),
             visualTransformation = visualTransformation,
             keyboardOptions = keyboardOptions ?: KeyboardOptions(
                 capitalization = KeyboardCapitalization.Characters,

@@ -31,7 +31,7 @@ import androidx.compose.ui.unit.dp
 import com.ivy.base.model.LoanRecordType
 import com.ivy.data.model.primitive.NotBlankTrimmedString
 import com.ivy.design.api.LocalTimeConverter
-import com.ivy.design.l0_system.UI
+import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
 import com.ivy.design.utils.thenIf
 import com.ivy.frp.test.TestingContext
@@ -215,8 +215,8 @@ fun BoxWithConstraintsScope.LoanRecordModal(
         Text(
             modifier = Modifier.padding(horizontal = 32.dp),
             text = stringResource(R.string.associated_account),
-            style = UI.typo.b2.style(
-                color = UI.colors.pureInverse,
+            style = LegacyTheme.typo.b2.style(
+                color = LegacyTheme.colors.pureInverse,
                 fontWeight = FontWeight.ExtraBold
             )
         )
@@ -250,8 +250,8 @@ fun BoxWithConstraintsScope.LoanRecordModal(
         Text(
             modifier = Modifier.padding(horizontal = 32.dp),
             text = stringResource(R.string.loan_record_type),
-            style = UI.typo.b2.style(
-                color = UI.colors.pureInverse,
+            style = LegacyTheme.typo.b2.style(
+                color = LegacyTheme.colors.pureInverse,
                 fontWeight = FontWeight.ExtraBold
             )
         )
@@ -472,12 +472,12 @@ private fun LoanRecordType(
             stringResource(id = R.string.decrease_loan) to R.drawable.ic_donate_minus
         }
     val selected = selectedRecordType == loanRecordType
-    val medium = UI.colors.medium
-    val rFull = UI.shapes.rFull
-    val selectedColor = UI.colors.green1
+    val medium = LegacyTheme.colors.medium
+    val rFull = LegacyTheme.shapes.rFull
+    val selectedColor = LegacyTheme.colors.green1
     Row(
         modifier = modifier
-            .clip(UI.shapes.rFull)
+            .clip(LegacyTheme.shapes.rFull)
             .thenIf(!selected) {
                 border(2.dp, medium, rFull)
             }
@@ -492,7 +492,7 @@ private fun LoanRecordType(
         ItemIconSDefaultIcon(
             defaultIcon = iconDrawable,
             iconName = null,
-            tint = UI.colors.pureInverse
+            tint = LegacyTheme.colors.pureInverse
         )
 
         Spacer(Modifier.width(4.dp))
@@ -500,8 +500,8 @@ private fun LoanRecordType(
         Text(
             modifier = Modifier.padding(vertical = 10.dp),
             text = text,
-            style = UI.typo.b2.style(
-                color = UI.colors.pureInverse,
+            style = LegacyTheme.typo.b2.style(
+                color = LegacyTheme.colors.pureInverse,
                 fontWeight = FontWeight.ExtraBold
             )
         )
@@ -579,14 +579,14 @@ private fun Account(
 ) {
     val accountColor = account.color.toComposeColor()
     val textColor =
-        if (selected) findContrastTextColor(accountColor) else UI.colors.pureInverse
+        if (selected) findContrastTextColor(accountColor) else LegacyTheme.colors.pureInverse
 
-    val medium = UI.colors.medium
-    val rFull = UI.shapes.rFull
+    val medium = LegacyTheme.colors.medium
+    val rFull = LegacyTheme.shapes.rFull
 
     Row(
         modifier = Modifier
-            .clip(UI.shapes.rFull)
+            .clip(LegacyTheme.shapes.rFull)
             .thenIf(!selected) {
                 border(2.dp, medium, rFull)
             }
@@ -610,7 +610,7 @@ private fun Account(
         Text(
             modifier = Modifier.padding(vertical = 10.dp),
             text = account.name,
-            style = UI.typo.b2.style(
+            style = LegacyTheme.typo.b2.style(
                 color = textColor,
                 fontWeight = FontWeight.ExtraBold
             )
@@ -629,8 +629,8 @@ private fun AddAccount(
 ) {
     Row(
         modifier = Modifier
-            .clip(UI.shapes.rFull)
-            .border(2.dp, UI.colors.medium, UI.shapes.rFull)
+            .clip(LegacyTheme.shapes.rFull)
+            .border(2.dp, LegacyTheme.colors.medium, LegacyTheme.shapes.rFull)
             .clickable(onClick = onClick),
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -638,7 +638,7 @@ private fun AddAccount(
 
         IvyIcon(
             icon = R.drawable.ic_plus,
-            tint = UI.colors.pureInverse
+            tint = LegacyTheme.colors.pureInverse
         )
 
         Spacer(Modifier.width(4.dp))
@@ -646,8 +646,8 @@ private fun AddAccount(
         Text(
             modifier = Modifier.padding(vertical = 10.dp),
             text = stringResource(R.string.add_account),
-            style = UI.typo.b2.style(
-                color = UI.colors.pureInverse,
+            style = LegacyTheme.typo.b2.style(
+                color = LegacyTheme.colors.pureInverse,
                 fontWeight = FontWeight.ExtraBold
             )
         )

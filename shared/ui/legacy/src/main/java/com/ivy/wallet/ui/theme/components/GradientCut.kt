@@ -12,7 +12,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
-import com.ivy.design.l0_system.UI
+import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.utils.thenIf
 import com.ivy.wallet.ui.theme.Gradient
 import com.ivy.wallet.ui.theme.Transparent
@@ -31,7 +31,7 @@ fun BoxWithConstraintsScope.GradientCutBottom(
             .thenIf(zIndex != null) {
                 zIndex(zIndex!!)
             }
-            .background(Gradient(Transparent, UI.colors.pure).asVerticalBrush())
+            .background(Gradient(Transparent, LegacyTheme.colors.pure).asVerticalBrush())
             .align(Alignment.BottomCenter)
             .alpha(alpha = alpha)
     )

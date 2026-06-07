@@ -25,7 +25,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.Category
-import com.ivy.design.l0_system.UI
+import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
 import com.ivy.design.utils.thenIf
 import com.ivy.ui.legacy.drawColoredShadow
@@ -190,22 +190,22 @@ private fun CategoryButton(
 ) {
     val categoryColor = category.color.value.toComposeColor()
 
-    val rFull = UI.shapes.rFull
+    val rFull = LegacyTheme.shapes.rFull
 
     Row(
         modifier = Modifier
             .thenIf(selected) {
                 drawColoredShadow(categoryColor)
             }
-            .clip(UI.shapes.rFull)
+            .clip(LegacyTheme.shapes.rFull)
             .combinedClickable(
                 onClick = onClick,
                 onLongClick = onLongClick
             )
             .border(
                 width = 2.dp,
-                color = if (selected) UI.colors.pureInverse else UI.colors.medium,
-                shape = UI.shapes.rFull
+                color = if (selected) LegacyTheme.colors.pureInverse else LegacyTheme.colors.medium,
+                shape = LegacyTheme.shapes.rFull
             )
             .thenIf(selected) {
                 background(categoryColor, rFull)
@@ -231,11 +231,11 @@ private fun CategoryButton(
                     end = if (selected) 20.dp else 24.dp
                 ),
             text = category.name.value,
-            style = UI.typo.b2.style(
+            style = LegacyTheme.typo.b2.style(
                 color = if (selected) {
                     findContrastTextColor(categoryColor)
                 } else {
-                    UI.colors.pureInverse
+                    LegacyTheme.colors.pureInverse
                 },
                 fontWeight = FontWeight.SemiBold
             )
@@ -267,13 +267,13 @@ fun AddNewButton(
     IvyBorderButton(
         modifier = modifier,
         text = stringResource(R.string.add_new),
-        backgroundGradient = Gradient.solid(UI.colors.mediumInverse),
+        backgroundGradient = Gradient.solid(LegacyTheme.colors.mediumInverse),
         iconStart = R.drawable.ic_plus,
-        textStyle = UI.typo.b2.style(
-            color = UI.colors.pureInverse,
+        textStyle = LegacyTheme.typo.b2.style(
+            color = LegacyTheme.colors.pureInverse,
             fontWeight = FontWeight.Bold
         ),
-        iconTint = UI.colors.pureInverse,
+        iconTint = LegacyTheme.colors.pureInverse,
         padding = 10.dp,
         onClick = onClick
     )

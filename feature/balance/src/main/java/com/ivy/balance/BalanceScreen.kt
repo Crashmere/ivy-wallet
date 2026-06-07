@@ -29,7 +29,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.ivy.design.api.LocalDatePicker
-import com.ivy.design.l0_system.UI
+import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
 import com.ivy.data.model.currency.format
 import com.ivy.legacy.LocalPeriodState
@@ -146,7 +146,7 @@ private fun ColumnScope.CurrentBalance(
     Text(
         modifier = Modifier.align(Alignment.CenterHorizontally),
         text = stringResource(R.string.current_balance),
-        style = UI.typo.b2.style(
+        style = LegacyTheme.typo.b2.style(
             color = Gray,
             fontWeight = FontWeight.ExtraBold
         )
@@ -172,7 +172,7 @@ private fun ColumnScope.BalanceAfterPlannedPayments(
         modifier = Modifier
             .padding(horizontal = 32.dp),
         text = stringResource(R.string.balance_after_payments),
-        style = UI.typo.b2.style(
+        style = LegacyTheme.typo.b2.style(
             color = Orange,
             fontWeight = FontWeight.ExtraBold
         )
@@ -206,8 +206,8 @@ private fun ColumnScope.BalanceAfterPlannedPayments(
 
             Text(
                 text = "${currentBalance.format(2)} $currency",
-                style = UI.typo.nC.style(
-                    color = UI.colors.pureInverse,
+                style = LegacyTheme.typo.nC.style(
+                    color = LegacyTheme.colors.pureInverse,
                     fontWeight = FontWeight.Normal
                 )
             )
@@ -217,8 +217,8 @@ private fun ColumnScope.BalanceAfterPlannedPayments(
             val plusSign = if (plannedPaymentsAmount >= 0) "+" else ""
             Text(
                 text = "${plusSign}${plannedPaymentsAmount.format(2)} $currency",
-                style = UI.typo.nC.style(
-                    color = UI.colors.pureInverse,
+                style = LegacyTheme.typo.nC.style(
+                    color = LegacyTheme.colors.pureInverse,
                     fontWeight = FontWeight.ExtraBold
                 )
             )

@@ -27,7 +27,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.ivy.design.IVY_COLOR_PICKER_COLORS_FREE
 import com.ivy.design.IVY_COLOR_PICKER_COLORS_PREMIUM
-import com.ivy.design.l0_system.UI
+import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.dynamicContrast
 import com.ivy.design.l0_system.style
 import com.ivy.design.utils.densityScope
@@ -52,8 +52,8 @@ fun ColumnScope.IvyColorPicker(
     Text(
         modifier = Modifier.padding(horizontal = 32.dp),
         text = stringResource(R.string.choose_color),
-        style = UI.typo.b2.style(
-            color = UI.colors.pureInverse,
+        style = LegacyTheme.typo.b2.style(
+            color = LegacyTheme.colors.pureInverse,
             fontWeight = FontWeight.ExtraBold
         )
     )

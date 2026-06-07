@@ -19,7 +19,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.ivy.design.l0_system.UI
+import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
 import com.ivy.domain.RootScreen
 import com.ivy.legacy.rootScreen
@@ -79,8 +79,8 @@ fun CustomerJourneyCard(
             .fillMaxWidth()
             .padding(horizontal = 16.dp)
             .drawColoredShadow(cardData.background.startColor)
-            .background(cardData.background.asHorizontalBrush(), UI.shapes.r3)
-            .clip(UI.shapes.r3)
+            .background(cardData.background.asHorizontalBrush(), LegacyTheme.shapes.r3)
+            .clip(LegacyTheme.shapes.r3)
             .clickable {
                 onCTA()
             }
@@ -95,7 +95,7 @@ fun CustomerJourneyCard(
                     .weight(1f)
                     .padding(start = 24.dp, end = 16.dp),
                 text = cardData.title,
-                style = UI.typo.b1.style(
+                style = LegacyTheme.typo.b1.style(
                     fontWeight = FontWeight.ExtraBold,
                     color = findContrastTextColor(cardData.background.startColor)
                 )
@@ -124,7 +124,7 @@ fun CustomerJourneyCard(
                 .fillMaxWidth()
                 .padding(start = 24.dp, end = 32.dp),
             text = cardData.description,
-            style = UI.typo.b2.style(
+            style = LegacyTheme.typo.b2.style(
                 fontWeight = FontWeight.Medium,
                 color = findContrastTextColor(cardData.background.startColor)
             )
@@ -142,7 +142,7 @@ fun CustomerJourneyCard(
                 shadowAlpha = 0f,
                 iconStart = cardData.ctaIcon,
                 iconTint = cardData.background.startColor,
-                textStyle = UI.typo.b2.style(
+                textStyle = LegacyTheme.typo.b2.style(
                     color = cardData.background.startColor,
                     fontWeight = FontWeight.Bold
                 ),

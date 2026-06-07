@@ -13,7 +13,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.ivy.design.l0_system.UI
+import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
 import com.ivy.ui.legacy.clickableNoIndication
 import com.ivy.ui.legacy.rememberInteractionSource
@@ -46,8 +46,8 @@ fun ModalAmountSection(
 
         Text(
             text = label,
-            style = UI.typo.c.style(
-                color = UI.colors.gray,
+            style = LegacyTheme.typo.c.style(
+                color = LegacyTheme.colors.gray,
                 fontWeight = FontWeight.ExtraBold
             )
         )

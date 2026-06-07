@@ -23,7 +23,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.currency.format
-import com.ivy.design.l0_system.UI
+import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
 import com.ivy.design.l1_buildingBlocks.IvyIcon
 import com.ivy.ui.R
@@ -66,7 +66,7 @@ fun SectionDivider(
             Text(
                 modifier = Modifier.testTag("upcoming_title"),
                 text = title,
-                style = UI.typo.b1.style(
+                style = LegacyTheme.typo.b1.style(
                     fontWeight = FontWeight.ExtraBold,
                     color = titleColor
                 )
@@ -109,17 +109,17 @@ private fun SectionDividerIncomeExpenseRow(
             Text(
                 modifier = Modifier.testTag("upcoming_expense"),
                 text = "${expenses.format(baseCurrency)} $baseCurrency",
-                style = UI.typo.nC.style(
+                style = LegacyTheme.typo.nC.style(
                     fontWeight = FontWeight.ExtraBold,
-                    color = UI.colors.pureInverse
+                    color = LegacyTheme.colors.pureInverse
                 )
             )
             Spacer(modifier = Modifier.width(4.dp))
             Text(
                 text = stringResource(R.string.expenses_lowercase),
-                style = UI.typo.c.style(
+                style = LegacyTheme.typo.c.style(
                     fontWeight = FontWeight.Normal,
-                    color = UI.colors.pureInverse
+                    color = LegacyTheme.colors.pureInverse
                 )
             )
         }
@@ -136,17 +136,17 @@ private fun SectionDividerIncomeExpenseRow(
             Text(
                 modifier = Modifier.testTag("upcoming_income"),
                 text = "${income.format(baseCurrency)} $baseCurrency",
-                style = UI.typo.nC.style(
+                style = LegacyTheme.typo.nC.style(
                     fontWeight = FontWeight.ExtraBold,
-                    color = UI.colors.green
+                    color = LegacyTheme.colors.green
                 )
             )
             Spacer(modifier = Modifier.width(4.dp))
             Text(
                 text = stringResource(R.string.income_lowercase),
-                style = UI.typo.c.style(
+                style = LegacyTheme.typo.c.style(
                     fontWeight = FontWeight.Normal,
-                    color = UI.colors.pureInverse
+                    color = LegacyTheme.colors.pureInverse
                 )
             )
         }
@@ -158,6 +158,6 @@ private fun SectionDividerDot() {
     Box(
         modifier = Modifier
             .size(4.dp)
-            .background(UI.colors.mediumInverse, CircleShape)
+            .background(LegacyTheme.colors.mediumInverse, CircleShape)
     )
 }

@@ -19,7 +19,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.ivy.design.l0_system.UI
+import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
 import com.ivy.design.utils.thenIf
 import com.ivy.data.model.currency.format
@@ -42,7 +42,7 @@ fun BudgetBattery(
     currency: String,
     expenses: Double,
     budget: Double,
-    backgroundNotFilled: Color = UI.colors.pure,
+    backgroundNotFilled: Color = LegacyTheme.colors.pure,
     onClick: (() -> Unit)? = null,
 ) {
     if (budget == 0.0) return
@@ -50,7 +50,7 @@ fun BudgetBattery(
 
     val textColor = when {
         percentSpent <= 0.30 -> {
-            UI.colors.pureInverse
+            LegacyTheme.colors.pureInverse
         }
 
         percentSpent <= 0.50 -> {
@@ -66,7 +66,7 @@ fun BudgetBattery(
 
     val captionTextColor = when {
         percentSpent <= 0.30 -> {
-            UI.colors.mediumInverse
+            LegacyTheme.colors.mediumInverse
         }
 
         percentSpent <= 0.50 -> {
@@ -83,7 +83,7 @@ fun BudgetBattery(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .clip(UI.shapes.r4)
+            .clip(LegacyTheme.shapes.r4)
             .background(backgroundNotFilled)
             .drawBehind {
                 drawRect(
@@ -133,7 +133,7 @@ fun BudgetBattery(
 
                     else -> stringResource(R.string.budget_exceeded_by)
                 },
-                style = UI.typo.c.style(
+                style = LegacyTheme.typo.c.style(
                     color = textColor,
                     fontWeight = FontWeight.ExtraBold
                 )
@@ -151,7 +151,7 @@ fun BudgetBattery(
 
             Text(
                 text = "${expenses.format(currency)}/${budget.format(currency)} $currency",
-                style = UI.typo.nC.style(
+                style = LegacyTheme.typo.nC.style(
                     fontWeight = FontWeight.ExtraBold,
                     color = captionTextColor
                 )

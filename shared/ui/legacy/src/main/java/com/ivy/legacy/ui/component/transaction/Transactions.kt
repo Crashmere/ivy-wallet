@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import com.ivy.base.legacy.Transaction
 import com.ivy.base.legacy.TransactionHistoryItem
 import com.ivy.base.legacy.stringRes
-import com.ivy.design.l0_system.UI
+import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
 import com.ivy.legacy.data.AppBaseData
 import com.ivy.legacy.data.LegacyDueSection
@@ -175,7 +175,7 @@ private fun LazyListScope.overdueSection(
 
         if (overdue.expanded) {
             item {
-                val isLightTheme = UI.colors.pure == White
+                val isLightTheme = LegacyTheme.colors.pure == White
                 IvyButton(
                     modifier = Modifier.padding(horizontal = 24.dp),
                     text = stringRes(R.string.skip_all),
@@ -188,7 +188,7 @@ private fun LazyListScope.overdueSection(
                             Black
                         )
                     },
-                    textStyle = UI.typo.b2.style(
+                    textStyle = LegacyTheme.typo.b2.style(
                         color = if (isLightTheme) Black else White,
                         fontWeight = FontWeight.Bold
                     )
@@ -323,7 +323,7 @@ private fun LazyItemScope.NoTransactionsEmptyState(
 
         Text(
             text = emptyStateTitle,
-            style = UI.typo.b1.style(
+            style = LegacyTheme.typo.b1.style(
                 color = Gray,
                 fontWeight = FontWeight.ExtraBold
             )
@@ -334,7 +334,7 @@ private fun LazyItemScope.NoTransactionsEmptyState(
         Text(
             modifier = Modifier.padding(horizontal = 32.dp),
             text = emptyStateText,
-            style = UI.typo.b2.style(
+            style = LegacyTheme.typo.b2.style(
                 color = Gray,
                 fontWeight = FontWeight.Medium,
                 textAlign = TextAlign.Center

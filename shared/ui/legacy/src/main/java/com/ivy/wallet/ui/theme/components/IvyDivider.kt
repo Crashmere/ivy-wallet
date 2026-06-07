@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.ivy.design.l0_system.UI
+import com.ivy.design.l0_system.LegacyTheme
 
 @Deprecated("Old design system. Use `:ivy-design` and Material3")
 @Composable
@@ -18,7 +18,7 @@ fun IvyDividerLine(
         modifier = modifier
             .fillMaxWidth()
             .height(2.dp)
-            .background(UI.colors.medium)
+            .background(LegacyTheme.colors.medium)
     )
 }
 
@@ -31,6 +31,6 @@ fun IvyDividerLineRounded(
         modifier = modifier
             .fillMaxWidth()
             .height(2.dp)
-            .background(UI.colors.medium, UI.shapes.rFull)
+            .background(LegacyTheme.colors.medium, LegacyTheme.shapes.rFull)
     )
 }

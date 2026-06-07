@@ -39,7 +39,7 @@ import com.ivy.design.api.LocalTimeConverter
 import com.ivy.design.api.LocalTimeFormatter
 import com.ivy.design.api.LocalTimeProvider
 import com.ivy.design.l0_system.BlueLight
-import com.ivy.design.l0_system.UI
+import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
 import com.ivy.design.l1_buildingBlocks.IvyText
 import com.ivy.design.l1_buildingBlocks.SpacerHor
@@ -106,13 +106,13 @@ fun TransactionCard(
             .fillMaxWidth()
             .padding(horizontal = 16.dp)
             .padding(top = 12.dp)
-            .clip(UI.shapes.r4)
+            .clip(LegacyTheme.shapes.r4)
             .clickable {
                 if (baseData.accounts.find { it.id == transaction.accountId } != null) {
                     onClick(transaction)
                 }
             }
-            .background(UI.colors.medium, UI.shapes.r4)
+            .background(LegacyTheme.colors.medium, LegacyTheme.shapes.r4)
             .testTag("transaction_card")
     ) {
         // TODO: Optimize this
@@ -149,11 +149,11 @@ fun TransactionCard(
                         )
                     }
                 ).uppercase(),
-                style = UI.typo.nC.style(
+                style = LegacyTheme.typo.nC.style(
                     color = if (transaction.dueDate!!.isAfter(timeProvider.utcNow())) {
                         Orange
                     } else {
-                        UI.colors.gray
+                        LegacyTheme.colors.gray
                     },
                     fontWeight = FontWeight.Bold
                 )
@@ -169,9 +169,9 @@ fun TransactionCard(
             Text(
                 modifier = Modifier.padding(horizontal = 24.dp),
                 text = transaction.title!!,
-                style = UI.typo.b1.style(
+                style = LegacyTheme.typo.b1.style(
                     fontWeight = FontWeight.ExtraBold,
-                    color = UI.colors.pureInverse
+                    color = LegacyTheme.colors.pureInverse
                 )
             )
         }
@@ -182,8 +182,8 @@ fun TransactionCard(
             Text(
                 text = description,
                 modifier = Modifier.padding(horizontal = 24.dp),
-                style = UI.typo.nC.style(
-                    color = UI.colors.gray,
+                style = LegacyTheme.typo.nC.style(
+                    color = LegacyTheme.colors.gray,
                     fontWeight = FontWeight.Bold
                 ),
                 maxLines = 3,
@@ -213,7 +213,7 @@ fun TransactionCard(
                     transaction.toAmount.toDouble()
                         .format(IvyCurrency.getDecimalPlaces(toAccountCurrency))
                 } $toAccountCurrency",
-                style = UI.typo.nB2.style(
+                style = LegacyTheme.typo.nB2.style(
                     color = Gray,
                     fontWeight = FontWeight.Normal
                 )
@@ -231,9 +231,9 @@ fun TransactionCard(
                         .padding(start = 24.dp),
                     text = stringResource(R.string.skip),
                     wrapContentMode = false,
-                    backgroundGradient = Gradient.solid(UI.colors.pure),
-                    textStyle = UI.typo.b2.style(
-                        color = UI.colors.pureInverse,
+                    backgroundGradient = Gradient.solid(LegacyTheme.colors.pure),
+                    textStyle = LegacyTheme.typo.b2.style(
+                        color = LegacyTheme.colors.pureInverse,
                         fontWeight = FontWeight.Bold
                     )
                 ) {
@@ -249,8 +249,8 @@ fun TransactionCard(
                     text = if (isExpense) stringResource(R.string.pay) else stringResource(R.string.get),
                     wrapContentMode = false,
                     backgroundGradient = if (isExpense) gradientExpenses() else GradientGreen,
-                    textStyle = UI.typo.b2.style(
-                        color = if (isExpense) UI.colors.pure else White,
+                    textStyle = LegacyTheme.typo.b2.style(
+                        color = if (isExpense) LegacyTheme.colors.pure else White,
                         fontWeight = FontWeight.Bold
                     )
                 ) {
@@ -278,8 +278,8 @@ private fun ColumnScope.TransactionTags(tags: ImmutableList<LegacyTag>) {
             // Tag Text
             Text(
                 text = "Tags:",
-                style = UI.typo.nC.style(
-                    color = UI.colors.gray,
+                style = LegacyTheme.typo.nC.style(
+                    color = LegacyTheme.colors.gray,
                     fontWeight = FontWeight.Normal
                 )
             )
@@ -290,7 +290,7 @@ private fun ColumnScope.TransactionTags(tags: ImmutableList<LegacyTag>) {
         items(tags, key = { it.id }) { tag ->
             Text(
                 text = "#${tag.name}",
-                style = UI.typo.nC.style(
+                style = LegacyTheme.typo.nC.style(
                     color = BlueLight,
                     fontWeight = FontWeight.Normal
                 )
@@ -345,9 +345,9 @@ private fun TransactionHeaderRow(
             )
 
             val accountBackgroundColor = if (shouldShowAccountSpecificColorInTransactions) {
-                account?.color?.toComposeColor() ?: UI.colors.pure
+                account?.color?.toComposeColor() ?: LegacyTheme.colors.pure
             } else {
-                UI.colors.pure
+                LegacyTheme.colors.pure
             }
 
             TransactionBadge(
@@ -423,8 +423,8 @@ private fun TransactionBadge(
 ) {
     Row(
         modifier = Modifier
-            .clip(UI.shapes.rFull)
-            .background(backgroundColor, UI.shapes.rFull)
+            .clip(LegacyTheme.shapes.rFull)
+            .background(backgroundColor, LegacyTheme.shapes.rFull)
             .clickable {
                 onClick()
             }
@@ -445,7 +445,7 @@ private fun TransactionBadge(
 
         IvyText(
             text = text,
-            typo = UI.typo.c.style(
+            typo = LegacyTheme.typo.c.style(
                 color = contrastColor,
                 fontWeight = FontWeight.ExtraBold
             )
@@ -482,10 +482,10 @@ private fun TransferHeader(
                                 (1f - TransferHeaderGradientThreshold) to toAccount.color.toComposeColor(),
                                 1f to toAccount.color.toComposeColor()
                             ),
-                            shape = UI.shapes.rFull
+                            shape = LegacyTheme.shapes.rFull
                         )
                 } else {
-                    Modifier.background(UI.colors.pure, UI.shapes.rFull)
+                    Modifier.background(LegacyTheme.colors.pure, LegacyTheme.shapes.rFull)
                 }
             ),
         verticalAlignment = Alignment.CenterVertically
@@ -496,7 +496,7 @@ private fun TransferHeader(
             if (shouldShowAccountSpecificColorInTransactions && account != null) {
                 findContrastTextColor(account.color.toComposeColor())
             } else {
-                UI.colors.pureInverse
+                LegacyTheme.colors.pureInverse
             }
 
         ItemIconSDefaultIcon(
@@ -512,7 +512,7 @@ private fun TransferHeader(
                 .padding(vertical = 8.dp),
             // used toString() in case of null
             text = account?.name.toString(),
-            style = UI.typo.c.style(
+            style = LegacyTheme.typo.c.style(
                 fontWeight = FontWeight.ExtraBold,
                 color = accountContrastColor
             )
@@ -528,7 +528,7 @@ private fun TransferHeader(
             if (shouldShowAccountSpecificColorInTransactions && toAccount != null) {
                 findContrastTextColor(toAccount.color.toComposeColor())
             } else {
-                UI.colors.pureInverse
+                LegacyTheme.colors.pureInverse
             }
 
         ItemIconSDefaultIcon(
@@ -544,7 +544,7 @@ private fun TransferHeader(
                 .padding(vertical = 8.dp),
             // used toString() in case of null
             text = toAccount?.name.toString(),
-            style = UI.typo.c.style(
+            style = LegacyTheme.typo.c.style(
                 fontWeight = FontWeight.ExtraBold,
                 color = toAccountContrastColor
             )
@@ -606,7 +606,7 @@ fun TypeAmountCurrency(
                             icon = R.drawable.ic_expense,
                             gradient = Gradient.black(),
                             iconTint = White,
-                            textColor = UI.colors.pureInverse
+                            textColor = LegacyTheme.colors.pureInverse
                         )
                     }
                 }

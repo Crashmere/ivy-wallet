@@ -8,7 +8,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.ivy.design.l0_system.UI
+import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.ui.R
 import com.ivy.wallet.ui.theme.components.BufferBattery
 import com.ivy.wallet.ui.theme.modal.edit.AmountModal
@@ -54,7 +54,7 @@ fun BoxWithConstraintsScope.BufferModal(
             buffer = newBufferAmount,
             balance = modal?.balance ?: 0.0,
             currency = modal?.currency ?: "",
-            backgroundNotFilled = UI.colors.medium,
+            backgroundNotFilled = LegacyTheme.colors.medium,
         )
 
         Spacer(Modifier.height(24.dp))

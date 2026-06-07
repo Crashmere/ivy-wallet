@@ -35,7 +35,7 @@ import com.ivy.data.model.Tag
 import com.ivy.data.model.TagId
 import com.ivy.design.api.LocalDatePicker
 import com.ivy.design.api.LocalTimeConverter
-import com.ivy.design.l0_system.UI
+import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
 import com.ivy.design.utils.hideKeyboard
 import com.ivy.legacy.data.EditTransactionDisplayLoan
@@ -325,8 +325,8 @@ private fun BoxWithConstraintsScope.UI(
             Text(
                 modifier = Modifier.padding(horizontal = 24.dp),
                 text = loanData.loanCaption!!,
-                style = UI.typo.nB2.style(
-                    color = UI.colors.mediumInverse,
+                style = LegacyTheme.typo.nB2.style(
+                    color = LegacyTheme.colors.mediumInverse,
                     fontWeight = FontWeight.Normal
                 )
             )

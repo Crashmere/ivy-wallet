@@ -26,7 +26,7 @@ import androidx.compose.ui.zIndex
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.ivy.base.legacy.stringRes
 import com.ivy.base.model.TransactionType
-import com.ivy.design.l0_system.UI
+import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
 import com.ivy.legacy.data.AppBaseData
 import com.ivy.legacy.data.LegacyDueSection
@@ -94,7 +94,7 @@ private fun BoxWithConstraintsScope.UI(
         ) {
             Text(
                 text = stringResource(R.string.generating_report),
-                style = UI.typo.b1.style(
+                style = LegacyTheme.typo.b1.style(
                     fontWeight = FontWeight.ExtraBold,
                     color = Orange
                 )
@@ -129,7 +129,7 @@ private fun BoxWithConstraintsScope.UI(
                     start = 32.dp
                 ),
                 text = stringResource(R.string.reports),
-                style = UI.typo.h2.style(
+                style = LegacyTheme.typo.h2.style(
                     fontWeight = FontWeight.ExtraBold
                 )
             )
@@ -139,7 +139,7 @@ private fun BoxWithConstraintsScope.UI(
             BalanceRow(
                 modifier = Modifier
                     .padding(start = 32.dp),
-                textColor = UI.colors.pureInverse,
+                textColor = LegacyTheme.colors.pureInverse,
                 currency = state.baseCurrency,
                 balance = state.balance,
                 balanceAmountPrefix = when {
@@ -156,7 +156,7 @@ private fun BoxWithConstraintsScope.UI(
                 income = state.income,
                 expenses = state.expenses,
                 hasAddButtons = false,
-                itemColor = UI.colors.pure,
+                itemColor = LegacyTheme.colors.pure,
                 incomeHeaderCardClicked = {
                     if (state.transactions.isNotEmpty()) {
                         nav.navigateTo(
@@ -313,7 +313,7 @@ private fun NoFilterEmptyState(
 
         Text(
             text = stringResource(R.string.no_filter),
-            style = UI.typo.b1.style(
+            style = LegacyTheme.typo.b1.style(
                 color = Gray,
                 fontWeight = FontWeight.ExtraBold
             )
@@ -324,7 +324,7 @@ private fun NoFilterEmptyState(
         Text(
             modifier = Modifier.padding(horizontal = 32.dp),
             text = stringResource(R.string.invalid_filter_warning),
-            style = UI.typo.b2.style(
+            style = LegacyTheme.typo.b2.style(
                 color = Gray,
                 fontWeight = FontWeight.Medium,
                 textAlign = TextAlign.Center

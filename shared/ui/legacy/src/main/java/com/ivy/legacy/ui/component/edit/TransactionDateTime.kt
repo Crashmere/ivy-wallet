@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import com.ivy.design.api.LocalTimeConverter
 import com.ivy.design.api.LocalTimeFormatter
 import com.ivy.design.api.LocalTimeProvider
-import com.ivy.design.l0_system.UI
+import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
 import com.ivy.ui.R
 import com.ivy.ui.time.TimeFormatter
@@ -43,8 +43,8 @@ fun TransactionDateTime(
             modifier = Modifier
                 .padding(horizontal = 16.dp)
                 .fillMaxWidth()
-                .clip(UI.shapes.r4)
-                .background(UI.colors.medium, UI.shapes.r4)
+                .clip(LegacyTheme.shapes.r4)
+                .background(LegacyTheme.colors.medium, LegacyTheme.shapes.r4)
                 .padding(vertical = 12.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -56,8 +56,8 @@ fun TransactionDateTime(
 
             Text(
                 text = stringResource(R.string.created_on),
-                style = UI.typo.b2.style(
-                    color = UI.colors.gray,
+                style = LegacyTheme.typo.b2.style(
+                    color = LegacyTheme.colors.gray,
                     fontWeight = FontWeight.Bold
                 )
             )
@@ -73,8 +73,8 @@ fun TransactionDateTime(
                 text = with(timeFormatter) {
                     localDateTime.format(TimeFormatter.Style.DateOnly(includeWeekDay = false))
                 },
-                style = UI.typo.nB2.style(
-                    color = UI.colors.pureInverse,
+                style = LegacyTheme.typo.nB2.style(
+                    color = LegacyTheme.colors.pureInverse,
                     fontWeight = FontWeight.ExtraBold
                 ),
                 modifier = Modifier.clickable {
@@ -86,8 +86,8 @@ fun TransactionDateTime(
                 text = " " + with(timeFormatter) {
                     localDateTime.toLocalTime().format()
                 },
-                style = UI.typo.nB2.style(
-                    color = UI.colors.pureInverse,
+                style = LegacyTheme.typo.nB2.style(
+                    color = LegacyTheme.colors.pureInverse,
                     fontWeight = FontWeight.ExtraBold
                 ),
                 modifier = Modifier.clickable {

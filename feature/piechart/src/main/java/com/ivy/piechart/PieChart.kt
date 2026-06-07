@@ -24,7 +24,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import com.ivy.base.legacy.toEpochMilli
 import com.ivy.base.model.TransactionType
 import com.ivy.data.model.Category
-import com.ivy.design.l0_system.UI
+import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.ui.legacy.drawColoredShadow
 import com.ivy.base.legacy.timeNowUTC
 import com.ivy.ui.R
@@ -58,15 +58,15 @@ fun PieChart(
                 .size((PIE_CHART_RADIUS_DP * 2).dp)
                 .drawColoredShadow(
                     color = Black,
-                    alpha = if (UI.colors.isLight) 0.05f else 0.5f,
+                    alpha = if (LegacyTheme.colors.isLight) 0.05f else 0.5f,
                     offsetY = 32.dp,
                     shadowRadius = 48.dp
                 )
                 .clip(CircleShape)
                 .background(
                     brush = Gradient(
-                        UI.colors.medium,
-                        UI.colors.pure
+                        LegacyTheme.colors.medium,
+                        LegacyTheme.colors.pure
                     ).asVerticalBrush(),
                     shape = CircleShape
                 )
@@ -87,7 +87,7 @@ fun PieChart(
             modifier = Modifier
                 .size(100.dp)
                 .clip(CircleShape)
-                .background(UI.colors.medium)
+                .background(LegacyTheme.colors.medium)
                 .padding(all = 20.dp),
             icon = if (type == TransactionType.INCOME) R.drawable.ic_income else R.drawable.ic_expense,
             tint = Gray

@@ -16,7 +16,7 @@ import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.ivy.design.l0_system.UI
+import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
 import com.ivy.ui.legacy.drawColoredShadow
 import com.ivy.design.utils.thenIf
@@ -49,14 +49,14 @@ fun OnboardingButton(
                     offsetY = 8.dp
                 )
             }
-            .clip(UI.shapes.rFull)
+            .clip(LegacyTheme.shapes.rFull)
             .background(
                 brush = if (enabled) {
                     backgroundGradient.asHorizontalBrush()
                 } else {
-                    SolidColor(UI.colors.gray)
+                    SolidColor(LegacyTheme.colors.gray)
                 },
-                shape = UI.shapes.rFull
+                shape = LegacyTheme.shapes.rFull
             )
             .clickable(onClick = onClick, enabled = enabled),
         contentAlignment = Alignment.Center
@@ -75,7 +75,7 @@ fun OnboardingButton(
         Text(
             modifier = Modifier.padding(vertical = 16.dp),
             text = text,
-            style = UI.typo.b2.style(
+            style = LegacyTheme.typo.b2.style(
                 color = textColor,
                 fontWeight = FontWeight.Bold
             )

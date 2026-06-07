@@ -18,7 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.ivy.design.l0_system.UI
+import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
 import com.ivy.ui.legacy.clickableNoIndication
 import com.ivy.ui.legacy.rememberInteractionSource
@@ -39,8 +39,8 @@ fun PrimaryAttributeColumn(
         modifier = Modifier
             .padding(horizontal = 16.dp)
             .fillMaxWidth()
-            .clip(UI.shapes.r4)
-            .border(2.dp, UI.colors.medium, UI.shapes.r4)
+            .clip(LegacyTheme.shapes.r4)
+            .border(2.dp, LegacyTheme.colors.medium, LegacyTheme.shapes.r4)
             .clickableNoIndication(rememberInteractionSource(), onClick = onClick),
     ) {
         Spacer(modifier = Modifier.height(12.dp))
@@ -55,8 +55,8 @@ fun PrimaryAttributeColumn(
 
             Text(
                 text = title,
-                style = UI.typo.b2.style(
-                    color = UI.colors.pureInverse,
+                style = LegacyTheme.typo.b2.style(
+                    color = LegacyTheme.colors.pureInverse,
                     fontWeight = FontWeight.ExtraBold
                 )
             )

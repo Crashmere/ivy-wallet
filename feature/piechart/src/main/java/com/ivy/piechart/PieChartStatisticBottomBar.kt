@@ -13,7 +13,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.ivy.base.model.TransactionType
-import com.ivy.design.l0_system.UI
+import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
 import com.ivy.ui.legacy.navigationBarInset
 import com.ivy.ui.legacy.toDensityDp
@@ -37,7 +37,7 @@ fun BoxWithConstraintsScope.PieChartStatisticBottomBar(
     ActionsRow(
         modifier = modifier
             .align(Alignment.BottomCenter)
-            .gradientCutBackgroundTop(UI.colors.pure, LocalDensity.current)
+            .gradientCutBackgroundTop(LegacyTheme.colors.pure, LocalDensity.current)
             .padding(bottom = bottomInset)
             .padding(bottom = 16.dp)
     ) {
@@ -59,12 +59,12 @@ fun BoxWithConstraintsScope.PieChartStatisticBottomBar(
             } else {
                 stringResource(id = R.string.add_expense)
             },
-            backgroundGradient = if (isIncome) GradientGreen else Gradient.solid(UI.colors.pureInverse),
-            textStyle = UI.typo.b2.style(
-                color = if (isIncome) White else UI.colors.pure,
+            backgroundGradient = if (isIncome) GradientGreen else Gradient.solid(LegacyTheme.colors.pureInverse),
+            textStyle = LegacyTheme.typo.b2.style(
+                color = if (isIncome) White else LegacyTheme.colors.pure,
                 fontWeight = FontWeight.ExtraBold
             ),
-            iconTint = if (isIncome) White else UI.colors.pure
+            iconTint = if (isIncome) White else LegacyTheme.colors.pure
         ) {
             onAdd(type)
         }

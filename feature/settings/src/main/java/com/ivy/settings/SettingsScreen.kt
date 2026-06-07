@@ -38,7 +38,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ivy.base.legacy.Theme
-import com.ivy.design.l0_system.UI
+import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
 import com.ivy.design.l1_buildingBlocks.IconScale
 import com.ivy.design.l1_buildingBlocks.IvyIconScaled
@@ -249,8 +249,8 @@ private fun BoxWithConstraintsScope.UI(
                 Text(
                     modifier = Modifier,
                     text = "${rootScreen.buildVersionName} (${rootScreen.buildVersionCode})",
-                    style = UI.typo.nC.style(
-                        color = UI.colors.gray,
+                    style = LegacyTheme.typo.nC.style(
+                        color = LegacyTheme.colors.gray,
                         fontWeight = FontWeight.Bold
                     )
                 )
@@ -265,7 +265,7 @@ private fun BoxWithConstraintsScope.UI(
             Text(
                 modifier = Modifier.padding(start = 32.dp),
                 text = stringResource(settingsPage.title),
-                style = UI.typo.h2.style(
+                style = LegacyTheme.typo.h2.style(
                     fontWeight = FontWeight.Black
                 )
             )
@@ -747,7 +747,7 @@ private fun StartDateOfMonth(
 
         IvyIconScaled(
             icon = R.drawable.ic_custom_calendar_m,
-            tint = UI.colors.pureInverse,
+            tint = LegacyTheme.colors.pureInverse,
             iconScale = IconScale.M,
             padding = 2.dp
         )
@@ -757,8 +757,8 @@ private fun StartDateOfMonth(
         Text(
             modifier = Modifier.padding(vertical = 20.dp),
             text = stringResource(R.string.start_date_of_month),
-            style = UI.typo.b2.style(
-                color = UI.colors.pureInverse,
+            style = LegacyTheme.typo.b2.style(
+                color = LegacyTheme.colors.pureInverse,
                 fontWeight = FontWeight.Bold
             )
         )
@@ -767,9 +767,9 @@ private fun StartDateOfMonth(
 
         Text(
             text = startDateOfMonth.toString(),
-            style = UI.typo.nB2.style(
+            style = LegacyTheme.typo.nB2.style(
                 fontWeight = FontWeight.ExtraBold,
-                color = UI.colors.pureInverse
+                color = LegacyTheme.colors.pureInverse
             )
         )
 
@@ -786,8 +786,8 @@ private fun AppThemeButton(
     SettingsPrimaryButton(
         icon = icon,
         text = label,
-        backgroundGradient = Gradient.solid(UI.colors.medium),
-        textColor = UI.colors.pureInverse,
+        backgroundGradient = Gradient.solid(LegacyTheme.colors.medium),
+        textColor = LegacyTheme.colors.pureInverse,
         iconPadding = 6.dp,
         description = stringResource(R.string.tap_to_switch_theme),
         onClick = onClick
@@ -811,7 +811,7 @@ private fun AppSwitch(
 
         IvyIconScaled(
             icon = icon,
-            tint = UI.colors.pureInverse,
+            tint = LegacyTheme.colors.pureInverse,
             iconScale = IconScale.M,
             padding = 0.dp
         )
@@ -825,8 +825,8 @@ private fun AppSwitch(
         ) {
             Text(
                 text = text,
-                style = UI.typo.b2.style(
-                    color = UI.colors.pureInverse,
+                style = LegacyTheme.typo.b2.style(
+                    color = LegacyTheme.colors.pureInverse,
                     fontWeight = FontWeight.Bold
                 )
             )
@@ -834,7 +834,7 @@ private fun AppSwitch(
                 Text(
                     modifier = Modifier.padding(end = 8.dp),
                     text = description,
-                    style = UI.typo.nB2.style(
+                    style = LegacyTheme.typo.nB2.style(
                         color = Gray,
                         fontWeight = FontWeight.Normal
                     ).copy(fontSize = 14.sp)
@@ -871,7 +871,7 @@ private fun SettingsPrimaryButton(
     @DrawableRes icon: Int,
     text: String,
     hasShadow: Boolean = false,
-    backgroundGradient: Gradient = Gradient.solid(UI.colors.medium),
+    backgroundGradient: Gradient = Gradient.solid(LegacyTheme.colors.medium),
     textColor: Color = White,
     iconPadding: Dp = 0.dp,
     description: String? = null,
@@ -900,7 +900,7 @@ private fun SettingsPrimaryButton(
         ) {
             Text(
                 text = text,
-                style = UI.typo.b2.style(
+                style = LegacyTheme.typo.b2.style(
                     color = textColor,
                     fontWeight = FontWeight.Bold,
                 )
@@ -909,7 +909,7 @@ private fun SettingsPrimaryButton(
                 Text(
                     modifier = Modifier.padding(end = 8.dp),
                     text = description,
-                    style = UI.typo.nB2.style(
+                    style = LegacyTheme.typo.nB2.style(
                         color = Gray,
                         fontWeight = FontWeight.Normal
                     ).copy(fontSize = 14.sp)
@@ -923,7 +923,7 @@ private fun SettingsPrimaryButton(
 private fun SettingsButtonRow(
     onClick: (() -> Unit)?,
     hasShadow: Boolean = false,
-    backgroundGradient: Gradient = Gradient.solid(UI.colors.medium),
+    backgroundGradient: Gradient = Gradient.solid(LegacyTheme.colors.medium),
     content: @Composable RowScope.() -> Unit
 ) {
     Row(
@@ -933,8 +933,8 @@ private fun SettingsButtonRow(
                 drawColoredShadow(color = backgroundGradient.startColor)
             }
             .fillMaxWidth()
-            .clip(UI.shapes.r4)
-            .background(backgroundGradient.asHorizontalBrush(), UI.shapes.r4)
+            .clip(LegacyTheme.shapes.r4)
+            .background(backgroundGradient.asHorizontalBrush(), LegacyTheme.shapes.r4)
             .thenIf(onClick != null) {
                 clickable {
                     onClick?.invoke()
@@ -955,8 +955,8 @@ private fun CurrencyButton(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp)
-            .clip(UI.shapes.r4)
-            .border(2.dp, UI.colors.medium, UI.shapes.r4)
+            .clip(LegacyTheme.shapes.r4)
+            .border(2.dp, LegacyTheme.colors.medium, LegacyTheme.shapes.r4)
             .clickable {
                 onClick()
             },
@@ -975,8 +975,8 @@ private fun CurrencyButton(
         Text(
             modifier = Modifier.padding(vertical = 20.dp),
             text = stringResource(R.string.set_currency),
-            style = UI.typo.b2.style(
-                color = UI.colors.pureInverse,
+            style = LegacyTheme.typo.b2.style(
+                color = LegacyTheme.colors.pureInverse,
                 fontWeight = FontWeight.Bold
             )
         )
@@ -985,8 +985,8 @@ private fun CurrencyButton(
 
         Text(
             text = currency,
-            style = UI.typo.b1.style(
-                color = UI.colors.pureInverse,
+            style = LegacyTheme.typo.b1.style(
+                color = LegacyTheme.colors.pureInverse,
                 fontWeight = FontWeight.ExtraBold
             )
         )
@@ -1013,7 +1013,7 @@ private fun SettingsSectionDivider(
         Text(
             modifier = Modifier.padding(start = 32.dp),
             text = text,
-            style = UI.typo.b2.style(
+            style = LegacyTheme.typo.b2.style(
                 color = color,
                 fontWeight = FontWeight.Bold
             )
@@ -1028,14 +1028,14 @@ private fun SettingsSubMenuButton(
     onClick: () -> Unit,
 ) {
     SettingsButtonRow(
-        backgroundGradient = Gradient.solid(UI.colors.medium),
+        backgroundGradient = Gradient.solid(LegacyTheme.colors.medium),
         onClick = onClick
     ) {
         Spacer(Modifier.width(12.dp))
 
         IvyIconScaled(
             icon = icon,
-            tint = UI.colors.pureInverse,
+            tint = LegacyTheme.colors.pureInverse,
             iconScale = IconScale.M
         )
 
@@ -1046,8 +1046,8 @@ private fun SettingsSubMenuButton(
                 .weight(1f)
                 .padding(top = 20.dp, bottom = 20.dp, end = 8.dp),
             text = text,
-            style = UI.typo.b2.style(
-                color = UI.colors.pureInverse,
+            style = LegacyTheme.typo.b2.style(
+                color = LegacyTheme.colors.pureInverse,
                 fontWeight = FontWeight.Bold
             )
         )
@@ -1072,8 +1072,8 @@ private fun SettingsDefaultButton(
     SettingsPrimaryButton(
         icon = icon,
         text = text,
-        backgroundGradient = Gradient.solid(UI.colors.medium),
-        textColor = UI.colors.pureInverse,
+        backgroundGradient = Gradient.solid(LegacyTheme.colors.medium),
+        textColor = LegacyTheme.colors.pureInverse,
         iconPadding = iconPadding,
         description = description
     ) {

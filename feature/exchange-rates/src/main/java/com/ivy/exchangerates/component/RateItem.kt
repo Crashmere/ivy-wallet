@@ -15,7 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.ivy.design.l0_system.UI
+import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
 import com.ivy.design.l1_buildingBlocks.SpacerHor
 import com.ivy.design.l1_buildingBlocks.SpacerWeight
@@ -36,7 +36,7 @@ fun RateItem(
                 horizontal = 16.dp
             )
             .clickable(onClick = onClick)
-            .border(2.dp, UI.colors.medium, UI.shapes.r4)
+            .border(2.dp, LegacyTheme.colors.medium, LegacyTheme.shapes.r4)
 
     ) {
         Row(
@@ -78,19 +78,19 @@ private fun RateColumn(label: String, rate: String, value: String) {
     Column {
         Text(
             text = label,
-            style = UI.typo.c.style(
+            style = LegacyTheme.typo.c.style(
                 fontWeight = FontWeight.Normal
             )
         )
         Text(
             text = rate,
-            style = UI.typo.nB1.style(
+            style = LegacyTheme.typo.nB1.style(
                 fontWeight = FontWeight.ExtraBold
             )
         )
         Text(
             text = value,
-            style = UI.typo.nB2.style(
+            style = LegacyTheme.typo.nB2.style(
                 fontWeight = FontWeight.Normal
             )
         )

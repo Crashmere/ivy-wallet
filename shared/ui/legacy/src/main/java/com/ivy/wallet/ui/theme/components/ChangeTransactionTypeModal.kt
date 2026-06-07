@@ -23,7 +23,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.ivy.base.model.TransactionType
-import com.ivy.design.l0_system.UI
+import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
 import com.ivy.ui.R
 import com.ivy.wallet.ui.theme.Gradient
@@ -92,8 +92,8 @@ fun BoxWithConstraintsScope.ChangeTransactionTypeModal(
         TransactionTypeButton(
             transactionType = TransactionType.EXPENSE,
             selected = transactionType == TransactionType.EXPENSE,
-            selectedGradient = Gradient(UI.colors.pureInverse, UI.colors.gray),
-            textSelectedColor = UI.colors.pure
+            selectedGradient = Gradient(LegacyTheme.colors.pureInverse, LegacyTheme.colors.gray),
+            textSelectedColor = LegacyTheme.colors.pure
         ) {
             transactionType = TransactionType.EXPENSE
             save(
@@ -146,10 +146,10 @@ private fun TransactionTypeButton(
         modifier = Modifier
             .padding(horizontal = 16.dp)
             .fillMaxWidth()
-            .clip(UI.shapes.r4)
+            .clip(LegacyTheme.shapes.r4)
             .background(
-                brush = if (selected) selectedGradient.asHorizontalBrush() else SolidColor(UI.colors.medium),
-                shape = UI.shapes.r4
+                brush = if (selected) selectedGradient.asHorizontalBrush() else SolidColor(LegacyTheme.colors.medium),
+                shape = LegacyTheme.shapes.r4
             )
             .clickable {
                 onClick()
@@ -160,7 +160,7 @@ private fun TransactionTypeButton(
     ) {
         Spacer(Modifier.width(16.dp))
 
-        val textColor = if (selected) textSelectedColor else UI.colors.pureInverse
+        val textColor = if (selected) textSelectedColor else LegacyTheme.colors.pureInverse
 
         IvyIcon(
             icon = when (transactionType) {
@@ -179,7 +179,7 @@ private fun TransactionTypeButton(
                 TransactionType.EXPENSE -> stringResource(R.string.expense)
                 TransactionType.TRANSFER -> stringResource(R.string.transfer)
             },
-            style = UI.typo.b1.style(
+            style = LegacyTheme.typo.b1.style(
                 color = textColor
             )
         )
@@ -194,7 +194,7 @@ private fun TransactionTypeButton(
 
             Text(
                 text = stringResource(R.string.selected_text),
-                style = UI.typo.b2.style(
+                style = LegacyTheme.typo.b2.style(
                     fontWeight = FontWeight.SemiBold,
                     color = textSelectedColor
                 )

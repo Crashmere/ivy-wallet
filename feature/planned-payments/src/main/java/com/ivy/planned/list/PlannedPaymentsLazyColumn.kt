@@ -23,7 +23,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.Category
-import com.ivy.design.l0_system.UI
+import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
 import com.ivy.legacy.datamodel.Account
 import com.ivy.legacy.datamodel.PlannedPaymentRule
@@ -117,7 +117,7 @@ private fun LazyListScope.plannedPaymentItems(
                 expanded = oneTimeExpanded,
                 setExpanded = setOneTimeExpanded,
                 title = stringResource(R.string.one_time_payments),
-                titleColor = UI.colors.pureInverse,
+                titleColor = LegacyTheme.colors.pureInverse,
                 baseCurrency = currency,
                 income = oneTimeIncome,
                 expenses = oneTimeExpenses.absoluteValue
@@ -148,7 +148,7 @@ private fun LazyListScope.plannedPaymentItems(
                 expanded = recurringExpanded,
                 setExpanded = setRecurringExpanded,
                 title = stringResource(R.string.recurring_payments),
-                titleColor = UI.colors.pureInverse,
+                titleColor = LegacyTheme.colors.pureInverse,
                 baseCurrency = currency,
                 income = recurringIncome,
                 expenses = recurringExpenses.absoluteValue
@@ -217,7 +217,7 @@ private fun LazyItemScope.NoPlannedPaymentsEmptyState() {
 
         Text(
             text = stringResource(R.string.no_planned_payments),
-            style = UI.typo.b1.style(
+            style = LegacyTheme.typo.b1.style(
                 color = Gray,
                 fontWeight = FontWeight.ExtraBold
             ),
@@ -228,7 +228,7 @@ private fun LazyItemScope.NoPlannedPaymentsEmptyState() {
 
         Text(
             text = stringResource(R.string.no_planned_payments_description),
-            style = UI.typo.b2.style(
+            style = LegacyTheme.typo.b2.style(
                 color = Gray,
                 fontWeight = FontWeight.Medium,
                 textAlign = TextAlign.Center

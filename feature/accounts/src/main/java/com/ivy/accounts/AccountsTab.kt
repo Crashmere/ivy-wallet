@@ -27,7 +27,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.ivy.design.l0_system.UI
+import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
 import com.ivy.legacy.data.model.AccountData
 import com.ivy.ui.legacy.clickableNoIndication
@@ -99,8 +99,8 @@ private fun BoxWithConstraintsScope.UI(
                 Column {
                     Text(
                         text = stringResource(R.string.accounts),
-                        style = UI.typo.b1.style(
-                            color = UI.colors.pureInverse,
+                        style = LegacyTheme.typo.b1.style(
+                            color = LegacyTheme.colors.pureInverse,
                             fontWeight = FontWeight.ExtraBold
                         )
                     )
@@ -175,7 +175,7 @@ private fun BoxWithConstraintsScope.UI(
                 .padding(end = 24.dp)
                 .padding(vertical = 8.dp),
             text = item.account.name.value,
-            style = UI.typo.b1.style(
+            style = LegacyTheme.typo.b1.style(
                 color = item.account.color.value.toComposeColor(),
                 fontWeight = FontWeight.Bold
             )
@@ -195,8 +195,8 @@ private fun AccountCard(
         modifier = Modifier
             .padding(horizontal = 16.dp)
             .fillMaxWidth()
-            .clip(UI.shapes.r4)
-            .border(2.dp, UI.colors.medium, UI.shapes.r4)
+            .clip(LegacyTheme.shapes.r4)
+            .border(2.dp, LegacyTheme.colors.medium, LegacyTheme.shapes.r4)
             .clickable(
                 onClick = onClick
             )
@@ -242,7 +242,7 @@ private fun AccountHeader(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .background(account.color.value.toComposeColor(), UI.shapes.r4Top)
+            .background(account.color.value.toComposeColor(), LegacyTheme.shapes.r4Top)
     ) {
         Spacer(Modifier.height(16.dp))
 
@@ -261,7 +261,7 @@ private fun AccountHeader(
 
             Text(
                 text = account.name.value,
-                style = UI.typo.b1.style(
+                style = LegacyTheme.typo.b1.style(
                     color = contrastColor,
                     fontWeight = FontWeight.ExtraBold
                 )
@@ -272,7 +272,7 @@ private fun AccountHeader(
 
                 Text(
                     text = stringResource(R.string.excluded),
-                    style = UI.typo.c.style(
+                    style = LegacyTheme.typo.c.style(
                         color = account.color.value.toComposeColor().dynamicContrast()
                     )
                 )

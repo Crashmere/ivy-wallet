@@ -22,7 +22,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.ItemTouchHelper.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.ivy.design.l0_system.UI
+import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
 import com.ivy.base.legacy.numberBetween
 import com.ivy.base.legacy.swap
@@ -43,8 +43,8 @@ fun <T : Reorderable> BoxScope.ReorderModalSingleType(
         Text(
             modifier = Modifier.padding(start = 32.dp),
             text = stringResource(R.string.reorder),
-            style = UI.typo.b1.style(
-                UI.colors.pureInverse,
+            style = LegacyTheme.typo.b1.style(
+                LegacyTheme.colors.pureInverse,
                 FontWeight.ExtraBold
             )
         )
@@ -85,8 +85,8 @@ fun <T : Reorderable> BoxScope.ReorderModal(
         Text(
             modifier = Modifier.padding(start = 32.dp),
             text = stringResource(R.string.reorder),
-            style = UI.typo.b1.style(
-                UI.colors.pureInverse,
+            style = LegacyTheme.typo.b1.style(
+                LegacyTheme.colors.pureInverse,
                 FontWeight.ExtraBold
             )
         )
@@ -140,7 +140,7 @@ fun <T : Reorderable> BoxScope.ReorderModal(
 
         Spacer(Modifier.height(24.dp))
 
-        val colorMedium = UI.colors.medium
+        val colorMedium = LegacyTheme.colors.medium
         AndroidView(
             modifier = Modifier
                 .fillMaxWidth()
@@ -256,7 +256,7 @@ private class Adapter<T : Reorderable>(
                                 }
                                 .testTag("reorder_drag_handle"),
                             icon = R.drawable.ic_drag_handle,
-                            tint = UI.colors.gray,
+                            tint = LegacyTheme.colors.gray,
                             contentDescription = "reorder_$position"
                         )
 

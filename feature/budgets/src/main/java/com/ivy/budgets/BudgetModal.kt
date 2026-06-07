@@ -22,7 +22,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.Category
-import com.ivy.design.l0_system.UI
+import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
 import com.ivy.domain.legacy.ui.theme.components.ListItem
 import com.ivy.legacy.datamodel.Account
@@ -214,9 +214,9 @@ private fun CategoriesRow(
     Text(
         modifier = Modifier.padding(start = 32.dp),
         text = determineBudgetType(budgetCategoryIds.size),
-        style = UI.typo.b1.style(
+        style = LegacyTheme.typo.b1.style(
             fontWeight = FontWeight.Medium,
-            color = UI.colors.pureInverse
+            color = LegacyTheme.colors.pureInverse
         )
     )
 

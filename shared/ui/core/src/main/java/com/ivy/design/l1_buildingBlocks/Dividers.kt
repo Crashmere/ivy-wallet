@@ -8,7 +8,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.ivy.design.l0_system.UI
+import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.utils.thenWhen
 
 @Deprecated("Old design system. Use `:ivy-design` and Material3")
@@ -18,8 +18,8 @@ fun DividerH(
         padding = 16.dp
     ),
     width: Dp = 1.dp,
-    color: Color = UI.colors.gray,
-    shape: Shape = UI.shapes.rFull
+    color: Color = LegacyTheme.colors.gray,
+    shape: Shape = LegacyTheme.shapes.rFull
 ) {
     Spacer(
         modifier = Modifier
@@ -46,8 +46,8 @@ fun DividerV(
         padding = 16.dp
     ),
     width: Dp = 1.dp,
-    color: Color = UI.colors.gray,
-    shape: Shape = UI.shapes.rFull
+    color: Color = LegacyTheme.colors.gray,
+    shape: Shape = LegacyTheme.shapes.rFull
 ) {
     Spacer(
         modifier = Modifier
@@ -72,8 +72,8 @@ fun DividerV(
 fun RowScope.DividerW(
     weight: Float = 1f,
     height: Dp = 1.dp,
-    color: Color = UI.colors.gray,
-    shape: Shape = UI.shapes.rFull
+    color: Color = LegacyTheme.colors.gray,
+    shape: Shape = LegacyTheme.shapes.rFull
 ) {
     Divider(
         modifier = Modifier
@@ -88,8 +88,8 @@ fun RowScope.DividerW(
 @Composable
 fun Divider(
     modifier: Modifier = Modifier,
-    color: Color = UI.colors.gray,
-    shape: Shape = UI.shapes.rFull
+    color: Color = LegacyTheme.colors.gray,
+    shape: Shape = LegacyTheme.shapes.rFull
 ) {
     Spacer(
         modifier = modifier

@@ -34,7 +34,7 @@ import com.ivy.base.model.TransactionType
 import com.ivy.base.model.processByType
 import com.ivy.data.model.LoanType
 import com.ivy.design.api.LocalTimeFormatter
-import com.ivy.design.l0_system.UI
+import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
 import com.ivy.legacy.datamodel.Account
 import com.ivy.legacy.datamodel.Loan
@@ -110,8 +110,8 @@ private fun BoxWithConstraintsScope.UI(
                 .fillMaxSize()
                 .statusBarsPadding()
                 .padding(top = 16.dp)
-                .clip(UI.shapes.r1Top)
-                .background(UI.colors.pure),
+                .clip(LegacyTheme.shapes.r1Top)
+                .background(LegacyTheme.colors.pure),
             state = listState,
         ) {
             item {
@@ -151,7 +151,7 @@ private fun BoxWithConstraintsScope.UI(
                         .height(32.dp)
                         .fillMaxWidth()
                         .background(itemColor) // itemColor is displayed below the clip
-                        .background(UI.colors.pure, UI.shapes.r1Top)
+                        .background(LegacyTheme.colors.pure, LegacyTheme.shapes.r1Top)
                 )
             }
 
@@ -346,7 +346,7 @@ private fun LoanItem(
                 Text(
                     modifier = Modifier.testTag("loan_name"),
                     text = loan.name,
-                    style = UI.typo.b1.style(
+                    style = LegacyTheme.typo.b1.style(
                         color = contrastColor,
                         fontWeight = FontWeight.ExtraBold
                     )
@@ -356,7 +356,7 @@ private fun LoanItem(
 
                 Text(
                     text = loan.humanReadableType(),
-                    style = UI.typo.c.style(
+                    style = LegacyTheme.typo.c.style(
                         color = loan.color.toComposeColor().dynamicContrast()
                     )
                 )
@@ -367,7 +367,7 @@ private fun LoanItem(
                     text = it.formatNicely(
                         noWeekDay = false
                     ).uppercase(),
-                    style = UI.typo.nC.style(
+                    style = LegacyTheme.typo.nC.style(
                         color = contrastColor
                     )
                 )
@@ -408,7 +408,7 @@ private fun LoanInfoCard(
                 color = backgroundColor,
                 alpha = 0.1f
             )
-            .background(backgroundColor, UI.shapes.r2),
+            .background(backgroundColor, LegacyTheme.shapes.r2),
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -418,7 +418,7 @@ private fun LoanInfoCard(
             Text(
                 modifier = Modifier.padding(top = 8.dp, start = 24.dp),
                 text = stringResource(R.string.paid),
-                style = UI.typo.c.style(
+                style = LegacyTheme.typo.c.style(
                     color = contrastColor,
                     fontWeight = FontWeight.ExtraBold
                 )
@@ -434,7 +434,7 @@ private fun LoanInfoCard(
                         iconName = selectedLoanAccount.icon,
                         defaultIcon = R.drawable.ic_custom_account_s
                     ),
-                    textStyle = UI.typo.c.style(
+                    textStyle = LegacyTheme.typo.c.style(
                         color = contrastColor,
                         fontWeight = FontWeight.ExtraBold
                     ),
@@ -461,7 +461,7 @@ private fun LoanInfoCard(
                 .padding(horizontal = 24.dp)
                 .testTag("amount_paid"),
             text = "${amountPaid.format(baseCurrency)} / ${loanTotalAmount.format(baseCurrency)}",
-            style = UI.typo.nB1.style(
+            style = LegacyTheme.typo.nB1.style(
                 color = contrastColor,
                 fontWeight = FontWeight.ExtraBold
             )
@@ -469,7 +469,7 @@ private fun LoanInfoCard(
         Text(
             modifier = Modifier.padding(horizontal = 24.dp),
             text = IvyCurrency.fromCode(baseCurrency)?.name ?: "",
-            style = UI.typo.b2.style(
+            style = LegacyTheme.typo.b2.style(
                 color = contrastColor,
                 fontWeight = FontWeight.Normal
             )
@@ -486,7 +486,7 @@ private fun LoanInfoCard(
             Text(
                 modifier = Modifier.testTag("percent_paid"),
                 text = "${percentPaid.times(100).format(2)}%",
-                style = UI.typo.nB1.style(
+                style = LegacyTheme.typo.nB1.style(
                     color = contrastColor,
                     fontWeight = FontWeight.ExtraBold
                 )
@@ -501,7 +501,7 @@ private fun LoanInfoCard(
                     leftToPay.format(baseCurrency),
                     baseCurrency
                 ),
-                style = UI.typo.nB2.style(
+                style = LegacyTheme.typo.nB2.style(
                     color = Gray,
                     fontWeight = FontWeight.ExtraBold
                 )
@@ -515,7 +515,7 @@ private fun LoanInfoCard(
                 .fillMaxWidth()
                 .height(24.dp)
                 .padding(horizontal = 24.dp),
-            notFilledColor = UI.colors.pure,
+            notFilledColor = LegacyTheme.colors.pure,
             percent = percentPaid
         )
 
@@ -531,7 +531,7 @@ private fun LoanInfoCard(
             Text(
                 modifier = Modifier.padding(horizontal = 24.dp),
                 text = stringResource(R.string.loan_interest),
-                style = UI.typo.c.style(
+                style = LegacyTheme.typo.c.style(
                     color = contrastColor,
                     fontWeight = FontWeight.ExtraBold
                 )
@@ -548,7 +548,7 @@ private fun LoanInfoCard(
                 Text(
                     modifier = Modifier.testTag("loan_interest_percent_paid"),
                     text = "${loanPercentPaid.times(100).format(2)}%",
-                    style = UI.typo.nB1.style(
+                    style = LegacyTheme.typo.nB1.style(
                         color = contrastColor,
                         fontWeight = FontWeight.ExtraBold
                     )
@@ -563,7 +563,7 @@ private fun LoanInfoCard(
                         loanAmountPaid.format(baseCurrency),
                         baseCurrency
                     ),
-                    style = UI.typo.nB2.style(
+                    style = LegacyTheme.typo.nB2.style(
                         color = Gray,
                         fontWeight = FontWeight.ExtraBold
                     )
@@ -577,7 +577,7 @@ private fun LoanInfoCard(
                     .fillMaxWidth()
                     .height(24.dp)
                     .padding(horizontal = 24.dp),
-                notFilledColor = UI.colors.pure,
+                notFilledColor = LegacyTheme.colors.pure,
                 percent = loanPercentPaid
             )
         }
@@ -592,7 +592,7 @@ private fun LoanInfoCard(
             text = stringResource(R.string.add_record),
             shadowAlpha = 0.1f,
             backgroundGradient = Gradient.solid(contrastColor),
-            textStyle = UI.typo.b2.style(
+            textStyle = LegacyTheme.typo.b2.style(
                 color = findContrastTextColor(contrastColor),
                 fontWeight = FontWeight.Bold
             ),
@@ -639,27 +639,27 @@ private fun LoanRecordItem(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp)
-            .clip(UI.shapes.r4)
+            .clip(LegacyTheme.shapes.r4)
             .clickable {
                 onClick()
             }
-            .background(UI.colors.medium, UI.shapes.r4)
+            .background(LegacyTheme.colors.medium, LegacyTheme.shapes.r4)
             .testTag("loan_record_item")
     ) {
         if (account != null || loanRecord.interest) {
             Row(Modifier.padding(16.dp)) {
                 if (account != null) {
                     IvyButton(
-                        backgroundGradient = Gradient.solid(UI.colors.pure),
+                        backgroundGradient = Gradient.solid(LegacyTheme.colors.pure),
                         hasGlow = false,
-                        iconTint = UI.colors.pureInverse,
+                        iconTint = LegacyTheme.colors.pureInverse,
                         text = account.name,
                         iconStart = getCustomIconIdS(
                             iconName = account.icon,
                             defaultIcon = R.drawable.ic_custom_account_s
                         ),
-                        textStyle = UI.typo.c.style(
-                            color = UI.colors.pureInverse,
+                        textStyle = LegacyTheme.typo.c.style(
+                            color = LegacyTheme.colors.pureInverse,
                             fontWeight = FontWeight.ExtraBold
                         ),
                         padding = 8.dp,
@@ -689,7 +689,7 @@ private fun LoanRecordItem(
                             iconName = "currency",
                             defaultIcon = R.drawable.ic_currency
                         ),
-                        textStyle = UI.typo.c.style(
+                        textStyle = LegacyTheme.typo.c.style(
                             color = textIconColor,
                             fontWeight = FontWeight.ExtraBold
                         ),
@@ -712,7 +712,7 @@ private fun LoanRecordItem(
                     TimeFormatter.Style.DateAndTime(includeWeekDay = true)
                 ).uppercase()
             },
-            style = UI.typo.nC.style(
+            style = LegacyTheme.typo.nC.style(
                 color = Gray,
                 fontWeight = FontWeight.Bold
             )
@@ -722,9 +722,9 @@ private fun LoanRecordItem(
             Text(
                 modifier = Modifier.padding(horizontal = 24.dp, vertical = 8.dp),
                 text = loanRecord.note!!,
-                style = UI.typo.b1.style(
+                style = LegacyTheme.typo.b1.style(
                     fontWeight = FontWeight.ExtraBold,
-                    color = UI.colors.pureInverse
+                    color = LegacyTheme.colors.pureInverse
                 )
             )
         }
@@ -758,7 +758,7 @@ private fun LoanRecordItem(
             Text(
                 modifier = Modifier.padding(start = 68.dp),
                 text = loanRecord.convertedAmount!!.format(baseCurrency) + " $loanBaseCurrency",
-                style = UI.typo.nB2.style(
+                style = LegacyTheme.typo.nB2.style(
                     color = Gray,
                     fontWeight = FontWeight.Normal
                 )
@@ -779,21 +779,21 @@ private fun InitialRecordItem(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp)
-            .clip(UI.shapes.r4)
-            .background(UI.colors.medium, UI.shapes.r4)
+            .clip(LegacyTheme.shapes.r4)
+            .background(LegacyTheme.colors.medium, LegacyTheme.shapes.r4)
             .testTag("loan_record_item")
     ) {
         IvyButton(
             modifier = Modifier.padding(16.dp),
-            backgroundGradient = Gradient.solid(UI.colors.pure),
+            backgroundGradient = Gradient.solid(LegacyTheme.colors.pure),
             text = stringResource(id = R.string.initial_loan_record),
-            iconTint = UI.colors.pureInverse,
+            iconTint = LegacyTheme.colors.pureInverse,
             iconStart = getCustomIconIdS(
                 iconName = loan.icon,
                 defaultIcon = R.drawable.ic_custom_loan_s
             ),
-            textStyle = UI.typo.c.style(
-                color = UI.colors.pureInverse,
+            textStyle = LegacyTheme.typo.c.style(
+                color = LegacyTheme.colors.pureInverse,
                 fontWeight = FontWeight.ExtraBold
             ),
             padding = 8.dp,
@@ -809,7 +809,7 @@ private fun InitialRecordItem(
                         TimeFormatter.Style.DateAndTime(includeWeekDay = true)
                     ).uppercase()
                 },
-                style = UI.typo.nC.style(
+                style = LegacyTheme.typo.nC.style(
                     color = Gray,
                     fontWeight = FontWeight.Bold
                 )
@@ -820,9 +820,9 @@ private fun InitialRecordItem(
             Text(
                 modifier = Modifier.padding(horizontal = 24.dp, vertical = 8.dp),
                 text = loan.note!!,
-                style = UI.typo.b1.style(
+                style = LegacyTheme.typo.b1.style(
                     fontWeight = FontWeight.ExtraBold,
-                    color = UI.colors.pureInverse
+                    color = LegacyTheme.colors.pureInverse
                 )
             )
         }
@@ -858,7 +858,7 @@ private fun NoLoanRecordsEmptyState() {
 
         Text(
             text = stringResource(R.string.no_records),
-            style = UI.typo.b1.style(
+            style = LegacyTheme.typo.b1.style(
                 color = Gray,
                 fontWeight = FontWeight.ExtraBold
             )
@@ -869,7 +869,7 @@ private fun NoLoanRecordsEmptyState() {
         Text(
             modifier = Modifier.padding(horizontal = 32.dp),
             text = stringResource(R.string.no_records_for_the_loan),
-            style = UI.typo.b2.style(
+            style = LegacyTheme.typo.b2.style(
                 color = Gray,
                 fontWeight = FontWeight.Medium,
                 textAlign = TextAlign.Center

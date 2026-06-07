@@ -37,7 +37,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
-import com.ivy.design.l0_system.UI
+import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.utils.rememberInteractionSource
 import com.ivy.ui.legacy.addKeyboardListener
 import com.ivy.ui.legacy.consumeClicks
@@ -150,7 +150,7 @@ fun BoxScope.IvyModal(
                 .fillMaxWidth()
                 .statusBarsPadding()
                 .padding(top = 24.dp)
-                .background(UI.colors.pure, UI.shapes.r2Top)
+                .background(LegacyTheme.colors.pure, LegacyTheme.shapes.r2Top)
                 .consumeClicks(rememberInteractionSource())
                 .thenIf(scrollState != null) {
                     verticalScroll(scrollState!!)
@@ -291,7 +291,7 @@ fun ModalActionsRow(
                     }
                 }
                 .gradientCutBackgroundTop(
-                    pure = UI.colors.pure,
+                    pure = LegacyTheme.colors.pure,
                     density = LocalDensity.current,
                     endY = 16.dp
                 )

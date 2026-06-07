@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ivy.design.l0_system.Orange
-import com.ivy.design.l0_system.UI
+import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
 import com.ivy.design.l1_buildingBlocks.SpacerVer
 import com.ivy.exchangerates.RatesEvent
@@ -81,7 +81,7 @@ fun BoxWithConstraintsScope.AddRateModal(
                 }
                 .padding(horizontal = 16.dp, vertical = 12.dp),
             text = "$baseCurrency-${toCurrency.text} = ${rate ?: "???"}",
-            style = UI.typo.nH2.style(
+            style = LegacyTheme.typo.nH2.style(
                 color = Orange,
                 textAlign = TextAlign.Center,
             )

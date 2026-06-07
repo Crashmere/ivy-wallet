@@ -16,7 +16,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.ivy.design.api.LocalTimeFormatter
-import com.ivy.design.l0_system.UI
+import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
 import com.ivy.ui.R
 import com.ivy.ui.time.TimeFormatter
@@ -48,8 +48,8 @@ private fun DueDateCard(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp)
-            .clip(UI.shapes.r4)
-            .background(UI.colors.medium, UI.shapes.r4)
+            .clip(LegacyTheme.shapes.r4)
+            .background(LegacyTheme.colors.medium, LegacyTheme.shapes.r4)
             .clickable(onClick = onClick)
             .padding(vertical = 20.dp),
         verticalAlignment = Alignment.CenterVertically
@@ -62,9 +62,9 @@ private fun DueDateCard(
 
         Text(
             text = stringResource(R.string.planned_for),
-            style = UI.typo.b2.style(
+            style = LegacyTheme.typo.b2.style(
                 fontWeight = FontWeight.ExtraBold,
-                color = UI.colors.pureInverse
+                color = LegacyTheme.colors.pureInverse
             )
         )
 
@@ -74,7 +74,7 @@ private fun DueDateCard(
             text = with(LocalTimeFormatter.current) {
                 dueDate.formatLocal(TimeFormatter.Style.DateOnly(includeWeekDay = false))
             },
-            style = UI.typo.nB2.style(
+            style = LegacyTheme.typo.nB2.style(
                 fontWeight = FontWeight.ExtraBold
             )
         )

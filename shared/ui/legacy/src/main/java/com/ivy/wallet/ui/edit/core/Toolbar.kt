@@ -20,7 +20,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.ivy.base.model.TransactionType
-import com.ivy.design.l0_system.UI
+import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.asBrush
 import com.ivy.navigation.navigation
 import com.ivy.ui.R
@@ -90,16 +90,16 @@ fun Toolbar(
                         .testTag("duplicate_button"),
                     shape = CircleShape,
                     colors = IconButtonDefaults.outlinedIconButtonColors()
-                        .copy(contentColor = UI.colors.medium),
+                        .copy(contentColor = LegacyTheme.colors.medium),
                     border = IconButtonDefaults.outlinedIconButtonBorder(enabled = true)
-                        .copy(width = 2.dp, brush = UI.colors.medium.asBrush()),
+                        .copy(width = 2.dp, brush = LegacyTheme.colors.medium.asBrush()),
                     onClick = onDuplicate
                 ) {
                     Icon(
                         modifier = Modifier.padding(6.dp),
                         imageVector = Icons.Sharp.CopyAll,
                         contentDescription = "duplicate_button",
-                        tint = UI.colors.pureInverse
+                        tint = LegacyTheme.colors.pureInverse
                     )
                 }
 

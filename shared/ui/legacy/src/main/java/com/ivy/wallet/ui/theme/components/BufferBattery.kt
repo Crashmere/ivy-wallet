@@ -19,7 +19,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.ivy.design.l0_system.UI
+import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
 import com.ivy.design.utils.thenIf
 import com.ivy.ui.R
@@ -40,7 +40,7 @@ fun BufferBattery(
     buffer: Double,
     balance: Double,
     currency: String,
-    backgroundNotFilled: Color = UI.colors.pure,
+    backgroundNotFilled: Color = LegacyTheme.colors.pure,
     onClick: (() -> Unit)? = null,
 ) {
     val bufferExceeded = balance < buffer
@@ -54,7 +54,7 @@ fun BufferBattery(
 
     val textColor = when {
         bufferExceededPercent <= 0.25 -> {
-            UI.colors.pureInverse
+            LegacyTheme.colors.pureInverse
         }
         bufferExceededPercent <= 0.50 -> {
             White
@@ -68,7 +68,7 @@ fun BufferBattery(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .clip(UI.shapes.r4)
+            .clip(LegacyTheme.shapes.r4)
             .background(backgroundNotFilled)
             .drawBehind {
                 drawRect(
@@ -118,7 +118,7 @@ fun BufferBattery(
                         R.string.left_to_spend
                     )
                 },
-                style = UI.typo.c.style(
+                style = LegacyTheme.typo.c.style(
                     color = textColor,
                     fontWeight = FontWeight.ExtraBold
                 )

@@ -43,7 +43,7 @@ import com.ivy.design.api.LocalTimeConverter
 import com.ivy.design.api.LocalTimeFormatter
 import com.ivy.design.api.LocalTimeProvider
 import com.ivy.design.LocalThemeState
-import com.ivy.design.l0_system.UI
+import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
 import com.ivy.design.utils.thenIf
 import com.ivy.legacy.data.AppBaseData
@@ -297,8 +297,8 @@ private fun BoxWithConstraintsScope.UI(
                 .fillMaxSize()
                 .statusBarsPadding()
                 .padding(top = 16.dp)
-                .clip(UI.shapes.r1Top)
-                .background(UI.colors.pure)
+                .clip(LegacyTheme.shapes.r1Top)
+                .background(LegacyTheme.colors.pure)
                 .testTag("item_stats_lazy_column"),
             state = listState,
         ) {
@@ -499,7 +499,7 @@ private fun LazyListScope.choosePeriodModal(
                     .height(32.dp)
                     .fillMaxWidth()
                     .background(itemColor) // itemColor is displayed below the clip
-                    .background(UI.colors.pure, UI.shapes.r1Top)
+                    .background(LegacyTheme.colors.pure, LegacyTheme.shapes.r1Top)
             )
 
             PeriodSelector(
@@ -773,7 +773,7 @@ private fun Item(
 
                 Text(
                     text = account.name,
-                    style = UI.typo.b1.style(
+                    style = LegacyTheme.typo.b1.style(
                         color = contrastColor,
                         fontWeight = FontWeight.ExtraBold
                     )
@@ -784,7 +784,7 @@ private fun Item(
 
                     Text(
                         text = stringRes(R.string.excluded),
-                        style = UI.typo.c.style(
+                        style = LegacyTheme.typo.c.style(
                             color = account.color.toComposeColor().dynamicContrast()
                         )
                     )
@@ -802,7 +802,7 @@ private fun Item(
 
                 Text(
                     text = category.name.value,
-                    style = UI.typo.b1.style(
+                    style = LegacyTheme.typo.b1.style(
                         color = contrastColor,
                         fontWeight = FontWeight.ExtraBold
                     )
@@ -821,7 +821,7 @@ private fun Item(
 
                 Text(
                     text = CATEGORY_UNSPECIFIED_NAME,
-                    style = UI.typo.b1.style(
+                    style = LegacyTheme.typo.b1.style(
                         color = contrastColor,
                         fontWeight = FontWeight.ExtraBold
                     )

@@ -30,7 +30,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.IntervalType
 import com.ivy.design.api.LocalTimeProvider
-import com.ivy.design.l0_system.UI
+import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
 import com.ivy.ui.legacy.addKeyboardListener
 import com.ivy.ui.legacy.clickableNoIndication
@@ -178,7 +178,7 @@ private fun TimesSelector(
         modifier = Modifier
             .padding(horizontal = 24.dp)
             .fillMaxWidth()
-            .background(UI.colors.medium, UI.shapes.r2),
+            .background(LegacyTheme.colors.medium, LegacyTheme.shapes.r2),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Spacer(Modifier.width(8.dp))
@@ -209,12 +209,12 @@ private fun RowScope.TimesSelectorButton(
     label: String,
     onClick: () -> Unit
 ) {
-    val rFull = UI.shapes.rFull
+    val rFull = LegacyTheme.shapes.rFull
 
     Text(
         modifier = Modifier
             .weight(1f)
-            .clip(UI.shapes.rFull)
+            .clip(LegacyTheme.shapes.rFull)
             .clickable {
                 onClick()
             }
@@ -224,7 +224,7 @@ private fun RowScope.TimesSelectorButton(
             }
             .padding(vertical = 8.dp),
         text = label,
-        style = UI.typo.b2.style(
+        style = LegacyTheme.typo.b2.style(
             color = if (selected) White else Gray,
             fontWeight = FontWeight.ExtraBold,
             textAlign = TextAlign.Center
@@ -270,8 +270,8 @@ private fun MultipleTimes(
         modifier = Modifier
             .padding(start = 32.dp),
         text = stringResource(R.string.starts_on),
-        style = UI.typo.b2.style(
-            color = UI.colors.pureInverse,
+        style = LegacyTheme.typo.b2.style(
+            color = LegacyTheme.colors.pureInverse,
             fontWeight = FontWeight.ExtraBold
         )
     )
@@ -297,9 +297,9 @@ private fun MultipleTimes(
         modifier = Modifier
             .padding(start = 32.dp),
         text = stringResource(R.string.repeats_every_text),
-        style = UI.typo.b2.style(
+        style = LegacyTheme.typo.b2.style(
             fontWeight = FontWeight.ExtraBold,
-            color = UI.colors.pureInverse
+            color = LegacyTheme.colors.pureInverse
         )
     )
 
@@ -355,9 +355,9 @@ private fun DateRow(
                 text = closeDay ?: date.formatNicely(
                     pattern = "EEEE, dd MMM"
                 ),
-                style = UI.typo.h2.style(
+                style = LegacyTheme.typo.h2.style(
                     fontWeight = FontWeight.Normal,
-                    color = UI.colors.pureInverse
+                    color = LegacyTheme.colors.pureInverse
                 )
             )
 
@@ -366,7 +366,7 @@ private fun DateRow(
 
                 Text(
                     text = date.formatDateWeekDayLong(),
-                    style = UI.typo.b2.style(
+                    style = LegacyTheme.typo.b2.style(
                         fontWeight = FontWeight.SemiBold,
                         color = Gray
                     )
@@ -383,8 +383,8 @@ private fun DateRow(
                 .testTag("recurring_modal_pick_date"),
             backgroundPadding = 4.dp,
             icon = R.drawable.ic_calendar,
-            backgroundGradient = Gradient.solid(UI.colors.pureInverse),
-            tint = UI.colors.pure
+            backgroundGradient = Gradient.solid(LegacyTheme.colors.pureInverse),
+            tint = LegacyTheme.colors.pure
         ) {
             pickDate(dateTime.toLocalDate(), onDatePicked)
         }

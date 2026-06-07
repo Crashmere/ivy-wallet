@@ -15,7 +15,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.ivy.design.l0_system.UI
+import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
 import com.ivy.ui.R
 import com.ivy.data.model.currency.IvyCurrency
@@ -71,7 +71,7 @@ fun BoxWithConstraintsScope.CurrencyModal(
 
                 Text(
                     text = stringResource(R.string.supports_crypto),
-                    style = UI.typo.c.style(
+                    style = LegacyTheme.typo.c.style(
                         fontWeight = FontWeight.ExtraBold,
                         color = Gray
                     )

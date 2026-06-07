@@ -12,7 +12,7 @@ import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.ColorUtils
-import com.ivy.design.l0_system.UI
+import com.ivy.design.l0_system.LegacyTheme
 
 @Deprecated("Old design system. Use `:ivy-design` and Material3")
 val White = Color(0xFFFAFAFA)
@@ -133,15 +133,15 @@ fun Modifier.gradientCutBackgroundBottom(
 
 @Deprecated("Old design system. Use `:ivy-design` and Material3")
 @Composable
-fun pureBlur() = UI.colors.pure.copy(alpha = 0.95f)
+fun pureBlur() = LegacyTheme.colors.pure.copy(alpha = 0.95f)
 
 @Deprecated("Old design system. Use `:ivy-design` and Material3")
 @Composable
-fun mediumBlur() = UI.colors.medium.copy(alpha = 0.95f)
+fun mediumBlur() = LegacyTheme.colors.medium.copy(alpha = 0.95f)
 
 @Deprecated("Old design system. Use `:ivy-design` and Material3")
 @Composable
-fun gradientExpenses() = Gradient(UI.colors.pureInverse, UI.colors.gray)
+fun gradientExpenses() = Gradient(LegacyTheme.colors.pureInverse, LegacyTheme.colors.gray)
 
 @Deprecated("Old design system. Use `:ivy-design` and Material3")
 data class Gradient(
@@ -164,7 +164,7 @@ data class Gradient(
 
         @Deprecated("Old design system. Use `:ivy-design` and Material3")
         @Composable
-        fun black() = Gradient(UI.colors.gray, UI.colors.pureInverse)
+        fun black() = Gradient(LegacyTheme.colors.gray, LegacyTheme.colors.pureInverse)
     }
 
     @Deprecated("Old design system. Use `:ivy-design` and Material3")

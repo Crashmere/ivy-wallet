@@ -21,7 +21,7 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.IntervalType
-import com.ivy.design.l0_system.UI
+import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
 import com.ivy.base.legacy.capitalizeLocal
 import com.ivy.base.legacy.isNotNullOrBlank
@@ -63,14 +63,14 @@ fun IntervalPickerRow(
                         GradientIvy.asHorizontalBrush()
                     } else {
                         Gradient
-                            .solid(UI.colors.medium)
+                            .solid(LegacyTheme.colors.medium)
                             .asHorizontalBrush()
                     },
-                    shape = UI.shapes.rFull
+                    shape = LegacyTheme.shapes.rFull
                 )
                 .padding(vertical = 12.dp),
             value = interNTextFieldValue,
-            textColor = if (validInput) White else UI.colors.pureInverse,
+            textColor = if (validInput) White else LegacyTheme.colors.pureInverse,
             hint = "0"
         ) {
             val filteredText = it.text.take(RepeatIntervalCharLimit)
@@ -106,7 +106,7 @@ private fun RowScope.IntervalTypeSelector(
     Row(
         modifier = Modifier
             .weight(1f)
-            .border(2.dp, UI.colors.medium, UI.shapes.rFull),
+            .border(2.dp, LegacyTheme.colors.medium, LegacyTheme.shapes.rFull),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Spacer(Modifier.width(20.dp))
@@ -135,8 +135,8 @@ private fun RowScope.IntervalTypeSelector(
 
         Text(
             text = intervalType.forDisplay(intervalN).capitalizeLocal(),
-            style = UI.typo.b2.style(
-                color = UI.colors.pureInverse,
+            style = LegacyTheme.typo.b2.style(
+                color = LegacyTheme.colors.pureInverse,
                 fontWeight = FontWeight.Bold
             )
         )

@@ -23,7 +23,7 @@ import com.ivy.base.legacy.Transaction
 import com.ivy.base.legacy.TransactionHistoryItem
 import com.ivy.base.legacy.stringRes
 import com.ivy.base.model.TransactionType
-import com.ivy.design.l0_system.UI
+import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
 import com.ivy.ui.legacy.drawColoredShadow
 import com.ivy.data.model.currency.format
@@ -128,7 +128,7 @@ private fun RowScope.HeaderCard(
                 color = backgroundColor,
                 alpha = 0.1f
             )
-            .background(backgroundColor, UI.shapes.r2)
+            .background(backgroundColor, LegacyTheme.shapes.r2)
             .clickable { onHeaderCardClicked() },
     ) {
         Spacer(Modifier.height(24.dp))
@@ -136,7 +136,7 @@ private fun RowScope.HeaderCard(
         Text(
             modifier = Modifier.padding(horizontal = 24.dp),
             text = title,
-            style = UI.typo.c.style(
+            style = LegacyTheme.typo.c.style(
                 color = contrastColor,
                 fontWeight = FontWeight.ExtraBold
             )
@@ -147,7 +147,7 @@ private fun RowScope.HeaderCard(
         Text(
             modifier = Modifier.padding(horizontal = 24.dp),
             text = amount.format(currencyCode),
-            style = UI.typo.nB1.style(
+            style = LegacyTheme.typo.nB1.style(
                 color = contrastColor,
                 fontWeight = FontWeight.ExtraBold
             )
@@ -155,7 +155,7 @@ private fun RowScope.HeaderCard(
         Text(
             modifier = Modifier.padding(horizontal = 24.dp),
             text = IvyCurrency.fromCode(currencyCode)?.name ?: "",
-            style = UI.typo.b2.style(
+            style = LegacyTheme.typo.b2.style(
                 color = contrastColor,
                 fontWeight = FontWeight.Normal
             )
@@ -166,7 +166,7 @@ private fun RowScope.HeaderCard(
         Text(
             modifier = Modifier.padding(horizontal = 24.dp),
             text = transactionCount.toString(),
-            style = UI.typo.nB1.style(
+            style = LegacyTheme.typo.nB1.style(
                 color = contrastColor,
                 fontWeight = FontWeight.ExtraBold
             )
@@ -174,7 +174,7 @@ private fun RowScope.HeaderCard(
         Text(
             modifier = Modifier.padding(horizontal = 24.dp),
             text = stringRes(R.string.transactions),
-            style = UI.typo.b2.style(
+            style = LegacyTheme.typo.b2.style(
                 color = contrastColor,
                 fontWeight = FontWeight.Normal
             )
@@ -192,7 +192,7 @@ private fun RowScope.HeaderCard(
                 text = addButtonText,
                 shadowAlpha = 0.1f,
                 backgroundGradient = Gradient.solid(addButtonBackground),
-                textStyle = UI.typo.b2.style(
+                textStyle = LegacyTheme.typo.b2.style(
                     color = findContrastTextColor(addButtonBackground),
                     fontWeight = FontWeight.Bold
                 ).copy(fontSize = 12.sp),

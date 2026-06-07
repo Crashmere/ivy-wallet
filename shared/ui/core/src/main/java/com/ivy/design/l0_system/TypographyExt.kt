@@ -12,7 +12,7 @@ fun TextStyle.colorAs(color: Color) = this.copy(color = color)
 @Deprecated("Old design system. Use `:ivy-design` and Material3")
 @Composable
 fun TextStyle.style(
-    color: Color = UI.colors.pureInverse,
+    color: Color = LegacyTheme.colors.pureInverse,
     fontWeight: FontWeight = FontWeight.Bold,
     textAlign: TextAlign = TextAlign.Start
 ) = this.copy(

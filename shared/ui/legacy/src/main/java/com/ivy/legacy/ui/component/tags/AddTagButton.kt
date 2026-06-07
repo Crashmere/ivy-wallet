@@ -8,7 +8,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.TagId
 import com.ivy.design.l0_system.Orange3
-import com.ivy.design.l0_system.UI
+import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
 import com.ivy.wallet.ui.theme.Gradient
 import com.ivy.wallet.ui.theme.components.IvyBorderButton
@@ -39,7 +39,7 @@ private fun ViewTagsButton(
         modifier = Modifier.padding(start = 24.dp),
         text = if (transactionTags.size <= 1) "${transactionTags.size}\t Tag" else "${transactionTags.size}\t Tags",
         backgroundGradient = Gradient.solid(Orange3),
-        textStyle = UI.typo.b2.style(
+        textStyle = LegacyTheme.typo.b2.style(
             color = contrastColor,
             fontWeight = FontWeight.Bold
         ),
@@ -58,7 +58,7 @@ private fun AddTagsButton(
     IvyBorderButton(
         modifier = Modifier.padding(start = 24.dp),
         iconStart = R.drawable.ic_plus,
-        iconTint = UI.colors.pureInverse,
+        iconTint = LegacyTheme.colors.pureInverse,
         text = stringResource(R.string.add_tags),
         onClick = onClick
     )

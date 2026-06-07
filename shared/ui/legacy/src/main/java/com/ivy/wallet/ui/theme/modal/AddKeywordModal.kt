@@ -14,7 +14,7 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.ivy.design.l0_system.UI
+import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
 import com.ivy.ui.legacy.onScreenStart
 import com.ivy.ui.legacy.selectEndTextFieldValue
@@ -52,9 +52,9 @@ fun BoxWithConstraintsScope.AddKeywordModal(
         Text(
             modifier = Modifier.padding(start = 32.dp),
             text = stringResource(R.string.add_keyword),
-            style = UI.typo.b1.style(
+            style = LegacyTheme.typo.b1.style(
                 fontWeight = FontWeight.ExtraBold,
-                color = UI.colors.pureInverse
+                color = LegacyTheme.colors.pureInverse
             )
         )
 

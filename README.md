@@ -60,7 +60,7 @@
 
 - `feature:*` 和 `app` 对 `:temp:legacy-code` 的直接依赖已经迁走，Gradle 中不再 include 旧 `temp` 模块。
 - `:temp:legacy-code` 模块已经删除；旧全局上下文入口暂时迁入 `shared:ui:legacy`，后续继续拆内部职责。
-- 旧设计系统源码已经迁入 `shared:ui:core` 作为兼容层，仍保留 `com.ivy.design.*` 包名和旧 `IvyUI`、`UI.colors` 等概念；旧全局 `IvyContext/IvyWalletCtx` 已删除。
+- 旧设计系统源码已经迁入 `shared:ui:core` 作为兼容层，仍保留 `com.ivy.design.*` 包名和旧 `IvyUI`、`LegacyTheme` 等概念；旧全局 `IvyContext/IvyWalletCtx` 已删除。
 
 问题：
 
@@ -394,6 +394,7 @@
 - 已把起始日和选中周期从 `IvyWalletCtx` 拆到 `shared:ui:legacy` 的 `PeriodState`，由 app 根部提供 `LocalPeriodState`，首页、交易、余额、饼图、报表、账户、分类、预算和设置页都改用这个明确状态。
 - 已把旧全局屏幕宽高从 `IvyContext` 删除：首页更多菜单、主底部栏、借贷底部栏和交易列表底部留白改用当前 Compose `BoxWithConstraintsScope` 的 `maxWidth/maxHeight` 计算布局，`IvyUI` 不再向全局上下文写入屏幕尺寸。
 - 已把旧主题状态从 `IvyContext` 拆到 `shared:ui:core` 的 `ThemeState`，`RootViewModel` 初始化运行时主题，首页和设置页切换主题时更新同一个状态；`IvyDesign.context()`、`IvyContext`、`IvyWalletCtx` 和 `ivyWalletCtx()` 已删除。
+- 已把旧主题访问入口从泛化的 `UI.colors/typo/shapes` 重命名为 `LegacyTheme.colors/typo/shapes`，功能和视觉不变，但调用点会明确标识这是旧主题兼容层。
 - 已删除 `:temp:legacy-code` 的 Gradle include、模块 build 文件，以及所有 app/feature 对 `projects.temp.legacyCode` 的依赖声明。
 - 阶段 5 的模块拆解目标已经完成：仓库中不再有被 Gradle include 的 `temp:*` 模块。后续工作转为拆除 `shared:ui:legacy` 中剩余旧上下文、旧设计 API 和旧 UI 兼容模型。
 
@@ -635,7 +636,7 @@ shared:ui:core
    - 移动 fake DAO、test dispatcher、test resource provider、test time converter。
 4. **收尾旧设计兼容层**
    - `:temp:old-design` 已删除。
-   - 后续改包名、替换 `UI.colors`/`IvyUI`/旧 building block。
+   - 后续改包名、替换 `LegacyTheme`/`IvyUI`/旧 building block。
 5. **迁移 `temp:legacy-code`**
    - 从工具函数和 modal 开始。
    - 再处理旧 domain action。
@@ -675,6 +676,6 @@ shared:ui:core
 
 下一步建议执行：
 
-1. 继续替换旧设计兼容 API：下一步优先处理 `UI.colors` 和旧 building block。
+1. 继续替换旧设计兼容 API：下一步优先处理旧 building block 和 `com.ivy.wallet.ui.theme.*` 包名。
 2. 收敛 `shared:ui:legacy` 中仍以 `com.ivy.wallet.ui.theme.*` 命名的旧组件，把通用组件迁到更清晰的 ui core 包名，功能专用组件再下沉到对应 feature。
 3. 每完成一组跨模块边界调整后运行 `:app:assembleDemo`，确认构建没有被迁移影响；涉及数据库、备份恢复或导入导出时再补充对应测试。

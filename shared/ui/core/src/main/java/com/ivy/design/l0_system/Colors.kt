@@ -210,7 +210,7 @@ data class Gradient(
 
         @Deprecated("Old design system. Use `:ivy-design` and Material3")
         @Composable
-        fun black() = Gradient(UI.colors.gray, UI.colors.pureInverse)
+        fun black() = Gradient(LegacyTheme.colors.gray, LegacyTheme.colors.pureInverse)
     }
 
     @Deprecated("Old design system. Use `:ivy-design` and Material3")

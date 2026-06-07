@@ -22,7 +22,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.ivy.design.l0_system.UI
+import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
 import com.ivy.navigation.CSVScreen
 import com.ivy.navigation.navigation
@@ -58,7 +58,7 @@ fun BoxWithConstraintsScope.ImportFrom(
             Text(
                 modifier = Modifier.padding(start = 32.dp),
                 text = stringResource(R.string.import_data),
-                style = UI.typo.h2.style(
+                style = LegacyTheme.typo.h2.style(
                     fontWeight = FontWeight.Black
                 )
             )
@@ -85,7 +85,7 @@ fun BoxWithConstraintsScope.ImportFrom(
             ) {
                 Text(
                     text = stringResource(id = R.string.manual_csv_import),
-                    style = UI.typo.b2.style(
+                    style = LegacyTheme.typo.b2.style(
                         fontWeight = FontWeight.Bold,
                         color = Color.White
                     )
@@ -115,8 +115,8 @@ private fun ImportAction(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp)
-            .clip(UI.shapes.r3)
-            .background(UI.colors.medium, UI.shapes.r3)
+            .clip(LegacyTheme.shapes.r3)
+            .background(LegacyTheme.colors.medium, LegacyTheme.shapes.r3)
             .clickable {
                 onClick()
             }
@@ -124,9 +124,9 @@ private fun ImportAction(
     ) {
         Text(
             text = title,
-            style = UI.typo.b2.style(
+            style = LegacyTheme.typo.b2.style(
                 fontWeight = FontWeight.Bold,
-                color = UI.colors.pureInverse
+                color = LegacyTheme.colors.pureInverse
             )
         )
 
@@ -134,8 +134,8 @@ private fun ImportAction(
 
         Text(
             text = description,
-            style = UI.typo.c.style(
-                color = UI.colors.pureInverse
+            style = LegacyTheme.typo.c.style(
+                color = LegacyTheme.colors.pureInverse
             )
         )
     }

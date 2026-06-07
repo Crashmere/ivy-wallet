@@ -11,7 +11,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.ivy.design.l0_system.UI
+import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.ui.legacy.drawColoredShadow
 import com.ivy.design.utils.thenIf
 import com.ivy.wallet.ui.theme.Gradient
@@ -44,7 +44,7 @@ fun IvyCircleButton(
                     offsetY = 8.dp
                 )
             }
-            .clip(UI.shapes.rFull)
+            .clip(LegacyTheme.shapes.rFull)
             .background(
                 brush = if (enabled) {
                     if (horizontalGradient) {
@@ -53,9 +53,9 @@ fun IvyCircleButton(
                         backgroundGradient.asVerticalBrush()
                     }
                 } else {
-                    SolidColor(UI.colors.gray)
+                    SolidColor(LegacyTheme.colors.gray)
                 },
-                shape = UI.shapes.rFull
+                shape = LegacyTheme.shapes.rFull
             )
             .clickable(onClick = onClick, enabled = enabled)
             .padding(all = backgroundPadding),

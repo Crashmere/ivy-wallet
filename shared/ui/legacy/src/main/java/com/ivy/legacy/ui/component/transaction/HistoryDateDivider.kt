@@ -18,7 +18,7 @@ import com.ivy.base.legacy.dateNowLocal
 import com.ivy.data.model.currency.format
 import com.ivy.design.l0_system.Gray
 import com.ivy.design.l0_system.Green
-import com.ivy.design.l0_system.UI
+import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
 import com.ivy.ui.R
 import com.ivy.ui.legacy.formatLocal
@@ -49,7 +49,7 @@ fun HistoryDateDivider(
                 text = date.formatLocal(
                     if (today.year == date.year) "MMMM dd." else "MMM dd. yyy"
                 ),
-                style = UI.typo.b1.style(
+                style = LegacyTheme.typo.b1.style(
                     fontWeight = FontWeight.ExtraBold
                 )
             )
@@ -71,7 +71,7 @@ fun HistoryDateDivider(
                         date.formatLocal("EEEE")
                     }
                 },
-                style = UI.typo.c.style(
+                style = LegacyTheme.typo.c.style(
                     fontWeight = FontWeight.Bold
                 )
             )
@@ -82,7 +82,7 @@ fun HistoryDateDivider(
         val cashflow = income - expenses
         Text(
             text = "${cashflow.format(baseCurrency)} $baseCurrency",
-            style = UI.typo.nB2.style(
+            style = LegacyTheme.typo.nB2.style(
                 fontWeight = FontWeight.Bold,
                 color = if (cashflow > 0) Green else Gray
             )
