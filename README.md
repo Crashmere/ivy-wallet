@@ -375,7 +375,10 @@
 - 已把金额输入弹窗、计算器弹窗和缓冲金额弹窗迁入 `shared:ui:legacy`。其中金额键盘仍通过 Hilt EntryPoint 读取“标准键盘布局”偏好，因此 `shared:ui:legacy` 暂时显式依赖 `shared:domain` 和 `keval`；后续偏好设置重构时应改为由调用方或 CompositionLocal 提供键盘布局。
 - 已把旧 `legacy.datamodel` 整体迁入 `shared:domain`，把旧创建参数模型迁入 `shared:ui:legacy` 作为过渡兼容模型。
 - 已把旧颜色选择器、账户弹窗、分类弹窗、借贷弹窗和借贷记录弹窗迁入 `shared:ui:legacy`。颜色选择器移除了旧付费锁显示分支；当前 `IvyWalletCtx.isPremium` 固定为 `true`，因此不改变当前实际显示。
-- `temp:legacy-code` 的旧 theme 目录已经没有 Kotlin 文件。下一步应从旧 domain action、旧 creator/logic、编辑交易底部表单和全局 `IvyWalletCtx` 继续拆。
+- 已把旧 UI 状态模型 `AppBaseData`、`LegacyDueSection`、`BufferInfo`、`EditTransactionDisplayLoan` 迁入 `shared:ui:legacy`，作为迁移期的 UI 兼容数据。
+- 已把搜索框、收入/支出卡片、详情工具栏、标签弹窗、交易卡片和交易列表组件迁入 `shared:ui:legacy`；交易卡片查找账户/分类时改为只使用调用方传入的数据，去掉了对 `IvyWalletCtx` 缓存的读取。
+- 已把 `SortOrder`、`CustomExchangeRateState`、`TransactionHistoryDateDivider` 迁入 `shared:domain`，它们本来已经以 `com.ivy.wallet.domain.data` 包名被 feature 使用。
+- `temp:legacy-code` 的旧 theme 目录和通用旧交易/标签/搜索 UI 目录已经没有 Kotlin 文件。下一步应从旧 domain action、旧 creator/logic、编辑交易底部表单和全局 `IvyWalletCtx` 继续拆。
 
 迁移分组：
 

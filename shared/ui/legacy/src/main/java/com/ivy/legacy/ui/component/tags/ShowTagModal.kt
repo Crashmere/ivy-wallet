@@ -29,7 +29,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.Tag
 import com.ivy.data.model.TagId
-import com.ivy.data.repository.mapper.TagMapper.Companion.createNewTagId
 import com.ivy.design.l0_system.Blue2Dark
 import com.ivy.design.l0_system.UI
 import com.ivy.design.l0_system.style
@@ -83,7 +82,7 @@ fun BoxWithConstraintsScope.ShowTagModal(
     }
 
     var selectedTagId by remember(selectedTag) {
-        mutableStateOf(selectedTag?.id ?: createNewTagId())
+        mutableStateOf(selectedTag?.id ?: TagId(UUID.randomUUID()))
     }
 
     var searchQueryTextFieldValue by remember(visible) {
@@ -157,7 +156,7 @@ fun BoxWithConstraintsScope.ShowTagModal(
         onTagAdd = {
             onTagAdd(it)
             selectedTag = null
-            selectedTagId = createNewTagId()
+            selectedTagId = TagId(UUID.randomUUID())
         },
         onTagDelete = {
             deleteTagModalVisible = true
