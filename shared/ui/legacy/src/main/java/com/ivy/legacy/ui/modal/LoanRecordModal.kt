@@ -35,7 +35,7 @@ import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
 import com.ivy.ui.compose.thenIf
 import com.ivy.legacy.domain.model.Account
-import com.ivy.legacy.domain.model.LoanRecord
+import com.ivy.data.model.legacy.LoanRecord
 import com.ivy.legacy.ui.component.DateTimeRow
 import com.ivy.legacy.ui.modal.ModalNameInput
 import com.ivy.base.currency.getDefaultFIATCurrency
@@ -45,7 +45,7 @@ import com.ivy.legacy.ui.testing.TestingContext
 import com.ivy.ui.R
 import com.ivy.data.model.legacy.CreateAccountData
 import com.ivy.legacy.domain.model.CreateLoanRecordData
-import com.ivy.legacy.domain.model.EditLoanRecordData
+import com.ivy.data.model.legacy.EditLoanRecordData
 import com.ivy.legacy.ui.component.ItemIconSDefaultIcon
 import com.ivy.legacy.ui.component.IvyCheckboxWithText
 import com.ivy.legacy.ui.component.IvyIcon

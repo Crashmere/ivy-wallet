@@ -1,6 +1,5 @@
-package com.ivy.legacy.domain.model
+package com.ivy.data.model.legacy
 
-import com.ivy.data.db.entity.LoanEntity
 import com.ivy.data.model.LoanType
 import java.time.LocalDateTime
 import java.util.UUID
@@ -20,18 +19,4 @@ data class Loan(
     val dateTime: LocalDateTime? = null,
 
     val id: UUID = UUID.randomUUID()
-) {
-    fun toEntity(): LoanEntity = LoanEntity(
-        name = name,
-        amount = amount,
-        type = type,
-        color = color,
-        icon = icon,
-        orderNum = orderNum,
-        accountId = accountId,
-        note = note,
-        isDeleted = isDeleted,
-        id = id,
-        dateTime = dateTime
-    )
-}
+)

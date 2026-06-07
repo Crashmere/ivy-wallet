@@ -485,6 +485,7 @@
 - 纯创建参数 `CreateAccountData`、`CreateCategoryData`、`CreateBudgetData` 已从 `com.ivy.legacy.domain.model` 下沉到 `com.ivy.data.model.legacy`；UI 弹窗、feature event 和 domain creator 继续使用同名参数对象，但不再占用 legacy domain model 包。
 - 旧预算模型 `Budget` 已从 `com.ivy.legacy.domain.model` 下沉到 `com.ivy.data.model.legacy`；数据库转换 `toEntity()` 已移入 legacy domain mapper，预算页、预算排序 use case 和旧预算 creator 继续使用同一模型语义。
 - 旧汇率计算仍使用的兼容模型 `ExchangeRate` 已从 `com.ivy.legacy.domain.model` 下沉到 `com.ivy.data.model.legacy`；数据库转换边界保留在 legacy domain mapper。无调用方的旧 `Category` 兼容模型和 mapper 已删除，分类功能继续使用正式 `com.ivy.data.model.Category`。
+- 旧借贷模型 `Loan`、`LoanRecord` 和 `EditLoanRecordData` 已从 `com.ivy.legacy.domain.model` 下沉到 `com.ivy.data.model.legacy`；借贷数据库转换 `toEntity()` 已移入 legacy domain mapper。`CreateLoanData/CreateLoanRecordData` 仍因携带旧 `Account` 暂留 domain，后续随账户模型一起处理。
 - 已把剩余 UI 兼容状态模型从 `com.ivy.legacy.data` 迁到 `com.ivy.legacy.ui.model`，并把周期选择模型迁到 `com.ivy.legacy.ui.model.period`；`com.ivy.legacy.data.*` 包名已经从源码中清空。
 - 已把新旧交易模型桥接 helper 从 `com.ivy.data.temp.migration` 改名到 `com.ivy.data.legacy`，它们仍用于预算、报表和旧 domain 统计，但不再伪装成临时 migration 工具。
 - 已把旧 UI helper 从 `com.ivy.ui.legacy` 迁到 `com.ivy.legacy.ui`，包括 Compose 扩展、手势、动画、日期/间隔格式化和 Android UI 扩展；功能不变，只让旧 UI 工具回到统一 legacy UI 包根。

@@ -15,8 +15,8 @@ import com.ivy.domain.usecase.loan.GetLoanRecordsUseCase
 import com.ivy.domain.usecase.loan.GetLoanTransactionUseCase
 import com.ivy.domain.usecase.loan.HasLoanRecordTransactionUseCase
 import com.ivy.legacy.domain.model.Account
-import com.ivy.legacy.domain.model.Loan
-import com.ivy.legacy.domain.model.LoanRecord
+import com.ivy.data.model.legacy.Loan
+import com.ivy.data.model.legacy.LoanRecord
 import com.ivy.legacy.domain.logic.AccountCreator
 import com.ivy.base.coroutines.computationThread
 import com.ivy.loans.loan.data.DisplayLoanRecord
@@ -35,7 +35,7 @@ import com.ivy.legacy.domain.logic.LoanRecordCreator
 import com.ivy.legacy.domain.logic.loantransactions.LoanTransactionsLogic
 import com.ivy.data.model.legacy.CreateAccountData
 import com.ivy.legacy.domain.model.CreateLoanRecordData
-import com.ivy.legacy.domain.model.EditLoanRecordData
+import com.ivy.data.model.legacy.EditLoanRecordData
 import com.ivy.legacy.ui.modal.LoanModalData
 import com.ivy.legacy.ui.modal.LoanRecordModalData
 import dagger.hilt.android.lifecycle.HiltViewModel

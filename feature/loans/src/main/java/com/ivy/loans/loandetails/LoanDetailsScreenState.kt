@@ -1,7 +1,7 @@
 package com.ivy.loans.loandetails
 
 import com.ivy.legacy.domain.model.Account
-import com.ivy.legacy.domain.model.Loan
+import com.ivy.data.model.legacy.Loan
 import com.ivy.loans.loan.data.DisplayLoanRecord
 import com.ivy.legacy.ui.modal.LoanModalData
 import com.ivy.legacy.ui.modal.LoanRecordModalData

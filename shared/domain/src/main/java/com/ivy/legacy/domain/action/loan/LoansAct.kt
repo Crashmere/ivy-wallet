@@ -4,7 +4,7 @@ import com.ivy.data.db.dao.read.LoanDao
 import com.ivy.legacy.frp.action.FPAction
 import com.ivy.legacy.frp.action.thenMap
 import com.ivy.legacy.frp.then
-import com.ivy.legacy.domain.model.Loan
+import com.ivy.data.model.legacy.Loan
 import com.ivy.legacy.domain.mapper.toLegacyDomain
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList

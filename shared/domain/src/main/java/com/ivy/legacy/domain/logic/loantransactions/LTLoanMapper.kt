@@ -5,8 +5,8 @@ import com.ivy.base.model.LoanRecordType
 import com.ivy.base.model.TransactionType
 import com.ivy.data.model.LoanType
 import com.ivy.legacy.domain.model.Account
-import com.ivy.legacy.domain.model.Loan
-import com.ivy.legacy.domain.model.LoanRecord
+import com.ivy.data.model.legacy.Loan
+import com.ivy.data.model.legacy.LoanRecord
 import com.ivy.legacy.domain.mapper.toLegacyDomain
 import com.ivy.base.coroutines.computationThread
 import com.ivy.base.coroutines.scopedIOThread

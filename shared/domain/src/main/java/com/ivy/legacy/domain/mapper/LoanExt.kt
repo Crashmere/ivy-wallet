@@ -2,9 +2,23 @@ package com.ivy.legacy.domain.mapper
 
 import com.ivy.data.db.entity.LoanEntity
 import com.ivy.data.model.LoanType
-import com.ivy.legacy.domain.model.Loan
+import com.ivy.data.model.legacy.Loan
 
 fun LoanEntity.toLegacyDomain(): Loan = Loan(
+    name = name,
+    amount = amount,
+    type = type,
+    color = color,
+    icon = icon,
+    orderNum = orderNum,
+    accountId = accountId,
+    note = note,
+    isDeleted = isDeleted,
+    id = id,
+    dateTime = dateTime
+)
+
+fun Loan.toEntity(): LoanEntity = LoanEntity(
     name = name,
     amount = amount,
     type = type,

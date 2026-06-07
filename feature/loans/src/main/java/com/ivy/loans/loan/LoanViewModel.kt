@@ -16,7 +16,7 @@ import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.domain.usecase.loan.GetLoanRecordsUseCase
 import com.ivy.domain.usecase.loan.ReorderLoansUseCase
 import com.ivy.legacy.domain.model.Account
-import com.ivy.legacy.domain.model.Loan
+import com.ivy.data.model.legacy.Loan
 import com.ivy.legacy.domain.logic.AccountCreator
 import com.ivy.data.model.currency.format
 import com.ivy.base.currency.getDefaultFIATCurrency

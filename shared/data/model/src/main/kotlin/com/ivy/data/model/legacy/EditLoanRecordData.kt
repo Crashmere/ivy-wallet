@@ -1,6 +1,4 @@
-package com.ivy.legacy.domain.model
-
-import com.ivy.legacy.domain.model.LoanRecord
+package com.ivy.data.model.legacy
 
 data class EditLoanRecordData(
     val newLoanRecord: LoanRecord,
