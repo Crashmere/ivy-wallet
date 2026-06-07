@@ -2,6 +2,7 @@ package com.ivy.data.di
 
 import com.ivy.data.DataWriteEventBus
 import com.ivy.data.api.AccountStore
+import com.ivy.data.api.AppPreferenceResetStore
 import com.ivy.data.api.AppPreferenceStore
 import com.ivy.data.api.BufferAmountStore
 import com.ivy.data.api.backup.BackupStore
@@ -57,6 +58,11 @@ abstract class DataBindingsModule {
 
     @Binds
     abstract fun bindAppPreferenceStore(store: SharedPrefsAppPreferenceStore): AppPreferenceStore
+
+    @Binds
+    abstract fun bindAppPreferenceResetStore(
+        store: SharedPrefsAppPreferenceStore
+    ): AppPreferenceResetStore
 
     @Binds
     abstract fun bindInitialSetupStore(store: SharedPrefsAppPreferenceStore): InitialSetupStore

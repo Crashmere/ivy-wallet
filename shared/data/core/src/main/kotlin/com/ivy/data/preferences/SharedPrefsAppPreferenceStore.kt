@@ -2,6 +2,7 @@ package com.ivy.data.preferences
 
 import android.content.Context
 import com.ivy.data.api.AppPreferenceKeys
+import com.ivy.data.api.AppPreferenceResetStore
 import com.ivy.data.api.AppPreferenceStore
 import com.ivy.data.api.CategorySortOrderStore
 import com.ivy.data.api.CustomerJourneyCardStore
@@ -17,7 +18,8 @@ class SharedPrefsAppPreferenceStore @Inject constructor(
     InitialSetupStore,
     LastSelectedAccountStore,
     CategorySortOrderStore,
-    CustomerJourneyCardStore {
+    CustomerJourneyCardStore,
+    AppPreferenceResetStore {
     companion object {
         private const val PREFS_FILENAME = "ivy_wallet_prefs"
     }

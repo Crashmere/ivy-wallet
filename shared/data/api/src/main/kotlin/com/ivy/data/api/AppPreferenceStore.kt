@@ -12,6 +12,4 @@ interface AppPreferenceStore {
     var hideIncome: Boolean
 
     var transfersAsIncomeExpense: Boolean
-
-    fun clearAll()
 }
