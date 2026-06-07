@@ -1,4 +1,4 @@
-package com.ivy.legacy.design.api.systems
+package com.ivy.legacy.design.l0_system
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.text.TextStyle
@@ -9,17 +9,13 @@ import androidx.compose.ui.text.style.BaselineShift
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ivy.base.legacy.Theme
-import com.ivy.legacy.design.api.IvyDesign
-import com.ivy.legacy.design.l0_system.*
 import com.ivy.ui.R
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
-object DefaultIvyDesign : IvyDesign {
+internal object DefaultLegacyDesign {
     private const val OPEN_SANS_BASELINE_SHIFT = 0.075f
     private const val RALEWAY_BASELINE_SHIFT = 0.2f
 
-    @Deprecated("Old design system. Use `:ivy-design` and Material3")
-    override fun typography(): IvyTypography {
+    fun typography(): IvyTypography {
         val openSans = FontFamily(
             Font(R.font.opensans_regular, FontWeight.Normal),
             Font(R.font.opensans_regular, FontWeight.Medium),
@@ -110,8 +106,7 @@ object DefaultIvyDesign : IvyDesign {
         }
     }
 
-    @Deprecated("Old design system. Use `:ivy-design` and Material3")
-    override fun colors(theme: Theme, isDarkModeEnabled: Boolean): IvyColors {
+    fun colors(theme: Theme, isDarkModeEnabled: Boolean): IvyColors {
         return when (theme) {
             Theme.LIGHT -> object : IvyColors {
                 override val pure = White
@@ -193,8 +188,7 @@ object DefaultIvyDesign : IvyDesign {
         }
     }
 
-    @Deprecated("Old design system. Use `:ivy-design` and Material3")
-    override fun shapes(): IvyShapes {
+    fun shapes(): IvyShapes {
         return object : IvyShapes() {
             override val r1 = RoundedCornerShape(32.dp)
             override val r1Top = RoundedCornerShape(topStart = 32.dp, topEnd = 32.dp)

@@ -28,7 +28,6 @@ fun IvyUI(
     timeFormatter: TimeFormatter,
     datePicker: DatePicker,
     themeState: ThemeState,
-    design: IvyDesign,
     includeSurface: Boolean = true,
     content: @Composable BoxWithConstraintsScope.() -> Unit
 ) {
@@ -40,8 +39,7 @@ fun IvyUI(
         LocalDatePicker provides datePicker,
     ) {
         IvyTheme(
-            theme = themeState.theme,
-            design = design
+            theme = themeState.theme
         ) {
             WrapWithSurface(includeSurface = includeSurface) {
                 BoxWithConstraints(modifier = Modifier.fillMaxSize()) {

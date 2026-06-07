@@ -12,7 +12,6 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 import com.ivy.base.legacy.Theme
-import com.ivy.legacy.design.api.IvyDesign
 import com.ivy.ui.theme.IvyMaterial3Theme
 
 @Deprecated("Old design system. Use `:ivy-design` and Material3")
@@ -46,13 +45,12 @@ object LegacyTheme {
 @Composable
 fun IvyTheme(
     theme: Theme,
-    design: IvyDesign,
     isDarkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
-    val colors = design.colors(theme, isDarkTheme)
-    val typography = design.typography()
-    val shapes = design.shapes()
+    val colors = DefaultLegacyDesign.colors(theme, isDarkTheme)
+    val typography = DefaultLegacyDesign.typography()
+    val shapes = DefaultLegacyDesign.shapes()
 
     CompositionLocalProvider(
         LocalIvyColors provides colors,
