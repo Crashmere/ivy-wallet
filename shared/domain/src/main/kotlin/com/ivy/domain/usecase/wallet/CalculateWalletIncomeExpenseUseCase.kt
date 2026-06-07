@@ -8,7 +8,7 @@ import com.ivy.data.model.legacy.ClosedTimeRange
 import com.ivy.data.model.legacy.IncomeExpensePair
 import com.ivy.domain.usecase.account.GetAccountTransactionsUseCase
 import com.ivy.domain.usecase.exchange.ExchangeAmountUseCase
-import com.ivy.domain.account.filterExcluded
+import com.ivy.domain.account.legacy.includedLegacyAccounts
 import com.ivy.domain.exchange.ExchangeData
 import com.ivy.domain.transaction.AccountValueFunctions
 import com.ivy.domain.transaction.foldTransactions
@@ -24,7 +24,7 @@ class CalculateWalletIncomeExpenseUseCase @Inject constructor(
         accounts: List<Account>,
         range: ClosedTimeRange,
     ): IncomeExpensePair {
-        val statsList = filterExcluded(accounts).map { account ->
+        val statsList = includedLegacyAccounts(accounts).map { account ->
             val transactions = getAccountTransactionsUseCase(
                 accountId = AccountId(account.id),
                 range = range

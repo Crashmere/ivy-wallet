@@ -17,7 +17,7 @@ import com.ivy.domain.usecase.category.CalculateCategoryIncomeWithAccountFilters
 import com.ivy.domain.usecase.category.GetCategoriesUseCase
 import com.ivy.domain.usecase.transaction.CalculateLegacyTransactionsIncomeExpenseUseCase
 import com.ivy.domain.usecase.transaction.GetLegacyTransactionsForAccountsUseCase
-import com.ivy.domain.account.filterExcluded
+import com.ivy.domain.account.legacy.includedLegacyAccounts
 import com.ivy.legacy.ui.theme.system.RedLight
 import com.ivy.ui.R
 import kotlinx.collections.immutable.ImmutableList
@@ -98,7 +98,7 @@ class BuildPieChartDataUseCase @Inject constructor(
     ): Pair<List<Account>, Set<UUID>> {
         val allAccounts = getLegacyAccountsUseCase()
         val accountsUsed = if (accountIdFilterList.isEmpty()) {
-            filterExcluded(allAccounts)
+            includedLegacyAccounts(allAccounts)
         } else {
             allAccounts.filter { accountIdFilterList.contains(it.id) }
         }

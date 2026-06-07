@@ -824,6 +824,7 @@
 - 新版交易到旧历史列表 UI item 的桥接函数已从 `legacy/TrnDateDividers.kt` 拆到正式 `com.ivy.domain.transaction.TransactionHistoryItems`；legacy 日期分组对象只保留旧交易模型入口。
 - 旧交易兼容目录中的文件名已和对象名对齐：`LegacyTransactionFunctions`、`LegacyFoldTransactions`、`LegacyWalletValueFunctions`、`LegacyTransactionDateDividers` 均保留在 `com.ivy.domain.transaction.legacy`，目录中不再混用新版语义文件名；交易求和 helper 也从 `sumTrns` 改为 `sumTransactions`。
 - 交易汇率换算相关旧缩写继续收敛：`ExchangeTrns.kt` 已改为 `ExchangeTransactions.kt`，`ExchangeTrnArgument`/`LegacyExchangeTrns`/`trnCurrency` 改为完整的 `ExchangeTransactionArgument`/`LegacyExchangeTransactions`/`transactionCurrency` 命名；行为不变。
+- 旧账户模型 helper 已从泛化 `com.ivy.domain.account.AccountFunctions` 迁到 `com.ivy.domain.account.legacy.LegacyAccountFunctions`，并改名为 `includedLegacyAccounts`/`legacyAccountCurrency`；调用方现在能明确看出这些函数仍依赖 legacy 账户模型。
 - 功能开关偏好门面已从 `PreferenceToggleRepository` 改名为 `PreferenceToggleService`：它只负责把 domain 层 `BoolPreference` 映射到底层 `PreferenceToggleStore`，不再用 repository 命名暗示数据仓库职责。
 - 旧 `Logic` 注入变量名已继续收敛：`LegacyExchangeRatesUseCase` 的调用方统一使用 `exchangeRatesUseCase`，首页客户旅程卡片也改用 `customerJourneyCardsProvider` 命名，避免把 provider/use case 误读成旧 logic 层。
 - 旧到期交易 UI 模型 `LegacyDueSection` 的 `trns` 字段已改为 `transactions`，legacy 交易列表内部私有 `trnItems/trnCount` 也改为完整命名；首页、报表和交易页调用方同步更新，展示行为不变。

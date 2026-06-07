@@ -4,7 +4,7 @@ import arrow.core.Option
 import arrow.core.toOption
 import com.ivy.data.model.Transaction
 import com.ivy.data.model.legacy.Account
-import com.ivy.domain.account.accountCurrency
+import com.ivy.domain.account.legacy.legacyAccountCurrency
 import com.ivy.domain.transaction.legacy.LegacyTransactionFunctions
 import com.ivy.domain.transaction.getAccountId
 import com.ivy.domain.transaction.getValue
@@ -24,7 +24,7 @@ suspend fun exchangeInBaseCurrency(
     arg: ExchangeTransactionArgument
 ): BigDecimal {
     val fromCurrency = arg.getAccount(transaction.getAccountId())?.let {
-        accountCurrency(it, arg.baseCurrency)
+        legacyAccountCurrency(it, arg.baseCurrency)
     }.toOption()
 
     return exchangeInCurrency(
@@ -40,7 +40,7 @@ suspend fun exchangeInBaseCurrency(
     arg: ExchangeTransactionArgument
 ): BigDecimal {
     val fromCurrency = arg.getAccount(transaction.accountId)?.let {
-        accountCurrency(it, arg.baseCurrency)
+        legacyAccountCurrency(it, arg.baseCurrency)
     }.toOption()
 
     return exchangeInCurrency(

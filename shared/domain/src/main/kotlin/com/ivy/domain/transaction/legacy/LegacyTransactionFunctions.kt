@@ -4,7 +4,7 @@ import arrow.core.Option
 import arrow.core.toOption
 import com.ivy.data.model.TransactionType
 import com.ivy.data.model.legacy.Account
-import com.ivy.domain.account.accountCurrency
+import com.ivy.domain.account.legacy.legacyAccountCurrency
 
 object LegacyTransactionFunctions {
     fun expenses(transactions: List<com.ivy.data.model.legacy.Transaction>): List<com.ivy.data.model.legacy.Transaction> {
@@ -20,6 +20,6 @@ object LegacyTransactionFunctions {
     ): Option<String> {
         val account = accounts.find { it.id == transaction.accountId }
             ?: return baseCurrency.toOption()
-        return accountCurrency(account, baseCurrency).toOption()
+        return legacyAccountCurrency(account, baseCurrency).toOption()
     }
 }

@@ -4,7 +4,7 @@ import arrow.core.Option
 import arrow.core.toOption
 import com.ivy.data.model.Transaction
 import com.ivy.data.model.legacy.Account
-import com.ivy.domain.account.accountCurrency
+import com.ivy.domain.account.legacy.legacyAccountCurrency
 
 fun transactionCurrency(
     transaction: Transaction,
@@ -15,5 +15,5 @@ fun transactionCurrency(
         it.id == transaction.getAccountId()
     }
         ?: return baseCurrency.toOption()
-    return accountCurrency(account, baseCurrency).toOption()
+    return legacyAccountCurrency(account, baseCurrency).toOption()
 }
