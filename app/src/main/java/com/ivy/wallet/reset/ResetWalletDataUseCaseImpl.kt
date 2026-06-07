@@ -1,8 +1,5 @@
 package com.ivy.wallet.reset
 
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.edit
 import com.ivy.base.coroutines.ioThread
 import com.ivy.data.DataObserver
 import com.ivy.data.DataWriteEvent
@@ -17,6 +14,7 @@ import com.ivy.data.repository.ExchangeRatesRepository
 import com.ivy.data.repository.TagRepository
 import com.ivy.data.repository.TransactionRepository
 import com.ivy.domain.preferences.AppPreferences
+import com.ivy.domain.preferences.DataStorePreferencesRepository
 import com.ivy.domain.usecase.ResetWalletDataUseCase
 import com.ivy.ui.navigation.MainScreen
 import com.ivy.ui.navigation.Navigation
@@ -27,7 +25,7 @@ class ResetWalletDataUseCaseImpl @Inject constructor(
     private val appPreferences: AppPreferences,
     private val navigation: Navigation,
     private val dataObserver: DataObserver,
-    private val dataStore: DataStore<Preferences>,
+    private val dataStorePreferencesRepository: DataStorePreferencesRepository,
     private val accountRepository: AccountRepository,
     private val transactionRepository: TransactionRepository,
     private val categoryRepository: CategoryRepository,
@@ -43,9 +41,7 @@ class ResetWalletDataUseCaseImpl @Inject constructor(
     override suspend fun resetAllData() {
         ioThread {
             deleteAllData()
-            dataStore.edit {
-                it.clear()
-            }
+            dataStorePreferencesRepository.clearAll()
             appPreferences.clearAll()
         }
 
