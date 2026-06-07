@@ -1,4 +1,4 @@
-package com.ivy.data.model.sync
+package com.ivy.data.model.identity
 
 interface Identifiable<ID : UniqueId> {
     val id: ID

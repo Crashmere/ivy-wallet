@@ -3,8 +3,8 @@ package com.ivy.data.model
 import com.ivy.data.model.primitive.ColorInt
 import com.ivy.data.model.primitive.IconAsset
 import com.ivy.data.model.primitive.NotBlankTrimmedString
-import com.ivy.data.model.sync.Identifiable
-import com.ivy.data.model.sync.UniqueId
+import com.ivy.data.model.identity.Identifiable
+import com.ivy.data.model.identity.UniqueId
 import java.util.UUID
 
 @JvmInline

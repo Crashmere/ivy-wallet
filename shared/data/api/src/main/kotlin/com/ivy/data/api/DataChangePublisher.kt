@@ -6,7 +6,7 @@ import com.ivy.data.model.Category
 import com.ivy.data.model.CategoryId
 import com.ivy.data.model.Tag
 import com.ivy.data.model.TagId
-import com.ivy.data.model.sync.UniqueId
+import com.ivy.data.model.identity.UniqueId
 import kotlinx.coroutines.flow.Flow
 
 interface DataChangePublisher {

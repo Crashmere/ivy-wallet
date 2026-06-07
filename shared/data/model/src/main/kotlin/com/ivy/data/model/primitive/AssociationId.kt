@@ -1,6 +1,6 @@
 package com.ivy.data.model.primitive
 
-import com.ivy.data.model.sync.UniqueId
+import com.ivy.data.model.identity.UniqueId
 import java.util.UUID
 
 @JvmInline

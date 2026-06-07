@@ -1,4 +1,4 @@
-package com.ivy.data.model.sync
+package com.ivy.data.model.identity
 
 import java.util.UUID
 

@@ -4,8 +4,8 @@ import com.ivy.base.threading.DispatchersProvider
 import com.ivy.data.api.DataChangePublisher
 import com.ivy.data.api.DataWriteEvent
 import com.ivy.data.api.DeleteOperation
-import com.ivy.data.model.sync.Identifiable
-import com.ivy.data.model.sync.UniqueId
+import com.ivy.data.model.identity.Identifiable
+import com.ivy.data.model.identity.UniqueId
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
