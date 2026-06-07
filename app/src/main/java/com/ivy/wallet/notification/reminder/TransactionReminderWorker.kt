@@ -8,7 +8,7 @@ import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.ivy.base.resource.ResourceProvider
 import com.ivy.domain.AppStarter
-import com.ivy.domain.preferences.AppPreferences
+import com.ivy.domain.usecase.settings.GetShowNotificationsPreferenceUseCase
 import com.ivy.domain.usecase.transaction.CountTodayTransactionsUseCase
 import com.ivy.ui.R
 import com.ivy.wallet.android.notification.IvyNotificationChannel
@@ -24,7 +24,7 @@ class TransactionReminderWorker @AssistedInject constructor(
     @Assisted params: WorkerParameters,
     private val countTodayTransactionsUseCase: CountTodayTransactionsUseCase,
     private val notificationService: NotificationService,
-    private val appPreferences: AppPreferences,
+    private val getShowNotificationsPreference: GetShowNotificationsPreferenceUseCase,
     private val appStarter: AppStarter,
     private val resourceProvider: ResourceProvider,
 ) : CoroutineWorker(appContext, params) {
@@ -73,5 +73,5 @@ class TransactionReminderWorker @AssistedInject constructor(
         ).shuffled().first()
 
     private fun fetchShowNotifications(): Boolean =
-        appPreferences.showNotifications
+        getShowNotificationsPreference()
 }

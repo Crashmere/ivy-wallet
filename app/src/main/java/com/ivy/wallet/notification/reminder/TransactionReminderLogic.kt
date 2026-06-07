@@ -6,7 +6,7 @@ import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import com.ivy.base.time.toEpochSeconds
 import com.ivy.base.time.TimeProvider
-import com.ivy.domain.preferences.AppPreferences
+import com.ivy.domain.usecase.settings.GetShowNotificationsPreferenceUseCase
 import dagger.hilt.android.qualifiers.ApplicationContext
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -14,7 +14,7 @@ import javax.inject.Inject
 class TransactionReminderLogic @Inject constructor(
     @ApplicationContext
     private val appContext: Context,
-    private val appPreferences: AppPreferences,
+    private val getShowNotificationsPreference: GetShowNotificationsPreferenceUseCase,
     private val timeProvider: TimeProvider,
 ) {
     companion object {
@@ -54,5 +54,5 @@ class TransactionReminderLogic @Inject constructor(
     }
 
     private fun fetchShowNotifications(): Boolean =
-        appPreferences.showNotifications
+        getShowNotificationsPreference()
 }

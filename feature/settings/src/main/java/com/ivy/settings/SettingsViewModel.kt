@@ -21,11 +21,13 @@ import com.ivy.domain.usecase.csv.ExportCsvUseCase
 import com.ivy.domain.usecase.exchange.SyncExchangeRatesUseCase
 import com.ivy.domain.usecase.settings.GetHideCurrentBalancePreferenceUseCase
 import com.ivy.domain.usecase.settings.GetHideIncomePreferenceUseCase
+import com.ivy.domain.usecase.settings.GetShowNotificationsPreferenceUseCase
 import com.ivy.domain.usecase.settings.GetStartDayOfMonthUseCase
 import com.ivy.domain.usecase.settings.GetThemeUseCase
 import com.ivy.domain.usecase.settings.GetTransfersAsIncomeExpensePreferenceUseCase
 import com.ivy.domain.usecase.settings.SetHideCurrentBalancePreferenceUseCase
 import com.ivy.domain.usecase.settings.SetHideIncomePreferenceUseCase
+import com.ivy.domain.usecase.settings.SetShowNotificationsPreferenceUseCase
 import com.ivy.domain.usecase.settings.SetStartDayOfMonthUseCase
 import com.ivy.domain.usecase.settings.SetTransfersAsIncomeExpensePreferenceUseCase
 import com.ivy.domain.usecase.settings.SwitchThemeUseCase
@@ -61,6 +63,8 @@ class SettingsViewModel @Inject constructor(
     private val setHideCurrentBalancePreference: SetHideCurrentBalancePreferenceUseCase,
     private val getHideIncomePreference: GetHideIncomePreferenceUseCase,
     private val setHideIncomePreference: SetHideIncomePreferenceUseCase,
+    private val getShowNotificationsPreference: GetShowNotificationsPreferenceUseCase,
+    private val setShowNotificationsPreference: SetShowNotificationsPreferenceUseCase,
     private val getTransfersAsIncomeExpensePreference: GetTransfersAsIncomeExpensePreferenceUseCase,
     private val setTransfersAsIncomeExpensePreference: SetTransfersAsIncomeExpensePreferenceUseCase,
     private val syncExchangeRatesUseCase: SyncExchangeRatesUseCase,
@@ -143,7 +147,7 @@ class SettingsViewModel @Inject constructor(
     }
 
     private fun initializeShowNotifications() {
-        showNotifications.value = appPreferences.showNotifications
+        showNotifications.value = getShowNotificationsPreference()
     }
 
     private fun initializeHideCurrentBalance() {
@@ -412,7 +416,7 @@ class SettingsViewModel @Inject constructor(
         showNotifications.value = notificationsShow
 
         viewModelScope.launch {
-            appPreferences.showNotifications = notificationsShow
+            setShowNotificationsPreference(notificationsShow)
         }
     }
 
