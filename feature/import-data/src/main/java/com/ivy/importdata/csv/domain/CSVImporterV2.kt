@@ -5,30 +5,27 @@ import arrow.core.raise.either
 import com.ivy.base.model.legacy.Transaction
 import com.ivy.base.model.TransactionType
 import com.ivy.base.time.TimeConverter
-import com.ivy.data.backup.CSVRow
-import com.ivy.data.backup.ImportResult
-import com.ivy.data.db.dao.read.AccountDao
 import com.ivy.data.model.Category
 import com.ivy.data.model.CategoryId
+import com.ivy.data.model.importing.ImportCsvRow
+import com.ivy.data.model.importing.ImportResult
 import com.ivy.data.model.primitive.AssetCode
 import com.ivy.data.model.primitive.ColorInt
 import com.ivy.data.model.primitive.IconAsset
 import com.ivy.data.model.primitive.NotBlankTrimmedString
-import com.ivy.data.repository.AccountRepository
-import com.ivy.data.repository.CategoryRepository
-import com.ivy.data.repository.TransactionRepository
-import com.ivy.data.repository.mapper.TransactionMapper
+import com.ivy.domain.usecase.account.SaveAccountUseCase
 import com.ivy.domain.usecase.category.GetCategoriesUseCase
+import com.ivy.domain.usecase.category.SaveCategoryUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyUseCase
+import com.ivy.domain.usecase.transaction.SaveLegacyTransactionUseCase
 import com.ivy.legacy.ui.theme.IVY_COLOR_PICKER_COLORS_FREE
 import com.ivy.importdata.csv.ImportantFields
 import com.ivy.importdata.csv.OptionalFields
 import com.ivy.importdata.csv.TransferFields
 import com.ivy.legacy.domain.model.Account
-import com.ivy.legacy.domain.mapper.toLegacyDomain
-import com.ivy.legacy.domain.model.toEntity
 import com.ivy.base.text.toLowerCaseLocal
 import com.ivy.data.model.currency.IvyCurrency
+import com.ivy.legacy.domain.action.account.AccountsAct
 import com.ivy.legacy.domain.pure.util.nextOrderNum
 import com.ivy.legacy.ui.theme.Green
 import com.ivy.legacy.ui.theme.IvyDark
@@ -39,13 +36,12 @@ import kotlin.math.absoluteValue
 import com.ivy.importdata.csv.CSVRow as CSVRowNew
 
 class CSVImporterV2 @Inject constructor(
-    private val transactionRepository: TransactionRepository,
-    private val transactionMapper: TransactionMapper,
-    private val accountDao: AccountDao,
-    private val categoryRepository: CategoryRepository,
+    private val accountsAct: AccountsAct,
     private val getCategoriesUseCase: GetCategoriesUseCase,
     private val getBaseCurrency: GetBaseCurrencyUseCase,
-    private val accountRepository: AccountRepository,
+    private val saveAccountUseCase: SaveAccountUseCase,
+    private val saveCategoryUseCase: SaveCategoryUseCase,
+    private val saveLegacyTransactionUseCase: SaveLegacyTransactionUseCase,
     private val timeConverter: TimeConverter,
 ) {
 
@@ -68,7 +64,7 @@ class CSVImporterV2 @Inject constructor(
         newCategoryColorIndex = 0
         newAccountColorIndex = 0
 
-        accounts = accountDao.findAll().map { it.toLegacyDomain() }
+        accounts = accountsAct(Unit)
         val initialAccountsCount = accounts.size
 
         categories = getCategoriesUseCase()
@@ -76,7 +72,7 @@ class CSVImporterV2 @Inject constructor(
 
         val baseCurrency = getBaseCurrency()
 
-        val failedRows = mutableListOf<CSVRow>()
+        val failedRows = mutableListOf<ImportCsvRow>()
 
         val transactions = rows.mapIndexedNotNull { index, row ->
             val progressPercent = if (rowsCount > 0) {
@@ -96,7 +92,7 @@ class CSVImporterV2 @Inject constructor(
 
             if (transaction == null) {
                 failedRows.add(
-                    CSVRow(
+                    ImportCsvRow(
                         index = index + 2, // + 1 because we skip Header and +1 because they don't start from zero
                         content = row.values
                     )
@@ -112,11 +108,7 @@ class CSVImporterV2 @Inject constructor(
                 0.0
             }
             onProgress(0.5 + progressPercent / 2)
-            with(transactionMapper) {
-                transaction.toEntity().toDomain().getOrNull()?.let {
-                    transactionRepository.save(it)
-                }
-            }
+            saveLegacyTransactionUseCase(transaction)
         }
 
         return ImportResult(
@@ -283,12 +275,12 @@ class CSVImporterV2 @Inject constructor(
             ),
             color = colorArgb,
             icon = icon,
-            orderNum = orderNum ?: accountDao.findMaxOrderNum().nextOrderNum()
+            orderNum = orderNum ?: accounts.maxOfOrNull { it.orderNum }.nextOrderNum()
         )
         val domainAccount = newAccount.toDomainAccount(baseCurrency).getOrNull()
             ?: return null
-        accountRepository.save(domainAccount)
-        accounts = accountDao.findAll().map { it.toLegacyDomain() }
+        saveAccountUseCase(domainAccount)
+        accounts = accountsAct(Unit)
 
         return newAccount
     }
@@ -335,12 +327,12 @@ class CSVImporterV2 @Inject constructor(
                 name = NotBlankTrimmedString.from(categoryNameString).bind(),
                 color = ColorInt(colorArgb),
                 icon = icon?.let(IconAsset::from)?.getOrNull(),
-                orderNum = orderNum ?: categoryRepository.findMaxOrderNum().nextOrderNum(),
+                orderNum = orderNum ?: categories.maxOfOrNull { it.orderNum }.nextOrderNum(),
             )
         }.getOrNull()
 
         if (newCategory != null) {
-            categoryRepository.save(newCategory)
+            saveCategoryUseCase(newCategory)
             categories = getCategoriesUseCase()
         }
 

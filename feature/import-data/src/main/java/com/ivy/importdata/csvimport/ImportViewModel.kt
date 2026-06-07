@@ -3,9 +3,9 @@ package com.ivy.importdata.csvimport
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ivy.data.backup.BackupDataUseCase
-import com.ivy.data.backup.ImportResult
 import com.ivy.base.lifecycle.asLiveData
+import com.ivy.data.model.importing.ImportResult
+import com.ivy.domain.usecase.backup.ImportBackupUseCase
 import com.ivy.ui.navigation.ImportScreen
 import com.ivy.ui.navigation.Navigation
 import com.ivy.ui.platform.FilePicker
@@ -18,7 +18,7 @@ import kotlin.math.roundToInt
 class ImportViewModel @Inject constructor(
     private val filePicker: FilePicker,
     private val nav: Navigation,
-    private val backupDataUseCase: BackupDataUseCase
+    private val importBackupUseCase: ImportBackupUseCase
 ) : ViewModel() {
     private val _importStep = MutableLiveData<ImportStep>()
     val importStep = _importStep.asLiveData()
@@ -53,8 +53,8 @@ class ImportViewModel @Inject constructor(
             viewModelScope.launch {
 
                 _importStep.value = ImportStep.LOADING
-                _importResult.value = backupDataUseCase.importBackupFile(
-                    backupFileUri = fileUri
+                _importResult.value = importBackupUseCase(
+                    backupFile = fileUri
                 ) { progressPercent ->
                     com.ivy.base.coroutines.uiThread {
                         _importProgressPercent.value =

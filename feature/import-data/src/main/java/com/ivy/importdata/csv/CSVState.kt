@@ -1,6 +1,6 @@
 package com.ivy.importdata.csv
 
-import com.ivy.data.backup.ImportResult
+import com.ivy.data.model.importing.ImportResult
 import kotlinx.collections.immutable.ImmutableList
 
 data class CSVState(

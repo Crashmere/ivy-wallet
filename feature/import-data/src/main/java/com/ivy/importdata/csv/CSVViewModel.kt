@@ -22,8 +22,8 @@ import com.ivy.importdata.csv.domain.parseTitle
 import com.ivy.importdata.csv.domain.parseToAccount
 import com.ivy.importdata.csv.domain.parseToAccountCurrency
 import com.ivy.importdata.csv.domain.parseTransactionType
+import com.ivy.domain.usecase.file.ReadTextFileUseCase
 import com.ivy.ui.navigation.Navigation
-import com.ivy.data.file.FileSystem
 import com.ivy.ui.platform.FilePicker
 import com.opencsv.CSVReaderBuilder
 import com.opencsv.validators.LineValidator
@@ -42,7 +42,7 @@ import kotlin.math.roundToInt
 
 @HiltViewModel
 class CSVViewModel @Inject constructor(
-    private val fileReader: FileSystem,
+    private val readTextFileUseCase: ReadTextFileUseCase,
     private val csvImporter: CSVImporterV2,
     private val nav: Navigation,
     private val filePicker: FilePicker,
@@ -459,20 +459,20 @@ class CSVViewModel @Inject constructor(
             }?.toImmutableList()
         }
 
-    private fun importCSV(uri: Uri, normalizeCSV: Boolean): Unit = try {
+    private suspend fun importCSV(uri: Uri, normalizeCSV: Boolean): Unit = try {
         csv = processFile(uri, normalizeCSV = normalizeCSV)?.toImmutableList()
         columns = csv?.firstOrNull()
     } catch (e: Exception) {
         e.printStackTrace()
     }
 
-    private fun processFile(
+    private suspend fun processFile(
         uri: Uri,
         normalizeCSV: Boolean = false,
         charset: Charset = Charsets.UTF_8
     ): List<CSVRow>? {
         return try {
-            val fileContent = fileReader.read(uri, charset).getOrNull() ?: return null
+            val fileContent = readTextFileUseCase(uri, charset) ?: return null
             parseCSV(fileContent, normalizeCSV).takeIf { it.isNotEmpty() }
         } catch (e: Exception) {
             if (charset != Charsets.UTF_16) {

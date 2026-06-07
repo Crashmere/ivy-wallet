@@ -16,10 +16,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.ivy.data.backup.ImportResult
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
 import com.ivy.importdata.csv.Spacer8
+import com.ivy.data.model.importing.ImportResult
 import com.ivy.data.model.currency.format
 import com.ivy.ui.navigation.CSVScreen
 import com.ivy.ui.navigation.navigation
