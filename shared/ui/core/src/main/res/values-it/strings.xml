@@ -317,7 +317,6 @@
     <string name="set_a_budget_description">Ivy Wallet non solo ti aiuta a monitorare passivamente le tue spese, ma crea anche pro-attivamente il tuo futuro finanziario impostando budget e seguendoli.</string>
     <string name="expenses_piechart_description">Puoi vedere lo schema delle tue spese diviso per categorie! Provalo, tocca il pulsante grigio e nero appena sotto il tuo saldo.</string>
     <string name="expenses_piechart">Grafico a torta delle uscite</string>
-    <string name="help_us_grow">Aiutaci a crescere in modo da poter investire di più nello sviluppo e rendere l\'applicazione migliore per te. Condividendo Ivy Wallet potrai rendere felici due sviluppatori e aiutare un amico a tenere sotto controllo le sue finanze.</string>
     <string name="share_with_friends">Condividi con gli amici</string>
     <string name="make_a_report_description">Puoi generare dei resoconti per ottenere un\'analisi approfondita delle tue entrate e delle tue uscite. Filtra le tue transazioni per tipo, periodo di tempo, categoria, conto, parole chiave e non solo per ottenere una vista migliore sulle tue finanze.</string>
     <string name="make_a_report">Crea un report</string>

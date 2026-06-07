@@ -317,7 +317,6 @@
     <string name="set_a_budget_description">Ivy Wallet không chỉ giúp bạn theo dõi chi tiêu một cách chủ động mà còn giúp bạn quản lý tài chính trong tương lại bằng cách thiết lập và tuân thủ ngân sách.</string>
     <string name="expenses_piechart_description">Bạn có thể xem cơ cấu chi tiêu của mình theo danh mục! Hãy thử bằng cách nhấn vào nút Chi phí màu xám/đen ngay bên dưới số dư của bạn.</string>
     <string name="expenses_piechart">Biểu đồ chi phí</string>
-    <string name="help_us_grow">Hãy giúp chúng tôi lớn mạnh hơn nữa để chúng tôi có thể đầu tư nhiều hơn vào việc phát triển và cải thiện ứng dụng này. Bằng cách chia sẻ Ivy Wallet, điều đó sẽ giúp cho tất cả những người đóng góp xây dựng Ivy Wallet cảm thấy hạn phúc và cũng sẽ giúp được bạn của chúng ta kiểm soát tài chính của họ tốt hơn.</string>
     <string name="share_with_friends">Chia sẻ với bạn bè</string>
     <string name="make_a_report_description">Bạn có thể tạo báo cáo để hiểu sâu hơn về thu nhập và chi tiêu của mình. Phân loại các giao dịch của bạn theo loại, khoảng thời gian, danh mục, tài khoản, số tiền, từ khóa, v.v. để xử lý tốt hơn về tài chính của bạn.</string>
     <string name="make_a_report">Tạo một báo cáo</string>

@@ -321,7 +321,6 @@
     <string name="set_a_budget_description">Ivy Wallet 不僅可以幫助您被動追蹤支出，還可以透過設定和遵守預算來主動管理您的財務未來。</string>
     <string name="expenses_piechart_description">您可以按類別查看您的支出結構!請點擊餘額下方的灰色/黑色支出按鈕進行嘗試。</string>
     <string name="expenses_piechart">支出圓餅圖</string>
-    <string name="help_us_grow">幫助我們成長，以便我們可以在開發上投入更多資金，讓應用程式更適合您。透過分享 Ivy wallet，您將使所有貢獻者感到高興，並幫助朋友掌控他們的財務。</string>
     <string name="share_with_friends">與朋友分享</string>
     <string name="make_a_report_description">您可以產生報告以深入了解您的收入和支出。按類型、時間段、類別、帳戶、金額、關鍵字等過濾您的交易，以便更好地管理您的財務狀況。</string>
     <string name="make_a_report">製作報表</string>

@@ -342,7 +342,6 @@
     <string name="set_a_budget_description">Ivy Wallet not only helps you passively track your spending, but also empowers you to actively manage your financial future by setting and sticking to budgets.</string>
     <string name="expenses_piechart_description">You can view your spending breakdown by category! Give it a try by tapping the gray/black Expenses button located just below your balance.</string>
     <string name="expenses_piechart">Expenses Pie Chart</string>
-    <string name="help_us_grow">Help us grow! Your support allows us to invest more in development and improve the app for you. By sharing Ivy Wallet, you not only bring joy to all contributors, but you also help a friend take control of their finances.</string>
     <string name="share_with_friends">Share with friends</string>
     <string name="make_a_report_description">Generate detailed reports to gain valuable insights into your income and spending. Filter your transactions by type, time period, category, accounts, amount, keywords, and more to better manage your finances.</string>
     <string name="make_a_report">Generate a report</string>

@@ -13,6 +13,7 @@
 - 精简测试和预览基础设施：删除 Paparazzi 截图测试、快照图片、仅服务 IDE 的 Compose `@Preview` 示例函数和预览 helper。
 - 持续清理 `temp:legacy-code` 与 `temp:old-design` 中确认无引用的旧代码、工具、组件和残留模型。
 - 删除空的 `:shared:data:core-testing` 模块，并把测试专用 `FakeRepositoryMemo` 从生产源码移入测试源集。
+- 删除未引用的第三方导入 logo、widget 预览/图标、推广/分享/捐赠图片，以及 `help_us_grow` 多语言推广文案。
 
 当前仍保留：
 
@@ -195,6 +196,12 @@
 ### 阶段 1：资源和文案瘦身
 
 目标：先删不会影响业务逻辑的资源和文案。
+
+已完成：
+
+- 删除未引用的第三方导入 logo、widget 预览/图标、推广/分享/捐赠图片。
+- 删除 `help_us_grow` 及各语言翻译。
+- 保留动态分类/账户图标资源，以及首页仍在使用的 `did_you_know` 提示卡文案。
 
 候选内容：
 
