@@ -10,12 +10,12 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.lifecycle.viewModelScope
 import com.ivy.base.theme.Theme
 import com.ivy.base.time.TimeProvider
-import com.ivy.data.backup.BackupDataUseCase
 import com.ivy.data.model.primitive.AssetCode
 import com.ivy.domain.preferences.AppPreferences
 import com.ivy.domain.preferences.toggles.BoolPreference
 import com.ivy.domain.preferences.toggles.PreferenceToggles
 import com.ivy.domain.usecase.ResetWalletDataUseCase
+import com.ivy.domain.usecase.backup.ExportBackupUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.domain.usecase.currency.SetBaseCurrencyUseCase
 import com.ivy.domain.usecase.csv.ExportCsvUseCase
@@ -50,7 +50,7 @@ class SettingsViewModel @Inject constructor(
     private val switchThemeUseCase: SwitchThemeUseCase,
     private val resetWalletDataUseCase: ResetWalletDataUseCase,
     private val appPreferences: AppPreferences,
-    private val backupDataUseCase: BackupDataUseCase,
+    private val exportBackupUseCase: ExportBackupUseCase,
     private val startDayOfMonthAct: StartDayOfMonthAct,
     private val updateStartDayOfMonthAct: UpdateStartDayOfMonthAct,
     private val syncExchangeRatesUseCase: SyncExchangeRatesUseCase,
@@ -362,7 +362,7 @@ class SettingsViewModel @Inject constructor(
         ) { fileUri ->
             viewModelScope.launch(Dispatchers.IO) {
                 progressState.value = true
-                backupDataUseCase.exportToFile(zipFileUri = fileUri)
+                exportBackupUseCase(fileUri)
                 progressState.value = false
 
                 appPreferences.dataBackupCompleted = true
