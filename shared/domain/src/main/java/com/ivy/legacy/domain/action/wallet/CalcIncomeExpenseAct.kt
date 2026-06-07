@@ -2,12 +2,13 @@ package com.ivy.legacy.domain.action.wallet
 
 import arrow.core.nonEmptyListOf
 import arrow.core.toOption
+import com.ivy.data.model.AccountId
+import com.ivy.domain.usecase.account.GetAccountTransactionsUseCase
 import com.ivy.domain.usecase.exchange.ExchangeAmountUseCase
 import com.ivy.legacy.frp.action.FPAction
 import com.ivy.legacy.frp.action.thenMap
 import com.ivy.legacy.frp.then
 import com.ivy.data.model.legacy.Account
-import com.ivy.legacy.domain.action.account.AccTrnsAct
 import com.ivy.legacy.domain.pure.account.filterExcluded
 import com.ivy.data.model.legacy.ClosedTimeRange
 import com.ivy.data.model.legacy.IncomeExpensePair
@@ -19,7 +20,7 @@ import timber.log.Timber
 import javax.inject.Inject
 
 class CalcIncomeExpenseAct @Inject constructor(
-    private val accTrnsAct: AccTrnsAct,
+    private val getAccountTransactionsUseCase: GetAccountTransactionsUseCase,
     private val exchangeAmountUseCase: ExchangeAmountUseCase
 ) : FPAction<CalcIncomeExpenseAct.Input, IncomeExpensePair>() {
 
@@ -28,11 +29,9 @@ class CalcIncomeExpenseAct @Inject constructor(
     } thenMap { acc ->
         Pair(
             acc,
-            accTrnsAct(
-                AccTrnsAct.Input(
-                    accountId = acc.id,
-                    range = range
-                )
+            getAccountTransactionsUseCase(
+                accountId = AccountId(acc.id),
+                range = range
             )
         )
     } thenMap { (acc, trns) ->

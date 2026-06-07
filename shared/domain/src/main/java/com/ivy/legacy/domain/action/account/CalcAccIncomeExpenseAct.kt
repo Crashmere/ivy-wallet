@@ -2,8 +2,8 @@ package com.ivy.legacy.domain.action.account
 
 import arrow.core.nonEmptyListOf
 import com.ivy.base.time.TimeProvider
+import com.ivy.domain.usecase.account.GetAccountTransactionsUseCase
 import com.ivy.legacy.frp.action.FPAction
-import com.ivy.legacy.frp.then
 import com.ivy.data.model.legacy.ClosedTimeRange
 import com.ivy.data.model.legacy.IncomeExpensePair
 import com.ivy.legacy.domain.pure.transaction.AccountValueFunctions
@@ -12,18 +12,17 @@ import java.math.BigDecimal
 import javax.inject.Inject
 
 class CalcAccIncomeExpenseAct @Inject constructor(
-    private val accTrnsAct: AccTrnsAct,
+    private val getAccountTransactionsUseCase: GetAccountTransactionsUseCase,
     private val timeProvider: TimeProvider
 ) : FPAction<CalcAccIncomeExpenseAct.Input, CalcAccIncomeExpenseAct.Output>() {
 
     override suspend fun Input.compose(): suspend () -> Output = suspend {
-        AccTrnsAct.Input(
-            accountId = account.id.value,
+        val transactions = getAccountTransactionsUseCase(
+            accountId = account.id,
             range = range ?: ClosedTimeRange.allTimeIvy(timeProvider)
         )
-    } then accTrnsAct then { accTrns ->
-        foldTransactions(
-            transactions = accTrns,
+        val values = foldTransactions(
+            transactions = transactions,
             arg = account.id.value,
             valueFunctions = nonEmptyListOf(
                 AccountValueFunctions::income,
@@ -32,7 +31,6 @@ class CalcAccIncomeExpenseAct @Inject constructor(
                 AccountValueFunctions::transferExpense
             )
         )
-    } then { values ->
         Output(
             account = account,
             incomeExpensePair = IncomeExpensePair(

@@ -32,7 +32,6 @@ import com.ivy.domain.usecase.transaction.MapTransactionsToLegacyWithTagsUseCase
 import com.ivy.legacy.ui.theme.system.RedLight
 import com.ivy.domain.preferences.toggles.PreferenceToggleRepository
 import com.ivy.domain.preferences.toggles.PreferenceToggles
-import com.ivy.legacy.frp.then
 import com.ivy.legacy.ui.state.PeriodState
 import com.ivy.legacy.ui.model.period.TimePeriod
 import com.ivy.data.model.legacy.toCloseTimeRange
@@ -46,7 +45,7 @@ import com.ivy.ui.navigation.TransactionsScreen
 import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.R
 import com.ivy.ui.preferences.asEnabledState
-import com.ivy.legacy.domain.action.account.AccTrnsAct
+import com.ivy.domain.usecase.account.GetAccountTransactionsUseCase
 import com.ivy.domain.usecase.account.GetLegacyAccountUseCase
 import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
 import com.ivy.legacy.domain.action.account.CalcAccBalanceAct
@@ -82,7 +81,7 @@ class TransactionsViewModel @Inject constructor(
     private val appPreferences: AppPreferences,
     private val getLegacyAccountsUseCase: GetLegacyAccountsUseCase,
     private val getLegacyAccountUseCase: GetLegacyAccountUseCase,
-    private val accTrnsAct: AccTrnsAct,
+    private val getAccountTransactionsUseCase: GetAccountTransactionsUseCase,
     private val trnsWithDateDivsAct: LegacyTrnsWithDateDivsAct,
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
     private val getAccountUseCase: GetAccountUseCase,
@@ -380,19 +379,15 @@ class TransactionsViewModel @Inject constructor(
         income.doubleValue = incomeExpensePair.income.toDouble()
         expenses.doubleValue = incomeExpensePair.expense.toDouble()
 
-        history.value = (
-                accTrnsAct then {
-                    trnsWithDateDivsAct(
-                        LegacyTrnsWithDateDivsAct.Input(
-                            baseCurrency = baseCurrency.value,
-                            transactions = mapTransactionsToLegacyWithTagsUseCase(it)
-                        )
+        history.value = trnsWithDateDivsAct(
+            LegacyTrnsWithDateDivsAct.Input(
+                baseCurrency = baseCurrency.value,
+                transactions = mapTransactionsToLegacyWithTagsUseCase(
+                    getAccountTransactionsUseCase(
+                        accountId = AccountId(initialAccount.id),
+                        range = range.toCloseTimeRange()
                     )
-                }
-                )(
-            AccTrnsAct.Input(
-                accountId = initialAccount.id,
-                range = range.toCloseTimeRange()
+                )
             )
         ).toImmutableList()
 
