@@ -54,6 +54,10 @@ class AppPreferences @Inject constructor(
         sharedPrefs.putBoolean(customerJourneyCardDismissedKey(cardId), true)
     }
 
+    fun clearAll() {
+        sharedPrefs.removeAll()
+    }
+
     private fun customerJourneyCardDismissedKey(cardId: String): String {
         return "$cardId${SharedPrefs._CARD_DISMISSED}"
     }

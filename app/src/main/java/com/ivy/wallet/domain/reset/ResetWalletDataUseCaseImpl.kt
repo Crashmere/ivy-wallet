@@ -3,7 +3,6 @@ package com.ivy.wallet.domain.reset
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
-import com.ivy.base.legacy.SharedPrefs
 import com.ivy.base.legacy.ioThread
 import com.ivy.data.DataObserver
 import com.ivy.data.DataWriteEvent
@@ -18,6 +17,7 @@ import com.ivy.data.repository.CategoryRepository
 import com.ivy.data.repository.ExchangeRatesRepository
 import com.ivy.data.repository.TagRepository
 import com.ivy.data.repository.TransactionRepository
+import com.ivy.domain.preferences.AppPreferences
 import com.ivy.domain.usecase.ResetWalletDataUseCase
 import com.ivy.navigation.MainScreen
 import com.ivy.navigation.Navigation
@@ -26,7 +26,7 @@ import javax.inject.Inject
 
 @Deprecated("Migrate to an UseCase in the domain layer.")
 class ResetWalletDataUseCaseImpl @Inject constructor(
-    private val sharedPrefs: SharedPrefs,
+    private val appPreferences: AppPreferences,
     private val navigation: Navigation,
     private val dataObserver: DataObserver,
     private val dataStore: DataStore<Preferences>,
@@ -49,7 +49,7 @@ class ResetWalletDataUseCaseImpl @Inject constructor(
             dataStore.edit {
                 it.clear()
             }
-            sharedPrefs.removeAll()
+            appPreferences.clearAll()
         }
 
         initialDataSetup.setupDefaults(systemDarkMode = false)
