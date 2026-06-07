@@ -11,7 +11,6 @@ import com.ivy.base.model.TransactionType
 import com.ivy.data.db.dao.read.SettingsDao
 import com.ivy.frp.test.TestIdlingResource
 import com.ivy.legacy.IvyWalletCtx
-import com.ivy.legacy.InitialDataSetup
 import com.ivy.base.legacy.ioThread
 import com.ivy.base.legacy.readOnly
 import com.ivy.navigation.EditTransactionScreen
@@ -19,6 +18,7 @@ import com.ivy.navigation.MainScreen
 import com.ivy.navigation.Navigation
 import com.ivy.ui.R
 import com.ivy.wallet.domain.deprecated.logic.notification.TransactionReminderLogic
+import com.ivy.wallet.domain.startup.InitialDataSetup
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job

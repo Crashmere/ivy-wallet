@@ -361,6 +361,8 @@
 - 已新增 `shared:ui:legacy` 过渡模块，并把旧 Compose/UI helper、手势 helper 和动画 helper 从 `temp:legacy-code` 迁入其中。
 - 已拆分 legacy 日期 helper：纯时间计算迁到 `shared:base`，日期展示格式迁到 `shared:ui:legacy`。
 - 已把旧 FRP 组合 helper、`FPAction`、`Res` 和测试空闲计数器从 `temp:legacy-code` 迁到 `shared:base`，并移除重复的 legacy `onScreenStart`。
+- 已把 Android 通知封装和交易提醒 WorkManager 逻辑从 `temp:legacy-code` 迁到 `app`，保留原包名和提醒功能。
+- 已把首次启动默认数据初始化迁到 `app`，并用 `ResetWalletDataUseCase` 接口替代设置页直接注入旧 `LogoutLogic`。
 
 迁移分组：
 

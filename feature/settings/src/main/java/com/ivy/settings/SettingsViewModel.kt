@@ -21,11 +21,11 @@ import com.ivy.data.model.primitive.AssetCode
 import com.ivy.domain.RootScreen
 import com.ivy.domain.features.BoolFeature
 import com.ivy.domain.features.Features
+import com.ivy.domain.usecase.ResetWalletDataUseCase
 import com.ivy.domain.usecase.csv.ExportCsvUseCase
 import com.ivy.domain.usecase.exchange.SyncExchangeRatesUseCase
 import com.ivy.frp.monad.Res
 import com.ivy.legacy.IvyWalletCtx
-import com.ivy.legacy.LogoutLogic
 import com.ivy.legacy.domain.action.settings.UpdateSettingsAct
 import com.ivy.base.legacy.getISOFormattedDateTime
 import com.ivy.base.legacy.ioThread
@@ -47,7 +47,7 @@ import javax.inject.Inject
 class SettingsViewModel @Inject constructor(
     private val settingsDao: SettingsDao,
     private val ivyContext: IvyWalletCtx,
-    private val logoutLogic: LogoutLogic,
+    private val resetWalletDataUseCase: ResetWalletDataUseCase,
     private val sharedPrefs: SharedPrefs,
     private val backupDataUseCase: BackupDataUseCase,
     private val startDayOfMonthAct: StartDayOfMonthAct,
@@ -479,7 +479,7 @@ class SettingsViewModel @Inject constructor(
 
     private fun cloudLogout() {
         viewModelScope.launch {
-            logoutLogic.cloudLogout()
+            resetWalletDataUseCase.resetCloudUserData()
         }
     }
 
@@ -491,7 +491,7 @@ class SettingsViewModel @Inject constructor(
 
     private fun logout() {
         viewModelScope.launch {
-            logoutLogic.logout()
+            resetWalletDataUseCase.resetAllData()
         }
     }
 

@@ -1,4 +1,4 @@
-package com.ivy.legacy
+package com.ivy.wallet.domain.startup
 
 import com.ivy.base.legacy.SharedPrefs
 import com.ivy.base.legacy.Theme
