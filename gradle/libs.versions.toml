@@ -111,8 +111,7 @@ ksp-plugin = { module = "com.google.devtools.ksp:com.google.devtools.ksp.gradle.
 [bundles]
 kotlin = [
     "kotlin-stdlib",
-    "kotlin-coroutines-core",
-    "kotlinx-collections-immutable"
+    "kotlin-coroutines-core"
 ]
 kotlin-android-runtime = [
     "kotlin-coroutines-android",
