@@ -139,7 +139,6 @@ dependencies {
     implementation(projects.shared.ui.core)
     implementation(projects.shared.ui.legacy)
     implementation(projects.shared.ui.navigation)
-    implementation(projects.temp.legacyCode)
 
     implementation(libs.bundles.kotlin)
     implementation(libs.bundles.kotlin.android)
