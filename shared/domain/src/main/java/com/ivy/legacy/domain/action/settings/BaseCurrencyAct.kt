@@ -1,7 +1,7 @@
 package com.ivy.legacy.domain.action.settings
 
 import com.ivy.data.repository.CurrencyRepository
-import com.ivy.frp.action.FPAction
+import com.ivy.base.frp.action.FPAction
 import javax.inject.Inject
 
 class BaseCurrencyAct @Inject constructor(

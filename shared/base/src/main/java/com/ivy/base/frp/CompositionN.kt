@@ -1,6 +1,6 @@
-package com.ivy.frp
+package com.ivy.base.frp
 
-import com.ivy.frp.action.Action
+import com.ivy.base.frp.action.Action
 
 // TODO: Implement properly
 

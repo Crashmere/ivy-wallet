@@ -3,7 +3,7 @@ package com.ivy.legacy.domain.pure.transaction
 import arrow.core.NonEmptyList
 import arrow.core.nonEmptyListOf
 import com.ivy.data.model.Transaction
-import com.ivy.frp.Pure
+import com.ivy.base.frp.Pure
 import com.ivy.legacy.domain.pure.util.mapIndexedNel
 import com.ivy.legacy.domain.pure.util.mapIndexedNelSuspend
 import com.ivy.legacy.domain.pure.util.nonEmptyListOfZeros

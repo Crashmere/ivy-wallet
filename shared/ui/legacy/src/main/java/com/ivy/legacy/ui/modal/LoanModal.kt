@@ -37,7 +37,7 @@ import com.ivy.ui.time.LocalTimeConverter
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
 import com.ivy.legacy.ui.component.IvyColorPicker
-import com.ivy.frp.test.TestingContext
+import com.ivy.base.frp.test.TestingContext
 import com.ivy.legacy.domain.model.Account
 import com.ivy.legacy.domain.model.Loan
 import com.ivy.legacy.ui.component.DateTimeRow

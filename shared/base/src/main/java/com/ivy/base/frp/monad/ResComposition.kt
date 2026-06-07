@@ -1,6 +1,6 @@
-package com.ivy.frp.monad
+package com.ivy.base.frp.monad
 
-import com.ivy.frp.action.Action
+import com.ivy.base.frp.action.Action
 
 // Action -> Action
 @Deprecated("Legacy code. Don't use it, please.")

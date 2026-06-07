@@ -1,7 +1,7 @@
 package com.ivy.legacy.domain.action.loan
 
 import com.ivy.data.db.dao.read.LoanDao
-import com.ivy.frp.action.FPAction
+import com.ivy.base.frp.action.FPAction
 import com.ivy.legacy.domain.model.Loan
 import com.ivy.legacy.domain.mapper.toLegacyDomain
 import java.util.UUID

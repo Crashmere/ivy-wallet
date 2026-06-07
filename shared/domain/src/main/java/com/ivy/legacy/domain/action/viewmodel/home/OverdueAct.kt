@@ -1,7 +1,7 @@
 package com.ivy.legacy.domain.action.viewmodel.home
 
-import com.ivy.frp.action.FPAction
-import com.ivy.frp.then
+import com.ivy.base.frp.action.FPAction
+import com.ivy.base.frp.then
 import com.ivy.base.time.ivyMinTime
 import com.ivy.legacy.domain.pure.data.ClosedTimeRange
 import com.ivy.legacy.domain.pure.data.IncomeExpensePair

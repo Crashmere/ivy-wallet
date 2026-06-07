@@ -29,8 +29,8 @@ import com.ivy.ui.time.LocalTimeConverter
 import com.ivy.ui.platform.LocalDatePicker
 import com.ivy.ui.time.LocalTimeFormatter
 import com.ivy.ui.time.LocalTimeProvider
-import com.ivy.frp.forward
-import com.ivy.frp.then2
+import com.ivy.base.frp.forward
+import com.ivy.base.frp.then2
 import com.ivy.home.Constants.SWIPE_HORIZONTAL_THRESHOLD
 import com.ivy.home.customerjourney.CustomerJourney
 import com.ivy.home.customerjourney.CustomerJourneyCardModel

@@ -1,4 +1,4 @@
-package com.ivy.frp
+package com.ivy.base.frp
 
 import arrow.core.None
 import arrow.core.Option

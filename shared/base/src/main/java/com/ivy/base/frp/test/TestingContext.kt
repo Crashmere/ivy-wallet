@@ -1,4 +1,4 @@
-package com.ivy.frp.test
+package com.ivy.base.frp.test
 
 @Deprecated("Legacy code. Don't use it, please.")
 object TestingContext {

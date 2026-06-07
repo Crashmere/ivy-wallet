@@ -1,8 +1,8 @@
 package com.ivy.legacy.domain.action.transaction
 
 import com.ivy.base.model.legacy.TransactionHistoryItem
-import com.ivy.frp.action.FPAction
-import com.ivy.frp.then
+import com.ivy.base.frp.action.FPAction
+import com.ivy.base.frp.then
 import com.ivy.legacy.domain.pure.data.ClosedTimeRange
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList

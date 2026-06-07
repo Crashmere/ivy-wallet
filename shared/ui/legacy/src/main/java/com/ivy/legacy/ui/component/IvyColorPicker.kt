@@ -32,7 +32,7 @@ import com.ivy.legacy.ui.theme.system.dynamicContrast
 import com.ivy.legacy.ui.theme.system.style
 import com.ivy.ui.compose.densityScope
 import com.ivy.ui.compose.thenIf
-import com.ivy.frp.test.TestingContext
+import com.ivy.base.frp.test.TestingContext
 import com.ivy.legacy.ui.onScreenStart
 import com.ivy.ui.R
 import kotlinx.coroutines.launch

@@ -1,6 +1,6 @@
 package com.ivy.legacy.domain.action.settings
 
-import com.ivy.frp.action.FPAction
+import com.ivy.base.frp.action.FPAction
 import java.math.BigDecimal
 import javax.inject.Inject
 

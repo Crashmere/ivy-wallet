@@ -1,8 +1,8 @@
-package com.ivy.frp.monad
+package com.ivy.base.frp.monad
 
-import com.ivy.frp.action.Action
-import com.ivy.frp.asParamTo
-import com.ivy.frp.thenInvokeAfter
+import com.ivy.base.frp.action.Action
+import com.ivy.base.frp.asParamTo
+import com.ivy.base.frp.thenInvokeAfter
 
 @Deprecated("Legacy code. Use Arrow's Either")
 sealed class Res<out E, out T> {

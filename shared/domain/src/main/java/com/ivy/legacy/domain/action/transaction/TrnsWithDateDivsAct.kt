@@ -6,8 +6,8 @@ import com.ivy.base.time.TimeConverter
 import com.ivy.data.db.dao.read.AccountDao
 import com.ivy.data.repository.AccountRepository
 import com.ivy.data.repository.TagRepository
-import com.ivy.frp.action.FPAction
-import com.ivy.frp.then
+import com.ivy.base.frp.action.FPAction
+import com.ivy.base.frp.then
 import com.ivy.legacy.domain.mapper.toLegacyDomain
 import com.ivy.legacy.domain.pure.transaction.LegacyTrnDateDividers
 import com.ivy.legacy.domain.pure.transaction.transactionsWithDateDividers

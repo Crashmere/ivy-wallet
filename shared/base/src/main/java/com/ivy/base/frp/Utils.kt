@@ -1,4 +1,4 @@
-package com.ivy.frp
+package com.ivy.base.frp
 
 @Deprecated("Legacy code. Don't use it, please.")
 suspend fun <A> List<A>.sumOfSuspend(

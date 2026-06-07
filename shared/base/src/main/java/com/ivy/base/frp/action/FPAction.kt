@@ -1,4 +1,4 @@
-package com.ivy.frp.action
+package com.ivy.base.frp.action
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers

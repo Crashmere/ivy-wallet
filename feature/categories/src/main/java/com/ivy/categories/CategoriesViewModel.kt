@@ -13,8 +13,8 @@ import com.ivy.base.time.TimeProvider
 import com.ivy.data.repository.CategoryRepository
 import com.ivy.domain.preferences.toggles.PreferenceToggles
 import com.ivy.domain.preferences.AppPreferences
-import com.ivy.frp.action.thenMap
-import com.ivy.frp.thenInvokeAfter
+import com.ivy.base.frp.action.thenMap
+import com.ivy.base.frp.thenInvokeAfter
 import com.ivy.legacy.ui.state.PeriodState
 import com.ivy.legacy.ui.model.period.TimePeriod
 import com.ivy.legacy.domain.model.Account

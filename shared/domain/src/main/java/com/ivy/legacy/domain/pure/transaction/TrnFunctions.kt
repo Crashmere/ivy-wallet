@@ -10,7 +10,7 @@ import com.ivy.data.model.Transaction
 import com.ivy.data.model.Transfer
 import com.ivy.data.legacy.getAccountId
 
-import com.ivy.frp.Pure
+import com.ivy.base.frp.Pure
 import com.ivy.legacy.domain.model.Account
 import com.ivy.legacy.domain.pure.account.accountCurrency
 import java.time.LocalDate

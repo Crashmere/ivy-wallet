@@ -1,4 +1,4 @@
-package com.ivy.frp.action
+package com.ivy.base.frp.action
 
 @Deprecated("Legacy code. Don't use it, please.")
 suspend inline infix fun <A, B> (suspend (A) -> List<B>).thenFilter(

@@ -1,4 +1,4 @@
-package com.ivy.frp.action
+package com.ivy.base.frp.action
 
 import java.math.BigDecimal
 

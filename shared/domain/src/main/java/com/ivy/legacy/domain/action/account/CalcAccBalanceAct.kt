@@ -3,8 +3,8 @@ package com.ivy.legacy.domain.action.account
 import arrow.core.nonEmptyListOf
 import com.ivy.base.time.TimeProvider
 import com.ivy.data.model.Account
-import com.ivy.frp.action.FPAction
-import com.ivy.frp.then
+import com.ivy.base.frp.action.FPAction
+import com.ivy.base.frp.then
 import com.ivy.legacy.domain.pure.transaction.AccountValueFunctions
 import com.ivy.legacy.domain.pure.data.ClosedTimeRange
 import com.ivy.legacy.domain.pure.transaction.foldTransactions

@@ -20,8 +20,8 @@ import com.ivy.data.repository.LegacySettingsRepository
 import com.ivy.data.repository.mapper.TransactionMapper
 import com.ivy.domain.preferences.toggles.PreferenceToggles
 import com.ivy.domain.usecase.exchange.SyncExchangeRatesUseCase
-import com.ivy.frp.then
-import com.ivy.frp.thenInvokeAfter
+import com.ivy.base.frp.then
+import com.ivy.base.frp.thenInvokeAfter
 import com.ivy.home.customerjourney.CustomerJourneyCardModel
 import com.ivy.home.customerjourney.CustomerJourneyCardsProvider
 import com.ivy.ui.theme.ThemeState

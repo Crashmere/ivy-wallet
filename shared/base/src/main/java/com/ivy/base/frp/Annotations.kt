@@ -1,4 +1,4 @@
-package com.ivy.frp
+package com.ivy.base.frp
 
 @Target(AnnotationTarget.FUNCTION)
 @Retention(AnnotationRetention.SOURCE)
