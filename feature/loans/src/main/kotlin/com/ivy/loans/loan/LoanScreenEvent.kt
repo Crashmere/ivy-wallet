@@ -2,7 +2,7 @@ package com.ivy.loans.loan
 
 import com.ivy.loans.loan.data.DisplayLoan
 import com.ivy.data.model.CreateAccountData
-import com.ivy.data.model.legacy.CreateLoanData
+import com.ivy.data.model.CreateLoanData
 
 sealed interface LoanScreenEvent {
     data class OnLoanCreate(val createLoanData: CreateLoanData) : LoanScreenEvent

@@ -2,8 +2,8 @@ package com.ivy.loans.loandetails.events
 
 import com.ivy.data.model.legacy.LoanRecord
 import com.ivy.loans.loan.data.DisplayLoanRecord
-import com.ivy.data.model.legacy.CreateLoanRecordData
-import com.ivy.data.model.legacy.EditLoanRecordData
+import com.ivy.data.model.CreateLoanRecordData
+import com.ivy.data.model.EditLoanRecordData
 
 sealed interface LoanRecordModalEvent : LoanDetailsScreenEvent {
     data class OnClickLoanRecord(val displayLoanRecord: DisplayLoanRecord) : LoanRecordModalEvent

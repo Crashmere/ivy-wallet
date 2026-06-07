@@ -35,8 +35,8 @@ import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.time.DateTimePicker
 import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
 import com.ivy.data.model.CreateAccountData
-import com.ivy.data.model.legacy.CreateLoanRecordData
-import com.ivy.data.model.legacy.EditLoanRecordData
+import com.ivy.data.model.CreateLoanRecordData
+import com.ivy.data.model.EditLoanRecordData
 import com.ivy.legacy.ui.modal.LoanModalData
 import com.ivy.legacy.ui.modal.LoanRecordModalData
 import com.ivy.loans.nowLocalDate

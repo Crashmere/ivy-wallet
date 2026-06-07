@@ -3,7 +3,7 @@ package com.ivy.domain.usecase.loan
 import com.ivy.data.model.legacy.Transaction
 import com.ivy.data.model.legacy.Loan
 import com.ivy.data.model.legacy.LoanRecord
-import com.ivy.data.model.legacy.CreateLoanRecordData
+import com.ivy.data.model.CreateLoanRecordData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.util.UUID

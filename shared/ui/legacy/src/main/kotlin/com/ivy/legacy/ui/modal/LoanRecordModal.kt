@@ -44,8 +44,8 @@ import com.ivy.legacy.ui.selectEndTextFieldValue
 import com.ivy.legacy.ui.testing.TestingContext
 import com.ivy.ui.R
 import com.ivy.data.model.CreateAccountData
-import com.ivy.data.model.legacy.CreateLoanRecordData
-import com.ivy.data.model.legacy.EditLoanRecordData
+import com.ivy.data.model.CreateLoanRecordData
+import com.ivy.data.model.EditLoanRecordData
 import com.ivy.legacy.ui.component.ItemIconSDefaultIcon
 import com.ivy.legacy.ui.component.IvyCheckboxWithText
 import com.ivy.legacy.ui.component.IvyIcon

@@ -49,7 +49,7 @@ import com.ivy.legacy.ui.modal.ModalNameInput
 import com.ivy.ui.R
 import com.ivy.data.model.currency.IvyCurrency
 import com.ivy.data.model.CreateAccountData
-import com.ivy.data.model.legacy.CreateLoanData
+import com.ivy.data.model.CreateLoanData
 import com.ivy.legacy.ui.theme.GradientIvy
 import com.ivy.legacy.ui.theme.Gray
 import com.ivy.legacy.ui.theme.Ivy
