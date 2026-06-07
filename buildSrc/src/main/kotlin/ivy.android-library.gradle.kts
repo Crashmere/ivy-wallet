@@ -30,6 +30,4 @@ gradle.projectsEvaluated {
 dependencies {
     implementation(libs.bundles.kotlin)
     implementation(catalog.bundle("kotlin-android"))
-
-    testImplementation(libs.bundles.testing)
 }

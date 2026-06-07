@@ -11,4 +11,5 @@ dependencies {
     implementation(projects.shared.base)
 
     testImplementation(projects.shared.baseTesting)
+    testImplementation(libs.bundles.testing)
 }

@@ -21,5 +21,6 @@ dependencies {
 
     testImplementation(projects.shared.baseTesting)
     testImplementation(projects.shared.data.modelTesting)
+    testImplementation(libs.bundles.testing)
     androidTestImplementation(projects.shared.baseTesting)
 }

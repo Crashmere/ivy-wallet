@@ -288,6 +288,7 @@
 - app 模块已移除自身不再直接使用的 Ktor、Room、OpenCSV、Keval、RecyclerView、AndroidX Security 和 Arrow 依赖；源码层已经不再直接引用 data core DAO/repository，只显式依赖仍被默认数据初始化使用的 `shared:data:model`。
 - `ivy.android-library` 不再给所有 Android library 默认添加 Arrow；`shared:data:model` 因公开 `Either/Raise` API 显式用 `api` 暴露 Arrow，其他实际直接使用 Arrow 的模块改为各自声明 `implementation(libs.bundles.arrow)`。
 - `ivy.android-library` 不再给所有 Android library 默认添加 Timber；app、数据层、domain 中的汇率同步/旧钱包统计，以及饼图页等实际写日志的模块改为各自显式声明日志库依赖。
+- `ivy.android-library` 不再给所有 Android library 默认添加整套单元测试依赖；当前有 `src/test` 的 `shared:base`、`shared:data:model`、`shared:data:model-testing`、`shared:data:core`、`shared:domain` 和 `shared:ui:core` 改为在各自模块里显式声明测试 bundle。
 
 ### 阶段 3：测试支持代码归位
 

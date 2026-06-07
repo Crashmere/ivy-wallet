@@ -11,4 +11,6 @@ dependencies {
 
     implementation(libs.bundles.arrow)
     implementation(libs.bundles.testing)
+
+    testImplementation(libs.bundles.testing)
 }
