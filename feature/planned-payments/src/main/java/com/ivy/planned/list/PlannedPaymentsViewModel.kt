@@ -8,10 +8,10 @@ import androidx.compose.runtime.mutableDoubleStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
-import com.ivy.data.db.dao.read.SettingsDao
 import com.ivy.ui.ComposeViewModel
 import com.ivy.data.model.Category
 import com.ivy.data.repository.CategoryRepository
+import com.ivy.data.repository.CurrencyRepository
 import com.ivy.legacy.domain.model.Account
 import com.ivy.legacy.domain.model.PlannedPaymentRule
 import com.ivy.base.legacy.ioThread
@@ -27,7 +27,7 @@ import javax.inject.Inject
 @Stable
 @HiltViewModel
 class PlannedPaymentsViewModel @Inject constructor(
-    private val settingsDao: SettingsDao,
+    private val currencyRepository: CurrencyRepository,
     private val plannedPaymentsLogic: PlannedPaymentsLogic,
     private val categoriesRepository: CategoryRepository,
     private val accountsAct: AccountsAct
@@ -136,8 +136,7 @@ class PlannedPaymentsViewModel @Inject constructor(
 
     private fun start() {
         viewModelScope.launch {
-            val settings = ioThread { settingsDao.findFirst() }
-            currency = settings.currency
+            currency = currencyRepository.getBaseCurrencyCode()
 
             categories = categoriesRepository.findAll().toImmutableList()
             accounts = accountsAct(Unit)

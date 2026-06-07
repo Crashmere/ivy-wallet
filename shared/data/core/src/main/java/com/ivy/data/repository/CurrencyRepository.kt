@@ -35,6 +35,8 @@ class CurrencyRepository @Inject constructor(
             ?: AssetCode.unsafe(FALLBACK_DEFAULT_CURRENCY)
     }
 
+    suspend fun getBaseCurrencyCode(): String = getBaseCurrency().code
+
     private fun getDefaultFIATCurrency(): Currency? {
         return Currency.getInstance(Locale.getDefault())
     }

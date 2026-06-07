@@ -3,7 +3,6 @@ package com.ivy.legacy.domain.logic.currency
 import com.ivy.base.legacy.Transaction
 import com.ivy.data.db.dao.read.AccountDao
 import com.ivy.data.db.dao.read.ExchangeRatesDao
-import com.ivy.data.db.dao.read.SettingsDao
 import com.ivy.legacy.domain.model.Account
 import com.ivy.legacy.domain.model.PlannedPaymentRule
 import com.ivy.legacy.domain.mapper.toLegacyDomain
@@ -120,10 +119,9 @@ class ExchangeRatesLogic @Inject constructor(
 @Deprecated("Use FP style, look into `domain.fp` package")
 suspend fun Iterable<Transaction>.sumInBaseCurrency(
     exchangeRatesLogic: ExchangeRatesLogic,
-    settingsDao: SettingsDao,
+    baseCurrency: String,
     accountDao: AccountDao,
 ): Double {
-    val baseCurrency = settingsDao.findFirst().currency
     val accounts = accountDao.findAll()
 
     return sumOf {
@@ -138,10 +136,9 @@ suspend fun Iterable<Transaction>.sumInBaseCurrency(
 @Deprecated("Use FP style, look into `domain.fp` package")
 suspend fun Iterable<PlannedPaymentRule>.sumByDoublePlannedInBaseCurrency(
     exchangeRatesLogic: ExchangeRatesLogic,
-    settingsDao: SettingsDao,
+    baseCurrency: String,
     accountDao: AccountDao,
 ): Double {
-    val baseCurrency = settingsDao.findFirst().currency
     val accounts = accountDao.findAll()
 
     return sumOf {

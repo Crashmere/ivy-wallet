@@ -531,6 +531,8 @@
 - 新增 `Migration130to131_DropUsers`，数据库版本升到 131，并生成 `131.json` schema；新 schema 不再包含 `users` 表。
 - 删除预算、借贷、借贷记录、计划付款和交易 DAO 中无调用方的 `findByIsSyncedAndIsDeleted` 同步查询，以及对应测试 fake override；这一步不改变 Room schema。
 - `isDeleted` 暂时保留：当前本地查询过滤和计划付款按账户软删除仍依赖它，不能和纯云同步残留一起批量删除。
+- 基础货币读取开始从 `SettingsDao` 直连收敛到 `CurrencyRepository`：编辑交易、借贷、计划付款、饼图统计、CSV 导入、旧分类统计、旧计划付款统计、旧借贷交易联动和 `BaseCurrencyAct` 不再直接读取 `settings` 表。
+- `SettingsEntity` 暂时仍保留：设置页主题/货币写入、首次默认数据、备份恢复格式和旧 `SettingsAct/UpdateSettingsAct` 仍依赖它。
 
 建议顺序：
 
@@ -730,6 +732,6 @@ shared:ui:core
 
 下一步建议执行：
 
-1. 梳理 `SettingsEntity`、`SettingsDao`、`WriteSettingsDao` 与 `AppPreferences/DataStore` 的职责重叠，先找不改备份格式的迁移点。
+1. 继续把设置页的主题/基础货币写入拆成更窄的偏好入口，减少 `SettingsAct/UpdateSettingsAct` 的调用面。
 2. 继续数据库只读审计：明确剩余 `isSynced/lastSyncedTime` 哪些只是构造字段和备份格式残留。
 3. 继续收敛平台桥接：评估 `FileSharer`、`BuildInfoProvider` 是否需要从 `LocalContext.current as ...` 改成 CompositionLocal。
