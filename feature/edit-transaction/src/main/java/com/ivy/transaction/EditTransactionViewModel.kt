@@ -8,7 +8,6 @@ import androidx.compose.runtime.mutableDoubleStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
-import com.ivy.base.Toaster
 import com.ivy.base.model.legacy.Transaction
 import com.ivy.base.model.TransactionType
 import com.ivy.base.resource.ResourceProvider
@@ -33,6 +32,7 @@ import com.ivy.domain.usecase.tag.CreateTagUseCase
 import com.ivy.domain.usecase.tag.DeleteTagUseCase
 import com.ivy.domain.usecase.tag.GetTransactionTagIdsUseCase
 import com.ivy.domain.usecase.tag.GetTagsUseCase
+import com.ivy.ui.platform.Toaster
 import com.ivy.domain.usecase.tag.RemoveTagFromTransactionUseCase
 import com.ivy.domain.usecase.tag.SaveTagUseCase
 import com.ivy.domain.usecase.tag.SearchTagsUseCase

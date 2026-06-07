@@ -10,7 +10,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
 import arrow.core.raise.either
-import com.ivy.base.Toaster
 import com.ivy.base.threading.DispatchersProvider
 import com.ivy.data.model.ExchangeRate
 import com.ivy.data.model.primitive.AssetCode
@@ -22,6 +21,7 @@ import com.ivy.domain.usecase.exchange.SaveExchangeRateUseCase
 import com.ivy.domain.usecase.exchange.SyncExchangeRatesUseCase
 import com.ivy.exchangerates.data.RateUi
 import com.ivy.ui.ComposeViewModel
+import com.ivy.ui.platform.Toaster
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.launch
