@@ -3,7 +3,7 @@ package com.ivy.domain.usecase.planned
 import com.ivy.data.api.PlannedPaymentRuleStore
 import com.ivy.data.api.TransactionStore
 import com.ivy.data.model.Transaction
-import com.ivy.domain.transaction.legacy.settleNow
+import com.ivy.domain.transaction.settleNow
 import javax.inject.Inject
 
 class PayOrSkipPlannedTransactionUseCase @Inject constructor(

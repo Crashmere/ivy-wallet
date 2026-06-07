@@ -5,7 +5,7 @@ import com.ivy.base.time.TimeProvider
 import com.ivy.data.model.Account
 import com.ivy.data.model.legacy.ClosedTimeRange
 import com.ivy.data.model.legacy.IncomeExpensePair
-import com.ivy.domain.transaction.legacy.AccountValueFunctions
+import com.ivy.domain.transaction.AccountValueFunctions
 import com.ivy.domain.transaction.legacy.foldTransactions
 import java.math.BigDecimal
 import javax.inject.Inject

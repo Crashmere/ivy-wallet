@@ -9,6 +9,7 @@ import com.ivy.data.model.legacy.Account
 import com.ivy.domain.exchange.ExchangeEffect
 import com.ivy.domain.exchange.LegacyExchangeTrns
 import com.ivy.domain.exchange.exchangeInBaseCurrency
+import com.ivy.domain.transaction.getAccountId
 import java.math.BigDecimal
 
 object WalletValueFunctions {

@@ -10,7 +10,7 @@ import com.ivy.domain.usecase.account.GetAccountTransactionsUseCase
 import com.ivy.domain.usecase.exchange.ExchangeAmountUseCase
 import com.ivy.domain.account.filterExcluded
 import com.ivy.domain.exchange.ExchangeData
-import com.ivy.domain.transaction.legacy.AccountValueFunctions
+import com.ivy.domain.transaction.AccountValueFunctions
 import com.ivy.domain.transaction.legacy.foldTransactions
 import com.ivy.domain.util.orZero
 import javax.inject.Inject
