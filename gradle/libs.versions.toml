@@ -68,7 +68,6 @@ compose-material3 = { module = "androidx.compose.material3:material3", version.r
 compose-material3-windowsize = { module = "androidx.compose.material3:material3-window-size-class", version.ref = "compose-material3" }
 compose-material-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "compose" }
 compose-runtime = { module = "androidx.compose.runtime:runtime", version.ref = "compose" }
-compose-runtime-livedata = { module = "androidx.compose.runtime:runtime-livedata", version.ref = "compose" }
 compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose" }
 compose-activity = { module = "androidx.activity:activity-compose", version = "1.9.1" }
 compose-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version = "2.8.4" }
@@ -95,7 +94,6 @@ javax-inject = { module = "javax.inject:javax.inject", version = "1" }
 androidx-security = { module = "androidx.security:security-crypto", version = "1.0.0" }
 androidx-biometrics = { module = "androidx.biometric:biometric", version = "1.2.0-alpha05" }
 androidx-activity = { module = "androidx.activity:activity-ktx", version = "1.9.1" }
-androidx-lifecycle-livedata-core = { module = "androidx.lifecycle:lifecycle-livedata-core", version = "2.8.4" }
 appcompat-activity = { module = "androidx.appcompat:appcompat", version = "1.7.0" }
 androidx-work = { module = "androidx.work:work-runtime-ktx", version.ref = "androidx-work" }
 androidx-work-testing = { module = "androidx.work:work-testing", version.ref = "androidx-work" }
@@ -166,7 +164,6 @@ compose = [
     "compose-activity",
     "compose-viewmodel",
     "compose-tooling",
-    "compose-runtime-livedata",
     "compose-coil",
 ]
 activity = [

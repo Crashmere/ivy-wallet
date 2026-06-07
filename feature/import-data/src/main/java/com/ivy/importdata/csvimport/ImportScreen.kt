@@ -3,8 +3,8 @@ package com.ivy.importdata.csvimport
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.BoxWithConstraintsScope
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.ivy.data.model.importing.ImportResult
 import com.ivy.importdata.csvimport.flow.ImportFrom
@@ -17,9 +17,9 @@ import com.ivy.ui.navigation.ImportScreen
 fun BoxWithConstraintsScope.ImportCSVScreen() {
     val viewModel: ImportViewModel = viewModel()
 
-    val importStep by viewModel.importStep.observeAsState(ImportStep.IMPORT_FROM)
-    val importProgressPercent by viewModel.importProgressPercent.observeAsState(0)
-    val importResult by viewModel.importResult.observeAsState()
+    val importStep by viewModel.importStep.collectAsState()
+    val importProgressPercent by viewModel.importProgressPercent.collectAsState()
+    val importResult by viewModel.importResult.collectAsState()
 
     com.ivy.legacy.ui.onScreenStart {
         viewModel.start(ImportScreen)

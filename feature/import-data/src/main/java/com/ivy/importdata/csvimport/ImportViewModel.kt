@@ -1,7 +1,5 @@
 package com.ivy.importdata.csvimport
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ivy.data.model.importing.ImportResult
@@ -10,6 +8,9 @@ import com.ivy.ui.navigation.ImportScreen
 import com.ivy.ui.navigation.Navigation
 import com.ivy.ui.platform.FilePicker
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.math.roundToInt
@@ -20,14 +21,14 @@ class ImportViewModel @Inject constructor(
     private val nav: Navigation,
     private val importBackupUseCase: ImportBackupUseCase
 ) : ViewModel() {
-    private val _importStep = MutableLiveData<ImportStep>()
-    val importStep: LiveData<ImportStep> = _importStep
+    private val _importStep = MutableStateFlow(ImportStep.IMPORT_FROM)
+    val importStep: StateFlow<ImportStep> = _importStep.asStateFlow()
 
-    private val _importProgressPercent = MutableLiveData<Int>()
-    val importProgressPercent: LiveData<Int> = _importProgressPercent
+    private val _importProgressPercent = MutableStateFlow(0)
+    val importProgressPercent: StateFlow<Int> = _importProgressPercent.asStateFlow()
 
-    private val _importResult = MutableLiveData<ImportResult>()
-    val importResult: LiveData<ImportResult> = _importResult
+    private val _importResult = MutableStateFlow<ImportResult?>(null)
+    val importResult: StateFlow<ImportResult?> = _importResult.asStateFlow()
 
     fun start(screen: ImportScreen) {
         nav.registerScreenBackHandler(screen) {
@@ -42,8 +43,6 @@ class ImportViewModel @Inject constructor(
                     _importStep.value = ImportStep.IMPORT_FROM
                     true
                 }
-
-                null -> false
             }
         }
     }
@@ -56,10 +55,8 @@ class ImportViewModel @Inject constructor(
                 _importResult.value = importBackupUseCase(
                     backupFile = fileUri
                 ) { progressPercent ->
-                    com.ivy.base.coroutines.uiThread {
-                        _importProgressPercent.value =
-                            (progressPercent * 100).roundToInt()
-                    }
+                    _importProgressPercent.value =
+                        (progressPercent * 100).roundToInt()
                 }
                 _importStep.value = ImportStep.RESULT
 
@@ -79,5 +76,7 @@ class ImportViewModel @Inject constructor(
 
     private fun resetState() {
         _importStep.value = ImportStep.IMPORT_FROM
+        _importProgressPercent.value = 0
+        _importResult.value = null
     }
 }

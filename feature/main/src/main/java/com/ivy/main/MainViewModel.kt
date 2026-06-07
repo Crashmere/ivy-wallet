@@ -1,7 +1,5 @@
 package com.ivy.main
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ivy.base.coroutines.ioThread
@@ -14,6 +12,9 @@ import com.ivy.ui.navigation.MainTabState
 import com.ivy.ui.navigation.Navigation
 import com.ivy.data.model.legacy.CreateAccountData
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -26,8 +27,8 @@ class MainViewModel @Inject constructor(
     private val getBaseCurrency: GetBaseCurrencyUseCase,
 ) : ViewModel() {
 
-    private val _currency = MutableLiveData<String>()
-    val currency: LiveData<String> = _currency
+    private val _currency = MutableStateFlow("")
+    val currency: StateFlow<String> = _currency.asStateFlow()
 
     fun start(screen: MainScreen) {
         nav.registerScreenBackHandler(screen) {

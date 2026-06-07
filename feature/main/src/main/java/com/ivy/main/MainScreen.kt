@@ -5,8 +5,8 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.BoxWithConstraintsScope
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -31,7 +31,7 @@ import com.ivy.legacy.ui.modal.edit.AccountModalData
 fun BoxWithConstraintsScope.MainScreen(screen: MainScreen) {
     val viewModel: MainViewModel = viewModel()
 
-    val currency by viewModel.currency.observeAsState("")
+    val currency by viewModel.currency.collectAsState()
 
     onScreenStart {
         viewModel.start(screen)
