@@ -38,7 +38,7 @@ class PlannedPaymentsLogic @Inject constructor(
         private const val AVG_DAYS_IN_MONTH = 30.436875
     }
 
-    suspend fun plannedPaymentsAmountFor(range: com.ivy.legacy.data.model.FromToTimeRange): Double {
+    suspend fun plannedPaymentsAmountFor(range: com.ivy.legacy.domain.model.FromToTimeRange): Double {
         val baseCurrency = settingsDao.findFirst().currency
         val accounts = accountDao.findAll()
 

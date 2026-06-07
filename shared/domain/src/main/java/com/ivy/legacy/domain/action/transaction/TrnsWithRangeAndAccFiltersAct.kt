@@ -20,7 +20,7 @@ class TrnsWithRangeAndAccFiltersAct @Inject constructor(
     }
 
     data class Input(
-        val range: com.ivy.legacy.data.model.FromToTimeRange,
+        val range: com.ivy.legacy.domain.model.FromToTimeRange,
         val accountIdFilterSet: Set<UUID>
     )
 }

@@ -18,9 +18,9 @@ class AccountDataAct @Inject constructor(
     private val exchangeAct: ExchangeAct,
     private val calcAccBalanceAct: CalcAccBalanceAct,
     private val calcAccIncomeExpenseAct: CalcAccIncomeExpenseAct
-) : FPAction<AccountDataAct.Input, ImmutableList<com.ivy.legacy.data.model.AccountData>>() {
+) : FPAction<AccountDataAct.Input, ImmutableList<com.ivy.legacy.domain.model.AccountData>>() {
 
-    override suspend fun Input.compose(): suspend () -> ImmutableList<com.ivy.legacy.data.model.AccountData> = suspend {
+    override suspend fun Input.compose(): suspend () -> ImmutableList<com.ivy.legacy.domain.model.AccountData> = suspend {
         accounts
     } thenMap { acc ->
         val balance = calcAccBalanceAct(
@@ -51,7 +51,7 @@ class AccountDataAct @Inject constructor(
             )
         ).incomeExpensePair
 
-        com.ivy.legacy.data.model.AccountData(
+        com.ivy.legacy.domain.model.AccountData(
             account = acc,
             balance = balance.toDouble(),
             balanceBaseCurrency = balanceBaseCurrency?.toDouble(),

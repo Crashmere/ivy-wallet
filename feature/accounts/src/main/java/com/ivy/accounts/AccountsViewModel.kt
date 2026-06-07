@@ -17,8 +17,8 @@ import com.ivy.data.DataWriteEvent
 import com.ivy.data.repository.AccountRepository
 import com.ivy.domain.features.Features
 import com.ivy.legacy.PeriodState
-import com.ivy.legacy.data.model.AccountData
-import com.ivy.legacy.data.model.toCloseTimeRange
+import com.ivy.legacy.domain.model.AccountData
+import com.ivy.legacy.domain.model.toCloseTimeRange
 import com.ivy.data.model.currency.format
 import com.ivy.base.legacy.ioThread
 import com.ivy.ui.ComposeViewModel

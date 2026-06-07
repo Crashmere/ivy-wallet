@@ -1,4 +1,4 @@
-package com.ivy.legacy.data.model
+package com.ivy.legacy.domain.model
 
 import androidx.compose.runtime.Immutable
 import com.ivy.data.model.Account

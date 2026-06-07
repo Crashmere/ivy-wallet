@@ -21,8 +21,8 @@ import com.ivy.data.temp.migration.getAccountId
 import com.ivy.data.temp.migration.getValue
 import com.ivy.frp.sumOfSuspend
 import com.ivy.legacy.PeriodState
-import com.ivy.legacy.data.model.FromToTimeRange
-import com.ivy.legacy.data.model.toCloseTimeRange
+import com.ivy.legacy.domain.model.FromToTimeRange
+import com.ivy.legacy.domain.model.toCloseTimeRange
 import com.ivy.legacy.domain.model.Account
 import com.ivy.legacy.domain.model.Budget
 import com.ivy.legacy.domain.logic.BudgetCreator

@@ -34,7 +34,7 @@ import com.ivy.design.api.LocalTimeConverter
 import com.ivy.design.api.LocalTimeProvider
 import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
-import com.ivy.legacy.data.model.FromToTimeRange
+import com.ivy.legacy.domain.model.FromToTimeRange
 import com.ivy.legacy.data.model.LastNTimeRange
 import com.ivy.legacy.data.model.Month.Companion.fromMonthValue
 import com.ivy.legacy.data.model.Month.Companion.monthsList

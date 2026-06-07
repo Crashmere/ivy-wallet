@@ -29,7 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
-import com.ivy.legacy.data.model.AccountData
+import com.ivy.legacy.domain.model.AccountData
 import com.ivy.ui.legacy.clickableNoIndication
 import com.ivy.ui.legacy.horizontalSwipeListener
 import com.ivy.ui.legacy.rememberInteractionSource

@@ -12,8 +12,8 @@ import com.ivy.data.repository.CurrencyRepository
 import com.ivy.data.repository.TransactionRepository
 import com.ivy.data.repository.mapper.TransactionMapper
 import com.ivy.data.temp.migration.getValue
-import com.ivy.legacy.data.model.filterOverdue
-import com.ivy.legacy.data.model.filterUpcoming
+import com.ivy.legacy.domain.model.filterOverdue
+import com.ivy.legacy.domain.model.filterUpcoming
 import com.ivy.legacy.domain.model.Account
 import com.ivy.legacy.domain.mapper.toDomain
 import com.ivy.legacy.domain.action.viewmodel.account.AccountDataAct
@@ -104,7 +104,7 @@ class WalletAccountLogic @Inject constructor(
 
     suspend fun calculateUpcomingIncome(
         account: Account,
-        range: com.ivy.legacy.data.model.FromToTimeRange
+        range: com.ivy.legacy.domain.model.FromToTimeRange
     ): Double =
         upcoming(account, range = range)
             .filterIsInstance<Income>()
@@ -112,7 +112,7 @@ class WalletAccountLogic @Inject constructor(
 
     suspend fun calculateUpcomingExpenses(
         account: Account,
-        range: com.ivy.legacy.data.model.FromToTimeRange
+        range: com.ivy.legacy.domain.model.FromToTimeRange
     ): Double =
         upcoming(account = account, range = range)
             .filterIsInstance<Expense>()
@@ -120,7 +120,7 @@ class WalletAccountLogic @Inject constructor(
 
     suspend fun calculateOverdueIncome(
         account: Account,
-        range: com.ivy.legacy.data.model.FromToTimeRange
+        range: com.ivy.legacy.domain.model.FromToTimeRange
     ): Double =
         overdue(account, range = range)
             .filterIsInstance<Income>()
@@ -128,7 +128,7 @@ class WalletAccountLogic @Inject constructor(
 
     suspend fun calculateOverdueExpenses(
         account: Account,
-        range: com.ivy.legacy.data.model.FromToTimeRange
+        range: com.ivy.legacy.domain.model.FromToTimeRange
     ): Double =
         overdue(account, range = range)
             .filterIsInstance<Expense>()
@@ -136,7 +136,7 @@ class WalletAccountLogic @Inject constructor(
 
     suspend fun upcoming(
         account: Account,
-        range: com.ivy.legacy.data.model.FromToTimeRange
+        range: com.ivy.legacy.domain.model.FromToTimeRange
     ): List<com.ivy.data.model.Transaction> {
         return transactionRepository.findAllDueToBetweenByAccount(
             accountId = AccountId(account.id),
@@ -147,7 +147,7 @@ class WalletAccountLogic @Inject constructor(
 
     suspend fun overdue(
         account: Account,
-        range: com.ivy.legacy.data.model.FromToTimeRange
+        range: com.ivy.legacy.domain.model.FromToTimeRange
     ): List<com.ivy.data.model.Transaction> {
         return transactionRepository.findAllDueToBetweenByAccount(
             accountId = AccountId(account.id),
