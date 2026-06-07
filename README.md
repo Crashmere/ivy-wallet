@@ -279,6 +279,7 @@
 - `shared:data:core`、`shared:domain` 已从 `ivy.feature` 迁出，改为显式声明基础 Android library、轻量 Compose runtime、Hilt、Room 或集成测试等各自实际需要的能力。
 - `shared:domain` 已移除 `ivy.room` 插件；主源码只显式保留 Hilt，当前只有 androidTest 中的汇率同步测试需要 Room runtime/testing 来创建内存数据库。
 - `ivy.room` 已从 `ivy.module` 改为基于 `ivy.android-library`，不再隐式带入 Hilt 和 kotlinx serialization；`shared:data:core` 改为显式声明这两个依赖。
+- `shared:ui:core`、`shared:ui:legacy`、`shared:ui:navigation` 已从 `ivy.feature` 迁到 `ivy.compose`；这一步保留现有 Compose/Hilt 能力，只先消除 shared UI 模块伪装成 feature 的构建命名。
 
 ### 阶段 3：测试支持代码归位
 
