@@ -9,10 +9,15 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
 import com.ivy.IvyNavGraph
 import com.ivy.base.legacy.Theme
 import com.ivy.base.time.TimeConverter
 import com.ivy.base.time.TimeProvider
+import com.ivy.domain.features.Features
+import com.ivy.domain.features.LocalFeatureDataStore
+import com.ivy.domain.features.LocalFeatures
 import com.ivy.legacy.ui.state.LocalPeriodState
 import com.ivy.legacy.ui.state.PeriodState
 import com.ivy.navigation.Navigation
@@ -40,6 +45,8 @@ fun RootContent(
     timeFormatter: TimeFormatter,
     dateTimePicker: DateTimePicker,
     datePicker: ActivityDatePicker,
+    features: Features,
+    featureDataStore: DataStore<Preferences>,
     buildInfoProvider: BuildInfoProvider,
     fileSharer: FileSharer,
     viewModel: RootViewModel,
@@ -48,6 +55,8 @@ fun RootContent(
 ) {
     CompositionLocalProvider(
         LocalPeriodState provides periodState,
+        LocalFeatures provides features,
+        LocalFeatureDataStore provides featureDataStore,
         LocalBuildInfoProvider provides buildInfoProvider,
         LocalFileSharer provides fileSharer,
     ) {

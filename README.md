@@ -505,6 +505,7 @@
 - 已把设置页、根启动流程、首次启动默认数据、交易提醒、起始日 action、隐藏余额/收入 action，以及账户/交易/饼图/旧账户逻辑里的全局偏好读取迁到 `AppPreferences`。
 - 已把分类排序、最近选择账户和客户旅程卡片关闭状态迁到 `AppPreferences`，feature 层不再直接注入 `SharedPrefs`。
 - 已把重置钱包流程改为通过 `AppPreferences.clearAll()` 清空 legacy 偏好；app/feature 层不再直接注入 `SharedPrefs`。
+- 功能开关 `BoolFeature` 不再通过 `Context.dataStore` 读写；根部 `RootContent` 显式提供 `LocalFeatureDataStore` 和 `LocalFeatures`，设置页、编辑交易分类排序、金额格式化和金额键盘都改为使用同一个注入的数据源。
 - 备份恢复仍保留原始 `SharedPrefs` 访问；它需要处理全部历史 key 和外部备份格式，后续与备份格式重构一起处理。
 
 目标：
@@ -594,6 +595,7 @@
 - `RootContent` 承接根部 Compose 内容、锁屏/主导航切换、旧 UI root 注入和 Material3 theme 包装，`RootActivity` 主要保留生命周期、平台注册和平台能力委托。
 - `RootScreen` 已被 `FileSharer`、`BuildInfoProvider` 拆分替代，首页客户旅程卡片也不再为了未使用的参数依赖 Activity 平台接口。
 - `FileSharer` 和 `BuildInfoProvider` 已通过 `LocalFileSharer/LocalBuildInfoProvider` 由 app 根部显式提供；设置页和报表页不再通过 `LocalContext.current as ...` 强转 Activity 获取平台服务。
+- `Features` 和功能开关 DataStore 已通过 `LocalFeatures/LocalFeatureDataStore` 由 app 根部显式提供；旧金额键盘不再用 Hilt `EntryPointAccessors` 从 application 反查依赖。
 
 ### 阶段 9：feature 模块收敛
 
@@ -741,4 +743,4 @@ shared:ui:core
 
 1. 继续评估 `SettingsEntity` 是否可以拆成更明确的本地偏好表或迁入 DataStore；这一步需要和备份恢复格式一起规划。
 2. 继续数据库只读审计：明确剩余 `isDeleted` 哪些是本地软删除语义，哪些可以改成直接删除。
-3. 继续收敛平台桥接：评估剩余 `LocalContext.current` 使用是否只是 Android framework 访问，还是还能继续抽成窄平台接口。
+3. 继续收敛平台桥接：剩余 `LocalContext.current` 主要集中在锁屏能力检查、动态图标资源查找和少量 Android framework 访问；后续优先处理锁屏/语言设置这类可抽成窄接口的部分。

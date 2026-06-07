@@ -17,7 +17,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -227,7 +226,6 @@ fun BoxWithConstraintsScope.AccountModal(
         }
     }
 
-    val context = LocalContext.current
     CurrencyModal(
         title = stringResource(R.string.choose_currency),
         initialCurrency = IvyCurrency.fromCode(currencyCode),
@@ -235,12 +233,6 @@ fun BoxWithConstraintsScope.AccountModal(
         dismiss = { currencyModalVisible = false }
     ) {
         currencyCode = it
-
-//        if (IvyCurrency.fromCode(it)?.isCrypto == true) {
-//            if (getCustomIconId(context = context, iconName = it, size = "m") != null) {
-//                icon = it
-//            }
-//        }
     }
 
     ChooseIconModal(

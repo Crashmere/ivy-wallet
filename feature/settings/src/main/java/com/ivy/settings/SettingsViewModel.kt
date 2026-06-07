@@ -11,6 +11,8 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
 import androidx.lifecycle.viewModelScope
 import com.ivy.base.legacy.Theme
 import com.ivy.data.backup.BackupDataUseCase
@@ -55,6 +57,7 @@ class SettingsViewModel @Inject constructor(
     private val updateStartDayOfMonthAct: UpdateStartDayOfMonthAct,
     private val syncExchangeRatesUseCase: SyncExchangeRatesUseCase,
     private val features: Features,
+    private val featureDataStore: DataStore<Preferences>,
     private val exportCsvUseCase: ExportCsvUseCase,
     private val filePicker: FilePicker,
     @ApplicationContext private val context: Context
@@ -147,15 +150,15 @@ class SettingsViewModel @Inject constructor(
     }
 
     private suspend fun initializeFeaturePreferences() {
-        compactAccountsMode.value = features.compactAccountsMode.isEnabled(context)
-        hideAccountTotalBalance.value = features.hideTotalBalance.isEnabled(context)
-        compactCategoriesMode.value = features.compactCategoriesMode.isEnabled(context)
+        compactAccountsMode.value = features.compactAccountsMode.isEnabled(featureDataStore)
+        hideAccountTotalBalance.value = features.hideTotalBalance.isEnabled(featureDataStore)
+        compactCategoriesMode.value = features.compactCategoriesMode.isEnabled(featureDataStore)
         showAccountColorsInTransactions.value =
-            features.showAccountColorsInTransactions.isEnabled(context)
-        showTitleSuggestions.value = features.showTitleSuggestions.isEnabled(context)
-        standardKeypadLayout.value = features.standardKeypadLayout.isEnabled(context)
-        showCategorySearchBar.value = features.showCategorySearchBar.isEnabled(context)
-        sortCategoriesAscending.value = features.sortCategoriesAscending.isEnabled(context)
+            features.showAccountColorsInTransactions.isEnabled(featureDataStore)
+        showTitleSuggestions.value = features.showTitleSuggestions.isEnabled(featureDataStore)
+        standardKeypadLayout.value = features.standardKeypadLayout.isEnabled(featureDataStore)
+        showCategorySearchBar.value = features.showCategorySearchBar.isEnabled(featureDataStore)
+        sortCategoriesAscending.value = features.sortCategoriesAscending.isEnabled(featureDataStore)
     }
 
     private suspend fun initializeStartDateOfMonth() {
@@ -435,7 +438,7 @@ class SettingsViewModel @Inject constructor(
         state.value = enabled
 
         viewModelScope.launch {
-            feature.set(context, enabled)
+            feature.set(featureDataStore, enabled)
         }
     }
 

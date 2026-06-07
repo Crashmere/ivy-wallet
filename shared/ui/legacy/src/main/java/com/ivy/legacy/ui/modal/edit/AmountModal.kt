@@ -24,7 +24,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
@@ -34,9 +33,9 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.ivy.domain.features.LocalFeatures
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
-import com.ivy.domain.di.FeaturesEntryPoint
 import com.ivy.data.model.currency.amountToDouble
 import com.ivy.data.model.currency.amountToDoubleOrNull
 import com.ivy.data.model.currency.format
@@ -50,7 +49,6 @@ import com.ivy.legacy.ui.theme.Red
 import com.ivy.legacy.ui.component.IvyIcon
 import com.ivy.legacy.ui.modal.IvyModal
 import com.ivy.legacy.ui.modal.ModalPositiveButton
-import dagger.hilt.android.EntryPointAccessors
 import java.util.UUID
 import kotlin.math.truncate
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -317,21 +315,7 @@ fun AmountKeyboard(
     FourthRowExtra: (@Composable RowScope.() -> Unit)? = null,
     onBackspace: () -> Unit,
 ) {
-    /**
-     * Retrieve `features` via EntryPointAccessors. `isStandardLayout` is stable and
-     * only changes via settings, so there isn't unnecessary recompositions.
-     * `isStandardLayout` doesn't change while the keyboard is shown.
-     * `AmountKeyboard` is self-contained, making it easy to reuse without passing parameters.
-     * Layout changes are rare, so recomposition has minimal impact on performance.
-     **/
-
-    val context = LocalContext.current
-    val features = remember {
-        EntryPointAccessors.fromApplication(
-            context.applicationContext,
-            FeaturesEntryPoint::class.java
-        ).getFeatures()
-    }
+    val features = LocalFeatures.current
     val isStandardLayout = features.standardKeypadLayout.asEnabledState()
 
     // Decide the order of the numbers based on the keypad layout

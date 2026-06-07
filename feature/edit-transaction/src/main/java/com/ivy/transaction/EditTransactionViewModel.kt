@@ -8,6 +8,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableDoubleStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
 import androidx.lifecycle.viewModelScope
 import com.ivy.base.Toaster
 import com.ivy.base.legacy.Transaction
@@ -102,6 +104,7 @@ class EditTransactionViewModel @Inject constructor(
     private val tagRepository: TagRepository,
     private val tagMapper: TagMapper,
     private val features: Features,
+    private val featureDataStore: DataStore<Preferences>,
     private val timeConverter: TimeConverter,
     private val timeProvider: TimeProvider,
     private val dateTimePicker: DateTimePicker,
@@ -986,6 +989,6 @@ class EditTransactionViewModel @Inject constructor(
     }
 
     private suspend fun shouldSortCategoriesAscending(): Boolean {
-        return features.sortCategoriesAscending.isEnabled(context)
+        return features.sortCategoriesAscending.isEnabled(featureDataStore)
     }
 }

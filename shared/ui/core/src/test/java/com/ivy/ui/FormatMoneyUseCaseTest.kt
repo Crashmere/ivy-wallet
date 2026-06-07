@@ -1,6 +1,7 @@
 package com.ivy.ui
 
-import android.content.Context
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
 import com.google.testing.junit.testparameterinjector.TestParameter
 import com.google.testing.junit.testparameterinjector.TestParameterInjector
 import com.ivy.domain.features.Features
@@ -106,10 +107,10 @@ class FormatMoneyUseCaseTest {
         @TestParameter testCase: MoneyFormatterTestCase
     ): Unit = runBlocking {
         // given
-        val context = mockk<Context>()
+        val featureDataStore = mockk<DataStore<Preferences>>()
         every { features.showDecimalNumber } returns mockk { coEvery { isEnabled(any()) } returns testCase.showDecimal }
         every { devicePreferences.locale() } returns testCase.locale
-        formatMoneyUseCase = FormatMoneyUseCase(features, devicePreferences, context)
+        formatMoneyUseCase = FormatMoneyUseCase(features, devicePreferences, featureDataStore)
 
         // when
         val result = formatMoneyUseCase.format(

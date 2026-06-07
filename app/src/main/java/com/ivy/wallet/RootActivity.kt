@@ -8,8 +8,11 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.biometric.BiometricPrompt
 import androidx.core.view.WindowCompat
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
 import com.ivy.base.time.TimeConverter
 import com.ivy.base.time.TimeProvider
+import com.ivy.domain.features.Features
 import com.ivy.legacy.ui.state.PeriodState
 import com.ivy.navigation.Navigation
 import com.ivy.ui.platform.BuildInfoProvider
@@ -59,6 +62,12 @@ class RootActivity : AppCompatActivity(),
     @Inject
     lateinit var filePicker: ActivityResultFilePicker
 
+    @Inject
+    lateinit var features: Features
+
+    @Inject
+    lateinit var featureDataStore: DataStore<Preferences>
+
     private val viewModel: RootViewModel by viewModels()
     private val activityFileSharer by lazy { ActivityFileSharer(this) }
     private val biometricAuthenticator by lazy { BiometricAuthenticator(this) }
@@ -78,6 +87,8 @@ class RootActivity : AppCompatActivity(),
                 timeFormatter = timeFormatter,
                 dateTimePicker = dateTimePicker,
                 datePicker = datePicker,
+                features = features,
+                featureDataStore = featureDataStore,
                 buildInfoProvider = this,
                 fileSharer = this,
                 viewModel = viewModel,
