@@ -30,20 +30,16 @@ import com.ivy.design.IVY_COLOR_PICKER_COLORS_PREMIUM
 import com.ivy.design.l0_system.UI
 import com.ivy.design.l0_system.dynamicContrast
 import com.ivy.design.l0_system.style
-import com.ivy.design.l1_buildingBlocks.IvyIcon
 import com.ivy.design.utils.densityScope
 import com.ivy.design.utils.thenIf
 import com.ivy.frp.test.TestingContext
 import com.ivy.ui.legacy.onScreenStart
-import com.ivy.legacy.ivyWalletCtx
-import com.ivy.navigation.navigation
 import com.ivy.ui.R
 import kotlinx.coroutines.launch
 
 @Deprecated("Old design system. Use `:ivy-design` and Material3")
 private data class IvyColor(
     val color: Color,
-    val premium: Boolean
 )
 
 @Deprecated("Old design system. Use `:ivy-design` and Material3")
@@ -68,7 +64,6 @@ fun ColumnScope.IvyColorPicker(
         .map {
             IvyColor(
                 color = it,
-                premium = false
             )
         }
 
@@ -76,7 +71,6 @@ fun ColumnScope.IvyColorPicker(
         .map {
             IvyColor(
                 color = it,
-                premium = true
             )
         }
 
@@ -101,9 +95,6 @@ fun ColumnScope.IvyColorPicker(
             }
         }
     }
-
-    val ivyContext = ivyWalletCtx()
-    val navigation = navigation()
 
     LazyRow(
         modifier = Modifier
@@ -141,7 +132,6 @@ private fun ColorItem(
         Spacer(Modifier.width(24.dp))
     }
 
-    val ivyContext = ivyWalletCtx()
     Box(
         modifier = Modifier
             .clip(CircleShape)
@@ -156,12 +146,6 @@ private fun ColorItem(
             .testTag("color_item_${ivyColor.color.value}"),
         contentAlignment = Alignment.Center
     ) {
-        if (ivyColor.premium && !ivyContext.isPremium) {
-            IvyIcon(
-                icon = R.drawable.ic_custom_safe_s,
-                tint = color.dynamicContrast()
-            )
-        }
     }
 
     Spacer(Modifier.width(if (selected) 16.dp else 24.dp))

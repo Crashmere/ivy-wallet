@@ -373,7 +373,9 @@
 - 已把 `Month.incrementMonthPeriod` 改成只返回新周期，不再直接更新 `IvyWalletCtx`；各页面/ViewModel 在调用处显式保存选中周期，副作用更清楚。
 - 已把 `ChoosePeriodModal` 和 `PeriodSelector` 迁入 `shared:ui:legacy`，并通过外部 `saveSelectedPeriod`、`pickDate`、`startDateOfMonth` 参数替代内部直接读取 `IvyWalletCtx`。
 - 已把金额输入弹窗、计算器弹窗和缓冲金额弹窗迁入 `shared:ui:legacy`。其中金额键盘仍通过 Hilt EntryPoint 读取“标准键盘布局”偏好，因此 `shared:ui:legacy` 暂时显式依赖 `shared:domain` 和 `keval`；后续偏好设置重构时应改为由调用方或 CompositionLocal 提供键盘布局。
-- 旧 theme 目录在 `temp:legacy-code` 中只剩仍直接依赖旧账户/分类/借贷模型或旧创建参数的 4 个弹窗/组件，后续需要按业务边界单独迁移。
+- 已把旧 `legacy.datamodel` 整体迁入 `shared:domain`，把旧创建参数模型迁入 `shared:ui:legacy` 作为过渡兼容模型。
+- 已把旧颜色选择器、账户弹窗、分类弹窗、借贷弹窗和借贷记录弹窗迁入 `shared:ui:legacy`。颜色选择器移除了旧付费锁显示分支；当前 `IvyWalletCtx.isPremium` 固定为 `true`，因此不改变当前实际显示。
+- `temp:legacy-code` 的旧 theme 目录已经没有 Kotlin 文件。下一步应从旧 domain action、旧 creator/logic、编辑交易底部表单和全局 `IvyWalletCtx` 继续拆。
 
 迁移分组：
 
