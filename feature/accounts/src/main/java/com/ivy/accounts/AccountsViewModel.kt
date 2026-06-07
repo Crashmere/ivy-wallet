@@ -1,8 +1,6 @@
 package com.ivy.accounts
 
 import com.ivy.legacy.ui.preferences.asEnabledState
-import android.annotation.SuppressLint
-import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Stable
@@ -10,6 +8,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
+import com.ivy.base.resource.ResourceProvider
 import com.ivy.base.time.TimeConverter
 import com.ivy.base.time.TimeProvider
 import com.ivy.data.DataObserver
@@ -28,7 +27,6 @@ import com.ivy.legacy.domain.action.settings.BaseCurrencyAct
 import com.ivy.legacy.domain.action.viewmodel.account.AccountDataAct
 import com.ivy.legacy.domain.action.wallet.CalcWalletBalanceAct
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.Dispatchers
@@ -37,11 +35,9 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @Stable
-@SuppressLint("StaticFieldLeak")
 @HiltViewModel
 class AccountsViewModel @Inject constructor(
-    @ApplicationContext
-    private val context: Context,
+    private val resourceProvider: ResourceProvider,
     private val periodState: PeriodState,
     private val appPreferences: AppPreferences,
     private val calcWalletBalanceAct: CalcWalletBalanceAct,
@@ -203,7 +199,7 @@ class AccountsViewModel @Inject constructor(
         baseCurrency = baseCurrencyCode
         accountsData = accountsDataList
         totalBalanceWithExcluded = totalBalanceWithExcludedAccounts.toString()
-        totalBalanceWithExcludedText = context.getString(
+        totalBalanceWithExcludedText = resourceProvider.getString(
             R.string.total,
             baseCurrencyCode,
             totalBalanceWithExcludedAccounts.format(
@@ -211,7 +207,7 @@ class AccountsViewModel @Inject constructor(
             )
         )
         totalBalanceWithoutExcluded = totalBalanceWithoutExcludedAccounts.toString()
-        totalBalanceWithoutExcludedText = context.getString(
+        totalBalanceWithoutExcludedText = resourceProvider.getString(
             R.string.total_exclusive,
             baseCurrencyCode,
             totalBalanceWithoutExcludedAccounts.format(

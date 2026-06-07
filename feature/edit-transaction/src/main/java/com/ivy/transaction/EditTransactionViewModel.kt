@@ -1,8 +1,6 @@
 package com.ivy.transaction
 
 import com.ivy.legacy.ui.preferences.asEnabledState
-import android.annotation.SuppressLint
-import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
@@ -15,6 +13,7 @@ import androidx.lifecycle.viewModelScope
 import com.ivy.base.Toaster
 import com.ivy.base.model.legacy.Transaction
 import com.ivy.base.model.TransactionType
+import com.ivy.base.resource.ResourceProvider
 import com.ivy.base.time.TimeConverter
 import com.ivy.base.time.TimeProvider
 import com.ivy.data.db.dao.read.LoanDao
@@ -59,7 +58,6 @@ import com.ivy.legacy.domain.logic.loantransactions.LoanTransactionsLogic
 import com.ivy.legacy.domain.model.CreateAccountData
 import com.ivy.legacy.domain.model.CreateCategoryData
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.ImmutableSet
 import kotlinx.collections.immutable.persistentListOf
@@ -80,11 +78,9 @@ import javax.inject.Inject
 
 @Suppress("LargeClass")
 @Stable
-@SuppressLint("StaticFieldLeak")
 @HiltViewModel
 class EditTransactionViewModel @Inject constructor(
-    @ApplicationContext
-    private val context: Context,
+    private val resourceProvider: ResourceProvider,
     private val toaster: Toaster,
     private val loanDao: LoanDao,
     private val currencyRepository: CurrencyRepository,
@@ -424,12 +420,12 @@ class EditTransactionViewModel @Inject constructor(
         val isLoanRecord = trans.loanRecordId != null
 
         val loanWarningDescription = if (isLoanRecord) {
-            context.getString(
+            resourceProvider.getString(
                 R.string.note_transaction_associated_with_loan_record_of_loan,
                 loan.name
             )
         } else {
-            context.getString(
+            resourceProvider.getString(
                 R.string.note_you_are_trying_to_change_the_account_associated_with_the_loan,
                 loan.name
             )
@@ -437,12 +433,12 @@ class EditTransactionViewModel @Inject constructor(
 
         val loanCaption =
             if (isLoanRecord) {
-                context.getString(
+                resourceProvider.getString(
                     R.string.this_transaction_is_associated_with_loan_record,
                     loan.name
                 )
             } else {
-                context.getString(
+                resourceProvider.getString(
                     R.string.this_transaction_is_associated_with_loan,
                     loan.name
                 )
