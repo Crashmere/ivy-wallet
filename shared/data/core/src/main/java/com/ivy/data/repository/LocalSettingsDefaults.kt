@@ -1,6 +1,6 @@
 package com.ivy.data.repository
 
-import com.ivy.base.theme.Theme
+import com.ivy.data.model.Theme
 import com.ivy.data.db.entity.SettingsEntity
 import java.util.UUID
 

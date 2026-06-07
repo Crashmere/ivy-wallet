@@ -1,5 +1,4 @@
-package com.ivy.base.theme
-
+package com.ivy.data.model
 
 // Persisted app theme preference. Enum names are stored in Room and backups.
 enum class Theme {

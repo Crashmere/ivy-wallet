@@ -1,6 +1,6 @@
 package com.ivy.domain.usecase.settings
 
-import com.ivy.base.theme.Theme
+import com.ivy.data.model.Theme
 import com.ivy.data.api.SettingsStore
 import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.test.runTest

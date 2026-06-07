@@ -1,6 +1,6 @@
 package com.ivy.data.api
 
-import com.ivy.base.theme.Theme
+import com.ivy.data.model.Theme
 import java.math.BigDecimal
 
 interface SettingsStore {
