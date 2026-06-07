@@ -39,6 +39,7 @@ import com.ivy.domain.usecase.tag.SearchTagsUseCase
 import com.ivy.domain.usecase.transaction.DeleteTransactionUseCase
 import com.ivy.domain.usecase.transaction.GetLegacyTransactionUseCase
 import com.ivy.domain.usecase.transaction.SaveLegacyTransactionUseCase
+import com.ivy.domain.usecase.transaction.SuggestTransactionTitlesUseCase
 import com.ivy.legacy.ui.model.EditTransactionDisplayLoan
 import com.ivy.data.model.legacy.Account
 import com.ivy.legacy.domain.logic.AccountCreator
@@ -57,7 +58,6 @@ import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
 import com.ivy.legacy.domain.data.CustomExchangeRateState
 import com.ivy.legacy.domain.logic.CategoryCreator
 import com.ivy.legacy.domain.logic.PlannedPaymentsLogic
-import com.ivy.legacy.domain.logic.SmartTitleSuggestionsLogic
 import com.ivy.legacy.domain.logic.currency.ExchangeRatesLogic
 import com.ivy.legacy.domain.logic.loantransactions.LoanTransactionsLogic
 import com.ivy.data.model.legacy.CreateAccountData
@@ -96,7 +96,7 @@ class EditTransactionViewModel @Inject constructor(
     private val categoryCreator: CategoryCreator,
     private val accountCreator: AccountCreator,
     private val plannedPaymentsLogic: PlannedPaymentsLogic,
-    private val smartTitleSuggestionsLogic: SmartTitleSuggestionsLogic,
+    private val suggestTransactionTitlesUseCase: SuggestTransactionTitlesUseCase,
     private val loanTransactionsLogic: LoanTransactionsLogic,
     private val getLegacyAccountsUseCase: GetLegacyAccountsUseCase,
     private val getCategoriesUseCase: GetCategoriesUseCase,
@@ -673,7 +673,7 @@ class EditTransactionViewModel @Inject constructor(
     private fun updateTitleSuggestions(title: String? = loadedTransaction().title) {
         viewModelScope.launch {
             titleSuggestions = ioThread {
-                smartTitleSuggestionsLogic.suggest(
+                suggestTransactionTitlesUseCase(
                     title = title,
                     categoryId = category?.id?.value,
                     accountId = account?.id

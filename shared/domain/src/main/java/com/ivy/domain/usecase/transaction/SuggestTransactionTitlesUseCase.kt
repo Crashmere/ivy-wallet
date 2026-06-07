@@ -1,26 +1,19 @@
-package com.ivy.legacy.domain.logic
+package com.ivy.domain.usecase.transaction
 
 import com.ivy.base.model.legacy.Transaction
-import com.ivy.data.db.dao.read.TransactionDao
-import com.ivy.legacy.domain.mapper.toLegacyDomain
 import com.ivy.base.text.capitalizeWords
 import com.ivy.base.text.isNotNullOrBlank
-import java.util.*
+import com.ivy.data.db.dao.read.TransactionDao
+import com.ivy.legacy.domain.mapper.toLegacyDomain
+import java.util.UUID
 import javax.inject.Inject
 
-const val SUGGESTIONS_LIMIT = 10
+private const val SUGGESTIONS_LIMIT = 10
 
-class SmartTitleSuggestionsLogic @Inject constructor(
+class SuggestTransactionTitlesUseCase @Inject constructor(
     private val transactionDao: TransactionDao
 ) {
-
-    /**
-     * Suggests titles based on:
-     * - title match
-     * - most used titles for categories
-     * - if suggestions.size < SUGGESTIONS_LIMIT most used titles for accounts
-     */
-    suspend fun suggest(
+    suspend operator fun invoke(
         title: String?,
         categoryId: UUID?,
         accountId: UUID?
@@ -28,7 +21,6 @@ class SmartTitleSuggestionsLogic @Inject constructor(
         val suggestions = mutableSetOf<String>()
 
         if (title != null && title.isNotEmpty()) {
-            // suggest by title
             val suggestionsByTitle = transactionDao.findAllByTitleMatchingPattern("$title%")
                 .map { it.toLegacyDomain() }
                 .extractUniqueTitles()
@@ -40,16 +32,9 @@ class SmartTitleSuggestionsLogic @Inject constructor(
         }
 
         if (categoryId != null) {
-            // suggest by category
-            // all titles used for the specific category
-            // ordered by N times used
-
             val suggestionsByCategory = transactionDao
-                .findAllByCategory(
-                    categoryId = categoryId
-                )
+                .findAllByCategory(categoryId = categoryId)
                 .map { it.toLegacyDomain() }
-                // exclude already suggested suggestions so they're ordered by priority at the end
                 .extractUniqueTitles(excludeSuggestions = suggestions)
                 .sortedByMostUsedFirst {
                     transactionDao.countByTitleMatchingPatternAndCategoryId(
@@ -62,16 +47,9 @@ class SmartTitleSuggestionsLogic @Inject constructor(
         }
 
         if (suggestions.size < SUGGESTIONS_LIMIT && accountId != null) {
-            // last resort, suggest by account
-            // all titles used for the specific account
-            // ordered by N times used
-
             val suggestionsByAccount = transactionDao
-                .findAllByAccount(
-                    accountId = accountId
-                )
+                .findAllByAccount(accountId = accountId)
                 .map { it.toLegacyDomain() }
-                // exclude already suggested suggestions so they're ordered by priority at the end
                 .extractUniqueTitles(excludeSuggestions = suggestions)
                 .sortedByMostUsedFirst {
                     transactionDao.countByTitleMatchingPatternAndAccountId(
@@ -91,26 +69,15 @@ class SmartTitleSuggestionsLogic @Inject constructor(
 
 private fun List<Transaction>.extractUniqueTitles(
     excludeSuggestions: Set<String>? = null
-): Set<String> {
-    return this
-        .filter { it.title.isNotNullOrBlank() }
+): Set<String> =
+    filter { it.title.isNotNullOrBlank() }
         .map { it.title!!.trim().capitalizeWords() }
         .filter { excludeSuggestions == null || !excludeSuggestions.contains(it) }
         .toSet()
-}
 
-private suspend fun Set<String>.sortedByMostUsedFirst(countUses: suspend (String) -> Long): Set<String> {
-    val titleCountMap = this
-        .map {
-            it to countUses(it)
-        }
-        .toMap()
-
-    val sortedSuggestions = this
-        .sortedByDescending {
-            titleCountMap.getOrDefault(it, 0)
-        }
-        .toSet()
-
-    return sortedSuggestions
+private suspend fun Set<String>.sortedByMostUsedFirst(
+    countUses: suspend (String) -> Long
+): Set<String> {
+    val titleCountMap = associateWith { countUses(it) }
+    return sortedByDescending { titleCountMap.getOrDefault(it, 0) }.toSet()
 }
