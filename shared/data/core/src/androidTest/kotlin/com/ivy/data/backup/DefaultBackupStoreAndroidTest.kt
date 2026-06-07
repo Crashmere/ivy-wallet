@@ -56,7 +56,7 @@ class DefaultBackupStoreAndroidTest {
             settingsDao = db.settingsDao,
             transactionDao = db.transactionDao,
             transactionWriter = db.writeTransactionDao,
-            appPreferenceStore = SharedPrefsAppPreferenceStore(appContext),
+            settingsPreferenceStore = SharedPrefsAppPreferenceStore(appContext),
             accountStore = RoomAccountStore(
                 accountDao = db.accountDao,
                 writeAccountDao = db.writeAccountDao,

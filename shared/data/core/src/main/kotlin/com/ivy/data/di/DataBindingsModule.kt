@@ -3,7 +3,6 @@ package com.ivy.data.di
 import com.ivy.data.DataWriteEventBus
 import com.ivy.data.api.AccountStore
 import com.ivy.data.api.AppPreferenceResetStore
-import com.ivy.data.api.AppPreferenceStore
 import com.ivy.data.api.BufferAmountStore
 import com.ivy.data.api.backup.BackupStore
 import com.ivy.data.api.BudgetStore
@@ -21,6 +20,7 @@ import com.ivy.data.api.LoanStore
 import com.ivy.data.api.PlannedPaymentRuleStore
 import com.ivy.data.api.PreferenceToggleStore
 import com.ivy.data.api.SettingsInitializationStore
+import com.ivy.data.api.SettingsPreferenceStore
 import com.ivy.data.api.SettingsResetStore
 import com.ivy.data.api.TagStore
 import com.ivy.data.api.ThemeStore
@@ -57,7 +57,9 @@ abstract class DataBindingsModule {
     abstract fun bindAccountStore(store: RoomAccountStore): AccountStore
 
     @Binds
-    abstract fun bindAppPreferenceStore(store: SharedPrefsAppPreferenceStore): AppPreferenceStore
+    abstract fun bindSettingsPreferenceStore(
+        store: SharedPrefsAppPreferenceStore
+    ): SettingsPreferenceStore
 
     @Binds
     abstract fun bindAppPreferenceResetStore(

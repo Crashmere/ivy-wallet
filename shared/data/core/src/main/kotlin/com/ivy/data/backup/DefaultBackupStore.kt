@@ -5,9 +5,9 @@ import android.net.Uri
 import androidx.core.net.toUri
 import com.ivy.data.api.AccountStore
 import com.ivy.data.api.AppPreferenceKeys
-import com.ivy.data.api.AppPreferenceStore
 import com.ivy.data.api.DataChangePublisher
 import com.ivy.data.api.DataWriteEvent
+import com.ivy.data.api.SettingsPreferenceStore
 import com.ivy.data.api.backup.BackupStore
 import com.ivy.data.api.file.ExternalFile
 import com.ivy.data.db.dao.read.AccountDao
@@ -56,7 +56,7 @@ class DefaultBackupStore @Inject constructor(
     private val settingsDao: SettingsDao,
     private val transactionDao: TransactionDao,
     private val transactionWriter: WriteTransactionDao,
-    private val appPreferenceStore: AppPreferenceStore,
+    private val settingsPreferenceStore: SettingsPreferenceStore,
     private val accountStore: AccountStore,
     private val accountMapper: AccountMapper,
     private val categoryWriter: WriteCategoryDao,
@@ -144,11 +144,11 @@ class DefaultBackupStore @Inject constructor(
 
     private fun getSharedPrefsData(): HashMap<String, String> {
         val hashmap = HashMap<String, String>()
-        hashmap[AppPreferenceKeys.SHOW_NOTIFICATIONS] = appPreferenceStore.showNotifications.toString()
-        hashmap[AppPreferenceKeys.APP_LOCK_ENABLED] = appPreferenceStore.appLockEnabled.toString()
-        hashmap[AppPreferenceKeys.HIDE_CURRENT_BALANCE] = appPreferenceStore.hideCurrentBalance.toString()
+        hashmap[AppPreferenceKeys.SHOW_NOTIFICATIONS] = settingsPreferenceStore.showNotifications.toString()
+        hashmap[AppPreferenceKeys.APP_LOCK_ENABLED] = settingsPreferenceStore.appLockEnabled.toString()
+        hashmap[AppPreferenceKeys.HIDE_CURRENT_BALANCE] = settingsPreferenceStore.hideCurrentBalance.toString()
         hashmap[AppPreferenceKeys.TRANSFERS_AS_INCOME_EXPENSE] =
-            appPreferenceStore.transfersAsIncomeExpense.toString()
+            settingsPreferenceStore.transfersAsIncomeExpense.toString()
 
         return hashmap
     }
@@ -293,16 +293,16 @@ class DefaultBackupStore @Inject constructor(
             val plannedPayments =
                 async { plannedPaymentRuleWriter.saveMany(completeData.plannedPaymentRules) }
 
-            appPreferenceStore.showNotifications =
+            settingsPreferenceStore.showNotifications =
                 (completeData.sharedPrefs[AppPreferenceKeys.SHOW_NOTIFICATIONS] ?: "true").toBoolean()
 
-            appPreferenceStore.appLockEnabled =
+            settingsPreferenceStore.appLockEnabled =
                 (completeData.sharedPrefs[AppPreferenceKeys.APP_LOCK_ENABLED] ?: "false").toBoolean()
 
-            appPreferenceStore.hideCurrentBalance =
+            settingsPreferenceStore.hideCurrentBalance =
                 (completeData.sharedPrefs[AppPreferenceKeys.HIDE_CURRENT_BALANCE] ?: "false").toBoolean()
 
-            appPreferenceStore.transfersAsIncomeExpense =
+            settingsPreferenceStore.transfersAsIncomeExpense =
                 (completeData.sharedPrefs[AppPreferenceKeys.TRANSFERS_AS_INCOME_EXPENSE] ?: "false").toBoolean()
 
             plannedPayments.await()

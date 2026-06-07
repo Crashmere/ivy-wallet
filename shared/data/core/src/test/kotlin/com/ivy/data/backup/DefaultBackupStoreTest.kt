@@ -1,7 +1,7 @@
 package com.ivy.data.backup
 
 import com.ivy.data.DataWriteEventBus
-import com.ivy.data.api.AppPreferenceStore
+import com.ivy.data.api.SettingsPreferenceStore
 import com.ivy.data.db.dao.fake.FakeAccountDao
 import com.ivy.data.db.dao.fake.FakeBudgetDao
 import com.ivy.data.db.dao.fake.FakeCategoryDao
@@ -71,7 +71,7 @@ class DefaultBackupStoreTest {
             plannedPaymentRuleWriter = plannedPaymentDao,
 
             context = mockk(relaxed = true),
-            appPreferenceStore = mockk<AppPreferenceStore>(relaxed = true),
+            settingsPreferenceStore = mockk<SettingsPreferenceStore>(relaxed = true),
             json = SerializationModule.provideJson(),
             fileSystem = mockk(relaxed = true),
             dataChangePublisher = DataWriteEventBus(),

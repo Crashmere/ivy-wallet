@@ -848,6 +848,7 @@
 - 最后选择账户 ID 已从泛化 `AppPreferenceStore` 拆到 `LastSelectedAccountStore`；账户选择用例只依赖自己的偏好端口，原 SharedPreferences key 不变。
 - 分类排序偏好和首页客户旅程卡片 dismissed 状态已分别拆到 `CategorySortOrderStore` 与 `CustomerJourneyCardStore`；分类/首页用例不再依赖完整 `AppPreferenceStore`。
 - App 偏好清空能力已从 `AppPreferenceStore` 拆到 `AppPreferenceResetStore`；重置用例不再依赖设置开关读取能力。
+- 剩余设置开关端口已从泛化 `AppPreferenceStore` 改名为 `SettingsPreferenceStore`；`AppPreferenceStore` 已删除，备份和设置用例只依赖明确的设置偏好端口。
 
 建议顺序：
 

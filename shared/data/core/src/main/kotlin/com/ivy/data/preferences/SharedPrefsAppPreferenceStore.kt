@@ -3,18 +3,18 @@ package com.ivy.data.preferences
 import android.content.Context
 import com.ivy.data.api.AppPreferenceKeys
 import com.ivy.data.api.AppPreferenceResetStore
-import com.ivy.data.api.AppPreferenceStore
 import com.ivy.data.api.CategorySortOrderStore
 import com.ivy.data.api.CustomerJourneyCardStore
 import com.ivy.data.api.InitialSetupStore
 import com.ivy.data.api.LastSelectedAccountStore
+import com.ivy.data.api.SettingsPreferenceStore
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
 class SharedPrefsAppPreferenceStore @Inject constructor(
     @ApplicationContext
     context: Context
-) : AppPreferenceStore,
+) : SettingsPreferenceStore,
     InitialSetupStore,
     LastSelectedAccountStore,
     CategorySortOrderStore,
