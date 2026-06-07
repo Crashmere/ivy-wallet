@@ -285,6 +285,7 @@
 - `shared:ui:core`、`shared:ui:legacy`、`shared:ui:navigation` 已从 `ivy.feature` 迁到 `ivy.compose`；shared UI 模块不再伪装成 feature。
 - `shared:ui:core`、`shared:ui:legacy`、`shared:ui:navigation` 的 Kotlin 源码已从 `src/main/java` 迁到 `src/main/kotlin`，`shared:ui:core` 测试源码同步迁到 `src/test/kotlin`；包名和运行行为不变，只收敛源集结构。
 - 所有 `feature:*` 模块的 Kotlin 源码已从 `src/main/java` 迁到 `src/main/kotlin`；页面模块继续保持原包名和行为，只让目录结构匹配 Kotlin-only 代码事实。
+- `app` 和 `shared:data:core` 的 Kotlin 源码也已迁到 `src/*/kotlin` 源集；其中 data-core 的 unit test 与 androidTest 同步迁移，持久化、备份和 Room 测试包名不变。
 - `ivy.compose` 已收敛为纯 Android Compose 配置，不再隐式套用 `ivy.module` 或引入未使用的 Molecule 插件；feature 模块继续由 `ivy.feature` 组合 Hilt 与 Compose 能力，需要 Hilt Module 的 shared UI 模块才显式声明 `ivy.hilt`。
 - 版本目录里的 Compose LiveData 依赖别名已从临时/拼写错误的 `compose-runtime-livedate-temp` 改为 `compose-runtime-livedata`，保留依赖本身不变。
 - 删除无运行时调用方的 `FormatMoneyUseCase` 和对应测试，`shared:ui:core` 不再因为这段旧金额格式化草稿依赖 `shared:domain` 或 DataStore；当前实际金额展示继续使用既有 data model currency formatting 与旧 UI 展示逻辑。
