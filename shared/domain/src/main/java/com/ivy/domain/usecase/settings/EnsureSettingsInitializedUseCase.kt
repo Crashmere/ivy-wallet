@@ -1,5 +1,6 @@
 package com.ivy.domain.usecase.settings
 
+import com.ivy.base.theme.Theme
 import com.ivy.data.api.SettingsStore
 import javax.inject.Inject
 
@@ -12,9 +13,13 @@ class EnsureSettingsInitializedUseCase @Inject constructor(
         bufferAmount: Double,
     ) {
         settingsStore.ensureInitialized(
-            systemDarkMode = systemDarkMode,
+            defaultTheme = systemDefaultTheme(systemDarkMode),
             currencyCode = currencyCode,
             bufferAmount = bufferAmount,
         )
+    }
+
+    private fun systemDefaultTheme(systemDarkMode: Boolean): Theme {
+        return if (systemDarkMode) Theme.DARK else Theme.LIGHT
     }
 }

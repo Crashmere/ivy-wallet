@@ -22,12 +22,8 @@ class SettingsRepository @Inject constructor(
         settingsDao.findFirstOrNull()?.theme ?: fallback
     }
 
-    override suspend fun getTheme(systemDarkMode: Boolean): Theme = getTheme(
-        fallback = if (systemDarkMode) Theme.DARK else Theme.LIGHT
-    )
-
     override suspend fun ensureInitialized(
-        systemDarkMode: Boolean,
+        defaultTheme: Theme,
         currencyCode: String,
         bufferAmount: Double,
     ) {
@@ -35,7 +31,7 @@ class SettingsRepository @Inject constructor(
             if (settingsDao.findFirstOrNull() == null) {
                 writeSettingsDao.save(
                     SettingsEntity(
-                        theme = if (systemDarkMode) Theme.DARK else Theme.LIGHT,
+                        theme = defaultTheme,
                         currency = currencyCode,
                         bufferAmount = bufferAmount,
                     )

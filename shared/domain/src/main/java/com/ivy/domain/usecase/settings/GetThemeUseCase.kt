@@ -12,6 +12,10 @@ class GetThemeUseCase @Inject constructor(
     }
 
     suspend fun withSystemFallback(systemDarkMode: Boolean): Theme {
-        return settingsStore.getTheme(systemDarkMode)
+        return settingsStore.getTheme(systemFallback(systemDarkMode))
+    }
+
+    private fun systemFallback(systemDarkMode: Boolean): Theme {
+        return if (systemDarkMode) Theme.DARK else Theme.LIGHT
     }
 }

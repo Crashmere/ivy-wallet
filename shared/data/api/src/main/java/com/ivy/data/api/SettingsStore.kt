@@ -6,10 +6,8 @@ import java.math.BigDecimal
 interface SettingsStore {
     suspend fun getTheme(fallback: Theme = Theme.AUTO): Theme
 
-    suspend fun getTheme(systemDarkMode: Boolean): Theme
-
     suspend fun ensureInitialized(
-        systemDarkMode: Boolean,
+        defaultTheme: Theme,
         currencyCode: String,
         bufferAmount: Double,
     )
