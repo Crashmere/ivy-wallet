@@ -34,7 +34,7 @@ import com.ivy.design.l1_buildingBlocks.IvyIcon
 import com.ivy.design.utils.densityScope
 import com.ivy.design.utils.thenIf
 import com.ivy.frp.test.TestingContext
-import com.ivy.legacy.frp.onScreenStart
+import com.ivy.ui.legacy.onScreenStart
 import com.ivy.legacy.ivyWalletCtx
 import com.ivy.navigation.navigation
 import com.ivy.ui.R

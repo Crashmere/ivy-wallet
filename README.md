@@ -360,6 +360,7 @@
 - 已把 `IvyCurrency` 和金额输入/显示格式 helper 从 `temp:legacy-code` 迁到 `shared:data:model` 的 `com.ivy.data.model.currency` 包。
 - 已新增 `shared:ui:legacy` 过渡模块，并把旧 Compose/UI helper、手势 helper 和动画 helper 从 `temp:legacy-code` 迁入其中。
 - 已拆分 legacy 日期 helper：纯时间计算迁到 `shared:base`，日期展示格式迁到 `shared:ui:legacy`。
+- 已把旧 FRP 组合 helper、`FPAction`、`Res` 和测试空闲计数器从 `temp:legacy-code` 迁到 `shared:base`，并移除重复的 legacy `onScreenStart`。
 
 迁移分组：
 
