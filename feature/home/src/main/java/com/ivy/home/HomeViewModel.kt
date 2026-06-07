@@ -27,8 +27,6 @@ import com.ivy.domain.usecase.settings.GetStartDayOfMonthUseCase
 import com.ivy.domain.usecase.settings.GetThemeUseCase
 import com.ivy.domain.usecase.settings.SetBufferAmountUseCase
 import com.ivy.domain.usecase.settings.SwitchThemeUseCase
-import com.ivy.legacy.frp.then
-import com.ivy.legacy.frp.thenInvokeAfter
 import com.ivy.domain.usecase.wallet.CalculateWalletBalanceUseCase
 import com.ivy.domain.usecase.wallet.CalculateWalletIncomeExpenseUseCase
 import com.ivy.home.customerjourney.CustomerJourneyCardModel
@@ -273,7 +271,7 @@ class HomeViewModel @Inject constructor(
     // -----------------------------------------------------------------------------------
     private suspend fun reload(
         timePeriod: TimePeriod = periodState.selectedPeriod
-    ) = suspend {
+    ) {
         val preferences = loadHomePreferences()
 
         currentTheme = preferences.theme
@@ -284,17 +282,19 @@ class HomeViewModel @Inject constructor(
         // This restores the runtime theme when the user imports a local backup.
         themeState.update(theme = preferences.theme)
 
-        Pair(
-            preferences,
-            period.toRange(
-                startDateOfMonth = periodState.startDayOfMonth,
-                timeConverter = timeConverter,
-                timeProvider = timeProvider
-            ).toUTCCloseTimeRange()
-        )
-    } then ::loadAppBaseData then ::loadIncomeExpenseBalance then
-            ::loadBuffer then ::loadTrnHistory then
-            ::loadDueTrns thenInvokeAfter ::loadCustomerJourney
+        val timeRange = period.toRange(
+            startDateOfMonth = periodState.startDayOfMonth,
+            timeConverter = timeConverter,
+            timeProvider = timeProvider
+        ).toUTCCloseTimeRange()
+
+        val appDataInput = loadAppBaseData(preferences to timeRange)
+        val balanceInput = loadIncomeExpenseBalance(appDataInput)
+        val historyInput = loadBuffer(balanceInput)
+        val dueInput = loadTrnHistory(historyInput)
+        loadDueTrns(dueInput)
+        loadCustomerJourney(Unit)
+    }
 
     private suspend fun loadHomePreferences(): HomePreferences {
         return HomePreferences(
@@ -486,9 +486,8 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    private suspend fun dismissCustomerJourneyCard(card: CustomerJourneyCardModel) = suspend {
+    private suspend fun dismissCustomerJourneyCard(card: CustomerJourneyCardModel) {
         customerJourneyLogic.dismissCard(card)
-    } thenInvokeAfter {
         reload()
     }
 

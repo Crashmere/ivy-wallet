@@ -641,6 +641,7 @@
 - 首页到期交易统计已收敛到 `GetUpcomingTransactionsInfoUseCase`、`GetOverdueTransactionsInfoUseCase` 和公共 `CalculateDueTransactionsInfoUseCase`；旧 `DueTrnsInfoAct`、`UpcomingAct` 和 `OverdueAct` 已删除，`shared:domain` 中不再保留旧 `domain/action` 源码。
 - feature-local 旧 action 写法继续收敛：账户页 `AccountDataAct` 改为 `BuildAccountDataUseCase`，饼图页 `PieChartAct` 改为 `BuildPieChartDataUseCase`，两者不再继承 `FPAction` 或依赖 `thenMap/thenFilter` 组合工具。
 - 未被运行时代码使用的 `legacy.frp.action` 和 `legacy.frp.monad` 已删除，`Composition.kt`/`CompositionN.kt` 中只保留普通函数组合重载；项目中不再存在 `FPAction`/`Action` 抽象。
+- feature 层和旧纯交易分组里的 `legacy.frp` 组合函数已改成普通 Kotlin lambda/循环，`Composition.kt`、`Composition2.kt`、`CompositionN.kt` 和 `Utils.kt` 已删除；当前 `legacy.frp` 只剩 `Pure/SideEffect` 注解。
 - 删除无调用方的 `SettingsAct`、`UpdateSettingsAct`、旧 `Settings` 模型和 `SettingsEntity.toLegacyDomain()` mapper。
 - `SettingsEntity` 暂时仍保留：首次默认数据、重置钱包、备份恢复格式，以及 `CurrencyRepository/LegacySettingsRepository` 内部仍依赖这张表。
 - `ResetWalletDataUseCaseImpl` 仍保留在 app 层实现：它需要同时编排数据清空、偏好清空、默认数据重建和根导航复位；当前不再用废弃注解制造警告，后续若拆分应先拆出数据清空与 app 导航两部分职责。

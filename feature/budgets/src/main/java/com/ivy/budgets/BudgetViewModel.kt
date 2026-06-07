@@ -15,7 +15,6 @@ import com.ivy.data.model.Expense
 import com.ivy.data.model.Income
 import com.ivy.data.model.Transaction
 import com.ivy.data.model.Transfer
-import com.ivy.legacy.frp.sumOfSuspend
 import com.ivy.legacy.ui.state.PeriodState
 import com.ivy.data.model.legacy.FromToTimeRange
 import com.ivy.data.model.legacy.toCloseTimeRange
@@ -232,11 +231,11 @@ class BudgetViewModel @Inject constructor(
         val accountsFilter = budget.parseAccountIds()
         val categoryFilter = budget.parseCategoryIds()
 
-        return transactions
+        var spentAmount = 0.0
+        for (transaction in transactions
             .filter { accountsFilter.isEmpty() || accountsFilter.contains(it.getAccountId()) }
-            .filter { categoryFilter.isEmpty() || categoryFilter.contains(it.category?.value) }
-            .sumOfSuspend {
-                when (it) {
+            .filter { categoryFilter.isEmpty() || categoryFilter.contains(it.category?.value) }) {
+            spentAmount += when (transaction) {
                     is Income -> {
                         0.0 // ignore income
                     }
@@ -246,9 +245,9 @@ class BudgetViewModel @Inject constructor(
                         exchangeAmountUseCase(
                             data = ExchangeData(
                                 baseCurrency = baseCurrencyCode,
-                                fromCurrency = trnCurrency(it, accounts, baseCurrencyCode)
+                                fromCurrency = trnCurrency(transaction, accounts, baseCurrencyCode)
                             ),
-                            amount = it.getValue()
+                            amount = transaction.getValue()
                         ).getOrNull()?.toDouble() ?: 0.0
                     }
 
@@ -257,7 +256,8 @@ class BudgetViewModel @Inject constructor(
                         0.0
                     }
                 }
-            }
+        }
+        return spentAmount
     }
 
     private fun createBudget(data: CreateBudgetData) {

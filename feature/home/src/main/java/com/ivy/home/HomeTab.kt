@@ -29,8 +29,6 @@ import com.ivy.ui.time.LocalTimeConverter
 import com.ivy.ui.platform.LocalDatePicker
 import com.ivy.ui.time.LocalTimeFormatter
 import com.ivy.ui.time.LocalTimeProvider
-import com.ivy.legacy.frp.forward
-import com.ivy.legacy.frp.then2
 import com.ivy.home.Constants.SWIPE_HORIZONTAL_THRESHOLD
 import com.ivy.home.customerjourney.CustomerJourney
 import com.ivy.home.customerjourney.CustomerJourneyCardModel
@@ -183,21 +181,11 @@ fun BoxWithConstraintsScope.HomeUi(
             customerJourneyCards = uiState.customerJourneyCards,
             shouldShowAccountSpecificColorInTransactions = uiState.shouldShowAccountSpecificColorInTransactions,
 
-            onPayOrGet = forward<Transaction>() then2 {
-                HomeEvent.PayOrGetPlanned(it)
-            } then2 onEvent,
-            onDismiss = forward<CustomerJourneyCardModel>() then2 {
-                HomeEvent.DismissCustomerJourneyCard(it)
-            } then2 onEvent,
-            onSkipTransaction = forward<Transaction>() then2 {
-                HomeEvent.SkipPlanned(it)
-            } then2 onEvent,
-            setUpcomingExpanded = forward<Boolean>() then2 {
-                HomeEvent.SetUpcomingExpanded(it)
-            } then2 onEvent,
-            setOverdueExpanded = forward<Boolean>() then2 {
-                HomeEvent.SetOverdueExpanded(it)
-            } then2 onEvent,
+            onPayOrGet = { onEvent(HomeEvent.PayOrGetPlanned(it)) },
+            onDismiss = { onEvent(HomeEvent.DismissCustomerJourneyCard(it)) },
+            onSkipTransaction = { onEvent(HomeEvent.SkipPlanned(it)) },
+            setUpcomingExpanded = { onEvent(HomeEvent.SetUpcomingExpanded(it)) },
+            setOverdueExpanded = { onEvent(HomeEvent.SetOverdueExpanded(it)) },
             onSkipAllTransactions = {
                 skipAllModalVisible = true
             }
@@ -231,9 +219,7 @@ fun BoxWithConstraintsScope.HomeUi(
         dismiss = {
             bufferModalData = null
         },
-        onBufferChanged = forward<Double>() then2 {
-            HomeEvent.SetBuffer(it)
-        } then2 onEvent
+        onBufferChanged = { onEvent(HomeEvent.SetBuffer(it)) }
     )
 
     CurrencyModal(
@@ -243,9 +229,7 @@ fun BoxWithConstraintsScope.HomeUi(
         dismiss = {
             currencyModalVisible = false
         },
-        onSetCurrency = forward<String>() then2 {
-            HomeEvent.SetCurrency(it)
-        } then2 onEvent
+        onSetCurrency = { onEvent(HomeEvent.SetCurrency(it)) }
     )
 
     ChoosePeriodModal(
@@ -262,9 +246,7 @@ fun BoxWithConstraintsScope.HomeUi(
                 onDatePicked = onDatePicked
             )
         },
-        onPeriodSelected = forward<TimePeriod>() then2 {
-            HomeEvent.SetPeriod(it)
-        } then2 onEvent
+        onPeriodSelected = { onEvent(HomeEvent.SetPeriod(it)) }
     )
 
     DeleteModal(

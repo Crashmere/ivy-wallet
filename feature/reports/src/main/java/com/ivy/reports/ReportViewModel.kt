@@ -35,7 +35,6 @@ import com.ivy.domain.usecase.tag.SearchTagsUseCase
 import com.ivy.domain.usecase.transaction.GetTransactionsByTagsUseCase
 import com.ivy.domain.usecase.transaction.GetTransactionsUseCase
 import com.ivy.domain.usecase.transaction.MapTransactionsToLegacyUseCase
-import com.ivy.legacy.frp.filterSuspend
 import com.ivy.legacy.ui.state.PeriodState
 import com.ivy.data.model.legacy.Account
 import com.ivy.base.time.getISOFormattedDateTime
@@ -426,21 +425,7 @@ class ReportViewModel @Inject constructor(
                 filterCategoryIds.contains(trn.category) ||
                         trn.getTransactionType() == TransactionType.TRANSFER
             }
-            .filterSuspend {
-                // Filter by Amount
-                // !NOTE: Amount must be converted to baseCurrency amount
-
-                val trnAmountBaseCurrency = exchangeAmountUseCase(
-                    data = ExchangeData(
-                        baseCurrency = baseCurrency,
-                        fromCurrency = trnCurrency(it, accounts, baseCurrency),
-                    ),
-                    amount = it.getValue()
-                ).orZero().toDouble()
-
-                (filter.minAmount == null || trnAmountBaseCurrency >= filter.minAmount) &&
-                        (filter.maxAmount == null || trnAmountBaseCurrency <= filter.maxAmount)
-            }
+            .filterByAmount(baseCurrency, accounts, filter)
             .filter {
                 // Filter by Included Keywords
 
@@ -487,6 +472,30 @@ class ReportViewModel @Inject constructor(
                 }
                 true
             }.toImmutableList()
+    }
+
+    private suspend fun List<Transaction>.filterByAmount(
+        baseCurrency: String,
+        accounts: List<Account>,
+        filter: ReportFilter
+    ): List<Transaction> {
+        val amountFilteredTransactions = mutableListOf<Transaction>()
+        for (transaction in this) {
+            val trnAmountBaseCurrency = exchangeAmountUseCase(
+                data = ExchangeData(
+                    baseCurrency = baseCurrency,
+                    fromCurrency = trnCurrency(transaction, accounts, baseCurrency),
+                ),
+                amount = transaction.getValue()
+            ).orZero().toDouble()
+
+            if ((filter.minAmount == null || trnAmountBaseCurrency >= filter.minAmount) &&
+                (filter.maxAmount == null || trnAmountBaseCurrency <= filter.maxAmount)
+            ) {
+                amountFilteredTransactions += transaction
+            }
+        }
+        return amountFilteredTransactions
     }
 
     private fun String.containsLowercase(anotherString: String): Boolean {
