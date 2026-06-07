@@ -659,6 +659,7 @@
 - `ActivityFilePickerHost` 承接 Activity Result 文件创建/打开注册，`RootActivity` 不再保存 launcher 和文件回调。
 - `ActivityFileSharer` 承接 CSV 分享和 zip 分享，并直接实现 `FileSharer`；`RootActivity` 不再为了分享文件实现 UI 平台接口。
 - `AppBuildInfoProvider` 承接版本号、版本名和 debug 状态读取；`RootActivity` 不再为了设置页版本显示实现 `BuildInfoProvider`。
+- `AndroidLocaleSettingsLauncher` 承接 Android 13+ 应用语言设置跳转；设置页 ViewModel 不再直接持有 `Context` 或组装平台 Intent。
 - `BiometricAuthenticator` 承接系统生物识别 Prompt 构造。
 - `SecureWindowController` 承接应用锁失焦时的 `FLAG_SECURE` 窗口保护。
 - `AppLockController` 承接应用锁启用状态、锁定状态、生物识别结果回调和用户非活跃计时，`RootViewModel` 只保留启动编排和委托方法。

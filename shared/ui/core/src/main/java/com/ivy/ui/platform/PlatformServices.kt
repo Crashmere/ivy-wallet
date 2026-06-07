@@ -26,6 +26,12 @@ interface FileSharer {
     fun shareZipFile(fileUri: Uri)
 }
 
+interface LocaleSettingsLauncher {
+    val appLocaleSettingsAvailable: Boolean
+
+    fun openAppLocaleSettings()
+}
+
 @Suppress("CompositionLocalAllowlist")
 val LocalBuildInfoProvider = compositionLocalOf<BuildInfoProvider> {
     error("No LocalBuildInfoProvider")
