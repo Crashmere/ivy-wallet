@@ -18,14 +18,14 @@ class AccountRepository @Inject constructor(
     private val accountDao: AccountDao,
     private val writeAccountDao: WriteAccountDao,
     private val dispatchersProvider: DispatchersProvider,
-    memoFactory: RepositoryMemoFactory,
+    cacheFactory: RepositoryCacheFactory,
 ) : AccountStore {
-    private val memo = memoFactory.createMemo(
+    private val cache = cacheFactory.createCache(
         getDataWriteSaveEvent = DataWriteEvent::SaveAccounts,
         getDateWriteDeleteEvent = DataWriteEvent::DeleteAccounts
     )
 
-    override suspend fun findById(id: AccountId): Account? = memo.findById(
+    override suspend fun findById(id: AccountId): Account? = cache.findById(
         id = id,
         findByIdOperation = {
             accountDao.findById(id.value)?.let {
@@ -34,40 +34,40 @@ class AccountRepository @Inject constructor(
         }
     )
 
-    override suspend fun findAll(): List<Account> = memo.findAll(
+    override suspend fun findAll(): List<Account> = cache.findAll(
         findAllOperation = {
             accountDao.findAll().mapNotNull {
                 with(mapper) { it.toDomain() }.getOrNull()
             }
         },
-        sortMemo = { sortedBy(Account::orderNum) }
+        sortCache = { sortedBy(Account::orderNum) }
     )
 
-    override suspend fun findMaxOrderNum(): Double = if (memo.findAllMemoized) {
-        memo.items.maxOfOrNull { (_, acc) -> acc.orderNum } ?: 0.0
+    override suspend fun findMaxOrderNum(): Double = if (cache.hasCachedAllItems) {
+        cache.items.maxOfOrNull { (_, acc) -> acc.orderNum } ?: 0.0
     } else {
         withContext(dispatchersProvider.io) {
             accountDao.findMaxOrderNum() ?: 0.0
         }
     }
 
-    override suspend fun save(value: Account): Unit = memo.save(value) {
+    override suspend fun save(value: Account): Unit = cache.save(value) {
         writeAccountDao.save(
             with(mapper) { it.toEntity() }
         )
     }
 
-    override suspend fun saveMany(values: List<Account>): Unit = memo.saveMany(values) {
+    override suspend fun saveMany(values: List<Account>): Unit = cache.saveMany(values) {
         writeAccountDao.saveMany(
             it.map { with(mapper) { it.toEntity() } }
         )
     }
 
-    override suspend fun deleteById(id: AccountId): Unit = memo.deleteById(id) {
+    override suspend fun deleteById(id: AccountId): Unit = cache.deleteById(id) {
         writeAccountDao.deleteById(id.value)
     }
 
-    override suspend fun deleteAll(): Unit = memo.deleteAll(
+    override suspend fun deleteAll(): Unit = cache.deleteAll(
         deleteAllOperation = writeAccountDao::deleteAll
     )
 }

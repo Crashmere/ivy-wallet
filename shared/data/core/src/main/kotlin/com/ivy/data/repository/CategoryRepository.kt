@@ -18,23 +18,23 @@ class CategoryRepository @Inject constructor(
     private val writeCategoryDao: WriteCategoryDao,
     private val categoryDao: CategoryDao,
     private val dispatchersProvider: DispatchersProvider,
-    memoFactory: RepositoryMemoFactory,
+    cacheFactory: RepositoryCacheFactory,
 ) : CategoryStore {
-    private val memo = memoFactory.createMemo(
+    private val cache = cacheFactory.createCache(
         getDataWriteSaveEvent = DataWriteEvent::SaveCategories,
         getDateWriteDeleteEvent = DataWriteEvent::DeleteCategories,
     )
 
-    override suspend fun findAll(): List<Category> = memo.findAll(
+    override suspend fun findAll(): List<Category> = cache.findAll(
         findAllOperation = {
             categoryDao.findAll().mapNotNull {
                 with(mapper) { it.toDomain() }.getOrNull()
             }
         },
-        sortMemo = { sortedBy(Category::orderNum) }
+        sortCache = { sortedBy(Category::orderNum) }
     )
 
-    override suspend fun findById(id: CategoryId): Category? = memo.findById(
+    override suspend fun findById(id: CategoryId): Category? = cache.findById(
         id = id,
         findByIdOperation = {
             categoryDao.findById(id.value)?.let {
@@ -43,15 +43,15 @@ class CategoryRepository @Inject constructor(
         }
     )
 
-    override suspend fun findMaxOrderNum(): Double = if (memo.findAllMemoized) {
-        memo.items.maxOfOrNull { (_, acc) -> acc.orderNum } ?: 0.0
+    override suspend fun findMaxOrderNum(): Double = if (cache.hasCachedAllItems) {
+        cache.items.maxOfOrNull { (_, acc) -> acc.orderNum } ?: 0.0
     } else {
         withContext(dispatchersProvider.io) {
             categoryDao.findMaxOrderNum() ?: 0.0
         }
     }
 
-    override suspend fun save(value: Category): Unit = memo.save(
+    override suspend fun save(value: Category): Unit = cache.save(
         value = value,
     ) {
         writeCategoryDao.save(
@@ -59,7 +59,7 @@ class CategoryRepository @Inject constructor(
         )
     }
 
-    override suspend fun saveMany(values: List<Category>): Unit = memo.saveMany(
+    override suspend fun saveMany(values: List<Category>): Unit = cache.saveMany(
         values = values,
     ) {
         writeCategoryDao.saveMany(
@@ -67,9 +67,9 @@ class CategoryRepository @Inject constructor(
         )
     }
 
-    override suspend fun deleteById(id: CategoryId): Unit = memo.deleteById(id = id) {
+    override suspend fun deleteById(id: CategoryId): Unit = cache.deleteById(id = id) {
         writeCategoryDao.deleteById(id.value)
     }
 
-    override suspend fun deleteAll(): Unit = memo.deleteAll(writeCategoryDao::deleteAll)
+    override suspend fun deleteAll(): Unit = cache.deleteAll(writeCategoryDao::deleteAll)
 }

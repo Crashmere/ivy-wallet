@@ -8,7 +8,7 @@ import com.ivy.data.model.Category
 import com.ivy.data.model.CategoryId
 import com.ivy.data.model.primitive.ColorInt
 import com.ivy.data.model.primitive.NotBlankTrimmedString
-import com.ivy.data.repository.fake.fakeRepositoryMemoFactory
+import com.ivy.data.repository.fake.fakeRepositoryCacheFactory
 import com.ivy.data.repository.mapper.CategoryMapper
 import io.kotest.matchers.shouldBe
 import io.mockk.coEvery
@@ -34,7 +34,7 @@ class CategoryRepositoryTest {
             categoryDao = categoryDao,
             writeCategoryDao = writeCategoryDao,
             dispatchersProvider = TestDispatchersProvider,
-            memoFactory = fakeRepositoryMemoFactory(),
+            cacheFactory = fakeRepositoryCacheFactory(),
         )
     }
 

@@ -16,7 +16,7 @@ import com.ivy.data.model.importing.ImportResult
 import com.ivy.data.preferences.SharedPrefsAppPreferenceStore
 import com.ivy.data.repository.AccountRepository
 import com.ivy.data.repository.CurrencyRepository
-import com.ivy.data.repository.fake.fakeRepositoryMemoFactory
+import com.ivy.data.repository.fake.fakeRepositoryCacheFactory
 import com.ivy.data.repository.mapper.AccountMapper
 import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.ints.shouldBeGreaterThan
@@ -61,7 +61,7 @@ class BackupDataUseCaseAndroidTest {
                 writeAccountDao = db.writeAccountDao,
                 mapper = accountMapper,
                 dispatchersProvider = TestDispatchersProvider,
-                memoFactory = fakeRepositoryMemoFactory(),
+                cacheFactory = fakeRepositoryCacheFactory(),
             ),
             accountMapper = accountMapper,
             categoryWriter = db.writeCategoryDao,

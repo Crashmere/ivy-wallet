@@ -16,7 +16,7 @@ import com.ivy.data.db.dao.fake.FakeTransactionDao
 import com.ivy.data.api.AppPreferenceStore
 import com.ivy.data.repository.AccountRepository
 import com.ivy.data.repository.CurrencyRepository
-import com.ivy.data.repository.fake.fakeRepositoryMemoFactory
+import com.ivy.data.repository.fake.fakeRepositoryCacheFactory
 import com.ivy.data.repository.mapper.AccountMapper
 import com.ivy.data.testResource
 import io.kotest.matchers.ints.shouldBeGreaterThan
@@ -53,7 +53,7 @@ class BackupDataUseCaseTest {
                 writeAccountDao = accountDao,
                 mapper = accountMapper,
                 dispatchersProvider = TestDispatchersProvider,
-                memoFactory = fakeRepositoryMemoFactory(),
+                cacheFactory = fakeRepositoryCacheFactory(),
             ),
             budgetDao = budgetDao,
             categoryDao = categoryDao,

@@ -11,7 +11,7 @@ import com.ivy.data.model.AccountId
 import com.ivy.data.model.primitive.AssetCode
 import com.ivy.data.model.primitive.ColorInt
 import com.ivy.data.model.primitive.NotBlankTrimmedString
-import com.ivy.data.repository.fake.fakeRepositoryMemoFactory
+import com.ivy.data.repository.fake.fakeRepositoryCacheFactory
 import com.ivy.data.repository.mapper.AccountMapper
 import io.kotest.matchers.shouldBe
 import io.mockk.coEvery
@@ -45,7 +45,7 @@ class AccountRepositoryTest {
             accountDao = accountDao,
             writeAccountDao = writeAccountDao,
             dispatchersProvider = TestDispatchersProvider,
-            memoFactory = fakeRepositoryMemoFactory(),
+            cacheFactory = fakeRepositoryCacheFactory(),
         )
     }
 

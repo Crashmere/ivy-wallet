@@ -27,19 +27,19 @@ class TagRepository @Inject constructor(
     private val writeTagDao: WriteTagDao,
     private val writeTagAssociationDao: WriteTagAssociationDao,
     private val dispatchersProvider: DispatchersProvider,
-    memoFactory: RepositoryMemoFactory,
+    cacheFactory: RepositoryCacheFactory,
 ) : TagStore {
-    private val memo = memoFactory.createMemo(
+    private val cache = cacheFactory.createCache(
         getDataWriteSaveEvent = DataWriteEvent::SaveTags,
         getDateWriteDeleteEvent = DataWriteEvent::DeleteTags,
     )
 
-    override suspend fun findById(id: TagId): Tag? = memo.findById(
+    override suspend fun findById(id: TagId): Tag? = cache.findById(
         id = id,
         findByIdOperation = ::findByIdOperation
     )
 
-    override suspend fun findByIds(ids: List<TagId>): List<Tag> = memo.findByIds(
+    override suspend fun findByIds(ids: List<TagId>): List<Tag> = cache.findByIds(
         ids = ids,
         findByIdOperation = ::findByIdOperation,
     )
@@ -83,7 +83,7 @@ class TagRepository @Inject constructor(
             .associate { it.key to it.value }
     }
 
-    override suspend fun findAll(): List<Tag> = memo.findAll(
+    override suspend fun findAll(): List<Tag> = cache.findAll(
         findAllOperation = {
             tagDao.findAll().let { entities ->
                 entities.mapNotNull {
@@ -91,7 +91,7 @@ class TagRepository @Inject constructor(
                 }
             }
         },
-        sortMemo = {
+        sortCache = {
             sortedByDescending { it.creationTimestamp.epochSecond }
         }
     )
@@ -148,11 +148,11 @@ class TagRepository @Inject constructor(
         }
     }
 
-    override suspend fun save(value: Tag): Unit = memo.save(value) {
+    override suspend fun save(value: Tag): Unit = cache.save(value) {
         writeTagDao.save(with(mapper) { it.toEntity() })
     }
 
-    override suspend fun deleteById(id: TagId): Unit = memo.deleteById(
+    override suspend fun deleteById(id: TagId): Unit = cache.deleteById(
         id = id,
         deleteByIdOperation = {
             writeTagAssociationDao.deleteAssociationsByTagId(it.value)
@@ -160,7 +160,7 @@ class TagRepository @Inject constructor(
         }
     )
 
-    override suspend fun deleteAll(): Unit = memo.deleteAll {
+    override suspend fun deleteAll(): Unit = cache.deleteAll {
         writeTagAssociationDao.deleteAll()
         writeTagDao.deleteAll()
     }

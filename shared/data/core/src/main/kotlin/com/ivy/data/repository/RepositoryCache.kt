@@ -9,14 +9,14 @@ import com.ivy.data.model.identity.UniqueId
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class RepositoryMemoFactory @Inject constructor(
+class RepositoryCacheFactory @Inject constructor(
     private val dataObserver: DataChangePublisher,
     private val dispatchers: DispatchersProvider,
 ) {
-    fun <T : Identifiable<TID>, TID : UniqueId> createMemo(
+    fun <T : Identifiable<TID>, TID : UniqueId> createCache(
         getDataWriteSaveEvent: (List<T>) -> DataWriteEvent,
         getDateWriteDeleteEvent: (DeleteOperation<TID>) -> DataWriteEvent
-    ): RepositoryMemo<T, TID> = RepositoryMemo(
+    ): RepositoryCache<T, TID> = RepositoryCache(
         dataObserver = dataObserver,
         dispatchers = dispatchers,
         getDataWriteSaveEvent = getDataWriteSaveEvent,
@@ -24,29 +24,29 @@ class RepositoryMemoFactory @Inject constructor(
     )
 }
 
-class RepositoryMemo<T : Identifiable<TID>, TID : UniqueId> internal constructor(
+class RepositoryCache<T : Identifiable<TID>, TID : UniqueId> internal constructor(
     private val dataObserver: DataChangePublisher,
     private val dispatchers: DispatchersProvider,
     private val getDataWriteSaveEvent: (List<T>) -> DataWriteEvent,
     private val getDataWriteDeleteEvent: (DeleteOperation<TID>) -> DataWriteEvent,
 ) {
 
-    private val _memo = mutableMapOf<TID, T>()
-    val items: Map<TID, T> = _memo
-    var findAllMemoized = false
+    private val cachedItems = mutableMapOf<TID, T>()
+    val items: Map<TID, T> = cachedItems
+    var hasCachedAllItems = false
         private set
 
     suspend fun findAll(
         findAllOperation: suspend () -> List<T>,
-        sortMemo: Collection<T>.() -> List<T>,
+        sortCache: Collection<T>.() -> List<T>,
     ): List<T> {
-        return if (findAllMemoized) {
-            sortMemo(_memo.values)
+        return if (hasCachedAllItems) {
+            sortCache(cachedItems.values)
         } else {
             withContext(dispatchers.io) {
                 findAllOperation().also {
-                    memoize(it)
-                    findAllMemoized = true
+                    cache(it)
+                    hasCachedAllItems = true
                 }
             }
         }
@@ -57,7 +57,7 @@ class RepositoryMemo<T : Identifiable<TID>, TID : UniqueId> internal constructor
         findByIdOperation: suspend (TID) -> T?
     ): T? {
         return items[id] ?: withContext(dispatchers.io) {
-            findByIdOperation(id)?.also(::memoize)
+            findByIdOperation(id)?.also(::cache)
         }
     }
 
@@ -72,7 +72,7 @@ class RepositoryMemo<T : Identifiable<TID>, TID : UniqueId> internal constructor
     ) {
         withContext(dispatchers.io) {
             writeOperation(value)
-            memoize(value)
+            cache(value)
             dataObserver.post(getDataWriteSaveEvent(listOf(value)))
         }
     }
@@ -83,7 +83,7 @@ class RepositoryMemo<T : Identifiable<TID>, TID : UniqueId> internal constructor
     ) {
         withContext(dispatchers.io) {
             writeOperation(values)
-            memoize(values)
+            cache(values)
             dataObserver.post(getDataWriteSaveEvent(values))
         }
     }
@@ -93,7 +93,7 @@ class RepositoryMemo<T : Identifiable<TID>, TID : UniqueId> internal constructor
         deleteByIdOperation: suspend (TID) -> Unit,
     ) {
         withContext(dispatchers.io) {
-            _memo.remove(id)
+            cachedItems.remove(id)
             deleteByIdOperation(id)
             dataObserver.post(
                 getDataWriteDeleteEvent(DeleteOperation.Just(listOf(id)))
@@ -105,17 +105,17 @@ class RepositoryMemo<T : Identifiable<TID>, TID : UniqueId> internal constructor
         deleteAllOperation: suspend () -> Unit,
     ) {
         withContext(dispatchers.io) {
-            _memo.clear()
+            cachedItems.clear()
             deleteAllOperation()
             dataObserver.post(getDataWriteDeleteEvent(DeleteOperation.All))
         }
     }
 
-    private fun memoize(items: List<T>) {
-        items.forEach(::memoize)
+    private fun cache(items: List<T>) {
+        items.forEach(::cache)
     }
 
-    private fun memoize(item: T) {
-        _memo[item.id] = item
+    private fun cache(item: T) {
+        cachedItems[item.id] = item
     }
 }
