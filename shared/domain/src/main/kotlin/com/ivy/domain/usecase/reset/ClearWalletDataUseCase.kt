@@ -7,7 +7,7 @@ import com.ivy.data.api.ExchangeRateStore
 import com.ivy.data.api.LoanRecordStore
 import com.ivy.data.api.LoanStore
 import com.ivy.data.api.PlannedPaymentRuleStore
-import com.ivy.data.api.SettingsStore
+import com.ivy.data.api.SettingsResetStore
 import com.ivy.data.api.TagStore
 import com.ivy.data.api.TransactionStore
 import javax.inject.Inject
@@ -17,7 +17,7 @@ class ClearWalletDataUseCase @Inject constructor(
     private val transactionStore: TransactionStore,
     private val categoryStore: CategoryStore,
     private val tagStore: TagStore,
-    private val settingsStore: SettingsStore,
+    private val settingsResetStore: SettingsResetStore,
     private val plannedPaymentRuleStore: PlannedPaymentRuleStore,
     private val budgetStore: BudgetStore,
     private val loanStore: LoanStore,
@@ -29,7 +29,7 @@ class ClearWalletDataUseCase @Inject constructor(
         transactionStore.deleteAll()
         categoryStore.deleteAll()
         tagStore.deleteAll()
-        settingsStore.deleteAll()
+        settingsResetStore.deleteAll()
         plannedPaymentRuleStore.deleteAll()
         budgetStore.deleteAll()
         loanStore.deleteAll()

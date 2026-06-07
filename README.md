@@ -706,7 +706,7 @@
 - 文本文件读写已抽成 `TextFileStore` 基础端口，data core 的 Android `FileSystem` 负责实现；CSV 导出和手动 CSV 读取不再直接依赖 data core 文件类，备份导入导出后续单独拆分。
 - 新增薄模块 `shared:data:api` 承载数据层端口；备份导入导出已改为依赖 `BackupStore`，data core 的 `BackupDataUseCase` 只作为实现绑定到该端口，feature 仍只通过 domain use case 使用备份功能。
 - `BackupDataUseCase` 的泛化 legacy TODO 已改成明确的备份格式兼容说明；这段实现暂时继续承担旧 ZIP/JSON 备份格式和旧本地数据兼容职责，后续拆分时应围绕该边界处理。
-- 基础币种和设置表访问已抽成 `CurrencyStore` 与 `SettingsStore` 端口；domain 的币种/设置 use case 不再直接注入 data core repository，data core 继续保留 Room-backed 实现和内部 mapper 依赖。
+- 基础币种和设置表访问已抽成 `CurrencyStore` 以及设置相关窄端口；domain 的币种/设置 use case 不再直接注入 data core repository，data core 继续保留 Room-backed 实现和内部 mapper 依赖。
 - 设置表默认值已集中到 data core 内部 `LocalSettingsDefaults`；`SettingsRepository` 不再引用 `CurrencyRepository` 的默认币种常量，两个 repository 也不再重复构造默认 `SettingsEntity`。
 - 汇率读写和远程同步入口已抽成 `ExchangeRateStore` 端口；汇率同步、设置页汇率列表和重置钱包流程不再直接依赖 data core 的 `ExchangeRatesRepository`。
 - 汇率单条查询已收敛到 `ExchangeRateStore.findByBaseCurrencyAndCurrency()`；汇率换算 use case 不再直接注入 `ExchangeRatesDao`，legacy 汇率 mapper 也不再依赖 `ExchangeRateEntity`。
@@ -733,8 +733,8 @@
 - 预算读写已抽成 `BudgetStore` 端口；预算创建、更新、删除、排序、列表读取和重置钱包流程不再直接注入 Room 的 `BudgetDao/WriteBudgetDao`，旧 `BudgetExt` 实体 mapper 已删除。
 - 计划付款规则读写已抽成 `PlannedPaymentRuleStore` 端口；首页统计、账户删除、计划付款保存/删除/读取、付或跳过计划付款，以及重置钱包流程不再直接注入 `PlannedPaymentRuleDao/WritePlannedPaymentRuleDao`，旧 `PlannedPaymentRuleExt` 实体 mapper 已删除。
 - 借贷和借贷记录读写已抽成 `LoanStore/LoanRecordStore` 端口；借贷 CRUD、借贷记录 CRUD、借贷交易同步和重置钱包流程不再直接注入 `LoanDao/LoanRecordDao/WriteLoanDao/WriteLoanRecordDao`，旧 `LoanExt/LoanRecordExt` 实体 mapper 已删除。
-- 设置表清空已收敛到 `SettingsStore.deleteAll()`；重置钱包流程不再直接注入 `WriteSettingsDao`。
-- 主题 fallback、首次初始化默认主题和主题切换规则已从 data core 移回 domain：`SettingsStore` 只保留主题读写能力，`GetThemeUseCase/EnsureSettingsInitializedUseCase/SwitchThemeUseCase` 负责系统暗色映射和 LIGHT/DARK/AMOLED/AUTO 循环顺序，并补充了单元测试锁定这些规则。
+- 设置表清空已收敛到 `SettingsResetStore.deleteAll()`；重置钱包流程不再直接注入 `WriteSettingsDao`。
+- 主题 fallback、首次初始化默认主题和主题切换规则已从 data core 移回 domain：`ThemeStore` 只负责主题读写，`SettingsInitializationStore` 只负责首次初始化，`GetThemeUseCase/EnsureSettingsInitializedUseCase/SwitchThemeUseCase` 负责系统暗色映射和 LIGHT/DARK/AMOLED/AUTO 循环顺序，并补充了单元测试锁定这些规则。
 - 分类排序偏好已收敛到 `GetCategorySortOrderPreferenceUseCase/SetCategorySortOrderPreferenceUseCase`；分类页不再直接注入 `AppPreferences`，底层 key 和排序行为保持不变。
 - 上次选择账户偏好已收敛到 `GetLastSelectedAccountIdUseCase/SetLastSelectedAccountIdUseCase`；编辑交易页和借贷页不再直接读写 `AppPreferences.lastSelectedAccountId`，底层字符串 key 和 UUID 解析行为保持不变。
 - “转账计入收支”记账规则偏好已收敛到 `GetTransfersAsIncomeExpensePreferenceUseCase/SetTransfersAsIncomeExpensePreferenceUseCase`；账户页、交易页和饼图页只读 domain 用例，设置页通过用例保存该开关，底层 key 不变。
@@ -808,7 +808,7 @@
 - app 和 `shared:data:core` 已显式声明 `androidx.core:core-ktx`，不再靠 Activity/AppCompat/DataStore 等传递依赖获得 AndroidX Core API。
 - `shared:ui:core` 已移除 Hilt 插件和内部 Hilt Module，并显式声明基础 `lifecycle-viewmodel`；主题状态、时间服务、日期时间选择器和 Toaster 的应用级绑定集中到 app 的 DI 模块。
 - `shared:ui:navigation` 和 `shared:ui:legacy` 已移除最后的 `javax.inject` 依赖；`Navigation/MainTabState/PeriodState` 作为普通状态类由 app 统一提供单例。
-- `SettingsStore` 的 Room 实现已从泛化的 `SettingsRepository` 改名为 `RoomSettingsStore`；外部端口不变，先把设置存储边界表达清楚。
+- 设置表的 Room 实现已从泛化的 `SettingsRepository` 改名为 `RoomSettingsStore`；先把设置存储边界表达清楚，再逐步拆出更窄的数据端口。
 - data-core 的 Store 实现已整体归位到 `com.ivy.data.store`：账户、分类、币种、标签、交易、预算、借贷、计划付款和设置的 Room 实现统一命名为 `Room*Store`，汇率实现命名为 `DefaultExchangeRateStore`。
 - data-core 的实体/模型转换器已从历史 `repository.mapper` 包迁到 `com.ivy.data.mapper`；主源码中不再使用 `com.ivy.data.repository` 包。
 - 设置表的内部访问已集中到 data-core 的 `SettingsTable`：`RoomSettingsStore` 和 `RoomCurrencyStore` 不再分别持有 `SettingsDao/WriteSettingsDao`，后续拆分 `SettingsEntity` 时只需围绕这一处旧表边界推进。
@@ -836,7 +836,7 @@
 - data-core 里的备份实现已从 `BackupDataUseCase` 改名为 `DefaultBackupStore`，并继续通过 `BackupStore` 暴露给 domain；ZIP/JSON 备份格式和导入导出行为不变。
 - `TransactionStore` 删除计划付款未来交易的方法已从过去式 `deletedByRecurringRuleIdAndNoDateTime` 改为命令式 `deleteByRecurringRuleIdAndNoDateTime`；DAO SQL 和调用语义不变。
 - 设置初始化链路中的基础币种参数已从泛化 `currencyCode` 改为 `baseCurrencyCode`；这一步不改 `settings.currency` 数据库列，只让初始化边界语义更明确。
-- `SettingsStore` 已拆出 `ThemeStore` 与 `BufferAmountStore` 窄端口；主题和缓冲金额 use case 不再依赖完整设置表能力，底层仍由 `RoomSettingsStore` 读写同一张 `settings` 表，数据库 schema 和备份格式不变。
+- 设置表端口已拆成 `SettingsInitializationStore`、`SettingsResetStore`、`ThemeStore` 与 `BufferAmountStore`；初始化、重置、主题和缓冲金额 use case 只依赖各自需要的能力，底层仍由 `RoomSettingsStore` 读写同一张 `settings` 表，数据库 schema 和备份格式不变。
 
 建议顺序：
 

@@ -13,7 +13,8 @@ import com.ivy.data.api.LoanRecordStore
 import com.ivy.data.api.LoanStore
 import com.ivy.data.api.PlannedPaymentRuleStore
 import com.ivy.data.api.PreferenceToggleStore
-import com.ivy.data.api.SettingsStore
+import com.ivy.data.api.SettingsInitializationStore
+import com.ivy.data.api.SettingsResetStore
 import com.ivy.data.api.TagStore
 import com.ivy.data.api.ThemeStore
 import com.ivy.data.api.TransactionStore
@@ -57,7 +58,12 @@ abstract class StoreModule {
     abstract fun bindCurrencyStore(store: RoomCurrencyStore): CurrencyStore
 
     @Binds
-    abstract fun bindSettingsStore(store: RoomSettingsStore): SettingsStore
+    abstract fun bindSettingsInitializationStore(
+        store: RoomSettingsStore
+    ): SettingsInitializationStore
+
+    @Binds
+    abstract fun bindSettingsResetStore(store: RoomSettingsStore): SettingsResetStore
 
     @Binds
     abstract fun bindThemeStore(store: RoomSettingsStore): ThemeStore

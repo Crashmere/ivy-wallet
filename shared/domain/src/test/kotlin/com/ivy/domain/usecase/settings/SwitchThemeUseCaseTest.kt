@@ -1,6 +1,6 @@
 package com.ivy.domain.usecase.settings
 
-import com.ivy.data.api.SettingsStore
+import com.ivy.data.api.SettingsInitializationStore
 import com.ivy.data.api.ThemeStore
 import com.ivy.data.model.Theme
 import io.kotest.matchers.shouldBe
@@ -50,7 +50,7 @@ class SwitchThemeUseCaseTest {
 
     private class FakeSettingsStore(
         initialTheme: Theme?,
-    ) : SettingsStore, ThemeStore {
+    ) : SettingsInitializationStore, ThemeStore {
         private var theme = initialTheme
         var initializedTheme: Theme? = null
 
@@ -72,6 +72,5 @@ class SwitchThemeUseCaseTest {
             return theme
         }
 
-        override suspend fun deleteAll() = Unit
     }
 }

@@ -1,18 +1,18 @@
 package com.ivy.domain.usecase.settings
 
+import com.ivy.data.api.SettingsInitializationStore
 import com.ivy.data.model.Theme
-import com.ivy.data.api.SettingsStore
 import javax.inject.Inject
 
 class EnsureSettingsInitializedUseCase @Inject constructor(
-    private val settingsStore: SettingsStore
+    private val settingsInitializationStore: SettingsInitializationStore
 ) {
     suspend operator fun invoke(
         systemDarkMode: Boolean,
         baseCurrencyCode: String,
         bufferAmount: Double,
     ) {
-        settingsStore.ensureInitialized(
+        settingsInitializationStore.ensureInitialized(
             defaultTheme = systemDefaultTheme(systemDarkMode),
             baseCurrencyCode = baseCurrencyCode,
             bufferAmount = bufferAmount,
