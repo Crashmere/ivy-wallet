@@ -1,8 +1,6 @@
 package com.ivy.base.resource
 
-import androidx.annotation.StringRes
-
 interface ResourceProvider {
-    fun getString(@StringRes resId: Int): String
-    fun getString(@StringRes resId: Int, vararg args: Any): String
+    fun getString(resId: Int): String
+    fun getString(resId: Int, vararg args: Any): String
 }
