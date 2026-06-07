@@ -501,7 +501,11 @@ class HomeViewModel @Inject constructor(
     private suspend fun onSelectNextMonth() {
         val month = period.month
         val year = period.year ?: currentUtcYear()
-        val period = month?.incrementMonthPeriod(1L, year = year)
+        val period = month?.incrementMonthPeriod(
+            increment = 1L,
+            year = year,
+            referenceDate = timeProvider.localDateNow(),
+        )
         if (period != null) {
             periodState.select(period)
             setPeriod(period)
@@ -511,7 +515,11 @@ class HomeViewModel @Inject constructor(
     private suspend fun onSelectPreviousMonth() {
         val month = period.month
         val year = period.year ?: currentUtcYear()
-        val period = month?.incrementMonthPeriod(-1L, year = year)
+        val period = month?.incrementMonthPeriod(
+            increment = -1L,
+            year = year,
+            referenceDate = timeProvider.localDateNow(),
+        )
         if (period != null) {
             periodState.select(period)
             setPeriod(period)

@@ -3,7 +3,6 @@ package com.ivy.legacy.ui.model.period
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
-import com.ivy.base.legacy.dateNowUTC
 import com.ivy.ui.R
 import java.time.LocalDate
 
@@ -31,15 +30,15 @@ data class Month(
             monthsList().first { it.monthValue == code }
     }
 
-    fun toDate(): LocalDate =
-        dateNowUTC()
-            .withMonth(monthValue)
+    fun toDate(referenceDate: LocalDate): LocalDate =
+        referenceDate.withMonth(monthValue)
 
     fun incrementMonthPeriod(
         increment: Long,
-        year: Int
+        year: Int,
+        referenceDate: LocalDate,
     ): TimePeriod {
-        val incrementedMonth = toDate().withYear(year).plusMonths(increment)
+        val incrementedMonth = toDate(referenceDate).withYear(year).plusMonths(increment)
         return TimePeriod(
             month = fromMonthValue(incrementedMonth.monthValue),
             year = incrementedMonth.year

@@ -700,7 +700,11 @@ class TransactionsViewModel @Inject constructor(
         val month = period.value.month
         val year = period.value.year ?: currentUtcYear()
         if (month != null) {
-            val nextPeriod = month.incrementMonthPeriod(1L, year)
+            val nextPeriod = month.incrementMonthPeriod(
+                increment = 1L,
+                year = year,
+                referenceDate = timeProvider.localDateNow(),
+            )
             periodState.select(nextPeriod)
             start(
                 screen = screen,
@@ -714,7 +718,11 @@ class TransactionsViewModel @Inject constructor(
         val month = period.value.month
         val year = period.value.year ?: currentUtcYear()
         if (month != null) {
-            val previousPeriod = month.incrementMonthPeriod(-1L, year)
+            val previousPeriod = month.incrementMonthPeriod(
+                increment = -1L,
+                year = year,
+                referenceDate = timeProvider.localDateNow(),
+            )
             periodState.select(previousPeriod)
             start(
                 screen = screen,

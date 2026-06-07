@@ -299,7 +299,7 @@ class WalletCategoryLogic @Inject constructor(
             categoryId = CategoryId(category.id.value),
             startDate = range.upcomingFrom(timeProvider),
             endDate = range.to()
-        ).filterUpcoming()
+        ).filterUpcoming(timeProvider)
     }
 
     @Deprecated("Uses legacy Transaction")
@@ -320,7 +320,7 @@ class WalletCategoryLogic @Inject constructor(
         return transactionRepository.findAllDueToBetweenByCategoryUnspecified(
             startDate = range.upcomingFrom(timeProvider),
             endDate = range.to()
-        ).filterUpcoming()
+        ).filterUpcoming(timeProvider)
     }
 
     suspend fun calculateOverdueIncomeByCategory(
@@ -394,7 +394,7 @@ class WalletCategoryLogic @Inject constructor(
             startDate = range.from(),
             endDate = range.overdueTo(timeProvider)
         )
-            .filterOverdue()
+            .filterOverdue(timeProvider)
     }
 
     @Deprecated("Uses legacy Transaction")
@@ -415,6 +415,6 @@ class WalletCategoryLogic @Inject constructor(
         return transactionRepository.findAllDueToBetweenByCategoryUnspecified(
             startDate = range.from(),
             endDate = range.overdueTo(timeProvider)
-        ).filterOverdue()
+        ).filterOverdue(timeProvider)
     }
 }

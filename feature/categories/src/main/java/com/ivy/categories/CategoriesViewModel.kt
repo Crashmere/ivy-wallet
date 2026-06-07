@@ -139,7 +139,8 @@ class CategoriesViewModel @Inject constructor(
     private suspend fun initialise() {
         ioThread {
             val range = TimePeriod.currentMonth(
-                startDayOfMonth = periodState.startDayOfMonth
+                startDayOfMonth = periodState.startDayOfMonth,
+                timeProvider = timeProvider,
             ).toRange(
                 periodState.startDayOfMonth,
                 timeConverter,

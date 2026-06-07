@@ -5,16 +5,24 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import com.ivy.base.time.TimeProvider
 import com.ivy.legacy.ui.model.period.TimePeriod
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class PeriodState @Inject constructor() {
+class PeriodState @Inject constructor(
+    private val timeProvider: TimeProvider,
+) {
     var startDayOfMonth by mutableIntStateOf(1)
         private set
 
-    var selectedPeriod by mutableStateOf(TimePeriod.currentMonth(startDayOfMonth))
+    var selectedPeriod by mutableStateOf(
+        TimePeriod.currentMonth(
+            startDayOfMonth = startDayOfMonth,
+            timeProvider = timeProvider,
+        )
+    )
         private set
 
     private var selectedPeriodInitialized = false
@@ -34,7 +42,8 @@ class PeriodState @Inject constructor() {
     ): TimePeriod {
         if (!selectedPeriodInitialized || forceReinitialize) {
             selectedPeriod = TimePeriod.currentMonth(
-                startDayOfMonth = startDayOfMonth
+                startDayOfMonth = startDayOfMonth,
+                timeProvider = timeProvider,
             )
             selectedPeriodInitialized = true
         }

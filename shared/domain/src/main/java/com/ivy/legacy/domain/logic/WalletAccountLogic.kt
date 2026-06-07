@@ -138,7 +138,7 @@ class WalletAccountLogic @Inject constructor(
             accountId = AccountId(account.id),
             startDate = range.upcomingFrom(timeProvider),
             endDate = range.to()
-        ).filterUpcoming()
+        ).filterUpcoming(timeProvider)
     }
 
     suspend fun overdue(
@@ -149,6 +149,6 @@ class WalletAccountLogic @Inject constructor(
             accountId = AccountId(account.id),
             startDate = range.from(),
             endDate = range.overdueTo(timeProvider)
-        ).filterOverdue()
+        ).filterOverdue(timeProvider)
     }
 }
