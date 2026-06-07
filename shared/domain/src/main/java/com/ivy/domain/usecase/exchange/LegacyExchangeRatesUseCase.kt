@@ -2,15 +2,16 @@ package com.ivy.domain.usecase.exchange
 
 import com.ivy.base.model.legacy.Transaction
 import com.ivy.data.api.AccountStore
-import com.ivy.data.db.dao.read.ExchangeRatesDao
+import com.ivy.data.api.ExchangeRateStore
 import com.ivy.data.model.legacy.Account
 import com.ivy.data.model.legacy.PlannedPaymentRule
+import com.ivy.data.model.primitive.AssetCode
 import com.ivy.domain.mapper.legacy.toLegacyDomain
 import java.util.UUID
 import javax.inject.Inject
 
 class LegacyExchangeRatesUseCase @Inject constructor(
-    private val exchangeRatesDao: ExchangeRatesDao
+    private val exchangeRateStore: ExchangeRateStore
 ) {
     suspend fun amountBaseCurrency(
         plannedPayment: PlannedPaymentRule,
@@ -104,10 +105,12 @@ class LegacyExchangeRatesUseCase @Inject constructor(
         baseCurrency: String,
         currency: String
     ): Double {
-        val rate = exchangeRatesDao.findByBaseCurrencyAndCurrency(
-            baseCurrency = baseCurrency,
-            currency = currency
-        )?.rate ?: return 1.0
+        val base = AssetCode.from(baseCurrency).getOrNull() ?: return 1.0
+        val target = AssetCode.from(currency).getOrNull() ?: return 1.0
+        val rate = exchangeRateStore.findByBaseCurrencyAndCurrency(
+            baseCurrency = base,
+            currency = target
+        )?.rate?.value ?: return 1.0
         if (rate <= 0) {
             return 1.0
         }

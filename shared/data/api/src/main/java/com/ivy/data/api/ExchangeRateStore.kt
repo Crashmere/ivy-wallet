@@ -12,6 +12,11 @@ interface ExchangeRateStore {
 
     suspend fun findAllManuallyOverridden(): List<ExchangeRate>
 
+    suspend fun findByBaseCurrencyAndCurrency(
+        baseCurrency: AssetCode,
+        currency: AssetCode,
+    ): ExchangeRate?
+
     suspend fun save(value: ExchangeRate)
 
     suspend fun saveManyRates(values: List<ExchangeRate>)

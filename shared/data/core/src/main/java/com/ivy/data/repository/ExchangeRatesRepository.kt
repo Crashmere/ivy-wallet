@@ -45,6 +45,18 @@ class ExchangeRatesRepository @Inject constructor(
                 }
         }
 
+    override suspend fun findByBaseCurrencyAndCurrency(
+        baseCurrency: AssetCode,
+        currency: AssetCode
+    ): ExchangeRate? = withContext(dispatchers.io) {
+        exchangeRatesDao.findByBaseCurrencyAndCurrency(
+            baseCurrency = baseCurrency.code,
+            currency = currency.code
+        )?.let {
+            with(mapper) { it.toDomain().getOrNull() }
+        }
+    }
+
     override suspend fun save(value: ExchangeRate) {
         withContext(dispatchers.io) {
             writeExchangeRatesDao.save(with(mapper) { value.toEntity() })

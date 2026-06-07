@@ -1,16 +1,10 @@
 package com.ivy.domain.mapper.legacy
 
-import com.ivy.data.db.entity.ExchangeRateEntity
-import com.ivy.data.model.legacy.ExchangeRate
+import com.ivy.data.model.ExchangeRate
+import com.ivy.data.model.legacy.ExchangeRate as LegacyExchangeRate
 
-fun ExchangeRateEntity.toLegacyDomain(): ExchangeRate = ExchangeRate(
-    baseCurrency = baseCurrency,
-    currency = currency,
-    rate = rate
-)
-
-fun ExchangeRate.toEntity(): ExchangeRateEntity = ExchangeRateEntity(
-    baseCurrency = baseCurrency,
-    currency = currency,
-    rate = rate
+fun ExchangeRate.toLegacyDomain(): LegacyExchangeRate = LegacyExchangeRate(
+    baseCurrency = baseCurrency.code,
+    currency = currency.code,
+    rate = rate.value
 )
