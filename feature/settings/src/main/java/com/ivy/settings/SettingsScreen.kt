@@ -46,7 +46,8 @@ import com.ivy.base.legacy.Theme
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
 import com.ivy.ui.compose.thenIf
-import com.ivy.legacy.ui.platform.rootScreen
+import com.ivy.legacy.ui.platform.buildInfoProvider
+import com.ivy.legacy.ui.platform.fileSharer
 import com.ivy.ui.legacy.drawColoredShadow
 import com.ivy.navigation.ExchangeRatesScreen
 import com.ivy.navigation.ImportScreen
@@ -78,7 +79,7 @@ private enum class SettingsPage(@StringRes val title: Int) {
 fun BoxWithConstraintsScope.SettingsScreen() {
     val viewModel: SettingsViewModel = screenScopedViewModel()
     val uiState = viewModel.uiState()
-    val rootScreen = rootScreen()
+    val fileSharer = fileSharer()
 
     UI(
         currencyCode = uiState.currencyCode,
@@ -106,10 +107,10 @@ fun BoxWithConstraintsScope.SettingsScreen() {
             viewModel.onEvent(SettingsEvent.SetCurrency(it))
         },
         onBackupData = {
-            viewModel.onEvent(SettingsEvent.BackupData(rootScreen))
+            viewModel.onEvent(SettingsEvent.BackupData(fileSharer))
         },
         onExportToCSV = {
-            viewModel.onEvent(SettingsEvent.ExportToCsv(rootScreen))
+            viewModel.onEvent(SettingsEvent.ExportToCsv(fileSharer))
         },
         onSetLockApp = {
             viewModel.onEvent(SettingsEvent.SetLockApp(it))
@@ -248,10 +249,10 @@ private fun BoxWithConstraintsScope.UI(
             ) {
                 Spacer(Modifier.weight(1f))
 
-                val rootScreen = rootScreen()
+                val buildInfoProvider = buildInfoProvider()
                 Text(
                     modifier = Modifier,
-                    text = "${rootScreen.buildVersionName} (${rootScreen.buildVersionCode})",
+                    text = "${buildInfoProvider.buildVersionName} (${buildInfoProvider.buildVersionCode})",
                     style = LegacyTheme.typo.nC.style(
                         color = LegacyTheme.colors.gray,
                         fontWeight = FontWeight.Bold

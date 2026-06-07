@@ -61,7 +61,7 @@ class CustomerJourneyCardsProvider @Inject constructor(
       ctaIcon = R.drawable.ic_custom_account_s,
       background = Gradient.solid(Ivy),
       hasDismiss = false,
-      onAction = { _, mainTabState, _ ->
+      onAction = { _, mainTabState ->
         mainTabState.select(MainTab.ACCOUNTS)
       }
     )
@@ -77,7 +77,7 @@ class CustomerJourneyCardsProvider @Inject constructor(
       ctaIcon = R.drawable.ic_planned_payments,
       background = Gradient.solid(Orange),
       hasDismiss = true,
-      onAction = { navigation, _, _ ->
+      onAction = { navigation, _ ->
         navigation.navigateTo(
           EditPlannedScreen(
             type = TransactionType.EXPENSE,
@@ -98,7 +98,7 @@ class CustomerJourneyCardsProvider @Inject constructor(
       ctaIcon = R.drawable.ic_custom_bills_s,
       background = Gradient.solid(Red),
       hasDismiss = true,
-      onAction = { navigation, _, _ ->
+      onAction = { navigation, _ ->
         navigation.navigateTo(PieChartStatisticScreen(type = TransactionType.EXPENSE))
       }
     )

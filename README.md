@@ -17,7 +17,7 @@
 - 删除 `:temp:old-design` 模块；旧设计 API 先迁入 `shared:ui:core` 作为兼容层，随后已逐步归位到更明确的 `legacy.ui.theme`/`legacy.ui.theme.system` 包名。
 - 删除 `:temp:legacy-code` 模块；剩余旧全局上下文暂时收敛在 `shared:ui:legacy`，并已把周期状态、文件选择、日期选择、主 Tab 状态等职责逐步拆出。
 - 整理部分 Gradle 约定插件：基础 shared 模块、数据核心模块和 domain 模块已经开始脱离面向页面的 `ivy.feature` 配置。
-- 开始拆分 `RootActivity` 平台能力：文件创建/打开、Material 日期选择器、生物识别弹窗、浏览器/商店跳转和 CSV/zip 分享已经移入 `app` 的 platform 边界；`RootScreen` 已从 domain 移到 UI platform 接口。
+- 开始拆分 `RootActivity` 平台能力：文件创建/打开、Material 日期选择器、生物识别弹窗和 CSV/zip 分享已经移入 `app` 的 platform 边界；`RootScreen` 大接口已删除，feature 改为依赖更窄的 UI platform 接口。
 
 当前仍保留：
 
@@ -143,13 +143,14 @@
 现状：
 
 - `RootActivity` 仍负责主题、根导航、应用锁生命周期和根部 Compose 宿主。
-- 文件创建/打开、CSV/zip 分享、Material 日期选择器、生物识别弹窗、浏览器跳转、Google Play 跳转已经拆到 `app/src/main/java/com/ivy/wallet/platform`。
-- `RootScreen` 已从 `shared:domain` 移到 `shared:ui:core` 的 `com.ivy.ui.platform` 包。
+- 文件创建/打开、CSV/zip 分享、Material 日期选择器和生物识别弹窗已经拆到 `app/src/main/java/com/ivy/wallet/platform`。
+- 构建版本信息和文件分享能力已拆成 `BuildInfoProvider`、`FileSharer` 这类窄接口，放在 `shared:ui:core` 的 `com.ivy.ui.platform` 包。
+- 原 `RootScreen` 大接口已经删除。
 
 问题：
 
 - Activity 仍偏重，应用锁生命周期和根导航还混在一起。
-- feature 仍通过大而全的 `RootScreen` 直接拿 Activity 能力，边界不够窄。
+- feature 仍有少量地方通过 `LocalContext.current as ...` 获取平台能力，后续可以继续改成 CompositionLocal 或更明确的依赖入口。
 
 目标：
 
@@ -158,8 +159,8 @@
   - `ShareService`
   - `BiometricLockController`
   - `DateTimePickerHost`
-  - `ExternalIntentLauncher`
-- `RootScreen` 移出 domain，或者拆成更窄的 UI/platform interface。
+- 删除无调用方的外部链接/商店跳转平台方法。
+- 保持 feature 只依赖 `FileSharer`、`BuildInfoProvider` 等窄接口。
 
 ### 6. feature 模块数量对个人项目偏多
 
@@ -389,7 +390,7 @@
 - 已把旧 `domain/action`、`domain/pure`、旧汇率换算逻辑、账户数据 action、交易范围过滤 action 迁入 `shared:domain`。
 - 已把旧 creator、计划付款逻辑、标题建议、账户/分类统计逻辑和借贷交易联动逻辑迁入 `shared:domain`；其中 `AccountCreator`、`BudgetCreator` 也统一改到 `com.ivy.wallet.domain.deprecated.logic` 包名。
 - 已把仍依赖 Android 字符串资源的 `PreloadDataLogic` 从 `temp:legacy-code` 移到 app 默认数据初始化边界，避免 `temp` 继续承载旧业务逻辑。
-- 已把旧全局上下文入口 `IvyWalletCtx`、`ivyWalletCtx()` 和 `rootScreen()` 迁入 `shared:ui:legacy`，随后继续拆分；目前仅保留仍有调用方的 `rootScreen()`。
+- 已把旧全局上下文入口 `IvyWalletCtx`、`ivyWalletCtx()` 和 `rootScreen()` 迁入 `shared:ui:legacy` 后继续拆分；目前这些旧全局入口都已经删除。
 - 已继续缩小 `shared:ui:legacy` 的旧全局 API：删除无调用方的 `rootView()`、时间选择器桥接、Google 登录入口和固定为 true 的会员状态；RootActivity 使用 `LegacyUiRoot` 作为旧 UI 兼容入口。
 - 已删除 `IvyWalletCtx` 中无实际写入路径的账户/分类缓存、列表滚动状态缓存和未被调用的 `reset()`；相关页面改为只使用已有的 `rememberScrollPositionListState(key = ...)` 保存滚动位置。
 - 已把备份/恢复/CSV 导入导出使用的文件创建和文件打开能力从 `IvyWalletCtx` 拆到 `shared:ui:core` 的 `FilePicker` 窄接口，由 app 侧 `ActivityResultFilePicker` 负责注册 Android Activity Result；同时删除没有读取方的 `dataBackupCompleted` 旧状态。
@@ -417,7 +418,7 @@
 - 已把旧兼容模型本体从 `com.ivy.legacy.datamodel` 迁到 `com.ivy.legacy.domain.model`，包括旧账户、分类、预算、借贷、计划付款规则、设置和旧交易实体转换扩展；字段和 `toEntity()` 映射保持不变。
 - 已把 `FromToTimeRange` 和 `AccountData` 从跨模块混用的 `com.ivy.legacy.data.model` 拆到 `com.ivy.legacy.domain.model`；UI 侧 `TimePeriod/Month/LastNTimeRange` 暂时保留在旧 UI 包，因为它们仍依赖 UI 文案和时间格式化。
 - 已把剩余 UI 兼容状态模型从 `com.ivy.legacy.data` 迁到 `com.ivy.legacy.ui.model`，并把周期选择模型迁到 `com.ivy.legacy.ui.model.period`；`com.ivy.legacy.data.*` 包名已经从源码中清空。
-- 已把旧周期状态入口从 `com.ivy.legacy` 根包迁到 `com.ivy.legacy.ui.state`，并把旧 `rootScreen()` 桥接函数迁到 `com.ivy.legacy.ui.platform`；`shared:ui:legacy` 不再通过根包暴露迁移期 API。
+- 已把旧周期状态入口从 `com.ivy.legacy` 根包迁到 `com.ivy.legacy.ui.state`，并删除旧 `rootScreen()` 桥接函数；`shared:ui:legacy` 不再通过根包暴露迁移期 API。
 - 已把旧设计兼容层从 `com.ivy.design.*` 迁到 `com.ivy.legacy.design.*`，包括旧 `LegacyTheme`、颜色常量、Compose helper 和 Material3 theme 包装；功能和视觉保持不变。
 - 已把旧设计包里的通用 Compose helper 迁到 `com.ivy.ui.compose`，并把键盘隐藏 helper 迁到 `com.ivy.ui.platform`；这些工具不再带旧设计系统的过时标记。
 - 已把当前仍在使用的主题状态 `ThemeState/LocalThemeState` 和 Material3 theme 包装迁到 `com.ivy.ui.theme`；旧 `LegacyTheme/IvyTheme` 继续作为兼容层调用它。
@@ -561,23 +562,23 @@
 - `DateTimePickerHost`
   - date picker
   - time picker
-- `ExternalIntentLauncher`
+- 删除无调用方的平台跳转能力
   - open browser
   - open market page
 
 同时调整：
 
-- `RootScreen` 已从 `shared:domain` 移到 `shared:ui:core/platform`。
+- `RootScreen` 大接口已经删除。
 - 与 Activity 强绑定的实现放到 `app` 的 platform 包。
-- feature 后续通过窄接口表达需求，不继续依赖大而全的 `RootScreen`。
+- feature 通过 `FileSharer`、`BuildInfoProvider` 等窄接口表达平台需求。
 
 当前进展：
 
 - `ActivityDatePickerHost` 承接 Material date picker 注册，`RootActivity` 不再直接构造 `MaterialDatePicker`。
 - `ActivityFilePickerHost` 承接 Activity Result 文件创建/打开注册，`RootActivity` 不再保存 launcher 和文件回调。
-- `ExternalIntentLauncher` 承接浏览器跳转、Google Play 跳转、CSV 分享和 zip 分享。
+- `ActivityFileSharer` 承接 CSV 分享和 zip 分享。
 - `BiometricAuthenticator` 承接系统生物识别 Prompt 构造。
-- `RootScreen` 已移到 `com.ivy.ui.platform.RootScreen`，domain 不再暴露 Android `Uri` 平台接口。
+- `RootScreen` 已被 `FileSharer`、`BuildInfoProvider` 拆分替代，首页客户旅程卡片也不再为了未使用的参数依赖 Activity 平台接口。
 
 ### 阶段 9：feature 模块收敛
 
@@ -692,7 +693,7 @@ shared:ui:core
    - 消除 feature 直接访问 `SharedPrefs`。
 7. **平台能力拆分**
    - 拆 `RootActivity`。
-   - 移动 `RootScreen`。
+   - 删除 `RootScreen` 大接口，改用窄平台接口。
 8. **数据库遗留迁移**
    - 用户表、同步字段、旧设置表单独处理。
 9. **feature 模块合并**
@@ -723,6 +724,6 @@ shared:ui:core
 
 下一步建议执行：
 
-1. 继续收窄 `RootScreen`：把分享文件、打开外部链接、构建版本信息拆成更小的 UI/platform 接口，逐步减少 feature 对 Activity 大接口的依赖。
-2. 继续减轻 `RootActivity`：把应用锁窗口保护、暂停/恢复计时和生物识别触发逻辑整理成更明确的 app lock controller。
+1. 继续减轻 `RootActivity`：把应用锁窗口保护、暂停/恢复计时和生物识别触发逻辑整理成更明确的 app lock controller。
+2. 继续收敛平台桥接：评估 `FileSharer`、`BuildInfoProvider` 是否需要从 `LocalContext.current as ...` 改成 CompositionLocal。
 3. 平台层稳定后再进入数据库遗留清理：先梳理 `UserEntity/UserDao`、`SettingsEntity`、同步字段和备份恢复格式，不直接改 schema。

@@ -17,7 +17,6 @@ import com.ivy.data.backup.BackupDataUseCase
 import com.ivy.data.db.dao.read.SettingsDao
 import com.ivy.data.db.dao.write.WriteSettingsDao
 import com.ivy.data.model.primitive.AssetCode
-import com.ivy.ui.platform.RootScreen
 import com.ivy.domain.features.BoolFeature
 import com.ivy.domain.features.Features
 import com.ivy.domain.preferences.AppPreferences
@@ -34,6 +33,7 @@ import com.ivy.base.legacy.timeNowUTC
 import com.ivy.base.legacy.uiThread
 import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.platform.FilePicker
+import com.ivy.ui.platform.FileSharer
 import com.ivy.legacy.domain.action.global.StartDayOfMonthAct
 import com.ivy.legacy.domain.action.global.UpdateStartDayOfMonthAct
 import com.ivy.legacy.domain.action.settings.SettingsAct
@@ -265,8 +265,8 @@ class SettingsViewModel @Inject constructor(
     override fun onEvent(event: SettingsEvent) {
         when (event) {
             is SettingsEvent.SetCurrency -> setCurrency(event.newCurrency)
-            is SettingsEvent.ExportToCsv -> exportToCSV(event.rootScreen)
-            is SettingsEvent.BackupData -> exportToZip(event.rootScreen)
+            is SettingsEvent.ExportToCsv -> exportToCSV(event.fileSharer)
+            is SettingsEvent.BackupData -> exportToZip(event.fileSharer)
             SettingsEvent.SwitchTheme -> switchTheme()
             is SettingsEvent.SetLockApp -> setLockApp(event.lockApp)
             is SettingsEvent.SetShowNotifications -> setShowNotifications(event.showNotifications)
@@ -355,7 +355,7 @@ class SettingsViewModel @Inject constructor(
         }
     }
 
-    private fun exportToCSV(rootScreen: RootScreen) {
+    private fun exportToCSV(fileSharer: FileSharer) {
         filePicker.createFile(
             "IvyWalletExport_${
                 timeNowUTC().getISOFormattedDateTime()
@@ -366,14 +366,14 @@ class SettingsViewModel @Inject constructor(
                     outputFile = fileUri
                 )
 
-                rootScreen.shareCSVFile(
+                fileSharer.shareCSVFile(
                     fileUri = fileUri
                 )
             }
         }
     }
 
-    private fun exportToZip(rootScreen: RootScreen) {
+    private fun exportToZip(fileSharer: FileSharer) {
         filePicker.createFile(
             "IvyWalletBackup_${
                 timeNowUTC().getISOFormattedDateTime()
@@ -387,7 +387,7 @@ class SettingsViewModel @Inject constructor(
                 appPreferences.dataBackupCompleted = true
 
                 uiThread {
-                    rootScreen.shareZipFile(
+                    fileSharer.shareZipFile(
                         fileUri = fileUri
                     )
                 }

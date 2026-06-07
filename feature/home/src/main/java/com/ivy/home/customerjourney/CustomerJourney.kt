@@ -2,7 +2,6 @@ package com.ivy.home.customerjourney
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -15,14 +14,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
-import com.ivy.ui.platform.RootScreen
-import com.ivy.legacy.ui.platform.rootScreen
 import com.ivy.ui.legacy.drawColoredShadow
 import com.ivy.navigation.LocalMainTabState
 import com.ivy.navigation.navigation
@@ -42,28 +38,23 @@ fun CustomerJourney(
 ) {
     val mainTabState = LocalMainTabState.current
     val nav = navigation()
-    if (LocalContext.current is RootScreen) {
-        val rootScreen = rootScreen()
 
-        if (customerJourneyCards.isNotEmpty()) {
-            Spacer(Modifier.height(12.dp))
-        }
+    if (customerJourneyCards.isNotEmpty()) {
+        Spacer(Modifier.height(12.dp))
+    }
 
-        for (card in customerJourneyCards) {
-            Spacer(Modifier.height(12.dp))
+    for (card in customerJourneyCards) {
+        Spacer(Modifier.height(12.dp))
 
-            CustomerJourneyCard(
-                modifier = modifier,
-                cardData = card,
-                onDismiss = {
-                    onDismiss(card)
-                }
-            ) {
-                card.onAction(nav, mainTabState, rootScreen)
+        CustomerJourneyCard(
+            modifier = modifier,
+            cardData = card,
+            onDismiss = {
+                onDismiss(card)
             }
+        ) {
+            card.onAction(nav, mainTabState)
         }
-    } else {
-        Box(modifier)
     }
 }
 

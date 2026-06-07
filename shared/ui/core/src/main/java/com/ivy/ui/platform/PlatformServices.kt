@@ -2,7 +2,7 @@ package com.ivy.ui.platform
 
 import android.net.Uri
 
-interface RootScreen {
+interface BuildInfoProvider {
     /**
      * BuildConfig.DEBUG
      */
@@ -17,12 +17,10 @@ interface RootScreen {
      * BuildConfig.VERSION_CODE
      */
     val buildVersionCode: Int
+}
 
-    fun openUrlInBrowser(url: String)
-
+interface FileSharer {
     fun shareCSVFile(fileUri: Uri)
 
     fun shareZipFile(fileUri: Uri)
-
-    fun openGooglePlayAppPage(appId: String)
 }

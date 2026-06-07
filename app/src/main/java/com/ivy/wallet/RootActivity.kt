@@ -21,20 +21,21 @@ import com.ivy.IvyNavGraph
 import com.ivy.base.legacy.Theme
 import com.ivy.base.time.TimeConverter
 import com.ivy.base.time.TimeProvider
-import com.ivy.ui.platform.RootScreen
 import com.ivy.legacy.ui.state.LocalPeriodState
 import com.ivy.legacy.ui.state.PeriodState
 import com.ivy.navigation.Navigation
 import com.ivy.navigation.NavigationRoot
 import com.ivy.ui.LegacyUiRoot
+import com.ivy.ui.platform.BuildInfoProvider
+import com.ivy.ui.platform.FileSharer
 import com.ivy.ui.theme.IvyMaterial3Theme
 import com.ivy.ui.theme.ThemeState
 import com.ivy.ui.time.TimeFormatter
 import com.ivy.ui.time.impl.DateTimePicker
 import com.ivy.wallet.platform.ActivityDatePicker
+import com.ivy.wallet.platform.ActivityFileSharer
 import com.ivy.wallet.platform.ActivityResultFilePicker
 import com.ivy.wallet.platform.BiometricAuthenticator
-import com.ivy.wallet.platform.ExternalIntentLauncher
 import com.ivy.wallet.platform.registerActivityResultLaunchers
 import com.ivy.wallet.platform.registerMaterialDatePicker
 import com.ivy.wallet.ui.applocked.AppLockedScreen
@@ -43,7 +44,9 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 @Suppress("TooManyFunctions")
-class RootActivity : AppCompatActivity(), RootScreen {
+class RootActivity : AppCompatActivity(),
+    BuildInfoProvider,
+    FileSharer {
     @Inject
     lateinit var themeState: ThemeState
 
@@ -72,7 +75,7 @@ class RootActivity : AppCompatActivity(), RootScreen {
     lateinit var filePicker: ActivityResultFilePicker
 
     private val viewModel: RootViewModel by viewModels()
-    private val externalIntentLauncher by lazy { ExternalIntentLauncher(this) }
+    private val activityFileSharer by lazy { ActivityFileSharer(this) }
     private val biometricAuthenticator by lazy { BiometricAuthenticator(this) }
 
     @OptIn(ExperimentalFoundationApi::class, ExperimentalAnimationApi::class)
@@ -200,20 +203,12 @@ class RootActivity : AppCompatActivity(), RootScreen {
         }
     }
 
-    override fun openUrlInBrowser(url: String) {
-        externalIntentLauncher.openUrlInBrowser(url)
-    }
-
-    override fun openGooglePlayAppPage(appId: String) {
-        externalIntentLauncher.openGooglePlayAppPage(appId)
-    }
-
     override fun shareCSVFile(fileUri: Uri) {
-        externalIntentLauncher.shareCSVFile(fileUri)
+        activityFileSharer.shareCSVFile(fileUri)
     }
 
     override fun shareZipFile(fileUri: Uri) {
-        externalIntentLauncher.shareZipFile(fileUri)
+        activityFileSharer.shareZipFile(fileUri)
     }
 
     override val isDebug: Boolean

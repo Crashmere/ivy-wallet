@@ -32,7 +32,6 @@ import com.ivy.data.repository.TransactionRepository
 import com.ivy.data.repository.mapper.TransactionMapper
 import com.ivy.data.temp.migration.getTransactionType
 import com.ivy.data.temp.migration.getValue
-import com.ivy.ui.platform.RootScreen
 import com.ivy.domain.features.Features
 import com.ivy.domain.usecase.csv.ExportCsvUseCase
 import com.ivy.frp.filterSuspend
@@ -47,6 +46,7 @@ import com.ivy.base.legacy.uiThread
 import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.R
 import com.ivy.ui.platform.FilePicker
+import com.ivy.ui.platform.FileSharer
 import com.ivy.legacy.domain.action.account.AccountsAct
 import com.ivy.legacy.domain.action.exchange.ExchangeAct
 import com.ivy.legacy.domain.action.settings.BaseCurrencyAct
@@ -549,7 +549,7 @@ class ReportViewModel @Inject constructor(
                     }
                 )
 
-                (context as RootScreen).shareCSVFile(
+                (context as FileSharer).shareCSVFile(
                     fileUri = fileUri
                 )
 
