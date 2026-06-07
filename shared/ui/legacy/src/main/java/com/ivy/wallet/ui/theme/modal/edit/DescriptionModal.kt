@@ -14,6 +14,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.font.FontWeight
@@ -24,7 +25,6 @@ import androidx.compose.ui.unit.dp
 import com.ivy.design.l0_system.UI
 import com.ivy.design.l0_system.style
 import com.ivy.design.utils.hideKeyboard
-import com.ivy.legacy.rootView
 import com.ivy.ui.legacy.clickableNoIndication
 import com.ivy.ui.legacy.onScreenStart
 import com.ivy.ui.legacy.rememberInteractionSource
@@ -51,7 +51,7 @@ fun BoxWithConstraintsScope.DescriptionModal(
     var descTextFieldValue by remember(description) {
         mutableStateOf(selectEndTextFieldValue(description))
     }
-    val view = rootView()
+    val view = LocalView.current
 
     IvyModal(
         id = id,

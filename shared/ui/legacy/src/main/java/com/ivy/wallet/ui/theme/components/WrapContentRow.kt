@@ -18,7 +18,6 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
-import com.ivy.legacy.datamodel.Category
 
 @Deprecated("Old design system. Use `:ivy-design` and Material3")
 @Composable

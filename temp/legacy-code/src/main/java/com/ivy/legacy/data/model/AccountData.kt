@@ -2,7 +2,7 @@ package com.ivy.legacy.data.model
 
 import androidx.compose.runtime.Immutable
 import com.ivy.data.model.Account
-import com.ivy.wallet.domain.data.Reorderable
+import com.ivy.data.model.Reorderable
 
 @Immutable
 data class AccountData(
@@ -12,7 +12,8 @@ data class AccountData(
     val monthlyExpenses: Double,
     val monthlyIncome: Double
 ) : Reorderable {
-    override fun getItemOrderNum() = account.orderNum
+    override val orderNum: Double
+        get() = account.orderNum
 
     override fun withNewOrderNum(newOrderNum: Double) = this.copy(
         account = account.copy(

@@ -6,4 +6,8 @@ package com.ivy.data.model
  */
 interface Reorderable {
     val orderNum: Double
+
+    fun withNewOrderNum(newOrderNum: Double): Reorderable {
+        error("Reordering is not implemented for ${this::class.simpleName}")
+    }
 }

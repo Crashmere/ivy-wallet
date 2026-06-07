@@ -26,8 +26,8 @@ import com.ivy.design.l0_system.UI
 import com.ivy.design.l0_system.style
 import com.ivy.base.legacy.numberBetween
 import com.ivy.base.legacy.swap
+import com.ivy.data.model.Reorderable
 import com.ivy.ui.R
-import com.ivy.wallet.domain.data.Reorderable
 import com.ivy.wallet.ui.theme.GradientGreen
 import com.ivy.wallet.ui.theme.White
 import com.ivy.wallet.ui.theme.modal.IvyModal
@@ -372,19 +372,19 @@ private fun <T : Reorderable> calculateOrderNum(
     return when {
         itemBefore != null && itemAfter != null -> {
             numberBetween(
-                itemBefore.getItemOrderNum(),
-                itemAfter.getItemOrderNum()
+                itemBefore.orderNum,
+                itemAfter.orderNum
             )
         }
 
         itemBefore != null && itemAfter == null -> {
             // It's last in it's priority
-            itemBefore.getItemOrderNum() + 1
+            itemBefore.orderNum + 1
         }
 
         itemBefore == null && itemAfter != null -> {
             // It's first in it's priority
-            itemAfter.getItemOrderNum() - 1
+            itemAfter.orderNum - 1
         }
 
         else -> 0.0

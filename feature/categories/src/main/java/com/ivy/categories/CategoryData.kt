@@ -1,7 +1,7 @@
 package com.ivy.categories
 
 import com.ivy.data.model.Category
-import com.ivy.wallet.domain.data.Reorderable
+import com.ivy.data.model.Reorderable
 
 data class CategoryData(
     val category: Category,
@@ -9,7 +9,8 @@ data class CategoryData(
     val monthlyExpenses: Double,
     val monthlyIncome: Double
 ) : Reorderable {
-    override fun getItemOrderNum() = category.orderNum
+    override val orderNum: Double
+        get() = category.orderNum
 
     override fun withNewOrderNum(newOrderNum: Double) = this.copy(
         category = category.copy(
