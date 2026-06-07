@@ -140,7 +140,7 @@ dependencies {
     implementation(projects.shared.ui.navigation)
 
     implementation(libs.bundles.kotlin)
-    implementation(libs.bundles.kotlin.android)
+    implementation(libs.bundles.kotlin.android.runtime)
     implementation(libs.bundles.compose)
     implementation(libs.bundles.activity)
     implementation(libs.androidx.biometrics)

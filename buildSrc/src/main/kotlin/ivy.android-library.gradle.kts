@@ -28,5 +28,5 @@ gradle.projectsEvaluated {
 
 dependencies {
     implementation(libs.bundles.kotlin)
-    implementation(catalog.bundle("kotlin-android"))
+    implementation(catalog.bundle("kotlin-android-runtime"))
 }

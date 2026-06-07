@@ -122,7 +122,7 @@ kotlin = [
     "kotlin-coroutines-core",
     "kotlinx-collections-immutable"
 ]
-kotlin-android = [
+kotlin-android-runtime = [
     "kotlin-coroutines-android",
 ]
 arrow = [

@@ -296,7 +296,7 @@
 - `ivy.module` 不再默认启用 kotlinx serialization；当前 `ivy.feature` 页面模块没有序列化源码引用，序列化能力只保留在 `shared:base` 和 `shared:data:core` 等实际需要的模块中。
 - app 模块已移除 Kotlin serialization 插件；应用壳本身没有序列化源码，序列化继续由 `shared:base` 和 `shared:data:core` 提供。
 - 空壳 `ivy.module` 约定插件已删除；`ivy.feature` 现在直接组合 `ivy.android-library`、`ivy.hilt` 和 `ivy.compose`，模块能力来源更直观。
-- app 与 `ivy.android-library` 已移除重复的旧式 `kotlin-android` 插件 ID，只保留正式 `org.jetbrains.kotlin.android` 插件；版本目录中的 `kotlin-android` 依赖 bundle 名称暂不改动。
+- app 与 `ivy.android-library` 已移除重复的旧式 `kotlin-android` 插件 ID，只保留正式 `org.jetbrains.kotlin.android` 插件；版本目录中仅包含 Android 协程运行时的依赖 bundle 已改名为 `kotlin-android-runtime`，避免和插件 ID 混淆。
 
 ### 阶段 3：测试支持代码归位
 
