@@ -627,6 +627,7 @@
 - `Theme` 枚举已取消旧设计系统 `@Deprecated` 注解；它当前是持久化的应用主题偏好，枚举名仍写入 Room 和备份文件。
 - 旧首页判断是否存在交易的 DAO 查询已从 `findAll_LIMIT_1()` 改成 `hasAny()`；这一步不改 schema，只让查询语义更直接并避免读取完整实体。
 - `DeviceIdUseCase` 已停止引用 data core 的 `IvyDataStore` typealias，改为直接依赖标准 `DataStore<Preferences>`；data core 只保留实际 `Context.dataStore` 提供入口。
+- 设置页偏好开关读写已收敛到 `PreferenceToggleRepository`；`:feature:settings` 不再直接注入 `DataStore<Preferences>`，并去掉了自身的 DataStore Gradle 依赖，底层开关 key 和存储文件不变。
 
 建议顺序：
 

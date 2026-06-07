@@ -7,7 +7,6 @@ android {
 }
 
 dependencies {
-    implementation(libs.datastore)
     implementation(projects.shared.base)
     implementation(projects.shared.data.model)
     implementation(projects.shared.domain)

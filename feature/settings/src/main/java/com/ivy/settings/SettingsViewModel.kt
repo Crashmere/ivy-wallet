@@ -5,14 +5,13 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
 import androidx.lifecycle.viewModelScope
 import com.ivy.base.theme.Theme
 import com.ivy.base.time.TimeProvider
 import com.ivy.data.model.primitive.AssetCode
 import com.ivy.domain.preferences.AppPreferences
 import com.ivy.domain.preferences.toggles.BoolPreference
+import com.ivy.domain.preferences.toggles.PreferenceToggleRepository
 import com.ivy.domain.preferences.toggles.PreferenceToggles
 import com.ivy.domain.usecase.ResetWalletDataUseCase
 import com.ivy.domain.usecase.backup.ExportBackupUseCase
@@ -55,7 +54,7 @@ class SettingsViewModel @Inject constructor(
     private val updateStartDayOfMonthAct: UpdateStartDayOfMonthAct,
     private val syncExchangeRatesUseCase: SyncExchangeRatesUseCase,
     private val preferenceToggles: PreferenceToggles,
-    private val preferenceDataStore: DataStore<Preferences>,
+    private val preferenceToggleRepository: PreferenceToggleRepository,
     private val exportCsvUseCase: ExportCsvUseCase,
     private val filePicker: FilePicker,
     private val timeProvider: TimeProvider,
@@ -149,15 +148,15 @@ class SettingsViewModel @Inject constructor(
     }
 
     private suspend fun initializeTogglePreferences() {
-        compactAccountsMode.value = preferenceToggles.compactAccountsMode.isEnabled(preferenceDataStore)
-        hideAccountTotalBalance.value = preferenceToggles.hideTotalBalance.isEnabled(preferenceDataStore)
-        compactCategoriesMode.value = preferenceToggles.compactCategoriesMode.isEnabled(preferenceDataStore)
+        compactAccountsMode.value = preferenceToggleRepository.isEnabled(preferenceToggles.compactAccountsMode)
+        hideAccountTotalBalance.value = preferenceToggleRepository.isEnabled(preferenceToggles.hideTotalBalance)
+        compactCategoriesMode.value = preferenceToggleRepository.isEnabled(preferenceToggles.compactCategoriesMode)
         showAccountColorsInTransactions.value =
-            preferenceToggles.showAccountColorsInTransactions.isEnabled(preferenceDataStore)
-        showTitleSuggestions.value = preferenceToggles.showTitleSuggestions.isEnabled(preferenceDataStore)
-        standardKeypadLayout.value = preferenceToggles.standardKeypadLayout.isEnabled(preferenceDataStore)
-        showCategorySearchBar.value = preferenceToggles.showCategorySearchBar.isEnabled(preferenceDataStore)
-        sortCategoriesAscending.value = preferenceToggles.sortCategoriesAscending.isEnabled(preferenceDataStore)
+            preferenceToggleRepository.isEnabled(preferenceToggles.showAccountColorsInTransactions)
+        showTitleSuggestions.value = preferenceToggleRepository.isEnabled(preferenceToggles.showTitleSuggestions)
+        standardKeypadLayout.value = preferenceToggleRepository.isEnabled(preferenceToggles.standardKeypadLayout)
+        showCategorySearchBar.value = preferenceToggleRepository.isEnabled(preferenceToggles.showCategorySearchBar)
+        sortCategoriesAscending.value = preferenceToggleRepository.isEnabled(preferenceToggles.sortCategoriesAscending)
     }
 
     private suspend fun initializeStartDateOfMonth() {
@@ -438,7 +437,7 @@ class SettingsViewModel @Inject constructor(
         state.value = enabled
 
         viewModelScope.launch {
-            preference.set(preferenceDataStore, enabled)
+            preferenceToggleRepository.set(preference, enabled)
         }
     }
 
