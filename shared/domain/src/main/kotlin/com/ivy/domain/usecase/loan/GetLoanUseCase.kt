@@ -1,7 +1,7 @@
 package com.ivy.domain.usecase.loan
 
 import com.ivy.data.api.LoanStore
-import com.ivy.data.model.legacy.Loan
+import com.ivy.data.model.Loan
 import java.util.UUID
 import javax.inject.Inject
 

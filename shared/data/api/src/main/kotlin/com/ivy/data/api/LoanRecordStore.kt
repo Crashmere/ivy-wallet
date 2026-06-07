@@ -1,6 +1,6 @@
 package com.ivy.data.api
 
-import com.ivy.data.model.legacy.LoanRecord
+import com.ivy.data.model.LoanRecord
 import java.util.UUID
 
 interface LoanRecordStore {

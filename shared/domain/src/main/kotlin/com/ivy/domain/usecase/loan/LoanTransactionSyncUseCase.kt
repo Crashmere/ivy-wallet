@@ -5,8 +5,8 @@ import com.ivy.data.model.LoanRecordType
 import com.ivy.data.model.TransactionType
 import com.ivy.data.model.LoanType
 import com.ivy.data.model.legacy.Account
-import com.ivy.data.model.legacy.Loan
-import com.ivy.data.model.legacy.LoanRecord
+import com.ivy.data.model.Loan
+import com.ivy.data.model.LoanRecord
 import com.ivy.data.model.CreateLoanData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async

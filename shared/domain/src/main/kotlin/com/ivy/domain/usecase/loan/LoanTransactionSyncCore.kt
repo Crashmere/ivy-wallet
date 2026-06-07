@@ -18,8 +18,8 @@ import com.ivy.data.model.primitive.NotBlankTrimmedString
 import com.ivy.domain.usecase.category.GetCategoriesUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.data.model.legacy.Account
-import com.ivy.data.model.legacy.Loan
-import com.ivy.data.model.legacy.LoanRecord
+import com.ivy.data.model.Loan
+import com.ivy.data.model.LoanRecord
 import com.ivy.domain.mapper.legacy.toDomain
 import com.ivy.domain.mapper.legacy.toLegacy
 import com.ivy.domain.mapper.legacy.toLegacyDomain

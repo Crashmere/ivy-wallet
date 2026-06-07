@@ -22,8 +22,8 @@ import com.ivy.domain.usecase.loan.UpdateLoanRecordUseCase
 import com.ivy.domain.usecase.loan.UpdateLoanUseCase
 import com.ivy.domain.usecase.account.CreateAccountWithBalanceUseCase
 import com.ivy.data.model.legacy.Account
-import com.ivy.data.model.legacy.Loan
-import com.ivy.data.model.legacy.LoanRecord
+import com.ivy.data.model.Loan
+import com.ivy.data.model.LoanRecord
 import com.ivy.loans.loan.data.DisplayLoanRecord
 import com.ivy.loans.loandetails.events.DeleteLoanModalEvent
 import com.ivy.loans.loandetails.events.LoanDetailsScreenEvent

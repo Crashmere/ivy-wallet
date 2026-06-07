@@ -1,6 +1,6 @@
 package com.ivy.loans.loandetails.events
 
-import com.ivy.data.model.legacy.LoanRecord
+import com.ivy.data.model.LoanRecord
 import com.ivy.loans.loan.data.DisplayLoanRecord
 import com.ivy.data.model.CreateLoanRecordData
 import com.ivy.data.model.EditLoanRecordData

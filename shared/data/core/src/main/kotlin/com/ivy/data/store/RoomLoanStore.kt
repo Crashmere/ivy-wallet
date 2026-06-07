@@ -4,7 +4,7 @@ import com.ivy.data.api.LoanStore
 import com.ivy.data.db.dao.read.LoanDao
 import com.ivy.data.db.dao.write.WriteLoanDao
 import com.ivy.data.db.entity.LoanEntity
-import com.ivy.data.model.legacy.Loan
+import com.ivy.data.model.Loan
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.util.UUID

@@ -35,7 +35,7 @@ import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
 import com.ivy.ui.compose.thenIf
 import com.ivy.data.model.legacy.Account
-import com.ivy.data.model.legacy.LoanRecord
+import com.ivy.data.model.LoanRecord
 import com.ivy.legacy.ui.component.DateTimeRow
 import com.ivy.legacy.ui.modal.ModalNameInput
 import com.ivy.data.model.currency.getDefaultFIATCurrency

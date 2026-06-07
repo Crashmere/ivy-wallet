@@ -2,7 +2,7 @@ package com.ivy.domain.usecase.loan
 
 import com.ivy.data.api.LoanRecordStore
 import com.ivy.data.model.CreateLoanRecordData
-import com.ivy.data.model.legacy.LoanRecord
+import com.ivy.data.model.LoanRecord
 import java.util.UUID
 import javax.inject.Inject
 

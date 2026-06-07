@@ -1,6 +1,5 @@
-package com.ivy.data.model.legacy
+package com.ivy.data.model
 
-import com.ivy.data.model.LoanRecordType
 import java.time.Instant
 import java.util.UUID
 
