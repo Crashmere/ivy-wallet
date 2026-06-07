@@ -34,6 +34,7 @@ import com.ivy.data.legacy.getTransactionType
 import com.ivy.data.legacy.getValue
 import com.ivy.domain.preferences.toggles.PreferenceToggles
 import com.ivy.domain.usecase.csv.ExportCsvUseCase
+import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.legacy.frp.filterSuspend
 import com.ivy.legacy.ui.state.PeriodState
 import com.ivy.legacy.domain.model.Account
@@ -48,7 +49,6 @@ import com.ivy.ui.platform.FilePicker
 import com.ivy.ui.platform.FileSharer
 import com.ivy.legacy.domain.action.account.AccountsAct
 import com.ivy.legacy.domain.action.exchange.ExchangeAct
-import com.ivy.legacy.domain.action.settings.BaseCurrencyAct
 import com.ivy.legacy.domain.action.transaction.CalcTrnsIncomeExpenseAct
 import com.ivy.legacy.domain.action.transaction.TrnsWithDateDivsAct
 import com.ivy.legacy.domain.logic.PlannedPaymentsLogic
@@ -85,7 +85,7 @@ class ReportViewModel @Inject constructor(
     private val categoryRepository: CategoryRepository,
     private val trnsWithDateDivsAct: TrnsWithDateDivsAct,
     private val calcTrnsIncomeExpenseAct: CalcTrnsIncomeExpenseAct,
-    private val baseCurrencyAct: BaseCurrencyAct,
+    private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
     private val transactionMapper: TransactionMapper,
     private val tagRepository: TagRepository,
     private val exportCsvUseCase: ExportCsvUseCase,
@@ -216,7 +216,7 @@ class ReportViewModel @Inject constructor(
 
     private fun start() {
         viewModelScope.launch(Dispatchers.IO) {
-            baseCurrency = baseCurrencyAct(Unit)
+            baseCurrency = getBaseCurrencyCode()
             accounts = accountsAct(Unit)
             categories =
                 (listOf(unSpecifiedCategory) + categoryRepository.findAll()).toImmutableList()

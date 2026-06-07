@@ -28,12 +28,12 @@ import com.ivy.legacy.domain.model.Budget
 import com.ivy.legacy.domain.logic.BudgetCreator
 import com.ivy.data.model.currency.format
 import com.ivy.base.text.isNotNullOrBlank
+import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.R
 import com.ivy.legacy.domain.action.account.AccountsAct
 import com.ivy.legacy.domain.action.budget.BudgetsAct
 import com.ivy.legacy.domain.action.exchange.ExchangeAct
-import com.ivy.legacy.domain.action.settings.BaseCurrencyAct
 import com.ivy.legacy.domain.action.transaction.HistoryTrnsAct
 import com.ivy.legacy.domain.model.CreateBudgetData
 import com.ivy.legacy.domain.pure.exchange.ExchangeData
@@ -55,7 +55,7 @@ class BudgetViewModel @Inject constructor(
     private val accountsAct: AccountsAct,
     private val categoryRepository: CategoryRepository,
     private val budgetsAct: BudgetsAct,
-    private val baseCurrencyAct: BaseCurrencyAct,
+    private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
     private val historyTrnsAct: HistoryTrnsAct,
     private val exchangeAct: ExchangeAct,
     private val timeProvider: TimeProvider,
@@ -184,7 +184,7 @@ class BudgetViewModel @Inject constructor(
         viewModelScope.launch {
             categories.value = categoryRepository.findAll().toImmutableList()
             val accounts = accountsAct(Unit)
-            val baseCurrency = baseCurrencyAct(Unit)
+            val baseCurrency = getBaseCurrencyCode()
             val startDateOfMonth = periodState.startDayOfMonth
             val timeRange = com.ivy.legacy.ui.model.period.TimePeriod.currentMonth(
                 startDayOfMonth = startDateOfMonth,

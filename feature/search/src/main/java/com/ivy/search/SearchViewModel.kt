@@ -12,11 +12,11 @@ import com.ivy.ui.ComposeViewModel
 import com.ivy.data.model.Category
 import com.ivy.data.repository.CategoryRepository
 import com.ivy.domain.preferences.toggles.PreferenceToggles
+import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.legacy.domain.model.Account
 import com.ivy.base.currency.getDefaultFIATCurrency
 import com.ivy.base.coroutines.ioThread
 import com.ivy.legacy.domain.action.account.AccountsAct
-import com.ivy.legacy.domain.action.settings.BaseCurrencyAct
 import com.ivy.legacy.domain.action.transaction.AllTrnsAct
 import com.ivy.legacy.domain.action.transaction.TrnsWithDateDivsAct
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -32,7 +32,7 @@ class SearchViewModel @Inject constructor(
     private val trnsWithDateDivsAct: TrnsWithDateDivsAct,
     private val accountsAct: AccountsAct,
     private val categoryRepository: CategoryRepository,
-    private val baseCurrencyAct: BaseCurrencyAct,
+    private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
     private val allTrnsAct: AllTrnsAct,
     private val preferenceToggles: PreferenceToggles
 ) : ComposeViewModel<SearchState, SearchEvent>() {
@@ -84,14 +84,14 @@ class SearchViewModel @Inject constructor(
                     }
                 trnsWithDateDivsAct(
                     TrnsWithDateDivsAct.Input(
-                        baseCurrency = baseCurrencyAct(Unit),
+                        baseCurrency = getBaseCurrencyCode(),
                         transactions = filteredTransactions
                     )
                 ).toImmutableList()
             }
 
             transactions.value = queryResult
-            baseCurrency.value = baseCurrencyAct(Unit)
+            baseCurrency.value = getBaseCurrencyCode()
             accounts.value = accountsAct(Unit)
             categories.value = categoryRepository.findAll().toImmutableList()
         }

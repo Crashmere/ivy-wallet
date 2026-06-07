@@ -593,6 +593,7 @@
 - 删除预算、借贷、借贷记录、计划付款和交易 DAO 中无调用方的 `findByIsSyncedAndIsDeleted` 同步查询，以及对应测试 fake override；这一步不改变 Room schema。
 - `isDeleted` 暂时保留：当前本地查询过滤和计划付款按账户软删除仍依赖它，不能和纯云同步残留一起批量删除。
 - 基础货币读取开始从 `SettingsDao` 直连收敛到 `CurrencyRepository`：编辑交易、借贷、计划付款、饼图统计、CSV 导入、旧分类统计、旧计划付款统计、旧借贷交易联动和 `BaseCurrencyAct` 不再直接读取 `settings` 表。
+- 无业务增量的旧 `BaseCurrencyAct` 已删除；余额、账户、预算、分类、搜索、报表和交易页改为通过正式 `GetBaseCurrencyCodeUseCase` 读取基础币种。
 - 新增 `LegacySettingsRepository`，把仍存放在 `settings` 表中的主题和缓冲金额用窄方法包起来；设置页、首页和根启动流程不再直接依赖 `SettingsDao` 或旧 settings action。
 - 首次启动默认设置初始化已下沉到 `LegacySettingsRepository.ensureInitialized()`；`InitialDataSetup` 不再直接构造 `SettingsEntity` 或注入 `SettingsDao/WriteSettingsDao`，只负责启动编排、默认账户/分类预置和提醒调度。
 - 删除无调用方的 `SettingsAct`、`UpdateSettingsAct`、旧 `Settings` 模型和 `SettingsEntity.toLegacyDomain()` mapper。

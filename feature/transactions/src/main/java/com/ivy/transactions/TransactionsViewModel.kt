@@ -28,6 +28,7 @@ import com.ivy.data.repository.TagRepository
 import com.ivy.data.repository.TransactionRepository
 import com.ivy.data.repository.mapper.TransactionMapper
 import com.ivy.domain.preferences.AppPreferences
+import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.legacy.ui.theme.system.RedLight
 import com.ivy.domain.preferences.toggles.PreferenceToggles
 import com.ivy.legacy.frp.then
@@ -50,7 +51,6 @@ import com.ivy.legacy.domain.action.account.AccountsAct
 import com.ivy.legacy.domain.action.account.CalcAccBalanceAct
 import com.ivy.legacy.domain.action.account.CalcAccIncomeExpenseAct
 import com.ivy.legacy.domain.action.exchange.ExchangeAct
-import com.ivy.legacy.domain.action.settings.BaseCurrencyAct
 import com.ivy.legacy.domain.action.transaction.LegacyCalcTrnsIncomeExpenseAct
 import com.ivy.legacy.domain.action.transaction.LegacyTrnsWithDateDivsAct
 import com.ivy.legacy.domain.logic.CategoryCreator
@@ -86,7 +86,7 @@ class TransactionsViewModel @Inject constructor(
     private val accountsAct: AccountsAct,
     private val accTrnsAct: AccTrnsAct,
     private val trnsWithDateDivsAct: LegacyTrnsWithDateDivsAct,
-    private val baseCurrencyAct: BaseCurrencyAct,
+    private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
     private val calcAccBalanceAct: CalcAccBalanceAct,
     private val calcAccIncomeExpenseAct: CalcAccIncomeExpenseAct,
     private val calcTrnsIncomeExpenseAct: LegacyCalcTrnsIncomeExpenseAct,
@@ -853,7 +853,7 @@ class TransactionsViewModel @Inject constructor(
         viewModelScope.launch {
             period.value = timePeriod ?: periodState.selectedPeriod
 
-            val baseCurrencyValue = baseCurrencyAct(Unit)
+            val baseCurrencyValue = getBaseCurrencyCode()
             baseCurrency.value = baseCurrencyValue
             currency.value = baseCurrency.value
 

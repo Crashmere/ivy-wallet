@@ -16,6 +16,7 @@ import com.ivy.data.DataWriteEvent
 import com.ivy.data.repository.AccountRepository
 import com.ivy.domain.preferences.toggles.PreferenceToggles
 import com.ivy.domain.preferences.AppPreferences
+import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.legacy.ui.state.PeriodState
 import com.ivy.legacy.domain.model.AccountData
 import com.ivy.legacy.domain.model.toCloseTimeRange
@@ -23,7 +24,6 @@ import com.ivy.data.model.currency.format
 import com.ivy.base.coroutines.ioThread
 import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.R
-import com.ivy.legacy.domain.action.settings.BaseCurrencyAct
 import com.ivy.legacy.domain.action.viewmodel.account.AccountDataAct
 import com.ivy.legacy.domain.action.wallet.CalcWalletBalanceAct
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -41,7 +41,7 @@ class AccountsViewModel @Inject constructor(
     private val periodState: PeriodState,
     private val appPreferences: AppPreferences,
     private val calcWalletBalanceAct: CalcWalletBalanceAct,
-    private val baseCurrencyAct: BaseCurrencyAct,
+    private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
     private val accountDataAct: AccountDataAct,
     private val accountRepository: AccountRepository,
     private val dataObserver: DataObserver,
@@ -169,7 +169,7 @@ class AccountsViewModel @Inject constructor(
         ) // this must be monthly
         val range = period.toRange(periodState.startDayOfMonth, timeConverter, timeProvider)
 
-        val baseCurrencyCode = baseCurrencyAct(Unit)
+        val baseCurrencyCode = getBaseCurrencyCode()
         val accounts = accountRepository.findAll().toImmutableList()
 
         val includeTransfersInCalc = appPreferences.transfersAsIncomeExpense
