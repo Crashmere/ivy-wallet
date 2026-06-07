@@ -1,12 +1,12 @@
 package com.ivy.data.repository
 
-import android.icu.util.Currency
 import com.ivy.base.threading.DispatchersProvider
 import com.ivy.data.api.CurrencyStore
 import com.ivy.data.db.dao.read.SettingsDao
 import com.ivy.data.db.dao.write.WriteSettingsDao
 import com.ivy.data.model.primitive.AssetCode
 import kotlinx.coroutines.withContext
+import java.util.Currency
 import java.util.Locale
 import javax.inject.Inject
 import javax.inject.Singleton
