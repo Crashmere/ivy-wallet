@@ -1,0 +1,38 @@
+package com.ivy.wallet.platform
+
+import androidx.biometric.BiometricManager
+import androidx.biometric.BiometricPrompt
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.FragmentActivity
+import com.ivy.ui.R
+
+class BiometricAuthenticator(
+    private val activity: FragmentActivity
+) {
+    fun authenticate(
+        biometricPromptCallback: BiometricPrompt.AuthenticationCallback
+    ) {
+        val executor = ContextCompat.getMainExecutor(activity)
+        val biometricPrompt = BiometricPrompt(
+            activity,
+            executor,
+            biometricPromptCallback
+        )
+
+        val promptInfo = BiometricPrompt.PromptInfo.Builder()
+            .setTitle(
+                activity.getString(R.string.authentication_required)
+            )
+            .setSubtitle(
+                activity.getString(R.string.authentication_required_description)
+            )
+            .setAllowedAuthenticators(
+                BiometricManager.Authenticators.BIOMETRIC_WEAK or
+                        BiometricManager.Authenticators.DEVICE_CREDENTIAL
+            )
+            .setConfirmationRequired(false)
+            .build()
+
+        biometricPrompt.authenticate(promptInfo)
+    }
+}

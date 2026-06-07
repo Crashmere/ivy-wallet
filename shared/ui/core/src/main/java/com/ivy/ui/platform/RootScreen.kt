@@ -1,4 +1,4 @@
-package com.ivy.domain
+package com.ivy.ui.platform
 
 import android.net.Uri
 

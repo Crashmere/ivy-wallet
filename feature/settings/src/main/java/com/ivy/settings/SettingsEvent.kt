@@ -1,6 +1,6 @@
 package com.ivy.settings
 
-import com.ivy.domain.RootScreen
+import com.ivy.ui.platform.RootScreen
 
 sealed interface SettingsEvent {
     data class SetCurrency(val newCurrency: String) : SettingsEvent

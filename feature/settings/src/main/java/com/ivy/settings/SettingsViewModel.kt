@@ -17,7 +17,7 @@ import com.ivy.data.backup.BackupDataUseCase
 import com.ivy.data.db.dao.read.SettingsDao
 import com.ivy.data.db.dao.write.WriteSettingsDao
 import com.ivy.data.model.primitive.AssetCode
-import com.ivy.domain.RootScreen
+import com.ivy.ui.platform.RootScreen
 import com.ivy.domain.features.BoolFeature
 import com.ivy.domain.features.Features
 import com.ivy.domain.preferences.AppPreferences

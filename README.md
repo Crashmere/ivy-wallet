@@ -17,6 +17,7 @@
 - 删除 `:temp:old-design` 模块；旧设计 API 先迁入 `shared:ui:core` 作为兼容层，随后已逐步归位到更明确的 `legacy.ui.theme`/`legacy.ui.theme.system` 包名。
 - 删除 `:temp:legacy-code` 模块；剩余旧全局上下文暂时收敛在 `shared:ui:legacy`，并已把周期状态、文件选择、日期选择、主 Tab 状态等职责逐步拆出。
 - 整理部分 Gradle 约定插件：基础 shared 模块、数据核心模块和 domain 模块已经开始脱离面向页面的 `ivy.feature` 配置。
+- 开始拆分 `RootActivity` 平台能力：文件创建/打开、Material 日期选择器、生物识别弹窗、浏览器/商店跳转和 CSV/zip 分享已经移入 `app` 的 platform 边界；`RootScreen` 已从 domain 移到 UI platform 接口。
 
 当前仍保留：
 
@@ -141,14 +142,14 @@
 
 现状：
 
-- `RootActivity` 同时负责主题、根导航、文件创建/打开、CSV/zip 分享、日期时间选择器、生物识别、浏览器跳转、Google Play 跳转。
-- `RootScreen` 放在 `shared:domain`，但它本质是 Android 平台/UI 接口。
+- `RootActivity` 仍负责主题、根导航、应用锁生命周期和根部 Compose 宿主。
+- 文件创建/打开、CSV/zip 分享、Material 日期选择器、生物识别弹窗、浏览器跳转、Google Play 跳转已经拆到 `app/src/main/java/com/ivy/wallet/platform`。
+- `RootScreen` 已从 `shared:domain` 移到 `shared:ui:core` 的 `com.ivy.ui.platform` 包。
 
 问题：
 
-- Activity 过重。
-- domain 反向知道了 Android 平台能力。
-- feature 通过 `RootScreen` 直接拿 Activity 能力，边界不清晰。
+- Activity 仍偏重，应用锁生命周期和根导航还混在一起。
+- feature 仍通过大而全的 `RootScreen` 直接拿 Activity 能力，边界不够窄。
 
 目标：
 
@@ -566,9 +567,17 @@
 
 同时调整：
 
-- `RootScreen` 不应在 `shared:domain`。
-- 与 Activity 强绑定的接口放到 `app` 或 `shared:ui:core/platform`。
-- feature 通过窄接口表达需求，不直接依赖大而全的 `RootScreen`。
+- `RootScreen` 已从 `shared:domain` 移到 `shared:ui:core/platform`。
+- 与 Activity 强绑定的实现放到 `app` 的 platform 包。
+- feature 后续通过窄接口表达需求，不继续依赖大而全的 `RootScreen`。
+
+当前进展：
+
+- `ActivityDatePickerHost` 承接 Material date picker 注册，`RootActivity` 不再直接构造 `MaterialDatePicker`。
+- `ActivityFilePickerHost` 承接 Activity Result 文件创建/打开注册，`RootActivity` 不再保存 launcher 和文件回调。
+- `ExternalIntentLauncher` 承接浏览器跳转、Google Play 跳转、CSV 分享和 zip 分享。
+- `BiometricAuthenticator` 承接系统生物识别 Prompt 构造。
+- `RootScreen` 已移到 `com.ivy.ui.platform.RootScreen`，domain 不再暴露 Android `Uri` 平台接口。
 
 ### 阶段 9：feature 模块收敛
 
@@ -714,6 +723,6 @@ shared:ui:core
 
 下一步建议执行：
 
-1. 建立偏好设置访问边界：先新增封装 `SharedPrefs` key 的 repository/manager，不立刻修改底层存储和备份格式。
-2. 分批迁移 feature 对 `SharedPrefs` 的直接访问：优先处理跨页面共享的锁屏、通知、隐藏余额/收入、转账计入收支等设置；分类排序、最近账户等局部状态后置。
-3. 每完成一组跨模块边界调整后运行 `:app:assembleDemo`，确认构建没有被迁移影响；涉及数据库、备份恢复或导入导出时再补充对应测试。
+1. 继续收窄 `RootScreen`：把分享文件、打开外部链接、构建版本信息拆成更小的 UI/platform 接口，逐步减少 feature 对 Activity 大接口的依赖。
+2. 继续减轻 `RootActivity`：把应用锁窗口保护、暂停/恢复计时和生物识别触发逻辑整理成更明确的 app lock controller。
+3. 平台层稳定后再进入数据库遗留清理：先梳理 `UserEntity/UserDao`、`SettingsEntity`、同步字段和备份恢复格式，不直接改 schema。

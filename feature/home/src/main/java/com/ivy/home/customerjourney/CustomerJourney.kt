@@ -21,7 +21,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
-import com.ivy.domain.RootScreen
+import com.ivy.ui.platform.RootScreen
 import com.ivy.legacy.ui.platform.rootScreen
 import com.ivy.ui.legacy.drawColoredShadow
 import com.ivy.navigation.LocalMainTabState

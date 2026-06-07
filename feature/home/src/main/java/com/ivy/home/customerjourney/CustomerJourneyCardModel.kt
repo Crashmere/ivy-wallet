@@ -3,7 +3,7 @@ package com.ivy.home.customerjourney
 import androidx.annotation.DrawableRes
 import androidx.compose.runtime.Immutable
 import com.ivy.legacy.ui.theme.system.Gradient
-import com.ivy.domain.RootScreen
+import com.ivy.ui.platform.RootScreen
 import com.ivy.navigation.MainTabState
 import com.ivy.navigation.Navigation
 
