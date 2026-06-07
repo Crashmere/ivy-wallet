@@ -56,7 +56,7 @@ import com.ivy.domain.usecase.account.SetLastSelectedAccountIdUseCase
 import com.ivy.domain.usecase.exchange.LegacyExchangeRatesUseCase
 import com.ivy.domain.usecase.loan.UpdateAssociatedLoanDataUseCase
 import com.ivy.data.model.legacy.CreateAccountData
-import com.ivy.data.model.legacy.CreateCategoryData
+import com.ivy.data.model.CreateCategoryData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.ImmutableSet

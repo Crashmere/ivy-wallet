@@ -4,7 +4,7 @@ import arrow.core.raise.either
 import com.ivy.data.api.CategoryStore
 import com.ivy.data.model.Category
 import com.ivy.data.model.CategoryId
-import com.ivy.data.model.legacy.CreateCategoryData
+import com.ivy.data.model.CreateCategoryData
 import com.ivy.data.model.primitive.ColorInt
 import com.ivy.data.model.primitive.IconAsset
 import com.ivy.data.model.primitive.NotBlankTrimmedString

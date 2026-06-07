@@ -22,7 +22,7 @@ import com.ivy.domain.usecase.category.CalculateCategoryIncomeWithAccountFilters
 import com.ivy.domain.usecase.category.CreateCategoryUseCase
 import com.ivy.domain.usecase.category.GetCategorySortOrderPreferenceUseCase
 import com.ivy.domain.usecase.category.SetCategorySortOrderPreferenceUseCase
-import com.ivy.data.model.legacy.CreateCategoryData
+import com.ivy.data.model.CreateCategoryData
 import com.ivy.legacy.ui.modal.edit.CategoryModalData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList

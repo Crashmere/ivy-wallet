@@ -39,7 +39,7 @@ import com.ivy.legacy.ui.hideKeyboard
 import com.ivy.legacy.ui.onScreenStart
 import com.ivy.legacy.ui.selectEndTextFieldValue
 import com.ivy.ui.R
-import com.ivy.data.model.legacy.CreateCategoryData
+import com.ivy.data.model.CreateCategoryData
 import com.ivy.legacy.ui.theme.Ivy
 import com.ivy.legacy.ui.component.ItemIconMDefaultIcon
 import com.ivy.legacy.ui.component.IvyNameTextField

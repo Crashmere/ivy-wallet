@@ -5,7 +5,7 @@ import com.ivy.data.model.Category
 import com.ivy.data.model.IntervalType
 import com.ivy.data.model.legacy.Account
 import com.ivy.data.model.legacy.CreateAccountData
-import com.ivy.data.model.legacy.CreateCategoryData
+import com.ivy.data.model.CreateCategoryData
 import com.ivy.legacy.ui.modal.RecurringRuleModalData
 import com.ivy.legacy.ui.modal.edit.AccountModalData
 import com.ivy.legacy.ui.modal.edit.CategoryModalData

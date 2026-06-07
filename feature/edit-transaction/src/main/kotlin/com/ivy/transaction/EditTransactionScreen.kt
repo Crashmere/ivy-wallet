@@ -51,7 +51,7 @@ import com.ivy.ui.navigation.screenScopedViewModel
 import com.ivy.ui.R
 import com.ivy.data.model.currency.IvyCurrency
 import com.ivy.data.model.legacy.CreateAccountData
-import com.ivy.data.model.legacy.CreateCategoryData
+import com.ivy.data.model.CreateCategoryData
 import com.ivy.legacy.ui.edit.core.Category
 import com.ivy.legacy.ui.edit.core.DueDate
 import com.ivy.legacy.ui.edit.core.EditBottomSheet
