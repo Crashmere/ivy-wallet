@@ -7,10 +7,6 @@ import com.ivy.domain.usecase.reset.ResetWalletDataUseCase
 import com.ivy.ui.platform.DatePicker
 import com.ivy.ui.platform.FilePicker
 import com.ivy.ui.platform.LocaleSettingsLauncher
-import com.ivy.ui.time.TimeConverter
-import com.ivy.ui.time.TimeProvider
-import com.ivy.ui.time.impl.DeviceTimeProvider
-import com.ivy.ui.time.impl.StandardTimeConverter
 import com.ivy.wallet.AppStarter
 import com.ivy.wallet.IvyAppStarter
 import com.ivy.wallet.platform.AndroidLocaleSettingsLauncher
@@ -58,14 +54,4 @@ abstract class AppBindingsModule {
     abstract fun preferenceToggles(
         preferenceToggles: IvyPreferenceToggles
     ): PreferenceToggles
-
-    @Binds
-    abstract fun timeProvider(
-        timeProvider: DeviceTimeProvider
-    ): TimeProvider
-
-    @Binds
-    abstract fun timeConverter(
-        timeConverter: StandardTimeConverter
-    ): TimeConverter
 }
