@@ -433,6 +433,7 @@
 - 偏好读写已抽出 `PreferenceStore` 接口，`SharedPrefs` 只作为 Android 实现通过 Hilt 绑定；业务 key 集中到 `AppPreferenceKeys`，domain 和数据备份恢复不再直接依赖 `SharedPrefs` 具体类。
 - 偏好 toggle 的 UI 读取边界已从 domain 拆到 `shared:ui:legacy`：`LocalPreferenceDataStore/LocalPreferenceToggles` 和 `BoolPreference.asEnabledState()` 现在属于旧 UI 层，domain 中的 `BoolPreference` 只保留 DataStore 读写定义。
 - `shared:domain` 已删除剩余 legacy 数据模型上的 Compose `@Immutable` 注解，并移除 `ivy.compose-runtime` 插件；domain 不再需要 Compose 编译配置。
+- `shared:data:core` 的测试 fake DAO 已停止使用 Compose Locale helper，并移除 `ivy.compose-runtime` 插件；数据层不再为测试字符串处理引入 Compose 配置。
 - 已删除旧 building block 中最薄的 `SpacerVer/SpacerHor/SpacerWeight`、`ColumnRoot`、`DividerW/DividerH/DividerV/DividerSize`，相关调用方已改用 Compose 原生 `Spacer`、`Column` 和本地分隔线。
 - 已删除旧 `IvyText` 包装，剩余调用方改用 Material3 `Text`。
 - 已删除旧 `IvyIcon/IvyIconScaled/IconScale` 包装，剩余调用方改用 Material3 `Icon`、`Image` 或本地小函数；`shared:ui:core` 的旧 `l1_buildingBlocks` 包已清空。

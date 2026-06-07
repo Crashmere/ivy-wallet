@@ -1,7 +1,5 @@
 package com.ivy.data.db.dao.fake
 
-import androidx.compose.ui.text.intl.Locale
-import androidx.compose.ui.text.toLowerCase
 import com.ivy.data.db.dao.read.TagDao
 import com.ivy.data.db.dao.write.WriteTagDao
 import com.ivy.data.db.entity.TagEntity
@@ -25,7 +23,7 @@ class FakeTagDao : TagDao, WriteTagDao {
     }
 
     override suspend fun findByText(text: String): List<TagEntity> {
-        return items.filter { it.name.contains(text.toLowerCase(Locale.current)) }
+        return items.filter { it.name.contains(text.lowercase()) }
     }
 
     override suspend fun findTagsByAssociatedIds(ids: List<UUID>): Map<UUID, List<TagEntity>> {
