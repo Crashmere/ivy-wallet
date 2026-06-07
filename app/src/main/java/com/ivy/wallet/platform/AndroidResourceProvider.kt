@@ -1,7 +1,8 @@
-package com.ivy.base.resource
+package com.ivy.wallet.platform
 
 import android.content.Context
 import androidx.annotation.StringRes
+import com.ivy.base.resource.ResourceProvider
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
