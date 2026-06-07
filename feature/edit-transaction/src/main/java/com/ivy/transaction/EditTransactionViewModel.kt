@@ -27,6 +27,7 @@ import com.ivy.domain.usecase.category.CreateCategoryUseCase
 import com.ivy.domain.usecase.category.UpdateCategoryUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.domain.usecase.loan.GetLoanUseCase
+import com.ivy.domain.usecase.planned.PayOrSkipLegacyPlannedTransactionUseCase
 import com.ivy.domain.usecase.tag.AssociateTagToTransactionUseCase
 import com.ivy.domain.usecase.tag.CopyTagsToTransactionUseCase
 import com.ivy.domain.usecase.tag.CreateTagUseCase
@@ -58,7 +59,6 @@ import com.ivy.ui.time.impl.DateTimePicker
 import com.ivy.domain.usecase.account.GetLegacyAccountUseCase
 import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
 import com.ivy.legacy.domain.data.CustomExchangeRateState
-import com.ivy.legacy.domain.logic.PlannedPaymentsLogic
 import com.ivy.legacy.domain.logic.currency.ExchangeRatesLogic
 import com.ivy.legacy.domain.logic.loantransactions.LoanTransactionsLogic
 import com.ivy.data.model.legacy.CreateAccountData
@@ -97,7 +97,7 @@ class EditTransactionViewModel @Inject constructor(
     private val createCategoryUseCase: CreateCategoryUseCase,
     private val updateCategoryUseCase: UpdateCategoryUseCase,
     private val createAccountWithBalanceUseCase: CreateAccountWithBalanceUseCase,
-    private val plannedPaymentsLogic: PlannedPaymentsLogic,
+    private val payOrSkipLegacyPlannedTransactionUseCase: PayOrSkipLegacyPlannedTransactionUseCase,
     private val suggestTransactionTitlesUseCase: SuggestTransactionTitlesUseCase,
     private val loanTransactionsLogic: LoanTransactionsLogic,
     private val getLegacyAccountsUseCase: GetLegacyAccountsUseCase,
@@ -605,9 +605,9 @@ class EditTransactionViewModel @Inject constructor(
 
     private fun onPayPlannedPayment() {
         viewModelScope.launch {
-            plannedPaymentsLogic.payOrGetLegacy(
+            payOrSkipLegacyPlannedTransactionUseCase(
                 transaction = loadedTransaction()
-            ) { paidTransaction ->
+            )?.let { paidTransaction ->
                 loadedTransaction = paidTransaction
                 paidHistory = paidTransaction.paidFor
                 dueDate = paidTransaction.dueDate

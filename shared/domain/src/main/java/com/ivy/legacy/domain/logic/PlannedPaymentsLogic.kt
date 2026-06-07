@@ -1,61 +1,17 @@
 package com.ivy.legacy.domain.logic
 
-import com.ivy.base.model.legacy.Transaction
-import com.ivy.base.time.TimeProvider
 import com.ivy.data.db.dao.read.PlannedPaymentRuleDao
 import com.ivy.data.db.dao.write.WritePlannedPaymentRuleDao
-import com.ivy.data.model.TransactionId
 import com.ivy.data.repository.TransactionRepository
-import com.ivy.data.repository.mapper.TransactionMapper
-import com.ivy.legacy.domain.mapper.toDomain
 import com.ivy.base.coroutines.ioThread
 import com.ivy.legacy.domain.pure.transaction.settleNow
 import javax.inject.Inject
 
 class PlannedPaymentsLogic @Inject constructor(
     private val plannedPaymentRuleDao: PlannedPaymentRuleDao,
-    private val transactionMapper: TransactionMapper,
     private val plannedPaymentRuleWriter: WritePlannedPaymentRuleDao,
     private val transactionRepository: TransactionRepository,
-    private val timeProvider: TimeProvider,
 ) {
-    suspend fun payOrGetLegacy(
-        transaction: Transaction,
-        skipTransaction: Boolean = false,
-        onUpdateUI: suspend (paidTransaction: Transaction) -> Unit
-    ) {
-        if (transaction.dueDate == null || transaction.dateTime != null) return
-
-        val paidTransaction = transaction.copy(
-            paidFor = transaction.dueDate,
-            dueDate = null,
-            dateTime = timeProvider.utcNow(),
-        )
-
-        val plannedPaymentRule = ioThread {
-            paidTransaction.recurringRuleId?.let {
-                plannedPaymentRuleDao.findById(it)
-            }
-        }
-
-        ioThread {
-            if (skipTransaction) {
-                transactionRepository.deleteById(TransactionId(paidTransaction.id))
-            } else {
-                paidTransaction.toDomain(transactionMapper)?.let {
-                    transactionRepository.save(it)
-                }
-            }
-
-            if (plannedPaymentRule != null && plannedPaymentRule.oneTime) {
-                // delete paid oneTime planned payment rules
-                plannedPaymentRuleWriter.deleteById(plannedPaymentRule.id)
-            }
-        }
-
-        onUpdateUI(paidTransaction)
-    }
-
     suspend fun payOrGet(
         transaction: com.ivy.data.model.Transaction,
         skipTransaction: Boolean = false,
@@ -131,52 +87,4 @@ class PlannedPaymentsLogic @Inject constructor(
         onUpdateUI(paidTransactions)
     }
 
-    suspend fun payOrGetLegacy(
-        transactions: List<Transaction>,
-        skipTransaction: Boolean = false,
-        onUpdateUI: suspend (paidTransactions: List<Transaction>) -> Unit
-    ) {
-        val paidTransactions =
-            transactions.filter { (it.dueDate == null || it.dateTime != null).not() }
-
-        if (paidTransactions.count() == 0) return
-
-        paidTransactions.map {
-            it.copy(
-                dueDate = null,
-                dateTime = timeProvider.utcNow(),
-            )
-        }
-
-        val plannedPaymentRules = ioThread {
-            paidTransactions.map { transaction ->
-                transaction.recurringRuleId?.let {
-                    plannedPaymentRuleDao.findById(it)
-                }
-            }
-        }
-
-        ioThread {
-            if (skipTransaction) {
-                paidTransactions.forEach { paidTransaction ->
-                    transactionRepository.deleteById(TransactionId(paidTransaction.id))
-                }
-            } else {
-                paidTransactions.forEach { paidTransaction ->
-                    paidTransaction.toDomain(transactionMapper)?.let {
-                        transactionRepository.save(it)
-                    }
-                }
-            }
-
-            plannedPaymentRules.forEach { plannedPaymentRule ->
-                if (plannedPaymentRule != null && plannedPaymentRule.oneTime) {
-                    // delete paid oneTime planned payment rules
-                    plannedPaymentRuleWriter.deleteById(plannedPaymentRule.id)
-                }
-            }
-        }
-
-        onUpdateUI(paidTransactions)
-    }
 }

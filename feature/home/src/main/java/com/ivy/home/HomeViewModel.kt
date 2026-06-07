@@ -50,8 +50,9 @@ import com.ivy.ui.preferences.asEnabledState
 import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
 import com.ivy.domain.usecase.home.GetOverdueTransactionsInfoUseCase
 import com.ivy.domain.usecase.home.GetUpcomingTransactionsInfoUseCase
+import com.ivy.domain.usecase.planned.PayOrSkipLegacyPlannedTransactionUseCase
+import com.ivy.domain.usecase.planned.PayOrSkipLegacyPlannedTransactionsUseCase
 import com.ivy.domain.usecase.transaction.GetTransactionHistoryItemsUseCase
-import com.ivy.legacy.domain.logic.PlannedPaymentsLogic
 import com.ivy.data.model.legacy.ClosedTimeRange
 import com.ivy.data.model.legacy.IncomeExpensePair
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -69,7 +70,8 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val themeState: ThemeState,
     private val nav: Navigation,
-    private val plannedPaymentsLogic: PlannedPaymentsLogic,
+    private val payOrSkipLegacyPlannedTransactionUseCase: PayOrSkipLegacyPlannedTransactionUseCase,
+    private val payOrSkipLegacyPlannedTransactionsUseCase: PayOrSkipLegacyPlannedTransactionsUseCase,
     private val customerJourneyLogic: CustomerJourneyCardsProvider,
     private val getTransactionHistoryItemsUseCase: GetTransactionHistoryItemsUseCase,
     private val calculateWalletIncomeExpenseUseCase: CalculateWalletIncomeExpenseUseCase,
@@ -460,28 +462,31 @@ class HomeViewModel @Inject constructor(
     }
 
     private suspend fun payOrGetPlanned(transaction: Transaction) {
-        plannedPaymentsLogic.payOrGetLegacy(
+        val paidTransaction = payOrSkipLegacyPlannedTransactionUseCase(
             transaction = transaction,
             skipTransaction = false
-        ) {
+        )
+        if (paidTransaction != null) {
             reload()
         }
     }
 
     private suspend fun skipPlanned(transaction: Transaction) {
-        plannedPaymentsLogic.payOrGetLegacy(
+        val paidTransaction = payOrSkipLegacyPlannedTransactionUseCase(
             transaction = transaction,
             skipTransaction = true
-        ) {
+        )
+        if (paidTransaction != null) {
             reload()
         }
     }
 
     private suspend fun skipAllPlanned(transactions: List<Transaction>) {
-        plannedPaymentsLogic.payOrGetLegacy(
+        val paidTransactions = payOrSkipLegacyPlannedTransactionsUseCase(
             transactions = transactions,
             skipTransaction = true
-        ) {
+        )
+        if (paidTransactions.isNotEmpty()) {
             reload()
         }
     }

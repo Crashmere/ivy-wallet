@@ -32,6 +32,8 @@ import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.domain.usecase.exchange.ExchangeAmountUseCase
 import com.ivy.domain.usecase.tag.GetTagsUseCase
 import com.ivy.domain.usecase.tag.SearchTagsUseCase
+import com.ivy.domain.usecase.planned.PayOrSkipLegacyPlannedTransactionUseCase
+import com.ivy.domain.usecase.planned.PayOrSkipLegacyPlannedTransactionsUseCase
 import com.ivy.domain.usecase.transaction.GetTransactionsByTagsUseCase
 import com.ivy.domain.usecase.transaction.GetTransactionsUseCase
 import com.ivy.domain.usecase.transaction.MapTransactionsToLegacyUseCase
@@ -78,6 +80,8 @@ import javax.inject.Inject
 @HiltViewModel
 class ReportViewModel @Inject constructor(
     private val plannedPaymentsLogic: PlannedPaymentsLogic,
+    private val payOrSkipLegacyPlannedTransactionUseCase: PayOrSkipLegacyPlannedTransactionUseCase,
+    private val payOrSkipLegacyPlannedTransactionsUseCase: PayOrSkipLegacyPlannedTransactionsUseCase,
     private val periodState: PeriodState,
     private val exchangeAmountUseCase: ExchangeAmountUseCase,
     private val getLegacyAccountsUseCase: GetLegacyAccountsUseCase,
@@ -562,9 +566,9 @@ class ReportViewModel @Inject constructor(
         }
     }
 
-        private suspend fun payOrGetLegacy(transaction: com.ivy.base.model.legacy.Transaction) {
+    private suspend fun payOrGetLegacy(transaction: com.ivy.base.model.legacy.Transaction) {
         uiThread {
-            plannedPaymentsLogic.payOrGetLegacy(transaction = transaction) {
+            if (payOrSkipLegacyPlannedTransactionUseCase(transaction) != null) {
                 start()
                 setFilter(filter)
             }
@@ -595,12 +599,13 @@ class ReportViewModel @Inject constructor(
         }
     }
 
-        private suspend fun skipTransactionLegacy(transaction: com.ivy.base.model.legacy.Transaction) {
+    private suspend fun skipTransactionLegacy(transaction: com.ivy.base.model.legacy.Transaction) {
         uiThread {
-            plannedPaymentsLogic.payOrGetLegacy(
+            val paidTransaction = payOrSkipLegacyPlannedTransactionUseCase(
                 transaction = transaction,
                 skipTransaction = true
-            ) {
+            )
+            if (paidTransaction != null) {
                 start()
                 setFilter(filter)
             }
@@ -619,12 +624,13 @@ class ReportViewModel @Inject constructor(
         }
     }
 
-        private suspend fun skipTransactionsLegacy(transactions: List<com.ivy.base.model.legacy.Transaction>) {
+    private suspend fun skipTransactionsLegacy(transactions: List<com.ivy.base.model.legacy.Transaction>) {
         uiThread {
-            plannedPaymentsLogic.payOrGetLegacy(
+            val paidTransactions = payOrSkipLegacyPlannedTransactionsUseCase(
                 transactions = transactions,
                 skipTransaction = true
-            ) {
+            )
+            if (paidTransactions.isNotEmpty()) {
                 start()
                 setFilter(filter)
             }

@@ -51,9 +51,10 @@ import com.ivy.domain.usecase.account.GetAccountTransactionsUseCase
 import com.ivy.domain.usecase.account.GetLegacyAccountUseCase
 import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
 import com.ivy.domain.usecase.account.UpdateAccountWithBalanceUseCase
+import com.ivy.domain.usecase.planned.PayOrSkipLegacyPlannedTransactionUseCase
+import com.ivy.domain.usecase.planned.PayOrSkipLegacyPlannedTransactionsUseCase
 import com.ivy.domain.usecase.transaction.BuildLegacyTransactionHistoryItemsUseCase
 import com.ivy.domain.usecase.transaction.CalculateLegacyTransactionsIncomeExpenseUseCase
-import com.ivy.legacy.domain.logic.PlannedPaymentsLogic
 import com.ivy.legacy.domain.logic.WalletAccountLogic
 import com.ivy.legacy.domain.logic.WalletCategoryLogic
 import com.ivy.legacy.domain.pure.exchange.ExchangeData
@@ -77,7 +78,8 @@ class TransactionsViewModel @Inject constructor(
     private val categoryLogic: WalletCategoryLogic,
     private val updateCategoryUseCase: UpdateCategoryUseCase,
     private val updateAccountWithBalanceUseCase: UpdateAccountWithBalanceUseCase,
-    private val plannedPaymentsLogic: PlannedPaymentsLogic,
+    private val payOrSkipLegacyPlannedTransactionUseCase: PayOrSkipLegacyPlannedTransactionUseCase,
+    private val payOrSkipLegacyPlannedTransactionsUseCase: PayOrSkipLegacyPlannedTransactionsUseCase,
     private val appPreferences: AppPreferences,
     private val getLegacyAccountsUseCase: GetLegacyAccountsUseCase,
     private val getLegacyAccountUseCase: GetLegacyAccountUseCase,
@@ -766,7 +768,7 @@ class TransactionsViewModel @Inject constructor(
 
     private fun payOrGet(screen: TransactionsScreen, transaction: Transaction) {
         viewModelScope.launch {
-            plannedPaymentsLogic.payOrGetLegacy(transaction = transaction) {
+            if (payOrSkipLegacyPlannedTransactionUseCase(transaction) != null) {
                 start(
                     screen = screen,
                     reset = false
@@ -777,10 +779,11 @@ class TransactionsViewModel @Inject constructor(
 
     private fun skipTransaction(screen: TransactionsScreen, transaction: Transaction) {
         viewModelScope.launch {
-            plannedPaymentsLogic.payOrGetLegacy(
+            val paidTransaction = payOrSkipLegacyPlannedTransactionUseCase(
                 transaction = transaction,
                 skipTransaction = true
-            ) {
+            )
+            if (paidTransaction != null) {
                 start(
                     screen = screen,
                     reset = false
@@ -791,10 +794,11 @@ class TransactionsViewModel @Inject constructor(
 
     private fun skipTransactions(screen: TransactionsScreen, transactions: List<Transaction>) {
         viewModelScope.launch {
-            plannedPaymentsLogic.payOrGetLegacy(
+            val paidTransactions = payOrSkipLegacyPlannedTransactionsUseCase(
                 transactions = transactions,
                 skipTransaction = true
-            ) {
+            )
+            if (paidTransactions.isNotEmpty()) {
                 start(
                     screen = screen,
                     reset = false
