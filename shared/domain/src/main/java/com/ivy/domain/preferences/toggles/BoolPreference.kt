@@ -2,8 +2,8 @@ package com.ivy.domain.preferences.toggles
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
-import com.ivy.data.datastore.DatastoreKeys
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
@@ -30,5 +30,5 @@ class BoolPreference(
     }
 
     private val preferenceKey: Preferences.Key<Boolean>
-        get() = DatastoreKeys.preferenceToggle(key)
+        get() = booleanPreferencesKey("feature_$key")
 }
