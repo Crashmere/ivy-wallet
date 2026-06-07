@@ -1,10 +1,5 @@
 plugins {
-    id("ivy.android-library")
-    id("ivy.hilt")
-}
-
-android {
-    namespace = "com.ivy.domain"
+    id("ivy.kotlin-library")
 }
 
 dependencies {
@@ -13,6 +8,7 @@ dependencies {
 
     implementation(libs.bundles.arrow)
     implementation(libs.bundles.opencsv)
+    implementation(libs.javax.inject)
 
     testImplementation(projects.shared.baseTesting)
     testImplementation(projects.shared.data.modelTesting)

@@ -277,9 +277,9 @@
 - `shared:data:model` 已移除轻量 `compose-runtime`，纯数据模型不再依赖 UI runtime。
 - 过渡用的 `ivy.compose-runtime` 插件已经删除；当前非页面模块不再需要轻量 Compose 编译配置。
 - `ivy.integration.testing` 已从 `ivy.feature` 改为基于 `ivy.android-library`，避免因为集成测试配置把完整 Compose UI 配置带入数据层。
-- `shared:data:core`、`shared:domain` 已从 `ivy.feature` 迁出，改为显式声明基础 Android library、Hilt、Room 或测试配置等各自实际需要的能力。
+- `shared:data:core`、`shared:domain` 已从 `ivy.feature` 迁出；其中 `shared:data:core` 继续作为 Android 数据实现模块显式声明 Room/Hilt 等能力，`shared:domain` 已进一步改成纯 JVM/Kotlin 模块。
 - `shared:domain` 已移除空 androidTest 源集使用的 `ivy.integration.testing` 插件；domain 当前只保留 JVM 单元测试，Room migration 和备份恢复这类设备测试继续留在 `shared:data:core`。
-- `shared:domain` 已移除 `ivy.room` 插件；主源码只显式保留 Hilt，测试也不再为了 domain 行为验证创建内存 Room 数据库。
+- `shared:domain` 已移除 `ivy.room` 和 `ivy.hilt` 插件；主源码只保留 `javax.inject` 构造注入注解供 app 侧 Hilt 图消费，domain 自身不再参与 Hilt 聚合，测试也不再为了 domain 行为验证创建内存 Room 数据库。
 - `shared:domain` 已移除 Ktor 依赖；汇率同步测试改用 `ExchangeRateStore` fake 验证业务转换与保存行为，真实网络 client 继续留在 data core 实现边界。
 - `ivy.room` 已从 `ivy.module` 改为基于 `ivy.android-library`，不再隐式带入 Hilt 和 kotlinx serialization；`shared:data:core` 改为显式声明这两个依赖。
 - `shared:ui:core`、`shared:ui:legacy`、`shared:ui:navigation` 已从 `ivy.feature` 迁到 `ivy.compose`；shared UI 模块不再伪装成 feature。
@@ -292,7 +292,7 @@
 - `ivy.android-library` 不再给所有 Android library 默认添加 Arrow；`shared:data:model` 因公开 `Either/Raise` API 显式用 `api` 暴露 Arrow，其他实际直接使用 Arrow 的模块改为各自声明 `implementation(libs.bundles.arrow)`；旧 FRP helper 移出后，`shared:base` 不再需要 Arrow。
 - `ivy.android-library` 不再给所有 Android library 默认添加 Timber；domain 汇率同步和饼图点击逻辑中的调试日志已删除，当前只保留 app 日志初始化/锁屏认证日志以及 data core 的网络/导入错误日志。
 - `ivy.android-library` 不再给所有 Android library 默认添加整套单元测试依赖；当前有 `src/test` 的 `shared:base`、`shared:data:model`、`shared:data:model-testing`、`shared:data:core`、`shared:domain` 和 `shared:ui:core` 改为在各自模块里显式声明测试 bundle。
-- 新增 `ivy.kotlin-library` 作为纯 JVM/Kotlin 模块约定；`shared:data:model`、`shared:data:model-testing` 和 `shared:data:api` 已从 Android library 改成 JVM 模块，不再需要 namespace、Android manifest、min/compile SDK 或 Android Kotlin runtime。
+- 新增 `ivy.kotlin-library` 作为纯 JVM/Kotlin 模块约定；`shared:base`、`shared:base-testing`、`shared:data:model`、`shared:data:model-testing`、`shared:data:api` 和 `shared:domain` 已从 Android library 改成 JVM 模块，不再需要 namespace、Android manifest、min/compile SDK 或 Android Kotlin runtime。
 - `shared:data:core` 的 DataStore 依赖已从 `api` 收窄为 `implementation`；DataStore 绑定仍由 data core 提供，但不再通过 data core 传递暴露给其他模块。
 - `shared:domain` 已移除 AndroidX DataStore 依赖；偏好开关的存储能力抽成 `PreferenceToggleStore` 端口，DataStore 读写和清空由 `shared:data:core` 实现，domain 只保留业务级 `PreferenceToggleRepository` 和开关元数据。
 - `shared:data:api` 已显式暴露 Arrow 依赖；`ExchangeRateStore` 的公开签名直接使用 `Either`，不再依赖 `shared:data:model` 间接传递 Arrow。
