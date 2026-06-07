@@ -142,7 +142,6 @@ dependencies {
 
     implementation(libs.bundles.kotlin)
     implementation(libs.bundles.kotlin.android)
-    implementation(libs.bundles.ktor)
     implementation(libs.bundles.arrow)
     implementation(libs.bundles.compose)
     implementation(libs.bundles.activity)
@@ -153,14 +152,8 @@ dependencies {
     implementation(libs.material)
     ksp(libs.hilt.compiler)
 
-    implementation(libs.bundles.room)
-    ksp(libs.room.compiler)
-
     implementation(libs.timber)
-    implementation(libs.keval)
-    implementation(libs.bundles.opencsv)
     implementation(libs.androidx.work)
-    implementation(libs.androidx.recyclerview)
 
     testImplementation(libs.bundles.testing)
     testImplementation(libs.androidx.work.testing)
