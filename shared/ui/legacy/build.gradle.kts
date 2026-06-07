@@ -1,6 +1,5 @@
 plugins {
     id("ivy.compose")
-    id("ivy.hilt")
 }
 
 android {
@@ -16,5 +15,6 @@ dependencies {
 
     implementation(libs.androidx.recyclerview)
     implementation(libs.datastore)
+    implementation(libs.javax.inject)
     implementation(libs.keval)
 }

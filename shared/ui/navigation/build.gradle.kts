@@ -1,6 +1,5 @@
 plugins {
     id("ivy.compose")
-    id("ivy.hilt")
 }
 
 android {
@@ -10,4 +9,5 @@ android {
 dependencies {
     implementation(projects.shared.base)
     implementation(projects.shared.ui.core)
+    implementation(libs.javax.inject)
 }

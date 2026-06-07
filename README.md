@@ -272,15 +272,15 @@
 
 - 新增 `ivy.android-library` 作为更清晰的 Android library 基础约定，旧 `ivy.kotlin-android` 暂时保留为兼容别名。
 - `shared:base`、`shared:data:model`、`shared:data:model-testing` 已从 `ivy.feature` 迁出，不再默认启用完整 Compose UI 配置。
-- `shared:base` 仍显式保留 Hilt、kotlinx serialization 和轻量 `compose-runtime`，因为当前源码仍包含 DI 绑定、序列化器和 `@Immutable` 注解。
-- `shared:data:model` 仍显式保留轻量 `compose-runtime`，后续可以把模型层的 Compose 注解替换掉，再彻底移除。
+- `shared:base` 仍显式保留 Hilt 和 kotlinx serialization，因为当前源码仍包含 DI 绑定和序列化器；Compose runtime 已经移除。
+- `shared:data:model` 已移除轻量 `compose-runtime`，纯数据模型不再依赖 UI runtime。
 - 新增 `ivy.compose-runtime`，只提供 `@Composable` 编译和 `compose-runtime/ui` 最小依赖，用于当前仍包含 `LocalContext`、`collectAsState` 等轻量 Compose API 的非页面模块。
 - `ivy.integration.testing` 已从 `ivy.feature` 改为基于 `ivy.android-library`，避免因为集成测试配置把完整 Compose UI 配置带入数据层。
 - `shared:data:core`、`shared:domain` 已从 `ivy.feature` 迁出，改为显式声明基础 Android library、轻量 Compose runtime、Hilt、Room 或集成测试等各自实际需要的能力。
 - `shared:domain` 已移除 `ivy.room` 插件；主源码只显式保留 Hilt，当前只有 androidTest 中的汇率同步测试需要 Room runtime/testing 来创建内存数据库。
 - `ivy.room` 已从 `ivy.module` 改为基于 `ivy.android-library`，不再隐式带入 Hilt 和 kotlinx serialization；`shared:data:core` 改为显式声明这两个依赖。
-- `shared:ui:core`、`shared:ui:legacy`、`shared:ui:navigation` 已从 `ivy.feature` 迁到 `ivy.compose`；这一步保留现有 Compose/Hilt 能力，只先消除 shared UI 模块伪装成 feature 的构建命名。
-- `ivy.compose` 已收敛为纯 Android Compose 配置，不再隐式套用 `ivy.module` 或引入未使用的 Molecule 插件；feature 模块继续由 `ivy.feature` 组合 `ivy.module + ivy.compose`，shared UI 模块则显式声明 `ivy.hilt`。
+- `shared:ui:core`、`shared:ui:legacy`、`shared:ui:navigation` 已从 `ivy.feature` 迁到 `ivy.compose`；shared UI 模块不再伪装成 feature。
+- `ivy.compose` 已收敛为纯 Android Compose 配置，不再隐式套用 `ivy.module` 或引入未使用的 Molecule 插件；feature 模块继续由 `ivy.feature` 组合 `ivy.module + ivy.compose`，需要 Hilt Module 的 shared UI 模块才显式声明 `ivy.hilt`。
 - 版本目录里的 Compose LiveData 依赖别名已从临时/拼写错误的 `compose-runtime-livedate-temp` 改为 `compose-runtime-livedata`，保留依赖本身不变。
 - 删除无运行时调用方的 `FormatMoneyUseCase` 和对应测试，`shared:ui:core` 不再因为这段旧金额格式化草稿依赖 `shared:domain` 或 DataStore；当前实际金额展示继续使用既有 data model currency formatting 与旧 UI 展示逻辑。
 - `shared:ui:navigation` 已移除未使用的 `shared:domain` 依赖；导航模块当前只依赖基础类型、UI core 和自身导航状态。
@@ -436,6 +436,7 @@
 - `shared:data:core` 的测试 fake DAO 已停止使用 Compose Locale helper，并移除 `ivy.compose-runtime` 插件；数据层不再为测试字符串处理引入 Compose 配置。
 - `shared:data:model` 已删除剩余数据类上的 Compose `@Immutable` 注解，并移除 `compose.runtime` 依赖；纯数据模型不再依赖 UI runtime。
 - `shared:base` 已删除基础枚举和旧交易兼容模型上的 Compose `@Immutable` 注解，并移除 `compose.runtime` 依赖；基础层不再依赖 UI runtime。
+- `shared:ui:navigation` 和 `shared:ui:legacy` 已移除 `ivy.hilt` 插件；它们只保留轻量 `javax.inject` 注解依赖，继续通过 app 的 Hilt 图提供 `Navigation`、`MainTabState` 和 `PeriodState` 单例。
 - 已删除旧 building block 中最薄的 `SpacerVer/SpacerHor/SpacerWeight`、`ColumnRoot`、`DividerW/DividerH/DividerV/DividerSize`，相关调用方已改用 Compose 原生 `Spacer`、`Column` 和本地分隔线。
 - 已删除旧 `IvyText` 包装，剩余调用方改用 Material3 `Text`。
 - 已删除旧 `IvyIcon/IvyIconScaled/IconScale` 包装，剩余调用方改用 Material3 `Icon`、`Image` 或本地小函数；`shared:ui:core` 的旧 `l1_buildingBlocks` 包已清空。
