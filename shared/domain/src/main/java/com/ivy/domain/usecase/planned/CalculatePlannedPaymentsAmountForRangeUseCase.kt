@@ -2,7 +2,7 @@ package com.ivy.domain.usecase.planned
 
 import com.ivy.base.model.TransactionType
 import com.ivy.base.threading.DispatchersProvider
-import com.ivy.data.db.dao.read.AccountDao
+import com.ivy.data.api.AccountStore
 import com.ivy.data.db.dao.read.TransactionDao
 import com.ivy.data.model.legacy.FromToTimeRange
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
@@ -15,13 +15,13 @@ class CalculatePlannedPaymentsAmountForRangeUseCase @Inject constructor(
     private val transactionDao: TransactionDao,
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
     private val exchangeRatesLogic: LegacyExchangeRatesUseCase,
-    private val accountDao: AccountDao,
+    private val accountStore: AccountStore,
     private val dispatchers: DispatchersProvider
 ) {
     suspend operator fun invoke(range: FromToTimeRange): Double {
         return withContext(dispatchers.io) {
             val baseCurrency = getBaseCurrencyCode()
-            val accounts = accountDao.findAll().map { it.toLegacyDomain() }
+            val accounts = accountStore.findAll().map { it.toLegacyDomain() }
 
             transactionDao.findAllDueToBetween(
                 startDate = range.from(),

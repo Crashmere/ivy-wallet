@@ -3,7 +3,6 @@ package com.ivy.domain.usecase.loan
 import com.ivy.base.model.legacy.Transaction
 import com.ivy.data.model.legacy.Loan
 import com.ivy.data.model.legacy.LoanRecord
-import com.ivy.domain.mapper.legacy.toLegacyDomain
 import com.ivy.base.coroutines.computationThread
 import com.ivy.data.model.legacy.CreateLoanRecordData
 import java.util.UUID
@@ -81,7 +80,7 @@ class LoanRecordTransactionSyncUseCase @Inject constructor(
                 newLoanRecordAccountID = transaction.accountId,
                 newLoanRecordAmount = transaction.amount.toDouble(),
                 loanAccountId = loan.accountId,
-                accounts = ltCore.fetchAccounts().map { it.toLegacyDomain() }
+                accounts = ltCore.fetchAccounts()
             )
 
             val modifiedLoanRecord = loanRecord.copy(
@@ -109,7 +108,7 @@ class LoanRecordTransactionSyncUseCase @Inject constructor(
             newLoanRecordAccountID = newLoanRecord.accountId,
             newLoanRecordAmount = newLoanRecord.amount,
             loanAccountId = loanAccountId,
-            accounts = ltCore.fetchAccounts().map { it.toLegacyDomain() },
+            accounts = ltCore.fetchAccounts(),
             reCalculateLoanAmount = reCalculateLoanAmount
         )
     }
@@ -125,7 +124,7 @@ class LoanRecordTransactionSyncUseCase @Inject constructor(
             newLoanRecordAccountID = data.account?.id,
             newLoanRecordAmount = data.amount,
             loanAccountId = loanAccountId,
-            accounts = ltCore.fetchAccounts().map { it.toLegacyDomain() },
+            accounts = ltCore.fetchAccounts(),
         )
     }
 }

@@ -8,7 +8,7 @@ import com.ivy.base.time.TimeConverter
 import com.ivy.domain.time.convertToLocal
 import com.ivy.data.api.AccountStore
 import com.ivy.data.api.TagStore
-import com.ivy.data.db.dao.read.AccountDao
+import com.ivy.data.model.AccountId
 import com.ivy.data.model.Tag
 import com.ivy.data.model.TagId
 import com.ivy.data.model.Transaction
@@ -27,14 +27,13 @@ import java.util.UUID
 suspend fun List<Transaction>.withDateDividers(
     exchangeRatesLogic: LegacyExchangeRatesUseCase,
     baseCurrencyCode: String,
-    accountDao: AccountDao,
     tagStore: TagStore,
     accountStore: AccountStore,
 ): List<TransactionHistoryItem> {
     return transactionsWithDateDividers(
         transactions = this,
         baseCurrencyCode = baseCurrencyCode,
-        getAccount = { accountId -> accountDao.findById(accountId)?.toLegacyDomain() },
+        getAccount = { accountId -> accountStore.findById(AccountId(accountId))?.toLegacyDomain() },
         getTags = { tagsIds -> tagStore.findByIds(tagsIds) },
         accountStore = accountStore,
         exchange = { data, amount ->
@@ -100,13 +99,13 @@ object LegacyTrnDateDividers {
         suspend fun List<com.ivy.base.model.legacy.Transaction>.withDateDividers(
         exchangeRatesLogic: LegacyExchangeRatesUseCase,
         baseCurrencyCode: String,
-        accountDao: AccountDao,
+        accountStore: AccountStore,
         timeConverter: TimeConverter,
     ): List<TransactionHistoryItem> {
         return transactionsWithDateDividers(
             transactions = this,
             baseCurrencyCode = baseCurrencyCode,
-            getAccount = { accountId -> accountDao.findById(accountId)?.toLegacyDomain() },
+            getAccount = { accountId -> accountStore.findById(AccountId(accountId))?.toLegacyDomain() },
             exchange = { data, amount ->
                 exchangeRatesLogic.convertAmount(
                     baseCurrency = data.baseCurrency,

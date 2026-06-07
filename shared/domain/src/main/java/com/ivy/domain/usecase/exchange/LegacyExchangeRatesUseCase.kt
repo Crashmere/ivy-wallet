@@ -1,7 +1,7 @@
 package com.ivy.domain.usecase.exchange
 
 import com.ivy.base.model.legacy.Transaction
-import com.ivy.data.db.dao.read.AccountDao
+import com.ivy.data.api.AccountStore
 import com.ivy.data.db.dao.read.ExchangeRatesDao
 import com.ivy.data.model.legacy.Account
 import com.ivy.data.model.legacy.PlannedPaymentRule
@@ -118,15 +118,15 @@ class LegacyExchangeRatesUseCase @Inject constructor(
 suspend fun Iterable<Transaction>.sumInBaseCurrency(
     exchangeRatesLogic: LegacyExchangeRatesUseCase,
     baseCurrency: String,
-    accountDao: AccountDao,
+    accountStore: AccountStore,
 ): Double {
-    val accounts = accountDao.findAll()
+    val accounts = accountStore.findAll().map { it.toLegacyDomain() }
 
     return sumOf {
         exchangeRatesLogic.amountBaseCurrency(
             transaction = it,
             baseCurrency = baseCurrency,
-            accounts = accounts.map { it.toLegacyDomain() }
+            accounts = accounts
         )
     }
 }
@@ -134,15 +134,15 @@ suspend fun Iterable<Transaction>.sumInBaseCurrency(
 suspend fun Iterable<PlannedPaymentRule>.sumByDoublePlannedInBaseCurrency(
     exchangeRatesLogic: LegacyExchangeRatesUseCase,
     baseCurrency: String,
-    accountDao: AccountDao,
+    accountStore: AccountStore,
 ): Double {
-    val accounts = accountDao.findAll()
+    val accounts = accountStore.findAll().map { it.toLegacyDomain() }
 
     return sumOf {
         exchangeRatesLogic.amountBaseCurrency(
             plannedPayment = it,
             baseCurrency = baseCurrency,
-            accounts = accounts.map { it.toLegacyDomain() }
+            accounts = accounts
         )
     }
 }

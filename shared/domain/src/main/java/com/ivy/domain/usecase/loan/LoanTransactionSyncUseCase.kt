@@ -7,7 +7,6 @@ import com.ivy.data.model.LoanType
 import com.ivy.data.model.legacy.Account
 import com.ivy.data.model.legacy.Loan
 import com.ivy.data.model.legacy.LoanRecord
-import com.ivy.domain.mapper.legacy.toLegacyDomain
 import com.ivy.base.coroutines.computationThread
 import com.ivy.base.coroutines.scopedIOThread
 import com.ivy.data.model.legacy.CreateLoanData
@@ -65,7 +64,7 @@ class LoanTransactionSyncUseCase @Inject constructor(
         newLoanAccountId: UUID?,
         loanId: UUID
     ) {
-        val accounts = ltCore.fetchAccounts().map { it.toLegacyDomain() }
+        val accounts = ltCore.fetchAccounts()
         computationThread {
             if (oldLoanAccountId == newLoanAccountId || oldLoanAccountId.fetchAssociatedCurrencyCode(
                     accounts
@@ -133,7 +132,7 @@ class LoanTransactionSyncUseCase @Inject constructor(
                                     newLoanRecordAccountID = loanRecord.accountId,
                                     newLoanRecordAmount = loanRecord.amount,
                                     loanAccountId = newAccountId,
-                                    accounts = ltCore.fetchAccounts().map { it.toLegacyDomain() },
+                                    accounts = ltCore.fetchAccounts(),
                                 )
                             loanRecord.copy(convertedAmount = convertedAmount)
                         }

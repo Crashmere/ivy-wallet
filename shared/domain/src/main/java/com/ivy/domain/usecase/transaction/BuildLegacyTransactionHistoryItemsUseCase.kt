@@ -3,14 +3,15 @@ package com.ivy.domain.usecase.transaction
 import com.ivy.base.model.legacy.Transaction
 import com.ivy.base.model.legacy.TransactionHistoryItem
 import com.ivy.base.time.TimeConverter
-import com.ivy.data.db.dao.read.AccountDao
+import com.ivy.data.api.AccountStore
+import com.ivy.data.model.AccountId
 import com.ivy.domain.usecase.exchange.ExchangeAmountUseCase
 import com.ivy.domain.mapper.legacy.toLegacyDomain
 import com.ivy.domain.transaction.legacy.LegacyTrnDateDividers
 import javax.inject.Inject
 
 class BuildLegacyTransactionHistoryItemsUseCase @Inject constructor(
-    private val accountDao: AccountDao,
+    private val accountStore: AccountStore,
     private val exchangeAmountUseCase: ExchangeAmountUseCase,
     private val timeConverter: TimeConverter,
 ) {
@@ -21,7 +22,7 @@ class BuildLegacyTransactionHistoryItemsUseCase @Inject constructor(
         return LegacyTrnDateDividers.transactionsWithDateDividers(
             transactions = transactions,
             baseCurrencyCode = baseCurrency,
-            getAccount = { accountId -> accountDao.findById(accountId)?.toLegacyDomain() },
+            getAccount = { accountId -> accountStore.findById(AccountId(accountId))?.toLegacyDomain() },
             exchange = exchangeAmountUseCase::invoke,
             timeConverter = timeConverter,
         )

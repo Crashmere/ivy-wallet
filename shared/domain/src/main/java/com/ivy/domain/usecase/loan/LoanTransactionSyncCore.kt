@@ -4,11 +4,11 @@ import com.ivy.base.model.legacy.Transaction
 import com.ivy.base.model.LoanRecordType
 import com.ivy.base.model.TransactionType
 import com.ivy.base.time.TimeProvider
+import com.ivy.data.api.AccountStore
 import com.ivy.data.api.CategoryStore
 import com.ivy.data.api.LoanRecordStore
 import com.ivy.data.api.LoanStore
 import com.ivy.data.api.TransactionStore
-import com.ivy.data.db.dao.read.AccountDao
 import com.ivy.data.db.dao.read.TransactionDao
 import com.ivy.data.model.Category
 import com.ivy.data.model.CategoryId
@@ -43,7 +43,7 @@ class LoanTransactionSyncCore @Inject constructor(
     private val loanRecordStore: LoanRecordStore,
     private val loanStore: LoanStore,
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
-    private val accountsDao: AccountDao,
+    private val accountStore: AccountStore,
     private val exchangeRatesLogic: LegacyExchangeRatesUseCase,
     private val transactionRepo: TransactionStore,
     private val transactionMapper: TransactionMapper,
@@ -297,7 +297,7 @@ class LoanTransactionSyncCore @Inject constructor(
     }
 
     suspend fun fetchAccounts() = ioThread {
-        accountsDao.findAll()
+        accountStore.findAll().map { it.toLegacyDomain() }
     }
 
     suspend fun saveLoanRecords(loanRecords: List<LoanRecord>) = ioThread {

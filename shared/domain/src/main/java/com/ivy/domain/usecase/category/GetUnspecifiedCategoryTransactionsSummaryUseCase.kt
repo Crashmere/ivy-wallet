@@ -5,7 +5,7 @@ import com.ivy.base.model.legacy.Transaction
 import com.ivy.base.model.legacy.TransactionHistoryItem
 import com.ivy.base.time.TimeConverter
 import com.ivy.base.time.TimeProvider
-import com.ivy.data.db.dao.read.AccountDao
+import com.ivy.data.api.AccountStore
 import com.ivy.data.model.legacy.FromToTimeRange
 import com.ivy.data.api.TransactionStore
 import com.ivy.data.repository.mapper.TransactionMapper
@@ -19,7 +19,7 @@ import com.ivy.domain.time.filterUpcomingLegacy
 import javax.inject.Inject
 
 class GetUnspecifiedCategoryTransactionsSummaryUseCase @Inject constructor(
-    private val accountDao: AccountDao,
+    private val accountStore: AccountStore,
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
     private val exchangeRatesLogic: LegacyExchangeRatesUseCase,
     private val transactionRepository: TransactionStore,
@@ -70,7 +70,7 @@ class GetUnspecifiedCategoryTransactionsSummaryUseCase @Inject constructor(
                 .withDateDividers(
                     exchangeRatesLogic = exchangeRatesLogic,
                     baseCurrencyCode = getBaseCurrencyCode(),
-                    accountDao = accountDao,
+                    accountStore = accountStore,
                     timeConverter = timeConverter,
                 )
         }
@@ -110,7 +110,7 @@ class GetUnspecifiedCategoryTransactionsSummaryUseCase @Inject constructor(
         return sumInBaseCurrency(
             exchangeRatesLogic = exchangeRatesLogic,
             baseCurrency = getBaseCurrencyCode(),
-            accountDao = accountDao
+            accountStore = accountStore
         )
     }
 

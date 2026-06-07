@@ -2,7 +2,7 @@ package com.ivy.domain.usecase.account
 
 import arrow.core.raise.either
 import com.ivy.base.threading.DispatchersProvider
-import com.ivy.data.db.dao.read.AccountDao
+import com.ivy.data.api.AccountStore
 import com.ivy.data.model.AccountId
 import com.ivy.data.model.legacy.CreateAccountData
 import com.ivy.data.model.primitive.AssetCode
@@ -18,7 +18,7 @@ import com.ivy.data.model.legacy.Account as LegacyAccount
 
 class CreateAccountWithBalanceUseCase @Inject constructor(
     private val adjustAccountBalanceUseCase: AdjustAccountBalanceUseCase,
-    private val accountDao: AccountDao,
+    private val accountStore: AccountStore,
     private val saveAccountUseCase: SaveAccountUseCase,
     private val dispatchers: DispatchersProvider
 ) {
@@ -32,7 +32,7 @@ class CreateAccountWithBalanceUseCase @Inject constructor(
                     color = ColorInt(data.color),
                     icon = data.icon?.let(IconAsset::from)?.getOrNull(),
                     includeInBalance = data.includeBalance,
-                    orderNum = accountDao.findMaxOrderNum().nextOrderNum(),
+                    orderNum = accountStore.findMaxOrderNum().nextOrderNum(),
                 )
             }.getOrNull() ?: return@withContext
 
@@ -44,7 +44,7 @@ class CreateAccountWithBalanceUseCase @Inject constructor(
                 color = data.color,
                 icon = data.icon,
                 includeInBalance = data.includeBalance,
-                orderNum = accountDao.findMaxOrderNum().nextOrderNum(),
+                orderNum = account.orderNum,
                 id = account.id.value
             )
             adjustAccountBalanceUseCase(
