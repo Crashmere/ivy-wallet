@@ -447,6 +447,7 @@
 - `app` 内部启动初始化和整库重置实现已从 `com.ivy.wallet.domain.*` 归入 `com.ivy.wallet.startup/reset`；这些类仍只是 app 侧编排和 domain 接口实现，不再伪装成正式领域层。
 - 锁屏页已改用 Material3 `Button/MaterialTheme`，不再直接依赖旧 `LegacyTheme/IvyButton`；自动弹出生物识别和手动解锁逻辑保持不变。
 - `RootActivity` 已用 `OnBackPressedDispatcher` 承接系统返回键，不再覆盖废弃的 `Activity.onBackPressed()`；旧 `Navigation.onBackPressed()` 仍作为迁移期兼容入口保留。
+- 快捷设置磁贴服务已删除空生命周期 override，并把旧系统的 `startActivityAndCollapse(Intent)` 调用隔离为 compat 方法；Android 14+ 继续使用 `PendingIntent` 分支。
 - 已删除旧 building block 中最薄的 `SpacerVer/SpacerHor/SpacerWeight`、`ColumnRoot`、`DividerW/DividerH/DividerV/DividerSize`，相关调用方已改用 Compose 原生 `Spacer`、`Column` 和本地分隔线。
 - 已删除旧 `IvyText` 包装，剩余调用方改用 Material3 `Text`。
 - 已删除旧 `IvyIcon/IvyIconScaled/IconScale` 包装，剩余调用方改用 Material3 `Icon`、`Image` 或本地小函数；`shared:ui:core` 的旧 `l1_buildingBlocks` 包已清空。
