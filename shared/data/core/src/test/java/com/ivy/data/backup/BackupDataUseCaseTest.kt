@@ -1,7 +1,7 @@
 package com.ivy.data.backup
 
 import com.ivy.base.TestDispatchersProvider
-import com.ivy.base.di.KotlinxSerializationModule
+import com.ivy.data.di.SerializationModule
 import com.ivy.data.DataObserver
 import com.ivy.data.db.dao.fake.FakeAccountDao
 import com.ivy.data.db.dao.fake.FakeBudgetDao
@@ -72,7 +72,7 @@ class BackupDataUseCaseTest {
 
             context = mockk(relaxed = true),
             appPreferenceStore = mockk<AppPreferenceStore>(relaxed = true),
-            json = KotlinxSerializationModule.provideJson(),
+            json = SerializationModule.provideJson(),
             dispatchersProvider = TestDispatchersProvider,
             fileSystem = mockk(relaxed = true),
             dataObserver = DataObserver(),

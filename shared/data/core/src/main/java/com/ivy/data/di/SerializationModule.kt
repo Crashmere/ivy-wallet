@@ -1,4 +1,4 @@
-package com.ivy.base.di
+package com.ivy.data.di
 
 import dagger.Module
 import dagger.Provides
@@ -8,7 +8,7 @@ import kotlinx.serialization.json.Json
 
 @Module
 @InstallIn(SingletonComponent::class)
-object KotlinxSerializationModule {
+object SerializationModule {
     @Provides
     fun provideJson(): Json {
         return Json {

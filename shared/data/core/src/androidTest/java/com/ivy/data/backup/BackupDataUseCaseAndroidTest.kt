@@ -8,7 +8,7 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.ivy.base.TestDispatchersProvider
-import com.ivy.base.di.KotlinxSerializationModule
+import com.ivy.data.di.SerializationModule
 import com.ivy.data.DataObserver
 import com.ivy.data.db.IvyRoomDatabase
 import com.ivy.data.file.FileSystem
@@ -71,7 +71,7 @@ class BackupDataUseCaseAndroidTest {
             loanRecordWriter = db.writeLoanRecordDao,
             plannedPaymentRuleWriter = db.writePlannedPaymentRuleDao,
             context = appContext,
-            json = KotlinxSerializationModule.provideJson(),
+            json = SerializationModule.provideJson(),
             dispatchersProvider = TestDispatchersProvider,
             fileSystem = FileSystem(appContext),
             dataObserver = DataObserver(),
