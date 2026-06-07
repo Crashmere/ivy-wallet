@@ -691,6 +691,7 @@
 - 标签读写、标签关联和标签搜索已抽成 `TagStore` 端口；编辑交易、历史列表、按标签筛选和重置钱包流程不再直接依赖 data core 的 `TagRepository`。
 - 账户与分类读写已抽成 `AccountStore/CategoryStore` 端口；对应 domain use case、交易历史构建、借贷同步和重置钱包流程不再直接注入 data core repository，`TransactionMapper` 也改为依赖账户端口。
 - 交易读写、到期交易、计划付款关联交易和借贷关联交易已抽成 `TransactionStore` 端口；domain 中的账户、分类、首页、计划付款、借贷、重置和交易 use case 不再直接注入 data core 的 `TransactionRepository`。
+- 交易剩余读路径已继续收敛到 `TransactionStore`；`hasAny()`、智能标题建议查询、按账户/分类标题计数、旧账户交易列表、计划付款金额统计和借贷同步不再直接注入 `TransactionDao`。
 - 数据变化事件已抽成 `DataChangePublisher/DataWriteEvent` 端口；domain 中的账户变更观察和全量数据变更通知不再直接依赖 data core 的 `DataObserver` 实现。
 - 预算读写已抽成 `BudgetStore` 端口；预算创建、更新、删除、排序、列表读取和重置钱包流程不再直接注入 Room 的 `BudgetDao/WriteBudgetDao`，旧 `BudgetExt` 实体 mapper 已删除。
 - 计划付款规则读写已抽成 `PlannedPaymentRuleStore` 端口；首页统计、账户删除、计划付款保存/删除/读取、付或跳过计划付款，以及重置钱包流程不再直接注入 `PlannedPaymentRuleDao/WritePlannedPaymentRuleDao`，旧 `PlannedPaymentRuleExt` 实体 mapper 已删除。

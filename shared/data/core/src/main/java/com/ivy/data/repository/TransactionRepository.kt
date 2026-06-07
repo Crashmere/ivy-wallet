@@ -31,6 +31,10 @@ class TransactionRepository @Inject constructor(
     private val dispatchersProvider: DispatchersProvider,
     private val tagRepository: TagRepository
 ) : TransactionStore {
+    override suspend fun hasAny(): Boolean = withContext(dispatchersProvider.io) {
+        transactionDao.hasAny()
+    }
+
     override suspend fun findAll(): List<Transaction> = withContext(dispatchersProvider.io) {
         val tagMap = async { findAllTagAssociations() }
         retrieveTrns(
@@ -99,6 +103,49 @@ class TransactionRepository @Inject constructor(
         endDate: Instant
     ): NonNegativeLong = withContext(dispatchersProvider.io) {
         transactionDao.countBetween(startDate, endDate).toNonNegative()
+    }
+
+    override suspend fun findAllByTitleMatchingPattern(pattern: String): List<Transaction> = retrieveTrns(
+        dbCall = {
+            transactionDao.findAllByTitleMatchingPattern(pattern)
+        }
+    )
+
+    override suspend fun countByTitleMatchingPattern(pattern: String): NonNegativeLong =
+        withContext(dispatchersProvider.io) {
+            transactionDao.countByTitleMatchingPattern(pattern).toNonNegative()
+        }
+
+    override suspend fun findAllByCategory(categoryId: CategoryId): List<Transaction> = retrieveTrns(
+        dbCall = {
+            transactionDao.findAllByCategory(categoryId.value)
+        }
+    )
+
+    override suspend fun countByTitleMatchingPatternAndCategory(
+        pattern: String,
+        categoryId: CategoryId
+    ): NonNegativeLong = withContext(dispatchersProvider.io) {
+        transactionDao.countByTitleMatchingPatternAndCategoryId(
+            pattern = pattern,
+            categoryId = categoryId.value
+        ).toNonNegative()
+    }
+
+    override suspend fun findAllByAccount(accountId: AccountId): List<Transaction> = retrieveTrns(
+        dbCall = {
+            transactionDao.findAllByAccount(accountId.value)
+        }
+    )
+
+    override suspend fun countByTitleMatchingPatternAndAccount(
+        pattern: String,
+        accountId: AccountId
+    ): NonNegativeLong = withContext(dispatchersProvider.io) {
+        transactionDao.countByTitleMatchingPatternAndAccountId(
+            pattern = pattern,
+            accountId = accountId.value
+        ).toNonNegative()
     }
 
     override suspend fun findAllByAccountAndBetween(

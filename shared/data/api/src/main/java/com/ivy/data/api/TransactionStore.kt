@@ -15,6 +15,8 @@ import java.util.UUID
 interface TransactionStore {
     suspend fun findAll(): List<Transaction>
 
+    suspend fun hasAny(): Boolean
+
     suspend fun findAllIncomeByAccount(accountId: AccountId): List<Income>
 
     suspend fun findAllExpenseByAccount(accountId: AccountId): List<Expense>
@@ -31,6 +33,24 @@ interface TransactionStore {
     suspend fun countBetween(
         startDate: Instant,
         endDate: Instant
+    ): NonNegativeLong
+
+    suspend fun findAllByTitleMatchingPattern(pattern: String): List<Transaction>
+
+    suspend fun countByTitleMatchingPattern(pattern: String): NonNegativeLong
+
+    suspend fun findAllByCategory(categoryId: CategoryId): List<Transaction>
+
+    suspend fun countByTitleMatchingPatternAndCategory(
+        pattern: String,
+        categoryId: CategoryId
+    ): NonNegativeLong
+
+    suspend fun findAllByAccount(accountId: AccountId): List<Transaction>
+
+    suspend fun countByTitleMatchingPatternAndAccount(
+        pattern: String,
+        accountId: AccountId
     ): NonNegativeLong
 
     suspend fun findAllByAccountAndBetween(

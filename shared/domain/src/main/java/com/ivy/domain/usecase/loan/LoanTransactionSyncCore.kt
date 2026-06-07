@@ -9,7 +9,6 @@ import com.ivy.data.api.CategoryStore
 import com.ivy.data.api.LoanRecordStore
 import com.ivy.data.api.LoanStore
 import com.ivy.data.api.TransactionStore
-import com.ivy.data.db.dao.read.TransactionDao
 import com.ivy.data.model.Category
 import com.ivy.data.model.CategoryId
 import com.ivy.data.model.LoanType
@@ -24,6 +23,7 @@ import com.ivy.data.model.legacy.Account
 import com.ivy.data.model.legacy.Loan
 import com.ivy.data.model.legacy.LoanRecord
 import com.ivy.domain.mapper.legacy.toDomain
+import com.ivy.domain.mapper.legacy.toLegacy
 import com.ivy.domain.mapper.legacy.toLegacyDomain
 import com.ivy.base.coroutines.computationThread
 import com.ivy.base.coroutines.ioThread
@@ -39,7 +39,6 @@ import javax.inject.Inject
 class LoanTransactionSyncCore @Inject constructor(
     private val categoryStore: CategoryStore,
     private val getCategoriesUseCase: GetCategoriesUseCase,
-    private val transactionDao: TransactionDao,
     private val loanRecordStore: LoanRecordStore,
     private val loanStore: LoanStore,
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
@@ -72,10 +71,10 @@ class LoanTransactionSyncCore @Inject constructor(
         ioThread {
             val transactions: List<Transaction?> =
                 if (loanId != null) {
-                    transactionDao.findAllByLoanId(loanId = loanId)
-                        .map { it.toLegacyDomain() }
+                    transactionRepo.findAllByLoanId(loanId = loanId)
+                        .map { it.toLegacy(transactionMapper) }
                 } else {
-                    listOf(transactionDao.findLoanRecordTransaction(loanRecordId!!)).map { it?.toLegacyDomain() }
+                    listOf(transactionRepo.findLoanRecordTransaction(loanRecordId!!)?.toLegacy(transactionMapper))
                 }
 
             transactions.forEach { trans ->
@@ -327,7 +326,7 @@ class LoanTransactionSyncCore @Inject constructor(
     suspend fun fetchLoanRecordTransaction(loanRecordId: UUID?): Transaction? {
         return loanRecordId?.let {
             ioThread {
-                transactionDao.findLoanRecordTransaction(it)?.toLegacyDomain()
+                transactionRepo.findLoanRecordTransaction(it)?.toLegacy(transactionMapper)
             }
         }
     }

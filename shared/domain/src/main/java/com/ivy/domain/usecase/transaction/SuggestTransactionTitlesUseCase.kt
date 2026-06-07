@@ -1,17 +1,17 @@
 package com.ivy.domain.usecase.transaction
 
-import com.ivy.base.model.legacy.Transaction
 import com.ivy.base.text.capitalizeWords
-import com.ivy.base.text.isNotNullOrBlank
-import com.ivy.data.db.dao.read.TransactionDao
-import com.ivy.domain.mapper.legacy.toLegacyDomain
+import com.ivy.data.api.TransactionStore
+import com.ivy.data.model.AccountId
+import com.ivy.data.model.CategoryId
+import com.ivy.data.model.Transaction
 import java.util.UUID
 import javax.inject.Inject
 
 private const val SUGGESTIONS_LIMIT = 10
 
 class SuggestTransactionTitlesUseCase @Inject constructor(
-    private val transactionDao: TransactionDao
+    private val transactionStore: TransactionStore
 ) {
     suspend operator fun invoke(
         title: String?,
@@ -21,41 +21,40 @@ class SuggestTransactionTitlesUseCase @Inject constructor(
         val suggestions = mutableSetOf<String>()
 
         if (title != null && title.isNotEmpty()) {
-            val suggestionsByTitle = transactionDao.findAllByTitleMatchingPattern("$title%")
-                .map { it.toLegacyDomain() }
+            val suggestionsByTitle = transactionStore.findAllByTitleMatchingPattern("$title%")
                 .extractUniqueTitles()
                 .sortedByMostUsedFirst {
-                    transactionDao.countByTitleMatchingPattern("$it%")
+                    transactionStore.countByTitleMatchingPattern("$it%").value
                 }
 
             suggestions.addAll(suggestionsByTitle)
         }
 
         if (categoryId != null) {
-            val suggestionsByCategory = transactionDao
-                .findAllByCategory(categoryId = categoryId)
-                .map { it.toLegacyDomain() }
+            val category = CategoryId(categoryId)
+            val suggestionsByCategory = transactionStore
+                .findAllByCategory(categoryId = category)
                 .extractUniqueTitles(excludeSuggestions = suggestions)
                 .sortedByMostUsedFirst {
-                    transactionDao.countByTitleMatchingPatternAndCategoryId(
+                    transactionStore.countByTitleMatchingPatternAndCategory(
                         pattern = it,
-                        categoryId = categoryId
-                    )
+                        categoryId = category
+                    ).value
                 }
 
             suggestions.addAll(suggestionsByCategory)
         }
 
         if (suggestions.size < SUGGESTIONS_LIMIT && accountId != null) {
-            val suggestionsByAccount = transactionDao
-                .findAllByAccount(accountId = accountId)
-                .map { it.toLegacyDomain() }
+            val account = AccountId(accountId)
+            val suggestionsByAccount = transactionStore
+                .findAllByAccount(accountId = account)
                 .extractUniqueTitles(excludeSuggestions = suggestions)
                 .sortedByMostUsedFirst {
-                    transactionDao.countByTitleMatchingPatternAndAccountId(
+                    transactionStore.countByTitleMatchingPatternAndAccount(
                         pattern = it,
-                        accountId = accountId
-                    )
+                        accountId = account
+                    ).value
                 }
 
             suggestions.addAll(suggestionsByAccount)
@@ -70,8 +69,8 @@ class SuggestTransactionTitlesUseCase @Inject constructor(
 private fun List<Transaction>.extractUniqueTitles(
     excludeSuggestions: Set<String>? = null
 ): Set<String> =
-    filter { it.title.isNotNullOrBlank() }
-        .map { it.title!!.trim().capitalizeWords() }
+    filter { it.title != null }
+        .map { it.title!!.value.trim().capitalizeWords() }
         .filter { excludeSuggestions == null || !excludeSuggestions.contains(it) }
         .toSet()
 
