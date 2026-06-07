@@ -27,7 +27,7 @@ import java.util.UUID
 private fun LocalDateTime.toEpochSeconds() = toEpochSecond(ZoneOffset.UTC)
 
 suspend fun List<Transaction>.withDateDividers(
-    exchangeRatesLogic: LegacyExchangeRatesUseCase,
+    exchangeRatesUseCase: LegacyExchangeRatesUseCase,
     baseCurrencyCode: String,
     tagStore: TagStore,
     accountStore: AccountStore,
@@ -38,7 +38,7 @@ suspend fun List<Transaction>.withDateDividers(
         getAccount = { accountId -> accountStore.findById(AccountId(accountId))?.toLegacyDomain() },
         getTags = { tagsIds -> tagStore.findByIds(tagsIds) },
         exchange = { data, amount ->
-            exchangeRatesLogic.convertAmount(
+            exchangeRatesUseCase.convertAmount(
                 baseCurrency = data.baseCurrency,
                 fromCurrency = data.fromCurrency.getOrNull() ?: "",
                 toCurrency = data.toCurrency,

@@ -15,7 +15,7 @@ import javax.inject.Inject
 class CalculatePlannedPaymentsAmountForRangeUseCase @Inject constructor(
     private val transactionStore: TransactionStore,
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
-    private val exchangeRatesLogic: LegacyExchangeRatesUseCase,
+    private val exchangeRatesUseCase: LegacyExchangeRatesUseCase,
     private val accountStore: AccountStore,
 ) {
     suspend operator fun invoke(range: FromToTimeRange): Double {
@@ -28,7 +28,7 @@ class CalculatePlannedPaymentsAmountForRangeUseCase @Inject constructor(
                 endDate = range.to()
             ).sumOf { transaction ->
                 val legacyTransaction = transaction.toLegacy()
-                val amount = exchangeRatesLogic.amountBaseCurrency(
+                val amount = exchangeRatesUseCase.amountBaseCurrency(
                     transaction = legacyTransaction,
                     baseCurrency = baseCurrency,
                     accounts = accounts

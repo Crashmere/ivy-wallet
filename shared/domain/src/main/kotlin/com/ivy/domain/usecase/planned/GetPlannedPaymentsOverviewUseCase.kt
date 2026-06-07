@@ -25,7 +25,7 @@ data class PlannedPaymentsOverview(
 class GetPlannedPaymentsOverviewUseCase @Inject constructor(
     private val plannedPaymentRuleStore: PlannedPaymentRuleStore,
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
-    private val exchangeRatesLogic: LegacyExchangeRatesUseCase,
+    private val exchangeRatesUseCase: LegacyExchangeRatesUseCase,
     private val accountStore: AccountStore,
 ) {
     suspend operator fun invoke(): PlannedPaymentsOverview {
@@ -71,7 +71,7 @@ class GetPlannedPaymentsOverviewUseCase @Inject constructor(
         accounts: List<Account>
     ): Double =
         sumOf {
-            exchangeRatesLogic.amountBaseCurrency(
+            exchangeRatesUseCase.amountBaseCurrency(
                 plannedPayment = it,
                 baseCurrency = baseCurrency,
                 accounts = accounts
@@ -95,7 +95,7 @@ class GetPlannedPaymentsOverviewUseCase @Inject constructor(
         baseCurrency: String,
         accounts: List<Account>
     ): Double {
-        val amountBaseCurrency = exchangeRatesLogic.amountBaseCurrency(
+        val amountBaseCurrency = exchangeRatesUseCase.amountBaseCurrency(
             plannedPayment = plannedPayment,
             baseCurrency = baseCurrency,
             accounts = accounts,

@@ -93,7 +93,7 @@ class EditTransactionViewModel @Inject constructor(
     private val nav: Navigation,
     private val getLastSelectedAccountId: GetLastSelectedAccountIdUseCase,
     private val setLastSelectedAccountId: SetLastSelectedAccountIdUseCase,
-    private val exchangeRatesLogic: LegacyExchangeRatesUseCase,
+    private val exchangeRatesUseCase: LegacyExchangeRatesUseCase,
     private val createCategoryUseCase: CreateCategoryUseCase,
     private val updateCategoryUseCase: UpdateCategoryUseCase,
     private val createAccountWithBalanceUseCase: CreateAccountWithBalanceUseCase,
@@ -772,7 +772,7 @@ class EditTransactionViewModel @Inject constructor(
         val toCurrency = toAccount?.currency ?: baseCurrency()
         val fromCurrency = account?.currency ?: baseCurrency()
 
-        return exchangeRatesLogic.convertAmount(
+        return exchangeRatesUseCase.convertAmount(
             baseCurrency = baseCurrency(),
             amount = amount,
             fromCurrency = fromCurrency,
@@ -866,7 +866,7 @@ class EditTransactionViewModel @Inject constructor(
                 ) {
                     customExchangeRateState.exchangeRate
                 } else {
-                    exchangeRatesLogic.convertAmount(
+                    exchangeRatesUseCase.convertAmount(
                         baseCurrency = baseUserCurrency,
                         amount = 1.0,
                         fromCurrency = fromAccCurrencyCode,

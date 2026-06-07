@@ -71,7 +71,7 @@ class HomeViewModel @Inject constructor(
     private val nav: Navigation,
     private val payOrSkipLegacyPlannedTransactionUseCase: PayOrSkipLegacyPlannedTransactionUseCase,
     private val payOrSkipLegacyPlannedTransactionsUseCase: PayOrSkipLegacyPlannedTransactionsUseCase,
-    private val customerJourneyLogic: CustomerJourneyCardsProvider,
+    private val customerJourneyCardsProvider: CustomerJourneyCardsProvider,
     private val getTransactionHistoryItemsUseCase: GetTransactionHistoryItemsUseCase,
     private val calculateWalletIncomeExpenseUseCase: CalculateWalletIncomeExpenseUseCase,
     private val calculateWalletBalanceUseCase: CalculateWalletBalanceUseCase,
@@ -390,7 +390,7 @@ class HomeViewModel @Inject constructor(
 
     private suspend fun loadCustomerJourney(unit: Unit) {
         customerJourneyCards = withContext(Dispatchers.IO) {
-            customerJourneyLogic.loadCards().toImmutableList()
+            customerJourneyCardsProvider.loadCards().toImmutableList()
         }
     }
 // -----------------------------------------------------------------
@@ -486,7 +486,7 @@ class HomeViewModel @Inject constructor(
     }
 
     private suspend fun dismissCustomerJourneyCard(card: CustomerJourneyCardModel) {
-        customerJourneyLogic.dismissCard(card)
+        customerJourneyCardsProvider.dismissCard(card)
         reload()
     }
 

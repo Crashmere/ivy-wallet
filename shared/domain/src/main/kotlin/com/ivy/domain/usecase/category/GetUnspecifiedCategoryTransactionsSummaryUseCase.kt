@@ -19,7 +19,7 @@ import javax.inject.Inject
 class GetUnspecifiedCategoryTransactionsSummaryUseCase @Inject constructor(
     private val accountStore: AccountStore,
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
-    private val exchangeRatesLogic: LegacyExchangeRatesUseCase,
+    private val exchangeRatesUseCase: LegacyExchangeRatesUseCase,
     private val transactionRepository: TransactionStore,
 ) {
     suspend operator fun invoke(range: FromToTimeRange): CategoryTransactionsSummary {
@@ -63,7 +63,7 @@ class GetUnspecifiedCategoryTransactionsSummaryUseCase @Inject constructor(
                     endDate = range.to()
                 ).map { it.toLegacy() }
                 .withDateDividers(
-                    exchangeRatesLogic = exchangeRatesLogic,
+                    exchangeRatesUseCase = exchangeRatesUseCase,
                     baseCurrencyCode = getBaseCurrencyCode(),
                     accountStore = accountStore,
                 )
@@ -102,7 +102,7 @@ class GetUnspecifiedCategoryTransactionsSummaryUseCase @Inject constructor(
 
     private suspend fun List<Transaction>.sumInBaseCurrency(): Double {
         return sumInBaseCurrency(
-            exchangeRatesLogic = exchangeRatesLogic,
+            exchangeRatesUseCase = exchangeRatesUseCase,
             baseCurrency = getBaseCurrencyCode(),
             accountStore = accountStore
         )

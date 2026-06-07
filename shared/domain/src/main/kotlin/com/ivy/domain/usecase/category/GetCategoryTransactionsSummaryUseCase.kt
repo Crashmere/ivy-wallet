@@ -23,7 +23,7 @@ import javax.inject.Inject
 class GetCategoryTransactionsSummaryUseCase @Inject constructor(
     private val accountStore: AccountStore,
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
-    private val exchangeRatesLogic: LegacyExchangeRatesUseCase,
+    private val exchangeRatesUseCase: LegacyExchangeRatesUseCase,
     private val transactionRepository: TransactionStore,
 ) {
     suspend operator fun invoke(
@@ -87,7 +87,7 @@ class GetCategoryTransactionsSummaryUseCase @Inject constructor(
             accountFilterSet = accountFilterSet,
             transactions = transactions
         ).sumOf {
-            val amount = exchangeRatesLogic.amountBaseCurrency(
+            val amount = exchangeRatesUseCase.amountBaseCurrency(
                 transaction = it,
                 baseCurrency = baseCurrency,
                 accounts = accounts
@@ -148,7 +148,7 @@ class GetCategoryTransactionsSummaryUseCase @Inject constructor(
                 accountFilterSet = accountFilterSet,
                 transactions = transactions
             ).withDateDividers(
-                exchangeRatesLogic = exchangeRatesLogic,
+                exchangeRatesUseCase = exchangeRatesUseCase,
                 baseCurrencyCode = getBaseCurrencyCode(),
                     accountStore = accountStore,
             )
@@ -215,7 +215,7 @@ class GetCategoryTransactionsSummaryUseCase @Inject constructor(
         return filter {
             accountFilterSet.isEmpty() || accountFilterSet.contains(it.accountId)
         }.sumInBaseCurrency(
-            exchangeRatesLogic = exchangeRatesLogic,
+            exchangeRatesUseCase = exchangeRatesUseCase,
             baseCurrency = getBaseCurrencyCode(),
             accountStore = accountStore
         )

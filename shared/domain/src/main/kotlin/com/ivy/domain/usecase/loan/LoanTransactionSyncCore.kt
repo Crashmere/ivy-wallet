@@ -41,7 +41,7 @@ class LoanTransactionSyncCore @Inject constructor(
     private val loanStore: LoanStore,
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
     private val accountStore: AccountStore,
-    private val exchangeRatesLogic: LegacyExchangeRatesUseCase,
+    private val exchangeRatesUseCase: LegacyExchangeRatesUseCase,
     private val transactionRepo: TransactionStore,
 ) {
     private var baseCurrencyCode: String? = null
@@ -266,7 +266,7 @@ class LoanTransactionSyncCore @Inject constructor(
                 reCalculateLoanAmount || loanRecordCurrenciesChanged ||
                         oldLonRecordConvertedAmount == null -> {
                     withContext(Dispatchers.IO) {
-                        exchangeRatesLogic.convertAmount(
+                        exchangeRatesUseCase.convertAmount(
                             baseCurrency = baseCurrency(),
                             amount = newLoanRecordAmount,
                             fromCurrency = newLoanRecordCurrency,

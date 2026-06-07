@@ -22,7 +22,7 @@ private fun LocalDateTime.toEpochSeconds() = toEpochSecond(ZoneOffset.UTC)
 
 object LegacyTrnDateDividers {
     suspend fun List<com.ivy.data.model.legacy.Transaction>.withDateDividers(
-        exchangeRatesLogic: LegacyExchangeRatesUseCase,
+        exchangeRatesUseCase: LegacyExchangeRatesUseCase,
         baseCurrencyCode: String,
         accountStore: AccountStore,
     ): List<TransactionHistoryItem> {
@@ -31,7 +31,7 @@ object LegacyTrnDateDividers {
             baseCurrencyCode = baseCurrencyCode,
             getAccount = { accountId -> accountStore.findById(AccountId(accountId))?.toLegacyDomain() },
             exchange = { data, amount ->
-                exchangeRatesLogic.convertAmount(
+                exchangeRatesUseCase.convertAmount(
                     baseCurrency = data.baseCurrency,
                     fromCurrency = data.fromCurrency.getOrNull() ?: "",
                     toCurrency = data.toCurrency,

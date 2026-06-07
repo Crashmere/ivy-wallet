@@ -119,14 +119,14 @@ class LegacyExchangeRatesUseCase @Inject constructor(
 }
 
 suspend fun Iterable<Transaction>.sumInBaseCurrency(
-    exchangeRatesLogic: LegacyExchangeRatesUseCase,
+    exchangeRatesUseCase: LegacyExchangeRatesUseCase,
     baseCurrency: String,
     accountStore: AccountStore,
 ): Double {
     val accounts = accountStore.findAll().map { it.toLegacyDomain() }
 
     return sumOf {
-        exchangeRatesLogic.amountBaseCurrency(
+        exchangeRatesUseCase.amountBaseCurrency(
             transaction = it,
             baseCurrency = baseCurrency,
             accounts = accounts
@@ -135,14 +135,14 @@ suspend fun Iterable<Transaction>.sumInBaseCurrency(
 }
 
 suspend fun Iterable<PlannedPaymentRule>.sumByDoublePlannedInBaseCurrency(
-    exchangeRatesLogic: LegacyExchangeRatesUseCase,
+    exchangeRatesUseCase: LegacyExchangeRatesUseCase,
     baseCurrency: String,
     accountStore: AccountStore,
 ): Double {
     val accounts = accountStore.findAll().map { it.toLegacyDomain() }
 
     return sumOf {
-        exchangeRatesLogic.amountBaseCurrency(
+        exchangeRatesUseCase.amountBaseCurrency(
             plannedPayment = it,
             baseCurrency = baseCurrency,
             accounts = accounts
