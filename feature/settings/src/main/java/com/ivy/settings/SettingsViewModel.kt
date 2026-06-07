@@ -19,9 +19,13 @@ import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.domain.usecase.currency.SetBaseCurrencyUseCase
 import com.ivy.domain.usecase.csv.ExportCsvUseCase
 import com.ivy.domain.usecase.exchange.SyncExchangeRatesUseCase
+import com.ivy.domain.usecase.settings.GetHideCurrentBalancePreferenceUseCase
+import com.ivy.domain.usecase.settings.GetHideIncomePreferenceUseCase
 import com.ivy.domain.usecase.settings.GetStartDayOfMonthUseCase
 import com.ivy.domain.usecase.settings.GetThemeUseCase
 import com.ivy.domain.usecase.settings.GetTransfersAsIncomeExpensePreferenceUseCase
+import com.ivy.domain.usecase.settings.SetHideCurrentBalancePreferenceUseCase
+import com.ivy.domain.usecase.settings.SetHideIncomePreferenceUseCase
 import com.ivy.domain.usecase.settings.SetStartDayOfMonthUseCase
 import com.ivy.domain.usecase.settings.SetTransfersAsIncomeExpensePreferenceUseCase
 import com.ivy.domain.usecase.settings.SwitchThemeUseCase
@@ -53,6 +57,10 @@ class SettingsViewModel @Inject constructor(
     private val exportBackupUseCase: ExportBackupUseCase,
     private val getStartDayOfMonth: GetStartDayOfMonthUseCase,
     private val setStartDayOfMonth: SetStartDayOfMonthUseCase,
+    private val getHideCurrentBalancePreference: GetHideCurrentBalancePreferenceUseCase,
+    private val setHideCurrentBalancePreference: SetHideCurrentBalancePreferenceUseCase,
+    private val getHideIncomePreference: GetHideIncomePreferenceUseCase,
+    private val setHideIncomePreference: SetHideIncomePreferenceUseCase,
     private val getTransfersAsIncomeExpensePreference: GetTransfersAsIncomeExpensePreferenceUseCase,
     private val setTransfersAsIncomeExpensePreference: SetTransfersAsIncomeExpensePreferenceUseCase,
     private val syncExchangeRatesUseCase: SyncExchangeRatesUseCase,
@@ -139,11 +147,11 @@ class SettingsViewModel @Inject constructor(
     }
 
     private fun initializeHideCurrentBalance() {
-        hideCurrentBalance.value = appPreferences.hideCurrentBalance
+        hideCurrentBalance.value = getHideCurrentBalancePreference()
     }
 
     private fun initializeHideIncome() {
-        hideIncome.value = appPreferences.hideIncome
+        hideIncome.value = getHideIncomePreference()
     }
 
     private fun initializeTransfersAsIncomeExpense() {
@@ -412,7 +420,7 @@ class SettingsViewModel @Inject constructor(
         hideCurrentBalance.value = hideBalance
 
         viewModelScope.launch {
-            appPreferences.hideCurrentBalance = hideBalance
+            setHideCurrentBalancePreference(hideBalance)
         }
     }
 
@@ -420,7 +428,7 @@ class SettingsViewModel @Inject constructor(
         hideIncome.value = isHideIncome
 
         viewModelScope.launch {
-            appPreferences.hideIncome = isHideIncome
+            setHideIncomePreference(isHideIncome)
         }
     }
 

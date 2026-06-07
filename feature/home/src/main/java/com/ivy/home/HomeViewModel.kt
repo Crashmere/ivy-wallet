@@ -13,7 +13,6 @@ import com.ivy.base.model.legacy.TransactionHistoryItem
 import com.ivy.base.time.TimeConverter
 import com.ivy.base.time.TimeProvider
 import com.ivy.data.model.primitive.AssetCode
-import com.ivy.domain.preferences.AppPreferences
 import com.ivy.domain.preferences.toggles.PreferenceToggleRepository
 import com.ivy.domain.preferences.toggles.PreferenceToggles
 import com.ivy.domain.usecase.category.GetCategoriesUseCase
@@ -23,6 +22,8 @@ import com.ivy.domain.usecase.exchange.SyncExchangeRatesUseCase
 import com.ivy.domain.usecase.transaction.HasTransactionsUseCase
 import com.ivy.domain.usecase.transaction.MapTransactionsToLegacyUseCase
 import com.ivy.domain.usecase.settings.GetBufferAmountUseCase
+import com.ivy.domain.usecase.settings.GetHideCurrentBalancePreferenceUseCase
+import com.ivy.domain.usecase.settings.GetHideIncomePreferenceUseCase
 import com.ivy.domain.usecase.settings.GetStartDayOfMonthUseCase
 import com.ivy.domain.usecase.settings.GetThemeUseCase
 import com.ivy.domain.usecase.settings.SetBufferAmountUseCase
@@ -87,7 +88,8 @@ class HomeViewModel @Inject constructor(
     private val getCategoriesUseCase: GetCategoriesUseCase,
     private val getUpcomingTransactionsInfoUseCase: GetUpcomingTransactionsInfoUseCase,
     private val getOverdueTransactionsInfoUseCase: GetOverdueTransactionsInfoUseCase,
-    private val appPreferences: AppPreferences,
+    private val getHideCurrentBalancePreference: GetHideCurrentBalancePreferenceUseCase,
+    private val getHideIncomePreference: GetHideIncomePreferenceUseCase,
     private val syncExchangeRatesUseCase: SyncExchangeRatesUseCase,
     private val hasTransactionsUseCase: HasTransactionsUseCase,
     private val mapTransactionsToLegacyUseCase: MapTransactionsToLegacyUseCase,
@@ -278,8 +280,8 @@ class HomeViewModel @Inject constructor(
 
         currentTheme = preferences.theme
         period = timePeriod
-        hideBalance = appPreferences.hideCurrentBalance
-        hideIncome = appPreferences.hideIncome
+        hideBalance = getHideCurrentBalancePreference()
+        hideIncome = getHideIncomePreference()
 
         // This restores the runtime theme when the user imports a local backup.
         themeState.update(theme = preferences.theme)

@@ -720,6 +720,7 @@
 - 分类排序偏好已收敛到 `GetCategorySortOrderPreferenceUseCase/SetCategorySortOrderPreferenceUseCase`；分类页不再直接注入 `AppPreferences`，底层 key 和排序行为保持不变。
 - 上次选择账户偏好已收敛到 `GetLastSelectedAccountIdUseCase/SetLastSelectedAccountIdUseCase`；编辑交易页和借贷页不再直接读写 `AppPreferences.lastSelectedAccountId`，底层字符串 key 和 UUID 解析行为保持不变。
 - “转账计入收支”记账规则偏好已收敛到 `GetTransfersAsIncomeExpensePreferenceUseCase/SetTransfersAsIncomeExpensePreferenceUseCase`；账户页、交易页和饼图页只读 domain 用例，设置页通过用例保存该开关，底层 key 不变。
+- 隐藏余额和隐藏收入偏好已收敛到独立 domain 用例；首页只读 `GetHideCurrentBalancePreferenceUseCase/GetHideIncomePreferenceUseCase`，设置页通过对应 set 用例保存，底层 key 和短暂显示逻辑保持不变。
 - 账户旧读取路径已收敛到 `AccountStore`；旧 legacy 账户模型现在由 data model 账户映射而来，`shared:domain` 主源码不再直接注入 `AccountDao` 或依赖 `AccountEntity` mapper。
 - 旧交易卡片已移除重复账户查找 TODO：渲染前先解析来源/目标账户，再复用同一结果处理点击和币种展示，行为不变但 legacy UI 内部职责更清楚。
 
