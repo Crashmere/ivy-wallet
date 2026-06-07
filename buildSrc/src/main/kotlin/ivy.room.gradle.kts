@@ -1,6 +1,7 @@
 plugins {
-    id("ivy.module")
+    id("ivy.android-library")
     id("androidx.room")
+    id("com.google.devtools.ksp")
 }
 
 dependencies {

@@ -1,6 +1,8 @@
 plugins {
     id("ivy.android-library")
     id("ivy.compose-runtime")
+    id("ivy.hilt")
+    id("ivy.kotlinx-serialization")
     id("ivy.room")
     id("ivy.integration.testing")
 }
