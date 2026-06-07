@@ -20,26 +20,6 @@ import com.ivy.base.legacy.toLowerCaseLocal
 
 @Deprecated("Old design system. Use `:ivy-design` and Material3")
 @Composable
-fun ItemIconL(
-    modifier: Modifier = Modifier,
-    iconName: String?,
-    tint: Color = LegacyTheme.colors.pureInverse,
-    iconContentScale: ContentScale? = null,
-    Default: (@Composable () -> Unit)? = null
-) {
-    ItemIcon(
-        modifier = modifier
-            .size(64.dp),
-        size = "l",
-        iconName = iconName,
-        tint = tint,
-        iconContentScale = iconContentScale,
-        Default = Default
-    )
-}
-
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
-@Composable
 fun ItemIconMDefaultIcon(
     modifier: Modifier = Modifier,
     iconName: String?,

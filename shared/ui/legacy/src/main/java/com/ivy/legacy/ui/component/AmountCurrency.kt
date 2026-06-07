@@ -47,7 +47,6 @@ fun AmountCurrencyB2Row(
         )
     }
 }
-
 @SuppressLint("ComposeModifierMissing")
 @Composable
 fun AmountCurrencyB1Row(
@@ -67,7 +66,6 @@ fun AmountCurrencyB1Row(
         )
     }
 }
-
 @SuppressLint(
     "ComposeContentEmitterReturningValues",
     "ComposeMultipleContentEmitters",
@@ -95,91 +93,6 @@ fun AmountCurrencyB1(
     Text(
         text = currency,
         style = LegacyTheme.typo.nB1.style(
-            fontWeight = FontWeight.Normal,
-            color = textColor
-        )
-    )
-}
-
-@SuppressLint(
-    "ComposeContentEmitterReturningValues",
-    "ComposeMultipleContentEmitters",
-    "ComposeModifierMissing"
-)
-@Composable
-fun AmountCurrencyH1(
-    amount: Double,
-    currency: String,
-    @SuppressLint("ComposeContentEmitterReturningValues") textColor: Color = LegacyTheme.colors.pureInverse
-) {
-    Text(
-        text = amount.format(currency),
-        style = LegacyTheme.typo.nH1.style(
-            fontWeight = FontWeight.Bold,
-            color = textColor
-        )
-    )
-    Spacer(modifier = Modifier.width(4.dp))
-    Text(
-        text = currency,
-        style = LegacyTheme.typo.nH2.style(
-            fontWeight = FontWeight.Normal,
-            color = textColor
-        )
-    )
-}
-
-@SuppressLint("ComposeModifierMissing")
-@Composable
-fun AmountCurrencyH2Row(
-    amount: Double,
-    currency: String,
-    textColor: Color = LegacyTheme.colors.pureInverse
-) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Text(
-            text = amount.format(currency),
-            style = LegacyTheme.typo.nH2.style(
-                fontWeight = FontWeight.Bold,
-                color = textColor
-            )
-        )
-        Spacer(modifier = Modifier.width(4.dp))
-        Text(
-            text = currency,
-            style = LegacyTheme.typo.b1.style(
-                fontWeight = FontWeight.Normal,
-                color = textColor
-            )
-        )
-    }
-}
-
-@SuppressLint(
-    "ComposeContentEmitterReturningValues",
-    "ComposeMultipleContentEmitters",
-    "ComposeModifierMissing"
-)
-@Composable
-fun AmountCurrencyCaption(
-    amount: Double,
-    currency: String,
-    amountFontWeight: FontWeight = FontWeight.ExtraBold,
-    textColor: Color = LegacyTheme.colors.pureInverse
-) {
-    Text(
-        text = amount.format(currency),
-        style = LegacyTheme.typo.nC.style(
-            fontWeight = amountFontWeight,
-            color = textColor
-        )
-    )
-    Spacer(modifier = Modifier.width(4.dp))
-    Text(
-        text = currency,
-        style = LegacyTheme.typo.nC.style(
             fontWeight = FontWeight.Normal,
             color = textColor
         )
