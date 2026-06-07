@@ -1,24 +1,19 @@
-package com.ivy.legacy.domain.logic
+package com.ivy.domain.usecase.planned
 
 import com.ivy.base.model.legacy.Transaction
 import com.ivy.base.time.incrementDate
+import com.ivy.data.model.legacy.PlannedPaymentRule
 import com.ivy.data.repository.TransactionRepository
 import com.ivy.data.repository.mapper.TransactionMapper
-import com.ivy.data.model.legacy.PlannedPaymentRule
 import com.ivy.legacy.domain.mapper.toDomain
 import java.time.Instant
 import javax.inject.Inject
 
-class PlannedPaymentsGenerator @Inject constructor(
+class GeneratePlannedPaymentTransactionsUseCase @Inject constructor(
     private val transactionMapper: TransactionMapper,
     private val transactionRepository: TransactionRepository
 ) {
-    companion object {
-        private const val GENERATED_INSTANCES_LIMIT = 72
-    }
-
-    suspend fun generate(rule: PlannedPaymentRule) {
-        // delete all not happened transactions
+    suspend operator fun invoke(rule: PlannedPaymentRule) {
         transactionRepository.deletedByRecurringRuleIdAndNoDateTime(
             recurringRuleId = rule.id
         )
@@ -31,9 +26,11 @@ class PlannedPaymentsGenerator @Inject constructor(
     }
 
     private suspend fun generateOneTime(rule: PlannedPaymentRule) {
-        val trns = transactionRepository.findAllByRecurringRuleId(recurringRuleId = rule.id)
+        val transactions = transactionRepository.findAllByRecurringRuleId(
+            recurringRuleId = rule.id
+        )
 
-        if (trns.isEmpty()) {
+        if (transactions.isEmpty()) {
             generateTransaction(rule, rule.startDate!!)
         }
     }
@@ -43,8 +40,10 @@ class PlannedPaymentsGenerator @Inject constructor(
         val startDate = rule.startDate!!
         val endDate = startDate.plusSeconds(94_608_000)
 
-        val trns = transactionRepository.findAllByRecurringRuleId(recurringRuleId = rule.id)
-        var trnsToSkip = trns.size
+        val transactions = transactionRepository.findAllByRecurringRuleId(
+            recurringRuleId = rule.id
+        )
+        var transactionsToSkip = transactions.size
 
         var generatedTransactions = 0
 
@@ -54,11 +53,9 @@ class PlannedPaymentsGenerator @Inject constructor(
                 break
             }
 
-            if (trnsToSkip > 0) {
-                // skip first N happened transactions
-                trnsToSkip--
+            if (transactionsToSkip > 0) {
+                transactionsToSkip--
             } else {
-                // generate transaction
                 generateTransaction(
                     rule = rule,
                     dueDate = date
@@ -74,7 +71,10 @@ class PlannedPaymentsGenerator @Inject constructor(
         }
     }
 
-    private suspend fun generateTransaction(rule: PlannedPaymentRule, dueDate: Instant) {
+    private suspend fun generateTransaction(
+        rule: PlannedPaymentRule,
+        dueDate: Instant
+    ) {
         Transaction(
             type = rule.type,
             accountId = rule.accountId,
@@ -89,5 +89,9 @@ class PlannedPaymentsGenerator @Inject constructor(
         ).toDomain(transactionMapper)?.let {
             transactionRepository.save(it)
         }
+    }
+
+    private companion object {
+        const val GENERATED_INSTANCES_LIMIT = 72
     }
 }
