@@ -41,8 +41,8 @@ import com.ivy.frp.test.TestingContext
 import com.ivy.legacy.domain.model.Account
 import com.ivy.legacy.domain.model.Loan
 import com.ivy.legacy.ui.component.DateTimeRow
-import com.ivy.base.legacy.getDefaultFIATCurrency
-import com.ivy.base.legacy.isNotNullOrBlank
+import com.ivy.base.currency.getDefaultFIATCurrency
+import com.ivy.base.text.isNotNullOrBlank
 import com.ivy.legacy.ui.onScreenStart
 import com.ivy.legacy.ui.selectEndTextFieldValue
 import com.ivy.ui.compose.thenIf

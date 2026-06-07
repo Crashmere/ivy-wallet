@@ -43,9 +43,9 @@ import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
 import com.ivy.legacy.ui.model.AppBaseData
 import com.ivy.legacy.domain.model.Account
-import com.ivy.base.legacy.capitalizeLocal
+import com.ivy.base.text.capitalizeLocal
 import com.ivy.data.model.currency.format
-import com.ivy.base.legacy.isNotNullOrBlank
+import com.ivy.base.text.isNotNullOrBlank
 import com.ivy.navigation.Navigation
 import com.ivy.navigation.TransactionsScreen
 import com.ivy.navigation.navigation

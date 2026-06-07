@@ -37,7 +37,7 @@ import com.ivy.data.model.primitive.IconAsset
 import com.ivy.data.model.primitive.NotBlankTrimmedString
 import com.ivy.legacy.ui.component.IvyColorPicker
 import com.ivy.legacy.ui.hideKeyboard
-import com.ivy.base.legacy.isNotNullOrBlank
+import com.ivy.base.text.isNotNullOrBlank
 import com.ivy.legacy.ui.onScreenStart
 import com.ivy.legacy.ui.selectEndTextFieldValue
 import com.ivy.ui.R

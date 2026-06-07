@@ -1,7 +1,5 @@
 package com.ivy.base.legacy
 
-import android.icu.util.Currency
-import java.util.Locale
 import java.util.Random
 
 fun <T> MutableList<T>.swap(fromIndex: Int, toIndex: Int) {
@@ -14,29 +12,4 @@ fun <T> MutableList<T>.swap(fromIndex: Int, toIndex: Int) {
 
 fun numberBetween(min: Double, max: Double): Double {
     return Random().nextDouble() * (max - min) + min
-}
-
-fun getDefaultFIATCurrency(): Currency =
-    Currency.getInstance(Locale.getDefault()) ?: Currency.getInstance("USD")
-        ?: Currency.getInstance("usd") ?: Currency.getAvailableCurrencies().firstOrNull()
-        ?: Currency.getInstance("EUR")
-
-fun String.toUpperCaseLocal() = this.uppercase(Locale.getDefault())
-
-fun String.toLowerCaseLocal() = this.lowercase(Locale.getDefault())
-
-fun String.uppercaseLocal(): String = this.uppercase(Locale.getDefault())
-
-fun String.capitalizeLocal(): String = this.replaceFirstChar {
-    if (it.isLowerCase()) {
-        it.titlecase(
-            Locale.getDefault()
-        )
-    } else {
-        it.toString()
-    }
-}
-
-fun String.capitalizeWords(): String {
-    return split(" ").joinToString(" ") { it.capitalizeLocal() }
 }

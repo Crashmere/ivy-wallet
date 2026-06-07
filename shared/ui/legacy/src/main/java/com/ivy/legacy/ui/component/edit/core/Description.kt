@@ -13,7 +13,7 @@ import androidx.compose.ui.unit.dp
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
 import com.ivy.legacy.ui.component.edit.PrimaryAttributeColumn
-import com.ivy.base.legacy.isNotNullOrBlank
+import com.ivy.base.text.isNotNullOrBlank
 import com.ivy.ui.R
 import com.ivy.legacy.ui.component.AddPrimaryAttributeButton
 

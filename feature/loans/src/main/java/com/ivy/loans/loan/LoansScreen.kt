@@ -33,7 +33,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
 import com.ivy.loans.humanReadableType
-import com.ivy.base.legacy.getDefaultFIATCurrency
+import com.ivy.base.currency.getDefaultFIATCurrency
 import com.ivy.legacy.ui.horizontalSwipeListener
 import com.ivy.legacy.ui.rememberSwipeListenerState
 import com.ivy.loans.loan.Constants.SWIPE_HORIZONTAL_THRESHOLD

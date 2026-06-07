@@ -3,8 +3,8 @@ package com.ivy.legacy.domain.logic
 import com.ivy.base.legacy.Transaction
 import com.ivy.data.db.dao.read.TransactionDao
 import com.ivy.legacy.domain.mapper.toLegacyDomain
-import com.ivy.base.legacy.capitalizeWords
-import com.ivy.base.legacy.isNotNullOrBlank
+import com.ivy.base.text.capitalizeWords
+import com.ivy.base.text.isNotNullOrBlank
 import java.util.*
 import javax.inject.Inject
 

@@ -47,7 +47,7 @@ import com.ivy.legacy.ui.densityScope
 import com.ivy.legacy.ui.hideKeyboard
 import com.ivy.legacy.ui.keyboardOnlyWindowInsets
 import com.ivy.legacy.ui.onScreenStart
-import com.ivy.base.legacy.toLowerCaseLocal
+import com.ivy.base.text.toLowerCaseLocal
 import com.ivy.ui.R
 import com.ivy.data.model.currency.IvyCurrency
 import com.ivy.legacy.ui.theme.GradientGreen

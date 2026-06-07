@@ -39,7 +39,7 @@ import com.ivy.legacy.domain.model.Account
 import com.ivy.legacy.domain.mapper.toLegacy
 import com.ivy.base.legacy.getISOFormattedDateTime
 import com.ivy.base.coroutines.scopedIOThread
-import com.ivy.base.legacy.toLowerCaseLocal
+import com.ivy.base.text.toLowerCaseLocal
 import com.ivy.base.coroutines.uiThread
 import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.R

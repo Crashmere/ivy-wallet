@@ -2,7 +2,7 @@ package com.ivy.data.model.currency
 
 import android.icu.util.Currency
 import androidx.compose.runtime.Immutable
-import com.ivy.base.legacy.getDefaultFIATCurrency
+import com.ivy.base.currency.getDefaultFIATCurrency
 
 @Immutable
 data class IvyCurrency(

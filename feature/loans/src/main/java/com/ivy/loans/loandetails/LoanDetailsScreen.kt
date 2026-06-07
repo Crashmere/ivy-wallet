@@ -46,7 +46,7 @@ import com.ivy.legacy.ui.clickableNoIndication
 import com.ivy.legacy.ui.drawColoredShadow
 import com.ivy.data.model.currency.format
 import com.ivy.legacy.ui.formatNicely
-import com.ivy.base.legacy.isNotNullOrBlank
+import com.ivy.base.text.isNotNullOrBlank
 import com.ivy.legacy.ui.rememberInteractionSource
 import com.ivy.legacy.ui.setStatusBarDarkTextCompat
 import com.ivy.loans.loan.data.DisplayLoanRecord

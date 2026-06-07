@@ -16,7 +16,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.ui.compose.thenWhen
-import com.ivy.base.legacy.toLowerCaseLocal
+import com.ivy.base.text.toLowerCaseLocal
 
 @Deprecated("Old design system. Use `:ivy-design` and Material3")
 @Composable

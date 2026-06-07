@@ -51,7 +51,7 @@ import com.ivy.legacy.domain.model.Account
 import com.ivy.legacy.ui.state.LocalPeriodState
 import com.ivy.legacy.ui.component.tags.AddTagButton
 import com.ivy.legacy.ui.component.tags.ShowTagModal
-import com.ivy.base.legacy.capitalizeLocal
+import com.ivy.base.text.capitalizeLocal
 import com.ivy.legacy.ui.springBounce
 import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.GradientGreen

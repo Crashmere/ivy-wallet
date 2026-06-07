@@ -39,8 +39,8 @@ import com.ivy.legacy.ui.forDisplay
 import com.ivy.legacy.ui.component.transaction.TypeAmountCurrency
 import com.ivy.legacy.ui.formatDateOnly
 import com.ivy.legacy.ui.formatDateOnlyWithYear
-import com.ivy.base.legacy.isNotNullOrBlank
-import com.ivy.base.legacy.uppercaseLocal
+import com.ivy.base.text.isNotNullOrBlank
+import com.ivy.base.text.uppercaseLocal
 import com.ivy.navigation.TransactionsScreen
 import com.ivy.navigation.navigation
 import com.ivy.ui.R

@@ -26,11 +26,11 @@ import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
 import com.ivy.legacy.ui.component.IvyColorPicker
 import com.ivy.legacy.domain.model.Account
-import com.ivy.base.legacy.isNotNullOrBlank
+import com.ivy.base.text.isNotNullOrBlank
 import com.ivy.legacy.ui.onScreenStart
 import com.ivy.legacy.ui.selectEndTextFieldValue
-import com.ivy.base.legacy.toLowerCaseLocal
-import com.ivy.base.legacy.toUpperCaseLocal
+import com.ivy.base.text.toLowerCaseLocal
+import com.ivy.base.text.toUpperCaseLocal
 import com.ivy.ui.R
 import com.ivy.data.model.currency.IvyCurrency
 import com.ivy.legacy.domain.model.CreateAccountData

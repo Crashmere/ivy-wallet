@@ -23,8 +23,8 @@ import androidx.compose.ui.unit.dp
 import com.ivy.data.model.IntervalType
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
-import com.ivy.base.legacy.capitalizeLocal
-import com.ivy.base.legacy.isNotNullOrBlank
+import com.ivy.base.text.capitalizeLocal
+import com.ivy.base.text.isNotNullOrBlank
 import com.ivy.legacy.ui.forDisplay
 import com.ivy.legacy.ui.selectEndTextFieldValue
 import com.ivy.ui.R

@@ -38,7 +38,7 @@ import com.ivy.legacy.domain.mapper.toDomain
 import com.ivy.legacy.domain.logic.AccountCreator
 import com.ivy.base.coroutines.computationThread
 import com.ivy.base.coroutines.ioThread
-import com.ivy.base.legacy.toLowerCaseLocal
+import com.ivy.base.text.toLowerCaseLocal
 import com.ivy.base.coroutines.uiThread
 import com.ivy.navigation.EditTransactionScreen
 import com.ivy.navigation.MainScreen

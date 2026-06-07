@@ -8,7 +8,7 @@ import arrow.core.toOption
 import com.ivy.frp.Pure
 import com.ivy.frp.SideEffect
 import com.ivy.legacy.domain.model.ExchangeRate
-import com.ivy.base.legacy.isNotNullOrBlank
+import com.ivy.base.text.isNotNullOrBlank
 import java.math.BigDecimal
 
 data class ExchangeData(

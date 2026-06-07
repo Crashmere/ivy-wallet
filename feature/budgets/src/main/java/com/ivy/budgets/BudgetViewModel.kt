@@ -27,7 +27,7 @@ import com.ivy.legacy.domain.model.Account
 import com.ivy.legacy.domain.model.Budget
 import com.ivy.legacy.domain.logic.BudgetCreator
 import com.ivy.data.model.currency.format
-import com.ivy.base.legacy.isNotNullOrBlank
+import com.ivy.base.text.isNotNullOrBlank
 import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.R
 import com.ivy.legacy.domain.action.account.AccountsAct
