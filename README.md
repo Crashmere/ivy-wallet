@@ -380,7 +380,7 @@
 - 已把 `IvyCurrency` 和金额输入/显示格式 helper 从 `temp:legacy-code` 迁到 `shared:data:model` 的 `com.ivy.data.model.currency` 包。
 - 已新增 `shared:ui:legacy` 过渡模块，并把旧 Compose/UI helper、手势 helper 和动画 helper 从 `temp:legacy-code` 迁入其中。
 - 已拆分 legacy 日期 helper：纯时间计算迁到 `shared:base`，日期展示格式迁到 `shared:ui:legacy`。
-- 已把旧 FRP 组合 helper、`FPAction`、`Res` 和测试空闲计数器从 `temp:legacy-code` 迁到 `shared:base`，并移除重复的 legacy `onScreenStart`。
+- 已把旧 FRP 组合 helper、`FPAction` 和 `Res` 从 `temp:legacy-code` 迁到 `shared:base`，并移除重复的 legacy `onScreenStart`；旧 UI 测试开关后续已下沉到 `shared:ui:legacy`。
 - 已把 Android 通知封装和交易提醒 WorkManager 逻辑从 `temp:legacy-code` 迁到 `app`，保留原包名和提醒功能。
 - 已把首次启动默认数据初始化迁到 `app`，并用 `ResetWalletDataUseCase` 接口替代设置页直接注入旧 `LogoutLogic`。
 - 已拆分 legacy 根目录中的周期 helper、借贷类型显示和交易页常量：纯时间计算进 `shared:base`，周期文案进 `shared:ui:legacy`，借贷显示逻辑进 `feature:loans`，交易页常量本地化到 `feature:transactions`。
@@ -467,6 +467,7 @@
 - 已把 `shared:domain` 中剩余旧业务逻辑从 `com.ivy.wallet.domain.deprecated.logic` 迁到 `com.ivy.legacy.domain.logic`，包括账户/分类/预算/借贷 creator、计划付款逻辑、标题建议、账户/分类统计、汇率换算和借贷交易联动；同时把拼写错误的 `loantrasactions` 包名改为 `loantransactions`。
 - 已把旧 FPAction/use-case 与 pure helper 从 `com.ivy.wallet.domain.action/pure` 迁到 `com.ivy.legacy.domain.action/pure`，并同步迁移 `ClosedTimeRange`、`IncomeExpensePair`、`IncomeExpenseTransferPair` 的旧统计值对象包名；这些代码仍是旧 domain 兼容层，但不再占用正式 Wallet 产品包名。
 - 已把 `shared:base` 中的旧 FRP/action helper 从 `com.ivy.base.frp` 迁到 `com.ivy.legacy.frp`，调用方仍保持原行为；这批 helper 后续按真实使用点逐步替换，当前不再用大面积 `@Deprecated` 注解制造编译噪音。
+- 旧 UI 专用的 `TestingContext` 已从 `shared:base` 的 FRP 包下沉到 `shared:ui:legacy` 的 `com.ivy.legacy.ui.testing`，基础层不再承载这段只服务旧 Compose UI 测试规避逻辑的全局开关。
 - 旧 FRP 组合 helper 已精简为只保留实际使用的重载，删除历史推导注释和“迁到 FP/FPAction”的过时 TODO；业务含义明确的 TODO 继续保留。
 - 旧 domain 逻辑、旧交易模型和旧统计值对象不再用大面积 `@Deprecated` 注解制造编译噪音；当前仍保留这些实现以支撑报表、交易列表、计划付款和旧统计流程，迁移状态通过 `legacy` 包名和 README 计划追踪。
 - 旧交易分组仍需要的本地时区转换 helper 已从 `shared:base` 移到 `com.ivy.legacy.domain.time`；`shared:base` 不再暴露这段只服务旧交易流程的扩展函数。

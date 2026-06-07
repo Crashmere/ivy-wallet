@@ -42,7 +42,6 @@ import androidx.compose.ui.unit.sp
 import com.ivy.legacy.domain.model.Account
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
-import com.ivy.legacy.frp.test.TestingContext
 import com.ivy.legacy.ui.addKeyboardListener
 import com.ivy.legacy.ui.clickableNoIndication
 import com.ivy.legacy.ui.consumeClicks
@@ -54,6 +53,7 @@ import com.ivy.legacy.ui.lerp
 import com.ivy.legacy.ui.navigationBarInsets
 import com.ivy.legacy.ui.onScreenStart
 import com.ivy.legacy.ui.springBounce
+import com.ivy.legacy.ui.testing.TestingContext
 import com.ivy.ui.compose.thenIf
 import com.ivy.legacy.ui.verticalSwipeListener
 import com.ivy.base.model.TransactionType

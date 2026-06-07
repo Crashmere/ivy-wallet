@@ -34,7 +34,6 @@ import com.ivy.ui.time.LocalTimeConverter
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
 import com.ivy.ui.compose.thenIf
-import com.ivy.legacy.frp.test.TestingContext
 import com.ivy.legacy.domain.model.Account
 import com.ivy.legacy.domain.model.LoanRecord
 import com.ivy.legacy.ui.component.DateTimeRow
@@ -42,6 +41,7 @@ import com.ivy.legacy.ui.modal.ModalNameInput
 import com.ivy.base.currency.getDefaultFIATCurrency
 import com.ivy.legacy.ui.onScreenStart
 import com.ivy.legacy.ui.selectEndTextFieldValue
+import com.ivy.legacy.ui.testing.TestingContext
 import com.ivy.ui.R
 import com.ivy.legacy.domain.model.CreateAccountData
 import com.ivy.legacy.domain.model.CreateLoanRecordData

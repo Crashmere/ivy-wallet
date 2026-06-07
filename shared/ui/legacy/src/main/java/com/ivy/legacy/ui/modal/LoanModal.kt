@@ -37,7 +37,6 @@ import com.ivy.ui.time.LocalTimeConverter
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
 import com.ivy.legacy.ui.component.IvyColorPicker
-import com.ivy.legacy.frp.test.TestingContext
 import com.ivy.legacy.domain.model.Account
 import com.ivy.legacy.domain.model.Loan
 import com.ivy.legacy.ui.component.DateTimeRow
@@ -45,6 +44,7 @@ import com.ivy.base.currency.getDefaultFIATCurrency
 import com.ivy.base.text.isNotNullOrBlank
 import com.ivy.legacy.ui.onScreenStart
 import com.ivy.legacy.ui.selectEndTextFieldValue
+import com.ivy.legacy.ui.testing.TestingContext
 import com.ivy.ui.compose.thenIf
 import com.ivy.legacy.ui.modal.ModalNameInput
 import com.ivy.ui.R

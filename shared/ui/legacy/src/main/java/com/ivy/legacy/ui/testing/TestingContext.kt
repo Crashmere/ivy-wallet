@@ -1,4 +1,4 @@
-package com.ivy.legacy.frp.test
+package com.ivy.legacy.ui.testing
 
 object TestingContext {
     var inTest = false
