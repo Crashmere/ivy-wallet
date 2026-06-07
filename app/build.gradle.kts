@@ -151,6 +151,7 @@ dependencies {
     implementation(libs.androidx.biometrics)
 
     implementation(libs.bundles.hilt)
+    implementation(libs.hilt.work)
     implementation(libs.material)
     ksp(libs.hilt.compiler)
 

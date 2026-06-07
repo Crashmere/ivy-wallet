@@ -160,7 +160,6 @@ activity = [
 ]
 hilt = [
     "hilt",
-    "hilt-work"
 ]
 room = [
     "room-runtime",
