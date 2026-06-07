@@ -43,9 +43,9 @@ fun IvyTheme(
     isDarkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
-    val colors = DefaultLegacyDesign.colors(theme, isDarkTheme)
-    val typography = DefaultLegacyDesign.typography()
-    val shapes = DefaultLegacyDesign.shapes()
+    val colors = LegacyThemeDefaults.colors(theme, isDarkTheme)
+    val typography = LegacyThemeDefaults.typography()
+    val shapes = LegacyThemeDefaults.shapes()
 
     CompositionLocalProvider(
         LocalIvyColors provides colors,

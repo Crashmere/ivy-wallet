@@ -330,7 +330,7 @@
    - `Colors.kt`
    - `IvyColors.kt`
    - `IvyTheme.kt`
-   - `DefaultLegacyDesign.kt`（已由旧多实现设计抽象收敛为内部默认配置）
+   - `LegacyThemeDefaults.kt`（已由旧多实现设计抽象收敛为内部默认配置）
    - 目标：迁入 `shared:ui:core`，逐步合并到 Material3 theme。
 2. 颜色选择器常量
    - `IVY_COLOR_PICKER_COLORS_*`
@@ -496,7 +496,7 @@
 - 已把旧 UI helper 从 `com.ivy.ui.legacy` 迁到 `com.ivy.legacy.ui`，包括 Compose 扩展、手势、动画、日期/间隔格式化和 Android UI 扩展；功能不变，只让旧 UI 工具回到统一 legacy UI 包根。
 - 已把旧主题系统和 `LegacyUiRoot` 从 `shared:ui:core` 下沉到 `shared:ui:legacy`；`ui:core` 继续保留 Material3 主题、平台接口、时间接口和基础 UI 工具，旧设计兼容层归入 legacy 模块。
 - 已把旧周期状态入口从 `com.ivy.legacy` 根包迁到 `com.ivy.legacy.ui.state`，并删除旧 `rootScreen()` 桥接函数；`shared:ui:legacy` 不再通过根包暴露迁移期 API。
-- 已把旧 `OnboardingButton` 重命名为通用的 `LegacyGradientButton`，并把复用的 `ic_onboarding_next_arrow` 资源改名为 `ic_next_arrow`；CSV 导入完成页、分类按钮和标签按钮的视觉保持不变。
+- 已把旧 `OnboardingButton` 重命名为通用的 `GradientButton`，并把复用的 `ic_onboarding_next_arrow` 资源改名为 `ic_next_arrow`；CSV 导入完成页、分类按钮和标签按钮的视觉保持不变。
 - 已删除无调用方的旧 `IvyDividerDot` 组件；仍被页面使用的复选框、分隔线、按钮和开关组件保留。
 - 已删除无外部调用的旧金额展示变体 `AmountCurrencyH1/H2Row/Caption`、大号 `ItemIconL` 包装和 `IvyOutlinedTextField`；当前页面仍使用的金额展示、图标和输入组件保留。
 - 已把旧设计兼容层从 `com.ivy.design.*` 迁到 `com.ivy.legacy.design.*`，包括旧 `LegacyTheme`、颜色常量、Compose helper 和 Material3 theme 包装；功能和视觉保持不变。
@@ -675,6 +675,7 @@
 - 设置页偏好开关读写已收敛到 `PreferenceToggleRepository`；`:feature:settings` 不再直接注入 `DataStore<Preferences>`，并去掉了自身的 DataStore Gradle 依赖，底层开关 key 和存储文件不变。
 - 旧 UI 偏好开关 CompositionLocal 已从 `LocalPreferenceDataStore` 改为 `LocalPreferenceToggleRepository`；`shared:ui:legacy` 不再直接依赖 DataStore，旧 UI 的开关读取仍复用相同 repository 和现有 key。
 - 旧 UI 金额输入偏好入口已收窄为 `AmountInputPreferences/LocalAmountInputPreferences`；它现在只表达金额键盘布局偏好，不再使用泛化的 `LegacyUiPreferences` 命名。
+- `shared:ui:legacy` 内部主题默认值和渐变按钮命名已收敛为 `LegacyThemeDefaults` 与 `GradientButton`；legacy 属性继续由模块和包名表达，组件名不再重复历史前缀。
 - 编辑交易页的分类排序偏好读取已改走 `PreferenceToggleRepository`；`:feature:edit-transaction` 不再直接注入 DataStore，也去掉了自身的 DataStore Gradle 依赖。
 - 重置钱包流程的 DataStore 清空已改走 `DataStorePreferencesRepository.clearAll()`；app 层不再直接注入 AndroidX DataStore，也去掉了自身的 DataStore Gradle 依赖。
 - 偏好开关 key helper 已从 data core 移回 domain 的 `BoolPreference` 内部；`feature_` 前缀保持不变，data core 不再暴露只服务 domain 偏好定义的 `DatastoreKeys`。

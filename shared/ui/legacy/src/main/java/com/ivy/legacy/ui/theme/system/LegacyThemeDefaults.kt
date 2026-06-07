@@ -11,7 +11,7 @@ import androidx.compose.ui.unit.sp
 import com.ivy.base.theme.Theme
 import com.ivy.ui.R
 
-internal object DefaultLegacyDesign {
+internal object LegacyThemeDefaults {
     private const val OPEN_SANS_BASELINE_SHIFT = 0.075f
     private const val RALEWAY_BASELINE_SHIFT = 0.2f
 

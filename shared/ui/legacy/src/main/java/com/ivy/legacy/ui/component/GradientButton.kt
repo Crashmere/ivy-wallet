@@ -23,11 +23,10 @@ import com.ivy.ui.compose.thenIf
 import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.Gradient
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.ui.text.input.TextFieldValue
 import com.ivy.legacy.ui.theme.GradientIvy
 
 @Composable
-fun LegacyGradientButton(
+fun GradientButton(
     modifier: Modifier = Modifier,
     text: String,
     textColor: Color,
