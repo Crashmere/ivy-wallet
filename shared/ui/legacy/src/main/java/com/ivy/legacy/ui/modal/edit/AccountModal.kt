@@ -24,7 +24,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
-import com.ivy.domain.legacy.ui.IvyColorPicker
+import com.ivy.legacy.ui.component.IvyColorPicker
 import com.ivy.legacy.domain.model.Account
 import com.ivy.base.legacy.isNotNullOrBlank
 import com.ivy.ui.legacy.onScreenStart

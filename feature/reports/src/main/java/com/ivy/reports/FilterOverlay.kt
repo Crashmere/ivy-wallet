@@ -46,7 +46,7 @@ import com.ivy.ui.time.LocalTimeFormatter
 import com.ivy.ui.time.LocalTimeProvider
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
-import com.ivy.domain.legacy.ui.theme.components.ListItem
+import com.ivy.legacy.ui.component.ListItem
 import com.ivy.legacy.domain.model.Account
 import com.ivy.legacy.ui.state.LocalPeriodState
 import com.ivy.legacy.ui.component.tags.AddTagButton

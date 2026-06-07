@@ -1,4 +1,4 @@
-package com.ivy.domain.db
+package com.ivy.data.db
 
 import androidx.room.TypeConverter
 import com.ivy.base.legacy.Theme

@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.dp
 import com.ivy.data.model.Category
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
-import com.ivy.domain.legacy.ui.theme.components.ListItem
+import com.ivy.legacy.ui.component.ListItem
 import com.ivy.legacy.domain.model.Account
 import com.ivy.legacy.domain.model.Budget
 import com.ivy.legacy.ui.modal.ModalNameInput

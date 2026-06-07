@@ -35,7 +35,7 @@ import com.ivy.data.model.Category
 import com.ivy.data.model.primitive.ColorInt
 import com.ivy.data.model.primitive.IconAsset
 import com.ivy.data.model.primitive.NotBlankTrimmedString
-import com.ivy.domain.legacy.ui.IvyColorPicker
+import com.ivy.legacy.ui.component.IvyColorPicker
 import com.ivy.ui.legacy.hideKeyboard
 import com.ivy.base.legacy.isNotNullOrBlank
 import com.ivy.ui.legacy.onScreenStart

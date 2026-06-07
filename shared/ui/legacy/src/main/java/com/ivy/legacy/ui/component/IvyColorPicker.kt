@@ -1,4 +1,4 @@
-package com.ivy.domain.legacy.ui
+package com.ivy.legacy.ui.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border

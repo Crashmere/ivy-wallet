@@ -1,4 +1,4 @@
-package com.ivy.domain.legacy.ui.theme.components
+package com.ivy.legacy.ui.component
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
