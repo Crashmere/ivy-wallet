@@ -1,5 +1,6 @@
 package com.ivy.domain.usecase.reset
 
+import com.ivy.data.api.ExchangeRateStore
 import com.ivy.data.db.dao.write.WriteBudgetDao
 import com.ivy.data.db.dao.write.WriteLoanDao
 import com.ivy.data.db.dao.write.WriteLoanRecordDao
@@ -7,7 +8,6 @@ import com.ivy.data.db.dao.write.WritePlannedPaymentRuleDao
 import com.ivy.data.db.dao.write.WriteSettingsDao
 import com.ivy.data.repository.AccountRepository
 import com.ivy.data.repository.CategoryRepository
-import com.ivy.data.repository.ExchangeRatesRepository
 import com.ivy.data.repository.TagRepository
 import com.ivy.data.repository.TransactionRepository
 import javax.inject.Inject
@@ -22,7 +22,7 @@ class ClearWalletDataUseCase @Inject constructor(
     private val writeBudgetDao: WriteBudgetDao,
     private val writeLoanDao: WriteLoanDao,
     private val writeLoanRecordDao: WriteLoanRecordDao,
-    private val exchangeRatesRepository: ExchangeRatesRepository,
+    private val exchangeRateStore: ExchangeRateStore,
 ) {
     suspend operator fun invoke() {
         accountRepository.deleteAll()
@@ -34,6 +34,6 @@ class ClearWalletDataUseCase @Inject constructor(
         writeBudgetDao.deleteAll()
         writeLoanDao.deleteAll()
         writeLoanRecordDao.deleteAll()
-        exchangeRatesRepository.deleteAll()
+        exchangeRateStore.deleteAll()
     }
 }

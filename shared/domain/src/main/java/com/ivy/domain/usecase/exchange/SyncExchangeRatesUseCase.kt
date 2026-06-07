@@ -3,18 +3,18 @@ package com.ivy.domain.usecase.exchange
 import arrow.core.Either
 import arrow.core.raise.either
 import arrow.core.raise.ensure
+import com.ivy.data.api.ExchangeRateStore
 import com.ivy.data.model.ExchangeRate
 import com.ivy.data.model.primitive.AssetCode
 import com.ivy.data.model.primitive.PositiveDouble
-import com.ivy.data.repository.ExchangeRatesRepository
 import timber.log.Timber
 import javax.inject.Inject
 
 class SyncExchangeRatesUseCase @Inject constructor(
-    private val repository: ExchangeRatesRepository,
+    private val exchangeRateStore: ExchangeRateStore,
 ) {
     suspend fun sync(baseCurrency: AssetCode): Either<String, Unit> = either {
-        val eurRates = repository.fetchEurExchangeRates().bind()
+        val eurRates = exchangeRateStore.fetchEurExchangeRates().bind()
             .associateBy(ExchangeRate::currency)
             .mapValues { it.value.rate }
 
@@ -41,7 +41,7 @@ class SyncExchangeRatesUseCase @Inject constructor(
             }.getOrNull()
         }.toList()
         Timber.d("Updating exchange rates: $baseCurrencyRates")
-        val manuallyOverridden = repository.findAllManuallyOverridden()
+        val manuallyOverridden = exchangeRateStore.findAllManuallyOverridden()
             .map { it.identifier() }
             .toSet()
         val newRatesToSave = baseCurrencyRates.mapNotNull { newRate ->
@@ -49,7 +49,7 @@ class SyncExchangeRatesUseCase @Inject constructor(
             // Only save exchange rates that are not overridden
             newRate.takeIf { !hasManualOverride }
         }
-        repository.saveManyRates(newRatesToSave)
+        exchangeRateStore.saveManyRates(newRatesToSave)
     }
 
     private fun ExchangeRate.identifier(): AssetCodeId = AssetCodeId(

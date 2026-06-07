@@ -3,6 +3,7 @@ package com.ivy.data.repository
 import arrow.core.Either
 import arrow.core.raise.either
 import com.ivy.base.threading.DispatchersProvider
+import com.ivy.data.api.ExchangeRateStore
 import com.ivy.data.db.dao.read.ExchangeRatesDao
 import com.ivy.data.db.dao.write.WriteExchangeRatesDao
 import com.ivy.data.model.ExchangeRate
@@ -21,22 +22,22 @@ class ExchangeRatesRepository @Inject constructor(
     private val writeExchangeRatesDao: WriteExchangeRatesDao,
     private val remoteExchangeRatesDataSource: RemoteExchangeRatesDataSource,
     private val dispatchers: DispatchersProvider,
-) {
-    suspend fun fetchEurExchangeRates(): Either<String, List<ExchangeRate>> = either {
+) : ExchangeRateStore {
+    override suspend fun fetchEurExchangeRates(): Either<String, List<ExchangeRate>> = either {
         withContext(dispatchers.io) {
             val response = remoteExchangeRatesDataSource.fetchEurExchangeRates().bind()
             with(mapper) { response.toDomain().bind() }
         }
     }
 
-    fun findAll(): Flow<List<ExchangeRate>> =
+    override fun findAll(): Flow<List<ExchangeRate>> =
         exchangeRatesDao.findAll().map { entities ->
             entities.mapNotNull {
                 with(mapper) { it.toDomain().getOrNull() }
             }
         }.flowOn(dispatchers.io)
 
-    suspend fun findAllManuallyOverridden(): List<ExchangeRate> =
+    override suspend fun findAllManuallyOverridden(): List<ExchangeRate> =
         withContext(dispatchers.io) {
             exchangeRatesDao.findAllManuallyOverridden()
                 .mapNotNull {
@@ -44,13 +45,13 @@ class ExchangeRatesRepository @Inject constructor(
                 }
         }
 
-    suspend fun save(value: ExchangeRate) {
+    override suspend fun save(value: ExchangeRate) {
         withContext(dispatchers.io) {
             writeExchangeRatesDao.save(with(mapper) { value.toEntity() })
         }
     }
 
-    suspend fun saveManyRates(values: List<ExchangeRate>) {
+    override suspend fun saveManyRates(values: List<ExchangeRate>) {
         withContext(dispatchers.io) {
             writeExchangeRatesDao.saveMany(
                 values.map {
@@ -60,13 +61,13 @@ class ExchangeRatesRepository @Inject constructor(
         }
     }
 
-    suspend fun deleteAll() {
+    override suspend fun deleteAll() {
         withContext(dispatchers.io) {
             writeExchangeRatesDao.deleteAll()
         }
     }
 
-    suspend fun deleteByBaseCurrencyAndCurrency(
+    override suspend fun deleteByBaseCurrencyAndCurrency(
         baseCurrency: AssetCode,
         currency: AssetCode
     ): Unit = withContext(dispatchers.io) {

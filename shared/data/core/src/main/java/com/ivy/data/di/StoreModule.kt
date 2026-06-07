@@ -1,8 +1,10 @@
 package com.ivy.data.di
 
 import com.ivy.data.api.CurrencyStore
+import com.ivy.data.api.ExchangeRateStore
 import com.ivy.data.api.SettingsStore
 import com.ivy.data.repository.CurrencyRepository
+import com.ivy.data.repository.ExchangeRatesRepository
 import com.ivy.data.repository.SettingsRepository
 import dagger.Binds
 import dagger.Module
@@ -17,4 +19,7 @@ abstract class StoreModule {
 
     @Binds
     abstract fun bindSettingsStore(repository: SettingsRepository): SettingsStore
+
+    @Binds
+    abstract fun bindExchangeRateStore(repository: ExchangeRatesRepository): ExchangeRateStore
 }
