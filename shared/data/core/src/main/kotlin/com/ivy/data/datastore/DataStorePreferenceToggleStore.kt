@@ -1,18 +1,20 @@
 package com.ivy.data.datastore
 
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
+import android.content.Context
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import com.ivy.data.api.PreferenceToggleStore
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class DataStorePreferenceToggleStore @Inject constructor(
-    private val dataStore: DataStore<Preferences>
+    @ApplicationContext context: Context
 ) : PreferenceToggleStore {
+    private val dataStore = context.dataStore
+
     override suspend fun isEnabled(
         storageKey: String,
         defaultValue: Boolean,

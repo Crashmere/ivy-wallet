@@ -839,6 +839,7 @@
 - 设置表端口已拆成 `SettingsInitializationStore`、`SettingsResetStore`、`ThemeStore` 与 `BufferAmountStore`；初始化、重置、主题和缓冲金额 use case 只依赖各自需要的能力，底层仍由 `RoomSettingsStore` 读写同一张 `settings` 表，数据库 schema 和备份格式不变。
 - `RoomCurrencyStore` 已删除进程内基础币种缓存，基础币种读取始终以 `SettingsTable` 当前内容为准；这避免重置、恢复或其他 settings 写入后同一 store 实例继续返回旧币种。
 - data-core 的单绑定 Hilt 模块已收敛到 `DataBindingsModule`：store、备份、文本文件和远程汇率数据源绑定集中在一处，减少只为一个接口存在的装配文件。
+- 偏好开关 DataStore 不再通过独立 Hilt module 暴露裸 `DataStore<Preferences>`；`DataStorePreferenceToggleStore` 在 data-core 内部直接使用应用 `Context` 取得同一个 `ivy_wallet_datastore_v1` 文件。
 
 建议顺序：
 
