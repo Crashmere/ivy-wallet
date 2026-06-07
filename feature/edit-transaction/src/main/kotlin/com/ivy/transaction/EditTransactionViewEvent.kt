@@ -7,7 +7,7 @@ import com.ivy.data.model.Tag
 import com.ivy.data.model.TagId
 import com.ivy.legacy.ui.model.EditTransactionDisplayLoan
 import com.ivy.data.model.legacy.Account
-import com.ivy.data.model.legacy.CreateAccountData
+import com.ivy.data.model.CreateAccountData
 import com.ivy.data.model.CreateCategoryData
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.ImmutableSet

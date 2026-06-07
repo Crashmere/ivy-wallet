@@ -43,7 +43,7 @@ import com.ivy.legacy.ui.onScreenStart
 import com.ivy.legacy.ui.selectEndTextFieldValue
 import com.ivy.legacy.ui.testing.TestingContext
 import com.ivy.ui.R
-import com.ivy.data.model.legacy.CreateAccountData
+import com.ivy.data.model.CreateAccountData
 import com.ivy.data.model.legacy.CreateLoanRecordData
 import com.ivy.data.model.legacy.EditLoanRecordData
 import com.ivy.legacy.ui.component.ItemIconSDefaultIcon

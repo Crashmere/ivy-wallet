@@ -3,7 +3,7 @@ package com.ivy.domain.usecase.account
 import arrow.core.raise.either
 import com.ivy.data.api.AccountStore
 import com.ivy.data.model.AccountId
-import com.ivy.data.model.legacy.CreateAccountData
+import com.ivy.data.model.CreateAccountData
 import com.ivy.data.model.primitive.AssetCode
 import com.ivy.data.model.primitive.ColorInt
 import com.ivy.data.model.primitive.IconAsset

@@ -483,7 +483,7 @@
 - 已把编辑交易/计划付款复用的旧底部表单组件从 `com.ivy.wallet.ui.edit.core` 迁到 `com.ivy.legacy.ui.edit.core`；除 app 自身锁屏包名外，旧 shared/feature UI 不再使用 `com.ivy.wallet.ui.*`。
 - 已清理迁移过程中留下的 `com.ivy.legacy.legacy.ui.theme.*` 双重 legacy 包名：预算进度条和日期时间行归入 `com.ivy.legacy.ui.component`，弹窗名称输入归入 `com.ivy.legacy.ui.modal`。
 - 已把 `TransactionHistoryDateDivider` 从旧 `com.ivy.wallet.domain.data` 迁到 `com.ivy.base.model.legacy`；它仍服务旧交易列表和旧日期分组，并与 `TransactionHistoryItem` 位于同一基础模型包。`SortOrder/CustomExchangeRateState` 已进一步下沉到对应 feature。
-- 旧创建/编辑参数已从早期的 `com.ivy.wallet.domain.deprecated.logic.model` 迁出；当前 `CreateBudgetData`、`CreateCategoryData` 已归位到正式 `com.ivy.data.model`，其余 `CreateAccountData`、`CreateLoanData`、`CreateLoanRecordData`、`EditLoanRecordData` 等纯参数对象仍暂留 `com.ivy.data.model.legacy`，旧页面和正式 use case 继续使用同名语义。
+- 旧创建/编辑参数已从早期的 `com.ivy.wallet.domain.deprecated.logic.model` 迁出；当前 `CreateAccountData`、`CreateBudgetData`、`CreateCategoryData` 已归位到正式 `com.ivy.data.model`，其余 `CreateLoanData`、`CreateLoanRecordData`、`EditLoanRecordData` 等纯参数对象仍暂留 `com.ivy.data.model.legacy`，旧页面和正式 use case 继续使用同名语义。
 - 已把 `shared:domain` 中旧业务逻辑从早期 deprecated/legacy logic 包继续迁出：计划付款、账户统计、分类统计、借贷交易联动和旧汇率换算已进入正式 use case 包；当前不再保留 `com.ivy.legacy.domain.logic` 源码。
 - 已把旧 FPAction/use-case 与 pure helper 从 `com.ivy.wallet.domain.action/pure` 迁到 `com.ivy.legacy.domain.action/pure`，并同步迁移 `ClosedTimeRange`、`IncomeExpensePair`、`IncomeExpenseTransferPair` 的旧统计值对象包名；这些代码仍是旧 domain 兼容层，但不再占用正式 Wallet 产品包名。
 - 已把旧 FRP/action helper 从 `shared:base` 物理下沉到 `shared:domain`，仍保留 `com.ivy.legacy.frp` 包名以避免大面积调用方 import churn；`shared:base` 不再承载这批旧 action 组合工具。
@@ -504,7 +504,7 @@
 - 账户余额过滤、账户币种 fallback 和汇率换算纯函数已从 `com.ivy.legacy.domain.pure.account/exchange` 迁到 `com.ivy.domain.account` 与 `com.ivy.domain.exchange`；它们仍兼容旧账户/汇率模型，但包边界已经按业务职责归位。
 - 旧交易纯计算、日期分组和新旧交易值桥接函数已从 `com.ivy.legacy.domain.pure.transaction` 迁到 `com.ivy.domain.transaction.legacy`；当前 `shared:domain` 中的 `com.ivy.legacy.domain` 源码已经清空。
 - 账户页展示模型 `AccountData` 和对应 `AccountDataAct` 已从 `shared:domain` 下沉到 `feature:accounts`；账户页专用展示聚合不再占用 shared domain 边界。
-- 纯创建参数 `CreateAccountData`、`CreateCategoryData`、`CreateBudgetData` 已从 `com.ivy.legacy.domain.model` 下沉；其中 `CreateBudgetData`、`CreateCategoryData` 已进一步归位到正式 `com.ivy.data.model`，UI 弹窗、feature event 和 domain creator 继续使用同名参数对象。
+- 纯创建参数 `CreateAccountData`、`CreateCategoryData`、`CreateBudgetData` 已从 `com.ivy.legacy.domain.model` 下沉并进一步归位到正式 `com.ivy.data.model`，UI 弹窗、feature event 和 domain creator 继续使用同名参数对象。
 - 预算模型 `Budget` 已从 `com.ivy.data.model.legacy` 归位到正式 `com.ivy.data.model`；字段、序列化 ID 字符串、软删除标记和 Room/备份格式保持不变，预算页和预算相关 use case 继续使用同一模型语义。
 - 旧汇率计算仍使用的兼容模型 `ExchangeRate` 已从 `com.ivy.legacy.domain.model` 下沉到 `com.ivy.data.model.legacy`；数据库转换边界保留在 legacy domain mapper。无调用方的旧 `Category` 兼容模型和 mapper 已删除，分类功能继续使用正式 `com.ivy.data.model.Category`。
 - 旧借贷模型 `Loan`、`LoanRecord` 和 `EditLoanRecordData` 已从 `com.ivy.legacy.domain.model` 下沉到 `com.ivy.data.model.legacy`；借贷数据库转换 `toEntity()` 已移入 legacy domain mapper。
@@ -1065,7 +1065,7 @@ shared:ui:core
 下一步建议执行：
 
 1. shared 模块依赖审计暂时没有发现可直接删除的低风险依赖；后续在改动具体调用方时继续顺手收缩 Gradle 依赖。
-2. 继续收敛仍在 domain/data-core 中流动的 `legacy` 数据模型；预算模型、预算创建参数和分类创建参数已归位到正式 data model，下一批优先选择账户创建参数或其他单一业务边界，避免一次性重写借贷、计划付款和交易统计等高风险功能。
+2. 继续收敛仍在 domain/data-core 中流动的 `legacy` 数据模型；预算模型、账户/预算/分类创建参数已归位到正式 data model，下一批优先选择借贷创建参数或其他单一业务边界，避免一次性重写借贷、计划付款和交易统计等高风险功能。
 3. 偏好设置代码边界已基本收窄，短期不再为清理而迁移存储格式；若后续要处理 `SettingsEntity`、SharedPrefs 或 DataStore 归并，必须单独规划 schema/备份兼容迁移。
 4. 继续数据库只读审计：`isDeleted` 目前先保留为本地软删除语义；不再把业务表里的 `isDeleted` 当作纯云同步字段批量删除。
 5. feature 模块合并属于较大结构调整，短期只在实际修改某个功能时收敛依赖；真正合并模块前需要先确认导航、资源和 Hilt 边界。

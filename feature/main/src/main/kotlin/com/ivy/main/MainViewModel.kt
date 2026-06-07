@@ -9,7 +9,7 @@ import com.ivy.ui.navigation.MainTab
 import com.ivy.ui.navigation.MainScreen
 import com.ivy.ui.navigation.MainTabState
 import com.ivy.ui.navigation.Navigation
-import com.ivy.data.model.legacy.CreateAccountData
+import com.ivy.data.model.CreateAccountData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

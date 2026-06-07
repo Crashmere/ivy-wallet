@@ -1,7 +1,7 @@
 package com.ivy.loans.loan
 
 import com.ivy.loans.loan.data.DisplayLoan
-import com.ivy.data.model.legacy.CreateAccountData
+import com.ivy.data.model.CreateAccountData
 import com.ivy.data.model.legacy.CreateLoanData
 
 sealed interface LoanScreenEvent {
