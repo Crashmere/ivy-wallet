@@ -4,8 +4,8 @@ import android.content.Context
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
-import com.ivy.base.legacy.timeNowLocal
 import com.ivy.base.legacy.toEpochSeconds
+import com.ivy.base.time.TimeProvider
 import com.ivy.domain.preferences.AppPreferences
 import dagger.hilt.android.qualifiers.ApplicationContext
 import java.util.concurrent.TimeUnit
@@ -16,6 +16,7 @@ class TransactionReminderLogic @Inject constructor(
     @ApplicationContext
     private val appContext: Context,
     private val appPreferences: AppPreferences,
+    private val timeProvider: TimeProvider,
 ) {
     companion object {
         private const val UNIQUE_WORK_NAME_V1 = "transaction_reminder_work"
@@ -40,8 +41,8 @@ class TransactionReminderLogic @Inject constructor(
             return
         }
 
-        val timeNowLocal = timeNowLocal()
-        val today8PM = timeNowLocal()
+        val timeNowLocal = timeProvider.localNow()
+        val today8PM = timeNowLocal
             .withHour(20)
             .withMinute(0)
 
