@@ -24,7 +24,6 @@ class BuildTransactionHistoryItemsUseCase @Inject constructor(
             baseCurrencyCode = baseCurrency,
             getTags = { tagIds -> tagStore.findByIds(tagIds) },
             getAccount = { accountId -> accountStore.findById(AccountId(accountId))?.toLegacyDomain() },
-            accountStore = accountStore,
             exchange = exchangeAmountUseCase::invoke
         )
     }

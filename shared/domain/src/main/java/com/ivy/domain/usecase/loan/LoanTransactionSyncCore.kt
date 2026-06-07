@@ -16,7 +16,6 @@ import com.ivy.data.model.TransactionId
 import com.ivy.data.model.primitive.ColorInt
 import com.ivy.data.model.primitive.IconAsset
 import com.ivy.data.model.primitive.NotBlankTrimmedString
-import com.ivy.data.repository.mapper.TransactionMapper
 import com.ivy.domain.usecase.category.GetCategoriesUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.data.model.legacy.Account
@@ -45,7 +44,6 @@ class LoanTransactionSyncCore @Inject constructor(
     private val accountStore: AccountStore,
     private val exchangeRatesLogic: LegacyExchangeRatesUseCase,
     private val transactionRepo: TransactionStore,
-    private val transactionMapper: TransactionMapper,
     private val timeProvider: TimeProvider,
 ) {
     private var baseCurrencyCode: String? = null
@@ -72,9 +70,9 @@ class LoanTransactionSyncCore @Inject constructor(
             val transactions: List<Transaction?> =
                 if (loanId != null) {
                     transactionRepo.findAllByLoanId(loanId = loanId)
-                        .map { it.toLegacy(transactionMapper) }
+                        .map { it.toLegacy() }
                 } else {
-                    listOf(transactionRepo.findLoanRecordTransaction(loanRecordId!!)?.toLegacy(transactionMapper))
+                    listOf(transactionRepo.findLoanRecordTransaction(loanRecordId!!)?.toLegacy())
                 }
 
             transactions.forEach { trans ->
@@ -193,7 +191,7 @@ class LoanTransactionSyncCore @Inject constructor(
             )
 
         ioThread {
-            modifiedTransaction.toDomain(transactionMapper)?.let {
+            modifiedTransaction.toDomain(accountStore)?.let {
                 transactionRepo.save(it)
             }
         }
@@ -326,7 +324,7 @@ class LoanTransactionSyncCore @Inject constructor(
     suspend fun fetchLoanRecordTransaction(loanRecordId: UUID?): Transaction? {
         return loanRecordId?.let {
             ioThread {
-                transactionRepo.findLoanRecordTransaction(it)?.toLegacy(transactionMapper)
+                transactionRepo.findLoanRecordTransaction(it)?.toLegacy()
             }
         }
     }

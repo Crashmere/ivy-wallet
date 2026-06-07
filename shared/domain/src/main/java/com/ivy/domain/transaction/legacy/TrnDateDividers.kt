@@ -12,9 +12,9 @@ import com.ivy.data.model.AccountId
 import com.ivy.data.model.Tag
 import com.ivy.data.model.TagId
 import com.ivy.data.model.Transaction
-import com.ivy.data.repository.mapper.TransactionMapper
 import com.ivy.data.model.legacy.Account
 import com.ivy.domain.mapper.legacy.toImmutableLegacyTags
+import com.ivy.domain.mapper.legacy.toLegacy
 import com.ivy.domain.mapper.legacy.toLegacyDomain
 import com.ivy.base.time.toEpochSeconds
 import com.ivy.domain.usecase.exchange.LegacyExchangeRatesUseCase
@@ -35,7 +35,6 @@ suspend fun List<Transaction>.withDateDividers(
         baseCurrencyCode = baseCurrencyCode,
         getAccount = { accountId -> accountStore.findById(AccountId(accountId))?.toLegacyDomain() },
         getTags = { tagsIds -> tagStore.findByIds(tagsIds) },
-        accountStore = accountStore,
         exchange = { data, amount ->
             exchangeRatesLogic.convertAmount(
                 baseCurrency = data.baseCurrency,
@@ -49,13 +48,11 @@ suspend fun List<Transaction>.withDateDividers(
 suspend fun transactionsWithDateDividers(
     transactions: List<Transaction>,
     baseCurrencyCode: String,
-    accountStore: AccountStore,
     getAccount: suspend (accountId: UUID) -> Account?,
     exchange: suspend (ExchangeData, BigDecimal) -> Option<BigDecimal>,
     getTags: suspend (tagIds: List<TagId>) -> List<Tag> = { emptyList() },
 ): List<TransactionHistoryItem> {
     if (transactions.isEmpty()) return emptyList()
-    val transactionsMapper = TransactionMapper(accountStore)
     return transactions
         .groupBy { it.time.convertToLocal().toLocalDate() }
         .filterKeys { it != null }
@@ -71,11 +68,8 @@ suspend fun transactionsWithDateDividers(
             )
 
             // Required to be interoperable with [TransactionHistoryItem]
-            val legacyTransactionsForDate = with(transactionsMapper) {
-                transactionsForDate.map {
-                    it.toEntity()
-                        .toLegacyDomain(tags = getTags(it.tags).toImmutableLegacyTags())
-                }
+            val legacyTransactionsForDate = transactionsForDate.map {
+                it.toLegacy(tags = getTags(it.tags).toImmutableLegacyTags())
             }
             listOf<TransactionHistoryItem>(
                 TransactionHistoryDateDivider(
