@@ -426,8 +426,8 @@
 - 已把旧 domain 层对 `IvyWalletCtx` 的直接依赖拆掉：账户/分类缓存 action 已删除，起始日状态由 `PeriodState` 和正式 settings use case 承接，调用方显式更新旧 UI 上下文；借贷交易逻辑去掉固定为 true 的付费判断分支。
 - 已把旧 `domain/action`、`domain/pure`、旧汇率换算逻辑、账户数据 action、交易范围过滤 action 迁入 `shared:domain`。
 - 已把旧 creator、计划付款逻辑、标题建议、账户/分类统计逻辑和借贷交易联动逻辑迁入 `shared:domain`；后续再逐步从 legacy 包迁到正式 use case。
-- 已把仍依赖 Android 字符串资源的 `PreloadDataLogic` 从 `temp:legacy-code` 移到 app 默认数据初始化边界，避免 `temp` 继续承载旧业务逻辑。
-- 已精简 `PreloadDataLogic`：删除没有运行时入口的账户/分类建议列表，默认账户预置直接创建当前 `data.model.Account`，不再通过旧 `legacy.domain.model.Account` 转换；首次启动默认现金、银行账户和默认分类保持不变。
+- 已把仍依赖 Android 字符串资源的默认钱包数据预置逻辑从 `temp:legacy-code` 移到 app 默认数据初始化边界，当前由 `DefaultWalletDataSeeder` 承接，避免 `temp` 继续承载旧业务逻辑。
+- 已精简 `DefaultWalletDataSeeder`：删除没有运行时入口的账户/分类建议列表，默认账户预置直接创建当前 `data.model.Account`，不再通过旧 `legacy.domain.model.Account` 转换；首次启动默认现金、银行账户和默认分类保持不变。
 - 已把旧全局上下文入口 `IvyWalletCtx`、`ivyWalletCtx()` 和 `rootScreen()` 迁入 `shared:ui:legacy` 后继续拆分；目前这些旧全局入口都已经删除。
 - 已继续缩小 `shared:ui:legacy` 的旧全局 API：删除无调用方的 `rootView()`、时间选择器桥接、Google 登录入口和固定为 true 的会员状态；RootActivity 使用 `LegacyUiRoot` 作为旧 UI 兼容入口。
 - 已删除 `IvyWalletCtx` 中无实际写入路径的账户/分类缓存、列表滚动状态缓存和未被调用的 `reset()`；相关页面改为只使用已有的 `rememberScrollPositionListState(key = ...)` 保存滚动位置。
@@ -858,6 +858,7 @@
 - `LocalTimeConverter/LocalTimeProvider/LocalTimeFormatter` 现在作为根部显式提供的 UI 时间平台入口保留，不再用废弃注解把当前页面的正常调用标成警告。
 - `RootContent` 接收的旧 Material 日期选择器已从 app 具体实现 `ActivityDatePicker` 收窄为 UI 层 `DatePicker` 接口；Activity 仍负责注册 FragmentManager 相关实现。
 - 交易提醒调度已删除无调用方的 `testNow()` 调试入口和旧 work name 常量，只保留当前实际使用的每日提醒任务。
+- app 层剩余的泛化 `*Logic` 命名已继续收敛：首次默认账户/分类预置从 `PreloadDataLogic` 改为 `DefaultWalletDataSeeder`，交易提醒调度从 `TransactionReminderLogic` 改为 `TransactionReminderScheduler`；行为不变，只让启动编排中的职责更直接。
 - Android Toast 封装 `Toaster` 已从 `shared:base` 迁到 `shared:ui:core` 的 `com.ivy.ui.platform`，编辑交易和汇率页继续通过同一注入类型显示提示；基础层不再承载这段 UI 平台能力。
 
 ### 阶段 9：feature 模块收敛

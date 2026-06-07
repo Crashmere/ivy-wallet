@@ -1,5 +1,5 @@
 package com.ivy.wallet.startup
-import com.ivy.ui.resource.ResourceProvider
+
 import com.ivy.data.model.Account
 import com.ivy.data.model.AccountId
 import com.ivy.data.model.Category
@@ -11,10 +11,11 @@ import com.ivy.domain.usecase.account.SaveAccountUseCase
 import com.ivy.domain.usecase.category.SaveCategoryUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyUseCase
 import com.ivy.ui.R
+import com.ivy.ui.resource.ResourceProvider
 import java.util.UUID
 import javax.inject.Inject
 
-class PreloadDataLogic @Inject constructor(
+class DefaultWalletDataSeeder @Inject constructor(
     private val saveCategoryUseCase: SaveCategoryUseCase,
     private val saveAccountUseCase: SaveAccountUseCase,
     private val getBaseCurrency: GetBaseCurrencyUseCase,
@@ -22,7 +23,7 @@ class PreloadDataLogic @Inject constructor(
 ) {
     private var categoryOrderNum = 0.0
 
-    suspend fun preloadAccounts() {
+    suspend fun seedAccounts() {
         val baseCurrency = getBaseCurrency()
         saveAccountUseCase(
             Account(
@@ -48,13 +49,13 @@ class PreloadDataLogic @Inject constructor(
         )
     }
 
-    suspend fun preloadCategories() {
+    suspend fun seedCategories() {
         categoryOrderNum = 0.0
 
         val categoriesToPreload = defaultCategories()
 
         for (createData in categoriesToPreload) {
-            preloadCategory(createData)
+            seedCategory(createData)
         }
     }
 
@@ -120,7 +121,7 @@ class PreloadDataLogic @Inject constructor(
         ),
     )
 
-    private suspend fun preloadCategory(
+    private suspend fun seedCategory(
         data: DefaultCategory,
     ) {
         saveCategoryUseCase(

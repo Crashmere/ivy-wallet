@@ -5,7 +5,7 @@ import com.ivy.domain.usecase.account.GetAccountsUseCase
 import com.ivy.domain.usecase.category.GetCategoriesUseCase
 import com.ivy.domain.usecase.settings.EnsureSettingsInitializedUseCase
 import com.ivy.domain.usecase.settings.SetInitialSetupCompletedUseCase
-import com.ivy.wallet.notification.reminder.TransactionReminderLogic
+import com.ivy.wallet.notification.reminder.TransactionReminderScheduler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -15,8 +15,8 @@ class InitialDataSetup @Inject constructor(
     private val getCategoriesUseCase: GetCategoriesUseCase,
     private val ensureSettingsInitialized: EnsureSettingsInitializedUseCase,
     private val setInitialSetupCompleted: SetInitialSetupCompletedUseCase,
-    private val preloadDataLogic: PreloadDataLogic,
-    private val transactionReminderLogic: TransactionReminderLogic,
+    private val defaultWalletDataSeeder: DefaultWalletDataSeeder,
+    private val transactionReminderScheduler: TransactionReminderScheduler,
 ) {
     suspend fun setupDefaults(systemDarkMode: Boolean) {
         withContext(Dispatchers.IO) {
@@ -29,15 +29,15 @@ class InitialDataSetup @Inject constructor(
             )
 
             if (getAccountsUseCase().isEmpty()) {
-                preloadDataLogic.preloadAccounts()
+                defaultWalletDataSeeder.seedAccounts()
             }
 
             if (getCategoriesUseCase().isEmpty()) {
-                preloadDataLogic.preloadCategories()
+                defaultWalletDataSeeder.seedCategories()
             }
 
             setInitialSetupCompleted(true)
-            transactionReminderLogic.scheduleReminder()
+            transactionReminderScheduler.scheduleReminder()
         }
     }
 }

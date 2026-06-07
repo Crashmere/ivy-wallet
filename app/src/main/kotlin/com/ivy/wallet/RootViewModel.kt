@@ -14,7 +14,7 @@ import com.ivy.legacy.ui.state.PeriodState
 import com.ivy.ui.navigation.EditTransactionScreen
 import com.ivy.ui.navigation.MainScreen
 import com.ivy.ui.navigation.Navigation
-import com.ivy.wallet.notification.reminder.TransactionReminderLogic
+import com.ivy.wallet.notification.reminder.TransactionReminderScheduler
 import com.ivy.wallet.startup.InitialDataSetup
 import com.ivy.wallet.security.AppLockController
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -33,7 +33,7 @@ class RootViewModel @Inject constructor(
     private val getStartDayOfMonth: GetStartDayOfMonthUseCase,
     private val isInitialSetupCompleted: IsInitialSetupCompletedUseCase,
     private val appLockController: AppLockController,
-    private val transactionReminderLogic: TransactionReminderLogic,
+    private val transactionReminderScheduler: TransactionReminderScheduler,
     private val initialDataSetup: InitialDataSetup,
 ) : ViewModel() {
 
@@ -74,7 +74,7 @@ class RootViewModel @Inject constructor(
     private fun navigateOnboardedUser(intent: Intent) {
         if (!handleSpecialStart(intent)) {
             nav.navigateTo(MainScreen)
-            transactionReminderLogic.scheduleReminder()
+            transactionReminderScheduler.scheduleReminder()
         }
     }
 

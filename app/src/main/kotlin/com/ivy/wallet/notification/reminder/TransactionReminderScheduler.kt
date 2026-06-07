@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 private fun LocalDateTime.toEpochSeconds() = toEpochSecond(ZoneOffset.UTC)
 
-class TransactionReminderLogic @Inject constructor(
+class TransactionReminderScheduler @Inject constructor(
     @ApplicationContext
     private val appContext: Context,
     private val getShowNotificationsPreference: GetShowNotificationsPreferenceUseCase,
