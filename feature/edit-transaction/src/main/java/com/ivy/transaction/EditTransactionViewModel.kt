@@ -46,7 +46,6 @@ import com.ivy.domain.usecase.transaction.SaveLegacyTransactionUseCase
 import com.ivy.domain.usecase.transaction.SuggestTransactionTitlesUseCase
 import com.ivy.legacy.ui.model.EditTransactionDisplayLoan
 import com.ivy.data.model.legacy.Account
-import com.ivy.base.text.toLowerCaseLocal
 import com.ivy.ui.navigation.EditTransactionScreen
 import com.ivy.ui.navigation.MainScreen
 import com.ivy.ui.navigation.Navigation
@@ -77,6 +76,7 @@ import kotlinx.coroutines.withContext
 import java.math.BigDecimal
 import java.time.Instant
 import java.time.LocalDateTime
+import java.util.Locale
 import java.util.UUID
 import javax.inject.Inject
 
@@ -916,7 +916,7 @@ class EditTransactionViewModel @Inject constructor(
 
     private fun onTagSaved(name: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            NotBlankTrimmedString.from(name.toLowerCaseLocal())
+            NotBlankTrimmedString.from(name.lowercase(Locale.getDefault()))
                 .onRight {
                     createTagUseCase(it)
                     this@EditTransactionViewModel.tags = getAllTags()
@@ -947,7 +947,7 @@ class EditTransactionViewModel @Inject constructor(
             tagSearchJob?.cancelAndJoin()
             delay(tagSearchDebounceTimeInMills) // Debounce effect
             tagSearchJob = launch(Dispatchers.IO) {
-                NotBlankTrimmedString.from(query.toLowerCaseLocal())
+                NotBlankTrimmedString.from(query.lowercase(Locale.getDefault()))
                     .onRight {
                         tags =
                             searchTagsUseCase(it).toImmutableList()

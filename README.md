@@ -441,7 +441,7 @@
 - 已删除 `shared:base` 中旧全局当前时间函数和手写 UTC/local 转换 helper；旧日期展示改为用 `LocalDateTime.toInstant(UTC)` 加标准 `DateTimeFormatter.withZone(...)` 格式化，计划付款页面顺手清理了残留的无用旧时间 import。
 - 旧 `DateTimeUtil` 毫秒转换已从 `com.ivy.base.legacy` 迁到 `com.ivy.base.time`，用 `toUtcEpochMilli()` / `epochMilliToUtcLocalDateTime()` 明确保留原有 UTC 持久化语义；旧 legacy 文件已删除。
 - 旧 `MVVMExt` 已拆出 `com.ivy.base.legacy`：原 LiveData 只读 helper 已删除，仍使用 LiveData 的 ViewModel 直接暴露 `LiveData<T>` 类型；后续 `StateFlow.readOnly()` 与旧 dispatcher helper 也已分别改为标准库 API 和标准协程调度器调用。
-- 字符串本地化大小写/判空 helper 已迁到 `com.ivy.base.text`，默认系统法币 helper 已迁到 `com.ivy.base.currency`；`shared:base:legacy` 不再承载这类通用文本和货币工具。
+- 字符串本地化大小写/判空 helper 已从 `shared:base:legacy` 拆出；后续无抽象价值的 `com.ivy.base.text` 包也已删除，调用方改用 Kotlin 标准库或文件内局部扩展。默认系统法币 helper 已归位到数据模型层。
 - 其余通用 helper 已继续拆出 `shared:base:legacy`：列表交换迁到 `com.ivy.base.collections`，随机区间数迁到 `com.ivy.base.random`，zip/unzip 迁到 `com.ivy.base.io`，余额正负号 helper 迁到 `com.ivy.ui.money`。
 - `shared:base` 中拼写错误的 `com.ivy.base.kotlinxserilzation` 包已更正为 `com.ivy.base.kotlinxserialization`；serializer descriptor 和编码方式保持不变。
 - 旧函数式 helper 已从顶层 `com.ivy.frp` 归入 `com.ivy.base.frp`；`shared:base` 源码现在只暴露在 `com.ivy.base.*` 根包下。
@@ -751,6 +751,7 @@
 - 剩余 `uiThread` 调用已改为标准 `withContext(Dispatchers.Main)`，base 中的主线程切换 helper 已删除。
 - `feature:main` 和 `feature:search` 已把旧 `ioThread` helper 改为标准 `withContext(Dispatchers.IO)`，并移除对 `shared:base` 的 Gradle 依赖。
 - 剩余 `ioThread/scopedIOThread/computationThread` 调用已全部改为标准 `withContext(Dispatchers.IO/Default)`；`shared:base` 中的旧协程 dispatcher helper 文件已删除。
+- `com.ivy.base.text` 中的字符串判空、大小写和首字母转换 helper 已删除；调用方改为标准 `isNullOrBlank().not()`、`uppercase/lowercase(Locale.getDefault())` 或局部私有扩展，基础层不再承载通用字符串糖衣。
 - 版本目录中未被任何 Gradle 文件或源码使用的 `mockk-android` 与 `androidx-security` 依赖别名已删除。
 - 账户旧读取路径已收敛到 `AccountStore`；旧 legacy 账户模型现在由 data model 账户映射而来，`shared:domain` 主源码不再直接注入 `AccountDao` 或依赖 `AccountEntity` mapper。
 - 旧交易卡片已移除重复账户查找 TODO：渲染前先解析来源/目标账户，再复用同一结果处理点击和币种展示，行为不变但 legacy UI 内部职责更清楚。

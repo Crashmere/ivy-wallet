@@ -16,7 +16,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.ui.compose.thenWhen
-import com.ivy.base.text.toLowerCaseLocal
+import java.util.Locale
 
 @Composable
 fun ItemIconMDefaultIcon(
@@ -185,7 +185,7 @@ fun getCustomIconId(
             val iconNameNormalized = iconName
                 .replace(" ", "")
                 .trim()
-                .toLowerCaseLocal()
+                .lowercase(Locale.getDefault())
 
             val itemId = context.resources.getIdentifier(
                 "ic_custom_${iconNameNormalized}_$size",
@@ -235,7 +235,7 @@ fun fallbackToNewIconFormat(
             val iconNameNormalized = iconName
                 .replace(" ", "")
                 .trim()
-                .toLowerCaseLocal()
+                .lowercase(Locale.getDefault())
 
             val iconId = context.resources.getIdentifier(
                 iconNameNormalized,

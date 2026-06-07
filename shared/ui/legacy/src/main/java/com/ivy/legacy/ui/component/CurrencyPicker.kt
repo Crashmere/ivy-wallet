@@ -47,7 +47,6 @@ import com.ivy.legacy.ui.densityScope
 import com.ivy.legacy.ui.hideKeyboard
 import com.ivy.legacy.ui.keyboardOnlyWindowInsets
 import com.ivy.legacy.ui.onScreenStart
-import com.ivy.base.text.toLowerCaseLocal
 import com.ivy.ui.R
 import com.ivy.data.model.currency.IvyCurrency
 import com.ivy.legacy.ui.theme.GradientGreen
@@ -274,8 +273,8 @@ private fun CurrencyList(
     val currencies = IvyCurrency.getAvailable()
         .filter {
             searchQueryLowercase.isBlank() ||
-                it.code.toLowerCaseLocal().startsWith(searchQueryLowercase) ||
-                it.name.toLowerCaseLocal().startsWith(searchQueryLowercase)
+                it.code.lowercase(Locale.getDefault()).startsWith(searchQueryLowercase) ||
+                it.name.lowercase(Locale.getDefault()).startsWith(searchQueryLowercase)
         }
         .sortedBy { it.code }
         .sortedBy { it.isCrypto }

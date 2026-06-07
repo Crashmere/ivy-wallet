@@ -22,7 +22,6 @@ import androidx.compose.ui.text.style.TextAlign
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
 import com.ivy.legacy.ui.hideKeyboard
-import com.ivy.base.text.isNotNullOrBlank
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
 import androidx.compose.ui.unit.dp
@@ -49,7 +48,7 @@ fun IvyDescriptionTextField(
         modifier = modifier,
         contentAlignment = Alignment.TopStart
     ) {
-        if (isEmpty && hint.isNotNullOrBlank()) {
+        if (isEmpty && hint.isNullOrBlank().not()) {
             Text(
                 modifier = textModifier,
                 text = hint!!,

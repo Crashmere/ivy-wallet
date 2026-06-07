@@ -28,7 +28,6 @@ import androidx.compose.ui.unit.dp
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
 import com.ivy.legacy.ui.hideKeyboard
-import com.ivy.base.text.isNotNullOrBlank
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -57,7 +56,7 @@ fun ColumnScope.IvyTitleTextField(
         modifier = modifier,
         contentAlignment = Alignment.CenterStart
     ) {
-        if (isEmpty && hint.isNotNullOrBlank()) {
+        if (isEmpty && hint.isNullOrBlank().not()) {
             Text(
                 modifier = Modifier,
                 text = hint!!,

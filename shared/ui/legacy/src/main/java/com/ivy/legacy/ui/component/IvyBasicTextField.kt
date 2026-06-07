@@ -22,7 +22,6 @@ import androidx.compose.ui.text.style.TextAlign
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
 import com.ivy.legacy.ui.hideKeyboard
-import com.ivy.base.text.isNotNullOrBlank
 import com.ivy.legacy.ui.selectEndTextFieldValue
 
 @Suppress("ParameterNaming")
@@ -48,7 +47,7 @@ fun IvyBasicTextField(
         modifier = modifier,
         contentAlignment = Alignment.CenterStart
     ) {
-        if (isEmpty && hint.isNotNullOrBlank()) {
+        if (isEmpty && hint.isNullOrBlank().not()) {
             Text(
                 modifier = Modifier,
                 text = hint!!,

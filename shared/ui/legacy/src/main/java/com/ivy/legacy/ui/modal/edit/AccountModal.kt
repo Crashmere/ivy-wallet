@@ -26,11 +26,8 @@ import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
 import com.ivy.legacy.ui.component.IvyColorPicker
 import com.ivy.data.model.legacy.Account
-import com.ivy.base.text.isNotNullOrBlank
 import com.ivy.legacy.ui.onScreenStart
 import com.ivy.legacy.ui.selectEndTextFieldValue
-import com.ivy.base.text.toLowerCaseLocal
-import com.ivy.base.text.toUpperCaseLocal
 import com.ivy.ui.R
 import com.ivy.data.model.currency.IvyCurrency
 import com.ivy.data.model.legacy.CreateAccountData
@@ -43,6 +40,7 @@ import com.ivy.legacy.ui.modal.IvyModal
 import com.ivy.legacy.ui.modal.ModalAddSave
 import com.ivy.legacy.ui.modal.ModalAmountSection
 import com.ivy.legacy.ui.modal.ModalTitle
+import java.util.Locale
 import java.util.UUID
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
@@ -100,7 +98,7 @@ fun BoxWithConstraintsScope.AccountModal(
         PrimaryAction = {
             ModalAddSave(
                 item = modal?.account,
-                enabled = nameTextFieldValue.text.isNotNullOrBlank() && (!forceNonZeroBalance || amount > 0)
+                enabled = nameTextFieldValue.text.isNullOrBlank().not() && (!forceNonZeroBalance || amount > 0)
             ) {
                 save(
                     account = account,
@@ -304,7 +302,7 @@ private fun AccountCurrency(
         Spacer(Modifier.width(32.dp))
 
         Text(
-            text = currencyCode.toUpperCaseLocal(),
+            text = currencyCode.uppercase(Locale.getDefault()),
             style = LegacyTheme.typo.b1.style(
                 fontWeight = FontWeight.ExtraBold
             )
@@ -314,7 +312,7 @@ private fun AccountCurrency(
 
         val currencyName = IvyCurrency.fromCode(currencyCode)?.name ?: ""
         Text(
-            text = "-$currencyName".toLowerCaseLocal(),
+            text = "-$currencyName".lowercase(Locale.getDefault()),
             style = LegacyTheme.typo.b2.style(
                 fontWeight = FontWeight.SemiBold,
                 color = Gray

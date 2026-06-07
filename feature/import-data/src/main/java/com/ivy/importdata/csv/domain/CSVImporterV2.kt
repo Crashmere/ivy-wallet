@@ -23,13 +23,13 @@ import com.ivy.importdata.csv.ImportantFields
 import com.ivy.importdata.csv.OptionalFields
 import com.ivy.importdata.csv.TransferFields
 import com.ivy.data.model.legacy.Account
-import com.ivy.base.text.toLowerCaseLocal
 import com.ivy.data.model.currency.IvyCurrency
 import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
 import com.ivy.domain.util.nextOrderNum
 import com.ivy.legacy.ui.theme.Green
 import com.ivy.legacy.ui.theme.IvyDark
 import kotlinx.collections.immutable.toImmutableList
+import java.util.Locale
 import java.util.UUID
 import javax.inject.Inject
 import kotlin.math.absoluteValue
@@ -245,7 +245,7 @@ class CSVImporterV2 @Inject constructor(
         if (accountNameString == null || accountNameString.isBlank()) return null
 
         val existingAccount = accounts.firstOrNull {
-            accountNameString.toLowerCaseLocal() == it.name.toLowerCaseLocal()
+            accountNameString.lowercase(Locale.getDefault()) == it.name.lowercase(Locale.getDefault())
         }
         if (existingAccount != null) {
             return existingAccount
@@ -253,11 +253,11 @@ class CSVImporterV2 @Inject constructor(
 
         // create new account
         val colorArgb = color ?: when {
-            accountNameString.toLowerCaseLocal().contains("cash") -> {
+            accountNameString.lowercase(Locale.getDefault()).contains("cash") -> {
                 Green
             }
 
-            accountNameString.toLowerCaseLocal().contains("revolut") -> {
+            accountNameString.lowercase(Locale.getDefault()).contains("revolut") -> {
                 IvyDark
             }
 
@@ -309,7 +309,7 @@ class CSVImporterV2 @Inject constructor(
         if (categoryNameString == null || categoryNameString.isBlank()) return null
 
         val existingCategory = categories.firstOrNull {
-            categoryNameString.toLowerCaseLocal() == it.name.value.toLowerCaseLocal()
+            categoryNameString.lowercase(Locale.getDefault()) == it.name.value.lowercase(Locale.getDefault())
         }
         if (existingCategory != null) {
             return existingCategory

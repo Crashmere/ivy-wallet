@@ -21,7 +21,6 @@ import com.ivy.data.model.legacy.toCloseTimeRange
 import com.ivy.data.model.legacy.Account
 import com.ivy.data.model.legacy.Budget
 import com.ivy.data.model.currency.format
-import com.ivy.base.text.isNotNullOrBlank
 import com.ivy.domain.usecase.budget.CreateBudgetUseCase
 import com.ivy.domain.usecase.budget.DeleteBudgetUseCase
 import com.ivy.domain.usecase.budget.GetBudgetsUseCase
@@ -202,7 +201,7 @@ class BudgetViewModel @Inject constructor(
                 .maxOfOrNull { it.amount } ?: 0.0
 
             categoryBudgetsTotal.doubleValue = budgets
-                .filter { it.categoryIdsSerialized.isNotNullOrBlank() }
+                .filter { it.categoryIdsSerialized.isNullOrBlank().not() }
                 .sumOf { it.amount }
 
             this@BudgetViewModel.budgets.value = withContext(Dispatchers.IO) {
@@ -303,6 +302,6 @@ fun calculateTotalRemainingBudget(
     categoryBudgetsTotal: Double
 ): Double {
     return categoryBudgetsTotal - budgets
-        .filter { it.budget.categoryIdsSerialized.isNotNullOrBlank() }
+        .filter { it.budget.categoryIdsSerialized.isNullOrBlank().not() }
         .sumOf { it.spentAmount }
 }

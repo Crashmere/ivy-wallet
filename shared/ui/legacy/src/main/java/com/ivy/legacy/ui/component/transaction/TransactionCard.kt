@@ -43,9 +43,7 @@ import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
 import com.ivy.legacy.ui.model.AppBaseData
 import com.ivy.data.model.legacy.Account
-import com.ivy.base.text.capitalizeLocal
 import com.ivy.data.model.currency.format
-import com.ivy.base.text.isNotNullOrBlank
 import com.ivy.ui.navigation.Navigation
 import com.ivy.ui.navigation.TransactionsScreen
 import com.ivy.ui.navigation.navigation
@@ -72,6 +70,7 @@ import com.ivy.legacy.ui.theme.toComposeColor
 import com.ivy.legacy.ui.component.AmountCurrencyB1
 import kotlinx.collections.immutable.ImmutableList
 import java.time.LocalDateTime
+import java.util.Locale
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.ui.graphics.toArgb
@@ -156,7 +155,7 @@ fun TransactionCard(
             )
         }
 
-        if (transaction.title.isNotNullOrBlank()) {
+        if (transaction.title.isNullOrBlank().not()) {
             Spacer(
                 Modifier.height(
                     if (transaction.dueDate != null) 8.dp else 12.dp
@@ -174,7 +173,7 @@ fun TransactionCard(
 
         val description = getTransactionDescription(transaction)
         if (!description.isNullOrBlank()) {
-            Spacer(Modifier.height(if (transaction.title.isNotNullOrBlank()) 4.dp else 8.dp))
+            Spacer(Modifier.height(if (transaction.title.isNullOrBlank().not()) 4.dp else 8.dp))
             Text(
                 text = description,
                 modifier = Modifier.padding(horizontal = 24.dp),
@@ -392,7 +391,7 @@ private fun getTransactionDescription(transaction: Transaction): String? {
         transaction.paidFor?.toLocalDateTime()
     }
     return when {
-        transaction.description.isNotNullOrBlank() -> transaction.description!!
+        transaction.description.isNullOrBlank().not() -> transaction.description!!
         transaction.recurringRuleId != null &&
                 transaction.dueDate == null &&
                 paidFor != null -> {
@@ -648,3 +647,11 @@ private data class AmountTypeStyle(
     val iconTint: Color,
     val textColor: Color
 )
+
+private fun String.capitalizeLocal(): String = replaceFirstChar {
+    if (it.isLowerCase()) {
+        it.titlecase(Locale.getDefault())
+    } else {
+        it.toString()
+    }
+}

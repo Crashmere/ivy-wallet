@@ -28,7 +28,6 @@ import com.ivy.legacy.ui.component.ListItem
 import com.ivy.data.model.legacy.Account
 import com.ivy.data.model.legacy.Budget
 import com.ivy.legacy.ui.modal.ModalNameInput
-import com.ivy.base.text.isNotNullOrBlank
 import com.ivy.legacy.ui.selectEndTextFieldValue
 import com.ivy.ui.R
 import com.ivy.data.model.legacy.CreateBudgetData
@@ -86,7 +85,7 @@ fun BoxWithConstraintsScope.BudgetModal(
         PrimaryAction = {
             ModalAddSave(
                 item = modal?.budget,
-                enabled = nameTextFieldValue.text.isNotNullOrBlank() && amount > 0.0
+                enabled = nameTextFieldValue.text.isNullOrBlank().not() && amount > 0.0
             ) {
                 if (initialBudget != null) {
                     onEdit(

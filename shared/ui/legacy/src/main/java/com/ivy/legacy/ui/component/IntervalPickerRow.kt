@@ -23,8 +23,6 @@ import androidx.compose.ui.unit.dp
 import com.ivy.data.model.IntervalType
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
-import com.ivy.base.text.capitalizeLocal
-import com.ivy.base.text.isNotNullOrBlank
 import com.ivy.legacy.ui.forDisplay
 import com.ivy.legacy.ui.selectEndTextFieldValue
 import com.ivy.ui.R
@@ -33,6 +31,7 @@ import com.ivy.legacy.ui.theme.GradientIvy
 import com.ivy.legacy.ui.theme.White
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
+import java.util.Locale
 
 private const val RepeatIntervalCharLimit = 5
 
@@ -53,7 +52,7 @@ fun IntervalPickerRow(
             mutableStateOf(selectEndTextFieldValue(intervalN.toString()))
         }
 
-        val validInput = intervalN > 0 && interNTextFieldValue.text.isNotNullOrBlank()
+        val validInput = intervalN > 0 && interNTextFieldValue.text.isNullOrBlank().not()
 
         IvyNumberTextField(
             modifier = Modifier
@@ -92,6 +91,14 @@ fun IntervalPickerRow(
         }
 
         Spacer(Modifier.width(24.dp))
+    }
+}
+
+private fun String.capitalizeLocal(): String = replaceFirstChar {
+    if (it.isLowerCase()) {
+        it.titlecase(Locale.getDefault())
+    } else {
+        it.toString()
     }
 }
 

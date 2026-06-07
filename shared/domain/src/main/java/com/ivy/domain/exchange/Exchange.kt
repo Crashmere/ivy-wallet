@@ -5,7 +5,6 @@ import arrow.core.Option
 import arrow.core.Some
 import arrow.core.raise.option
 import arrow.core.toOption
-import com.ivy.base.text.isNotNullOrBlank
 import com.ivy.data.model.legacy.ExchangeRate
 import java.math.BigDecimal
 
@@ -87,7 +86,7 @@ suspend fun exchange(
     }
 }
 private fun String.validateCurrency(): Option<String> {
-    return if (this.isNotNullOrBlank()) return Some(this) else None
+    return if (this.isNullOrBlank().not()) return Some(this) else None
 }
 suspend fun validExchangeRate(
     baseCurrency: String,

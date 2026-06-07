@@ -51,7 +51,6 @@ import com.ivy.data.model.legacy.Account
 import com.ivy.legacy.ui.state.LocalPeriodState
 import com.ivy.legacy.ui.component.tags.AddTagButton
 import com.ivy.legacy.ui.component.tags.ShowTagModal
-import com.ivy.base.text.capitalizeLocal
 import com.ivy.legacy.ui.springBounce
 import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.GradientGreen
@@ -75,6 +74,7 @@ import com.ivy.legacy.ui.component.AmountCurrencyB1Row
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
+import java.util.Locale
 import java.util.UUID
 import kotlin.math.roundToInt
 
@@ -1057,4 +1057,12 @@ private fun FilterTitleText(
             color = if (active) LegacyTheme.colors.pureInverse else inactiveColor
         )
     )
+}
+
+private fun String.capitalizeLocal(): String = replaceFirstChar {
+    if (it.isLowerCase()) {
+        it.titlecase(Locale.getDefault())
+    } else {
+        it.toString()
+    }
 }

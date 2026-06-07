@@ -46,7 +46,6 @@ import com.ivy.legacy.ui.clickableNoIndication
 import com.ivy.legacy.ui.drawColoredShadow
 import com.ivy.data.model.currency.format
 import com.ivy.legacy.ui.formatNicely
-import com.ivy.base.text.isNotNullOrBlank
 import com.ivy.legacy.ui.rememberInteractionSource
 import com.ivy.legacy.ui.setStatusBarDarkTextCompat
 import com.ivy.loans.loan.data.DisplayLoanRecord
@@ -718,7 +717,7 @@ private fun LoanRecordItem(
             )
         )
 
-        if (loanRecord.note.isNotNullOrBlank()) {
+        if (loanRecord.note.isNullOrBlank().not()) {
             Text(
                 modifier = Modifier.padding(horizontal = 24.dp, vertical = 8.dp),
                 text = loanRecord.note!!,
@@ -816,7 +815,7 @@ private fun InitialRecordItem(
             )
         }
 
-        if (loan.note.isNotNullOrBlank()) {
+        if (loan.note.isNullOrBlank().not()) {
             Text(
                 modifier = Modifier.padding(horizontal = 24.dp, vertical = 8.dp),
                 text = loan.note!!,

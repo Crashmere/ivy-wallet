@@ -22,12 +22,12 @@ import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
 import com.ivy.legacy.ui.forDisplay
 import com.ivy.legacy.ui.formatDateOnly
-import com.ivy.base.text.uppercaseLocal
 import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.Orange
 import com.ivy.legacy.ui.component.AddPrimaryAttributeButton
 import com.ivy.legacy.ui.component.IvyIcon
 import java.time.LocalDateTime
+import java.util.Locale
 
 @Composable
 fun RecurringRule(
@@ -109,7 +109,7 @@ private fun RecurringRuleCard(
             if (!oneTime && intervalType != null && intervalN != null) {
                 Spacer(Modifier.height(4.dp))
 
-                val intervalTypeLabel = intervalType.forDisplay(intervalN).uppercaseLocal()
+                val intervalTypeLabel = intervalType.forDisplay(intervalN).uppercase(Locale.getDefault())
                 Text(
                     text = stringResource(R.string.repeats_every, intervalN, intervalTypeLabel),
                     style = LegacyTheme.typo.c.style(

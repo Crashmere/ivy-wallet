@@ -42,7 +42,6 @@ import com.ivy.domain.usecase.transaction.MapTransactionsToLegacyUseCase
 import com.ivy.legacy.ui.state.PeriodState
 import com.ivy.data.model.legacy.Account
 import com.ivy.base.time.getISOFormattedDateTime
-import com.ivy.base.text.toLowerCaseLocal
 import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.R
 import com.ivy.ui.platform.FilePicker
@@ -72,6 +71,7 @@ import kotlinx.coroutines.withContext
 import java.math.BigDecimal
 import java.time.ZoneId
 import java.time.ZoneOffset
+import java.util.Locale
 import java.util.UUID
 import javax.inject.Inject
 
@@ -209,7 +209,7 @@ class ReportViewModel @Inject constructor(
             tagSearchJob?.cancelAndJoin()
             delay(tagSearchDebounceTimeInMills) // Debounce effect
             tagSearchJob = launch(Dispatchers.IO) {
-                NotBlankTrimmedString.from(query.toLowerCaseLocal())
+                NotBlankTrimmedString.from(query.lowercase(Locale.getDefault()))
                     .fold(
                         ifRight = {
                             allTags =
@@ -504,7 +504,7 @@ class ReportViewModel @Inject constructor(
     }
 
     private fun String.containsLowercase(anotherString: String): Boolean {
-        return this.toLowerCaseLocal().contains(anotherString.toLowerCaseLocal())
+        return this.lowercase(Locale.getDefault()).contains(anotherString.lowercase(Locale.getDefault()))
     }
 
     private fun calculateBalance(incomeExpenseTransferPair: IncomeExpenseTransferPair): BigDecimal {

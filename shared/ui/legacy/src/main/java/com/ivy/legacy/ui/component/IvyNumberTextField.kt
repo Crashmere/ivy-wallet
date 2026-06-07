@@ -22,7 +22,6 @@ import androidx.compose.ui.text.style.TextAlign
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
 import com.ivy.legacy.ui.hideKeyboard
-import com.ivy.base.text.isNotNullOrBlank
 
 @Suppress("ParameterNaming")
 @Composable
@@ -45,7 +44,7 @@ fun IvyNumberTextField(
         modifier = modifier,
         contentAlignment = Alignment.Center
     ) {
-        if (isEmpty && hint.isNotNullOrBlank()) {
+        if (isEmpty && hint.isNullOrBlank().not()) {
             Text(
                 modifier = textModifier,
                 text = hint!!,

@@ -39,8 +39,6 @@ import com.ivy.legacy.ui.forDisplay
 import com.ivy.legacy.ui.component.transaction.TypeAmountCurrency
 import com.ivy.legacy.ui.formatDateOnly
 import com.ivy.legacy.ui.formatDateOnlyWithYear
-import com.ivy.base.text.isNotNullOrBlank
-import com.ivy.base.text.uppercaseLocal
 import com.ivy.ui.navigation.TransactionsScreen
 import com.ivy.ui.navigation.navigation
 import com.ivy.ui.R
@@ -56,6 +54,7 @@ import com.ivy.legacy.ui.theme.toComposeColor
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import java.time.LocalDateTime
+import java.util.Locale
 import java.util.UUID
 
 @SuppressLint("ComposeModifierMissing")
@@ -103,7 +102,7 @@ fun LazyItemScope.PlannedPaymentCard(
             intervalType = plannedPayment.intervalType
         )
 
-        if (plannedPayment.title.isNotNullOrBlank()) {
+        if (plannedPayment.title.isNullOrBlank().not()) {
             Spacer(Modifier.height(8.dp))
 
             Text(
@@ -230,7 +229,7 @@ private fun RuleTextRow(
             )
             Text(
                 modifier = Modifier.padding(bottom = 1.dp),
-                text = startDate?.toLocalDate()?.formatDateOnlyWithYear()?.uppercaseLocal()
+                text = startDate?.toLocalDate()?.formatDateOnlyWithYear()?.uppercase(Locale.getDefault())
                     ?: stringResource(R.string.null_text),
                 style = LegacyTheme.typo.nC.style(
                     color = Orange,
@@ -238,7 +237,7 @@ private fun RuleTextRow(
                 )
             )
         } else {
-            val startDateFormatted = startDate?.toLocalDate()?.formatDateOnly()?.uppercaseLocal()
+            val startDateFormatted = startDate?.toLocalDate()?.formatDateOnly()?.uppercase(Locale.getDefault())
             Text(
                 text = stringResource(R.string.starts_date, startDateFormatted ?: ""),
                 style = LegacyTheme.typo.nC.style(
@@ -246,7 +245,7 @@ private fun RuleTextRow(
                     fontWeight = FontWeight.SemiBold
                 )
             )
-            val intervalTypeFormatted = intervalType?.forDisplay(intervalN ?: 0)?.uppercaseLocal()
+            val intervalTypeFormatted = intervalType?.forDisplay(intervalN ?: 0)?.uppercase(Locale.getDefault())
             Text(
                 modifier = Modifier.padding(bottom = 1.dp),
                 text = stringResource(

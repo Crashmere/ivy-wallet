@@ -38,7 +38,6 @@ import com.ivy.domain.preferences.toggles.PreferenceToggles
 import com.ivy.legacy.ui.state.PeriodState
 import com.ivy.legacy.ui.model.period.TimePeriod
 import com.ivy.data.model.legacy.toCloseTimeRange
-import com.ivy.base.text.isNotNullOrBlank
 import com.ivy.legacy.ui.selectEndTextFieldValue
 import com.ivy.ui.navigation.Navigation
 import com.ivy.ui.navigation.TransactionsScreen
@@ -352,7 +351,7 @@ class TransactionsViewModel @Inject constructor(
         account.value = initialAccount
         val range = period.value.toRange(periodState.startDayOfMonth, timeConverter, timeProvider)
 
-        if (initialAccount.currency.isNotNullOrBlank()) {
+        if (initialAccount.currency.isNullOrBlank().not()) {
             currency.value = initialAccount.currency!!
         }
 

@@ -1,10 +1,10 @@
 package com.ivy.domain.usecase.transaction
 
-import com.ivy.base.text.capitalizeWords
 import com.ivy.data.api.TransactionStore
 import com.ivy.data.model.AccountId
 import com.ivy.data.model.CategoryId
 import com.ivy.data.model.Transaction
+import java.util.Locale
 import java.util.UUID
 import javax.inject.Inject
 
@@ -79,4 +79,15 @@ private suspend fun Set<String>.sortedByMostUsedFirst(
 ): Set<String> {
     val titleCountMap = associateWith { countUses(it) }
     return sortedByDescending { titleCountMap.getOrDefault(it, 0) }.toSet()
+}
+
+private fun String.capitalizeWords(): String =
+    split(" ").joinToString(" ") { it.capitalizeLocal() }
+
+private fun String.capitalizeLocal(): String = replaceFirstChar {
+    if (it.isLowerCase()) {
+        it.titlecase(Locale.getDefault())
+    } else {
+        it.toString()
+    }
 }
