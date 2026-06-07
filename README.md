@@ -506,7 +506,7 @@
 - 账户页展示模型 `AccountData` 和对应 `AccountDataAct` 已从 `shared:domain` 下沉到 `feature:accounts`；账户页专用展示聚合不再占用 shared domain 边界。
 - 纯创建参数 `CreateAccountData`、`CreateCategoryData`、`CreateBudgetData`、`CreateLoanData`、`CreateLoanRecordData` 和借贷记录编辑参数 `EditLoanRecordData` 已从 `com.ivy.legacy.domain.model` 下沉并进一步归位到正式 `com.ivy.data.model`，UI 弹窗、feature event 和 domain creator 继续使用同名参数对象。
 - 预算模型 `Budget` 已从 `com.ivy.data.model.legacy` 归位到正式 `com.ivy.data.model`；字段、序列化 ID 字符串、软删除标记和 Room/备份格式保持不变，预算页和预算相关 use case 继续使用同一模型语义。
-- 旧汇率计算仍使用的兼容模型 `ExchangeRate` 已从 `com.ivy.legacy.domain.model` 下沉到 `com.ivy.data.model.legacy`；数据库转换边界保留在 legacy domain mapper。无调用方的旧 `Category` 兼容模型和 mapper 已删除，分类功能继续使用正式 `com.ivy.data.model.Category`。
+- 无调用方的旧 `ExchangeRate` 兼容模型已删除，汇率读写、同步和页面展示统一使用正式 `com.ivy.data.model.ExchangeRate`。无调用方的旧 `Category` 兼容模型和 mapper 已删除，分类功能继续使用正式 `com.ivy.data.model.Category`。
 - 旧借贷模型 `Loan`、`LoanRecord` 已从 `com.ivy.legacy.domain.model` 下沉到 `com.ivy.data.model.legacy`；借贷数据库转换 `toEntity()` 已移入 legacy domain mapper。借贷创建/编辑参数已迁入正式 data model，但字段仍保留 legacy 借贷模型引用。
 - 旧账户模型 `Account`、计划付款规则 `PlannedPaymentRule` 已从 `com.ivy.legacy.domain.model` 下沉到 `com.ivy.data.model.legacy`；旧交易 `toEntity()` 已从 model 包合并进 `com.ivy.domain.mapper.legacy.TransactionExt`。`com.ivy.legacy.domain.model` 源码目录已经清空。
 - 已把剩余 UI 兼容状态模型从 `com.ivy.legacy.data` 迁到 `com.ivy.legacy.ui.model`，并把周期选择模型迁到 `com.ivy.legacy.ui.model.period`；`com.ivy.legacy.data.*` 包名已经从源码中清空。
