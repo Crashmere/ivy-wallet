@@ -31,7 +31,7 @@ import com.ivy.legacy.data.model.TimePeriod
 import com.ivy.legacy.data.model.toUTCCloseTimeRange
 import com.ivy.legacy.datamodel.Account
 import com.ivy.legacy.datamodel.Settings
-import com.ivy.legacy.datamodel.temp.toLegacyDomain
+import com.ivy.legacy.domain.mapper.toLegacyDomain
 import com.ivy.legacy.domain.action.settings.UpdateSettingsAct
 import com.ivy.legacy.domain.action.viewmodel.home.ShouldHideIncomeAct
 import com.ivy.base.legacy.dateNowUTC

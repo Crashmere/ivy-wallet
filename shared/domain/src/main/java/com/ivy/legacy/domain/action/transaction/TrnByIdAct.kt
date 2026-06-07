@@ -6,7 +6,7 @@ import com.ivy.data.repository.TransactionRepository
 import com.ivy.data.repository.mapper.TransactionMapper
 import com.ivy.frp.action.FPAction
 import com.ivy.frp.then
-import com.ivy.legacy.datamodel.temp.toLegacy
+import com.ivy.legacy.domain.mapper.toLegacy
 import java.util.UUID
 import javax.inject.Inject
 

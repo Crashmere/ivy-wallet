@@ -4,7 +4,7 @@ import arrow.core.Option
 import com.ivy.data.db.dao.read.ExchangeRatesDao
 import com.ivy.frp.action.FPAction
 import com.ivy.frp.then
-import com.ivy.legacy.datamodel.temp.toLegacyDomain
+import com.ivy.legacy.domain.mapper.toLegacyDomain
 import com.ivy.legacy.domain.pure.exchange.ExchangeData
 import com.ivy.legacy.domain.pure.exchange.exchange
 import java.math.BigDecimal

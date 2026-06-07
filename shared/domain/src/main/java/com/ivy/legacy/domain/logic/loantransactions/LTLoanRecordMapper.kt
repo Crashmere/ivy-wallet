@@ -3,7 +3,7 @@ package com.ivy.legacy.domain.logic.loantransactions
 import com.ivy.base.legacy.Transaction
 import com.ivy.legacy.datamodel.Loan
 import com.ivy.legacy.datamodel.LoanRecord
-import com.ivy.legacy.datamodel.temp.toLegacyDomain
+import com.ivy.legacy.domain.mapper.toLegacyDomain
 import com.ivy.base.legacy.computationThread
 import com.ivy.legacy.domain.model.CreateLoanRecordData
 import java.util.UUID

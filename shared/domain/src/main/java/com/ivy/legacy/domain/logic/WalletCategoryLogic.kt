@@ -15,8 +15,8 @@ import com.ivy.legacy.data.model.filterOverdue
 import com.ivy.legacy.data.model.filterOverdueLegacy
 import com.ivy.legacy.data.model.filterUpcoming
 import com.ivy.legacy.data.model.filterUpcomingLegacy
-import com.ivy.legacy.datamodel.temp.toLegacy
-import com.ivy.legacy.datamodel.temp.toLegacyDomain
+import com.ivy.legacy.domain.mapper.toLegacy
+import com.ivy.legacy.domain.mapper.toLegacyDomain
 import com.ivy.legacy.domain.pure.transaction.LegacyTrnDateDividers
 import com.ivy.legacy.domain.logic.currency.ExchangeRatesLogic
 import com.ivy.legacy.domain.logic.currency.sumInBaseCurrency

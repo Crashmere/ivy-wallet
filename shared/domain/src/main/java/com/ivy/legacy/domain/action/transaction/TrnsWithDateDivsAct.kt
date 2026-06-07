@@ -8,7 +8,7 @@ import com.ivy.data.repository.AccountRepository
 import com.ivy.data.repository.TagRepository
 import com.ivy.frp.action.FPAction
 import com.ivy.frp.then
-import com.ivy.legacy.datamodel.temp.toLegacyDomain
+import com.ivy.legacy.domain.mapper.toLegacyDomain
 import com.ivy.legacy.domain.pure.transaction.LegacyTrnDateDividers
 import com.ivy.legacy.domain.pure.transaction.transactionsWithDateDividers
 import com.ivy.legacy.domain.action.exchange.ExchangeAct

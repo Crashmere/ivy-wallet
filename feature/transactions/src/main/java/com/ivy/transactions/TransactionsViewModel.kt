@@ -33,8 +33,8 @@ import com.ivy.frp.then
 import com.ivy.legacy.PeriodState
 import com.ivy.legacy.data.model.TimePeriod
 import com.ivy.legacy.data.model.toCloseTimeRange
-import com.ivy.legacy.datamodel.temp.toImmutableLegacyTags
-import com.ivy.legacy.datamodel.temp.toLegacyDomain
+import com.ivy.legacy.domain.mapper.toImmutableLegacyTags
+import com.ivy.legacy.domain.mapper.toLegacyDomain
 import com.ivy.legacy.domain.logic.AccountCreator
 import com.ivy.base.legacy.computationThread
 import com.ivy.base.legacy.dateNowUTC

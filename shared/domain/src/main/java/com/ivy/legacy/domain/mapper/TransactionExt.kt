@@ -1,4 +1,4 @@
-package com.ivy.legacy.datamodel.temp
+package com.ivy.legacy.domain.mapper
 
 import com.ivy.base.legacy.LegacyTag
 import com.ivy.base.legacy.LegacyTransaction

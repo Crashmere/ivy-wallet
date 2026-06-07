@@ -15,7 +15,7 @@ import com.ivy.data.temp.migration.getValue
 import com.ivy.legacy.data.model.filterOverdue
 import com.ivy.legacy.data.model.filterUpcoming
 import com.ivy.legacy.datamodel.Account
-import com.ivy.legacy.datamodel.temp.toDomain
+import com.ivy.legacy.domain.mapper.toDomain
 import com.ivy.legacy.domain.action.viewmodel.account.AccountDataAct
 import com.ivy.legacy.domain.pure.data.ClosedTimeRange
 import kotlinx.collections.immutable.toImmutableList

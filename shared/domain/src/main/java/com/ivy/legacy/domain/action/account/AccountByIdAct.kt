@@ -4,7 +4,7 @@ import com.ivy.data.db.dao.read.AccountDao
 import com.ivy.frp.action.FPAction
 import com.ivy.frp.then
 import com.ivy.legacy.datamodel.Account
-import com.ivy.legacy.datamodel.temp.toLegacyDomain
+import com.ivy.legacy.domain.mapper.toLegacyDomain
 import java.util.UUID
 import javax.inject.Inject
 

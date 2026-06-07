@@ -3,7 +3,7 @@ package com.ivy.legacy.domain.action.loan
 import com.ivy.data.db.dao.read.LoanDao
 import com.ivy.frp.action.FPAction
 import com.ivy.legacy.datamodel.Loan
-import com.ivy.legacy.datamodel.temp.toLegacyDomain
+import com.ivy.legacy.domain.mapper.toLegacyDomain
 import java.util.UUID
 import javax.inject.Inject
 

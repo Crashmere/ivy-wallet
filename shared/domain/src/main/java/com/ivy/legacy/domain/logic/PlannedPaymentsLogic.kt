@@ -15,8 +15,8 @@ import com.ivy.data.repository.mapper.TransactionMapper
 import com.ivy.data.temp.migration.settleNow
 import com.ivy.legacy.datamodel.Account
 import com.ivy.legacy.datamodel.PlannedPaymentRule
-import com.ivy.legacy.datamodel.temp.toDomain
-import com.ivy.legacy.datamodel.temp.toLegacyDomain
+import com.ivy.legacy.domain.mapper.toDomain
+import com.ivy.legacy.domain.mapper.toLegacyDomain
 import com.ivy.base.legacy.ioThread
 import com.ivy.legacy.domain.logic.currency.ExchangeRatesLogic
 import com.ivy.legacy.domain.logic.currency.sumByDoublePlannedInBaseCurrency

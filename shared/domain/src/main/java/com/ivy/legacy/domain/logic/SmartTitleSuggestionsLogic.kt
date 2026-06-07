@@ -2,7 +2,7 @@ package com.ivy.legacy.domain.logic
 
 import com.ivy.base.legacy.Transaction
 import com.ivy.data.db.dao.read.TransactionDao
-import com.ivy.legacy.datamodel.temp.toLegacyDomain
+import com.ivy.legacy.domain.mapper.toLegacyDomain
 import com.ivy.base.legacy.capitalizeWords
 import com.ivy.base.legacy.isNotNullOrBlank
 import java.util.*

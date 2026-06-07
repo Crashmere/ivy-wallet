@@ -1,4 +1,4 @@
-package com.ivy.legacy.datamodel.temp
+package com.ivy.legacy.domain.mapper
 
 import com.ivy.data.db.entity.ExchangeRateEntity
 import com.ivy.legacy.datamodel.ExchangeRate
