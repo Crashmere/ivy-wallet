@@ -2,6 +2,7 @@ package com.ivy.wallet
 
 import android.content.Intent
 import androidx.biometric.BiometricPrompt
+import androidx.core.content.IntentCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ivy.base.model.TransactionType
@@ -77,7 +78,11 @@ class RootViewModel @Inject constructor(
     @Suppress("SwallowedException")
     private fun handleSpecialStart(intent: Intent): Boolean {
         val addTrnType: TransactionType? = try {
-            intent.getSerializableExtra(EXTRA_ADD_TRANSACTION_TYPE) as? TransactionType
+            IntentCompat.getSerializableExtra(
+                intent,
+                EXTRA_ADD_TRANSACTION_TYPE,
+                TransactionType::class.java
+            )
                 ?: TransactionType.valueOf(intent.getStringExtra(EXTRA_ADD_TRANSACTION_TYPE) ?: "")
         } catch (e: IllegalArgumentException) {
             null
