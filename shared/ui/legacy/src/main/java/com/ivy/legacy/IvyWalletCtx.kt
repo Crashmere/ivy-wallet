@@ -10,7 +10,6 @@ import com.ivy.base.legacy.SharedPrefs
 import com.ivy.data.model.Category
 import com.ivy.legacy.datamodel.Account
 import java.time.LocalDate
-import java.time.LocalTime
 import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -113,10 +112,6 @@ class IvyWalletCtx @Inject constructor() : IvyContext() {
         initialDate: LocalDate?,
         onDatePicked: (LocalDate) -> Unit
     ) -> Unit
-    lateinit var onShowTimePicker: (
-        initialTime: LocalTime?,
-        onDatePicked: (LocalTime) -> Unit
-    ) -> Unit
 
     @Deprecated("Legacy code. Don't use it, please.")
     fun datePicker(
@@ -127,23 +122,7 @@ class IvyWalletCtx @Inject constructor() : IvyContext() {
     ) {
         onShowDatePicker(minDate, maxDate, initialDate, onDatePicked)
     }
-
-    @Deprecated("Legacy code. Don't use it, please.")
-    fun timePicker(
-        initialTime: LocalTime?,
-        onTimePicked: (LocalTime) -> Unit
-    ) {
-        onShowTimePicker(initialTime, onTimePicked)
-    }
     // Activity help -------------------------------------------------------------------------------
-
-    // Billing -------------------------------------------------------------------------------------
-    @Deprecated("Legacy code. Don't use it, please.")
-    var isPremium = true // if (BuildConfig.DEBUG) Constants.PREMIUM_INITIAL_VALUE_DEBUG else false
-    // Billing -------------------------------------------------------------------------------------
-
-    @Deprecated("Legacy code. Don't use it, please.")
-    lateinit var googleSignIn: (idTokenResult: (String?) -> Unit) -> Unit
 
     @Deprecated("Legacy code. Don't use it, please.")
     lateinit var createNewFile: (fileName: String, onCreated: (Uri) -> Unit) -> Unit
@@ -156,7 +135,6 @@ class IvyWalletCtx @Inject constructor() : IvyContext() {
     fun reset() {
         mainTab = com.ivy.legacy.data.model.MainTab.HOME
         startDayOfMonth = 1
-        isPremium = true
         transactionsListState = null
         categoriesListState = null
         accountsListState = null

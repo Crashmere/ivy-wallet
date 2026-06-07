@@ -15,6 +15,7 @@
 - 删除空的 `:shared:data:core-testing` 模块，并把测试专用 `FakeRepositoryMemo` 从生产源码移入测试源集。
 - 删除未引用的第三方导入 logo、widget 预览/图标、推广/分享/捐赠图片，以及 `help_us_grow` 多语言推广文案。
 - 删除 `:temp:old-design` 模块；旧设计 API 先迁入 `shared:ui:core` 作为兼容层，后续再逐步替换旧包名和旧组件。
+- 删除 `:temp:legacy-code` 模块；剩余旧全局上下文暂时收敛在 `shared:ui:legacy`，并开始继续缩小 API 表面。
 - 整理部分 Gradle 约定插件：基础 shared 模块、数据核心模块和 domain 模块已经开始脱离面向页面的 `ivy.feature` 配置。
 
 当前仍保留：
@@ -57,7 +58,7 @@
 
 现状：
 
-- 大多数 `feature:*` 对 `:temp:legacy-code` 的直接业务依赖已经迁走，但 `app` 仍通过旧全局上下文和启动兼容逻辑依赖 `temp`。
+- `feature:*` 和 `app` 对 `:temp:legacy-code` 的直接依赖已经迁走，Gradle 中不再 include 旧 `temp` 模块。
 - `:temp:legacy-code` 模块已经删除；旧全局上下文入口暂时迁入 `shared:ui:legacy`，后续继续拆内部职责。
 - 旧设计系统源码已经迁入 `shared:ui:core` 作为兼容层，仍保留 `com.ivy.design.*` 包名和旧 `IvyUI`、`IvyContext`、`UI.colors` 等概念。
 
@@ -65,7 +66,7 @@
 
 - 新代码很容易继续引用 legacy API。
 - 无法从模块依赖上判断哪些是真正公共能力，哪些只是迁移残留。
-- 删除 `temp:legacy-code` 仍会牵一发动全身。
+- `shared:ui:legacy` 现在承担了迁移期公共 UI/旧上下文职责，仍会让新代码误用旧 API。
 
 目标：
 
@@ -375,7 +376,7 @@
 - 已把 `ChoosePeriodModal` 和 `PeriodSelector` 迁入 `shared:ui:legacy`，并通过外部 `saveSelectedPeriod`、`pickDate`、`startDateOfMonth` 参数替代内部直接读取 `IvyWalletCtx`。
 - 已把金额输入弹窗、计算器弹窗和缓冲金额弹窗迁入 `shared:ui:legacy`。其中金额键盘仍通过 Hilt EntryPoint 读取“标准键盘布局”偏好，因此 `shared:ui:legacy` 暂时显式依赖 `shared:domain` 和 `keval`；后续偏好设置重构时应改为由调用方或 CompositionLocal 提供键盘布局。
 - 已把旧 `legacy.datamodel` 整体迁入 `shared:domain`，把旧创建参数模型迁入 `shared:domain`，并把账户/分类/借贷创建参数里的颜色从 Compose `Color` 改为普通 ARGB `Int`，由 UI 弹窗在边界处转换。
-- 已把旧颜色选择器、账户弹窗、分类弹窗、借贷弹窗和借贷记录弹窗迁入 `shared:ui:legacy`。颜色选择器移除了旧付费锁显示分支；当前 `IvyWalletCtx.isPremium` 固定为 `true`，因此不改变当前实际显示。
+- 已把旧颜色选择器、账户弹窗、分类弹窗、借贷弹窗和借贷记录弹窗迁入 `shared:ui:legacy`。颜色选择器移除了旧付费锁显示分支，不再依赖会员状态。
 - 已把旧 UI 状态模型 `AppBaseData`、`LegacyDueSection`、`BufferInfo`、`EditTransactionDisplayLoan` 迁入 `shared:ui:legacy`，作为迁移期的 UI 兼容数据。
 - 已把搜索框、收入/支出卡片、详情工具栏、标签弹窗、交易卡片和交易列表组件迁入 `shared:ui:legacy`；交易卡片查找账户/分类时改为只使用调用方传入的数据，去掉了对 `IvyWalletCtx` 缓存的读取。
 - 已把 `SortOrder`、`CustomExchangeRateState`、`TransactionHistoryDateDivider` 迁入 `shared:domain`，它们本来已经以 `com.ivy.wallet.domain.data` 包名被 feature 使用。
@@ -384,7 +385,8 @@
 - 已把旧 `domain/action`、`domain/pure`、旧汇率换算逻辑、账户数据 action、交易范围过滤 action 迁入 `shared:domain`。
 - 已把旧 creator、计划付款逻辑、标题建议、账户/分类统计逻辑和借贷交易联动逻辑迁入 `shared:domain`；其中 `AccountCreator`、`BudgetCreator` 也统一改到 `com.ivy.wallet.domain.deprecated.logic` 包名。
 - 已把仍依赖 Android 字符串资源的 `PreloadDataLogic` 从 `temp:legacy-code` 移到 app 默认数据初始化边界，避免 `temp` 继续承载旧业务逻辑。
-- 已把旧全局上下文入口 `IvyWalletCtx`、`ivyWalletCtx()`、`rootScreen()` 和旧设计入口 `appDesign(...)` 迁入 `shared:ui:legacy`，保持旧包名以降低调用方改动。
+- 已把旧全局上下文入口 `IvyWalletCtx`、`ivyWalletCtx()` 和 `rootScreen()` 迁入 `shared:ui:legacy`，保持旧包名以降低调用方改动。
+- 已继续缩小 `shared:ui:legacy` 的旧全局 API：删除无调用方的 `rootView()`、时间选择器桥接、Google 登录入口和固定为 true 的会员状态；旧设计入口 `appDesign(...)` 只在 `RootActivity` 内部保留为私有兼容函数。
 - 已删除 `:temp:legacy-code` 的 Gradle include、模块 build 文件，以及所有 app/feature 对 `projects.temp.legacyCode` 的依赖声明。
 - 阶段 5 的模块拆解目标已经完成：仓库中不再有被 Gradle include 的 `temp:*` 模块。后续工作转为拆除 `shared:ui:legacy` 中剩余旧上下文、旧设计 API 和旧 UI 兼容模型。
 

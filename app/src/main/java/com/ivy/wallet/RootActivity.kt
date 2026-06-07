@@ -25,18 +25,17 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.android.material.datepicker.MaterialDatePicker
-import com.google.android.material.timepicker.MaterialTimePicker
-import com.google.android.material.timepicker.TimeFormat
 import com.ivy.IvyNavGraph
 import com.ivy.base.legacy.Theme
 import com.ivy.base.time.TimeConverter
 import com.ivy.base.time.TimeProvider
+import com.ivy.design.IvyContext
 import com.ivy.design.api.IvyDesign
 import com.ivy.design.api.IvyUI
+import com.ivy.design.api.systems.IvyWalletDesign
 import com.ivy.design.system.IvyMaterial3Theme
 import com.ivy.domain.RootScreen
 import com.ivy.legacy.IvyWalletCtx
-import com.ivy.legacy.appDesign
 import com.ivy.navigation.Navigation
 import com.ivy.navigation.NavigationRoot
 import com.ivy.ui.R
@@ -47,7 +46,6 @@ import com.ivy.wallet.platform.simpleActivityForResultLauncher
 import com.ivy.wallet.ui.applocked.AppLockedScreen
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDate
-import java.time.LocalTime
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -147,7 +145,6 @@ class RootActivity : AppCompatActivity(), RootScreen {
         setupActivityForResultLaunchers()
         WindowCompat.setDecorFitsSystemWindows(window, false)
         setupDatePicker()
-        setupTimePicker()
     }
 
     private companion object {
@@ -190,28 +187,6 @@ class RootActivity : AppCompatActivity(), RootScreen {
                 datePicker.addOnCancelListener {
                     onDatePicked(initialDate)
                 }
-            }
-        }
-    }
-
-    private fun setupTimePicker() {
-        ivyContext.onShowTimePicker = { initialTime,
-                                        onTimePicked ->
-            val nowLocal = initialTime ?: timeProvider.localTimeNow()
-            val is24Hour = android.text.format.DateFormat.is24HourFormat(this)
-            val timeFormat = if (is24Hour) TimeFormat.CLOCK_24H else TimeFormat.CLOCK_12H
-
-            val picker =
-                MaterialTimePicker.Builder()
-                    .setTimeFormat(timeFormat)
-                    .setHour(nowLocal.hour)
-                    .setMinute(nowLocal.minute)
-                    .build()
-            picker.show(supportFragmentManager, "timePicker")
-            picker.addOnPositiveButtonClickListener {
-                onTimePicked(
-                    LocalTime.of(picker.hour, picker.minute).withSecond(0)
-                )
             }
         }
     }
@@ -404,4 +379,8 @@ class RootActivity : AppCompatActivity(), RootScreen {
     override val buildVersionCode: Int
         get() = BuildConfig.VERSION_CODE
 
+}
+
+private fun appDesign(context: IvyWalletCtx): IvyDesign = object : IvyWalletDesign() {
+    override fun context(): IvyContext = context
 }
