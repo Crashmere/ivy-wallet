@@ -16,8 +16,8 @@ import com.ivy.base.theme.Theme
 import com.ivy.base.time.TimeConverter
 import com.ivy.base.time.TimeProvider
 import com.ivy.domain.preferences.toggles.PreferenceToggles
-import com.ivy.domain.preferences.toggles.LocalPreferenceDataStore
-import com.ivy.domain.preferences.toggles.LocalPreferenceToggles
+import com.ivy.legacy.ui.preferences.LocalPreferenceDataStore
+import com.ivy.legacy.ui.preferences.LocalPreferenceToggles
 import com.ivy.legacy.ui.state.LocalPeriodState
 import com.ivy.legacy.ui.state.PeriodState
 import com.ivy.navigation.Navigation

@@ -15,5 +15,6 @@ dependencies {
     implementation(projects.shared.ui.navigation)
 
     implementation(libs.androidx.recyclerview)
+    implementation(libs.datastore)
     implementation(libs.keval)
 }

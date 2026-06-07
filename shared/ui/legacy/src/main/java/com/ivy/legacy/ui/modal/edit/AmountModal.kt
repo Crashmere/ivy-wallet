@@ -33,7 +33,8 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.ivy.domain.preferences.toggles.LocalPreferenceToggles
+import com.ivy.legacy.ui.preferences.LocalPreferenceToggles
+import com.ivy.legacy.ui.preferences.asEnabledState
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
 import com.ivy.data.model.currency.amountToDouble
