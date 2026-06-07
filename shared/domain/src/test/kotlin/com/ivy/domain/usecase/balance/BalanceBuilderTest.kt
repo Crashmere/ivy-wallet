@@ -10,7 +10,7 @@ import com.ivy.data.model.primitive.NonNegativeInt
 import com.ivy.data.model.primitive.NonZeroDouble
 import com.ivy.data.model.primitive.PositiveDouble
 import com.ivy.domain.model.StatSummary
-import com.ivy.domain.usecase.BalanceBuilder
+import com.ivy.domain.model.BalanceBuilder
 import com.ivy.domain.usecase.account.AccountStats
 import io.kotest.matchers.shouldBe
 import org.junit.Test

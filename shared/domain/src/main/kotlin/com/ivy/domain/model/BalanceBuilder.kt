@@ -1,4 +1,4 @@
-package com.ivy.domain.usecase
+package com.ivy.domain.model
 
 import com.ivy.data.model.primitive.AssetCode
 import com.ivy.data.model.primitive.NonZeroDouble

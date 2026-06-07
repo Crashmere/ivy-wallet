@@ -7,7 +7,7 @@ import com.ivy.data.model.Income
 import com.ivy.data.model.Transaction
 import com.ivy.data.model.Transfer
 import com.ivy.domain.model.StatSummary
-import com.ivy.domain.usecase.StatSummaryBuilder
+import com.ivy.domain.model.StatSummaryBuilder
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 

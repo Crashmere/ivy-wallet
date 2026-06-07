@@ -1,11 +1,9 @@
-package com.ivy.domain.usecase
+package com.ivy.domain.model
 
 import com.ivy.data.model.PositiveValue
 import com.ivy.data.model.primitive.AssetCode
 import com.ivy.data.model.primitive.NonNegativeInt
 import com.ivy.data.model.primitive.PositiveDouble
-import com.ivy.domain.model.StatSummary
-
 class StatSummaryBuilder {
     private var count = 0
     private val values = mutableMapOf<AssetCode, PositiveDouble>()

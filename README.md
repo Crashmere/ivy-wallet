@@ -724,6 +724,8 @@
 - 交易 legacy/modern 转换已改为基于 data model 和 `AccountStore` 直接完成；`shared:domain` 主源码不再依赖 data core 的 `TransactionMapper` 或 `TransactionEntity`。
 - `shared:domain` 的 Gradle 主依赖和测试依赖都已移除 `shared:data:core`；domain 单元测试改用数据端口 mock/fake，不再依赖 repository、Room 或 data core mapper。
 - 数据变化事件已抽成 `DataChangePublisher/DataWriteEvent` 端口；domain 中的账户变更观察和全量数据变更通知不再直接依赖 data core 的 `DataObserver` 实现。
+- `KSerializerLocalDateTime` 的泛化 `TODO` 已改成明确兼容说明：它继续服务旧 Room 实体和备份 JSON 中以 UTC epoch millis 编码的 `LocalDateTime`，不作为未完成的新模型迁移入口。
+- `BalanceBuilder` 和 `StatSummaryBuilder` 已从 `com.ivy.domain.usecase` 根包归位到 `com.ivy.domain.model`；它们是统计聚合辅助对象，不再和可注入业务用例混在同一层级。
 - 预算读写已抽成 `BudgetStore` 端口；预算创建、更新、删除、排序、列表读取和重置钱包流程不再直接注入 Room 的 `BudgetDao/WriteBudgetDao`，旧 `BudgetExt` 实体 mapper 已删除。
 - 计划付款规则读写已抽成 `PlannedPaymentRuleStore` 端口；首页统计、账户删除、计划付款保存/删除/读取、付或跳过计划付款，以及重置钱包流程不再直接注入 `PlannedPaymentRuleDao/WritePlannedPaymentRuleDao`，旧 `PlannedPaymentRuleExt` 实体 mapper 已删除。
 - 借贷和借贷记录读写已抽成 `LoanStore/LoanRecordStore` 端口；借贷 CRUD、借贷记录 CRUD、借贷交易同步和重置钱包流程不再直接注入 `LoanDao/LoanRecordDao/WriteLoanDao/WriteLoanRecordDao`，旧 `LoanExt/LoanRecordExt` 实体 mapper 已删除。
