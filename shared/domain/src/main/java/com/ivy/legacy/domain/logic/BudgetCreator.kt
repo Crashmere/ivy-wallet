@@ -28,7 +28,6 @@ class BudgetCreator @Inject constructor(
                     categoryIdsSerialized = data.categoryIdsSerialized,
                     accountIdsSerialized = data.accountIdsSerialized,
                     orderId = budgetDao.findMaxOrderNum().nextOrderNum(),
-                    isSynced = false
                 )
 
                 budgetWriter.save(budget.toEntity())
@@ -50,11 +49,7 @@ class BudgetCreator @Inject constructor(
 
         try {
             ioThread {
-                budgetWriter.save(
-                    updatedBudget.toEntity().copy(
-                        isSynced = false
-                    )
-                )
+                budgetWriter.save(updatedBudget.toEntity())
             }
 
             onRefreshUI(updatedBudget)

@@ -33,7 +33,6 @@ class InitialDataSetup @Inject constructor(
                         name = "",
                         currency = defaultCurrency.code,
                         bufferAmount = 1000.0,
-                        isSynced = true,
                         isDeleted = false,
                     )
                 )

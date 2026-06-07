@@ -19,7 +19,6 @@ data class Loan(
     val accountId: UUID? = null,
     val note: String? = null,
 
-    val isSynced: Boolean = false,
     val isDeleted: Boolean = false,
     val dateTime: LocalDateTime? = null,
 
@@ -34,7 +33,6 @@ data class Loan(
         orderNum = orderNum,
         accountId = accountId,
         note = note,
-        isSynced = isSynced,
         isDeleted = isDeleted,
         id = id,
         dateTime = dateTime

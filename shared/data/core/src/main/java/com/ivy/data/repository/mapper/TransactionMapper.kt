@@ -161,7 +161,6 @@ class TransactionMapper @Inject constructor(
             attachmentUrl = null,
             loanId = metadata.loanId,
             loanRecordId = metadata.loanRecordId,
-            isSynced = true,
             isDeleted = false,
             id = id.value
         )

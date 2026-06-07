@@ -9,7 +9,6 @@ fun BudgetEntity.toLegacyDomain(): Budget = Budget(
     amount = amount,
     categoryIdsSerialized = categoryIdsSerialized,
     accountIdsSerialized = accountIdsSerialized,
-    isSynced = isSynced,
     isDeleted = isDeleted,
     orderId = orderId,
     id = id

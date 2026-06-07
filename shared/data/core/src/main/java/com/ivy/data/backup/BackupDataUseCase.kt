@@ -249,6 +249,9 @@ class BackupDataUseCase @Inject constructor(
             transactionWriter.saveMany(completeData.transactions)
             onProgress(0.6)
 
+            settingsWriter.deleteAll()
+            settingsWriter.saveMany(completeData.settings)
+
             val accounts = async {
                 val domainAccounts = with(accountMapper) {
                     completeData.accounts.mapNotNull { entity ->
@@ -280,10 +283,6 @@ class BackupDataUseCase @Inject constructor(
 
             val plannedPayments =
                 async { plannedPaymentRuleWriter.saveMany(completeData.plannedPaymentRules) }
-            val settings = async {
-                settingsWriter.deleteAll()
-                settingsWriter.saveMany(completeData.settings)
-            }
 
             sharedPrefs.putBoolean(
                 SharedPrefs.SHOW_NOTIFICATIONS,
@@ -309,7 +308,6 @@ class BackupDataUseCase @Inject constructor(
             )
 
             plannedPayments.await()
-            settings.await()
             tags.await()
             tagAssociations.await()
 

@@ -8,7 +8,6 @@ fun CategoryEntity.toLegacyDomain(): Category = Category(
     color = color,
     icon = icon,
     orderNum = orderNum,
-    isSynced = isSynced,
     isDeleted = isDeleted,
     id = id
 )

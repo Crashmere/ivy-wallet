@@ -35,7 +35,6 @@ class PreloadDataLogic @Inject constructor(
             color = Green,
             icon = "cash",
             orderNum = 0.0,
-            isSynced = false
         )
 
         val bank = Account(
@@ -44,7 +43,6 @@ class PreloadDataLogic @Inject constructor(
             color = IvyDark,
             icon = "bank",
             orderNum = 1.0,
-            isSynced = false
         )
 
         cash.toDomainAccount(currencyRepository).getOrNull()

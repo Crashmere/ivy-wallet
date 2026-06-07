@@ -14,7 +14,7 @@ interface WritePlannedPaymentRuleDao {
     @Upsert
     suspend fun saveMany(value: List<PlannedPaymentRuleEntity>)
 
-    @Query("UPDATE planned_payment_rules SET isDeleted = 1, isSynced = 0 WHERE accountId = :accountId")
+    @Query("UPDATE planned_payment_rules SET isDeleted = 1 WHERE accountId = :accountId")
     suspend fun deletedByAccountId(accountId: UUID)
 
     @Query("DELETE FROM planned_payment_rules WHERE id = :id")

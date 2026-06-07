@@ -27,8 +27,7 @@ class FakeAccountDaoTest {
             color = 1,
             icon = null,
             includeInBalance = true,
-            orderNum = 1.0,
-            isSynced = true
+            orderNum = 1.0
         )
 
         // when

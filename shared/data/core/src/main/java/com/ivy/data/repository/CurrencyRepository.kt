@@ -49,7 +49,6 @@ class CurrencyRepository @Inject constructor(
                     currency = FALLBACK_DEFAULT_CURRENCY,
                     bufferAmount = 0.0,
                     name = "",
-                    isSynced = true,
                     isDeleted = false,
                     id = UUID.randomUUID()
                 )

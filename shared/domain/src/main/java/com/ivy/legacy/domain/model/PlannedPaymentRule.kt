@@ -22,7 +22,6 @@ data class PlannedPaymentRule(
     val title: String? = null,
     val description: String? = null,
 
-    val isSynced: Boolean = false,
     val isDeleted: Boolean = false,
 
     val id: UUID = UUID.randomUUID()
@@ -38,7 +37,6 @@ data class PlannedPaymentRule(
         categoryId = categoryId,
         title = title,
         description = description,
-        isSynced = isSynced,
         isDeleted = isDeleted,
         id = id
     )

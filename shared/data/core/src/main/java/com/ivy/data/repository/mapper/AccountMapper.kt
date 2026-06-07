@@ -40,7 +40,6 @@ class AccountMapper @Inject constructor(
             orderNum = orderNum,
             includeInBalance = includeInBalance,
             id = id.value,
-            isSynced = true, // TODO: Delete this
         )
     }
 }

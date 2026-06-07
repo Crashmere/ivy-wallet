@@ -41,7 +41,6 @@ class WalletAccountLogic @Inject constructor(
         adjustTransactionTitle: String = "Adjust balance",
 
         isFiat: Boolean? = null,
-        trnIsSyncedFlag: Boolean = false, // TODO: Remove this once Bank Integration trn sync is properly implemented
     ) {
         val ab = actualBalance ?: calculateAccountBalance(account)
         val diff = ab - newBalance
@@ -57,7 +56,6 @@ class WalletAccountLogic @Inject constructor(
                     toAmount = diff.absoluteValue.toBigDecimal(),
                     dateTime = timeProvider.utcNow(),
                     accountId = account.id,
-                    isSynced = trnIsSyncedFlag
                 ).toDomain(transactionMapper)?.let {
                     transactionRepository.save(it)
                 }
@@ -72,7 +70,6 @@ class WalletAccountLogic @Inject constructor(
                     toAmount = diff.absoluteValue.toBigDecimal(),
                     dateTime = timeProvider.utcNow(),
                     accountId = account.id,
-                    isSynced = trnIsSyncedFlag
                 ).toDomain(transactionMapper)?.let {
                     transactionRepository.save(it)
                 }

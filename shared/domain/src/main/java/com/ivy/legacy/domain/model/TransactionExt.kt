@@ -20,6 +20,5 @@ fun Transaction.toEntity(): TransactionEntity = TransactionEntity(
     loanId = loanId,
     loanRecordId = loanRecordId,
     id = id,
-    isSynced = isSynced,
     isDeleted = isDeleted
 )

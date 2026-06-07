@@ -32,7 +32,6 @@ class LoanCreator @Inject constructor(
                     icon = data.icon,
                     note = data.note,
                     orderNum = dao.findMaxOrderNum().nextOrderNum(),
-                    isSynced = false,
                     accountId = data.account?.id,
                     dateTime = data.dateTime
                 )
@@ -58,11 +57,7 @@ class LoanCreator @Inject constructor(
 
         try {
             ioThread {
-                loanWriter.save(
-                    updatedItem.toEntity().copy(
-                        isSynced = false
-                    )
-                )
+                loanWriter.save(updatedItem.toEntity())
             }
 
             onRefreshUI(updatedItem)

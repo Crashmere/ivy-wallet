@@ -73,7 +73,6 @@ class AccountRepositoryTest {
             icon = null,
             orderNum = 1.0,
             includeInBalance = true,
-            isSynced = true,
             isDeleted = false,
             id = accountId.value
         )
@@ -104,7 +103,6 @@ class AccountRepositoryTest {
             icon = null,
             orderNum = 2.0,
             includeInBalance = true,
-            isSynced = true,
             isDeleted = false,
             id = accountId.value
         )
@@ -141,7 +139,6 @@ class AccountRepositoryTest {
                 icon = null,
                 orderNum = 1.0,
                 includeInBalance = true,
-                isSynced = true,
                 isDeleted = false,
                 id = account1Id.value
             ),
@@ -152,7 +149,6 @@ class AccountRepositoryTest {
                 icon = null,
                 orderNum = 2.0,
                 includeInBalance = true,
-                isSynced = true,
                 isDeleted = false,
                 id = account2Id.value
             )
@@ -197,7 +193,6 @@ class AccountRepositoryTest {
                 icon = null,
                 orderNum = 1.0,
                 includeInBalance = true,
-                isSynced = true,
                 isDeleted = false,
                 id = account1Id.value
             ),
@@ -208,7 +203,6 @@ class AccountRepositoryTest {
                 icon = null,
                 orderNum = 2.0,
                 includeInBalance = true,
-                isSynced = true,
                 isDeleted = false,
                 id = account2Id.value
             )
@@ -283,7 +277,6 @@ class AccountRepositoryTest {
                     icon = null,
                     orderNum = 1.0,
                     includeInBalance = true,
-                    isSynced = true,
                     isDeleted = false,
                     id = accountId.value
                 )
@@ -332,7 +325,6 @@ class AccountRepositoryTest {
                         icon = null,
                         orderNum = 1.0,
                         includeInBalance = true,
-                        isSynced = true,
                         isDeleted = false,
                         id = account1Id.value
                     ),
@@ -343,7 +335,6 @@ class AccountRepositoryTest {
                         icon = null,
                         orderNum = 2.0,
                         includeInBalance = true,
-                        isSynced = true,
                         isDeleted = false,
                         id = account2Id.value
                     )

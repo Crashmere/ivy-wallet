@@ -50,12 +50,10 @@ fun List<Tag>.toImmutableLegacyTags(): ImmutableList<LegacyTag> =
 fun TransactionEntity.isIdenticalWith(transaction: TransactionEntity?): Boolean {
     if (transaction == null) return false
 
-    // Set isSynced && isDeleted to false so they aren't accounted in the equals check
+    // Set isDeleted to false so it isn't accounted in the equals check.
     return this.copy(
-        isSynced = false,
         isDeleted = false
     ) == transaction.copy(
-        isSynced = false,
         isDeleted = false
     )
 }

@@ -160,7 +160,6 @@ class PlannedPaymentsLogic @Inject constructor(
     @Deprecated("Uses legacy Transaction")
     suspend fun payOrGetLegacy(
         transaction: Transaction,
-        syncTransaction: Boolean = true,
         skipTransaction: Boolean = false,
         onUpdateUI: suspend (paidTransaction: Transaction) -> Unit
     ) {
@@ -170,7 +169,6 @@ class PlannedPaymentsLogic @Inject constructor(
             paidFor = transaction.dueDate,
             dueDate = null,
             dateTime = timeProvider.utcNow(),
-            isSynced = false,
         )
 
         val plannedPaymentRule = ioThread {
@@ -199,7 +197,6 @@ class PlannedPaymentsLogic @Inject constructor(
 
     suspend fun payOrGet(
         transaction: com.ivy.data.model.Transaction,
-        syncTransaction: Boolean = true,
         skipTransaction: Boolean = false,
         onUpdateUI: suspend (paidTransaction: com.ivy.data.model.Transaction) -> Unit
     ) {
@@ -231,7 +228,6 @@ class PlannedPaymentsLogic @Inject constructor(
 
     suspend fun payOrGet(
         transactions: List<com.ivy.data.model.Transaction>,
-        syncTransaction: Boolean = true,
         skipTransaction: Boolean = false,
         onUpdateUI: suspend (paidTransactions: List<com.ivy.data.model.Transaction>) -> Unit
     ) {
@@ -277,7 +273,6 @@ class PlannedPaymentsLogic @Inject constructor(
     @Deprecated("Uses legacy Transaction")
     suspend fun payOrGetLegacy(
         transactions: List<Transaction>,
-        syncTransaction: Boolean = true,
         skipTransaction: Boolean = false,
         onUpdateUI: suspend (paidTransactions: List<Transaction>) -> Unit
     ) {
@@ -290,7 +285,6 @@ class PlannedPaymentsLogic @Inject constructor(
             it.copy(
                 dueDate = null,
                 dateTime = timeProvider.utcNow(),
-                isSynced = false
             )
         }
 

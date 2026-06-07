@@ -24,7 +24,6 @@ data class Account(
     val orderNum: Double = 0.0,
     val includeInBalance: Boolean = true,
 
-    val isSynced: Boolean = false,
     val isDeleted: Boolean = false,
 
     val id: UUID = UUID.randomUUID()
@@ -36,7 +35,6 @@ data class Account(
         icon = icon,
         orderNum = orderNum,
         includeInBalance = includeInBalance,
-        isSynced = isSynced,
         isDeleted = isDeleted,
         id = id
     )

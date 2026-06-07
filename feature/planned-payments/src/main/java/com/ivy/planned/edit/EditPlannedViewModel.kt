@@ -426,8 +426,6 @@ class EditPlannedViewModel @Inject constructor(
                         title = title?.trim(),
                         description = description?.trim(),
                         amount = amount ?: error("no amount"),
-
-                        isSynced = false
                     )
 
                     plannedPaymentRuleWriter.save(loadedRule().toEntity())

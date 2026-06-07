@@ -12,7 +12,6 @@ data class Category(
     val icon: String? = null,
     val orderNum: Double = 0.0,
 
-    val isSynced: Boolean = false,
     val isDeleted: Boolean = false,
 
     val id: UUID = UUID.randomUUID()
@@ -22,7 +21,6 @@ data class Category(
         color = color,
         icon = icon,
         orderNum = orderNum,
-        isSynced = isSynced,
         isDeleted = isDeleted,
         id = id
     )

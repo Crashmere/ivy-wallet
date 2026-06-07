@@ -26,7 +26,6 @@ class LoanRecordCreator @Inject constructor(
                     note = note?.trim(),
                     amount = data.amount,
                     dateTime = data.dateTime,
-                    isSynced = false,
                     interest = data.interest,
                     accountId = data.account?.id,
                     convertedAmount = data.convertedAmount,
@@ -53,11 +52,7 @@ class LoanRecordCreator @Inject constructor(
 
         try {
             ioThread {
-                loanRecordWriter.save(
-                    updatedItem.toEntity().copy(
-                        isSynced = false
-                    )
-                )
+                loanRecordWriter.save(updatedItem.toEntity())
             }
 
             onRefreshUI(updatedItem)

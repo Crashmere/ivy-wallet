@@ -39,7 +39,6 @@ class CategoryMapperTest {
             color = 42,
             icon = null,
             orderNum = 1.0,
-            isSynced = true,
             isDeleted = false,
             id = CategoryId.value
         )
@@ -116,7 +115,6 @@ class CategoryMapperTest {
             color = 42,
             icon = null,
             orderNum = 1.0,
-            isSynced = true,
             isDeleted = false,
             id = CategoryId.value
         )

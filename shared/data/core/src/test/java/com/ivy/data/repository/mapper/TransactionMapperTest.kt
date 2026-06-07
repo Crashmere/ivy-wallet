@@ -95,7 +95,6 @@ class TransactionMapperTest {
             attachmentUrl = null,
             loanId = LoanId,
             loanRecordId = LoanRecordId,
-            isSynced = true,
             isDeleted = false,
             id = TransactionId.value
         )
@@ -148,7 +147,6 @@ class TransactionMapperTest {
             attachmentUrl = null,
             loanId = LoanId,
             loanRecordId = LoanRecordId,
-            isSynced = true,
             isDeleted = false,
             id = TransactionId.value
         )
@@ -206,7 +204,6 @@ class TransactionMapperTest {
             attachmentUrl = null,
             loanId = LoanId,
             loanRecordId = LoanRecordId,
-            isSynced = true,
             isDeleted = false,
             id = TransactionId.value
         )
@@ -708,7 +705,6 @@ class TransactionMapperTest {
             attachmentUrl = null,
             loanId = LoanId,
             loanRecordId = LoanRecordId,
-            isSynced = true,
             isDeleted = false,
             id = TransactionId.value
         )
@@ -729,7 +725,6 @@ class TransactionMapperTest {
             attachmentUrl = null,
             loanId = LoanId,
             loanRecordId = LoanRecordId,
-            isSynced = true,
             isDeleted = false,
             id = TransactionId.value
         )
@@ -750,7 +745,6 @@ class TransactionMapperTest {
             attachmentUrl = null,
             loanId = LoanId,
             loanRecordId = LoanRecordId,
-            isSynced = false,
             isDeleted = false,
             id = TransactionId.value
         )

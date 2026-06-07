@@ -13,7 +13,6 @@ fun LoanEntity.toLegacyDomain(): Loan = Loan(
     orderNum = orderNum,
     accountId = accountId,
     note = note,
-    isSynced = isSynced,
     isDeleted = isDeleted,
     id = id,
     dateTime = dateTime

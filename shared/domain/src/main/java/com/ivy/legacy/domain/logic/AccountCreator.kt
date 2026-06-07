@@ -48,7 +48,6 @@ class AccountCreator @Inject constructor(
                 icon = data.icon,
                 includeInBalance = data.includeBalance,
                 orderNum = accountDao.findMaxOrderNum().nextOrderNum(),
-                isSynced = false,
                 id = account.id.value
             )
             accountLogic.adjustBalance(
@@ -66,17 +65,14 @@ class AccountCreator @Inject constructor(
         newBalance: Double,
         onRefreshUI: suspend () -> Unit
     ) {
-        val updatedLegacyAccount = legacyAccount.copy(
-            isSynced = false
-        )
         ioThread {
             val account = legacyAccount.toDomainAccount(currencyRepository).getOrNull()
                 ?: return@ioThread
             accountRepository.save(account)
 
             accountLogic.adjustBalance(
-                account = updatedLegacyAccount,
-                actualBalance = accountLogic.calculateAccountBalance(updatedLegacyAccount),
+                account = legacyAccount,
+                actualBalance = accountLogic.calculateAccountBalance(legacyAccount),
                 newBalance = newBalance
             )
         }

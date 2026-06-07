@@ -538,12 +538,13 @@
 - `SettingsEntity` 暂时仍保留：首次默认数据、重置钱包、备份恢复格式，以及 `CurrencyRepository/LegacySettingsRepository` 内部仍依赖这张表。
 - 删除无调用方的 `data_synced_to_cloud` 多语言文案，云同步用户可见入口继续减少。
 - 删除标签和标签关联表里的 `lastSyncedTime` 云同步时间字段，新增 `Migration131to132_DropTagSyncTime`，数据库版本升到 132；旧备份里的多余字段可被现有 JSON 配置忽略。
+- 删除账户、交易、分类、设置、计划付款、预算、借贷和借贷记录表里的 `isSynced` 云同步状态字段，新增 `Migration132to133_DropIsSynced`，数据库版本升到 133；旧备份里的多余字段继续由 `ignoreUnknownKeys` 兼容。
 
 建议顺序：
 
-1. 评估 `isDeleted/isSynced` 字段：
-   - 如果只是历史同步残留，写迁移删除。
-   - 如果仍被软删除逻辑使用，先替换成直接删除或明确本地删除语义。
+1. 继续评估 `isDeleted` 字段：
+   - `isSynced` 已确认是云同步残留并删除。
+   - `isDeleted` 仍服务本地查询过滤和部分软删除流程；后续先明确它是否应保留为本地删除语义，再决定是否写迁移删除。
 2. 梳理 `SettingsEntity` 与 `AppPreferences/DataStore` 的职责重叠。
 3. 更新备份恢复数据结构和测试。
 
@@ -738,5 +739,5 @@ shared:ui:core
 下一步建议执行：
 
 1. 继续评估 `SettingsEntity` 是否可以拆成更明确的本地偏好表或迁入 DataStore；这一步需要和备份恢复格式一起规划。
-2. 继续数据库只读审计：明确剩余 `isSynced` 哪些只是构造字段和备份格式残留。
+2. 继续数据库只读审计：明确剩余 `isDeleted` 哪些是本地软删除语义，哪些可以改成直接删除。
 3. 继续收敛平台桥接：评估 `FileSharer`、`BuildInfoProvider` 是否需要从 `LocalContext.current as ...` 改成 CompositionLocal。

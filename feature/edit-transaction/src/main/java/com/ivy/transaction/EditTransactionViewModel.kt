@@ -587,8 +587,7 @@ class EditTransactionViewModel @Inject constructor(
     private fun onPayPlannedPayment() {
         viewModelScope.launch {
             plannedPaymentsLogic.payOrGetLegacy(
-                transaction = loadedTransaction(),
-                syncTransaction = false
+                transaction = loadedTransaction()
             ) { paidTransaction ->
                 loadedTransaction = paidTransaction
                 paidHistory = paidTransaction.paidFor
@@ -721,8 +720,7 @@ class EditTransactionViewModel @Inject constructor(
 
                         else -> loadedTransaction().dateTime
                     },
-                    categoryId = category?.id?.value,
-                    isSynced = false
+                    categoryId = category?.id?.value
                 )
 
                 if (loadedTransaction?.loanId != null) {

@@ -58,9 +58,6 @@ data class TransactionEntity(
     @Serializable(with = KSerializerUUID::class)
     val loanRecordId: UUID? = null,
     @Deprecated("Obsolete field used for cloud sync. Can't be deleted because of backwards compatibility")
-    @SerialName("isSynced")
-    val isSynced: Boolean = false,
-    @Deprecated("Obsolete field used for cloud sync. Can't be deleted because of backwards compatibility")
     @SerialName("isDeleted")
     val isDeleted: Boolean = false,
 

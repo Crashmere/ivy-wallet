@@ -293,7 +293,6 @@ class BudgetViewModel @Inject constructor(
                     budgetWriter.save(
                         item.budget.toEntity().copy(
                             orderId = index.toDouble(),
-                            isSynced = false
                         )
                     )
                 }

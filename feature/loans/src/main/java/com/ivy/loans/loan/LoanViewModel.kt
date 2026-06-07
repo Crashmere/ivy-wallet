@@ -329,7 +329,6 @@ class LoanViewModel @Inject constructor(
                     loanWriter.save(
                         item.loan.toEntity().copy(
                             orderNum = index.toDouble(),
-                            isSynced = false
                         )
                     )
                 }

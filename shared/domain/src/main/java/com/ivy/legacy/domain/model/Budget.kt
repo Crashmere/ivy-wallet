@@ -13,7 +13,6 @@ data class Budget(
     val categoryIdsSerialized: String?,
     val accountIdsSerialized: String?,
 
-    val isSynced: Boolean = false,
     val isDeleted: Boolean = false,
 
     val orderId: Double,
@@ -24,7 +23,6 @@ data class Budget(
         amount = amount,
         categoryIdsSerialized = categoryIdsSerialized,
         accountIdsSerialized = accountIdsSerialized,
-        isSynced = isSynced,
         isDeleted = isDeleted,
         orderId = orderId,
         id = id,

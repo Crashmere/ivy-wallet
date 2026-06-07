@@ -19,7 +19,6 @@ data class LoanRecord(
     val convertedAmount: Double? = null,
     val loanRecordType: LoanRecordType,
 
-    val isSynced: Boolean = false,
     val isDeleted: Boolean = false,
 
     val id: UUID = UUID.randomUUID()
@@ -33,7 +32,6 @@ data class LoanRecord(
         accountId = accountId,
         convertedAmount = convertedAmount,
         loanRecordType = loanRecordType,
-        isSynced = isSynced,
         isDeleted = isDeleted,
         id = id
     )
