@@ -550,6 +550,7 @@
 - 删除设置页“删除云端数据”入口、空的 `resetCloudUserData()` 用例方法，以及对应多语言云端删除文案；当前分支已经没有云端数据实现，这条链路只会误导用户。
 - 删除 `settings` 表里的旧 `name` 和 `isDeleted` 字段，新增 `Migration133to134_DropSettingsLegacyFields`，数据库版本升到 134；运行时仍保留 `theme/currency/bufferAmount/id`，旧备份里的多余字段继续由 JSON 配置忽略。
 - 已把历史 Room migration 和 `RoomTypeConverters` 的包名从旧的 `com.ivy.domain.db.*` 归位到 `com.ivy.data.db.*`；这一步只调整源码边界，不改变 schema 或 migration 内容。
+- 删除未接入运行时、主体仍是 `TODO("Not implemented")` 的新 domain use case 草稿：钱包统计、钱包余额、分类统计、账户余额和汇率换算；保留已有测试覆盖的 `AccountStatsUseCase.calculate(account, transactions)` 聚合逻辑。
 
 建议顺序：
 

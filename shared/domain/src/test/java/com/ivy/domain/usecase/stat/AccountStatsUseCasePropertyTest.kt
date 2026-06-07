@@ -28,7 +28,6 @@ import io.kotest.property.Arb
 import io.kotest.property.arbitrary.filter
 import io.kotest.property.arbitrary.list
 import io.kotest.property.checkAll
-import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
@@ -41,8 +40,6 @@ class AccountStatsUseCasePropertyTest {
     fun setup() {
         useCase = AccountStatsUseCase(
             dispatchers = TestDispatchersProvider,
-            accountRepository = mockk(),
-            exchangeUseCase = mockk(),
         )
     }
 
