@@ -35,7 +35,7 @@ class FakeSettingsDao : SettingsDao, WriteSettingsDao {
     }
 
     override suspend fun deleteById(id: UUID) {
-        TODO("Not yet implemented")
+        items.removeIf { it.id == id }
     }
 
     override suspend fun deleteAll() {

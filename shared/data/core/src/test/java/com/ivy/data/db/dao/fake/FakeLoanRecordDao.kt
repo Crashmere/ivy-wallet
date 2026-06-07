@@ -19,7 +19,7 @@ class FakeLoanRecordDao : LoanRecordDao, WriteLoanRecordDao {
     }
 
     override suspend fun findAllByLoanId(loanId: UUID): List<LoanRecordEntity> {
-        TODO("Not yet implemented")
+        return items.filter { it.loanId == loanId }
     }
 
     override suspend fun save(value: LoanRecordEntity) {

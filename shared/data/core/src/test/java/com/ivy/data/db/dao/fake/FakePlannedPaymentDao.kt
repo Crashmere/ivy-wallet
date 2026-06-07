@@ -15,7 +15,7 @@ class FakePlannedPaymentDao : PlannedPaymentRuleDao, WritePlannedPaymentRuleDao 
     }
 
     override suspend fun findAllByOneTime(oneTime: Boolean): List<PlannedPaymentRuleEntity> {
-        TODO("Not yet implemented")
+        return items.filter { it.oneTime == oneTime }
     }
 
     override suspend fun findById(id: UUID): PlannedPaymentRuleEntity? {
@@ -23,7 +23,7 @@ class FakePlannedPaymentDao : PlannedPaymentRuleDao, WritePlannedPaymentRuleDao 
     }
 
     override suspend fun countPlannedPayments(): Long {
-        TODO("Not yet implemented")
+        return items.size.toLong()
     }
 
     override suspend fun save(value: PlannedPaymentRuleEntity) {

@@ -312,6 +312,7 @@
 - 新增 `:shared:base-testing`，用于承载跨模块复用的基础测试 helper。
 - `shared:data:core`、`shared:domain`、`shared:ui:core` 的测试源集改为显式依赖 `shared:base-testing`。
 - `Fake*Dao`、`FakeRepositoryMemo` 已归位到测试源集；生产源码不再包含这些 fake。
+- 测试源集中的 `FakeSettingsDao`、`FakePlannedPaymentDao`、`FakeLoanRecordDao` 已补齐基础内存行为，不再保留 `TODO("Not yet implemented")` 作为潜在测试崩溃点。
 - 已删除生产源码中的空 `TestIdlingResource` 以及 Root/Main/Import/Loans ViewModel 中的空调用。
 
 ### 阶段 4：消灭 `temp:old-design`
