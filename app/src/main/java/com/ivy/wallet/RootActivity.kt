@@ -31,7 +31,7 @@ import com.ivy.base.legacy.Theme
 import com.ivy.base.time.TimeConverter
 import com.ivy.base.time.TimeProvider
 import com.ivy.ui.theme.ThemeState
-import com.ivy.legacy.design.api.IvyUI
+import com.ivy.ui.LegacyUiRoot
 import com.ivy.ui.theme.IvyMaterial3Theme
 import com.ivy.domain.RootScreen
 import com.ivy.legacy.ui.state.LocalPeriodState
@@ -107,7 +107,7 @@ class RootActivity : AppCompatActivity(), RootScreen {
                     null -> { // display nothing
                     }
                     true -> {
-                        IvyUI(
+                        LegacyUiRoot(
                             timeConverter = timeConverter,
                             timeProvider = timeProvider,
                             timeFormatter = timeFormatter,
@@ -129,7 +129,7 @@ class RootActivity : AppCompatActivity(), RootScreen {
 
                     false -> {
                         NavigationRoot(navigation = navigation) { screen ->
-                            IvyUI(
+                            LegacyUiRoot(
                                 includeSurface = screen?.isLegacy ?: true,
                                 timeConverter = timeConverter,
                                 timeProvider = timeProvider,

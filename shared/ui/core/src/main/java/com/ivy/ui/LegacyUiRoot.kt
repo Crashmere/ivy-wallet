@@ -1,4 +1,4 @@
-package com.ivy.legacy.design.api
+package com.ivy.ui
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -22,7 +22,7 @@ import com.ivy.ui.time.TimeFormatter
 
 @SuppressLint("ComposeModifierMissing")
 @Composable
-fun IvyUI(
+fun LegacyUiRoot(
     timeConverter: TimeConverter,
     timeProvider: TimeProvider,
     timeFormatter: TimeFormatter,
