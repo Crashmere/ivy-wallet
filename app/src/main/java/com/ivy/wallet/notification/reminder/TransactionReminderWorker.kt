@@ -6,7 +6,7 @@ import androidx.core.app.NotificationCompat
 import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
-import com.ivy.base.resource.ResourceProvider
+import com.ivy.ui.resource.ResourceProvider
 import com.ivy.domain.AppStarter
 import com.ivy.domain.usecase.settings.GetShowNotificationsPreferenceUseCase
 import com.ivy.domain.usecase.transaction.CountTodayTransactionsUseCase

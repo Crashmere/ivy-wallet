@@ -1,4 +1,4 @@
-package com.ivy.base.resource
+package com.ivy.ui.resource
 
 class TestResourceProvider : ResourceProvider {
     private val strings = mutableMapOf<Int, String>()

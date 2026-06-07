@@ -45,11 +45,11 @@
 | 模块 | 目标职责 | 不应包含 |
 | --- | --- | --- |
 | `:app` | Android 应用壳、`Activity`、启动流程、系统权限、生物识别、文件选择、分享、根导航宿主 | 业务计算、数据库访问、旧 UI 组件、跨 feature 业务状态 |
-| `:shared:base` | 纯基础能力：时间、线程、基础 Result/Failure、资源抽象、轻量工具 | `SharedPrefs` 业务 key、UI 组件、Room、Ktor、Compose |
+| `:shared:base` | 纯基础能力：时间、线程等少量跨层端口 | `SharedPrefs` 业务 key、资源抽象、UI 组件、Room、Ktor、Compose |
 | `:shared:data:model` | 纯数据模型和值对象：Account、Transaction、Category、Tag、ExchangeRate、primitive value object | Room DAO、Repository、Android Context、UI 文案 |
 | `:shared:data:core` | 数据实现：Room、DataStore、FileSystem、Repository、备份恢复、远程汇率数据源 | UI 状态、Compose、测试 fake、feature 专用逻辑 |
 | `:shared:domain` | 业务 use case：余额、统计、CSV 导出、汇率换算、设置/偏好业务规则 | Room 插件、Ktor 具体实现、Android Activity 接口、UI 资源 |
-| `:shared:ui:core` | Material3 主题、通用 Compose 组件、图标、时间/金额 UI 格式化、UI CompositionLocal | 数据库、Repository 实现、业务写入逻辑 |
+| `:shared:ui:core` | Material3 主题、通用 Compose 组件、图标、资源端口、时间/金额 UI 格式化、UI CompositionLocal | 数据库、Repository 实现、业务写入逻辑 |
 | `:shared:ui:navigation` | 页面 route、导航状态、导航容器 | domain use case、数据层实现、feature 业务逻辑 |
 | `:feature:*` | 用户可感知功能页面和 ViewModel | 公共基础设施、跨模块全局状态、临时兼容代码 |
 | `:temp:*` | 迁移过程中的临时兼容层 | 最终应清空并删除 |
@@ -107,7 +107,7 @@
 现状：
 
 - `Fake*Dao` 已在 `shared:data:core/src/test`。
-- `TestDispatchersProvider`、`TestResourceProvider`、`TestTimeConverter` 已在 `shared:base-testing`。
+- `TestDispatchersProvider`、`TestTimeConverter` 已在 `shared:base-testing`；`TestResourceProvider` 已随资源端口迁到 `shared:ui:core/src/test`。
 - `FakeRepositoryMemo` 已移到 test/androidTest 源集。
 - 生产源码中的空 `TestIdlingResource` 计数器已删除，调用方不再插入测试空闲计数。
 
@@ -118,7 +118,7 @@
 
 目标：
 
-- 生产 main 源集不承载 fake DAO、test dispatcher、test resource provider 或空闲同步计数器。
+- 生产 main 源集不承载 fake DAO、test dispatcher、test resource provider 或空闲同步计数器；资源测试替身留在 UI 测试源集。
 - 测试支持能力集中在测试源集或 `shared:*testing` 模块。
 
 ### 4. 数据层仍有同步、登录和云端历史痕迹
@@ -309,7 +309,7 @@
 
 - `shared:data:core/src/main/java/com/ivy/data/db/dao/fake/Fake*Dao.kt`
 - `shared:base/src/main/java/com/ivy/base/TestDispatchersProvider.kt`
-- `shared:base/src/main/java/com/ivy/base/resource/TestResourceProvider.kt`
+- `shared:base/src/main/java/com/ivy/base/resource/TestResourceProvider.kt`（已迁到 `shared:ui:core/src/test`）
 - `shared:base/src/main/java/com/ivy/base/time/impl/TestTimeConverter.kt`
 
 可选方案：
@@ -731,8 +731,8 @@
 - 旧 `AppPreferences` 具体类已拆成 `AppPreferenceStore` 端口和 `SharedPrefsAppPreferenceStore` 实现；domain 用例只依赖 data-api 端口，SharedPrefs 读写细节下沉到 data-core。
 - 备份恢复中的偏好读写已改走 `AppPreferenceStore`；备份 JSON 仍保留原 sharedPrefs key 字符串以兼容旧备份文件，但 `BackupDataUseCase` 不再直接读写通用 `PreferenceStore`。
 - 旧 `PreferenceStore/SharedPrefs` 基础层抽象已删除；`SharedPrefsAppPreferenceStore` 在 data-core 内部直接持有 Android SharedPreferences，base 不再暴露偏好存储绑定。
-- `AndroidResourceProvider` 已从 base 移到 app 平台层并由 app Hilt 模块绑定；base 只保留 `ResourceProvider` 抽象，不再持有 Android Context 资源实现。
-- `ResourceProvider` 接口已去掉 `@StringRes` 注解；资源 ID 在 base 只作为普通端口参数，Android 注解仅保留在 app 实现层。
+- `AndroidResourceProvider` 已从 base 移到 app 平台层并由 app Hilt 模块绑定；`ResourceProvider` 抽象也已从 base 迁到 `shared:ui:core` 的 `com.ivy.ui.resource` 包。
+- `ResourceProvider` 接口已去掉 `@StringRes` 注解；资源 ID 在 UI 端口中只作为普通参数，Android 注解仅保留在 app 实现层。
 - 备份 zip/unzip 工具已从 base 下沉到 `shared:data:core` 的备份包；zip 文件读写仍使用 Android `Context/Uri`，但只留在实际负责备份恢复的数据实现层。
 - 文本文件读写端口 `TextFileStore` 已从 base 迁到 `shared:data:api:file`；CSV 导出和文本读取用例继续依赖端口，Android `Uri` 读写实现仍在 data-core 的 `FileSystem`。
 - 默认法币函数已从 base 移到 `shared:data:model:currency`，和 `IvyCurrency` 放在同一模型边界；贷款、搜索和 legacy 借贷弹窗只更新导入路径，默认币种 fallback 行为保持不变。
@@ -752,6 +752,7 @@
 - `feature:main` 和 `feature:search` 已把旧 `ioThread` helper 改为标准 `withContext(Dispatchers.IO)`，并移除对 `shared:base` 的 Gradle 依赖。
 - 剩余 `ioThread/scopedIOThread/computationThread` 调用已全部改为标准 `withContext(Dispatchers.IO/Default)`；`shared:base` 中的旧协程 dispatcher helper 文件已删除。
 - `com.ivy.base.text` 中的字符串判空、大小写和首字母转换 helper 已删除；调用方改为标准 `isNullOrBlank().not()`、`uppercase/lowercase(Locale.getDefault())` 或局部私有扩展，基础层不再承载通用字符串糖衣。
+- `ResourceProvider` 已从 `shared:base` 迁到 `shared:ui:core`，测试替身也随之从 `base-testing` 移到 ui-core 测试源集；base 不再承载 Android 字符串资源端口。
 - 版本目录中未被任何 Gradle 文件或源码使用的 `mockk-android` 与 `androidx-security` 依赖别名已删除。
 - 账户旧读取路径已收敛到 `AccountStore`；旧 legacy 账户模型现在由 data model 账户映射而来，`shared:domain` 主源码不再直接注入 `AccountDao` 或依赖 `AccountEntity` mapper。
 - 旧交易卡片已移除重复账户查找 TODO：渲染前先解析来源/目标账户，再复用同一结果处理点击和币种展示，行为不变但 legacy UI 内部职责更清楚。

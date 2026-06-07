@@ -9,7 +9,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
 import com.ivy.data.model.legacy.Transaction
 import com.ivy.data.model.TransactionType
-import com.ivy.base.resource.ResourceProvider
+import com.ivy.ui.resource.ResourceProvider
 import com.ivy.base.time.TimeConverter
 import com.ivy.base.time.TimeProvider
 import com.ivy.data.model.Category

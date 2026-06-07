@@ -3,7 +3,7 @@ package com.ivy.ui.platform
 import android.content.Context
 import android.widget.Toast
 import androidx.annotation.StringRes
-import com.ivy.base.resource.ResourceProvider
+import com.ivy.ui.resource.ResourceProvider
 import com.ivy.base.threading.DispatchersProvider
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.withContext

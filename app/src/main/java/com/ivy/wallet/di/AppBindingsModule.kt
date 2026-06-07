@@ -1,6 +1,6 @@
 package com.ivy.wallet.di
 
-import com.ivy.base.resource.ResourceProvider
+import com.ivy.ui.resource.ResourceProvider
 import com.ivy.domain.AppStarter
 import com.ivy.domain.usecase.ResetWalletDataUseCase
 import com.ivy.ui.platform.DatePicker

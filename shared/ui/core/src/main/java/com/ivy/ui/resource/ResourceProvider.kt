@@ -1,4 +1,4 @@
-package com.ivy.base.resource
+package com.ivy.ui.resource
 
 interface ResourceProvider {
     fun getString(resId: Int): String

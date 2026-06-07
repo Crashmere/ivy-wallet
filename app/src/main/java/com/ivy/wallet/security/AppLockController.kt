@@ -1,7 +1,7 @@
 package com.ivy.wallet.security
 
 import androidx.biometric.BiometricPrompt
-import com.ivy.base.resource.ResourceProvider
+import com.ivy.ui.resource.ResourceProvider
 import com.ivy.domain.usecase.settings.GetAppLockEnabledPreferenceUseCase
 import com.ivy.ui.R
 import kotlinx.coroutines.CoroutineScope

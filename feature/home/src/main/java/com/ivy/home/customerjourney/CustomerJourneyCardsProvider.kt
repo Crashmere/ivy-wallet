@@ -1,7 +1,7 @@
 package com.ivy.home.customerjourney
 
 import com.ivy.data.model.TransactionType
-import com.ivy.base.resource.ResourceProvider
+import com.ivy.ui.resource.ResourceProvider
 import com.ivy.domain.usecase.home.DismissCustomerJourneyCardUseCase
 import com.ivy.domain.usecase.home.GetCustomerJourneyStatsUseCase
 import com.ivy.domain.usecase.home.IsCustomerJourneyCardDismissedUseCase
