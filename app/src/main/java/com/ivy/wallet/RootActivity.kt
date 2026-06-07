@@ -2,6 +2,7 @@ package com.ivy.wallet
 
 import android.net.Uri
 import android.os.Bundle
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
@@ -73,6 +74,11 @@ class RootActivity : AppCompatActivity(),
     private val activityFileSharer by lazy { ActivityFileSharer(this) }
     private val biometricAuthenticator by lazy { BiometricAuthenticator(this) }
     private val secureWindowController by lazy { SecureWindowController(window) }
+    private val backPressedCallback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            handleRootBackPressed()
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
@@ -108,6 +114,7 @@ class RootActivity : AppCompatActivity(),
         filePicker.registerActivityResultLaunchers(this)
         WindowCompat.setDecorFitsSystemWindows(window, false)
         datePicker.registerMaterialDatePicker(supportFragmentManager)
+        onBackPressedDispatcher.addCallback(this, backPressedCallback)
     }
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
@@ -138,13 +145,16 @@ class RootActivity : AppCompatActivity(),
         biometricAuthenticator.authenticate(biometricPromptCallback)
     }
 
-    override fun onBackPressed() {
-        if (viewModel.isAppLocked()) {
-            super.onBackPressed()
-        } else {
-            if (!navigation.onBackPressed()) {
-                super.onBackPressed()
-            }
+    @Suppress("DEPRECATION")
+    private fun handleRootBackPressed() {
+        if (!viewModel.isAppLocked() && navigation.onBackPressed()) {
+            return
+        }
+        backPressedCallback.isEnabled = false
+        try {
+            onBackPressedDispatcher.onBackPressed()
+        } finally {
+            backPressedCallback.isEnabled = true
         }
     }
 
