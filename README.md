@@ -22,6 +22,7 @@
 - 已删除 `temp:old-design` 中确认无外部引用的旧组件：`l2_components`、`l3_ivyComponents` 和旧 shape building block。
 - 已删除 `temp:old-design` 中无引用的旧 `Background`、`IvyPadding` 和 padding helper，并简化仍被调用的 `IvyText`。
 - 已删除 `temp:old-design` 中无引用的旧 Android、动画、窗口 inset 和 dp/px 工具，并精简 Compose/键盘工具 helper。
+- 已继续精简 `temp:legacy-code`，删除无引用的旧 DataStore 包装、旧账户余额模型、分类纯函数对象，并移除部分新旧并存文件中的未接入新模型残留。
 - 保留应用功能源码、功能测试源码、Gradle wrapper、本地数据管理能力和当前主要记账功能。
 - 当前本机已通过项目本地 Android SDK 编译 demo APK，并成功安装到已连接手机。
 
@@ -69,6 +70,7 @@
 - `temp:old-design` 中无引用的旧 l2/l3 组件和旧 shape building block；保留仍被当前功能引用的旧设计基础能力。
 - `temp:old-design` 中无引用的旧 `Background`、`IvyPadding` 和 padding helper；保留仍被 CSV 导入、借贷逻辑和颜色选择器使用的旧颜色列表常量。
 - `temp:old-design` 中无引用的旧 Android、动画、窗口 inset、dp/px 和 Compose helper；保留仍被页面调用的 `thenIf`、`thenWhen`、`densityScope`、`rememberInteractionSource` 和 `hideKeyboard`。
+- `temp:legacy-code` 中无引用的旧 `IvyDataStore` 包装、旧 `AccountBalance` 模型、分类纯函数对象，以及未被接入的非 legacy 分类统计 action 和新 `DueSection` 数据残留。
 
 ## 已确认保留
 
