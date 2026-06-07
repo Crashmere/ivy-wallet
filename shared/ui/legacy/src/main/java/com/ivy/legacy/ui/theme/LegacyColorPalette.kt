@@ -1,4 +1,4 @@
-package com.ivy.legacy.design
+package com.ivy.legacy.ui.theme
 
 import com.ivy.legacy.design.l0_system.Blue
 import com.ivy.legacy.design.l0_system.Blue2
