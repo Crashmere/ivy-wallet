@@ -733,6 +733,7 @@
 - 旧 `PreferenceStore/SharedPrefs` 基础层抽象已删除；`SharedPrefsAppPreferenceStore` 在 data-core 内部直接持有 Android SharedPreferences，base 不再暴露偏好存储绑定。
 - `AndroidResourceProvider` 已从 base 移到 app 平台层并由 app Hilt 模块绑定；base 只保留 `ResourceProvider` 抽象，不再持有 Android Context 资源实现。
 - `ResourceProvider` 接口已去掉 `@StringRes` 注解；资源 ID 在 base 只作为普通端口参数，Android 注解仅保留在 app 实现层。
+- 备份 zip/unzip 工具已从 base 下沉到 `shared:data:core` 的备份包；zip 文件读写仍使用 Android `Context/Uri`，但只留在实际负责备份恢复的数据实现层。
 - 账户旧读取路径已收敛到 `AccountStore`；旧 legacy 账户模型现在由 data model 账户映射而来，`shared:domain` 主源码不再直接注入 `AccountDao` 或依赖 `AccountEntity` mapper。
 - 旧交易卡片已移除重复账户查找 TODO：渲染前先解析来源/目标账户，再复用同一结果处理点击和币种展示，行为不变但 legacy UI 内部职责更清楚。
 

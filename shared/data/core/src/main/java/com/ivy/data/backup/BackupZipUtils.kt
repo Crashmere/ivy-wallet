@@ -1,4 +1,4 @@
-package com.ivy.base.io
+package com.ivy.data.backup
 
 import android.content.Context
 import android.net.Uri
@@ -14,7 +14,7 @@ import java.util.zip.ZipOutputStream
 private const val MODE_WRITE = "w"
 private const val MODE_READ = "r"
 
-fun zip(context: Context, zipFile: Uri, files: List<File>) {
+internal fun zip(context: Context, zipFile: Uri, files: List<File>) {
     context.contentResolver.openFileDescriptor(zipFile, MODE_WRITE).use { descriptor ->
         descriptor?.fileDescriptor?.let {
             ZipOutputStream(BufferedOutputStream(FileOutputStream(it))).use { outStream ->
@@ -51,7 +51,7 @@ private fun zip(
     }
 }
 
-fun unzip(context: Context, zipFile: Uri, location: File) {
+internal fun unzip(context: Context, zipFile: Uri, location: File) {
     context.contentResolver.openFileDescriptor(zipFile, MODE_READ).use { descriptor ->
         descriptor?.fileDescriptor?.let {
             unzip(FileInputStream(it), location)
@@ -59,7 +59,7 @@ fun unzip(context: Context, zipFile: Uri, location: File) {
     }
 }
 
-fun unzip(fileInputStream: FileInputStream, location: File) {
+private fun unzip(fileInputStream: FileInputStream, location: File) {
     ZipInputStream(BufferedInputStream(fileInputStream)).use { zipInputStream ->
         if (location.exists() && !location.isDirectory) {
             throw IllegalStateException("Location file must be directory or not exist")
