@@ -448,6 +448,7 @@
 - `shared:base` 已移除只为旧 LiveData helper 保留的 `androidx.lifecycle:lifecycle-livedata-core` 依赖；基础层目前不再依赖 Lifecycle。
 - `shared:ui:navigation` 和 `shared:ui:legacy` 已移除 `ivy.hilt` 插件；它们只保留轻量 `javax.inject` 注解依赖，继续通过 app 的 Hilt 图提供 `Navigation`、`MainTabState` 和 `PeriodState` 单例。
 - `shared:ui:legacy` 已移除对 `shared:domain` 的 Gradle 依赖；旧 UI 兼容层只依赖基础模型、数据模型、UI core 和导航，不再反向接触 domain use case。
+- `shared:ui:legacy` 已移除显式 Arrow 依赖；分类和标签编辑弹窗不再用 `either/bind` 组装 UI 表单结果，改回直接构造已校验的值对象。
 - `shared:ui:navigation` 已从顶层 `com.ivy.navigation` 归入 `com.ivy.ui.navigation`，模块 namespace 与 UI 分层保持一致；路由对象和导航状态行为不变。
 - `app` 的 AndroidManifest 已删除被 AGP 忽略的 `package` 属性，应用命名空间继续由模块 `namespace = "com.ivy.wallet"` 提供。
 - `app` 内部启动初始化和整库重置实现已从 `com.ivy.wallet.domain.*` 归入 `com.ivy.wallet.startup/reset`；这些类仍只是 app 侧编排和 domain 接口实现，不再伪装成正式领域层。
