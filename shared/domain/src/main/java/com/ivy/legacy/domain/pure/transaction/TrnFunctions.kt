@@ -3,7 +3,7 @@ package com.ivy.legacy.domain.pure.transaction
 import arrow.core.Option
 import arrow.core.toOption
 import com.ivy.base.model.TransactionType
-import com.ivy.base.time.convertToLocal
+import com.ivy.legacy.domain.time.convertToLocal
 import com.ivy.data.model.Expense
 import com.ivy.data.model.Income
 import com.ivy.data.model.Transaction

@@ -4,7 +4,7 @@ import arrow.core.Option
 import arrow.core.toOption
 import com.ivy.base.model.legacy.TransactionHistoryItem
 import com.ivy.base.time.TimeConverter
-import com.ivy.base.time.convertToLocal
+import com.ivy.legacy.domain.time.convertToLocal
 import com.ivy.data.db.dao.read.AccountDao
 import com.ivy.data.model.Tag
 import com.ivy.data.model.TagId

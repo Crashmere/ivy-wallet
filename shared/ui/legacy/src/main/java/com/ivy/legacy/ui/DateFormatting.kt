@@ -11,7 +11,6 @@ import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 
-@Deprecated("Use the TimeConverter interface via DI")
 @Composable
 fun LocalDateTime.formatNicely(
     noWeekDay: Boolean = false,
@@ -53,18 +52,14 @@ fun LocalDateTime.formatNicely(
     }
 }
 
-@Deprecated("Use the TimeConverter interface via DI")
 fun LocalDate.formatDateOnly(): String = this.formatLocal("MMM. dd", ZoneOffset.systemDefault())
 
-@Deprecated("Use the TimeConverter interface via DI")
 fun LocalDate.formatDateOnlyWithYear(): String =
     this.formatLocal("dd MMM, yyyy", ZoneOffset.systemDefault())
 
-@Deprecated("Use the TimeConverter interface via DI")
 fun LocalDate.formatDateWeekDayLong(): String =
     this.formatLocal("EEEE, dd MMM", ZoneOffset.systemDefault())
 
-@Deprecated("Use the TimeConverter interface via DI")
 @Composable
 fun LocalDate.formatNicely(
     pattern: String = "EEE, dd MMM",
