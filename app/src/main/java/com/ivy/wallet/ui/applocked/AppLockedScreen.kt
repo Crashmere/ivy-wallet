@@ -12,6 +12,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -24,14 +27,8 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.ivy.legacy.ui.theme.system.LegacyTheme
-import com.ivy.legacy.ui.theme.system.style
 import com.ivy.ui.R
-import com.ivy.legacy.ui.theme.Gray
-import com.ivy.legacy.ui.theme.White
-import com.ivy.legacy.ui.component.IvyButton
 
 @SuppressLint("ComposeModifierMissing")
 @Composable
@@ -51,13 +48,16 @@ fun BoxWithConstraintsScope.AppLockedScreen(
 
         Text(
             modifier = Modifier
-                .background(LegacyTheme.colors.medium, LegacyTheme.shapes.rFull)
+                .background(
+                    color = MaterialTheme.colorScheme.surfaceVariant,
+                    shape = RoundedCornerShape(percent = 50)
+                )
                 .padding(vertical = 12.dp)
                 .padding(horizontal = 32.dp),
             text = stringResource(R.string.app_locked),
-            style = LegacyTheme.typo.b2.style(
-                fontWeight = FontWeight.ExtraBold,
-            )
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            style = MaterialTheme.typography.bodyLarge,
+            fontWeight = FontWeight.ExtraBold,
         )
 
         Spacer(Modifier.weight(1f))
@@ -66,7 +66,7 @@ fun BoxWithConstraintsScope.AppLockedScreen(
             modifier = Modifier
                 .size(width = 96.dp, height = 138.dp),
             painter = painterResource(id = R.drawable.ic_fingerprint),
-            colorFilter = ColorFilter.tint(LegacyTheme.colors.medium),
+            colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.primary),
             contentScale = ContentScale.FillBounds,
             contentDescription = "unlock icon"
         )
@@ -75,10 +75,9 @@ fun BoxWithConstraintsScope.AppLockedScreen(
 
         Text(
             text = stringResource(R.string.authenticate_text),
-            style = LegacyTheme.typo.b2.style(
-                fontWeight = FontWeight.SemiBold,
-                color = Gray
-            )
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            style = MaterialTheme.typography.bodyLarge,
+            fontWeight = FontWeight.SemiBold,
         )
 
         Spacer(Modifier.height(24.dp))
@@ -88,22 +87,21 @@ fun BoxWithConstraintsScope.AppLockedScreen(
         )
         val latestOnShowOSBiometricsModal by rememberUpdatedState(onShowOSBiometricsModal)
 
-        IvyButton(
+        Button(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp),
-            text = stringResource(R.string.unlock),
-            textStyle = LegacyTheme.typo.b2.style(
-                color = White,
-                fontWeight = FontWeight.Bold,
-                textAlign = TextAlign.Center
-            ),
-            wrapContentMode = false
+            onClick = {
+                osAuthentication(
+                    hasLockScreen = hasLockScreen,
+                    onShowOSBiometricsModal = latestOnShowOSBiometricsModal,
+                    onContinueWithoutAuthentication = latestOnContinueWithoutAuthentication
+                )
+            }
         ) {
-            osAuthentication(
-                hasLockScreen = hasLockScreen,
-                onShowOSBiometricsModal = latestOnShowOSBiometricsModal,
-                onContinueWithoutAuthentication = latestOnContinueWithoutAuthentication
+            Text(
+                text = stringResource(R.string.unlock),
+                fontWeight = FontWeight.Bold,
             )
         }
         Spacer(Modifier.height(24.dp))

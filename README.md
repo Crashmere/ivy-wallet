@@ -445,6 +445,7 @@
 - `shared:ui:navigation` 已从顶层 `com.ivy.navigation` 归入 `com.ivy.ui.navigation`，模块 namespace 与 UI 分层保持一致；路由对象和导航状态行为不变。
 - `app` 的 AndroidManifest 已删除被 AGP 忽略的 `package` 属性，应用命名空间继续由模块 `namespace = "com.ivy.wallet"` 提供。
 - `app` 内部启动初始化和整库重置实现已从 `com.ivy.wallet.domain.*` 归入 `com.ivy.wallet.startup/reset`；这些类仍只是 app 侧编排和 domain 接口实现，不再伪装成正式领域层。
+- 锁屏页已改用 Material3 `Button/MaterialTheme`，不再直接依赖旧 `LegacyTheme/IvyButton`；自动弹出生物识别和手动解锁逻辑保持不变。
 - 已删除旧 building block 中最薄的 `SpacerVer/SpacerHor/SpacerWeight`、`ColumnRoot`、`DividerW/DividerH/DividerV/DividerSize`，相关调用方已改用 Compose 原生 `Spacer`、`Column` 和本地分隔线。
 - 已删除旧 `IvyText` 包装，剩余调用方改用 Material3 `Text`。
 - 已删除旧 `IvyIcon/IvyIconScaled/IconScale` 包装，剩余调用方改用 Material3 `Icon`、`Image` 或本地小函数；`shared:ui:core` 的旧 `l1_buildingBlocks` 包已清空。
