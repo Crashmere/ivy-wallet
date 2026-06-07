@@ -33,9 +33,9 @@ import java.util.Locale
 import java.util.UUID
 import javax.inject.Inject
 import kotlin.math.absoluteValue
-import com.ivy.importdata.csv.CSVRow as CSVRowNew
+import com.ivy.importdata.csv.CSVRow
 
-class CSVImporterV2 @Inject constructor(
+class CsvTransactionImporter @Inject constructor(
     private val getLegacyAccountsUseCase: GetLegacyAccountsUseCase,
     private val getCategoriesUseCase: GetCategoriesUseCase,
     private val getBaseCurrency: GetBaseCurrencyUseCase,
@@ -51,7 +51,7 @@ class CSVImporterV2 @Inject constructor(
     private var newAccountColorIndex = 0
 
     suspend fun import(
-        csv: List<CSVRowNew>,
+        csv: List<CSVRow>,
         importantFields: ImportantFields,
         transferFields: TransferFields,
         optionalFields: OptionalFields,
@@ -121,7 +121,7 @@ class CSVImporterV2 @Inject constructor(
 
     private suspend fun mapToTransaction(
         baseCurrency: AssetCode,
-        row: CSVRowNew,
+        row: CSVRow,
         importantFields: ImportantFields,
         transferFields: TransferFields,
         optionalFields: OptionalFields,

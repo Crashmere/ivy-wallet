@@ -781,6 +781,7 @@
 - `feature:exchange-rates` 已把保存/删除手动汇率时的 `DispatchersProvider` 注入改为标准 `Dispatchers.IO`，并移除对 `shared:base` 的 Gradle 依赖；汇率同步和手动汇率行为不变。
 - `feature:settings` 的导出文件名时间戳已改用 JDK `Instant.now()` 生成 UTC 时间，移除只服务文件命名的 `TimeProvider` 注入和 `shared:base` Gradle 依赖。
 - `feature:import-data` 的 CSV 日期导入已用局部 `LocalDateTime.atZone(ZoneId.systemDefault()).toInstant()` 表达原有本地时间转 UTC 规则，移除只服务该转换的 `TimeConverter` 注入和 `shared:base` Gradle 依赖。
+- CSV 导入执行器已从历史名 `CSVImporterV2` 改为 `CsvTransactionImporter`，并移除 `CSVRowNew` 迁移期别名；当前只保留这一套 CSV 交易导入实现。
 - `feature:planned-payments` 的计划付款编辑和列表展示也已用局部系统时区转换替代 `TimeConverter/LocalTimeConverter`，移除 `shared:base` Gradle 依赖；计划付款起始时间的本地展示和 UTC 存储规则保持不变。
 - 剩余 `ioThread/scopedIOThread/computationThread` 调用已全部改为标准 `withContext(Dispatchers.IO/Default)`；`shared:base` 中的旧协程 dispatcher helper 文件已删除。
 - `com.ivy.base.text` 中的字符串判空、大小写和首字母转换 helper 已删除；调用方改为标准 `isNullOrBlank().not()`、`uppercase/lowercase(Locale.getDefault())` 或局部私有扩展，基础层不再承载通用字符串糖衣。

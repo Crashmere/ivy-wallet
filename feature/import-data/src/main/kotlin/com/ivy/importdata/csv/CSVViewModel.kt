@@ -10,7 +10,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ivy.data.api.file.ExternalFile
-import com.ivy.importdata.csv.domain.CSVImporterV2
+import com.ivy.importdata.csv.domain.CsvTransactionImporter
 import com.ivy.importdata.csv.domain.SAMPLE_SIZE
 import com.ivy.importdata.csv.domain.parseAccount
 import com.ivy.importdata.csv.domain.parseAccountCurrency
@@ -44,7 +44,7 @@ import kotlin.math.roundToInt
 @HiltViewModel
 class CSVViewModel @Inject constructor(
     private val readTextFileUseCase: ReadTextFileUseCase,
-    private val csvImporter: CSVImporterV2,
+    private val csvImporter: CsvTransactionImporter,
     private val nav: Navigation,
     private val filePicker: FilePicker,
 ) : ViewModel() {
