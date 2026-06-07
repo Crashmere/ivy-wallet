@@ -15,6 +15,7 @@ import com.ivy.data.repository.CategoryRepository
 import com.ivy.data.repository.TransactionRepository
 import com.ivy.domain.usecase.account.GetAccountsUseCase
 import com.ivy.domain.usecase.category.GetCategoriesUseCase
+import com.ivy.domain.usecase.transaction.GetTransactionsUseCase
 import io.kotest.matchers.shouldBe
 import io.kotest.property.Arb
 import io.kotest.property.arbitrary.int
@@ -42,7 +43,7 @@ class ExportCsvUseCasePropertyTest {
         useCase = ExportCsvUseCase(
             getAccountsUseCase = GetAccountsUseCase(accountRepository),
             getCategoriesUseCase = GetCategoriesUseCase(categoryRepository),
-            transactionRepository = transactionRepository,
+            getTransactionsUseCase = GetTransactionsUseCase(transactionRepository),
             dispatchers = TestDispatchersProvider,
             fileSystem = fileSystem,
             timeConverter = timeConverter

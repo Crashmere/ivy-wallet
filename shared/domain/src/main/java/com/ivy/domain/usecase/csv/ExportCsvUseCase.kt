@@ -16,9 +16,9 @@ import com.ivy.data.model.Transaction
 import com.ivy.data.model.Transfer
 import com.ivy.data.model.primitive.NonNegativeDouble
 import com.ivy.data.model.primitive.toNonNegative
-import com.ivy.data.repository.TransactionRepository
 import com.ivy.domain.usecase.account.GetAccountsUseCase
 import com.ivy.domain.usecase.category.GetCategoriesUseCase
+import com.ivy.domain.usecase.transaction.GetTransactionsUseCase
 import kotlinx.coroutines.withContext
 import org.apache.commons.text.StringEscapeUtils
 import java.text.DecimalFormat
@@ -32,7 +32,7 @@ import kotlin.experimental.ExperimentalTypeInference
 class ExportCsvUseCase @Inject constructor(
     private val getAccountsUseCase: GetAccountsUseCase,
     private val getCategoriesUseCase: GetCategoriesUseCase,
-    private val transactionRepository: TransactionRepository,
+    private val getTransactionsUseCase: GetTransactionsUseCase,
     private val dispatchers: DispatchersProvider,
     private val fileSystem: FileSystem,
     private val timeConverter: TimeConverter
@@ -41,7 +41,7 @@ class ExportCsvUseCase @Inject constructor(
     suspend fun exportToFile(
         outputFile: Uri,
         exportScope: suspend () -> List<Transaction> = {
-            transactionRepository.findAll()
+            getTransactionsUseCase()
         }
     ): Either<FileSystem.Failure, Unit> = withContext(dispatchers.io) {
         val csv = exportCsv(exportScope)
