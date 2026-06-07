@@ -4,6 +4,7 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -17,6 +18,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
@@ -31,7 +33,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
@@ -40,8 +45,6 @@ import androidx.compose.ui.unit.sp
 import com.ivy.base.legacy.Theme
 import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
-import com.ivy.design.l1_buildingBlocks.IconScale
-import com.ivy.design.l1_buildingBlocks.IvyIconScaled
 import com.ivy.design.utils.thenIf
 import com.ivy.legacy.rootScreen
 import com.ivy.ui.legacy.drawColoredShadow
@@ -745,10 +748,9 @@ private fun StartDateOfMonth(
     ) {
         Spacer(Modifier.width(12.dp))
 
-        IvyIconScaled(
+        SettingsIcon(
             icon = R.drawable.ic_custom_calendar_m,
             tint = LegacyTheme.colors.pureInverse,
-            iconScale = IconScale.M,
             padding = 2.dp
         )
 
@@ -809,10 +811,9 @@ private fun AppSwitch(
     ) {
         Spacer(Modifier.width(12.dp))
 
-        IvyIconScaled(
+        SettingsIcon(
             icon = icon,
             tint = LegacyTheme.colors.pureInverse,
-            iconScale = IconScale.M,
             padding = 0.dp
         )
 
@@ -884,10 +885,9 @@ private fun SettingsPrimaryButton(
     ) {
         Spacer(Modifier.width(12.dp))
 
-        IvyIconScaled(
+        SettingsIcon(
             icon = icon,
             tint = textColor,
-            iconScale = IconScale.M,
             padding = iconPadding
         )
 
@@ -964,9 +964,8 @@ private fun CurrencyButton(
     ) {
         Spacer(Modifier.width(12.dp))
 
-        IvyIconScaled(
+        SettingsIcon(
             icon = R.drawable.ic_currency,
-            iconScale = IconScale.M,
             padding = 0.dp
         )
 
@@ -993,9 +992,8 @@ private fun CurrencyButton(
 
         Spacer(Modifier.height(4.dp))
 
-        IvyIconScaled(
+        SettingsIcon(
             icon = R.drawable.ic_arrow_right,
-            iconScale = IconScale.M
         )
 
         Spacer(Modifier.width(24.dp))
@@ -1033,10 +1031,9 @@ private fun SettingsSubMenuButton(
     ) {
         Spacer(Modifier.width(12.dp))
 
-        IvyIconScaled(
+        SettingsIcon(
             icon = icon,
             tint = LegacyTheme.colors.pureInverse,
-            iconScale = IconScale.M
         )
 
         Spacer(Modifier.width(8.dp))
@@ -1052,9 +1049,8 @@ private fun SettingsSubMenuButton(
             )
         )
 
-        IvyIconScaled(
+        SettingsIcon(
             icon = R.drawable.ic_arrow_right,
-            iconScale = IconScale.M
         )
 
         Spacer(Modifier.width(24.dp))
@@ -1079,4 +1075,22 @@ private fun SettingsDefaultButton(
     ) {
         onClick()
     }
+}
+
+@Composable
+private fun SettingsIcon(
+    @DrawableRes icon: Int,
+    tint: Color = LegacyTheme.colors.pureInverse,
+    padding: Dp = 4.dp,
+) {
+    Image(
+        modifier = Modifier
+            .size(48.dp)
+            .padding(all = padding),
+        painter = painterResource(id = icon),
+        colorFilter = ColorFilter.tint(tint),
+        alignment = Alignment.Center,
+        contentScale = ContentScale.Fit,
+        contentDescription = "icon"
+    )
 }

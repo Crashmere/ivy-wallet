@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -19,13 +20,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.currency.format
 import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
-import com.ivy.design.l1_buildingBlocks.IvyIcon
 import com.ivy.ui.R
 import com.ivy.ui.legacy.clickableNoIndication
 import com.ivy.ui.legacy.rememberInteractionSource
@@ -87,9 +88,11 @@ fun SectionDivider(
 
         Spacer(Modifier.weight(1f))
 
-        IvyIcon(
+        Icon(
             modifier = Modifier.rotate(expandIconRotation),
-            icon = R.drawable.ic_expandarrow
+            painter = painterResource(id = R.drawable.ic_expandarrow),
+            contentDescription = "icon",
+            tint = LegacyTheme.colors.pureInverse
         )
 
         Spacer(Modifier.width(32.dp))

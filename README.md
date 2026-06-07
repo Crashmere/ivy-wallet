@@ -319,11 +319,11 @@
    - 注意：CSV 导入、借贷逻辑和旧颜色选择器仍在用。
 3. 基础 building block
    - `IvyText`（已删除，调用方改用 Material3 `Text`）
-   - `IvyIcon`
+   - `IvyIcon/IvyIconScaled`（已删除，调用方改用 Material3 `Icon`、`Image` 或本地小函数）
    - `SpacerHor/SpacerVer`（已删除，调用方改用 Compose 原生 `Spacer`）
    - `DividerW/DividerH`（已删除未使用的旧分隔包装，少量调用方改为本地 `Spacer` 分隔线）
    - `ColumnRoot`（已删除，调用方改用 Compose 原生 `Column`）
-   - 目标：继续替换剩余 `IvyIcon/IvyIconScaled`，再删除旧 `l1_buildingBlocks` 包。
+   - 目标：旧 `l1_buildingBlocks` 包已清空，后续继续收敛旧主题包名。
 4. Compose helper
    - `thenIf`
    - `thenWhen`
@@ -397,6 +397,7 @@
 - 已把旧主题访问入口从泛化的 `UI.colors/typo/shapes` 重命名为 `LegacyTheme.colors/typo/shapes`，功能和视觉不变，但调用点会明确标识这是旧主题兼容层。
 - 已删除旧 building block 中最薄的 `SpacerVer/SpacerHor/SpacerWeight`、`ColumnRoot`、`DividerW/DividerH/DividerV/DividerSize`，相关调用方已改用 Compose 原生 `Spacer`、`Column` 和本地分隔线。
 - 已删除旧 `IvyText` 包装，剩余调用方改用 Material3 `Text`。
+- 已删除旧 `IvyIcon/IvyIconScaled/IconScale` 包装，剩余调用方改用 Material3 `Icon`、`Image` 或本地小函数；`shared:ui:core` 的旧 `l1_buildingBlocks` 包已清空。
 - 已删除 `:temp:legacy-code` 的 Gradle include、模块 build 文件，以及所有 app/feature 对 `projects.temp.legacyCode` 的依赖声明。
 - 阶段 5 的模块拆解目标已经完成：仓库中不再有被 Gradle include 的 `temp:*` 模块。后续工作转为拆除 `shared:ui:legacy` 中剩余旧上下文、旧设计 API 和旧 UI 兼容模型。
 
@@ -678,6 +679,6 @@ shared:ui:core
 
 下一步建议执行：
 
-1. 继续替换旧设计兼容 API：下一步优先处理剩余 `IvyIcon/IvyIconScaled` 和 `com.ivy.wallet.ui.theme.*` 包名。
+1. 继续替换旧设计兼容 API：下一步优先处理 `com.ivy.wallet.ui.theme.*` 包名和仍混在 `shared:ui:legacy` 中的通用旧组件。
 2. 收敛 `shared:ui:legacy` 中仍以 `com.ivy.wallet.ui.theme.*` 命名的旧组件，把通用组件迁到更清晰的 ui core 包名，功能专用组件再下沉到对应 feature。
 3. 每完成一组跨模块边界调整后运行 `:app:assembleDemo`，确认构建没有被迁移影响；涉及数据库、备份恢复或导入导出时再补充对应测试。
