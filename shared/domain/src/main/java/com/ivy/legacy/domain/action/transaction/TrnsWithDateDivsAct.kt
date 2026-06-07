@@ -6,18 +6,17 @@ import com.ivy.base.time.TimeConverter
 import com.ivy.data.db.dao.read.AccountDao
 import com.ivy.data.repository.AccountRepository
 import com.ivy.data.repository.TagRepository
+import com.ivy.domain.usecase.exchange.ExchangeAmountUseCase
 import com.ivy.legacy.frp.action.FPAction
 import com.ivy.legacy.frp.then
 import com.ivy.legacy.domain.mapper.toLegacyDomain
 import com.ivy.legacy.domain.pure.transaction.LegacyTrnDateDividers
 import com.ivy.legacy.domain.pure.transaction.transactionsWithDateDividers
-import com.ivy.legacy.domain.action.exchange.ExchangeAct
-import com.ivy.legacy.domain.action.exchange.actInput
 import javax.inject.Inject
 
 class TrnsWithDateDivsAct @Inject constructor(
     private val accountDao: AccountDao,
-    private val exchangeAct: ExchangeAct,
+    private val exchangeAmountUseCase: ExchangeAmountUseCase,
     private val tagRepository: TagRepository,
     private val accountRepository: AccountRepository,
 ) : FPAction<TrnsWithDateDivsAct.Input, List<TransactionHistoryItem>>() {
@@ -29,7 +28,7 @@ class TrnsWithDateDivsAct @Inject constructor(
             getTags = { tagIds -> tagRepository.findByIds(tagIds) },
             getAccount = accountDao::findById then { it?.toLegacyDomain() },
             accountRepository = accountRepository,
-            exchange = ::actInput then exchangeAct
+            exchange = exchangeAmountUseCase::invoke
         )
     }
 
@@ -41,7 +40,7 @@ class TrnsWithDateDivsAct @Inject constructor(
 
 class LegacyTrnsWithDateDivsAct @Inject constructor(
     private val accountDao: AccountDao,
-    private val exchangeAct: ExchangeAct,
+    private val exchangeAmountUseCase: ExchangeAmountUseCase,
     private val timeConverter: TimeConverter,
 ) : FPAction<LegacyTrnsWithDateDivsAct.Input, List<TransactionHistoryItem>>() {
 
@@ -51,7 +50,7 @@ class LegacyTrnsWithDateDivsAct @Inject constructor(
             baseCurrencyCode = baseCurrency,
 
             getAccount = accountDao::findById then { it?.toLegacyDomain() },
-            exchange = ::actInput then exchangeAct,
+            exchange = exchangeAmountUseCase::invoke,
             timeConverter = timeConverter,
         )
     }

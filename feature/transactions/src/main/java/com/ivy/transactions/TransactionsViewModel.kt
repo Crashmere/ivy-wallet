@@ -26,6 +26,7 @@ import com.ivy.domain.usecase.category.DeleteCategoryUseCase
 import com.ivy.domain.usecase.category.GetCategoriesUseCase
 import com.ivy.domain.usecase.category.GetCategoryUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
+import com.ivy.domain.usecase.exchange.ExchangeAmountUseCase
 import com.ivy.domain.usecase.transaction.MapTransactionsToLegacyUseCase
 import com.ivy.domain.usecase.transaction.MapTransactionsToLegacyWithTagsUseCase
 import com.ivy.legacy.ui.theme.system.RedLight
@@ -50,7 +51,6 @@ import com.ivy.domain.usecase.account.GetLegacyAccountUseCase
 import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
 import com.ivy.legacy.domain.action.account.CalcAccBalanceAct
 import com.ivy.legacy.domain.action.account.CalcAccIncomeExpenseAct
-import com.ivy.legacy.domain.action.exchange.ExchangeAct
 import com.ivy.legacy.domain.action.transaction.LegacyCalcTrnsIncomeExpenseAct
 import com.ivy.legacy.domain.action.transaction.LegacyTrnsWithDateDivsAct
 import com.ivy.legacy.domain.logic.CategoryCreator
@@ -93,7 +93,7 @@ class TransactionsViewModel @Inject constructor(
     private val calcAccBalanceAct: CalcAccBalanceAct,
     private val calcAccIncomeExpenseAct: CalcAccIncomeExpenseAct,
     private val calcTrnsIncomeExpenseAct: LegacyCalcTrnsIncomeExpenseAct,
-    private val exchangeAct: ExchangeAct,
+    private val exchangeAmountUseCase: ExchangeAmountUseCase,
     private val mapTransactionsToLegacyUseCase: MapTransactionsToLegacyUseCase,
     private val mapTransactionsToLegacyWithTagsUseCase: MapTransactionsToLegacyWithTagsUseCase,
     private val resourceProvider: ResourceProvider,
@@ -359,14 +359,12 @@ class TransactionsViewModel @Inject constructor(
         ).balance.toDouble()
         balance.doubleValue = balanceValue
         if (baseCurrency.value != currency.value) {
-            balanceBaseCurrency.value = exchangeAct(
-                ExchangeAct.Input(
-                    data = ExchangeData(
-                        baseCurrency = baseCurrency.value,
-                        fromCurrency = currency.value.toOption()
-                    ),
-                    amount = balanceValue.toBigDecimal()
-                )
+            balanceBaseCurrency.value = exchangeAmountUseCase(
+                data = ExchangeData(
+                    baseCurrency = baseCurrency.value,
+                    fromCurrency = currency.value.toOption()
+                ),
+                amount = balanceValue.toBigDecimal()
             ).getOrNull()?.toDouble()
         }
 

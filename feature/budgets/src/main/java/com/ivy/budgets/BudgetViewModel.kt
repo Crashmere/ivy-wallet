@@ -28,10 +28,10 @@ import com.ivy.domain.usecase.budget.GetBudgetsUseCase
 import com.ivy.domain.usecase.budget.ReorderBudgetsUseCase
 import com.ivy.domain.usecase.category.GetCategoriesUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
+import com.ivy.domain.usecase.exchange.ExchangeAmountUseCase
 import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.R
 import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
-import com.ivy.legacy.domain.action.exchange.ExchangeAct
 import com.ivy.legacy.domain.action.transaction.HistoryTrnsAct
 import com.ivy.data.model.legacy.CreateBudgetData
 import com.ivy.legacy.domain.pure.exchange.ExchangeData
@@ -57,7 +57,7 @@ class BudgetViewModel @Inject constructor(
     private val getBudgetsUseCase: GetBudgetsUseCase,
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
     private val historyTrnsAct: HistoryTrnsAct,
-    private val exchangeAct: ExchangeAct,
+    private val exchangeAmountUseCase: ExchangeAmountUseCase,
     private val timeProvider: TimeProvider,
     private val timeConverter: TimeConverter,
 ) : ComposeViewModel<BudgetScreenState, BudgetScreenEvent>() {
@@ -243,14 +243,12 @@ class BudgetViewModel @Inject constructor(
 
                     is Expense -> {
                         // increment spent amount
-                        exchangeAct(
-                            ExchangeAct.Input(
-                                data = ExchangeData(
-                                    baseCurrency = baseCurrencyCode,
-                                    fromCurrency = trnCurrency(it, accounts, baseCurrencyCode)
-                                ),
-                                amount = it.getValue()
-                            )
+                        exchangeAmountUseCase(
+                            data = ExchangeData(
+                                baseCurrency = baseCurrencyCode,
+                                fromCurrency = trnCurrency(it, accounts, baseCurrencyCode)
+                            ),
+                            amount = it.getValue()
                         ).getOrNull()?.toDouble() ?: 0.0
                     }
 

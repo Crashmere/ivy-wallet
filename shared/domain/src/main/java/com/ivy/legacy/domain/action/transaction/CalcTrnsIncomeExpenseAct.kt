@@ -2,11 +2,10 @@ package com.ivy.legacy.domain.action.transaction
 
 import arrow.core.nonEmptyListOf
 import com.ivy.data.model.Transaction
+import com.ivy.domain.usecase.exchange.ExchangeAmountUseCase
 import com.ivy.legacy.frp.action.FPAction
 import com.ivy.legacy.frp.then
 import com.ivy.data.model.legacy.Account
-import com.ivy.legacy.domain.action.exchange.ExchangeAct
-import com.ivy.legacy.domain.action.exchange.actInput
 import com.ivy.data.model.legacy.IncomeExpenseTransferPair
 import com.ivy.legacy.domain.pure.transaction.LegacyFoldTransactions
 import com.ivy.legacy.domain.pure.transaction.WalletValueFunctions
@@ -15,7 +14,7 @@ import com.ivy.legacy.domain.pure.transaction.foldTransactionsSuspend
 import javax.inject.Inject
 
 class CalcTrnsIncomeExpenseAct @Inject constructor(
-    private val exchangeAct: ExchangeAct
+    private val exchangeAmountUseCase: ExchangeAmountUseCase
 ) : FPAction<CalcTrnsIncomeExpenseAct.Input, IncomeExpenseTransferPair>() {
     override suspend fun Input.compose(): suspend () -> IncomeExpenseTransferPair = suspend {
         foldTransactionsSuspend(
@@ -29,7 +28,7 @@ class CalcTrnsIncomeExpenseAct @Inject constructor(
             arg = WalletValueFunctions.Argument(
                 accounts = accounts,
                 baseCurrency = baseCurrency,
-                exchange = ::actInput then exchangeAct
+                exchange = exchangeAmountUseCase::invoke
             )
         )
     } then { values ->
@@ -49,7 +48,7 @@ class CalcTrnsIncomeExpenseAct @Inject constructor(
 }
 
 class LegacyCalcTrnsIncomeExpenseAct @Inject constructor(
-    private val exchangeAct: ExchangeAct
+    private val exchangeAmountUseCase: ExchangeAmountUseCase
 ) : FPAction<LegacyCalcTrnsIncomeExpenseAct.Input, IncomeExpenseTransferPair>() {
     override suspend fun Input.compose(): suspend () -> IncomeExpenseTransferPair = suspend {
         LegacyFoldTransactions.foldTransactionsSuspend(
@@ -63,7 +62,7 @@ class LegacyCalcTrnsIncomeExpenseAct @Inject constructor(
             arg = WalletValueFunctionsLegacy.Argument(
                 accounts = accounts,
                 baseCurrency = baseCurrency,
-                exchange = ::actInput then exchangeAct
+                exchange = exchangeAmountUseCase::invoke
             )
         )
     } then { values ->

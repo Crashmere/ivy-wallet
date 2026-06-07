@@ -3,9 +3,9 @@ package com.ivy.accounts
 import arrow.core.toOption
 import com.ivy.data.model.Account
 import com.ivy.data.model.legacy.ClosedTimeRange
+import com.ivy.domain.usecase.exchange.ExchangeAmountUseCase
 import com.ivy.legacy.domain.action.account.CalcAccBalanceAct
 import com.ivy.legacy.domain.action.account.CalcAccIncomeExpenseAct
-import com.ivy.legacy.domain.action.exchange.ExchangeAct
 import com.ivy.legacy.domain.pure.exchange.ExchangeData
 import com.ivy.legacy.frp.action.FPAction
 import com.ivy.legacy.frp.action.thenMap
@@ -15,7 +15,7 @@ import kotlinx.collections.immutable.toImmutableList
 import javax.inject.Inject
 
 class AccountDataAct @Inject constructor(
-    private val exchangeAct: ExchangeAct,
+    private val exchangeAmountUseCase: ExchangeAmountUseCase,
     private val calcAccBalanceAct: CalcAccBalanceAct,
     private val calcAccIncomeExpenseAct: CalcAccIncomeExpenseAct
 ) : FPAction<AccountDataAct.Input, ImmutableList<AccountData>>() {
@@ -30,14 +30,12 @@ class AccountDataAct @Inject constructor(
         ).balance
 
         val balanceBaseCurrency = if (acc.asset.code != baseCurrency) {
-            exchangeAct(
-                ExchangeAct.Input(
-                    data = ExchangeData(
-                        baseCurrency = baseCurrency,
-                        fromCurrency = acc.asset.code.toOption()
-                    ),
-                    amount = balance
-                )
+            exchangeAmountUseCase(
+                data = ExchangeData(
+                    baseCurrency = baseCurrency,
+                    fromCurrency = acc.asset.code.toOption()
+                ),
+                amount = balance
             ).getOrNull()
         } else {
             null

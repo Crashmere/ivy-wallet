@@ -29,6 +29,7 @@ import com.ivy.domain.preferences.toggles.PreferenceToggles
 import com.ivy.domain.usecase.category.GetCategoriesUseCase
 import com.ivy.domain.usecase.csv.ExportCsvUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
+import com.ivy.domain.usecase.exchange.ExchangeAmountUseCase
 import com.ivy.domain.usecase.tag.GetTagsUseCase
 import com.ivy.domain.usecase.tag.SearchTagsUseCase
 import com.ivy.domain.usecase.transaction.GetTransactionsByTagsUseCase
@@ -47,7 +48,6 @@ import com.ivy.ui.platform.FilePicker
 import com.ivy.ui.platform.FileSharer
 import com.ivy.ui.preferences.asEnabledState
 import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
-import com.ivy.legacy.domain.action.exchange.ExchangeAct
 import com.ivy.legacy.domain.action.transaction.CalcTrnsIncomeExpenseAct
 import com.ivy.legacy.domain.action.transaction.TrnsWithDateDivsAct
 import com.ivy.legacy.domain.logic.PlannedPaymentsLogic
@@ -80,7 +80,7 @@ import javax.inject.Inject
 class ReportViewModel @Inject constructor(
     private val plannedPaymentsLogic: PlannedPaymentsLogic,
     private val periodState: PeriodState,
-    private val exchangeAct: ExchangeAct,
+    private val exchangeAmountUseCase: ExchangeAmountUseCase,
     private val getLegacyAccountsUseCase: GetLegacyAccountsUseCase,
     private val getCategoriesUseCase: GetCategoriesUseCase,
     private val trnsWithDateDivsAct: TrnsWithDateDivsAct,
@@ -438,14 +438,12 @@ class ReportViewModel @Inject constructor(
                 // Filter by Amount
                 // !NOTE: Amount must be converted to baseCurrency amount
 
-                val trnAmountBaseCurrency = exchangeAct(
-                    ExchangeAct.Input(
-                        data = ExchangeData(
-                            baseCurrency = baseCurrency,
-                            fromCurrency = trnCurrency(it, accounts, baseCurrency),
-                        ),
-                        amount = it.getValue()
-                    )
+                val trnAmountBaseCurrency = exchangeAmountUseCase(
+                    data = ExchangeData(
+                        baseCurrency = baseCurrency,
+                        fromCurrency = trnCurrency(it, accounts, baseCurrency),
+                    ),
+                    amount = it.getValue()
                 ).orZero().toDouble()
 
                 (filter.minAmount == null || trnAmountBaseCurrency >= filter.minAmount) &&

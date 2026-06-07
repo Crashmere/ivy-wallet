@@ -9,8 +9,8 @@ import com.ivy.data.model.primitive.IconAsset
 import com.ivy.data.model.primitive.NotBlankTrimmedString
 import com.ivy.legacy.frp.action.FPAction
 import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
+import com.ivy.domain.usecase.exchange.ExchangeAmountUseCase
 import com.ivy.legacy.domain.action.account.CalcAccBalanceAct
-import com.ivy.legacy.domain.action.exchange.ExchangeAct
 import com.ivy.data.model.legacy.ClosedTimeRange
 import com.ivy.legacy.domain.pure.exchange.ExchangeData
 import java.math.BigDecimal
@@ -19,7 +19,7 @@ import javax.inject.Inject
 class CalcWalletBalanceAct @Inject constructor(
     private val getLegacyAccountsUseCase: GetLegacyAccountsUseCase,
     private val calcAccBalanceAct: CalcAccBalanceAct,
-    private val exchangeAct: ExchangeAct,
+    private val exchangeAmountUseCase: ExchangeAmountUseCase,
 ) : FPAction<CalcWalletBalanceAct.Input, BigDecimal>() {
 
     override suspend fun Input.compose(): suspend () -> BigDecimal = suspend {
@@ -43,15 +43,13 @@ class CalcWalletBalanceAct @Inject constructor(
                     )
                 )
 
-                val exchanged = exchangeAct(
-                    ExchangeAct.Input(
-                        data = ExchangeData(
-                            baseCurrency = baseCurrency,
-                            fromCurrency = accountBalance.account.asset.code.toOption(),
-                            toCurrency = balanceCurrency
-                        ),
-                        amount = accountBalance.balance
-                    )
+                val exchanged = exchangeAmountUseCase(
+                    data = ExchangeData(
+                        baseCurrency = baseCurrency,
+                        fromCurrency = accountBalance.account.asset.code.toOption(),
+                        toCurrency = balanceCurrency
+                    ),
+                    amount = accountBalance.balance
                 )
 
                 sum + (exchanged.getOrNull() ?: BigDecimal.ZERO)

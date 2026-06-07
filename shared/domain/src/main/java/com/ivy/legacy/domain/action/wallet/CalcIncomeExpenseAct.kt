@@ -2,12 +2,12 @@ package com.ivy.legacy.domain.action.wallet
 
 import arrow.core.nonEmptyListOf
 import arrow.core.toOption
+import com.ivy.domain.usecase.exchange.ExchangeAmountUseCase
 import com.ivy.legacy.frp.action.FPAction
 import com.ivy.legacy.frp.action.thenMap
 import com.ivy.legacy.frp.then
 import com.ivy.data.model.legacy.Account
 import com.ivy.legacy.domain.action.account.AccTrnsAct
-import com.ivy.legacy.domain.action.exchange.ExchangeAct
 import com.ivy.legacy.domain.pure.account.filterExcluded
 import com.ivy.data.model.legacy.ClosedTimeRange
 import com.ivy.data.model.legacy.IncomeExpensePair
@@ -20,7 +20,7 @@ import javax.inject.Inject
 
 class CalcIncomeExpenseAct @Inject constructor(
     private val accTrnsAct: AccTrnsAct,
-    private val exchangeAct: ExchangeAct
+    private val exchangeAmountUseCase: ExchangeAmountUseCase
 ) : FPAction<CalcIncomeExpenseAct.Input, IncomeExpensePair>() {
 
     override suspend fun Input.compose(): suspend () -> IncomeExpensePair = suspend {
@@ -51,14 +51,12 @@ class CalcIncomeExpenseAct @Inject constructor(
     } thenMap { (acc, stats) ->
         Timber.i("acc_stats: $acc - $stats")
         stats.map {
-            exchangeAct(
-                ExchangeAct.Input(
-                    data = ExchangeData(
-                        baseCurrency = baseCurrency,
-                        fromCurrency = (acc.currency ?: baseCurrency).toOption()
-                    ),
-                    amount = it
+            exchangeAmountUseCase(
+                data = ExchangeData(
+                    baseCurrency = baseCurrency,
+                    fromCurrency = (acc.currency ?: baseCurrency).toOption()
                 ),
+                amount = it
             ).orZero()
         }
     } then { statsList ->
