@@ -10,7 +10,7 @@ import com.ivy.data.model.Theme
 import com.ivy.data.api.file.ExternalFile
 import com.ivy.data.model.primitive.AssetCode
 import com.ivy.domain.preferences.toggles.BoolPreference
-import com.ivy.domain.preferences.toggles.PreferenceToggleRepository
+import com.ivy.domain.preferences.toggles.PreferenceToggleService
 import com.ivy.domain.preferences.toggles.PreferenceToggles
 import com.ivy.domain.usecase.reset.ResetWalletDataUseCase
 import com.ivy.domain.usecase.backup.ExportBackupUseCase
@@ -74,7 +74,7 @@ class SettingsViewModel @Inject constructor(
     private val setTransfersAsIncomeExpensePreference: SetTransfersAsIncomeExpensePreferenceUseCase,
     private val syncExchangeRatesUseCase: SyncExchangeRatesUseCase,
     private val preferenceToggles: PreferenceToggles,
-    private val preferenceToggleRepository: PreferenceToggleRepository,
+    private val preferenceToggleService: PreferenceToggleService,
     private val filePicker: FilePicker,
     private val exportCsvUseCase: ExportCsvUseCase,
     private val localeSettingsLauncher: LocaleSettingsLauncher
@@ -167,15 +167,15 @@ class SettingsViewModel @Inject constructor(
     }
 
     private suspend fun initializeTogglePreferences() {
-        compactAccountsMode.value = preferenceToggleRepository.isEnabled(preferenceToggles.compactAccountsMode)
-        hideAccountTotalBalance.value = preferenceToggleRepository.isEnabled(preferenceToggles.hideTotalBalance)
-        compactCategoriesMode.value = preferenceToggleRepository.isEnabled(preferenceToggles.compactCategoriesMode)
+        compactAccountsMode.value = preferenceToggleService.isEnabled(preferenceToggles.compactAccountsMode)
+        hideAccountTotalBalance.value = preferenceToggleService.isEnabled(preferenceToggles.hideTotalBalance)
+        compactCategoriesMode.value = preferenceToggleService.isEnabled(preferenceToggles.compactCategoriesMode)
         showAccountColorsInTransactions.value =
-            preferenceToggleRepository.isEnabled(preferenceToggles.showAccountColorsInTransactions)
-        showTitleSuggestions.value = preferenceToggleRepository.isEnabled(preferenceToggles.showTitleSuggestions)
-        standardKeypadLayout.value = preferenceToggleRepository.isEnabled(preferenceToggles.standardKeypadLayout)
-        showCategorySearchBar.value = preferenceToggleRepository.isEnabled(preferenceToggles.showCategorySearchBar)
-        sortCategoriesAscending.value = preferenceToggleRepository.isEnabled(preferenceToggles.sortCategoriesAscending)
+            preferenceToggleService.isEnabled(preferenceToggles.showAccountColorsInTransactions)
+        showTitleSuggestions.value = preferenceToggleService.isEnabled(preferenceToggles.showTitleSuggestions)
+        standardKeypadLayout.value = preferenceToggleService.isEnabled(preferenceToggles.standardKeypadLayout)
+        showCategorySearchBar.value = preferenceToggleService.isEnabled(preferenceToggles.showCategorySearchBar)
+        sortCategoriesAscending.value = preferenceToggleService.isEnabled(preferenceToggles.sortCategoriesAscending)
     }
 
     private fun initializeStartDateOfMonth() {
@@ -454,7 +454,7 @@ class SettingsViewModel @Inject constructor(
         state.value = enabled
 
         viewModelScope.launch {
-            preferenceToggleRepository.set(preference, enabled)
+            preferenceToggleService.set(preference, enabled)
         }
     }
 

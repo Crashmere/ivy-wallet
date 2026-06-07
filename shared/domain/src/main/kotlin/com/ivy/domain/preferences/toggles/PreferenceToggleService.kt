@@ -4,7 +4,7 @@ import com.ivy.data.api.PreferenceToggleStore
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class PreferenceToggleRepository @Inject constructor(
+class PreferenceToggleService @Inject constructor(
     private val store: PreferenceToggleStore
 ) {
     suspend fun isEnabled(preference: BoolPreference): Boolean {

@@ -8,7 +8,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
 import com.ivy.ui.resource.ResourceProvider
-import com.ivy.domain.preferences.toggles.PreferenceToggleRepository
+import com.ivy.domain.preferences.toggles.PreferenceToggleService
 import com.ivy.domain.preferences.toggles.PreferenceToggles
 import com.ivy.domain.usecase.account.GetAccountsUseCase
 import com.ivy.domain.usecase.account.ObserveAccountChangesUseCase
@@ -44,7 +44,7 @@ class AccountsViewModel @Inject constructor(
     private val buildAccountDataUseCase: BuildAccountDataUseCase,
     private val observeAccountChangesUseCase: ObserveAccountChangesUseCase,
     private val preferenceToggles: PreferenceToggles,
-    private val preferenceToggleRepository: PreferenceToggleRepository,
+    private val preferenceToggleService: PreferenceToggleService,
 ) : ComposeViewModel<AccountsState, AccountsEvent>() {
     private var baseCurrency by mutableStateOf("")
     private var accountsData by mutableStateOf(listOf<AccountData>())
@@ -84,7 +84,7 @@ class AccountsViewModel @Inject constructor(
     @Composable
     private fun getHideTotalBalance(): Boolean {
         val preference = preferenceToggles.hideTotalBalance
-        return preferenceToggleRepository.enabledFlow(preference)
+        return preferenceToggleService.enabledFlow(preference)
             .asEnabledState(preference.defaultValue)
     }
 
@@ -126,7 +126,7 @@ class AccountsViewModel @Inject constructor(
     @Composable
     private fun getCompactAccountsMode(): Boolean {
         val preference = preferenceToggles.compactAccountsMode
-        return preferenceToggleRepository.enabledFlow(preference)
+        return preferenceToggleService.enabledFlow(preference)
             .asEnabledState(preference.defaultValue)
     }
 

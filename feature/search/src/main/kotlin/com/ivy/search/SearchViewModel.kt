@@ -9,7 +9,7 @@ import com.ivy.data.model.legacy.TransactionHistoryItem
 import com.ivy.data.model.primitive.NotBlankTrimmedString
 import com.ivy.ui.ComposeViewModel
 import com.ivy.data.model.Category
-import com.ivy.domain.preferences.toggles.PreferenceToggleRepository
+import com.ivy.domain.preferences.toggles.PreferenceToggleService
 import com.ivy.domain.preferences.toggles.PreferenceToggles
 import com.ivy.domain.usecase.category.GetCategoriesUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
@@ -36,7 +36,7 @@ class SearchViewModel @Inject constructor(
     private val getCategoriesUseCase: GetCategoriesUseCase,
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
     private val getTransactionsUseCase: GetTransactionsUseCase,
-    private val preferenceToggleRepository: PreferenceToggleRepository,
+    private val preferenceToggleService: PreferenceToggleService,
     private val preferenceToggles: PreferenceToggles
 ) : ComposeViewModel<SearchState, SearchEvent>() {
 
@@ -50,7 +50,7 @@ class SearchViewModel @Inject constructor(
     @Composable
     fun getShouldShowAccountSpecificColorInTransactions(): Boolean {
         val preference = preferenceToggles.showAccountColorsInTransactions
-        return preferenceToggleRepository.enabledFlow(preference)
+        return preferenceToggleService.enabledFlow(preference)
             .asEnabledState(preference.defaultValue)
     }
 

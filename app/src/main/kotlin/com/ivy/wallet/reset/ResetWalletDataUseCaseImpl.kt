@@ -1,6 +1,6 @@
 package com.ivy.wallet.reset
 
-import com.ivy.domain.preferences.toggles.PreferenceToggleRepository
+import com.ivy.domain.preferences.toggles.PreferenceToggleService
 import com.ivy.domain.usecase.reset.ResetWalletDataUseCase
 import com.ivy.domain.usecase.reset.ClearAppPreferencesUseCase
 import com.ivy.domain.usecase.reset.ClearWalletDataUseCase
@@ -17,13 +17,13 @@ class ResetWalletDataUseCaseImpl @Inject constructor(
     private val clearWalletDataUseCase: ClearWalletDataUseCase,
     private val clearAppPreferences: ClearAppPreferencesUseCase,
     private val notifyAllDataChangedUseCase: NotifyAllDataChangedUseCase,
-    private val preferenceToggleRepository: PreferenceToggleRepository,
+    private val preferenceToggleService: PreferenceToggleService,
     private val initialDataSetup: InitialDataSetup,
 ) : ResetWalletDataUseCase {
     override suspend fun resetAllData() {
         withContext(Dispatchers.IO) {
             clearWalletDataUseCase()
-            preferenceToggleRepository.clearAll()
+            preferenceToggleService.clearAll()
             clearAppPreferences()
         }
 

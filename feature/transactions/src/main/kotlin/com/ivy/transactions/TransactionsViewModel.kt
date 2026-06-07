@@ -30,7 +30,7 @@ import com.ivy.domain.usecase.exchange.ExchangeAmountUseCase
 import com.ivy.domain.usecase.transaction.MapTransactionsToLegacyUseCase
 import com.ivy.domain.usecase.transaction.MapTransactionsToLegacyWithTagsUseCase
 import com.ivy.legacy.ui.theme.system.RedLight
-import com.ivy.domain.preferences.toggles.PreferenceToggleRepository
+import com.ivy.domain.preferences.toggles.PreferenceToggleService
 import com.ivy.domain.preferences.toggles.PreferenceToggles
 import com.ivy.legacy.ui.state.PeriodState
 import com.ivy.legacy.ui.model.period.TimePeriod
@@ -98,7 +98,7 @@ class TransactionsViewModel @Inject constructor(
     private val mapTransactionsToLegacyUseCase: MapTransactionsToLegacyUseCase,
     private val mapTransactionsToLegacyWithTagsUseCase: MapTransactionsToLegacyWithTagsUseCase,
     private val resourceProvider: ResourceProvider,
-    private val preferenceToggleRepository: PreferenceToggleRepository,
+    private val preferenceToggleService: PreferenceToggleService,
     private val preferenceToggles: PreferenceToggles
 ) : ComposeViewModel<TransactionsState, TransactionsEvent>() {
 
@@ -174,7 +174,7 @@ class TransactionsViewModel @Inject constructor(
     @Composable
     fun getShouldShowAccountSpecificColorInTransactions(): Boolean {
         val preference = preferenceToggles.showAccountColorsInTransactions
-        return preferenceToggleRepository.enabledFlow(preference)
+        return preferenceToggleService.enabledFlow(preference)
             .asEnabledState(preference.defaultValue)
     }
 

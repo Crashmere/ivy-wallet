@@ -12,7 +12,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import com.ivy.IvyNavGraph
 import com.ivy.data.model.Theme
-import com.ivy.domain.preferences.toggles.PreferenceToggleRepository
+import com.ivy.domain.preferences.toggles.PreferenceToggleService
 import com.ivy.domain.preferences.toggles.PreferenceToggles
 import com.ivy.legacy.ui.LegacyUiRoot
 import com.ivy.legacy.ui.preferences.AmountInputPreferences
@@ -47,7 +47,7 @@ fun RootContent(
     dateTimePicker: DateTimePicker,
     datePicker: DatePicker,
     preferenceToggles: PreferenceToggles,
-    preferenceToggleRepository: PreferenceToggleRepository,
+    preferenceToggleService: PreferenceToggleService,
     buildInfoProvider: BuildInfoProvider,
     fileSharer: FileSharer,
     viewModel: RootViewModel,
@@ -55,11 +55,11 @@ fun RootContent(
     hasLockScreen: () -> Boolean,
     onShowOSBiometricsModal: () -> Unit,
 ) {
-    val amountInputPreferences = remember(preferenceToggles, preferenceToggleRepository) {
+    val amountInputPreferences = remember(preferenceToggles, preferenceToggleService) {
         AmountInputPreferences(
             standardKeypadLayout = UiBoolPreference(
                 defaultValue = preferenceToggles.standardKeypadLayout.defaultValue,
-                enabledFlow = preferenceToggleRepository.enabledFlow(
+                enabledFlow = preferenceToggleService.enabledFlow(
                     preferenceToggles.standardKeypadLayout
                 )
             )

@@ -7,7 +7,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.lifecycle.viewModelScope
 import com.ivy.data.model.legacy.Transaction
-import com.ivy.domain.preferences.toggles.PreferenceToggleRepository
+import com.ivy.domain.preferences.toggles.PreferenceToggleService
 import com.ivy.domain.preferences.toggles.PreferenceToggles
 import com.ivy.domain.usecase.category.GetCategoriesUseCase
 import com.ivy.domain.usecase.category.SaveCategoryUseCase
@@ -50,7 +50,7 @@ class CategoriesViewModel @Inject constructor(
     private val getLegacyTransactionsForAccountsUseCase: GetLegacyTransactionsForAccountsUseCase,
     private val calculateCategoryIncomeWithAccountFiltersUseCase: CalculateCategoryIncomeWithAccountFiltersUseCase,
     private val preferenceToggles: PreferenceToggles,
-    private val preferenceToggleRepository: PreferenceToggleRepository,
+    private val preferenceToggleService: PreferenceToggleService,
 ) : ComposeViewModel<CategoriesScreenState, CategoriesScreenEvent>() {
 
     private val baseCurrency = mutableStateOf("")
@@ -83,14 +83,14 @@ class CategoriesViewModel @Inject constructor(
     @Composable
     private fun getCompactCategoriesMode(): Boolean {
         val preference = preferenceToggles.compactCategoriesMode
-        return preferenceToggleRepository.enabledFlow(preference)
+        return preferenceToggleService.enabledFlow(preference)
             .asEnabledState(preference.defaultValue)
     }
 
     @Composable
     private fun getShowCategorySearchBar(): Boolean {
         val preference = preferenceToggles.showCategorySearchBar
-        return preferenceToggleRepository.enabledFlow(preference)
+        return preferenceToggleService.enabledFlow(preference)
             .asEnabledState(preference.defaultValue)
     }
 

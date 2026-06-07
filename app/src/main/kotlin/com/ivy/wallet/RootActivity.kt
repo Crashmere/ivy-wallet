@@ -8,7 +8,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.biometric.BiometricPrompt
 import androidx.core.view.WindowCompat
-import com.ivy.domain.preferences.toggles.PreferenceToggleRepository
+import com.ivy.domain.preferences.toggles.PreferenceToggleService
 import com.ivy.domain.preferences.toggles.PreferenceToggles
 import com.ivy.legacy.ui.state.PeriodState
 import com.ivy.ui.navigation.Navigation
@@ -62,7 +62,7 @@ class RootActivity : AppCompatActivity() {
     lateinit var preferenceToggles: PreferenceToggles
 
     @Inject
-    lateinit var preferenceToggleRepository: PreferenceToggleRepository
+    lateinit var preferenceToggleService: PreferenceToggleService
 
     private val viewModel: RootViewModel by viewModels()
     private val activityFileSharer by lazy { ActivityFileSharer(this) }
@@ -89,7 +89,7 @@ class RootActivity : AppCompatActivity() {
                 dateTimePicker = dateTimePicker,
                 datePicker = datePicker,
                 preferenceToggles = preferenceToggles,
-                preferenceToggleRepository = preferenceToggleRepository,
+                preferenceToggleService = preferenceToggleService,
                 buildInfoProvider = AppBuildInfoProvider,
                 fileSharer = activityFileSharer,
                 viewModel = viewModel,
