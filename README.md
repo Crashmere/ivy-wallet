@@ -602,6 +602,7 @@
 - 标签列表读取和文本搜索开始收敛到正式 domain 用例：新增 `GetTagsUseCase` 和 `SearchTagsUseCase`，报表筛选和编辑交易里的普通标签列表/搜索不再直接调用 `TagRepository.findAll()/findByText()`；标签保存、删除、交易关联和按标签反查交易仍保留仓库入口，后续按写入和筛选语义继续拆。
 - 账户/分类页面的写入边界继续收窄：新增 `SaveAccountUseCase`、`SaveCategoryUseCase` 和 `ObserveAccountChangesUseCase`，账户排序、分类排序和账户变更刷新不再直接依赖 repository 或 `DataObserver`；`:feature:accounts` 和 `:feature:categories` 已去掉对 `shared:data:core` 的直接 Gradle 依赖。
 - 继续清理 feature 的 Gradle 依赖：`:feature:search`、`:feature:piechart`、`:feature:main` 和 `:feature:settings` 已去掉对 `shared:data:core` 的直接依赖；其中 search/main/settings 只补充实际需要的 `shared:data:model` 或 DataStore 依赖，settings 的 ZIP 备份导出改走 `ExportBackupUseCase`。
+- 汇率页的数据边界已收敛：新增 `ObserveExchangeRatesUseCase`、`SaveExchangeRateUseCase` 和 `DeleteExchangeRateUseCase`，`:feature:exchange-rates` 不再直接注入 `ExchangeRatesRepository`，并已去掉对 `shared:data:core` 的直接依赖。
 - 删除无调用方的 `SettingsAct`、`UpdateSettingsAct`、旧 `Settings` 模型和 `SettingsEntity.toLegacyDomain()` mapper。
 - `SettingsEntity` 暂时仍保留：首次默认数据、重置钱包、备份恢复格式，以及 `CurrencyRepository/LegacySettingsRepository` 内部仍依赖这张表。
 - `ResetWalletDataUseCaseImpl` 仍保留在 app 层实现：它需要同时编排数据清空、偏好清空、默认数据重建和根导航复位；当前不再用废弃注解制造警告，后续若拆分应先拆出数据清空与 app 导航两部分职责。

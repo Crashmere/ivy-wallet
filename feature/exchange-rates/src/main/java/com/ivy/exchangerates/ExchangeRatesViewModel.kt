@@ -15,8 +15,10 @@ import com.ivy.base.threading.DispatchersProvider
 import com.ivy.data.model.ExchangeRate
 import com.ivy.data.model.primitive.AssetCode
 import com.ivy.data.model.primitive.PositiveDouble
-import com.ivy.data.repository.ExchangeRatesRepository
 import com.ivy.domain.usecase.currency.GetBaseCurrencyUseCase
+import com.ivy.domain.usecase.exchange.DeleteExchangeRateUseCase
+import com.ivy.domain.usecase.exchange.ObserveExchangeRatesUseCase
+import com.ivy.domain.usecase.exchange.SaveExchangeRateUseCase
 import com.ivy.domain.usecase.exchange.SyncExchangeRatesUseCase
 import com.ivy.exchangerates.data.RateUi
 import com.ivy.ui.ComposeViewModel
@@ -31,7 +33,9 @@ import javax.inject.Inject
 class ExchangeRatesViewModel @Inject constructor(
     private val syncExchangeRatesUseCase: SyncExchangeRatesUseCase,
     private val getBaseCurrency: GetBaseCurrencyUseCase,
-    private val exchangeRatesRepo: ExchangeRatesRepository,
+    private val observeExchangeRatesUseCase: ObserveExchangeRatesUseCase,
+    private val saveExchangeRateUseCase: SaveExchangeRateUseCase,
+    private val deleteExchangeRateUseCase: DeleteExchangeRateUseCase,
     private val dispatchers: DispatchersProvider,
     private val toaster: Toaster,
 ) : ComposeViewModel<RatesState, RatesEvent>() {
@@ -65,7 +69,7 @@ class ExchangeRatesViewModel @Inject constructor(
 
     @Composable
     private fun getRates(): List<ExchangeRate> {
-        val rates by remember { exchangeRatesRepo.findAll() }
+        val rates by remember { observeExchangeRatesUseCase() }
             .collectAsState(initial = emptyList())
 
         return rates.filter {
@@ -92,7 +96,7 @@ class ExchangeRatesViewModel @Inject constructor(
     private suspend fun handleRemoveOverride(event: RatesEvent.RemoveOverride) {
         withContext(dispatchers.io) {
             either {
-                exchangeRatesRepo.deleteByBaseCurrencyAndCurrency(
+                deleteExchangeRateUseCase(
                     baseCurrency = AssetCode.from(event.rate.from).bind(),
                     currency = AssetCode.from(event.rate.to).bind()
                 )
@@ -117,7 +121,7 @@ class ExchangeRatesViewModel @Inject constructor(
                     manualOverride = true
                 )
             }.onRight {
-                exchangeRatesRepo.save(it)
+                saveExchangeRateUseCase(it)
             }.onLeft { toaster.show(it) }
         }
     }
@@ -132,7 +136,7 @@ class ExchangeRatesViewModel @Inject constructor(
                     manualOverride = true
                 )
             }.onRight {
-                exchangeRatesRepo.save(it)
+                saveExchangeRateUseCase(it)
             }.onLeft { toaster.show(it) }
         }
     }
