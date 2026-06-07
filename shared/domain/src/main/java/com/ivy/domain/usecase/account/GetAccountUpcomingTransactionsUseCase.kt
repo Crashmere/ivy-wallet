@@ -18,7 +18,7 @@ class GetAccountUpcomingTransactionsUseCase @Inject constructor(
     ): List<Transaction> {
         return transactionRepository.findAllDueToBetweenByAccount(
             accountId = accountId,
-            startDate = range.upcomingFrom(timeProvider),
+            startDate = range.upcomingFrom(timeProvider.utcNow()),
             endDate = range.to()
         ).filterUpcoming(timeProvider)
     }

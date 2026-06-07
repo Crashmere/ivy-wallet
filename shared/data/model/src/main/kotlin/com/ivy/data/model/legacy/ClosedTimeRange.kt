@@ -1,7 +1,5 @@
 package com.ivy.data.model.legacy
 
-import com.ivy.base.time.TimeProvider
-import com.ivy.base.time.ivyMinTime
 import java.time.Instant
 
 data class ClosedTimeRange(
@@ -10,14 +8,14 @@ data class ClosedTimeRange(
 ) {
     companion object {
         fun allTimeIvy(
-            timeProvider: TimeProvider,
+            now: Instant,
         ): ClosedTimeRange = ClosedTimeRange(
-            from = ivyMinTime(),
-            to = timeProvider.utcNow(),
+            from = legacyMinTime(),
+            to = now,
         )
 
         fun to(to: Instant): ClosedTimeRange = ClosedTimeRange(
-            from = ivyMinTime(),
+            from = legacyMinTime(),
             to = to
         )
     }

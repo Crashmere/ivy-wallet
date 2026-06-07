@@ -19,7 +19,7 @@ class CalculateAccountBalanceUseCase @Inject constructor(
     ): BigDecimal {
         val transactions = getAccountTransactionsUseCase(
             accountId = account.id,
-            range = range ?: ClosedTimeRange.allTimeIvy(timeProvider)
+            range = range ?: ClosedTimeRange.allTimeIvy(timeProvider.utcNow())
         )
         return foldTransactions(
             transactions = transactions,

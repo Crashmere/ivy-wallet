@@ -21,7 +21,7 @@ class CalculateAccountIncomeExpenseUseCase @Inject constructor(
     ): IncomeExpensePair {
         val transactions = getAccountTransactionsUseCase(
             accountId = account.id,
-            range = range ?: ClosedTimeRange.allTimeIvy(timeProvider)
+            range = range ?: ClosedTimeRange.allTimeIvy(timeProvider.utcNow())
         )
         val values = foldTransactions(
             transactions = transactions,

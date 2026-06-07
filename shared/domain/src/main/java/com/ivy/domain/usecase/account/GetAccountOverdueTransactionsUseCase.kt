@@ -19,7 +19,7 @@ class GetAccountOverdueTransactionsUseCase @Inject constructor(
         return transactionRepository.findAllDueToBetweenByAccount(
             accountId = accountId,
             startDate = range.from(),
-            endDate = range.overdueTo(timeProvider)
+            endDate = range.overdueTo(timeProvider.utcNow())
         ).filterOverdue(timeProvider)
     }
 }

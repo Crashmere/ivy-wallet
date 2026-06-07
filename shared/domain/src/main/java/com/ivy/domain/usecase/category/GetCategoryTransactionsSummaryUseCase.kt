@@ -183,7 +183,7 @@ class GetCategoryTransactionsSummaryUseCase @Inject constructor(
     ): CategoryDueTransactionsSummary {
         val transactions = transactionRepository.findAllDueToBetweenByCategory(
             categoryId = CategoryId(category.id.value),
-            startDate = range.upcomingFrom(timeProvider),
+            startDate = range.upcomingFrom(timeProvider.utcNow()),
             endDate = range.to()
         ).map {
             it.toLegacy()
@@ -203,7 +203,7 @@ class GetCategoryTransactionsSummaryUseCase @Inject constructor(
         val transactions = transactionRepository.findAllDueToBetweenByCategory(
             categoryId = CategoryId(category.id.value),
             startDate = range.from(),
-            endDate = range.overdueTo(timeProvider)
+            endDate = range.overdueTo(timeProvider.utcNow())
         ).map {
             it.toLegacy()
         }.filterOverdueLegacy(timeProvider, timeConverter)

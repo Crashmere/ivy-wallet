@@ -1,8 +1,5 @@
 package com.ivy.data.model.legacy
 
-import com.ivy.base.time.TimeProvider
-import com.ivy.base.time.ivyMaxTime
-import com.ivy.base.time.ivyMinTime
 import java.time.Instant
 
 @Suppress("DataClassFunctions")
@@ -11,23 +8,21 @@ data class FromToTimeRange(
     val to: Instant?,
 ) {
     fun from(): Instant =
-        from ?: ivyMinTime()
+        from ?: legacyMinTime()
 
     fun to(): Instant =
-        to ?: ivyMaxTime()
+        to ?: legacyMaxTime()
 
     fun upcomingFrom(
-        timeProvider: TimeProvider
+        now: Instant
     ): Instant {
-        val startOfDayNowUTC = timeProvider.utcNow()
-        return if (includes(startOfDayNowUTC)) startOfDayNowUTC else from()
+        return if (includes(now)) now else from()
     }
 
     fun overdueTo(
-        timeProvider: TimeProvider
+        now: Instant
     ): Instant {
-        val startOfDayNowUTC = timeProvider.utcNow()
-        return if (includes(startOfDayNowUTC)) startOfDayNowUTC else to()
+        return if (includes(now)) now else to()
     }
 
     fun includes(dateTime: Instant): Boolean =
@@ -43,14 +38,14 @@ fun FromToTimeRange.toCloseTimeRangeUnsafe(): ClosedTimeRange {
 
 fun FromToTimeRange.toCloseTimeRange(): ClosedTimeRange {
     return ClosedTimeRange(
-        from = from ?: ivyMinTime(),
-        to = to ?: ivyMaxTime()
+        from = from ?: legacyMinTime(),
+        to = to ?: legacyMaxTime()
     )
 }
 
 fun FromToTimeRange.toUTCCloseTimeRange(): ClosedTimeRange {
     return ClosedTimeRange(
-        from = from ?: ivyMinTime(),
-        to = to ?: ivyMaxTime()
+        from = from ?: legacyMinTime(),
+        to = to ?: legacyMaxTime()
     )
 }

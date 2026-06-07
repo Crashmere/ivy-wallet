@@ -8,8 +8,6 @@ android {
 }
 
 dependencies {
-    implementation(projects.shared.base)
-
     api(libs.bundles.arrow)
     api(libs.kotlinx.collections.immutable)
 

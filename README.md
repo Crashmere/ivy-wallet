@@ -745,6 +745,7 @@
 - 金额正负号展示 helper 已从 base 迁到 `shared:ui:core` 的 `com.ivy.ui.money`；分类页和交易页继续复用同一显示逻辑，基础层不再承载 UI 展示语义。
 - 单一调用方的随机数 helper 已内联到 legacy 重排弹窗；base 不再保留 `random` 包。
 - `shared:data:api` 和 `shared:ui:navigation` 已移除不再使用的 `shared:base` Gradle 依赖；两个模块现在只声明实际源码需要的模型、UI 或端口依赖。
+- legacy 时间范围模型不再接收 `TimeProvider`，改由 domain 传入当前 `Instant`；data-model 内部保留同值的 legacy 安全时间边界，`shared:data:model` 已脱离 `shared:base` 依赖。
 - 账户旧读取路径已收敛到 `AccountStore`；旧 legacy 账户模型现在由 data model 账户映射而来，`shared:domain` 主源码不再直接注入 `AccountDao` 或依赖 `AccountEntity` mapper。
 - 旧交易卡片已移除重复账户查找 TODO：渲染前先解析来源/目标账户，再复用同一结果处理点击和币种展示，行为不变但 legacy UI 内部职责更清楚。
 
