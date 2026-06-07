@@ -59,13 +59,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 private const val DURATION_BACKGROUND_BLUR_ANIM = 400
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 const val DURATION_MODAL_ANIM = 200
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @Composable
 fun BoxScope.IvyModal(
     id: UUID?,
@@ -193,7 +193,7 @@ fun BoxScope.IvyModal(
     }
 }
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @Composable
 private fun ModalBackHandling(
     modalId: UUID?,
@@ -209,7 +209,7 @@ private fun ModalBackHandling(
     )
 }
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @Composable
 fun AddModalBackHandling(
     modalId: UUID?,
@@ -254,7 +254,7 @@ private fun removeLastBackHandlerSafe(nav: Navigation) {
     }
 }
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @Suppress("ParameterNaming")
 @Composable
 fun ModalActionsRow(

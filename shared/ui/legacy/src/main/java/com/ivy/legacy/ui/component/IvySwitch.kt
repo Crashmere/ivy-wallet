@@ -17,7 +17,7 @@ import com.ivy.legacy.ui.springBounce
 import com.ivy.legacy.ui.theme.Gray
 import com.ivy.legacy.ui.theme.Green
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @Composable
 fun IvySwitch(
     modifier: Modifier = Modifier,

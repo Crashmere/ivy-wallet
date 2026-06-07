@@ -54,14 +54,14 @@ import java.util.UUID
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 data class CategoryModalData(
     val category: Category?,
     val id: UUID = UUID.randomUUID(),
     val autoFocusKeyboard: Boolean = true,
 )
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @Composable
 fun BoxWithConstraintsScope.CategoryModal(
     modal: CategoryModalData?,

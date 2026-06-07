@@ -14,7 +14,7 @@ import com.ivy.legacy.ui.component.BufferBattery
 import com.ivy.legacy.ui.modal.edit.AmountModal
 import java.util.*
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 data class BufferModalData(
     val balance: Double,
     val buffer: Double,
@@ -22,7 +22,7 @@ data class BufferModalData(
     val id: UUID = UUID.randomUUID()
 )
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @Suppress("ParameterNaming")
 @Composable
 fun BoxWithConstraintsScope.BufferModal(

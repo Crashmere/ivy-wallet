@@ -17,7 +17,7 @@ import com.ivy.base.text.isNotNullOrBlank
 import com.ivy.ui.R
 import com.ivy.legacy.ui.component.AddPrimaryAttributeButton
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @Composable
 fun Description(
     description: String?,

@@ -33,7 +33,7 @@ import com.ivy.legacy.ui.theme.White
 import com.ivy.legacy.ui.modal.IvyModal
 import java.util.*
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @Suppress("UNCHECKED_CAST", "ParameterNaming")
 @Composable
 fun <T : Reorderable> BoxScope.ReorderModalSingleType(
@@ -75,7 +75,7 @@ fun <T : Reorderable> BoxScope.ReorderModalSingleType(
     )
 }
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @Suppress("ParameterNaming")
 @Composable
 fun <T : Reorderable> BoxScope.ReorderModal(
@@ -177,7 +177,7 @@ fun <T : Reorderable> BoxScope.ReorderModal(
     }
 }
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @Suppress("UNCHECKED_CAST")
 private class Adapter<T : Reorderable>(
     private val itemTouchHelper: ItemTouchHelper,

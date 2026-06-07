@@ -33,7 +33,7 @@ import com.ivy.base.text.isNotNullOrBlank
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.padding
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @Suppress("ParameterNaming")
 @Composable
 fun IvyNameTextField(

@@ -37,12 +37,12 @@ import com.ivy.legacy.ui.onScreenStart
 import com.ivy.ui.R
 import kotlinx.coroutines.launch
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 private data class IvyColor(
     val color: Color,
 )
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @Suppress("ParameterNaming")
 @Composable
 fun ColumnScope.IvyColorPicker(

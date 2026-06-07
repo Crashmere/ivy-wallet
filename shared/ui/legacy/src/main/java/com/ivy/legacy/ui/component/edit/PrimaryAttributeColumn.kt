@@ -26,7 +26,7 @@ import com.ivy.legacy.ui.component.IvyIcon
 import androidx.compose.ui.res.stringResource
 import com.ivy.ui.R
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @Composable
 fun PrimaryAttributeColumn(
     @DrawableRes icon: Int,

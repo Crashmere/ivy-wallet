@@ -42,10 +42,10 @@ import java.util.UUID
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 private const val ICON_PICKER_ICONS_PER_ROW = 5
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @Suppress("ParameterNaming")
 @Composable
 fun BoxWithConstraintsScope.ChooseIconModal(

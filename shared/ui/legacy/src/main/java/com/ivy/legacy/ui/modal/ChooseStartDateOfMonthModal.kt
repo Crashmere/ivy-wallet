@@ -29,7 +29,7 @@ import com.ivy.legacy.ui.theme.Ivy
 import com.ivy.legacy.ui.theme.White
 import java.util.UUID
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @Suppress("ParameterNaming")
 @Composable
 fun BoxWithConstraintsScope.ChooseStartDateOfMonthModal(

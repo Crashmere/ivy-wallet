@@ -17,7 +17,7 @@ import com.ivy.ui.compose.thenIf
 import com.ivy.legacy.ui.theme.Gradient
 import com.ivy.legacy.ui.theme.Transparent
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @Composable
 fun BoxWithConstraintsScope.GradientCutBottom(
     height: Dp = 96.dp,

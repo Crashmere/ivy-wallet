@@ -19,7 +19,7 @@ import com.ivy.data.model.currency.shortenAmount
 import com.ivy.data.model.currency.shouldShortAmount
 
 @SuppressLint("ComposeModifierMissing")
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @Composable
 fun AmountCurrencyB2Row(
     amount: Double,

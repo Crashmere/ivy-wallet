@@ -61,14 +61,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import java.time.LocalDate
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 data class ChoosePeriodModalData(
     val id: UUID = UUID.randomUUID(),
     val period: TimePeriod
 )
 
 @SuppressLint("ComposeModifierMissing")
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @Suppress("ParameterNaming")
 @Composable
 fun BoxWithConstraintsScope.ChoosePeriodModal(
@@ -244,7 +244,7 @@ private fun ColumnScope.ChooseMonth(
     }
 }
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 data class MonthYear(
     val month: com.ivy.legacy.ui.model.period.Month,
     val year: Int

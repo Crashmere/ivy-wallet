@@ -5,7 +5,7 @@ import com.ivy.data.model.Category
 import com.ivy.legacy.domain.model.Account
 import java.util.UUID
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @Composable
 fun category(
     categoryId: UUID?,
@@ -15,7 +15,7 @@ fun category(
     return categories.find { it.id.value == targetId }
 }
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @Composable
 fun account(
     accountId: UUID?,

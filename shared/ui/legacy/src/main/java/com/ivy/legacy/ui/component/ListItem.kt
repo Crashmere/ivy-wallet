@@ -22,7 +22,7 @@ import com.ivy.ui.compose.thenIf
 import com.ivy.legacy.ui.component.ItemIconSDefaultIcon
 import com.ivy.legacy.ui.theme.findContrastTextColor
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @Composable
 fun ListItem(
     icon: String?,

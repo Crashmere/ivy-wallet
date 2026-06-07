@@ -8,236 +8,236 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.core.graphics.ColorUtils
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 val White = Color(0xFFFAFAFA)
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 val Black = Color(0xFF111114)
 
 // Primary
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 val Ivy = Color(0xFF6B4DFF)
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 val Purple = Color(0xFF6B4DFF)
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 val Purple1 = Color(0xFFC34CFF)
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 val Purple2 = Color(0xFFFF4CFF)
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 val Blue = Color(0xFF4CC3FF)
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 val Blue2 = Color(0xFF45E6E6)
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 val Blue3 = Color(0xFF457BE6)
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 val Green = Color(0xFF14CC9E)
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 val Green2 = Color(0xFF45E67B)
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 val Green3 = Color(0xFF96E645)
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 val Green4 = Color(0xFFC7E62E)
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 val Yellow = Color(0xFFFFEE33)
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 val Orange = Color(0xFFF29F30)
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 val Orange2 = Color(0xFFE67B45)
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 val Orange3 = Color(0xFFFFC34C)
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 val Red = Color(0xFFFF4060)
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 val Red2 = Color(0xFFE62E2E)
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 val Red3 = Color(0xFFFF4CA6)
 
 // Light
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 val IvyLight = Color(0xFFD5CCFF)
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 val Purple1Light = Color(0xFFEECCFF)
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 val Purple2Light = Color(0xFFFFBFFF)
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 val BlueLight = Color(0xFFB3E6FF)
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 val Blue2Light = Color(0xFFB3FFFF)
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 val Blue3Light = Color(0xFFCCDDFF)
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 val GreenLight = Color(0xFFAAF2E0)
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 val Green2Light = Color(0xFF99FFBB)
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 val Green3Light = Color(0xFFCCFF99)
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 val Green4Light = Color(0xFFEEFF99)
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 val YellowLight = Color(0xFFFFF799)
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 val OrangeLight = Color(0xFFFFDEB3)
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 val Orange2Light = Color(0xFFFFCCB3)
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 val Orange3Light = Color(0xFFFFDC99)
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 val RedLight = Color(0xFFFFCCD5)
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 val Red2Light = Color(0xFFFFB3B3)
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 val Red3Light = Color(0xFFFFCCE6)
 
 // Dark
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 val IvyDark = Color(0xFF352680)
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 val Purple1Dark = Color(0xFF622680)
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 val Purple2Dark = Color(0xFF802680)
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 val BlueDark = Color(0xFF266280)
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 val Blue2Dark = Color(0xFF227373)
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 val Blue3Dark = Color(0xFF223D73)
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 val GreenDark = Color(0xFF0A664F)
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 val Green2Dark = Color(0xFF22733D)
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 val Green3Dark = Color(0xFF66804D)
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 val Green4Dark = Color(0xFF637317)
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 val YellowDark = Color(0xFF807719)
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 val OrangeDark = Color(0xFF734B17)
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 val Orange2Dark = Color(0xFF66371F)
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 val Orange3Dark = Color(0xFF806226)
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 val RedDark = Color(0xFF801919)
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 val Red2Dark = Color(0xFF802030)
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 val Red3Dark = Color(0xFF802653)
 // --------------------------------------------------------------------------------------------------
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 val TrueBlack = Color(0xFF000000)
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 val MediumBlack = Color(0xFF2B2C2D)
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 val Gray = Color(0xFF939199)
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 val MediumWhite = Color(0xFFEFEEF0)
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 val Transparent = Color(0x00000000)
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 val GradientGreen = Gradient(Green, Color(0xFF49F2C8))
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @Immutable
 data class Gradient(
     val startColor: Color,
     val endColor: Color
 ) {
     companion object {
-        @Deprecated("Old design system. Use `:ivy-design` and Material3")
+        @Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
         fun from(startColor: Int, endColor: Int?) = Gradient(
             startColor = startColor.toComposeColor(),
             endColor = (endColor ?: startColor).toComposeColor()
         )
 
-        @Deprecated("Old design system. Use `:ivy-design` and Material3")
+        @Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
         fun solid(color: Color) = Gradient(color, color)
 
-        @Deprecated("Old design system. Use `:ivy-design` and Material3")
+        @Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
         @Composable
         fun black() = Gradient(LegacyTheme.colors.gray, LegacyTheme.colors.pureInverse)
     }
 
-    @Deprecated("Old design system. Use `:ivy-design` and Material3")
+    @Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
     fun asHorizontalBrush() = Brush.horizontalGradient(colors = listOf(startColor, endColor))
 }
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 fun findContrastTextColor(backgroundColor: Color): Color {
     return if (isDarkColor(backgroundColor.toArgb())) White else Black
 }
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 fun isDarkColor(color: Color): Boolean {
     return isDarkColor(color.toArgb())
 }
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 fun isDarkColor(@ColorInt color: Int): Boolean {
     return ColorUtils.calculateLuminance(color) <= 0.5
 }
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 fun Color.asBrush(): Brush {
     return Brush.horizontalGradient(listOf(this, this))
 }
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 fun Color.dynamicContrast(): Color {
     val pickedColor = this.toHSVSpec()
 
@@ -268,7 +268,7 @@ fun Color.dynamicContrast(): Color {
     }
 }
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 fun Color.lighten(): Color {
     return this.hsv(
         s = 0.3f,
@@ -276,7 +276,7 @@ fun Color.lighten(): Color {
     )
 }
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 fun Color.darken(): Color {
     return this.hsv(
         s = 0.6f,
@@ -284,7 +284,7 @@ fun Color.darken(): Color {
     )
 }
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 fun Color.toHSVSpec(): HSVSpec {
     val hsv = FloatArray(3)
     val color: Int = this.toArgb()
@@ -292,14 +292,14 @@ fun Color.toHSVSpec(): HSVSpec {
     return HSVSpec(hsv[0], hsv[1], hsv[2])
 }
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 data class HSVSpec(
     val h: Float,
     val s: Float,
     val v: Float
 )
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 fun Color.hsv(
     h: Float? = null,
     s: Float,
@@ -319,5 +319,5 @@ fun Color.hsv(
     return Color(android.graphics.Color.HSVToColor(hsv))
 }
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 fun Int.toComposeColor() = Color(this)

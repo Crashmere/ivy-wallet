@@ -20,7 +20,7 @@ import com.ivy.legacy.ui.component.IvyButton
 import com.ivy.legacy.ui.component.IvyCircleButton
 import com.ivy.legacy.ui.component.IvyOutlinedButton
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @Composable
 fun ModalDynamicPrimaryAction(
     initialEmpty: Boolean,
@@ -62,7 +62,7 @@ fun ModalDynamicPrimaryAction(
     }
 }
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @Composable
 fun ModalSet(
     modifier: Modifier = Modifier,
@@ -78,7 +78,7 @@ fun ModalSet(
     )
 }
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @Composable
 fun ModalCheck(
     modifier: Modifier = Modifier,
@@ -95,7 +95,7 @@ fun ModalCheck(
     )
 }
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @Composable
 fun <T> ModalAddSave(
     item: T,
@@ -115,7 +115,7 @@ fun <T> ModalAddSave(
     }
 }
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @Composable
 fun ModalSave(
     modifier: Modifier = Modifier,
@@ -131,7 +131,7 @@ fun ModalSave(
     )
 }
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @Composable
 fun ModalAdd(
     enabled: Boolean = true,
@@ -147,7 +147,7 @@ fun ModalAdd(
     )
 }
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @Composable
 fun ModalNegativeButton(
     text: String,
@@ -164,7 +164,7 @@ fun ModalNegativeButton(
     )
 }
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @Composable
 fun ModalPositiveButton(
     modifier: Modifier = Modifier,
@@ -183,7 +183,7 @@ fun ModalPositiveButton(
     )
 }
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @Composable
 fun ModalDelete(
     enabled: Boolean = true,
@@ -202,7 +202,7 @@ fun ModalDelete(
     )
 }
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @Composable
 fun ModalTitle(
     text: String
@@ -217,7 +217,7 @@ fun ModalTitle(
     )
 }
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @Composable
 fun ModalSkip(
     text: String = stringResource(R.string.skip),

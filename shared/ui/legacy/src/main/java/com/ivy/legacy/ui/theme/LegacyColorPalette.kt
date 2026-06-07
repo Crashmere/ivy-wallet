@@ -52,7 +52,7 @@ import com.ivy.legacy.ui.theme.system.Yellow
 import com.ivy.legacy.ui.theme.system.YellowDark
 import com.ivy.legacy.ui.theme.system.YellowLight
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 val IVY_COLOR_PICKER_COLORS_FREE = listOf(
     // Primary
     Ivy, Purple1, Purple2, Blue, Blue2, Blue3,
@@ -60,7 +60,7 @@ val IVY_COLOR_PICKER_COLORS_FREE = listOf(
     Orange, Orange2, Orange3, Red, Red2, Red3,
 )
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 val IVY_COLOR_PICKER_COLORS_PREMIUM = listOf(
     // Light
     IvyLight, Purple1Light, Purple2Light, BlueLight, Blue2Light, Blue3Light,

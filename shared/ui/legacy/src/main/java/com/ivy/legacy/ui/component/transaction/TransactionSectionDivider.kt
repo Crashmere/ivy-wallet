@@ -32,7 +32,7 @@ import com.ivy.legacy.ui.clickableNoIndication
 import com.ivy.legacy.ui.rememberInteractionSource
 import com.ivy.legacy.ui.springBounce
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @Composable
 fun SectionDivider(
     expanded: Boolean,

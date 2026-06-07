@@ -17,7 +17,7 @@ import com.ivy.legacy.ui.toDensityDp
 import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.gradientCutBackgroundTop
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @Composable
 fun BoxWithConstraintsScope.BackBottomBar(
     bottomInset: Dp = navigationBarInset().toDensityDp(),

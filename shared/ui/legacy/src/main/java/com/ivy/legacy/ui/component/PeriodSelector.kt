@@ -29,7 +29,7 @@ import com.ivy.legacy.ui.model.period.TimePeriod
 import com.ivy.ui.R
 import com.ivy.legacy.ui.component.IvyIcon
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @Composable
 fun PeriodSelector(
     period: TimePeriod,

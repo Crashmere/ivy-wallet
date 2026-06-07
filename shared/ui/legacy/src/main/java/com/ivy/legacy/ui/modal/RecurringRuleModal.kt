@@ -58,7 +58,7 @@ import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 data class RecurringRuleModalData(
     val initialStartDate: LocalDateTime?,
     val initialIntervalN: Int?,
@@ -67,7 +67,7 @@ data class RecurringRuleModalData(
     val id: UUID = UUID.randomUUID()
 )
 
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Deprecated("Legacy UI. Prefer Material3 and shared:ui:core for new code.")
 @Suppress("ParameterNaming")
 @Composable
 fun BoxWithConstraintsScope.RecurringRuleModal(
