@@ -10,7 +10,9 @@ import com.ivy.data.model.primitive.NotBlankTrimmedString
 import java.util.UUID
 import com.ivy.data.model.Account as DomainAccount
 
-data class Account(
+typealias Account = LegacyAccount
+
+data class LegacyAccount(
     val name: String,
     val color: Int,
     val currency: String? = null,

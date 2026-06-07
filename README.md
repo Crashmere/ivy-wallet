@@ -451,7 +451,7 @@
 - 其余通用 helper 已继续拆出 `shared:base:legacy`：列表交换迁到 `com.ivy.base.collections`，随机区间数迁到 `com.ivy.base.random`，zip/unzip 迁到 `com.ivy.base.io`，余额正负号 helper 迁到 `com.ivy.ui.money`。
 - `shared:base` 中拼写错误的 `com.ivy.base.kotlinxserilzation` 包已更正为 `com.ivy.base.kotlinxserialization`；serializer descriptor 和编码方式保持不变。
 - 旧函数式 helper 已从顶层 `com.ivy.frp` 归入 `com.ivy.base.frp`；`shared:base` 源码现在只暴露在 `com.ivy.base.*` 根包下。
-- 日期、时间范围和 `IntervalType` 周期递增 helper 已迁到 `com.ivy.base.time`；旧交易兼容模型 `Transaction/LegacyTransaction` 仍保留在 `com.ivy.data.model.legacy`，交易标签 DTO `LegacyTag`、交易历史列表接口 `TransactionHistoryItem` 和日期分隔项已归位到正式 `com.ivy.data.model`。
+- 日期、时间范围和 `IntervalType` 周期递增 helper 已迁到 `com.ivy.base.time`；旧交易兼容模型在 `com.ivy.data.model.legacy` 内已改成真实类 `LegacyTransaction` 加兼容别名 `Transaction`，交易标签 DTO `LegacyTag`、交易历史列表接口 `TransactionHistoryItem` 和日期分隔项已归位到正式 `com.ivy.data.model`。
 - 旧主题枚举已迁到 `com.ivy.data.model.Theme`，数据库仍通过枚举 `name` 持久化，现有设置值不变；旧 `SharedPrefs` 已迁到 `com.ivy.base.prefs.SharedPrefs`，同一个 `ivy_wallet_prefs` 文件名和 key 保持不变。
 - `shared:base` 中的 `com.ivy.base.legacy` 包已经清空；后续重点从“迁出 legacy 包名”转向“减少 Android SharedPreferences 对 domain/data 的扩散”。
 - 偏好读写已抽出窄端口，`SharedPrefs` 只作为 Android 实现通过 Hilt 绑定；业务 key 集中到 `SharedPreferenceKeys`，domain 和数据备份恢复不再直接依赖 `SharedPrefs` 具体类。
@@ -495,7 +495,7 @@
 - 已清理一批低风险编译警告：保留仍被使用的 `LegacyTag` 和客户旅程卡片 provider，但取消误导性废弃标记；Arrow `orNull()`/旧 `option` DSL、旧 Material `Divider` 和 Kotlin `toUpperCase()` 调用已更新到当前 API。
 - 继续清理低风险废弃 API：旧货币选择器改用 `String.lowercase(Locale)`，旧排序弹窗改用 `bindingAdapterPosition` 并处理 `NO_POSITION`，汇率页箭头图标改用 AutoMirrored 版本。
 - 已把 `com.ivy.legacy.datamodel.temp` 中的旧实体/新模型 mapper 扩展函数迁到 `com.ivy.domain.mapper.legacy`；这些文件仍服务旧数据模型兼容，但不再使用含糊的 `temp` 包名。
-- 旧兼容模型已从早期的 `com.ivy.legacy.datamodel` 迁出，并继续按职责下沉；当前模型本体主要归入 `com.ivy.data.model.legacy`，数据库实体转换保留在 `com.ivy.domain.mapper.legacy`。
+- 旧兼容模型已从早期的 `com.ivy.legacy.datamodel` 迁出，并继续按职责下沉；当前 `com.ivy.data.model.legacy` 只剩旧账户/旧交易兼容层，数据库实体转换保留在 `com.ivy.domain.mapper.legacy`。
 - 已把跨模块混用的旧模型从 `com.ivy.legacy.data.model` 拆出并继续归位：`FromToTimeRange` 已进入正式 `com.ivy.data.model`，账户页展示聚合 `AccountData` 已下沉到 `feature:accounts`；UI 侧 `TimePeriod/Month/LastNTimeRange` 暂时保留在旧 UI 包，因为它们仍依赖 UI 文案和时间格式化。
 - 已把 `ClosedTimeRange`、`IncomeExpensePair`、`IncomeExpenseTransferPair` 从旧 `com.ivy.legacy.domain.pure.data` 包归入正式 `com.ivy.data.model`；它们仍作为旧统计流程的值对象保留在 `shared:data:model`，但不再使用 legacy 包名。
 - 旧时间范围值对象 `FromToTimeRange` 已从 `com.ivy.legacy.domain.model` 归位到正式 `com.ivy.data.model`；upcoming/overdue 交易过滤函数已迁到 `com.ivy.domain.time`，UI 和 feature 不再为了这个纯范围对象引用 legacy domain 包名。
@@ -508,7 +508,7 @@
 - 预算模型 `Budget` 已从 `com.ivy.data.model.legacy` 归位到正式 `com.ivy.data.model`；字段、序列化 ID 字符串、软删除标记和 Room/备份格式保持不变，预算页和预算相关 use case 继续使用同一模型语义。
 - 无调用方的旧 `ExchangeRate` 兼容模型已删除，汇率读写、同步和页面展示统一使用正式 `com.ivy.data.model.ExchangeRate`。无调用方的旧 `Category` 兼容模型和 mapper 已删除，分类功能继续使用正式 `com.ivy.data.model.Category`。
 - 借贷模型 `Loan`、`LoanRecord` 已从 `com.ivy.legacy.domain.model` 下沉并归位到正式 `com.ivy.data.model`；借贷数据库转换 `toEntity()` 已移入 legacy domain mapper。字段、`isDeleted` 软删除语义、日期类型和 Room/备份格式保持不变。
-- 旧账户模型 `Account` 仍保留在 `com.ivy.data.model.legacy`；计划付款规则 `PlannedPaymentRule` 已归位到正式 `com.ivy.data.model`。旧交易 `toEntity()` 已从 model 包合并进 `com.ivy.domain.mapper.legacy.TransactionExt`。`com.ivy.legacy.domain.model` 源码目录已经清空。
+- 旧账户模型在 `com.ivy.data.model.legacy` 内已改成真实类 `LegacyAccount` 加兼容别名 `Account`；计划付款规则 `PlannedPaymentRule` 已归位到正式 `com.ivy.data.model`。旧交易 `toEntity()` 已从 model 包合并进 `com.ivy.domain.mapper.legacy.TransactionExt`。`com.ivy.legacy.domain.model` 源码目录已经清空。
 - 已把剩余 UI 兼容状态模型从 `com.ivy.legacy.data` 迁到 `com.ivy.legacy.ui.model`，并把周期选择模型迁到 `com.ivy.legacy.ui.model.period`；`com.ivy.legacy.data.*` 包名已经从源码中清空。
 - 已把新旧交易模型桥接 helper 从 `com.ivy.data.temp.migration` 改名到 `com.ivy.data.legacy`，它们仍用于预算、报表和旧 domain 统计，但不再伪装成临时 migration 工具。
 - 已把旧 UI helper 从 `com.ivy.ui.legacy` 迁到 `com.ivy.legacy.ui`，包括 Compose 扩展、手势、动画、日期/间隔格式化和 Android UI 扩展；功能不变，只让旧 UI 工具回到统一 legacy UI 包根。
@@ -1065,7 +1065,7 @@ shared:ui:core
 下一步建议执行：
 
 1. shared 模块依赖审计暂时没有发现可直接删除的低风险依赖；后续在改动具体调用方时继续顺手收缩 Gradle 依赖。
-2. 继续收敛仍在 domain/data-core 中流动的 `legacy` 数据模型；预算模型、账户/预算/分类/借贷创建参数已归位到正式 data model，下一批优先只做只读审计或选择更小的值对象边界，避免一次性重写借贷、计划付款和交易统计等高风险功能。
+2. 继续收敛仍在 domain/data-core 中流动的 `legacy` 数据模型；预算、借贷、计划付款、交易历史项和各类创建参数已归位到正式 data model。当前只剩旧账户/旧交易兼容层，下一批优先逐步把调用方从 `Account`/`Transaction` 兼容别名改为显式 `LegacyAccount`/`LegacyTransaction`，避免一次性重写交易统计等高风险功能。
 3. 偏好设置代码边界已基本收窄，短期不再为清理而迁移存储格式；若后续要处理 `SettingsEntity`、SharedPrefs 或 DataStore 归并，必须单独规划 schema/备份兼容迁移。
 4. 继续数据库只读审计：`isDeleted` 目前先保留为本地软删除语义；不再把业务表里的 `isDeleted` 当作纯云同步字段批量删除。
 5. feature 模块合并属于较大结构调整，短期只在实际修改某个功能时收敛依赖；真正合并模块前需要先确认导航、资源和 Hilt 边界。
