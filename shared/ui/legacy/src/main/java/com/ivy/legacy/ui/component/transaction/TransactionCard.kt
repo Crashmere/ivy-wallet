@@ -41,7 +41,6 @@ import com.ivy.design.api.LocalTimeProvider
 import com.ivy.design.l0_system.BlueLight
 import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
-import com.ivy.design.l1_buildingBlocks.IvyText
 import com.ivy.legacy.data.AppBaseData
 import com.ivy.legacy.datamodel.Account
 import com.ivy.base.legacy.capitalizeLocal
@@ -442,9 +441,9 @@ private fun TransactionBadge(
 
         Spacer(Modifier.width(4.dp))
 
-        IvyText(
+        Text(
             text = text,
-            typo = LegacyTheme.typo.c.style(
+            style = LegacyTheme.typo.c.style(
                 color = contrastColor,
                 fontWeight = FontWeight.ExtraBold
             )

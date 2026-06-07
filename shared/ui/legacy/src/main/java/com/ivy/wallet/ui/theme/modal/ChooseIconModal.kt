@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -28,7 +29,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
-import com.ivy.design.l1_buildingBlocks.IvyText
 import com.ivy.ui.legacy.hideKeyboard
 import com.ivy.ui.legacy.onScreenStart
 import com.ivy.design.utils.thenIf
@@ -309,9 +309,9 @@ private fun Section(
 
         Spacer(Modifier.width(16.dp))
 
-        IvyText(
+        Text(
             text = title,
-            typo = LegacyTheme.typo.b1.style(
+            style = LegacyTheme.typo.b1.style(
                 color = LegacyTheme.colors.pureInverse,
             )
         )
