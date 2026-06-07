@@ -1,14 +1,19 @@
 package com.ivy.legacy.ui.component.transaction
 
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
@@ -17,18 +22,14 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.ivy.data.model.currency.format
 import com.ivy.design.l0_system.UI
 import com.ivy.design.l0_system.style
+import com.ivy.design.l1_buildingBlocks.IvyIcon
+import com.ivy.ui.R
 import com.ivy.ui.legacy.clickableNoIndication
-import com.ivy.data.model.currency.format
 import com.ivy.ui.legacy.rememberInteractionSource
 import com.ivy.ui.legacy.springBounce
-import com.ivy.ui.R
-import com.ivy.wallet.ui.theme.components.IvyDividerDot
-import com.ivy.wallet.ui.theme.components.IvyIcon
-import androidx.compose.runtime.getValue
-import com.ivy.wallet.ui.theme.Orange
-import com.ivy.wallet.ui.theme.Red
 
 @Deprecated("Old design system. Use `:ivy-design` and Material3")
 @Composable
@@ -126,7 +127,7 @@ private fun SectionDividerIncomeExpenseRow(
         if (income > 0 && expenses > 0) {
             Spacer(Modifier.width(8.dp))
 
-            IvyDividerDot()
+            SectionDividerDot()
 
             Spacer(Modifier.width(8.dp))
         }
@@ -150,4 +151,13 @@ private fun SectionDividerIncomeExpenseRow(
             )
         }
     }
+}
+
+@Composable
+private fun SectionDividerDot() {
+    Box(
+        modifier = Modifier
+            .size(4.dp)
+            .background(UI.colors.mediumInverse, CircleShape)
+    )
 }

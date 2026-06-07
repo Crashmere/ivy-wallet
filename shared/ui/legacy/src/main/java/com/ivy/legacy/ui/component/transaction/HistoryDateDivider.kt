@@ -14,16 +14,15 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.ivy.design.l0_system.UI
-import com.ivy.design.l0_system.style
 import com.ivy.base.legacy.dateNowLocal
 import com.ivy.data.model.currency.format
-import com.ivy.ui.legacy.formatLocal
+import com.ivy.design.l0_system.Gray
+import com.ivy.design.l0_system.Green
+import com.ivy.design.l0_system.UI
+import com.ivy.design.l0_system.style
 import com.ivy.ui.R
-import com.ivy.wallet.ui.theme.Gray
-import com.ivy.wallet.ui.theme.Green
+import com.ivy.ui.legacy.formatLocal
 import java.time.LocalDate
-import com.ivy.base.legacy.dateNowUTC
 
 @Deprecated("Old design system. Use `:ivy-design` and Material3")
 @Composable

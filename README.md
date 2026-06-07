@@ -364,6 +364,7 @@
 - 已把 Android 通知封装和交易提醒 WorkManager 逻辑从 `temp:legacy-code` 迁到 `app`，保留原包名和提醒功能。
 - 已把首次启动默认数据初始化迁到 `app`，并用 `ResetWalletDataUseCase` 接口替代设置页直接注入旧 `LogoutLogic`。
 - 已拆分 legacy 根目录中的周期 helper、借贷类型显示和交易页常量：纯时间计算进 `shared:base`，周期文案进 `shared:ui:legacy`，借贷显示逻辑进 `feature:loans`，交易页常量本地化到 `feature:transactions`。
+- 已把不依赖 legacy datamodel/domain 的部分交易分隔组件从 `temp:legacy-code` 迁入 `shared:ui:legacy`，并去掉它们对 temp 旧 theme 组件的依赖。
 
 迁移分组：
 
