@@ -1,8 +1,7 @@
 package com.ivy.data.backup
 
-import com.ivy.base.TestDispatchersProvider
-import com.ivy.data.di.SerializationModule
 import com.ivy.data.DataWriteEventBus
+import com.ivy.data.api.AppPreferenceStore
 import com.ivy.data.db.dao.fake.FakeAccountDao
 import com.ivy.data.db.dao.fake.FakeBudgetDao
 import com.ivy.data.db.dao.fake.FakeCategoryDao
@@ -13,7 +12,7 @@ import com.ivy.data.db.dao.fake.FakeSettingsDao
 import com.ivy.data.db.dao.fake.FakeTagAssociationDao
 import com.ivy.data.db.dao.fake.FakeTagDao
 import com.ivy.data.db.dao.fake.FakeTransactionDao
-import com.ivy.data.api.AppPreferenceStore
+import com.ivy.data.di.SerializationModule
 import com.ivy.data.repository.AccountRepository
 import com.ivy.data.repository.CurrencyRepository
 import com.ivy.data.repository.fake.fakeRepositoryCacheFactory
@@ -42,7 +41,6 @@ class BackupDataUseCaseTest {
             CurrencyRepository(
                 settingsDao = settingsDao,
                 writeSettingsDao = settingsDao,
-                dispatchersProvider = TestDispatchersProvider,
             )
         )
         return BackupDataUseCase(
@@ -52,7 +50,6 @@ class BackupDataUseCaseTest {
                 accountDao = accountDao,
                 writeAccountDao = accountDao,
                 mapper = accountMapper,
-                dispatchersProvider = TestDispatchersProvider,
                 cacheFactory = fakeRepositoryCacheFactory(),
             ),
             budgetDao = budgetDao,
@@ -73,7 +70,6 @@ class BackupDataUseCaseTest {
             context = mockk(relaxed = true),
             appPreferenceStore = mockk<AppPreferenceStore>(relaxed = true),
             json = SerializationModule.provideJson(),
-            dispatchersProvider = TestDispatchersProvider,
             fileSystem = mockk(relaxed = true),
             dataChangePublisher = DataWriteEventBus(),
             tagsReader = tagDao,

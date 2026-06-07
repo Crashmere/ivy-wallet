@@ -1,6 +1,5 @@
 package com.ivy.data.repository
 
-import com.ivy.base.threading.DispatchersProvider
 import com.ivy.data.api.DataWriteEvent
 import com.ivy.data.api.TagStore
 import com.ivy.data.db.dao.read.TagAssociationDao
@@ -12,6 +11,7 @@ import com.ivy.data.model.TagAssociation
 import com.ivy.data.model.TagId
 import com.ivy.data.model.primitive.AssociationId
 import com.ivy.data.repository.mapper.TagMapper
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.withContext
@@ -26,7 +26,6 @@ class TagRepository @Inject constructor(
     private val tagAssociationDao: TagAssociationDao,
     private val writeTagDao: WriteTagDao,
     private val writeTagAssociationDao: WriteTagAssociationDao,
-    private val dispatchersProvider: DispatchersProvider,
     cacheFactory: RepositoryCacheFactory,
 ) : TagStore {
     private val cache = cacheFactory.createCache(
@@ -50,7 +49,7 @@ class TagRepository @Inject constructor(
         }
 
     override suspend fun findByAssociatedId(id: AssociationId): List<Tag> {
-        return withContext(dispatchersProvider.io) {
+        return withContext(Dispatchers.IO) {
             tagDao.findTagsByAssociatedId(id.value).let { entities ->
                 entities.mapNotNull {
                     with(mapper) {
@@ -65,7 +64,7 @@ class TagRepository @Inject constructor(
         ids: List<AssociationId>
     ): Map<AssociationId, List<Tag>> {
         return ids.chunked(MAX_SQL_LITE_QUERY_SIZE).map {
-            withContext(dispatchersProvider.io) {
+            withContext(Dispatchers.IO) {
                 async {
                     tagDao.findTagsByAssociatedIds(it.map { it.value })
                         .entries.associate { (id, tags) ->
@@ -97,7 +96,7 @@ class TagRepository @Inject constructor(
     )
 
     override suspend fun findByText(text: String): List<Tag> {
-        return withContext(dispatchersProvider.io) {
+        return withContext(Dispatchers.IO) {
             tagDao.findByText(text).let { entities ->
                 entities.mapNotNull {
                     with(mapper) { it.toDomain().getOrNull() }
@@ -109,7 +108,7 @@ class TagRepository @Inject constructor(
     override suspend fun findByAllAssociatedIdForTagId(
         tagIds: List<TagId>
     ): Map<TagId, List<TagAssociation>> {
-        return withContext(dispatchersProvider.io) {
+        return withContext(Dispatchers.IO) {
             tagAssociationDao.findByAllAssociatedIdForTagId(
                 tagIds.toRawValues()
             ).entries.associate { (id, associations) ->
@@ -121,7 +120,7 @@ class TagRepository @Inject constructor(
     }
 
     override suspend fun findByAllTagsForAssociations(): Map<AssociationId, List<TagAssociation>> {
-        return withContext(dispatchersProvider.io) {
+        return withContext(Dispatchers.IO) {
             tagAssociationDao.findAll().groupBy {
                 AssociationId(it.associatedId)
             }.mapValues {
@@ -133,7 +132,7 @@ class TagRepository @Inject constructor(
     }
 
     override suspend fun associateTagToEntity(associationId: AssociationId, tagId: TagId) {
-        withContext(dispatchersProvider.io) {
+        withContext(Dispatchers.IO) {
             writeTagAssociationDao.save(
                 with(mapper) {
                     createNewTagAssociation(tagId, associationId).toEntity()
@@ -143,7 +142,7 @@ class TagRepository @Inject constructor(
     }
 
     override suspend fun removeTagAssociation(associationId: AssociationId, tagId: TagId) {
-        withContext(dispatchersProvider.io) {
+        withContext(Dispatchers.IO) {
             writeTagAssociationDao.deleteId(tagId = tagId.value, associatedId = associationId.value)
         }
     }

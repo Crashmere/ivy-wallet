@@ -7,10 +7,9 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import com.ivy.base.TestDispatchersProvider
-import com.ivy.data.di.SerializationModule
 import com.ivy.data.DataWriteEventBus
 import com.ivy.data.db.IvyRoomDatabase
+import com.ivy.data.di.SerializationModule
 import com.ivy.data.file.FileSystem
 import com.ivy.data.model.importing.ImportResult
 import com.ivy.data.preferences.SharedPrefsAppPreferenceStore
@@ -42,7 +41,6 @@ class BackupDataUseCaseAndroidTest {
             currencyRepository = CurrencyRepository(
                 settingsDao = db.settingsDao,
                 writeSettingsDao = db.writeSettingsDao,
-                dispatchersProvider = TestDispatchersProvider,
             )
         )
         useCase = BackupDataUseCase(
@@ -60,7 +58,6 @@ class BackupDataUseCaseAndroidTest {
                 accountDao = db.accountDao,
                 writeAccountDao = db.writeAccountDao,
                 mapper = accountMapper,
-                dispatchersProvider = TestDispatchersProvider,
                 cacheFactory = fakeRepositoryCacheFactory(),
             ),
             accountMapper = accountMapper,
@@ -72,7 +69,6 @@ class BackupDataUseCaseAndroidTest {
             plannedPaymentRuleWriter = db.writePlannedPaymentRuleDao,
             context = appContext,
             json = SerializationModule.provideJson(),
-            dispatchersProvider = TestDispatchersProvider,
             fileSystem = FileSystem(appContext),
             dataChangePublisher = DataWriteEventBus(),
             tagsReader = db.tagDao,

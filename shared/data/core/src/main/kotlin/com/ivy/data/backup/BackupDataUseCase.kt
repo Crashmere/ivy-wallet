@@ -3,7 +3,6 @@ package com.ivy.data.backup
 import android.content.Context
 import android.net.Uri
 import androidx.core.net.toUri
-import com.ivy.base.threading.DispatchersProvider
 import com.ivy.data.api.AppPreferenceKeys
 import com.ivy.data.api.AppPreferenceStore
 import com.ivy.data.api.DataChangePublisher
@@ -35,6 +34,7 @@ import com.ivy.data.repository.AccountRepository
 import com.ivy.data.repository.mapper.AccountMapper
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.encodeToString
@@ -68,7 +68,6 @@ class BackupDataUseCase @Inject constructor(
     @ApplicationContext
     private val context: Context,
     private val json: Json,
-    private val dispatchersProvider: DispatchersProvider,
     private val fileSystem: FileSystem,
     private val dataChangePublisher: DataChangePublisher,
     private val tagsReader: TagDao,
@@ -111,7 +110,7 @@ class BackupDataUseCase @Inject constructor(
     }
 
     suspend fun generateJsonBackup(): String {
-        return withContext(dispatchersProvider.io) {
+        return withContext(Dispatchers.IO) {
             val accounts = async { accountDao.findAll() }
             val budgets = async { budgetDao.findAll() }
             val categories = async { categoryDao.findAll() }
@@ -157,7 +156,7 @@ class BackupDataUseCase @Inject constructor(
     suspend fun importBackupFile(
         backupFileUri: Uri,
         onProgress: suspend (progressPercent: Double) -> Unit
-    ): ImportResult = withContext(dispatchersProvider.io) {
+    ): ImportResult = withContext(Dispatchers.IO) {
         return@withContext try {
             val jsonString = try {
                 extractAndReadBackupZip(backupFileUri, onProgress)
@@ -255,7 +254,7 @@ class BackupDataUseCase @Inject constructor(
         completeData: IvyWalletCompleteData,
         onProgress: suspend (progressPercent: Double) -> Unit = {}
     ) {
-        withContext(dispatchersProvider.io) {
+        withContext(Dispatchers.IO) {
             transactionWriter.saveMany(completeData.transactions)
             onProgress(0.6)
 
@@ -322,7 +321,7 @@ class BackupDataUseCase @Inject constructor(
     private suspend fun getReplacementPairs(
         completeData: IvyWalletCompleteData
     ): List<Pair<UUID, UUID>> {
-        return withContext(dispatchersProvider.io) {
+        return withContext(Dispatchers.IO) {
             val existingAccountsList = accountDao.findAll()
             val existingCategoryList = categoryDao.findAll()
 

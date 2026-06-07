@@ -1,24 +1,22 @@
 package com.ivy.data.repository
 
-import com.ivy.base.threading.DispatchersProvider
 import com.ivy.data.api.DataChangePublisher
 import com.ivy.data.api.DataWriteEvent
 import com.ivy.data.api.DeleteOperation
 import com.ivy.data.model.identity.Identifiable
 import com.ivy.data.model.identity.UniqueId
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class RepositoryCacheFactory @Inject constructor(
     private val dataChangePublisher: DataChangePublisher,
-    private val dispatchers: DispatchersProvider,
 ) {
     fun <T : Identifiable<TID>, TID : UniqueId> createCache(
         getDataWriteSaveEvent: (List<T>) -> DataWriteEvent,
         getDateWriteDeleteEvent: (DeleteOperation<TID>) -> DataWriteEvent
     ): RepositoryCache<T, TID> = RepositoryCache(
         dataChangePublisher = dataChangePublisher,
-        dispatchers = dispatchers,
         getDataWriteSaveEvent = getDataWriteSaveEvent,
         getDataWriteDeleteEvent = getDateWriteDeleteEvent,
     )
@@ -26,7 +24,6 @@ class RepositoryCacheFactory @Inject constructor(
 
 class RepositoryCache<T : Identifiable<TID>, TID : UniqueId> internal constructor(
     private val dataChangePublisher: DataChangePublisher,
-    private val dispatchers: DispatchersProvider,
     private val getDataWriteSaveEvent: (List<T>) -> DataWriteEvent,
     private val getDataWriteDeleteEvent: (DeleteOperation<TID>) -> DataWriteEvent,
 ) {
@@ -43,7 +40,7 @@ class RepositoryCache<T : Identifiable<TID>, TID : UniqueId> internal constructo
         return if (hasCachedAllItems) {
             sortCache(cachedItems.values)
         } else {
-            withContext(dispatchers.io) {
+            withContext(Dispatchers.IO) {
                 findAllOperation().also {
                     cache(it)
                     hasCachedAllItems = true
@@ -56,7 +53,7 @@ class RepositoryCache<T : Identifiable<TID>, TID : UniqueId> internal constructo
         id: TID,
         findByIdOperation: suspend (TID) -> T?
     ): T? {
-        return items[id] ?: withContext(dispatchers.io) {
+        return items[id] ?: withContext(Dispatchers.IO) {
             findByIdOperation(id)?.also(::cache)
         }
     }
@@ -70,7 +67,7 @@ class RepositoryCache<T : Identifiable<TID>, TID : UniqueId> internal constructo
         value: T,
         writeOperation: suspend (T) -> Unit,
     ) {
-        withContext(dispatchers.io) {
+        withContext(Dispatchers.IO) {
             writeOperation(value)
             cache(value)
             dataChangePublisher.post(getDataWriteSaveEvent(listOf(value)))
@@ -81,7 +78,7 @@ class RepositoryCache<T : Identifiable<TID>, TID : UniqueId> internal constructo
         values: List<T>,
         writeOperation: suspend (List<T>) -> Unit,
     ) {
-        withContext(dispatchers.io) {
+        withContext(Dispatchers.IO) {
             writeOperation(values)
             cache(values)
             dataChangePublisher.post(getDataWriteSaveEvent(values))
@@ -92,7 +89,7 @@ class RepositoryCache<T : Identifiable<TID>, TID : UniqueId> internal constructo
         id: TID,
         deleteByIdOperation: suspend (TID) -> Unit,
     ) {
-        withContext(dispatchers.io) {
+        withContext(Dispatchers.IO) {
             cachedItems.remove(id)
             deleteByIdOperation(id)
             dataChangePublisher.post(
@@ -104,7 +101,7 @@ class RepositoryCache<T : Identifiable<TID>, TID : UniqueId> internal constructo
     suspend fun deleteAll(
         deleteAllOperation: suspend () -> Unit,
     ) {
-        withContext(dispatchers.io) {
+        withContext(Dispatchers.IO) {
             cachedItems.clear()
             deleteAllOperation()
             dataChangePublisher.post(getDataWriteDeleteEvent(DeleteOperation.All))

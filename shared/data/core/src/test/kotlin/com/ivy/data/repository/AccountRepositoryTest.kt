@@ -1,6 +1,5 @@
 package com.ivy.data.repository
 
-import com.ivy.base.TestDispatchersProvider
 import com.ivy.data.db.dao.fake.FakeSettingsDao
 import com.ivy.data.db.dao.read.AccountDao
 import com.ivy.data.db.dao.write.WriteAccountDao
@@ -36,12 +35,10 @@ class AccountRepositoryTest {
                 CurrencyRepository(
                     settingsDao = settingsDao,
                     writeSettingsDao = settingsDao,
-                    dispatchersProvider = TestDispatchersProvider
                 )
             ),
             accountDao = accountDao,
             writeAccountDao = writeAccountDao,
-            dispatchersProvider = TestDispatchersProvider,
             cacheFactory = fakeRepositoryCacheFactory(),
         )
     }

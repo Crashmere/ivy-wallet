@@ -3,8 +3,6 @@ package com.ivy.data.repository
 import arrow.core.Either
 import arrow.core.Some
 import arrow.core.identity
-import com.ivy.base.TestDispatchersProvider
-import com.ivy.data.model.TransactionType
 import com.ivy.data.db.dao.fake.FakeTransactionDao
 import com.ivy.data.db.dao.read.TransactionDao
 import com.ivy.data.db.dao.write.WriteTransactionDao
@@ -14,6 +12,7 @@ import com.ivy.data.model.AccountId
 import com.ivy.data.model.Expense
 import com.ivy.data.model.Income
 import com.ivy.data.model.Transaction
+import com.ivy.data.model.TransactionType
 import com.ivy.data.model.Transfer
 import com.ivy.data.model.testing.ModelFixtures
 import com.ivy.data.model.testing.accountId
@@ -59,7 +58,6 @@ class TransactionRepositoryTest {
         mapper = mapper,
         transactionDao = fakeDao ?: transactionDao,
         writeTransactionDao = fakeDao ?: writeTransactionDao,
-        dispatchersProvider = TestDispatchersProvider,
         tagRepository = tagRepository
     )
 

@@ -1,6 +1,5 @@
 package com.ivy.data.repository
 
-import com.ivy.base.threading.DispatchersProvider
 import com.ivy.data.api.DataWriteEvent
 import com.ivy.data.api.CategoryStore
 import com.ivy.data.db.dao.read.CategoryDao
@@ -8,6 +7,7 @@ import com.ivy.data.db.dao.write.WriteCategoryDao
 import com.ivy.data.model.Category
 import com.ivy.data.model.CategoryId
 import com.ivy.data.repository.mapper.CategoryMapper
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -17,7 +17,6 @@ class CategoryRepository @Inject constructor(
     private val mapper: CategoryMapper,
     private val writeCategoryDao: WriteCategoryDao,
     private val categoryDao: CategoryDao,
-    private val dispatchersProvider: DispatchersProvider,
     cacheFactory: RepositoryCacheFactory,
 ) : CategoryStore {
     private val cache = cacheFactory.createCache(
@@ -46,7 +45,7 @@ class CategoryRepository @Inject constructor(
     override suspend fun findMaxOrderNum(): Double = if (cache.hasCachedAllItems) {
         cache.items.maxOfOrNull { (_, acc) -> acc.orderNum } ?: 0.0
     } else {
-        withContext(dispatchersProvider.io) {
+        withContext(Dispatchers.IO) {
             categoryDao.findMaxOrderNum() ?: 0.0
         }
     }

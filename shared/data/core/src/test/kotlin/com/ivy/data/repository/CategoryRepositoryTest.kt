@@ -1,6 +1,5 @@
 package com.ivy.data.repository
 
-import com.ivy.base.TestDispatchersProvider
 import com.ivy.data.db.dao.read.CategoryDao
 import com.ivy.data.db.dao.write.WriteCategoryDao
 import com.ivy.data.db.entity.CategoryEntity
@@ -33,7 +32,6 @@ class CategoryRepositoryTest {
             mapper = CategoryMapper(),
             categoryDao = categoryDao,
             writeCategoryDao = writeCategoryDao,
-            dispatchersProvider = TestDispatchersProvider,
             cacheFactory = fakeRepositoryCacheFactory(),
         )
     }

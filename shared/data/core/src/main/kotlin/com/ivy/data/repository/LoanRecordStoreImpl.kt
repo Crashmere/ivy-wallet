@@ -1,11 +1,11 @@
 package com.ivy.data.repository
 
-import com.ivy.base.threading.DispatchersProvider
 import com.ivy.data.api.LoanRecordStore
 import com.ivy.data.db.dao.read.LoanRecordDao
 import com.ivy.data.db.dao.write.WriteLoanRecordDao
 import com.ivy.data.db.entity.LoanRecordEntity
 import com.ivy.data.model.legacy.LoanRecord
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.util.UUID
 import javax.inject.Inject
@@ -13,41 +13,40 @@ import javax.inject.Inject
 class LoanRecordStoreImpl @Inject constructor(
     private val loanRecordDao: LoanRecordDao,
     private val loanRecordWriter: WriteLoanRecordDao,
-    private val dispatchers: DispatchersProvider
 ) : LoanRecordStore {
-    override suspend fun findAll(): List<LoanRecord> = withContext(dispatchers.io) {
+    override suspend fun findAll(): List<LoanRecord> = withContext(Dispatchers.IO) {
         loanRecordDao.findAll().map { it.toLegacyModel() }
     }
 
-    override suspend fun findById(id: UUID): LoanRecord? = withContext(dispatchers.io) {
+    override suspend fun findById(id: UUID): LoanRecord? = withContext(Dispatchers.IO) {
         loanRecordDao.findById(id)?.toLegacyModel()
     }
 
     override suspend fun findAllByLoanId(loanId: UUID): List<LoanRecord> =
-        withContext(dispatchers.io) {
+        withContext(Dispatchers.IO) {
             loanRecordDao.findAllByLoanId(loanId).map { it.toLegacyModel() }
         }
 
     override suspend fun save(value: LoanRecord) {
-        withContext(dispatchers.io) {
+        withContext(Dispatchers.IO) {
             loanRecordWriter.save(value.toEntity())
         }
     }
 
     override suspend fun saveMany(values: List<LoanRecord>) {
-        withContext(dispatchers.io) {
+        withContext(Dispatchers.IO) {
             loanRecordWriter.saveMany(values.map { it.toEntity() })
         }
     }
 
     override suspend fun deleteById(id: UUID) {
-        withContext(dispatchers.io) {
+        withContext(Dispatchers.IO) {
             loanRecordWriter.deleteById(id)
         }
     }
 
     override suspend fun deleteAll() {
-        withContext(dispatchers.io) {
+        withContext(Dispatchers.IO) {
             loanRecordWriter.deleteAll()
         }
     }

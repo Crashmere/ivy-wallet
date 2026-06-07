@@ -1,13 +1,13 @@
 package com.ivy.data.repository
 
-import com.ivy.base.threading.DispatchersProvider
-import com.ivy.data.api.DataWriteEvent
 import com.ivy.data.api.AccountStore
+import com.ivy.data.api.DataWriteEvent
 import com.ivy.data.db.dao.read.AccountDao
 import com.ivy.data.db.dao.write.WriteAccountDao
 import com.ivy.data.model.Account
 import com.ivy.data.model.AccountId
 import com.ivy.data.repository.mapper.AccountMapper
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -17,7 +17,6 @@ class AccountRepository @Inject constructor(
     private val mapper: AccountMapper,
     private val accountDao: AccountDao,
     private val writeAccountDao: WriteAccountDao,
-    private val dispatchersProvider: DispatchersProvider,
     cacheFactory: RepositoryCacheFactory,
 ) : AccountStore {
     private val cache = cacheFactory.createCache(
@@ -46,7 +45,7 @@ class AccountRepository @Inject constructor(
     override suspend fun findMaxOrderNum(): Double = if (cache.hasCachedAllItems) {
         cache.items.maxOfOrNull { (_, acc) -> acc.orderNum } ?: 0.0
     } else {
-        withContext(dispatchersProvider.io) {
+        withContext(Dispatchers.IO) {
             accountDao.findMaxOrderNum() ?: 0.0
         }
     }

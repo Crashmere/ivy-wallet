@@ -1,11 +1,11 @@
 package com.ivy.data.repository
 
-import com.ivy.base.threading.DispatchersProvider
 import com.ivy.data.api.PlannedPaymentRuleStore
 import com.ivy.data.db.dao.read.PlannedPaymentRuleDao
 import com.ivy.data.db.dao.write.WritePlannedPaymentRuleDao
 import com.ivy.data.db.entity.PlannedPaymentRuleEntity
 import com.ivy.data.model.legacy.PlannedPaymentRule
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.util.UUID
 import javax.inject.Inject
@@ -13,52 +13,51 @@ import javax.inject.Inject
 class PlannedPaymentRuleStoreImpl @Inject constructor(
     private val plannedPaymentRuleDao: PlannedPaymentRuleDao,
     private val plannedPaymentRuleWriter: WritePlannedPaymentRuleDao,
-    private val dispatchers: DispatchersProvider
 ) : PlannedPaymentRuleStore {
-    override suspend fun findAll(): List<PlannedPaymentRule> = withContext(dispatchers.io) {
+    override suspend fun findAll(): List<PlannedPaymentRule> = withContext(Dispatchers.IO) {
         plannedPaymentRuleDao.findAll().map { it.toLegacyModel() }
     }
 
     override suspend fun findAllByOneTime(
         oneTime: Boolean
-    ): List<PlannedPaymentRule> = withContext(dispatchers.io) {
+    ): List<PlannedPaymentRule> = withContext(Dispatchers.IO) {
         plannedPaymentRuleDao.findAllByOneTime(oneTime).map { it.toLegacyModel() }
     }
 
-    override suspend fun findById(id: UUID): PlannedPaymentRule? = withContext(dispatchers.io) {
+    override suspend fun findById(id: UUID): PlannedPaymentRule? = withContext(Dispatchers.IO) {
         plannedPaymentRuleDao.findById(id)?.toLegacyModel()
     }
 
-    override suspend fun countPlannedPayments(): Long = withContext(dispatchers.io) {
+    override suspend fun countPlannedPayments(): Long = withContext(Dispatchers.IO) {
         plannedPaymentRuleDao.countPlannedPayments()
     }
 
     override suspend fun save(value: PlannedPaymentRule) {
-        withContext(dispatchers.io) {
+        withContext(Dispatchers.IO) {
             plannedPaymentRuleWriter.save(value.toEntity())
         }
     }
 
     override suspend fun saveMany(values: List<PlannedPaymentRule>) {
-        withContext(dispatchers.io) {
+        withContext(Dispatchers.IO) {
             plannedPaymentRuleWriter.saveMany(values.map { it.toEntity() })
         }
     }
 
     override suspend fun deleteByAccountId(accountId: UUID) {
-        withContext(dispatchers.io) {
+        withContext(Dispatchers.IO) {
             plannedPaymentRuleWriter.deletedByAccountId(accountId)
         }
     }
 
     override suspend fun deleteById(id: UUID) {
-        withContext(dispatchers.io) {
+        withContext(Dispatchers.IO) {
             plannedPaymentRuleWriter.deleteById(id)
         }
     }
 
     override suspend fun deleteAll() {
-        withContext(dispatchers.io) {
+        withContext(Dispatchers.IO) {
             plannedPaymentRuleWriter.deleteAll()
         }
     }
