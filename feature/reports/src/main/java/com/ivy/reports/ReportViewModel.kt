@@ -41,7 +41,6 @@ import com.ivy.domain.usecase.transaction.GetTransactionsUseCase
 import com.ivy.domain.usecase.transaction.MapTransactionsToLegacyUseCase
 import com.ivy.legacy.ui.state.PeriodState
 import com.ivy.data.model.legacy.Account
-import com.ivy.base.time.getISOFormattedDateTime
 import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.R
 import com.ivy.ui.platform.FilePicker
@@ -71,9 +70,12 @@ import kotlinx.coroutines.withContext
 import java.math.BigDecimal
 import java.time.ZoneId
 import java.time.ZoneOffset
+import java.time.format.DateTimeFormatter
 import java.util.Locale
 import java.util.UUID
 import javax.inject.Inject
+
+private val exportTimestampFormatter = DateTimeFormatter.ofPattern("yyyyMMdd-HHmm")
 
 @Stable
 @HiltViewModel
@@ -550,7 +552,7 @@ class ReportViewModel @Inject constructor(
             .atZone(ZoneOffset.UTC)
             .toLocalDateTime()
 
-    private fun utcTimestamp(): String = utcNow().getISOFormattedDateTime()
+    private fun utcTimestamp(): String = utcNow().format(exportTimestampFormatter)
 
     private fun setOverdueExpandedValue(expanded: Boolean) {
         overdueExpanded = expanded

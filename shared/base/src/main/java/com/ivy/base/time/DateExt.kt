@@ -9,9 +9,6 @@ import java.time.format.DateTimeFormatter
 
 fun LocalDateTime.toEpochSeconds() = this.toEpochSecond(ZoneOffset.UTC)
 
-fun LocalDateTime.getISOFormattedDateTime(): String =
-    this.format(DateTimeFormatter.ofPattern("yyyyMMdd-HHmm"))
-
 fun LocalDateTime.format(
     pattern: String
 ): String {

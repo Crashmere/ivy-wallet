@@ -34,7 +34,6 @@ import com.ivy.domain.usecase.settings.SetTransfersAsIncomeExpensePreferenceUseC
 import com.ivy.domain.usecase.settings.SwitchThemeUseCase
 import com.ivy.ui.theme.ThemeState
 import com.ivy.legacy.ui.state.PeriodState
-import com.ivy.base.time.getISOFormattedDateTime
 import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.platform.FilePicker
 import com.ivy.ui.platform.FileSharer
@@ -44,7 +43,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.time.ZoneOffset
+import java.time.format.DateTimeFormatter
 import javax.inject.Inject
+
+private val exportTimestampFormatter = DateTimeFormatter.ofPattern("yyyyMMdd-HHmm")
 
 @Stable
 @HiltViewModel
@@ -394,7 +396,7 @@ class SettingsViewModel @Inject constructor(
         timeProvider.utcNow()
             .atZone(ZoneOffset.UTC)
             .toLocalDateTime()
-            .getISOFormattedDateTime()
+            .format(exportTimestampFormatter)
 
     private fun switchTheme() {
         viewModelScope.launch {
