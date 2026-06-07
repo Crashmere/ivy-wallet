@@ -10,10 +10,10 @@ import androidx.lifecycle.viewModelScope
 import com.ivy.base.model.legacy.Transaction
 import com.ivy.base.time.TimeConverter
 import com.ivy.base.time.TimeProvider
-import com.ivy.data.repository.CategoryRepository
 import com.ivy.domain.preferences.toggles.PreferenceToggles
 import com.ivy.domain.preferences.AppPreferences
 import com.ivy.domain.usecase.category.GetCategoriesUseCase
+import com.ivy.domain.usecase.category.SaveCategoryUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.legacy.frp.action.thenMap
 import com.ivy.legacy.frp.thenInvokeAfter
@@ -44,8 +44,8 @@ import javax.inject.Inject
 @HiltViewModel
 class CategoriesViewModel @Inject constructor(
     private val categoryCreator: CategoryCreator,
-    private val categoryRepository: CategoryRepository,
     private val getCategoriesUseCase: GetCategoriesUseCase,
+    private val saveCategoryUseCase: SaveCategoryUseCase,
     private val periodState: PeriodState,
     private val appPreferences: AppPreferences,
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
@@ -207,7 +207,7 @@ class CategoriesViewModel @Inject constructor(
         if (sortOrder == SortOrder.DEFAULT) {
             ioThread {
                 sortedList.forEachIndexed { index, categoryData ->
-                    categoryRepository.save(categoryData.category.copy(orderNum = index.toDouble()))
+                    saveCategoryUseCase(categoryData.category.copy(orderNum = index.toDouble()))
                 }
             }
         }

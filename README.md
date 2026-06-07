@@ -600,6 +600,7 @@
 - 分类列表读取开始收敛到正式 domain 用例：新增 `GetCategoriesUseCase`，搜索页、首页、预算页、报表页、计划付款列表和饼图统计 action 不再为了只读分类列表直接注入 `CategoryRepository`；仍需要保存、删除、查询单个分类或创建默认分类的流程暂时保留数据层依赖，后续按写入语义继续拆。
 - 继续扩大分类/账户只读列表边界：账户页、分类页、交易页、编辑交易页、计划付款编辑页、CSV 导入/导出和借贷联动逻辑中的普通分类或账户列表读取已改走 `GetCategoriesUseCase/GetAccountsUseCase`；写入、排序保存、首次初始化是否为空和自动创建 Loans 分类仍保留原仓库入口。
 - 标签列表读取和文本搜索开始收敛到正式 domain 用例：新增 `GetTagsUseCase` 和 `SearchTagsUseCase`，报表筛选和编辑交易里的普通标签列表/搜索不再直接调用 `TagRepository.findAll()/findByText()`；标签保存、删除、交易关联和按标签反查交易仍保留仓库入口，后续按写入和筛选语义继续拆。
+- 账户/分类页面的写入边界继续收窄：新增 `SaveAccountUseCase`、`SaveCategoryUseCase` 和 `ObserveAccountChangesUseCase`，账户排序、分类排序和账户变更刷新不再直接依赖 repository 或 `DataObserver`；`:feature:accounts` 和 `:feature:categories` 已去掉对 `shared:data:core` 的直接 Gradle 依赖。
 - 删除无调用方的 `SettingsAct`、`UpdateSettingsAct`、旧 `Settings` 模型和 `SettingsEntity.toLegacyDomain()` mapper。
 - `SettingsEntity` 暂时仍保留：首次默认数据、重置钱包、备份恢复格式，以及 `CurrencyRepository/LegacySettingsRepository` 内部仍依赖这张表。
 - `ResetWalletDataUseCaseImpl` 仍保留在 app 层实现：它需要同时编排数据清空、偏好清空、默认数据重建和根导航复位；当前不再用废弃注解制造警告，后续若拆分应先拆出数据清空与 app 导航两部分职责。

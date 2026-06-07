@@ -11,12 +11,11 @@ import androidx.lifecycle.viewModelScope
 import com.ivy.base.resource.ResourceProvider
 import com.ivy.base.time.TimeConverter
 import com.ivy.base.time.TimeProvider
-import com.ivy.data.DataObserver
-import com.ivy.data.DataWriteEvent
-import com.ivy.data.repository.AccountRepository
 import com.ivy.domain.preferences.toggles.PreferenceToggles
 import com.ivy.domain.preferences.AppPreferences
 import com.ivy.domain.usecase.account.GetAccountsUseCase
+import com.ivy.domain.usecase.account.ObserveAccountChangesUseCase
+import com.ivy.domain.usecase.account.SaveAccountUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.legacy.ui.state.PeriodState
 import com.ivy.legacy.domain.model.AccountData
@@ -44,9 +43,9 @@ class AccountsViewModel @Inject constructor(
     private val calcWalletBalanceAct: CalcWalletBalanceAct,
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
     private val getAccountsUseCase: GetAccountsUseCase,
+    private val saveAccountUseCase: SaveAccountUseCase,
     private val accountDataAct: AccountDataAct,
-    private val accountRepository: AccountRepository,
-    private val dataObserver: DataObserver,
+    private val observeAccountChangesUseCase: ObserveAccountChangesUseCase,
     private val preferenceToggles: PreferenceToggles,
     private val timeProvider: TimeProvider,
     private val timeConverter: TimeConverter,
@@ -61,16 +60,8 @@ class AccountsViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            dataObserver.writeEvents.collectLatest { event ->
-                when (event) {
-                    is DataWriteEvent.AccountChange -> {
-                        onStart()
-                    }
-
-                    else -> {
-                        // do nothing
-                    }
-                }
+            observeAccountChangesUseCase().collectLatest {
+                onStart()
             }
         }
     }
@@ -151,7 +142,7 @@ class AccountsViewModel @Inject constructor(
     private suspend fun reorder(newOrder: List<AccountData>) {
         ioThread {
             newOrder.mapIndexed { index, accountData ->
-                accountRepository.save(accountData.account.copy(orderNum = index.toDouble()))
+                saveAccountUseCase(accountData.account.copy(orderNum = index.toDouble()))
             }
         }
 
