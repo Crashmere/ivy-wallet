@@ -7,12 +7,9 @@ import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.ivy.base.resource.ResourceProvider
-import com.ivy.base.time.TimeConverter
-import com.ivy.base.time.TimeProvider
-import com.ivy.data.db.dao.read.TransactionDao
 import com.ivy.domain.AppStarter
 import com.ivy.domain.preferences.AppPreferences
-import com.ivy.base.time.atEndOfDay
+import com.ivy.domain.usecase.transaction.CountTodayTransactionsUseCase
 import com.ivy.ui.R
 import com.ivy.wallet.android.notification.IvyNotificationChannel
 import com.ivy.wallet.android.notification.NotificationService
@@ -25,12 +22,10 @@ import kotlinx.coroutines.withContext
 class TransactionReminderWorker @AssistedInject constructor(
     @Assisted appContext: Context,
     @Assisted params: WorkerParameters,
-    private val transactionDao: TransactionDao,
+    private val countTodayTransactionsUseCase: CountTodayTransactionsUseCase,
     private val notificationService: NotificationService,
     private val appPreferences: AppPreferences,
     private val appStarter: AppStarter,
-    private val timeProvider: TimeProvider,
-    private val timeConverter: TimeConverter,
     private val resourceProvider: ResourceProvider,
 ) : CoroutineWorker(appContext, params) {
 
@@ -39,18 +34,13 @@ class TransactionReminderWorker @AssistedInject constructor(
     }
 
     override suspend fun doWork() = withContext(Dispatchers.IO) {
-        val transactionsToday = with(timeConverter) {
-            transactionDao.findAllBetween(
-                startDate = timeProvider.localDateNow().atStartOfDay().toUTC(),
-                endDate = timeProvider.localDateNow().atEndOfDay().toUTC(),
-            )
-        }
+        val transactionsTodayCount = countTodayTransactionsUseCase()
 
         val showNotifications = fetchShowNotifications()
 
         // Double check is needed because the user can switch off notifications in settings after it has been scheduled to show notifications for the next day
-        if (transactionsToday.size < MINIMUM_TRANSACTIONS_PER_DAY && showNotifications) {
-            // Have less than 1 two transactions today, remind them
+        if (transactionsTodayCount.value < MINIMUM_TRANSACTIONS_PER_DAY && showNotifications) {
+            // Have less than 1 transaction today, remind them
 
             val notification = notificationService
                 .defaultIvyNotification(

@@ -635,6 +635,7 @@
 - 删除无调用方的 `DeviceIdUseCase` 和 `DeviceId` 草稿；偏好开关的底层 DataStore 读写方法已收紧为 domain 模块内部 API，外部调用方只能通过 `PreferenceToggleRepository` 访问。
 - 重置钱包流程的数据删除和全量数据变化通知已拆成 `ClearWalletDataUseCase`、`NotifyAllDataChangedUseCase`；app 层的 reset 实现不再直接注入底层 DAO、repository 或 `DataObserver`，只保留重置编排、偏好清空、默认数据重建和导航复位。
 - 首次默认账户/分类预置已改走 `GetAccountsUseCase/GetCategoriesUseCase` 和 `SaveAccountUseCase/SaveCategoryUseCase`；app 启动编排不再直接注入账户 DAO 或分类/账户 repository，默认内容、颜色、图标和初始化条件保持不变。
+- 交易提醒 Worker 的“今天是否已经记账”判断已改走 `CountTodayTransactionsUseCase`；app 通知 Worker 不再直接注入 `TransactionDao`，数据层新增按时间范围计数查询，避免为了计数加载完整交易列表。
 
 建议顺序：
 

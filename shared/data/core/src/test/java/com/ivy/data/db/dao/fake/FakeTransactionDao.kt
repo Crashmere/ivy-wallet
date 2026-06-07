@@ -84,6 +84,13 @@ class FakeTransactionDao : TransactionDao, WriteTransactionDao {
         }.sortedByDescending { it.dateTime }
     }
 
+    override suspend fun countBetween(
+        startDate: Instant,
+        endDate: Instant
+    ): Long {
+        return findAllBetween(startDate, endDate).size.toLong()
+    }
+
     override suspend fun findAllByAccountAndBetween(
         accountId: UUID,
         startDate: Instant,

@@ -63,6 +63,14 @@ interface TransactionDao {
     ): List<TransactionEntity>
 
     @Query(
+        "SELECT COUNT(*) FROM transactions WHERE isDeleted = 0 AND dateTime >= :startDate AND dateTime <= :endDate"
+    )
+    suspend fun countBetween(
+        startDate: Instant,
+        endDate: Instant
+    ): Long
+
+    @Query(
         "SELECT * FROM transactions WHERE isDeleted = 0 AND accountId = :accountId AND dateTime >= :startDate AND dateTime <= :endDate ORDER BY dateTime DESC"
     )
     suspend fun findAllByAccountAndBetween(

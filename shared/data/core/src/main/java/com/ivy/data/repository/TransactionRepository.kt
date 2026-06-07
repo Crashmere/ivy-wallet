@@ -93,6 +93,13 @@ class TransactionRepository @Inject constructor(
         }
     }
 
+    suspend fun countBetween(
+        startDate: Instant,
+        endDate: Instant
+    ): NonNegativeLong = withContext(dispatchersProvider.io) {
+        transactionDao.countBetween(startDate, endDate).toNonNegative()
+    }
+
     suspend fun findAllByAccountAndBetween(
         accountId: AccountId,
         startDate: Instant,
