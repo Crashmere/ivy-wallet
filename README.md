@@ -24,6 +24,7 @@
 - 已删除 `temp:old-design` 中无引用的旧 Android、动画、窗口 inset 和 dp/px 工具，并精简 Compose/键盘工具 helper。
 - 已继续精简 `temp:legacy-code`，删除无引用的旧 DataStore 包装、旧账户余额模型、分类纯函数对象，并移除部分新旧并存文件中的未接入新模型残留。
 - 已清理 `shared/base` 中无引用的旧文件工具和日期格式化 helper，保留仍被数据库与序列化使用的时间戳转换函数。
+- 已删除空的 `:shared:data:core-testing` 模块，并将 `FakeRepositoryMemo` 从生产源码移入 `shared:data:core` 测试源集。
 - 保留应用功能源码、功能测试源码、Gradle wrapper、本地数据管理能力和当前主要记账功能。
 - 当前本机已通过项目本地 Android SDK 编译 demo APK，并成功安装到已连接手机。
 
@@ -73,6 +74,7 @@
 - `temp:old-design` 中无引用的旧 Android、动画、窗口 inset、dp/px 和 Compose helper；保留仍被页面调用的 `thenIf`、`thenWhen`、`densityScope`、`rememberInteractionSource` 和 `hideKeyboard`。
 - `temp:legacy-code` 中无引用的旧 `IvyDataStore` 包装、旧 `AccountBalance` 模型、分类纯函数对象，以及未被接入的非 legacy 分类统计 action 和新 `DueSection` 数据残留。
 - `shared/base` 中无引用的旧 `FileUtil` 文件工具和 `ZonedDateTime.format` helper；保留仍被 Room 类型转换器和 kotlinx serialization 使用的 epoch 转换 helper。
+- 空的 `:shared:data:core-testing` 模块，以及误放在 `shared:data:core` 生产源码中的测试专用 `FakeRepositoryMemo`。
 
 ## 已确认保留
 
