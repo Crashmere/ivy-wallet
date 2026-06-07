@@ -234,14 +234,6 @@ class FakeTransactionDao : TransactionDao, WriteTransactionDao {
         return items.filter { it.id in ids }
     }
 
-    override suspend fun findByIsSyncedAndIsDeleted(
-        synced: Boolean,
-        deleted: Boolean
-    ): List<TransactionEntity> {
-        return items.filter { it.isSynced == synced && it.isDeleted == deleted }
-            .sortedByDescending { it.dateTime }
-    }
-
     override suspend fun countHappenedTransactions(): Long {
         return items.count { it.dateTime != null && !it.isDeleted }.toLong()
     }

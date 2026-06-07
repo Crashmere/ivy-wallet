@@ -529,6 +529,8 @@
 - 删除 `UserEntity`、`UserDao` 和 Hilt DAO provider。
 - `ResetWalletDataUseCaseImpl` 不再依赖用户表。
 - 新增 `Migration130to131_DropUsers`，数据库版本升到 131，并生成 `131.json` schema；新 schema 不再包含 `users` 表。
+- 删除预算、借贷、借贷记录、计划付款和交易 DAO 中无调用方的 `findByIsSyncedAndIsDeleted` 同步查询，以及对应测试 fake override；这一步不改变 Room schema。
+- `isDeleted` 暂时保留：当前本地查询过滤和计划付款按账户软删除仍依赖它，不能和纯云同步残留一起批量删除。
 
 建议顺序：
 
@@ -728,6 +730,6 @@ shared:ui:core
 
 下一步建议执行：
 
-1. 继续数据库只读审计：明确 `isDeleted/isSynced/lastSyncedTime` 哪些仍参与本地软删除、备份恢复或查询过滤。
-2. 梳理 `SettingsEntity`、`SettingsDao`、`WriteSettingsDao` 与 `AppPreferences/DataStore` 的职责重叠，先找不改备份格式的迁移点。
+1. 梳理 `SettingsEntity`、`SettingsDao`、`WriteSettingsDao` 与 `AppPreferences/DataStore` 的职责重叠，先找不改备份格式的迁移点。
+2. 继续数据库只读审计：明确剩余 `isSynced/lastSyncedTime` 哪些只是构造字段和备份格式残留。
 3. 继续收敛平台桥接：评估 `FileSharer`、`BuildInfoProvider` 是否需要从 `LocalContext.current as ...` 改成 CompositionLocal。
