@@ -16,13 +16,16 @@ import com.ivy.data.model.legacy.Account
 import com.ivy.domain.mapper.legacy.toImmutableLegacyTags
 import com.ivy.domain.mapper.legacy.toLegacy
 import com.ivy.domain.mapper.legacy.toLegacyDomain
-import com.ivy.base.time.toEpochSeconds
 import com.ivy.domain.usecase.exchange.LegacyExchangeRatesUseCase
 import com.ivy.domain.exchange.ExchangeData
 import com.ivy.domain.exchange.ExchangeTrnArgument
 import com.ivy.domain.exchange.exchangeInBaseCurrency
 import java.math.BigDecimal
+import java.time.LocalDateTime
+import java.time.ZoneOffset
 import java.util.UUID
+
+private fun LocalDateTime.toEpochSeconds() = toEpochSecond(ZoneOffset.UTC)
 
 suspend fun List<Transaction>.withDateDividers(
     exchangeRatesLogic: LegacyExchangeRatesUseCase,

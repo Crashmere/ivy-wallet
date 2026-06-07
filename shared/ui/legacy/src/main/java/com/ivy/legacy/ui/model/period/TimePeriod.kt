@@ -4,16 +4,34 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.Composable
 import com.ivy.base.time.TimeConverter
 import com.ivy.base.time.TimeProvider
-import com.ivy.base.time.atEndOfDay
-import com.ivy.base.time.endOfMonth
-import com.ivy.base.time.startOfMonth
-import com.ivy.base.time.withDayOfMonthSafe
 import com.ivy.data.model.legacy.FromToTimeRange
 import com.ivy.ui.time.TimeFormatter
 import java.time.Instant
 import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.LocalTime
 
 private const val MonthNameAbbreviationLength = 3
+
+private fun startOfMonth(date: LocalDate, timeConverter: TimeConverter): Instant {
+    val startOfMonthLocal = date.withDayOfMonth(1).atStartOfDay()
+    return with(timeConverter) { startOfMonthLocal.toUTC() }
+}
+
+private fun endOfMonth(date: LocalDate, timeConverter: TimeConverter): Instant {
+    val endOfMonthLocal = date.withDayOfMonth(date.lengthOfMonth()).atTime(LocalTime.MAX)
+    return with(timeConverter) { endOfMonthLocal.toUTC() }
+}
+
+private fun LocalDate.atEndOfDay(): LocalDateTime =
+    atTime(23, 59, 59)
+
+private fun LocalDate.withDayOfMonthSafe(targetDayOfMonth: Int): LocalDate {
+    val maxDayOfMonth = lengthOfMonth()
+    return withDayOfMonth(
+        if (targetDayOfMonth > maxDayOfMonth) maxDayOfMonth else targetDayOfMonth
+    )
+}
 
 @Suppress("DataClassFunctions")
 @Immutable

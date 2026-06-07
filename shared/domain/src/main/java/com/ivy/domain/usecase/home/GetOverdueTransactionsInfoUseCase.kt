@@ -1,6 +1,6 @@
 package com.ivy.domain.usecase.home
 
-import com.ivy.base.time.ivyMinTime
+import com.ivy.base.time.INSTANT_MIN_SAFE
 import com.ivy.data.model.legacy.ClosedTimeRange
 import com.ivy.domain.transaction.legacy.isOverdue
 import java.time.Instant
@@ -15,7 +15,7 @@ class GetOverdueTransactionsInfoUseCase @Inject constructor(
     ): DueTransactionsInfo {
         return calculateDueTransactionsInfoUseCase(
             range = ClosedTimeRange(
-                from = ivyMinTime(),
+                from = INSTANT_MIN_SAFE,
                 to = toRange
             ),
             baseCurrency = baseCurrency,

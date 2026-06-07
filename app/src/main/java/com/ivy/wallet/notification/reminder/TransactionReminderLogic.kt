@@ -4,12 +4,15 @@ import android.content.Context
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
-import com.ivy.base.time.toEpochSeconds
 import com.ivy.base.time.TimeProvider
 import com.ivy.domain.usecase.settings.GetShowNotificationsPreferenceUseCase
 import dagger.hilt.android.qualifiers.ApplicationContext
+import java.time.LocalDateTime
+import java.time.ZoneOffset
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
+
+private fun LocalDateTime.toEpochSeconds() = toEpochSecond(ZoneOffset.UTC)
 
 class TransactionReminderLogic @Inject constructor(
     @ApplicationContext
