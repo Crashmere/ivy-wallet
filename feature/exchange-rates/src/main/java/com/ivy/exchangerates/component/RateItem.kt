@@ -21,7 +21,7 @@ import com.ivy.data.model.currency.format
 import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
 import com.ivy.exchangerates.data.RateUi
-import com.ivy.wallet.ui.theme.components.DeleteButton
+import com.ivy.legacy.ui.component.DeleteButton
 
 @Composable
 fun RateItem(

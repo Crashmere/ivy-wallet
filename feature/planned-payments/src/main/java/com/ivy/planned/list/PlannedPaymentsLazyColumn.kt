@@ -33,7 +33,7 @@ import com.ivy.navigation.Navigation
 import com.ivy.navigation.navigation
 import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.Gray
-import com.ivy.wallet.ui.theme.components.IvyIcon
+import com.ivy.legacy.ui.component.IvyIcon
 import kotlinx.collections.immutable.ImmutableList
 import kotlin.math.absoluteValue
 

@@ -11,8 +11,8 @@ import com.ivy.design.l0_system.Orange3
 import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
 import com.ivy.legacy.ui.theme.Gradient
-import com.ivy.wallet.ui.theme.components.IvyBorderButton
-import com.ivy.wallet.ui.theme.components.IvyButton
+import com.ivy.legacy.ui.component.IvyBorderButton
+import com.ivy.legacy.ui.component.IvyButton
 import com.ivy.legacy.ui.theme.findContrastTextColor
 import kotlinx.collections.immutable.ImmutableList
 import com.ivy.ui.R

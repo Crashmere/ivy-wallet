@@ -16,9 +16,9 @@ import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.GradientGreen
 import com.ivy.legacy.ui.theme.GradientRed
 import com.ivy.legacy.ui.theme.White
-import com.ivy.wallet.ui.theme.components.IvyButton
-import com.ivy.wallet.ui.theme.components.IvyCircleButton
-import com.ivy.wallet.ui.theme.components.IvyOutlinedButton
+import com.ivy.legacy.ui.component.IvyButton
+import com.ivy.legacy.ui.component.IvyCircleButton
+import com.ivy.legacy.ui.component.IvyOutlinedButton
 
 @Deprecated("Old design system. Use `:ivy-design` and Material3")
 @Composable

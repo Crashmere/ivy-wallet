@@ -36,9 +36,9 @@ import com.ivy.navigation.navigation
 import com.ivy.navigation.screenScopedViewModel
 import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.Gray
-import com.ivy.wallet.ui.theme.components.IvyIcon
-import com.ivy.wallet.ui.theme.components.ReorderButton
-import com.ivy.wallet.ui.theme.components.ReorderModalSingleType
+import com.ivy.legacy.ui.component.IvyIcon
+import com.ivy.legacy.ui.component.ReorderButton
+import com.ivy.legacy.ui.component.ReorderModalSingleType
 import com.ivy.wallet.ui.theme.wallet.AmountCurrencyB1
 
 @Composable

@@ -15,9 +15,9 @@ import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.ui.legacy.navigationBarInset
 import com.ivy.ui.legacy.toDensityDp
 import com.ivy.ui.R
-import com.ivy.wallet.ui.theme.components.ActionsRow
-import com.ivy.wallet.ui.theme.components.CloseButton
-import com.ivy.wallet.ui.theme.components.IvyOutlinedButton
+import com.ivy.legacy.ui.component.ActionsRow
+import com.ivy.legacy.ui.component.CloseButton
+import com.ivy.legacy.ui.component.IvyOutlinedButton
 import com.ivy.legacy.ui.theme.gradientCutBackgroundTop
 
 @Composable

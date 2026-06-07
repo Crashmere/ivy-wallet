@@ -21,7 +21,7 @@ import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.ui.legacy.onScreenStart
 import com.ivy.ui.legacy.selectEndTextFieldValue
 import com.ivy.ui.R
-import com.ivy.wallet.ui.theme.components.IvyBasicTextField
+import com.ivy.legacy.ui.component.IvyBasicTextField
 
 @Deprecated("Old design system. Use `:ivy-design` and Material3")
 @Suppress("MagicNumber")

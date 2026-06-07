@@ -28,8 +28,8 @@ import com.ivy.navigation.LocalMainTabState
 import com.ivy.navigation.navigation
 import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.Gradient
-import com.ivy.wallet.ui.theme.components.IvyButton
-import com.ivy.wallet.ui.theme.components.IvyIcon
+import com.ivy.legacy.ui.component.IvyButton
+import com.ivy.legacy.ui.component.IvyIcon
 import com.ivy.legacy.ui.theme.dynamicContrast
 import com.ivy.legacy.ui.theme.findContrastTextColor
 import kotlinx.collections.immutable.ImmutableList

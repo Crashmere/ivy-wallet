@@ -34,7 +34,7 @@ import com.ivy.ui.legacy.onScreenStart
 import com.ivy.design.utils.thenIf
 import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.Ivy
-import com.ivy.wallet.ui.theme.components.ItemIconS
+import com.ivy.legacy.ui.component.ItemIconS
 import com.ivy.legacy.ui.theme.dynamicContrast
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList

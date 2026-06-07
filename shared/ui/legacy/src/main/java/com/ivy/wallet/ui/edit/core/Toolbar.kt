@@ -24,9 +24,9 @@ import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.asBrush
 import com.ivy.navigation.navigation
 import com.ivy.ui.R
-import com.ivy.wallet.ui.theme.components.CloseButton
-import com.ivy.wallet.ui.theme.components.DeleteButton
-import com.ivy.wallet.ui.theme.components.IvyOutlinedButton
+import com.ivy.legacy.ui.component.CloseButton
+import com.ivy.legacy.ui.component.DeleteButton
+import com.ivy.legacy.ui.component.IvyOutlinedButton
 import java.util.UUID
 
 @Deprecated("Old design system. Use `:ivy-design` and Material3")

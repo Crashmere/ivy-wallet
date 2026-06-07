@@ -57,9 +57,9 @@ import com.ivy.legacy.ui.theme.GradientIvy
 import com.ivy.legacy.ui.theme.Green
 import com.ivy.legacy.ui.theme.Ivy
 import com.ivy.legacy.ui.theme.White
-import com.ivy.wallet.ui.theme.components.IvyCircleButton
-import com.ivy.wallet.ui.theme.components.IvyIcon
-import com.ivy.wallet.ui.theme.components.IvyOutlinedButton
+import com.ivy.legacy.ui.component.IvyCircleButton
+import com.ivy.legacy.ui.component.IvyIcon
+import com.ivy.legacy.ui.component.IvyOutlinedButton
 import com.ivy.legacy.ui.theme.gradientExpenses
 import com.ivy.wallet.ui.theme.modal.AddModalBackHandling
 import com.ivy.legacy.ui.theme.pureBlur

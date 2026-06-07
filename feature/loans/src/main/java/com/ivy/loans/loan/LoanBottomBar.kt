@@ -33,8 +33,8 @@ import com.ivy.legacy.ui.theme.GradientPurple
 import com.ivy.legacy.ui.theme.Green
 import com.ivy.legacy.ui.theme.Purple
 import com.ivy.legacy.ui.theme.White
-import com.ivy.wallet.ui.theme.components.IvyCircleButton
-import com.ivy.wallet.ui.theme.components.IvyIcon
+import com.ivy.legacy.ui.component.IvyCircleButton
+import com.ivy.legacy.ui.component.IvyIcon
 import com.ivy.legacy.ui.theme.pureBlur
 import kotlin.math.roundToInt
 

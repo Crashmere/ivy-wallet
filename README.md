@@ -399,6 +399,7 @@
 - 已删除旧 `IvyText` 包装，剩余调用方改用 Material3 `Text`。
 - 已删除旧 `IvyIcon/IvyIconScaled/IconScale` 包装，剩余调用方改用 Material3 `Icon`、`Image` 或本地小函数；`shared:ui:core` 的旧 `l1_buildingBlocks` 包已清空。
 - 已把旧颜色常量、`Gradient` 和颜色对比/转换 helper 从 `com.ivy.wallet.ui.theme` 迁到 `com.ivy.legacy.ui.theme`，避免通用旧 UI 工具继续挂在 Wallet 产品包名下；旧 `components/modal/wallet` 子包后续再分组迁移。
+- 已把旧通用 UI 组件从 `com.ivy.wallet.ui.theme.components` 迁到 `com.ivy.legacy.ui.component`，包括旧按钮、工具栏、输入框、余额行、排序弹窗、底部栏和图标组件；功能和视觉保持不变。
 - 已删除 `:temp:legacy-code` 的 Gradle include、模块 build 文件，以及所有 app/feature 对 `projects.temp.legacyCode` 的依赖声明。
 - 阶段 5 的模块拆解目标已经完成：仓库中不再有被 Gradle include 的 `temp:*` 模块。后续工作转为拆除 `shared:ui:legacy` 中剩余旧上下文、旧设计 API 和旧 UI 兼容模型。
 
@@ -680,6 +681,6 @@ shared:ui:core
 
 下一步建议执行：
 
-1. 继续替换旧设计兼容 API：下一步优先处理 `com.ivy.wallet.ui.theme.components/modal/wallet` 包名和仍混在 `shared:ui:legacy` 中的通用旧组件。
-2. 收敛 `shared:ui:legacy` 中仍以旧 Wallet 包名命名的组件，把通用组件迁到更清晰的 legacy/ui 或 ui core 包名，功能专用组件再下沉到对应 feature。
+1. 继续替换旧设计兼容 API：下一步优先处理 `com.ivy.wallet.ui.theme.modal` 和 `com.ivy.wallet.ui.theme.wallet` 包名。
+2. 收敛 `shared:ui:legacy` 中仍以旧 Wallet 包名命名的弹窗和金额/周期展示组件，把通用部分迁到更清晰的 legacy/ui 包名，功能专用组件再下沉到对应 feature。
 3. 每完成一组跨模块边界调整后运行 `:app:assembleDemo`，确认构建没有被迁移影响；涉及数据库、备份恢复或导入导出时再补充对应测试。

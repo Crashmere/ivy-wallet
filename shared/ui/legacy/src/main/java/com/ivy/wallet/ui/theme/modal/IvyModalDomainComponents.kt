@@ -17,8 +17,8 @@ import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
 import com.ivy.ui.legacy.clickableNoIndication
 import com.ivy.ui.legacy.rememberInteractionSource
-import com.ivy.wallet.ui.theme.components.BalanceRow
-import com.ivy.wallet.ui.theme.components.IvyDividerLine
+import com.ivy.legacy.ui.component.BalanceRow
+import com.ivy.legacy.ui.component.IvyDividerLine
 
 @Suppress("UnusedParameter")
 @Deprecated("Old design system. Use `:ivy-design` and Material3")

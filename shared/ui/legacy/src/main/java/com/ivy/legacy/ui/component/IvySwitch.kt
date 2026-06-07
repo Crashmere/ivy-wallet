@@ -1,0 +1,68 @@
+package com.ivy.legacy.ui.component
+
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.unit.dp
+import com.ivy.design.l0_system.LegacyTheme
+import com.ivy.ui.legacy.springBounce
+import com.ivy.legacy.ui.theme.Gray
+import com.ivy.legacy.ui.theme.Green
+
+@Deprecated("Old design system. Use `:ivy-design` and Material3")
+@Composable
+fun IvySwitch(
+    modifier: Modifier = Modifier,
+    enabled: Boolean,
+    onEnabledChange: (checked: Boolean) -> Unit
+) {
+    val color by animateColorAsState(
+        targetValue = if (enabled) Green else Gray,
+        animationSpec = springBounce()
+    )
+
+    Row(
+        modifier = modifier
+            .width(40.dp)
+            .clip(LegacyTheme.shapes.rFull)
+            .border(2.dp, color, LegacyTheme.shapes.rFull)
+            .clickable {
+                onEnabledChange(!enabled)
+            }
+            .padding(vertical = 4.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        val weightStart by animateFloatAsState(
+            targetValue = if (enabled) 1f else 0f,
+            animationSpec = springBounce()
+        )
+
+        Spacer(Modifier.width(4.dp))
+
+        if (weightStart > 0) {
+            Spacer(Modifier.weight(weightStart))
+        }
+
+        // Circle
+        Spacer(
+            modifier = Modifier
+                .size(16.dp)
+                .background(color, CircleShape)
+        )
+
+        val weightEnd = 1f - weightStart
+        if (weightEnd > 0) {
+            Spacer(Modifier.weight(weightEnd))
+        }
+
+        Spacer(Modifier.width(4.dp))
+    }
+}

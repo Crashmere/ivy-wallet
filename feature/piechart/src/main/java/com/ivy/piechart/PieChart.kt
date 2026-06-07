@@ -31,7 +31,7 @@ import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.Black
 import com.ivy.legacy.ui.theme.Gradient
 import com.ivy.legacy.ui.theme.Gray
-import com.ivy.wallet.ui.theme.components.IvyIcon
+import com.ivy.legacy.ui.component.IvyIcon
 import com.ivy.legacy.ui.theme.toComposeColor
 import kotlinx.collections.immutable.ImmutableList
 import timber.log.Timber

@@ -29,7 +29,7 @@ import com.ivy.legacy.ui.theme.Ivy
 import com.ivy.legacy.ui.theme.Orange
 import com.ivy.legacy.ui.theme.Red
 import com.ivy.legacy.ui.theme.White
-import com.ivy.wallet.ui.theme.components.IvyIcon
+import com.ivy.legacy.ui.component.IvyIcon
 import com.ivy.wallet.ui.theme.wallet.AmountCurrencyB2Row
 import kotlin.math.abs
 import androidx.compose.foundation.layout.Box

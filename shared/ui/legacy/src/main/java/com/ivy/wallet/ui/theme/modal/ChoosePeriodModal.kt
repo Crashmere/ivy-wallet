@@ -49,9 +49,9 @@ import com.ivy.legacy.ui.theme.GradientIvy
 import com.ivy.legacy.ui.theme.Gray
 import com.ivy.legacy.ui.theme.Green
 import com.ivy.legacy.ui.theme.White
-import com.ivy.wallet.ui.theme.components.CircleButtonFilled
-import com.ivy.wallet.ui.theme.components.IntervalPickerRow
-import com.ivy.wallet.ui.theme.components.IvyDividerLine
+import com.ivy.legacy.ui.component.CircleButtonFilled
+import com.ivy.legacy.ui.component.IntervalPickerRow
+import com.ivy.legacy.ui.component.IvyDividerLine
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime

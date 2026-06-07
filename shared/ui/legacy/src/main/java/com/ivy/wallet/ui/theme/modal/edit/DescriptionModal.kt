@@ -30,7 +30,7 @@ import com.ivy.ui.legacy.onScreenStart
 import com.ivy.ui.legacy.rememberInteractionSource
 import com.ivy.ui.legacy.selectEndTextFieldValue
 import com.ivy.ui.R
-import com.ivy.wallet.ui.theme.components.IvyDescriptionTextField
+import com.ivy.legacy.ui.component.IvyDescriptionTextField
 import com.ivy.wallet.ui.theme.modal.IvyModal
 import com.ivy.wallet.ui.theme.modal.ModalDynamicPrimaryAction
 import java.util.UUID

@@ -21,9 +21,9 @@ import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.Gradient
 import com.ivy.legacy.ui.theme.GradientGreen
 import com.ivy.legacy.ui.theme.White
-import com.ivy.wallet.ui.theme.components.ActionsRow
-import com.ivy.wallet.ui.theme.components.CloseButton
-import com.ivy.wallet.ui.theme.components.IvyButton
+import com.ivy.legacy.ui.component.ActionsRow
+import com.ivy.legacy.ui.component.CloseButton
+import com.ivy.legacy.ui.component.IvyButton
 import com.ivy.legacy.ui.theme.gradientCutBackgroundTop
 
 @Composable

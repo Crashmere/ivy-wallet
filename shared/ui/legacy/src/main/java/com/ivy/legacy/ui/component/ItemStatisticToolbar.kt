@@ -14,9 +14,9 @@ import com.ivy.base.legacy.stringRes
 import com.ivy.navigation.navigation
 import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.Transparent
-import com.ivy.wallet.ui.theme.components.CircleButton
-import com.ivy.wallet.ui.theme.components.DeleteButton
-import com.ivy.wallet.ui.theme.components.IvyOutlinedButton
+import com.ivy.legacy.ui.component.CircleButton
+import com.ivy.legacy.ui.component.DeleteButton
+import com.ivy.legacy.ui.component.IvyOutlinedButton
 
 @SuppressLint("ComposeModifierMissing")
 @Deprecated("Old design system. Use `:ivy-design` and Material3")

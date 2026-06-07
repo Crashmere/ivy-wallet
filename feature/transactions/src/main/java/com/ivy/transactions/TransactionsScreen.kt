@@ -71,9 +71,9 @@ import com.ivy.ui.rememberScrollPositionListState
 import com.ivy.wallet.domain.pure.data.IncomeExpensePair
 import com.ivy.legacy.ui.theme.Gray
 import com.ivy.legacy.ui.theme.GreenDark
-import com.ivy.wallet.ui.theme.components.BalanceRow
-import com.ivy.wallet.ui.theme.components.BalanceRowMedium
-import com.ivy.wallet.ui.theme.components.ItemIconMDefaultIcon
+import com.ivy.legacy.ui.component.BalanceRow
+import com.ivy.legacy.ui.component.BalanceRowMedium
+import com.ivy.legacy.ui.component.ItemIconMDefaultIcon
 import com.ivy.legacy.ui.theme.dynamicContrast
 import com.ivy.legacy.ui.theme.findContrastTextColor
 import com.ivy.legacy.ui.theme.isDarkColor

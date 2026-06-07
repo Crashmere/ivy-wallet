@@ -34,7 +34,7 @@ import com.ivy.ui.R
 import com.ivy.wallet.platform.hasLockScreen
 import com.ivy.legacy.ui.theme.Gray
 import com.ivy.legacy.ui.theme.White
-import com.ivy.wallet.ui.theme.components.IvyButton
+import com.ivy.legacy.ui.component.IvyButton
 
 @SuppressLint("ComposeModifierMissing")
 @Composable

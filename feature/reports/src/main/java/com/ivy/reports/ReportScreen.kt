@@ -44,14 +44,14 @@ import com.ivy.wallet.domain.pure.data.IncomeExpensePair
 import com.ivy.legacy.ui.theme.Gray
 import com.ivy.legacy.ui.theme.Green
 import com.ivy.legacy.ui.theme.Orange
-import com.ivy.wallet.ui.theme.components.BackButtonType
-import com.ivy.wallet.ui.theme.components.BalanceRow
-import com.ivy.wallet.ui.theme.components.CircleButtonFilled
-import com.ivy.wallet.ui.theme.components.IvyButton
-import com.ivy.wallet.ui.theme.components.IvyCheckboxWithText
-import com.ivy.wallet.ui.theme.components.IvyIcon
-import com.ivy.wallet.ui.theme.components.IvyOutlinedButton
-import com.ivy.wallet.ui.theme.components.IvyToolbar
+import com.ivy.legacy.ui.component.BackButtonType
+import com.ivy.legacy.ui.component.BalanceRow
+import com.ivy.legacy.ui.component.CircleButtonFilled
+import com.ivy.legacy.ui.component.IvyButton
+import com.ivy.legacy.ui.component.IvyCheckboxWithText
+import com.ivy.legacy.ui.component.IvyIcon
+import com.ivy.legacy.ui.component.IvyOutlinedButton
+import com.ivy.legacy.ui.component.IvyToolbar
 import com.ivy.legacy.ui.theme.pureBlur
 import kotlinx.collections.immutable.toImmutableList
 

@@ -15,7 +15,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import com.ivy.ui.legacy.hideKeyboard
 import com.ivy.ui.legacy.onScreenStart
-import com.ivy.wallet.ui.theme.components.IvyNameTextField
+import com.ivy.legacy.ui.component.IvyNameTextField
 
 @Composable
 fun ModalNameInput(

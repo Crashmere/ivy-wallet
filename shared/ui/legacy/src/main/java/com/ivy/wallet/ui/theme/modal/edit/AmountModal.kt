@@ -47,7 +47,7 @@ import com.ivy.data.model.currency.localDecimalSeparator
 import com.ivy.ui.legacy.onScreenStart
 import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.Red
-import com.ivy.wallet.ui.theme.components.IvyIcon
+import com.ivy.legacy.ui.component.IvyIcon
 import com.ivy.wallet.ui.theme.modal.IvyModal
 import com.ivy.wallet.ui.theme.modal.ModalPositiveButton
 import dagger.hilt.android.EntryPointAccessors

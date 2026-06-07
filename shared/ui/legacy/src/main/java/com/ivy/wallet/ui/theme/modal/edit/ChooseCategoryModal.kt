@@ -34,10 +34,10 @@ import com.ivy.ui.legacy.onScreenStart
 import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.Gradient
 import com.ivy.legacy.ui.theme.Ivy
-import com.ivy.wallet.ui.theme.components.ItemIconSDefaultIcon
-import com.ivy.wallet.ui.theme.components.IvyBorderButton
-import com.ivy.wallet.ui.theme.components.IvyCircleButton
-import com.ivy.wallet.ui.theme.components.WrapContentRow
+import com.ivy.legacy.ui.component.ItemIconSDefaultIcon
+import com.ivy.legacy.ui.component.IvyBorderButton
+import com.ivy.legacy.ui.component.IvyCircleButton
+import com.ivy.legacy.ui.component.WrapContentRow
 import com.ivy.legacy.ui.theme.findContrastTextColor
 import com.ivy.wallet.ui.theme.modal.IvyModal
 import com.ivy.wallet.ui.theme.modal.ModalSkip

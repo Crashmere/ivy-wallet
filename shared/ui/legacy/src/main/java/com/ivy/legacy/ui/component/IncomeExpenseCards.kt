@@ -33,7 +33,7 @@ import com.ivy.legacy.ui.theme.Gradient
 import com.ivy.legacy.ui.theme.Green
 import com.ivy.legacy.ui.theme.MediumBlack
 import com.ivy.legacy.ui.theme.MediumWhite
-import com.ivy.wallet.ui.theme.components.IvyButton
+import com.ivy.legacy.ui.component.IvyButton
 import com.ivy.legacy.ui.theme.findContrastTextColor
 import com.ivy.legacy.ui.theme.isDarkColor
 

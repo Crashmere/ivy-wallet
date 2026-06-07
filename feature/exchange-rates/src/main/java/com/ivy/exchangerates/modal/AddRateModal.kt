@@ -21,7 +21,7 @@ import com.ivy.design.l0_system.style
 import com.ivy.exchangerates.RatesEvent
 import com.ivy.exchangerates.data.RateUi
 import com.ivy.ui.legacy.selectEndTextFieldValue
-import com.ivy.wallet.ui.theme.components.IvyNameTextField
+import com.ivy.legacy.ui.component.IvyNameTextField
 import com.ivy.wallet.ui.theme.modal.IvyModal
 import com.ivy.wallet.ui.theme.modal.ModalAdd
 import com.ivy.wallet.ui.theme.modal.ModalTitle

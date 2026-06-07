@@ -26,8 +26,8 @@ import com.ivy.base.legacy.timeNowUTC
 import com.ivy.base.legacy.uppercaseLocal
 import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.Orange
-import com.ivy.wallet.ui.theme.components.AddPrimaryAttributeButton
-import com.ivy.wallet.ui.theme.components.IvyIcon
+import com.ivy.legacy.ui.component.AddPrimaryAttributeButton
+import com.ivy.legacy.ui.component.IvyIcon
 import java.time.LocalDateTime
 
 @Composable

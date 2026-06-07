@@ -22,7 +22,7 @@ import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
 import com.ivy.ui.legacy.clickableNoIndication
 import com.ivy.ui.legacy.rememberInteractionSource
-import com.ivy.wallet.ui.theme.components.IvyIcon
+import com.ivy.legacy.ui.component.IvyIcon
 import androidx.compose.ui.res.stringResource
 import com.ivy.ui.R
 

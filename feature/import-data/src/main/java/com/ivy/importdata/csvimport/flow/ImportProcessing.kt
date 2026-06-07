@@ -21,7 +21,7 @@ import com.ivy.design.l0_system.style
 import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.GradientGreen
 import com.ivy.legacy.ui.theme.Gray
-import com.ivy.wallet.ui.theme.components.IvyDividerLine
+import com.ivy.legacy.ui.component.IvyDividerLine
 
 @Composable
 fun ImportProcessing(

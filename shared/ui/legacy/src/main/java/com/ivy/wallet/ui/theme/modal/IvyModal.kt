@@ -49,8 +49,8 @@ import com.ivy.ui.legacy.onScreenStart
 import com.ivy.design.utils.thenIf
 import com.ivy.navigation.Navigation
 import com.ivy.navigation.navigation
-import com.ivy.wallet.ui.theme.components.ActionsRow
-import com.ivy.wallet.ui.theme.components.CloseButton
+import com.ivy.legacy.ui.component.ActionsRow
+import com.ivy.legacy.ui.component.CloseButton
 import com.ivy.legacy.ui.theme.gradientCutBackgroundTop
 import com.ivy.legacy.ui.theme.mediumBlur
 import java.util.UUID

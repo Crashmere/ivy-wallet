@@ -20,7 +20,7 @@ import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
 import com.ivy.ui.R
 import com.ivy.ui.time.TimeFormatter
-import com.ivy.wallet.ui.theme.components.IvyIcon
+import com.ivy.legacy.ui.component.IvyIcon
 import java.time.Instant
 import com.ivy.design.api.LocalTimeProvider
 import java.util.concurrent.TimeUnit

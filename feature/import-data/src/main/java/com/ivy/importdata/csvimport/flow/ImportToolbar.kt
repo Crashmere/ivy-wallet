@@ -15,7 +15,7 @@ import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
 import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.Gray
-import com.ivy.wallet.ui.theme.components.IvyToolbar
+import com.ivy.legacy.ui.component.IvyToolbar
 
 @Composable
 fun ImportToolbar(

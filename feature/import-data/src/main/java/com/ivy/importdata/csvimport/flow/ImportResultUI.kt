@@ -29,9 +29,9 @@ import com.ivy.legacy.ui.theme.Gray
 import com.ivy.legacy.ui.theme.Green
 import com.ivy.legacy.ui.theme.Red
 import com.ivy.legacy.ui.theme.White
-import com.ivy.wallet.ui.theme.components.BackButton
-import com.ivy.wallet.ui.theme.components.IvyDividerLine
-import com.ivy.wallet.ui.theme.components.OnboardingButton
+import com.ivy.legacy.ui.component.BackButton
+import com.ivy.legacy.ui.component.IvyDividerLine
+import com.ivy.legacy.ui.component.OnboardingButton
 import kotlinx.collections.immutable.persistentListOf
 
 @SuppressLint("ComposeModifierMissing")

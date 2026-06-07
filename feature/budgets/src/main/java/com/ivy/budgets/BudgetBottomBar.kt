@@ -4,8 +4,8 @@ import androidx.compose.foundation.layout.BoxWithConstraintsScope
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.ivy.ui.R
-import com.ivy.wallet.ui.theme.components.BackBottomBar
-import com.ivy.wallet.ui.theme.components.IvyButton
+import com.ivy.legacy.ui.component.BackBottomBar
+import com.ivy.legacy.ui.component.IvyButton
 
 @Composable
 internal fun BoxWithConstraintsScope.BudgetBottomBar(

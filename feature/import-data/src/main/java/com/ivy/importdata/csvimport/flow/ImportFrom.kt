@@ -27,7 +27,7 @@ import com.ivy.design.l0_system.style
 import com.ivy.navigation.CSVScreen
 import com.ivy.navigation.navigation
 import com.ivy.ui.R
-import com.ivy.wallet.ui.theme.components.GradientCutBottom
+import com.ivy.legacy.ui.component.GradientCutBottom
 
 @ExperimentalFoundationApi
 @Composable

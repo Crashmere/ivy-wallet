@@ -26,7 +26,7 @@ import com.ivy.design.l0_system.style
 import com.ivy.ui.legacy.keyboardVisibleState
 import com.ivy.ui.legacy.selectEndTextFieldValue
 import com.ivy.ui.R
-import com.ivy.wallet.ui.theme.components.IvyTitleTextField
+import com.ivy.legacy.ui.component.IvyTitleTextField
 import kotlinx.coroutines.launch
 import java.util.UUID
 import androidx.compose.foundation.layout.Column

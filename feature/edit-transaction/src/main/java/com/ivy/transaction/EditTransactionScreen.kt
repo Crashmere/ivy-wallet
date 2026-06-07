@@ -59,9 +59,9 @@ import com.ivy.wallet.ui.edit.core.DueDate
 import com.ivy.wallet.ui.edit.core.EditBottomSheet
 import com.ivy.wallet.ui.edit.core.Title
 import com.ivy.wallet.ui.edit.core.Toolbar
-import com.ivy.wallet.ui.theme.components.AddPrimaryAttributeButton
-import com.ivy.wallet.ui.theme.components.ChangeTransactionTypeModal
-import com.ivy.wallet.ui.theme.components.CustomExchangeRateCard
+import com.ivy.legacy.ui.component.AddPrimaryAttributeButton
+import com.ivy.legacy.ui.component.ChangeTransactionTypeModal
+import com.ivy.legacy.ui.component.CustomExchangeRateCard
 import com.ivy.wallet.ui.theme.modal.DeleteModal
 import com.ivy.wallet.ui.theme.modal.ModalAdd
 import com.ivy.wallet.ui.theme.modal.ModalCheck

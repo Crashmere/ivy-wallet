@@ -39,15 +39,15 @@ import com.ivy.ui.legacy.hideKeyboard
 import com.ivy.ui.legacy.onScreenStart
 import com.ivy.ui.legacy.selectEndTextFieldValue
 import com.ivy.legacy.ui.theme.Gradient
-import com.ivy.wallet.ui.theme.components.IvyBorderButton
-import com.ivy.wallet.ui.theme.components.IvyCircleButton
+import com.ivy.legacy.ui.component.IvyBorderButton
+import com.ivy.legacy.ui.component.IvyCircleButton
 import com.ivy.legacy.ui.theme.findContrastTextColor
 import com.ivy.wallet.ui.theme.modal.DeleteModal
 import com.ivy.wallet.ui.theme.modal.IvyModal
 import com.ivy.wallet.ui.theme.modal.ModalPositiveButton
 import com.ivy.wallet.ui.theme.modal.ModalTitle
 import com.ivy.ui.R
-import com.ivy.wallet.ui.theme.components.WrapContentRow
+import com.ivy.legacy.ui.component.WrapContentRow
 import kotlinx.collections.immutable.ImmutableList
 import java.util.UUID
 

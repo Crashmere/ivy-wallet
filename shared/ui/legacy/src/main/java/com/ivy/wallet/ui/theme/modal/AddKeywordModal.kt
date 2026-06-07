@@ -19,7 +19,7 @@ import com.ivy.design.l0_system.style
 import com.ivy.ui.legacy.onScreenStart
 import com.ivy.ui.legacy.selectEndTextFieldValue
 import com.ivy.ui.R
-import com.ivy.wallet.ui.theme.components.IvyTitleTextField
+import com.ivy.legacy.ui.component.IvyTitleTextField
 import java.util.UUID
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue

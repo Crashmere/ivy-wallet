@@ -67,9 +67,9 @@ import com.ivy.navigation.SettingsScreen
 import com.ivy.navigation.navigation
 import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.Gray
-import com.ivy.wallet.ui.theme.components.BufferBattery
-import com.ivy.wallet.ui.theme.components.CircleButtonFilled
-import com.ivy.wallet.ui.theme.components.IvyIcon
+import com.ivy.legacy.ui.component.BufferBattery
+import com.ivy.legacy.ui.component.CircleButtonFilled
+import com.ivy.legacy.ui.component.IvyIcon
 import com.ivy.wallet.ui.theme.modal.AddModalBackHandling
 import com.ivy.wallet.ui.theme.wallet.AmountCurrencyB1
 import java.util.UUID
