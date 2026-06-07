@@ -11,8 +11,8 @@ import com.ivy.base.model.processByType
 import com.ivy.base.time.TimeConverter
 import com.ivy.base.time.TimeProvider
 import com.ivy.data.model.LoanType
-import com.ivy.domain.preferences.AppPreferences
 import com.ivy.domain.usecase.account.CreateAccountWithBalanceUseCase
+import com.ivy.domain.usecase.account.GetLastSelectedAccountIdUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.domain.usecase.loan.CreateLoanUseCase
 import com.ivy.domain.usecase.loan.GetLoanRecordsUseCase
@@ -49,7 +49,7 @@ class LoanViewModel @Inject constructor(
     private val getLoanRecordsUseCase: GetLoanRecordsUseCase,
     private val reorderLoansUseCase: ReorderLoansUseCase,
     private val createLoanUseCase: CreateLoanUseCase,
-    private val appPreferences: AppPreferences,
+    private val getLastSelectedAccountId: GetLastSelectedAccountIdUseCase,
     private val createAccountWithBalanceUseCase: CreateAccountWithBalanceUseCase,
     private val loanTransactionSyncUseCase: LoanTransactionSyncUseCase,
     private val getLoansUseCase: GetLoansUseCase,
@@ -348,9 +348,7 @@ class LoanViewModel @Inject constructor(
     private fun defaultAccountId(
         accounts: List<Account>,
     ): Account? {
-        val lastSelectedId = appPreferences.lastSelectedAccountId?.let {
-            UUID.fromString(it)
-        }
+        val lastSelectedId = getLastSelectedAccountId()
 
         lastSelectedId?.let { uuid ->
             return accounts.find { it.id == uuid }

@@ -20,7 +20,6 @@ import com.ivy.data.model.TransactionId
 import com.ivy.data.model.primitive.NotBlankTrimmedString
 import com.ivy.domain.preferences.toggles.PreferenceToggleRepository
 import com.ivy.domain.preferences.toggles.PreferenceToggles
-import com.ivy.domain.preferences.AppPreferences
 import com.ivy.domain.usecase.category.GetCategoriesUseCase
 import com.ivy.domain.usecase.category.GetCategoryUseCase
 import com.ivy.domain.usecase.category.CreateCategoryUseCase
@@ -40,6 +39,7 @@ import com.ivy.domain.usecase.tag.RemoveTagFromTransactionUseCase
 import com.ivy.domain.usecase.tag.SaveTagUseCase
 import com.ivy.domain.usecase.tag.SearchTagsUseCase
 import com.ivy.domain.usecase.account.CreateAccountWithBalanceUseCase
+import com.ivy.domain.usecase.account.GetLastSelectedAccountIdUseCase
 import com.ivy.domain.usecase.transaction.DeleteTransactionUseCase
 import com.ivy.domain.usecase.transaction.GetLegacyTransactionUseCase
 import com.ivy.domain.usecase.transaction.SaveLegacyTransactionUseCase
@@ -58,6 +58,7 @@ import com.ivy.ui.R
 import com.ivy.ui.time.impl.DateTimePicker
 import com.ivy.domain.usecase.account.GetLegacyAccountUseCase
 import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
+import com.ivy.domain.usecase.account.SetLastSelectedAccountIdUseCase
 import com.ivy.domain.usecase.exchange.LegacyExchangeRatesUseCase
 import com.ivy.domain.usecase.loan.UpdateAssociatedLoanDataUseCase
 import com.ivy.data.model.legacy.CreateAccountData
@@ -91,7 +92,8 @@ class EditTransactionViewModel @Inject constructor(
     private val getCategoryUseCase: GetCategoryUseCase,
     private val getLoanUseCase: GetLoanUseCase,
     private val nav: Navigation,
-    private val appPreferences: AppPreferences,
+    private val getLastSelectedAccountId: GetLastSelectedAccountIdUseCase,
+    private val setLastSelectedAccountId: SetLastSelectedAccountIdUseCase,
     private val exchangeRatesLogic: LegacyExchangeRatesUseCase,
     private val createCategoryUseCase: CreateCategoryUseCase,
     private val updateCategoryUseCase: UpdateCategoryUseCase,
@@ -375,7 +377,7 @@ class EditTransactionViewModel @Inject constructor(
             return screen.accountId!!
         }
 
-        val lastSelectedId = appPreferences.lastSelectedAccountId?.let { UUID.fromString(it) }
+        val lastSelectedId = getLastSelectedAccountId()
         if (lastSelectedId != null && ioThread {
                 accounts.find {
                     it.id == lastSelectedId
@@ -518,7 +520,7 @@ class EditTransactionViewModel @Inject constructor(
             accountsChanged = true
 
             // update last selected account
-            appPreferences.lastSelectedAccountId = newAccount.id.toString()
+            setLastSelectedAccountId(newAccount.id)
 
             saveIfEditMode()
 
