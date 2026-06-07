@@ -83,26 +83,20 @@
 
 现状：
 
-- `ivy.feature` 被 app 以外几乎所有 Android library 复用。
-- `shared:base`、`shared:data:core`、`shared:domain` 这类非 feature 模块也使用 feature 插件。
-- 一些模块拿到了并不需要的 Compose、Hilt、Room、Ktor 或测试配置。
+- `ivy.feature` 组合插件已删除，所有 feature 模块直接声明 `ivy.compose` 和 `ivy.hilt`。
+- `shared:data:model`、`shared:data:api`、`shared:domain` 已收敛为 JVM/Kotlin 模块；`shared:data:core` 显式声明 Android library、Room、Hilt 和集成测试能力。
+- 大部分公共 bundle 已下放到实际使用方，但仍需要继续检查 Compose、Hilt、testing 等依赖是否还有可收窄空间。
 
 问题：
 
-- 模块职责从 Gradle 文件上看不出来。
-- 非 UI 模块容易意外依赖 UI/Compose。
-- 这是典型多人项目模板化残留，对个人维护不够直观。
+- 模块职责已经比原始仓库清楚，但个别 bundle 仍可能让模块获得未直接使用的能力。
+- feature 模块当前仍统一启用 Compose 和 Hilt；短期合理，后续如果合并或拆小模块，再逐个判断是否需要 Hilt。
+- 构建配置仍应保持“模块需要什么就显式声明什么”，避免重新形成大而全的约定插件。
 
 目标：
 
-- 拆分成更直接的约定插件，例如：
-  - `ivy.android-library`
-  - `ivy.kotlin-library`
-  - `ivy.android-compose`
-  - `ivy.hilt-library`
-  - `ivy.room-library`
-  - `ivy.tested-library`
-- 每个模块显式声明自己需要的能力。
+- 保持 `ivy.android-library`、`ivy.kotlin-library`、`ivy.compose`、`ivy.hilt`、`ivy.room`、`ivy.integration.testing` 这类窄约定。
+- 每个模块显式声明自己需要的能力，不再恢复 `ivy.feature` 这类组合入口。
 
 ### 3. 测试 helper 已基本移出生产源码
 
@@ -287,8 +281,8 @@
 - `shared:ui:core`、`shared:ui:legacy`、`shared:ui:navigation` 的 Kotlin 源码已从 `src/main/java` 迁到 `src/main/kotlin`，`shared:ui:core` 测试源码同步迁到 `src/test/kotlin`；包名和运行行为不变，只收敛源集结构。
 - 所有 `feature:*` 模块的 Kotlin 源码已从 `src/main/java` 迁到 `src/main/kotlin`；页面模块继续保持原包名和行为，只让目录结构匹配 Kotlin-only 代码事实。
 - `app` 和 `shared:data:core` 的 Kotlin 源码也已迁到 `src/*/kotlin` 源集；其中 data-core 的 unit test 与 androidTest 同步迁移，持久化、备份和 Room 测试包名不变。
-- `ivy.compose` 已收敛为纯 Android Compose 配置，不再隐式套用 `ivy.module` 或引入未使用的 Molecule 插件；feature 模块继续由 `ivy.feature` 组合 Hilt 与 Compose 能力，需要 Hilt Module 的 shared UI 模块才显式声明 `ivy.hilt`。
-- `ivy.hilt` 已收敛为纯 Hilt/KSP 配置，不再隐式应用 `ivy.android-library`；需要 Android 基础配置的模块必须通过 `ivy.compose`、`ivy.feature` 或显式 `ivy.android-library` 声明。
+- `ivy.compose` 已收敛为纯 Android Compose 配置，不再隐式套用 `ivy.module` 或引入未使用的 Molecule 插件；feature 模块现在显式同时声明 `ivy.compose` 与 `ivy.hilt`，需要 Hilt Module 的 shared UI 模块才显式声明 `ivy.hilt`。
+- `ivy.hilt` 已收敛为纯 Hilt/KSP 配置，不再隐式应用 `ivy.android-library`；需要 Android 基础配置的模块必须通过 `ivy.compose` 或显式 `ivy.android-library` 声明。
 - 版本目录里的 Compose LiveData 依赖别名已从临时/拼写错误的 `compose-runtime-livedate-temp` 改为 `compose-runtime-livedata`，保留依赖本身不变。
 - 删除无运行时调用方的 `FormatMoneyUseCase` 和对应测试，`shared:ui:core` 不再因为这段旧金额格式化草稿依赖 `shared:domain` 或 DataStore；当前实际金额展示继续使用既有 data model currency formatting 与旧 UI 展示逻辑。
 - `shared:ui:navigation` 已移除未使用的 `shared:domain` 依赖；导航模块当前只依赖基础类型、UI core 和自身导航状态。
@@ -305,9 +299,9 @@
 - 汇率页保存/删除手动汇率时已从 `either/bind` DSL 改为普通顺序校验，`feature:exchange-rates` 不再直接声明 Arrow 依赖；数据模型层仍负责暴露值对象校验结果。
 - CSV 导入的新分类创建已从单个 `either` 块改为普通值对象解析；`feature:import-data` 移除 Arrow Gradle 依赖后，当前所有 `feature:*` 模块都不再直接声明或导入 Arrow。
 - CSV 反读 helper `ReadCsvUseCase` 已从 domain 主源码移到测试源集，OpenCSV 在 `shared:domain` 中收窄为测试依赖；导出 CSV 的字段转义改为本地实现，domain 主源码不再依赖 OpenCSV 或其传递依赖。
-- `ivy.module` 不再默认启用 kotlinx serialization；当前 `ivy.feature` 页面模块没有序列化源码引用，序列化能力只保留在 `shared:data:model` 和 `shared:data:core` 等实际需要的模块中。
+- `ivy.module` 不再默认启用 kotlinx serialization；当前页面模块没有序列化源码引用，序列化能力只保留在 `shared:data:model` 和 `shared:data:core` 等实际需要的模块中。
 - app 模块已移除 Kotlin serialization 插件；应用壳本身没有序列化源码，序列化继续由 `shared:data:model` 和 `shared:data:core` 提供。
-- 空壳 `ivy.module` 约定插件已删除；`ivy.feature` 现在只保留 `ivy.hilt` 和 `ivy.compose` 两个页面能力入口，不再重复声明基础 Android library 插件。
+- 空壳 `ivy.module` 约定插件已删除；`ivy.feature` 组合插件也已删除，页面模块直接声明 `ivy.compose` 和 `ivy.hilt`。
 - app 与 `ivy.android-library` 已移除重复的旧式 `kotlin-android` 插件 ID，只保留正式 `org.jetbrains.kotlin.android` 插件；版本目录中仅包含 Android 协程运行时的依赖 bundle 已改名为 `kotlin-android-runtime`，避免和插件 ID 混淆。
 - app、`ivy.android-library` 和 `ivy.kotlin-library` 已把 Kotlin JVM target 配置从弃用的 `kotlinOptions` 迁到 `compilerOptions`；Java/Kotlin 目标仍保持 17，构建输出不再出现该弃用警告。
 - app 当前没有 `src/test` 或 `src/androidTest` 源码，已移除 app 模块中无消费方的通用测试 bundle 和 WorkManager 测试依赖；运行时 WorkManager 依赖保留。
@@ -808,6 +802,7 @@
 - `shared:ui:legacy` 显式声明 `androidx.core:core-ktx`，不再靠 Compose/ViewModel 传递依赖获得 `doOnLayout`。
 - `hilt-work` 已从公共 Hilt bundle 下放到 app；当前只有交易提醒 Worker 和 app 的 WorkManager 配置需要它。
 - `kotlinx-collections-immutable` 已从公共 Kotlin bundle 移除；它仍由 `shared:data:model` 以 `api` 暴露，因为导入结果和多处 UI 状态仍使用 immutable collection 类型。
+- `ivy.feature` 组合插件已删除；各 feature 模块现在显式声明 `ivy.compose` 和 `ivy.hilt`，模块需要的构建能力从 Gradle 文件即可直接看出。
 - `DateTimePicker` 接口已从 `com.ivy.ui.time.impl` 归位到 `com.ivy.ui.time`；`impl` 包只保留 Android/Material 日期时间选择器实现。
 - 账户旧读取路径已收敛到 `AccountStore`；旧 legacy 账户模型现在由 data model 账户映射而来，`shared:domain` 主源码不再直接注入 `AccountDao` 或依赖 `AccountEntity` mapper。
 - 旧交易卡片已移除重复账户查找 TODO：渲染前先解析来源/目标账户，再复用同一结果处理点击和币种展示，行为不变但 legacy UI 内部职责更清楚。
