@@ -10,5 +10,4 @@ dependencies {
     implementation(projects.shared.data.model)
     implementation(projects.shared.ui.core)
     implementation(libs.compose.viewmodel)
-    implementation(libs.javax.inject)
 }

@@ -13,6 +13,5 @@ dependencies {
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.recyclerview)
-    implementation(libs.javax.inject)
     implementation(libs.keval)
 }

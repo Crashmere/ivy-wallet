@@ -10,11 +10,8 @@ import com.ivy.legacy.ui.model.period.TimePeriod
 import com.ivy.ui.time.TimeConverter
 import com.ivy.ui.time.TimeProvider
 import java.time.ZoneOffset
-import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
-class PeriodState @Inject constructor(
+class PeriodState(
     private val timeConverter: TimeConverter,
     private val timeProvider: TimeProvider,
 ) {

@@ -1,8 +1,11 @@
 package com.ivy.wallet.di
 
 import android.content.Context
+import com.ivy.legacy.ui.state.PeriodState
 import com.ivy.ui.platform.Toaster
 import com.ivy.ui.resource.ResourceProvider
+import com.ivy.ui.navigation.MainTabState
+import com.ivy.ui.navigation.Navigation
 import com.ivy.ui.theme.ThemeState
 import com.ivy.ui.time.DateTimePicker
 import com.ivy.ui.time.DevicePreferences
@@ -27,6 +30,24 @@ object UiCoreBindingsModule {
     @Provides
     @Singleton
     fun themeState(): ThemeState = ThemeState()
+
+    @Provides
+    @Singleton
+    fun navigation(): Navigation = Navigation()
+
+    @Provides
+    @Singleton
+    fun mainTabState(): MainTabState = MainTabState()
+
+    @Provides
+    @Singleton
+    fun periodState(
+        timeConverter: TimeConverter,
+        timeProvider: TimeProvider,
+    ): PeriodState = PeriodState(
+        timeConverter = timeConverter,
+        timeProvider = timeProvider,
+    )
 
     @Provides
     fun timeProvider(): TimeProvider = DeviceTimeProvider()

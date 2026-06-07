@@ -6,12 +6,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import java.util.Stack
 import java.util.UUID
-import javax.inject.Inject
-import javax.inject.Singleton
 
 @Stable
-@Singleton
-class Navigation @Inject constructor() {
+class Navigation {
   var currentScreen: Screen? by mutableStateOf(null)
     private set
 
