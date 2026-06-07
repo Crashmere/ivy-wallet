@@ -660,6 +660,7 @@
 - `Features` 和功能开关 DataStore 已通过 `LocalFeatures/LocalFeatureDataStore` 由 app 根部显式提供；旧金额键盘不再用 Hilt `EntryPointAccessors` 从 application 反查依赖。
 - 锁屏页不再通过 `LocalContext.current` 自行检查系统锁屏状态；`RootActivity` 从 app 平台层提供 `hasLockScreen` 检查函数，UI 只负责触发认证或继续进入应用。
 - 根启动 intent 的交易类型解析已改用 `IntentCompat.getSerializableExtra()`，不再直接调用新版 Android 中弃用的 `Intent.getSerializableExtra(String)`。
+- 导航返回处理已收窄为 `Navigation.handleRootBack()`、`registerScreenBackHandler()` 和 modal handler 注册方法；页面和旧 modal 不再直接访问导航内部的返回栈和 handler map。
 
 ### 阶段 9：feature 模块收敛
 

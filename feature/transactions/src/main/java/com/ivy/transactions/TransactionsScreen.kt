@@ -101,7 +101,7 @@ fun BoxWithConstraintsScope.TransactionsScreen(screen: TransactionsScreen) {
     LaunchedEffect(Unit) {
         viewModel.start(screen)
 
-        nav.onBackPressed[screen] = {
+        nav.registerScreenBackHandler(screen) {
             setStatusBarDarkTextCompat(
                 view = view,
                 darkText = themeState.theme == Theme.LIGHT

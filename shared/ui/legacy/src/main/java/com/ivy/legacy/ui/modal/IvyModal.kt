@@ -47,7 +47,6 @@ import com.ivy.legacy.ui.keyboardOnlyWindowInsets
 import com.ivy.legacy.ui.navigationBarInsets
 import com.ivy.legacy.ui.onScreenStart
 import com.ivy.ui.compose.thenIf
-import com.ivy.ui.navigation.Navigation
 import com.ivy.ui.navigation.navigation
 import com.ivy.legacy.ui.component.ActionsRow
 import com.ivy.legacy.ui.component.CloseButton
@@ -214,38 +213,25 @@ fun AddModalBackHandling(
     val latestAction by rememberUpdatedState(action)
     val nav = navigation()
     DisposableEffect(visible) {
-        if (visible) {
-            val lastModalBackHandlingId = nav.lastModalBackHandlerId()
-
-            if (modalId != null && modalId != lastModalBackHandlingId) {
-                nav.modalBackHandling.add(
-                    Navigation.ModalBackHandler(
-                        id = modalId,
-                        onBackPressed = {
-                            if (visible) {
-                                latestAction()
-                                true
-                            } else {
-                                false
-                            }
-                        }
-                    )
-                )
-            }
+        if (visible && modalId != null) {
+            nav.addModalBackHandler(
+                id = modalId,
+                onBackPressed = {
+                    if (visible) {
+                        latestAction()
+                        true
+                    } else {
+                        false
+                    }
+                }
+            )
         }
 
         onDispose {
-            val lastModalBackHandlingId = nav.lastModalBackHandlerId()
-            if (modalId != null && lastModalBackHandlingId == modalId) {
-                removeLastBackHandlerSafe(nav)
+            if (modalId != null) {
+                nav.removeModalBackHandler(modalId)
             }
         }
-    }
-}
-
-private fun removeLastBackHandlerSafe(nav: Navigation) {
-    if (nav.modalBackHandling.isNotEmpty()) {
-        nav.modalBackHandling.pop()
     }
 }
 

@@ -145,9 +145,8 @@ class RootActivity : AppCompatActivity(),
         biometricAuthenticator.authenticate(biometricPromptCallback)
     }
 
-    @Suppress("DEPRECATION")
     private fun handleRootBackPressed() {
-        if (!viewModel.isAppLocked() && navigation.onBackPressed()) {
+        if (!viewModel.isAppLocked() && navigation.handleRootBack()) {
             return
         }
         backPressedCallback.isEnabled = false

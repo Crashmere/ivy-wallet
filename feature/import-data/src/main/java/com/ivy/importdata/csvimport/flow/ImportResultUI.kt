@@ -53,7 +53,7 @@ fun ImportResultUI(
         BackButton(
             modifier = Modifier.padding(start = 20.dp)
         ) {
-            nav.onBackPressed()
+            nav.back()
         }
 
         Spacer(Modifier.height(24.dp))

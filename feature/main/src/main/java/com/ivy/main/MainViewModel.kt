@@ -30,7 +30,7 @@ class MainViewModel @Inject constructor(
     val currency = _currency.asLiveData()
 
     fun start(screen: MainScreen) {
-        nav.onBackPressed[screen] = {
+        nav.registerScreenBackHandler(screen) {
             if (mainTabState.selectedTab == MainTab.ACCOUNTS) {
                 mainTabState.select(MainTab.HOME)
                 true

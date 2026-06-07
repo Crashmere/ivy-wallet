@@ -15,28 +15,40 @@ class Navigation @Inject constructor() {
   var currentScreen: Screen? by mutableStateOf(null)
     private set
 
-  @Deprecated("Legacy code. Don't use it, please.")
-  val modalBackHandling: Stack<ModalBackHandler> = Stack()
+  private val modalBackHandlers: Stack<ModalBackHandler> = Stack()
 
-  @Deprecated("Legacy code. Use Compose `BackHandler {}` instead.")
-  val onBackPressed: MutableMap<Screen, () -> Boolean> = mutableMapOf()
+  private val screenBackHandlers: MutableMap<Screen, () -> Boolean> = mutableMapOf()
 
   private val backStack: Stack<Screen> = Stack()
   var lastScreen: Screen? = null
     private set
 
-  @Deprecated("Legacy code. Don't use it, please.")
-  data class ModalBackHandler(
+  private data class ModalBackHandler(
     val id: UUID,
     val onBackPressed: () -> Boolean
   )
 
-  @Deprecated("Legacy code. Don't use it, please.")
-  fun lastModalBackHandlerId(): UUID? {
-    return if (modalBackHandling.isEmpty()) {
-      null
-    } else {
-      modalBackHandling.peek().id
+  fun registerScreenBackHandler(screen: Screen, handler: () -> Boolean) {
+    screenBackHandlers[screen] = handler
+  }
+
+  fun addModalBackHandler(
+    id: UUID,
+    onBackPressed: () -> Boolean
+  ) {
+    if (modalBackHandlers.lastOrNull()?.id != id) {
+      modalBackHandlers.add(
+        ModalBackHandler(
+          id = id,
+          onBackPressed = onBackPressed
+        )
+      )
+    }
+  }
+
+  fun removeModalBackHandler(id: UUID) {
+    if (modalBackHandlers.lastOrNull()?.id == id) {
+      modalBackHandlers.pop()
     }
   }
 
@@ -53,12 +65,11 @@ class Navigation @Inject constructor() {
     backStack.pop()
   }
 
-  @Deprecated("Legacy code. Don't use it, please.")
-  fun onBackPressed(): Boolean {
-    if (modalBackHandling.isNotEmpty()) {
-      return modalBackHandling.peek().onBackPressed()
+  fun handleRootBack(): Boolean {
+    if (modalBackHandlers.isNotEmpty()) {
+      return modalBackHandlers.peek().onBackPressed()
     }
-    val specialHandling = onBackPressed.getOrDefault(currentScreen) { false }.invoke()
+    val specialHandling = screenBackHandlers.getOrDefault(currentScreen) { false }.invoke()
     return specialHandling || back()
   }
 

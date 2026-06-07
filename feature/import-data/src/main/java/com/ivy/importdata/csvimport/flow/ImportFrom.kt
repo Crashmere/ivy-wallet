@@ -47,7 +47,7 @@ fun BoxWithConstraintsScope.ImportFrom(
             val nav = navigation()
             ImportToolbar(
                 hasSkip = hasSkip,
-                onBack = { nav.onBackPressed() },
+                onBack = { nav.back() },
                 onSkip = onSkip
             )
         }

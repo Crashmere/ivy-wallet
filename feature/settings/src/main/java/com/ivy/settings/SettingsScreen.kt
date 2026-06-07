@@ -236,7 +236,7 @@ private fun BoxWithConstraintsScope.UI(
             IvyToolbar(
                 onBack = {
                     if (settingsPage == SettingsPage.Main) {
-                        nav.onBackPressed()
+                        nav.back()
                     } else {
                         settingsPage = SettingsPage.Main
                     }

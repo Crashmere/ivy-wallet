@@ -30,7 +30,7 @@ class ImportViewModel @Inject constructor(
     val importResult = _importResult.asLiveData()
 
     fun start(screen: ImportScreen) {
-        nav.onBackPressed[screen] = {
+        nav.registerScreenBackHandler(screen) {
             when (importStep.value) {
                 ImportStep.IMPORT_FROM -> false
                 ImportStep.LOADING -> {
