@@ -30,13 +30,12 @@ import com.ivy.IvyNavGraph
 import com.ivy.base.legacy.Theme
 import com.ivy.base.time.TimeConverter
 import com.ivy.base.time.TimeProvider
-import com.ivy.design.IvyContext
+import com.ivy.design.ThemeState
 import com.ivy.design.api.IvyDesign
 import com.ivy.design.api.IvyUI
 import com.ivy.design.api.systems.IvyWalletDesign
 import com.ivy.design.system.IvyMaterial3Theme
 import com.ivy.domain.RootScreen
-import com.ivy.legacy.IvyWalletCtx
 import com.ivy.legacy.LocalPeriodState
 import com.ivy.legacy.PeriodState
 import com.ivy.navigation.Navigation
@@ -57,7 +56,7 @@ import javax.inject.Inject
 @Suppress("TooManyFunctions")
 class RootActivity : AppCompatActivity(), RootScreen {
     @Inject
-    lateinit var ivyContext: IvyWalletCtx
+    lateinit var themeState: ThemeState
 
     @Inject
     lateinit var periodState: PeriodState
@@ -111,11 +110,12 @@ class RootActivity : AppCompatActivity(), RootScreen {
                     }
                     true -> {
                         IvyUI(
-                            design = appDesign(ivyContext),
+                            design = appDesign(),
                             timeConverter = timeConverter,
                             timeProvider = timeProvider,
                             timeFormatter = timeFormatter,
                             datePicker = datePicker,
+                            themeState = themeState,
                         ) {
                             AppLockedScreen(
                                 onShowOSBiometricsModal = {
@@ -133,12 +133,13 @@ class RootActivity : AppCompatActivity(), RootScreen {
                     false -> {
                         NavigationRoot(navigation = navigation) { screen ->
                             IvyUI(
-                                design = appDesign(ivyContext),
+                                design = appDesign(),
                                 includeSurface = screen?.isLegacy ?: true,
                                 timeConverter = timeConverter,
                                 timeProvider = timeProvider,
                                 timeFormatter = timeFormatter,
                                 datePicker = datePicker,
+                                themeState = themeState,
                             ) {
                                 IvyNavGraph(screen)
                             }
@@ -148,10 +149,10 @@ class RootActivity : AppCompatActivity(), RootScreen {
 
                 IvyMaterial3Theme(
                     dark = isDarkThemeEnabled(
-                        ivyDesign = appDesign(ivyContext),
+                        theme = themeState.theme,
                         systemDarkTheme = isSystemInDarkTheme
                     ),
-                    isTrueBlack = appDesign(ivyContext).context().theme == Theme.AMOLED_DARK
+                    isTrueBlack = themeState.theme == Theme.AMOLED_DARK
                 ) {
                     dateTimePicker.Content()
                 }
@@ -209,8 +210,8 @@ class RootActivity : AppCompatActivity(), RootScreen {
         }
     }
 
-    private fun isDarkThemeEnabled(ivyDesign: IvyDesign, systemDarkTheme: Boolean): Boolean {
-        return when (ivyDesign.context().theme) {
+    private fun isDarkThemeEnabled(theme: Theme, systemDarkTheme: Boolean): Boolean {
+        return when (theme) {
             Theme.LIGHT -> false
             Theme.DARK -> true
             Theme.AMOLED_DARK -> true
@@ -399,6 +400,4 @@ class RootActivity : AppCompatActivity(), RootScreen {
 
 }
 
-private fun appDesign(context: IvyWalletCtx): IvyDesign = object : IvyWalletDesign() {
-    override fun context(): IvyContext = context
-}
+private fun appDesign(): IvyDesign = object : IvyWalletDesign() {}

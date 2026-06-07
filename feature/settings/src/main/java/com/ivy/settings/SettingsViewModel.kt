@@ -25,7 +25,7 @@ import com.ivy.domain.usecase.ResetWalletDataUseCase
 import com.ivy.domain.usecase.csv.ExportCsvUseCase
 import com.ivy.domain.usecase.exchange.SyncExchangeRatesUseCase
 import com.ivy.frp.monad.Res
-import com.ivy.legacy.IvyWalletCtx
+import com.ivy.design.ThemeState
 import com.ivy.legacy.PeriodState
 import com.ivy.legacy.domain.action.settings.UpdateSettingsAct
 import com.ivy.base.legacy.getISOFormattedDateTime
@@ -48,7 +48,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
     private val settingsDao: SettingsDao,
-    private val ivyContext: IvyWalletCtx,
+    private val themeState: ThemeState,
     private val periodState: PeriodState,
     private val resetWalletDataUseCase: ResetWalletDataUseCase,
     private val sharedPrefs: SharedPrefs,
@@ -404,7 +404,7 @@ class SettingsViewModel @Inject constructor(
         viewModelScope.launch {
             settingsAct.getSettingsWithNextTheme().run {
                 updateSettingsAct(this)
-                ivyContext.switchTheme(this.theme)
+                themeState.update(this.theme)
                 currentTheme.value = this.theme
             }
         }

@@ -22,7 +22,7 @@ import com.ivy.frp.then
 import com.ivy.frp.thenInvokeAfter
 import com.ivy.home.customerjourney.CustomerJourneyCardModel
 import com.ivy.home.customerjourney.CustomerJourneyCardsProvider
-import com.ivy.legacy.IvyWalletCtx
+import com.ivy.design.ThemeState
 import com.ivy.legacy.PeriodState
 import com.ivy.legacy.data.AppBaseData
 import com.ivy.legacy.data.BufferInfo
@@ -68,7 +68,7 @@ import javax.inject.Inject
 @Stable
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val ivyContext: IvyWalletCtx,
+    private val themeState: ThemeState,
     private val nav: Navigation,
     private val plannedPaymentsLogic: PlannedPaymentsLogic,
     private val customerJourneyLogic: CustomerJourneyCardsProvider,
@@ -271,8 +271,8 @@ class HomeViewModel @Inject constructor(
         this.hideBalance = hideBalance
         this.hideIncome = hideIncome
 
-        // This method is used to restore the theme when user imports locally backed up data
-        ivyContext.switchTheme(theme = settings.theme)
+        // This restores the runtime theme when the user imports a local backup.
+        themeState.update(theme = settings.theme)
 
         Pair(
             settings,
@@ -435,7 +435,7 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             settingsAct.getSettingsWithNextTheme().run {
                 updateSettingsAct(this)
-                ivyContext.switchTheme(this.theme)
+                themeState.update(this.theme)
                 currentTheme = this.theme
             }
         }

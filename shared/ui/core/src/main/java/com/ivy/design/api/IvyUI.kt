@@ -11,12 +11,11 @@ import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.Modifier
 import com.ivy.base.time.TimeConverter
 import com.ivy.base.time.TimeProvider
-import com.ivy.design.IvyContext
+import com.ivy.design.LocalThemeState
+import com.ivy.design.ThemeState
 import com.ivy.design.l0_system.IvyTheme
 import com.ivy.ui.platform.DatePicker
 import com.ivy.ui.time.TimeFormatter
-
-val LocalIvyContext = compositionLocalOf<IvyContext> { error("No LocalIvyContext") }
 
 @Suppress("CompositionLocalAllowlist")
 @Deprecated("Used only for time migration to Instant. Never use it in new code!")
@@ -34,28 +33,26 @@ val LocalTimeFormatter = compositionLocalOf<TimeFormatter> { error("No LocalTime
 val LocalDatePicker = compositionLocalOf<DatePicker> { error("No LocalDatePicker") }
 
 @SuppressLint("ComposeModifierMissing")
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
 @Composable
 fun IvyUI(
     timeConverter: TimeConverter,
     timeProvider: TimeProvider,
     timeFormatter: TimeFormatter,
     datePicker: DatePicker,
+    themeState: ThemeState,
     design: IvyDesign,
     includeSurface: Boolean = true,
     content: @Composable BoxWithConstraintsScope.() -> Unit
 ) {
-    val ivyContext = design.context()
-
     CompositionLocalProvider(
-        LocalIvyContext provides ivyContext,
+        LocalThemeState provides themeState,
         LocalTimeConverter provides timeConverter,
         LocalTimeProvider provides timeProvider,
         LocalTimeFormatter provides timeFormatter,
         LocalDatePicker provides datePicker,
     ) {
         IvyTheme(
-            theme = ivyContext.theme,
+            theme = themeState.theme,
             design = design
         ) {
             WrapWithSurface(includeSurface = includeSurface) {
@@ -79,10 +76,4 @@ private fun WrapWithSurface(
     } else {
         content()
     }
-}
-
-@Deprecated("Old design system. Use `:ivy-design` and Material3")
-@Composable
-fun ivyContext(): IvyContext {
-    return LocalIvyContext.current
 }

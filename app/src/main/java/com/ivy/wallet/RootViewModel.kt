@@ -10,7 +10,7 @@ import com.ivy.base.legacy.stringRes
 import com.ivy.base.model.TransactionType
 import com.ivy.data.db.dao.read.SettingsDao
 import com.ivy.frp.test.TestIdlingResource
-import com.ivy.legacy.IvyWalletCtx
+import com.ivy.design.ThemeState
 import com.ivy.legacy.PeriodState
 import com.ivy.base.legacy.ioThread
 import com.ivy.base.legacy.readOnly
@@ -34,7 +34,7 @@ import javax.inject.Inject
 @HiltViewModel
 @Suppress("LongParameterList", "TooManyFunctions")
 class RootViewModel @Inject constructor(
-    private val ivyContext: IvyWalletCtx,
+    private val themeState: ThemeState,
     private val periodState: PeriodState,
     private val nav: Navigation,
     private val settingsDao: SettingsDao,
@@ -61,7 +61,7 @@ class RootViewModel @Inject constructor(
             ioThread {
                 val theme = settingsDao.findAll().firstOrNull()?.theme
                     ?: if (systemDarkMode) Theme.DARK else Theme.LIGHT
-                ivyContext.switchTheme(theme)
+                themeState.update(theme)
 
                 periodState.initStartDayOfMonth(sharedPrefs = sharedPrefs)
             }
