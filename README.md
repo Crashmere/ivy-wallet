@@ -599,6 +599,8 @@
 - 已把历史 Room migration 和 `RoomTypeConverters` 的包名从旧的 `com.ivy.domain.db.*` 归位到 `com.ivy.data.db.*`；这一步只调整源码边界，不改变 schema 或 migration 内容。
 - 删除未接入运行时、主体仍是 `TODO("Not implemented")` 的新 domain use case 草稿：钱包统计、钱包余额、分类统计、账户余额和汇率换算；保留已有测试覆盖的 `AccountStatsUseCase.calculate(account, transactions)` 聚合逻辑。
 - 业务表实体上的 `isDeleted` 已取消“云同步废字段”注解；当前它是仍被 DAO 查询和部分写入逻辑使用的本地软删除字段，不再作为纯云同步残留处理。
+- `SettingsEntity` 已取消 `@Deprecated` 注解，改为普通注释标明 legacy 表用途；它当前仍服务主题、基础币种、缓冲金额和备份兼容，不再让 Room database 编译产生误导性警告。
+- `Theme` 枚举已取消旧设计系统 `@Deprecated` 注解；它当前是持久化的应用主题偏好，枚举名仍写入 Room 和备份文件。
 
 建议顺序：
 

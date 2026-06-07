@@ -10,10 +10,10 @@ import kotlinx.serialization.Serializable
 import java.util.*
 
 @Suppress("DataClassDefaultValues")
-@Deprecated("Legacy concept - migrate to DataStore and get rid of it.")
 @Keep
 @Serializable
 @Entity(tableName = "settings")
+// Legacy table still used for theme, base currency, buffer amount, and backup compatibility.
 data class SettingsEntity(
     @SerialName("theme")
     val theme: Theme,
