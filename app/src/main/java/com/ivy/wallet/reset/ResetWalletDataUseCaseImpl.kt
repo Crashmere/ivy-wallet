@@ -23,7 +23,6 @@ import com.ivy.ui.navigation.Navigation
 import com.ivy.wallet.startup.InitialDataSetup
 import javax.inject.Inject
 
-@Deprecated("Migrate to an UseCase in the domain layer.")
 class ResetWalletDataUseCaseImpl @Inject constructor(
     private val appPreferences: AppPreferences,
     private val navigation: Navigation,

@@ -21,8 +21,8 @@ class FakeTransactionDao : TransactionDao, WriteTransactionDao {
             )
     }
 
-    override suspend fun findAll_LIMIT_1(): List<TransactionEntity> {
-        return findAll().take(1)
+    override suspend fun hasAny(): Boolean {
+        return items.any { !it.isDeleted }
     }
 
     override suspend fun findAllByType(type: TransactionType): List<TransactionEntity> {

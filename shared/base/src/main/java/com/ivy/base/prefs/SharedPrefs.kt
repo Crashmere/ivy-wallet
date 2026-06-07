@@ -4,7 +4,6 @@ import android.content.Context
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
-@Deprecated("Use IvyWalletDataStore instead.")
 class SharedPrefs @Inject constructor(
     @ApplicationContext
     appContext: Context
