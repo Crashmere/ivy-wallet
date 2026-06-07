@@ -20,6 +20,8 @@ import com.ivy.domain.usecase.exchange.LegacyExchangeRatesUseCase
 import com.ivy.domain.exchange.ExchangeData
 import com.ivy.domain.exchange.ExchangeTrnArgument
 import com.ivy.domain.exchange.exchangeInBaseCurrency
+import com.ivy.domain.transaction.expenses
+import com.ivy.domain.transaction.incomes
 import java.math.BigDecimal
 import java.time.LocalDateTime
 import java.time.ZoneOffset

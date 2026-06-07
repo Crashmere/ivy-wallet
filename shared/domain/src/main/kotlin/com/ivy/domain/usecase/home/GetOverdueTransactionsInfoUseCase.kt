@@ -2,7 +2,7 @@ package com.ivy.domain.usecase.home
 
 import com.ivy.base.time.INSTANT_MIN_SAFE
 import com.ivy.data.model.legacy.ClosedTimeRange
-import com.ivy.domain.transaction.legacy.isOverdue
+import com.ivy.domain.transaction.isOverdue
 import java.time.Instant
 import javax.inject.Inject
 

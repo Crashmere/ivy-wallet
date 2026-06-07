@@ -9,8 +9,8 @@ import com.ivy.domain.usecase.exchange.ExchangeAmountUseCase
 import com.ivy.domain.usecase.transaction.GetDueTransactionsUseCase
 import com.ivy.domain.exchange.ExchangeTrnArgument
 import com.ivy.domain.exchange.exchangeInBaseCurrency
-import com.ivy.domain.transaction.legacy.expenses
-import com.ivy.domain.transaction.legacy.incomes
+import com.ivy.domain.transaction.expenses
+import com.ivy.domain.transaction.incomes
 import com.ivy.domain.transaction.legacy.sumTrns
 import java.time.LocalDate
 import javax.inject.Inject
