@@ -1,8 +1,8 @@
 package com.ivy.budgets
 
 import com.ivy.budgets.model.DisplayBudget
-import com.ivy.data.model.legacy.Budget
-import com.ivy.data.model.legacy.CreateBudgetData
+import com.ivy.data.model.Budget
+import com.ivy.data.model.CreateBudgetData
 
 sealed interface BudgetScreenEvent {
     data class OnReorder(val newOrder: List<DisplayBudget>) : BudgetScreenEvent

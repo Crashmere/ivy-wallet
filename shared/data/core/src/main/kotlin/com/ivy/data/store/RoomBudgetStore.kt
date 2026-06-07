@@ -4,7 +4,7 @@ import com.ivy.data.api.BudgetStore
 import com.ivy.data.db.dao.read.BudgetDao
 import com.ivy.data.db.dao.write.WriteBudgetDao
 import com.ivy.data.db.entity.BudgetEntity
-import com.ivy.data.model.legacy.Budget
+import com.ivy.data.model.Budget
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.util.UUID
@@ -15,11 +15,11 @@ class RoomBudgetStore @Inject constructor(
     private val budgetWriter: WriteBudgetDao,
 ) : BudgetStore {
     override suspend fun findAll(): List<Budget> = withContext(Dispatchers.IO) {
-        budgetDao.findAll().map { it.toLegacyModel() }
+        budgetDao.findAll().map { it.toModel() }
     }
 
     override suspend fun findById(id: UUID): Budget? = withContext(Dispatchers.IO) {
-        budgetDao.findById(id)?.toLegacyModel()
+        budgetDao.findById(id)?.toModel()
     }
 
     override suspend fun findMaxOrderNum(): Double = withContext(Dispatchers.IO) {
@@ -50,7 +50,7 @@ class RoomBudgetStore @Inject constructor(
         }
     }
 
-    private fun BudgetEntity.toLegacyModel(): Budget = Budget(
+    private fun BudgetEntity.toModel(): Budget = Budget(
         name = name,
         amount = amount,
         categoryIdsSerialized = categoryIdsSerialized,

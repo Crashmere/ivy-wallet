@@ -1,6 +1,6 @@
 package com.ivy.data.api
 
-import com.ivy.data.model.legacy.Budget
+import com.ivy.data.model.Budget
 import java.util.UUID
 
 interface BudgetStore {

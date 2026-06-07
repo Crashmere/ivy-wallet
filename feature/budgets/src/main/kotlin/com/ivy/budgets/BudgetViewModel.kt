@@ -17,7 +17,7 @@ import com.ivy.legacy.ui.state.PeriodState
 import com.ivy.data.model.legacy.FromToTimeRange
 import com.ivy.data.model.legacy.toCloseTimeRange
 import com.ivy.data.model.legacy.Account
-import com.ivy.data.model.legacy.Budget
+import com.ivy.data.model.Budget
 import com.ivy.data.model.currency.format
 import com.ivy.domain.usecase.budget.CreateBudgetUseCase
 import com.ivy.domain.usecase.budget.DeleteBudgetUseCase
@@ -31,7 +31,7 @@ import com.ivy.domain.usecase.transaction.GetTransactionsBetweenUseCase
 import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.R
 import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
-import com.ivy.data.model.legacy.CreateBudgetData
+import com.ivy.data.model.CreateBudgetData
 import com.ivy.domain.exchange.ExchangeData
 import com.ivy.domain.transaction.getAccountId
 import com.ivy.domain.transaction.getValue

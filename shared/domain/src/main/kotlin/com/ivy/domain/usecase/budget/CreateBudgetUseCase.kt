@@ -1,8 +1,8 @@
 package com.ivy.domain.usecase.budget
 
 import com.ivy.data.api.BudgetStore
-import com.ivy.data.model.legacy.Budget
-import com.ivy.data.model.legacy.CreateBudgetData
+import com.ivy.data.model.Budget
+import com.ivy.data.model.CreateBudgetData
 import com.ivy.domain.util.nextOrderNum
 import javax.inject.Inject
 

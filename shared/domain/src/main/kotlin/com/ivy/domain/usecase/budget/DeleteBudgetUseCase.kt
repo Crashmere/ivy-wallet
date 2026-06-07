@@ -1,7 +1,7 @@
 package com.ivy.domain.usecase.budget
 
 import com.ivy.data.api.BudgetStore
-import com.ivy.data.model.legacy.Budget
+import com.ivy.data.model.Budget
 import javax.inject.Inject
 
 class DeleteBudgetUseCase @Inject constructor(

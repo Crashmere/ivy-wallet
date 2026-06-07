@@ -2,7 +2,7 @@ package com.ivy.budgets.model
 
 import androidx.compose.runtime.Immutable
 import com.ivy.data.model.Reorderable
-import com.ivy.data.model.legacy.Budget
+import com.ivy.data.model.Budget
 
 @Immutable
 data class DisplayBudget(
