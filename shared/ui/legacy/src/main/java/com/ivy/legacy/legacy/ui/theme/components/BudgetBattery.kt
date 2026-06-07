@@ -30,7 +30,7 @@ import com.ivy.legacy.ui.theme.Orange
 import com.ivy.legacy.ui.theme.Red
 import com.ivy.legacy.ui.theme.White
 import com.ivy.legacy.ui.component.IvyIcon
-import com.ivy.wallet.ui.theme.wallet.AmountCurrencyB2Row
+import com.ivy.legacy.ui.component.AmountCurrencyB2Row
 import kotlin.math.abs
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize

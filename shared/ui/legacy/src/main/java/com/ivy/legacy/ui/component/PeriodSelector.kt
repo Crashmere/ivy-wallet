@@ -1,4 +1,4 @@
-package com.ivy.wallet.ui.theme.wallet
+package com.ivy.legacy.ui.component
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable

@@ -70,7 +70,7 @@ import com.ivy.legacy.ui.modal.ModalTitle
 import com.ivy.legacy.ui.modal.edit.CategoryModal
 import com.ivy.legacy.ui.modal.edit.CategoryModalData
 import com.ivy.legacy.ui.theme.toComposeColor
-import com.ivy.wallet.ui.theme.wallet.AmountCurrencyB1
+import com.ivy.legacy.ui.component.AmountCurrencyB1
 import kotlinx.collections.immutable.ImmutableList
 import java.util.UUID
 

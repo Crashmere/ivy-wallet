@@ -1,4 +1,4 @@
-package com.ivy.wallet.ui.theme.wallet
+package com.ivy.legacy.ui.component
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Row

@@ -71,7 +71,7 @@ import com.ivy.legacy.ui.component.BufferBattery
 import com.ivy.legacy.ui.component.CircleButtonFilled
 import com.ivy.legacy.ui.component.IvyIcon
 import com.ivy.legacy.ui.modal.AddModalBackHandling
-import com.ivy.wallet.ui.theme.wallet.AmountCurrencyB1
+import com.ivy.legacy.ui.component.AmountCurrencyB1
 import java.util.UUID
 import kotlin.math.roundToInt
 

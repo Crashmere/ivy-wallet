@@ -71,7 +71,7 @@ import com.ivy.legacy.ui.modal.ChoosePeriodModal
 import com.ivy.legacy.ui.modal.ChoosePeriodModalData
 import com.ivy.legacy.ui.modal.edit.AmountModal
 import com.ivy.legacy.ui.theme.toComposeColor
-import com.ivy.wallet.ui.theme.wallet.AmountCurrencyB1Row
+import com.ivy.legacy.ui.component.AmountCurrencyB1Row
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList

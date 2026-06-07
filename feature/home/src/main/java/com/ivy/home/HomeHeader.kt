@@ -58,7 +58,7 @@ import com.ivy.legacy.ui.component.BalanceRow
 import com.ivy.legacy.ui.component.BalanceRowMini
 import com.ivy.legacy.ui.component.IvyIcon
 import com.ivy.legacy.ui.component.IvyOutlinedButton
-import com.ivy.wallet.ui.theme.wallet.AmountCurrencyB1
+import com.ivy.legacy.ui.component.AmountCurrencyB1
 import kotlin.math.absoluteValue
 
 @ExperimentalAnimationApi

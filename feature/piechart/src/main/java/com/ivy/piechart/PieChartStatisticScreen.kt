@@ -70,7 +70,7 @@ import com.ivy.legacy.ui.theme.gradientExpenses
 import com.ivy.legacy.ui.modal.ChoosePeriodModal
 import com.ivy.legacy.ui.theme.pureBlur
 import com.ivy.legacy.ui.theme.toComposeColor
-import com.ivy.wallet.ui.theme.wallet.AmountCurrencyB1Row
+import com.ivy.legacy.ui.component.AmountCurrencyB1Row
 
 @ExperimentalFoundationApi
 @Composable

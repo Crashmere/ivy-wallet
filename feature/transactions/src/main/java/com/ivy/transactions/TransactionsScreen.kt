@@ -86,7 +86,7 @@ import com.ivy.legacy.ui.modal.edit.AccountModalData
 import com.ivy.legacy.ui.modal.edit.CategoryModal
 import com.ivy.legacy.ui.modal.edit.CategoryModalData
 import com.ivy.legacy.ui.theme.toComposeColor
-import com.ivy.wallet.ui.theme.wallet.PeriodSelector
+import com.ivy.legacy.ui.component.PeriodSelector
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
