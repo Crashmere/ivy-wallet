@@ -48,7 +48,6 @@ import com.ivy.ui.navigation.Navigation
 import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.preferences.asEnabledState
 import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
-import com.ivy.legacy.domain.action.settings.CalcBufferDiffAct
 import com.ivy.legacy.domain.action.transaction.HistoryWithDateDivsAct
 import com.ivy.legacy.domain.action.viewmodel.home.OverdueAct
 import com.ivy.legacy.domain.action.viewmodel.home.UpcomingAct
@@ -86,7 +85,6 @@ class HomeViewModel @Inject constructor(
     private val getStartDayOfMonth: GetStartDayOfMonthUseCase,
     private val getLegacyAccountsUseCase: GetLegacyAccountsUseCase,
     private val getCategoriesUseCase: GetCategoriesUseCase,
-    private val calcBufferDiffAct: CalcBufferDiffAct,
     private val upcomingAct: UpcomingAct,
     private val overdueAct: OverdueAct,
     private val appPreferences: AppPreferences,
@@ -352,12 +350,7 @@ class HomeViewModel @Inject constructor(
 
         buffer = BufferInfo(
             amount = preferences.bufferAmount,
-            bufferDiff = calcBufferDiffAct(
-                CalcBufferDiffAct.Input(
-                    balance = balance,
-                    buffer = preferences.bufferAmount
-                )
-            )
+            bufferDiff = balance - preferences.bufferAmount
         )
 
         return preferences.baseCurrency to timeRange
