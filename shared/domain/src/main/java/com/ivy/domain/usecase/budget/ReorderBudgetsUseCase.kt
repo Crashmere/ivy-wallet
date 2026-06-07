@@ -1,25 +1,17 @@
 package com.ivy.domain.usecase.budget
 
-import com.ivy.base.threading.DispatchersProvider
-import com.ivy.data.db.dao.write.WriteBudgetDao
+import com.ivy.data.api.BudgetStore
 import com.ivy.data.model.legacy.Budget
-import com.ivy.domain.mapper.legacy.toEntity
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class ReorderBudgetsUseCase @Inject constructor(
-    private val budgetWriter: WriteBudgetDao,
-    private val dispatchers: DispatchersProvider
+    private val budgetStore: BudgetStore,
 ) {
     suspend operator fun invoke(budgets: List<Budget>) {
-        withContext(dispatchers.io) {
-            budgets.forEachIndexed { index, budget ->
-                budgetWriter.save(
-                    budget.toEntity().copy(
-                        orderId = index.toDouble()
-                    )
-                )
+        budgetStore.saveMany(
+            budgets.mapIndexed { index, budget ->
+                budget.copy(orderId = index.toDouble())
             }
-        }
+        )
     }
 }

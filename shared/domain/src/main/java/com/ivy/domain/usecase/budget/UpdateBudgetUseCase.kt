@@ -1,24 +1,18 @@
 package com.ivy.domain.usecase.budget
 
-import com.ivy.base.threading.DispatchersProvider
-import com.ivy.data.db.dao.write.WriteBudgetDao
+import com.ivy.data.api.BudgetStore
 import com.ivy.data.model.legacy.Budget
-import com.ivy.domain.mapper.legacy.toEntity
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class UpdateBudgetUseCase @Inject constructor(
-    private val budgetWriter: WriteBudgetDao,
-    private val dispatchers: DispatchersProvider
+    private val budgetStore: BudgetStore,
 ) {
     suspend operator fun invoke(budget: Budget): Boolean {
         if (budget.name.isBlank()) return false
         if (budget.amount <= 0.0) return false
 
         return try {
-            withContext(dispatchers.io) {
-                budgetWriter.save(budget.toEntity())
-            }
+            budgetStore.save(budget)
             true
         } catch (e: Exception) {
             e.printStackTrace()

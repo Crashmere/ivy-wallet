@@ -2,6 +2,7 @@ package com.ivy.data.di
 
 import com.ivy.data.DataObserver
 import com.ivy.data.api.AccountStore
+import com.ivy.data.api.BudgetStore
 import com.ivy.data.api.CategoryStore
 import com.ivy.data.api.CurrencyStore
 import com.ivy.data.api.DataChangePublisher
@@ -10,6 +11,7 @@ import com.ivy.data.api.SettingsStore
 import com.ivy.data.api.TagStore
 import com.ivy.data.api.TransactionStore
 import com.ivy.data.repository.AccountRepository
+import com.ivy.data.repository.BudgetStoreImpl
 import com.ivy.data.repository.CategoryRepository
 import com.ivy.data.repository.CurrencyRepository
 import com.ivy.data.repository.ExchangeRatesRepository
@@ -29,6 +31,9 @@ abstract class StoreModule {
 
     @Binds
     abstract fun bindAccountStore(repository: AccountRepository): AccountStore
+
+    @Binds
+    abstract fun bindBudgetStore(store: BudgetStoreImpl): BudgetStore
 
     @Binds
     abstract fun bindCategoryStore(repository: CategoryRepository): CategoryStore
