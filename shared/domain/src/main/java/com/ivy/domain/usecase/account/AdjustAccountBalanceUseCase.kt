@@ -3,7 +3,7 @@ package com.ivy.domain.usecase.account
 import arrow.core.getOrElse
 import com.ivy.base.model.TransactionType
 import com.ivy.base.time.TimeProvider
-import com.ivy.data.repository.TransactionRepository
+import com.ivy.data.api.TransactionStore
 import com.ivy.data.repository.mapper.TransactionMapper
 import com.ivy.domain.usecase.currency.GetBaseCurrencyUseCase
 import com.ivy.domain.mapper.legacy.toDomain
@@ -15,7 +15,7 @@ import com.ivy.base.model.legacy.Transaction as LegacyTransaction
 import com.ivy.data.model.legacy.Account as LegacyAccount
 
 class AdjustAccountBalanceUseCase @Inject constructor(
-    private val transactionRepository: TransactionRepository,
+    private val transactionRepository: TransactionStore,
     private val transactionMapper: TransactionMapper,
     private val calculateAccountBalanceUseCase: CalculateAccountBalanceUseCase,
     private val getBaseCurrency: GetBaseCurrencyUseCase,

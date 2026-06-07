@@ -9,12 +9,12 @@ import com.ivy.data.db.dao.write.WriteLoanDao
 import com.ivy.data.db.dao.write.WriteLoanRecordDao
 import com.ivy.data.db.dao.write.WritePlannedPaymentRuleDao
 import com.ivy.data.db.dao.write.WriteSettingsDao
-import com.ivy.data.repository.TransactionRepository
+import com.ivy.data.api.TransactionStore
 import javax.inject.Inject
 
 class ClearWalletDataUseCase @Inject constructor(
     private val accountStore: AccountStore,
-    private val transactionRepository: TransactionRepository,
+    private val transactionRepository: TransactionStore,
     private val categoryStore: CategoryStore,
     private val tagStore: TagStore,
     private val writeSettingsDao: WriteSettingsDao,

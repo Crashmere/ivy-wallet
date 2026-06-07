@@ -6,12 +6,14 @@ import com.ivy.data.api.CurrencyStore
 import com.ivy.data.api.ExchangeRateStore
 import com.ivy.data.api.SettingsStore
 import com.ivy.data.api.TagStore
+import com.ivy.data.api.TransactionStore
 import com.ivy.data.repository.AccountRepository
 import com.ivy.data.repository.CategoryRepository
 import com.ivy.data.repository.CurrencyRepository
 import com.ivy.data.repository.ExchangeRatesRepository
 import com.ivy.data.repository.SettingsRepository
 import com.ivy.data.repository.TagRepository
+import com.ivy.data.repository.TransactionRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -37,4 +39,7 @@ abstract class StoreModule {
 
     @Binds
     abstract fun bindTagStore(repository: TagRepository): TagStore
+
+    @Binds
+    abstract fun bindTransactionStore(repository: TransactionRepository): TransactionStore
 }

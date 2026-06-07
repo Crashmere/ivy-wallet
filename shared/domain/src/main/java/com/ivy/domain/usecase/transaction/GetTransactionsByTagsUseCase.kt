@@ -4,12 +4,12 @@ import com.ivy.data.api.TagStore
 import com.ivy.data.model.TagId
 import com.ivy.data.model.Transaction
 import com.ivy.data.model.TransactionId
-import com.ivy.data.repository.TransactionRepository
+import com.ivy.data.api.TransactionStore
 import javax.inject.Inject
 
 class GetTransactionsByTagsUseCase @Inject constructor(
     private val tagStore: TagStore,
-    private val transactionRepository: TransactionRepository
+    private val transactionRepository: TransactionStore
 ) {
     suspend operator fun invoke(tagIds: List<TagId>): List<Transaction> {
         val transactionIds = tagStore.findByAllAssociatedIdForTagId(tagIds)

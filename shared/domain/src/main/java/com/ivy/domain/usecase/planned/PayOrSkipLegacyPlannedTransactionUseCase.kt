@@ -6,7 +6,7 @@ import com.ivy.base.time.TimeProvider
 import com.ivy.data.db.dao.read.PlannedPaymentRuleDao
 import com.ivy.data.db.dao.write.WritePlannedPaymentRuleDao
 import com.ivy.data.model.TransactionId
-import com.ivy.data.repository.TransactionRepository
+import com.ivy.data.api.TransactionStore
 import com.ivy.data.repository.mapper.TransactionMapper
 import com.ivy.domain.mapper.legacy.toDomain
 import kotlinx.coroutines.withContext
@@ -16,7 +16,7 @@ class PayOrSkipLegacyPlannedTransactionUseCase @Inject constructor(
     private val plannedPaymentRuleDao: PlannedPaymentRuleDao,
     private val transactionMapper: TransactionMapper,
     private val plannedPaymentRuleWriter: WritePlannedPaymentRuleDao,
-    private val transactionRepository: TransactionRepository,
+    private val transactionRepository: TransactionStore,
     private val timeProvider: TimeProvider,
     private val dispatchers: DispatchersProvider
 ) {

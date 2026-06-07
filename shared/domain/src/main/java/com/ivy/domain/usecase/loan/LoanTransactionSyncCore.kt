@@ -18,7 +18,7 @@ import com.ivy.data.model.primitive.ColorInt
 import com.ivy.data.model.primitive.IconAsset
 import com.ivy.data.model.primitive.NotBlankTrimmedString
 import com.ivy.data.api.CategoryStore
-import com.ivy.data.repository.TransactionRepository
+import com.ivy.data.api.TransactionStore
 import com.ivy.data.repository.mapper.TransactionMapper
 import com.ivy.domain.usecase.category.GetCategoriesUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
@@ -48,7 +48,7 @@ class LoanTransactionSyncCore @Inject constructor(
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
     private val accountsDao: AccountDao,
     private val exchangeRatesLogic: LegacyExchangeRatesUseCase,
-    private val transactionRepo: TransactionRepository,
+    private val transactionRepo: TransactionStore,
     private val transactionMapper: TransactionMapper,
     private val writeLoanRecordDao: WriteLoanRecordDao,
     private val writeLoanDao: WriteLoanDao,

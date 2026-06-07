@@ -9,7 +9,7 @@ import com.ivy.data.db.dao.read.AccountDao
 import com.ivy.data.model.Category
 import com.ivy.data.model.CategoryId
 import com.ivy.data.model.legacy.FromToTimeRange
-import com.ivy.data.repository.TransactionRepository
+import com.ivy.data.api.TransactionStore
 import com.ivy.data.repository.mapper.TransactionMapper
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.domain.usecase.exchange.LegacyExchangeRatesUseCase
@@ -26,7 +26,7 @@ class GetCategoryTransactionsSummaryUseCase @Inject constructor(
     private val accountDao: AccountDao,
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
     private val exchangeRatesLogic: LegacyExchangeRatesUseCase,
-    private val transactionRepository: TransactionRepository,
+    private val transactionRepository: TransactionStore,
     private val transactionMapper: TransactionMapper,
     private val timeProvider: TimeProvider,
     private val timeConverter: TimeConverter,

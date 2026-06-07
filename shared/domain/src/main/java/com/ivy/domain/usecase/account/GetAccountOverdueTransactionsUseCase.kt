@@ -4,12 +4,12 @@ import com.ivy.base.time.TimeProvider
 import com.ivy.data.model.AccountId
 import com.ivy.data.model.Transaction
 import com.ivy.data.model.legacy.FromToTimeRange
-import com.ivy.data.repository.TransactionRepository
+import com.ivy.data.api.TransactionStore
 import com.ivy.domain.time.filterOverdue
 import javax.inject.Inject
 
 class GetAccountOverdueTransactionsUseCase @Inject constructor(
-    private val transactionRepository: TransactionRepository,
+    private val transactionRepository: TransactionStore,
     private val timeProvider: TimeProvider
 ) {
     suspend operator fun invoke(

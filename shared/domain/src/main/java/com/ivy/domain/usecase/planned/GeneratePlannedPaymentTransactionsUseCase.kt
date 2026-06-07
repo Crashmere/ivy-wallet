@@ -3,7 +3,7 @@ package com.ivy.domain.usecase.planned
 import com.ivy.base.model.legacy.Transaction
 import com.ivy.base.time.incrementDate
 import com.ivy.data.model.legacy.PlannedPaymentRule
-import com.ivy.data.repository.TransactionRepository
+import com.ivy.data.api.TransactionStore
 import com.ivy.data.repository.mapper.TransactionMapper
 import com.ivy.domain.mapper.legacy.toDomain
 import java.time.Instant
@@ -11,7 +11,7 @@ import javax.inject.Inject
 
 class GeneratePlannedPaymentTransactionsUseCase @Inject constructor(
     private val transactionMapper: TransactionMapper,
-    private val transactionRepository: TransactionRepository
+    private val transactionRepository: TransactionStore
 ) {
     suspend operator fun invoke(rule: PlannedPaymentRule) {
         transactionRepository.deletedByRecurringRuleIdAndNoDateTime(

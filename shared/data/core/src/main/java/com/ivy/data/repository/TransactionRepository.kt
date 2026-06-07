@@ -2,6 +2,7 @@ package com.ivy.data.repository
 
 import com.ivy.base.model.TransactionType
 import com.ivy.base.threading.DispatchersProvider
+import com.ivy.data.api.TransactionStore
 import com.ivy.data.db.dao.read.TransactionDao
 import com.ivy.data.db.dao.write.WriteTransactionDao
 import com.ivy.data.db.entity.TransactionEntity
@@ -29,8 +30,8 @@ class TransactionRepository @Inject constructor(
     private val writeTransactionDao: WriteTransactionDao,
     private val dispatchersProvider: DispatchersProvider,
     private val tagRepository: TagRepository
-) {
-    suspend fun findAll(): List<Transaction> = withContext(dispatchersProvider.io) {
+) : TransactionStore {
+    override suspend fun findAll(): List<Transaction> = withContext(dispatchersProvider.io) {
         val tagMap = async { findAllTagAssociations() }
         retrieveTrns(
             dbCall = transactionDao::findAll,
@@ -40,7 +41,7 @@ class TransactionRepository @Inject constructor(
         )
     }
 
-    suspend fun findAllIncomeByAccount(
+    override suspend fun findAllIncomeByAccount(
         accountId: AccountId
     ): List<Income> = retrieveTrns(
         dbCall = {
@@ -51,7 +52,7 @@ class TransactionRepository @Inject constructor(
         }
     ).filterIsInstance<Income>()
 
-    suspend fun findAllExpenseByAccount(
+    override suspend fun findAllExpenseByAccount(
         accountId: AccountId
     ): List<Expense> = retrieveTrns(
         dbCall = {
@@ -62,7 +63,7 @@ class TransactionRepository @Inject constructor(
         }
     ).filterIsInstance<Expense>()
 
-    suspend fun findAllTransferByAccount(
+    override suspend fun findAllTransferByAccount(
         accountId: AccountId
     ): List<Transfer> = retrieveTrns(
         dbCall = {
@@ -73,7 +74,7 @@ class TransactionRepository @Inject constructor(
         }
     ).filterIsInstance<Transfer>()
 
-    suspend fun findAllTransfersToAccount(
+    override suspend fun findAllTransfersToAccount(
         toAccountId: AccountId
     ): List<Transfer> = retrieveTrns(
         dbCall = {
@@ -81,7 +82,7 @@ class TransactionRepository @Inject constructor(
         }
     ).filterIsInstance<Transfer>()
 
-    suspend fun findAllBetween(
+    override suspend fun findAllBetween(
         startDate: Instant,
         endDate: Instant
     ): List<Transaction> = withContext(dispatchersProvider.io) {
@@ -93,14 +94,14 @@ class TransactionRepository @Inject constructor(
         }
     }
 
-    suspend fun countBetween(
+    override suspend fun countBetween(
         startDate: Instant,
         endDate: Instant
     ): NonNegativeLong = withContext(dispatchersProvider.io) {
         transactionDao.countBetween(startDate, endDate).toNonNegative()
     }
 
-    suspend fun findAllByAccountAndBetween(
+    override suspend fun findAllByAccountAndBetween(
         accountId: AccountId,
         startDate: Instant,
         endDate: Instant
@@ -114,7 +115,7 @@ class TransactionRepository @Inject constructor(
         }
     )
 
-    suspend fun findAllToAccountAndBetween(
+    override suspend fun findAllToAccountAndBetween(
         toAccountId: AccountId,
         startDate: Instant,
         endDate: Instant
@@ -128,7 +129,7 @@ class TransactionRepository @Inject constructor(
         }
     )
 
-    suspend fun findAllDueToBetween(
+    override suspend fun findAllDueToBetween(
         startDate: Instant,
         endDate: Instant
     ): List<Transaction> = retrieveTrns(
@@ -140,7 +141,7 @@ class TransactionRepository @Inject constructor(
         }
     )
 
-    suspend fun findAllDueToBetweenByCategory(
+    override suspend fun findAllDueToBetweenByCategory(
         startDate: Instant,
         endDate: Instant,
         categoryId: CategoryId
@@ -154,7 +155,7 @@ class TransactionRepository @Inject constructor(
         }
     )
 
-    suspend fun findAllDueToBetweenByCategoryUnspecified(
+    override suspend fun findAllDueToBetweenByCategoryUnspecified(
         startDate: Instant,
         endDate: Instant
     ): List<Transaction> = retrieveTrns(
@@ -166,7 +167,7 @@ class TransactionRepository @Inject constructor(
         }
     )
 
-    suspend fun findAllDueToBetweenByAccount(
+    override suspend fun findAllDueToBetweenByAccount(
         startDate: Instant,
         endDate: Instant,
         accountId: AccountId
@@ -180,7 +181,7 @@ class TransactionRepository @Inject constructor(
         }
     )
 
-    suspend fun findAllByCategoryAndTypeAndBetween(
+    override suspend fun findAllByCategoryAndTypeAndBetween(
         categoryId: UUID,
         type: TransactionType,
         startDate: Instant,
@@ -196,7 +197,7 @@ class TransactionRepository @Inject constructor(
         }
     )
 
-    suspend fun findAllUnspecifiedAndTypeAndBetween(
+    override suspend fun findAllUnspecifiedAndTypeAndBetween(
         type: TransactionType,
         startDate: Instant,
         endDate: Instant
@@ -210,7 +211,7 @@ class TransactionRepository @Inject constructor(
         }
     )
 
-    suspend fun findAllUnspecifiedAndBetween(
+    override suspend fun findAllUnspecifiedAndBetween(
         startDate: Instant,
         endDate: Instant
     ): List<Transaction> = retrieveTrns(
@@ -222,7 +223,7 @@ class TransactionRepository @Inject constructor(
         }
     )
 
-    suspend fun findAllByCategoryAndBetween(
+    override suspend fun findAllByCategoryAndBetween(
         categoryId: UUID,
         startDate: Instant,
         endDate: Instant
@@ -236,13 +237,13 @@ class TransactionRepository @Inject constructor(
         }
     )
 
-    suspend fun findAllByRecurringRuleId(recurringRuleId: UUID): List<Transaction> = retrieveTrns(
+    override suspend fun findAllByRecurringRuleId(recurringRuleId: UUID): List<Transaction> = retrieveTrns(
         dbCall = {
             transactionDao.findAllByRecurringRuleId(recurringRuleId)
         }
     )
 
-    suspend fun findById(
+    override suspend fun findById(
         id: TransactionId
     ): Transaction? = withContext(dispatchersProvider.io) {
         transactionDao.findById(id.value)?.let {
@@ -250,7 +251,7 @@ class TransactionRepository @Inject constructor(
         }
     }
 
-    suspend fun findByIds(ids: List<TransactionId>): List<Transaction> {
+    override suspend fun findByIds(ids: List<TransactionId>): List<Transaction> {
         return withContext(dispatchersProvider.io) {
             val tagMap = async { findTagsForTransactionIds(ids) }
             retrieveTrns(
@@ -264,7 +265,7 @@ class TransactionRepository @Inject constructor(
         }
     }
 
-    suspend fun save(value: Transaction) {
+    override suspend fun save(value: Transaction) {
         withContext(dispatchersProvider.io) {
             writeTransactionDao.save(
                 with(mapper) { value.toEntity() }
@@ -272,7 +273,7 @@ class TransactionRepository @Inject constructor(
         }
     }
 
-    suspend fun saveMany(value: List<Transaction>) {
+    override suspend fun saveMany(value: List<Transaction>) {
         withContext(dispatchersProvider.io) {
             writeTransactionDao.saveMany(
                 value.map { with(mapper) { it.toEntity() } }
@@ -280,49 +281,49 @@ class TransactionRepository @Inject constructor(
         }
     }
 
-    suspend fun deleteById(id: TransactionId) {
+    override suspend fun deleteById(id: TransactionId) {
         withContext(dispatchersProvider.io) {
             writeTransactionDao.deleteById(id.value)
         }
     }
 
-    suspend fun deleteAllByAccountId(accountId: AccountId) {
+    override suspend fun deleteAllByAccountId(accountId: AccountId) {
         withContext(dispatchersProvider.io) {
             writeTransactionDao.deleteAllByAccountId(accountId.value)
         }
     }
 
-    suspend fun deletedByRecurringRuleIdAndNoDateTime(recurringRuleId: UUID) {
+    override suspend fun deletedByRecurringRuleIdAndNoDateTime(recurringRuleId: UUID) {
         withContext(dispatchersProvider.io) {
             writeTransactionDao.deletedByRecurringRuleIdAndNoDateTime(recurringRuleId)
         }
     }
 
-    suspend fun deleteAll() {
+    override suspend fun deleteAll() {
         withContext(dispatchersProvider.io) {
             writeTransactionDao.deleteAll()
         }
     }
 
-    suspend fun countHappenedTransactions(): NonNegativeLong = withContext(dispatchersProvider.io) {
+    override suspend fun countHappenedTransactions(): NonNegativeLong = withContext(dispatchersProvider.io) {
         transactionDao.countHappenedTransactions().toNonNegative()
     }
 
-    suspend fun findLoanTransaction(loanId: UUID): Transaction? =
+    override suspend fun findLoanTransaction(loanId: UUID): Transaction? =
         withContext(dispatchersProvider.io) {
             transactionDao.findLoanTransaction(loanId)?.let {
                 with(mapper) { it.toDomain() }.getOrNull()
             }
         }
 
-    suspend fun findLoanRecordTransaction(loanRecordId: UUID): Transaction? =
+    override suspend fun findLoanRecordTransaction(loanRecordId: UUID): Transaction? =
         withContext(dispatchersProvider.io) {
             transactionDao.findLoanRecordTransaction(loanRecordId)?.let {
                 with(mapper) { it.toDomain() }.getOrNull()
             }
         }
 
-    suspend fun findAllByLoanId(loanId: UUID): List<Transaction> = retrieveTrns(
+    override suspend fun findAllByLoanId(loanId: UUID): List<Transaction> = retrieveTrns(
         dbCall = {
             transactionDao.findAllByLoanId(loanId)
         }

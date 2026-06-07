@@ -4,7 +4,7 @@ import com.ivy.base.threading.DispatchersProvider
 import com.ivy.data.db.dao.read.PlannedPaymentRuleDao
 import com.ivy.data.db.dao.write.WritePlannedPaymentRuleDao
 import com.ivy.data.model.Transaction
-import com.ivy.data.repository.TransactionRepository
+import com.ivy.data.api.TransactionStore
 import com.ivy.domain.transaction.legacy.settleNow
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -12,7 +12,7 @@ import javax.inject.Inject
 class PayOrSkipPlannedTransactionUseCase @Inject constructor(
     private val plannedPaymentRuleDao: PlannedPaymentRuleDao,
     private val plannedPaymentRuleWriter: WritePlannedPaymentRuleDao,
-    private val transactionRepository: TransactionRepository,
+    private val transactionRepository: TransactionStore,
     private val dispatchers: DispatchersProvider
 ) {
     suspend operator fun invoke(

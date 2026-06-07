@@ -1,11 +1,11 @@
 package com.ivy.domain.usecase.home
 
 import com.ivy.data.db.dao.read.PlannedPaymentRuleDao
-import com.ivy.data.repository.TransactionRepository
+import com.ivy.data.api.TransactionStore
 import javax.inject.Inject
 
 class GetCustomerJourneyStatsUseCase @Inject constructor(
-    private val transactionRepository: TransactionRepository,
+    private val transactionRepository: TransactionStore,
     private val plannedPaymentRuleDao: PlannedPaymentRuleDao
 ) {
     suspend operator fun invoke(): CustomerJourneyStats {
