@@ -41,6 +41,7 @@ import com.ivy.navigation.NavigationRoot
 import com.ivy.ui.R
 import com.ivy.ui.time.TimeFormatter
 import com.ivy.ui.time.impl.DateTimePicker
+import com.ivy.wallet.platform.ActivityDatePicker
 import com.ivy.wallet.platform.ActivityResultFilePicker
 import com.ivy.wallet.platform.activityForResultLauncher
 import com.ivy.wallet.platform.simpleActivityForResultLauncher
@@ -69,6 +70,9 @@ class RootActivity : AppCompatActivity(), RootScreen {
 
     @Inject
     lateinit var dateTimePicker: DateTimePicker
+
+    @Inject
+    lateinit var datePicker: ActivityDatePicker
 
     @Inject
     lateinit var filePicker: ActivityResultFilePicker
@@ -104,6 +108,7 @@ class RootActivity : AppCompatActivity(), RootScreen {
                         timeConverter = timeConverter,
                         timeProvider = timeProvider,
                         timeFormatter = timeFormatter,
+                        datePicker = datePicker,
                     ) {
                         AppLockedScreen(
                             onShowOSBiometricsModal = {
@@ -126,6 +131,7 @@ class RootActivity : AppCompatActivity(), RootScreen {
                             timeConverter = timeConverter,
                             timeProvider = timeProvider,
                             timeFormatter = timeFormatter,
+                            datePicker = datePicker,
                         ) {
                             IvyNavGraph(screen)
                         }
@@ -156,11 +162,11 @@ class RootActivity : AppCompatActivity(), RootScreen {
     }
 
     private fun setupDatePicker() {
-        ivyContext.onShowDatePicker = { minDate,
-                                        maxDate,
-                                        initialDate,
-                                        onDatePicked ->
-            val datePicker =
+        datePicker.registerPicker { minDate,
+                                    maxDate,
+                                    initialDate,
+                                    onDatePicked ->
+            val picker =
                 MaterialDatePicker.Builder.datePicker()
                     .setSelection(
                         if (initialDate != null) {
@@ -170,25 +176,25 @@ class RootActivity : AppCompatActivity(), RootScreen {
                         }
                     )
                     .build()
-            datePicker.show(supportFragmentManager, "datePicker")
-            datePicker.addOnPositiveButtonClickListener {
+            picker.show(supportFragmentManager, "datePicker")
+            picker.addOnPositiveButtonClickListener {
                 onDatePicked(LocalDate.ofEpochDay(it / MILLISECONDS_IN_DAY))
             }
 
             if (minDate != null) {
-                datePicker.addOnCancelListener {
+                picker.addOnCancelListener {
                     onDatePicked(minDate)
                 }
             }
 
             if (maxDate != null) {
-                datePicker.addOnCancelListener {
+                picker.addOnCancelListener {
                     onDatePicked(maxDate)
                 }
             }
 
             if (initialDate != null) {
-                datePicker.addOnCancelListener {
+                picker.addOnCancelListener {
                     onDatePicked(initialDate)
                 }
             }

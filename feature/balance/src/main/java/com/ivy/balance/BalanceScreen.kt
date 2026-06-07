@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.ivy.design.api.LocalDatePicker
 import com.ivy.design.l0_system.UI
 import com.ivy.design.l0_system.style
 import com.ivy.data.model.currency.format
@@ -66,6 +67,7 @@ private fun BoxWithConstraintsScope.UI(
 ) {
     var choosePeriodModal: ChoosePeriodModalData? by remember { mutableStateOf(null) }
     val ivyContext = ivyWalletCtx()
+    val datePicker = LocalDatePicker.current
 
     Column(
         modifier = Modifier
@@ -124,13 +126,12 @@ private fun BoxWithConstraintsScope.UI(
         },
         saveSelectedPeriod = ivyContext::updateSelectedPeriodInMemory,
         pickDate = { minDate, maxDate, initialDate, onDatePicked ->
-            ivyContext.datePicker(
+            datePicker.pickDate(
                 minDate = minDate,
                 maxDate = maxDate,
                 initialDate = initialDate,
-            ) {
-                onDatePicked(it)
-            }
+                onDatePicked = onDatePicked
+            )
         },
     ) {
         onEvent(BalanceEvent.OnSetPeriod(it))

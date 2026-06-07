@@ -39,6 +39,7 @@ import com.ivy.base.legacy.TransactionHistoryItem
 import com.ivy.base.legacy.stringRes
 import com.ivy.base.model.TransactionType
 import com.ivy.data.model.Category
+import com.ivy.design.api.LocalDatePicker
 import com.ivy.design.api.LocalTimeConverter
 import com.ivy.design.api.LocalTimeFormatter
 import com.ivy.design.api.LocalTimeProvider
@@ -259,6 +260,7 @@ private fun BoxWithConstraintsScope.UI(
     onChoosePeriodModal: (ChoosePeriodModalData?) -> Unit,
 ) {
     val ivyContext = ivyWalletCtx()
+    val datePicker = LocalDatePicker.current
     val itemColor = (account?.color ?: category?.color?.value)?.toComposeColor() ?: Gray
 
     var categoryModalData: CategoryModalData? by remember { mutableStateOf(null) }
@@ -470,13 +472,12 @@ private fun BoxWithConstraintsScope.UI(
         },
         saveSelectedPeriod = ivyContext::updateSelectedPeriodInMemory,
         pickDate = { minDate, maxDate, initialDate, onDatePicked ->
-            ivyContext.datePicker(
+            datePicker.pickDate(
                 minDate = minDate,
                 maxDate = maxDate,
                 initialDate = initialDate,
-            ) {
-                onDatePicked(it)
-            }
+                onDatePicked = onDatePicked
+            )
         },
     ) {
         onSetPeriod(it)

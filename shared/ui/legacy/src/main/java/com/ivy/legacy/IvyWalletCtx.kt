@@ -5,7 +5,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import com.ivy.base.legacy.SharedPrefs
 import com.ivy.design.IvyContext
-import java.time.LocalDate
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -75,25 +74,5 @@ class IvyWalletCtx @Inject constructor() : IvyContext() {
         moreMenuExpanded = expanded
     }
     // ------------------------------------------ State ---------------------------------------------
-
-    // Activity help -------------------------------------------------------------------------------
-    @Deprecated("Legacy code. Don't use it, please.")
-    lateinit var onShowDatePicker: (
-        minDate: LocalDate?,
-        maxDate: LocalDate?,
-        initialDate: LocalDate?,
-        onDatePicked: (LocalDate) -> Unit
-    ) -> Unit
-
-    @Deprecated("Legacy code. Don't use it, please.")
-    fun datePicker(
-        minDate: LocalDate? = null,
-        maxDate: LocalDate? = null,
-        initialDate: LocalDate?,
-        onDatePicked: (LocalDate) -> Unit
-    ) {
-        onShowDatePicker(minDate, maxDate, initialDate, onDatePicked)
-    }
-    // Activity help -------------------------------------------------------------------------------
 
 }

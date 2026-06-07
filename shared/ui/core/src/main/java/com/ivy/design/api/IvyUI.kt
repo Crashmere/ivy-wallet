@@ -14,6 +14,7 @@ import com.ivy.base.time.TimeConverter
 import com.ivy.base.time.TimeProvider
 import com.ivy.design.IvyContext
 import com.ivy.design.l0_system.IvyTheme
+import com.ivy.ui.platform.DatePicker
 import com.ivy.ui.time.TimeFormatter
 
 val LocalIvyContext = compositionLocalOf<IvyContext> { error("No LocalIvyContext") }
@@ -30,6 +31,9 @@ val LocalTimeProvider = compositionLocalOf<TimeProvider> { error("No LocalTimePr
 @Deprecated("Used only for time migration to Instant. Never use it in new code!")
 val LocalTimeFormatter = compositionLocalOf<TimeFormatter> { error("No LocalTimeFormatter") }
 
+@Suppress("CompositionLocalAllowlist")
+val LocalDatePicker = compositionLocalOf<DatePicker> { error("No LocalDatePicker") }
+
 @SuppressLint("ComposeModifierMissing")
 @Deprecated("Old design system. Use `:ivy-design` and Material3")
 @Composable
@@ -37,6 +41,7 @@ fun IvyUI(
     timeConverter: TimeConverter,
     timeProvider: TimeProvider,
     timeFormatter: TimeFormatter,
+    datePicker: DatePicker,
     design: IvyDesign,
     includeSurface: Boolean = true,
     content: @Composable BoxWithConstraintsScope.() -> Unit
@@ -48,6 +53,7 @@ fun IvyUI(
         LocalTimeConverter provides timeConverter,
         LocalTimeProvider provides timeProvider,
         LocalTimeFormatter provides timeFormatter,
+        LocalDatePicker provides datePicker,
     ) {
         IvyTheme(
             theme = ivyContext.theme,

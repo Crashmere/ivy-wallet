@@ -33,13 +33,13 @@ import com.ivy.base.model.TransactionType
 import com.ivy.data.model.Category
 import com.ivy.data.model.Tag
 import com.ivy.data.model.TagId
+import com.ivy.design.api.LocalDatePicker
 import com.ivy.design.api.LocalTimeConverter
 import com.ivy.design.l0_system.UI
 import com.ivy.design.l0_system.style
 import com.ivy.design.utils.hideKeyboard
 import com.ivy.legacy.data.EditTransactionDisplayLoan
 import com.ivy.legacy.datamodel.Account
-import com.ivy.legacy.ivyWalletCtx
 import com.ivy.legacy.ui.component.edit.TransactionDateTime
 import com.ivy.legacy.ui.component.edit.core.Description
 import com.ivy.legacy.ui.component.tags.AddTagButton
@@ -346,18 +346,18 @@ private fun BoxWithConstraintsScope.UI(
 
         Spacer(Modifier.height(32.dp))
 
-        val ivyContext = ivyWalletCtx()
-
+        val datePicker = LocalDatePicker.current
         val timeConverter = LocalTimeConverter.current
         if (dueDate != null) {
             DueDate(dueDate = dueDate) {
-                ivyContext.datePicker(
+                datePicker.pickDate(
                     initialDate = with(timeConverter) {
                         dueDate.toLocalDate()
+                    },
+                    onDatePicked = {
+                        onDueDateChange(it.atTime(12, 0))
                     }
-                ) {
-                    onDueDateChange(it.atTime(12, 0))
-                }
+                )
             }
 
             Spacer(Modifier.height(12.dp))

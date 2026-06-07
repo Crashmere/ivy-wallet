@@ -26,8 +26,8 @@ import androidx.compose.ui.unit.dp
 import com.ivy.base.model.TransactionType
 import com.ivy.data.model.Category
 import com.ivy.data.model.IntervalType
+import com.ivy.design.api.LocalDatePicker
 import com.ivy.legacy.datamodel.Account
-import com.ivy.legacy.ivyWalletCtx
 import com.ivy.ui.legacy.onScreenStart
 import com.ivy.navigation.EditPlannedScreen
 import com.ivy.navigation.screenScopedViewModel
@@ -366,13 +366,16 @@ private fun BoxWithConstraintsScope.UI(
         }
     }
 
-    val ivyContext = ivyWalletCtx()
+    val datePicker = LocalDatePicker.current
     RecurringRuleModal(
         modal = state.recurringRuleModalData,
         pickDate = { initialDate, onDatePicked ->
-            ivyContext.datePicker(initialDate = initialDate) {
-                onDatePicked(it.atTime(12, 0))
-            }
+            datePicker.pickDate(
+                initialDate = initialDate,
+                onDatePicked = {
+                    onDatePicked(it.atTime(12, 0))
+                }
+            )
         },
         onRuleChanged = { newStartDate, newOneTime, newIntervalN, newIntervalType ->
             onEvent(

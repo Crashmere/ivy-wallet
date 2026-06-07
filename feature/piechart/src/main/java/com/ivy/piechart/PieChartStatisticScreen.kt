@@ -36,6 +36,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ivy.base.model.TransactionType
+import com.ivy.design.api.LocalDatePicker
 import com.ivy.design.api.LocalTimeConverter
 import com.ivy.design.api.LocalTimeFormatter
 import com.ivy.design.api.LocalTimeProvider
@@ -97,6 +98,7 @@ private fun BoxWithConstraintsScope.UI(
 ) {
     val nav = navigation()
     val ivyContext = ivyWalletCtx()
+    val datePicker = LocalDatePicker.current
     val lazyState = rememberScrollPositionListState(
         key = "item_pie_chart_lazy_column"
     )
@@ -227,13 +229,12 @@ private fun BoxWithConstraintsScope.UI(
         },
         saveSelectedPeriod = ivyContext::updateSelectedPeriodInMemory,
         pickDate = { minDate, maxDate, initialDate, onDatePicked ->
-            ivyContext.datePicker(
+            datePicker.pickDate(
                 minDate = minDate,
                 maxDate = maxDate,
                 initialDate = initialDate,
-            ) {
-                onDatePicked(it)
-            }
+                onDatePicked = onDatePicked
+            )
         },
     ) {
         onEvent(PieChartStatisticEvent.OnSetPeriod(it))

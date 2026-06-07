@@ -40,6 +40,7 @@ import com.ivy.base.model.TransactionType
 import com.ivy.data.model.Category
 import com.ivy.data.model.Tag
 import com.ivy.data.model.TagId
+import com.ivy.design.api.LocalDatePicker
 import com.ivy.design.api.LocalTimeConverter
 import com.ivy.design.api.LocalTimeFormatter
 import com.ivy.design.api.LocalTimeProvider
@@ -117,6 +118,7 @@ fun BoxWithConstraintsScope.FilterOverlay(
         mutableStateOf(null)
     }
     val ivyContext = ivyWalletCtx()
+    val datePicker = LocalDatePicker.current
     var minAmountModalShown by remember { mutableStateOf(false) }
     var maxAmountModalShown by remember { mutableStateOf(false) }
     var includeKeywordModalShown by remember { mutableStateOf(false) }
@@ -325,13 +327,12 @@ fun BoxWithConstraintsScope.FilterOverlay(
         dismiss = { choosePeriodModal = null },
         saveSelectedPeriod = ivyContext::updateSelectedPeriodInMemory,
         pickDate = { minDate, maxDate, initialDate, onDatePicked ->
-            ivyContext.datePicker(
+            datePicker.pickDate(
                 minDate = minDate,
                 maxDate = maxDate,
                 initialDate = initialDate,
-            ) {
-                onDatePicked(it)
-            }
+                onDatePicked = onDatePicked
+            )
         },
     ) { selectedPeriod ->
         localFilter = nonNullFilter(localFilter).copy(

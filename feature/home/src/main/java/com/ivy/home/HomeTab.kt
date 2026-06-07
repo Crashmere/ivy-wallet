@@ -27,6 +27,7 @@ import com.ivy.base.legacy.Transaction
 import com.ivy.base.legacy.TransactionHistoryItem
 import com.ivy.base.legacy.stringRes
 import com.ivy.design.api.LocalTimeConverter
+import com.ivy.design.api.LocalDatePicker
 import com.ivy.design.api.LocalTimeFormatter
 import com.ivy.design.api.LocalTimeProvider
 import com.ivy.frp.forward
@@ -80,6 +81,7 @@ fun BoxWithConstraintsScope.HomeUi(
     modifier: Modifier = Modifier,
 ) {
     val ivyContext = ivyWalletCtx()
+    val datePicker = LocalDatePicker.current
 
     var bufferModalData: BufferModalData? by remember { mutableStateOf(null) }
     var currencyModalVisible by remember { mutableStateOf(false) }
@@ -253,13 +255,12 @@ fun BoxWithConstraintsScope.HomeUi(
         },
         saveSelectedPeriod = ivyContext::updateSelectedPeriodInMemory,
         pickDate = { minDate, maxDate, initialDate, onDatePicked ->
-            ivyContext.datePicker(
+            datePicker.pickDate(
                 minDate = minDate,
                 maxDate = maxDate,
                 initialDate = initialDate,
-            ) {
-                onDatePicked(it)
-            }
+                onDatePicked = onDatePicked
+            )
         },
         onPeriodSelected = forward<TimePeriod>() then2 {
             HomeEvent.SetPeriod(it)
