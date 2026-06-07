@@ -14,8 +14,8 @@ import com.ivy.data.repository.mapper.TransactionMapper
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.domain.usecase.exchange.LegacyExchangeRatesUseCase
 import com.ivy.domain.usecase.exchange.sumInBaseCurrency
-import com.ivy.legacy.domain.mapper.toLegacy
-import com.ivy.legacy.domain.mapper.toLegacyDomain
+import com.ivy.domain.mapper.legacy.toLegacy
+import com.ivy.domain.mapper.legacy.toLegacyDomain
 import com.ivy.legacy.domain.pure.transaction.LegacyTrnDateDividers
 import com.ivy.domain.time.filterOverdueLegacy
 import com.ivy.domain.time.filterUpcomingLegacy

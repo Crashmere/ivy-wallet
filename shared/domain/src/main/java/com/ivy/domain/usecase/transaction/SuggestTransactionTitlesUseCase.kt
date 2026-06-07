@@ -4,7 +4,7 @@ import com.ivy.base.model.legacy.Transaction
 import com.ivy.base.text.capitalizeWords
 import com.ivy.base.text.isNotNullOrBlank
 import com.ivy.data.db.dao.read.TransactionDao
-import com.ivy.legacy.domain.mapper.toLegacyDomain
+import com.ivy.domain.mapper.legacy.toLegacyDomain
 import java.util.UUID
 import javax.inject.Inject
 

@@ -2,7 +2,7 @@ package com.ivy.domain.usecase.exchange
 
 import arrow.core.Option
 import com.ivy.data.db.dao.read.ExchangeRatesDao
-import com.ivy.legacy.domain.mapper.toLegacyDomain
+import com.ivy.domain.mapper.legacy.toLegacyDomain
 import com.ivy.legacy.domain.pure.exchange.ExchangeData
 import com.ivy.legacy.domain.pure.exchange.exchange
 import java.math.BigDecimal

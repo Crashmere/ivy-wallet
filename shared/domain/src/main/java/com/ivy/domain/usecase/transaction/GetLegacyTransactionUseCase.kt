@@ -4,7 +4,7 @@ import com.ivy.base.model.legacy.Transaction
 import com.ivy.data.model.TransactionId
 import com.ivy.data.repository.TransactionRepository
 import com.ivy.data.repository.mapper.TransactionMapper
-import com.ivy.legacy.domain.mapper.toLegacy
+import com.ivy.domain.mapper.legacy.toLegacy
 import java.util.UUID
 import javax.inject.Inject
 

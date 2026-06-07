@@ -6,7 +6,7 @@ import com.ivy.data.model.Transaction
 import com.ivy.data.repository.AccountRepository
 import com.ivy.data.repository.TagRepository
 import com.ivy.domain.usecase.exchange.ExchangeAmountUseCase
-import com.ivy.legacy.domain.mapper.toLegacyDomain
+import com.ivy.domain.mapper.legacy.toLegacyDomain
 import com.ivy.legacy.domain.pure.transaction.transactionsWithDateDividers
 import javax.inject.Inject
 

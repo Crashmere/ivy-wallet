@@ -5,7 +5,7 @@ import com.ivy.data.db.dao.read.BudgetDao
 import com.ivy.data.db.dao.write.WriteBudgetDao
 import com.ivy.data.model.legacy.Budget
 import com.ivy.data.model.legacy.CreateBudgetData
-import com.ivy.legacy.domain.mapper.toEntity
+import com.ivy.domain.mapper.legacy.toEntity
 import com.ivy.legacy.domain.pure.util.nextOrderNum
 import kotlinx.coroutines.withContext
 import javax.inject.Inject

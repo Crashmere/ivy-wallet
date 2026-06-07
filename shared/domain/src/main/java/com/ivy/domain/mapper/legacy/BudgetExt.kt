@@ -1,4 +1,4 @@
-package com.ivy.legacy.domain.mapper
+package com.ivy.domain.mapper.legacy
 
 import com.ivy.data.db.entity.BudgetEntity
 import com.ivy.data.model.legacy.Budget

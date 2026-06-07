@@ -4,7 +4,7 @@ import com.ivy.base.threading.DispatchersProvider
 import com.ivy.data.db.dao.write.WriteLoanRecordDao
 import com.ivy.data.model.legacy.CreateLoanRecordData
 import com.ivy.data.model.legacy.LoanRecord
-import com.ivy.legacy.domain.mapper.toEntity
+import com.ivy.domain.mapper.legacy.toEntity
 import kotlinx.coroutines.withContext
 import java.util.UUID
 import javax.inject.Inject

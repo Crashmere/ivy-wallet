@@ -8,7 +8,7 @@ import com.ivy.data.db.dao.write.WritePlannedPaymentRuleDao
 import com.ivy.data.model.TransactionId
 import com.ivy.data.repository.TransactionRepository
 import com.ivy.data.repository.mapper.TransactionMapper
-import com.ivy.legacy.domain.mapper.toDomain
+import com.ivy.domain.mapper.legacy.toDomain
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 

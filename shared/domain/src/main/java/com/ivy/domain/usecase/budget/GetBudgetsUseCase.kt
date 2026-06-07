@@ -3,7 +3,7 @@ package com.ivy.domain.usecase.budget
 import com.ivy.base.threading.DispatchersProvider
 import com.ivy.data.db.dao.read.BudgetDao
 import com.ivy.data.model.legacy.Budget
-import com.ivy.legacy.domain.mapper.toLegacyDomain
+import com.ivy.domain.mapper.legacy.toLegacyDomain
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 

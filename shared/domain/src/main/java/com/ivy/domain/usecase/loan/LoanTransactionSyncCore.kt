@@ -25,9 +25,9 @@ import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.data.model.legacy.Account
 import com.ivy.data.model.legacy.Loan
 import com.ivy.data.model.legacy.LoanRecord
-import com.ivy.legacy.domain.mapper.toDomain
-import com.ivy.legacy.domain.mapper.toEntity
-import com.ivy.legacy.domain.mapper.toLegacyDomain
+import com.ivy.domain.mapper.legacy.toDomain
+import com.ivy.domain.mapper.legacy.toEntity
+import com.ivy.domain.mapper.legacy.toLegacyDomain
 import com.ivy.base.coroutines.computationThread
 import com.ivy.base.coroutines.ioThread
 import com.ivy.domain.usecase.exchange.LegacyExchangeRatesUseCase

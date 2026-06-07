@@ -6,7 +6,7 @@ import com.ivy.base.time.TimeProvider
 import com.ivy.data.repository.TransactionRepository
 import com.ivy.data.repository.mapper.TransactionMapper
 import com.ivy.domain.usecase.currency.GetBaseCurrencyUseCase
-import com.ivy.legacy.domain.mapper.toDomain
+import com.ivy.domain.mapper.legacy.toDomain
 import java.math.BigDecimal
 import javax.inject.Inject
 import kotlin.math.abs

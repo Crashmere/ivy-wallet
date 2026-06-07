@@ -1,4 +1,4 @@
-package com.ivy.legacy.domain.mapper
+package com.ivy.domain.mapper.legacy
 
 import com.ivy.base.model.legacy.LegacyTag
 import com.ivy.base.model.legacy.LegacyTransaction

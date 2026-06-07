@@ -3,7 +3,7 @@ package com.ivy.domain.usecase.account
 import com.ivy.base.threading.DispatchersProvider
 import com.ivy.data.db.dao.read.AccountDao
 import com.ivy.data.model.legacy.Account
-import com.ivy.legacy.domain.mapper.toLegacyDomain
+import com.ivy.domain.mapper.legacy.toLegacyDomain
 import kotlinx.coroutines.withContext
 import java.util.UUID
 import javax.inject.Inject

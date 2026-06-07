@@ -3,7 +3,7 @@ package com.ivy.domain.usecase.transaction
 import com.ivy.base.model.legacy.LegacyTransaction
 import com.ivy.data.repository.TransactionRepository
 import com.ivy.data.repository.mapper.TransactionMapper
-import com.ivy.legacy.domain.mapper.toDomain
+import com.ivy.domain.mapper.legacy.toDomain
 import javax.inject.Inject
 
 class SaveLegacyTransactionUseCase @Inject constructor(

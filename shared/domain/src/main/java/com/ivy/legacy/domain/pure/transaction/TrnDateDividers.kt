@@ -14,8 +14,8 @@ import com.ivy.data.repository.AccountRepository
 import com.ivy.data.repository.TagRepository
 import com.ivy.data.repository.mapper.TransactionMapper
 import com.ivy.data.model.legacy.Account
-import com.ivy.legacy.domain.mapper.toImmutableLegacyTags
-import com.ivy.legacy.domain.mapper.toLegacyDomain
+import com.ivy.domain.mapper.legacy.toImmutableLegacyTags
+import com.ivy.domain.mapper.legacy.toLegacyDomain
 import com.ivy.base.time.toEpochSeconds
 import com.ivy.domain.usecase.exchange.LegacyExchangeRatesUseCase
 import com.ivy.legacy.domain.pure.exchange.ExchangeData

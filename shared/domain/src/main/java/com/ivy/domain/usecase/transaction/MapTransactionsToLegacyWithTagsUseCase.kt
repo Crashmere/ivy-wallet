@@ -4,8 +4,8 @@ import com.ivy.base.model.legacy.LegacyTransaction
 import com.ivy.data.model.Transaction
 import com.ivy.data.repository.TagRepository
 import com.ivy.data.repository.mapper.TransactionMapper
-import com.ivy.legacy.domain.mapper.toImmutableLegacyTags
-import com.ivy.legacy.domain.mapper.toLegacyDomain
+import com.ivy.domain.mapper.legacy.toImmutableLegacyTags
+import com.ivy.domain.mapper.legacy.toLegacyDomain
 import javax.inject.Inject
 
 class MapTransactionsToLegacyWithTagsUseCase @Inject constructor(

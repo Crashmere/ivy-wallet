@@ -3,7 +3,7 @@ package com.ivy.domain.usecase.loan
 import com.ivy.base.threading.DispatchersProvider
 import com.ivy.data.db.dao.read.LoanDao
 import com.ivy.data.model.legacy.Loan
-import com.ivy.legacy.domain.mapper.toLegacyDomain
+import com.ivy.domain.mapper.legacy.toLegacyDomain
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
