@@ -42,7 +42,6 @@ import com.ivy.design.l0_system.BlueLight
 import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
 import com.ivy.design.l1_buildingBlocks.IvyText
-import com.ivy.design.l1_buildingBlocks.SpacerHor
 import com.ivy.legacy.data.AppBaseData
 import com.ivy.legacy.datamodel.Account
 import com.ivy.base.legacy.capitalizeLocal
@@ -431,7 +430,7 @@ private fun TransactionBadge(
             .padding(end = 10.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        SpacerHor(width = 8.dp)
+        Spacer(Modifier.width(8.dp))
 
         val contrastColor = findContrastTextColor(backgroundColor)
 
@@ -441,7 +440,7 @@ private fun TransactionBadge(
             tint = contrastColor
         )
 
-        SpacerHor(width = 4.dp)
+        Spacer(Modifier.width(4.dp))
 
         IvyText(
             text = text,
@@ -451,7 +450,7 @@ private fun TransactionBadge(
             )
         )
 
-        SpacerHor(width = 20.dp)
+        Spacer(Modifier.width(20.dp))
     }
 }
 

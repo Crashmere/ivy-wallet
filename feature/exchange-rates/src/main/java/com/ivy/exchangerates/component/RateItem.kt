@@ -4,8 +4,10 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material3.Icon
@@ -15,12 +17,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.ivy.data.model.currency.format
 import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
-import com.ivy.design.l1_buildingBlocks.SpacerHor
-import com.ivy.design.l1_buildingBlocks.SpacerWeight
 import com.ivy.exchangerates.data.RateUi
-import com.ivy.data.model.currency.format
 import com.ivy.wallet.ui.theme.components.DeleteButton
 
 @Composable
@@ -53,12 +53,12 @@ fun RateItem(
                 value = currencyValue.format(currencyCode = rate.from)
             )
 
-            SpacerHor(width = 16.dp)
+            Spacer(Modifier.width(16.dp))
             Icon(
                 imageVector = Icons.Filled.ArrowForward,
                 contentDescription = "arrow to next"
             )
-            SpacerHor(width = 16.dp)
+            Spacer(Modifier.width(16.dp))
             RateColumn(
                 label = "Buy",
                 rate = rate.to,
@@ -66,7 +66,7 @@ fun RateItem(
             )
 
             if (onDelete != null) {
-                SpacerWeight(weight = 1f)
+                Spacer(Modifier.weight(1f))
                 DeleteButton(onClick = onDelete)
             }
         }

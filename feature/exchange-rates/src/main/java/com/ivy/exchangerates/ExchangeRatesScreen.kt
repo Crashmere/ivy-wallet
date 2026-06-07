@@ -1,9 +1,18 @@
 package com.ivy.exchangerates
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.BoxWithConstraintsScope
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
@@ -20,10 +29,6 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
-import com.ivy.design.l1_buildingBlocks.ColumnRoot
-import com.ivy.design.l1_buildingBlocks.DividerW
-import com.ivy.design.l1_buildingBlocks.SpacerHor
-import com.ivy.design.l1_buildingBlocks.SpacerVer
 import com.ivy.exchangerates.component.RateItem
 import com.ivy.exchangerates.data.RateUi
 import com.ivy.exchangerates.modal.AddRateModal
@@ -65,14 +70,19 @@ private fun BoxWithConstraintsScope.UI(
         amountModalVisible = true
     }
 
-    ColumnRoot {
-        SpacerVer(height = 16.dp)
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .statusBarsPadding()
+            .navigationBarsPadding()
+    ) {
+        Spacer(Modifier.height(16.dp))
         SearchField(onSearch = { onEvent(RatesEvent.Search(it)) })
-        SpacerVer(height = 4.dp)
+        Spacer(Modifier.height(4.dp))
         LazyColumn {
             ratesSection(text = "Manual")
             items(items = state.manual) { rate ->
-                SpacerVer(height = 4.dp)
+                Spacer(Modifier.height(4.dp))
                 RateItem(
                     rate = rate,
                     onDelete = { onEvent(RatesEvent.RemoveOverride(rate)) },
@@ -81,7 +91,7 @@ private fun BoxWithConstraintsScope.UI(
             }
             ratesSection(text = "Automatic")
             items(items = state.automatic) { rate ->
-                SpacerVer(height = 4.dp)
+                Spacer(Modifier.height(4.dp))
                 RateItem(
                     rate = rate,
                     onDelete = null,
@@ -89,7 +99,7 @@ private fun BoxWithConstraintsScope.UI(
                 )
             }
             item(key = "last_item_spacer") {
-                SpacerVer(height = 480.dp)
+                Spacer(Modifier.height(480.dp))
             }
         }
     }
@@ -123,7 +133,7 @@ private fun BoxWithConstraintsScope.UI(
         decimalCountMax = 12,
         Header = {
             rateToUpdate?.let {
-                SpacerVer(height = 24.dp)
+                Spacer(Modifier.height(24.dp))
                 Text(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -148,18 +158,28 @@ private fun LazyListScope.ratesSection(
     text: String
 ) {
     item {
-        SpacerVer(height = 24.dp)
+        Spacer(Modifier.height(24.dp))
         Row(verticalAlignment = Alignment.CenterVertically) {
-            DividerW()
-            SpacerHor(width = 16.dp)
+            SectionDivider()
+            Spacer(Modifier.width(16.dp))
             Text(
                 text = text,
                 style = LegacyTheme.typo.h2
             )
-            SpacerHor(width = 16.dp)
-            DividerW()
+            Spacer(Modifier.width(16.dp))
+            SectionDivider()
         }
     }
+}
+
+@Composable
+private fun RowScope.SectionDivider() {
+    Spacer(
+        modifier = Modifier
+            .weight(1f)
+            .height(1.dp)
+            .background(LegacyTheme.colors.gray, LegacyTheme.shapes.rFull)
+    )
 }
 
 @Composable

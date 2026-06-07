@@ -5,6 +5,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.BoxWithConstraintsScope
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -27,10 +28,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
-import com.ivy.design.l1_buildingBlocks.DividerW
 import com.ivy.design.l1_buildingBlocks.IvyText
-import com.ivy.design.l1_buildingBlocks.SpacerHor
-import com.ivy.design.l1_buildingBlocks.SpacerVer
 import com.ivy.ui.legacy.hideKeyboard
 import com.ivy.ui.legacy.onScreenStart
 import com.ivy.design.utils.thenIf
@@ -301,15 +299,15 @@ private fun Icon(
 private fun Section(
     title: String
 ) {
-    SpacerVer(height = 20.dp)
+    Spacer(Modifier.height(20.dp))
 
     Row(
         modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        DividerW()
+        SectionDivider()
 
-        SpacerHor(width = 16.dp)
+        Spacer(Modifier.width(16.dp))
 
         IvyText(
             text = title,
@@ -318,12 +316,22 @@ private fun Section(
             )
         )
 
-        SpacerHor(width = 16.dp)
+        Spacer(Modifier.width(16.dp))
 
-        DividerW()
+        SectionDivider()
     }
 
-    SpacerVer(height = 20.dp)
+    Spacer(Modifier.height(20.dp))
+}
+
+@Composable
+private fun RowScope.SectionDivider() {
+    Spacer(
+        modifier = Modifier
+            .weight(1f)
+            .height(1.dp)
+            .background(LegacyTheme.colors.gray, LegacyTheme.shapes.rFull)
+    )
 }
 
 data class IconPickerSection(val title: String)

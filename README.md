@@ -320,10 +320,10 @@
 3. 基础 building block
    - `IvyText`
    - `IvyIcon`
-   - `SpacerHor/SpacerVer`
-   - `DividerW/DividerH`
-   - `ColumnRoot`
-   - 目标：迁到 `shared:ui:core/component/legacy` 或直接替换为 Material3/Compose 原生写法。
+   - `SpacerHor/SpacerVer`（已删除，调用方改用 Compose 原生 `Spacer`）
+   - `DividerW/DividerH`（已删除未使用的旧分隔包装，少量调用方改为本地 `Spacer` 分隔线）
+   - `ColumnRoot`（已删除，调用方改用 Compose 原生 `Column`）
+   - 目标：继续替换剩余 `IvyText/IvyIcon`，再收敛旧 `l1_buildingBlocks` 包。
 4. Compose helper
    - `thenIf`
    - `thenWhen`
@@ -334,7 +334,7 @@
 
 当前进展：
 
-- 已把 `utils/Compose.kt`、`utils/Keyboard.kt`、`Spacers.kt`、`ColumnRoot.kt`、`IvyText.kt` 从 `temp:old-design` 移到 `shared:ui:core`。
+- 已把 `utils/Compose.kt`、`utils/Keyboard.kt`、`Spacers.kt`、`ColumnRoot.kt`、`IvyText.kt` 从 `temp:old-design` 移到 `shared:ui:core`；其中 `Spacers.kt`、`ColumnRoot.kt` 和未使用的旧分隔组件后续已替换为 Compose 原生写法并删除。
 - 这些文件暂时保留 `com.ivy.design.*` 包名，以降低迁移成本；后续在旧设计模块清空后再统一改包名。
 - 在 `shared:ui:core` 补齐 `colorControlNormal` attr，让仍使用该 attr 的旧 drawable 可以通过独立资源校验。
 - 已把剩余旧设计 Kotlin 源码整体迁入 `shared:ui:core`，并删除 `:temp:old-design` 模块依赖。
@@ -395,6 +395,7 @@
 - 已把旧全局屏幕宽高从 `IvyContext` 删除：首页更多菜单、主底部栏、借贷底部栏和交易列表底部留白改用当前 Compose `BoxWithConstraintsScope` 的 `maxWidth/maxHeight` 计算布局，`IvyUI` 不再向全局上下文写入屏幕尺寸。
 - 已把旧主题状态从 `IvyContext` 拆到 `shared:ui:core` 的 `ThemeState`，`RootViewModel` 初始化运行时主题，首页和设置页切换主题时更新同一个状态；`IvyDesign.context()`、`IvyContext`、`IvyWalletCtx` 和 `ivyWalletCtx()` 已删除。
 - 已把旧主题访问入口从泛化的 `UI.colors/typo/shapes` 重命名为 `LegacyTheme.colors/typo/shapes`，功能和视觉不变，但调用点会明确标识这是旧主题兼容层。
+- 已删除旧 building block 中最薄的 `SpacerVer/SpacerHor/SpacerWeight`、`ColumnRoot`、`DividerW/DividerH/DividerV/DividerSize`，相关调用方已改用 Compose 原生 `Spacer`、`Column` 和本地分隔线。
 - 已删除 `:temp:legacy-code` 的 Gradle include、模块 build 文件，以及所有 app/feature 对 `projects.temp.legacyCode` 的依赖声明。
 - 阶段 5 的模块拆解目标已经完成：仓库中不再有被 Gradle include 的 `temp:*` 模块。后续工作转为拆除 `shared:ui:legacy` 中剩余旧上下文、旧设计 API 和旧 UI 兼容模型。
 
@@ -676,6 +677,6 @@ shared:ui:core
 
 下一步建议执行：
 
-1. 继续替换旧设计兼容 API：下一步优先处理旧 building block 和 `com.ivy.wallet.ui.theme.*` 包名。
+1. 继续替换旧设计兼容 API：下一步优先处理剩余 `IvyText/IvyIcon` 和 `com.ivy.wallet.ui.theme.*` 包名。
 2. 收敛 `shared:ui:legacy` 中仍以 `com.ivy.wallet.ui.theme.*` 命名的旧组件，把通用组件迁到更清晰的 ui core 包名，功能专用组件再下沉到对应 feature。
 3. 每完成一组跨模块边界调整后运行 `:app:assembleDemo`，确认构建没有被迁移影响；涉及数据库、备份恢复或导入导出时再补充对应测试。
