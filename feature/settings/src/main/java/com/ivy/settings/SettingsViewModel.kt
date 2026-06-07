@@ -35,7 +35,6 @@ import com.ivy.domain.usecase.settings.SwitchThemeUseCase
 import com.ivy.ui.theme.ThemeState
 import com.ivy.legacy.ui.state.PeriodState
 import com.ivy.base.time.getISOFormattedDateTime
-import com.ivy.base.coroutines.uiThread
 import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.platform.FilePicker
 import com.ivy.ui.platform.FileSharer
@@ -43,6 +42,7 @@ import com.ivy.ui.platform.LocaleSettingsLauncher
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.time.ZoneOffset
 import javax.inject.Inject
 
@@ -381,7 +381,7 @@ class SettingsViewModel @Inject constructor(
                 exportBackupUseCase(fileUri)
                 progressState.value = false
 
-                uiThread {
+                withContext(Dispatchers.Main) {
                     fileSharer.shareZipFile(
                         fileUri = fileUri
                     )

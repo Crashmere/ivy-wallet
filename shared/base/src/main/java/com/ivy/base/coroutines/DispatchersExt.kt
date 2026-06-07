@@ -16,7 +16,3 @@ suspend fun <T> scopedIOThread(action: suspend (scope: CoroutineScope) -> T): T 
 suspend fun <T> computationThread(action: suspend () -> T): T = withContext(Dispatchers.Default) {
     return@withContext action()
 }
-
-suspend fun <T> uiThread(action: suspend () -> T): T = withContext(Dispatchers.Main) {
-    return@withContext action()
-}

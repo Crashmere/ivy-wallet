@@ -49,7 +49,6 @@ import com.ivy.data.model.legacy.Account
 import com.ivy.base.coroutines.computationThread
 import com.ivy.base.coroutines.ioThread
 import com.ivy.base.text.toLowerCaseLocal
-import com.ivy.base.coroutines.uiThread
 import com.ivy.ui.navigation.EditTransactionScreen
 import com.ivy.ui.navigation.MainScreen
 import com.ivy.ui.navigation.Navigation
@@ -76,6 +75,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.math.BigDecimal
 import java.time.Instant
 import java.time.LocalDateTime
@@ -890,7 +890,7 @@ class EditTransactionViewModel @Inject constructor(
             )
 
             customExchangeRateState = customTransferExchangeRateState
-            uiThread {
+            withContext(Dispatchers.Main) {
                 saveIfEditMode()
             }
         }

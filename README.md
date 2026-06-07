@@ -748,6 +748,7 @@
 - legacy 时间范围模型不再接收 `TimeProvider`，改由 domain 传入当前 `Instant`；data-model 内部保留同值的 legacy 安全时间边界，`shared:data:model` 已脱离 `shared:base` 依赖。
 - `shared:data:core` 对 `shared:data:model` 的依赖已从 `api` 收窄为 `implementation`；数据实现层继续使用模型类型，但不再通过自身向外传递暴露模型依赖。
 - `feature:main` 和备份导入页面的旧 `LiveData` 状态已改为 `StateFlow`；Compose 不再需要 `runtime-livedata` 适配依赖，版本目录中的 LiveData 运行时别名也已删除。
+- 剩余 `uiThread` 调用已改为标准 `withContext(Dispatchers.Main)`，base 中的主线程切换 helper 已删除。
 - 账户旧读取路径已收敛到 `AccountStore`；旧 legacy 账户模型现在由 data model 账户映射而来，`shared:domain` 主源码不再直接注入 `AccountDao` 或依赖 `AccountEntity` mapper。
 - 旧交易卡片已移除重复账户查找 TODO：渲染前先解析来源/目标账户，再复用同一结果处理点击和币种展示，行为不变但 legacy UI 内部职责更清楚。
 

@@ -44,7 +44,6 @@ import com.ivy.data.model.legacy.Account
 import com.ivy.base.time.getISOFormattedDateTime
 import com.ivy.base.coroutines.scopedIOThread
 import com.ivy.base.text.toLowerCaseLocal
-import com.ivy.base.coroutines.uiThread
 import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.R
 import com.ivy.ui.platform.FilePicker
@@ -558,7 +557,7 @@ class ReportViewModel @Inject constructor(
     }
 
     private suspend fun payOrGet(transaction: Transaction) {
-        uiThread {
+        withContext(Dispatchers.Main) {
             if (payOrSkipPlannedTransactionUseCase(transaction) != null) {
                 start()
                 setFilter(filter)
@@ -567,7 +566,7 @@ class ReportViewModel @Inject constructor(
     }
 
     private suspend fun payOrGetLegacy(transaction: com.ivy.data.model.legacy.Transaction) {
-        uiThread {
+        withContext(Dispatchers.Main) {
             if (payOrSkipLegacyPlannedTransactionUseCase(transaction) != null) {
                 start()
                 setFilter(filter)
@@ -588,7 +587,7 @@ class ReportViewModel @Inject constructor(
     }
 
     private suspend fun skipTransaction(transaction: Transaction) {
-        uiThread {
+        withContext(Dispatchers.Main) {
             val paidTransaction = payOrSkipPlannedTransactionUseCase(
                 transaction = transaction,
                 skipTransaction = true
@@ -601,7 +600,7 @@ class ReportViewModel @Inject constructor(
     }
 
     private suspend fun skipTransactionLegacy(transaction: com.ivy.data.model.legacy.Transaction) {
-        uiThread {
+        withContext(Dispatchers.Main) {
             val paidTransaction = payOrSkipLegacyPlannedTransactionUseCase(
                 transaction = transaction,
                 skipTransaction = true
@@ -614,7 +613,7 @@ class ReportViewModel @Inject constructor(
     }
 
     private suspend fun skipTransactions(transactions: List<Transaction>) {
-        uiThread {
+        withContext(Dispatchers.Main) {
             val paidTransactions = payOrSkipPlannedTransactionsUseCase(
                 transactions = transactions,
                 skipTransaction = true
@@ -627,7 +626,7 @@ class ReportViewModel @Inject constructor(
     }
 
     private suspend fun skipTransactionsLegacy(transactions: List<com.ivy.data.model.legacy.Transaction>) {
-        uiThread {
+        withContext(Dispatchers.Main) {
             val paidTransactions = payOrSkipLegacyPlannedTransactionsUseCase(
                 transactions = transactions,
                 skipTransaction = true
