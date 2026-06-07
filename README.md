@@ -723,7 +723,8 @@
 - 隐藏余额和隐藏收入偏好已收敛到独立 domain 用例；首页只读 `GetHideCurrentBalancePreferenceUseCase/GetHideIncomePreferenceUseCase`，设置页通过对应 set 用例保存，底层 key 和短暂显示逻辑保持不变。
 - 交易提醒通知开关已收敛到 `GetShowNotificationsPreferenceUseCase/SetShowNotificationsPreferenceUseCase`；设置页、提醒调度逻辑和提醒 Worker 不再直接访问 `AppPreferences.showNotifications`，通知调度与二次检查行为保持不变。
 - 应用锁开关已收敛到 `GetAppLockEnabledPreferenceUseCase/SetAppLockEnabledPreferenceUseCase`；设置页和 `AppLockController` 不再直接访问 `AppPreferences.appLockEnabled`，运行时锁定状态仍由 app 层 controller 管理。
-- 首次初始化完成、备份完成和月起始日读取已收敛到 settings domain 用例；`RootViewModel`、`InitialDataSetup` 和设置页备份流程不再直接访问对应的 `AppPreferences` 字段，底层 key 与启动/备份行为保持不变。
+- 首次初始化完成和月起始日读取已收敛到 settings domain 用例；`RootViewModel` 和 `InitialDataSetup` 不再直接访问对应的 `AppPreferences` 字段，底层 key 与启动行为保持不变。
+- 只写不读的 `data_backup_completed` 旧偏好已删除；备份导出仍直接生成 zip 并触发分享，不再写入没有消费方的完成标记。
 - 首页客户旅程卡片关闭状态已收敛到 `IsCustomerJourneyCardDismissedUseCase/DismissCustomerJourneyCardUseCase`；`feature:home` 不再直接拼接或读写客户旅程偏好 key。
 - 重置钱包流程中的旧 app 偏好清空已收敛到 `ClearAppPreferencesUseCase`；app 层重置实现继续负责编排，但不再直接注入 `AppPreferences`。
 - 账户旧读取路径已收敛到 `AccountStore`；旧 legacy 账户模型现在由 data model 账户映射而来，`shared:domain` 主源码不再直接注入 `AccountDao` 或依赖 `AccountEntity` mapper。

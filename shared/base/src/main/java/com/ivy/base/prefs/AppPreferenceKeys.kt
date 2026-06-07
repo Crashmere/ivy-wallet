@@ -15,5 +15,4 @@ object AppPreferenceKeys {
     const val CUSTOMER_JOURNEY_CARD_DISMISSED_SUFFIX = "_cj_dismissed"
 
     const val CATEGORY_SORT_ORDER = "categorySortOrder"
-    const val DATA_BACKUP_COMPLETED = "data_backup_completed"
 }

@@ -35,10 +35,6 @@ class AppPreferences @Inject constructor(
         get() = preferenceStore.getBoolean(AppPreferenceKeys.TRANSFERS_AS_INCOME_EXPENSE, false)
         set(value) = preferenceStore.putBoolean(AppPreferenceKeys.TRANSFERS_AS_INCOME_EXPENSE, value)
 
-    var dataBackupCompleted: Boolean
-        get() = preferenceStore.getBoolean(AppPreferenceKeys.DATA_BACKUP_COMPLETED, false)
-        set(value) = preferenceStore.putBoolean(AppPreferenceKeys.DATA_BACKUP_COMPLETED, value)
-
     var categorySortOrder: Int
         get() = preferenceStore.getInt(AppPreferenceKeys.CATEGORY_SORT_ORDER, 0)
         set(value) = preferenceStore.putInt(AppPreferenceKeys.CATEGORY_SORT_ORDER, value)

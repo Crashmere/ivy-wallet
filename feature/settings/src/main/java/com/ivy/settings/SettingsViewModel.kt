@@ -26,7 +26,6 @@ import com.ivy.domain.usecase.settings.GetStartDayOfMonthUseCase
 import com.ivy.domain.usecase.settings.GetThemeUseCase
 import com.ivy.domain.usecase.settings.GetTransfersAsIncomeExpensePreferenceUseCase
 import com.ivy.domain.usecase.settings.SetAppLockEnabledPreferenceUseCase
-import com.ivy.domain.usecase.settings.SetDataBackupCompletedPreferenceUseCase
 import com.ivy.domain.usecase.settings.SetHideCurrentBalancePreferenceUseCase
 import com.ivy.domain.usecase.settings.SetHideIncomePreferenceUseCase
 import com.ivy.domain.usecase.settings.SetShowNotificationsPreferenceUseCase
@@ -58,7 +57,6 @@ class SettingsViewModel @Inject constructor(
     private val switchThemeUseCase: SwitchThemeUseCase,
     private val resetWalletDataUseCase: ResetWalletDataUseCase,
     private val exportBackupUseCase: ExportBackupUseCase,
-    private val setDataBackupCompletedPreference: SetDataBackupCompletedPreferenceUseCase,
     private val getStartDayOfMonth: GetStartDayOfMonthUseCase,
     private val setStartDayOfMonth: SetStartDayOfMonthUseCase,
     private val getAppLockEnabledPreference: GetAppLockEnabledPreferenceUseCase,
@@ -382,8 +380,6 @@ class SettingsViewModel @Inject constructor(
                 progressState.value = true
                 exportBackupUseCase(fileUri)
                 progressState.value = false
-
-                setDataBackupCompletedPreference(true)
 
                 uiThread {
                     fileSharer.shareZipFile(
