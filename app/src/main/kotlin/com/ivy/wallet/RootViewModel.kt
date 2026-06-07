@@ -18,9 +18,7 @@ import com.ivy.wallet.notification.reminder.TransactionReminderScheduler
 import com.ivy.wallet.startup.InitialDataSetup
 import com.ivy.wallet.security.AppLockController
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -45,29 +43,20 @@ class RootViewModel @Inject constructor(
 
     fun start(systemDarkMode: Boolean, intent: Intent) {
         viewModelScope.launch {
+            val theme = getTheme.withSystemFallback(systemDarkMode)
+            themeState.update(theme)
 
-            withContext(Dispatchers.IO) {
-                val theme = getTheme.withSystemFallback(systemDarkMode)
-                themeState.update(theme)
-
-                periodState.initStartDayOfMonth(startDay = getStartDayOfMonth())
-            }
-
+            periodState.initStartDayOfMonth(startDay = getStartDayOfMonth())
         }
 
         viewModelScope.launch {
+            appLockController.initialize()
 
-            withContext(Dispatchers.IO) {
-                appLockController.initialize()
-
-                if (isInitialSetupCompletedUseCase()) {
-                    navigateOnboardedUser(intent)
-                } else {
-                    initialDataSetup.setupDefaults(systemDarkMode)
-                    navigateOnboardedUser(intent)
-                }
+            if (!isInitialSetupCompletedUseCase()) {
+                initialDataSetup.setupDefaults(systemDarkMode)
             }
 
+            navigateOnboardedUser(intent)
         }
     }
 
