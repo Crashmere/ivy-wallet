@@ -1,6 +1,6 @@
 package com.ivy.categories
 
-import com.ivy.wallet.domain.data.SortOrder
+import com.ivy.legacy.domain.data.SortOrder
 import com.ivy.legacy.ui.modal.edit.CategoryModalData
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf

@@ -20,7 +20,7 @@ import com.ivy.legacy.datamodel.Account
 import com.ivy.legacy.datamodel.temp.toImmutableLegacyTags
 import com.ivy.legacy.datamodel.temp.toLegacyDomain
 import com.ivy.base.legacy.toEpochSeconds
-import com.ivy.wallet.domain.data.TransactionHistoryDateDivider
+import com.ivy.legacy.domain.data.TransactionHistoryDateDivider
 import com.ivy.wallet.domain.deprecated.logic.currency.ExchangeRatesLogic
 import com.ivy.wallet.domain.pure.exchange.ExchangeData
 import com.ivy.wallet.domain.pure.exchange.ExchangeTrnArgument

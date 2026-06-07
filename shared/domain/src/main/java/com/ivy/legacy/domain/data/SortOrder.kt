@@ -1,4 +1,4 @@
-package com.ivy.wallet.domain.data
+package com.ivy.legacy.domain.data
 
 enum class SortOrder(val orderNum: Int, val displayName: String) {
     DEFAULT(0, "Default"),

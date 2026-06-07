@@ -27,7 +27,7 @@ import com.ivy.navigation.EditTransactionScreen
 import com.ivy.navigation.Navigation
 import com.ivy.navigation.navigation
 import com.ivy.ui.R
-import com.ivy.wallet.domain.data.TransactionHistoryDateDivider
+import com.ivy.legacy.domain.data.TransactionHistoryDateDivider
 import com.ivy.legacy.ui.theme.Black
 import com.ivy.legacy.ui.theme.Gradient
 import com.ivy.legacy.ui.theme.Gray

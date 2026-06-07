@@ -47,7 +47,7 @@ import com.ivy.ui.time.impl.DateTimePicker
 import com.ivy.wallet.domain.action.account.AccountByIdAct
 import com.ivy.wallet.domain.action.account.AccountsAct
 import com.ivy.wallet.domain.action.transaction.TrnByIdAct
-import com.ivy.wallet.domain.data.CustomExchangeRateState
+import com.ivy.legacy.domain.data.CustomExchangeRateState
 import com.ivy.wallet.domain.deprecated.logic.CategoryCreator
 import com.ivy.wallet.domain.deprecated.logic.PlannedPaymentsLogic
 import com.ivy.wallet.domain.deprecated.logic.SmartTitleSuggestionsLogic

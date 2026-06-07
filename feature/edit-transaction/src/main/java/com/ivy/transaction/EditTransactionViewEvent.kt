@@ -7,7 +7,7 @@ import com.ivy.data.model.Tag
 import com.ivy.data.model.TagId
 import com.ivy.legacy.data.EditTransactionDisplayLoan
 import com.ivy.legacy.datamodel.Account
-import com.ivy.wallet.domain.data.CustomExchangeRateState
+import com.ivy.legacy.domain.data.CustomExchangeRateState
 import com.ivy.wallet.domain.deprecated.logic.model.CreateAccountData
 import com.ivy.wallet.domain.deprecated.logic.model.CreateCategoryData
 import kotlinx.collections.immutable.ImmutableList
