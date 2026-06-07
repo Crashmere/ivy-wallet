@@ -33,7 +33,7 @@ import com.ivy.legacy.ui.theme.system.style
 import com.ivy.ui.compose.densityScope
 import com.ivy.ui.compose.thenIf
 import com.ivy.frp.test.TestingContext
-import com.ivy.ui.legacy.onScreenStart
+import com.ivy.legacy.ui.onScreenStart
 import com.ivy.ui.R
 import kotlinx.coroutines.launch
 

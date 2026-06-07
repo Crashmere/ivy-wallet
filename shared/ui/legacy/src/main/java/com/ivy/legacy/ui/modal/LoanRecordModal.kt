@@ -40,8 +40,8 @@ import com.ivy.legacy.domain.model.LoanRecord
 import com.ivy.legacy.ui.component.DateTimeRow
 import com.ivy.legacy.ui.modal.ModalNameInput
 import com.ivy.base.legacy.getDefaultFIATCurrency
-import com.ivy.ui.legacy.onScreenStart
-import com.ivy.ui.legacy.selectEndTextFieldValue
+import com.ivy.legacy.ui.onScreenStart
+import com.ivy.legacy.ui.selectEndTextFieldValue
 import com.ivy.ui.R
 import com.ivy.legacy.domain.model.CreateAccountData
 import com.ivy.legacy.domain.model.CreateLoanRecordData

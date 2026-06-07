@@ -1,4 +1,4 @@
-package com.ivy.ui.legacy
+package com.ivy.legacy.ui
 
 import android.animation.ArgbEvaluator
 import android.annotation.SuppressLint

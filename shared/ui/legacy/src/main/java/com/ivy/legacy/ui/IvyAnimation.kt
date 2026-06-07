@@ -1,4 +1,4 @@
-package com.ivy.ui.legacy
+package com.ivy.legacy.ui
 
 import androidx.compose.animation.core.spring
 

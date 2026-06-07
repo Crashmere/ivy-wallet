@@ -46,7 +46,7 @@ import com.ivy.legacy.ui.SearchInput
 import com.ivy.base.legacy.balancePrefix
 import com.ivy.base.legacy.compactBalancePrefix
 import com.ivy.data.model.currency.format
-import com.ivy.ui.legacy.selectEndTextFieldValue
+import com.ivy.legacy.ui.selectEndTextFieldValue
 import com.ivy.navigation.CategoriesScreen
 import com.ivy.navigation.TransactionsScreen
 import com.ivy.navigation.navigation

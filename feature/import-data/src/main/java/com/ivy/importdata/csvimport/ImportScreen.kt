@@ -21,7 +21,7 @@ fun BoxWithConstraintsScope.ImportCSVScreen() {
     val importProgressPercent by viewModel.importProgressPercent.observeAsState(0)
     val importResult by viewModel.importResult.observeAsState()
 
-    com.ivy.ui.legacy.onScreenStart {
+    com.ivy.legacy.ui.onScreenStart {
         viewModel.start(ImportScreen)
     }
 

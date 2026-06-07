@@ -21,10 +21,10 @@ import androidx.compose.ui.unit.dp
 import com.ivy.legacy.ui.model.AppBaseData
 import com.ivy.legacy.ui.SearchInput
 import com.ivy.legacy.ui.component.transaction.transactions
-import com.ivy.ui.legacy.densityScope
-import com.ivy.ui.legacy.keyboardOnlyWindowInsets
-import com.ivy.ui.legacy.keyboardVisibleState
-import com.ivy.ui.legacy.selectEndTextFieldValue
+import com.ivy.legacy.ui.densityScope
+import com.ivy.legacy.ui.keyboardOnlyWindowInsets
+import com.ivy.legacy.ui.keyboardVisibleState
+import com.ivy.legacy.ui.selectEndTextFieldValue
 import com.ivy.navigation.SearchScreen
 import com.ivy.navigation.screenScopedViewModel
 import com.ivy.ui.R

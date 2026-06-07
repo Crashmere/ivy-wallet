@@ -43,8 +43,8 @@ import com.ivy.legacy.domain.model.Loan
 import com.ivy.legacy.ui.component.DateTimeRow
 import com.ivy.base.legacy.getDefaultFIATCurrency
 import com.ivy.base.legacy.isNotNullOrBlank
-import com.ivy.ui.legacy.onScreenStart
-import com.ivy.ui.legacy.selectEndTextFieldValue
+import com.ivy.legacy.ui.onScreenStart
+import com.ivy.legacy.ui.selectEndTextFieldValue
 import com.ivy.ui.compose.thenIf
 import com.ivy.legacy.ui.modal.ModalNameInput
 import com.ivy.ui.R

@@ -21,7 +21,7 @@ import com.ivy.legacy.ui.theme.system.Green
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
 import com.ivy.ui.R
-import com.ivy.ui.legacy.formatLocal
+import com.ivy.legacy.ui.formatLocal
 import java.time.LocalDate
 
 @Deprecated("Old design system. Use `:ivy-design` and Material3")

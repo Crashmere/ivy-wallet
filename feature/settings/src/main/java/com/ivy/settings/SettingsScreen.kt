@@ -48,7 +48,7 @@ import com.ivy.legacy.ui.theme.system.style
 import com.ivy.ui.compose.thenIf
 import com.ivy.legacy.ui.platform.buildInfoProvider
 import com.ivy.legacy.ui.platform.fileSharer
-import com.ivy.ui.legacy.drawColoredShadow
+import com.ivy.legacy.ui.drawColoredShadow
 import com.ivy.navigation.ExchangeRatesScreen
 import com.ivy.navigation.ImportScreen
 import com.ivy.navigation.navigation

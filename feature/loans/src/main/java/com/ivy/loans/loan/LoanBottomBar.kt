@@ -26,8 +26,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
-import com.ivy.ui.legacy.navigationBarInset
-import com.ivy.ui.legacy.toDensityPx
+import com.ivy.legacy.ui.navigationBarInset
+import com.ivy.legacy.ui.toDensityPx
 import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.GradientPurple
 import com.ivy.legacy.ui.theme.Green

@@ -13,8 +13,8 @@ import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
-import com.ivy.ui.legacy.hideKeyboard
-import com.ivy.ui.legacy.onScreenStart
+import com.ivy.legacy.ui.hideKeyboard
+import com.ivy.legacy.ui.onScreenStart
 import com.ivy.legacy.ui.component.IvyNameTextField
 
 @Composable

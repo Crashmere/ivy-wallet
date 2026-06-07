@@ -25,8 +25,8 @@ import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
 import com.ivy.base.legacy.capitalizeLocal
 import com.ivy.base.legacy.isNotNullOrBlank
-import com.ivy.ui.legacy.forDisplay
-import com.ivy.ui.legacy.selectEndTextFieldValue
+import com.ivy.legacy.ui.forDisplay
+import com.ivy.legacy.ui.selectEndTextFieldValue
 import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.Gradient
 import com.ivy.legacy.ui.theme.GradientIvy

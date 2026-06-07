@@ -21,7 +21,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
-import com.ivy.ui.legacy.hideKeyboard
+import com.ivy.legacy.ui.hideKeyboard
 import com.ivy.base.legacy.isNotNullOrBlank
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding

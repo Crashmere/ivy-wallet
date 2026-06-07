@@ -27,8 +27,8 @@ import com.ivy.legacy.ui.theme.system.style
 import com.ivy.legacy.ui.component.IvyColorPicker
 import com.ivy.legacy.domain.model.Account
 import com.ivy.base.legacy.isNotNullOrBlank
-import com.ivy.ui.legacy.onScreenStart
-import com.ivy.ui.legacy.selectEndTextFieldValue
+import com.ivy.legacy.ui.onScreenStart
+import com.ivy.legacy.ui.selectEndTextFieldValue
 import com.ivy.base.legacy.toLowerCaseLocal
 import com.ivy.base.legacy.toUpperCaseLocal
 import com.ivy.ui.R

@@ -28,9 +28,9 @@ import com.ivy.data.model.currency.format
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
 import com.ivy.ui.R
-import com.ivy.ui.legacy.clickableNoIndication
-import com.ivy.ui.legacy.rememberInteractionSource
-import com.ivy.ui.legacy.springBounce
+import com.ivy.legacy.ui.clickableNoIndication
+import com.ivy.legacy.ui.rememberInteractionSource
+import com.ivy.legacy.ui.springBounce
 
 @Deprecated("Old design system. Use `:ivy-design` and Material3")
 @Composable

@@ -11,7 +11,7 @@ import androidx.compose.ui.unit.dp
 import com.ivy.ui.time.LocalTimeFormatter
 import com.ivy.base.legacy.convertLocalToUTC
 import com.ivy.base.legacy.convertUTCToLocal
-import com.ivy.ui.legacy.formatNicely
+import com.ivy.legacy.ui.formatNicely
 import com.ivy.base.legacy.timeNowUTC
 import com.ivy.ui.R
 import com.ivy.legacy.ui.component.IvyOutlinedButton

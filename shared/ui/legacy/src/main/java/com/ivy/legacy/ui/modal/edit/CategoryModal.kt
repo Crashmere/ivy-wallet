@@ -36,10 +36,10 @@ import com.ivy.data.model.primitive.ColorInt
 import com.ivy.data.model.primitive.IconAsset
 import com.ivy.data.model.primitive.NotBlankTrimmedString
 import com.ivy.legacy.ui.component.IvyColorPicker
-import com.ivy.ui.legacy.hideKeyboard
+import com.ivy.legacy.ui.hideKeyboard
 import com.ivy.base.legacy.isNotNullOrBlank
-import com.ivy.ui.legacy.onScreenStart
-import com.ivy.ui.legacy.selectEndTextFieldValue
+import com.ivy.legacy.ui.onScreenStart
+import com.ivy.legacy.ui.selectEndTextFieldValue
 import com.ivy.ui.R
 import com.ivy.legacy.domain.model.CreateCategoryData
 import com.ivy.legacy.ui.theme.Ivy

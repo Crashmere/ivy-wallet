@@ -12,8 +12,8 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.ivy.legacy.ui.theme.system.LegacyTheme
-import com.ivy.ui.legacy.navigationBarInset
-import com.ivy.ui.legacy.toDensityDp
+import com.ivy.legacy.ui.navigationBarInset
+import com.ivy.legacy.ui.toDensityDp
 import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.gradientCutBackgroundTop
 

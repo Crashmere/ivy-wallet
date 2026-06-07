@@ -44,10 +44,10 @@ import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
 import com.ivy.ui.compose.thenIf
 import com.ivy.legacy.ui.state.LocalPeriodState
-import com.ivy.ui.legacy.drawColoredShadow
+import com.ivy.legacy.ui.drawColoredShadow
 import com.ivy.data.model.currency.format
-import com.ivy.ui.legacy.horizontalSwipeListener
-import com.ivy.ui.legacy.rememberSwipeListenerState
+import com.ivy.legacy.ui.horizontalSwipeListener
+import com.ivy.legacy.ui.rememberSwipeListenerState
 import com.ivy.navigation.EditTransactionScreen
 import com.ivy.navigation.PieChartStatisticScreen
 import com.ivy.navigation.TransactionsScreen
@@ -105,7 +105,7 @@ private fun BoxWithConstraintsScope.UI(
     val expanded = lazyState.firstVisibleItemIndex < 1
     val percentExpanded by animateFloatAsState(
         targetValue = if (expanded) 1f else 0f,
-        animationSpec = com.ivy.ui.legacy.springBounce(),
+        animationSpec = com.ivy.legacy.ui.springBounce(),
         label = "percent expanded"
     )
 
@@ -325,7 +325,7 @@ private fun Header(
                             drawColoredShadow(backgroundGradient.startColor)
                         }
                         .alpha(percentExpanded)
-                        .size(com.ivy.ui.legacy.lerp(1, 40, percentExpanded).dp),
+                        .size(com.ivy.legacy.ui.lerp(1, 40, percentExpanded).dp),
                     iconPadding = 4.dp,
                     icon = R.drawable.ic_plus,
                     backgroundGradient = backgroundGradient,

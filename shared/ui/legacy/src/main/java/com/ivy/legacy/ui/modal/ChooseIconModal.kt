@@ -29,8 +29,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
-import com.ivy.ui.legacy.hideKeyboard
-import com.ivy.ui.legacy.onScreenStart
+import com.ivy.legacy.ui.hideKeyboard
+import com.ivy.legacy.ui.onScreenStart
 import com.ivy.ui.compose.thenIf
 import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.Ivy

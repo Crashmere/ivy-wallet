@@ -1,4 +1,4 @@
-package com.ivy.ui.legacy
+package com.ivy.legacy.ui
 
 import com.ivy.base.legacy.convertUTCtoLocal
 import com.ivy.base.legacy.dateNowUTC

@@ -20,8 +20,8 @@ import androidx.compose.ui.unit.dp
 import com.ivy.data.model.IntervalType
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
-import com.ivy.ui.legacy.forDisplay
-import com.ivy.ui.legacy.formatDateOnly
+import com.ivy.legacy.ui.forDisplay
+import com.ivy.legacy.ui.formatDateOnly
 import com.ivy.base.legacy.timeNowUTC
 import com.ivy.base.legacy.uppercaseLocal
 import com.ivy.ui.R

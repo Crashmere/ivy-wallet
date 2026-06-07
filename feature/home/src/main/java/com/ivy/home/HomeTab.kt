@@ -43,9 +43,9 @@ import com.ivy.legacy.ui.model.period.TimePeriod
 import com.ivy.legacy.ui.state.LocalPeriodState
 import com.ivy.legacy.ui.component.transaction.TransactionsDividerLine
 import com.ivy.legacy.ui.component.transaction.transactions
-import com.ivy.ui.legacy.horizontalSwipeListener
-import com.ivy.ui.legacy.rememberSwipeListenerState
-import com.ivy.ui.legacy.verticalSwipeListener
+import com.ivy.legacy.ui.horizontalSwipeListener
+import com.ivy.legacy.ui.rememberSwipeListenerState
+import com.ivy.legacy.ui.verticalSwipeListener
 import com.ivy.navigation.screenScopedViewModel
 import com.ivy.navigation.LocalMainTabState
 import com.ivy.navigation.MainTab

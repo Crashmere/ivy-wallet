@@ -29,7 +29,7 @@ import com.ivy.legacy.domain.model.Account
 import com.ivy.legacy.domain.model.Budget
 import com.ivy.legacy.ui.modal.ModalNameInput
 import com.ivy.base.legacy.isNotNullOrBlank
-import com.ivy.ui.legacy.selectEndTextFieldValue
+import com.ivy.legacy.ui.selectEndTextFieldValue
 import com.ivy.ui.R
 import com.ivy.legacy.domain.model.CreateBudgetData
 import com.ivy.legacy.ui.modal.DeleteModal

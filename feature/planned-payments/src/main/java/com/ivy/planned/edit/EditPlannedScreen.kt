@@ -28,7 +28,7 @@ import com.ivy.data.model.Category
 import com.ivy.data.model.IntervalType
 import com.ivy.ui.platform.LocalDatePicker
 import com.ivy.legacy.domain.model.Account
-import com.ivy.ui.legacy.onScreenStart
+import com.ivy.legacy.ui.onScreenStart
 import com.ivy.navigation.EditPlannedScreen
 import com.ivy.navigation.screenScopedViewModel
 import com.ivy.ui.R
