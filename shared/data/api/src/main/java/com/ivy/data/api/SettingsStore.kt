@@ -19,4 +19,6 @@ interface SettingsStore {
     suspend fun getBufferAmount(): BigDecimal
 
     suspend fun setBufferAmount(amount: BigDecimal): BigDecimal
+
+    suspend fun deleteAll()
 }

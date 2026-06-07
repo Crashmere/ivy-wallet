@@ -61,6 +61,12 @@ class SettingsRepository @Inject constructor(
         amount
     }
 
+    override suspend fun deleteAll() {
+        withContext(dispatchersProvider.io) {
+            writeSettingsDao.deleteAll()
+        }
+    }
+
     private suspend fun settingsEntityOrDefault(): SettingsEntity {
         return settingsDao.findFirstOrNull()
             ?: SettingsEntity(
