@@ -8,20 +8,20 @@ import com.ivy.domain.account.accountCurrency
 import com.ivy.domain.transaction.legacy.LegacyTrnFunctions
 import com.ivy.domain.transaction.getAccountId
 import com.ivy.domain.transaction.getValue
-import com.ivy.domain.transaction.trnCurrency
+import com.ivy.domain.transaction.transactionCurrency
 import java.math.BigDecimal
 import java.util.UUID
 
 typealias ExchangeEffect = suspend (ExchangeData, BigDecimal) -> Option<BigDecimal>
 
-data class ExchangeTrnArgument(
+data class ExchangeTransactionArgument(
     val baseCurrency: String,
     val getAccount: suspend (accountId: UUID) -> Account?,
     val exchange: ExchangeEffect
 )
 suspend fun exchangeInBaseCurrency(
     transaction: Transaction,
-    arg: ExchangeTrnArgument
+    arg: ExchangeTransactionArgument
 ): BigDecimal {
     val fromCurrency = arg.getAccount(transaction.getAccountId())?.let {
         accountCurrency(it, arg.baseCurrency)
@@ -30,14 +30,14 @@ suspend fun exchangeInBaseCurrency(
     return exchangeInCurrency(
         transaction = transaction,
         baseCurrency = arg.baseCurrency,
-        trnCurrency = fromCurrency,
+        transactionCurrency = fromCurrency,
         toCurrency = arg.baseCurrency,
         exchange = arg.exchange
     )
 }
 suspend fun exchangeInBaseCurrency(
     transaction: com.ivy.data.model.legacy.Transaction,
-    arg: ExchangeTrnArgument
+    arg: ExchangeTransactionArgument
 ): BigDecimal {
     val fromCurrency = arg.getAccount(transaction.accountId)?.let {
         accountCurrency(it, arg.baseCurrency)
@@ -46,7 +46,7 @@ suspend fun exchangeInBaseCurrency(
     return exchangeInCurrency(
         transaction = transaction,
         baseCurrency = arg.baseCurrency,
-        trnCurrency = fromCurrency,
+        transactionCurrency = fromCurrency,
         toCurrency = arg.baseCurrency,
         exchange = arg.exchange
     )
@@ -73,7 +73,7 @@ suspend fun exchangeInCurrency(
     return exchange(
         ExchangeData(
             baseCurrency = baseCurrency,
-            fromCurrency = trnCurrency(transaction, accounts, baseCurrency),
+            fromCurrency = transactionCurrency(transaction, accounts, baseCurrency),
             toCurrency = toCurrency
         ),
         transaction.getValue()
@@ -83,14 +83,14 @@ suspend fun exchangeInCurrency(
 suspend fun exchangeInCurrency(
     transaction: Transaction,
     baseCurrency: String,
-    trnCurrency: Option<String>,
+    transactionCurrency: Option<String>,
     toCurrency: String,
     exchange: ExchangeEffect
 ): BigDecimal {
     return exchange(
         ExchangeData(
             baseCurrency = baseCurrency,
-            fromCurrency = trnCurrency,
+            fromCurrency = transactionCurrency,
             toCurrency = toCurrency
         ),
         transaction.getValue()
@@ -100,21 +100,21 @@ suspend fun exchangeInCurrency(
 suspend fun exchangeInCurrency(
     transaction: com.ivy.data.model.legacy.Transaction,
     baseCurrency: String,
-    trnCurrency: Option<String>,
+    transactionCurrency: Option<String>,
     toCurrency: String,
     exchange: ExchangeEffect
 ): BigDecimal {
     return exchange(
         ExchangeData(
             baseCurrency = baseCurrency,
-            fromCurrency = trnCurrency,
+            fromCurrency = transactionCurrency,
             toCurrency = toCurrency
         ),
         transaction.amount
     ).getOrNull() ?: BigDecimal.ZERO
 }
 
-object LegacyExchangeTrns {
+object LegacyExchangeTransactions {
     suspend fun exchangeInBaseCurrency(
         transaction: com.ivy.data.model.legacy.Transaction,
         baseCurrency: String,
@@ -137,7 +137,7 @@ object LegacyExchangeTrns {
         return exchange(
             ExchangeData(
                 baseCurrency = baseCurrency,
-                fromCurrency = LegacyTrnFunctions.trnCurrency(transaction, accounts, baseCurrency),
+                fromCurrency = LegacyTrnFunctions.transactionCurrency(transaction, accounts, baseCurrency),
                 toCurrency = toCurrency
             ),
             transaction.amount

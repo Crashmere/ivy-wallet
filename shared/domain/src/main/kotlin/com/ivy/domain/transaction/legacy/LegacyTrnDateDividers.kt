@@ -10,7 +10,7 @@ import com.ivy.data.model.legacy.Account
 import com.ivy.domain.mapper.legacy.toLegacyDomain
 import com.ivy.domain.usecase.exchange.LegacyExchangeRatesUseCase
 import com.ivy.domain.exchange.ExchangeData
-import com.ivy.domain.exchange.ExchangeTrnArgument
+import com.ivy.domain.exchange.ExchangeTransactionArgument
 import com.ivy.domain.exchange.exchangeInBaseCurrency
 import com.ivy.domain.time.toLocalDateInSystemZone
 import java.math.BigDecimal
@@ -60,7 +60,7 @@ object LegacyTrnDateDividers {
                         ).toInt()
             }
             .flatMap { (date, transactionsForDate) ->
-                val arg = ExchangeTrnArgument(
+                val arg = ExchangeTransactionArgument(
                     baseCurrency = baseCurrencyCode,
                     getAccount = getAccount,
                     exchange = exchange

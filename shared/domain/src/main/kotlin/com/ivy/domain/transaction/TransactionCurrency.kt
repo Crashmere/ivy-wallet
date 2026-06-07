@@ -6,7 +6,7 @@ import com.ivy.data.model.Transaction
 import com.ivy.data.model.legacy.Account
 import com.ivy.domain.account.accountCurrency
 
-fun trnCurrency(
+fun transactionCurrency(
     transaction: Transaction,
     accounts: List<Account>,
     baseCurrency: String

@@ -6,7 +6,7 @@ import com.ivy.data.model.legacy.IncomeExpensePair
 import com.ivy.domain.usecase.account.GetLegacyAccountUseCase
 import com.ivy.domain.usecase.exchange.ExchangeAmountUseCase
 import com.ivy.domain.usecase.transaction.GetDueTransactionsUseCase
-import com.ivy.domain.exchange.ExchangeTrnArgument
+import com.ivy.domain.exchange.ExchangeTransactionArgument
 import com.ivy.domain.exchange.exchangeInBaseCurrency
 import com.ivy.domain.transaction.expenses
 import com.ivy.domain.transaction.incomes
@@ -28,7 +28,7 @@ class CalculateDueTransactionsInfoUseCase @Inject constructor(
         val dateNow = nowLocalDate()
         val dueTransactions = getDueTransactionsUseCase(range)
             .filter { dueFilter(it, dateNow) }
-        val exchangeArg = ExchangeTrnArgument(
+        val exchangeArg = ExchangeTransactionArgument(
             baseCurrency = baseCurrency,
             exchange = exchangeAmountUseCase::invoke,
             getAccount = { getLegacyAccountUseCase(it) }

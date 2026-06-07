@@ -13,7 +13,7 @@ object LegacyTrnFunctions {
     fun incomes(transactions: List<com.ivy.data.model.legacy.Transaction>): List<com.ivy.data.model.legacy.Transaction> {
         return transactions.filter { it.type == TransactionType.INCOME }
     }
-    fun trnCurrency(
+    fun transactionCurrency(
         transaction: com.ivy.data.model.legacy.Transaction,
         accounts: List<Account>,
         baseCurrency: String

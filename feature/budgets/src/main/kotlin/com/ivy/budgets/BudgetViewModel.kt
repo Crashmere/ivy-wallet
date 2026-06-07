@@ -35,7 +35,7 @@ import com.ivy.data.model.legacy.CreateBudgetData
 import com.ivy.domain.exchange.ExchangeData
 import com.ivy.domain.transaction.getAccountId
 import com.ivy.domain.transaction.getValue
-import com.ivy.domain.transaction.trnCurrency
+import com.ivy.domain.transaction.transactionCurrency
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
@@ -242,7 +242,7 @@ class BudgetViewModel @Inject constructor(
                         exchangeAmountUseCase(
                             data = ExchangeData(
                                 baseCurrency = baseCurrencyCode,
-                                fromCurrency = trnCurrency(transaction, accounts, baseCurrencyCode)
+                                fromCurrency = transactionCurrency(transaction, accounts, baseCurrencyCode)
                             ),
                             amount = transaction.getValue()
                         ).getOrNull()?.toDouble() ?: 0.0

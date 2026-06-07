@@ -3,7 +3,7 @@ package com.ivy.domain.transaction.legacy
 import com.ivy.data.model.TransactionType
 import com.ivy.data.model.legacy.Account
 import com.ivy.domain.exchange.ExchangeEffect
-import com.ivy.domain.exchange.LegacyExchangeTrns
+import com.ivy.domain.exchange.LegacyExchangeTransactions
 import java.math.BigDecimal
 
 object WalletValueFunctionsLegacy {
@@ -18,7 +18,7 @@ object WalletValueFunctionsLegacy {
         arg: Argument
     ): BigDecimal = with(transaction) {
         when (type) {
-            TransactionType.INCOME -> LegacyExchangeTrns.exchangeInBaseCurrency(
+            TransactionType.INCOME -> LegacyExchangeTransactions.exchangeInBaseCurrency(
                 transaction = this,
                 accounts = arg.accounts,
                 baseCurrency = arg.baseCurrency,
@@ -36,7 +36,7 @@ object WalletValueFunctionsLegacy {
         val condition = arg.accounts.any { it.id == this.toAccountId }
         when {
             type == TransactionType.TRANSFER && condition ->
-                LegacyExchangeTrns.exchangeInBaseCurrency(
+                LegacyExchangeTransactions.exchangeInBaseCurrency(
                     transaction = this.copy(
                         amount = this.toAmount,
                         accountId = this.toAccountId ?: this.accountId
@@ -55,7 +55,7 @@ object WalletValueFunctionsLegacy {
         arg: Argument
     ): BigDecimal = with(transaction) {
         when (type) {
-            TransactionType.EXPENSE -> LegacyExchangeTrns.exchangeInBaseCurrency(
+            TransactionType.EXPENSE -> LegacyExchangeTransactions.exchangeInBaseCurrency(
                 transaction = this,
                 accounts = arg.accounts,
                 baseCurrency = arg.baseCurrency,
@@ -72,7 +72,7 @@ object WalletValueFunctionsLegacy {
     ): BigDecimal = with(transaction) {
         val condition = arg.accounts.any { it.id == this.accountId }
         when {
-            type == TransactionType.TRANSFER && condition -> LegacyExchangeTrns.exchangeInBaseCurrency(
+            type == TransactionType.TRANSFER && condition -> LegacyExchangeTransactions.exchangeInBaseCurrency(
                 transaction = this,
                 accounts = arg.accounts,
                 baseCurrency = arg.baseCurrency,

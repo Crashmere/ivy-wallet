@@ -61,12 +61,12 @@ class LegacyExchangeRatesUseCase @Inject constructor(
         baseCurrency: String,
         accounts: List<Account> // helper
     ): Double {
-        val trnCurrency = accounts.find { it.id == accountId }?.currency
+        val transactionCurrency = accounts.find { it.id == accountId }?.currency
             ?: return amount // no conversion
 
         return amountBaseCurrency(
             amount = amount,
-            amountCurrency = trnCurrency,
+            amountCurrency = transactionCurrency,
             baseCurrency = baseCurrency
         )
     }

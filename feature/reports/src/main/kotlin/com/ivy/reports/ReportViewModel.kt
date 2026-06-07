@@ -52,7 +52,7 @@ import com.ivy.data.model.legacy.IncomeExpenseTransferPair
 import com.ivy.domain.exchange.ExchangeData
 import com.ivy.domain.transaction.getTransactionType
 import com.ivy.domain.transaction.getValue
-import com.ivy.domain.transaction.trnCurrency
+import com.ivy.domain.transaction.transactionCurrency
 import com.ivy.domain.util.orZero
 import com.ivy.legacy.ui.theme.Gray
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -489,7 +489,7 @@ class ReportViewModel @Inject constructor(
             val trnAmountBaseCurrency = exchangeAmountUseCase(
                 data = ExchangeData(
                     baseCurrency = baseCurrency,
-                    fromCurrency = trnCurrency(transaction, accounts, baseCurrency),
+                    fromCurrency = transactionCurrency(transaction, accounts, baseCurrency),
                 ),
                 amount = transaction.getValue()
             ).orZero().toDouble()

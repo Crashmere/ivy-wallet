@@ -12,7 +12,7 @@ import com.ivy.data.model.legacy.Account
 import com.ivy.data.model.legacy.TransactionHistoryDateDivider
 import com.ivy.data.model.legacy.TransactionHistoryItem
 import com.ivy.domain.exchange.ExchangeData
-import com.ivy.domain.exchange.ExchangeTrnArgument
+import com.ivy.domain.exchange.ExchangeTransactionArgument
 import com.ivy.domain.exchange.exchangeInBaseCurrency
 import com.ivy.domain.mapper.legacy.toImmutableLegacyTags
 import com.ivy.domain.mapper.legacy.toLegacy
@@ -64,7 +64,7 @@ suspend fun transactionsWithDateDividers(
             (date2.atStartOfDay().toEpochSeconds() - date1.atStartOfDay().toEpochSeconds()).toInt()
         }
         .flatMap { (date, transactionsForDate) ->
-            val arg = ExchangeTrnArgument(
+            val arg = ExchangeTransactionArgument(
                 baseCurrency = baseCurrencyCode,
                 getAccount = getAccount,
                 exchange = exchange
