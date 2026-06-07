@@ -12,8 +12,8 @@ import com.ivy.base.model.TransactionType
 import com.ivy.base.time.TimeConverter
 import com.ivy.base.time.TimeProvider
 import com.ivy.data.model.Category
-import com.ivy.domain.preferences.AppPreferences
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
+import com.ivy.domain.usecase.settings.GetTransfersAsIncomeExpensePreferenceUseCase
 import com.ivy.legacy.ui.state.PeriodState
 import com.ivy.legacy.ui.model.period.TimePeriod
 import com.ivy.base.coroutines.ioThread
@@ -36,7 +36,7 @@ class PieChartStatisticViewModel @Inject constructor(
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
     private val periodState: PeriodState,
     private val buildPieChartDataUseCase: BuildPieChartDataUseCase,
-    private val appPreferences: AppPreferences,
+    private val getTransfersAsIncomeExpensePreference: GetTransfersAsIncomeExpensePreferenceUseCase,
     private val timeProvider: TimeProvider,
     private val timeConverter: TimeConverter,
 ) : ComposeViewModel<PieChartStatisticState, PieChartStatisticEvent>() {
@@ -195,7 +195,7 @@ class PieChartStatisticViewModel @Inject constructor(
         val range = periodValue.toRange(periodState.startDayOfMonth, timeConverter, timeProvider)
 
         val treatTransferAsIncExp =
-            appPreferences.transfersAsIncomeExpense &&
+            getTransfersAsIncomeExpensePreference() &&
                     accountIdFilterList.isNotEmpty() &&
                     treatTransfersAsIncomeExpense
 

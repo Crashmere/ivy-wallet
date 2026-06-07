@@ -21,7 +21,9 @@ import com.ivy.domain.usecase.csv.ExportCsvUseCase
 import com.ivy.domain.usecase.exchange.SyncExchangeRatesUseCase
 import com.ivy.domain.usecase.settings.GetStartDayOfMonthUseCase
 import com.ivy.domain.usecase.settings.GetThemeUseCase
+import com.ivy.domain.usecase.settings.GetTransfersAsIncomeExpensePreferenceUseCase
 import com.ivy.domain.usecase.settings.SetStartDayOfMonthUseCase
+import com.ivy.domain.usecase.settings.SetTransfersAsIncomeExpensePreferenceUseCase
 import com.ivy.domain.usecase.settings.SwitchThemeUseCase
 import com.ivy.ui.theme.ThemeState
 import com.ivy.legacy.ui.state.PeriodState
@@ -51,6 +53,8 @@ class SettingsViewModel @Inject constructor(
     private val exportBackupUseCase: ExportBackupUseCase,
     private val getStartDayOfMonth: GetStartDayOfMonthUseCase,
     private val setStartDayOfMonth: SetStartDayOfMonthUseCase,
+    private val getTransfersAsIncomeExpensePreference: GetTransfersAsIncomeExpensePreferenceUseCase,
+    private val setTransfersAsIncomeExpensePreference: SetTransfersAsIncomeExpensePreferenceUseCase,
     private val syncExchangeRatesUseCase: SyncExchangeRatesUseCase,
     private val preferenceToggles: PreferenceToggles,
     private val preferenceToggleRepository: PreferenceToggleRepository,
@@ -143,7 +147,7 @@ class SettingsViewModel @Inject constructor(
     }
 
     private fun initializeTransfersAsIncomeExpense() {
-        treatTransfersAsIncomeExpense.value = appPreferences.transfersAsIncomeExpense
+        treatTransfersAsIncomeExpense.value = getTransfersAsIncomeExpensePreference()
     }
 
     private suspend fun initializeTogglePreferences() {
@@ -424,7 +428,7 @@ class SettingsViewModel @Inject constructor(
         treatTransfersAsIncomeExpense.value = setTransfersAsIncomeExpense
 
         viewModelScope.launch {
-            appPreferences.transfersAsIncomeExpense = treatTransfersAsIncomeExpense.value
+            setTransfersAsIncomeExpensePreference(treatTransfersAsIncomeExpense.value)
         }
     }
 

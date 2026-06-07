@@ -19,7 +19,6 @@ import com.ivy.data.model.CategoryId
 import com.ivy.data.model.primitive.ColorInt
 import com.ivy.data.model.primitive.IconAsset
 import com.ivy.data.model.primitive.NotBlankTrimmedString
-import com.ivy.domain.preferences.AppPreferences
 import com.ivy.domain.usecase.account.DeleteAccountUseCase
 import com.ivy.domain.usecase.account.GetAccountUseCase
 import com.ivy.domain.usecase.category.DeleteCategoryUseCase
@@ -58,6 +57,7 @@ import com.ivy.domain.usecase.account.GetAccountUpcomingTransactionsSummaryUseCa
 import com.ivy.domain.usecase.account.UpdateAccountWithBalanceUseCase
 import com.ivy.domain.usecase.planned.PayOrSkipLegacyPlannedTransactionUseCase
 import com.ivy.domain.usecase.planned.PayOrSkipLegacyPlannedTransactionsUseCase
+import com.ivy.domain.usecase.settings.GetTransfersAsIncomeExpensePreferenceUseCase
 import com.ivy.domain.usecase.transaction.BuildLegacyTransactionHistoryItemsUseCase
 import com.ivy.domain.usecase.transaction.CalculateLegacyTransactionsIncomeExpenseUseCase
 import com.ivy.domain.exchange.ExchangeData
@@ -81,7 +81,7 @@ class TransactionsViewModel @Inject constructor(
     private val updateAccountWithBalanceUseCase: UpdateAccountWithBalanceUseCase,
     private val payOrSkipLegacyPlannedTransactionUseCase: PayOrSkipLegacyPlannedTransactionUseCase,
     private val payOrSkipLegacyPlannedTransactionsUseCase: PayOrSkipLegacyPlannedTransactionsUseCase,
-    private val appPreferences: AppPreferences,
+    private val getTransfersAsIncomeExpensePreference: GetTransfersAsIncomeExpensePreferenceUseCase,
     private val getLegacyAccountsUseCase: GetLegacyAccountsUseCase,
     private val getLegacyAccountUseCase: GetLegacyAccountUseCase,
     private val getAccountTransactionsUseCase: GetAccountTransactionsUseCase,
@@ -370,7 +370,7 @@ class TransactionsViewModel @Inject constructor(
             ).getOrNull()?.toDouble()
         }
 
-        val includeTransfersInCalc = appPreferences.transfersAsIncomeExpense
+        val includeTransfersInCalc = getTransfersAsIncomeExpensePreference()
 
         val incomeExpensePair = calculateAccountIncomeExpenseUseCase(
             account = account,
@@ -705,7 +705,7 @@ class TransactionsViewModel @Inject constructor(
             accounts.value = getLegacyAccountsUseCase()
             initWithTransactions.value = false
             treatTransfersAsIncomeExpense.value =
-                appPreferences.transfersAsIncomeExpense
+                getTransfersAsIncomeExpensePreference()
 
             when {
                 screen.accountId != null -> {

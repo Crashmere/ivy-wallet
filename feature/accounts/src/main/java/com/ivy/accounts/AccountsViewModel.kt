@@ -12,11 +12,11 @@ import com.ivy.base.time.TimeConverter
 import com.ivy.base.time.TimeProvider
 import com.ivy.domain.preferences.toggles.PreferenceToggleRepository
 import com.ivy.domain.preferences.toggles.PreferenceToggles
-import com.ivy.domain.preferences.AppPreferences
 import com.ivy.domain.usecase.account.GetAccountsUseCase
 import com.ivy.domain.usecase.account.ObserveAccountChangesUseCase
 import com.ivy.domain.usecase.account.SaveAccountUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
+import com.ivy.domain.usecase.settings.GetTransfersAsIncomeExpensePreferenceUseCase
 import com.ivy.legacy.ui.state.PeriodState
 import com.ivy.data.model.legacy.toCloseTimeRange
 import com.ivy.data.model.currency.format
@@ -38,7 +38,7 @@ import javax.inject.Inject
 class AccountsViewModel @Inject constructor(
     private val resourceProvider: ResourceProvider,
     private val periodState: PeriodState,
-    private val appPreferences: AppPreferences,
+    private val getTransfersAsIncomeExpensePreference: GetTransfersAsIncomeExpensePreferenceUseCase,
     private val calculateWalletBalanceUseCase: CalculateWalletBalanceUseCase,
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
     private val getAccountsUseCase: GetAccountsUseCase,
@@ -169,7 +169,7 @@ class AccountsViewModel @Inject constructor(
         val baseCurrencyCode = getBaseCurrencyCode()
         val accounts = getAccountsUseCase().toImmutableList()
 
-        val includeTransfersInCalc = appPreferences.transfersAsIncomeExpense
+        val includeTransfersInCalc = getTransfersAsIncomeExpensePreference()
 
         val accountsDataList = buildAccountDataUseCase(
             accounts = accounts,
