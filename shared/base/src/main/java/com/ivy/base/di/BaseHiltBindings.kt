@@ -1,5 +1,7 @@
 package com.ivy.base.di
 
+import com.ivy.base.prefs.PreferenceStore
+import com.ivy.base.prefs.SharedPrefs
 import com.ivy.base.resource.AndroidResourceProvider
 import com.ivy.base.resource.ResourceProvider
 import com.ivy.base.threading.DispatchersProvider
@@ -27,4 +29,7 @@ interface BaseHiltBindings {
 
     @Binds
     fun resourceProvider(impl: AndroidResourceProvider): ResourceProvider
+
+    @Binds
+    fun preferenceStore(impl: SharedPrefs): PreferenceStore
 }

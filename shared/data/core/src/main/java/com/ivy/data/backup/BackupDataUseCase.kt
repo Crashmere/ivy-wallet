@@ -3,7 +3,8 @@ package com.ivy.data.backup
 import android.content.Context
 import android.net.Uri
 import androidx.core.net.toUri
-import com.ivy.base.prefs.SharedPrefs
+import com.ivy.base.prefs.AppPreferenceKeys
+import com.ivy.base.prefs.PreferenceStore
 import com.ivy.base.io.unzip
 import com.ivy.base.io.zip
 import com.ivy.base.threading.DispatchersProvider
@@ -54,7 +55,7 @@ class BackupDataUseCase @Inject constructor(
     private val settingsDao: SettingsDao,
     private val transactionDao: TransactionDao,
     private val transactionWriter: WriteTransactionDao,
-    private val sharedPrefs: SharedPrefs,
+    private val preferenceStore: PreferenceStore,
     private val accountRepository: AccountRepository,
     private val accountMapper: AccountMapper,
     private val categoryWriter: WriteCategoryDao,
@@ -129,17 +130,17 @@ class BackupDataUseCase @Inject constructor(
 
     private fun getSharedPrefsData(): HashMap<String, String> {
         val hashmap = HashMap<String, String>()
-        hashmap[SharedPrefs.SHOW_NOTIFICATIONS] =
-            sharedPrefs.getBoolean(SharedPrefs.SHOW_NOTIFICATIONS, true).toString()
+        hashmap[AppPreferenceKeys.SHOW_NOTIFICATIONS] =
+            preferenceStore.getBoolean(AppPreferenceKeys.SHOW_NOTIFICATIONS, true).toString()
 
-        hashmap[SharedPrefs.APP_LOCK_ENABLED] =
-            sharedPrefs.getBoolean(SharedPrefs.APP_LOCK_ENABLED, false).toString()
+        hashmap[AppPreferenceKeys.APP_LOCK_ENABLED] =
+            preferenceStore.getBoolean(AppPreferenceKeys.APP_LOCK_ENABLED, false).toString()
 
-        hashmap[SharedPrefs.HIDE_CURRENT_BALANCE] =
-            sharedPrefs.getBoolean(SharedPrefs.HIDE_CURRENT_BALANCE, false).toString()
+        hashmap[AppPreferenceKeys.HIDE_CURRENT_BALANCE] =
+            preferenceStore.getBoolean(AppPreferenceKeys.HIDE_CURRENT_BALANCE, false).toString()
 
-        hashmap[SharedPrefs.TRANSFERS_AS_INCOME_EXPENSE] =
-            sharedPrefs.getBoolean(SharedPrefs.TRANSFERS_AS_INCOME_EXPENSE, false).toString()
+        hashmap[AppPreferenceKeys.TRANSFERS_AS_INCOME_EXPENSE] =
+            preferenceStore.getBoolean(AppPreferenceKeys.TRANSFERS_AS_INCOME_EXPENSE, false).toString()
 
         return hashmap
     }
@@ -284,25 +285,25 @@ class BackupDataUseCase @Inject constructor(
             val plannedPayments =
                 async { plannedPaymentRuleWriter.saveMany(completeData.plannedPaymentRules) }
 
-            sharedPrefs.putBoolean(
-                SharedPrefs.SHOW_NOTIFICATIONS,
-                (completeData.sharedPrefs[SharedPrefs.SHOW_NOTIFICATIONS] ?: "true").toBoolean()
+            preferenceStore.putBoolean(
+                AppPreferenceKeys.SHOW_NOTIFICATIONS,
+                (completeData.sharedPrefs[AppPreferenceKeys.SHOW_NOTIFICATIONS] ?: "true").toBoolean()
             )
 
-            sharedPrefs.putBoolean(
-                SharedPrefs.APP_LOCK_ENABLED,
-                (completeData.sharedPrefs[SharedPrefs.APP_LOCK_ENABLED] ?: "false").toBoolean()
+            preferenceStore.putBoolean(
+                AppPreferenceKeys.APP_LOCK_ENABLED,
+                (completeData.sharedPrefs[AppPreferenceKeys.APP_LOCK_ENABLED] ?: "false").toBoolean()
             )
 
-            sharedPrefs.putBoolean(
-                SharedPrefs.HIDE_CURRENT_BALANCE,
-                (completeData.sharedPrefs[SharedPrefs.HIDE_CURRENT_BALANCE] ?: "false").toBoolean()
+            preferenceStore.putBoolean(
+                AppPreferenceKeys.HIDE_CURRENT_BALANCE,
+                (completeData.sharedPrefs[AppPreferenceKeys.HIDE_CURRENT_BALANCE] ?: "false").toBoolean()
             )
 
-            sharedPrefs.putBoolean(
-                SharedPrefs.TRANSFERS_AS_INCOME_EXPENSE,
+            preferenceStore.putBoolean(
+                AppPreferenceKeys.TRANSFERS_AS_INCOME_EXPENSE,
                 (
-                        completeData.sharedPrefs[SharedPrefs.TRANSFERS_AS_INCOME_EXPENSE]
+                        completeData.sharedPrefs[AppPreferenceKeys.TRANSFERS_AS_INCOME_EXPENSE]
                             ?: "false"
                         ).toBoolean()
             )
