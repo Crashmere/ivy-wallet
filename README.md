@@ -324,6 +324,13 @@
    - `hideKeyboard`
    - 目标：UI helper 进 `shared:ui:core`，平台键盘行为保持在 UI 层。
 
+当前进展：
+
+- 已把 `utils/Compose.kt`、`utils/Keyboard.kt`、`Spacers.kt`、`ColumnRoot.kt`、`IvyText.kt` 从 `temp:old-design` 移到 `shared:ui:core`。
+- 这些文件暂时保留 `com.ivy.design.*` 包名，以降低迁移成本；后续在旧设计模块清空后再统一改包名。
+- 在 `shared:ui:core` 补齐 `colorControlNormal` attr，让仍使用该 attr 的旧 drawable 可以通过独立资源校验。
+- `IvyIcon`、`Dividers`、`IvyTheme/UI` 等依赖旧主题上下文的文件暂时保留在 `temp:old-design`，下一步分组处理。
+
 完成标准：
 
 - `rg "projects.temp.oldDesign" -g "build.gradle.kts"` 无 feature/app 依赖。
