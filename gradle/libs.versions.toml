@@ -86,6 +86,7 @@ hilt-gradle-plugin = { module = "com.google.dagger:hilt-android-gradle-plugin", 
 javax-inject = { module = "javax.inject:javax.inject", version = "1" }
 
 # AndroidX
+androidx-core-ktx = { module = "androidx.core:core-ktx", version = "1.13.1" }
 androidx-biometrics = { module = "androidx.biometric:biometric", version = "1.2.0-alpha05" }
 androidx-activity = { module = "androidx.activity:activity-ktx", version = "1.9.1" }
 appcompat-activity = { module = "androidx.appcompat:appcompat", version = "1.7.0" }
@@ -152,7 +153,6 @@ compose = [
     "compose-material-icons-extended",
     "compose-runtime",
     "compose-ui",
-    "compose-viewmodel",
 ]
 activity = [
     "androidx-activity",

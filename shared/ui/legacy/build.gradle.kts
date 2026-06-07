@@ -11,6 +11,7 @@ dependencies {
     implementation(projects.shared.ui.core)
     implementation(projects.shared.ui.navigation)
 
+    implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.recyclerview)
     implementation(libs.javax.inject)
     implementation(libs.keval)
