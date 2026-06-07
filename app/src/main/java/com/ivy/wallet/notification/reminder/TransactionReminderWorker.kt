@@ -7,10 +7,10 @@ import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.ivy.ui.resource.ResourceProvider
-import com.ivy.domain.AppStarter
 import com.ivy.domain.usecase.settings.GetShowNotificationsPreferenceUseCase
 import com.ivy.domain.usecase.transaction.CountTodayTransactionsUseCase
 import com.ivy.ui.R
+import com.ivy.wallet.AppStarter
 import com.ivy.wallet.android.notification.IvyNotificationChannel
 import com.ivy.wallet.android.notification.NotificationService
 import dagger.assisted.Assisted

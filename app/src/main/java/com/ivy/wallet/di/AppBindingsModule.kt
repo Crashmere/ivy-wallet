@@ -6,12 +6,14 @@ import com.ivy.base.time.TimeConverter
 import com.ivy.base.time.TimeProvider
 import com.ivy.base.time.impl.DeviceTimeProvider
 import com.ivy.base.time.impl.StandardTimeConverter
+import com.ivy.domain.preferences.toggles.IvyPreferenceToggles
+import com.ivy.domain.preferences.toggles.PreferenceToggles
 import com.ivy.ui.resource.ResourceProvider
-import com.ivy.domain.AppStarter
 import com.ivy.domain.usecase.ResetWalletDataUseCase
 import com.ivy.ui.platform.DatePicker
 import com.ivy.ui.platform.FilePicker
 import com.ivy.ui.platform.LocaleSettingsLauncher
+import com.ivy.wallet.AppStarter
 import com.ivy.wallet.IvyAppStarter
 import com.ivy.wallet.platform.AndroidLocaleSettingsLauncher
 import com.ivy.wallet.platform.AndroidResourceProvider
@@ -53,6 +55,11 @@ abstract class AppBindingsModule {
     abstract fun resourceProvider(
         resourceProvider: AndroidResourceProvider
     ): ResourceProvider
+
+    @Binds
+    abstract fun preferenceToggles(
+        preferenceToggles: IvyPreferenceToggles
+    ): PreferenceToggles
 
     @Binds
     abstract fun dispatchersProvider(
