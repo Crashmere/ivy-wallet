@@ -8,5 +8,4 @@ android {
 
 dependencies {
     implementation(projects.shared.base)
-    implementation(libs.compose.runtime)
 }

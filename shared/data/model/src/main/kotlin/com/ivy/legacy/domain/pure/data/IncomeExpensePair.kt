@@ -1,9 +1,7 @@
 package com.ivy.legacy.domain.pure.data
 
-import androidx.compose.runtime.Immutable
 import java.math.BigDecimal
 
-@Immutable
 data class IncomeExpensePair(
     val income: BigDecimal,
     val expense: BigDecimal

@@ -1,6 +1,5 @@
 package com.ivy.data.model
 
-import androidx.compose.runtime.Immutable
 import com.ivy.data.model.primitive.AssociationId
 import com.ivy.data.model.primitive.ColorInt
 import com.ivy.data.model.primitive.IconAsset
@@ -27,5 +26,4 @@ data class TagAssociation(
 ) : Identifiable<TagId>
 
 @JvmInline
-@Immutable
 value class TagId(override val value: UUID) : UniqueId
