@@ -7,8 +7,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableDoubleStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
 import androidx.lifecycle.viewModelScope
 import com.ivy.base.Toaster
 import com.ivy.base.model.legacy.Transaction
@@ -22,6 +20,7 @@ import com.ivy.data.model.Tag
 import com.ivy.data.model.TagId
 import com.ivy.data.model.TransactionId
 import com.ivy.data.model.primitive.NotBlankTrimmedString
+import com.ivy.domain.preferences.toggles.PreferenceToggleRepository
 import com.ivy.domain.preferences.toggles.PreferenceToggles
 import com.ivy.domain.preferences.AppPreferences
 import com.ivy.domain.usecase.category.GetCategoriesUseCase
@@ -115,7 +114,7 @@ class EditTransactionViewModel @Inject constructor(
     private val getTagsUseCase: GetTagsUseCase,
     private val searchTagsUseCase: SearchTagsUseCase,
     private val preferenceToggles: PreferenceToggles,
-    private val preferenceDataStore: DataStore<Preferences>,
+    private val preferenceToggleRepository: PreferenceToggleRepository,
     private val timeConverter: TimeConverter,
     private val timeProvider: TimeProvider,
     private val dateTimePicker: DateTimePicker,
@@ -980,6 +979,6 @@ class EditTransactionViewModel @Inject constructor(
     }
 
     private suspend fun shouldSortCategoriesAscending(): Boolean {
-        return preferenceToggles.sortCategoriesAscending.isEnabled(preferenceDataStore)
+        return preferenceToggleRepository.isEnabled(preferenceToggles.sortCategoriesAscending)
     }
 }
