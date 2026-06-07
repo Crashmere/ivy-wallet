@@ -31,7 +31,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-@Suppress("TooManyFunctions")
 class RootActivity : AppCompatActivity() {
     @Inject
     lateinit var themeState: ThemeState

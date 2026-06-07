@@ -147,13 +147,13 @@
 
 - `RootActivity` 仍负责主题、根导航、应用锁生命周期和根部 Compose 宿主。
 - 文件创建/打开、CSV/zip 分享、Material 日期选择器和生物识别弹窗已经拆到 `app/src/main/java/com/ivy/wallet/platform`。
-- 构建版本信息和文件分享能力已拆成 `BuildInfoProvider`、`FileSharer` 这类窄接口，放在 `shared:ui:core` 的 `com.ivy.ui.platform` 包。
+- 构建版本信息、文件分享和应用语言设置跳转已拆成 `BuildInfoProvider`、`FileSharer`、`LocaleSettingsLauncher` 这类窄接口，放在 `shared:ui:core` 的 `com.ivy.ui.platform` 包。
 - 原 `RootScreen` 大接口已经删除。
 
 问题：
 
 - Activity 仍偏重，应用锁生命周期和根导航还混在一起。
-- feature 仍有少量地方通过 `LocalContext.current as ...` 获取平台能力，后续可以继续改成 CompositionLocal 或更明确的依赖入口。
+- feature 已不再通过 `LocalContext.current as ...` 强转 Activity 获取平台能力；剩余平台行为主要集中在 app/platform、数据文件读写和 Compose UI 边界。
 
 目标：
 
