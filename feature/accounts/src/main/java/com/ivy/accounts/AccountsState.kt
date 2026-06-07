@@ -1,7 +1,6 @@
 package com.ivy.accounts
 
 import androidx.compose.runtime.Immutable
-import com.ivy.legacy.domain.model.AccountData
 import kotlinx.collections.immutable.ImmutableList
 
 @Immutable

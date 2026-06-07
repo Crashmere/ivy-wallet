@@ -9,16 +9,13 @@ import com.ivy.data.model.Expense
 import com.ivy.data.model.Income
 import com.ivy.data.repository.TransactionRepository
 import com.ivy.data.repository.mapper.TransactionMapper
-import com.ivy.domain.preferences.AppPreferences
 import com.ivy.domain.usecase.currency.GetBaseCurrencyUseCase
+import com.ivy.legacy.domain.action.account.CalcAccBalanceAct
 import com.ivy.legacy.domain.model.filterOverdue
 import com.ivy.legacy.domain.model.filterUpcoming
 import com.ivy.legacy.domain.model.Account
 import com.ivy.legacy.domain.mapper.toDomain
-import com.ivy.legacy.domain.action.viewmodel.account.AccountDataAct
-import com.ivy.data.model.legacy.ClosedTimeRange
 import com.ivy.legacy.domain.pure.transaction.getValue
-import kotlinx.collections.immutable.toImmutableList
 import javax.inject.Inject
 import kotlin.math.abs
 import kotlin.math.absoluteValue
@@ -26,8 +23,7 @@ import kotlin.math.absoluteValue
 class WalletAccountLogic @Inject constructor(
     private val transactionRepository: TransactionRepository,
     private val transactionMapper: TransactionMapper,
-    private val accountDataAct: AccountDataAct,
-    private val appPreferences: AppPreferences,
+    private val calcAccBalanceAct: CalcAccBalanceAct,
     private val getBaseCurrency: GetBaseCurrencyUseCase,
     private val timeProvider: TimeProvider
 ) {
@@ -80,22 +76,14 @@ class WalletAccountLogic @Inject constructor(
         account: Account
     ): Double {
         val baseCurrency = getBaseCurrency()
-        val accountList = account.toDomainAccount(baseCurrency)
-            .map { a -> listOf(a) }
-            .getOrElse { emptyList() }
+        val domainAccount = account.toDomainAccount(baseCurrency)
+            .getOrElse { return 0.0 }
 
-        val includeTransfersInCalc = appPreferences.transfersAsIncomeExpense
-
-        val accountsDataList = accountDataAct(
-            AccountDataAct.Input(
-                accounts = accountList.toImmutableList(),
-                range = ClosedTimeRange.allTimeIvy(timeProvider),
-                baseCurrency = baseCurrency.code,
-                includeTransfersInCalc = includeTransfersInCalc
+        return calcAccBalanceAct(
+            CalcAccBalanceAct.Input(
+                account = domainAccount
             )
-        )
-
-        return accountsDataList.firstOrNull()?.balance ?: 0.0
+        ).balance.toDouble()
     }
 
     suspend fun calculateUpcomingIncome(

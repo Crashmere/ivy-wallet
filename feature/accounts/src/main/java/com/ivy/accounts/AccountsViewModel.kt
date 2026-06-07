@@ -18,14 +18,12 @@ import com.ivy.domain.usecase.account.ObserveAccountChangesUseCase
 import com.ivy.domain.usecase.account.SaveAccountUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.legacy.ui.state.PeriodState
-import com.ivy.legacy.domain.model.AccountData
 import com.ivy.data.model.legacy.toCloseTimeRange
 import com.ivy.data.model.currency.format
 import com.ivy.base.coroutines.ioThread
 import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.R
 import com.ivy.ui.preferences.asEnabledState
-import com.ivy.legacy.domain.action.viewmodel.account.AccountDataAct
 import com.ivy.legacy.domain.action.wallet.CalcWalletBalanceAct
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList

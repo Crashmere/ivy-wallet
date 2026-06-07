@@ -1,4 +1,4 @@
-package com.ivy.legacy.domain.model
+package com.ivy.accounts
 
 import com.ivy.data.model.Account
 import com.ivy.data.model.Reorderable

@@ -1,15 +1,15 @@
-package com.ivy.legacy.domain.action.viewmodel.account
+package com.ivy.accounts
 
 import arrow.core.toOption
-import com.ivy.legacy.frp.action.FPAction
-import com.ivy.legacy.frp.action.thenMap
-import com.ivy.legacy.frp.then
-import com.ivy.legacy.domain.model.Account
+import com.ivy.data.model.Account
+import com.ivy.data.model.legacy.ClosedTimeRange
 import com.ivy.legacy.domain.action.account.CalcAccBalanceAct
 import com.ivy.legacy.domain.action.account.CalcAccIncomeExpenseAct
 import com.ivy.legacy.domain.action.exchange.ExchangeAct
-import com.ivy.data.model.legacy.ClosedTimeRange
 import com.ivy.legacy.domain.pure.exchange.ExchangeData
+import com.ivy.legacy.frp.action.FPAction
+import com.ivy.legacy.frp.action.thenMap
+import com.ivy.legacy.frp.then
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 import javax.inject.Inject
@@ -18,9 +18,9 @@ class AccountDataAct @Inject constructor(
     private val exchangeAct: ExchangeAct,
     private val calcAccBalanceAct: CalcAccBalanceAct,
     private val calcAccIncomeExpenseAct: CalcAccIncomeExpenseAct
-) : FPAction<AccountDataAct.Input, ImmutableList<com.ivy.legacy.domain.model.AccountData>>() {
+) : FPAction<AccountDataAct.Input, ImmutableList<AccountData>>() {
 
-    override suspend fun Input.compose(): suspend () -> ImmutableList<com.ivy.legacy.domain.model.AccountData> = suspend {
+    override suspend fun Input.compose(): suspend () -> ImmutableList<AccountData> = suspend {
         accounts
     } thenMap { acc ->
         val balance = calcAccBalanceAct(
@@ -51,7 +51,7 @@ class AccountDataAct @Inject constructor(
             )
         ).incomeExpensePair
 
-        com.ivy.legacy.domain.model.AccountData(
+        AccountData(
             account = acc,
             balance = balance.toDouble(),
             balanceBaseCurrency = balanceBaseCurrency?.toDouble(),
@@ -63,7 +63,7 @@ class AccountDataAct @Inject constructor(
     }
 
     data class Input(
-        val accounts: ImmutableList<com.ivy.data.model.Account>,
+        val accounts: ImmutableList<Account>,
         val baseCurrency: String,
         val range: ClosedTimeRange,
         val includeTransfersInCalc: Boolean = false

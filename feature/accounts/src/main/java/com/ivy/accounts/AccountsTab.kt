@@ -29,7 +29,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
-import com.ivy.legacy.domain.model.AccountData
 import com.ivy.legacy.ui.clickableNoIndication
 import com.ivy.legacy.ui.horizontalSwipeListener
 import com.ivy.legacy.ui.rememberInteractionSource
