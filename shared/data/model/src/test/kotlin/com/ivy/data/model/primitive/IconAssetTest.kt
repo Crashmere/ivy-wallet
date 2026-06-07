@@ -5,7 +5,7 @@ import io.kotest.assertions.arrow.core.shouldBeRight
 import io.kotest.matchers.shouldBe
 import org.junit.Test
 
-class IconIdTest {
+class IconAssetTest {
     @Test
     fun `fails for blank ids`() {
         IconAsset.from("").shouldBeLeft()
