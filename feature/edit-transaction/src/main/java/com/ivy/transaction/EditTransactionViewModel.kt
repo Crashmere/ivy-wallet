@@ -36,13 +36,13 @@ import com.ivy.ui.preferences.asEnabledState
 import com.ivy.domain.usecase.tag.RemoveTagFromTransactionUseCase
 import com.ivy.domain.usecase.tag.SaveTagUseCase
 import com.ivy.domain.usecase.tag.SearchTagsUseCase
+import com.ivy.domain.usecase.account.CreateAccountWithBalanceUseCase
 import com.ivy.domain.usecase.transaction.DeleteTransactionUseCase
 import com.ivy.domain.usecase.transaction.GetLegacyTransactionUseCase
 import com.ivy.domain.usecase.transaction.SaveLegacyTransactionUseCase
 import com.ivy.domain.usecase.transaction.SuggestTransactionTitlesUseCase
 import com.ivy.legacy.ui.model.EditTransactionDisplayLoan
 import com.ivy.data.model.legacy.Account
-import com.ivy.legacy.domain.logic.AccountCreator
 import com.ivy.base.coroutines.computationThread
 import com.ivy.base.coroutines.ioThread
 import com.ivy.base.text.toLowerCaseLocal
@@ -94,7 +94,7 @@ class EditTransactionViewModel @Inject constructor(
     private val appPreferences: AppPreferences,
     private val exchangeRatesLogic: ExchangeRatesLogic,
     private val categoryCreator: CategoryCreator,
-    private val accountCreator: AccountCreator,
+    private val createAccountWithBalanceUseCase: CreateAccountWithBalanceUseCase,
     private val plannedPaymentsLogic: PlannedPaymentsLogic,
     private val suggestTransactionTitlesUseCase: SuggestTransactionTitlesUseCase,
     private val loanTransactionsLogic: LoanTransactionsLogic,
@@ -692,9 +692,8 @@ class EditTransactionViewModel @Inject constructor(
 
     private fun createAccount(data: CreateAccountData) {
         viewModelScope.launch {
-            accountCreator.createAccount(data) {
-                accounts = getLegacyAccountsUseCase()
-            }
+            createAccountWithBalanceUseCase(data)
+            accounts = getLegacyAccountsUseCase()
         }
     }
 

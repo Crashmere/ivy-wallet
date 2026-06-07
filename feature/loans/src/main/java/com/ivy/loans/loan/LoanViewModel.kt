@@ -12,13 +12,13 @@ import com.ivy.base.time.TimeConverter
 import com.ivy.base.time.TimeProvider
 import com.ivy.data.model.LoanType
 import com.ivy.domain.preferences.AppPreferences
+import com.ivy.domain.usecase.account.CreateAccountWithBalanceUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.domain.usecase.loan.GetLoanRecordsUseCase
 import com.ivy.domain.usecase.loan.GetLoansUseCase
 import com.ivy.domain.usecase.loan.ReorderLoansUseCase
 import com.ivy.data.model.legacy.Account
 import com.ivy.data.model.legacy.Loan
-import com.ivy.legacy.domain.logic.AccountCreator
 import com.ivy.data.model.currency.format
 import com.ivy.base.currency.getDefaultFIATCurrency
 import com.ivy.base.coroutines.ioThread
@@ -50,7 +50,7 @@ class LoanViewModel @Inject constructor(
     private val reorderLoansUseCase: ReorderLoansUseCase,
     private val loanCreator: LoanCreator,
     private val appPreferences: AppPreferences,
-    private val accountCreator: AccountCreator,
+    private val createAccountWithBalanceUseCase: CreateAccountWithBalanceUseCase,
     private val loanTransactionsLogic: LoanTransactionsLogic,
     private val getLoansUseCase: GetLoansUseCase,
     private val getLegacyAccountsUseCase: GetLegacyAccountsUseCase,
@@ -338,11 +338,8 @@ class LoanViewModel @Inject constructor(
 
     private fun createAccount(data: CreateAccountData) {
         viewModelScope.launch {
-
-            accountCreator.createAccount(data) {
-                accounts = getLegacyAccountsUseCase()
-            }
-
+            createAccountWithBalanceUseCase(data)
+            accounts = getLegacyAccountsUseCase()
         }
     }
 

@@ -1,35 +1,32 @@
-package com.ivy.legacy.domain.logic
+package com.ivy.domain.usecase.account
+
 import arrow.core.raise.either
+import com.ivy.base.threading.DispatchersProvider
 import com.ivy.data.db.dao.read.AccountDao
-import com.ivy.data.model.Account
 import com.ivy.data.model.AccountId
+import com.ivy.data.model.legacy.CreateAccountData
 import com.ivy.data.model.primitive.AssetCode
 import com.ivy.data.model.primitive.ColorInt
 import com.ivy.data.model.primitive.IconAsset
 import com.ivy.data.model.primitive.NotBlankTrimmedString
-import com.ivy.data.repository.AccountRepository
-import com.ivy.base.coroutines.ioThread
-import com.ivy.domain.usecase.currency.GetBaseCurrencyUseCase
-import com.ivy.data.model.legacy.CreateAccountData
+import com.ivy.legacy.domain.logic.WalletAccountLogic
 import com.ivy.legacy.domain.pure.util.nextOrderNum
+import kotlinx.coroutines.withContext
 import java.util.UUID
 import javax.inject.Inject
+import com.ivy.data.model.Account as DomainAccount
 import com.ivy.data.model.legacy.Account as LegacyAccount
 
-class AccountCreator @Inject constructor(
+class CreateAccountWithBalanceUseCase @Inject constructor(
     private val accountLogic: WalletAccountLogic,
     private val accountDao: AccountDao,
-    private val accountRepository: AccountRepository,
-    private val getBaseCurrency: GetBaseCurrencyUseCase,
+    private val saveAccountUseCase: SaveAccountUseCase,
+    private val dispatchers: DispatchersProvider
 ) {
-
-    suspend fun createAccount(
-        data: CreateAccountData,
-        onRefreshUI: suspend () -> Unit
-    ) {
-        ioThread {
+    suspend operator fun invoke(data: CreateAccountData) {
+        withContext(dispatchers.io) {
             val account = either {
-                Account(
+                DomainAccount(
                     id = AccountId(value = UUID.randomUUID()),
                     name = NotBlankTrimmedString.from(data.name).bind(),
                     asset = AssetCode.from(data.currency).bind(),
@@ -38,8 +35,9 @@ class AccountCreator @Inject constructor(
                     includeInBalance = data.includeBalance,
                     orderNum = accountDao.findMaxOrderNum().nextOrderNum(),
                 )
-            }.getOrNull() ?: return@ioThread
-            accountRepository.save(account)
+            }.getOrNull() ?: return@withContext
+
+            saveAccountUseCase(account)
 
             val legacyAccount = LegacyAccount(
                 name = data.name,
@@ -56,27 +54,5 @@ class AccountCreator @Inject constructor(
                 newBalance = data.balance
             )
         }
-
-        onRefreshUI()
-    }
-
-    suspend fun editAccount(
-        legacyAccount: LegacyAccount,
-        newBalance: Double,
-        onRefreshUI: suspend () -> Unit
-    ) {
-        ioThread {
-            val account = legacyAccount.toDomainAccount(getBaseCurrency()).getOrNull()
-                ?: return@ioThread
-            accountRepository.save(account)
-
-            accountLogic.adjustBalance(
-                account = legacyAccount,
-                actualBalance = accountLogic.calculateAccountBalance(legacyAccount),
-                newBalance = newBalance
-            )
-        }
-
-        onRefreshUI()
     }
 }

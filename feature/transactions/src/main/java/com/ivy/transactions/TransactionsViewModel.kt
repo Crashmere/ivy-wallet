@@ -35,7 +35,6 @@ import com.ivy.domain.preferences.toggles.PreferenceToggles
 import com.ivy.legacy.ui.state.PeriodState
 import com.ivy.legacy.ui.model.period.TimePeriod
 import com.ivy.data.model.legacy.toCloseTimeRange
-import com.ivy.legacy.domain.logic.AccountCreator
 import com.ivy.base.coroutines.computationThread
 import com.ivy.base.coroutines.ioThread
 import com.ivy.base.text.isNotNullOrBlank
@@ -50,6 +49,7 @@ import com.ivy.domain.usecase.account.CalculateAccountIncomeExpenseUseCase
 import com.ivy.domain.usecase.account.GetAccountTransactionsUseCase
 import com.ivy.domain.usecase.account.GetLegacyAccountUseCase
 import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
+import com.ivy.domain.usecase.account.UpdateAccountWithBalanceUseCase
 import com.ivy.domain.usecase.transaction.BuildLegacyTransactionHistoryItemsUseCase
 import com.ivy.domain.usecase.transaction.CalculateLegacyTransactionsIncomeExpenseUseCase
 import com.ivy.legacy.domain.logic.CategoryCreator
@@ -76,7 +76,7 @@ class TransactionsViewModel @Inject constructor(
     private val accountLogic: WalletAccountLogic,
     private val categoryLogic: WalletCategoryLogic,
     private val categoryCreator: CategoryCreator,
-    private val accountCreator: AccountCreator,
+    private val updateAccountWithBalanceUseCase: UpdateAccountWithBalanceUseCase,
     private val plannedPaymentsLogic: PlannedPaymentsLogic,
     private val appPreferences: AppPreferences,
     private val getLegacyAccountsUseCase: GetLegacyAccountsUseCase,
@@ -755,13 +755,12 @@ class TransactionsViewModel @Inject constructor(
         newBalance: Double,
     ) {
         viewModelScope.launch {
-            accountCreator.editAccount(account, newBalance) {
-                start(
-                    screen = screen,
-                    timePeriod = period.value,
-                    reset = false
-                )
-            }
+            updateAccountWithBalanceUseCase(account, newBalance)
+            start(
+                screen = screen,
+                timePeriod = period.value,
+                reset = false
+            )
         }
     }
 

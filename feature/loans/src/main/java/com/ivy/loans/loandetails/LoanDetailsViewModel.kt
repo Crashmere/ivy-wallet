@@ -15,10 +15,10 @@ import com.ivy.domain.usecase.loan.GetLoanRecordsUseCase
 import com.ivy.domain.usecase.loan.GetLoanTransactionUseCase
 import com.ivy.domain.usecase.loan.GetLoanUseCase
 import com.ivy.domain.usecase.loan.HasLoanRecordTransactionUseCase
+import com.ivy.domain.usecase.account.CreateAccountWithBalanceUseCase
 import com.ivy.data.model.legacy.Account
 import com.ivy.data.model.legacy.Loan
 import com.ivy.data.model.legacy.LoanRecord
-import com.ivy.legacy.domain.logic.AccountCreator
 import com.ivy.base.coroutines.computationThread
 import com.ivy.loans.loan.data.DisplayLoanRecord
 import com.ivy.loans.loandetails.events.DeleteLoanModalEvent
@@ -57,7 +57,7 @@ class LoanDetailsViewModel @Inject constructor(
     private val getLoanRecordsUseCase: GetLoanRecordsUseCase,
     private val getLoanTransactionUseCase: GetLoanTransactionUseCase,
     private val hasLoanRecordTransactionUseCase: HasLoanRecordTransactionUseCase,
-    private val accountCreator: AccountCreator,
+    private val createAccountWithBalanceUseCase: CreateAccountWithBalanceUseCase,
     private val loanTransactionsLogic: LoanTransactionsLogic,
     private val nav: Navigation,
     private val getLegacyAccountsUseCase: GetLegacyAccountsUseCase,
@@ -539,11 +539,8 @@ class LoanDetailsViewModel @Inject constructor(
 
     private fun createAccount(data: CreateAccountData) {
         viewModelScope.launch {
-
-            accountCreator.createAccount(data) {
-                accounts.value = getLegacyAccountsUseCase()
-            }
-
+            createAccountWithBalanceUseCase(data)
+            accounts.value = getLegacyAccountsUseCase()
         }
     }
 
