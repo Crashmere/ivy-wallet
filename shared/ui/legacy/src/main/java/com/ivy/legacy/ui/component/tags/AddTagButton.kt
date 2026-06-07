@@ -45,7 +45,7 @@ private fun ViewTagsButton(
         ),
         iconTint = contrastColor,
         hasGlow = false,
-        iconEnd = R.drawable.ic_onboarding_next_arrow,
+        iconEnd = R.drawable.ic_next_arrow,
         wrapContentMode = true,
         onClick = onClick
     )

@@ -28,7 +28,7 @@ import com.ivy.legacy.ui.theme.GradientIvy
 
 @Deprecated("Old design system. Use `:ivy-design` and Material3")
 @Composable
-fun OnboardingButton(
+fun LegacyGradientButton(
     modifier: Modifier = Modifier,
     text: String,
     textColor: Color,
@@ -87,7 +87,7 @@ fun OnboardingButton(
                     .align(Alignment.CenterEnd)
                     .padding(vertical = 8.dp)
                     .padding(end = 24.dp),
-                painter = painterResource(id = R.drawable.ic_onboarding_next_arrow),
+                painter = painterResource(id = R.drawable.ic_next_arrow),
                 contentDescription = "next"
             )
         }

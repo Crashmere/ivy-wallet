@@ -431,6 +431,7 @@
 - 已把旧 UI helper 从 `com.ivy.ui.legacy` 迁到 `com.ivy.legacy.ui`，包括 Compose 扩展、手势、动画、日期/间隔格式化和 Android UI 扩展；功能不变，只让旧 UI 工具回到统一 legacy UI 包根。
 - 已把旧主题系统和 `LegacyUiRoot` 从 `shared:ui:core` 下沉到 `shared:ui:legacy`；`ui:core` 继续保留 Material3 主题、平台接口、时间接口和基础 UI 工具，旧设计兼容层归入 legacy 模块。
 - 已把旧周期状态入口从 `com.ivy.legacy` 根包迁到 `com.ivy.legacy.ui.state`，并删除旧 `rootScreen()` 桥接函数；`shared:ui:legacy` 不再通过根包暴露迁移期 API。
+- 已把旧 `OnboardingButton` 重命名为通用的 `LegacyGradientButton`，并把复用的 `ic_onboarding_next_arrow` 资源改名为 `ic_next_arrow`；CSV 导入完成页、分类按钮和标签按钮的视觉保持不变。
 - 已把旧设计兼容层从 `com.ivy.design.*` 迁到 `com.ivy.legacy.design.*`，包括旧 `LegacyTheme`、颜色常量、Compose helper 和 Material3 theme 包装；功能和视觉保持不变。
 - 已把旧设计包里的通用 Compose helper 迁到 `com.ivy.ui.compose`，并把键盘隐藏 helper 迁到 `com.ivy.ui.platform`；这些工具不再带旧设计系统的过时标记。
 - 已把当前仍在使用的主题状态 `ThemeState/LocalThemeState` 和 Material3 theme 包装迁到 `com.ivy.ui.theme`；旧 `LegacyTheme/IvyTheme` 继续作为兼容层调用它。

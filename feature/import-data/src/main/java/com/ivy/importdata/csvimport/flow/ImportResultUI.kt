@@ -31,7 +31,7 @@ import com.ivy.legacy.ui.theme.Red
 import com.ivy.legacy.ui.theme.White
 import com.ivy.legacy.ui.component.BackButton
 import com.ivy.legacy.ui.component.IvyDividerLine
-import com.ivy.legacy.ui.component.OnboardingButton
+import com.ivy.legacy.ui.component.LegacyGradientButton
 import kotlinx.collections.immutable.persistentListOf
 
 @SuppressLint("ComposeModifierMissing")
@@ -129,7 +129,7 @@ fun ImportResultUI(
 
         Spacer8()
 
-        OnboardingButton(
+        LegacyGradientButton(
             Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp),
