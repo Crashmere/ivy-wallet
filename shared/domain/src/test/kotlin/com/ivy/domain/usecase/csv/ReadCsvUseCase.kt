@@ -4,9 +4,8 @@ import com.opencsv.CSVReaderBuilder
 import com.opencsv.validators.LineValidator
 import com.opencsv.validators.RowValidator
 import java.io.StringReader
-import javax.inject.Inject
 
-class ReadCsvUseCase @Inject constructor() {
+class ReadCsvUseCase {
 
     fun readCsv(csv: String): List<List<String>> {
         val csvReader = CSVReaderBuilder(StringReader(csv))
@@ -15,18 +14,14 @@ class ReadCsvUseCase @Inject constructor() {
                     return true
                 }
 
-                override fun validate(line: String?) {
-                    // do nothing
-                }
+                override fun validate(line: String?) = Unit
             })
             .withRowValidator(object : RowValidator {
                 override fun isValid(row: Array<out String>?): Boolean {
                     return true
                 }
 
-                override fun validate(row: Array<out String>?) {
-                    // do nothing
-                }
+                override fun validate(row: Array<out String>?) = Unit
             })
             .build()
 

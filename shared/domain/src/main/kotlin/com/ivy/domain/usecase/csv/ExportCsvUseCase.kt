@@ -19,7 +19,6 @@ import com.ivy.domain.usecase.account.GetAccountsUseCase
 import com.ivy.domain.usecase.category.GetCategoriesUseCase
 import com.ivy.domain.usecase.transaction.GetTransactionsUseCase
 import kotlinx.coroutines.withContext
-import org.apache.commons.text.StringEscapeUtils
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
 import java.time.Instant
@@ -117,13 +116,22 @@ class ExportCsvUseCase @Inject constructor(
         return columns.joinToString(separator = CSV_SEPARATOR)
     }
 
-    private fun String.escapeCsvString(): String = try {
-        StringEscapeUtils.escapeCsv(this).escapeSpecialChars()
-    } catch (e: Exception) {
-        escapeSpecialChars()
+    private fun String.escapeCsvString(): String {
+        val sanitized = escapeSpecialChars()
+        return if (sanitized.requiresCsvQuotes()) {
+            "\"${sanitized.replace("\"", "\"\"")}\""
+        } else {
+            sanitized
+        }
     }
 
     private fun String.escapeSpecialChars(): String = replace("\\", "")
+
+    private fun String.requiresCsvQuotes(): Boolean {
+        return any { char ->
+            char == CSV_SEPARATOR.single() || char == '"' || char == '\n' || char == '\r'
+        }
+    }
 
     private fun Transaction.toIvyCsvRow(): IvyCsvRow = when (this) {
         is Expense -> expenseCsvRow()
