@@ -790,6 +790,7 @@
 - `PeriodState` 已承接 legacy 周期的当前月、范围解析和月份前后移动逻辑；账户、分类、预算、余额、首页、交易和饼图页不再直接注入 `TimeProvider/TimeConverter`，并移除对 `shared:base` 的 Gradle 依赖。
 - `feature:reports` 的筛选周期范围和周期显示已改走 `PeriodState`/legacy 周期显示 helper，CSV 导出文件名使用 JDK `Instant.now()` 生成 UTC 时间戳；报表模块不再直接依赖 `shared:base`。
 - `feature:edit-transaction` 的交易日期、时间和 due date 转换已用局部系统时区 `java.time` helper 表达，创建/复制交易默认时间改用 `Instant.now()`；编辑交易模块不再直接依赖 `shared:base`。
+- `feature:loans` 的贷款和贷款记录日期选择逻辑已收敛到模块内 `LoanTime` helper；贷款本体继续保留本地 `LocalDateTime` 语义，贷款记录继续保留 UTC `Instant` 语义，贷款模块不再直接依赖 `shared:base`。
 - `com.ivy.base.text` 中的字符串判空、大小写和首字母转换 helper 已删除；调用方改为标准 `isNullOrBlank().not()`、`uppercase/lowercase(Locale.getDefault())` 或局部私有扩展，基础层不再承载通用字符串糖衣。
 - `ResourceProvider` 已从 `shared:base` 迁到 `shared:ui:core`，测试替身也随之从 `base-testing` 移到 ui-core 测试源集；base 不再承载 Android 字符串资源端口。
 - `shared:base` 中无消费方的 `BaseModule` 和 `@AppCoroutineScope` 已删除；应用级协程 scope 绑定不再作为未使用的全局 DI 暴露。
