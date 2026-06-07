@@ -43,8 +43,8 @@ import androidx.compose.ui.unit.sp
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
 import com.ivy.legacy.ui.SearchInput
-import com.ivy.base.money.balancePrefix
-import com.ivy.base.money.compactBalancePrefix
+import com.ivy.ui.money.balancePrefix
+import com.ivy.ui.money.compactBalancePrefix
 import com.ivy.data.model.currency.format
 import com.ivy.legacy.ui.selectEndTextFieldValue
 import com.ivy.ui.navigation.CategoriesScreen

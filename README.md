@@ -442,7 +442,7 @@
 - 旧 `DateTimeUtil` 毫秒转换已从 `com.ivy.base.legacy` 迁到 `com.ivy.base.time`，用 `toUtcEpochMilli()` / `epochMilliToUtcLocalDateTime()` 明确保留原有 UTC 持久化语义；旧 legacy 文件已删除。
 - 旧 `MVVMExt` 已拆出 `com.ivy.base.legacy`：dispatcher helper 和 `StateFlow.readOnly()` 迁到 `com.ivy.base.coroutines`；原 LiveData 只读 helper 已删除，仍使用 LiveData 的 ViewModel 直接暴露 `LiveData<T>` 类型。
 - 字符串本地化大小写/判空 helper 已迁到 `com.ivy.base.text`，默认系统法币 helper 已迁到 `com.ivy.base.currency`；`shared:base:legacy` 不再承载这类通用文本和货币工具。
-- 其余通用 helper 已继续拆出 `shared:base:legacy`：列表交换迁到 `com.ivy.base.collections`，随机区间数迁到 `com.ivy.base.random`，zip/unzip 迁到 `com.ivy.base.io`，余额正负号 helper 迁到 `com.ivy.base.money`。
+- 其余通用 helper 已继续拆出 `shared:base:legacy`：列表交换迁到 `com.ivy.base.collections`，随机区间数迁到 `com.ivy.base.random`，zip/unzip 迁到 `com.ivy.base.io`，余额正负号 helper 迁到 `com.ivy.ui.money`。
 - `shared:base` 中拼写错误的 `com.ivy.base.kotlinxserilzation` 包已更正为 `com.ivy.base.kotlinxserialization`；serializer descriptor 和编码方式保持不变。
 - 旧函数式 helper 已从顶层 `com.ivy.frp` 归入 `com.ivy.base.frp`；`shared:base` 源码现在只暴露在 `com.ivy.base.*` 根包下。
 - 日期、时间范围和 `IntervalType` 周期递增 helper 已迁到 `com.ivy.base.time`；旧交易兼容模型 `Transaction/LegacyTransaction/TransactionHistoryItem/LegacyTag` 已迁到 `com.ivy.base.model.legacy`，继续留在 `shared:base` 以保持现有导航和旧 UI 依赖不变。
@@ -742,6 +742,7 @@
 - `Json` 的 Hilt 提供模块已从 base 移到 `shared:data:core`，由数据层集中配置备份恢复和 Ktor 客户端共用的 kotlinx serialization 行为。
 - legacy 交易展示模型、`TransactionType` 和 `LoanRecordType` 已归位到 `shared:data:model`；base 不再承载交易模型类型，也不再应用 kotlinx serialization 构建插件。
 - `Theme` 已从 base 归位到 `shared:data:model`；枚举成员和持久化 `name` 不变，Room 与备份中的主题值保持兼容。
+- 金额正负号展示 helper 已从 base 迁到 `shared:ui:core` 的 `com.ivy.ui.money`；分类页和交易页继续复用同一显示逻辑，基础层不再承载 UI 展示语义。
 - 账户旧读取路径已收敛到 `AccountStore`；旧 legacy 账户模型现在由 data model 账户映射而来，`shared:domain` 主源码不再直接注入 `AccountDao` 或依赖 `AccountEntity` mapper。
 - 旧交易卡片已移除重复账户查找 TODO：渲染前先解析来源/目标账户，再复用同一结果处理点击和币种展示，行为不变但 legacy UI 内部职责更清楚。
 
