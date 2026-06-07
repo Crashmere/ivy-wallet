@@ -4,13 +4,10 @@ import android.content.Context
 import android.widget.Toast
 import androidx.annotation.StringRes
 import com.ivy.ui.resource.ResourceProvider
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import javax.inject.Inject
 
-class Toaster @Inject constructor(
-    @ApplicationContext
+class Toaster(
     private val context: Context,
     private val resourceProvider: ResourceProvider,
 ) {

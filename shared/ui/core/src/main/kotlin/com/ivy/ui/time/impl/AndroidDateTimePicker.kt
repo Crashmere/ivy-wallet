@@ -28,12 +28,9 @@ import com.ivy.ui.time.TimeProvider
 import java.time.Instant
 import java.time.LocalDate
 import java.time.LocalTime
-import javax.inject.Inject
-import javax.inject.Singleton
 
 @Stable
-@Singleton
-class AndroidDateTimePicker @Inject constructor(
+class AndroidDateTimePicker(
     private val timeProvider: TimeProvider,
     private val timeConverter: TimeConverter,
 ) : DateTimePicker {

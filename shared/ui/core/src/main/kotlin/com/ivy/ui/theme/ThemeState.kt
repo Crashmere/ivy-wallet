@@ -5,11 +5,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import com.ivy.data.model.Theme
-import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
-class ThemeState @Inject constructor() {
+class ThemeState {
     var theme by mutableStateOf(Theme.LIGHT)
         private set
 

@@ -1,6 +1,5 @@
 plugins {
     id("ivy.compose")
-    id("ivy.hilt")
 }
 
 android {
@@ -9,6 +8,8 @@ android {
 
 dependencies {
     implementation(projects.shared.data.model)
+
+    implementation(libs.androidx.lifecycle.viewmodel)
 
     testImplementation(libs.bundles.testing)
 }
