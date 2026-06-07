@@ -13,6 +13,7 @@ import com.ivy.base.time.TimeProvider
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.domain.usecase.loan.GetLoanRecordsUseCase
 import com.ivy.domain.usecase.loan.GetLoanTransactionUseCase
+import com.ivy.domain.usecase.loan.GetLoanUseCase
 import com.ivy.domain.usecase.loan.HasLoanRecordTransactionUseCase
 import com.ivy.data.model.legacy.Account
 import com.ivy.data.model.legacy.Loan
@@ -29,7 +30,6 @@ import com.ivy.ui.navigation.Navigation
 import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.time.impl.DateTimePicker
 import com.ivy.legacy.domain.action.account.AccountsAct
-import com.ivy.legacy.domain.action.loan.LoanByIdAct
 import com.ivy.legacy.domain.logic.LoanCreator
 import com.ivy.legacy.domain.logic.LoanRecordCreator
 import com.ivy.legacy.domain.logic.loantransactions.LoanTransactionsLogic
@@ -61,7 +61,7 @@ class LoanDetailsViewModel @Inject constructor(
     private val loanTransactionsLogic: LoanTransactionsLogic,
     private val nav: Navigation,
     private val accountsAct: AccountsAct,
-    private val loanByIdAct: LoanByIdAct,
+    private val getLoanUseCase: GetLoanUseCase,
     private val timeConverter: TimeConverter,
     private val timeProvider: TimeProvider,
     private val dateTimePicker: DateTimePicker,
@@ -255,7 +255,7 @@ class LoanDetailsViewModel @Inject constructor(
 
             accounts.value = accountsAct(Unit)
 
-            loan.value = loanByIdAct(loanId)
+            loan.value = getLoanUseCase(loanId)
 
             loan.value?.let { loan ->
                 selectedLoanAccount.value = accounts.value.find {

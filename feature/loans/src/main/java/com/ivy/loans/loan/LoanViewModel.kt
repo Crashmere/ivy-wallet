@@ -14,6 +14,7 @@ import com.ivy.data.model.LoanType
 import com.ivy.domain.preferences.AppPreferences
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.domain.usecase.loan.GetLoanRecordsUseCase
+import com.ivy.domain.usecase.loan.GetLoansUseCase
 import com.ivy.domain.usecase.loan.ReorderLoansUseCase
 import com.ivy.data.model.legacy.Account
 import com.ivy.data.model.legacy.Loan
@@ -25,7 +26,6 @@ import com.ivy.loans.loan.data.DisplayLoan
 import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.time.impl.DateTimePicker
 import com.ivy.legacy.domain.action.account.AccountsAct
-import com.ivy.legacy.domain.action.loan.LoansAct
 import com.ivy.legacy.domain.logic.LoanCreator
 import com.ivy.legacy.domain.logic.loantransactions.LoanTransactionsLogic
 import com.ivy.data.model.legacy.CreateAccountData
@@ -52,7 +52,7 @@ class LoanViewModel @Inject constructor(
     private val appPreferences: AppPreferences,
     private val accountCreator: AccountCreator,
     private val loanTransactionsLogic: LoanTransactionsLogic,
-    private val loansAct: LoansAct,
+    private val getLoansUseCase: GetLoansUseCase,
     private val accountsAct: AccountsAct,
     private val timeConverter: TimeConverter,
     private val timeProvider: TimeProvider,
@@ -203,7 +203,7 @@ class LoanViewModel @Inject constructor(
             totalOwedAmount = 0.0
 
             allLoans = ioThread {
-                loansAct(Unit)
+                getLoansUseCase()
                     .map { loan ->
                         val (amountPaid, loanTotalAmount) = calculateAmountPaidAndTotalAmount(loan)
                         val percentPaid = if (loanTotalAmount != 0.0) {
