@@ -18,7 +18,7 @@ import com.ivy.data.model.LoanType
 import com.ivy.frp.test.TestIdlingResource
 import com.ivy.legacy.datamodel.Account
 import com.ivy.legacy.datamodel.Loan
-import com.ivy.wallet.domain.deprecated.logic.AccountCreator
+import com.ivy.legacy.domain.logic.AccountCreator
 import com.ivy.data.model.currency.format
 import com.ivy.base.legacy.getDefaultFIATCurrency
 import com.ivy.base.legacy.ioThread
@@ -27,8 +27,8 @@ import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.time.impl.DateTimePicker
 import com.ivy.wallet.domain.action.account.AccountsAct
 import com.ivy.wallet.domain.action.loan.LoansAct
-import com.ivy.wallet.domain.deprecated.logic.LoanCreator
-import com.ivy.wallet.domain.deprecated.logic.loantrasactions.LoanTransactionsLogic
+import com.ivy.legacy.domain.logic.LoanCreator
+import com.ivy.legacy.domain.logic.loantransactions.LoanTransactionsLogic
 import com.ivy.legacy.domain.model.CreateAccountData
 import com.ivy.legacy.domain.model.CreateLoanData
 import com.ivy.legacy.ui.modal.LoanModalData

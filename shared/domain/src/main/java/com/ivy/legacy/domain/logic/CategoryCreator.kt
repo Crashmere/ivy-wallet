@@ -1,4 +1,4 @@
-package com.ivy.wallet.domain.deprecated.logic
+package com.ivy.legacy.domain.logic
 import arrow.core.raise.either
 import com.ivy.data.model.Category
 import com.ivy.data.model.CategoryId

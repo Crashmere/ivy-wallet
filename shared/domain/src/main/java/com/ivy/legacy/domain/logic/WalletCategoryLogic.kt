@@ -1,4 +1,4 @@
-package com.ivy.wallet.domain.deprecated.logic
+package com.ivy.legacy.domain.logic
 
 import com.ivy.base.legacy.Transaction
 import com.ivy.base.legacy.TransactionHistoryItem
@@ -18,8 +18,8 @@ import com.ivy.legacy.data.model.filterUpcomingLegacy
 import com.ivy.legacy.datamodel.temp.toLegacy
 import com.ivy.legacy.datamodel.temp.toLegacyDomain
 import com.ivy.legacy.domain.pure.transaction.LegacyTrnDateDividers
-import com.ivy.wallet.domain.deprecated.logic.currency.ExchangeRatesLogic
-import com.ivy.wallet.domain.deprecated.logic.currency.sumInBaseCurrency
+import com.ivy.legacy.domain.logic.currency.ExchangeRatesLogic
+import com.ivy.legacy.domain.logic.currency.sumInBaseCurrency
 import java.util.UUID
 import javax.inject.Inject
 

@@ -1,4 +1,4 @@
-package com.ivy.wallet.domain.deprecated.logic
+package com.ivy.legacy.domain.logic
 
 import arrow.core.getOrElse
 import com.ivy.base.legacy.SharedPrefs

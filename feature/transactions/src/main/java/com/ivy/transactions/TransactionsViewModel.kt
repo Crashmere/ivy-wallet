@@ -35,7 +35,7 @@ import com.ivy.legacy.data.model.TimePeriod
 import com.ivy.legacy.data.model.toCloseTimeRange
 import com.ivy.legacy.datamodel.temp.toImmutableLegacyTags
 import com.ivy.legacy.datamodel.temp.toLegacyDomain
-import com.ivy.wallet.domain.deprecated.logic.AccountCreator
+import com.ivy.legacy.domain.logic.AccountCreator
 import com.ivy.base.legacy.computationThread
 import com.ivy.base.legacy.dateNowUTC
 import com.ivy.base.legacy.ioThread
@@ -53,10 +53,10 @@ import com.ivy.wallet.domain.action.exchange.ExchangeAct
 import com.ivy.wallet.domain.action.settings.BaseCurrencyAct
 import com.ivy.wallet.domain.action.transaction.LegacyCalcTrnsIncomeExpenseAct
 import com.ivy.wallet.domain.action.transaction.LegacyTrnsWithDateDivsAct
-import com.ivy.wallet.domain.deprecated.logic.CategoryCreator
-import com.ivy.wallet.domain.deprecated.logic.PlannedPaymentsLogic
-import com.ivy.wallet.domain.deprecated.logic.WalletAccountLogic
-import com.ivy.wallet.domain.deprecated.logic.WalletCategoryLogic
+import com.ivy.legacy.domain.logic.CategoryCreator
+import com.ivy.legacy.domain.logic.PlannedPaymentsLogic
+import com.ivy.legacy.domain.logic.WalletAccountLogic
+import com.ivy.legacy.domain.logic.WalletCategoryLogic
 import com.ivy.wallet.domain.pure.exchange.ExchangeData
 import com.ivy.legacy.ui.modal.ChoosePeriodModalData
 import dagger.hilt.android.lifecycle.HiltViewModel

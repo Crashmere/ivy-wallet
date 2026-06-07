@@ -53,7 +53,7 @@ import com.ivy.wallet.domain.action.viewmodel.home.ShouldHideBalanceAct
 import com.ivy.wallet.domain.action.viewmodel.home.UpcomingAct
 import com.ivy.wallet.domain.action.wallet.CalcIncomeExpenseAct
 import com.ivy.wallet.domain.action.wallet.CalcWalletBalanceAct
-import com.ivy.wallet.domain.deprecated.logic.PlannedPaymentsLogic
+import com.ivy.legacy.domain.logic.PlannedPaymentsLogic
 import com.ivy.wallet.domain.pure.data.ClosedTimeRange
 import com.ivy.wallet.domain.pure.data.IncomeExpensePair
 import dagger.hilt.android.lifecycle.HiltViewModel

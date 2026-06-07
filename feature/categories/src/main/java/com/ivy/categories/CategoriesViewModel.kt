@@ -24,7 +24,7 @@ import com.ivy.wallet.domain.action.category.LegacyCategoryIncomeWithAccountFilt
 import com.ivy.wallet.domain.action.settings.BaseCurrencyAct
 import com.ivy.wallet.domain.action.transaction.TrnsWithRangeAndAccFiltersAct
 import com.ivy.legacy.domain.data.SortOrder
-import com.ivy.wallet.domain.deprecated.logic.CategoryCreator
+import com.ivy.legacy.domain.logic.CategoryCreator
 import com.ivy.legacy.domain.model.CreateCategoryData
 import com.ivy.legacy.ui.modal.edit.CategoryModalData
 import dagger.hilt.android.lifecycle.HiltViewModel

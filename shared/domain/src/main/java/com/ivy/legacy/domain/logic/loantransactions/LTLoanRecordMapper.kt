@@ -1,4 +1,4 @@
-package com.ivy.wallet.domain.deprecated.logic.loantrasactions
+package com.ivy.legacy.domain.logic.loantransactions
 
 import com.ivy.base.legacy.Transaction
 import com.ivy.legacy.datamodel.Loan

@@ -407,6 +407,7 @@
 - 已清理迁移过程中留下的 `com.ivy.legacy.legacy.ui.theme.*` 双重 legacy 包名：预算进度条和日期时间行归入 `com.ivy.legacy.ui.component`，弹窗名称输入归入 `com.ivy.legacy.ui.modal`。
 - 已把 `SortOrder`、`CustomExchangeRateState`、`TransactionHistoryDateDivider` 从旧 `com.ivy.wallet.domain.data` 迁到 `com.ivy.legacy.domain.data`；这些类型仍然服务旧页面状态和旧交易列表，先明确标记为 legacy domain 数据。
 - 已把 `CreateAccountData`、`CreateBudgetData`、`CreateCategoryData`、`CreateLoanData`、`CreateLoanRecordData`、`EditLoanRecordData` 从旧 `com.ivy.wallet.domain.deprecated.logic.model` 迁到 `com.ivy.legacy.domain.model`；这些仍是旧创建/编辑流程的参数对象，但不再挂在 deprecated logic 包名下。
+- 已把 `shared:domain` 中剩余旧业务逻辑从 `com.ivy.wallet.domain.deprecated.logic` 迁到 `com.ivy.legacy.domain.logic`，包括账户/分类/预算/借贷 creator、计划付款逻辑、标题建议、账户/分类统计、汇率换算和借贷交易联动；同时把拼写错误的 `loantrasactions` 包名改为 `loantransactions`。
 - 已删除 `:temp:legacy-code` 的 Gradle include、模块 build 文件，以及所有 app/feature 对 `projects.temp.legacyCode` 的依赖声明。
 - 阶段 5 的模块拆解目标已经完成：仓库中不再有被 Gradle include 的 `temp:*` 模块。后续工作转为拆除 `shared:ui:legacy` 中剩余旧上下文、旧设计 API 和旧 UI 兼容模型。
 
@@ -688,6 +689,6 @@ shared:ui:core
 
 下一步建议执行：
 
-1. 继续替换旧设计兼容 API：下一步盘点 `shared:domain` 中旧 `com.ivy.wallet.domain.deprecated.logic` 包名，优先处理可机械迁移的业务 logic 包名、明显拼写错误和 app 侧平台逻辑归位。
+1. 继续替换旧设计兼容 API：下一步盘点剩余 `com.ivy.legacy.datamodel` 和旧 domain action/pure 的使用面，优先处理不触碰数据库 schema 的包名归位和边界收敛。
 2. `legacy.datamodel`、统计计算、借贷联动、备份恢复和数据库迁移暂不混入普通包名提交，避免功能回退难以定位。
 3. 每完成一组跨模块边界调整后运行 `:app:assembleDemo`，确认构建没有被迁移影响；涉及数据库、备份恢复或导入导出时再补充对应测试。

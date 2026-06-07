@@ -33,7 +33,7 @@ import com.ivy.domain.features.Features
 import com.ivy.legacy.data.EditTransactionDisplayLoan
 import com.ivy.legacy.datamodel.Account
 import com.ivy.legacy.datamodel.temp.toDomain
-import com.ivy.wallet.domain.deprecated.logic.AccountCreator
+import com.ivy.legacy.domain.logic.AccountCreator
 import com.ivy.base.legacy.computationThread
 import com.ivy.base.legacy.ioThread
 import com.ivy.base.legacy.toLowerCaseLocal
@@ -48,11 +48,11 @@ import com.ivy.wallet.domain.action.account.AccountByIdAct
 import com.ivy.wallet.domain.action.account.AccountsAct
 import com.ivy.wallet.domain.action.transaction.TrnByIdAct
 import com.ivy.legacy.domain.data.CustomExchangeRateState
-import com.ivy.wallet.domain.deprecated.logic.CategoryCreator
-import com.ivy.wallet.domain.deprecated.logic.PlannedPaymentsLogic
-import com.ivy.wallet.domain.deprecated.logic.SmartTitleSuggestionsLogic
-import com.ivy.wallet.domain.deprecated.logic.currency.ExchangeRatesLogic
-import com.ivy.wallet.domain.deprecated.logic.loantrasactions.LoanTransactionsLogic
+import com.ivy.legacy.domain.logic.CategoryCreator
+import com.ivy.legacy.domain.logic.PlannedPaymentsLogic
+import com.ivy.legacy.domain.logic.SmartTitleSuggestionsLogic
+import com.ivy.legacy.domain.logic.currency.ExchangeRatesLogic
+import com.ivy.legacy.domain.logic.loantransactions.LoanTransactionsLogic
 import com.ivy.legacy.domain.model.CreateAccountData
 import com.ivy.legacy.domain.model.CreateCategoryData
 import dagger.hilt.android.lifecycle.HiltViewModel

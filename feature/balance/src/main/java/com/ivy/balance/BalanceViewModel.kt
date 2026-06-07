@@ -17,7 +17,7 @@ import com.ivy.legacy.data.model.TimePeriod
 import com.ivy.base.legacy.ioThread
 import com.ivy.wallet.domain.action.settings.BaseCurrencyAct
 import com.ivy.wallet.domain.action.wallet.CalcWalletBalanceAct
-import com.ivy.wallet.domain.deprecated.logic.PlannedPaymentsLogic
+import com.ivy.legacy.domain.logic.PlannedPaymentsLogic
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

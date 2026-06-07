@@ -1,4 +1,4 @@
-package com.ivy.wallet.domain.deprecated.logic.loantrasactions
+package com.ivy.legacy.domain.logic.loantransactions
 
 import com.ivy.base.legacy.Transaction
 import com.ivy.base.model.LoanRecordType
@@ -28,7 +28,7 @@ import com.ivy.legacy.datamodel.temp.toDomain
 import com.ivy.legacy.datamodel.temp.toLegacyDomain
 import com.ivy.base.legacy.computationThread
 import com.ivy.base.legacy.ioThread
-import com.ivy.wallet.domain.deprecated.logic.currency.ExchangeRatesLogic
+import com.ivy.legacy.domain.logic.currency.ExchangeRatesLogic
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

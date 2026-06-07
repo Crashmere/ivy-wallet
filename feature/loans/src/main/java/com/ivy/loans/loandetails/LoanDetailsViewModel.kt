@@ -20,7 +20,7 @@ import com.ivy.legacy.datamodel.Loan
 import com.ivy.legacy.datamodel.LoanRecord
 import com.ivy.legacy.datamodel.temp.toLegacy
 import com.ivy.legacy.datamodel.temp.toLegacyDomain
-import com.ivy.wallet.domain.deprecated.logic.AccountCreator
+import com.ivy.legacy.domain.logic.AccountCreator
 import com.ivy.base.legacy.computationThread
 import com.ivy.base.legacy.ioThread
 import com.ivy.loans.loan.data.DisplayLoanRecord
@@ -34,9 +34,9 @@ import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.time.impl.DateTimePicker
 import com.ivy.wallet.domain.action.account.AccountsAct
 import com.ivy.wallet.domain.action.loan.LoanByIdAct
-import com.ivy.wallet.domain.deprecated.logic.LoanCreator
-import com.ivy.wallet.domain.deprecated.logic.LoanRecordCreator
-import com.ivy.wallet.domain.deprecated.logic.loantrasactions.LoanTransactionsLogic
+import com.ivy.legacy.domain.logic.LoanCreator
+import com.ivy.legacy.domain.logic.LoanRecordCreator
+import com.ivy.legacy.domain.logic.loantransactions.LoanTransactionsLogic
 import com.ivy.legacy.domain.model.CreateAccountData
 import com.ivy.legacy.domain.model.CreateLoanRecordData
 import com.ivy.legacy.domain.model.EditLoanRecordData

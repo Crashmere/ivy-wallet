@@ -1,4 +1,4 @@
-package com.ivy.wallet.domain.deprecated.logic
+package com.ivy.legacy.domain.logic
 
 import com.ivy.base.legacy.Transaction
 import com.ivy.base.model.TransactionType
@@ -18,8 +18,8 @@ import com.ivy.legacy.datamodel.PlannedPaymentRule
 import com.ivy.legacy.datamodel.temp.toDomain
 import com.ivy.legacy.datamodel.temp.toLegacyDomain
 import com.ivy.base.legacy.ioThread
-import com.ivy.wallet.domain.deprecated.logic.currency.ExchangeRatesLogic
-import com.ivy.wallet.domain.deprecated.logic.currency.sumByDoublePlannedInBaseCurrency
+import com.ivy.legacy.domain.logic.currency.ExchangeRatesLogic
+import com.ivy.legacy.domain.logic.currency.sumByDoublePlannedInBaseCurrency
 import javax.inject.Inject
 
 @Deprecated("Migrate to FP Style")

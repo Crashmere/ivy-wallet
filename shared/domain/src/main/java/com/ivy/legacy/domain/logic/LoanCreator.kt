@@ -1,4 +1,4 @@
-package com.ivy.wallet.domain.deprecated.logic
+package com.ivy.legacy.domain.logic
 import com.ivy.data.db.dao.read.LoanDao
 import com.ivy.data.db.dao.write.WriteLoanDao
 import com.ivy.legacy.datamodel.Loan

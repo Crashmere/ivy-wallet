@@ -1,4 +1,4 @@
-package com.ivy.wallet.domain.deprecated.logic.currency
+package com.ivy.legacy.domain.logic.currency
 
 import com.ivy.base.legacy.Transaction
 import com.ivy.data.db.dao.read.AccountDao

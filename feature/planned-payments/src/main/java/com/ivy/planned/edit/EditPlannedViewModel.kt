@@ -21,14 +21,14 @@ import com.ivy.data.repository.TransactionRepository
 import com.ivy.legacy.datamodel.Account
 import com.ivy.legacy.datamodel.PlannedPaymentRule
 import com.ivy.legacy.datamodel.temp.toLegacyDomain
-import com.ivy.wallet.domain.deprecated.logic.AccountCreator
+import com.ivy.legacy.domain.logic.AccountCreator
 import com.ivy.base.legacy.ioThread
 import com.ivy.navigation.EditPlannedScreen
 import com.ivy.navigation.Navigation
 import com.ivy.ui.ComposeViewModel
 import com.ivy.wallet.domain.action.account.AccountsAct
-import com.ivy.wallet.domain.deprecated.logic.CategoryCreator
-import com.ivy.wallet.domain.deprecated.logic.PlannedPaymentsGenerator
+import com.ivy.legacy.domain.logic.CategoryCreator
+import com.ivy.legacy.domain.logic.PlannedPaymentsGenerator
 import com.ivy.legacy.domain.model.CreateAccountData
 import com.ivy.legacy.domain.model.CreateCategoryData
 import com.ivy.legacy.ui.modal.RecurringRuleModalData
