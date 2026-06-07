@@ -354,8 +354,6 @@
     <string name="confirm_skip_all">ಎಲ್ಲವನ್ನೂ ಬಿಟ್ಟುಬಿಡಿ ಎಂಬುದನ್ನು ದೃಢೀಕರಿಸಿ</string>
     <string name="confirm_skip_all_description">ಎಲ್ಲಾ ಮಿತಿಮೀರಿದ ಯೋಜಿತ ಪಾವತಿಗಳನ್ನು ಬಿಟ್ಟುಬಿಡಲು ನೀವು ಖಚಿತವಾಗಿ ಬಯಸುವಿರಾ?</string>
     <string name="switch_to_offline_mode">ಆಫ್‌ಲೈನ್ ಮೋಡ್‌ಗೆ ಬದಲಿಸಿ</string>
-    <string name="delete_all_user_cloud_data_warning">ಎಚ್ಚರಿಕೆ! ಈ ಕ್ರಿಯೆಯು ನಿಮ್ಮ ಎಲ್ಲಾ ಕ್ಲೌಡ್-ಸಂಗ್ರಹಿಸಿದ ಡೇಟಾವನ್ನು %1$s ಗಾಗಿ ಶಾಶ್ವತವಾಗಿ ಅಳಿಸುತ್ತದೆ, ನಿಮ್ಮ ಸ್ಥಳೀಯ ಅಪ್ಲಿಕೇಶನ್‌ನಲ್ಲಿ ಸಂಗ್ರಹಿಸಲಾದ ಆಫ್‌ಲೈನ್ ಡೇಟಾ ಉಳಿಯುತ್ತದೆ.</string>
-    <string name="delete_all_cloud_data_question">ಎಲ್ಲಾ ಕ್ಲೌಡ್-ಸಂಗ್ರಹಿಸಿದ ಡೇಟಾವನ್ನು ಅಳಿಸುವುದೇ?</string>
     <string name="experimental">ಪ್ರಯೋಗಾತ್ಮಕ</string>
     <string name="experimental_settings">ಪ್ರಯೋಗಾತ್ಮಕ ಸೆಟ್ಟಿಂಗ್‌ಗಳು</string>
     <string name="wallet_balance">Wallet balance</string>

@@ -354,8 +354,6 @@
     <string name="make_a_report_description">आप अपनी आय और खर्च के बारे में गहन जानकारी प्राप्त करने के लिए रिपोर्ट तैयार कर सकते हैं। अपने वित्त के बारे में बेहतर दृष्टिकोण प्राप्त करने के लिए अपने लेन-देन को प्रकार, समय अवधि, श्रेणी, खातों, राशि, कीवर्ड आदि के आधार पर फ़िल्टर करें।</string>
     <string name="transfers_as_income_expense_description">खाता स्थानान्तरण को खाता स्क्रीन में आय या व्यय के रूप में मानता है</string>
     <string name="switch_to_offline_mode">ऑफ़लाइन मोड में स्विच करें</string>
-    <string name="delete_all_user_cloud_data_warning">चेतावनी! यह क्रिया %1$s के लिए आपके सभी क्लाउड-संग्रहीत डेटा को स्थायी रूप से हटा देगी, आपके स्थानीय ऐप में संग्रहीत ऑफ़लाइन डेटा बना रहेगा।</string>
-    <string name="delete_all_cloud_data_question">सभी क्लाउड-संग्रहीत डेटा हटाएं?</string>
     <string name="experimental">Experimental</string>
     <string name="experimental_settings">प्रायोगिक सेटिंग्स</string>
     <string name="wallet_balance">वॉलेट बैलेंस</string>

@@ -68,8 +68,4 @@ class ResetWalletDataUseCaseImpl @Inject constructor(
         writeLoanRecordDao.deleteAll()
         exchangeRatesRepository.deleteAll()
     }
-
-    override suspend fun resetCloudUserData() {
-        navigation.navigateTo(MainScreen)
-    }
 }

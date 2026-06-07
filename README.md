@@ -9,6 +9,7 @@
 - 删除社区协作、开源展示和发布流程相关内容：GitHub workflow、Issue/PR 模板、开发规范、Fastlane、发布日志、贡献者、开源致谢、投票问卷、原仓库入口、分享 Ivy、Google Play 评分、Telegram/推广文案等。
 - 删除 Google/Firebase/商店发布相关接线：Google Services、Crashlytics、Google Play Review、Firebase Firestore、GitHub 自动备份迁移残留等。
 - 删除不再需要的功能模块和入口：contributors、releases、attributions、poll、disclaimer、onboarding、widget，以及第三方 App 导入模板和教程。
+- 删除失去实现意义的云端删除入口：设置页不再显示“删除云端数据”链路，`ResetWalletDataUseCase` 不再保留空的 cloud reset 方法。
 - 整顿设置页：合并原高级特性页，改成个人偏好设置；重排设置分组；删除匿名账户入口和首页问候语。
 - 精简测试和预览基础设施：删除 Paparazzi 截图测试、快照图片、仅服务 IDE 的 Compose `@Preview` 示例函数和预览 helper。
 - 持续清理 `temp:legacy-code` 中确认无引用的旧代码、工具、组件和残留模型。
@@ -540,12 +541,13 @@
 - 删除无调用方的 `data_synced_to_cloud` 多语言文案，云同步用户可见入口继续减少。
 - 删除标签和标签关联表里的 `lastSyncedTime` 云同步时间字段，新增 `Migration131to132_DropTagSyncTime`，数据库版本升到 132；旧备份里的多余字段可被现有 JSON 配置忽略。
 - 删除账户、交易、分类、设置、计划付款、预算、借贷和借贷记录表里的 `isSynced` 云同步状态字段，新增 `Migration132to133_DropIsSynced`，数据库版本升到 133；旧备份里的多余字段继续由 `ignoreUnknownKeys` 兼容。
+- 删除设置页“删除云端数据”入口、空的 `resetCloudUserData()` 用例方法，以及对应多语言云端删除文案；当前分支已经没有云端数据实现，这条链路只会误导用户。
 
 建议顺序：
 
 1. 继续评估 `isDeleted` 字段：
    - `isSynced` 已确认是云同步残留并删除。
-   - `isDeleted` 仍服务本地查询过滤和部分软删除流程；后续先明确它是否应保留为本地删除语义，再决定是否写迁移删除。
+   - `isDeleted` 仍服务本地查询过滤、测试 fake、历史迁移和计划付款按账户软删除；短期应视为本地软删除语义，不再和云同步残留一起批量删除。
 2. 梳理 `SettingsEntity` 与 `AppPreferences/DataStore` 的职责重叠。
 3. 更新备份恢复数据结构和测试。
 
@@ -743,5 +745,5 @@ shared:ui:core
 下一步建议执行：
 
 1. 继续评估 `SettingsEntity` 是否可以拆成更明确的本地偏好表或迁入 DataStore；这一步需要和备份恢复格式一起规划。
-2. 继续数据库只读审计：明确剩余 `isDeleted` 哪些是本地软删除语义，哪些可以改成直接删除。
+2. 继续数据库只读审计：`isDeleted` 目前先保留为本地软删除语义；下一步更适合从 `SettingsEntity` 的 theme/currency/bufferAmount 拆分开始。
 3. 继续收敛平台桥接：源码中的 `LocalContext.current` 目前只剩动态图标资源查找；这部分依赖 Android `Resources.getIdentifier()` 支撑自定义分类/账户图标，暂时保留。

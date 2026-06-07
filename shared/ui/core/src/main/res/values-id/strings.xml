@@ -357,8 +357,6 @@
     <string name="confirm_skip_all">Konfirmasi lewati semua</string>
     <string name="confirm_skip_all_description">Apakah Anda yakin ingin melewati semua pembayaran yang tertunda?</string>
     <string name="switch_to_offline_mode">Beralih ke mode offline</string>
-    <string name="delete_all_user_cloud_data_warning">PERINGATAN! Tindakan ini akan menghapus semua data yang disimpan di cloud untuk %1$s SECARA PERMANEN, data offline yang disimpan di aplikasi lokal Anda akan tetap ada.</string>
-    <string name="delete_all_cloud_data_question">Hapus semua data yang disimpan di cloud?</string>
     <string name="experimental">Eksperimental</string>
     <string name="experimental_settings">Pengaturan Eksperimental</string>
     <string name="wallet_balance">Saldo dompet</string>

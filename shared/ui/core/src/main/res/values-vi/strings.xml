@@ -357,8 +357,6 @@
     <string name="confirm_skip_all">Xác nhận bỏ qua tất cả</string>
     <string name="confirm_skip_all_description">Bạn có chắc chắn muốn bỏ qua tất cả các khoản thanh toán đã quá hạn theo kế hoạch không?</string>
     <string name="switch_to_offline_mode">Chuyển sang chế độ ngoại tuyến</string>
-    <string name="delete_all_user_cloud_data_warning">CẢNH BÁO! Hành động này sẽ xóa tất cả dữ liệu được lưu trữ trên cloud của bạn trong %1$s VĨNH VIỄN, dữ liệu ngoại tuyến được lưu trữ trong ứng dụng của bạn sẽ vẫn còn.</string>
-    <string name="delete_all_cloud_data_question">Xóa tất cả dữ liệu được lưu trữ trên cloud?</string>
     <string name="experimental">Thử nghiệm</string>
     <string name="experimental_settings">Cài đặt thử nghiệm</string>
     <string name="wallet_balance">Số dư trên ví</string>

@@ -356,8 +356,6 @@
     <string name="confirm_skip_all">Alle überspringen bestätigen</string>
     <string name="confirm_skip_all_description">Bist du sicher, dass du alle überfälligen geplanten Zahlungen überspringen willst?</string>
     <string name="switch_to_offline_mode">In den Offline-Modus wechseln</string>
-    <string name="delete_all_user_cloud_data_warning">ACHTUNG! Mit dieser Aktion werden alle in der Cloud gespeicherten Daten für %1$s DAUERHAFT gelöscht, die in deiner lokalen App gespeicherten Offline-Daten bleiben erhalten.</string>
-    <string name="delete_all_cloud_data_question">Alle in der Cloud gespeicherten Daten löschen?</string>
     <string name="experimental">Experimentell</string>
     <string name="experimental_settings">Experimentelle Einstellungen</string>
     <string name="wallet_balance">Bilanz der Wallet</string>

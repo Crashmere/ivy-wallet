@@ -357,8 +357,6 @@
     <string name="confirm_skip_all">Potwierdź pominięcie wszystkich</string>
     <string name="confirm_skip_all_description">Czy na pewno chcesz pominąć wszystkie zaległe zaplanowane płatności?</string>
     <string name="switch_to_offline_mode">Przełącz na konto offline</string>
-    <string name="delete_all_user_cloud_data_warning">UWAGA! Ta czynność spowoduje TRWAŁE usunięcie wszystkich przechowywanych w chmurze danych %1$s, dane offline przechowywane w Twojej aplikacji lokalnej pozostaną nienaruszone.</string>
-    <string name="delete_all_cloud_data_question">Usunąć wszystkie dane z chmury?</string>
     <string name="experimental">Eksperymentalne</string>
     <string name="experimental_settings">Ustawienia eksperymentalne</string>
     <string name="wallet_balance">Saldo portfela</string>

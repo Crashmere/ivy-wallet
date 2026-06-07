@@ -380,8 +380,6 @@
     <string name="confirm_skip_all">确认全部跳过</string>
     <string name="confirm_skip_all_description">您确定要跳过所有逾期的计划支付吗？</string>
     <string name="switch_to_offline_mode">切换到离线模式</string>
-    <string name="delete_all_user_cloud_data_warning">警告！此操作将永久删除 %1$s 的所有云存储数据，本地应用程序中存储的离线数据将保留。</string>
-    <string name="delete_all_cloud_data_question">删除所有云存储数据？</string>
     <string name="experimental">实验性功能</string>
     <string name="experimental_settings">实验性功能设置</string>
     <string name="wallet_balance">钱包余额</string>

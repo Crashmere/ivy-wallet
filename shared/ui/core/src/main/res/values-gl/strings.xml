@@ -359,8 +359,6 @@
     <string name="confirm_skip_all">Confirmar saltar todo</string>
     <string name="confirm_skip_all_description">Está seguro de que quere saltarse tódolos pagos previstos atrasados?</string>
     <string name="switch_to_offline_mode">Cambiar ao modo sen conexión</string>
-    <string name="delete_all_user_cloud_data_warning">ADVERTENCIA! Esta acción eliminará PERMANENTEMENTE tódolos teus datos almacenados na nube para %1$s, os datos almacenados localmente na túa aplicación seguirán existindo.</string>
-    <string name="delete_all_cloud_data_question">Eliminar tódolos datos almacenados na nube?</string>
     <string name="experimental">Experimental</string>
     <string name="experimental_settings">Axustes experimentais</string>
     <string name="wallet_balance">Saldo da carteira</string>

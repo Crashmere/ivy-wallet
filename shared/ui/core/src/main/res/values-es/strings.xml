@@ -358,8 +358,6 @@
     <string name="confirm_skip_all">Confirmar saltar todo</string>
     <string name="confirm_skip_all_description">¿Está seguro de saltar todas las transacciones planeadas caducadas?</string>
     <string name="switch_to_offline_mode">Cambiar a modo sin conexión</string>
-    <string name="delete_all_user_cloud_data_warning">¡ADVERTENCIA! Esta acción eliminará todos sus datos almacenados en la nube para %1$s PERMANENTEMENTE, los datos sin conexión almacenados en su aplicación local permanecerán.</string>
-    <string name="delete_all_cloud_data_question">¿Eliminar todos los datos almacenados en la nube?</string>
     <string name="experimental">Experimental</string>
     <string name="experimental_settings">Ajustes experimentales</string>
     <string name="wallet_balance">Wallet balance</string>

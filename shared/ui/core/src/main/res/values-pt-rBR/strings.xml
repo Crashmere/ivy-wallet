@@ -357,8 +357,6 @@
     <string name="confirm_skip_all">Confirme ignorar tudo</string>
     <string name="confirm_skip_all_description">Tem certeza de que deseja ignorar todos os pagamentos planejados em atraso?</string>
     <string name="switch_to_offline_mode">Mudar para o modo off-line</string>
-    <string name="delete_all_user_cloud_data_warning">AVISO! Esta ação excluirá todos os seus dados armazenados na nuvem por %1$s PERMANENTEMENTE. Os dados off-line armazenados no seu aplicativo local permanecerão.</string>
-    <string name="delete_all_cloud_data_question">Excluir todos os dados armazenados na nuvem?</string>
     <string name="experimental">Experimental</string>
     <string name="experimental_settings">Configurações experimentais</string>
     <string name="wallet_balance">Saldo da carteira</string>

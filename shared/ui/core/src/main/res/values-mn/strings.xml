@@ -354,8 +354,6 @@
     <string name="confirm_skip_all">Тийм, бүгдийг алгасъя</string>
     <string name="confirm_skip_all_description">Бүх хугацаа хэтэрсэн төлөвлөгөөт гүйлгээг алгасах уу?</string>
     <string name="switch_to_offline_mode">Оффлайн горимд шилжих</string>
-    <string name="delete_all_user_cloud_data_warning">АНХААР! Энэ үйлдэл %1$s-н үүлэнд нөөцөлсөн бүх мэдээллийг ҮҮРД устгах болно. Одоо гар утсан дээр хадгалагдсан мэдээлэл үлдэнэ.</string>
-    <string name="delete_all_cloud_data_question">Үүлэнд нөөцөлсөн бүх мэдээллээ устгах уу?</string>
     <string name="experimental">Туршилт</string>
     <string name="experimental_settings">Туршилтын тохиргоо</string>
     <string name="wallet_balance">Хэтэвчний үлдэгдэл</string>

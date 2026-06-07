@@ -361,8 +361,6 @@
     <string name="confirm_skip_all">確認跳過全部</string>
     <string name="confirm_skip_all_description">您確定要跳過所有逾期的經常交易嗎?</string>
     <string name="switch_to_offline_mode">切換到離線模式</string>
-    <string name="delete_all_user_cloud_data_warning">警告!此操作將永久刪除您在雲端中儲存的所有資料 %1$s，儲存在本機應用程式中的離線資料將保留。</string>
-    <string name="delete_all_cloud_data_question">刪除所有雲端儲存資料?</string>
     <string name="experimental">實驗</string>
     <string name="experimental_settings">實驗設定</string>
     <string name="wallet_balance">錢包餘額</string>
