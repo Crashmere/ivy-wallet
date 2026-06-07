@@ -11,10 +11,15 @@ import com.ivy.base.model.LoanRecordType
 import com.ivy.base.time.TimeConverter
 import com.ivy.base.time.TimeProvider
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
+import com.ivy.domain.usecase.loan.CreateLoanRecordUseCase
+import com.ivy.domain.usecase.loan.DeleteLoanRecordUseCase
+import com.ivy.domain.usecase.loan.DeleteLoanUseCase
 import com.ivy.domain.usecase.loan.GetLoanRecordsUseCase
 import com.ivy.domain.usecase.loan.GetLoanTransactionUseCase
 import com.ivy.domain.usecase.loan.GetLoanUseCase
 import com.ivy.domain.usecase.loan.HasLoanRecordTransactionUseCase
+import com.ivy.domain.usecase.loan.UpdateLoanRecordUseCase
+import com.ivy.domain.usecase.loan.UpdateLoanUseCase
 import com.ivy.domain.usecase.account.CreateAccountWithBalanceUseCase
 import com.ivy.data.model.legacy.Account
 import com.ivy.data.model.legacy.Loan
@@ -30,8 +35,6 @@ import com.ivy.ui.navigation.Navigation
 import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.time.impl.DateTimePicker
 import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
-import com.ivy.legacy.domain.logic.LoanCreator
-import com.ivy.legacy.domain.logic.LoanRecordCreator
 import com.ivy.legacy.domain.logic.loantransactions.LoanTransactionsLogic
 import com.ivy.data.model.legacy.CreateAccountData
 import com.ivy.data.model.legacy.CreateLoanRecordData
@@ -51,8 +54,11 @@ import javax.inject.Inject
 @Stable
 @HiltViewModel
 class LoanDetailsViewModel @Inject constructor(
-    private val loanCreator: LoanCreator,
-    private val loanRecordCreator: LoanRecordCreator,
+    private val updateLoanUseCase: UpdateLoanUseCase,
+    private val deleteLoanUseCase: DeleteLoanUseCase,
+    private val createLoanRecordUseCase: CreateLoanRecordUseCase,
+    private val updateLoanRecordUseCase: UpdateLoanRecordUseCase,
+    private val deleteLoanRecordUseCase: DeleteLoanRecordUseCase,
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
     private val getLoanRecordsUseCase: GetLoanRecordsUseCase,
     private val getLoanTransactionUseCase: GetLoanTransactionUseCase,
@@ -354,8 +360,8 @@ class LoanDetailsViewModel @Inject constructor(
                 transaction = associatedTransaction
             )
 
-            loanCreator.edit(loan) {
-                load(loanId = it.id)
+            if (updateLoanUseCase(loan)) {
+                load(loanId = loan.id)
             }
 
         }
@@ -368,7 +374,7 @@ class LoanDetailsViewModel @Inject constructor(
 
             loanTransactionsLogic.Loan.deleteAssociatedLoanTransactions(loan.id)
 
-            loanCreator.delete(loan) {
+            if (deleteLoanUseCase(loan)) {
                 // close screen
                 nav.back()
             }
@@ -390,18 +396,17 @@ class LoanDetailsViewModel @Inject constructor(
                 )
             )
 
-            val loanRecordUUID = loanRecordCreator.create(
+            val loanRecord = createLoanRecordUseCase(
                 loanId = loanId,
                 data = modifiedData
-            ) {
+            )
+            if (loanRecord != null) {
                 load(loanId = loanId)
-            }
 
-            loanRecordUUID?.let {
                 loanTransactionsLogic.LoanRecord.createAssociatedLoanRecordTransaction(
                     data = modifiedData,
                     loan = localLoan,
-                    loanRecordId = it
+                    loanRecordId = loanRecord.id
                 )
             }
 
@@ -430,8 +435,8 @@ class LoanDetailsViewModel @Inject constructor(
                 loanRecord = loanRecord,
             )
 
-            loanRecordCreator.edit(modifiedLoanRecord) {
-                load(loanId = it.loanId)
+            if (updateLoanRecordUseCase(modifiedLoanRecord)) {
+                load(loanId = modifiedLoanRecord.loanId)
             }
 
         }
@@ -442,7 +447,7 @@ class LoanDetailsViewModel @Inject constructor(
 
         viewModelScope.launch {
 
-            loanRecordCreator.delete(loanRecord) {
+            if (deleteLoanRecordUseCase(loanRecord)) {
                 load(loanId = loanId)
             }
 

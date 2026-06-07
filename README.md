@@ -464,8 +464,8 @@
 - 已把编辑交易/计划付款复用的旧底部表单组件从 `com.ivy.wallet.ui.edit.core` 迁到 `com.ivy.legacy.ui.edit.core`；除 app 自身锁屏包名外，旧 shared/feature UI 不再使用 `com.ivy.wallet.ui.*`。
 - 已清理迁移过程中留下的 `com.ivy.legacy.legacy.ui.theme.*` 双重 legacy 包名：预算进度条和日期时间行归入 `com.ivy.legacy.ui.component`，弹窗名称输入归入 `com.ivy.legacy.ui.modal`。
 - 已把 `SortOrder`、`CustomExchangeRateState`、`TransactionHistoryDateDivider` 从旧 `com.ivy.wallet.domain.data` 迁到 `com.ivy.legacy.domain.data`；这些类型仍然服务旧页面状态和旧交易列表，先明确标记为 legacy domain 数据。
-- 旧创建/编辑参数已从早期的 `com.ivy.wallet.domain.deprecated.logic.model` 迁出；当前 `CreateAccountData`、`CreateBudgetData`、`CreateCategoryData`、`CreateLoanData`、`CreateLoanRecordData`、`EditLoanRecordData` 等纯参数对象归入 `com.ivy.data.model.legacy`，旧创建流程继续使用同名语义。
-- 已把 `shared:domain` 中剩余旧业务逻辑从 `com.ivy.wallet.domain.deprecated.logic` 迁到 `com.ivy.legacy.domain.logic`，包括借贷 creator、计划付款逻辑、账户/分类统计、汇率换算和借贷交易联动；同时把拼写错误的 `loantrasactions` 包名改为 `loantransactions`。账户 creator、分类 creator、预算 creator 和标题建议已进一步迁到正式 use case。
+- 旧创建/编辑参数已从早期的 `com.ivy.wallet.domain.deprecated.logic.model` 迁出；当前 `CreateAccountData`、`CreateBudgetData`、`CreateCategoryData`、`CreateLoanData`、`CreateLoanRecordData`、`EditLoanRecordData` 等纯参数对象归入 `com.ivy.data.model.legacy`，旧页面和正式 use case 继续使用同名语义。
+- 已把 `shared:domain` 中剩余旧业务逻辑从 `com.ivy.wallet.domain.deprecated.logic` 迁到 `com.ivy.legacy.domain.logic`，包括计划付款逻辑、账户/分类统计、汇率换算和借贷交易联动；同时把拼写错误的 `loantrasactions` 包名改为 `loantransactions`。账户、分类、预算、借贷 creator 和标题建议已进一步迁到正式 use case。
 - 已把旧 FPAction/use-case 与 pure helper 从 `com.ivy.wallet.domain.action/pure` 迁到 `com.ivy.legacy.domain.action/pure`，并同步迁移 `ClosedTimeRange`、`IncomeExpensePair`、`IncomeExpenseTransferPair` 的旧统计值对象包名；这些代码仍是旧 domain 兼容层，但不再占用正式 Wallet 产品包名。
 - 已把旧 FRP/action helper 从 `shared:base` 物理下沉到 `shared:domain`，仍保留 `com.ivy.legacy.frp` 包名以避免大面积调用方 import churn；`shared:base` 不再承载这批旧 action 组合工具。
 - 旧 UI 专用的 `TestingContext` 已从 `shared:base` 的 FRP 包下沉到 `shared:ui:legacy` 的 `com.ivy.legacy.ui.testing`，基础层不再承载这段只服务旧 Compose UI 测试规避逻辑的全局开关。
@@ -519,7 +519,6 @@
    - `domain/action/*`
    - 目标：改成普通 use case 或直接内联到 ViewModel/domain use case。
 3. 旧业务逻辑
-   - `LoanCreator`
    - `LoanTransactions*`
    - `ExchangeRatesLogic`
    - 目标：迁入 `shared:domain` 或对应 feature 的 domain 子包。
@@ -628,6 +627,7 @@
 - 首页的偏好和交易存在性读取继续收窄：新增 `HasTransactionsUseCase` 替代旧 `HasTrnsAct`，隐藏余额/收入状态直接读取 `AppPreferences`，旧 `HasTrnsAct`、`ShouldHideBalanceAct` 和 `ShouldHideIncomeAct` 已删除。
 - 首页缓冲金额差值已直接内联为 `balance - bufferAmount`，无业务增量的旧 `CalcBufferDiffAct` 已删除。
 - 借贷页数据边界已收敛：新增 `GetLoansUseCase`、`GetLoanUseCase`、`GetLoanRecordsUseCase`、`ReorderLoansUseCase`、`GetLoanTransactionUseCase` 和 `HasLoanRecordTransactionUseCase`，借贷列表和借贷详情不再直接注入 `LoanRecordDao`、`WriteLoanDao`、`TransactionRepository` 或 `TransactionMapper`；旧 `LoansAct/LoanByIdAct` 已删除，`:feature:loans` 已去掉对 `shared:data:core` 的直接依赖。
+- 借贷写入边界已收敛：新增 `CreateLoanUseCase`、`UpdateLoanUseCase`、`DeleteLoanUseCase`、`CreateLoanRecordUseCase`、`UpdateLoanRecordUseCase` 和 `DeleteLoanRecordUseCase`；借贷列表和详情页不再注入旧 `LoanCreator/LoanRecordCreator`，关联交易创建、编辑和删除仍保持原有调用顺序。
 - 计划付款编辑页数据边界已收敛：新增 `GetPlannedPaymentRuleUseCase`、`SavePlannedPaymentRuleUseCase`、`DeletePlannedPaymentRuleUseCase` 和 `GetCategoryUseCase`，计划付款保存仍会生成未来交易、删除仍会清理未发生的生成交易，`:feature:planned-payments` 已去掉对 `shared:data:core` 的直接依赖。
 - 编辑交易页数据边界已收敛：新增 `SaveLegacyTransactionUseCase`、`DeleteTransactionUseCase`、`GetLoanUseCase` 和一组标签读写/关联用例，交易保存、删除、复制、标签创建、标签编辑、标签删除和标签关联不再直接调用数据层 repository/mapper，`:feature:edit-transaction` 已去掉对 `shared:data:core` 的直接依赖。
 - 交易详情页数据边界已收敛：新增 `GetAccountUseCase`、`DeleteAccountUseCase`、`DeleteCategoryUseCase` 和 `MapTransactionsToLegacyWithTagsUseCase`，账户详情、分类详情、账户删除、分类删除和带标签历史列表不再直接注入数据层 repository/DAO/mapper，`:feature:transactions` 已去掉对 `shared:data:core` 的直接依赖。

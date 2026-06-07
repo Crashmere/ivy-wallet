@@ -14,6 +14,7 @@ import com.ivy.data.model.LoanType
 import com.ivy.domain.preferences.AppPreferences
 import com.ivy.domain.usecase.account.CreateAccountWithBalanceUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
+import com.ivy.domain.usecase.loan.CreateLoanUseCase
 import com.ivy.domain.usecase.loan.GetLoanRecordsUseCase
 import com.ivy.domain.usecase.loan.GetLoansUseCase
 import com.ivy.domain.usecase.loan.ReorderLoansUseCase
@@ -26,7 +27,6 @@ import com.ivy.loans.loan.data.DisplayLoan
 import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.time.impl.DateTimePicker
 import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
-import com.ivy.legacy.domain.logic.LoanCreator
 import com.ivy.legacy.domain.logic.loantransactions.LoanTransactionsLogic
 import com.ivy.data.model.legacy.CreateAccountData
 import com.ivy.data.model.legacy.CreateLoanData
@@ -48,7 +48,7 @@ class LoanViewModel @Inject constructor(
     private val getBaseCurrencyCodeUseCase: GetBaseCurrencyCodeUseCase,
     private val getLoanRecordsUseCase: GetLoanRecordsUseCase,
     private val reorderLoansUseCase: ReorderLoansUseCase,
-    private val loanCreator: LoanCreator,
+    private val createLoanUseCase: CreateLoanUseCase,
     private val appPreferences: AppPreferences,
     private val createAccountWithBalanceUseCase: CreateAccountWithBalanceUseCase,
     private val loanTransactionsLogic: LoanTransactionsLogic,
@@ -310,12 +310,14 @@ class LoanViewModel @Inject constructor(
     private fun createLoan(data: CreateLoanData) {
         viewModelScope.launch {
 
-            val uuid = loanCreator.create(data) {
+            val loan = createLoanUseCase(data)
+            if (loan != null) {
                 start()
-            }
 
-            uuid?.let {
-                loanTransactionsLogic.Loan.createAssociatedLoanTransaction(data = data, loanId = it)
+                loanTransactionsLogic.Loan.createAssociatedLoanTransaction(
+                    data = data,
+                    loanId = loan.id
+                )
             }
 
         }
