@@ -269,8 +269,8 @@
 - `shared:data:model` 仍显式保留轻量 `compose-runtime`，后续可以把模型层的 Compose 注解替换掉，再彻底移除。
 - 新增 `ivy.compose-runtime`，只提供 `@Composable` 编译和 `compose-runtime/ui` 最小依赖，用于当前仍包含 `LocalContext`、`collectAsState` 等轻量 Compose API 的非页面模块。
 - `ivy.integration.testing` 已从 `ivy.feature` 改为基于 `ivy.android-library`，避免因为集成测试配置把完整 Compose UI 配置带入数据层。
-- `shared:data:core`、`shared:domain` 已从 `ivy.feature` 迁出，改为显式声明基础 Android library、轻量 Compose runtime、Room 和集成测试能力。
-- `shared:domain` 当前仍暂时保留 `ivy.room`，后续需要确认 Room 依赖是否只是历史残留，再单独拆除。
+- `shared:data:core`、`shared:domain` 已从 `ivy.feature` 迁出，改为显式声明基础 Android library、轻量 Compose runtime、Hilt、Room 或集成测试等各自实际需要的能力。
+- `shared:domain` 已移除 `ivy.room` 插件；主源码只显式保留 Hilt，当前只有 androidTest 中的汇率同步测试需要 Room runtime/testing 来创建内存数据库。
 
 ### 阶段 3：测试支持代码归位
 
@@ -626,6 +626,6 @@ shared:ui:core
 
 下一步建议执行：
 
-1. 收尾阶段 2：检查 `shared:domain` 是否真的需要 Room 插件，并把 `ivy.room` 拆成更窄的 Room-only 配置。
+1. 收尾阶段 2：继续拆窄 `ivy.room`，让它不再通过 `ivy.module` 隐式带入 Hilt 和 kotlinx serialization。
 2. 开始阶段 5：优先从 `temp:legacy-code` 中的纯工具函数、旧 UI helper 和明显可归位的小组件迁移，避免先碰账户余额、导入导出、Room migration 等高风险逻辑。
 3. 每完成一组模块边界调整后运行 `:app:assembleDemo`，确认构建没有被 Gradle 插件收缩影响。
