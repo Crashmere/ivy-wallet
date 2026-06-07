@@ -291,6 +291,7 @@
 - `ivy.android-library` 不再给所有 Android library 默认添加 Timber；app、数据层、domain 中的汇率同步/旧钱包统计，以及饼图页等实际写日志的模块改为各自显式声明日志库依赖。
 - `ivy.android-library` 不再给所有 Android library 默认添加整套单元测试依赖；当前有 `src/test` 的 `shared:base`、`shared:data:model`、`shared:data:model-testing`、`shared:data:core`、`shared:domain` 和 `shared:ui:core` 改为在各自模块里显式声明测试 bundle。
 - `shared:data:core` 的 DataStore 依赖已从 `api` 收窄为 `implementation`；DataStore 绑定仍由 data core 提供，但不再通过 data core 传递暴露给其他模块。
+- `ivy.module` 不再默认启用 kotlinx serialization；当前 `ivy.feature` 页面模块没有序列化源码引用，序列化能力只保留在 app、`shared:base` 和 `shared:data:core` 等实际需要的模块中。
 
 ### 阶段 3：测试支持代码归位
 
