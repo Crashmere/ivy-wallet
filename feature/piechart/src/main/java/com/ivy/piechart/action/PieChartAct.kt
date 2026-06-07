@@ -10,6 +10,7 @@ import com.ivy.data.model.primitive.ColorInt
 import com.ivy.data.model.primitive.IconAsset
 import com.ivy.data.model.primitive.NotBlankTrimmedString
 import com.ivy.domain.usecase.category.GetCategoriesUseCase
+import com.ivy.domain.usecase.transaction.GetLegacyTransactionsForAccountsUseCase
 import com.ivy.legacy.ui.theme.system.RedLight
 import com.ivy.legacy.frp.Pure
 import com.ivy.legacy.frp.SideEffect
@@ -23,7 +24,6 @@ import com.ivy.ui.R
 import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
 import com.ivy.legacy.domain.action.category.LegacyCategoryIncomeWithAccountFiltersAct
 import com.ivy.legacy.domain.action.transaction.LegacyCalcTrnsIncomeExpenseAct
-import com.ivy.legacy.domain.action.transaction.TrnsWithRangeAndAccFiltersAct
 import com.ivy.legacy.domain.pure.account.filterExcluded
 import com.ivy.data.model.legacy.IncomeExpenseTransferPair
 import kotlinx.collections.immutable.ImmutableList
@@ -34,7 +34,7 @@ import javax.inject.Inject
 
 class PieChartAct @Inject constructor(
     private val getLegacyAccountsUseCase: GetLegacyAccountsUseCase,
-    private val trnsWithRangeAndAccFiltersAct: TrnsWithRangeAndAccFiltersAct,
+    private val getLegacyTransactionsForAccountsUseCase: GetLegacyTransactionsForAccountsUseCase,
     private val calcTrnsIncomeExpenseAct: LegacyCalcTrnsIncomeExpenseAct,
     private val getCategoriesUseCase: GetCategoriesUseCase,
     private val categoryIncomeWithAccountFiltersAct: LegacyCategoryIncomeWithAccountFiltersAct,
@@ -60,11 +60,9 @@ class PieChartAct @Inject constructor(
         val accountIdFilterSet = it.second
 
         val transactions = existingTransactions.ifEmpty {
-            trnsWithRangeAndAccFiltersAct(
-                TrnsWithRangeAndAccFiltersAct.Input(
-                    range = range,
-                    accountIdFilterSet = accountIdFilterSet
-                )
+            getLegacyTransactionsForAccountsUseCase(
+                range = range,
+                accountIdFilterSet = accountIdFilterSet
             )
         }
 

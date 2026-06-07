@@ -17,7 +17,7 @@ import com.ivy.data.model.legacy.Account
 import com.ivy.base.currency.getDefaultFIATCurrency
 import com.ivy.base.coroutines.ioThread
 import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
-import com.ivy.legacy.domain.action.transaction.AllTrnsAct
+import com.ivy.domain.usecase.transaction.GetTransactionsUseCase
 import com.ivy.legacy.domain.action.transaction.TrnsWithDateDivsAct
 import com.ivy.ui.preferences.asEnabledState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -34,7 +34,7 @@ class SearchViewModel @Inject constructor(
     private val getLegacyAccountsUseCase: GetLegacyAccountsUseCase,
     private val getCategoriesUseCase: GetCategoriesUseCase,
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
-    private val allTrnsAct: AllTrnsAct,
+    private val getTransactionsUseCase: GetTransactionsUseCase,
     private val preferenceToggleRepository: PreferenceToggleRepository,
     private val preferenceToggles: PreferenceToggles
 ) : ComposeViewModel<SearchState, SearchEvent>() {
@@ -81,7 +81,7 @@ class SearchViewModel @Inject constructor(
 
         viewModelScope.launch {
             val queryResult = ioThread {
-                val filteredTransactions = allTrnsAct(Unit)
+                val filteredTransactions = getTransactionsUseCase()
                     .filter { transaction ->
                         transaction.title.matchesQuery(normalizedQuery) ||
                                 transaction.description.matchesQuery(normalizedQuery)

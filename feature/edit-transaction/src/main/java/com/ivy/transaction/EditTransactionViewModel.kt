@@ -37,6 +37,7 @@ import com.ivy.domain.usecase.tag.RemoveTagFromTransactionUseCase
 import com.ivy.domain.usecase.tag.SaveTagUseCase
 import com.ivy.domain.usecase.tag.SearchTagsUseCase
 import com.ivy.domain.usecase.transaction.DeleteTransactionUseCase
+import com.ivy.domain.usecase.transaction.GetLegacyTransactionUseCase
 import com.ivy.domain.usecase.transaction.SaveLegacyTransactionUseCase
 import com.ivy.legacy.ui.model.EditTransactionDisplayLoan
 import com.ivy.data.model.legacy.Account
@@ -53,7 +54,6 @@ import com.ivy.ui.R
 import com.ivy.ui.time.impl.DateTimePicker
 import com.ivy.domain.usecase.account.GetLegacyAccountUseCase
 import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
-import com.ivy.legacy.domain.action.transaction.TrnByIdAct
 import com.ivy.legacy.domain.data.CustomExchangeRateState
 import com.ivy.legacy.domain.logic.CategoryCreator
 import com.ivy.legacy.domain.logic.PlannedPaymentsLogic
@@ -100,7 +100,7 @@ class EditTransactionViewModel @Inject constructor(
     private val loanTransactionsLogic: LoanTransactionsLogic,
     private val getLegacyAccountsUseCase: GetLegacyAccountsUseCase,
     private val getCategoriesUseCase: GetCategoriesUseCase,
-    private val trnByIdAct: TrnByIdAct,
+    private val getLegacyTransactionUseCase: GetLegacyTransactionUseCase,
     private val getLegacyAccountUseCase: GetLegacyAccountUseCase,
     private val saveLegacyTransactionUseCase: SaveLegacyTransactionUseCase,
     private val deleteTransactionUseCase: DeleteTransactionUseCase,
@@ -177,7 +177,7 @@ class EditTransactionViewModel @Inject constructor(
             reset()
 
             loadedTransaction = screen.initialTransactionId?.let {
-                trnByIdAct(it)
+                getLegacyTransactionUseCase(it)
             } ?: Transaction(
                 accountId = defaultAccountId(
                     screen = screen,

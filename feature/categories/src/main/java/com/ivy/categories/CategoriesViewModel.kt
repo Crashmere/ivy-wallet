@@ -15,8 +15,7 @@ import com.ivy.domain.preferences.AppPreferences
 import com.ivy.domain.usecase.category.GetCategoriesUseCase
 import com.ivy.domain.usecase.category.SaveCategoryUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
-import com.ivy.legacy.frp.action.thenMap
-import com.ivy.legacy.frp.thenInvokeAfter
+import com.ivy.domain.usecase.transaction.GetLegacyTransactionsForAccountsUseCase
 import com.ivy.legacy.ui.state.PeriodState
 import com.ivy.legacy.ui.model.period.TimePeriod
 import com.ivy.data.model.legacy.Account
@@ -25,7 +24,6 @@ import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.preferences.asEnabledState
 import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
 import com.ivy.legacy.domain.action.category.LegacyCategoryIncomeWithAccountFiltersAct
-import com.ivy.legacy.domain.action.transaction.TrnsWithRangeAndAccFiltersAct
 import com.ivy.legacy.domain.data.SortOrder
 import com.ivy.legacy.domain.logic.CategoryCreator
 import com.ivy.data.model.legacy.CreateCategoryData
@@ -51,7 +49,7 @@ class CategoriesViewModel @Inject constructor(
     private val appPreferences: AppPreferences,
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
     private val getLegacyAccountsUseCase: GetLegacyAccountsUseCase,
-    private val trnsWithRangeAndAccFiltersAct: TrnsWithRangeAndAccFiltersAct,
+    private val getLegacyTransactionsForAccountsUseCase: GetLegacyTransactionsForAccountsUseCase,
     private val categoryIncomeWithAccountFiltersAct: LegacyCategoryIncomeWithAccountFiltersAct,
     private val preferenceToggles: PreferenceToggles,
     private val preferenceToggleRepository: PreferenceToggleRepository,
@@ -159,12 +157,9 @@ class CategoriesViewModel @Inject constructor(
             allAccounts = getLegacyAccountsUseCase()
             baseCurrency.value = getBaseCurrencyCode()
 
-            transactions = trnsWithRangeAndAccFiltersAct(
-                TrnsWithRangeAndAccFiltersAct.Input(
-                    range = range,
-                    accountIdFilterSet = suspend { allAccounts } thenMap { it.id }
-                            thenInvokeAfter { it.toHashSet() }
-                )
+            transactions = getLegacyTransactionsForAccountsUseCase(
+                range = range,
+                accountIdFilterSet = allAccounts.map { it.id }.toHashSet()
             )
 
             val sortOrder = SortOrder.from(

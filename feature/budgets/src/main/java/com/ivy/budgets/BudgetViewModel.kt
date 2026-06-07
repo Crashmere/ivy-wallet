@@ -29,10 +29,10 @@ import com.ivy.domain.usecase.budget.ReorderBudgetsUseCase
 import com.ivy.domain.usecase.category.GetCategoriesUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.domain.usecase.exchange.ExchangeAmountUseCase
+import com.ivy.domain.usecase.transaction.GetTransactionsBetweenUseCase
 import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.R
 import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
-import com.ivy.legacy.domain.action.transaction.HistoryTrnsAct
 import com.ivy.data.model.legacy.CreateBudgetData
 import com.ivy.legacy.domain.pure.exchange.ExchangeData
 import com.ivy.legacy.domain.pure.transaction.getAccountId
@@ -56,7 +56,7 @@ class BudgetViewModel @Inject constructor(
     private val getCategoriesUseCase: GetCategoriesUseCase,
     private val getBudgetsUseCase: GetBudgetsUseCase,
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
-    private val historyTrnsAct: HistoryTrnsAct,
+    private val getTransactionsBetweenUseCase: GetTransactionsBetweenUseCase,
     private val exchangeAmountUseCase: ExchangeAmountUseCase,
     private val timeProvider: TimeProvider,
     private val timeConverter: TimeConverter,
@@ -206,7 +206,7 @@ class BudgetViewModel @Inject constructor(
                         budget = it,
                         spentAmount = calculateSpentAmount(
                             budget = it,
-                            transactions = historyTrnsAct(timeRange.toCloseTimeRange()),
+                            transactions = getTransactionsBetweenUseCase(timeRange.toCloseTimeRange()),
                             accounts = accounts,
                             baseCurrencyCode = baseCurrency
                         )
