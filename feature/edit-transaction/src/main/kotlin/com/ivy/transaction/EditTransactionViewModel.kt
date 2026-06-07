@@ -424,17 +424,17 @@ class EditTransactionViewModel @Inject constructor(
             )
         }
 
-        displayLoanHelper = getDisplayLoanHelper(trans = transaction)
+        displayLoanHelper = getDisplayLoanHelper(transaction = transaction)
     }
 
-    private suspend fun getDisplayLoanHelper(trans: Transaction): EditTransactionDisplayLoan {
-        if (trans.loanId == null) {
+    private suspend fun getDisplayLoanHelper(transaction: Transaction): EditTransactionDisplayLoan {
+        if (transaction.loanId == null) {
             return EditTransactionDisplayLoan()
         }
 
         val loan =
-            getLoanUseCase(trans.loanId!!) ?: return EditTransactionDisplayLoan()
-        val isLoanRecord = trans.loanRecordId != null
+            getLoanUseCase(transaction.loanId!!) ?: return EditTransactionDisplayLoan()
+        val isLoanRecord = transaction.loanRecordId != null
 
         val loanWarningDescription = if (isLoanRecord) {
             resourceProvider.getString(

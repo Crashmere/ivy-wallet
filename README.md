@@ -828,6 +828,7 @@
 - 旧 `Logic` 注入变量名已继续收敛：`LegacyExchangeRatesUseCase` 的调用方统一使用 `exchangeRatesUseCase`，首页客户旅程卡片也改用 `customerJourneyCardsProvider` 命名，避免把 provider/use case 误读成旧 logic 层。
 - 旧到期交易 UI 模型 `LegacyDueSection` 的 `trns` 字段已改为 `transactions`，legacy 交易列表内部私有 `trnItems/trnCount` 也改为完整命名；首页、报表和交易页调用方同步更新，展示行为不变。
 - CSV 导入页面的交易类型元数据已从 `TrnTypeMetadata` 展开为 `TransactionTypeMetadata`，对应事件 `TypeMetaChange/DataMetaChange` 也改为 `TypeMetadataChange/DateMetadataChange`；导入解析规则和 CSV 字段映射行为不变。
+- app 启动、首页到期交易加载、编辑交易删除弹窗、交易类型 lambda、客户旅程计数、账户统计和 CSV 导出中的局部 `trn/trans` 缩写已展开为 `transaction*` 命名；只改局部符号，不改业务计算。
 
 建议顺序：
 

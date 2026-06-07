@@ -80,7 +80,7 @@ class RootViewModel @Inject constructor(
 
     @Suppress("SwallowedException")
     private fun handleSpecialStart(intent: Intent): Boolean {
-        val addTrnType: TransactionType? = try {
+        val addTransactionType: TransactionType? = try {
             IntentCompat.getSerializableExtra(
                 intent,
                 EXTRA_ADD_TRANSACTION_TYPE,
@@ -91,11 +91,11 @@ class RootViewModel @Inject constructor(
             null
         }
 
-        if (addTrnType != null) {
+        if (addTransactionType != null) {
             nav.navigateTo(
                 EditTransactionScreen(
                     initialTransactionId = null,
-                    type = addTrnType
+                    type = addTransactionType
                 )
             )
 

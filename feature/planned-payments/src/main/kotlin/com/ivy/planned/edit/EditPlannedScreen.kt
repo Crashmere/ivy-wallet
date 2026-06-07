@@ -101,7 +101,7 @@ private fun BoxWithConstraintsScope.UI(
         Toolbar(
             type = state.transactionType,
             initialTransactionId = screen.plannedPaymentRuleId,
-            onDeleteTrnModal = {
+            onDeleteTransactionModal = {
                 onEvent(EditPlannedScreenEvent.OnDeleteTransactionModalVisible(true))
             },
             onChangeTransactionTypeModal = {

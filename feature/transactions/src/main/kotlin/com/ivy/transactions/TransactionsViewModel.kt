@@ -481,7 +481,7 @@ class TransactionsViewModel @Inject constructor(
         )
         category.value = accountTransferCategory
         val accountFilterIdSet = accountFilterList.toHashSet()
-        val trans = transactions.filter {
+        val filteredTransactions = transactions.filter {
             it.categoryId == null && (
                     accountFilterIdSet.contains(it.accountId) || accountFilterIdSet.contains(
                         it.toAccountId
@@ -490,7 +490,7 @@ class TransactionsViewModel @Inject constructor(
         }
 
         val historyIncomeExpense = calculateLegacyTransactionsIncomeExpenseUseCase(
-            transactions = trans,
+            transactions = filteredTransactions,
             accounts = accountFilterList.mapNotNull { accID -> accounts.value.find { it.id == accID } },
             baseCurrency = baseCurrency.value
         )

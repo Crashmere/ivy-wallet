@@ -710,11 +710,11 @@ private fun Header(
                     )
                 }
             }
-        ) { trnType ->
+        ) { transactionType ->
             nav.navigateTo(
                 EditTransactionScreen(
                     initialTransactionId = null,
-                    type = trnType,
+                    type = transactionType,
                     accountId = account?.id,
                     categoryId = category?.id?.value
                 )

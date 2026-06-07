@@ -34,7 +34,7 @@ fun Toolbar(
     type: TransactionType,
     initialTransactionId: UUID?,
 
-    onDeleteTrnModal: () -> Unit,
+    onDeleteTransactionModal: () -> Unit,
     onChangeTransactionTypeModal: () -> Unit,
 
     showDuplicateButton: Boolean,
@@ -108,7 +108,7 @@ fun Toolbar(
             DeleteButton(
                 hasShadow = false
             ) {
-                onDeleteTrnModal()
+                onDeleteTransactionModal()
             }
 
             Spacer(Modifier.width(24.dp))

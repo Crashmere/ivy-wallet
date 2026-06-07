@@ -50,8 +50,8 @@ class CustomerJourneyCardsProvider @Inject constructor(
 
     private fun adjustBalanceCard() = CustomerJourneyCardModel(
         id = "adjust_balance",
-        condition = { trnCount, _ ->
-            trnCount == 0L
+        condition = { transactionCount, _ ->
+            transactionCount == 0L
         },
         title = resourceProvider.getString(R.string.adjust_initial_balance),
         description = resourceProvider.getString(R.string.adjust_initial_balance_description),
@@ -66,8 +66,8 @@ class CustomerJourneyCardsProvider @Inject constructor(
 
     private fun addPlannedPaymentCard() = CustomerJourneyCardModel(
         id = "add_planned_payment",
-        condition = { trnCount, plannedPaymentCount ->
-            trnCount >= 1 && plannedPaymentCount == 0L
+        condition = { transactionCount, plannedPaymentCount ->
+            transactionCount >= 1 && plannedPaymentCount == 0L
         },
         title = resourceProvider.getString(R.string.create_first_planned_payment),
         description = resourceProvider.getString(R.string.create_first_planned_payment_description),
@@ -87,8 +87,8 @@ class CustomerJourneyCardsProvider @Inject constructor(
 
     private fun expensesPieChartCard() = CustomerJourneyCardModel(
         id = "expenses_pie_chart",
-        condition = { trnCount, _ ->
-            trnCount >= 7
+        condition = { transactionCount, _ ->
+            transactionCount >= 7
         },
         title = resourceProvider.getString(R.string.did_you_know),
         description = resourceProvider.getString(R.string.you_can_see_a_piechart),

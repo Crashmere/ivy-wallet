@@ -135,11 +135,11 @@ private fun BoxWithConstraintsScope.UI(
                 onClose = {
                     nav.back()
                 },
-                onAdd = { trnType ->
+                onAdd = { transactionType ->
                     nav.navigateTo(
                         EditTransactionScreen(
                             initialTransactionId = null,
-                            type = trnType
+                            type = transactionType
                         )
                     )
                 }

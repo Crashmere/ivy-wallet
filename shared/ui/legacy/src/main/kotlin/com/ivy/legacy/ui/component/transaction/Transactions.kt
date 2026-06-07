@@ -228,10 +228,10 @@ private fun LazyListScope.transactionItems(
             shouldShowAccountSpecificColorInTransactions = shouldShowAccountSpecificColorInTransactions,
             onPayOrGet = onPayOrGet,
             onSkipTransaction = onSkipTransaction
-        ) { trn ->
+        ) { transaction ->
             onTransactionClick(
                 nav = nav,
-                transaction = trn
+                transaction = transaction
             )
         }
     }
@@ -267,10 +267,10 @@ private fun LazyListScope.historySection(
                         transaction = it,
                         shouldShowAccountSpecificColorInTransactions = shouldShowAccountSpecificColorInTransactions,
                         onPayOrGet = onPayOrGet
-                    ) { trn ->
+                    ) { transaction ->
                         onTransactionClick(
                             nav = nav,
-                            transaction = trn
+                            transaction = transaction
                         )
                     }
                 }

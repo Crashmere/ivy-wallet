@@ -10,7 +10,7 @@ import com.ivy.ui.navigation.Navigation
 data class CustomerJourneyCardModel(
     val id: String,
     @Suppress("MaximumLineLength", "ParameterWrapping", "MaxLineLength", "ParameterListWrapping")
-    val condition: suspend (trnCount: Long, plannedPaymentsCount: Long) -> Boolean,
+    val condition: suspend (transactionCount: Long, plannedPaymentsCount: Long) -> Boolean,
     val title: String,
     val description: String,
     val cta: String?,

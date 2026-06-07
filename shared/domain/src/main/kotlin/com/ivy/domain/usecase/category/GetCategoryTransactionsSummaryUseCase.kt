@@ -161,14 +161,14 @@ class GetCategoryTransactionsSummaryUseCase @Inject constructor(
         accountFilterSet: Set<UUID>,
         transactions: List<Transaction>?
     ): List<Transaction> {
-        val trans = transactions ?: transactionRepository
+        val resolvedTransactions = transactions ?: transactionRepository
             .findAllByCategoryAndBetween(
                 categoryId = category.id.value,
                 startDate = range.from(),
                 endDate = range.to()
             ).map { it.toLegacy() }
 
-        return trans.filter {
+        return resolvedTransactions.filter {
             accountFilterSet.isEmpty() || accountFilterSet.contains(it.accountId)
         }
     }

@@ -287,8 +287,8 @@ class HomeViewModel @Inject constructor(
         val appDataInput = loadAppBaseData(preferences to timeRange)
         val balanceInput = loadIncomeExpenseBalance(appDataInput)
         val historyInput = loadBuffer(balanceInput)
-        val dueInput = loadTrnHistory(historyInput)
-        loadDueTrns(dueInput)
+        val dueInput = loadTransactionHistory(historyInput)
+        loadDueTransactions(dueInput)
         loadCustomerJourney(Unit)
     }
 
@@ -350,7 +350,7 @@ class HomeViewModel @Inject constructor(
         return preferences.baseCurrency to timeRange
     }
 
-    private suspend fun loadTrnHistory(
+    private suspend fun loadTransactionHistory(
         input: Pair<String, ClosedTimeRange>
     ): Pair<String, ClosedTimeRange> {
         val (baseCurrency, timeRange) = input
@@ -363,7 +363,7 @@ class HomeViewModel @Inject constructor(
         return baseCurrency to timeRange
     }
 
-    private suspend fun loadDueTrns(
+    private suspend fun loadDueTransactions(
         input: Pair<String, ClosedTimeRange>
     ) {
         val (baseCurrency, timeRange) = input

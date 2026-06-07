@@ -21,20 +21,20 @@ class AccountStatsUseCase @Inject constructor() {
         val transfersIn = StatSummaryBuilder()
         val transfersOut = StatSummaryBuilder()
 
-        for (trn in transactions) {
-            when (trn) {
-                is Expense -> if (trn.account == account) {
-                    expense.process(trn.value)
+        for (transaction in transactions) {
+            when (transaction) {
+                is Expense -> if (transaction.account == account) {
+                    expense.process(transaction.value)
                 }
 
-                is Income -> if (trn.account == account) {
-                    income.process(trn.value)
+                is Income -> if (transaction.account == account) {
+                    income.process(transaction.value)
                 }
 
                 is Transfer -> {
                     when (account) {
-                        trn.fromAccount -> transfersOut.process(trn.fromValue)
-                        trn.toAccount -> transfersIn.process(trn.toValue)
+                        transaction.fromAccount -> transfersOut.process(transaction.fromValue)
+                        transaction.toAccount -> transfersIn.process(transaction.toValue)
                         else -> {
                             // ignore, not relevant transfer for the account
                         }

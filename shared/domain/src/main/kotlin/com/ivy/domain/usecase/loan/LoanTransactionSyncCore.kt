@@ -73,8 +73,8 @@ class LoanTransactionSyncCore @Inject constructor(
                     listOf(transactionRepo.findLoanRecordTransaction(loanRecordId!!)?.toLegacy())
                 }
 
-            transactions.forEach { trans ->
-                deleteTransaction(trans)
+            transactions.forEach { transaction ->
+                deleteTransaction(transaction)
             }
         }
     }

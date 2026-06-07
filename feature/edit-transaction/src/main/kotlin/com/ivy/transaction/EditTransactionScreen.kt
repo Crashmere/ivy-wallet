@@ -231,7 +231,7 @@ private fun BoxWithConstraintsScope.UI(
     var categoryModalData: CategoryModalData? by remember { mutableStateOf(null) }
     var accountModalData: AccountModalData? by remember { mutableStateOf(null) }
     var descriptionModalVisible by remember { mutableStateOf(false) }
-    var deleteTrnModalVisible by remember { mutableStateOf(false) }
+    var deleteTransactionModalVisible by remember { mutableStateOf(false) }
     var changeTransactionTypeModalVisible by remember { mutableStateOf(false) }
     var amountModalShown by remember { mutableStateOf(false) }
     var exchangeRateAmountModalShown by remember { mutableStateOf(false) }
@@ -280,8 +280,8 @@ private fun BoxWithConstraintsScope.UI(
             // with loan record to hide the ChangeTransactionType Button
             type = if (loanData.isLoanRecord) TransactionType.TRANSFER else transactionType,
             initialTransactionId = screen.initialTransactionId,
-            onDeleteTrnModal = {
-                deleteTrnModalVisible = true
+            onDeleteTransactionModal = {
+                deleteTransactionModalVisible = true
             },
             onChangeTransactionTypeModal = {
                 changeTransactionTypeModalVisible = true
@@ -547,10 +547,10 @@ private fun BoxWithConstraintsScope.UI(
     )
 
     DeleteModal(
-        visible = deleteTrnModalVisible,
+        visible = deleteTransactionModalVisible,
         title = stringResource(R.string.confirm_deletion),
         description = stringResource(R.string.transaction_confirm_deletion_description),
-        dismiss = { deleteTrnModalVisible = false }
+        dismiss = { deleteTransactionModalVisible = false }
     ) {
         onDelete()
     }

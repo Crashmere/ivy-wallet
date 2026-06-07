@@ -54,9 +54,9 @@ class ExportCsvUseCase @Inject constructor(
         buildString {
             append(IvyCsvRow.Columns.joinToString(separator = CSV_SEPARATOR))
             append(NEWLINE)
-            for (trn in transactions) {
+            for (transaction in transactions) {
                 append(
-                    trn.toIvyCsvRow().toCsvString(
+                    transaction.toIvyCsvRow().toCsvString(
                         accountsMap = accountsMap,
                         categoriesMap = categoriesMap
                     )
