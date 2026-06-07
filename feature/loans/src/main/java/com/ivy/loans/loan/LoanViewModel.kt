@@ -28,7 +28,7 @@ import com.ivy.legacy.domain.action.account.AccountsAct
 import com.ivy.legacy.domain.action.loan.LoansAct
 import com.ivy.legacy.domain.logic.LoanCreator
 import com.ivy.legacy.domain.logic.loantransactions.LoanTransactionsLogic
-import com.ivy.legacy.domain.model.CreateAccountData
+import com.ivy.data.model.legacy.CreateAccountData
 import com.ivy.legacy.domain.model.CreateLoanData
 import com.ivy.legacy.ui.modal.LoanModalData
 import dagger.hilt.android.lifecycle.HiltViewModel

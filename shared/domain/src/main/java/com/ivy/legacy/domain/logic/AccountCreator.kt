@@ -10,7 +10,7 @@ import com.ivy.data.model.primitive.NotBlankTrimmedString
 import com.ivy.data.repository.AccountRepository
 import com.ivy.base.coroutines.ioThread
 import com.ivy.domain.usecase.currency.GetBaseCurrencyUseCase
-import com.ivy.legacy.domain.model.CreateAccountData
+import com.ivy.data.model.legacy.CreateAccountData
 import com.ivy.legacy.domain.pure.util.nextOrderNum
 import java.util.UUID
 import javax.inject.Inject

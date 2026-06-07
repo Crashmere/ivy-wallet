@@ -33,7 +33,7 @@ import com.ivy.base.text.toLowerCaseLocal
 import com.ivy.base.text.toUpperCaseLocal
 import com.ivy.ui.R
 import com.ivy.data.model.currency.IvyCurrency
-import com.ivy.legacy.domain.model.CreateAccountData
+import com.ivy.data.model.legacy.CreateAccountData
 import com.ivy.legacy.ui.theme.Gray
 import com.ivy.legacy.ui.theme.Ivy
 import com.ivy.legacy.ui.component.IvyCheckboxWithText

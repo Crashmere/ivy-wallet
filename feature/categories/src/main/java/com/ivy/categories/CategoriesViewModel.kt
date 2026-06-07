@@ -28,7 +28,7 @@ import com.ivy.legacy.domain.action.category.LegacyCategoryIncomeWithAccountFilt
 import com.ivy.legacy.domain.action.transaction.TrnsWithRangeAndAccFiltersAct
 import com.ivy.legacy.domain.data.SortOrder
 import com.ivy.legacy.domain.logic.CategoryCreator
-import com.ivy.legacy.domain.model.CreateCategoryData
+import com.ivy.data.model.legacy.CreateCategoryData
 import com.ivy.legacy.ui.modal.edit.CategoryModalData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList

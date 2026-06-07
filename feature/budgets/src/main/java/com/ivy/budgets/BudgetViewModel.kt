@@ -33,7 +33,7 @@ import com.ivy.legacy.domain.action.account.AccountsAct
 import com.ivy.legacy.domain.action.budget.BudgetsAct
 import com.ivy.legacy.domain.action.exchange.ExchangeAct
 import com.ivy.legacy.domain.action.transaction.HistoryTrnsAct
-import com.ivy.legacy.domain.model.CreateBudgetData
+import com.ivy.data.model.legacy.CreateBudgetData
 import com.ivy.legacy.domain.pure.exchange.ExchangeData
 import com.ivy.legacy.domain.pure.transaction.getAccountId
 import com.ivy.legacy.domain.pure.transaction.getValue

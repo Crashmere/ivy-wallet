@@ -31,7 +31,7 @@ import com.ivy.legacy.ui.modal.ModalNameInput
 import com.ivy.base.text.isNotNullOrBlank
 import com.ivy.legacy.ui.selectEndTextFieldValue
 import com.ivy.ui.R
-import com.ivy.legacy.domain.model.CreateBudgetData
+import com.ivy.data.model.legacy.CreateBudgetData
 import com.ivy.legacy.ui.modal.DeleteModal
 import com.ivy.legacy.ui.modal.IvyModal
 import com.ivy.legacy.ui.modal.ModalAddSave

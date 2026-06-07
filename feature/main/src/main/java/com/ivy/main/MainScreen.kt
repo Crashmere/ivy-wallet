@@ -21,7 +21,7 @@ import com.ivy.ui.navigation.LocalMainTabState
 import com.ivy.ui.navigation.MainTab
 import com.ivy.ui.navigation.MainScreen
 import com.ivy.ui.navigation.navigation
-import com.ivy.legacy.domain.model.CreateAccountData
+import com.ivy.data.model.legacy.CreateAccountData
 import com.ivy.legacy.ui.modal.edit.AccountModal
 import com.ivy.legacy.ui.modal.edit.AccountModalData
 

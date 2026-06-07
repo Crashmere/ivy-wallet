@@ -1,4 +1,4 @@
-package com.ivy.legacy.domain.model
+package com.ivy.data.model.legacy
 
 data class CreateCategoryData(
     val name: String,

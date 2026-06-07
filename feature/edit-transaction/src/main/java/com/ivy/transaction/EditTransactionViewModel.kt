@@ -60,8 +60,8 @@ import com.ivy.legacy.domain.logic.PlannedPaymentsLogic
 import com.ivy.legacy.domain.logic.SmartTitleSuggestionsLogic
 import com.ivy.legacy.domain.logic.currency.ExchangeRatesLogic
 import com.ivy.legacy.domain.logic.loantransactions.LoanTransactionsLogic
-import com.ivy.legacy.domain.model.CreateAccountData
-import com.ivy.legacy.domain.model.CreateCategoryData
+import com.ivy.data.model.legacy.CreateAccountData
+import com.ivy.data.model.legacy.CreateCategoryData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.ImmutableSet

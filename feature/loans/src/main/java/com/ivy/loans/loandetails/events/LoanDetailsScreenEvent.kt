@@ -1,6 +1,6 @@
 package com.ivy.loans.loandetails.events
 
-import com.ivy.legacy.domain.model.CreateAccountData
+import com.ivy.data.model.legacy.CreateAccountData
 
 sealed interface LoanDetailsScreenEvent {
     data object OnEditLoanClick : LoanDetailsScreenEvent

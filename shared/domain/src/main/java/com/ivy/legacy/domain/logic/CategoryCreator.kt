@@ -7,7 +7,7 @@ import com.ivy.data.model.primitive.IconAsset
 import com.ivy.data.model.primitive.NotBlankTrimmedString
 import com.ivy.data.repository.CategoryRepository
 import com.ivy.base.coroutines.ioThread
-import com.ivy.legacy.domain.model.CreateCategoryData
+import com.ivy.data.model.legacy.CreateCategoryData
 import com.ivy.legacy.domain.pure.util.nextOrderNum
 import java.util.UUID
 import javax.inject.Inject

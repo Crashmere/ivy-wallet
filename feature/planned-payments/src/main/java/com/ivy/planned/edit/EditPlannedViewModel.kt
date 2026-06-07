@@ -27,8 +27,8 @@ import com.ivy.ui.ComposeViewModel
 import com.ivy.legacy.domain.action.account.AccountByIdAct
 import com.ivy.legacy.domain.action.account.AccountsAct
 import com.ivy.legacy.domain.logic.CategoryCreator
-import com.ivy.legacy.domain.model.CreateAccountData
-import com.ivy.legacy.domain.model.CreateCategoryData
+import com.ivy.data.model.legacy.CreateAccountData
+import com.ivy.data.model.legacy.CreateCategoryData
 import com.ivy.legacy.ui.modal.RecurringRuleModalData
 import com.ivy.legacy.ui.modal.edit.AccountModalData
 import com.ivy.legacy.ui.modal.edit.CategoryModalData

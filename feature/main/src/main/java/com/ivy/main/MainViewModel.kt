@@ -12,7 +12,7 @@ import com.ivy.ui.navigation.MainTab
 import com.ivy.ui.navigation.MainScreen
 import com.ivy.ui.navigation.MainTabState
 import com.ivy.ui.navigation.Navigation
-import com.ivy.legacy.domain.model.CreateAccountData
+import com.ivy.data.model.legacy.CreateAccountData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

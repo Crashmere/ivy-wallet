@@ -33,7 +33,7 @@ import com.ivy.legacy.domain.action.loan.LoanByIdAct
 import com.ivy.legacy.domain.logic.LoanCreator
 import com.ivy.legacy.domain.logic.LoanRecordCreator
 import com.ivy.legacy.domain.logic.loantransactions.LoanTransactionsLogic
-import com.ivy.legacy.domain.model.CreateAccountData
+import com.ivy.data.model.legacy.CreateAccountData
 import com.ivy.legacy.domain.model.CreateLoanRecordData
 import com.ivy.legacy.domain.model.EditLoanRecordData
 import com.ivy.legacy.ui.modal.LoanModalData

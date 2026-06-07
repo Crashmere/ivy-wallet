@@ -4,7 +4,7 @@ import com.ivy.data.db.dao.read.BudgetDao
 import com.ivy.data.db.dao.write.WriteBudgetDao
 import com.ivy.legacy.domain.model.Budget
 import com.ivy.base.coroutines.ioThread
-import com.ivy.legacy.domain.model.CreateBudgetData
+import com.ivy.data.model.legacy.CreateBudgetData
 import com.ivy.legacy.domain.pure.util.nextOrderNum
 import javax.inject.Inject
 
