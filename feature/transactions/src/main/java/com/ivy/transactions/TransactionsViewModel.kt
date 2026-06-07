@@ -14,30 +14,27 @@ import com.ivy.base.model.TransactionType
 import com.ivy.base.resource.ResourceProvider
 import com.ivy.base.time.TimeConverter
 import com.ivy.base.time.TimeProvider
-import com.ivy.data.db.dao.read.AccountDao
-import com.ivy.data.db.dao.write.WritePlannedPaymentRuleDao
 import com.ivy.data.model.AccountId
 import com.ivy.data.model.Category
 import com.ivy.data.model.CategoryId
 import com.ivy.data.model.primitive.ColorInt
 import com.ivy.data.model.primitive.IconAsset
 import com.ivy.data.model.primitive.NotBlankTrimmedString
-import com.ivy.data.repository.AccountRepository
-import com.ivy.data.repository.CategoryRepository
-import com.ivy.data.repository.TagRepository
-import com.ivy.data.repository.TransactionRepository
-import com.ivy.data.repository.mapper.TransactionMapper
 import com.ivy.domain.preferences.AppPreferences
+import com.ivy.domain.usecase.account.DeleteAccountUseCase
+import com.ivy.domain.usecase.account.GetAccountUseCase
+import com.ivy.domain.usecase.category.DeleteCategoryUseCase
 import com.ivy.domain.usecase.category.GetCategoriesUseCase
+import com.ivy.domain.usecase.category.GetCategoryUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
+import com.ivy.domain.usecase.transaction.MapTransactionsToLegacyUseCase
+import com.ivy.domain.usecase.transaction.MapTransactionsToLegacyWithTagsUseCase
 import com.ivy.legacy.ui.theme.system.RedLight
 import com.ivy.domain.preferences.toggles.PreferenceToggles
 import com.ivy.legacy.frp.then
 import com.ivy.legacy.ui.state.PeriodState
 import com.ivy.legacy.ui.model.period.TimePeriod
 import com.ivy.legacy.domain.model.toCloseTimeRange
-import com.ivy.legacy.domain.mapper.toImmutableLegacyTags
-import com.ivy.legacy.domain.mapper.toLegacyDomain
 import com.ivy.legacy.domain.logic.AccountCreator
 import com.ivy.base.coroutines.computationThread
 import com.ivy.base.coroutines.ioThread
@@ -48,6 +45,7 @@ import com.ivy.ui.navigation.TransactionsScreen
 import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.R
 import com.ivy.legacy.domain.action.account.AccTrnsAct
+import com.ivy.legacy.domain.action.account.AccountByIdAct
 import com.ivy.legacy.domain.action.account.AccountsAct
 import com.ivy.legacy.domain.action.account.CalcAccBalanceAct
 import com.ivy.legacy.domain.action.account.CalcAccIncomeExpenseAct
@@ -73,9 +71,6 @@ import com.ivy.legacy.domain.model.Account as LegacyAccount
 @Stable
 @HiltViewModel
 class TransactionsViewModel @Inject constructor(
-    private val accountRepository: AccountRepository,
-    private val accountDao: AccountDao,
-    private val categoryRepository: CategoryRepository,
     private val periodState: PeriodState,
     private val nav: Navigation,
     private val accountLogic: WalletAccountLogic,
@@ -85,18 +80,21 @@ class TransactionsViewModel @Inject constructor(
     private val plannedPaymentsLogic: PlannedPaymentsLogic,
     private val appPreferences: AppPreferences,
     private val accountsAct: AccountsAct,
+    private val accountByIdAct: AccountByIdAct,
     private val accTrnsAct: AccTrnsAct,
     private val trnsWithDateDivsAct: LegacyTrnsWithDateDivsAct,
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
+    private val getAccountUseCase: GetAccountUseCase,
+    private val deleteAccountUseCase: DeleteAccountUseCase,
     private val getCategoriesUseCase: GetCategoriesUseCase,
+    private val getCategoryUseCase: GetCategoryUseCase,
+    private val deleteCategoryUseCase: DeleteCategoryUseCase,
     private val calcAccBalanceAct: CalcAccBalanceAct,
     private val calcAccIncomeExpenseAct: CalcAccIncomeExpenseAct,
     private val calcTrnsIncomeExpenseAct: LegacyCalcTrnsIncomeExpenseAct,
     private val exchangeAct: ExchangeAct,
-    private val transactionRepository: TransactionRepository,
-    private val plannedPaymentRuleWriter: WritePlannedPaymentRuleDao,
-    private val transactionMapper: TransactionMapper,
-    private val tagRepository: TagRepository,
+    private val mapTransactionsToLegacyUseCase: MapTransactionsToLegacyUseCase,
+    private val mapTransactionsToLegacyWithTagsUseCase: MapTransactionsToLegacyWithTagsUseCase,
     private val resourceProvider: ResourceProvider,
     private val timeProvider: TimeProvider,
     private val timeConverter: TimeConverter,
@@ -340,9 +338,7 @@ class TransactionsViewModel @Inject constructor(
     }
 
     private suspend fun initForAccount(accountId: UUID) {
-        val initialAccount = ioThread {
-            accountDao.findById(accountId)?.toLegacyDomain() ?: error("account not found")
-        }
+        val initialAccount = accountByIdAct(accountId) ?: error("account not found")
         account.value = initialAccount
         val range = period.value.toRange(periodState.startDayOfMonth, timeConverter, timeProvider)
 
@@ -350,7 +346,7 @@ class TransactionsViewModel @Inject constructor(
             currency.value = initialAccount.currency!!
         }
 
-        val account = accountRepository.findById(AccountId(accountId)) ?: error("account not found")
+        val account = getAccountUseCase(AccountId(accountId)) ?: error("account not found")
 
         val balanceValue = calcAccBalanceAct(
             CalcAccBalanceAct.Input(
@@ -387,13 +383,7 @@ class TransactionsViewModel @Inject constructor(
                     trnsWithDateDivsAct(
                         LegacyTrnsWithDateDivsAct.Input(
                             baseCurrency = baseCurrency.value,
-                            transactions = with(transactionMapper) {
-                                it.map {
-                                    val tags =
-                                        tagRepository.findByIds(it.tags).toImmutableLegacyTags()
-                                    it.toEntity().toLegacyDomain(tags = tags)
-                                }
-                            }
+                            transactions = mapTransactionsToLegacyWithTagsUseCase(it)
                         )
                     )
                 }
@@ -414,9 +404,8 @@ class TransactionsViewModel @Inject constructor(
         }
 
         upcoming.value = ioThread {
-            with(transactionMapper) {
-                accountLogic.upcoming(initialAccount, range).map { it.toEntity().toLegacyDomain() }
-            }.toImmutableList()
+            mapTransactionsToLegacyUseCase(accountLogic.upcoming(initialAccount, range))
+                .toImmutableList()
         }
 
         // Overdue
@@ -429,18 +418,15 @@ class TransactionsViewModel @Inject constructor(
         }
 
         overdue.value = ioThread {
-            with(transactionMapper) {
-                accountLogic.overdue(initialAccount, range).map {
-                    it.toEntity().toLegacyDomain()
-                }.toImmutableList()
-            }
+            mapTransactionsToLegacyUseCase(accountLogic.overdue(initialAccount, range))
+                .toImmutableList()
         }
     }
 
     private suspend fun initForCategory(categoryId: UUID, accountFilterList: List<UUID>) {
         val accountFilterSet = accountFilterList.toSet()
         val initialCategory = ioThread {
-            categoryRepository.findById(CategoryId(categoryId)) ?: error("category not found")
+            getCategoryUseCase(CategoryId(categoryId)) ?: error("category not found")
         }
         category.value = initialCategory
         val range = period.value.toRange(periodState.startDayOfMonth, timeConverter, timeProvider)
@@ -507,7 +493,7 @@ class TransactionsViewModel @Inject constructor(
 
             val accountFilterSet = accountFilterList.toSet()
             val initialCategory = ioThread {
-                categoryRepository.findById(CategoryId(categoryId)) ?: error("category not found")
+                getCategoryUseCase(CategoryId(categoryId)) ?: error("category not found")
             }
             category.value = initialCategory
             val range =
@@ -750,18 +736,14 @@ class TransactionsViewModel @Inject constructor(
 
     private suspend fun deleteAccount(accountId: UUID) {
         ioThread {
-            transactionRepository.deleteAllByAccountId(accountId = AccountId(accountId))
-            plannedPaymentRuleWriter.deletedByAccountId(accountId = accountId)
-            accountRepository.deleteById(AccountId(accountId))
-
+            deleteAccountUseCase(AccountId(accountId))
             nav.back()
         }
     }
 
     private suspend fun deleteCategory(categoryId: UUID) {
         ioThread {
-            categoryRepository.deleteById(CategoryId(categoryId))
-
+            deleteCategoryUseCase(CategoryId(categoryId))
             nav.back()
         }
     }
