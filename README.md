@@ -309,6 +309,7 @@
 - 空壳 `ivy.module` 约定插件已删除；`ivy.feature` 现在只保留 `ivy.hilt` 和 `ivy.compose` 两个页面能力入口，不再重复声明基础 Android library 插件。
 - app 与 `ivy.android-library` 已移除重复的旧式 `kotlin-android` 插件 ID，只保留正式 `org.jetbrains.kotlin.android` 插件；版本目录中仅包含 Android 协程运行时的依赖 bundle 已改名为 `kotlin-android-runtime`，避免和插件 ID 混淆。
 - app、`ivy.android-library` 和 `ivy.kotlin-library` 已把 Kotlin JVM target 配置从弃用的 `kotlinOptions` 迁到 `compilerOptions`；Java/Kotlin 目标仍保持 17，构建输出不再出现该弃用警告。
+- app 当前没有 `src/test` 或 `src/androidTest` 源码，已移除 app 模块中无消费方的通用测试 bundle 和 WorkManager 测试依赖；运行时 WorkManager 依赖保留。
 - 根目录 `temp/` 已加入 `.gitignore`；旧 `temp:*` 模块不再被 Gradle include，后续本地残留构建目录不会被误加回版本库。
 
 ### 阶段 3：测试支持代码归位

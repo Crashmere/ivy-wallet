@@ -156,7 +156,4 @@ dependencies {
 
     implementation(libs.timber)
     implementation(libs.androidx.work)
-
-    testImplementation(libs.bundles.testing)
-    testImplementation(libs.androidx.work.testing)
 }
