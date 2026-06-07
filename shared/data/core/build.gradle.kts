@@ -17,6 +17,7 @@ dependencies {
     implementation(libs.bundles.arrow)
     api(libs.datastore)
     implementation(libs.bundles.ktor)
+    implementation(libs.timber)
 
     testImplementation(projects.shared.baseTesting)
     testImplementation(projects.shared.data.modelTesting)
