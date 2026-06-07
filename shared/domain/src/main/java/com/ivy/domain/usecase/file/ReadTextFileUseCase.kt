@@ -1,7 +1,7 @@
 package com.ivy.domain.usecase.file
 
 import android.net.Uri
-import com.ivy.base.io.TextFileStore
+import com.ivy.data.api.file.TextFileStore
 import java.nio.charset.Charset
 import javax.inject.Inject
 

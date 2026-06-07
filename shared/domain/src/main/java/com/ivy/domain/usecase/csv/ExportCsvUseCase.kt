@@ -2,9 +2,9 @@ package com.ivy.domain.usecase.csv
 
 import android.net.Uri
 import com.ivy.base.model.TransactionType
-import com.ivy.base.io.TextFileStore
 import com.ivy.base.threading.DispatchersProvider
 import com.ivy.base.time.TimeConverter
+import com.ivy.data.api.file.TextFileStore
 import com.ivy.data.model.Account
 import com.ivy.data.model.AccountId
 import com.ivy.data.model.Category

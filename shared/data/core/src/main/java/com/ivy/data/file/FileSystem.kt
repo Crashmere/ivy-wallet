@@ -3,7 +3,7 @@ package com.ivy.data.file
 import android.content.Context
 import android.net.Uri
 import arrow.core.Either
-import com.ivy.base.io.TextFileStore
+import com.ivy.data.api.file.TextFileStore
 import dagger.hilt.android.qualifiers.ApplicationContext
 import java.io.BufferedReader
 import java.io.FileInputStream

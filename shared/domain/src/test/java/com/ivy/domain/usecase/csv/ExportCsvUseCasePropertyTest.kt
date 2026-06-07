@@ -2,11 +2,11 @@ package com.ivy.domain.usecase.csv
 
 import arrow.core.Some
 import com.ivy.base.TestDispatchersProvider
-import com.ivy.base.io.TextFileStore
 import com.ivy.base.time.impl.TestTimeConverter
 import com.ivy.data.api.AccountStore
 import com.ivy.data.api.CategoryStore
 import com.ivy.data.api.TransactionStore
+import com.ivy.data.api.file.TextFileStore
 import com.ivy.data.model.Transaction
 import com.ivy.data.model.getFromAccount
 import com.ivy.data.model.getToAccount

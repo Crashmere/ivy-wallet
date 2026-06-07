@@ -1,6 +1,6 @@
 package com.ivy.data.di
 
-import com.ivy.base.io.TextFileStore
+import com.ivy.data.api.file.TextFileStore
 import com.ivy.data.file.FileSystem
 import dagger.Binds
 import dagger.Module
