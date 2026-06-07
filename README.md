@@ -1,89 +1,599 @@
-# Ivy Wallet 个人维护分支开发计划
+# Ivy Wallet 个人维护分支重构计划
 
-这个仓库现在作为个人使用和个性化开发用途维护，不再面向上游协作、社区运营、应用商店发布或多人开发流程。
+这个仓库现在作为个人使用和个性化开发用途维护，不再面向上游协作、社区运营、应用商店发布或多人开发流程。后续重构的目标不是重写 Ivy Wallet，而是在不影响当前已有功能的前提下，把项目逐步整理成模块结构清晰、职责分配合理、依赖方向明确、适合单人长期维护的 Android 项目。
 
-## 当前状态
+## 当前状态摘要
 
-- 已删除 GitHub workflow、Issue/PR 模板、CI 辅助模块、Fastlane 发布配置、开发规范文档、Detekt 配置、lint baseline、脚本和生成图等外围资产。
-- 已移除 Detekt、Kover、模块图、Gradle wrapper 自动升级、Google Services、Crashlytics、Google Play Review、Compose lint 等构建或发布相关接线。
-- 已删除 contributors、releases、attributions、poll 等社区、发布说明、致谢和远程反馈模块。
-- 已删除原项目开源展示、GitHub 仓库入口、分享 Ivy、Google Play 评分卡、Telegram/推广求助文案和 GitHub 自动备份迁移残留。
-- 已将原 `:feature:features` 独立英文页面合并进设置页，改为面向个人使用的偏好设置。
-- 已整顿设置页结构：数据管理、记账规则、系统行为保留为一级分组，外观与显示、输入与列表改为二级菜单。
-- 已移除设置页顶部匿名账户名称入口和首页问候语。
-- 已精简数据导入页：删除第三方 App 导入模板和教程，只保留 Ivy 备份恢复与手动 CSV 导入。
-- 已清理 `temp:legacy-code` 中一批无引用旧代码：Crashlytics 空壳、旧 FRP ViewModel/Composable、孤立旧 modal、旧图表/输入组件和无引用工具类型。
-- 已删除 `temp:legacy-code` 中仅服务 IDE 预览的 Compose `@Preview` 示例函数。
-- 已删除 `temp:legacy-code` 旧 Compose App 包装中无引用的 `rootActivity` 和组件预览包装 helper。
-- 已精简 `temp:legacy-code` 旧工具包，删除无引用的 Fragment helper、部分动画 preset、URL helper、日期格式化 helper 和金额拆分格式化 helper。
-- 已删除 app/feature 模块中仅服务 IDE 预览的 Compose `@Preview` 示例函数。
-- 已删除 app/feature 模块和 `shared/ui/core` 中的 Paparazzi 截图测试入口、快照图片和截图测试目录。
-- 已删除 `temp:old-design` 旧设计组件中仅服务 IDE 预览或截图测试的 Compose 预览 helper。
-- 已删除 `temp:old-design` 中确认无外部引用的旧组件：`l2_components`、`l3_ivyComponents` 和旧 shape building block。
-- 已删除 `temp:old-design` 中无引用的旧 `Background`、`IvyPadding` 和 padding helper，并简化仍被调用的 `IvyText`。
-- 已删除 `temp:old-design` 中无引用的旧 Android、动画、窗口 inset 和 dp/px 工具，并精简 Compose/键盘工具 helper。
-- 已继续精简 `temp:legacy-code`，删除无引用的旧 DataStore 包装、旧账户余额模型、分类纯函数对象，并移除部分新旧并存文件中的未接入新模型残留。
-- 已清理 `shared/base` 中无引用的旧文件工具和日期格式化 helper，保留仍被数据库与序列化使用的时间戳转换函数。
-- 已删除空的 `:shared:data:core-testing` 模块，并将 `FakeRepositoryMemo` 从生产源码移入 `shared:data:core` 测试源集。
-- 保留应用功能源码、功能测试源码、Gradle wrapper、本地数据管理能力和当前主要记账功能。
-- 当前本机已通过项目本地 Android SDK 编译 demo APK，并成功安装到已连接手机。
+已经完成的清理可以概括为几类：
 
-## 后续清理原则
+- 删除社区协作、开源展示和发布流程相关内容：GitHub workflow、Issue/PR 模板、开发规范、Fastlane、发布日志、贡献者、开源致谢、投票问卷、原仓库入口、分享 Ivy、Google Play 评分、Telegram/推广文案等。
+- 删除 Google/Firebase/商店发布相关接线：Google Services、Crashlytics、Google Play Review、Firebase Firestore、GitHub 自动备份迁移残留等。
+- 删除不再需要的功能模块和入口：contributors、releases、attributions、poll、disclaimer、onboarding、widget，以及第三方 App 导入模板和教程。
+- 整顿设置页：合并原高级特性页，改成个人偏好设置；重排设置分组；删除匿名账户入口和首页问候语。
+- 精简测试和预览基础设施：删除 Paparazzi 截图测试、快照图片、仅服务 IDE 的 Compose `@Preview` 示例函数和预览 helper。
+- 持续清理 `temp:legacy-code` 与 `temp:old-design` 中确认无引用的旧代码、工具、组件和残留模型。
+- 删除空的 `:shared:data:core-testing` 模块，并把测试专用 `FakeRepositoryMemo` 从生产源码移入测试源集。
 
-- 优先删除和个人记账无关的社区、推广、远程反馈、发布信息和原项目展示功能。
-- 保留真实记账功能、数据模型、数据库、导入导出和功能测试，除非确认个人使用场景不再需要。
-- 每一轮清理后都尽量保持 Gradle module include、app 依赖、导航入口和设置页入口一致，避免留下不可达或不可编译的残留。
-- 对启动流程、数据库迁移、导入导出这类会影响个人数据或首次使用体验的内容，先确认使用习惯，再动手删除。
+当前仍保留：
 
-## 已完成的主要清理
+- 真实记账功能、数据模型、数据库、数据迁移、备份恢复、CSV 导入导出、汇率同步、功能测试。
+- Gradle wrapper、本地 Android SDK 配置、VS Code 开发所需配置。
+- 运行时仍被引用的旧 UI 组件、旧领域逻辑和旧设计系统桥接层。
 
-### 社区和发布相关内容
+## 核心目标
 
-- GitHub workflow、Issue/PR 模板、社区规范、开发规范、发布脚本和 Fastlane 配置。
-- `:feature:contributors`
-- `:feature:releases`
-- `:feature:attributions`
-- `:feature:poll:impl` 和 `:feature:poll:public`
+重构完成后的代码应该满足这些条件：
 
-### 设置页和推广入口
+- **功能不回退**：现有首页、账户、交易、分类、预算、借贷、计划付款、报表、饼图、汇率、搜索、设置、备份恢复、CSV 导入导出继续可用。
+- **模块职责清楚**：每个模块有明确边界，不再让 `temp`、legacy、旧设计系统承担事实上的公共基础设施职责。
+- **依赖方向单向**：UI 不反向污染 domain，domain 不直接依赖 Android UI，测试 helper 不进入生产源码。
+- **保留必要抽象，删除协作噪音**：去掉为多人协作、开源运营、远程发布和上游维护服务的抽象或流程；保留能降低个人维护成本的抽象。
+- **逐步迁移，不大爆炸式重写**：每一轮都可编译、可安装、可回滚，优先通过迁移和收敛来消除旧模块。
 
-- 设置页贡献者、发布日志、开源致谢、投票问卷、外部推广和原高级特性独立页面。
-- 首页 customer journey 中的外部反馈/评分相关卡片。
-- 首页更多菜单里的 GitHub 开源卡片和分享 Ivy 入口。
-- onboarding 欢迎页里的 `#opensource` 原仓库入口。
-- 免责声明页里的开源仓库展示卡片。
-- 首次启动免责声明阻塞页 `:feature:disclaimer`，以及对应的启动跳转、导航入口、`LegalRepository` 和 `LocalLegalDataSource`。
-- 首次启动 onboarding 模块 `:feature:onboarding`，改为自动初始化默认设置、账户和分类后直接进入主页。
+## 目标模块结构
 
-### 构建和数据残留
+最终建议收敛到下面的结构。短期不一定一次性做到，但每轮重构都应朝这个方向推进。
 
-- Google Services、Crashlytics、Google Play Review、Firebase Firestore 相关接线。
-- GitHub 自动备份清理迁移、迁移管理器空壳和 `DatastoreKeys.GITHUB_*`。
-- `shared/ui/core` 中不再使用的 GitHub 图标、开源卡片组件和对应截图测试。
-- 多语言资源中不再使用的开源、分享、评分、Telegram 和推广求助文案。
-- Android 桌面小组件模块 `:widget:add-transaction`、`:widget:balance`、`:widget:shared-base`，以及首页小组件引导卡、Manifest receiver、启动广播、余额刷新接线和 Glance 依赖。
-- `:feature:import-data` 中的第三方 App 来源列表、导入说明页、旧 CSV 模板映射、第三方 App logo 和教程文案；保留备份恢复与手动 CSV 映射导入。
-- `temp:legacy-code` 中无引用的 Crashlytics 工具空壳、旧 FRP View 层封装、旧名称/月选择弹窗、旧折线图、旧 checklist 输入框和无引用工具类型。
-- `temp:legacy-code` 中的 Compose `@Preview` 示例函数；保留真实运行时组件。
-- `temp:legacy-code` 旧 Compose App 包装中的无引用 Activity helper 和组件预览包装 helper；保留运行时仍使用的 `ivyWalletCtx`、`rootView`、`rootScreen` 和 `appDesign`。
-- `temp:legacy-code` 旧工具包中无引用的 Fragment 参数/Activity Result helper、动画 preset、URL 打开 helper、日期时间格式化 helper 和金额拆分格式化 helper。
-- app/feature 模块中的 Compose `@Preview` 示例函数和 Paparazzi 截图测试入口；保留功能代码和功能测试。
-- `temp:old-design` 旧设计组件中的 Compose `@Preview` 示例函数和截图测试预览 helper；保留真实组件。
-- `temp:old-design` 中无引用的旧 l2/l3 组件和旧 shape building block；保留仍被当前功能引用的旧设计基础能力。
-- `temp:old-design` 中无引用的旧 `Background`、`IvyPadding` 和 padding helper；保留仍被 CSV 导入、借贷逻辑和颜色选择器使用的旧颜色列表常量。
-- `temp:old-design` 中无引用的旧 Android、动画、窗口 inset、dp/px 和 Compose helper；保留仍被页面调用的 `thenIf`、`thenWhen`、`densityScope`、`rememberInteractionSource` 和 `hideKeyboard`。
-- `temp:legacy-code` 中无引用的旧 `IvyDataStore` 包装、旧 `AccountBalance` 模型、分类纯函数对象，以及未被接入的非 legacy 分类统计 action 和新 `DueSection` 数据残留。
-- `shared/base` 中无引用的旧 `FileUtil` 文件工具和 `ZonedDateTime.format` helper；保留仍被 Room 类型转换器和 kotlinx serialization 使用的 epoch 转换 helper。
-- 空的 `:shared:data:core-testing` 模块，以及误放在 `shared:data:core` 生产源码中的测试专用 `FakeRepositoryMemo`。
+| 模块 | 目标职责 | 不应包含 |
+| --- | --- | --- |
+| `:app` | Android 应用壳、`Activity`、启动流程、系统权限、生物识别、文件选择、分享、根导航宿主 | 业务计算、数据库访问、旧 UI 组件、跨 feature 业务状态 |
+| `:shared:base` | 纯基础能力：时间、线程、基础 Result/Failure、资源抽象、轻量工具 | `SharedPrefs` 业务 key、UI 组件、Room、Ktor、Compose |
+| `:shared:data:model` | 纯数据模型和值对象：Account、Transaction、Category、Tag、ExchangeRate、primitive value object | Room DAO、Repository、Android Context、UI 文案 |
+| `:shared:data:core` | 数据实现：Room、DataStore、FileSystem、Repository、备份恢复、远程汇率数据源 | UI 状态、Compose、测试 fake、feature 专用逻辑 |
+| `:shared:domain` | 业务 use case：余额、统计、CSV 导出、汇率换算、设置/偏好业务规则 | Room 插件、Ktor 具体实现、Android Activity 接口、UI 资源 |
+| `:shared:ui:core` | Material3 主题、通用 Compose 组件、图标、时间/金额 UI 格式化、UI CompositionLocal | 数据库、Repository 实现、业务写入逻辑 |
+| `:shared:ui:navigation` | 页面 route、导航状态、导航容器 | domain use case、数据层实现、feature 业务逻辑 |
+| `:feature:*` | 用户可感知功能页面和 ViewModel | 公共基础设施、跨模块全局状态、临时兼容代码 |
+| `:temp:*` | 迁移过程中的临时兼容层 | 最终应清空并删除 |
 
-## 已确认保留
+长期可以进一步简化 feature 模块。如果个人维护更重视低心智负担，可以把多个小 feature 合并，最终保留少量大模块。
 
-- `shared:data:core` 中的本地备份、恢复、zip/json/csv 导入导出能力。
-- `:feature:import-data` 中的手动 CSV 导入流程。
-- `temp:old-design` 中的 `IVY_COLOR_PICKER_COLORS_*` 旧颜色列表常量；当前仍被 CSV 导入、借贷逻辑和旧颜色选择器使用。
-- 功能测试源码。
+## 当前主要问题
 
-## 建议执行顺序
+### 1. `temp` 模块已经变成事实公共层
 
-1. 继续检查 `temp:legacy-code` 中剩余的旧 UI 组件和旧领域逻辑，优先处理确认无引用的部分。
-2. 继续缩小 `temp:old-design` 的保留范围，优先从只有少量引用的旧 building block 和 feature 侧直接依赖入手。
+现状：
+
+- 大多数 `feature:*` 同时依赖 `:temp:legacy-code` 和 `:temp:old-design`。
+- `temp:legacy-code` 里混杂旧数据模型、旧 domain action、旧 UI 组件、modal、工具函数、通知 worker、启动初始化逻辑。
+- `temp:old-design` 虽然只剩少量文件，但仍提供全局颜色、旧 `IvyUI`、旧 `IvyContext`、基础 building block 和 Compose helper。
+
+问题：
+
+- 新代码很容易继续引用 legacy API。
+- 无法从模块依赖上判断哪些是真正公共能力，哪些只是迁移残留。
+- 删除 `temp` 会牵一发动全身。
+
+目标：
+
+- 把仍有价值的代码迁到正确模块。
+- 把旧名字、旧 package、旧设计系统概念逐步消掉。
+- 最终删除 `:temp:legacy-code` 和 `:temp:old-design`。
+
+### 2. 构建约定插件过度通用
+
+现状：
+
+- `ivy.feature` 被 app 以外几乎所有 Android library 复用。
+- `shared:base`、`shared:data:core`、`shared:domain` 这类非 feature 模块也使用 feature 插件。
+- 一些模块拿到了并不需要的 Compose、Hilt、Room、Ktor 或测试配置。
+
+问题：
+
+- 模块职责从 Gradle 文件上看不出来。
+- 非 UI 模块容易意外依赖 UI/Compose。
+- 这是典型多人项目模板化残留，对个人维护不够直观。
+
+目标：
+
+- 拆分成更直接的约定插件，例如：
+  - `ivy.android-library`
+  - `ivy.android-compose`
+  - `ivy.hilt-library`
+  - `ivy.room-library`
+  - `ivy.tested-library`
+- 每个模块显式声明自己需要的能力。
+
+### 3. 测试 helper 仍有一部分在生产源码
+
+现状：
+
+- `Fake*Dao` 仍在 `shared:data:core/src/main`。
+- `TestDispatchersProvider`、`TestResourceProvider`、`TestTimeConverter` 仍在 `shared:base/src/main`。
+- `FakeRepositoryMemo` 已移到 test/androidTest 源集。
+
+问题：
+
+- 生产源码携带测试专用对象。
+- 运行时 API 表面变大，阅读时容易误判这些 fake 可以在真实功能中使用。
+
+目标：
+
+- 建立测试支持源集或测试支持模块。
+- 把 fake DAO 和 test helper 全部移出生产 main 源集。
+
+### 4. 数据层仍有同步、登录和云端历史痕迹
+
+现状：
+
+- Room entity 里仍有 `isSynced`、`isDeleted`、`lastSyncedTime` 等历史同步字段。
+- `UserEntity/UserDao` 仍存在，主要被 `LogoutLogic` 的清空流程调用。
+- `SettingsEntity` 仍是旧设置模型，部分偏好又在 `SharedPrefs/DataStore` 中。
+
+问题：
+
+- 个人本地使用不需要云同步语义。
+- 数据模型承担了历史兼容和当前功能两种职责。
+- 删除字段/表会影响 Room schema 和历史数据库迁移，不能粗暴删除。
+
+目标：
+
+- 先让运行时代码不再依赖旧同步/用户表概念。
+- 再通过明确 Room migration 删除或废弃字段。
+- 备份恢复格式同步调整，并保留测试覆盖。
+
+### 5. 平台能力集中在 `RootActivity`
+
+现状：
+
+- `RootActivity` 同时负责主题、根导航、文件创建/打开、CSV/zip 分享、日期时间选择器、生物识别、浏览器跳转、Google Play 跳转。
+- `RootScreen` 放在 `shared:domain`，但它本质是 Android 平台/UI 接口。
+
+问题：
+
+- Activity 过重。
+- domain 反向知道了 Android 平台能力。
+- feature 通过 `RootScreen` 直接拿 Activity 能力，边界不清晰。
+
+目标：
+
+- 把平台能力拆成小 service/controller：
+  - `FilePickerService`
+  - `ShareService`
+  - `BiometricLockController`
+  - `DateTimePickerHost`
+  - `ExternalIntentLauncher`
+- `RootScreen` 移出 domain，或者拆成更窄的 UI/platform interface。
+
+### 6. feature 模块数量对个人项目偏多
+
+现状：
+
+- 仍有 16 个 feature 模块。
+- 很多 feature 文件很少，但都重复依赖 shared、temp、navigation、old design。
+
+问题：
+
+- 模块数量本身成为心智负担。
+- 改一个横向 UI/状态逻辑需要跨很多模块。
+- 单人开发未必需要这么细的多人协作边界。
+
+目标：
+
+- 先消除 feature 对 `temp` 的依赖。
+- 再按真实个人维护习惯合并模块。
+
+## 分阶段重构路线
+
+### 阶段 0：工作方式固定下来
+
+每一轮重构遵守：
+
+- 只处理一个主题，例如“资源清理”“Gradle 插件整理”“迁移颜色常量”。
+- 保持提交粒度清晰。
+- 默认不编译；涉及 Gradle、Room、依赖迁移、跨模块移动时再编译。
+- 涉及数据库迁移、备份恢复、导入导出时必须运行相关测试或至少编译验证。
+- 误删可以回滚，但不主动动个人数据相关逻辑，除非已经明确迁移策略。
+
+建议验证级别：
+
+- 纯 README/资源删除：`git diff --check`
+- Kotlin 源码移动：`./gradlew.bat :app:assembleDemo`
+- 测试 helper 迁移：相关模块 `test` 或 `assembleDemo`
+- Room schema 变化：迁移测试、备份恢复测试、demo 安装验证
+
+### 阶段 1：资源和文案瘦身
+
+目标：先删不会影响业务逻辑的资源和文案。
+
+候选内容：
+
+- 未引用的第三方导入 logo：
+  - `monefy_logo`
+  - `moneymanager_logo`
+  - `spendee_logo`
+  - `wallet_by_budgetbakers_logo`
+- 未引用的 widget 预览和 widget 图标：
+  - `preview_widget_add_trn*`
+  - `preview_widget_wallet_balance`
+  - `ic_widget_*`
+  - `shape_widget_background`
+  - `income_shape_widget_background`
+  - `expense_shape_widget_background`
+- 未引用的推广/分享/捐赠资源：
+  - `donate_illustration`
+  - `home_more_menu_share`
+  - `questions`
+  - `didyouknow`
+  - `help_us_grow` 及各语言翻译
+- 如果确认只面向中文个人使用，可以进一步只保留：
+  - `values`
+  - `values-zh-rCN`
+
+注意：
+
+- 自定义分类/账户图标不能直接批量删。它们通过 `Resources.getIdentifier()` 动态查找，静态搜索可能看不到引用。
+- `ic_custom_*` 和 `ic_vue_*` 大量图标仍支撑图标选择器，不能直接当无引用资源删除。
+
+### 阶段 2：整理 Gradle 约定插件
+
+目标：让模块声明更符合职责，减少模板化残留。
+
+建议步骤：
+
+1. 新增或重命名约定插件：
+   - `ivy.android-library`：Android library 基础配置、Kotlin、min/compile SDK。
+   - `ivy.compose-library`：仅给 Compose UI 模块使用。
+   - `ivy.hilt-library`：仅给需要 DI 的模块使用。
+   - `ivy.room-library`：仅给 Room 模块使用。
+   - `ivy.tested-library`：测试依赖和测试 JVM 配置。
+2. 先迁移低风险模块：
+   - `shared:base`
+   - `shared:data:model`
+   - `shared:data:model-testing`
+3. 再迁移数据和 domain：
+   - `shared:data:core`
+   - `shared:domain`
+4. 最后迁移 feature 和 temp。
+
+目标结果：
+
+- 非 UI 模块不默认启用 Compose。
+- 非 Room 模块不应用 Room 插件。
+- `shared:domain` 不直接引入 Ktor 和 Room 插件，除非当前迁移未完成且有明确说明。
+
+### 阶段 3：测试支持代码归位
+
+目标：生产源码不再包含测试 fake。
+
+候选迁移：
+
+- `shared:data:core/src/main/java/com/ivy/data/db/dao/fake/Fake*Dao.kt`
+- `shared:base/src/main/java/com/ivy/base/TestDispatchersProvider.kt`
+- `shared:base/src/main/java/com/ivy/base/resource/TestResourceProvider.kt`
+- `shared:base/src/main/java/com/ivy/base/time/impl/TestTimeConverter.kt`
+
+可选方案：
+
+1. 简单方案：复制到各自模块的 `src/test` 和 `src/androidTest`。
+2. 中等方案：创建 `:shared:test-support`，仅测试依赖它。
+3. 更完整方案：使用 Android Gradle test fixtures，但会增加配置复杂度。
+
+个人维护推荐：
+
+- 优先采用 `:shared:test-support`，名字直接、职责清晰。
+- 不为了“标准化”引入过复杂的 test fixtures 配置。
+
+### 阶段 4：消灭 `temp:old-design`
+
+目标：先迁移仍有价值的 18 个文件，再删除模块。
+
+迁移分组：
+
+1. 颜色与主题
+   - `Colors.kt`
+   - `IvyColors.kt`
+   - `IvyTheme.kt`
+   - `IvyWalletDesign.kt`
+   - 目标：迁入 `shared:ui:core`，逐步合并到 Material3 theme。
+2. 颜色选择器常量
+   - `IVY_COLOR_PICKER_COLORS_*`
+   - 目标：迁入 `shared:ui:core` 或更明确的 `ColorPalette.kt`。
+   - 注意：CSV 导入、借贷逻辑和旧颜色选择器仍在用。
+3. 基础 building block
+   - `IvyText`
+   - `IvyIcon`
+   - `SpacerHor/SpacerVer`
+   - `DividerW/DividerH`
+   - `ColumnRoot`
+   - 目标：迁到 `shared:ui:core/component/legacy` 或直接替换为 Material3/Compose 原生写法。
+4. Compose helper
+   - `thenIf`
+   - `thenWhen`
+   - `densityScope`
+   - `rememberInteractionSource`
+   - `hideKeyboard`
+   - 目标：UI helper 进 `shared:ui:core`，平台键盘行为保持在 UI 层。
+
+完成标准：
+
+- `rg "projects.temp.oldDesign" -g "build.gradle.kts"` 无 feature/app 依赖。
+- `rg "com.ivy.design"` 只剩新设计系统包，或者完全消失。
+- 删除 `:temp:old-design` include 和目录。
+
+### 阶段 5：拆解 `temp:legacy-code`
+
+目标：按职责迁移，不按旧目录整体搬家。
+
+迁移分组：
+
+1. 旧数据模型与 mapper
+   - `legacy.datamodel`
+   - `datamodel.temp.*`
+   - 目标：能替换为 `shared:data:model` 的就替换；仍需兼容旧 UI 的放到明确的 `legacy-model` 包，避免散落。
+2. 旧 domain action
+   - `FPAction`
+   - `then/thenMap/thenFilter/thenSum`
+   - `domain/action/*`
+   - 目标：改成普通 use case 或直接内联到 ViewModel/domain use case。
+3. 旧业务逻辑
+   - `AccountCreator`
+   - `CategoryCreator`
+   - `BudgetCreator`
+   - `LoanCreator`
+   - `LoanTransactions*`
+   - `ExchangeRatesLogic`
+   - 目标：迁入 `shared:domain` 或对应 feature 的 domain 子包。
+4. 旧 UI 组件和 modal
+   - `AccountModal`
+   - `CategoryModal`
+   - `ChoosePeriodModal`
+   - `CalculatorModal`
+   - `CurrencyPicker`
+   - `ReorderModal`
+   - 目标：通用组件进 `shared:ui:core`；功能专用组件进对应 feature。
+5. 工具函数
+   - 纯 Kotlin：进 `shared:base`。
+   - Compose/UI：进 `shared:ui:core`。
+   - Android 平台能力：进 `app` 或 platform service。
+6. 启动和全局上下文
+   - `IvyWalletCtx`
+   - `IvyComposeApp`
+   - `InitialDataSetup`
+   - 目标：拆成明确的 app startup、preferences、theme state、date/time picker host。
+
+完成标准：
+
+- feature 不再依赖 `projects.temp.legacyCode`。
+- app 不再依赖 `projects.temp.legacyCode`。
+- 删除 `:temp:legacy-code` include 和目录。
+
+### 阶段 6：偏好设置与本地配置重构
+
+目标：把 `SharedPrefs` 和零散 DataStore key 收敛成明确 repository。
+
+建议建立：
+
+- `PreferencesRepository`
+- `ThemePreference`
+- `PrivacyPreference`
+- `NotificationPreference`
+- `DisplayPreference`
+- `StartupPreference`
+
+迁移内容：
+
+- app lock enabled
+- show notifications
+- hide current balance
+- hide income
+- transfers as income/expense
+- theme
+- initial setup completed
+- backup completed
+- start day of month
+
+目标：
+
+- feature 不直接读写 `SharedPrefs`。
+- `SharedPrefs` 最终删除或降级为 DataStore 的内部兼容实现。
+- `shared/domain/features` 改名或收敛为 `preferences`，避免“高级特性”历史语义。
+
+### 阶段 7：数据层和数据库遗留清理
+
+目标：删除云同步、用户表和旧设置表的历史负担，但必须谨慎。
+
+候选内容：
+
+- `UserEntity`
+- `UserDao`
+- `users` table
+- `SettingsEntity`
+- `isSynced`
+- `isDeleted`
+- `lastSyncedTime`
+- `LogoutLogic.cloudLogout`
+
+建议顺序：
+
+1. 把 `LogoutLogic` 改成 `ResetAllDataUseCase`。
+2. 让清空本地数据流程不再依赖 `UserDao`。
+3. 新增 Room migration 删除或废弃 `users` 表。
+4. 评估 `isDeleted/isSynced` 字段：
+   - 如果只是历史同步残留，写迁移删除。
+   - 如果仍被软删除逻辑使用，先替换成直接删除或明确本地删除语义。
+5. 更新备份恢复数据结构和测试。
+
+风险：
+
+- 会影响已有安装数据。
+- 会影响备份文件兼容性。
+- 必须单独提交、单独验证。
+
+### 阶段 8：平台能力拆分
+
+目标：减轻 `RootActivity` 和 `RootViewModel`。
+
+建议拆分：
+
+- `FilePickerService`
+  - create document
+  - open document
+- `ShareService`
+  - share CSV
+  - share ZIP
+- `BiometricLockController`
+  - app lock 状态
+  - biometric prompt
+  - inactive timer
+- `DateTimePickerHost`
+  - date picker
+  - time picker
+- `ExternalIntentLauncher`
+  - open browser
+  - open market page
+
+同时调整：
+
+- `RootScreen` 不应在 `shared:domain`。
+- 与 Activity 强绑定的接口放到 `app` 或 `shared:ui:core/platform`。
+- feature 通过窄接口表达需求，不直接依赖大而全的 `RootScreen`。
+
+### 阶段 9：feature 模块收敛
+
+目标：减少个人维护心智负担。
+
+短期保持现有 feature 模块，先去掉 temp 依赖。长期可以合并：
+
+候选合并方向：
+
+- 核心记账：
+  - `home`
+  - `main`
+  - `accounts`
+  - `transactions`
+  - `edit-transaction`
+  - `search`
+- 统计分析：
+  - `balance`
+  - `reports`
+  - `piechart`
+- 扩展记账：
+  - `budgets`
+  - `loans`
+  - `planned-payments`
+  - `exchange-rates`
+- 数据与设置：
+  - `settings`
+  - `import-data`
+
+如果后续只追求最简单，可以最终合并为：
+
+- `:feature:wallet`
+- `:feature:analytics`
+- `:feature:settings`
+
+但合并模块应放在 temp 依赖消除之后，否则只是把旧耦合搬到更大的模块里。
+
+### 阶段 10：最终依赖方向
+
+目标依赖方向：
+
+```text
+app
+  -> feature:*
+  -> shared:ui:navigation
+  -> shared:ui:core
+  -> shared:domain
+  -> shared:data:core
+  -> shared:data:model
+
+feature:*
+  -> shared:ui:core
+  -> shared:ui:navigation
+  -> shared:domain
+  -> shared:data:model
+
+shared:domain
+  -> shared:base
+  -> shared:data:model
+
+shared:data:core
+  -> shared:base
+  -> shared:data:model
+
+shared:ui:core
+  -> shared:base
+  -> shared:domain only if unavoidable
+```
+
+不希望出现：
+
+- `shared:domain -> shared:ui:*`
+- `shared:domain -> Android Activity/platform interface`
+- `feature -> temp:*`
+- `shared:data:core/src/main -> fake/test helper`
+- `app -> every low-level library because of convenience`
+
+## 高风险区域
+
+这些内容可以重构，但不要和普通清理混在同一提交里：
+
+- Room schema、migration、entity 字段删除。
+- 备份恢复格式变化。
+- CSV 导入导出字段变化。
+- `InitialDataSetup` 和首次启动默认数据。
+- 账户余额、转账、借贷、预算统计逻辑。
+- 汇率同步和历史汇率换算。
+- App lock、生物识别、文件选择和分享。
+- 动态图标资源，例如 `ic_custom_*`、`ic_vue_*`。
+
+## 近期推荐执行顺序
+
+推荐从低风险到高风险这样推进：
+
+1. **资源和文案瘦身**
+   - 删除未引用的第三方导入 logo、widget 预览图、推广/分享文案。
+   - 可选：只保留中文和默认资源。
+2. **构建约定插件整理**
+   - 先让 `shared:base`、`shared:data:model` 不再使用 `ivy.feature`。
+   - 再处理 `shared:data:core`、`shared:domain`。
+3. **测试 helper 归位**
+   - 新建或整理 `shared:test-support`。
+   - 移动 fake DAO、test dispatcher、test resource provider、test time converter。
+4. **迁移 `temp:old-design`**
+   - 从颜色常量和基础 Compose helper 开始。
+   - 每迁一组，移除对应 feature 依赖。
+5. **迁移 `temp:legacy-code`**
+   - 从工具函数和 modal 开始。
+   - 再处理旧 domain action。
+6. **偏好设置重构**
+   - 建立 `PreferencesRepository`。
+   - 消除 feature 直接访问 `SharedPrefs`。
+7. **平台能力拆分**
+   - 拆 `RootActivity`。
+   - 移动 `RootScreen`。
+8. **数据库遗留迁移**
+   - 用户表、同步字段、旧设置表单独处理。
+9. **feature 模块合并**
+   - 在 temp 依赖减少后再做。
+
+## 每轮提交建议
+
+提交粒度建议：
+
+- `chore: 删除未引用资源残留`
+- `build: 拆分 Android library 构建约定`
+- `test: 移动数据层 fake DAO 到测试支持模块`
+- `refactor: 迁移旧颜色常量到 ui core`
+- `refactor: 迁移旧账户弹窗到 accounts feature`
+- `refactor: 建立偏好设置仓库`
+- `refactor: 拆分 RootActivity 平台能力`
+- `data: 删除 legacy users 表`
+
+每轮提交说明应包含：
+
+- 删除/迁移了什么。
+- 保留了什么。
+- 是否编译。
+- 是否安装。
+- 是否跑测试。
+
+## 当前下一步
+
+下一步建议执行：
+
+1. 扫描并删除确认无引用的资源和字符串。
+2. 更新 `README.md` 中资源清理进展。
+3. 做静态检查。
+4. 如果只删资源，不强制编译；如果删除了被资源表引用的内容，再编译 `:app:assembleDemo`。
