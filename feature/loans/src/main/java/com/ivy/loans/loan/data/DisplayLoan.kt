@@ -1,7 +1,7 @@
 package com.ivy.loans.loan.data
 
 import com.ivy.data.model.legacy.Loan
-import com.ivy.base.currency.getDefaultFIATCurrency
+import com.ivy.data.model.currency.getDefaultFIATCurrency
 import com.ivy.data.model.Reorderable
 
 data class DisplayLoan(

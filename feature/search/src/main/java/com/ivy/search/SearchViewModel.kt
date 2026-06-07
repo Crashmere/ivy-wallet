@@ -14,7 +14,7 @@ import com.ivy.domain.preferences.toggles.PreferenceToggles
 import com.ivy.domain.usecase.category.GetCategoriesUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.data.model.legacy.Account
-import com.ivy.base.currency.getDefaultFIATCurrency
+import com.ivy.data.model.currency.getDefaultFIATCurrency
 import com.ivy.base.coroutines.ioThread
 import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
 import com.ivy.domain.usecase.transaction.BuildTransactionHistoryItemsUseCase

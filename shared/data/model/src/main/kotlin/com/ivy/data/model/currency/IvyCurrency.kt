@@ -1,7 +1,6 @@
 package com.ivy.data.model.currency
 
 import android.icu.util.Currency
-import com.ivy.base.currency.getDefaultFIATCurrency
 
 data class IvyCurrency(
     val code: String,

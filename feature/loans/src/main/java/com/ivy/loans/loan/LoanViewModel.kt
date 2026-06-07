@@ -22,7 +22,7 @@ import com.ivy.domain.usecase.loan.ReorderLoansUseCase
 import com.ivy.data.model.legacy.Account
 import com.ivy.data.model.legacy.Loan
 import com.ivy.data.model.currency.format
-import com.ivy.base.currency.getDefaultFIATCurrency
+import com.ivy.data.model.currency.getDefaultFIATCurrency
 import com.ivy.base.coroutines.ioThread
 import com.ivy.loans.loan.data.DisplayLoan
 import com.ivy.ui.ComposeViewModel

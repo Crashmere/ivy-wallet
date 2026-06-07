@@ -40,7 +40,7 @@ import com.ivy.legacy.ui.component.IvyColorPicker
 import com.ivy.data.model.legacy.Account
 import com.ivy.data.model.legacy.Loan
 import com.ivy.legacy.ui.component.DateTimeRow
-import com.ivy.base.currency.getDefaultFIATCurrency
+import com.ivy.data.model.currency.getDefaultFIATCurrency
 import com.ivy.base.text.isNotNullOrBlank
 import com.ivy.legacy.ui.onScreenStart
 import com.ivy.legacy.ui.selectEndTextFieldValue

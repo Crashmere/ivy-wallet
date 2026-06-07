@@ -1,4 +1,4 @@
-package com.ivy.base.currency
+package com.ivy.data.model.currency
 
 import android.icu.util.Currency
 import java.util.Locale
