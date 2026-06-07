@@ -33,7 +33,6 @@ import com.ivy.legacy.ui.theme.Gray
 import com.ivy.legacy.ui.component.IvyIcon
 import com.ivy.legacy.ui.theme.toComposeColor
 import kotlinx.collections.immutable.ImmutableList
-import timber.log.Timber
 import kotlin.math.acos
 import kotlin.math.sqrt
 
@@ -207,7 +206,6 @@ private class PieChartView(context: Context) : View(context) {
 
                     val centerX = width / 2f
                     val centerY = height / 2f
-                    Timber.d("click: x = $touchX, y = $touchY (width = $width, height = $height)")
 
                     val angle = getAngle(
                         touchX = touchX,
@@ -216,13 +214,10 @@ private class PieChartView(context: Context) : View(context) {
                         centerY = centerY
                     )
 
-                    Timber.d("degrees = $angle")
-
                     val clickedCategory = zones
                         .firstOrNull { zone ->
                             zone.contains(angle = angle)
                         }?.category
-                    Timber.i("clicked category = ${clickedCategory?.name}")
 
                     onCategoryClicked(clickedCategory)
                 }

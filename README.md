@@ -288,7 +288,7 @@
 - app 模块已移除自身不再直接使用的 Ktor、Room、OpenCSV、Keval、RecyclerView、AndroidX Security 和 Arrow 依赖；源码层已经不再直接引用 data core DAO/repository，Gradle 层保留对 data-core 的实现依赖以纳入 Hilt 绑定。
 - app 模块重新显式依赖 `shared:data:core` 作为运行时数据实现模块；feature/domain 仍只依赖 data 端口，data-core 的 Hilt Module 负责把 Room、DataStore、备份、文件和远程汇率实现绑定进应用图。
 - `ivy.android-library` 不再给所有 Android library 默认添加 Arrow；`shared:data:model` 因公开 `Either/Raise` API 显式用 `api` 暴露 Arrow，其他实际直接使用 Arrow 的模块改为各自声明 `implementation(libs.bundles.arrow)`；旧 FRP helper 移出后，`shared:base` 不再需要 Arrow。
-- `ivy.android-library` 不再给所有 Android library 默认添加 Timber；app、数据层、domain 中的汇率同步/旧钱包统计，以及饼图页等实际写日志的模块改为各自显式声明日志库依赖。
+- `ivy.android-library` 不再给所有 Android library 默认添加 Timber；domain 汇率同步和饼图点击逻辑中的调试日志已删除，当前只保留 app 日志初始化/锁屏认证日志以及 data core 的网络/导入错误日志。
 - `ivy.android-library` 不再给所有 Android library 默认添加整套单元测试依赖；当前有 `src/test` 的 `shared:base`、`shared:data:model`、`shared:data:model-testing`、`shared:data:core`、`shared:domain` 和 `shared:ui:core` 改为在各自模块里显式声明测试 bundle。
 - `shared:data:core` 的 DataStore 依赖已从 `api` 收窄为 `implementation`；DataStore 绑定仍由 data core 提供，但不再通过 data core 传递暴露给其他模块。
 - `shared:domain` 已移除 AndroidX DataStore 依赖；偏好开关的存储能力抽成 `PreferenceToggleStore` 端口，DataStore 读写和清空由 `shared:data:core` 实现，domain 只保留业务级 `PreferenceToggleRepository` 和开关元数据。

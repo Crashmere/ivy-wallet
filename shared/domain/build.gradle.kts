@@ -14,7 +14,6 @@ dependencies {
 
     implementation(libs.bundles.arrow)
     implementation(libs.bundles.opencsv)
-    implementation(libs.timber)
 
     testImplementation(projects.shared.baseTesting)
     testImplementation(projects.shared.data.modelTesting)

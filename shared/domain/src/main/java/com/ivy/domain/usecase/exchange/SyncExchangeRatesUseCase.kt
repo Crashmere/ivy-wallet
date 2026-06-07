@@ -7,7 +7,6 @@ import com.ivy.data.api.ExchangeRateStore
 import com.ivy.data.model.ExchangeRate
 import com.ivy.data.model.primitive.AssetCode
 import com.ivy.data.model.primitive.PositiveDouble
-import timber.log.Timber
 import javax.inject.Inject
 
 class SyncExchangeRatesUseCase @Inject constructor(
@@ -40,7 +39,6 @@ class SyncExchangeRatesUseCase @Inject constructor(
                 )
             }.getOrNull()
         }.toList()
-        Timber.d("Updating exchange rates: $baseCurrencyRates")
         val manuallyOverridden = exchangeRateStore.findAllManuallyOverridden()
             .map { it.identifier() }
             .toSet()
