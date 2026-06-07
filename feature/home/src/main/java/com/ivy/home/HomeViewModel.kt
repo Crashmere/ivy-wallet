@@ -13,12 +13,14 @@ import com.ivy.base.model.legacy.TransactionHistoryItem
 import com.ivy.base.time.TimeConverter
 import com.ivy.base.time.TimeProvider
 import com.ivy.data.model.primitive.AssetCode
+import com.ivy.domain.preferences.AppPreferences
 import com.ivy.domain.preferences.toggles.PreferenceToggleRepository
 import com.ivy.domain.preferences.toggles.PreferenceToggles
 import com.ivy.domain.usecase.category.GetCategoriesUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.domain.usecase.currency.SetBaseCurrencyUseCase
 import com.ivy.domain.usecase.exchange.SyncExchangeRatesUseCase
+import com.ivy.domain.usecase.transaction.HasTransactionsUseCase
 import com.ivy.domain.usecase.transaction.MapTransactionsToLegacyUseCase
 import com.ivy.domain.usecase.settings.GetBufferAmountUseCase
 import com.ivy.domain.usecase.settings.GetThemeUseCase
@@ -36,7 +38,6 @@ import com.ivy.legacy.ui.model.LegacyDueSection
 import com.ivy.legacy.ui.model.period.TimePeriod
 import com.ivy.data.model.legacy.toUTCCloseTimeRange
 import com.ivy.data.model.legacy.Account
-import com.ivy.legacy.domain.action.viewmodel.home.ShouldHideIncomeAct
 import com.ivy.base.coroutines.ioThread
 import com.ivy.ui.navigation.BalanceScreen
 import com.ivy.ui.navigation.MainTab
@@ -49,9 +50,7 @@ import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
 import com.ivy.legacy.domain.action.global.StartDayOfMonthAct
 import com.ivy.legacy.domain.action.settings.CalcBufferDiffAct
 import com.ivy.legacy.domain.action.transaction.HistoryWithDateDivsAct
-import com.ivy.legacy.domain.action.viewmodel.home.HasTrnsAct
 import com.ivy.legacy.domain.action.viewmodel.home.OverdueAct
-import com.ivy.legacy.domain.action.viewmodel.home.ShouldHideBalanceAct
 import com.ivy.legacy.domain.action.viewmodel.home.UpcomingAct
 import com.ivy.legacy.domain.action.wallet.CalcIncomeExpenseAct
 import com.ivy.legacy.domain.action.wallet.CalcWalletBalanceAct
@@ -89,11 +88,10 @@ class HomeViewModel @Inject constructor(
     private val calcBufferDiffAct: CalcBufferDiffAct,
     private val upcomingAct: UpcomingAct,
     private val overdueAct: OverdueAct,
-    private val hasTrnsAct: HasTrnsAct,
     private val startDayOfMonthAct: StartDayOfMonthAct,
-    private val shouldHideBalanceAct: ShouldHideBalanceAct,
-    private val shouldHideIncomeAct: ShouldHideIncomeAct,
+    private val appPreferences: AppPreferences,
     private val syncExchangeRatesUseCase: SyncExchangeRatesUseCase,
+    private val hasTransactionsUseCase: HasTransactionsUseCase,
     private val mapTransactionsToLegacyUseCase: MapTransactionsToLegacyUseCase,
     private val timeProvider: TimeProvider,
     private val timeConverter: TimeConverter,
@@ -279,13 +277,11 @@ class HomeViewModel @Inject constructor(
         timePeriod: TimePeriod = periodState.selectedPeriod
     ) = suspend {
         val preferences = loadHomePreferences()
-        val hideBalance = shouldHideBalanceAct(Unit)
-        val hideIncome = shouldHideIncomeAct(Unit)
 
         currentTheme = preferences.theme
         period = timePeriod
-        this.hideBalance = hideBalance
-        this.hideIncome = hideIncome
+        hideBalance = appPreferences.hideCurrentBalance
+        hideIncome = appPreferences.hideIncome
 
         // This restores the runtime theme when the user imports a local backup.
         themeState.update(theme = preferences.theme)
@@ -418,7 +414,7 @@ class HomeViewModel @Inject constructor(
     }
 
     private suspend fun onBalanceClick() {
-        val hasTransactions = hasTrnsAct(Unit)
+        val hasTransactions = hasTransactionsUseCase()
         if (hasTransactions) {
             // has transactions show him "Balance" screen
             nav.navigateTo(BalanceScreen)

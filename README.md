@@ -623,6 +623,7 @@
 - 旧交易桥接函数已从 `shared:data:core` 移到 domain 旧交易纯逻辑包：`getValue/getAccountId/getTransactionType/settleNow` 不再作为数据实现层 API 暴露，预算、报表和旧 domain 逻辑改为从 `com.ivy.legacy.domain.pure.transaction` 使用这些扩展。
 - 预算页数据边界已收敛：新增 `GetBudgetsUseCase` 和 `ReorderBudgetsUseCase` 封装预算列表读取与排序保存，旧 `BudgetsAct` 已删除；`:feature:budgets` 不再直接注入 `WriteBudgetDao`，并已去掉对 `shared:data:core` 的直接依赖。
 - 首页数据边界已收敛：新增 `GetCustomerJourneyStatsUseCase` 封装首页引导卡片需要的交易/计划付款计数，新增 `MapTransactionsToLegacyUseCase` 封装新旧交易模型转换，`:feature:home` 不再直接依赖 `TransactionRepository`、`PlannedPaymentRuleDao` 或 `TransactionMapper`，并已去掉对 `shared:data:core` 的直接依赖。
+- 首页的偏好和交易存在性读取继续收窄：新增 `HasTransactionsUseCase` 替代旧 `HasTrnsAct`，隐藏余额/收入状态直接读取 `AppPreferences`，旧 `HasTrnsAct`、`ShouldHideBalanceAct` 和 `ShouldHideIncomeAct` 已删除。
 - 借贷页数据边界已收敛：新增 `GetLoansUseCase`、`GetLoanUseCase`、`GetLoanRecordsUseCase`、`ReorderLoansUseCase`、`GetLoanTransactionUseCase` 和 `HasLoanRecordTransactionUseCase`，借贷列表和借贷详情不再直接注入 `LoanRecordDao`、`WriteLoanDao`、`TransactionRepository` 或 `TransactionMapper`；旧 `LoansAct/LoanByIdAct` 已删除，`:feature:loans` 已去掉对 `shared:data:core` 的直接依赖。
 - 计划付款编辑页数据边界已收敛：新增 `GetPlannedPaymentRuleUseCase`、`SavePlannedPaymentRuleUseCase`、`DeletePlannedPaymentRuleUseCase` 和 `GetCategoryUseCase`，计划付款保存仍会生成未来交易、删除仍会清理未发生的生成交易，`:feature:planned-payments` 已去掉对 `shared:data:core` 的直接依赖。
 - 编辑交易页数据边界已收敛：新增 `SaveLegacyTransactionUseCase`、`DeleteTransactionUseCase`、`GetLoanUseCase` 和一组标签读写/关联用例，交易保存、删除、复制、标签创建、标签编辑、标签删除和标签关联不再直接调用数据层 repository/mapper，`:feature:edit-transaction` 已去掉对 `shared:data:core` 的直接依赖。
