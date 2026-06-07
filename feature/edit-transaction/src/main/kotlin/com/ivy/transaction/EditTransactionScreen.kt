@@ -34,7 +34,6 @@ import com.ivy.data.model.Category
 import com.ivy.data.model.Tag
 import com.ivy.data.model.TagId
 import com.ivy.ui.platform.LocalDatePicker
-import com.ivy.ui.time.LocalTimeConverter
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
 import com.ivy.ui.platform.hideKeyboard
@@ -77,6 +76,7 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.ImmutableSet
 import java.time.Instant
 import java.time.LocalDateTime
+import java.time.ZoneId
 import java.util.UUID
 import kotlin.math.roundToInt
 
@@ -346,13 +346,10 @@ private fun BoxWithConstraintsScope.UI(
         Spacer(Modifier.height(32.dp))
 
         val datePicker = LocalDatePicker.current
-        val timeConverter = LocalTimeConverter.current
         if (dueDate != null) {
             DueDate(dueDate = dueDate) {
                 datePicker.pickDate(
-                    initialDate = with(timeConverter) {
-                        dueDate.toLocalDate()
-                    },
+                    initialDate = dueDate.toLocalDateInSystemZone(),
                     onDatePicked = {
                         onDueDateChange(it.atTime(12, 0))
                     }
@@ -643,3 +640,6 @@ private fun shouldFocusTitle(
 ): Boolean = titleTextFieldValue.text.isBlank() && type != TransactionType.TRANSFER
 
 private fun shouldFocusAmount(amount: Double) = amount == 0.0
+
+private fun Instant.toLocalDateInSystemZone() =
+    atZone(ZoneId.systemDefault()).toLocalDate()

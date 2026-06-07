@@ -10,8 +10,6 @@ import androidx.lifecycle.viewModelScope
 import com.ivy.data.model.legacy.Transaction
 import com.ivy.data.model.TransactionType
 import com.ivy.ui.resource.ResourceProvider
-import com.ivy.base.time.TimeConverter
-import com.ivy.base.time.TimeProvider
 import com.ivy.data.model.Category
 import com.ivy.data.model.CategoryId
 import com.ivy.data.model.Tag
@@ -75,7 +73,10 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.math.BigDecimal
 import java.time.Instant
+import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.LocalTime
+import java.time.ZoneId
 import java.util.Locale
 import java.util.UUID
 import javax.inject.Inject
@@ -116,8 +117,6 @@ class EditTransactionViewModel @Inject constructor(
     private val searchTagsUseCase: SearchTagsUseCase,
     private val preferenceToggles: PreferenceToggles,
     private val preferenceToggleRepository: PreferenceToggleRepository,
-    private val timeConverter: TimeConverter,
-    private val timeProvider: TimeProvider,
     private val dateTimePicker: DateTimePicker,
 ) : ComposeViewModel<EditTransactionViewState, EditTransactionViewEvent>() {
 
@@ -543,7 +542,7 @@ class EditTransactionViewModel @Inject constructor(
     }
 
     private fun onDueDateChanged(newDueDate: LocalDateTime?) {
-        val newDueDateUtc = with(timeConverter) { newDueDate?.toUTC() }
+        val newDueDateUtc = newDueDate?.toUtcInstant()
         loadedTransaction = loadedTransaction().copy(
             dueDate = newDueDateUtc
         )
@@ -557,8 +556,8 @@ class EditTransactionViewModel @Inject constructor(
             initialDate = loadedTransaction?.dateTime,
         ) { localDate ->
             val localTime = loadedTransaction().dateTime?.let {
-                with(timeConverter) { it.toLocalTime() }
-            } ?: timeProvider.localTimeNow()
+                it.toLocalTimeInSystemZone()
+            } ?: LocalTime.now()
             loadedTransaction = loadedTransaction().copy(
                 date = localDate,
             )
@@ -569,14 +568,12 @@ class EditTransactionViewModel @Inject constructor(
     private fun handleChangeTime() {
         dateTimePicker.pickTime(
             initialTime = loadedTransaction?.dateTime?.let {
-                with(timeConverter) {
-                    it.toLocalDateTime()
-                }
-            }?.toLocalTime()
+                it.toLocalTimeInSystemZone()
+            }
         ) { localTime ->
             val localDate = loadedTransaction().dateTime?.let {
-                with(timeConverter) { it.toLocalDate() }
-            } ?: timeProvider.localDateNow()
+                it.toLocalDateInSystemZone()
+            } ?: LocalDate.now()
             loadedTransaction = loadedTransaction().copy(
                 time = localTime,
             )
@@ -585,7 +582,7 @@ class EditTransactionViewModel @Inject constructor(
     }
 
     private fun updateDateTime(newDateTime: LocalDateTime) {
-        val newDateTimeUtc = with(timeConverter) { newDateTime.toUTC() }
+        val newDateTimeUtc = newDateTime.toUtcInstant()
         loadedTransaction = loadedTransaction().copy(
             dateTime = newDateTimeUtc,
         )
@@ -637,7 +634,7 @@ class EditTransactionViewModel @Inject constructor(
                 loadedTransaction()
                     .copy(
                         id = id,
-                        dateTime = timeProvider.utcNow(),
+                        dateTime = Instant.now(),
                     )
                     .let { saveLegacyTransactionUseCase(it) }
 
@@ -727,7 +724,7 @@ class EditTransactionViewModel @Inject constructor(
                     dateTime = when {
                         loadedTransaction().dateTime == null &&
                                 dueDate == null -> {
-                            timeProvider.utcNow()
+                            Instant.now()
                         }
 
                         else -> loadedTransaction().dateTime
@@ -986,3 +983,12 @@ class EditTransactionViewModel @Inject constructor(
         return preferenceToggleRepository.isEnabled(preferenceToggles.sortCategoriesAscending)
     }
 }
+
+private fun LocalDateTime.toUtcInstant(): Instant =
+    atZone(ZoneId.systemDefault()).toInstant()
+
+private fun Instant.toLocalDateInSystemZone(): LocalDate =
+    atZone(ZoneId.systemDefault()).toLocalDate()
+
+private fun Instant.toLocalTimeInSystemZone(): LocalTime =
+    atZone(ZoneId.systemDefault()).toLocalTime()
