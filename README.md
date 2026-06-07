@@ -722,6 +722,7 @@
 - “转账计入收支”记账规则偏好已收敛到 `GetTransfersAsIncomeExpensePreferenceUseCase/SetTransfersAsIncomeExpensePreferenceUseCase`；账户页、交易页和饼图页只读 domain 用例，设置页通过用例保存该开关，底层 key 不变。
 - 隐藏余额和隐藏收入偏好已收敛到独立 domain 用例；首页只读 `GetHideCurrentBalancePreferenceUseCase/GetHideIncomePreferenceUseCase`，设置页通过对应 set 用例保存，底层 key 和短暂显示逻辑保持不变。
 - 交易提醒通知开关已收敛到 `GetShowNotificationsPreferenceUseCase/SetShowNotificationsPreferenceUseCase`；设置页、提醒调度逻辑和提醒 Worker 不再直接访问 `AppPreferences.showNotifications`，通知调度与二次检查行为保持不变。
+- 应用锁开关已收敛到 `GetAppLockEnabledPreferenceUseCase/SetAppLockEnabledPreferenceUseCase`；设置页和 `AppLockController` 不再直接访问 `AppPreferences.appLockEnabled`，运行时锁定状态仍由 app 层 controller 管理。
 - 账户旧读取路径已收敛到 `AccountStore`；旧 legacy 账户模型现在由 data model 账户映射而来，`shared:domain` 主源码不再直接注入 `AccountDao` 或依赖 `AccountEntity` mapper。
 - 旧交易卡片已移除重复账户查找 TODO：渲染前先解析来源/目标账户，再复用同一结果处理点击和币种展示，行为不变但 legacy UI 内部职责更清楚。
 

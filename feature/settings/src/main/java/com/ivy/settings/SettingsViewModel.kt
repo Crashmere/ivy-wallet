@@ -19,12 +19,14 @@ import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.domain.usecase.currency.SetBaseCurrencyUseCase
 import com.ivy.domain.usecase.csv.ExportCsvUseCase
 import com.ivy.domain.usecase.exchange.SyncExchangeRatesUseCase
+import com.ivy.domain.usecase.settings.GetAppLockEnabledPreferenceUseCase
 import com.ivy.domain.usecase.settings.GetHideCurrentBalancePreferenceUseCase
 import com.ivy.domain.usecase.settings.GetHideIncomePreferenceUseCase
 import com.ivy.domain.usecase.settings.GetShowNotificationsPreferenceUseCase
 import com.ivy.domain.usecase.settings.GetStartDayOfMonthUseCase
 import com.ivy.domain.usecase.settings.GetThemeUseCase
 import com.ivy.domain.usecase.settings.GetTransfersAsIncomeExpensePreferenceUseCase
+import com.ivy.domain.usecase.settings.SetAppLockEnabledPreferenceUseCase
 import com.ivy.domain.usecase.settings.SetHideCurrentBalancePreferenceUseCase
 import com.ivy.domain.usecase.settings.SetHideIncomePreferenceUseCase
 import com.ivy.domain.usecase.settings.SetShowNotificationsPreferenceUseCase
@@ -59,6 +61,8 @@ class SettingsViewModel @Inject constructor(
     private val exportBackupUseCase: ExportBackupUseCase,
     private val getStartDayOfMonth: GetStartDayOfMonthUseCase,
     private val setStartDayOfMonth: SetStartDayOfMonthUseCase,
+    private val getAppLockEnabledPreference: GetAppLockEnabledPreferenceUseCase,
+    private val setAppLockEnabledPreference: SetAppLockEnabledPreferenceUseCase,
     private val getHideCurrentBalancePreference: GetHideCurrentBalancePreferenceUseCase,
     private val setHideCurrentBalancePreference: SetHideCurrentBalancePreferenceUseCase,
     private val getHideIncomePreference: GetHideIncomePreferenceUseCase,
@@ -143,7 +147,7 @@ class SettingsViewModel @Inject constructor(
     }
 
     private fun initializeLockApp() {
-        lockApp.value = appPreferences.appLockEnabled
+        lockApp.value = getAppLockEnabledPreference()
     }
 
     private fun initializeShowNotifications() {
@@ -408,7 +412,7 @@ class SettingsViewModel @Inject constructor(
         lockApp.value = lock
 
         viewModelScope.launch {
-            appPreferences.appLockEnabled = lock
+            setAppLockEnabledPreference(lock)
         }
     }
 

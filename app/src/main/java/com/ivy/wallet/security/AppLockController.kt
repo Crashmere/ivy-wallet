@@ -3,7 +3,7 @@ package com.ivy.wallet.security
 import androidx.biometric.BiometricPrompt
 import com.ivy.base.coroutines.readOnly
 import com.ivy.base.resource.ResourceProvider
-import com.ivy.domain.preferences.AppPreferences
+import com.ivy.domain.usecase.settings.GetAppLockEnabledPreferenceUseCase
 import com.ivy.ui.R
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -17,7 +17,7 @@ import java.util.concurrent.atomic.AtomicLong
 import javax.inject.Inject
 
 class AppLockController @Inject constructor(
-    private val appPreferences: AppPreferences,
+    private val getAppLockEnabledPreference: GetAppLockEnabledPreferenceUseCase,
     private val resourceProvider: ResourceProvider,
 ) {
     private companion object {
@@ -34,7 +34,7 @@ class AppLockController @Inject constructor(
     private var userInactiveJob: Job? = null
 
     fun initialize() {
-        appLockEnabled = appPreferences.appLockEnabled
+        appLockEnabled = getAppLockEnabledPreference()
         _appLocked.value = appLockEnabled
     }
 
