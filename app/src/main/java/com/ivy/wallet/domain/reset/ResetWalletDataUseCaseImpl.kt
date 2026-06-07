@@ -6,7 +6,6 @@ import androidx.datastore.preferences.core.edit
 import com.ivy.base.legacy.ioThread
 import com.ivy.data.DataObserver
 import com.ivy.data.DataWriteEvent
-import com.ivy.data.db.dao.read.UserDao
 import com.ivy.data.db.dao.write.WriteBudgetDao
 import com.ivy.data.db.dao.write.WriteLoanDao
 import com.ivy.data.db.dao.write.WriteLoanRecordDao
@@ -34,7 +33,6 @@ class ResetWalletDataUseCaseImpl @Inject constructor(
     private val transactionRepository: TransactionRepository,
     private val categoryRepository: CategoryRepository,
     private val tagRepository: TagRepository,
-    private val userDao: UserDao,
     private val writeSettingsDao: WriteSettingsDao,
     private val writePlannedPaymentRuleDao: WritePlannedPaymentRuleDao,
     private val writeBudgetDao: WriteBudgetDao,
@@ -65,7 +63,6 @@ class ResetWalletDataUseCaseImpl @Inject constructor(
         tagRepository.deleteAll()
         writeSettingsDao.deleteAll()
         writePlannedPaymentRuleDao.deleteAll()
-        userDao.deleteAll()
         writeBudgetDao.deleteAll()
         writeLoanDao.deleteAll()
         writeLoanRecordDao.deleteAll()

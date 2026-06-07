@@ -123,7 +123,7 @@
 现状：
 
 - Room entity 里仍有 `isSynced`、`isDeleted`、`lastSyncedTime` 等历史同步字段。
-- `UserEntity/UserDao` 仍存在，主要被 `LogoutLogic` 的清空流程调用。
+- 历史 `users` 表已通过 130 -> 131 Room migration 删除，`UserEntity/UserDao` 和重置流程里的用户表清空依赖已移除。
 - `SettingsEntity` 仍是旧设置模型，部分偏好又在 `SharedPrefs/DataStore` 中。
 
 问题：
@@ -135,7 +135,7 @@
 目标：
 
 - 先让运行时代码不再依赖旧同步/用户表概念。
-- 再通过明确 Room migration 删除或废弃字段。
+- 继续通过明确 Room migration 删除或废弃字段。
 - 备份恢复格式同步调整，并保留测试覆盖。
 
 ### 5. 平台能力集中在 `RootActivity`
@@ -518,24 +518,25 @@
 
 候选内容：
 
-- `UserEntity`
-- `UserDao`
-- `users` table
 - `SettingsEntity`
 - `isSynced`
 - `isDeleted`
 - `lastSyncedTime`
 - `LogoutLogic.cloudLogout`
 
+已完成：
+
+- 删除 `UserEntity`、`UserDao` 和 Hilt DAO provider。
+- `ResetWalletDataUseCaseImpl` 不再依赖用户表。
+- 新增 `Migration130to131_DropUsers`，数据库版本升到 131，并生成 `131.json` schema；新 schema 不再包含 `users` 表。
+
 建议顺序：
 
-1. 把 `LogoutLogic` 改成 `ResetAllDataUseCase`。
-2. 让清空本地数据流程不再依赖 `UserDao`。
-3. 新增 Room migration 删除或废弃 `users` 表。
-4. 评估 `isDeleted/isSynced` 字段：
+1. 评估 `isDeleted/isSynced` 字段：
    - 如果只是历史同步残留，写迁移删除。
    - 如果仍被软删除逻辑使用，先替换成直接删除或明确本地删除语义。
-5. 更新备份恢复数据结构和测试。
+2. 梳理 `SettingsEntity` 与 `AppPreferences/DataStore` 的职责重叠。
+3. 更新备份恢复数据结构和测试。
 
 风险：
 
@@ -727,6 +728,6 @@ shared:ui:core
 
 下一步建议执行：
 
-1. 继续收敛平台桥接：评估 `FileSharer`、`BuildInfoProvider` 是否需要从 `LocalContext.current as ...` 改成 CompositionLocal。
-2. 平台层稳定后进入数据库遗留清理：先梳理 `UserEntity/UserDao`、`SettingsEntity`、同步字段和备份恢复格式，不直接改 schema。
-3. 数据库清理开始前，先补一轮只读审计，明确哪些字段仍参与本地软删除、备份恢复或迁移。
+1. 继续数据库只读审计：明确 `isDeleted/isSynced/lastSyncedTime` 哪些仍参与本地软删除、备份恢复或查询过滤。
+2. 梳理 `SettingsEntity`、`SettingsDao`、`WriteSettingsDao` 与 `AppPreferences/DataStore` 的职责重叠，先找不改备份格式的迁移点。
+3. 继续收敛平台桥接：评估 `FileSharer`、`BuildInfoProvider` 是否需要从 `LocalContext.current as ...` 改成 CompositionLocal。

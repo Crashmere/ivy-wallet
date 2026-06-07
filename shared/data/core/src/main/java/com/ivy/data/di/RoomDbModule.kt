@@ -13,7 +13,6 @@ import com.ivy.data.db.dao.read.SettingsDao
 import com.ivy.data.db.dao.read.TagAssociationDao
 import com.ivy.data.db.dao.read.TagDao
 import com.ivy.data.db.dao.read.TransactionDao
-import com.ivy.data.db.dao.read.UserDao
 import com.ivy.data.db.dao.write.WriteAccountDao
 import com.ivy.data.db.dao.write.WriteBudgetDao
 import com.ivy.data.db.dao.write.WriteCategoryDao
@@ -44,11 +43,6 @@ object RoomDbModule {
         return IvyRoomDatabase.create(
             applicationContext = appContext,
         )
-    }
-
-    @Provides
-    fun provideUserDao(db: IvyRoomDatabase): UserDao {
-        return db.userDao
     }
 
     @Provides
