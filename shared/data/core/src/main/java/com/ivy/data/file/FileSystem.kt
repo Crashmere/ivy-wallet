@@ -3,6 +3,7 @@ package com.ivy.data.file
 import android.content.Context
 import android.net.Uri
 import arrow.core.Either
+import com.ivy.base.io.TextFileStore
 import dagger.hilt.android.qualifiers.ApplicationContext
 import java.io.BufferedReader
 import java.io.FileInputStream
@@ -16,7 +17,27 @@ import javax.inject.Inject
 class FileSystem @Inject constructor(
     @ApplicationContext
     private val appContext: Context
-) {
+) : TextFileStore {
+    override fun writeText(
+        uri: Uri,
+        content: String,
+    ): Result<Unit> {
+        return when (val result = writeToFile(uri, content)) {
+            is Either.Left -> Result.failure(result.value.e)
+            is Either.Right -> Result.success(result.value)
+        }
+    }
+
+    override fun readText(
+        uri: Uri,
+        charset: Charset,
+    ): Result<String> {
+        return when (val result = read(uri, charset)) {
+            is Either.Left -> Result.failure(result.value.e)
+            is Either.Right -> Result.success(result.value)
+        }
+    }
+
     fun writeToFile(uri: Uri, content: String): Either<Failure, Unit> = try {
         val contentResolver = appContext.contentResolver
 

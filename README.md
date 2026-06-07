@@ -684,6 +684,7 @@
 - 首次默认账户/分类预置已改走 `GetAccountsUseCase/GetCategoriesUseCase` 和 `SaveAccountUseCase/SaveCategoryUseCase`；app 启动编排不再直接注入账户 DAO 或分类/账户 repository，默认内容、颜色、图标和初始化条件保持不变。
 - 交易提醒 Worker 的“今天是否已经记账”判断已改走 `CountTodayTransactionsUseCase`；app 通知 Worker 不再直接注入 `TransactionDao`，数据层新增按时间范围计数查询，避免为了计数加载完整交易列表。
 - 编辑交易页的标题建议逻辑已从旧 `SmartTitleSuggestionsLogic` 迁到正式 `SuggestTransactionTitlesUseCase`；按标题、分类和账户使用频次生成建议的规则保持不变。
+- 文本文件读写已抽成 `TextFileStore` 基础端口，data core 的 Android `FileSystem` 负责实现；CSV 导出和手动 CSV 读取不再直接依赖 data core 文件类，备份导入导出后续单独拆分。
 
 建议顺序：
 

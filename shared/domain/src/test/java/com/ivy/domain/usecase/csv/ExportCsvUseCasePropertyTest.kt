@@ -2,8 +2,8 @@ package com.ivy.domain.usecase.csv
 
 import arrow.core.Some
 import com.ivy.base.TestDispatchersProvider
+import com.ivy.base.io.TextFileStore
 import com.ivy.base.time.impl.TestTimeConverter
-import com.ivy.data.file.FileSystem
 import com.ivy.data.model.Transaction
 import com.ivy.data.model.getFromAccount
 import com.ivy.data.model.getToAccount
@@ -33,7 +33,7 @@ class ExportCsvUseCasePropertyTest {
     private val accountRepository = mockk<AccountRepository>()
     private val categoryRepository = mockk<CategoryRepository>(relaxed = true)
     private val transactionRepository = mockk<TransactionRepository>()
-    private val fileSystem = mockk<FileSystem>()
+    private val textFileStore = mockk<TextFileStore>()
     private val timeConverter = TestTimeConverter()
 
     private lateinit var useCase: ExportCsvUseCase
@@ -45,7 +45,7 @@ class ExportCsvUseCasePropertyTest {
             getCategoriesUseCase = GetCategoriesUseCase(categoryRepository),
             getTransactionsUseCase = GetTransactionsUseCase(transactionRepository),
             dispatchers = TestDispatchersProvider,
-            fileSystem = fileSystem,
+            textFileStore = textFileStore,
             timeConverter = timeConverter
         )
     }

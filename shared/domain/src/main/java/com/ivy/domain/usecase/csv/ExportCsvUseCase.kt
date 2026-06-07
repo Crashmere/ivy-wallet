@@ -1,11 +1,10 @@
 package com.ivy.domain.usecase.csv
 
 import android.net.Uri
-import arrow.core.Either
 import com.ivy.base.model.TransactionType
+import com.ivy.base.io.TextFileStore
 import com.ivy.base.threading.DispatchersProvider
 import com.ivy.base.time.TimeConverter
-import com.ivy.data.file.FileSystem
 import com.ivy.data.model.Account
 import com.ivy.data.model.AccountId
 import com.ivy.data.model.Category
@@ -34,7 +33,7 @@ class ExportCsvUseCase @Inject constructor(
     private val getCategoriesUseCase: GetCategoriesUseCase,
     private val getTransactionsUseCase: GetTransactionsUseCase,
     private val dispatchers: DispatchersProvider,
-    private val fileSystem: FileSystem,
+    private val textFileStore: TextFileStore,
     private val timeConverter: TimeConverter
 ) {
 
@@ -43,9 +42,9 @@ class ExportCsvUseCase @Inject constructor(
         exportScope: suspend () -> List<Transaction> = {
             getTransactionsUseCase()
         }
-    ): Either<FileSystem.Failure, Unit> = withContext(dispatchers.io) {
+    ): Result<Unit> = withContext(dispatchers.io) {
         val csv = exportCsv(exportScope)
-        fileSystem.writeToFile(outputFile, csv)
+        textFileStore.writeText(outputFile, csv)
     }
 
     suspend fun exportCsv(
