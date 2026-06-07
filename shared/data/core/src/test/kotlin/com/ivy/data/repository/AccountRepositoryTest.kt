@@ -1,7 +1,6 @@
 package com.ivy.data.repository
 
 import com.ivy.base.TestDispatchersProvider
-import com.ivy.data.DataObserver
 import com.ivy.data.db.dao.fake.FakeSettingsDao
 import com.ivy.data.db.dao.read.AccountDao
 import com.ivy.data.db.dao.write.WriteAccountDao
@@ -27,8 +26,6 @@ import java.util.UUID
 class AccountRepositoryTest {
     val accountDao = mockk<AccountDao>()
     val writeAccountDao = mockk<WriteAccountDao>()
-    val writeEventBus = mockk<DataObserver>(relaxed = true)
-
     private lateinit var repository: AccountRepository
 
     @Before

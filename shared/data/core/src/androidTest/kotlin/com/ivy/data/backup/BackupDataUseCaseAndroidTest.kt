@@ -9,7 +9,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.ivy.base.TestDispatchersProvider
 import com.ivy.data.di.SerializationModule
-import com.ivy.data.DataObserver
+import com.ivy.data.DataWriteEventBus
 import com.ivy.data.db.IvyRoomDatabase
 import com.ivy.data.file.FileSystem
 import com.ivy.data.model.importing.ImportResult
@@ -74,7 +74,7 @@ class BackupDataUseCaseAndroidTest {
             json = SerializationModule.provideJson(),
             dispatchersProvider = TestDispatchersProvider,
             fileSystem = FileSystem(appContext),
-            dataObserver = DataObserver(),
+            dataChangePublisher = DataWriteEventBus(),
             tagsReader = db.tagDao,
             tagAssociationReader = db.tagAssociationDao,
             tagsWriter = db.writeTagDao,

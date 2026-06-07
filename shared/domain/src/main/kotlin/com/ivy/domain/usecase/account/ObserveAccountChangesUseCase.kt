@@ -8,10 +8,10 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class ObserveAccountChangesUseCase @Inject constructor(
-    private val dataObserver: DataChangePublisher
+    private val dataChangePublisher: DataChangePublisher
 ) {
     operator fun invoke(): Flow<Unit> {
-        return dataObserver.writeEvents
+        return dataChangePublisher.writeEvents
             .filterIsInstance<DataWriteEvent.AccountChange>()
             .map { }
     }

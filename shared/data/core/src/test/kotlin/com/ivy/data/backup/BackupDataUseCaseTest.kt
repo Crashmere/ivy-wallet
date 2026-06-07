@@ -2,7 +2,7 @@ package com.ivy.data.backup
 
 import com.ivy.base.TestDispatchersProvider
 import com.ivy.data.di.SerializationModule
-import com.ivy.data.DataObserver
+import com.ivy.data.DataWriteEventBus
 import com.ivy.data.db.dao.fake.FakeAccountDao
 import com.ivy.data.db.dao.fake.FakeBudgetDao
 import com.ivy.data.db.dao.fake.FakeCategoryDao
@@ -75,7 +75,7 @@ class BackupDataUseCaseTest {
             json = SerializationModule.provideJson(),
             dispatchersProvider = TestDispatchersProvider,
             fileSystem = mockk(relaxed = true),
-            dataObserver = DataObserver(),
+            dataChangePublisher = DataWriteEventBus(),
             tagsReader = tagDao,
             tagsWriter = tagDao,
             tagAssociationReader = tagAssociationDao,

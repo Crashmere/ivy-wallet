@@ -725,6 +725,7 @@
 - 交易 legacy/modern 转换已改为基于 data model 和 `AccountStore` 直接完成；`shared:domain` 主源码不再依赖 data core 的 `TransactionMapper` 或 `TransactionEntity`。
 - `shared:domain` 的 Gradle 主依赖和测试依赖都已移除 `shared:data:core`；domain 单元测试改用数据端口 mock/fake，不再依赖 repository、Room 或 data core mapper。
 - 数据变化事件已抽成 `DataChangePublisher/DataWriteEvent` 端口；domain 中的账户变更观察和全量数据变更通知不再直接依赖 data core 的 `DataObserver` 实现。
+- data-core 中的事件发布实现已从 `DataObserver` 改名为 `DataWriteEventBus`；它负责发出写入事件，不再用“观察者”命名反向暗示数据流。
 - `KSerializerLocalDateTime` 的泛化 `TODO` 已改成明确兼容说明：它继续服务旧 Room 实体和备份 JSON 中以 UTC epoch millis 编码的 `LocalDateTime`，不作为未完成的新模型迁移入口。
 - `BalanceBuilder` 和 `StatSummaryBuilder` 已从 `com.ivy.domain.usecase` 根包归位到 `com.ivy.domain.model`；对应测试也已移动到 domain model 测试目录。它们是统计聚合辅助对象，不再和可注入业务用例混在同一层级。
 - `ResetWalletDataUseCase` 接口已从 `com.ivy.domain.usecase` 根包移入 `com.ivy.domain.usecase.reset`，和 `ClearWalletDataUseCase`、`ClearAppPreferencesUseCase`、`NotifyAllDataChangedUseCase` 保持同一 reset 边界。

@@ -10,14 +10,14 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class RepositoryCacheFactory @Inject constructor(
-    private val dataObserver: DataChangePublisher,
+    private val dataChangePublisher: DataChangePublisher,
     private val dispatchers: DispatchersProvider,
 ) {
     fun <T : Identifiable<TID>, TID : UniqueId> createCache(
         getDataWriteSaveEvent: (List<T>) -> DataWriteEvent,
         getDateWriteDeleteEvent: (DeleteOperation<TID>) -> DataWriteEvent
     ): RepositoryCache<T, TID> = RepositoryCache(
-        dataObserver = dataObserver,
+        dataChangePublisher = dataChangePublisher,
         dispatchers = dispatchers,
         getDataWriteSaveEvent = getDataWriteSaveEvent,
         getDataWriteDeleteEvent = getDateWriteDeleteEvent,
@@ -25,7 +25,7 @@ class RepositoryCacheFactory @Inject constructor(
 }
 
 class RepositoryCache<T : Identifiable<TID>, TID : UniqueId> internal constructor(
-    private val dataObserver: DataChangePublisher,
+    private val dataChangePublisher: DataChangePublisher,
     private val dispatchers: DispatchersProvider,
     private val getDataWriteSaveEvent: (List<T>) -> DataWriteEvent,
     private val getDataWriteDeleteEvent: (DeleteOperation<TID>) -> DataWriteEvent,
@@ -73,7 +73,7 @@ class RepositoryCache<T : Identifiable<TID>, TID : UniqueId> internal constructo
         withContext(dispatchers.io) {
             writeOperation(value)
             cache(value)
-            dataObserver.post(getDataWriteSaveEvent(listOf(value)))
+            dataChangePublisher.post(getDataWriteSaveEvent(listOf(value)))
         }
     }
 
@@ -84,7 +84,7 @@ class RepositoryCache<T : Identifiable<TID>, TID : UniqueId> internal constructo
         withContext(dispatchers.io) {
             writeOperation(values)
             cache(values)
-            dataObserver.post(getDataWriteSaveEvent(values))
+            dataChangePublisher.post(getDataWriteSaveEvent(values))
         }
     }
 
@@ -95,7 +95,7 @@ class RepositoryCache<T : Identifiable<TID>, TID : UniqueId> internal constructo
         withContext(dispatchers.io) {
             cachedItems.remove(id)
             deleteByIdOperation(id)
-            dataObserver.post(
+            dataChangePublisher.post(
                 getDataWriteDeleteEvent(DeleteOperation.Just(listOf(id)))
             )
         }
@@ -107,7 +107,7 @@ class RepositoryCache<T : Identifiable<TID>, TID : UniqueId> internal constructo
         withContext(dispatchers.io) {
             cachedItems.clear()
             deleteAllOperation()
-            dataObserver.post(getDataWriteDeleteEvent(DeleteOperation.All))
+            dataChangePublisher.post(getDataWriteDeleteEvent(DeleteOperation.All))
         }
     }
 

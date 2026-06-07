@@ -1,6 +1,6 @@
 package com.ivy.data.di
 
-import com.ivy.data.DataObserver
+import com.ivy.data.DataWriteEventBus
 import com.ivy.data.api.AccountStore
 import com.ivy.data.api.AppPreferenceStore
 import com.ivy.data.api.BudgetStore
@@ -37,7 +37,7 @@ import dagger.hilt.components.SingletonComponent
 @InstallIn(SingletonComponent::class)
 abstract class StoreModule {
     @Binds
-    abstract fun bindDataChangePublisher(observer: DataObserver): DataChangePublisher
+    abstract fun bindDataChangePublisher(eventBus: DataWriteEventBus): DataChangePublisher
 
     @Binds
     abstract fun bindAccountStore(repository: AccountRepository): AccountStore

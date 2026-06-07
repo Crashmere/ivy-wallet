@@ -70,7 +70,7 @@ class BackupDataUseCase @Inject constructor(
     private val json: Json,
     private val dispatchersProvider: DispatchersProvider,
     private val fileSystem: FileSystem,
-    private val dataObserver: DataChangePublisher,
+    private val dataChangePublisher: DataChangePublisher,
     private val tagsReader: TagDao,
     private val tagAssociationReader: TagAssociationDao,
     private val tagsWriter: WriteTagDao,
@@ -176,7 +176,7 @@ class BackupDataUseCase @Inject constructor(
                 failedRows = persistentListOf()
             )
         } finally {
-            dataObserver.post(DataWriteEvent.AllDataChange)
+            dataChangePublisher.post(DataWriteEvent.AllDataChange)
         }
     }
 

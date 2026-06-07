@@ -5,9 +5,9 @@ import com.ivy.data.api.DataWriteEvent
 import javax.inject.Inject
 
 class NotifyAllDataChangedUseCase @Inject constructor(
-    private val dataObserver: DataChangePublisher
+    private val dataChangePublisher: DataChangePublisher
 ) {
     suspend operator fun invoke() {
-        dataObserver.post(DataWriteEvent.AllDataChange)
+        dataChangePublisher.post(DataWriteEvent.AllDataChange)
     }
 }

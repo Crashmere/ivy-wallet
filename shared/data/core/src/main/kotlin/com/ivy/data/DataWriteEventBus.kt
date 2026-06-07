@@ -8,7 +8,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class DataObserver @Inject constructor() : DataChangePublisher {
+class DataWriteEventBus @Inject constructor() : DataChangePublisher {
     private val _writeEvents = MutableSharedFlow<DataWriteEvent>()
     override val writeEvents: Flow<DataWriteEvent> = _writeEvents
 
