@@ -14,8 +14,8 @@ inline fun <E, T, S> Res<E, T>.map(f: (Res<E, T>) -> S): S {
     return f(this)
 }
 
-inline fun <T> tryOp(
-    noinline operation: suspend () -> T,
+fun <T> tryOp(
+    operation: suspend () -> T,
 ): suspend () -> Res<Exception, T> = {
     try {
         operation thenInvokeAfter { Res.Ok(it) }
