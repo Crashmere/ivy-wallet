@@ -1,4 +1,4 @@
-package com.ivy.legacy.utils
+package com.ivy.base.legacy
 
 import android.icu.util.Currency
 import java.util.Locale

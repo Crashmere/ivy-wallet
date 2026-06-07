@@ -50,7 +50,7 @@ import com.ivy.legacy.datamodel.Account
 import com.ivy.legacy.ivyWalletCtx
 import com.ivy.legacy.ui.component.tags.AddTagButton
 import com.ivy.legacy.ui.component.tags.ShowTagModal
-import com.ivy.legacy.utils.capitalizeLocal
+import com.ivy.base.legacy.capitalizeLocal
 import com.ivy.legacy.utils.springBounce
 import com.ivy.ui.R
 import com.ivy.wallet.ui.theme.GradientGreen

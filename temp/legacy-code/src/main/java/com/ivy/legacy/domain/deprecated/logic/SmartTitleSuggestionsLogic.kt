@@ -3,7 +3,7 @@ package com.ivy.wallet.domain.deprecated.logic
 import com.ivy.base.legacy.Transaction
 import com.ivy.data.db.dao.read.TransactionDao
 import com.ivy.legacy.datamodel.temp.toLegacyDomain
-import com.ivy.legacy.utils.capitalizeWords
+import com.ivy.base.legacy.capitalizeWords
 import com.ivy.base.legacy.isNotNullOrBlank
 import java.util.*
 import javax.inject.Inject

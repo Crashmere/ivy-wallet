@@ -36,7 +36,7 @@ import com.ivy.legacy.datamodel.temp.toDomain
 import com.ivy.legacy.domain.deprecated.logic.AccountCreator
 import com.ivy.base.legacy.computationThread
 import com.ivy.base.legacy.ioThread
-import com.ivy.legacy.utils.toLowerCaseLocal
+import com.ivy.base.legacy.toLowerCaseLocal
 import com.ivy.base.legacy.uiThread
 import com.ivy.navigation.EditTransactionScreen
 import com.ivy.navigation.MainScreen

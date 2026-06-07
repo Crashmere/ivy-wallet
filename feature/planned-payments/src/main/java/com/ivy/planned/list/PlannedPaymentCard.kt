@@ -41,7 +41,7 @@ import com.ivy.legacy.utils.formatDateOnly
 import com.ivy.legacy.utils.formatDateOnlyWithYear
 import com.ivy.base.legacy.isNotNullOrBlank
 import com.ivy.legacy.utils.timeNowUTC
-import com.ivy.legacy.utils.uppercaseLocal
+import com.ivy.base.legacy.uppercaseLocal
 import com.ivy.navigation.TransactionsScreen
 import com.ivy.navigation.navigation
 import com.ivy.ui.R

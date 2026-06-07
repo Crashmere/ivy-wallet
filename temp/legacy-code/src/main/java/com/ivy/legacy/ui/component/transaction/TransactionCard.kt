@@ -45,7 +45,7 @@ import com.ivy.design.l1_buildingBlocks.IvyText
 import com.ivy.design.l1_buildingBlocks.SpacerHor
 import com.ivy.legacy.data.AppBaseData
 import com.ivy.legacy.datamodel.Account
-import com.ivy.legacy.utils.capitalizeLocal
+import com.ivy.base.legacy.capitalizeLocal
 import com.ivy.legacy.utils.dateNowUTC
 import com.ivy.legacy.utils.format
 import com.ivy.base.legacy.isNotNullOrBlank

@@ -355,6 +355,7 @@
 - 已把只被锁屏界面使用的设备锁屏检查从 legacy 通用工具迁到 `app` 的 `com.ivy.wallet.platform` 包。
 - 已把 legacy 状态暴露和线程切换 helper 从 `temp:legacy-code` 迁到 `shared:base` 的 `com.ivy.base.legacy` 包。
 - 已把 legacy 字符串空白校验 helper 从 `temp:legacy-code` 迁到 `shared:base` 的 `com.ivy.base.legacy` 包。
+- 已把 legacy 通用本地化字符串、默认货币、随机数和列表交换 helper 从 `temp:legacy-code` 迁到 `shared:base` 的 `com.ivy.base.legacy` 包。
 
 迁移分组：
 

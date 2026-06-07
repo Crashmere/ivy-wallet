@@ -42,7 +42,7 @@ import com.ivy.legacy.datamodel.temp.toLegacy
 import com.ivy.legacy.utils.getISOFormattedDateTime
 import com.ivy.base.legacy.scopedIOThread
 import com.ivy.legacy.utils.timeNowUTC
-import com.ivy.legacy.utils.toLowerCaseLocal
+import com.ivy.base.legacy.toLowerCaseLocal
 import com.ivy.base.legacy.uiThread
 import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.R
