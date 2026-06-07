@@ -3,7 +3,6 @@ package com.ivy.importdata.csv.domain
 import androidx.compose.ui.graphics.toArgb
 import com.ivy.data.model.legacy.Transaction
 import com.ivy.data.model.TransactionType
-import com.ivy.base.time.TimeConverter
 import com.ivy.data.model.Category
 import com.ivy.data.model.CategoryId
 import com.ivy.data.model.importing.ImportCsvRow
@@ -28,6 +27,8 @@ import com.ivy.domain.util.nextOrderNum
 import com.ivy.legacy.ui.theme.Green
 import com.ivy.legacy.ui.theme.IvyDark
 import kotlinx.collections.immutable.toImmutableList
+import java.time.LocalDateTime
+import java.time.ZoneId
 import java.util.Locale
 import java.util.UUID
 import javax.inject.Inject
@@ -41,7 +42,6 @@ class CSVImporterV2 @Inject constructor(
     private val saveAccountUseCase: SaveAccountUseCase,
     private val saveCategoryUseCase: SaveCategoryUseCase,
     private val saveLegacyTransactionUseCase: SaveLegacyTransactionUseCase,
-    private val timeConverter: TimeConverter,
 ) {
 
     lateinit var accounts: List<Account>
@@ -225,7 +225,7 @@ class CSVImporterV2 @Inject constructor(
             accountId = account.id,
             toAccountId = toAccount?.id,
             toAmount = toAmount?.toBigDecimal() ?: amount.toBigDecimal(),
-            dateTime = with(timeConverter) { dateTime.toUTC() },
+            dateTime = dateTime.toInstantInSystemZone(),
             dueDate = null,
             categoryId = category?.id?.value,
             title = title,
@@ -335,4 +335,7 @@ class CSVImporterV2 @Inject constructor(
 
         return newCategory
     }
+
+    private fun LocalDateTime.toInstantInSystemZone() =
+        atZone(ZoneId.systemDefault()).toInstant()
 }
