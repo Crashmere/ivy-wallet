@@ -19,7 +19,7 @@ class FakeSettingsDao : SettingsDao, WriteSettingsDao {
     }
 
     override suspend fun findAll(): List<SettingsEntity> {
-        return items
+        return items.toList()
     }
 
     override suspend fun findById(id: UUID): SettingsEntity? {
@@ -27,11 +27,12 @@ class FakeSettingsDao : SettingsDao, WriteSettingsDao {
     }
 
     override suspend fun save(value: SettingsEntity) {
+        items.removeIf { it.id == value.id }
         items.add(value)
     }
 
     override suspend fun saveMany(value: List<SettingsEntity>) {
-        items.addAll(value)
+        value.forEach { save(it) }
     }
 
     override suspend fun deleteById(id: UUID) {
