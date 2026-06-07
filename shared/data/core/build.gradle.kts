@@ -15,6 +15,7 @@ dependencies {
     implementation(projects.shared.data.model)
 
     implementation(libs.bundles.arrow)
+    implementation(libs.androidx.core.ktx)
     implementation(libs.datastore)
     implementation(libs.bundles.ktor)
     implementation(libs.timber)

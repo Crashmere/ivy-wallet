@@ -148,6 +148,7 @@ dependencies {
     implementation(libs.bundles.compose)
     implementation(libs.bundles.activity)
     implementation(libs.compose.activity)
+    implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.biometrics)
 
     implementation(libs.bundles.hilt)
