@@ -9,27 +9,24 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
 import com.ivy.base.model.TransactionType
 import com.ivy.base.time.TimeConverter
-import com.ivy.data.db.dao.read.AccountDao
-import com.ivy.data.db.dao.read.PlannedPaymentRuleDao
-import com.ivy.data.db.dao.write.WritePlannedPaymentRuleDao
 import com.ivy.data.model.Category
 import com.ivy.data.model.CategoryId
 import com.ivy.data.model.IntervalType
-import com.ivy.data.repository.CategoryRepository
-import com.ivy.data.repository.TransactionRepository
 import com.ivy.domain.usecase.category.GetCategoriesUseCase
+import com.ivy.domain.usecase.category.GetCategoryUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
+import com.ivy.domain.usecase.planned.DeletePlannedPaymentRuleUseCase
+import com.ivy.domain.usecase.planned.GetPlannedPaymentRuleUseCase
+import com.ivy.domain.usecase.planned.SavePlannedPaymentRuleUseCase
 import com.ivy.legacy.domain.model.Account
 import com.ivy.legacy.domain.model.PlannedPaymentRule
-import com.ivy.legacy.domain.mapper.toLegacyDomain
 import com.ivy.legacy.domain.logic.AccountCreator
-import com.ivy.base.coroutines.ioThread
 import com.ivy.ui.navigation.EditPlannedScreen
 import com.ivy.ui.navigation.Navigation
 import com.ivy.ui.ComposeViewModel
+import com.ivy.legacy.domain.action.account.AccountByIdAct
 import com.ivy.legacy.domain.action.account.AccountsAct
 import com.ivy.legacy.domain.logic.CategoryCreator
-import com.ivy.legacy.domain.logic.PlannedPaymentsGenerator
 import com.ivy.legacy.domain.model.CreateAccountData
 import com.ivy.legacy.domain.model.CreateCategoryData
 import com.ivy.legacy.ui.modal.RecurringRuleModalData
@@ -46,18 +43,17 @@ import javax.inject.Inject
 @Stable
 @HiltViewModel
 class EditPlannedViewModel @Inject constructor(
-    private val accountDao: AccountDao,
-    private val categoryRepository: CategoryRepository,
     private val getCategoriesUseCase: GetCategoriesUseCase,
+    private val getCategoryUseCase: GetCategoryUseCase,
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
+    private val getPlannedPaymentRuleUseCase: GetPlannedPaymentRuleUseCase,
+    private val savePlannedPaymentRuleUseCase: SavePlannedPaymentRuleUseCase,
+    private val deletePlannedPaymentRuleUseCase: DeletePlannedPaymentRuleUseCase,
     private val nav: Navigation,
-    private val plannedPaymentRuleDao: PlannedPaymentRuleDao,
-    private val plannedPaymentsGenerator: PlannedPaymentsGenerator,
     private val categoryCreator: CategoryCreator,
     private val accountCreator: AccountCreator,
+    private val accountByIdAct: AccountByIdAct,
     private val accountsAct: AccountsAct,
-    private val plannedPaymentRuleWriter: WritePlannedPaymentRuleDao,
-    private val transactionRepository: TransactionRepository,
     private val timeConverter: TimeConverter,
 ) : ComposeViewModel<EditPlannedScreenState, EditPlannedScreenEvent>() {
 
@@ -281,7 +277,7 @@ class EditPlannedViewModel @Inject constructor(
             reset()
 
             loadedRule = screen.plannedPaymentRuleId?.let {
-                ioThread { plannedPaymentRuleDao.findById(it)!!.toLegacyDomain() }
+                getPlannedPaymentRuleUseCase(it) ?: error("planned payment rule not found")
             } ?: PlannedPaymentRule(
                 startDate = null,
                 intervalN = null,
@@ -309,10 +305,10 @@ class EditPlannedViewModel @Inject constructor(
         intervalType = rule.intervalType
         initialTitle = rule.title
         description = rule.description
-        val selectedAccount = ioThread { accountDao.findById(rule.accountId)!!.toLegacyDomain() }
+        val selectedAccount = accountByIdAct(rule.accountId) ?: error("account not found")
         account = selectedAccount
         category = rule.categoryId?.let {
-            ioThread { categoryRepository.findById(CategoryId(it)) }
+            getCategoryUseCase(CategoryId(it))
         }
         amount = rule.amount
 
@@ -416,23 +412,20 @@ class EditPlannedViewModel @Inject constructor(
 
         viewModelScope.launch {
             try {
-                ioThread {
-                    loadedRule = loadedRule().copy(
-                        type = transactionType ?: error("no transaction type"),
-                        startDate = with(timeConverter) { startDate?.toUTC() }
-                            ?: error("no startDate"),
-                        intervalN = intervalN ?: error("no intervalN"),
-                        intervalType = intervalType ?: error("no intervalType"),
-                        categoryId = category?.id?.value,
-                        accountId = account?.id ?: error("no accountId"),
-                        title = title?.trim(),
-                        description = description?.trim(),
-                        amount = amount ?: error("no amount"),
-                    )
+                loadedRule = loadedRule().copy(
+                    type = transactionType ?: error("no transaction type"),
+                    startDate = with(timeConverter) { startDate?.toUTC() }
+                        ?: error("no startDate"),
+                    intervalN = intervalN ?: error("no intervalN"),
+                    intervalType = intervalType ?: error("no intervalType"),
+                    categoryId = category?.id?.value,
+                    accountId = account?.id ?: error("no accountId"),
+                    title = title?.trim(),
+                    description = description?.trim(),
+                    amount = amount ?: error("no amount"),
+                )
 
-                    plannedPaymentRuleWriter.save(loadedRule().toEntity())
-                    plannedPaymentsGenerator.generate(loadedRule())
-                }
+                savePlannedPaymentRuleUseCase(loadedRule())
 
                 if (closeScreen) {
                     nav.back()
@@ -469,15 +462,10 @@ class EditPlannedViewModel @Inject constructor(
     private fun delete() {
         viewModelScope.launch {
             deleteTransactionModalVisible = false
-            ioThread {
-                loadedRule?.let {
-                    plannedPaymentRuleWriter.deleteById(it.id)
-                    transactionRepository.deletedByRecurringRuleIdAndNoDateTime(
-                        recurringRuleId = it.id
-                    )
-                }
-                nav.back()
+            loadedRule?.let {
+                deletePlannedPaymentRuleUseCase(it.id)
             }
+            nav.back()
         }
     }
 
