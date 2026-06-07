@@ -1,4 +1,4 @@
-package com.ivy.legacy.domain.time
+package com.ivy.domain.time
 
 import java.time.Instant
 import java.time.ZoneId

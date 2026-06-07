@@ -5,7 +5,7 @@ import com.ivy.data.model.AccountId
 import com.ivy.data.model.Transaction
 import com.ivy.data.model.legacy.FromToTimeRange
 import com.ivy.data.repository.TransactionRepository
-import com.ivy.legacy.domain.time.filterOverdue
+import com.ivy.domain.time.filterOverdue
 import javax.inject.Inject
 
 class GetAccountOverdueTransactionsUseCase @Inject constructor(

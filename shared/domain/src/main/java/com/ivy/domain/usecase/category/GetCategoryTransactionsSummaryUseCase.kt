@@ -17,8 +17,8 @@ import com.ivy.domain.usecase.exchange.sumInBaseCurrency
 import com.ivy.legacy.domain.mapper.toLegacy
 import com.ivy.legacy.domain.mapper.toLegacyDomain
 import com.ivy.legacy.domain.pure.transaction.LegacyTrnDateDividers
-import com.ivy.legacy.domain.time.filterOverdueLegacy
-import com.ivy.legacy.domain.time.filterUpcomingLegacy
+import com.ivy.domain.time.filterOverdueLegacy
+import com.ivy.domain.time.filterUpcomingLegacy
 import java.util.UUID
 import javax.inject.Inject
 

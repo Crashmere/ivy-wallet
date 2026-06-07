@@ -472,15 +472,15 @@
 - 旧 FRP 组合 helper 已精简为只保留实际使用的重载，删除历史推导注释和“迁到 FP/FPAction”的过时 TODO；业务含义明确的 TODO 继续保留。
 - 旧 `Res.tryOp()` 已移除没有收益的 `inline/noinline` 组合，避免迁移后 domain 编译持续产生无意义的 inline 性能警告。
 - 旧 domain 逻辑、旧交易模型和旧统计值对象不再用大面积 `@Deprecated` 注解制造编译噪音；当前仍保留这些实现以支撑报表、交易列表、计划付款和旧统计流程，迁移状态通过 `legacy` 包名和 README 计划追踪。
-- 旧交易分组仍需要的本地时区转换 helper 已从 `shared:base` 移到 `com.ivy.legacy.domain.time`；`shared:base` 不再暴露这段只服务旧交易流程的扩展函数。
+- 旧交易分组仍需要的本地时区转换 helper 已从 `shared:base` 移到 `com.ivy.domain.time`；`shared:base` 不再暴露这段只服务 domain 交易流程的扩展函数。
 - 已清理一批低风险编译警告：保留仍被使用的 `LegacyTag` 和客户旅程卡片 provider，但取消误导性废弃标记；Arrow `orNull()`/旧 `option` DSL、旧 Material `Divider` 和 Kotlin `toUpperCase()` 调用已更新到当前 API。
 - 继续清理低风险废弃 API：旧货币选择器改用 `String.lowercase(Locale)`，旧排序弹窗改用 `bindingAdapterPosition` 并处理 `NO_POSITION`，汇率页箭头图标改用 AutoMirrored 版本。
 - 已把 `com.ivy.legacy.datamodel.temp` 中的旧实体/新模型 mapper 扩展函数迁到 `com.ivy.legacy.domain.mapper`；这些文件仍服务旧数据模型兼容，但不再使用含糊的 `temp` 包名。
 - 旧兼容模型已从早期的 `com.ivy.legacy.datamodel` 迁出，并继续按职责下沉；当前模型本体主要归入 `com.ivy.data.model.legacy`，数据库实体转换保留在 `com.ivy.legacy.domain.mapper`。
 - 已把跨模块混用的旧模型从 `com.ivy.legacy.data.model` 拆出并继续归位：`FromToTimeRange` 已进入 `com.ivy.data.model.legacy`，账户页展示聚合 `AccountData` 已下沉到 `feature:accounts`；UI 侧 `TimePeriod/Month/LastNTimeRange` 暂时保留在旧 UI 包，因为它们仍依赖 UI 文案和时间格式化。
 - 已把 `ClosedTimeRange`、`IncomeExpensePair`、`IncomeExpenseTransferPair` 从旧 `com.ivy.legacy.domain.pure.data` 包归入 `com.ivy.data.model.legacy`；它们仍作为旧统计流程的值对象保留在 `shared:data:model`。
-- 旧时间范围值对象 `FromToTimeRange` 已从 `com.ivy.legacy.domain.model` 下沉到 `com.ivy.data.model.legacy`；`shared:domain` 原文件只保留 upcoming/overdue 交易过滤函数，UI 和 feature 不再为了这个纯范围对象引用 legacy domain 包名。
-- upcoming/overdue 交易日期过滤 helper 已从 `com.ivy.legacy.domain.model` 迁到 `com.ivy.legacy.domain.time`；legacy model 包不再承载这类业务过滤函数。
+- 旧时间范围值对象 `FromToTimeRange` 已从 `com.ivy.legacy.domain.model` 下沉到 `com.ivy.data.model.legacy`；upcoming/overdue 交易过滤函数已迁到 `com.ivy.domain.time`，UI 和 feature 不再为了这个纯范围对象引用 legacy domain 包名。
+- upcoming/overdue 交易日期过滤 helper 已从 `com.ivy.legacy.domain.model` 迁到 `com.ivy.domain.time`；legacy model 包不再承载这类业务过滤函数。
 - 账户页展示模型 `AccountData` 和对应 `AccountDataAct` 已从 `shared:domain` 下沉到 `feature:accounts`；账户页专用展示聚合不再占用 shared domain 边界。
 - 纯创建参数 `CreateAccountData`、`CreateCategoryData`、`CreateBudgetData` 已从 `com.ivy.legacy.domain.model` 下沉到 `com.ivy.data.model.legacy`；UI 弹窗、feature event 和 domain creator 继续使用同名参数对象，但不再占用 legacy domain model 包。
 - 旧预算模型 `Budget` 已从 `com.ivy.legacy.domain.model` 下沉到 `com.ivy.data.model.legacy`；数据库转换 `toEntity()` 已移入 legacy domain mapper，预算页和预算相关 use case 继续使用同一模型语义。

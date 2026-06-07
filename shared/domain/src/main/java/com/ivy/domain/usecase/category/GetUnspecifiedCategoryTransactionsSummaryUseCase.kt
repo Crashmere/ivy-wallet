@@ -14,8 +14,8 @@ import com.ivy.domain.usecase.exchange.LegacyExchangeRatesUseCase
 import com.ivy.domain.usecase.exchange.sumInBaseCurrency
 import com.ivy.legacy.domain.mapper.toLegacy
 import com.ivy.legacy.domain.pure.transaction.LegacyTrnDateDividers
-import com.ivy.legacy.domain.time.filterOverdueLegacy
-import com.ivy.legacy.domain.time.filterUpcomingLegacy
+import com.ivy.domain.time.filterOverdueLegacy
+import com.ivy.domain.time.filterUpcomingLegacy
 import javax.inject.Inject
 
 class GetUnspecifiedCategoryTransactionsSummaryUseCase @Inject constructor(
