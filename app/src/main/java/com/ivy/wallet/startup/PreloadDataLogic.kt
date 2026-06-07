@@ -1,4 +1,4 @@
-package com.ivy.wallet.domain.startup
+package com.ivy.wallet.startup
 
 import arrow.core.raise.either
 import com.ivy.base.resource.ResourceProvider

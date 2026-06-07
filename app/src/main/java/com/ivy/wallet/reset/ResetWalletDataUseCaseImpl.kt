@@ -1,4 +1,4 @@
-package com.ivy.wallet.domain.reset
+package com.ivy.wallet.reset
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
@@ -20,7 +20,7 @@ import com.ivy.domain.preferences.AppPreferences
 import com.ivy.domain.usecase.ResetWalletDataUseCase
 import com.ivy.ui.navigation.MainScreen
 import com.ivy.ui.navigation.Navigation
-import com.ivy.wallet.domain.startup.InitialDataSetup
+import com.ivy.wallet.startup.InitialDataSetup
 import javax.inject.Inject
 
 @Deprecated("Migrate to an UseCase in the domain layer.")

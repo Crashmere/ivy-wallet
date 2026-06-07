@@ -1,11 +1,11 @@
-package com.ivy.wallet.domain.startup
+package com.ivy.wallet.startup
 
 import com.ivy.data.db.dao.read.AccountDao
 import com.ivy.data.repository.CategoryRepository
 import com.ivy.data.repository.LegacySettingsRepository
-import com.ivy.domain.preferences.AppPreferences
 import com.ivy.base.coroutines.ioThread
 import com.ivy.data.model.currency.IvyCurrency
+import com.ivy.domain.preferences.AppPreferences
 import com.ivy.wallet.notification.reminder.TransactionReminderLogic
 import javax.inject.Inject
 

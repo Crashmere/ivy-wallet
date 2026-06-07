@@ -5,7 +5,7 @@ import com.ivy.domain.usecase.ResetWalletDataUseCase
 import com.ivy.ui.platform.DatePicker
 import com.ivy.ui.platform.FilePicker
 import com.ivy.wallet.IvyAppStarter
-import com.ivy.wallet.domain.reset.ResetWalletDataUseCaseImpl
+import com.ivy.wallet.reset.ResetWalletDataUseCaseImpl
 import com.ivy.wallet.platform.ActivityDatePicker
 import com.ivy.wallet.platform.ActivityResultFilePicker
 import dagger.Binds

@@ -15,7 +15,7 @@ import com.ivy.ui.navigation.EditTransactionScreen
 import com.ivy.ui.navigation.MainScreen
 import com.ivy.ui.navigation.Navigation
 import com.ivy.wallet.notification.reminder.TransactionReminderLogic
-import com.ivy.wallet.domain.startup.InitialDataSetup
+import com.ivy.wallet.startup.InitialDataSetup
 import com.ivy.wallet.security.AppLockController
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
