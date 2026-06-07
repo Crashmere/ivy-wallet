@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
-import com.ivy.base.time.TimeProvider
 import com.ivy.domain.usecase.settings.GetShowNotificationsPreferenceUseCase
 import dagger.hilt.android.qualifiers.ApplicationContext
 import java.time.LocalDateTime
@@ -18,7 +17,6 @@ class TransactionReminderScheduler @Inject constructor(
     @ApplicationContext
     private val appContext: Context,
     private val getShowNotificationsPreference: GetShowNotificationsPreferenceUseCase,
-    private val timeProvider: TimeProvider,
 ) {
     companion object {
         private const val UNIQUE_WORK_NAME_V2 = "transaction_reminder_work_v2"
@@ -29,7 +27,7 @@ class TransactionReminderScheduler @Inject constructor(
             return
         }
 
-        val timeNowLocal = timeProvider.localNow()
+        val timeNowLocal = LocalDateTime.now()
         val today8PM = timeNowLocal
             .withHour(20)
             .withMinute(0)

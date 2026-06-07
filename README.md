@@ -439,7 +439,7 @@
 - 已把旧主题访问入口从泛化的 `UI.colors/typo/shapes` 重命名为 `LegacyTheme.colors/typo/shapes`，功能和视觉不变，但调用点会明确标识这是旧主题兼容层。
 - 已把 app 侧首次启动默认数据逻辑从 `com.ivy.wallet.domain.deprecated.logic` 迁到 `com.ivy.wallet.domain.startup`，并把交易提醒 WorkManager 调度/Worker 从 `domain.deprecated.logic.notification` 迁到 `com.ivy.wallet.notification.reminder`；这些代码仍保留旧实现，但不再伪装成共享 domain 逻辑。
 - app 主源码不再使用 deprecated 的全局 `stringRes()`；首次启动默认数据、应用锁日志和交易提醒通知文案都改为通过注入式 `ResourceProvider` 读取资源，继续缩小全局 `appContext` 的影响面。
-- 交易提醒调度器不再使用 deprecated 的全局 `timeNowLocal()`，改为注入 `TimeProvider` 获取当前本地时间；每天 20:00 的提醒调度语义保持不变。
+- 交易提醒调度器不再使用 deprecated 的全局 `timeNowLocal()`，也不再注入 `TimeProvider`；调度本身直接用本地 `LocalDateTime.now()` 计算下一次 20:00 提醒，提醒语义保持不变。
 - 第一批 ViewModel 已停止使用 deprecated 的全局 UTC 时间函数：设置导出文件名、首页/余额/交易/饼图的月份切换、报表 upcoming/overdue 判断和报表导出文件名都改为通过注入式 `TimeProvider` 获取当前时间。
 - 第一批非 UI feature 逻辑已停止使用 deprecated 的全局 `stringRes()`：交易页/报表页/饼图中的特殊分类名称，以及首页客户旅程卡片文案都改为通过注入式 `ResourceProvider` 获取字符串资源。
 - 第一批 feature 屏幕层已停止使用 deprecated 的全局 `stringRes()`：首页、交易页和报表页的空状态/标签文案改为 Compose 原生 `stringResource()`，列表构建块继续接收普通字符串参数。
@@ -874,6 +874,7 @@
 - `LocalTimeConverter/LocalTimeProvider/LocalTimeFormatter` 现在作为根部显式提供的 UI 时间平台入口保留，不再用废弃注解把当前页面的正常调用标成警告。
 - `RootContent` 接收的旧 Material 日期选择器已从 app 具体实现 `ActivityDatePicker` 收窄为 UI 层 `DatePicker` 接口；Activity 仍负责注册 FragmentManager 相关实现。
 - 交易提醒调度已删除无调用方的 `testNow()` 调试入口和旧 work name 常量，只保留当前实际使用的每日提醒任务。
+- 交易提醒调度不再通过 Hilt 注入 `TimeProvider`，而是在 app 调度器内部直接读取本地当前时间；app 的提醒流程不再为了一个本地时间读取依赖 `shared:base` 时间端口。
 - app 层剩余的泛化 `*Logic` 命名已继续收敛：首次默认账户/分类预置从 `PreloadDataLogic` 改为 `DefaultWalletDataSeeder`，交易提醒调度从 `TransactionReminderLogic` 改为 `TransactionReminderScheduler`；行为不变，只让启动编排中的职责更直接。
 - Android Toast 封装 `Toaster` 已从 `shared:base` 迁到 `shared:ui:core` 的 `com.ivy.ui.platform`，编辑交易和汇率页继续通过同一注入类型显示提示；基础层不再承载这段 UI 平台能力。
 
