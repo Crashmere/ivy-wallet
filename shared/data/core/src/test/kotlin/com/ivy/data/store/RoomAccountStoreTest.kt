@@ -33,8 +33,10 @@ class RoomAccountStoreTest {
         repository = RoomAccountStore(
             mapper = AccountMapper(
                 RoomCurrencyStore(
-                    settingsDao = settingsDao,
-                    writeSettingsDao = settingsDao,
+                    settingsTable = SettingsTable(
+                        settingsDao = settingsDao,
+                        writeSettingsDao = settingsDao,
+                    )
                 )
             ),
             accountDao = accountDao,

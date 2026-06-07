@@ -15,6 +15,7 @@ import com.ivy.data.model.importing.ImportResult
 import com.ivy.data.preferences.SharedPrefsAppPreferenceStore
 import com.ivy.data.store.RoomAccountStore
 import com.ivy.data.store.RoomCurrencyStore
+import com.ivy.data.store.SettingsTable
 import com.ivy.data.store.fake.fakeStoreCacheFactory
 import com.ivy.data.mapper.AccountMapper
 import io.kotest.matchers.collections.shouldBeEmpty
@@ -39,8 +40,10 @@ class BackupDataUseCaseAndroidTest {
         val appContext = InstrumentationRegistry.getInstrumentation().context
         val accountMapper = AccountMapper(
             currencyStore = RoomCurrencyStore(
-                settingsDao = db.settingsDao,
-                writeSettingsDao = db.writeSettingsDao,
+                settingsTable = SettingsTable(
+                    settingsDao = db.settingsDao,
+                    writeSettingsDao = db.writeSettingsDao,
+                )
             )
         )
         useCase = BackupDataUseCase(

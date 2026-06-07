@@ -15,6 +15,7 @@ import com.ivy.data.db.dao.fake.FakeTransactionDao
 import com.ivy.data.di.SerializationModule
 import com.ivy.data.store.RoomAccountStore
 import com.ivy.data.store.RoomCurrencyStore
+import com.ivy.data.store.SettingsTable
 import com.ivy.data.store.fake.fakeStoreCacheFactory
 import com.ivy.data.mapper.AccountMapper
 import com.ivy.data.testResource
@@ -39,8 +40,10 @@ class BackupDataUseCaseTest {
     ): BackupDataUseCase {
         val accountMapper = AccountMapper(
             RoomCurrencyStore(
-                settingsDao = settingsDao,
-                writeSettingsDao = settingsDao,
+                settingsTable = SettingsTable(
+                    settingsDao = settingsDao,
+                    writeSettingsDao = settingsDao,
+                )
             )
         )
         return BackupDataUseCase(
