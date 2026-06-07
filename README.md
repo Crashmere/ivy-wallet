@@ -778,6 +778,7 @@
 - `feature:main` 和备份导入页面的旧 `LiveData` 状态已改为 `StateFlow`；Compose 不再需要 `runtime-livedata` 适配依赖，版本目录中的 LiveData 运行时别名也已删除。
 - 剩余 `uiThread` 调用已改为标准 `withContext(Dispatchers.Main)`，base 中的主线程切换 helper 已删除。
 - `feature:main` 和 `feature:search` 已把旧 `ioThread` helper 改为标准 `withContext(Dispatchers.IO)`，并移除对 `shared:base` 的 Gradle 依赖。
+- `feature:exchange-rates` 已把保存/删除手动汇率时的 `DispatchersProvider` 注入改为标准 `Dispatchers.IO`，并移除对 `shared:base` 的 Gradle 依赖；汇率同步和手动汇率行为不变。
 - 剩余 `ioThread/scopedIOThread/computationThread` 调用已全部改为标准 `withContext(Dispatchers.IO/Default)`；`shared:base` 中的旧协程 dispatcher helper 文件已删除。
 - `com.ivy.base.text` 中的字符串判空、大小写和首字母转换 helper 已删除；调用方改为标准 `isNullOrBlank().not()`、`uppercase/lowercase(Locale.getDefault())` 或局部私有扩展，基础层不再承载通用字符串糖衣。
 - `ResourceProvider` 已从 `shared:base` 迁到 `shared:ui:core`，测试替身也随之从 `base-testing` 移到 ui-core 测试源集；base 不再承载 Android 字符串资源端口。

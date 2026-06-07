@@ -9,7 +9,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
-import com.ivy.base.threading.DispatchersProvider
 import com.ivy.data.model.ExchangeRate
 import com.ivy.data.model.primitive.AssetCode
 import com.ivy.data.model.primitive.PositiveDouble
@@ -23,6 +22,7 @@ import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.platform.Toaster
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.toImmutableList
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -35,7 +35,6 @@ class ExchangeRatesViewModel @Inject constructor(
     private val observeExchangeRatesUseCase: ObserveExchangeRatesUseCase,
     private val saveExchangeRateUseCase: SaveExchangeRateUseCase,
     private val deleteExchangeRateUseCase: DeleteExchangeRateUseCase,
-    private val dispatchers: DispatchersProvider,
     private val toaster: Toaster,
 ) : ComposeViewModel<RatesState, RatesEvent>() {
     private var searchQuery by mutableStateOf("")
@@ -93,7 +92,7 @@ class ExchangeRatesViewModel @Inject constructor(
     }
 
     private suspend fun handleRemoveOverride(event: RatesEvent.RemoveOverride) {
-        withContext(dispatchers.io) {
+        withContext(Dispatchers.IO) {
             val baseCurrency = AssetCode.from(event.rate.from)
                 .fold({ toaster.show(it); return@withContext }, { it })
             val currency = AssetCode.from(event.rate.to)
@@ -112,7 +111,7 @@ class ExchangeRatesViewModel @Inject constructor(
     }
 
     private suspend fun handleUpdateRate(event: RatesEvent.UpdateRate) {
-        withContext(dispatchers.io) {
+        withContext(Dispatchers.IO) {
             val baseCurrency = AssetCode.from(event.rate.from)
                 .fold({ toaster.show(it); return@withContext }, { it })
             val currency = AssetCode.from(event.rate.to)
@@ -132,7 +131,7 @@ class ExchangeRatesViewModel @Inject constructor(
     }
 
     private suspend fun handleAddRate(event: RatesEvent.AddRate) {
-        withContext(dispatchers.io) {
+        withContext(Dispatchers.IO) {
             val baseCurrency = AssetCode.from(event.rate.from)
                 .fold({ toaster.show(it); return@withContext }, { it })
             val currency = AssetCode.from(event.rate.to)
