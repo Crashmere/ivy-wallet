@@ -16,28 +16,31 @@ import com.ivy.base.model.TransactionType
 import com.ivy.base.resource.ResourceProvider
 import com.ivy.base.time.TimeConverter
 import com.ivy.base.time.TimeProvider
-import com.ivy.data.db.dao.read.LoanDao
 import com.ivy.data.model.Category
 import com.ivy.data.model.CategoryId
 import com.ivy.data.model.Tag
 import com.ivy.data.model.TagId
 import com.ivy.data.model.TransactionId
-import com.ivy.data.model.primitive.AssociationId
 import com.ivy.data.model.primitive.NotBlankTrimmedString
-import com.ivy.data.repository.CategoryRepository
-import com.ivy.data.repository.TagRepository
-import com.ivy.data.repository.TransactionRepository
-import com.ivy.data.repository.mapper.TagMapper
-import com.ivy.data.repository.mapper.TransactionMapper
 import com.ivy.domain.preferences.toggles.PreferenceToggles
 import com.ivy.domain.preferences.AppPreferences
 import com.ivy.domain.usecase.category.GetCategoriesUseCase
+import com.ivy.domain.usecase.category.GetCategoryUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
+import com.ivy.domain.usecase.loan.GetLoanUseCase
+import com.ivy.domain.usecase.tag.AssociateTagToTransactionUseCase
+import com.ivy.domain.usecase.tag.CopyTagsToTransactionUseCase
+import com.ivy.domain.usecase.tag.CreateTagUseCase
+import com.ivy.domain.usecase.tag.DeleteTagUseCase
+import com.ivy.domain.usecase.tag.GetTransactionTagIdsUseCase
 import com.ivy.domain.usecase.tag.GetTagsUseCase
+import com.ivy.domain.usecase.tag.RemoveTagFromTransactionUseCase
+import com.ivy.domain.usecase.tag.SaveTagUseCase
 import com.ivy.domain.usecase.tag.SearchTagsUseCase
+import com.ivy.domain.usecase.transaction.DeleteTransactionUseCase
+import com.ivy.domain.usecase.transaction.SaveLegacyTransactionUseCase
 import com.ivy.legacy.ui.model.EditTransactionDisplayLoan
 import com.ivy.legacy.domain.model.Account
-import com.ivy.legacy.domain.mapper.toDomain
 import com.ivy.legacy.domain.logic.AccountCreator
 import com.ivy.base.coroutines.computationThread
 import com.ivy.base.coroutines.ioThread
@@ -85,8 +88,9 @@ import javax.inject.Inject
 class EditTransactionViewModel @Inject constructor(
     private val resourceProvider: ResourceProvider,
     private val toaster: Toaster,
-    private val loanDao: LoanDao,
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
+    private val getCategoryUseCase: GetCategoryUseCase,
+    private val getLoanUseCase: GetLoanUseCase,
     private val nav: Navigation,
     private val appPreferences: AppPreferences,
     private val exchangeRatesLogic: ExchangeRatesLogic,
@@ -96,16 +100,20 @@ class EditTransactionViewModel @Inject constructor(
     private val smartTitleSuggestionsLogic: SmartTitleSuggestionsLogic,
     private val loanTransactionsLogic: LoanTransactionsLogic,
     private val accountsAct: AccountsAct,
-    private val categoryRepository: CategoryRepository,
     private val getCategoriesUseCase: GetCategoriesUseCase,
     private val trnByIdAct: TrnByIdAct,
     private val accountByIdAct: AccountByIdAct,
-    private val transactionRepo: TransactionRepository,
-    private val transactionMapper: TransactionMapper,
-    private val tagRepository: TagRepository,
+    private val saveLegacyTransactionUseCase: SaveLegacyTransactionUseCase,
+    private val deleteTransactionUseCase: DeleteTransactionUseCase,
+    private val getTransactionTagIdsUseCase: GetTransactionTagIdsUseCase,
+    private val createTagUseCase: CreateTagUseCase,
+    private val saveTagUseCase: SaveTagUseCase,
+    private val deleteTagUseCase: DeleteTagUseCase,
+    private val associateTagToTransactionUseCase: AssociateTagToTransactionUseCase,
+    private val removeTagFromTransactionUseCase: RemoveTagFromTransactionUseCase,
+    private val copyTagsToTransactionUseCase: CopyTagsToTransactionUseCase,
     private val getTagsUseCase: GetTagsUseCase,
     private val searchTagsUseCase: SearchTagsUseCase,
-    private val tagMapper: TagMapper,
     private val preferenceToggles: PreferenceToggles,
     private val preferenceDataStore: DataStore<Preferences>,
     private val timeConverter: TimeConverter,
@@ -184,7 +192,7 @@ class EditTransactionViewModel @Inject constructor(
 
             tags = tagList.await()
             transactionAssociatedTags =
-                tagRepository.findByAssociatedId(AssociationId(loadedTransaction().id)).map(Tag::id)
+                getTransactionTagIdsUseCase(loadedTransaction().id)
                     .toImmutableList()
             display(loadedTransaction!!)
         }
@@ -392,7 +400,7 @@ class EditTransactionViewModel @Inject constructor(
             accountByIdAct(it)
         }
         category = transaction.categoryId?.let {
-            categoryRepository.findById(CategoryId(it))
+            getCategoryUseCase(CategoryId(it))
         }
         amount = transaction.amount.toDouble()
 
@@ -422,7 +430,7 @@ class EditTransactionViewModel @Inject constructor(
         }
 
         val loan =
-            ioThread { loanDao.findById(trans.loanId!!) } ?: return EditTransactionDisplayLoan()
+            getLoanUseCase(trans.loanId!!) ?: return EditTransactionDisplayLoan()
         val isLoanRecord = trans.loanRecordId != null
 
         val loanWarningDescription = if (isLoanRecord) {
@@ -611,7 +619,7 @@ class EditTransactionViewModel @Inject constructor(
         viewModelScope.launch {
             ioThread {
                 loadedTransaction?.let {
-                    transactionRepo.deleteById(TransactionId(it.id))
+                    deleteTransactionUseCase(TransactionId(it.id))
                 }
                 closeScreen()
             }
@@ -622,19 +630,14 @@ class EditTransactionViewModel @Inject constructor(
         viewModelScope.launch {
             ioThread {
                 val id = UUID.randomUUID()
-                 loadedTransaction()
+                loadedTransaction()
                     .copy(
                         id = id,
                         dateTime = timeProvider.utcNow(),
                     )
-                    .toDomain(transactionMapper)
-                    ?.let {
-                        transactionRepo.save(it)
-                    }
+                    .let { saveLegacyTransactionUseCase(it) }
 
-                tagRepository.findByIds(transactionAssociatedTags).forEach {
-                    associateTagToTransaction(it, id)
-                }
+                copyTagsToTransactionUseCase(transactionAssociatedTags, id)
 
             }
 
@@ -745,9 +748,7 @@ class EditTransactionViewModel @Inject constructor(
                     accountsChanged = false
                 }
 
-                loadedTransaction().toDomain(transactionMapper)?.let {
-                    transactionRepo.save(it)
-                }
+                saveLegacyTransactionUseCase(loadedTransaction())
 
             }
 
@@ -914,8 +915,7 @@ class EditTransactionViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             NotBlankTrimmedString.from(name.toLowerCaseLocal())
                 .onRight {
-                    val tag = with(tagMapper) { createNewTag(name = it) }
-                    tagRepository.save(tag)
+                    createTagUseCase(it)
                     this@EditTransactionViewModel.tags = getAllTags()
                 }
 
@@ -925,28 +925,17 @@ class EditTransactionViewModel @Inject constructor(
 
     private fun associateTagToTransaction(selectedTag: Tag) {
         viewModelScope.launch(Dispatchers.IO) {
-            val associatedId = AssociationId(loadedTransaction().id)
-            tagRepository.associateTagToEntity(associatedId, selectedTag.id)
+            associateTagToTransactionUseCase(loadedTransaction().id, selectedTag.id)
             transactionAssociatedTags =
-                tagRepository.findByAssociatedId(associatedId).map(Tag::id).toImmutableList()
-        }
-    }
-
-    private fun associateTagToTransaction(selectedTag: Tag, id: UUID) {
-        viewModelScope.launch(Dispatchers.IO) {
-            val associatedId = AssociationId(id)
-            tagRepository.associateTagToEntity(associatedId, selectedTag.id)
-            transactionAssociatedTags =
-                tagRepository.findByAssociatedId(associatedId).map(Tag::id).toImmutableList()
+                getTransactionTagIdsUseCase(loadedTransaction().id).toImmutableList()
         }
     }
 
     private fun removeTagAssociation(selectedTag: Tag) {
         viewModelScope.launch(Dispatchers.IO) {
-            val associatedId = AssociationId(loadedTransaction().id)
-            tagRepository.removeTagAssociation(associatedId, selectedTag.id)
+            removeTagFromTransactionUseCase(loadedTransaction().id, selectedTag.id)
             transactionAssociatedTags =
-                tagRepository.findByAssociatedId(associatedId).map(Tag::id).toImmutableList()
+                getTransactionTagIdsUseCase(loadedTransaction().id).toImmutableList()
         }
     }
 
@@ -969,14 +958,14 @@ class EditTransactionViewModel @Inject constructor(
 
     private fun deleteTag(selectedTag: Tag) {
         viewModelScope.launch(Dispatchers.IO) {
-            tagRepository.deleteById(selectedTag.id)
+            deleteTagUseCase(selectedTag.id)
             tags = getAllTags()
         }
     }
 
     private fun updateTagInformation(newTag: Tag) {
         viewModelScope.launch(Dispatchers.IO) {
-            tagRepository.save(newTag)
+            saveTagUseCase(newTag)
             tags = getAllTags()
         }
     }
