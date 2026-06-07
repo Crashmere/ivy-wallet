@@ -5,10 +5,10 @@ import arrow.core.Option
 import arrow.core.Some
 import arrow.core.raise.option
 import arrow.core.toOption
+import com.ivy.base.text.isNotNullOrBlank
+import com.ivy.data.model.legacy.ExchangeRate
 import com.ivy.legacy.frp.Pure
 import com.ivy.legacy.frp.SideEffect
-import com.ivy.legacy.domain.model.ExchangeRate
-import com.ivy.base.text.isNotNullOrBlank
 import java.math.BigDecimal
 
 data class ExchangeData(
