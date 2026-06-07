@@ -3,6 +3,7 @@ package com.ivy.legacy.domain.pure.transaction
 import arrow.core.Option
 import arrow.core.toOption
 import com.ivy.base.model.legacy.TransactionHistoryItem
+import com.ivy.base.model.legacy.TransactionHistoryDateDivider
 import com.ivy.base.time.TimeConverter
 import com.ivy.legacy.domain.time.convertToLocal
 import com.ivy.data.db.dao.read.AccountDao
@@ -16,7 +17,6 @@ import com.ivy.data.model.legacy.Account
 import com.ivy.legacy.domain.mapper.toImmutableLegacyTags
 import com.ivy.legacy.domain.mapper.toLegacyDomain
 import com.ivy.base.time.toEpochSeconds
-import com.ivy.legacy.domain.data.TransactionHistoryDateDivider
 import com.ivy.domain.usecase.exchange.LegacyExchangeRatesUseCase
 import com.ivy.legacy.domain.pure.exchange.ExchangeData
 import com.ivy.legacy.domain.pure.exchange.ExchangeTrnArgument

@@ -18,6 +18,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.ivy.base.model.legacy.Transaction
+import com.ivy.base.model.legacy.TransactionHistoryDateDivider
 import com.ivy.base.model.legacy.TransactionHistoryItem
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
@@ -27,7 +28,6 @@ import com.ivy.ui.navigation.EditTransactionScreen
 import com.ivy.ui.navigation.Navigation
 import com.ivy.ui.navigation.navigation
 import com.ivy.ui.R
-import com.ivy.legacy.domain.data.TransactionHistoryDateDivider
 import com.ivy.legacy.ui.theme.Black
 import com.ivy.legacy.ui.theme.Gradient
 import com.ivy.legacy.ui.theme.Gray

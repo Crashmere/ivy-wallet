@@ -1,6 +1,5 @@
-package com.ivy.legacy.domain.data
+package com.ivy.base.model.legacy
 
-import com.ivy.base.model.legacy.TransactionHistoryItem
 import java.time.LocalDate
 
 data class TransactionHistoryDateDivider(

@@ -398,7 +398,7 @@
 - 已把旧颜色选择器、账户弹窗、分类弹窗、借贷弹窗和借贷记录弹窗迁入 `shared:ui:legacy`。颜色选择器移除了旧付费锁显示分支，不再依赖会员状态。
 - 已把旧 UI 状态模型 `AppBaseData`、`LegacyDueSection`、`BufferInfo`、`EditTransactionDisplayLoan` 迁入 `shared:ui:legacy`，作为迁移期的 UI 兼容数据。
 - 已把搜索框、收入/支出卡片、详情工具栏、标签弹窗、交易卡片和交易列表组件迁入 `shared:ui:legacy`；交易卡片查找账户/分类时改为只使用调用方传入的数据，去掉了对 `IvyWalletCtx` 缓存的读取。
-- 早期迁入 `shared:domain` 的旧页面状态值对象已继续下沉：`SortOrder` 进入分类 feature，`CustomExchangeRateState` 进入编辑交易 feature，`TransactionHistoryDateDivider` 暂时仍服务旧交易列表兼容层。
+- 早期迁入 `shared:domain` 的旧页面状态值对象已继续下沉：`SortOrder` 进入分类 feature，`CustomExchangeRateState` 进入编辑交易 feature，`TransactionHistoryDateDivider` 进入 `shared:base` 的 legacy history item 模型包。
 - 已把编辑交易/计划付款复用的底部表单组件迁入 `shared:ui:legacy`；`EditBottomSheet` 改用 Compose 屏幕高度，不再为了底部操作条位置读取 `IvyWalletCtx`。
 - 已把旧 domain 层对 `IvyWalletCtx` 的直接依赖拆掉：账户/分类缓存 action 已删除，起始日状态由 `PeriodState` 和正式 settings use case 承接，调用方显式更新旧 UI 上下文；借贷交易逻辑去掉固定为 true 的付费判断分支。
 - 已把旧 `domain/action`、`domain/pure`、旧汇率换算逻辑、账户数据 action、交易范围过滤 action 迁入 `shared:domain`。
@@ -463,7 +463,7 @@
 - 已把旧 `wallet` UI 子包里的金额/货币展示和周期选择组件并入 `com.ivy.legacy.ui.component`；`com.ivy.wallet.ui.theme.*` 包名已经从源码中清空。
 - 已把编辑交易/计划付款复用的旧底部表单组件从 `com.ivy.wallet.ui.edit.core` 迁到 `com.ivy.legacy.ui.edit.core`；除 app 自身锁屏包名外，旧 shared/feature UI 不再使用 `com.ivy.wallet.ui.*`。
 - 已清理迁移过程中留下的 `com.ivy.legacy.legacy.ui.theme.*` 双重 legacy 包名：预算进度条和日期时间行归入 `com.ivy.legacy.ui.component`，弹窗名称输入归入 `com.ivy.legacy.ui.modal`。
-- 已把 `TransactionHistoryDateDivider` 从旧 `com.ivy.wallet.domain.data` 迁到 `com.ivy.legacy.domain.data`；它仍服务旧交易列表和旧日期分组。`SortOrder/CustomExchangeRateState` 已进一步下沉到对应 feature。
+- 已把 `TransactionHistoryDateDivider` 从旧 `com.ivy.wallet.domain.data` 迁到 `com.ivy.base.model.legacy`；它仍服务旧交易列表和旧日期分组，并与 `TransactionHistoryItem` 位于同一基础模型包。`SortOrder/CustomExchangeRateState` 已进一步下沉到对应 feature。
 - 旧创建/编辑参数已从早期的 `com.ivy.wallet.domain.deprecated.logic.model` 迁出；当前 `CreateAccountData`、`CreateBudgetData`、`CreateCategoryData`、`CreateLoanData`、`CreateLoanRecordData`、`EditLoanRecordData` 等纯参数对象归入 `com.ivy.data.model.legacy`，旧页面和正式 use case 继续使用同名语义。
 - 已把 `shared:domain` 中旧业务逻辑从早期 deprecated/legacy logic 包继续迁出：计划付款、账户统计、分类统计、借贷交易联动和旧汇率换算已进入正式 use case 包；当前不再保留 `com.ivy.legacy.domain.logic` 源码。
 - 已把旧 FPAction/use-case 与 pure helper 从 `com.ivy.wallet.domain.action/pure` 迁到 `com.ivy.legacy.domain.action/pure`，并同步迁移 `ClosedTimeRange`、`IncomeExpensePair`、`IncomeExpenseTransferPair` 的旧统计值对象包名；这些代码仍是旧 domain 兼容层，但不再占用正式 Wallet 产品包名。
