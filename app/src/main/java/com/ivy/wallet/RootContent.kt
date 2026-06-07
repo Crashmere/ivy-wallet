@@ -12,7 +12,7 @@ import androidx.compose.runtime.getValue
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import com.ivy.IvyNavGraph
-import com.ivy.base.legacy.Theme
+import com.ivy.base.theme.Theme
 import com.ivy.base.time.TimeConverter
 import com.ivy.base.time.TimeProvider
 import com.ivy.domain.preferences.toggles.PreferenceToggles

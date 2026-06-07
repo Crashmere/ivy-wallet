@@ -11,7 +11,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
-import com.ivy.base.legacy.Theme
+import com.ivy.base.theme.Theme
 import com.ivy.ui.theme.IvyMaterial3Theme
 
 @Deprecated("Old design system. Use `:ivy-design` and Material3")

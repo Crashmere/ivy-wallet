@@ -1,6 +1,6 @@
 package com.ivy.data.repository
 
-import com.ivy.base.legacy.Theme
+import com.ivy.base.theme.Theme
 import com.ivy.base.threading.DispatchersProvider
 import com.ivy.data.db.dao.read.SettingsDao
 import com.ivy.data.db.dao.write.WriteSettingsDao

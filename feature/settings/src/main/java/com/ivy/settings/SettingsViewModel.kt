@@ -14,7 +14,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.lifecycle.viewModelScope
-import com.ivy.base.legacy.Theme
+import com.ivy.base.theme.Theme
 import com.ivy.base.time.TimeProvider
 import com.ivy.data.backup.BackupDataUseCase
 import com.ivy.data.model.primitive.AssetCode

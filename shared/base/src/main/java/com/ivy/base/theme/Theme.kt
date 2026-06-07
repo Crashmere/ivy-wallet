@@ -1,4 +1,4 @@
-package com.ivy.base.legacy
+package com.ivy.base.theme
 
 import androidx.compose.runtime.Immutable
 

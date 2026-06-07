@@ -4,7 +4,7 @@ import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import com.ivy.base.legacy.Theme
+import com.ivy.base.theme.Theme
 import javax.inject.Inject
 import javax.inject.Singleton
 
