@@ -26,7 +26,7 @@ import androidx.compose.ui.unit.dp
 import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
 import com.ivy.domain.legacy.ui.IvyColorPicker
-import com.ivy.legacy.datamodel.Account
+import com.ivy.legacy.domain.model.Account
 import com.ivy.base.legacy.isNotNullOrBlank
 import com.ivy.ui.legacy.onScreenStart
 import com.ivy.ui.legacy.selectEndTextFieldValue

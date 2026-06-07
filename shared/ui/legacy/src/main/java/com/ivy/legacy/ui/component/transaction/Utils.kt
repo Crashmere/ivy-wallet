@@ -2,7 +2,7 @@ package com.ivy.legacy.ui.component.transaction
 
 import androidx.compose.runtime.Composable
 import com.ivy.data.model.Category
-import com.ivy.legacy.datamodel.Account
+import com.ivy.legacy.domain.model.Account
 import java.util.UUID
 
 @Deprecated("Old design system. Use `:ivy-design` and Material3")

@@ -1,7 +1,7 @@
 package com.ivy.legacy.domain.logic
 
 import com.ivy.data.db.dao.write.WriteLoanRecordDao
-import com.ivy.legacy.datamodel.LoanRecord
+import com.ivy.legacy.domain.model.LoanRecord
 import com.ivy.base.legacy.ioThread
 import com.ivy.legacy.domain.model.CreateLoanRecordData
 import java.util.UUID

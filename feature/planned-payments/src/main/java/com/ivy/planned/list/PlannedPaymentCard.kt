@@ -33,8 +33,8 @@ import com.ivy.data.model.primitive.NotBlankTrimmedString
 import com.ivy.design.api.LocalTimeConverter
 import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
-import com.ivy.legacy.datamodel.Account
-import com.ivy.legacy.datamodel.PlannedPaymentRule
+import com.ivy.legacy.domain.model.Account
+import com.ivy.legacy.domain.model.PlannedPaymentRule
 import com.ivy.ui.legacy.forDisplay
 import com.ivy.legacy.ui.component.transaction.TypeAmountCurrency
 import com.ivy.ui.legacy.formatDateOnly

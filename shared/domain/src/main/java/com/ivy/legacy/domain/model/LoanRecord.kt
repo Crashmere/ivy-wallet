@@ -1,4 +1,4 @@
-package com.ivy.legacy.datamodel
+package com.ivy.legacy.domain.model
 
 import androidx.compose.runtime.Immutable
 import com.ivy.base.model.LoanRecordType

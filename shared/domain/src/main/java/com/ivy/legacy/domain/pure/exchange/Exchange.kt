@@ -7,7 +7,7 @@ import arrow.core.computations.option
 import arrow.core.toOption
 import com.ivy.frp.Pure
 import com.ivy.frp.SideEffect
-import com.ivy.legacy.datamodel.ExchangeRate
+import com.ivy.legacy.domain.model.ExchangeRate
 import com.ivy.base.legacy.isNotNullOrBlank
 import java.math.BigDecimal
 

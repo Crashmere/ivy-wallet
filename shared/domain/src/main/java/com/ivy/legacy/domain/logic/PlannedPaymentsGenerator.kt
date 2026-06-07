@@ -4,7 +4,7 @@ import com.ivy.base.legacy.Transaction
 import com.ivy.base.legacy.incrementDate
 import com.ivy.data.repository.TransactionRepository
 import com.ivy.data.repository.mapper.TransactionMapper
-import com.ivy.legacy.datamodel.PlannedPaymentRule
+import com.ivy.legacy.domain.model.PlannedPaymentRule
 import com.ivy.legacy.domain.mapper.toDomain
 import java.time.Instant
 import javax.inject.Inject

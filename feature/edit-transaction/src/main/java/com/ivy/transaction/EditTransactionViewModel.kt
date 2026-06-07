@@ -31,7 +31,7 @@ import com.ivy.data.repository.mapper.TagMapper
 import com.ivy.data.repository.mapper.TransactionMapper
 import com.ivy.domain.features.Features
 import com.ivy.legacy.data.EditTransactionDisplayLoan
-import com.ivy.legacy.datamodel.Account
+import com.ivy.legacy.domain.model.Account
 import com.ivy.legacy.domain.mapper.toDomain
 import com.ivy.legacy.domain.logic.AccountCreator
 import com.ivy.base.legacy.computationThread

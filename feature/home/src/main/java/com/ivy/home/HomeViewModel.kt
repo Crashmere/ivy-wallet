@@ -29,8 +29,8 @@ import com.ivy.legacy.data.BufferInfo
 import com.ivy.legacy.data.LegacyDueSection
 import com.ivy.legacy.data.model.TimePeriod
 import com.ivy.legacy.data.model.toUTCCloseTimeRange
-import com.ivy.legacy.datamodel.Account
-import com.ivy.legacy.datamodel.Settings
+import com.ivy.legacy.domain.model.Account
+import com.ivy.legacy.domain.model.Settings
 import com.ivy.legacy.domain.mapper.toLegacyDomain
 import com.ivy.legacy.domain.action.settings.UpdateSettingsAct
 import com.ivy.legacy.domain.action.viewmodel.home.ShouldHideIncomeAct

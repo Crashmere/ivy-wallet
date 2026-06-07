@@ -18,8 +18,8 @@ import com.ivy.data.model.CategoryId
 import com.ivy.data.model.IntervalType
 import com.ivy.data.repository.CategoryRepository
 import com.ivy.data.repository.TransactionRepository
-import com.ivy.legacy.datamodel.Account
-import com.ivy.legacy.datamodel.PlannedPaymentRule
+import com.ivy.legacy.domain.model.Account
+import com.ivy.legacy.domain.model.PlannedPaymentRule
 import com.ivy.legacy.domain.mapper.toLegacyDomain
 import com.ivy.legacy.domain.logic.AccountCreator
 import com.ivy.base.legacy.ioThread

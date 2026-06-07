@@ -1,7 +1,7 @@
 package com.ivy.legacy.domain.mapper
 
 import com.ivy.data.db.entity.BudgetEntity
-import com.ivy.legacy.datamodel.Budget
+import com.ivy.legacy.domain.model.Budget
 import java.util.UUID
 
 fun BudgetEntity.toLegacyDomain(): Budget = Budget(

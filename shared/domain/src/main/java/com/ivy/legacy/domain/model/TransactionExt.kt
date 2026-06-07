@@ -1,4 +1,4 @@
-package com.ivy.legacy.datamodel
+package com.ivy.legacy.domain.model
 
 import com.ivy.base.legacy.Transaction
 import com.ivy.data.db.entity.TransactionEntity

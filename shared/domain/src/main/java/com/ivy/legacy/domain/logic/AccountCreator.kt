@@ -14,7 +14,7 @@ import com.ivy.legacy.domain.model.CreateAccountData
 import com.ivy.legacy.domain.pure.util.nextOrderNum
 import java.util.UUID
 import javax.inject.Inject
-import com.ivy.legacy.datamodel.Account as LegacyAccount
+import com.ivy.legacy.domain.model.Account as LegacyAccount
 
 class AccountCreator @Inject constructor(
     private val accountLogic: WalletAccountLogic,

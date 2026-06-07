@@ -15,9 +15,9 @@ import com.ivy.data.db.dao.read.SettingsDao
 import com.ivy.data.repository.TransactionRepository
 import com.ivy.data.repository.mapper.TransactionMapper
 import com.ivy.frp.test.TestIdlingResource
-import com.ivy.legacy.datamodel.Account
-import com.ivy.legacy.datamodel.Loan
-import com.ivy.legacy.datamodel.LoanRecord
+import com.ivy.legacy.domain.model.Account
+import com.ivy.legacy.domain.model.Loan
+import com.ivy.legacy.domain.model.LoanRecord
 import com.ivy.legacy.domain.mapper.toLegacy
 import com.ivy.legacy.domain.mapper.toLegacyDomain
 import com.ivy.legacy.domain.logic.AccountCreator

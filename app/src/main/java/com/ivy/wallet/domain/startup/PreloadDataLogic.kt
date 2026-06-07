@@ -10,7 +10,7 @@ import com.ivy.data.model.primitive.NotBlankTrimmedString
 import com.ivy.data.repository.AccountRepository
 import com.ivy.data.repository.CategoryRepository
 import com.ivy.data.repository.CurrencyRepository
-import com.ivy.legacy.datamodel.Account
+import com.ivy.legacy.domain.model.Account
 import com.ivy.ui.R
 import com.ivy.legacy.domain.model.CreateAccountData
 import com.ivy.legacy.domain.model.CreateCategoryData

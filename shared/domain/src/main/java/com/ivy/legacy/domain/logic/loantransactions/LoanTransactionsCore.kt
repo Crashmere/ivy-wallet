@@ -21,9 +21,9 @@ import com.ivy.data.model.primitive.NotBlankTrimmedString
 import com.ivy.data.repository.CategoryRepository
 import com.ivy.data.repository.TransactionRepository
 import com.ivy.data.repository.mapper.TransactionMapper
-import com.ivy.legacy.datamodel.Account
-import com.ivy.legacy.datamodel.Loan
-import com.ivy.legacy.datamodel.LoanRecord
+import com.ivy.legacy.domain.model.Account
+import com.ivy.legacy.domain.model.Loan
+import com.ivy.legacy.domain.model.LoanRecord
 import com.ivy.legacy.domain.mapper.toDomain
 import com.ivy.legacy.domain.mapper.toLegacyDomain
 import com.ivy.base.legacy.computationThread

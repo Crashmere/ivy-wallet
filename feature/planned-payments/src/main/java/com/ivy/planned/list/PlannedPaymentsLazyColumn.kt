@@ -25,8 +25,8 @@ import androidx.compose.ui.unit.dp
 import com.ivy.data.model.Category
 import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
-import com.ivy.legacy.datamodel.Account
-import com.ivy.legacy.datamodel.PlannedPaymentRule
+import com.ivy.legacy.domain.model.Account
+import com.ivy.legacy.domain.model.PlannedPaymentRule
 import com.ivy.legacy.ui.component.transaction.SectionDivider
 import com.ivy.navigation.EditPlannedScreen
 import com.ivy.navigation.Navigation

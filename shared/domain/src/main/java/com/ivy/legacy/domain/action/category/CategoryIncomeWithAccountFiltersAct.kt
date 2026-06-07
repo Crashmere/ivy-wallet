@@ -3,7 +3,7 @@ package com.ivy.legacy.domain.action.category
 import com.ivy.data.model.Category
 import com.ivy.frp.action.FPAction
 import com.ivy.frp.then
-import com.ivy.legacy.datamodel.Account
+import com.ivy.legacy.domain.model.Account
 import com.ivy.legacy.domain.action.transaction.LegacyCalcTrnsIncomeExpenseAct
 import com.ivy.legacy.domain.pure.data.IncomeExpenseTransferPair
 import javax.inject.Inject

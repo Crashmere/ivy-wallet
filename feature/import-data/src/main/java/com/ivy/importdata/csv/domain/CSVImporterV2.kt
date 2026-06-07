@@ -23,9 +23,9 @@ import com.ivy.design.IVY_COLOR_PICKER_COLORS_FREE
 import com.ivy.importdata.csv.ImportantFields
 import com.ivy.importdata.csv.OptionalFields
 import com.ivy.importdata.csv.TransferFields
-import com.ivy.legacy.datamodel.Account
+import com.ivy.legacy.domain.model.Account
 import com.ivy.legacy.domain.mapper.toLegacyDomain
-import com.ivy.legacy.datamodel.toEntity
+import com.ivy.legacy.domain.model.toEntity
 import com.ivy.base.legacy.toLowerCaseLocal
 import com.ivy.data.model.currency.IvyCurrency
 import com.ivy.legacy.domain.pure.util.nextOrderNum

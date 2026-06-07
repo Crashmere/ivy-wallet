@@ -35,8 +35,8 @@ import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
 import com.ivy.design.utils.thenIf
 import com.ivy.frp.test.TestingContext
-import com.ivy.legacy.datamodel.Account
-import com.ivy.legacy.datamodel.LoanRecord
+import com.ivy.legacy.domain.model.Account
+import com.ivy.legacy.domain.model.LoanRecord
 import com.ivy.legacy.ui.component.DateTimeRow
 import com.ivy.legacy.ui.modal.ModalNameInput
 import com.ivy.base.legacy.getDefaultFIATCurrency

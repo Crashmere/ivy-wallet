@@ -4,8 +4,8 @@ import com.ivy.base.legacy.Transaction
 import com.ivy.data.db.dao.read.AccountDao
 import com.ivy.data.db.dao.read.ExchangeRatesDao
 import com.ivy.data.db.dao.read.SettingsDao
-import com.ivy.legacy.datamodel.Account
-import com.ivy.legacy.datamodel.PlannedPaymentRule
+import com.ivy.legacy.domain.model.Account
+import com.ivy.legacy.domain.model.PlannedPaymentRule
 import com.ivy.legacy.domain.mapper.toLegacyDomain
 import java.util.UUID
 import javax.inject.Inject

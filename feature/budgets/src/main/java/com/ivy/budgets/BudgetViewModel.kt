@@ -23,8 +23,8 @@ import com.ivy.frp.sumOfSuspend
 import com.ivy.legacy.PeriodState
 import com.ivy.legacy.data.model.FromToTimeRange
 import com.ivy.legacy.data.model.toCloseTimeRange
-import com.ivy.legacy.datamodel.Account
-import com.ivy.legacy.datamodel.Budget
+import com.ivy.legacy.domain.model.Account
+import com.ivy.legacy.domain.model.Budget
 import com.ivy.legacy.domain.logic.BudgetCreator
 import com.ivy.data.model.currency.format
 import com.ivy.base.legacy.isNotNullOrBlank

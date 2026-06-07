@@ -1,7 +1,7 @@
 package com.ivy.legacy.domain.mapper
 
 import com.ivy.data.db.entity.PlannedPaymentRuleEntity
-import com.ivy.legacy.datamodel.PlannedPaymentRule
+import com.ivy.legacy.domain.model.PlannedPaymentRule
 
 fun PlannedPaymentRuleEntity.toLegacyDomain(): PlannedPaymentRule = PlannedPaymentRule(
     startDate = startDate,

@@ -12,8 +12,8 @@ import com.ivy.data.db.dao.read.SettingsDao
 import com.ivy.ui.ComposeViewModel
 import com.ivy.data.model.Category
 import com.ivy.data.repository.CategoryRepository
-import com.ivy.legacy.datamodel.Account
-import com.ivy.legacy.datamodel.PlannedPaymentRule
+import com.ivy.legacy.domain.model.Account
+import com.ivy.legacy.domain.model.PlannedPaymentRule
 import com.ivy.base.legacy.ioThread
 import com.ivy.legacy.domain.action.account.AccountsAct
 import com.ivy.legacy.domain.logic.PlannedPaymentsLogic

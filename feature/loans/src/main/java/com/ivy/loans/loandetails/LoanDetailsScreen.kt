@@ -36,9 +36,9 @@ import com.ivy.data.model.LoanType
 import com.ivy.design.api.LocalTimeFormatter
 import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
-import com.ivy.legacy.datamodel.Account
-import com.ivy.legacy.datamodel.Loan
-import com.ivy.legacy.datamodel.LoanRecord
+import com.ivy.legacy.domain.model.Account
+import com.ivy.legacy.domain.model.Loan
+import com.ivy.legacy.domain.model.LoanRecord
 import com.ivy.loans.humanReadableType
 import com.ivy.legacy.ui.component.ItemStatisticToolbar
 import com.ivy.legacy.ui.component.transaction.TypeAmountCurrency

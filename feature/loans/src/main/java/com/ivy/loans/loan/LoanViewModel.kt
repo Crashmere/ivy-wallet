@@ -16,8 +16,8 @@ import com.ivy.data.db.dao.read.SettingsDao
 import com.ivy.data.db.dao.write.WriteLoanDao
 import com.ivy.data.model.LoanType
 import com.ivy.frp.test.TestIdlingResource
-import com.ivy.legacy.datamodel.Account
-import com.ivy.legacy.datamodel.Loan
+import com.ivy.legacy.domain.model.Account
+import com.ivy.legacy.domain.model.Loan
 import com.ivy.legacy.domain.logic.AccountCreator
 import com.ivy.data.model.currency.format
 import com.ivy.base.legacy.getDefaultFIATCurrency

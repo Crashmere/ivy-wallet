@@ -2,7 +2,7 @@ package com.ivy.legacy.domain.mapper
 
 import com.ivy.data.db.entity.LoanEntity
 import com.ivy.data.model.LoanType
-import com.ivy.legacy.datamodel.Loan
+import com.ivy.legacy.domain.model.Loan
 
 fun LoanEntity.toLegacyDomain(): Loan = Loan(
     name = name,

@@ -11,7 +11,7 @@ import com.ivy.data.model.Transfer
 import com.ivy.data.temp.migration.getAccountId
 
 import com.ivy.frp.Pure
-import com.ivy.legacy.datamodel.Account
+import com.ivy.legacy.domain.model.Account
 import com.ivy.legacy.domain.pure.account.accountCurrency
 import java.time.LocalDate
 

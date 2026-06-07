@@ -1,7 +1,7 @@
 package com.ivy.legacy.domain.mapper
 
 import com.ivy.data.db.entity.CategoryEntity
-import com.ivy.legacy.datamodel.Category
+import com.ivy.legacy.domain.model.Category
 
 fun CategoryEntity.toLegacyDomain(): Category = Category(
     name = name,

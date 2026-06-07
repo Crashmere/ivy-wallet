@@ -2,7 +2,7 @@ package com.ivy.legacy.domain.action.account
 
 import com.ivy.data.db.dao.read.AccountDao
 import com.ivy.frp.action.FPAction
-import com.ivy.legacy.datamodel.Account
+import com.ivy.legacy.domain.model.Account
 import com.ivy.legacy.domain.mapper.toLegacyDomain
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList

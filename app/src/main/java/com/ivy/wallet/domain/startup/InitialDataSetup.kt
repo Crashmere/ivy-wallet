@@ -6,7 +6,7 @@ import com.ivy.data.db.dao.read.AccountDao
 import com.ivy.data.db.dao.read.SettingsDao
 import com.ivy.data.db.dao.write.WriteSettingsDao
 import com.ivy.data.repository.CategoryRepository
-import com.ivy.legacy.datamodel.Settings
+import com.ivy.legacy.domain.model.Settings
 import com.ivy.base.legacy.ioThread
 import com.ivy.data.model.currency.IvyCurrency
 import com.ivy.wallet.notification.reminder.TransactionReminderLogic

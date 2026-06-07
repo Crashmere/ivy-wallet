@@ -6,7 +6,7 @@ import com.ivy.data.db.entity.TransactionEntity
 import com.ivy.data.model.Tag
 import com.ivy.data.model.Transaction
 import com.ivy.data.repository.mapper.TransactionMapper
-import com.ivy.legacy.datamodel.toEntity
+import com.ivy.legacy.domain.model.toEntity
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
