@@ -14,8 +14,6 @@ import com.ivy.data.model.legacy.LegacyTransaction
 import com.ivy.data.model.legacy.TransactionHistoryItem
 import com.ivy.data.model.TransactionType
 import com.ivy.ui.resource.ResourceProvider
-import com.ivy.base.time.TimeConverter
-import com.ivy.base.time.TimeProvider
 import com.ivy.data.model.Category
 import com.ivy.data.model.CategoryId
 import com.ivy.data.model.Expense
@@ -69,6 +67,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.math.BigDecimal
+import java.time.Instant
 import java.time.ZoneId
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
@@ -99,8 +98,6 @@ class ReportViewModel @Inject constructor(
     private val searchTagsUseCase: SearchTagsUseCase,
     private val exportCsvUseCase: ExportCsvUseCase,
     private val resourceProvider: ResourceProvider,
-    private val timeProvider: TimeProvider,
-    private val timeConverter: TimeConverter,
     private val preferenceToggles: PreferenceToggles,
     private val preferenceToggleRepository: PreferenceToggleRepository,
     private val filePicker: FilePicker
@@ -384,7 +381,7 @@ class ReportViewModel @Inject constructor(
         val filterCategoryIds =
             filter.categories.map { if (it.id.value == unSpecifiedCategory.id.value) null else it.id }
         val filterRange =
-            filter.period?.toRange(periodState.startDayOfMonth, timeConverter, timeProvider)
+            filter.period?.let(periodState::rangeOf)
 
         val transactions = if (filter.includedTags.isNotEmpty()) {
             getTransactionsByTagsUseCase(filter.includedTags)
@@ -549,7 +546,7 @@ class ReportViewModel @Inject constructor(
     }
 
     private fun utcNow() =
-        timeProvider.utcNow()
+        Instant.now()
             .atZone(ZoneOffset.UTC)
             .toLocalDateTime()
 

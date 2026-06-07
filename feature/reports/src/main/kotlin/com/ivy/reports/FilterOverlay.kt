@@ -41,13 +41,11 @@ import com.ivy.data.model.Category
 import com.ivy.data.model.Tag
 import com.ivy.data.model.TagId
 import com.ivy.ui.platform.LocalDatePicker
-import com.ivy.ui.time.LocalTimeConverter
-import com.ivy.ui.time.LocalTimeFormatter
-import com.ivy.ui.time.LocalTimeProvider
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
 import com.ivy.legacy.ui.component.ListItem
 import com.ivy.data.model.legacy.Account
+import com.ivy.legacy.ui.model.period.displayLong
 import com.ivy.legacy.ui.state.LocalPeriodState
 import com.ivy.legacy.ui.component.tags.AddTagButton
 import com.ivy.legacy.ui.component.tags.ShowTagModal
@@ -642,12 +640,7 @@ private fun PeriodFilter(
             .fillMaxWidth()
             .padding(horizontal = 24.dp),
         iconStart = R.drawable.ic_calendar,
-        text = filter?.period?.toDisplayLong(
-            startDateOfMonth = startDateOfMonth,
-            timeProvider = LocalTimeProvider.current,
-            timeConverter = LocalTimeConverter.current,
-            timeFormatter = LocalTimeFormatter.current,
-        )
+        text = filter?.period?.displayLong(startDateOfMonth)
             ?.capitalizeLocal()
             ?: stringResource(R.string.select_time_range),
         padding = 12.dp,
