@@ -7,7 +7,6 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.viewModelScope
 import com.ivy.data.model.Theme
-import com.ivy.base.time.TimeProvider
 import com.ivy.data.api.file.ExternalFile
 import com.ivy.data.model.primitive.AssetCode
 import com.ivy.domain.preferences.toggles.BoolPreference
@@ -43,6 +42,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.time.Instant
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 import javax.inject.Inject
@@ -75,9 +75,8 @@ class SettingsViewModel @Inject constructor(
     private val syncExchangeRatesUseCase: SyncExchangeRatesUseCase,
     private val preferenceToggles: PreferenceToggles,
     private val preferenceToggleRepository: PreferenceToggleRepository,
-    private val exportCsvUseCase: ExportCsvUseCase,
     private val filePicker: FilePicker,
-    private val timeProvider: TimeProvider,
+    private val exportCsvUseCase: ExportCsvUseCase,
     private val localeSettingsLauncher: LocaleSettingsLauncher
 ) : ComposeViewModel<SettingsState, SettingsEvent>() {
 
@@ -394,7 +393,7 @@ class SettingsViewModel @Inject constructor(
     }
 
     private fun utcTimestamp(): String =
-        timeProvider.utcNow()
+        Instant.now()
             .atZone(ZoneOffset.UTC)
             .toLocalDateTime()
             .format(exportTimestampFormatter)
