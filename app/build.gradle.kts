@@ -147,6 +147,7 @@ dependencies {
     implementation(libs.bundles.kotlin.android.runtime)
     implementation(libs.bundles.compose)
     implementation(libs.bundles.activity)
+    implementation(libs.compose.activity)
     implementation(libs.androidx.biometrics)
 
     implementation(libs.bundles.hilt)
