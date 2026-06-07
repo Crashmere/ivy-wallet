@@ -202,7 +202,6 @@
     <string name="logout">ಲಾಗ್ಔಟ್</string>
     <string name="login">ಲಾಗಿನ್</string>
     <string name="syncing">ಸಿಂಕ್ ಮಾಡಲಾಗುತ್ತಿದೆ…</string>
-    <string name="data_synced_to_cloud">ಡೇಟಾವನ್ನು ಕ್ಲೌಡ್‌ಗೆ ಸಿಂಕ್ ಮಾಡಲಾಗಿದೆ</string>
     <string name="tap_to_sync">ಸಿಂಕ್ ಮಾಡಲು ಟ್ಯಾಪ್ ಮಾಡಿ</string>
     <string name="sync_failed">ಸಿಂಕ್ ವಿಫಲವಾಗಿದೆ. ಸಿಂಕ್ ಮಾಡಲು ಟ್ಯಾಪ್ ಮಾಡಿ</string>
     <string name="export_to_csv">CSV ಗೆ ರಫ್ತು ಮಾಡಿ</string>

@@ -202,7 +202,6 @@
     <string name="logout">Выйти</string>
     <string name="login">Войти</string>
     <string name="syncing">Синхронизация…</string>
-    <string name="data_synced_to_cloud">Данные синхронизированы с облаком</string>
     <string name="tap_to_sync">Нажмите, чтобы синхронизировать</string>
     <string name="sync_failed">Синхронизация не удалась. Нажмите, чтобы повторить</string>
     <string name="export_to_csv">Экспорт в CSV</string>

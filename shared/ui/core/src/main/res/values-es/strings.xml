@@ -206,7 +206,6 @@
     <string name="logout">Cerrar sesión</string>
     <string name="login">Iniciar sesión</string>
     <string name="syncing">Sincronizando…</string>
-    <string name="data_synced_to_cloud">Datos sincronizados con la nube</string>
     <string name="tap_to_sync">Toca para sincronizar</string>
     <string name="sync_failed">Error de sincronización. Toca para sincronizar</string>
     <string name="export_to_csv">Exportar a CSV</string>

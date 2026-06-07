@@ -230,7 +230,6 @@
     <string name="logout">Logout</string>
     <string name="login">Login</string>
     <string name="syncing">Syncing…</string>
-    <string name="data_synced_to_cloud">Data synced to the cloud</string>
     <string name="tap_to_sync">Tap to sync</string>
     <string name="sync_failed">Sync failed. Tap to retry</string>
     <string name="export_to_csv">Export to CSV</string>

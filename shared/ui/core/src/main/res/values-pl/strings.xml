@@ -205,7 +205,6 @@
     <string name="logout">Wyloguj</string>
     <string name="login">Zaloguj</string>
     <string name="syncing">Synchronizuję…</string>
-    <string name="data_synced_to_cloud">Dane zsynchronizowane do chmury</string>
     <string name="tap_to_sync">Dotknij, aby zsynchronizować</string>
     <string name="sync_failed">Synchronizacja nieudana. Dotknij, aby schynchronizować</string>
     <string name="export_to_csv">Eksportuj do pliku CSV</string>

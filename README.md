@@ -14,6 +14,7 @@
 - 持续清理 `temp:legacy-code` 中确认无引用的旧代码、工具、组件和残留模型。
 - 删除空的 `:shared:data:core-testing` 模块，并把测试专用 `FakeRepositoryMemo` 从生产源码移入测试源集。
 - 删除未引用的第三方导入 logo、widget 预览/图标、推广/分享/捐赠图片，以及 `help_us_grow` 多语言推广文案。
+- 删除无代码引用的 `data_synced_to_cloud` 多语言云同步完成文案。
 - 删除 `:temp:old-design` 模块；旧设计 API 先迁入 `shared:ui:core` 作为兼容层，随后已逐步归位到更明确的 `legacy.ui.theme`/`legacy.ui.theme.system` 包名。
 - 删除 `:temp:legacy-code` 模块；剩余旧全局上下文暂时收敛在 `shared:ui:legacy`，并已把周期状态、文件选择、日期选择、主 Tab 状态等职责逐步拆出。
 - 整理部分 Gradle 约定插件：基础 shared 模块、数据核心模块和 domain 模块已经开始脱离面向页面的 `ivy.feature` 配置。
@@ -535,6 +536,7 @@
 - 新增 `LegacySettingsRepository`，把仍存放在 `settings` 表中的主题和缓冲金额用窄方法包起来；设置页、首页和根启动流程不再直接依赖 `SettingsDao` 或旧 settings action。
 - 删除无调用方的 `SettingsAct`、`UpdateSettingsAct`、旧 `Settings` 模型和 `SettingsEntity.toLegacyDomain()` mapper。
 - `SettingsEntity` 暂时仍保留：首次默认数据、重置钱包、备份恢复格式，以及 `CurrencyRepository/LegacySettingsRepository` 内部仍依赖这张表。
+- 删除无调用方的 `data_synced_to_cloud` 多语言文案，云同步用户可见入口继续减少。
 
 建议顺序：
 

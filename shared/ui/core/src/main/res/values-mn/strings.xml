@@ -202,7 +202,6 @@
     <string name="logout">Гарах</string>
     <string name="login">Нэвтрэх</string>
     <string name="syncing">Нөөцөлж байна…</string>
-    <string name="data_synced_to_cloud">Мэдээллийг үүлэнд нөөцөллөө</string>
     <string name="tap_to_sync">Нөөцлөх</string>
     <string name="sync_failed">Нөөцлөхөд алдаа гарлаа. Дарж дахин оролд</string>
     <string name="export_to_csv">CSV хэлбэрээр хадгалах</string>

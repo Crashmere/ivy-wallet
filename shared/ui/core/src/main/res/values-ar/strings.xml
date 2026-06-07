@@ -202,7 +202,6 @@
     <string name="logout">تسجيل الخروج</string>
     <string name="login">تسجيل الدخول</string>
     <string name="syncing">يتم المزامنة…</string>
-    <string name="data_synced_to_cloud">تمت مزامنة البيانات للسحابة</string>
     <string name="tap_to_sync">أضغط للمزامنة</string>
     <string name="sync_failed">فشلت عملية المزامنة. أضغط للمزامنة</string>
     <string name="export_to_csv">CSV التصدير لملف</string>

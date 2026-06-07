@@ -209,7 +209,6 @@
     <string name="logout">登出</string>
     <string name="login">登入</string>
     <string name="syncing">正在同步…</string>
-    <string name="data_synced_to_cloud">資料同步至雲端</string>
     <string name="tap_to_sync">點選同步</string>
     <string name="sync_failed">同步失敗。點選同步</string>
     <string name="export_to_csv">匯出為 CSV</string>
