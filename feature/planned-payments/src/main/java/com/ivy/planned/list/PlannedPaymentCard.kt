@@ -31,8 +31,8 @@ import com.ivy.data.model.IntervalType
 import com.ivy.data.model.primitive.ColorInt
 import com.ivy.data.model.primitive.NotBlankTrimmedString
 import com.ivy.ui.time.LocalTimeConverter
-import com.ivy.legacy.design.l0_system.LegacyTheme
-import com.ivy.legacy.design.l0_system.style
+import com.ivy.legacy.ui.theme.system.LegacyTheme
+import com.ivy.legacy.ui.theme.system.style
 import com.ivy.legacy.domain.model.Account
 import com.ivy.legacy.domain.model.PlannedPaymentRule
 import com.ivy.ui.legacy.forDisplay

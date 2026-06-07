@@ -10,7 +10,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import com.ivy.base.time.TimeConverter
 import com.ivy.base.time.TimeProvider
-import com.ivy.legacy.design.l0_system.IvyTheme
+import com.ivy.legacy.ui.theme.system.IvyTheme
 import com.ivy.ui.platform.DatePicker
 import com.ivy.ui.platform.LocalDatePicker
 import com.ivy.ui.theme.LocalThemeState

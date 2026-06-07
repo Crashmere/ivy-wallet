@@ -27,9 +27,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.ivy.legacy.ui.theme.IVY_COLOR_PICKER_COLORS_FREE
 import com.ivy.legacy.ui.theme.IVY_COLOR_PICKER_COLORS_PREMIUM
-import com.ivy.legacy.design.l0_system.LegacyTheme
-import com.ivy.legacy.design.l0_system.dynamicContrast
-import com.ivy.legacy.design.l0_system.style
+import com.ivy.legacy.ui.theme.system.LegacyTheme
+import com.ivy.legacy.ui.theme.system.dynamicContrast
+import com.ivy.legacy.ui.theme.system.style
 import com.ivy.ui.compose.densityScope
 import com.ivy.ui.compose.thenIf
 import com.ivy.frp.test.TestingContext

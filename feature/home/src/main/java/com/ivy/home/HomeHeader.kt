@@ -32,8 +32,8 @@ import com.ivy.base.model.TransactionType
 import com.ivy.ui.time.LocalTimeConverter
 import com.ivy.ui.time.LocalTimeFormatter
 import com.ivy.ui.time.LocalTimeProvider
-import com.ivy.legacy.design.l0_system.LegacyTheme
-import com.ivy.legacy.design.l0_system.style
+import com.ivy.legacy.ui.theme.system.LegacyTheme
+import com.ivy.legacy.ui.theme.system.style
 import com.ivy.ui.compose.thenIf
 import com.ivy.legacy.ui.state.LocalPeriodState
 import com.ivy.legacy.ui.model.period.TimePeriod

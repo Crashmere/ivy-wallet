@@ -34,8 +34,8 @@ import androidx.compose.ui.unit.dp
 import com.ivy.data.model.LoanType
 import com.ivy.data.model.primitive.NotBlankTrimmedString
 import com.ivy.ui.time.LocalTimeConverter
-import com.ivy.legacy.design.l0_system.LegacyTheme
-import com.ivy.legacy.design.l0_system.style
+import com.ivy.legacy.ui.theme.system.LegacyTheme
+import com.ivy.legacy.ui.theme.system.style
 import com.ivy.domain.legacy.ui.IvyColorPicker
 import com.ivy.frp.test.TestingContext
 import com.ivy.legacy.domain.model.Account

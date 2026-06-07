@@ -29,9 +29,9 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.Tag
 import com.ivy.data.model.TagId
-import com.ivy.legacy.design.l0_system.Blue2Dark
-import com.ivy.legacy.design.l0_system.LegacyTheme
-import com.ivy.legacy.design.l0_system.style
+import com.ivy.legacy.ui.theme.system.Blue2Dark
+import com.ivy.legacy.ui.theme.system.LegacyTheme
+import com.ivy.legacy.ui.theme.system.style
 import com.ivy.ui.compose.thenIf
 import com.ivy.legacy.ui.SearchInput
 import com.ivy.ui.legacy.drawColoredShadow

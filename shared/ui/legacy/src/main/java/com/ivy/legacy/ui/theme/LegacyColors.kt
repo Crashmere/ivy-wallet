@@ -12,7 +12,7 @@ import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.ColorUtils
-import com.ivy.legacy.design.l0_system.LegacyTheme
+import com.ivy.legacy.ui.theme.system.LegacyTheme
 
 @Deprecated("Old design system. Use `:ivy-design` and Material3")
 val White = Color(0xFFFAFAFA)
@@ -150,7 +150,7 @@ data class Gradient(
 ) {
     companion object {
         @Deprecated("Old design system. Use `:ivy-design` and Material3")
-        fun from(gradient: com.ivy.legacy.design.l0_system.Gradient) =
+        fun from(gradient: com.ivy.legacy.ui.theme.system.Gradient) =
             Gradient(gradient.startColor, gradient.endColor)
 
         @Deprecated("Old design system. Use `:ivy-design` and Material3")

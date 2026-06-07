@@ -1,4 +1,4 @@
-package com.ivy.legacy.design.l0_system
+package com.ivy.legacy.ui.theme.system
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.text.TextStyle

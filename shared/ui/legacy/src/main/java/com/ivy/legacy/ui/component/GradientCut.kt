@@ -12,7 +12,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
-import com.ivy.legacy.design.l0_system.LegacyTheme
+import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.ui.compose.thenIf
 import com.ivy.legacy.ui.theme.Gradient
 import com.ivy.legacy.ui.theme.Transparent

@@ -30,8 +30,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.IntervalType
 import com.ivy.ui.time.LocalTimeProvider
-import com.ivy.legacy.design.l0_system.LegacyTheme
-import com.ivy.legacy.design.l0_system.style
+import com.ivy.legacy.ui.theme.system.LegacyTheme
+import com.ivy.legacy.ui.theme.system.style
 import com.ivy.ui.legacy.addKeyboardListener
 import com.ivy.ui.legacy.clickableNoIndication
 import com.ivy.ui.legacy.closeDay

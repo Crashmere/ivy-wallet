@@ -29,8 +29,8 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.ivy.ui.platform.LocalDatePicker
-import com.ivy.legacy.design.l0_system.LegacyTheme
-import com.ivy.legacy.design.l0_system.style
+import com.ivy.legacy.ui.theme.system.LegacyTheme
+import com.ivy.legacy.ui.theme.system.style
 import com.ivy.data.model.currency.format
 import com.ivy.legacy.ui.state.LocalPeriodState
 import com.ivy.navigation.BalanceScreen

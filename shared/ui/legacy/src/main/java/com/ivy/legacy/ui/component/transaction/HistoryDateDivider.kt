@@ -16,10 +16,10 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.ivy.base.legacy.dateNowLocal
 import com.ivy.data.model.currency.format
-import com.ivy.legacy.design.l0_system.Gray
-import com.ivy.legacy.design.l0_system.Green
-import com.ivy.legacy.design.l0_system.LegacyTheme
-import com.ivy.legacy.design.l0_system.style
+import com.ivy.legacy.ui.theme.system.Gray
+import com.ivy.legacy.ui.theme.system.Green
+import com.ivy.legacy.ui.theme.system.LegacyTheme
+import com.ivy.legacy.ui.theme.system.style
 import com.ivy.ui.R
 import com.ivy.ui.legacy.formatLocal
 import java.time.LocalDate

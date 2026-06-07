@@ -14,7 +14,7 @@
 - 持续清理 `temp:legacy-code` 中确认无引用的旧代码、工具、组件和残留模型。
 - 删除空的 `:shared:data:core-testing` 模块，并把测试专用 `FakeRepositoryMemo` 从生产源码移入测试源集。
 - 删除未引用的第三方导入 logo、widget 预览/图标、推广/分享/捐赠图片，以及 `help_us_grow` 多语言推广文案。
-- 删除 `:temp:old-design` 模块；旧设计 API 先迁入 `shared:ui:core` 作为兼容层，后续再逐步替换旧包名和旧组件。
+- 删除 `:temp:old-design` 模块；旧设计 API 先迁入 `shared:ui:core` 作为兼容层，随后已逐步归位到更明确的 `legacy.ui.theme`/`legacy.ui.theme.system` 包名。
 - 删除 `:temp:legacy-code` 模块；剩余旧全局上下文暂时收敛在 `shared:ui:legacy`，并已把周期状态、文件选择、日期选择、主 Tab 状态等职责逐步拆出。
 - 整理部分 Gradle 约定插件：基础 shared 模块、数据核心模块和 domain 模块已经开始脱离面向页面的 `ivy.feature` 配置。
 
@@ -60,7 +60,7 @@
 
 - `feature:*` 和 `app` 对 `:temp:legacy-code` 的直接依赖已经迁走，Gradle 中不再 include 旧 `temp` 模块。
 - `:temp:legacy-code` 模块已经删除；旧全局上下文入口暂时迁入 `shared:ui:legacy`，后续继续拆内部职责。
-- 旧设计系统源码已经迁入 `shared:ui:core` 作为兼容层，并已统一归到 `com.ivy.legacy.design.*` 包名；旧根包装器已迁到 `com.ivy.ui.LegacyUiRoot`，旧 `LegacyTheme` 等概念仍存在，但不再伪装成正式设计系统。
+- 旧设计系统源码已经迁入 `shared:ui:core` 作为兼容层，并已从 `com.ivy.legacy.design.*` 进一步归位到 `com.ivy.legacy.ui.theme.system`；旧根包装器已迁到 `com.ivy.ui.LegacyUiRoot`，旧 `LegacyTheme` 等概念仍存在，但不再伪装成正式设计系统。
 
 问题：
 
@@ -335,7 +335,7 @@
 当前进展：
 
 - 已把 `utils/Compose.kt`、`utils/Keyboard.kt`、`Spacers.kt`、`ColumnRoot.kt`、`IvyText.kt` 从 `temp:old-design` 移到 `shared:ui:core`；其中 `Spacers.kt`、`ColumnRoot.kt` 和未使用的旧分隔组件后续已替换为 Compose 原生写法并删除。
-- 这些文件已统一归到 `com.ivy.legacy.design.*` 包名；后续继续替换 `LegacyTheme` 和旧颜色/组件。
+- 这些文件已归到明确的 legacy UI theme 包名；后续继续替换 `LegacyTheme` 和旧颜色/组件。
 - 在 `shared:ui:core` 补齐 `colorControlNormal` attr，让仍使用该 attr 的旧 drawable 可以通过独立资源校验。
 - 已把剩余旧设计 Kotlin 源码整体迁入 `shared:ui:core`，并删除 `:temp:old-design` 模块依赖。
 - 旧模块中的字体是 `shared:ui:core` 的重复资源；旧模块中的未引用 drawable 不迁移。
@@ -420,6 +420,7 @@
 - 已把 `LocalDatePicker` 迁到 `com.ivy.ui.platform`，把 `LocalTimeConverter/LocalTimeProvider/LocalTimeFormatter` 迁到 `com.ivy.ui.time`；根部 UI 包装器只负责提供这些平台和时间 Local，不再定义它们。
 - 已把旧 `IvyUI` 根包装器迁到 `com.ivy.ui.LegacyUiRoot` 并改名，`com.ivy.legacy.design.api` 包已经清空。
 - 已把旧颜色选择器常量从 `com.ivy.legacy.design` 根包迁到 `com.ivy.legacy.ui.theme`，CSV 导入和旧颜色选择器继续使用同一组颜色值。
+- 已把旧主题兼容层从 `com.ivy.legacy.design.l0_system` 迁到 `com.ivy.legacy.ui.theme.system`，旧设计包目录已经清空；功能和视觉保持不变。
 - 已删除旧设计接口和默认设计外部传参，旧主题兼容层直接使用内部默认配置，去掉了无实际扩展点的设计系统抽象。
 - 已删除 `:temp:legacy-code` 的 Gradle include、模块 build 文件，以及所有 app/feature 对 `projects.temp.legacyCode` 的依赖声明。
 - 阶段 5 的模块拆解目标已经完成：仓库中不再有被 Gradle include 的 `temp:*` 模块。后续工作转为拆除 `shared:ui:legacy` 中剩余旧上下文、旧设计 API 和旧 UI 兼容模型。
@@ -702,6 +703,6 @@ shared:ui:core
 
 下一步建议执行：
 
-1. 继续替换旧设计兼容 API：下一步盘点 `shared:ui:legacy` 中剩余旧 UI/data 兼容模型，优先处理纯包名归位和可替换的薄 UI 包装；实体字段、备份恢复格式和 Room migration 暂不混入普通包名提交。
-2. 继续替换旧设计兼容 API：优先从调用面较小的旧颜色常量和 `LegacyTheme` 使用点开始，逐步减少旧 modal 组件的使用；暂不混入视觉重做。
+1. 建立偏好设置访问边界：先新增封装 `SharedPrefs` key 的 repository/manager，不立刻修改底层存储和备份格式。
+2. 分批迁移 feature 对 `SharedPrefs` 的直接访问：优先处理跨页面共享的锁屏、通知、隐藏余额/收入、转账计入收支等设置；分类排序、最近账户等局部状态后置。
 3. 每完成一组跨模块边界调整后运行 `:app:assembleDemo`，确认构建没有被迁移影响；涉及数据库、备份恢复或导入导出时再补充对应测试。

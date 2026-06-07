@@ -16,8 +16,8 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
-import com.ivy.legacy.design.l0_system.Gray
-import com.ivy.legacy.design.l0_system.LegacyTheme
+import com.ivy.legacy.ui.theme.system.Gray
+import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.ui.legacy.onScreenStart
 import com.ivy.ui.legacy.selectEndTextFieldValue
 import com.ivy.ui.R
