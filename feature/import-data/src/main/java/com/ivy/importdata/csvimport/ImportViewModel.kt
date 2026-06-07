@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ivy.data.backup.BackupDataUseCase
 import com.ivy.data.backup.ImportResult
-import com.ivy.frp.test.TestIdlingResource
 import com.ivy.base.legacy.asLiveData
 import com.ivy.navigation.ImportScreen
 import com.ivy.navigation.Navigation
@@ -52,7 +51,6 @@ class ImportViewModel @Inject constructor(
     fun restoreBackup() {
         filePicker.openFile { fileUri ->
             viewModelScope.launch {
-                TestIdlingResource.increment()
 
                 _importStep.value = ImportStep.LOADING
                 _importResult.value = backupDataUseCase.importBackupFile(
@@ -65,7 +63,6 @@ class ImportViewModel @Inject constructor(
                 }
                 _importStep.value = ImportStep.RESULT
 
-                TestIdlingResource.decrement()
             }
         }
     }

@@ -98,23 +98,24 @@
   - `ivy.tested-library`
 - 每个模块显式声明自己需要的能力。
 
-### 3. 测试 helper 仍有一部分在生产源码
+### 3. 测试 helper 已基本移出生产源码
 
 现状：
 
-- `Fake*Dao` 仍在 `shared:data:core/src/main`。
-- `TestDispatchersProvider`、`TestResourceProvider`、`TestTimeConverter` 仍在 `shared:base/src/main`。
+- `Fake*Dao` 已在 `shared:data:core/src/test`。
+- `TestDispatchersProvider`、`TestResourceProvider`、`TestTimeConverter` 已在 `shared:base-testing`。
 - `FakeRepositoryMemo` 已移到 test/androidTest 源集。
+- 生产源码中的空 `TestIdlingResource` 计数器已删除，调用方不再插入测试空闲计数。
 
 问题：
 
-- 生产源码携带测试专用对象。
-- 运行时 API 表面变大，阅读时容易误判这些 fake 可以在真实功能中使用。
+- 仍需要继续防止新的测试 helper 回流到 `src/main`。
+- 功能测试如果后续重新需要空闲同步，应在 androidTest 专用边界实现，而不是回到生产 ViewModel。
 
 目标：
 
-- 建立测试支持源集或测试支持模块。
-- 把 fake DAO 和 test helper 全部移出生产 main 源集。
+- 生产 main 源集不承载 fake DAO、test dispatcher、test resource provider 或空闲同步计数器。
+- 测试支持能力集中在测试源集或 `shared:*testing` 模块。
 
 ### 4. 数据层仍有同步、登录和云端历史痕迹
 
@@ -300,6 +301,8 @@
 
 - 新增 `:shared:base-testing`，用于承载跨模块复用的基础测试 helper。
 - `shared:data:core`、`shared:domain`、`shared:ui:core` 的测试源集改为显式依赖 `shared:base-testing`。
+- `Fake*Dao`、`FakeRepositoryMemo` 已归位到测试源集；生产源码不再包含这些 fake。
+- 已删除生产源码中的空 `TestIdlingResource` 以及 Root/Main/Import/Loans ViewModel 中的空调用。
 
 ### 阶段 4：消灭 `temp:old-design`
 

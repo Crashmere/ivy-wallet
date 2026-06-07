@@ -15,7 +15,6 @@ import com.ivy.data.db.dao.read.SettingsDao
 import com.ivy.data.db.dao.write.WriteLoanDao
 import com.ivy.data.model.LoanType
 import com.ivy.domain.preferences.AppPreferences
-import com.ivy.frp.test.TestIdlingResource
 import com.ivy.legacy.domain.model.Account
 import com.ivy.legacy.domain.model.Loan
 import com.ivy.legacy.domain.logic.AccountCreator
@@ -191,7 +190,6 @@ class LoanViewModel @Inject constructor(
 
     private fun start() {
         viewModelScope.launch(Dispatchers.Default) {
-            TestIdlingResource.increment()
 
             dateTime = timeProvider.utcNow()
 
@@ -243,7 +241,6 @@ class LoanViewModel @Inject constructor(
             loadPendingLoans()
             loadCompletedLoans()
 
-            TestIdlingResource.decrement()
         }
     }
 
@@ -314,7 +311,6 @@ class LoanViewModel @Inject constructor(
 
     private fun createLoan(data: CreateLoanData) {
         viewModelScope.launch {
-            TestIdlingResource.increment()
 
             val uuid = loanCreator.create(data) {
                 start()
@@ -324,13 +320,11 @@ class LoanViewModel @Inject constructor(
                 loanTransactionsLogic.Loan.createAssociatedLoanTransaction(data = data, loanId = it)
             }
 
-            TestIdlingResource.decrement()
         }
     }
 
     private fun reorder(newOrder: List<DisplayLoan>) {
         viewModelScope.launch {
-            TestIdlingResource.increment()
 
             ioThread {
                 newOrder.forEachIndexed { index, item ->
@@ -344,7 +338,6 @@ class LoanViewModel @Inject constructor(
             }
             start()
 
-            TestIdlingResource.decrement()
         }
     }
 
@@ -358,13 +351,11 @@ class LoanViewModel @Inject constructor(
 
     private fun createAccount(data: CreateAccountData) {
         viewModelScope.launch {
-            TestIdlingResource.increment()
 
             accountCreator.createAccount(data) {
                 accounts = accountsAct(Unit)
             }
 
-            TestIdlingResource.decrement()
         }
     }
 

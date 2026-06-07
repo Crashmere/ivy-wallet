@@ -9,7 +9,6 @@ import com.ivy.base.legacy.stringRes
 import com.ivy.base.model.TransactionType
 import com.ivy.data.db.dao.read.SettingsDao
 import com.ivy.domain.preferences.AppPreferences
-import com.ivy.frp.test.TestIdlingResource
 import com.ivy.ui.theme.ThemeState
 import com.ivy.legacy.ui.state.PeriodState
 import com.ivy.base.legacy.ioThread
@@ -56,7 +55,6 @@ class RootViewModel @Inject constructor(
 
     fun start(systemDarkMode: Boolean, intent: Intent) {
         viewModelScope.launch {
-            TestIdlingResource.increment()
 
             ioThread {
                 val theme = settingsDao.findAll().firstOrNull()?.theme
@@ -66,11 +64,9 @@ class RootViewModel @Inject constructor(
                 periodState.initStartDayOfMonth(startDay = appPreferences.startDayOfMonth)
             }
 
-            TestIdlingResource.decrement()
         }
 
         viewModelScope.launch {
-            TestIdlingResource.increment()
 
             ioThread {
                 appLockEnabled = appPreferences.appLockEnabled
@@ -85,7 +81,6 @@ class RootViewModel @Inject constructor(
                 }
             }
 
-            TestIdlingResource.decrement()
         }
     }
 

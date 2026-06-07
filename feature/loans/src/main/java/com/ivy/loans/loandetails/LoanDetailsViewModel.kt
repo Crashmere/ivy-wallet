@@ -14,7 +14,6 @@ import com.ivy.data.db.dao.read.LoanRecordDao
 import com.ivy.data.db.dao.read.SettingsDao
 import com.ivy.data.repository.TransactionRepository
 import com.ivy.data.repository.mapper.TransactionMapper
-import com.ivy.frp.test.TestIdlingResource
 import com.ivy.legacy.domain.model.Account
 import com.ivy.legacy.domain.model.Loan
 import com.ivy.legacy.domain.model.LoanRecord
@@ -250,7 +249,6 @@ class LoanDetailsViewModel @Inject constructor(
 
     private fun load(loanId: UUID) {
         viewModelScope.launch {
-            TestIdlingResource.increment()
 
             dateTime.value = timeProvider.utcNow()
 
@@ -349,13 +347,11 @@ class LoanDetailsViewModel @Inject constructor(
                 createLoanTransaction.value = false
             }
 
-            TestIdlingResource.decrement()
         }
     }
 
     fun editLoan(loan: Loan, createLoanTransaction: Boolean = false) {
         viewModelScope.launch {
-            TestIdlingResource.increment()
 
             this@LoanDetailsViewModel.loan.value?.let {
                 loanTransactionsLogic.Loan.recalculateLoanRecords(
@@ -375,7 +371,6 @@ class LoanDetailsViewModel @Inject constructor(
                 load(loanId = it.id)
             }
 
-            TestIdlingResource.decrement()
         }
     }
 
@@ -383,7 +378,6 @@ class LoanDetailsViewModel @Inject constructor(
         val loan = loan.value ?: return
 
         viewModelScope.launch {
-            TestIdlingResource.increment()
 
             loanTransactionsLogic.Loan.deleteAssociatedLoanTransactions(loan.id)
 
@@ -392,7 +386,6 @@ class LoanDetailsViewModel @Inject constructor(
                 nav.back()
             }
 
-            TestIdlingResource.decrement()
         }
     }
 
@@ -402,7 +395,6 @@ class LoanDetailsViewModel @Inject constructor(
         val localLoan = loan.value!!
 
         viewModelScope.launch {
-            TestIdlingResource.increment()
 
             val modifiedData = data.copy(
                 convertedAmount = loanTransactionsLogic.LoanRecord.calculateConvertedAmount(
@@ -426,14 +418,12 @@ class LoanDetailsViewModel @Inject constructor(
                 )
             }
 
-            TestIdlingResource.decrement()
         }
     }
 
     private fun editLoanRecord(editLoanRecordData: EditLoanRecordData) {
         viewModelScope.launch {
             val loanRecord = editLoanRecordData.newLoanRecord
-            TestIdlingResource.increment()
 
             val localLoan: Loan = loan.value ?: return@launch
 
@@ -457,7 +447,6 @@ class LoanDetailsViewModel @Inject constructor(
                 load(loanId = it.loanId)
             }
 
-            TestIdlingResource.decrement()
         }
     }
 
@@ -465,7 +454,6 @@ class LoanDetailsViewModel @Inject constructor(
         val loanId = loan.value?.id ?: return
 
         viewModelScope.launch {
-            TestIdlingResource.increment()
 
             loanRecordCreator.delete(loanRecord) {
                 load(loanId = loanId)
@@ -473,7 +461,6 @@ class LoanDetailsViewModel @Inject constructor(
 
             loanTransactionsLogic.LoanRecord.deleteAssociatedLoanRecordTransaction(loanRecordId = loanRecord.id)
 
-            TestIdlingResource.decrement()
         }
     }
 
@@ -565,13 +552,11 @@ class LoanDetailsViewModel @Inject constructor(
 
     private fun createAccount(data: CreateAccountData) {
         viewModelScope.launch {
-            TestIdlingResource.increment()
 
             accountCreator.createAccount(data) {
                 accounts.value = accountsAct(Unit)
             }
 
-            TestIdlingResource.decrement()
         }
     }
 
