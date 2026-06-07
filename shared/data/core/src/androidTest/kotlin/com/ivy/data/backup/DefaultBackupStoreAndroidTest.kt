@@ -28,10 +28,10 @@ import org.junit.runner.RunWith
 import java.io.File
 
 @RunWith(AndroidJUnit4::class)
-class BackupDataUseCaseAndroidTest {
+class DefaultBackupStoreAndroidTest {
 
     private lateinit var db: IvyRoomDatabase
-    private lateinit var useCase: BackupDataUseCase
+    private lateinit var store: DefaultBackupStore
 
     @Before
     fun createDb() {
@@ -46,7 +46,7 @@ class BackupDataUseCaseAndroidTest {
                 )
             )
         )
-        useCase = BackupDataUseCase(
+        store = DefaultBackupStore(
             accountDao = db.accountDao,
             budgetDao = db.budgetDao,
             categoryDao = db.categoryDao,
@@ -106,7 +106,7 @@ class BackupDataUseCaseAndroidTest {
         val backupUri = copyTestResourceToInternalStorage("backups/$version.zip")
 
         // when
-        val res = useCase.importBackupFile(backupUri, onProgress = {})
+        val res = store.importBackupFile(backupUri, onProgress = {})
 
         // then
         res.shouldBeSuccessful()
@@ -117,7 +117,7 @@ class BackupDataUseCaseAndroidTest {
         val backupUri = copyTestResourceToInternalStorage("backups/$version.json")
 
         // when
-        val res = useCase.importBackupFile(backupUri, onProgress = {})
+        val res = store.importBackupFile(backupUri, onProgress = {})
 
         // then
         res.shouldBeSuccessful()
@@ -127,12 +127,12 @@ class BackupDataUseCaseAndroidTest {
         // given
         val backupUri = copyTestResourceToInternalStorage("backups/$version.zip")
         // preload data
-        useCase.importBackupFile(backupUri, onProgress = {}).shouldBeSuccessful()
+        store.importBackupFile(backupUri, onProgress = {}).shouldBeSuccessful()
         val exportedFileUri = tempAndroidFile("exported", ".zip").toUri()
 
         // then
-        useCase.exportToFile(exportedFileUri)
-        val reImportRes = useCase.importBackupFile(backupUri, onProgress = {})
+        store.exportToFile(exportedFileUri)
+        val reImportRes = store.importBackupFile(backupUri, onProgress = {})
 
         // then
         reImportRes.shouldBeSuccessful()

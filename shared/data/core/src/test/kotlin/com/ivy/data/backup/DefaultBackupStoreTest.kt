@@ -25,8 +25,8 @@ import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
 import org.junit.Test
 
-class BackupDataUseCaseTest {
-    private fun newBackupDataUseCase(
+class DefaultBackupStoreTest {
+    private fun newDefaultBackupStore(
         accountDao: FakeAccountDao = FakeAccountDao(),
         categoryDao: FakeCategoryDao = FakeCategoryDao(),
         transactionDao: FakeTransactionDao = FakeTransactionDao(),
@@ -37,7 +37,7 @@ class BackupDataUseCaseTest {
         loanRecordDao: FakeLoanRecordDao = FakeLoanRecordDao(),
         tagDao: FakeTagDao = FakeTagDao(),
         tagAssociationDao: FakeTagAssociationDao = FakeTagAssociationDao()
-    ): BackupDataUseCase {
+    ): DefaultBackupStore {
         val accountMapper = AccountMapper(
             RoomCurrencyStore(
                 settingsTable = SettingsTable(
@@ -46,7 +46,7 @@ class BackupDataUseCaseTest {
                 )
             )
         )
-        return BackupDataUseCase(
+        return DefaultBackupStore(
             accountDao = accountDao,
             accountMapper = accountMapper,
             accountStore = RoomAccountStore(
@@ -84,12 +84,12 @@ class BackupDataUseCaseTest {
 
     private suspend fun backupTestCase(backupVersion: String) {
         // given
-        val originalBackupUseCase = newBackupDataUseCase()
+        val originalBackupStore = newDefaultBackupStore()
         val backupJsonData = testResource("backups/$backupVersion.json")
             .readText(Charsets.UTF_16)
 
         // when
-        val importedDataRes = originalBackupUseCase.importJson(backupJsonData, onProgress = {})
+        val importedDataRes = originalBackupStore.importJson(backupJsonData, onProgress = {})
 
         // then
         importedDataRes.accountsImported shouldBeGreaterThan 0
@@ -99,16 +99,16 @@ class BackupDataUseCaseTest {
 
         // Also - exporting and re-importing the data should work
         // given
-        val exportedJson = originalBackupUseCase.generateJsonBackup()
+        val exportedJson = originalBackupStore.generateJsonBackup()
 
         // when
-        val freshBackupUseCase = newBackupDataUseCase()
-        val reImportedDataRes = freshBackupUseCase.importJson(exportedJson, onProgress = {})
+        val freshBackupStore = newDefaultBackupStore()
+        val reImportedDataRes = freshBackupStore.importJson(exportedJson, onProgress = {})
         // then
         reImportedDataRes shouldBe importedDataRes
 
         // Finally, exporting again should yield the same result
-        freshBackupUseCase.generateJsonBackup() shouldBe exportedJson
+        freshBackupStore.generateJsonBackup() shouldBe exportedJson
     }
 
     @Test

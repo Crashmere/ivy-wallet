@@ -46,7 +46,7 @@ import java.util.UUID
 import javax.inject.Inject
 
 // Keeps the existing ZIP/JSON backup format compatible with older local data.
-class BackupDataUseCase @Inject constructor(
+class DefaultBackupStore @Inject constructor(
     private val accountDao: AccountDao,
     private val budgetDao: BudgetDao,
     private val categoryDao: CategoryDao,
