@@ -1,6 +1,5 @@
 package com.ivy.domain.usecase.account
 
-import com.ivy.base.threading.DispatchersProvider
 import com.ivy.data.model.AccountId
 import com.ivy.data.model.Expense
 import com.ivy.data.model.Income
@@ -8,16 +7,15 @@ import com.ivy.data.model.Transaction
 import com.ivy.data.model.Transfer
 import com.ivy.domain.model.StatSummary
 import com.ivy.domain.model.StatSummaryBuilder
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class AccountStatsUseCase @Inject constructor(
-    private val dispatchers: DispatchersProvider,
-) {
+class AccountStatsUseCase @Inject constructor() {
     suspend fun calculate(
         account: AccountId,
         transactions: List<Transaction>
-    ): AccountStats = withContext(dispatchers.default) {
+    ): AccountStats = withContext(Dispatchers.Default) {
         val income = StatSummaryBuilder()
         val expense = StatSummaryBuilder()
         val transfersIn = StatSummaryBuilder()

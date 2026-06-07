@@ -1,7 +1,5 @@
 package com.ivy.domain.usecase.csv
 
-import com.ivy.data.model.TransactionType
-import com.ivy.base.threading.DispatchersProvider
 import com.ivy.base.time.TimeConverter
 import com.ivy.data.api.file.ExternalFile
 import com.ivy.data.api.file.TextFileStore
@@ -12,12 +10,14 @@ import com.ivy.data.model.CategoryId
 import com.ivy.data.model.Expense
 import com.ivy.data.model.Income
 import com.ivy.data.model.Transaction
+import com.ivy.data.model.TransactionType
 import com.ivy.data.model.Transfer
 import com.ivy.data.model.primitive.NonNegativeDouble
 import com.ivy.data.model.primitive.toNonNegative
 import com.ivy.domain.usecase.account.GetAccountsUseCase
 import com.ivy.domain.usecase.category.GetCategoriesUseCase
 import com.ivy.domain.usecase.transaction.GetTransactionsUseCase
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
@@ -31,7 +31,6 @@ class ExportCsvUseCase @Inject constructor(
     private val getAccountsUseCase: GetAccountsUseCase,
     private val getCategoriesUseCase: GetCategoriesUseCase,
     private val getTransactionsUseCase: GetTransactionsUseCase,
-    private val dispatchers: DispatchersProvider,
     private val textFileStore: TextFileStore,
     private val timeConverter: TimeConverter
 ) {
@@ -41,14 +40,14 @@ class ExportCsvUseCase @Inject constructor(
         exportScope: suspend () -> List<Transaction> = {
             getTransactionsUseCase()
         }
-    ): Result<Unit> = withContext(dispatchers.io) {
+    ): Result<Unit> = withContext(Dispatchers.IO) {
         val csv = exportCsv(exportScope)
         textFileStore.writeText(outputFile, csv)
     }
 
     suspend fun exportCsv(
         exportScope: suspend () -> List<Transaction>
-    ): String = withContext(dispatchers.io) {
+    ): String = withContext(Dispatchers.IO) {
         val transactions = exportScope()
         val accountsMap = getAccountsUseCase().associateBy(Account::id)
         val categoriesMap = getCategoriesUseCase().associateBy(Category::id)

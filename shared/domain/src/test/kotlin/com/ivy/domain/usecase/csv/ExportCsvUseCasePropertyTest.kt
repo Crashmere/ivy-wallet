@@ -1,7 +1,6 @@
 package com.ivy.domain.usecase.csv
 
 import arrow.core.Some
-import com.ivy.base.TestDispatchersProvider
 import com.ivy.base.time.impl.TestTimeConverter
 import com.ivy.data.api.AccountStore
 import com.ivy.data.api.CategoryStore
@@ -44,7 +43,6 @@ class ExportCsvUseCasePropertyTest {
             getAccountsUseCase = GetAccountsUseCase(accountStore),
             getCategoriesUseCase = GetCategoriesUseCase(categoryStore),
             getTransactionsUseCase = GetTransactionsUseCase(transactionStore),
-            dispatchers = TestDispatchersProvider,
             textFileStore = textFileStore,
             timeConverter = timeConverter
         )

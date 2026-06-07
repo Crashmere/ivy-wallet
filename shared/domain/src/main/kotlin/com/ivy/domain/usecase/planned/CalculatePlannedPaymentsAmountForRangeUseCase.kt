@@ -1,14 +1,14 @@
 package com.ivy.domain.usecase.planned
 
-import com.ivy.data.model.TransactionType
-import com.ivy.base.threading.DispatchersProvider
 import com.ivy.data.api.AccountStore
 import com.ivy.data.api.TransactionStore
+import com.ivy.data.model.TransactionType
 import com.ivy.data.model.legacy.FromToTimeRange
+import com.ivy.domain.mapper.legacy.toLegacyDomain
 import com.ivy.domain.mapper.legacy.toLegacy
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.domain.usecase.exchange.LegacyExchangeRatesUseCase
-import com.ivy.domain.mapper.legacy.toLegacyDomain
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -17,10 +17,9 @@ class CalculatePlannedPaymentsAmountForRangeUseCase @Inject constructor(
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
     private val exchangeRatesLogic: LegacyExchangeRatesUseCase,
     private val accountStore: AccountStore,
-    private val dispatchers: DispatchersProvider
 ) {
     suspend operator fun invoke(range: FromToTimeRange): Double {
-        return withContext(dispatchers.io) {
+        return withContext(Dispatchers.IO) {
             val baseCurrency = getBaseCurrencyCode()
             val accounts = accountStore.findAll().map { it.toLegacyDomain() }
 

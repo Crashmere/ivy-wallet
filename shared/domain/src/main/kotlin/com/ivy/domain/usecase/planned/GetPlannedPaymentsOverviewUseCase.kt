@@ -1,15 +1,15 @@
 package com.ivy.domain.usecase.planned
 
-import com.ivy.data.model.TransactionType
-import com.ivy.base.threading.DispatchersProvider
 import com.ivy.data.api.AccountStore
 import com.ivy.data.api.PlannedPaymentRuleStore
 import com.ivy.data.model.IntervalType
+import com.ivy.data.model.TransactionType
 import com.ivy.data.model.legacy.Account
 import com.ivy.data.model.legacy.PlannedPaymentRule
+import com.ivy.domain.mapper.legacy.toLegacyDomain
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.domain.usecase.exchange.LegacyExchangeRatesUseCase
-import com.ivy.domain.mapper.legacy.toLegacyDomain
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -27,10 +27,9 @@ class GetPlannedPaymentsOverviewUseCase @Inject constructor(
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
     private val exchangeRatesLogic: LegacyExchangeRatesUseCase,
     private val accountStore: AccountStore,
-    private val dispatchers: DispatchersProvider
 ) {
     suspend operator fun invoke(): PlannedPaymentsOverview {
-        return withContext(dispatchers.io) {
+        return withContext(Dispatchers.IO) {
             val oneTime = plannedPaymentRuleStore.findAllByOneTime(oneTime = true)
             val recurring = plannedPaymentRuleStore.findAllByOneTime(oneTime = false)
             val baseCurrency = getBaseCurrencyCode()

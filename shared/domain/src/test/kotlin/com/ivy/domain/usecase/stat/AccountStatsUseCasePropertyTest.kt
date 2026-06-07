@@ -1,7 +1,6 @@
 package com.ivy.domain.usecase.stat
 
 import arrow.core.NonEmptyList
-import com.ivy.base.TestDispatchersProvider
 import com.ivy.data.model.AccountId
 import com.ivy.data.model.Expense
 import com.ivy.data.model.Income
@@ -38,9 +37,7 @@ class AccountStatsUseCasePropertyTest {
 
     @Before
     fun setup() {
-        useCase = AccountStatsUseCase(
-            dispatchers = TestDispatchersProvider,
-        )
+        useCase = AccountStatsUseCase()
     }
 
     @Test
