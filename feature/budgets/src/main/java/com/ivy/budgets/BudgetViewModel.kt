@@ -20,11 +20,13 @@ import com.ivy.data.model.legacy.FromToTimeRange
 import com.ivy.data.model.legacy.toCloseTimeRange
 import com.ivy.data.model.legacy.Account
 import com.ivy.data.model.legacy.Budget
-import com.ivy.legacy.domain.logic.BudgetCreator
 import com.ivy.data.model.currency.format
 import com.ivy.base.text.isNotNullOrBlank
+import com.ivy.domain.usecase.budget.CreateBudgetUseCase
+import com.ivy.domain.usecase.budget.DeleteBudgetUseCase
 import com.ivy.domain.usecase.budget.GetBudgetsUseCase
 import com.ivy.domain.usecase.budget.ReorderBudgetsUseCase
+import com.ivy.domain.usecase.budget.UpdateBudgetUseCase
 import com.ivy.domain.usecase.category.GetCategoriesUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.domain.usecase.exchange.ExchangeAmountUseCase
@@ -49,7 +51,9 @@ import kotlin.math.abs
 @HiltViewModel
 class BudgetViewModel @Inject constructor(
     private val reorderBudgetsUseCase: ReorderBudgetsUseCase,
-    private val budgetCreator: BudgetCreator,
+    private val createBudgetUseCase: CreateBudgetUseCase,
+    private val updateBudgetUseCase: UpdateBudgetUseCase,
+    private val deleteBudgetUseCase: DeleteBudgetUseCase,
     private val periodState: PeriodState,
     private val getLegacyAccountsUseCase: GetLegacyAccountsUseCase,
     private val getCategoriesUseCase: GetCategoriesUseCase,
@@ -262,7 +266,7 @@ class BudgetViewModel @Inject constructor(
 
     private fun createBudget(data: CreateBudgetData) {
         viewModelScope.launch {
-            budgetCreator.createBudget(data) {
+            if (createBudgetUseCase(data) != null) {
                 start()
             }
         }
@@ -270,7 +274,7 @@ class BudgetViewModel @Inject constructor(
 
     private fun editBudget(budget: Budget) {
         viewModelScope.launch {
-            budgetCreator.editBudget(budget) {
+            if (updateBudgetUseCase(budget)) {
                 start()
             }
         }
@@ -278,7 +282,7 @@ class BudgetViewModel @Inject constructor(
 
     private fun deleteBudget(budget: Budget) {
         viewModelScope.launch {
-            budgetCreator.deleteBudget(budget) {
+            if (deleteBudgetUseCase(budget)) {
                 start()
             }
         }
