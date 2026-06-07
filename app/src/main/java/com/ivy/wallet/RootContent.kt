@@ -9,14 +9,13 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
 import com.ivy.IvyNavGraph
 import com.ivy.base.theme.Theme
 import com.ivy.base.time.TimeConverter
 import com.ivy.base.time.TimeProvider
+import com.ivy.domain.preferences.toggles.PreferenceToggleRepository
 import com.ivy.domain.preferences.toggles.PreferenceToggles
-import com.ivy.legacy.ui.preferences.LocalPreferenceDataStore
+import com.ivy.legacy.ui.preferences.LocalPreferenceToggleRepository
 import com.ivy.legacy.ui.preferences.LocalPreferenceToggles
 import com.ivy.legacy.ui.state.LocalPeriodState
 import com.ivy.legacy.ui.state.PeriodState
@@ -46,7 +45,7 @@ fun RootContent(
     dateTimePicker: DateTimePicker,
     datePicker: ActivityDatePicker,
     preferenceToggles: PreferenceToggles,
-    preferenceDataStore: DataStore<Preferences>,
+    preferenceToggleRepository: PreferenceToggleRepository,
     buildInfoProvider: BuildInfoProvider,
     fileSharer: FileSharer,
     viewModel: RootViewModel,
@@ -57,7 +56,7 @@ fun RootContent(
     CompositionLocalProvider(
         LocalPeriodState provides periodState,
         LocalPreferenceToggles provides preferenceToggles,
-        LocalPreferenceDataStore provides preferenceDataStore,
+        LocalPreferenceToggleRepository provides preferenceToggleRepository,
         LocalBuildInfoProvider provides buildInfoProvider,
         LocalFileSharer provides fileSharer,
     ) {

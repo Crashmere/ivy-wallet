@@ -7,8 +7,8 @@ import com.ivy.domain.preferences.toggles.BoolPreference
 
 @Composable
 fun BoolPreference.asEnabledState(): Boolean {
-    val dataStore = LocalPreferenceDataStore.current
-    val preferenceValue = remember(dataStore) { enabledFlow(dataStore) }
+    val repository = LocalPreferenceToggleRepository.current
+    val preferenceValue = remember(repository) { repository.enabledFlow(this) }
         .collectAsState(defaultValue).value
     return preferenceValue ?: defaultValue
 }
