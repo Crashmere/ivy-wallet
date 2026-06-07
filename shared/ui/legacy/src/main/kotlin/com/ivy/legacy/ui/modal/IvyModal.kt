@@ -297,10 +297,3 @@ fun ModalActionsRow(
     }
 }
 
-@Composable
-fun ModalPreviewActionRowSpacer() {
-    Spacer(Modifier.height(modalPreviewActionRowHeight()))
-}
-
-@Composable
-fun modalPreviewActionRowHeight() = 80.dp

@@ -55,7 +55,6 @@ import kotlin.math.truncate
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
-import com.ivy.legacy.ui.modal.modalPreviewActionRowHeight
 
 @SuppressLint("ComposeModifierMissing")
 @Suppress("ParameterNaming")
