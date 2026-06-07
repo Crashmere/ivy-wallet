@@ -2,7 +2,7 @@ package com.ivy.wallet.security
 
 import androidx.biometric.BiometricPrompt
 import com.ivy.base.legacy.readOnly
-import com.ivy.base.legacy.stringRes
+import com.ivy.base.resource.ResourceProvider
 import com.ivy.domain.preferences.AppPreferences
 import com.ivy.ui.R
 import kotlinx.coroutines.CoroutineScope
@@ -17,7 +17,8 @@ import java.util.concurrent.atomic.AtomicLong
 import javax.inject.Inject
 
 class AppLockController @Inject constructor(
-    private val appPreferences: AppPreferences
+    private val appPreferences: AppPreferences,
+    private val resourceProvider: ResourceProvider,
 ) {
     private companion object {
         private const val USER_INACTIVITY_TIME_LIMIT = 60
@@ -58,13 +59,13 @@ class AppLockController @Inject constructor(
     ): BiometricPrompt.AuthenticationCallback {
         return object : BiometricPrompt.AuthenticationCallback() {
             override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
-                Timber.d(stringRes(R.string.authentication_succeeded))
+                Timber.d(resourceProvider.getString(R.string.authentication_succeeded))
                 unlockApp()
                 onAuthSuccess()
             }
 
             override fun onAuthenticationFailed() {
-                Timber.d(stringRes(R.string.authentication_failed))
+                Timber.d(resourceProvider.getString(R.string.authentication_failed))
             }
 
             override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {

@@ -411,6 +411,7 @@
 - 已把旧主题状态从 `IvyContext` 拆到 `shared:ui:core` 的 `ThemeState`，`RootViewModel` 初始化运行时主题，首页和设置页切换主题时更新同一个状态；旧设计 `context()`、`IvyContext`、`IvyWalletCtx` 和 `ivyWalletCtx()` 已删除。
 - 已把旧主题访问入口从泛化的 `UI.colors/typo/shapes` 重命名为 `LegacyTheme.colors/typo/shapes`，功能和视觉不变，但调用点会明确标识这是旧主题兼容层。
 - 已把 app 侧首次启动默认数据逻辑从 `com.ivy.wallet.domain.deprecated.logic` 迁到 `com.ivy.wallet.domain.startup`，并把交易提醒 WorkManager 调度/Worker 从 `domain.deprecated.logic.notification` 迁到 `com.ivy.wallet.notification.reminder`；这些代码仍保留旧实现，但不再伪装成共享 domain 逻辑。
+- app 主源码不再使用 deprecated 的全局 `stringRes()`；首次启动默认数据、应用锁日志和交易提醒通知文案都改为通过注入式 `ResourceProvider` 读取资源，继续缩小全局 `appContext` 的影响面。
 - 已删除旧 building block 中最薄的 `SpacerVer/SpacerHor/SpacerWeight`、`ColumnRoot`、`DividerW/DividerH/DividerV/DividerSize`，相关调用方已改用 Compose 原生 `Spacer`、`Column` 和本地分隔线。
 - 已删除旧 `IvyText` 包装，剩余调用方改用 Material3 `Text`。
 - 已删除旧 `IvyIcon/IvyIconScaled/IconScale` 包装，剩余调用方改用 Material3 `Icon`、`Image` 或本地小函数；`shared:ui:core` 的旧 `l1_buildingBlocks` 包已清空。

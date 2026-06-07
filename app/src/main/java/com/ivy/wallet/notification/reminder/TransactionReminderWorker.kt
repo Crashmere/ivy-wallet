@@ -6,7 +6,7 @@ import androidx.core.app.NotificationCompat
 import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
-import com.ivy.base.legacy.stringRes
+import com.ivy.base.resource.ResourceProvider
 import com.ivy.base.time.TimeConverter
 import com.ivy.base.time.TimeProvider
 import com.ivy.data.db.dao.read.TransactionDao
@@ -31,6 +31,7 @@ class TransactionReminderWorker @AssistedInject constructor(
     private val appStarter: AppStarter,
     private val timeProvider: TimeProvider,
     private val timeConverter: TimeConverter,
+    private val resourceProvider: ResourceProvider,
 ) : CoroutineWorker(appContext, params) {
 
     companion object {
@@ -76,9 +77,9 @@ class TransactionReminderWorker @AssistedInject constructor(
 
     private fun randomText(): String =
         listOf(
-            stringRes(R.string.notification_1),
-            stringRes(R.string.notification_2),
-            stringRes(R.string.notification_3),
+            resourceProvider.getString(R.string.notification_1),
+            resourceProvider.getString(R.string.notification_2),
+            resourceProvider.getString(R.string.notification_3),
         ).shuffled().first()
 
     private fun fetchShowNotifications(): Boolean =

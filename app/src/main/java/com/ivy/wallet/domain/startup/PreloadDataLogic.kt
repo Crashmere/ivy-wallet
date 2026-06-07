@@ -1,7 +1,7 @@
 package com.ivy.wallet.domain.startup
 
 import arrow.core.raise.either
-import com.ivy.base.legacy.stringRes
+import com.ivy.base.resource.ResourceProvider
 import com.ivy.data.model.Account
 import com.ivy.data.model.AccountId
 import com.ivy.data.model.Category
@@ -20,6 +20,7 @@ class PreloadDataLogic @Inject constructor(
     private val categoryRepository: CategoryRepository,
     private val accountRepository: AccountRepository,
     private val currencyRepository: CurrencyRepository,
+    private val resourceProvider: ResourceProvider,
 ) {
     private var categoryOrderNum = 0.0
 
@@ -28,7 +29,7 @@ class PreloadDataLogic @Inject constructor(
         accountRepository.save(
             Account(
                 id = AccountId(UUID.randomUUID()),
-                name = NotBlankTrimmedString.unsafe(stringRes(R.string.cash)),
+                name = NotBlankTrimmedString.unsafe(resourceProvider.getString(R.string.cash)),
                 asset = baseCurrency,
                 color = ColorInt(Green),
                 icon = IconAsset.from("cash").getOrNull(),
@@ -39,7 +40,7 @@ class PreloadDataLogic @Inject constructor(
         accountRepository.save(
             Account(
                 id = AccountId(UUID.randomUUID()),
-                name = NotBlankTrimmedString.unsafe(stringRes(R.string.bank)),
+                name = NotBlankTrimmedString.unsafe(resourceProvider.getString(R.string.bank)),
                 asset = baseCurrency,
                 color = ColorInt(IvyDark),
                 icon = IconAsset.from("bank").getOrNull(),
@@ -61,61 +62,61 @@ class PreloadDataLogic @Inject constructor(
 
     private fun defaultCategories() = listOf(
         DefaultCategory(
-            name = stringRes(R.string.food_drinks),
+            name = resourceProvider.getString(R.string.food_drinks),
             color = Green,
             icon = "fooddrink"
         ),
 
         DefaultCategory(
-            name = stringRes(R.string.bills_fees),
+            name = resourceProvider.getString(R.string.bills_fees),
             color = Red,
             icon = "bills"
         ),
 
         DefaultCategory(
-            name = stringRes(R.string.transport),
+            name = resourceProvider.getString(R.string.transport),
             color = YellowLight,
             icon = "transport"
         ),
 
         DefaultCategory(
-            name = stringRes(R.string.groceries),
+            name = resourceProvider.getString(R.string.groceries),
             color = GreenLight,
             icon = "groceries"
         ),
 
         DefaultCategory(
-            name = stringRes(R.string.entertainment),
+            name = resourceProvider.getString(R.string.entertainment),
             color = Orange,
             icon = "game"
         ),
 
         DefaultCategory(
-            name = stringRes(R.string.shopping),
+            name = resourceProvider.getString(R.string.shopping),
             color = Ivy,
             icon = "shopping"
         ),
 
         DefaultCategory(
-            name = stringRes(R.string.gifts),
+            name = resourceProvider.getString(R.string.gifts),
             color = RedLight,
             icon = "gift"
         ),
 
         DefaultCategory(
-            name = stringRes(R.string.health),
+            name = resourceProvider.getString(R.string.health),
             color = IvyLight,
             icon = "health"
         ),
 
         DefaultCategory(
-            name = stringRes(R.string.investments),
+            name = resourceProvider.getString(R.string.investments),
             color = IvyDark,
             icon = "leaf"
         ),
 
         DefaultCategory(
-            name = stringRes(R.string.loans),
+            name = resourceProvider.getString(R.string.loans),
             color = BlueDark,
             icon = "loan"
         ),
