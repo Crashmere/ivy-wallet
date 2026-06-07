@@ -352,6 +352,7 @@
 当前进展：
 
 - 已把只被 `RootActivity` 使用的 Activity result launcher helper 从 `temp:legacy-code` 迁到 `app` 的 `com.ivy.wallet.platform` 包。
+- 已把只被锁屏界面使用的设备锁屏检查从 legacy 通用工具迁到 `app` 的 `com.ivy.wallet.platform` 包。
 
 迁移分组：
 

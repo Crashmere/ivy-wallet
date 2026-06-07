@@ -30,8 +30,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ivy.design.l0_system.UI
 import com.ivy.design.l0_system.style
-import com.ivy.legacy.utils.hasLockScreen
 import com.ivy.ui.R
+import com.ivy.wallet.platform.hasLockScreen
 import com.ivy.wallet.ui.theme.Gray
 import com.ivy.wallet.ui.theme.White
 import com.ivy.wallet.ui.theme.components.IvyButton

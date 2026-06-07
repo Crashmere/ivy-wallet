@@ -1,7 +1,5 @@
 package com.ivy.legacy.utils
 
-import android.app.KeyguardManager
-import android.content.Context
 import android.icu.util.Currency
 import java.util.Locale
 import java.util.Random
@@ -41,9 +39,4 @@ fun String.capitalizeLocal(): String = this.replaceFirstChar {
 
 fun String.capitalizeWords(): String {
     return split(" ").joinToString(" ") { it.capitalizeLocal() }
-}
-
-fun hasLockScreen(context: Context): Boolean {
-    val keyguardManager = context.getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
-    return keyguardManager.isDeviceSecure
 }
