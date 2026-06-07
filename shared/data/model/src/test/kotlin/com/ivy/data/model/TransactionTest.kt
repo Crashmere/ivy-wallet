@@ -1,15 +1,7 @@
-package com.ivy.data.model.primitive
+package com.ivy.data.model
 
-import com.ivy.data.model.AccountId
-import com.ivy.data.model.Expense
-import com.ivy.data.model.Income
-import com.ivy.data.model.PositiveValue
-import com.ivy.data.model.TransactionId
-import com.ivy.data.model.TransactionMetadata
-import com.ivy.data.model.Transfer
-import com.ivy.data.model.getFromAccount
-import com.ivy.data.model.getFromValue
-import com.ivy.data.model.getToAccount
+import com.ivy.data.model.primitive.AssetCode
+import com.ivy.data.model.primitive.PositiveDouble
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 import org.junit.Test

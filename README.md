@@ -729,6 +729,7 @@
 - `ResetWalletDataUseCase` 接口已从 `com.ivy.domain.usecase` 根包移入 `com.ivy.domain.usecase.reset`，和 `ClearWalletDataUseCase`、`ClearAppPreferencesUseCase`、`NotifyAllDataChangedUseCase` 保持同一 reset 边界。
 - CSV 导出测试中的反读辅助类已从容易误解为生产用例的 `ReadCsvUseCase` 改名为 `CsvTestReader`，继续只存在于 test 源集。
 - `IconAsset` 的测试文件和测试类已从旧名 `IconIdTest` 改为 `IconAssetTest`，和当前模型名保持一致。
+- `TransactionTest` 已从 primitive 测试包移动到 `com.ivy.data.model` 测试包；它测试的是正式交易模型扩展，不再混入基础值对象测试目录。
 - 预算读写已抽成 `BudgetStore` 端口；预算创建、更新、删除、排序、列表读取和重置钱包流程不再直接注入 Room 的 `BudgetDao/WriteBudgetDao`，旧 `BudgetExt` 实体 mapper 已删除。
 - 计划付款规则读写已抽成 `PlannedPaymentRuleStore` 端口；首页统计、账户删除、计划付款保存/删除/读取、付或跳过计划付款，以及重置钱包流程不再直接注入 `PlannedPaymentRuleDao/WritePlannedPaymentRuleDao`，旧 `PlannedPaymentRuleExt` 实体 mapper 已删除。
 - 借贷和借贷记录读写已抽成 `LoanStore/LoanRecordStore` 端口；借贷 CRUD、借贷记录 CRUD、借贷交易同步和重置钱包流程不再直接注入 `LoanDao/LoanRecordDao/WriteLoanDao/WriteLoanRecordDao`，旧 `LoanExt/LoanRecordExt` 实体 mapper 已删除。
