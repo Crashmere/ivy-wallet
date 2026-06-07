@@ -3,7 +3,7 @@ package com.ivy.data.backup
 import android.content.Context
 import android.net.Uri
 import androidx.core.net.toUri
-import com.ivy.base.legacy.SharedPrefs
+import com.ivy.base.prefs.SharedPrefs
 import com.ivy.base.io.unzip
 import com.ivy.base.io.zip
 import com.ivy.base.threading.DispatchersProvider

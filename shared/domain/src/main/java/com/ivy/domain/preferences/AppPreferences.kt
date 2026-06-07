@@ -1,6 +1,6 @@
 package com.ivy.domain.preferences
 
-import com.ivy.base.legacy.SharedPrefs
+import com.ivy.base.prefs.SharedPrefs
 import javax.inject.Inject
 
 class AppPreferences @Inject constructor(
