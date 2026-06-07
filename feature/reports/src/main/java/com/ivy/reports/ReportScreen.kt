@@ -17,7 +17,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -39,6 +38,7 @@ import com.ivy.navigation.PieChartStatisticScreen
 import com.ivy.navigation.ReportScreen
 import com.ivy.navigation.navigation
 import com.ivy.ui.R
+import com.ivy.legacy.ui.platform.fileSharer
 import com.ivy.ui.rememberScrollPositionListState
 import com.ivy.legacy.domain.pure.data.IncomeExpensePair
 import com.ivy.legacy.ui.theme.Gray
@@ -77,7 +77,7 @@ private fun BoxWithConstraintsScope.UI(
 ) {
     val legacyTransactions = state.transactions
     val nav = navigation()
-    val context = LocalContext.current
+    val platformFileSharer = fileSharer()
 
     val listState = rememberScrollPositionListState(key = "reports")
 
@@ -111,7 +111,9 @@ private fun BoxWithConstraintsScope.UI(
         stickyHeader {
             Toolbar(
                 onExport = {
-                    onEventHandler.invoke(ReportScreenEvent.OnExport(context = context))
+                    onEventHandler.invoke(
+                        ReportScreenEvent.OnExport(fileSharer = platformFileSharer)
+                    )
                 },
                 onFilter = {
                     onEventHandler.invoke(

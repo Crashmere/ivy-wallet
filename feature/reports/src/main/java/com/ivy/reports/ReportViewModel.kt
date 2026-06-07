@@ -1,6 +1,5 @@
 package com.ivy.reports
 
-import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Stable
@@ -175,7 +174,7 @@ class ReportViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.Default) {
             when (event) {
                 is ReportScreenEvent.OnFilter -> setFilter(event.filter)
-                is ReportScreenEvent.OnExport -> export(event.context)
+                is ReportScreenEvent.OnExport -> export(event.fileSharer)
                 is ReportScreenEvent.OnPayOrGet -> payOrGet(event.transaction)
                 is ReportScreenEvent.SkipTransaction -> skipTransaction(event.transaction)
                 is ReportScreenEvent.SkipTransactions -> skipTransactions(event.transactions)
@@ -526,7 +525,7 @@ class ReportViewModel @Inject constructor(
         return incomeExpenseTransferPair.income + incomeExpenseTransferPair.transferIncome - incomeExpenseTransferPair.expense - incomeExpenseTransferPair.transferExpense
     }
 
-    private suspend fun export(context: Context) {
+    private suspend fun export(fileSharer: FileSharer) {
         val filter = filter ?: return
         if (!filter.validate()) return
 
@@ -549,7 +548,7 @@ class ReportViewModel @Inject constructor(
                     }
                 )
 
-                (context as FileSharer).shareCSVFile(
+                fileSharer.shareCSVFile(
                     fileUri = fileUri
                 )
 

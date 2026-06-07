@@ -1,6 +1,7 @@
 package com.ivy.ui.platform
 
 import android.net.Uri
+import androidx.compose.runtime.compositionLocalOf
 
 interface BuildInfoProvider {
     /**
@@ -23,4 +24,14 @@ interface FileSharer {
     fun shareCSVFile(fileUri: Uri)
 
     fun shareZipFile(fileUri: Uri)
+}
+
+@Suppress("CompositionLocalAllowlist")
+val LocalBuildInfoProvider = compositionLocalOf<BuildInfoProvider> {
+    error("No LocalBuildInfoProvider")
+}
+
+@Suppress("CompositionLocalAllowlist")
+val LocalFileSharer = compositionLocalOf<FileSharer> {
+    error("No LocalFileSharer")
 }

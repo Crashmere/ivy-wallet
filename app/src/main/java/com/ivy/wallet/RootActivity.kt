@@ -78,6 +78,8 @@ class RootActivity : AppCompatActivity(),
                 timeFormatter = timeFormatter,
                 dateTimePicker = dateTimePicker,
                 datePicker = datePicker,
+                buildInfoProvider = this,
+                fileSharer = this,
                 viewModel = viewModel,
                 intent = intent,
                 onShowOSBiometricsModal = {

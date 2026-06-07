@@ -18,6 +18,10 @@ import com.ivy.legacy.ui.state.PeriodState
 import com.ivy.navigation.Navigation
 import com.ivy.navigation.NavigationRoot
 import com.ivy.ui.LegacyUiRoot
+import com.ivy.ui.platform.BuildInfoProvider
+import com.ivy.ui.platform.FileSharer
+import com.ivy.ui.platform.LocalBuildInfoProvider
+import com.ivy.ui.platform.LocalFileSharer
 import com.ivy.ui.theme.IvyMaterial3Theme
 import com.ivy.ui.theme.ThemeState
 import com.ivy.ui.time.TimeFormatter
@@ -36,11 +40,17 @@ fun RootContent(
     timeFormatter: TimeFormatter,
     dateTimePicker: DateTimePicker,
     datePicker: ActivityDatePicker,
+    buildInfoProvider: BuildInfoProvider,
+    fileSharer: FileSharer,
     viewModel: RootViewModel,
     intent: Intent,
     onShowOSBiometricsModal: () -> Unit,
 ) {
-    CompositionLocalProvider(LocalPeriodState provides periodState) {
+    CompositionLocalProvider(
+        LocalPeriodState provides periodState,
+        LocalBuildInfoProvider provides buildInfoProvider,
+        LocalFileSharer provides fileSharer,
+    ) {
         val isSystemInDarkTheme = isSystemInDarkTheme()
 
         LaunchedEffect(isSystemInDarkTheme) {
