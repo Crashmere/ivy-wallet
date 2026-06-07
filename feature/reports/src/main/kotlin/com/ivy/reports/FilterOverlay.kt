@@ -545,7 +545,7 @@ private fun TypeFilter(
 ) {
     FilterTitleText(
         text = stringResource(R.string.by_type),
-        active = filter != null && filter.trnTypes.isNotEmpty(),
+        active = filter != null && filter.transactionTypes.isNotEmpty(),
         inactiveColor = Red
     )
 
@@ -557,7 +557,7 @@ private fun TypeFilter(
         Spacer(Modifier.width(20.dp))
 
         TypeFilterCheckbox(
-            trnType = TransactionType.INCOME,
+            transactionType = TransactionType.INCOME,
             filter = filter,
             nonFilter = nonNullFilter,
             onSetFilter = onSetFilter
@@ -566,7 +566,7 @@ private fun TypeFilter(
         Spacer(Modifier.width(20.dp))
 
         TypeFilterCheckbox(
-            trnType = TransactionType.EXPENSE,
+            transactionType = TransactionType.EXPENSE,
             filter = filter,
             nonFilter = nonNullFilter,
             onSetFilter = onSetFilter
@@ -577,7 +577,7 @@ private fun TypeFilter(
 
     TypeFilterCheckbox(
         modifier = Modifier.padding(start = 20.dp),
-        trnType = TransactionType.TRANSFER,
+        transactionType = TransactionType.TRANSFER,
         filter = filter,
         nonFilter = nonNullFilter,
         onSetFilter = onSetFilter
@@ -588,32 +588,32 @@ private fun TypeFilter(
 @Composable
 private fun TypeFilterCheckbox(
     modifier: Modifier = Modifier,
-    trnType: TransactionType,
+    transactionType: TransactionType,
     filter: ReportFilter?,
     nonFilter: (ReportFilter?) -> ReportFilter,
     onSetFilter: (ReportFilter) -> Unit
 ) {
     IvyCheckboxWithText(
         modifier = modifier,
-        text = when (trnType) {
+        text = when (transactionType) {
             TransactionType.INCOME -> stringResource(R.string.incomes)
             TransactionType.EXPENSE -> stringResource(R.string.expenses)
             TransactionType.TRANSFER -> stringResource(R.string.account_transfers)
         },
-        checked = filter != null && filter.trnTypes.contains(trnType),
+        checked = filter != null && filter.transactionTypes.contains(transactionType),
     ) { checked ->
         if (checked) {
-            // remove trn type
+            // remove transaction type
             onSetFilter(
                 nonFilter(filter).copy(
-                    trnTypes = nonFilter(filter).trnTypes.plus(trnType)
+                    transactionTypes = nonFilter(filter).transactionTypes.plus(transactionType)
                 )
             )
         } else {
-            // add trn type
+            // add transaction type
             onSetFilter(
                 nonFilter(filter).copy(
-                    trnTypes = nonFilter(filter).trnTypes.filter { it != trnType }
+                    transactionTypes = nonFilter(filter).transactionTypes.filter { it != transactionType }
                 )
             )
         }

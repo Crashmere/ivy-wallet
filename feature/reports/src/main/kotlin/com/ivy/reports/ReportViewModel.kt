@@ -369,7 +369,7 @@ class ReportViewModel @Inject constructor(
         this.transactions = transactions
         this.balance = balanceValue
         this.showTransfersAsIncExpCheckbox =
-            reportFilter?.trnTypes?.contains(TransactionType.TRANSFER) ?: false
+            reportFilter?.transactionTypes?.contains(TransactionType.TRANSFER) ?: false
     }
 
     private suspend fun filterTransactions(
@@ -398,7 +398,7 @@ class ReportViewModel @Inject constructor(
         return transactions
             .filter { !excludeableByTagTransactionsIds.contains(it.id) }
             .filter {
-                filter.trnTypes.contains(it.getTransactionType())
+                filter.transactionTypes.contains(it.getTransactionType())
             }
             .filter {
                 // Filter by Time Period
@@ -407,28 +407,28 @@ class ReportViewModel @Inject constructor(
 
                 filterRange.includes(it.time)
             }
-            .filter { trn ->
+            .filter { transaction ->
                 // Filter by Accounts
-                when (trn) {
+                when (transaction) {
                     is Transfer -> {
-                        filterAccountIds.contains(trn.fromAccount.value) || // Transfers Out
-                                (filterAccountIds.contains(trn.toAccount.value)) // Transfers In
+                        filterAccountIds.contains(transaction.fromAccount.value) || // Transfers Out
+                                (filterAccountIds.contains(transaction.toAccount.value)) // Transfers In
                     }
 
                     is Expense -> {
-                        filterAccountIds.contains(trn.account.value)
+                        filterAccountIds.contains(transaction.account.value)
                     }
 
                     is Income -> {
-                        filterAccountIds.contains(trn.account.value)
+                        filterAccountIds.contains(transaction.account.value)
                     }
                 }
             }
-            .filter { trn ->
+            .filter { transaction ->
                 // Filter by Categories
 
-                filterCategoryIds.contains(trn.category) ||
-                        trn.getTransactionType() == TransactionType.TRANSFER
+                filterCategoryIds.contains(transaction.category) ||
+                        transaction.getTransactionType() == TransactionType.TRANSFER
             }
             .filterByAmount(baseCurrency, accounts, filter)
             .filter {
@@ -486,7 +486,7 @@ class ReportViewModel @Inject constructor(
     ): List<Transaction> {
         val amountFilteredTransactions = mutableListOf<Transaction>()
         for (transaction in this) {
-            val trnAmountBaseCurrency = exchangeAmountUseCase(
+            val transactionAmountBaseCurrency = exchangeAmountUseCase(
                 data = ExchangeData(
                     baseCurrency = baseCurrency,
                     fromCurrency = transactionCurrency(transaction, accounts, baseCurrency),
@@ -494,8 +494,8 @@ class ReportViewModel @Inject constructor(
                 amount = transaction.getValue()
             ).orZero().toDouble()
 
-            if ((filter.minAmount == null || trnAmountBaseCurrency >= filter.minAmount) &&
-                (filter.maxAmount == null || trnAmountBaseCurrency <= filter.maxAmount)
+            if ((filter.minAmount == null || transactionAmountBaseCurrency >= filter.minAmount) &&
+                (filter.maxAmount == null || transactionAmountBaseCurrency <= filter.maxAmount)
             ) {
                 amountFilteredTransactions += transaction
             }
