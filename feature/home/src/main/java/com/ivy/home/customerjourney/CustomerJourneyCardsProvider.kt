@@ -2,8 +2,9 @@ package com.ivy.home.customerjourney
 
 import com.ivy.base.model.TransactionType
 import com.ivy.base.resource.ResourceProvider
-import com.ivy.domain.preferences.AppPreferences
+import com.ivy.domain.usecase.home.DismissCustomerJourneyCardUseCase
 import com.ivy.domain.usecase.home.GetCustomerJourneyStatsUseCase
+import com.ivy.domain.usecase.home.IsCustomerJourneyCardDismissedUseCase
 import com.ivy.legacy.ui.theme.system.Gradient
 import com.ivy.legacy.ui.theme.system.Ivy
 import com.ivy.legacy.ui.theme.system.Orange
@@ -16,7 +17,8 @@ import javax.inject.Inject
 
 class CustomerJourneyCardsProvider @Inject constructor(
     private val getCustomerJourneyStatsUseCase: GetCustomerJourneyStatsUseCase,
-    private val appPreferences: AppPreferences,
+    private val isCustomerJourneyCardDismissed: IsCustomerJourneyCardDismissedUseCase,
+    private val dismissCustomerJourneyCard: DismissCustomerJourneyCardUseCase,
     private val resourceProvider: ResourceProvider,
 ) {
 
@@ -33,11 +35,11 @@ class CustomerJourneyCardsProvider @Inject constructor(
     }
 
     private fun isCardDismissed(cardData: CustomerJourneyCardModel): Boolean {
-        return appPreferences.isCustomerJourneyCardDismissed(cardData.id)
+        return isCustomerJourneyCardDismissed(cardData.id)
     }
 
     fun dismissCard(cardData: CustomerJourneyCardModel) {
-        appPreferences.dismissCustomerJourneyCard(cardData.id)
+        dismissCustomerJourneyCard(cardData.id)
     }
 
     private fun activeCards() = listOf(
