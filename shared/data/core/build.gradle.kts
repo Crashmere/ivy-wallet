@@ -13,7 +13,7 @@ android {
 dependencies {
     implementation(projects.shared.base)
     implementation(projects.shared.data.api)
-    api(projects.shared.data.model)
+    implementation(projects.shared.data.model)
 
     implementation(libs.bundles.arrow)
     implementation(libs.datastore)
