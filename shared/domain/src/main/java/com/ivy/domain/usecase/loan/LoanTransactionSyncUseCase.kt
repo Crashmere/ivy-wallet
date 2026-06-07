@@ -111,7 +111,7 @@ class LoanTransactionSyncUseCase @Inject constructor(
                 accountId = transaction.accountId
             )
 
-            ltCore.saveLoan(modifiedLoan.toLegacyDomain())
+            ltCore.saveLoan(modifiedLoan)
         }
         onBackgroundProcessingEnd()
     }
@@ -123,7 +123,6 @@ class LoanTransactionSyncUseCase @Inject constructor(
         return scopedIOThread { scope ->
             val loanRecords =
                 ltCore.fetchAllLoanRecords(loanId = loanId)
-                    .map { it.toLegacyDomain() }
                     .map { loanRecord ->
                         scope.async {
                             val convertedAmount: Double? =

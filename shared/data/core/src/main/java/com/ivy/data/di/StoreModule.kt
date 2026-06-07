@@ -7,6 +7,8 @@ import com.ivy.data.api.CategoryStore
 import com.ivy.data.api.CurrencyStore
 import com.ivy.data.api.DataChangePublisher
 import com.ivy.data.api.ExchangeRateStore
+import com.ivy.data.api.LoanRecordStore
+import com.ivy.data.api.LoanStore
 import com.ivy.data.api.PlannedPaymentRuleStore
 import com.ivy.data.api.SettingsStore
 import com.ivy.data.api.TagStore
@@ -16,6 +18,8 @@ import com.ivy.data.repository.BudgetStoreImpl
 import com.ivy.data.repository.CategoryRepository
 import com.ivy.data.repository.CurrencyRepository
 import com.ivy.data.repository.ExchangeRatesRepository
+import com.ivy.data.repository.LoanRecordStoreImpl
+import com.ivy.data.repository.LoanStoreImpl
 import com.ivy.data.repository.PlannedPaymentRuleStoreImpl
 import com.ivy.data.repository.SettingsRepository
 import com.ivy.data.repository.TagRepository
@@ -48,6 +52,12 @@ abstract class StoreModule {
 
     @Binds
     abstract fun bindExchangeRateStore(repository: ExchangeRatesRepository): ExchangeRateStore
+
+    @Binds
+    abstract fun bindLoanStore(store: LoanStoreImpl): LoanStore
+
+    @Binds
+    abstract fun bindLoanRecordStore(store: LoanRecordStoreImpl): LoanRecordStore
 
     @Binds
     abstract fun bindPlannedPaymentRuleStore(

@@ -4,12 +4,12 @@ import com.ivy.base.model.legacy.Transaction
 import com.ivy.base.model.LoanRecordType
 import com.ivy.base.model.TransactionType
 import com.ivy.base.time.TimeProvider
+import com.ivy.data.api.CategoryStore
+import com.ivy.data.api.LoanRecordStore
+import com.ivy.data.api.LoanStore
+import com.ivy.data.api.TransactionStore
 import com.ivy.data.db.dao.read.AccountDao
-import com.ivy.data.db.dao.read.LoanDao
-import com.ivy.data.db.dao.read.LoanRecordDao
 import com.ivy.data.db.dao.read.TransactionDao
-import com.ivy.data.db.dao.write.WriteLoanDao
-import com.ivy.data.db.dao.write.WriteLoanRecordDao
 import com.ivy.data.model.Category
 import com.ivy.data.model.CategoryId
 import com.ivy.data.model.LoanType
@@ -17,8 +17,6 @@ import com.ivy.data.model.TransactionId
 import com.ivy.data.model.primitive.ColorInt
 import com.ivy.data.model.primitive.IconAsset
 import com.ivy.data.model.primitive.NotBlankTrimmedString
-import com.ivy.data.api.CategoryStore
-import com.ivy.data.api.TransactionStore
 import com.ivy.data.repository.mapper.TransactionMapper
 import com.ivy.domain.usecase.category.GetCategoriesUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
@@ -26,7 +24,6 @@ import com.ivy.data.model.legacy.Account
 import com.ivy.data.model.legacy.Loan
 import com.ivy.data.model.legacy.LoanRecord
 import com.ivy.domain.mapper.legacy.toDomain
-import com.ivy.domain.mapper.legacy.toEntity
 import com.ivy.domain.mapper.legacy.toLegacyDomain
 import com.ivy.base.coroutines.computationThread
 import com.ivy.base.coroutines.ioThread
@@ -43,15 +40,13 @@ class LoanTransactionSyncCore @Inject constructor(
     private val categoryStore: CategoryStore,
     private val getCategoriesUseCase: GetCategoriesUseCase,
     private val transactionDao: TransactionDao,
-    private val loanRecordDao: LoanRecordDao,
-    private val loanDao: LoanDao,
+    private val loanRecordStore: LoanRecordStore,
+    private val loanStore: LoanStore,
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
     private val accountsDao: AccountDao,
     private val exchangeRatesLogic: LegacyExchangeRatesUseCase,
     private val transactionRepo: TransactionStore,
     private val transactionMapper: TransactionMapper,
-    private val writeLoanRecordDao: WriteLoanRecordDao,
-    private val writeLoanDao: WriteLoanDao,
     private val timeProvider: TimeProvider,
 ) {
     private var baseCurrencyCode: String? = null
@@ -306,27 +301,27 @@ class LoanTransactionSyncCore @Inject constructor(
     }
 
     suspend fun saveLoanRecords(loanRecords: List<LoanRecord>) = ioThread {
-        writeLoanRecordDao.saveMany(loanRecords.map { it.toEntity() })
+        loanRecordStore.saveMany(loanRecords)
     }
 
     suspend fun saveLoanRecords(loanRecord: LoanRecord) = ioThread {
-        writeLoanRecordDao.save(loanRecord.toEntity())
+        loanRecordStore.save(loanRecord)
     }
 
     suspend fun saveLoan(loan: Loan) = ioThread {
-        writeLoanDao.save(loan.toEntity())
+        loanStore.save(loan)
     }
 
     suspend fun fetchLoanRecord(loanRecordId: UUID) = ioThread {
-        loanRecordDao.findById(loanRecordId)
+        loanRecordStore.findById(loanRecordId)
     }
 
     suspend fun fetchAllLoanRecords(loanId: UUID) = ioThread {
-        loanRecordDao.findAllByLoanId(loanId)
+        loanRecordStore.findAllByLoanId(loanId)
     }
 
     suspend fun fetchLoan(loanId: UUID) = ioThread {
-        loanDao.findById(loanId)
+        loanStore.findById(loanId)
     }
 
     suspend fun fetchLoanRecordTransaction(loanRecordId: UUID?): Transaction? {

@@ -91,7 +91,7 @@ class LoanRecordTransactionSyncUseCase @Inject constructor(
                 accountId = transaction.accountId,
                 convertedAmount = convertedAmount
             )
-            ltCore.saveLoanRecords(modifiedLoanRecord.toLegacyDomain())
+            ltCore.saveLoanRecords(modifiedLoanRecord)
         }
         onBackgroundProcessingEnd()
     }
