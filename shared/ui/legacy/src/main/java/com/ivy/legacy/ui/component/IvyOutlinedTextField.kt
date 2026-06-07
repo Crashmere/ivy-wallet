@@ -26,7 +26,7 @@ import androidx.compose.ui.unit.dp
 import com.ivy.legacy.design.l0_system.LegacyTheme
 import com.ivy.legacy.design.l0_system.style
 import com.ivy.base.legacy.isNotNullOrBlank
-import com.ivy.legacy.design.utils.thenIf
+import com.ivy.ui.compose.thenIf
 
 @Deprecated("Old design system. Use `:ivy-design` and Material3")
 @Suppress("ParameterNaming")

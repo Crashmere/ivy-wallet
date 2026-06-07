@@ -34,7 +34,7 @@ import com.ivy.legacy.design.api.LocalTimeFormatter
 import com.ivy.legacy.design.api.LocalTimeProvider
 import com.ivy.legacy.design.l0_system.LegacyTheme
 import com.ivy.legacy.design.l0_system.style
-import com.ivy.legacy.design.utils.thenIf
+import com.ivy.ui.compose.thenIf
 import com.ivy.legacy.ui.state.LocalPeriodState
 import com.ivy.legacy.ui.model.period.TimePeriod
 import com.ivy.legacy.ui.component.transaction.TransactionsDividerLine

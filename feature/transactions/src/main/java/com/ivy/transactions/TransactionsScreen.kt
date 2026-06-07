@@ -45,7 +45,7 @@ import com.ivy.legacy.design.api.LocalTimeProvider
 import com.ivy.legacy.design.LocalThemeState
 import com.ivy.legacy.design.l0_system.LegacyTheme
 import com.ivy.legacy.design.l0_system.style
-import com.ivy.legacy.design.utils.thenIf
+import com.ivy.ui.compose.thenIf
 import com.ivy.legacy.ui.model.AppBaseData
 import com.ivy.legacy.ui.model.LegacyDueSection
 import com.ivy.legacy.ui.model.period.Month

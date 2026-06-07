@@ -24,7 +24,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.ivy.legacy.design.l0_system.LegacyTheme
 import com.ivy.legacy.design.l0_system.style
-import com.ivy.legacy.design.utils.hideKeyboard
+import com.ivy.ui.platform.hideKeyboard
 import com.ivy.ui.legacy.clickableNoIndication
 import com.ivy.ui.legacy.onScreenStart
 import com.ivy.ui.legacy.rememberInteractionSource

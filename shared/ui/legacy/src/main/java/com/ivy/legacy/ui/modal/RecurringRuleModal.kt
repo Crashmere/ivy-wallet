@@ -39,7 +39,7 @@ import com.ivy.ui.legacy.formatDateWeekDayLong
 import com.ivy.ui.legacy.formatNicely
 import com.ivy.ui.legacy.hideKeyboard
 import com.ivy.ui.legacy.onScreenStart
-import com.ivy.legacy.design.utils.thenIf
+import com.ivy.ui.compose.thenIf
 import com.ivy.ui.legacy.rememberInteractionSource
 import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.Gradient

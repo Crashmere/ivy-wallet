@@ -37,7 +37,7 @@ import com.ivy.legacy.design.api.LocalDatePicker
 import com.ivy.legacy.design.api.LocalTimeConverter
 import com.ivy.legacy.design.l0_system.LegacyTheme
 import com.ivy.legacy.design.l0_system.style
-import com.ivy.legacy.design.utils.hideKeyboard
+import com.ivy.ui.platform.hideKeyboard
 import com.ivy.legacy.ui.model.EditTransactionDisplayLoan
 import com.ivy.legacy.domain.model.Account
 import com.ivy.legacy.ui.component.edit.TransactionDateTime

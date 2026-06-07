@@ -54,7 +54,7 @@ import com.ivy.ui.legacy.lerp
 import com.ivy.ui.legacy.navigationBarInsets
 import com.ivy.ui.legacy.onScreenStart
 import com.ivy.ui.legacy.springBounce
-import com.ivy.legacy.design.utils.thenIf
+import com.ivy.ui.compose.thenIf
 import com.ivy.ui.legacy.verticalSwipeListener
 import com.ivy.base.model.TransactionType
 import com.ivy.ui.legacy.rememberInteractionSource

@@ -30,8 +30,8 @@ import com.ivy.legacy.design.IVY_COLOR_PICKER_COLORS_PREMIUM
 import com.ivy.legacy.design.l0_system.LegacyTheme
 import com.ivy.legacy.design.l0_system.dynamicContrast
 import com.ivy.legacy.design.l0_system.style
-import com.ivy.legacy.design.utils.densityScope
-import com.ivy.legacy.design.utils.thenIf
+import com.ivy.ui.compose.densityScope
+import com.ivy.ui.compose.thenIf
 import com.ivy.frp.test.TestingContext
 import com.ivy.ui.legacy.onScreenStart
 import com.ivy.ui.R

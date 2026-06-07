@@ -45,7 +45,7 @@ import androidx.compose.ui.unit.sp
 import com.ivy.base.legacy.Theme
 import com.ivy.legacy.design.l0_system.LegacyTheme
 import com.ivy.legacy.design.l0_system.style
-import com.ivy.legacy.design.utils.thenIf
+import com.ivy.ui.compose.thenIf
 import com.ivy.legacy.ui.platform.rootScreen
 import com.ivy.ui.legacy.drawColoredShadow
 import com.ivy.navigation.ExchangeRatesScreen

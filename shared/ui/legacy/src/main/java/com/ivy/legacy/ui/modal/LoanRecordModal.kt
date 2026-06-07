@@ -33,7 +33,7 @@ import com.ivy.data.model.primitive.NotBlankTrimmedString
 import com.ivy.legacy.design.api.LocalTimeConverter
 import com.ivy.legacy.design.l0_system.LegacyTheme
 import com.ivy.legacy.design.l0_system.style
-import com.ivy.legacy.design.utils.thenIf
+import com.ivy.ui.compose.thenIf
 import com.ivy.frp.test.TestingContext
 import com.ivy.legacy.domain.model.Account
 import com.ivy.legacy.domain.model.LoanRecord

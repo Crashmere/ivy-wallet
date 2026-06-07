@@ -42,7 +42,7 @@ import com.ivy.legacy.design.api.LocalTimeFormatter
 import com.ivy.legacy.design.api.LocalTimeProvider
 import com.ivy.legacy.design.l0_system.LegacyTheme
 import com.ivy.legacy.design.l0_system.style
-import com.ivy.legacy.design.utils.thenIf
+import com.ivy.ui.compose.thenIf
 import com.ivy.legacy.ui.state.LocalPeriodState
 import com.ivy.ui.legacy.drawColoredShadow
 import com.ivy.data.model.currency.format
