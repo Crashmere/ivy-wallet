@@ -22,6 +22,7 @@ import com.ivy.domain.exchange.ExchangeTrnArgument
 import com.ivy.domain.exchange.exchangeInBaseCurrency
 import com.ivy.domain.transaction.expenses
 import com.ivy.domain.transaction.incomes
+import com.ivy.domain.transaction.sumTrns
 import java.math.BigDecimal
 import java.time.LocalDateTime
 import java.time.ZoneOffset

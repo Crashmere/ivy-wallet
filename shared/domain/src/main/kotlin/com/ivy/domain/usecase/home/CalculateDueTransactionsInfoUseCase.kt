@@ -11,7 +11,7 @@ import com.ivy.domain.exchange.ExchangeTrnArgument
 import com.ivy.domain.exchange.exchangeInBaseCurrency
 import com.ivy.domain.transaction.expenses
 import com.ivy.domain.transaction.incomes
-import com.ivy.domain.transaction.legacy.sumTrns
+import com.ivy.domain.transaction.sumTrns
 import java.time.LocalDate
 import javax.inject.Inject
 

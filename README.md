@@ -778,6 +778,7 @@
 - 旧交易卡片已移除重复账户查找 TODO：渲染前先解析来源/目标账户，再复用同一结果处理点击和币种展示，行为不变但 legacy UI 内部职责更清楚。
 - 新版交易值读取 helper 和账户统计值函数已从 `com.ivy.domain.transaction.legacy` 迁到正式 `com.ivy.domain.transaction` 包；legacy 包继续只承载仍依赖旧交易/账户模型的兼容逻辑。
 - 新版交易筛选和到期判断 helper 已从 legacy 文件拆到 `com.ivy.domain.transaction.TransactionFilters`；旧包内只保留旧交易模型筛选和仍依赖旧账户模型的币种兼容 helper。
+- 新版交易折叠/求和 helper 已从 `legacy/FoldTransactions.kt` 拆到正式 `com.ivy.domain.transaction.TransactionFolds`；legacy 文件只保留旧交易模型折叠对象。
 
 建议顺序：
 
