@@ -46,7 +46,7 @@ class BackupDataUseCaseTest {
         return BackupDataUseCase(
             accountDao = accountDao,
             accountMapper = accountMapper,
-            accountRepository = AccountRepository(
+            accountStore = AccountRepository(
                 accountDao = accountDao,
                 writeAccountDao = accountDao,
                 mapper = accountMapper,

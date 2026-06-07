@@ -38,7 +38,7 @@ class BackupDataUseCaseAndroidTest {
         db = Room.inMemoryDatabaseBuilder(context, IvyRoomDatabase::class.java).build()
         val appContext = InstrumentationRegistry.getInstrumentation().context
         val accountMapper = AccountMapper(
-            currencyRepository = CurrencyRepository(
+            currencyStore = CurrencyRepository(
                 settingsDao = db.settingsDao,
                 writeSettingsDao = db.writeSettingsDao,
             )
@@ -54,7 +54,7 @@ class BackupDataUseCaseAndroidTest {
             transactionDao = db.transactionDao,
             transactionWriter = db.writeTransactionDao,
             appPreferenceStore = SharedPrefsAppPreferenceStore(appContext),
-            accountRepository = AccountRepository(
+            accountStore = AccountRepository(
                 accountDao = db.accountDao,
                 writeAccountDao = db.writeAccountDao,
                 mapper = accountMapper,

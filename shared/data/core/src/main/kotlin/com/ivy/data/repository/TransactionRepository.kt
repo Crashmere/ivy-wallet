@@ -1,6 +1,7 @@
 package com.ivy.data.repository
 
 import com.ivy.data.api.TransactionStore
+import com.ivy.data.api.TagStore
 import com.ivy.data.db.dao.read.TransactionDao
 import com.ivy.data.db.dao.write.WriteTransactionDao
 import com.ivy.data.db.entity.TransactionEntity
@@ -28,7 +29,7 @@ class TransactionRepository @Inject constructor(
     private val mapper: TransactionMapper,
     private val transactionDao: TransactionDao,
     private val writeTransactionDao: WriteTransactionDao,
-    private val tagRepository: TagRepository
+    private val tagStore: TagStore
 ) : TransactionStore {
     override suspend fun hasAny(): Boolean = withContext(Dispatchers.IO) {
         transactionDao.hasAny()
@@ -393,14 +394,14 @@ class TransactionRepository @Inject constructor(
     private suspend fun findTagsForTransactionIds(
         transactionIds: List<TransactionId>
     ): Map<UUID, List<TagId>> {
-        return tagRepository.findByAssociatedId(transactionIds.map { AssociationId(it.value) })
+        return tagStore.findByAssociatedId(transactionIds.map { AssociationId(it.value) })
             .entries.associate {
                 it.key.value to it.value.map { ta -> ta.id }
             }
     }
 
     private suspend fun findAllTagAssociations(): Map<UUID, List<TagId>> {
-        return tagRepository.findByAllTagsForAssociations().entries.associate {
+        return tagStore.findByAllTagsForAssociations().entries.associate {
             it.key.value to it.value.map { ta -> ta.id }
         }
     }

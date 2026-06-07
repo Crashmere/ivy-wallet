@@ -3,6 +3,7 @@ package com.ivy.data.repository.mapper
 import arrow.core.Either
 import arrow.core.raise.either
 import arrow.core.raise.ensure
+import com.ivy.data.api.CurrencyStore
 import com.ivy.data.db.entity.AccountEntity
 import com.ivy.data.model.Account
 import com.ivy.data.model.AccountId
@@ -10,11 +11,10 @@ import com.ivy.data.model.primitive.AssetCode
 import com.ivy.data.model.primitive.ColorInt
 import com.ivy.data.model.primitive.IconAsset
 import com.ivy.data.model.primitive.NotBlankTrimmedString
-import com.ivy.data.repository.CurrencyRepository
 import javax.inject.Inject
 
 class AccountMapper @Inject constructor(
-    private val currencyRepository: CurrencyRepository
+    private val currencyStore: CurrencyStore
 ) {
     suspend fun AccountEntity.toDomain(): Either<String, Account> = either {
         ensure(!isDeleted) { "Account is deleted" }
@@ -23,7 +23,7 @@ class AccountMapper @Inject constructor(
             id = AccountId(id),
             name = NotBlankTrimmedString.from(name).bind(),
             asset = currency?.let(AssetCode::from)?.getOrNull()
-                ?: currencyRepository.getBaseCurrency(),
+                ?: currencyStore.getBaseCurrency(),
             color = ColorInt(color),
             icon = icon?.let(IconAsset::from)?.getOrNull(),
             includeInBalance = includeInBalance,

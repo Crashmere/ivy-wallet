@@ -10,7 +10,7 @@ import com.ivy.data.model.getFromAccount
 import com.ivy.data.model.getFromValue
 import com.ivy.data.model.testing.account
 import com.ivy.data.model.testing.transaction
-import com.ivy.data.repository.AccountRepository
+import com.ivy.data.api.AccountStore
 import com.ivy.data.validIncomeOrExpense
 import com.ivy.data.validTransfer
 import io.kotest.matchers.nulls.shouldNotBeNull
@@ -27,13 +27,13 @@ import org.junit.Test
 
 class TransactionMapperPropertyTest {
 
-    private val accountRepo = mockk<AccountRepository>()
+    private val accountStore = mockk<AccountStore>()
 
     private lateinit var mapper: TransactionMapper
 
     @Before
     fun setup() {
-        mapper = TransactionMapper(accountStore = accountRepo,)
+        mapper = TransactionMapper(accountStore = accountStore)
     }
 
     @Test
@@ -44,14 +44,14 @@ class TransactionMapperPropertyTest {
                 accountId = Some(trnOrig.getFromAccount()),
                 asset = Some(trnOrig.getFromValue().asset)
             ).next()
-            coEvery { accountRepo.findById(account.id) } returns account
+            coEvery { accountStore.findById(account.id) } returns account
 
             if (trnOrig is Transfer) {
                 val toAccount = Arb.account(
                     accountId = Some(trnOrig.toAccount),
                     asset = Some(trnOrig.toValue.asset)
                 ).next()
-                coEvery { accountRepo.findById(toAccount.id) } returns toAccount
+                coEvery { accountStore.findById(toAccount.id) } returns toAccount
             }
 
             with(mapper) {
@@ -129,11 +129,11 @@ class TransactionMapperPropertyTest {
 
     private fun mockkValidAccounts(entity: TransactionEntity) {
         coEvery {
-            accountRepo.findById(AccountId(entity.accountId))
+            accountStore.findById(AccountId(entity.accountId))
         } returns Arb.account().next()
         entity.toAccountId?.let { toAccountId ->
             coEvery {
-                accountRepo.findById(AccountId(toAccountId))
+                accountStore.findById(AccountId(toAccountId))
             } returns Arb.account().next()
         }
     }

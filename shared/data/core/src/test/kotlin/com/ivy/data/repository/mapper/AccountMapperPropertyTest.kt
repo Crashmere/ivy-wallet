@@ -1,9 +1,9 @@
 package com.ivy.data.repository.mapper
 
 import com.ivy.data.invalidAccountEntity
+import com.ivy.data.api.CurrencyStore
 import com.ivy.data.model.primitive.AssetCode
 import com.ivy.data.model.testing.account
-import com.ivy.data.repository.CurrencyRepository
 import com.ivy.data.validAccountEntity
 import io.kotest.assertions.arrow.core.shouldBeLeft
 import io.kotest.assertions.arrow.core.shouldBeRight
@@ -19,14 +19,14 @@ import org.junit.Test
 
 class AccountMapperPropertyTest {
 
-    private val currencyRepository = mockk<CurrencyRepository>()
+    private val currencyStore = mockk<CurrencyStore>()
 
     private lateinit var mapper: AccountMapper
 
     @Before
     fun mapper() {
         mapper = AccountMapper(
-            currencyRepository = currencyRepository,
+            currencyStore = currencyStore,
         )
     }
 
@@ -54,7 +54,7 @@ class AccountMapperPropertyTest {
     fun `maps invalid accounts - always fails`() = runTest {
         checkAll(Arb.invalidAccountEntity()) { entity ->
             // given
-            coEvery { currencyRepository.getBaseCurrency() } returns AssetCode.EUR
+            coEvery { currencyStore.getBaseCurrency() } returns AssetCode.EUR
 
             // when
             val res = with(mapper) { entity.toDomain() }
@@ -68,7 +68,7 @@ class AccountMapperPropertyTest {
     fun `maps valid accounts - always succeeds`() = runTest {
         checkAll(Arb.validAccountEntity()) { entity ->
             // given
-            coEvery { currencyRepository.getBaseCurrency() } returns AssetCode.EUR
+            coEvery { currencyStore.getBaseCurrency() } returns AssetCode.EUR
 
             // when
             val res = with(mapper) { entity.toDomain() }

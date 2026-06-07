@@ -18,6 +18,7 @@ import com.ivy.data.model.testing.ModelFixtures
 import com.ivy.data.model.testing.accountId
 import com.ivy.data.model.testing.transaction
 import com.ivy.data.model.testing.transactionId
+import com.ivy.data.api.TagStore
 import com.ivy.data.repository.mapper.TransactionMapper
 import com.ivy.data.validTransactionEntity
 import io.kotest.matchers.longs.shouldBeGreaterThanOrEqual
@@ -43,7 +44,7 @@ class TransactionRepositoryTest {
     private val mapper = mockk<TransactionMapper>()
     private val transactionDao = mockk<TransactionDao>()
     private val writeTransactionDao = mockk<WriteTransactionDao>()
-    private val tagRepository = mockk<TagRepository>(relaxed = true)
+    private val tagStore = mockk<TagStore>(relaxed = true)
 
     private lateinit var repository: TransactionRepository
 
@@ -58,7 +59,7 @@ class TransactionRepositoryTest {
         mapper = mapper,
         transactionDao = fakeDao ?: transactionDao,
         writeTransactionDao = fakeDao ?: writeTransactionDao,
-        tagRepository = tagRepository
+        tagStore = tagStore
     )
 
     @Test

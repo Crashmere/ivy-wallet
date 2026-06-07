@@ -10,7 +10,7 @@ import com.ivy.data.model.primitive.ColorInt
 import com.ivy.data.model.primitive.IconAsset
 import com.ivy.data.model.primitive.NotBlankTrimmedString
 import com.ivy.data.model.testing.ModelFixtures
-import com.ivy.data.repository.CurrencyRepository
+import com.ivy.data.api.CurrencyStore
 import io.kotest.assertions.arrow.core.shouldBeLeft
 import io.kotest.assertions.arrow.core.shouldBeRight
 import io.kotest.matchers.shouldBe
@@ -25,13 +25,13 @@ import java.util.UUID
 @RunWith(TestParameterInjector::class)
 class AccountMapperTest {
 
-    private val currencyRepository = mockk<CurrencyRepository>(relaxed = true)
+    private val currencyStore = mockk<CurrencyStore>(relaxed = true)
 
     private lateinit var mapper: AccountMapper
 
     @Before
     fun setup() {
-        mapper = AccountMapper(currencyRepository = currencyRepository)
+        mapper = AccountMapper(currencyStore = currencyStore)
     }
 
     @Test
@@ -113,7 +113,7 @@ class AccountMapperTest {
     fun `maps entity to domain - currency missing, fallbacks to base currency`() = runTest {
         // given
         val corruptedEntity = ValidEntity.copy(currency = null)
-        coEvery { currencyRepository.getBaseCurrency() } returns AssetCode.unsafe("BGN")
+        coEvery { currencyStore.getBaseCurrency() } returns AssetCode.unsafe("BGN")
 
         // when
         val result = with(mapper) { corruptedEntity.toDomain() }

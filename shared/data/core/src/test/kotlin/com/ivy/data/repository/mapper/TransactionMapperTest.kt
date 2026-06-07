@@ -19,7 +19,7 @@ import com.ivy.data.model.primitive.AssetCode.Companion.USD
 import com.ivy.data.model.primitive.NotBlankTrimmedString
 import com.ivy.data.model.primitive.PositiveDouble
 import com.ivy.data.model.testing.account
-import com.ivy.data.repository.AccountRepository
+import com.ivy.data.api.AccountStore
 import io.kotest.assertions.arrow.core.shouldBeLeft
 import io.kotest.assertions.arrow.core.shouldBeRight
 import io.kotest.matchers.shouldBe
@@ -38,13 +38,13 @@ import java.util.UUID
 @RunWith(TestParameterInjector::class)
 class TransactionMapperTest {
 
-    private val accountRepo = mockk<AccountRepository>()
+    private val accountStore = mockk<AccountStore>()
 
     private lateinit var mapper: TransactionMapper
 
     @Before
     fun setup() {
-        mapper = TransactionMapper(accountStore = accountRepo)
+        mapper = TransactionMapper(accountStore = accountStore)
     }
 
     // region entity -> domain
@@ -331,7 +331,7 @@ class TransactionMapperTest {
     @Test
     fun `income entity to domain - missing source account is failure`() = runTest {
         // given
-        coEvery { accountRepo.findById(AccountId) } returns null
+        coEvery { accountStore.findById(AccountId) } returns null
 
         // when
         val transfer = with(mapper) { ValidIncome.toDomain() }
@@ -460,7 +460,7 @@ class TransactionMapperTest {
     @Test
     fun `expense entity to domain - missing source account is failure`() = runTest {
         // given
-        coEvery { accountRepo.findById(AccountId) } returns null
+        coEvery { accountStore.findById(AccountId) } returns null
 
         // when
         val transfer = with(mapper) { ValidExpense.toDomain() }
@@ -636,9 +636,9 @@ class TransactionMapperTest {
     @Test
     fun `transfer entity to domain - missing source account is failure`() = runTest {
         // given
-        coEvery { accountRepo.findById(AccountId) } returns null
+        coEvery { accountStore.findById(AccountId) } returns null
         coEvery {
-            accountRepo.findById(ToAccountId)
+            accountStore.findById(ToAccountId)
         } returns Arb.account(asset = Some(EUR)).next()
 
         // when
@@ -652,9 +652,9 @@ class TransactionMapperTest {
     fun `transfer entity to domain - missing destination account is failure`() = runTest {
         // given
         coEvery {
-            accountRepo.findById(AccountId)
+            accountStore.findById(AccountId)
         } returns Arb.account(asset = Some(EUR)).next()
-        coEvery { accountRepo.findById(ToAccountId) } returns null
+        coEvery { accountStore.findById(ToAccountId) } returns null
 
         // when
         val transfer = with(mapper) { ValidTransfer.toDomain() }
@@ -669,11 +669,11 @@ class TransactionMapperTest {
         toAccount: AssetCode? = null,
     ) {
         coEvery {
-            accountRepo.findById(AccountId)
+            accountStore.findById(AccountId)
         } returns Arb.account(asset = Some(account)).next()
         if (toAccount != null) {
             coEvery {
-                accountRepo.findById(ToAccountId)
+                accountStore.findById(ToAccountId)
             } returns Arb.account(asset = Some(toAccount)).next()
         }
     }

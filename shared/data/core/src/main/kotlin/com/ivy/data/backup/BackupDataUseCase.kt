@@ -3,6 +3,7 @@ package com.ivy.data.backup
 import android.content.Context
 import android.net.Uri
 import androidx.core.net.toUri
+import com.ivy.data.api.AccountStore
 import com.ivy.data.api.AppPreferenceKeys
 import com.ivy.data.api.AppPreferenceStore
 import com.ivy.data.api.DataChangePublisher
@@ -30,7 +31,6 @@ import com.ivy.data.db.dao.write.WriteTagDao
 import com.ivy.data.db.dao.write.WriteTransactionDao
 import com.ivy.data.file.FileSystem
 import com.ivy.data.model.importing.ImportResult
-import com.ivy.data.repository.AccountRepository
 import com.ivy.data.repository.mapper.AccountMapper
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.collections.immutable.persistentListOf
@@ -57,7 +57,7 @@ class BackupDataUseCase @Inject constructor(
     private val transactionDao: TransactionDao,
     private val transactionWriter: WriteTransactionDao,
     private val appPreferenceStore: AppPreferenceStore,
-    private val accountRepository: AccountRepository,
+    private val accountStore: AccountStore,
     private val accountMapper: AccountMapper,
     private val categoryWriter: WriteCategoryDao,
     private val settingsWriter: WriteSettingsDao,
@@ -267,7 +267,7 @@ class BackupDataUseCase @Inject constructor(
                         entity.toDomain().getOrNull()
                     }
                 }
-                accountRepository.saveMany(domainAccounts)
+                accountStore.saveMany(domainAccounts)
             }
             val budgets = async { budgetWriter.saveMany(completeData.budgets) }
             val categories =
