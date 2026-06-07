@@ -46,8 +46,8 @@ import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.R
 import com.ivy.ui.preferences.asEnabledState
 import com.ivy.legacy.domain.action.account.AccTrnsAct
-import com.ivy.legacy.domain.action.account.AccountByIdAct
-import com.ivy.legacy.domain.action.account.AccountsAct
+import com.ivy.domain.usecase.account.GetLegacyAccountUseCase
+import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
 import com.ivy.legacy.domain.action.account.CalcAccBalanceAct
 import com.ivy.legacy.domain.action.account.CalcAccIncomeExpenseAct
 import com.ivy.legacy.domain.action.exchange.ExchangeAct
@@ -80,8 +80,8 @@ class TransactionsViewModel @Inject constructor(
     private val accountCreator: AccountCreator,
     private val plannedPaymentsLogic: PlannedPaymentsLogic,
     private val appPreferences: AppPreferences,
-    private val accountsAct: AccountsAct,
-    private val accountByIdAct: AccountByIdAct,
+    private val getLegacyAccountsUseCase: GetLegacyAccountsUseCase,
+    private val getLegacyAccountUseCase: GetLegacyAccountUseCase,
     private val accTrnsAct: AccTrnsAct,
     private val trnsWithDateDivsAct: LegacyTrnsWithDateDivsAct,
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
@@ -342,7 +342,7 @@ class TransactionsViewModel @Inject constructor(
     }
 
     private suspend fun initForAccount(accountId: UUID) {
-        val initialAccount = accountByIdAct(accountId) ?: error("account not found")
+        val initialAccount = getLegacyAccountUseCase(accountId) ?: error("account not found")
         account.value = initialAccount
         val range = period.value.toRange(periodState.startDayOfMonth, timeConverter, timeProvider)
 
@@ -846,7 +846,7 @@ class TransactionsViewModel @Inject constructor(
             currency.value = baseCurrency.value
 
             categories.value = getCategoriesUseCase().toImmutableList()
-            accounts.value = accountsAct(Unit)
+            accounts.value = getLegacyAccountsUseCase()
             initWithTransactions.value = false
             treatTransfersAsIncomeExpense.value =
                 appPreferences.transfersAsIncomeExpense

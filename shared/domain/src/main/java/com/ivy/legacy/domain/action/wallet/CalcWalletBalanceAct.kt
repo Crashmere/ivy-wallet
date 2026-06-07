@@ -8,11 +8,7 @@ import com.ivy.data.model.primitive.ColorInt
 import com.ivy.data.model.primitive.IconAsset
 import com.ivy.data.model.primitive.NotBlankTrimmedString
 import com.ivy.legacy.frp.action.FPAction
-import com.ivy.legacy.frp.action.thenFilter
-import com.ivy.legacy.frp.action.thenMap
-import com.ivy.legacy.frp.action.thenSum
-import com.ivy.legacy.frp.fixUnit
-import com.ivy.legacy.domain.action.account.AccountsAct
+import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
 import com.ivy.legacy.domain.action.account.CalcAccBalanceAct
 import com.ivy.legacy.domain.action.exchange.ExchangeAct
 import com.ivy.data.model.legacy.ClosedTimeRange
@@ -21,47 +17,46 @@ import java.math.BigDecimal
 import javax.inject.Inject
 
 class CalcWalletBalanceAct @Inject constructor(
-    private val accountsAct: AccountsAct,
+    private val getLegacyAccountsUseCase: GetLegacyAccountsUseCase,
     private val calcAccBalanceAct: CalcAccBalanceAct,
     private val exchangeAct: ExchangeAct,
 ) : FPAction<CalcWalletBalanceAct.Input, BigDecimal>() {
 
-    override suspend fun Input.compose(): suspend () -> BigDecimal = recipe().fixUnit()
+    override suspend fun Input.compose(): suspend () -> BigDecimal = suspend {
+        getLegacyAccountsUseCase()
+            .filter { withExcluded || it.includeInBalance }
+            .fold(BigDecimal.ZERO) { sum, account ->
+                val accountBalance = calcAccBalanceAct(
+                    CalcAccBalanceAct.Input(
+                        account = Account(
+                            id = AccountId(account.id),
+                            name = NotBlankTrimmedString.from(account.name).getOrNull()
+                                ?: error("account name cannot be blank"),
+                            asset = AssetCode.from(account.currency ?: baseCurrency).getOrNull()
+                                ?: error("account currency cannot be blank"),
+                            color = ColorInt(account.color),
+                            icon = account.icon?.let { IconAsset.from(it).getOrNull() },
+                            includeInBalance = account.includeInBalance,
+                            orderNum = account.orderNum,
+                        ),
+                        range = range
+                    )
+                )
 
-    private suspend fun Input.recipe(): suspend (Unit) -> BigDecimal =
-        accountsAct thenFilter {
-            withExcluded || it.includeInBalance
-        } thenMap { account ->
-            calcAccBalanceAct(
-                CalcAccBalanceAct.Input(
-                    account = Account(
-                        id = AccountId(account.id),
-                        name = NotBlankTrimmedString.from(account.name).getOrNull()
-                            ?: error("account name cannot be blank"),
-                        asset = AssetCode.from(account.currency ?: baseCurrency).getOrNull()
-                            ?: error("account currency cannot be blank"),
-                        color = ColorInt(account.color),
-                        icon = account.icon?.let { IconAsset.from(it).getOrNull() },
-                        includeInBalance = account.includeInBalance,
-                        orderNum = account.orderNum,
-                    ),
-                    range = range
+                val exchanged = exchangeAct(
+                    ExchangeAct.Input(
+                        data = ExchangeData(
+                            baseCurrency = baseCurrency,
+                            fromCurrency = accountBalance.account.asset.code.toOption(),
+                            toCurrency = balanceCurrency
+                        ),
+                        amount = accountBalance.balance
+                    )
                 )
-            )
-        } thenMap {
-            exchangeAct(
-                ExchangeAct.Input(
-                    data = ExchangeData(
-                        baseCurrency = baseCurrency,
-                        fromCurrency = (it.account.asset.code).toOption(),
-                        toCurrency = balanceCurrency
-                    ),
-                    amount = it.balance
-                )
-            )
-        } thenSum {
-            it.getOrNull() ?: BigDecimal.ZERO
-        }
+
+                sum + (exchanged.getOrNull() ?: BigDecimal.ZERO)
+            }
+    }
 
     @Suppress("DataClassDefaultValues")
     data class Input(

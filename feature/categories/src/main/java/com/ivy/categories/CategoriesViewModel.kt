@@ -23,7 +23,7 @@ import com.ivy.data.model.legacy.Account
 import com.ivy.base.coroutines.ioThread
 import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.preferences.asEnabledState
-import com.ivy.legacy.domain.action.account.AccountsAct
+import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
 import com.ivy.legacy.domain.action.category.LegacyCategoryIncomeWithAccountFiltersAct
 import com.ivy.legacy.domain.action.transaction.TrnsWithRangeAndAccFiltersAct
 import com.ivy.legacy.domain.data.SortOrder
@@ -50,7 +50,7 @@ class CategoriesViewModel @Inject constructor(
     private val periodState: PeriodState,
     private val appPreferences: AppPreferences,
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
-    private val accountsAct: AccountsAct,
+    private val getLegacyAccountsUseCase: GetLegacyAccountsUseCase,
     private val trnsWithRangeAndAccFiltersAct: TrnsWithRangeAndAccFiltersAct,
     private val categoryIncomeWithAccountFiltersAct: LegacyCategoryIncomeWithAccountFiltersAct,
     private val preferenceToggles: PreferenceToggles,
@@ -156,7 +156,7 @@ class CategoriesViewModel @Inject constructor(
                 timeProvider
             ) // this must be monthly
 
-            allAccounts = accountsAct(Unit)
+            allAccounts = getLegacyAccountsUseCase()
             baseCurrency.value = getBaseCurrencyCode()
 
             transactions = trnsWithRangeAndAccFiltersAct(

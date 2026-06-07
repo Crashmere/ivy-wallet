@@ -29,7 +29,7 @@ import com.ivy.ui.navigation.LoanDetailsScreen
 import com.ivy.ui.navigation.Navigation
 import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.time.impl.DateTimePicker
-import com.ivy.legacy.domain.action.account.AccountsAct
+import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
 import com.ivy.legacy.domain.logic.LoanCreator
 import com.ivy.legacy.domain.logic.LoanRecordCreator
 import com.ivy.legacy.domain.logic.loantransactions.LoanTransactionsLogic
@@ -60,7 +60,7 @@ class LoanDetailsViewModel @Inject constructor(
     private val accountCreator: AccountCreator,
     private val loanTransactionsLogic: LoanTransactionsLogic,
     private val nav: Navigation,
-    private val accountsAct: AccountsAct,
+    private val getLegacyAccountsUseCase: GetLegacyAccountsUseCase,
     private val getLoanUseCase: GetLoanUseCase,
     private val timeConverter: TimeConverter,
     private val timeProvider: TimeProvider,
@@ -253,7 +253,7 @@ class LoanDetailsViewModel @Inject constructor(
                 baseCurrency.value = it
             }
 
-            accounts.value = accountsAct(Unit)
+            accounts.value = getLegacyAccountsUseCase()
 
             loan.value = getLoanUseCase(loanId)
 
@@ -541,7 +541,7 @@ class LoanDetailsViewModel @Inject constructor(
         viewModelScope.launch {
 
             accountCreator.createAccount(data) {
-                accounts.value = accountsAct(Unit)
+                accounts.value = getLegacyAccountsUseCase()
             }
 
         }

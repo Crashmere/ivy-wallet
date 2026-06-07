@@ -20,7 +20,7 @@ import com.ivy.legacy.frp.then
 import com.ivy.data.model.legacy.Account
 import com.ivy.piechart.CategoryAmount
 import com.ivy.ui.R
-import com.ivy.legacy.domain.action.account.AccountsAct
+import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
 import com.ivy.legacy.domain.action.category.LegacyCategoryIncomeWithAccountFiltersAct
 import com.ivy.legacy.domain.action.transaction.LegacyCalcTrnsIncomeExpenseAct
 import com.ivy.legacy.domain.action.transaction.TrnsWithRangeAndAccFiltersAct
@@ -33,7 +33,7 @@ import java.util.UUID
 import javax.inject.Inject
 
 class PieChartAct @Inject constructor(
-    private val accountsAct: AccountsAct,
+    private val getLegacyAccountsUseCase: GetLegacyAccountsUseCase,
     private val trnsWithRangeAndAccFiltersAct: TrnsWithRangeAndAccFiltersAct,
     private val calcTrnsIncomeExpenseAct: LegacyCalcTrnsIncomeExpenseAct,
     private val getCategoriesUseCase: GetCategoriesUseCase,
@@ -53,7 +53,7 @@ class PieChartAct @Inject constructor(
     override suspend fun Input.compose(): suspend () -> Output = suspend {
         getUsableAccounts(
             accountIdFilterList = accountIdFilterList,
-            allAccounts = suspend { accountsAct(Unit) }
+            allAccounts = suspend { getLegacyAccountsUseCase() }
         )
     } then {
         val accountsUsed = it.first

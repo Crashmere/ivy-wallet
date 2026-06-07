@@ -51,8 +51,8 @@ import com.ivy.ui.navigation.Navigation
 import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.R
 import com.ivy.ui.time.impl.DateTimePicker
-import com.ivy.legacy.domain.action.account.AccountByIdAct
-import com.ivy.legacy.domain.action.account.AccountsAct
+import com.ivy.domain.usecase.account.GetLegacyAccountUseCase
+import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
 import com.ivy.legacy.domain.action.transaction.TrnByIdAct
 import com.ivy.legacy.domain.data.CustomExchangeRateState
 import com.ivy.legacy.domain.logic.CategoryCreator
@@ -98,10 +98,10 @@ class EditTransactionViewModel @Inject constructor(
     private val plannedPaymentsLogic: PlannedPaymentsLogic,
     private val smartTitleSuggestionsLogic: SmartTitleSuggestionsLogic,
     private val loanTransactionsLogic: LoanTransactionsLogic,
-    private val accountsAct: AccountsAct,
+    private val getLegacyAccountsUseCase: GetLegacyAccountsUseCase,
     private val getCategoriesUseCase: GetCategoriesUseCase,
     private val trnByIdAct: TrnByIdAct,
-    private val accountByIdAct: AccountByIdAct,
+    private val getLegacyAccountUseCase: GetLegacyAccountUseCase,
     private val saveLegacyTransactionUseCase: SaveLegacyTransactionUseCase,
     private val deleteTransactionUseCase: DeleteTransactionUseCase,
     private val getTransactionTagIdsUseCase: GetTransactionTagIdsUseCase,
@@ -165,7 +165,7 @@ class EditTransactionViewModel @Inject constructor(
 
             val tagList = async { getAllTags() }
 
-            val getAccounts = accountsAct(Unit)
+            val getAccounts = getLegacyAccountsUseCase()
             if (getAccounts.isEmpty()) {
                 closeScreen()
                 return@launch
@@ -397,10 +397,10 @@ class EditTransactionViewModel @Inject constructor(
         description = transaction.description
         dueDate = transaction.dueDate
         paidHistory = transaction.paidFor
-        val selectedAccount = accountByIdAct(transaction.accountId)!!
+        val selectedAccount = getLegacyAccountUseCase(transaction.accountId)!!
         account = selectedAccount
         toAccount = transaction.toAccountId?.let {
-            accountByIdAct(it)
+            getLegacyAccountUseCase(it)
         }
         category = transaction.categoryId?.let {
             getCategoryUseCase(CategoryId(it))
@@ -693,7 +693,7 @@ class EditTransactionViewModel @Inject constructor(
     private fun createAccount(data: CreateAccountData) {
         viewModelScope.launch {
             accountCreator.createAccount(data) {
-                accounts = accountsAct(Unit)
+                accounts = getLegacyAccountsUseCase()
             }
         }
     }

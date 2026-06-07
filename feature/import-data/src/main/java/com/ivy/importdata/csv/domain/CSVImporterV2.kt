@@ -25,7 +25,7 @@ import com.ivy.importdata.csv.TransferFields
 import com.ivy.data.model.legacy.Account
 import com.ivy.base.text.toLowerCaseLocal
 import com.ivy.data.model.currency.IvyCurrency
-import com.ivy.legacy.domain.action.account.AccountsAct
+import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
 import com.ivy.legacy.domain.pure.util.nextOrderNum
 import com.ivy.legacy.ui.theme.Green
 import com.ivy.legacy.ui.theme.IvyDark
@@ -36,7 +36,7 @@ import kotlin.math.absoluteValue
 import com.ivy.importdata.csv.CSVRow as CSVRowNew
 
 class CSVImporterV2 @Inject constructor(
-    private val accountsAct: AccountsAct,
+    private val getLegacyAccountsUseCase: GetLegacyAccountsUseCase,
     private val getCategoriesUseCase: GetCategoriesUseCase,
     private val getBaseCurrency: GetBaseCurrencyUseCase,
     private val saveAccountUseCase: SaveAccountUseCase,
@@ -64,7 +64,7 @@ class CSVImporterV2 @Inject constructor(
         newCategoryColorIndex = 0
         newAccountColorIndex = 0
 
-        accounts = accountsAct(Unit)
+        accounts = getLegacyAccountsUseCase()
         val initialAccountsCount = accounts.size
 
         categories = getCategoriesUseCase()
@@ -280,7 +280,7 @@ class CSVImporterV2 @Inject constructor(
         val domainAccount = newAccount.toDomainAccount(baseCurrency).getOrNull()
             ?: return null
         saveAccountUseCase(domainAccount)
-        accounts = accountsAct(Unit)
+        accounts = getLegacyAccountsUseCase()
 
         return newAccount
     }

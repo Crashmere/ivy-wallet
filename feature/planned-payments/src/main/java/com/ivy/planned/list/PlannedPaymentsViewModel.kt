@@ -15,7 +15,7 @@ import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.data.model.legacy.Account
 import com.ivy.data.model.legacy.PlannedPaymentRule
 import com.ivy.base.coroutines.ioThread
-import com.ivy.legacy.domain.action.account.AccountsAct
+import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
 import com.ivy.legacy.domain.logic.PlannedPaymentsLogic
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
@@ -30,7 +30,7 @@ class PlannedPaymentsViewModel @Inject constructor(
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
     private val plannedPaymentsLogic: PlannedPaymentsLogic,
     private val getCategoriesUseCase: GetCategoriesUseCase,
-    private val accountsAct: AccountsAct
+    private val getLegacyAccountsUseCase: GetLegacyAccountsUseCase
 ) : ComposeViewModel<PlannedPaymentsScreenState, PlannedPaymentsScreenEvent>() {
 
     private var currency by mutableStateOf("")
@@ -139,7 +139,7 @@ class PlannedPaymentsViewModel @Inject constructor(
             currency = getBaseCurrencyCode()
 
             categories = getCategoriesUseCase().toImmutableList()
-            accounts = accountsAct(Unit)
+            accounts = getLegacyAccountsUseCase()
 
             oneTimePlannedPayment =
                 ioThread { plannedPaymentsLogic.oneTime() }.toImmutableList()

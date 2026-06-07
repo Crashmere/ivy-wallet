@@ -24,8 +24,8 @@ import com.ivy.legacy.domain.logic.AccountCreator
 import com.ivy.ui.navigation.EditPlannedScreen
 import com.ivy.ui.navigation.Navigation
 import com.ivy.ui.ComposeViewModel
-import com.ivy.legacy.domain.action.account.AccountByIdAct
-import com.ivy.legacy.domain.action.account.AccountsAct
+import com.ivy.domain.usecase.account.GetLegacyAccountUseCase
+import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
 import com.ivy.legacy.domain.logic.CategoryCreator
 import com.ivy.data.model.legacy.CreateAccountData
 import com.ivy.data.model.legacy.CreateCategoryData
@@ -52,8 +52,8 @@ class EditPlannedViewModel @Inject constructor(
     private val nav: Navigation,
     private val categoryCreator: CategoryCreator,
     private val accountCreator: AccountCreator,
-    private val accountByIdAct: AccountByIdAct,
-    private val accountsAct: AccountsAct,
+    private val getLegacyAccountUseCase: GetLegacyAccountUseCase,
+    private val getLegacyAccountsUseCase: GetLegacyAccountsUseCase,
     private val timeConverter: TimeConverter,
 ) : ComposeViewModel<EditPlannedScreenState, EditPlannedScreenEvent>() {
 
@@ -266,7 +266,7 @@ class EditPlannedViewModel @Inject constructor(
             transactionType = screen.type
             editMode = screen.plannedPaymentRuleId != null
 
-            val accounts = accountsAct(Unit)
+            val accounts = getLegacyAccountsUseCase()
             if (accounts.isEmpty()) {
                 nav.back()
                 return@launch
@@ -305,7 +305,7 @@ class EditPlannedViewModel @Inject constructor(
         intervalType = rule.intervalType
         initialTitle = rule.title
         description = rule.description
-        val selectedAccount = accountByIdAct(rule.accountId) ?: error("account not found")
+        val selectedAccount = getLegacyAccountUseCase(rule.accountId) ?: error("account not found")
         account = selectedAccount
         category = rule.categoryId?.let {
             getCategoryUseCase(CategoryId(it))
@@ -490,7 +490,7 @@ class EditPlannedViewModel @Inject constructor(
     private fun createAccount(data: CreateAccountData) {
         viewModelScope.launch {
             accountCreator.createAccount(data) {
-                accounts = accountsAct(Unit)
+                accounts = getLegacyAccountsUseCase()
             }
         }
     }

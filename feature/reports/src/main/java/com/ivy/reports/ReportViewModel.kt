@@ -46,7 +46,7 @@ import com.ivy.ui.R
 import com.ivy.ui.platform.FilePicker
 import com.ivy.ui.platform.FileSharer
 import com.ivy.ui.preferences.asEnabledState
-import com.ivy.legacy.domain.action.account.AccountsAct
+import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
 import com.ivy.legacy.domain.action.exchange.ExchangeAct
 import com.ivy.legacy.domain.action.transaction.CalcTrnsIncomeExpenseAct
 import com.ivy.legacy.domain.action.transaction.TrnsWithDateDivsAct
@@ -81,7 +81,7 @@ class ReportViewModel @Inject constructor(
     private val plannedPaymentsLogic: PlannedPaymentsLogic,
     private val periodState: PeriodState,
     private val exchangeAct: ExchangeAct,
-    private val accountsAct: AccountsAct,
+    private val getLegacyAccountsUseCase: GetLegacyAccountsUseCase,
     private val getCategoriesUseCase: GetCategoriesUseCase,
     private val trnsWithDateDivsAct: TrnsWithDateDivsAct,
     private val calcTrnsIncomeExpenseAct: CalcTrnsIncomeExpenseAct,
@@ -223,7 +223,7 @@ class ReportViewModel @Inject constructor(
     private fun start() {
         viewModelScope.launch(Dispatchers.IO) {
             baseCurrency = getBaseCurrencyCode()
-            accounts = accountsAct(Unit)
+            accounts = getLegacyAccountsUseCase()
             categories =
                 (listOf(unSpecifiedCategory) + getCategoriesUseCase()).toImmutableList()
             allTags = getTagsUseCase().toImmutableList()
@@ -241,7 +241,7 @@ class ReportViewModel @Inject constructor(
                     history = persistentListOf(),
                     upcomingTransactions = persistentListOf(),
                     overdueTransactions = persistentListOf(),
-                    accounts = accountsAct(Unit),
+                    accounts = getLegacyAccountsUseCase(),
                     reportFilter = filter,
                     accountIdFilters = persistentListOf(),
                     transactions = persistentListOf(),

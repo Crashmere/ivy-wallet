@@ -3,9 +3,8 @@ package com.ivy.legacy.domain.action.viewmodel.home
 import com.ivy.base.time.TimeProvider
 import com.ivy.data.model.Transaction
 import com.ivy.legacy.frp.action.FPAction
-import com.ivy.legacy.frp.lambda
 import com.ivy.legacy.frp.then
-import com.ivy.legacy.domain.action.account.AccountByIdAct
+import com.ivy.domain.usecase.account.GetLegacyAccountUseCase
 import com.ivy.legacy.domain.action.exchange.ExchangeAct
 import com.ivy.legacy.domain.action.exchange.actInput
 import com.ivy.legacy.domain.action.transaction.DueTrnsAct
@@ -21,7 +20,7 @@ import javax.inject.Inject
 
 class DueTrnsInfoAct @Inject constructor(
     private val dueTrnsAct: DueTrnsAct,
-    private val accountByIdAct: AccountByIdAct,
+    private val getLegacyAccountUseCase: GetLegacyAccountUseCase,
     private val exchangeAct: ExchangeAct,
     private val timeProvider: TimeProvider
 ) : FPAction<DueTrnsInfoAct.Input, DueTrnsInfoAct.Output>() {
@@ -39,7 +38,7 @@ class DueTrnsInfoAct @Inject constructor(
             val exchangeArg = ExchangeTrnArgument(
                 baseCurrency = baseCurrency,
                 exchange = ::actInput then exchangeAct,
-                getAccount = accountByIdAct.lambda()
+                getAccount = { getLegacyAccountUseCase(it) }
             )
 
             Output(

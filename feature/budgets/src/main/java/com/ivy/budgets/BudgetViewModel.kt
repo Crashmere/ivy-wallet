@@ -30,7 +30,7 @@ import com.ivy.domain.usecase.category.GetCategoriesUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.R
-import com.ivy.legacy.domain.action.account.AccountsAct
+import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
 import com.ivy.legacy.domain.action.exchange.ExchangeAct
 import com.ivy.legacy.domain.action.transaction.HistoryTrnsAct
 import com.ivy.data.model.legacy.CreateBudgetData
@@ -52,7 +52,7 @@ class BudgetViewModel @Inject constructor(
     private val reorderBudgetsUseCase: ReorderBudgetsUseCase,
     private val budgetCreator: BudgetCreator,
     private val periodState: PeriodState,
-    private val accountsAct: AccountsAct,
+    private val getLegacyAccountsUseCase: GetLegacyAccountsUseCase,
     private val getCategoriesUseCase: GetCategoriesUseCase,
     private val getBudgetsUseCase: GetBudgetsUseCase,
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
@@ -183,7 +183,7 @@ class BudgetViewModel @Inject constructor(
     private fun start() {
         viewModelScope.launch {
             categories.value = getCategoriesUseCase().toImmutableList()
-            val accounts = accountsAct(Unit)
+            val accounts = getLegacyAccountsUseCase()
             val baseCurrency = getBaseCurrencyCode()
             val startDateOfMonth = periodState.startDayOfMonth
             val timeRange = com.ivy.legacy.ui.model.period.TimePeriod.currentMonth(

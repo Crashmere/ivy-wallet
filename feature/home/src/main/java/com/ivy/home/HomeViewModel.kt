@@ -45,7 +45,7 @@ import com.ivy.ui.navigation.MainTabState
 import com.ivy.ui.navigation.Navigation
 import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.preferences.asEnabledState
-import com.ivy.legacy.domain.action.account.AccountsAct
+import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
 import com.ivy.legacy.domain.action.global.StartDayOfMonthAct
 import com.ivy.legacy.domain.action.settings.CalcBufferDiffAct
 import com.ivy.legacy.domain.action.transaction.HistoryWithDateDivsAct
@@ -84,7 +84,7 @@ class HomeViewModel @Inject constructor(
     private val switchThemeUseCase: SwitchThemeUseCase,
     private val getBufferAmountUseCase: GetBufferAmountUseCase,
     private val setBufferAmountUseCase: SetBufferAmountUseCase,
-    private val accountsAct: AccountsAct,
+    private val getLegacyAccountsUseCase: GetLegacyAccountsUseCase,
     private val getCategoriesUseCase: GetCategoriesUseCase,
     private val calcBufferDiffAct: CalcBufferDiffAct,
     private val upcomingAct: UpcomingAct,
@@ -314,7 +314,7 @@ class HomeViewModel @Inject constructor(
         input: Pair<HomePreferences, ClosedTimeRange>
     ): Triple<HomePreferences, ClosedTimeRange, List<Account>> {
         val (preferences, timeRange) = input
-        val accounts = accountsAct(Unit)
+        val accounts = getLegacyAccountsUseCase()
         val categories = getCategoriesUseCase()
 
         baseData = AppBaseData(
