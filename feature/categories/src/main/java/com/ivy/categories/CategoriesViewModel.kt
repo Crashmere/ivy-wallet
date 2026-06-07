@@ -19,10 +19,10 @@ import com.ivy.legacy.data.model.TimePeriod
 import com.ivy.legacy.datamodel.Account
 import com.ivy.base.legacy.ioThread
 import com.ivy.ui.ComposeViewModel
-import com.ivy.wallet.domain.action.account.AccountsAct
-import com.ivy.wallet.domain.action.category.LegacyCategoryIncomeWithAccountFiltersAct
-import com.ivy.wallet.domain.action.settings.BaseCurrencyAct
-import com.ivy.wallet.domain.action.transaction.TrnsWithRangeAndAccFiltersAct
+import com.ivy.legacy.domain.action.account.AccountsAct
+import com.ivy.legacy.domain.action.category.LegacyCategoryIncomeWithAccountFiltersAct
+import com.ivy.legacy.domain.action.settings.BaseCurrencyAct
+import com.ivy.legacy.domain.action.transaction.TrnsWithRangeAndAccFiltersAct
 import com.ivy.legacy.domain.data.SortOrder
 import com.ivy.legacy.domain.logic.CategoryCreator
 import com.ivy.legacy.domain.model.CreateCategoryData

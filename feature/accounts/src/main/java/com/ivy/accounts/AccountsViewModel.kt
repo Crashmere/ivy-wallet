@@ -23,9 +23,9 @@ import com.ivy.data.model.currency.format
 import com.ivy.base.legacy.ioThread
 import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.R
-import com.ivy.wallet.domain.action.settings.BaseCurrencyAct
-import com.ivy.wallet.domain.action.viewmodel.account.AccountDataAct
-import com.ivy.wallet.domain.action.wallet.CalcWalletBalanceAct
+import com.ivy.legacy.domain.action.settings.BaseCurrencyAct
+import com.ivy.legacy.domain.action.viewmodel.account.AccountDataAct
+import com.ivy.legacy.domain.action.wallet.CalcWalletBalanceAct
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.collections.immutable.ImmutableList

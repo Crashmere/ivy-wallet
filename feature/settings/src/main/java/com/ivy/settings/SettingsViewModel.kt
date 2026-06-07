@@ -34,9 +34,9 @@ import com.ivy.base.legacy.timeNowUTC
 import com.ivy.base.legacy.uiThread
 import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.platform.FilePicker
-import com.ivy.wallet.domain.action.global.StartDayOfMonthAct
-import com.ivy.wallet.domain.action.global.UpdateStartDayOfMonthAct
-import com.ivy.wallet.domain.action.settings.SettingsAct
+import com.ivy.legacy.domain.action.global.StartDayOfMonthAct
+import com.ivy.legacy.domain.action.global.UpdateStartDayOfMonthAct
+import com.ivy.legacy.domain.action.settings.SettingsAct
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers

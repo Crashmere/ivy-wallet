@@ -4,7 +4,7 @@ import com.ivy.data.db.dao.write.WriteLoanDao
 import com.ivy.legacy.datamodel.Loan
 import com.ivy.base.legacy.ioThread
 import com.ivy.legacy.domain.model.CreateLoanData
-import com.ivy.wallet.domain.pure.util.nextOrderNum
+import com.ivy.legacy.domain.pure.util.nextOrderNum
 import java.util.UUID
 import javax.inject.Inject
 

@@ -11,7 +11,7 @@ import com.ivy.data.repository.AccountRepository
 import com.ivy.data.repository.CurrencyRepository
 import com.ivy.base.legacy.ioThread
 import com.ivy.legacy.domain.model.CreateAccountData
-import com.ivy.wallet.domain.pure.util.nextOrderNum
+import com.ivy.legacy.domain.pure.util.nextOrderNum
 import java.util.UUID
 import javax.inject.Inject
 import com.ivy.legacy.datamodel.Account as LegacyAccount

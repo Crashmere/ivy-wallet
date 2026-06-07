@@ -44,9 +44,9 @@ import com.ivy.navigation.Navigation
 import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.R
 import com.ivy.ui.time.impl.DateTimePicker
-import com.ivy.wallet.domain.action.account.AccountByIdAct
-import com.ivy.wallet.domain.action.account.AccountsAct
-import com.ivy.wallet.domain.action.transaction.TrnByIdAct
+import com.ivy.legacy.domain.action.account.AccountByIdAct
+import com.ivy.legacy.domain.action.account.AccountsAct
+import com.ivy.legacy.domain.action.transaction.TrnByIdAct
 import com.ivy.legacy.domain.data.CustomExchangeRateState
 import com.ivy.legacy.domain.logic.CategoryCreator
 import com.ivy.legacy.domain.logic.PlannedPaymentsLogic

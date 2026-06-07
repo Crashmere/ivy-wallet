@@ -7,7 +7,7 @@ import com.ivy.base.time.TimeProvider
 import com.ivy.base.legacy.ivyMinTime
 import com.ivy.base.legacy.dateNowUTC
 import com.ivy.base.legacy.ivyMaxTime
-import com.ivy.wallet.domain.pure.data.ClosedTimeRange
+import com.ivy.legacy.domain.pure.data.ClosedTimeRange
 import java.time.Instant
 import java.time.ZoneOffset
 

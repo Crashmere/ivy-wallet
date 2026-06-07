@@ -25,8 +25,8 @@ import com.ivy.base.legacy.ioThread
 import com.ivy.loans.loan.data.DisplayLoan
 import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.time.impl.DateTimePicker
-import com.ivy.wallet.domain.action.account.AccountsAct
-import com.ivy.wallet.domain.action.loan.LoansAct
+import com.ivy.legacy.domain.action.account.AccountsAct
+import com.ivy.legacy.domain.action.loan.LoansAct
 import com.ivy.legacy.domain.logic.LoanCreator
 import com.ivy.legacy.domain.logic.loantransactions.LoanTransactionsLogic
 import com.ivy.legacy.domain.model.CreateAccountData

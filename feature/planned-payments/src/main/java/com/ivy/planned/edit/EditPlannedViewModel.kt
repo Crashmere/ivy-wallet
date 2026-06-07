@@ -26,7 +26,7 @@ import com.ivy.base.legacy.ioThread
 import com.ivy.navigation.EditPlannedScreen
 import com.ivy.navigation.Navigation
 import com.ivy.ui.ComposeViewModel
-import com.ivy.wallet.domain.action.account.AccountsAct
+import com.ivy.legacy.domain.action.account.AccountsAct
 import com.ivy.legacy.domain.logic.CategoryCreator
 import com.ivy.legacy.domain.logic.PlannedPaymentsGenerator
 import com.ivy.legacy.domain.model.CreateAccountData

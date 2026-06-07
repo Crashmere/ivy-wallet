@@ -22,14 +22,14 @@ import com.ivy.legacy.datamodel.temp.toLegacyDomain
 import com.ivy.base.legacy.toEpochSeconds
 import com.ivy.legacy.domain.data.TransactionHistoryDateDivider
 import com.ivy.legacy.domain.logic.currency.ExchangeRatesLogic
-import com.ivy.wallet.domain.pure.exchange.ExchangeData
-import com.ivy.wallet.domain.pure.exchange.ExchangeTrnArgument
-import com.ivy.wallet.domain.pure.exchange.exchangeInBaseCurrency
-import com.ivy.wallet.domain.pure.transaction.LegacyFoldTransactions
-import com.ivy.wallet.domain.pure.transaction.LegacyTrnFunctions
-import com.ivy.wallet.domain.pure.transaction.expenses
-import com.ivy.wallet.domain.pure.transaction.incomes
-import com.ivy.wallet.domain.pure.transaction.sumTrns
+import com.ivy.legacy.domain.pure.exchange.ExchangeData
+import com.ivy.legacy.domain.pure.exchange.ExchangeTrnArgument
+import com.ivy.legacy.domain.pure.exchange.exchangeInBaseCurrency
+import com.ivy.legacy.domain.pure.transaction.LegacyFoldTransactions
+import com.ivy.legacy.domain.pure.transaction.LegacyTrnFunctions
+import com.ivy.legacy.domain.pure.transaction.expenses
+import com.ivy.legacy.domain.pure.transaction.incomes
+import com.ivy.legacy.domain.pure.transaction.sumTrns
 import java.math.BigDecimal
 import java.util.UUID
 

@@ -16,8 +16,8 @@ import com.ivy.legacy.data.model.filterOverdue
 import com.ivy.legacy.data.model.filterUpcoming
 import com.ivy.legacy.datamodel.Account
 import com.ivy.legacy.datamodel.temp.toDomain
-import com.ivy.wallet.domain.action.viewmodel.account.AccountDataAct
-import com.ivy.wallet.domain.pure.data.ClosedTimeRange
+import com.ivy.legacy.domain.action.viewmodel.account.AccountDataAct
+import com.ivy.legacy.domain.pure.data.ClosedTimeRange
 import kotlinx.collections.immutable.toImmutableList
 import javax.inject.Inject
 import kotlin.math.abs

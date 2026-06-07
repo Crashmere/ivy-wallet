@@ -14,10 +14,10 @@ import com.ivy.domain.features.Features
 import com.ivy.legacy.datamodel.Account
 import com.ivy.base.legacy.getDefaultFIATCurrency
 import com.ivy.base.legacy.ioThread
-import com.ivy.wallet.domain.action.account.AccountsAct
-import com.ivy.wallet.domain.action.settings.BaseCurrencyAct
-import com.ivy.wallet.domain.action.transaction.AllTrnsAct
-import com.ivy.wallet.domain.action.transaction.TrnsWithDateDivsAct
+import com.ivy.legacy.domain.action.account.AccountsAct
+import com.ivy.legacy.domain.action.settings.BaseCurrencyAct
+import com.ivy.legacy.domain.action.transaction.AllTrnsAct
+import com.ivy.legacy.domain.action.transaction.TrnsWithDateDivsAct
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf

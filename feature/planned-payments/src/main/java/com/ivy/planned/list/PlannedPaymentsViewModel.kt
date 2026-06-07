@@ -15,7 +15,7 @@ import com.ivy.data.repository.CategoryRepository
 import com.ivy.legacy.datamodel.Account
 import com.ivy.legacy.datamodel.PlannedPaymentRule
 import com.ivy.base.legacy.ioThread
-import com.ivy.wallet.domain.action.account.AccountsAct
+import com.ivy.legacy.domain.action.account.AccountsAct
 import com.ivy.legacy.domain.logic.PlannedPaymentsLogic
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
