@@ -108,7 +108,7 @@
 现状：
 
 - `Fake*Dao` 已在 `shared:data:core/src/test`。
-- `TestDispatchersProvider`、`TestTimeConverter` 已在 `shared:base-testing`；`TestResourceProvider` 已随资源端口迁到 `shared:ui:core/src/test`。
+- 旧 `TestDispatchersProvider`、`TestTimeConverter` 已随对应端口清理删除；`TestResourceProvider` 已随资源端口迁到 `shared:ui:core/src/test`。
 - `FakeRepositoryMemo` 已移到 test/androidTest 源集。
 - 生产源码中的空 `TestIdlingResource` 计数器已删除，调用方不再插入测试空闲计数。
 
@@ -273,7 +273,7 @@
 
 - 新增 `ivy.android-library` 作为更清晰的 Android library 基础约定；旧 `ivy.kotlin-android` 兼容别名已经删除，当前没有模块使用它。
 - `shared:base`、`shared:data:model`、`shared:data:model-testing` 已从 `ivy.feature` 迁出，不再默认启用完整 Compose UI 配置。
-- `shared:base` 已退出 `ivy.hilt`，基础时间/线程端口的 Hilt 绑定迁到 app 装配层；Compose runtime 和 kotlinx serialization 也已经移除。`shared:base` 与 `shared:base-testing` 当前已改成纯 JVM/Kotlin 模块，不再需要 Android namespace、manifest 或 SDK 配置。
+- `shared:base` 已退出 `ivy.hilt`，基础时间/线程端口的 Hilt 绑定迁到 app 装配层；Compose runtime 和 kotlinx serialization 也已经移除。`shared:base` 当前已改成纯 JVM/Kotlin 模块，不再需要 Android namespace、manifest 或 SDK 配置。
 - `shared:data:model` 已移除轻量 `compose-runtime`，纯数据模型不再依赖 UI runtime。
 - 过渡用的 `ivy.compose-runtime` 插件已经删除；当前非页面模块不再需要轻量 Compose 编译配置。
 - `ivy.integration.testing` 已从 `ivy.feature` 迁出并收敛为 instrumentation 测试配置，避免因为集成测试配置把完整 Compose UI 或 Android library 基础配置带入数据层。
@@ -296,7 +296,7 @@
 - `ivy.android-library` 不再给所有 Android library 默认添加 Arrow；`shared:data:model` 因公开 `Either/Raise` API 显式用 `api` 暴露 Arrow，其他实际直接使用 Arrow 的模块改为各自声明 `implementation(libs.bundles.arrow)`；旧 FRP helper 移出后，`shared:base` 不再需要 Arrow。
 - `ivy.android-library` 不再给所有 Android library 默认添加 Timber；domain 汇率同步和饼图点击逻辑中的调试日志已删除，当前只保留 app 日志初始化/锁屏认证日志以及 data core 的网络/导入错误日志。
 - `ivy.android-library` 不再给所有 Android library 默认添加整套单元测试依赖；当前有 `src/test` 的 `shared:base`、`shared:data:model`、`shared:data:model-testing`、`shared:data:core`、`shared:domain` 和 `shared:ui:core` 改为在各自模块里显式声明测试 bundle。
-- 新增 `ivy.kotlin-library` 作为纯 JVM/Kotlin 模块约定；`shared:base`、`shared:base-testing`、`shared:data:model`、`shared:data:model-testing`、`shared:data:api` 和 `shared:domain` 已从 Android library 改成 JVM 模块，不再需要 namespace、Android manifest、min/compile SDK 或 Android Kotlin runtime。
+- 新增 `ivy.kotlin-library` 作为纯 JVM/Kotlin 模块约定；`shared:base`、`shared:data:model`、`shared:data:model-testing`、`shared:data:api` 和 `shared:domain` 已从 Android library 改成 JVM 模块，不再需要 namespace、Android manifest、min/compile SDK 或 Android Kotlin runtime。
 - `shared:data:core` 的 DataStore 依赖已从 `api` 收窄为 `implementation`；DataStore 绑定仍由 data core 提供，但不再通过 data core 传递暴露给其他模块。
 - `shared:domain` 已移除 AndroidX DataStore 依赖；偏好开关的存储能力抽成 `PreferenceToggleStore` 端口，DataStore 读写和清空由 `shared:data:core` 实现，domain 只保留业务级 `PreferenceToggleRepository` 和开关元数据。
 - `shared:data:api` 已显式暴露 Arrow 依赖；`ExchangeRateStore` 的公开签名直接使用 `Either`，不再依赖 `shared:data:model` 间接传递 Arrow。
@@ -322,7 +322,7 @@
 - `shared:data:core/src/main/java/com/ivy/data/db/dao/fake/Fake*Dao.kt`
 - `shared:base/src/main/java/com/ivy/base/TestDispatchersProvider.kt`
 - `shared:base/src/main/java/com/ivy/base/resource/TestResourceProvider.kt`（已迁到 `shared:ui:core/src/test`）
-- `shared:base/src/main/java/com/ivy/base/time/impl/TestTimeConverter.kt`
+- 旧 `shared:base/src/main/java/com/ivy/base/time/impl/TestTimeConverter.kt` 已删除。
 
 可选方案：
 
@@ -332,13 +332,12 @@
 
 个人维护推荐：
 
-- 优先采用 `:shared:base-testing` 这类测试支持模块，名字直接、职责清晰。
+- 优先把测试 helper 放回具体模块的 `src/test` 或 `src/androidTest`；只有多个模块确实复用时再单独建测试支持模块。
 - 不为了“标准化”引入过复杂的 test fixtures 配置。
 
 当前进展：
 
-- 新增 `:shared:base-testing`，用于承载跨模块复用的基础测试 helper。
-- `shared:data:core`、`shared:domain`、`shared:ui:core` 的测试源集改为显式依赖 `shared:base-testing`。
+- `:shared:base-testing` 已删除；剩余测试 helper 已回到具体模块测试源集，当前没有跨模块复用的基础测试 helper 模块。
 - `Fake*Dao`、`FakeRepositoryMemo` 已归位到测试源集；生产源码不再包含这些 fake。
 - 测试源集中的 `FakeSettingsDao`、`FakePlannedPaymentDao`、`FakeLoanRecordDao` 已补齐基础内存行为，不再保留 `TODO("Not yet implemented")` 作为潜在测试崩溃点。
 - 已删除生产源码中的空 `TestIdlingResource` 以及 Root/Main/Import/Loans ViewModel 中的空调用。
@@ -788,6 +787,7 @@
 - `shared:domain` 中剩余只服务 use case 外层切线程的 `DispatchersProvider` 注入已移除，账户/分类创建编辑、旧账户/交易读取、计划付款汇总、账户统计和 CSV 导出改用标准 `Dispatchers.IO/Default`；时间端口仍保留在 base，用于现有日期语义。
 - 最后一个 UI 调用方 `Toaster` 已改用标准 `Dispatchers.Main`；`DispatchersProvider/IvyDispatchersProvider/TestDispatchersProvider` 和 app 绑定随之删除，基础层不再保留线程调度端口。
 - `shared:domain` 的账户统计、分类汇总、计划付款、贷款同步、CSV 导出和旧交易历史分组已改用 domain 内部 `java.time` helper；domain 不再注入 `TimeProvider/TimeConverter`，也不再依赖 `shared:base/base-testing`。
+- 无源码消费方的 `:shared:base-testing` 已删除，`shared:ui:core` 移除过时测试依赖；基础测试 helper 不再保留独立模块。
 - `PeriodState` 已承接 legacy 周期的当前月、范围解析和月份前后移动逻辑；账户、分类、预算、余额、首页、交易和饼图页不再直接注入 `TimeProvider/TimeConverter`，并移除对 `shared:base` 的 Gradle 依赖。
 - `feature:reports` 的筛选周期范围和周期显示已改走 `PeriodState`/legacy 周期显示 helper，CSV 导出文件名使用 JDK `Instant.now()` 生成 UTC 时间戳；报表模块不再直接依赖 `shared:base`。
 - `feature:edit-transaction` 的交易日期、时间和 due date 转换已用局部系统时区 `java.time` helper 表达，创建/复制交易默认时间改用 `Instant.now()`；编辑交易模块不再直接依赖 `shared:base`。

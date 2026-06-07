@@ -11,6 +11,5 @@ dependencies {
     implementation(projects.shared.base)
     implementation(projects.shared.data.model)
 
-    testImplementation(projects.shared.baseTesting)
     testImplementation(libs.bundles.testing)
 }
