@@ -24,13 +24,13 @@ import com.ivy.data.model.legacy.Budget
 import com.ivy.legacy.domain.logic.BudgetCreator
 import com.ivy.data.model.currency.format
 import com.ivy.base.text.isNotNullOrBlank
+import com.ivy.domain.usecase.budget.GetBudgetsUseCase
 import com.ivy.domain.usecase.budget.ReorderBudgetsUseCase
 import com.ivy.domain.usecase.category.GetCategoriesUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.R
 import com.ivy.legacy.domain.action.account.AccountsAct
-import com.ivy.legacy.domain.action.budget.BudgetsAct
 import com.ivy.legacy.domain.action.exchange.ExchangeAct
 import com.ivy.legacy.domain.action.transaction.HistoryTrnsAct
 import com.ivy.data.model.legacy.CreateBudgetData
@@ -54,7 +54,7 @@ class BudgetViewModel @Inject constructor(
     private val periodState: PeriodState,
     private val accountsAct: AccountsAct,
     private val getCategoriesUseCase: GetCategoriesUseCase,
-    private val budgetsAct: BudgetsAct,
+    private val getBudgetsUseCase: GetBudgetsUseCase,
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
     private val historyTrnsAct: HistoryTrnsAct,
     private val exchangeAct: ExchangeAct,
@@ -190,7 +190,7 @@ class BudgetViewModel @Inject constructor(
                 startDayOfMonth = startDateOfMonth,
                 timeProvider = timeProvider,
             ).toRange(startDateOfMonth = startDateOfMonth, timeConverter, timeProvider)
-            val budgets = budgetsAct(Unit)
+            val budgets = getBudgetsUseCase()
 
             appBudgetMax.doubleValue = budgets
                 .filter { it.categoryIdsSerialized.isNullOrBlank() }
