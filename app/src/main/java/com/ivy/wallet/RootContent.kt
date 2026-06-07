@@ -23,6 +23,7 @@ import com.ivy.ui.navigation.Navigation
 import com.ivy.ui.navigation.NavigationRoot
 import com.ivy.legacy.ui.LegacyUiRoot
 import com.ivy.ui.platform.BuildInfoProvider
+import com.ivy.ui.platform.DatePicker
 import com.ivy.ui.platform.FileSharer
 import com.ivy.ui.platform.LocalBuildInfoProvider
 import com.ivy.ui.platform.LocalFileSharer
@@ -30,7 +31,6 @@ import com.ivy.ui.theme.IvyMaterial3Theme
 import com.ivy.ui.theme.ThemeState
 import com.ivy.ui.time.TimeFormatter
 import com.ivy.ui.time.impl.DateTimePicker
-import com.ivy.wallet.platform.ActivityDatePicker
 import com.ivy.wallet.ui.applocked.AppLockedScreen
 
 @OptIn(ExperimentalFoundationApi::class, ExperimentalAnimationApi::class)
@@ -43,7 +43,7 @@ fun RootContent(
     timeProvider: TimeProvider,
     timeFormatter: TimeFormatter,
     dateTimePicker: DateTimePicker,
-    datePicker: ActivityDatePicker,
+    datePicker: DatePicker,
     preferenceToggles: PreferenceToggles,
     preferenceToggleRepository: PreferenceToggleRepository,
     buildInfoProvider: BuildInfoProvider,
