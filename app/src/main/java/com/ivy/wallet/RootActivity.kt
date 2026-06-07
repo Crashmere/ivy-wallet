@@ -1,6 +1,5 @@
 package com.ivy.wallet
 
-import android.net.Uri
 import android.os.Bundle
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.compose.setContent
@@ -16,14 +15,13 @@ import com.ivy.base.time.TimeProvider
 import com.ivy.domain.preferences.toggles.PreferenceToggles
 import com.ivy.legacy.ui.state.PeriodState
 import com.ivy.ui.navigation.Navigation
-import com.ivy.ui.platform.BuildInfoProvider
-import com.ivy.ui.platform.FileSharer
 import com.ivy.ui.theme.ThemeState
 import com.ivy.ui.time.TimeFormatter
 import com.ivy.ui.time.impl.DateTimePicker
 import com.ivy.wallet.platform.ActivityDatePicker
 import com.ivy.wallet.platform.ActivityFileSharer
 import com.ivy.wallet.platform.ActivityResultFilePicker
+import com.ivy.wallet.platform.AppBuildInfoProvider
 import com.ivy.wallet.platform.BiometricAuthenticator
 import com.ivy.wallet.platform.SecureWindowController
 import com.ivy.wallet.platform.hasLockScreen as deviceHasLockScreen
@@ -34,9 +32,7 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 @Suppress("TooManyFunctions")
-class RootActivity : AppCompatActivity(),
-    BuildInfoProvider,
-    FileSharer {
+class RootActivity : AppCompatActivity() {
     @Inject
     lateinit var themeState: ThemeState
 
@@ -96,8 +92,8 @@ class RootActivity : AppCompatActivity(),
                 datePicker = datePicker,
                 preferenceToggles = preferenceToggles,
                 preferenceDataStore = preferenceDataStore,
-                buildInfoProvider = this,
-                fileSharer = this,
+                buildInfoProvider = AppBuildInfoProvider,
+                fileSharer = activityFileSharer,
                 viewModel = viewModel,
                 intent = intent,
                 hasLockScreen = { deviceHasLockScreen(this) },
@@ -156,20 +152,5 @@ class RootActivity : AppCompatActivity(),
             backPressedCallback.isEnabled = true
         }
     }
-
-    override fun shareCSVFile(fileUri: Uri) {
-        activityFileSharer.shareCSVFile(fileUri)
-    }
-
-    override fun shareZipFile(fileUri: Uri) {
-        activityFileSharer.shareZipFile(fileUri)
-    }
-
-    override val isDebug: Boolean
-        get() = BuildConfig.DEBUG
-    override val buildVersionName: String
-        get() = BuildConfig.VERSION_NAME
-    override val buildVersionCode: Int
-        get() = BuildConfig.VERSION_CODE
 
 }

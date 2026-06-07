@@ -3,18 +3,19 @@ package com.ivy.wallet.platform
 import android.content.Intent
 import android.net.Uri
 import androidx.activity.ComponentActivity
+import com.ivy.ui.platform.FileSharer
 
 class ActivityFileSharer(
     private val activity: ComponentActivity
-) {
-    fun shareCSVFile(fileUri: Uri) {
+) : FileSharer {
+    override fun shareCSVFile(fileUri: Uri) {
         shareFile(
             fileUri = fileUri,
             mimeType = "text/csv"
         )
     }
 
-    fun shareZipFile(fileUri: Uri) {
+    override fun shareZipFile(fileUri: Uri) {
         shareFile(
             fileUri = fileUri,
             mimeType = "application/zip"
