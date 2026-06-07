@@ -12,6 +12,7 @@ import com.ivy.data.api.DataChangePublisher
 import com.ivy.data.api.ExchangeRateStore
 import com.ivy.data.api.file.TextFileStore
 import com.ivy.data.api.InitialSetupStore
+import com.ivy.data.api.LastSelectedAccountStore
 import com.ivy.data.api.LoanRecordStore
 import com.ivy.data.api.LoanStore
 import com.ivy.data.api.PlannedPaymentRuleStore
@@ -57,6 +58,11 @@ abstract class DataBindingsModule {
 
     @Binds
     abstract fun bindInitialSetupStore(store: SharedPrefsAppPreferenceStore): InitialSetupStore
+
+    @Binds
+    abstract fun bindLastSelectedAccountStore(
+        store: SharedPrefsAppPreferenceStore
+    ): LastSelectedAccountStore
 
     @Binds
     abstract fun bindBackupStore(defaultBackupStore: DefaultBackupStore): BackupStore

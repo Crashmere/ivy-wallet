@@ -1,13 +1,13 @@
 package com.ivy.domain.usecase.account
 
-import com.ivy.data.api.AppPreferenceStore
+import com.ivy.data.api.LastSelectedAccountStore
 import java.util.UUID
 import javax.inject.Inject
 
 class GetLastSelectedAccountIdUseCase @Inject constructor(
-    private val appPreferences: AppPreferenceStore,
+    private val lastSelectedAccountStore: LastSelectedAccountStore,
 ) {
     operator fun invoke(): UUID? {
-        return appPreferences.lastSelectedAccountId?.let(UUID::fromString)
+        return lastSelectedAccountStore.lastSelectedAccountId?.let(UUID::fromString)
     }
 }

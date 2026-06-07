@@ -15,8 +15,6 @@ interface AppPreferenceStore {
 
     var categorySortOrder: Int
 
-    var lastSelectedAccountId: String?
-
     fun isCustomerJourneyCardDismissed(cardId: String): Boolean
 
     fun dismissCustomerJourneyCard(cardId: String)

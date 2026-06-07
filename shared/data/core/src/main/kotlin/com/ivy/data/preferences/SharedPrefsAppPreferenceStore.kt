@@ -4,13 +4,14 @@ import android.content.Context
 import com.ivy.data.api.AppPreferenceKeys
 import com.ivy.data.api.AppPreferenceStore
 import com.ivy.data.api.InitialSetupStore
+import com.ivy.data.api.LastSelectedAccountStore
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
 class SharedPrefsAppPreferenceStore @Inject constructor(
     @ApplicationContext
     context: Context
-) : AppPreferenceStore, InitialSetupStore {
+) : AppPreferenceStore, InitialSetupStore, LastSelectedAccountStore {
     companion object {
         private const val PREFS_FILENAME = "ivy_wallet_prefs"
     }
