@@ -1,9 +1,9 @@
 package com.ivy.legacy.domain.action.global
 
 import com.ivy.domain.preferences.AppPreferences
-import com.ivy.base.frp.action.FPAction
-import com.ivy.base.frp.monad.Res
-import com.ivy.base.frp.monad.thenIfSuccess
+import com.ivy.legacy.frp.action.FPAction
+import com.ivy.legacy.frp.monad.Res
+import com.ivy.legacy.frp.monad.thenIfSuccess
 import javax.inject.Inject
 
 class UpdateStartDayOfMonthAct @Inject constructor(

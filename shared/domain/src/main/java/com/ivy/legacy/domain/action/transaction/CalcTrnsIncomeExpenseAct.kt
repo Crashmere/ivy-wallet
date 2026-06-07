@@ -2,8 +2,8 @@ package com.ivy.legacy.domain.action.transaction
 
 import arrow.core.nonEmptyListOf
 import com.ivy.data.model.Transaction
-import com.ivy.base.frp.action.FPAction
-import com.ivy.base.frp.then
+import com.ivy.legacy.frp.action.FPAction
+import com.ivy.legacy.frp.then
 import com.ivy.legacy.domain.model.Account
 import com.ivy.legacy.domain.action.exchange.ExchangeAct
 import com.ivy.legacy.domain.action.exchange.actInput

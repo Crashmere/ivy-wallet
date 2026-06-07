@@ -2,9 +2,9 @@ package com.ivy.legacy.domain.action.wallet
 
 import arrow.core.nonEmptyListOf
 import arrow.core.toOption
-import com.ivy.base.frp.action.FPAction
-import com.ivy.base.frp.action.thenMap
-import com.ivy.base.frp.then
+import com.ivy.legacy.frp.action.FPAction
+import com.ivy.legacy.frp.action.thenMap
+import com.ivy.legacy.frp.then
 import com.ivy.legacy.domain.model.Account
 import com.ivy.legacy.domain.action.account.AccTrnsAct
 import com.ivy.legacy.domain.action.exchange.ExchangeAct

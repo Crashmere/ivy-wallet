@@ -2,8 +2,8 @@ package com.ivy.legacy.domain.action.transaction
 
 import com.ivy.base.model.legacy.Transaction
 import com.ivy.data.db.dao.read.TransactionDao
-import com.ivy.base.frp.action.FPAction
-import com.ivy.base.frp.action.thenFilter
+import com.ivy.legacy.frp.action.FPAction
+import com.ivy.legacy.frp.action.thenFilter
 import com.ivy.legacy.domain.mapper.toLegacyDomain
 import java.util.UUID
 import javax.inject.Inject

@@ -30,7 +30,7 @@ import com.ivy.data.repository.mapper.TransactionMapper
 import com.ivy.domain.preferences.AppPreferences
 import com.ivy.legacy.ui.theme.system.RedLight
 import com.ivy.domain.preferences.toggles.PreferenceToggles
-import com.ivy.base.frp.then
+import com.ivy.legacy.frp.then
 import com.ivy.legacy.ui.state.PeriodState
 import com.ivy.legacy.ui.model.period.TimePeriod
 import com.ivy.legacy.domain.model.toCloseTimeRange

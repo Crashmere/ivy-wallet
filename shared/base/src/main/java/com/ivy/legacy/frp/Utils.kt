@@ -1,6 +1,5 @@
-package com.ivy.base.frp
+package com.ivy.legacy.frp
 
-@Deprecated("Legacy code. Don't use it, please.")
 suspend fun <A> List<A>.sumOfSuspend(
     selector: suspend (A) -> Double
 ): Double {
@@ -11,7 +10,6 @@ suspend fun <A> List<A>.sumOfSuspend(
     return sum
 }
 
-@Deprecated("Legacy code. Don't use it, please.")
 suspend fun <A> Collection<A>.filterSuspend(
     predicate: suspend (A) -> Boolean
 ): Collection<A> {

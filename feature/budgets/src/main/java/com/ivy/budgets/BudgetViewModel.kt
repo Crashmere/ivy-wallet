@@ -19,7 +19,7 @@ import com.ivy.data.model.Transfer
 import com.ivy.data.repository.CategoryRepository
 import com.ivy.data.legacy.getAccountId
 import com.ivy.data.legacy.getValue
-import com.ivy.base.frp.sumOfSuspend
+import com.ivy.legacy.frp.sumOfSuspend
 import com.ivy.legacy.ui.state.PeriodState
 import com.ivy.legacy.domain.model.FromToTimeRange
 import com.ivy.legacy.domain.model.toCloseTimeRange

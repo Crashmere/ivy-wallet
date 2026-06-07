@@ -5,8 +5,8 @@ import arrow.core.Option
 import arrow.core.Some
 import arrow.core.computations.option
 import arrow.core.toOption
-import com.ivy.base.frp.Pure
-import com.ivy.base.frp.SideEffect
+import com.ivy.legacy.frp.Pure
+import com.ivy.legacy.frp.SideEffect
 import com.ivy.legacy.domain.model.ExchangeRate
 import com.ivy.base.text.isNotNullOrBlank
 import java.math.BigDecimal

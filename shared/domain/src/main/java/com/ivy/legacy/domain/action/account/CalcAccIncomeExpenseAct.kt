@@ -2,8 +2,8 @@ package com.ivy.legacy.domain.action.account
 
 import arrow.core.nonEmptyListOf
 import com.ivy.base.time.TimeProvider
-import com.ivy.base.frp.action.FPAction
-import com.ivy.base.frp.then
+import com.ivy.legacy.frp.action.FPAction
+import com.ivy.legacy.frp.then
 import com.ivy.data.model.legacy.ClosedTimeRange
 import com.ivy.data.model.legacy.IncomeExpensePair
 import com.ivy.legacy.domain.pure.transaction.AccountValueFunctions

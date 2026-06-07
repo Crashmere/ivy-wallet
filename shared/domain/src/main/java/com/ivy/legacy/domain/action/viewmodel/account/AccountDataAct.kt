@@ -1,9 +1,9 @@
 package com.ivy.legacy.domain.action.viewmodel.account
 
 import arrow.core.toOption
-import com.ivy.base.frp.action.FPAction
-import com.ivy.base.frp.action.thenMap
-import com.ivy.base.frp.then
+import com.ivy.legacy.frp.action.FPAction
+import com.ivy.legacy.frp.action.thenMap
+import com.ivy.legacy.frp.then
 import com.ivy.legacy.domain.model.Account
 import com.ivy.legacy.domain.action.account.CalcAccBalanceAct
 import com.ivy.legacy.domain.action.account.CalcAccIncomeExpenseAct

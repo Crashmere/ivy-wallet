@@ -1,6 +1,5 @@
-package com.ivy.base.frp.action
+package com.ivy.legacy.frp.action
 
-@Deprecated("Legacy code. Don't use it, please.")
 suspend inline infix fun <A, B, C> (suspend (A) -> List<B>).thenMap(
     crossinline transform: suspend (B) -> C
 ): suspend (A) -> List<C> =
@@ -11,7 +10,6 @@ suspend inline infix fun <A, B, C> (suspend (A) -> List<B>).thenMap(
         }
     }
 
-@Deprecated("Legacy code. Don't use it, please.")
 suspend inline infix fun <B, C> (suspend () -> List<B>).thenMap(
     crossinline transform: suspend (B) -> C
 ): suspend () -> List<C> =

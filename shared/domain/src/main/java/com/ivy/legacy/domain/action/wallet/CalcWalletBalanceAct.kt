@@ -7,11 +7,11 @@ import com.ivy.data.model.primitive.AssetCode
 import com.ivy.data.model.primitive.ColorInt
 import com.ivy.data.model.primitive.IconAsset
 import com.ivy.data.model.primitive.NotBlankTrimmedString
-import com.ivy.base.frp.action.FPAction
-import com.ivy.base.frp.action.thenFilter
-import com.ivy.base.frp.action.thenMap
-import com.ivy.base.frp.action.thenSum
-import com.ivy.base.frp.fixUnit
+import com.ivy.legacy.frp.action.FPAction
+import com.ivy.legacy.frp.action.thenFilter
+import com.ivy.legacy.frp.action.thenMap
+import com.ivy.legacy.frp.action.thenSum
+import com.ivy.legacy.frp.fixUnit
 import com.ivy.legacy.domain.action.account.AccountsAct
 import com.ivy.legacy.domain.action.account.CalcAccBalanceAct
 import com.ivy.legacy.domain.action.exchange.ExchangeAct

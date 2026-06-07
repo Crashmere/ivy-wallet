@@ -2,9 +2,9 @@ package com.ivy.legacy.domain.action.viewmodel.home
 
 import com.ivy.base.time.TimeProvider
 import com.ivy.data.model.Transaction
-import com.ivy.base.frp.action.FPAction
-import com.ivy.base.frp.lambda
-import com.ivy.base.frp.then
+import com.ivy.legacy.frp.action.FPAction
+import com.ivy.legacy.frp.lambda
+import com.ivy.legacy.frp.then
 import com.ivy.legacy.domain.action.account.AccountByIdAct
 import com.ivy.legacy.domain.action.exchange.ExchangeAct
 import com.ivy.legacy.domain.action.exchange.actInput

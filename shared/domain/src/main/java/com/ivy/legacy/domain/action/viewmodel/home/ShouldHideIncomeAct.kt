@@ -1,7 +1,7 @@
 package com.ivy.legacy.domain.action.viewmodel.home
 
 import com.ivy.domain.preferences.AppPreferences
-import com.ivy.base.frp.action.FPAction
+import com.ivy.legacy.frp.action.FPAction
 import javax.inject.Inject
 
 class ShouldHideIncomeAct @Inject constructor(

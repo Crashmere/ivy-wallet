@@ -1,8 +1,8 @@
 package com.ivy.legacy.domain.action.category
 
 import com.ivy.data.model.Category
-import com.ivy.base.frp.action.FPAction
-import com.ivy.base.frp.then
+import com.ivy.legacy.frp.action.FPAction
+import com.ivy.legacy.frp.then
 import com.ivy.legacy.domain.model.Account
 import com.ivy.legacy.domain.action.transaction.LegacyCalcTrnsIncomeExpenseAct
 import com.ivy.data.model.legacy.IncomeExpenseTransferPair

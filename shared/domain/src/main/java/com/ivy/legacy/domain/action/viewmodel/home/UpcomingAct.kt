@@ -1,8 +1,8 @@
 package com.ivy.legacy.domain.action.viewmodel.home
 
 import com.ivy.data.model.Transaction
-import com.ivy.base.frp.action.FPAction
-import com.ivy.base.frp.then
+import com.ivy.legacy.frp.action.FPAction
+import com.ivy.legacy.frp.then
 import com.ivy.data.model.legacy.ClosedTimeRange
 import com.ivy.data.model.legacy.IncomeExpensePair
 import com.ivy.legacy.domain.pure.transaction.isUpcoming

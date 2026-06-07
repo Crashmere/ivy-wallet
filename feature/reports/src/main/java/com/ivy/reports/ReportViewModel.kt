@@ -34,7 +34,7 @@ import com.ivy.data.legacy.getTransactionType
 import com.ivy.data.legacy.getValue
 import com.ivy.domain.preferences.toggles.PreferenceToggles
 import com.ivy.domain.usecase.csv.ExportCsvUseCase
-import com.ivy.base.frp.filterSuspend
+import com.ivy.legacy.frp.filterSuspend
 import com.ivy.legacy.ui.state.PeriodState
 import com.ivy.legacy.domain.model.Account
 import com.ivy.legacy.domain.mapper.toLegacy

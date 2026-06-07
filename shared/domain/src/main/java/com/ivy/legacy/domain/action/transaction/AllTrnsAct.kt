@@ -2,7 +2,7 @@ package com.ivy.legacy.domain.action.transaction
 
 import com.ivy.data.model.Transaction
 import com.ivy.data.repository.TransactionRepository
-import com.ivy.base.frp.action.FPAction
+import com.ivy.legacy.frp.action.FPAction
 import javax.inject.Inject
 
 class AllTrnsAct @Inject constructor(
