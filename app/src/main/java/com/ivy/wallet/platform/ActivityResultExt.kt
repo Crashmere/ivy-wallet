@@ -1,4 +1,4 @@
-package com.ivy.legacy.utils
+package com.ivy.wallet.platform
 
 import android.content.Context
 import android.content.Intent

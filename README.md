@@ -349,6 +349,10 @@
 
 目标：按职责迁移，不按旧目录整体搬家。
 
+当前进展：
+
+- 已把只被 `RootActivity` 使用的 Activity result launcher helper 从 `temp:legacy-code` 迁到 `app` 的 `com.ivy.wallet.platform` 包。
+
 迁移分组：
 
 1. 旧数据模型与 mapper

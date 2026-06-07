@@ -37,13 +37,13 @@ import com.ivy.design.system.IvyMaterial3Theme
 import com.ivy.domain.RootScreen
 import com.ivy.legacy.IvyWalletCtx
 import com.ivy.legacy.appDesign
-import com.ivy.legacy.utils.activityForResultLauncher
-import com.ivy.legacy.utils.simpleActivityForResultLauncher
 import com.ivy.navigation.Navigation
 import com.ivy.navigation.NavigationRoot
 import com.ivy.ui.R
 import com.ivy.ui.time.TimeFormatter
 import com.ivy.ui.time.impl.DateTimePicker
+import com.ivy.wallet.platform.activityForResultLauncher
+import com.ivy.wallet.platform.simpleActivityForResultLauncher
 import com.ivy.wallet.ui.applocked.AppLockedScreen
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDate
