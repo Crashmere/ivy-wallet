@@ -28,8 +28,8 @@ import com.ivy.base.legacy.numberBetween
 import com.ivy.base.legacy.swap
 import com.ivy.data.model.Reorderable
 import com.ivy.ui.R
-import com.ivy.wallet.ui.theme.GradientGreen
-import com.ivy.wallet.ui.theme.White
+import com.ivy.legacy.ui.theme.GradientGreen
+import com.ivy.legacy.ui.theme.White
 import com.ivy.wallet.ui.theme.modal.IvyModal
 import java.util.*
 

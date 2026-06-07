@@ -18,13 +18,13 @@ import com.ivy.design.l0_system.style
 import com.ivy.ui.legacy.navigationBarInset
 import com.ivy.ui.legacy.toDensityDp
 import com.ivy.ui.R
-import com.ivy.wallet.ui.theme.Gradient
-import com.ivy.wallet.ui.theme.GradientGreen
-import com.ivy.wallet.ui.theme.White
+import com.ivy.legacy.ui.theme.Gradient
+import com.ivy.legacy.ui.theme.GradientGreen
+import com.ivy.legacy.ui.theme.White
 import com.ivy.wallet.ui.theme.components.ActionsRow
 import com.ivy.wallet.ui.theme.components.CloseButton
 import com.ivy.wallet.ui.theme.components.IvyButton
-import com.ivy.wallet.ui.theme.gradientCutBackgroundTop
+import com.ivy.legacy.ui.theme.gradientCutBackgroundTop
 
 @Composable
 fun BoxWithConstraintsScope.PieChartStatisticBottomBar(

@@ -49,11 +49,11 @@ import com.ivy.ui.legacy.verticalSwipeListener
 import com.ivy.navigation.PieChartStatisticScreen
 import com.ivy.navigation.navigation
 import com.ivy.ui.R
-import com.ivy.wallet.ui.theme.Gradient
-import com.ivy.wallet.ui.theme.GradientGreen
-import com.ivy.wallet.ui.theme.Gray
-import com.ivy.wallet.ui.theme.Green
-import com.ivy.wallet.ui.theme.White
+import com.ivy.legacy.ui.theme.Gradient
+import com.ivy.legacy.ui.theme.GradientGreen
+import com.ivy.legacy.ui.theme.Gray
+import com.ivy.legacy.ui.theme.Green
+import com.ivy.legacy.ui.theme.White
 import com.ivy.wallet.ui.theme.components.BalanceRow
 import com.ivy.wallet.ui.theme.components.BalanceRowMini
 import com.ivy.wallet.ui.theme.components.IvyIcon

@@ -29,13 +29,13 @@ import com.ivy.design.l0_system.style
 import com.ivy.ui.legacy.navigationBarInset
 import com.ivy.ui.legacy.toDensityPx
 import com.ivy.ui.R
-import com.ivy.wallet.ui.theme.GradientPurple
-import com.ivy.wallet.ui.theme.Green
-import com.ivy.wallet.ui.theme.Purple
-import com.ivy.wallet.ui.theme.White
+import com.ivy.legacy.ui.theme.GradientPurple
+import com.ivy.legacy.ui.theme.Green
+import com.ivy.legacy.ui.theme.Purple
+import com.ivy.legacy.ui.theme.White
 import com.ivy.wallet.ui.theme.components.IvyCircleButton
 import com.ivy.wallet.ui.theme.components.IvyIcon
-import com.ivy.wallet.ui.theme.pureBlur
+import com.ivy.legacy.ui.theme.pureBlur
 import kotlin.math.roundToInt
 
 val FAB_BUTTON_SIZE = 56.dp

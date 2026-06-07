@@ -32,17 +32,17 @@ import com.ivy.ui.legacy.drawColoredShadow
 import com.ivy.ui.legacy.hideKeyboard
 import com.ivy.ui.legacy.onScreenStart
 import com.ivy.ui.R
-import com.ivy.wallet.ui.theme.Gradient
-import com.ivy.wallet.ui.theme.Ivy
+import com.ivy.legacy.ui.theme.Gradient
+import com.ivy.legacy.ui.theme.Ivy
 import com.ivy.wallet.ui.theme.components.ItemIconSDefaultIcon
 import com.ivy.wallet.ui.theme.components.IvyBorderButton
 import com.ivy.wallet.ui.theme.components.IvyCircleButton
 import com.ivy.wallet.ui.theme.components.WrapContentRow
-import com.ivy.wallet.ui.theme.findContrastTextColor
+import com.ivy.legacy.ui.theme.findContrastTextColor
 import com.ivy.wallet.ui.theme.modal.IvyModal
 import com.ivy.wallet.ui.theme.modal.ModalSkip
 import com.ivy.wallet.ui.theme.modal.ModalTitle
-import com.ivy.wallet.ui.theme.toComposeColor
+import com.ivy.legacy.ui.theme.toComposeColor
 import java.util.UUID
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
@@ -50,8 +50,8 @@ import androidx.compose.ui.graphics.toArgb
 import com.ivy.data.model.CategoryId
 import com.ivy.data.model.primitive.ColorInt
 import com.ivy.data.model.primitive.NotBlankTrimmedString
-import com.ivy.wallet.ui.theme.Orange
-import com.ivy.wallet.ui.theme.Red
+import com.ivy.legacy.ui.theme.Orange
+import com.ivy.legacy.ui.theme.Red
 
 @Deprecated("Old design system. Use `:ivy-design` and Material3")
 @Suppress("ParameterNaming")

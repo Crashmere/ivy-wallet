@@ -24,10 +24,10 @@ import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
 import com.ivy.ui.legacy.drawColoredShadow
 import com.ivy.design.utils.thenIf
-import com.ivy.wallet.ui.theme.Gradient
-import com.ivy.wallet.ui.theme.GradientIvy
-import com.ivy.wallet.ui.theme.Ivy
-import com.ivy.wallet.ui.theme.White
+import com.ivy.legacy.ui.theme.Gradient
+import com.ivy.legacy.ui.theme.GradientIvy
+import com.ivy.legacy.ui.theme.Ivy
+import com.ivy.legacy.ui.theme.White
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.wrapContentSize
 import com.ivy.ui.R

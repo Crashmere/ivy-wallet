@@ -46,9 +46,9 @@ import com.ivy.wallet.ui.theme.components.BalanceRowMini
 import com.ivy.wallet.ui.theme.components.ItemIconSDefaultIcon
 import com.ivy.wallet.ui.theme.components.ReorderButton
 import com.ivy.wallet.ui.theme.components.ReorderModalSingleType
-import com.ivy.wallet.ui.theme.dynamicContrast
-import com.ivy.wallet.ui.theme.findContrastTextColor
-import com.ivy.wallet.ui.theme.toComposeColor
+import com.ivy.legacy.ui.theme.dynamicContrast
+import com.ivy.legacy.ui.theme.findContrastTextColor
+import com.ivy.legacy.ui.theme.toComposeColor
 
 @Composable
 fun BoxWithConstraintsScope.AccountsTab() {

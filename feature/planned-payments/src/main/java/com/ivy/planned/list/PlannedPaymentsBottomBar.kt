@@ -18,7 +18,7 @@ import com.ivy.ui.R
 import com.ivy.wallet.ui.theme.components.ActionsRow
 import com.ivy.wallet.ui.theme.components.CloseButton
 import com.ivy.wallet.ui.theme.components.IvyOutlinedButton
-import com.ivy.wallet.ui.theme.gradientCutBackgroundTop
+import com.ivy.legacy.ui.theme.gradientCutBackgroundTop
 
 @Composable
 fun BoxWithConstraintsScope.PlannedPaymentsBottomBar(

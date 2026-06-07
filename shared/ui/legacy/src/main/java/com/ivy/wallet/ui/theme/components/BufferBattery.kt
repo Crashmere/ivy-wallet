@@ -23,11 +23,11 @@ import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
 import com.ivy.design.utils.thenIf
 import com.ivy.ui.R
-import com.ivy.wallet.ui.theme.Green
-import com.ivy.wallet.ui.theme.Ivy
-import com.ivy.wallet.ui.theme.Orange
-import com.ivy.wallet.ui.theme.Red
-import com.ivy.wallet.ui.theme.White
+import com.ivy.legacy.ui.theme.Green
+import com.ivy.legacy.ui.theme.Ivy
+import com.ivy.legacy.ui.theme.Orange
+import com.ivy.legacy.ui.theme.Red
+import com.ivy.legacy.ui.theme.White
 import com.ivy.wallet.ui.theme.wallet.AmountCurrencyB2Row
 import kotlin.math.abs
 import androidx.compose.foundation.layout.Box

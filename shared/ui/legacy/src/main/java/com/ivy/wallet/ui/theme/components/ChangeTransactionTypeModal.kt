@@ -26,10 +26,10 @@ import com.ivy.base.model.TransactionType
 import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
 import com.ivy.ui.R
-import com.ivy.wallet.ui.theme.Gradient
-import com.ivy.wallet.ui.theme.GradientGreen
-import com.ivy.wallet.ui.theme.GradientIvy
-import com.ivy.wallet.ui.theme.White
+import com.ivy.legacy.ui.theme.Gradient
+import com.ivy.legacy.ui.theme.GradientGreen
+import com.ivy.legacy.ui.theme.GradientIvy
+import com.ivy.legacy.ui.theme.White
 import com.ivy.wallet.ui.theme.modal.IvyModal
 import com.ivy.wallet.ui.theme.modal.ModalSet
 import com.ivy.wallet.ui.theme.modal.ModalTitle

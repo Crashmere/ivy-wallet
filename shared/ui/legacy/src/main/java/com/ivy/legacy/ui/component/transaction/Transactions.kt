@@ -28,12 +28,12 @@ import com.ivy.navigation.Navigation
 import com.ivy.navigation.navigation
 import com.ivy.ui.R
 import com.ivy.wallet.domain.data.TransactionHistoryDateDivider
-import com.ivy.wallet.ui.theme.Black
-import com.ivy.wallet.ui.theme.Gradient
-import com.ivy.wallet.ui.theme.Gray
-import com.ivy.wallet.ui.theme.Orange
-import com.ivy.wallet.ui.theme.Red
-import com.ivy.wallet.ui.theme.White
+import com.ivy.legacy.ui.theme.Black
+import com.ivy.legacy.ui.theme.Gradient
+import com.ivy.legacy.ui.theme.Gray
+import com.ivy.legacy.ui.theme.Orange
+import com.ivy.legacy.ui.theme.Red
+import com.ivy.legacy.ui.theme.White
 import com.ivy.wallet.ui.theme.components.IvyButton
 import com.ivy.wallet.ui.theme.components.IvyIcon
 

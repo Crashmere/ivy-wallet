@@ -14,8 +14,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.ui.legacy.springBounce
-import com.ivy.wallet.ui.theme.Gray
-import com.ivy.wallet.ui.theme.Green
+import com.ivy.legacy.ui.theme.Gray
+import com.ivy.legacy.ui.theme.Green
 
 @Deprecated("Old design system. Use `:ivy-design` and Material3")
 @Composable

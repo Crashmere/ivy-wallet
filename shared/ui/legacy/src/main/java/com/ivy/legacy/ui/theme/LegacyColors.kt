@@ -1,4 +1,4 @@
-package com.ivy.wallet.ui.theme
+package com.ivy.legacy.ui.theme
 
 import androidx.annotation.ColorInt
 import androidx.compose.foundation.background

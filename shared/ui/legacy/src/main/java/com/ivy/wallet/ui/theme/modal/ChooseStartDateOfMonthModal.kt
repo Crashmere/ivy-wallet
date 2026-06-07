@@ -25,8 +25,8 @@ import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
 import com.ivy.design.utils.thenIf
 import com.ivy.ui.R
-import com.ivy.wallet.ui.theme.Ivy
-import com.ivy.wallet.ui.theme.White
+import com.ivy.legacy.ui.theme.Ivy
+import com.ivy.legacy.ui.theme.White
 import java.util.UUID
 
 @Deprecated("Old design system. Use `:ivy-design` and Material3")

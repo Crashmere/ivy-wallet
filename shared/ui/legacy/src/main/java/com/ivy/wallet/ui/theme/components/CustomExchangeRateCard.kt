@@ -23,7 +23,7 @@ import com.ivy.design.l0_system.style
 import com.ivy.data.model.currency.format
 import com.ivy.ui.R
 import com.ivy.data.model.currency.IvyCurrency
-import com.ivy.wallet.ui.theme.Orange
+import com.ivy.legacy.ui.theme.Orange
 
 @Deprecated("Old design system. Use `:ivy-design` and Material3")
 @Composable

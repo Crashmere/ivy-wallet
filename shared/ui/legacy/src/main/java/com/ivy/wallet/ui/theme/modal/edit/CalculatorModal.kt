@@ -24,8 +24,8 @@ import com.ivy.data.model.currency.formatInputAmount
 import com.ivy.data.model.currency.localDecimalSeparator
 import com.ivy.data.model.currency.normalizeExpression
 import com.ivy.ui.R
-import com.ivy.wallet.ui.theme.Gray
-import com.ivy.wallet.ui.theme.Red
+import com.ivy.legacy.ui.theme.Gray
+import com.ivy.legacy.ui.theme.Red
 import com.ivy.wallet.ui.theme.modal.IvyModal
 import com.ivy.wallet.ui.theme.modal.ModalSet
 import com.ivy.wallet.ui.theme.modal.ModalTitle

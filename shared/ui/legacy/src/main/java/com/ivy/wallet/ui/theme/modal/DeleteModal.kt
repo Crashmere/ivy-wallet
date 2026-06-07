@@ -26,7 +26,7 @@ import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
 import com.ivy.ui.legacy.hideKeyboard
 import com.ivy.ui.R
-import com.ivy.wallet.ui.theme.Red
+import com.ivy.legacy.ui.theme.Red
 import com.ivy.wallet.ui.theme.components.IvyNameTextField
 import java.util.UUID
 

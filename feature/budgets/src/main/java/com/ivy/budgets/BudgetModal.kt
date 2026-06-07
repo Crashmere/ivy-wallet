@@ -39,7 +39,7 @@ import com.ivy.wallet.ui.theme.modal.ModalAmountSection
 import com.ivy.wallet.ui.theme.modal.ModalDelete
 import com.ivy.wallet.ui.theme.modal.ModalTitle
 import com.ivy.wallet.ui.theme.modal.edit.AmountModal
-import com.ivy.wallet.ui.theme.toComposeColor
+import com.ivy.legacy.ui.theme.toComposeColor
 import java.util.UUID
 
 @Deprecated("Old design system. Use `:ivy-design` and Material3")

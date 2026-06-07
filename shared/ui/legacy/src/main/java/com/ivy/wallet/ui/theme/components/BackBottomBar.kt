@@ -15,7 +15,7 @@ import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.ui.legacy.navigationBarInset
 import com.ivy.ui.legacy.toDensityDp
 import com.ivy.ui.R
-import com.ivy.wallet.ui.theme.gradientCutBackgroundTop
+import com.ivy.legacy.ui.theme.gradientCutBackgroundTop
 
 @Deprecated("Old design system. Use `:ivy-design` and Material3")
 @Composable

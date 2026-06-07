@@ -24,11 +24,11 @@ import com.ivy.data.model.currency.format
 import com.ivy.navigation.CSVScreen
 import com.ivy.navigation.navigation
 import com.ivy.ui.R
-import com.ivy.wallet.ui.theme.GradientIvy
-import com.ivy.wallet.ui.theme.Gray
-import com.ivy.wallet.ui.theme.Green
-import com.ivy.wallet.ui.theme.Red
-import com.ivy.wallet.ui.theme.White
+import com.ivy.legacy.ui.theme.GradientIvy
+import com.ivy.legacy.ui.theme.Gray
+import com.ivy.legacy.ui.theme.Green
+import com.ivy.legacy.ui.theme.Red
+import com.ivy.legacy.ui.theme.White
 import com.ivy.wallet.ui.theme.components.BackButton
 import com.ivy.wallet.ui.theme.components.IvyDividerLine
 import com.ivy.wallet.ui.theme.components.OnboardingButton

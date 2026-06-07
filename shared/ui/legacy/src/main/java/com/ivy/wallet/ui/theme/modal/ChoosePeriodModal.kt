@@ -44,11 +44,11 @@ import com.ivy.base.legacy.dateNowUTC
 import com.ivy.ui.legacy.formatDateOnlyWithYear
 import com.ivy.ui.legacy.onScreenStart
 import com.ivy.ui.R
-import com.ivy.wallet.ui.theme.Gradient
-import com.ivy.wallet.ui.theme.GradientIvy
-import com.ivy.wallet.ui.theme.Gray
-import com.ivy.wallet.ui.theme.Green
-import com.ivy.wallet.ui.theme.White
+import com.ivy.legacy.ui.theme.Gradient
+import com.ivy.legacy.ui.theme.GradientIvy
+import com.ivy.legacy.ui.theme.Gray
+import com.ivy.legacy.ui.theme.Green
+import com.ivy.legacy.ui.theme.White
 import com.ivy.wallet.ui.theme.components.CircleButtonFilled
 import com.ivy.wallet.ui.theme.components.IntervalPickerRow
 import com.ivy.wallet.ui.theme.components.IvyDividerLine

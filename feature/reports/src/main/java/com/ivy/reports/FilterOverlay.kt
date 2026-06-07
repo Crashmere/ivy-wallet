@@ -54,9 +54,9 @@ import com.ivy.legacy.ui.component.tags.ShowTagModal
 import com.ivy.base.legacy.capitalizeLocal
 import com.ivy.ui.legacy.springBounce
 import com.ivy.ui.R
-import com.ivy.wallet.ui.theme.GradientGreen
-import com.ivy.wallet.ui.theme.Green
-import com.ivy.wallet.ui.theme.Red
+import com.ivy.legacy.ui.theme.GradientGreen
+import com.ivy.legacy.ui.theme.Green
+import com.ivy.legacy.ui.theme.Red
 import com.ivy.wallet.ui.theme.components.CloseButton
 import com.ivy.wallet.ui.theme.components.GradientCutBottom
 import com.ivy.wallet.ui.theme.components.IvyButton
@@ -70,7 +70,7 @@ import com.ivy.wallet.ui.theme.modal.AddModalBackHandling
 import com.ivy.wallet.ui.theme.modal.ChoosePeriodModal
 import com.ivy.wallet.ui.theme.modal.ChoosePeriodModalData
 import com.ivy.wallet.ui.theme.modal.edit.AmountModal
-import com.ivy.wallet.ui.theme.toComposeColor
+import com.ivy.legacy.ui.theme.toComposeColor
 import com.ivy.wallet.ui.theme.wallet.AmountCurrencyB1Row
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf

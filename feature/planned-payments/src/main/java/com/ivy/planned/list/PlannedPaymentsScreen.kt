@@ -29,8 +29,8 @@ import com.ivy.navigation.navigation
 import com.ivy.navigation.screenScopedViewModel
 import com.ivy.ui.R
 import com.ivy.ui.rememberScrollPositionListState
-import com.ivy.wallet.ui.theme.Green
-import com.ivy.wallet.ui.theme.Orange
+import com.ivy.legacy.ui.theme.Green
+import com.ivy.legacy.ui.theme.Orange
 import kotlinx.collections.immutable.persistentListOf
 import java.time.ZoneOffset
 import java.util.UUID

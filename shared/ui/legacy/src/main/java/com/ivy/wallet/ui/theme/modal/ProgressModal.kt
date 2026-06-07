@@ -15,7 +15,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
-import com.ivy.wallet.ui.theme.Red
+import com.ivy.legacy.ui.theme.Red
 import java.util.UUID
 
 @Deprecated("Old design system. Use `:ivy-design` and Material3")

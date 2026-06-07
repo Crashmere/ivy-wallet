@@ -14,11 +14,11 @@ import androidx.compose.ui.unit.dp
 import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.ui.legacy.drawColoredShadow
 import com.ivy.design.utils.thenIf
-import com.ivy.wallet.ui.theme.Gradient
-import com.ivy.wallet.ui.theme.GradientIvy
-import com.ivy.wallet.ui.theme.White
+import com.ivy.legacy.ui.theme.Gradient
+import com.ivy.legacy.ui.theme.GradientIvy
+import com.ivy.legacy.ui.theme.White
 import com.ivy.ui.R
-import com.ivy.wallet.ui.theme.GradientRed
+import com.ivy.legacy.ui.theme.GradientRed
 
 @Deprecated("Old design system. Use `:ivy-design` and Material3")
 @Composable

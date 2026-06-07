@@ -50,10 +50,10 @@ import com.ivy.ui.legacy.onScreenStart
 import com.ivy.base.legacy.toLowerCaseLocal
 import com.ivy.ui.R
 import com.ivy.data.model.currency.IvyCurrency
-import com.ivy.wallet.ui.theme.GradientGreen
-import com.ivy.wallet.ui.theme.GradientIvy
-import com.ivy.wallet.ui.theme.Ivy
-import com.ivy.wallet.ui.theme.White
+import com.ivy.legacy.ui.theme.GradientGreen
+import com.ivy.legacy.ui.theme.GradientIvy
+import com.ivy.legacy.ui.theme.Ivy
+import com.ivy.legacy.ui.theme.White
 import com.ivy.wallet.ui.theme.modal.DURATION_MODAL_ANIM
 import java.util.Locale
 import androidx.compose.runtime.getValue

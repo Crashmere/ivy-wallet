@@ -61,18 +61,18 @@ import com.ivy.ui.legacy.rememberInteractionSource
 import com.ivy.ui.legacy.rememberSwipeListenerState
 import com.ivy.ui.R
 import com.ivy.data.model.currency.IvyCurrency
-import com.ivy.wallet.ui.theme.Gradient
-import com.ivy.wallet.ui.theme.Ivy
+import com.ivy.legacy.ui.theme.Gradient
+import com.ivy.legacy.ui.theme.Ivy
 import com.ivy.wallet.ui.theme.components.ActionsRow
 import com.ivy.wallet.ui.theme.components.BalanceRow
 import com.ivy.wallet.ui.theme.components.CircleButton
 import com.ivy.wallet.ui.theme.components.ItemIconSDefaultIcon
 import com.ivy.wallet.ui.theme.components.IvyButton
 import com.ivy.wallet.ui.theme.components.IvyIcon
-import com.ivy.wallet.ui.theme.findContrastTextColor
+import com.ivy.legacy.ui.theme.findContrastTextColor
 import com.ivy.wallet.ui.theme.modal.DURATION_MODAL_ANIM
 import com.ivy.wallet.ui.theme.modal.edit.AmountModal
-import com.ivy.wallet.ui.theme.toComposeColor
+import com.ivy.legacy.ui.theme.toComposeColor
 import kotlinx.coroutines.launch
 import java.util.Locale
 import java.util.UUID
@@ -82,10 +82,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.toArgb
-import com.ivy.wallet.ui.theme.Green
-import com.ivy.wallet.ui.theme.GreenDark
-import com.ivy.wallet.ui.theme.GreenLight
-import com.ivy.wallet.ui.theme.IvyDark
+import com.ivy.legacy.ui.theme.Green
+import com.ivy.legacy.ui.theme.GreenDark
+import com.ivy.legacy.ui.theme.GreenLight
+import com.ivy.legacy.ui.theme.IvyDark
 import com.ivy.wallet.ui.theme.modal.ModalSave
 import com.ivy.wallet.ui.theme.modal.ModalSet
 

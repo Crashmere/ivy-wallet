@@ -28,9 +28,9 @@ import com.ivy.base.legacy.isNotNullOrBlank
 import com.ivy.ui.legacy.forDisplay
 import com.ivy.ui.legacy.selectEndTextFieldValue
 import com.ivy.ui.R
-import com.ivy.wallet.ui.theme.Gradient
-import com.ivy.wallet.ui.theme.GradientIvy
-import com.ivy.wallet.ui.theme.White
+import com.ivy.legacy.ui.theme.Gradient
+import com.ivy.legacy.ui.theme.GradientIvy
+import com.ivy.legacy.ui.theme.White
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 

@@ -33,9 +33,9 @@ import com.ivy.ui.legacy.hideKeyboard
 import com.ivy.ui.legacy.onScreenStart
 import com.ivy.design.utils.thenIf
 import com.ivy.ui.R
-import com.ivy.wallet.ui.theme.Ivy
+import com.ivy.legacy.ui.theme.Ivy
 import com.ivy.wallet.ui.theme.components.ItemIconS
-import com.ivy.wallet.ui.theme.dynamicContrast
+import com.ivy.legacy.ui.theme.dynamicContrast
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 import java.util.UUID

@@ -24,7 +24,7 @@ import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
 import com.ivy.design.utils.thenIf
 import com.ivy.ui.R
-import com.ivy.wallet.ui.theme.Green
+import com.ivy.legacy.ui.theme.Green
 
 @Deprecated("Old design system. Use `:ivy-design` and Material3")
 @Composable

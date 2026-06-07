@@ -51,8 +51,8 @@ import com.ivy.navigation.Navigation
 import com.ivy.navigation.navigation
 import com.ivy.wallet.ui.theme.components.ActionsRow
 import com.ivy.wallet.ui.theme.components.CloseButton
-import com.ivy.wallet.ui.theme.gradientCutBackgroundTop
-import com.ivy.wallet.ui.theme.mediumBlur
+import com.ivy.legacy.ui.theme.gradientCutBackgroundTop
+import com.ivy.legacy.ui.theme.mediumBlur
 import java.util.UUID
 import kotlin.math.roundToInt
 import androidx.compose.material3.Text

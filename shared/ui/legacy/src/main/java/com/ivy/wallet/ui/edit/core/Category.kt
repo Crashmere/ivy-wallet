@@ -10,12 +10,12 @@ import com.ivy.data.model.Category
 import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
 import com.ivy.ui.R
-import com.ivy.wallet.ui.theme.Gradient
+import com.ivy.legacy.ui.theme.Gradient
 import com.ivy.wallet.ui.theme.components.IvyBorderButton
 import com.ivy.wallet.ui.theme.components.IvyButton
 import com.ivy.wallet.ui.theme.components.getCustomIconIdS
-import com.ivy.wallet.ui.theme.findContrastTextColor
-import com.ivy.wallet.ui.theme.toComposeColor
+import com.ivy.legacy.ui.theme.findContrastTextColor
+import com.ivy.legacy.ui.theme.toComposeColor
 
 @Deprecated("Old design system. Use `:ivy-design` and Material3")
 @Composable

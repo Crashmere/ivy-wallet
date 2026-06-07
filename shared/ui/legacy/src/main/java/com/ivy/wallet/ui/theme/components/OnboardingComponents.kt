@@ -21,10 +21,10 @@ import com.ivy.design.l0_system.style
 import com.ivy.ui.legacy.drawColoredShadow
 import com.ivy.design.utils.thenIf
 import com.ivy.ui.R
-import com.ivy.wallet.ui.theme.Gradient
+import com.ivy.legacy.ui.theme.Gradient
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.ui.text.input.TextFieldValue
-import com.ivy.wallet.ui.theme.GradientIvy
+import com.ivy.legacy.ui.theme.GradientIvy
 
 @Deprecated("Old design system. Use `:ivy-design` and Material3")
 @Composable

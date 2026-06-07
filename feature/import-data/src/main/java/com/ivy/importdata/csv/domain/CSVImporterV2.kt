@@ -29,8 +29,8 @@ import com.ivy.legacy.datamodel.toEntity
 import com.ivy.base.legacy.toLowerCaseLocal
 import com.ivy.data.model.currency.IvyCurrency
 import com.ivy.wallet.domain.pure.util.nextOrderNum
-import com.ivy.wallet.ui.theme.Green
-import com.ivy.wallet.ui.theme.IvyDark
+import com.ivy.legacy.ui.theme.Green
+import com.ivy.legacy.ui.theme.IvyDark
 import kotlinx.collections.immutable.toImmutableList
 import java.util.UUID
 import javax.inject.Inject

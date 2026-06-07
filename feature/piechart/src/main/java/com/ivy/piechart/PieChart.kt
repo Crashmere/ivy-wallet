@@ -28,11 +28,11 @@ import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.ui.legacy.drawColoredShadow
 import com.ivy.base.legacy.timeNowUTC
 import com.ivy.ui.R
-import com.ivy.wallet.ui.theme.Black
-import com.ivy.wallet.ui.theme.Gradient
-import com.ivy.wallet.ui.theme.Gray
+import com.ivy.legacy.ui.theme.Black
+import com.ivy.legacy.ui.theme.Gradient
+import com.ivy.legacy.ui.theme.Gray
 import com.ivy.wallet.ui.theme.components.IvyIcon
-import com.ivy.wallet.ui.theme.toComposeColor
+import com.ivy.legacy.ui.theme.toComposeColor
 import kotlinx.collections.immutable.ImmutableList
 import timber.log.Timber
 import kotlin.math.acos

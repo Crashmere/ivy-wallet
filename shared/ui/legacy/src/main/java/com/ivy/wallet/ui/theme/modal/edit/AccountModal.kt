@@ -35,8 +35,8 @@ import com.ivy.base.legacy.toUpperCaseLocal
 import com.ivy.ui.R
 import com.ivy.data.model.currency.IvyCurrency
 import com.ivy.wallet.domain.deprecated.logic.model.CreateAccountData
-import com.ivy.wallet.ui.theme.Gray
-import com.ivy.wallet.ui.theme.Ivy
+import com.ivy.legacy.ui.theme.Gray
+import com.ivy.legacy.ui.theme.Ivy
 import com.ivy.wallet.ui.theme.components.IvyCheckboxWithText
 import com.ivy.wallet.ui.theme.modal.ChooseIconModal
 import com.ivy.wallet.ui.theme.modal.CurrencyModal

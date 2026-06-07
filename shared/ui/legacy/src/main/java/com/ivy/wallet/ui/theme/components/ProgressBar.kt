@@ -8,7 +8,10 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
 import com.ivy.design.l0_system.LegacyTheme
-import com.ivy.wallet.ui.theme.*
+import com.ivy.legacy.ui.theme.Green
+import com.ivy.legacy.ui.theme.Ivy
+import com.ivy.legacy.ui.theme.Orange
+import com.ivy.legacy.ui.theme.Red
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding

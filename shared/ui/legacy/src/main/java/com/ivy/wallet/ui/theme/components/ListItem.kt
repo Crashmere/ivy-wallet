@@ -20,7 +20,7 @@ import com.ivy.design.l0_system.LegacyTheme
 import com.ivy.design.l0_system.style
 import com.ivy.design.utils.thenIf
 import com.ivy.wallet.ui.theme.components.ItemIconSDefaultIcon
-import com.ivy.wallet.ui.theme.findContrastTextColor
+import com.ivy.legacy.ui.theme.findContrastTextColor
 
 @Deprecated("Old design system. Use `:ivy-design` and Material3")
 @Composable
