@@ -44,8 +44,8 @@ import androidx.compose.ui.unit.sp
 import com.ivy.design.l0_system.UI
 import com.ivy.design.l0_system.style
 import com.ivy.legacy.ui.SearchInput
-import com.ivy.legacy.utils.balancePrefix
-import com.ivy.legacy.utils.compactBalancePrefix
+import com.ivy.base.legacy.balancePrefix
+import com.ivy.base.legacy.compactBalancePrefix
 import com.ivy.legacy.utils.format
 import com.ivy.legacy.utils.selectEndTextFieldValue
 import com.ivy.navigation.CategoriesScreen
