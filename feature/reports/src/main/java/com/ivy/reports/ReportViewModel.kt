@@ -35,6 +35,8 @@ import com.ivy.domain.preferences.toggles.PreferenceToggles
 import com.ivy.domain.usecase.category.GetCategoriesUseCase
 import com.ivy.domain.usecase.csv.ExportCsvUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
+import com.ivy.domain.usecase.tag.GetTagsUseCase
+import com.ivy.domain.usecase.tag.SearchTagsUseCase
 import com.ivy.legacy.frp.filterSuspend
 import com.ivy.legacy.ui.state.PeriodState
 import com.ivy.legacy.domain.model.Account
@@ -88,6 +90,8 @@ class ReportViewModel @Inject constructor(
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
     private val transactionMapper: TransactionMapper,
     private val tagRepository: TagRepository,
+    private val getTagsUseCase: GetTagsUseCase,
+    private val searchTagsUseCase: SearchTagsUseCase,
     private val exportCsvUseCase: ExportCsvUseCase,
     private val resourceProvider: ResourceProvider,
     private val timeProvider: TimeProvider,
@@ -204,10 +208,10 @@ class ReportViewModel @Inject constructor(
                     .fold(
                         ifRight = {
                             allTags =
-                                tagRepository.findByText(text = it.value).toImmutableList()
+                                searchTagsUseCase(it).toImmutableList()
                         },
                         ifLeft = {
-                            allTags = tagRepository.findAll().toImmutableList()
+                            allTags = getTagsUseCase().toImmutableList()
                         }
                     )
             }
@@ -220,7 +224,7 @@ class ReportViewModel @Inject constructor(
             accounts = accountsAct(Unit)
             categories =
                 (listOf(unSpecifiedCategory) + getCategoriesUseCase()).toImmutableList()
-            allTags = tagRepository.findAll().toImmutableList()
+            allTags = getTagsUseCase().toImmutableList()
         }
     }
 

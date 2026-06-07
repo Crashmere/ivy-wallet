@@ -32,6 +32,8 @@ import com.ivy.data.repository.mapper.TransactionMapper
 import com.ivy.domain.preferences.toggles.PreferenceToggles
 import com.ivy.domain.preferences.AppPreferences
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
+import com.ivy.domain.usecase.tag.GetTagsUseCase
+import com.ivy.domain.usecase.tag.SearchTagsUseCase
 import com.ivy.legacy.ui.model.EditTransactionDisplayLoan
 import com.ivy.legacy.domain.model.Account
 import com.ivy.legacy.domain.mapper.toDomain
@@ -99,6 +101,8 @@ class EditTransactionViewModel @Inject constructor(
     private val transactionRepo: TransactionRepository,
     private val transactionMapper: TransactionMapper,
     private val tagRepository: TagRepository,
+    private val getTagsUseCase: GetTagsUseCase,
+    private val searchTagsUseCase: SearchTagsUseCase,
     private val tagMapper: TagMapper,
     private val preferenceToggles: PreferenceToggles,
     private val preferenceDataStore: DataStore<Preferences>,
@@ -902,7 +906,7 @@ class EditTransactionViewModel @Inject constructor(
     }
 
     private suspend fun getAllTags(): ImmutableList<Tag> =
-        tagRepository.findAll().toImmutableList()
+        getTagsUseCase().toImmutableList()
 
     private fun onTagSaved(name: String) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -952,10 +956,10 @@ class EditTransactionViewModel @Inject constructor(
                 NotBlankTrimmedString.from(query.toLowerCaseLocal())
                     .onRight {
                         tags =
-                            tagRepository.findByText(text = it.value).toImmutableList()
+                            searchTagsUseCase(it).toImmutableList()
                     }
                     .onLeft {
-                        tags = tagRepository.findAll().toImmutableList()
+                        tags = getTagsUseCase().toImmutableList()
                     }
             }
         }
@@ -964,14 +968,14 @@ class EditTransactionViewModel @Inject constructor(
     private fun deleteTag(selectedTag: Tag) {
         viewModelScope.launch(Dispatchers.IO) {
             tagRepository.deleteById(selectedTag.id)
-            tags = tagRepository.findAll().toImmutableList()
+            tags = getAllTags()
         }
     }
 
     private fun updateTagInformation(newTag: Tag) {
         viewModelScope.launch(Dispatchers.IO) {
             tagRepository.save(newTag)
-            tags = tagRepository.findAll().toImmutableList()
+            tags = getAllTags()
         }
     }
 
