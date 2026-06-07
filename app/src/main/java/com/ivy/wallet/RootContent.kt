@@ -22,7 +22,7 @@ import com.ivy.legacy.ui.state.LocalPeriodState
 import com.ivy.legacy.ui.state.PeriodState
 import com.ivy.navigation.Navigation
 import com.ivy.navigation.NavigationRoot
-import com.ivy.ui.LegacyUiRoot
+import com.ivy.legacy.ui.LegacyUiRoot
 import com.ivy.ui.platform.BuildInfoProvider
 import com.ivy.ui.platform.FileSharer
 import com.ivy.ui.platform.LocalBuildInfoProvider
