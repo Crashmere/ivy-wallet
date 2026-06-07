@@ -125,7 +125,7 @@
 
 现状：
 
-- Room entity 里仍有 `isSynced`、`isDeleted`、`lastSyncedTime` 等历史同步字段。
+- 当前主实体已经删除 `isSynced`、`lastSyncedTime` 等运行时云同步字段；`isDeleted` 仍作为本地软删除过滤字段保留。
 - 历史 `users` 表已通过 130 -> 131 Room migration 删除，`UserEntity/UserDao` 和重置流程里的用户表清空依赖已移除。
 - `SettingsEntity` 仍是旧设置模型，部分偏好又在 `SharedPrefs/DataStore` 中。
 
@@ -577,9 +577,7 @@
 
 - `SettingsEntity`
 - `isSynced`
-- `isDeleted`
 - `lastSyncedTime`
-- `LogoutLogic.cloudLogout`
 
 已完成：
 
@@ -600,6 +598,7 @@
 - 删除 `settings` 表里的旧 `name` 和 `isDeleted` 字段，新增 `Migration133to134_DropSettingsLegacyFields`，数据库版本升到 134；运行时仍保留 `theme/currency/bufferAmount/id`，旧备份里的多余字段继续由 JSON 配置忽略。
 - 已把历史 Room migration 和 `RoomTypeConverters` 的包名从旧的 `com.ivy.domain.db.*` 归位到 `com.ivy.data.db.*`；这一步只调整源码边界，不改变 schema 或 migration 内容。
 - 删除未接入运行时、主体仍是 `TODO("Not implemented")` 的新 domain use case 草稿：钱包统计、钱包余额、分类统计、账户余额和汇率换算；保留已有测试覆盖的 `AccountStatsUseCase.calculate(account, transactions)` 聚合逻辑。
+- 业务表实体上的 `isDeleted` 已取消“云同步废字段”注解；当前它是仍被 DAO 查询和部分写入逻辑使用的本地软删除字段，不再作为纯云同步残留处理。
 
 建议顺序：
 
