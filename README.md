@@ -283,6 +283,7 @@
 - `ivy.compose` 已收敛为纯 Android Compose 配置，不再隐式套用 `ivy.module` 或引入未使用的 Molecule 插件；feature 模块继续由 `ivy.feature` 组合 `ivy.module + ivy.compose`，shared UI 模块则显式声明 `ivy.hilt`。
 - 版本目录里的 Compose LiveData 依赖别名已从临时/拼写错误的 `compose-runtime-livedate-temp` 改为 `compose-runtime-livedata`，保留依赖本身不变。
 - 删除无运行时调用方的 `FormatMoneyUseCase` 和对应测试，`shared:ui:core` 不再因为这段旧金额格式化草稿依赖 `shared:domain` 或 DataStore；当前实际金额展示继续使用既有 data model currency formatting 与旧 UI 展示逻辑。
+- `shared:ui:navigation` 已移除未使用的 `shared:domain` 依赖；导航模块当前只依赖基础类型、UI core 和自身导航状态。
 
 ### 阶段 3：测试支持代码归位
 
