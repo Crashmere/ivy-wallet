@@ -10,18 +10,15 @@ import com.ivy.base.model.legacy.Transaction
 import com.ivy.base.model.LoanRecordType
 import com.ivy.base.time.TimeConverter
 import com.ivy.base.time.TimeProvider
-import com.ivy.data.db.dao.read.LoanRecordDao
-import com.ivy.data.repository.TransactionRepository
-import com.ivy.data.repository.mapper.TransactionMapper
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
+import com.ivy.domain.usecase.loan.GetLoanRecordsUseCase
+import com.ivy.domain.usecase.loan.GetLoanTransactionUseCase
+import com.ivy.domain.usecase.loan.HasLoanRecordTransactionUseCase
 import com.ivy.legacy.domain.model.Account
 import com.ivy.legacy.domain.model.Loan
 import com.ivy.legacy.domain.model.LoanRecord
-import com.ivy.legacy.domain.mapper.toLegacy
-import com.ivy.legacy.domain.mapper.toLegacyDomain
 import com.ivy.legacy.domain.logic.AccountCreator
 import com.ivy.base.coroutines.computationThread
-import com.ivy.base.coroutines.ioThread
 import com.ivy.loans.loan.data.DisplayLoanRecord
 import com.ivy.loans.loandetails.events.DeleteLoanModalEvent
 import com.ivy.loans.loandetails.events.LoanDetailsScreenEvent
@@ -54,12 +51,12 @@ import javax.inject.Inject
 @Stable
 @HiltViewModel
 class LoanDetailsViewModel @Inject constructor(
-    private val loanRecordDao: LoanRecordDao,
     private val loanCreator: LoanCreator,
     private val loanRecordCreator: LoanRecordCreator,
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
-    private val transactionRepository: TransactionRepository,
-    private val transactionMapper: TransactionMapper,
+    private val getLoanRecordsUseCase: GetLoanRecordsUseCase,
+    private val getLoanTransactionUseCase: GetLoanTransactionUseCase,
+    private val hasLoanRecordTransactionUseCase: HasLoanRecordTransactionUseCase,
     private val accountCreator: AccountCreator,
     private val loanTransactionsLogic: LoanTransactionsLogic,
     private val nav: Navigation,
@@ -272,12 +269,8 @@ class LoanDetailsViewModel @Inject constructor(
 
             computationThread {
                 displayLoanRecords.value =
-                    ioThread { loanRecordDao.findAllByLoanId(loanId = loanId) }.map {
-                        val trans = ioThread {
-                            transactionRepository.findLoanRecordTransaction(
-                                it.id
-                            )
-                        }
+                    getLoanRecordsUseCase(loanId).map {
+                        val hasTransaction = hasLoanRecordTransactionUseCase(it.id)
 
                         val account = findAccount(
                             accounts = accounts.value,
@@ -285,9 +278,9 @@ class LoanDetailsViewModel @Inject constructor(
                         )
 
                         DisplayLoanRecord(
-                            it.toLegacyDomain(),
+                            it,
                             account = account,
-                            loanRecordTransaction = trans != null,
+                            loanRecordTransaction = hasTransaction,
                             loanRecordCurrencyCode = account?.currency ?: defaultCurrencyCode,
                             loanCurrencyCode = selectedLoanAccount.value?.currency
                                 ?: defaultCurrencyCode
@@ -333,11 +326,7 @@ class LoanDetailsViewModel @Inject constructor(
                 loanTotalAmount.doubleValue = totalAmount
             }
 
-            associatedTransaction = ioThread {
-                transactionRepository.findLoanTransaction(loanId = loan.value!!.id).let {
-                    it?.toLegacy(transactionMapper)
-                }
-            }
+            associatedTransaction = getLoanTransactionUseCase(loanId = loan.value!!.id)
 
             associatedTransaction?.let {
                 createLoanTransaction.value = true

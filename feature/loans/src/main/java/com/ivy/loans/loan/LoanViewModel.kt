@@ -10,11 +10,11 @@ import androidx.lifecycle.viewModelScope
 import com.ivy.base.model.processByType
 import com.ivy.base.time.TimeConverter
 import com.ivy.base.time.TimeProvider
-import com.ivy.data.db.dao.read.LoanRecordDao
-import com.ivy.data.db.dao.write.WriteLoanDao
 import com.ivy.data.model.LoanType
 import com.ivy.domain.preferences.AppPreferences
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
+import com.ivy.domain.usecase.loan.GetLoanRecordsUseCase
+import com.ivy.domain.usecase.loan.ReorderLoansUseCase
 import com.ivy.legacy.domain.model.Account
 import com.ivy.legacy.domain.model.Loan
 import com.ivy.legacy.domain.logic.AccountCreator
@@ -45,15 +45,15 @@ import javax.inject.Inject
 @Stable
 @HiltViewModel
 class LoanViewModel @Inject constructor(
-    private val loanRecordDao: LoanRecordDao,
     private val getBaseCurrencyCodeUseCase: GetBaseCurrencyCodeUseCase,
+    private val getLoanRecordsUseCase: GetLoanRecordsUseCase,
+    private val reorderLoansUseCase: ReorderLoansUseCase,
     private val loanCreator: LoanCreator,
     private val appPreferences: AppPreferences,
     private val accountCreator: AccountCreator,
     private val loanTransactionsLogic: LoanTransactionsLogic,
     private val loansAct: LoansAct,
     private val accountsAct: AccountsAct,
-    private val loanWriter: WriteLoanDao,
     private val timeConverter: TimeConverter,
     private val timeProvider: TimeProvider,
     private val dateTimePicker: DateTimePicker
@@ -323,18 +323,8 @@ class LoanViewModel @Inject constructor(
 
     private fun reorder(newOrder: List<DisplayLoan>) {
         viewModelScope.launch {
-
-            ioThread {
-                newOrder.forEachIndexed { index, item ->
-                    loanWriter.save(
-                        item.loan.toEntity().copy(
-                            orderNum = index.toDouble(),
-                        )
-                    )
-                }
-            }
+            reorderLoansUseCase(newOrder.map(DisplayLoan::loan))
             start()
-
         }
     }
 
@@ -381,7 +371,7 @@ class LoanViewModel @Inject constructor(
      *  @return A Pair containing the total amount paid and the total loan amount.
      */
     private suspend fun calculateAmountPaidAndTotalAmount(loan: Loan): Pair<Double, Double> {
-        val loanRecords = ioThread { loanRecordDao.findAllByLoanId(loanId = loan.id) }
+        val loanRecords = getLoanRecordsUseCase(loan.id)
         val (amountPaid, loanTotalAmount) = loanRecords.fold(0.0 to loan.amount) { value, loanRecord ->
             val (currentAmountPaid, currentLoanTotalAmount) = value
             if (loanRecord.interest) return@fold value
