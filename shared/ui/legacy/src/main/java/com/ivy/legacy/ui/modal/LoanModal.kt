@@ -37,7 +37,7 @@ import com.ivy.ui.time.LocalTimeConverter
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
 import com.ivy.legacy.ui.component.IvyColorPicker
-import com.ivy.legacy.domain.model.Account
+import com.ivy.data.model.legacy.Account
 import com.ivy.data.model.legacy.Loan
 import com.ivy.legacy.ui.component.DateTimeRow
 import com.ivy.base.currency.getDefaultFIATCurrency
@@ -50,7 +50,7 @@ import com.ivy.legacy.ui.modal.ModalNameInput
 import com.ivy.ui.R
 import com.ivy.data.model.currency.IvyCurrency
 import com.ivy.data.model.legacy.CreateAccountData
-import com.ivy.legacy.domain.model.CreateLoanData
+import com.ivy.data.model.legacy.CreateLoanData
 import com.ivy.legacy.ui.theme.GradientIvy
 import com.ivy.legacy.ui.theme.Gray
 import com.ivy.legacy.ui.theme.Ivy

@@ -11,7 +11,7 @@ import com.ivy.data.repository.TransactionRepository
 import com.ivy.data.repository.mapper.TransactionMapper
 import com.ivy.domain.usecase.currency.GetBaseCurrencyUseCase
 import com.ivy.legacy.domain.action.account.CalcAccBalanceAct
-import com.ivy.legacy.domain.model.Account
+import com.ivy.data.model.legacy.Account
 import com.ivy.legacy.domain.mapper.toDomain
 import com.ivy.legacy.domain.pure.transaction.getValue
 import com.ivy.legacy.domain.time.filterOverdue

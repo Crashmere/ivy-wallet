@@ -3,7 +3,7 @@ package com.ivy.planned.edit
 import com.ivy.base.model.TransactionType
 import com.ivy.data.model.Category
 import com.ivy.data.model.IntervalType
-import com.ivy.legacy.domain.model.Account
+import com.ivy.data.model.legacy.Account
 import com.ivy.data.model.legacy.CreateAccountData
 import com.ivy.data.model.legacy.CreateCategoryData
 import com.ivy.legacy.ui.modal.RecurringRuleModalData

@@ -1,6 +1,6 @@
 package com.ivy.legacy.domain.pure.account
 
-import com.ivy.legacy.domain.model.Account
+import com.ivy.data.model.legacy.Account
 
 fun filterExcluded(accounts: List<Account>): List<Account> =
     accounts.filter { it.includeInBalance }

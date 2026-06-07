@@ -3,7 +3,7 @@ package com.ivy.reports
 import com.ivy.base.model.legacy.TransactionHistoryItem
 import com.ivy.data.model.Category
 import com.ivy.data.model.Tag
-import com.ivy.legacy.domain.model.Account
+import com.ivy.data.model.legacy.Account
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import java.util.*

@@ -5,7 +5,7 @@ import arrow.core.toOption
 import com.ivy.data.model.Transaction
 import com.ivy.legacy.frp.Pure
 import com.ivy.legacy.frp.SideEffect
-import com.ivy.legacy.domain.model.Account
+import com.ivy.data.model.legacy.Account
 import com.ivy.legacy.domain.pure.account.accountCurrency
 import com.ivy.legacy.domain.pure.transaction.LegacyTrnFunctions
 import com.ivy.legacy.domain.pure.transaction.getAccountId

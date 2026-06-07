@@ -3,8 +3,8 @@ package com.ivy.legacy.domain.logic.currency
 import com.ivy.base.model.legacy.Transaction
 import com.ivy.data.db.dao.read.AccountDao
 import com.ivy.data.db.dao.read.ExchangeRatesDao
-import com.ivy.legacy.domain.model.Account
-import com.ivy.legacy.domain.model.PlannedPaymentRule
+import com.ivy.data.model.legacy.Account
+import com.ivy.data.model.legacy.PlannedPaymentRule
 import com.ivy.legacy.domain.mapper.toLegacyDomain
 import java.util.UUID
 import javax.inject.Inject

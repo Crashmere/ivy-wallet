@@ -5,7 +5,7 @@ import arrow.core.toOption
 import com.ivy.legacy.frp.action.FPAction
 import com.ivy.legacy.frp.action.thenMap
 import com.ivy.legacy.frp.then
-import com.ivy.legacy.domain.model.Account
+import com.ivy.data.model.legacy.Account
 import com.ivy.legacy.domain.action.account.AccTrnsAct
 import com.ivy.legacy.domain.action.exchange.ExchangeAct
 import com.ivy.legacy.domain.pure.account.filterExcluded

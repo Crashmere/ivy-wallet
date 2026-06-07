@@ -1,6 +1,6 @@
 package com.ivy.loans.loan
 
-import com.ivy.legacy.domain.model.Account
+import com.ivy.data.model.legacy.Account
 import com.ivy.loans.loan.data.DisplayLoan
 import com.ivy.legacy.ui.modal.LoanModalData
 import kotlinx.collections.immutable.ImmutableList

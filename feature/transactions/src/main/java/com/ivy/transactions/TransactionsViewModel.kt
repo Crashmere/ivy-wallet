@@ -67,7 +67,7 @@ import kotlinx.coroutines.launch
 import java.time.ZoneOffset
 import java.util.UUID
 import javax.inject.Inject
-import com.ivy.legacy.domain.model.Account as LegacyAccount
+import com.ivy.data.model.legacy.Account as LegacyAccount
 
 @Stable
 @HiltViewModel

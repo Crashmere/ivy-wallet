@@ -2,7 +2,7 @@ package com.ivy.legacy.ui.model
 
 import androidx.compose.runtime.Immutable
 import com.ivy.data.model.Category
-import com.ivy.legacy.domain.model.Account
+import com.ivy.data.model.legacy.Account
 import kotlinx.collections.immutable.ImmutableList
 
 @Immutable

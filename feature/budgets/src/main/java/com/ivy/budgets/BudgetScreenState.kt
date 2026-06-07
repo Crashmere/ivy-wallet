@@ -3,7 +3,7 @@ package com.ivy.budgets
 import com.ivy.budgets.model.DisplayBudget
 import com.ivy.data.model.Category
 import com.ivy.data.model.legacy.FromToTimeRange
-import com.ivy.legacy.domain.model.Account
+import com.ivy.data.model.legacy.Account
 import kotlinx.collections.immutable.ImmutableList
 import javax.annotation.concurrent.Immutable
 

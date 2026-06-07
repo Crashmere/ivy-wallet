@@ -42,7 +42,7 @@ import com.ivy.legacy.ui.theme.system.BlueLight
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
 import com.ivy.legacy.ui.model.AppBaseData
-import com.ivy.legacy.domain.model.Account
+import com.ivy.data.model.legacy.Account
 import com.ivy.base.text.capitalizeLocal
 import com.ivy.data.model.currency.format
 import com.ivy.base.text.isNotNullOrBlank

@@ -1,7 +1,6 @@
-package com.ivy.legacy.domain.model
+package com.ivy.data.model.legacy
 
 import com.ivy.data.model.LoanType
-import com.ivy.legacy.domain.model.Account
 import java.time.LocalDateTime
 
 data class CreateLoanData(

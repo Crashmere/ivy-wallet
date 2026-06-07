@@ -49,7 +49,7 @@ import com.ivy.legacy.ui.model.AppBaseData
 import com.ivy.legacy.ui.model.LegacyDueSection
 import com.ivy.legacy.ui.model.period.Month
 import com.ivy.legacy.ui.model.period.TimePeriod
-import com.ivy.legacy.domain.model.Account
+import com.ivy.data.model.legacy.Account
 import com.ivy.legacy.ui.state.LocalPeriodState
 import com.ivy.legacy.ui.component.IncomeExpensesCards
 import com.ivy.legacy.ui.component.ItemStatisticToolbar

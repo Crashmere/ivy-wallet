@@ -36,7 +36,7 @@ import com.ivy.data.model.LoanType
 import com.ivy.ui.time.LocalTimeFormatter
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
-import com.ivy.legacy.domain.model.Account
+import com.ivy.data.model.legacy.Account
 import com.ivy.data.model.legacy.Loan
 import com.ivy.data.model.legacy.LoanRecord
 import com.ivy.loans.humanReadableType

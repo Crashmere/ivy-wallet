@@ -3,7 +3,7 @@ import com.ivy.data.db.dao.read.LoanDao
 import com.ivy.data.db.dao.write.WriteLoanDao
 import com.ivy.data.model.legacy.Loan
 import com.ivy.base.coroutines.ioThread
-import com.ivy.legacy.domain.model.CreateLoanData
+import com.ivy.data.model.legacy.CreateLoanData
 import com.ivy.legacy.domain.mapper.toEntity
 import com.ivy.legacy.domain.pure.util.nextOrderNum
 import java.util.UUID

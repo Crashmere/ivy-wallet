@@ -22,7 +22,7 @@ import com.ivy.legacy.ui.theme.IVY_COLOR_PICKER_COLORS_FREE
 import com.ivy.importdata.csv.ImportantFields
 import com.ivy.importdata.csv.OptionalFields
 import com.ivy.importdata.csv.TransferFields
-import com.ivy.legacy.domain.model.Account
+import com.ivy.data.model.legacy.Account
 import com.ivy.base.text.toLowerCaseLocal
 import com.ivy.data.model.currency.IvyCurrency
 import com.ivy.legacy.domain.action.account.AccountsAct

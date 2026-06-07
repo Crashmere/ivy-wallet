@@ -19,7 +19,7 @@ import com.ivy.legacy.frp.action.thenMap
 import com.ivy.legacy.frp.thenInvokeAfter
 import com.ivy.legacy.ui.state.PeriodState
 import com.ivy.legacy.ui.model.period.TimePeriod
-import com.ivy.legacy.domain.model.Account
+import com.ivy.data.model.legacy.Account
 import com.ivy.base.coroutines.ioThread
 import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.preferences.asEnabledState

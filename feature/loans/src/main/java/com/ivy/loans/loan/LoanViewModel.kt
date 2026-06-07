@@ -15,7 +15,7 @@ import com.ivy.domain.preferences.AppPreferences
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.domain.usecase.loan.GetLoanRecordsUseCase
 import com.ivy.domain.usecase.loan.ReorderLoansUseCase
-import com.ivy.legacy.domain.model.Account
+import com.ivy.data.model.legacy.Account
 import com.ivy.data.model.legacy.Loan
 import com.ivy.legacy.domain.logic.AccountCreator
 import com.ivy.data.model.currency.format
@@ -29,7 +29,7 @@ import com.ivy.legacy.domain.action.loan.LoansAct
 import com.ivy.legacy.domain.logic.LoanCreator
 import com.ivy.legacy.domain.logic.loantransactions.LoanTransactionsLogic
 import com.ivy.data.model.legacy.CreateAccountData
-import com.ivy.legacy.domain.model.CreateLoanData
+import com.ivy.data.model.legacy.CreateLoanData
 import com.ivy.legacy.ui.modal.LoanModalData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList

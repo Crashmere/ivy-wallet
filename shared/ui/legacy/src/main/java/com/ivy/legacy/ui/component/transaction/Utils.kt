@@ -2,7 +2,7 @@ package com.ivy.legacy.ui.component.transaction
 
 import androidx.compose.runtime.Composable
 import com.ivy.data.model.Category
-import com.ivy.legacy.domain.model.Account
+import com.ivy.data.model.legacy.Account
 import java.util.UUID
 
 @Composable

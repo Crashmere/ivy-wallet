@@ -12,8 +12,8 @@ import com.ivy.data.model.TransactionId
 import com.ivy.data.repository.TransactionRepository
 import com.ivy.data.repository.mapper.TransactionMapper
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
-import com.ivy.legacy.domain.model.Account
-import com.ivy.legacy.domain.model.PlannedPaymentRule
+import com.ivy.data.model.legacy.Account
+import com.ivy.data.model.legacy.PlannedPaymentRule
 import com.ivy.legacy.domain.mapper.toDomain
 import com.ivy.legacy.domain.mapper.toLegacyDomain
 import com.ivy.base.coroutines.ioThread

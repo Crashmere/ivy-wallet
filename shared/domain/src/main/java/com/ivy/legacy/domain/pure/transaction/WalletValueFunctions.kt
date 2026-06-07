@@ -6,7 +6,7 @@ import com.ivy.data.model.Income
 import com.ivy.data.model.Transaction
 import com.ivy.data.model.Transfer
 import com.ivy.legacy.frp.SideEffect
-import com.ivy.legacy.domain.model.Account
+import com.ivy.data.model.legacy.Account
 import com.ivy.legacy.domain.pure.exchange.ExchangeEffect
 import com.ivy.legacy.domain.pure.exchange.LegacyExchangeTrns
 import com.ivy.legacy.domain.pure.exchange.exchangeInBaseCurrency

@@ -18,8 +18,8 @@ import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.domain.usecase.planned.DeletePlannedPaymentRuleUseCase
 import com.ivy.domain.usecase.planned.GetPlannedPaymentRuleUseCase
 import com.ivy.domain.usecase.planned.SavePlannedPaymentRuleUseCase
-import com.ivy.legacy.domain.model.Account
-import com.ivy.legacy.domain.model.PlannedPaymentRule
+import com.ivy.data.model.legacy.Account
+import com.ivy.data.model.legacy.PlannedPaymentRule
 import com.ivy.legacy.domain.logic.AccountCreator
 import com.ivy.ui.navigation.EditPlannedScreen
 import com.ivy.ui.navigation.Navigation

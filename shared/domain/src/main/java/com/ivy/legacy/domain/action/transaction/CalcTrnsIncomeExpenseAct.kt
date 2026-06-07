@@ -4,7 +4,7 @@ import arrow.core.nonEmptyListOf
 import com.ivy.data.model.Transaction
 import com.ivy.legacy.frp.action.FPAction
 import com.ivy.legacy.frp.then
-import com.ivy.legacy.domain.model.Account
+import com.ivy.data.model.legacy.Account
 import com.ivy.legacy.domain.action.exchange.ExchangeAct
 import com.ivy.legacy.domain.action.exchange.actInput
 import com.ivy.data.model.legacy.IncomeExpenseTransferPair

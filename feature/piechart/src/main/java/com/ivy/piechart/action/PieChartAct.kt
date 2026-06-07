@@ -17,7 +17,7 @@ import com.ivy.legacy.frp.action.FPAction
 import com.ivy.legacy.frp.action.thenFilter
 import com.ivy.legacy.frp.action.thenMap
 import com.ivy.legacy.frp.then
-import com.ivy.legacy.domain.model.Account
+import com.ivy.data.model.legacy.Account
 import com.ivy.piechart.CategoryAmount
 import com.ivy.ui.R
 import com.ivy.legacy.domain.action.account.AccountsAct

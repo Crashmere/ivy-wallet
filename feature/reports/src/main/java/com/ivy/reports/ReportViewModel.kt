@@ -36,7 +36,7 @@ import com.ivy.domain.usecase.transaction.GetTransactionsUseCase
 import com.ivy.domain.usecase.transaction.MapTransactionsToLegacyUseCase
 import com.ivy.legacy.frp.filterSuspend
 import com.ivy.legacy.ui.state.PeriodState
-import com.ivy.legacy.domain.model.Account
+import com.ivy.data.model.legacy.Account
 import com.ivy.base.time.getISOFormattedDateTime
 import com.ivy.base.coroutines.scopedIOThread
 import com.ivy.base.text.toLowerCaseLocal

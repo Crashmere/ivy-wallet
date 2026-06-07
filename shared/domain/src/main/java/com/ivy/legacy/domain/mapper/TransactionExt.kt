@@ -2,11 +2,11 @@ package com.ivy.legacy.domain.mapper
 
 import com.ivy.base.model.legacy.LegacyTag
 import com.ivy.base.model.legacy.LegacyTransaction
+import com.ivy.base.model.legacy.Transaction as LegacyTransactionModel
 import com.ivy.data.db.entity.TransactionEntity
 import com.ivy.data.model.Tag
 import com.ivy.data.model.Transaction
 import com.ivy.data.repository.mapper.TransactionMapper
-import com.ivy.legacy.domain.model.toEntity
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
@@ -57,3 +57,23 @@ fun TransactionEntity.isIdenticalWith(transaction: TransactionEntity?): Boolean 
         isDeleted = false
     )
 }
+
+fun LegacyTransactionModel.toEntity(): TransactionEntity = TransactionEntity(
+    accountId = accountId,
+    type = type,
+    amount = amount.toDouble(),
+    toAccountId = toAccountId,
+    toAmount = toAmount.toDouble(),
+    title = title,
+    description = description,
+    dateTime = dateTime,
+    categoryId = categoryId,
+    dueDate = dueDate,
+    recurringRuleId = recurringRuleId,
+    paidForDateTime = paidFor,
+    attachmentUrl = attachmentUrl,
+    loanId = loanId,
+    loanRecordId = loanRecordId,
+    id = id,
+    isDeleted = isDeleted
+)

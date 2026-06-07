@@ -12,8 +12,8 @@ import com.ivy.ui.ComposeViewModel
 import com.ivy.data.model.Category
 import com.ivy.domain.usecase.category.GetCategoriesUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
-import com.ivy.legacy.domain.model.Account
-import com.ivy.legacy.domain.model.PlannedPaymentRule
+import com.ivy.data.model.legacy.Account
+import com.ivy.data.model.legacy.PlannedPaymentRule
 import com.ivy.base.coroutines.ioThread
 import com.ivy.legacy.domain.action.account.AccountsAct
 import com.ivy.legacy.domain.logic.PlannedPaymentsLogic

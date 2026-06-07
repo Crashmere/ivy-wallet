@@ -1,9 +1,7 @@
-package com.ivy.legacy.domain.model
+package com.ivy.data.model.legacy
 
 import arrow.core.Either
 import arrow.core.raise.either
-import com.ivy.data.db.entity.AccountEntity
-import com.ivy.data.model.Account
 import com.ivy.data.model.AccountId
 import com.ivy.data.model.primitive.AssetCode
 import com.ivy.data.model.primitive.ColorInt
@@ -24,23 +22,12 @@ data class Account(
 
     val id: UUID = UUID.randomUUID()
 ) {
-    fun toEntity(): AccountEntity = AccountEntity(
-        name = name,
-        currency = currency,
-        color = color,
-        icon = icon,
-        orderNum = orderNum,
-        includeInBalance = includeInBalance,
-        isDeleted = isDeleted,
-        id = id
-    )
-
     @Suppress("DataClassFunctions")
     fun toDomainAccount(
         baseCurrency: AssetCode
     ): Either<String, DomainAccount> {
         return either {
-            Account(
+            DomainAccount(
                 id = AccountId(id),
                 name = NotBlankTrimmedString.from(name).bind(),
                 asset = currency?.let(AssetCode::from)?.bind()

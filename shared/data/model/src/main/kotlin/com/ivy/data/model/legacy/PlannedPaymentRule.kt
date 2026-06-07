@@ -1,7 +1,6 @@
-package com.ivy.legacy.domain.model
+package com.ivy.data.model.legacy
 
 import com.ivy.base.model.TransactionType
-import com.ivy.data.db.entity.PlannedPaymentRuleEntity
 import com.ivy.data.model.IntervalType
 import java.time.Instant
 import java.util.UUID
@@ -22,19 +21,4 @@ data class PlannedPaymentRule(
     val isDeleted: Boolean = false,
 
     val id: UUID = UUID.randomUUID()
-) {
-    fun toEntity(): PlannedPaymentRuleEntity = PlannedPaymentRuleEntity(
-        startDate = startDate,
-        intervalN = intervalN,
-        intervalType = intervalType,
-        oneTime = oneTime,
-        type = type,
-        accountId = accountId,
-        amount = amount,
-        categoryId = categoryId,
-        title = title,
-        description = description,
-        isDeleted = isDeleted,
-        id = id
-    )
-}
+)

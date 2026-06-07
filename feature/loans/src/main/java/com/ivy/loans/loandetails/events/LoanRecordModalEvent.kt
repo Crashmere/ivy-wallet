@@ -2,7 +2,7 @@ package com.ivy.loans.loandetails.events
 
 import com.ivy.data.model.legacy.LoanRecord
 import com.ivy.loans.loan.data.DisplayLoanRecord
-import com.ivy.legacy.domain.model.CreateLoanRecordData
+import com.ivy.data.model.legacy.CreateLoanRecordData
 import com.ivy.data.model.legacy.EditLoanRecordData
 
 sealed interface LoanRecordModalEvent : LoanDetailsScreenEvent {

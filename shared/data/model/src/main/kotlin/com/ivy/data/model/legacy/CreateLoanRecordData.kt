@@ -1,7 +1,6 @@
-package com.ivy.legacy.domain.model
+package com.ivy.data.model.legacy
 
 import com.ivy.base.model.LoanRecordType
-import com.ivy.legacy.domain.model.Account
 import java.time.Instant
 
 data class CreateLoanRecordData(

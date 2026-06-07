@@ -20,8 +20,8 @@ import com.ivy.data.model.primitive.NotBlankTrimmedString
 import com.ivy.legacy.ui.theme.system.Purple
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
-import com.ivy.legacy.domain.model.Account
-import com.ivy.legacy.domain.model.PlannedPaymentRule
+import com.ivy.data.model.legacy.Account
+import com.ivy.data.model.legacy.PlannedPaymentRule
 import com.ivy.ui.navigation.EditPlannedScreen
 import com.ivy.ui.navigation.PlannedPaymentsScreen
 import com.ivy.ui.navigation.navigation

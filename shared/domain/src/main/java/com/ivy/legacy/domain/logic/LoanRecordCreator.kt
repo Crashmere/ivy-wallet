@@ -3,7 +3,7 @@ package com.ivy.legacy.domain.logic
 import com.ivy.data.db.dao.write.WriteLoanRecordDao
 import com.ivy.data.model.legacy.LoanRecord
 import com.ivy.base.coroutines.ioThread
-import com.ivy.legacy.domain.model.CreateLoanRecordData
+import com.ivy.data.model.legacy.CreateLoanRecordData
 import com.ivy.legacy.domain.mapper.toEntity
 import java.util.UUID
 import javax.inject.Inject
