@@ -235,8 +235,10 @@ class PieChartStatisticViewModel @Inject constructor(
         val month = period.month
         val year = period.year ?: com.ivy.base.legacy.dateNowUTC().year
         if (month != null) {
+            val nextPeriod = month.incrementMonthPeriod(1L, year)
+            ivyContext.updateSelectedPeriodInMemory(nextPeriod)
             load(
-                periodValue = month.incrementMonthPeriod(ivyContext, 1L, year)
+                periodValue = nextPeriod
             )
         }
     }
@@ -245,8 +247,10 @@ class PieChartStatisticViewModel @Inject constructor(
         val month = period.month
         val year = period.year ?: com.ivy.base.legacy.dateNowUTC().year
         if (month != null) {
+            val previousPeriod = month.incrementMonthPeriod(-1L, year)
+            ivyContext.updateSelectedPeriodInMemory(previousPeriod)
             load(
-                periodValue = month.incrementMonthPeriod(ivyContext, -1L, year)
+                periodValue = previousPeriod
             )
         }
     }

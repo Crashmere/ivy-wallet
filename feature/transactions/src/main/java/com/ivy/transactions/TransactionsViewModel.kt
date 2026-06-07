@@ -700,9 +700,11 @@ class TransactionsViewModel @Inject constructor(
         val month = period.value.month
         val year = period.value.year ?: dateNowUTC().year
         if (month != null) {
+            val nextPeriod = month.incrementMonthPeriod(1L, year)
+            ivyContext.updateSelectedPeriodInMemory(nextPeriod)
             start(
                 screen = screen,
-                timePeriod = month.incrementMonthPeriod(ivyContext, 1L, year),
+                timePeriod = nextPeriod,
                 reset = false
             )
         }
@@ -712,9 +714,11 @@ class TransactionsViewModel @Inject constructor(
         val month = period.value.month
         val year = period.value.year ?: dateNowUTC().year
         if (month != null) {
+            val previousPeriod = month.incrementMonthPeriod(-1L, year)
+            ivyContext.updateSelectedPeriodInMemory(previousPeriod)
             start(
                 screen = screen,
-                timePeriod = month.incrementMonthPeriod(ivyContext, -1L, year),
+                timePeriod = previousPeriod,
                 reset = false
             )
         }

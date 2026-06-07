@@ -31,6 +31,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.ivy.design.l0_system.UI
 import com.ivy.design.l0_system.style
 import com.ivy.data.model.currency.format
+import com.ivy.legacy.ivyWalletCtx
 import com.ivy.navigation.BalanceScreen
 import com.ivy.navigation.navigation
 import com.ivy.ui.R
@@ -64,6 +65,7 @@ private fun BoxWithConstraintsScope.UI(
     onEvent: (BalanceEvent) -> Unit = {}
 ) {
     var choosePeriodModal: ChoosePeriodModalData? by remember { mutableStateOf(null) }
+    val ivyContext = ivyWalletCtx()
 
     Column(
         modifier = Modifier
@@ -75,6 +77,7 @@ private fun BoxWithConstraintsScope.UI(
 
         PeriodSelector(
             period = state.period,
+            startDateOfMonth = ivyContext.startDayOfMonth,
             onPreviousMonth = { onEvent(BalanceEvent.OnPreviousMonth) },
             onNextMonth = { onEvent(BalanceEvent.OnNextMonth) },
             onShowChoosePeriodModal = {
@@ -118,7 +121,17 @@ private fun BoxWithConstraintsScope.UI(
         modal = choosePeriodModal,
         dismiss = {
             choosePeriodModal = null
-        }
+        },
+        saveSelectedPeriod = ivyContext::updateSelectedPeriodInMemory,
+        pickDate = { minDate, maxDate, initialDate, onDatePicked ->
+            ivyContext.datePicker(
+                minDate = minDate,
+                maxDate = maxDate,
+                initialDate = initialDate,
+            ) {
+                onDatePicked(it)
+            }
+        },
     ) {
         onEvent(BalanceEvent.OnSetPeriod(it))
     }

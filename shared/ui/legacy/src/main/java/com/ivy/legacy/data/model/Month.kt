@@ -2,7 +2,6 @@ package com.ivy.legacy.data.model
 
 import androidx.compose.runtime.Immutable
 import com.ivy.base.legacy.stringRes
-import com.ivy.legacy.IvyWalletCtx
 import com.ivy.base.legacy.dateNowUTC
 import com.ivy.ui.R
 import java.time.LocalDate
@@ -37,17 +36,14 @@ data class Month(
             .withMonth(monthValue)
 
     fun incrementMonthPeriod(
-        ivyContext: IvyWalletCtx,
         increment: Long,
         year: Int
     ): TimePeriod {
         val incrementedMonth = toDate().withYear(year).plusMonths(increment)
-        val incrementedPeriod = TimePeriod(
+        return TimePeriod(
             month = fromMonthValue(incrementedMonth.monthValue),
             year = incrementedMonth.year
         )
-        ivyContext.updateSelectedPeriodInMemory(incrementedPeriod)
-        return incrementedPeriod
     }
 
     fun toTimePeriod(): TimePeriod = TimePeriod(

@@ -39,7 +39,6 @@ import com.ivy.legacy.data.model.LastNTimeRange
 import com.ivy.legacy.data.model.Month.Companion.fromMonthValue
 import com.ivy.legacy.data.model.Month.Companion.monthsList
 import com.ivy.legacy.data.model.TimePeriod
-import com.ivy.legacy.ivyWalletCtx
 import com.ivy.ui.legacy.addKeyboardListener
 import com.ivy.base.legacy.dateNowUTC
 import com.ivy.ui.legacy.formatDateOnlyWithYear
@@ -60,6 +59,7 @@ import java.util.UUID
 import java.util.concurrent.TimeUnit
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
+import java.time.LocalDate
 
 @Deprecated("Old design system. Use `:ivy-design` and Material3")
 data class ChoosePeriodModalData(
@@ -75,13 +75,19 @@ fun BoxWithConstraintsScope.ChoosePeriodModal(
     modal: ChoosePeriodModalData?,
 
     dismiss: () -> Unit,
+    saveSelectedPeriod: (TimePeriod) -> Unit,
+    pickDate: (
+        minDate: LocalDate?,
+        maxDate: LocalDate?,
+        initialDate: LocalDate?,
+        onDatePicked: (LocalDate) -> Unit
+    ) -> Unit,
     onPeriodSelected: (TimePeriod) -> Unit
 ) {
     var period by remember(modal) {
         mutableStateOf(modal?.period)
     }
 
-    val ivyContext = ivyWalletCtx()
     val modalScrollState = rememberScrollState()
 
     IvyModal(
@@ -94,7 +100,7 @@ fun BoxWithConstraintsScope.ChoosePeriodModal(
                 enabled = period != null && period!!.isValid()
             ) {
                 if (period != null) {
-                    ivyContext.updateSelectedPeriodInMemory(period!!)
+                    saveSelectedPeriod(period!!)
                     dismiss()
                     onPeriodSelected(period!!)
                 }
@@ -125,7 +131,8 @@ fun BoxWithConstraintsScope.ChoosePeriodModal(
         Spacer(Modifier.height(32.dp))
 
         FromToRange(
-            timeRange = period?.fromToRange
+            timeRange = period?.fromToRange,
+            pickDate = pickDate,
         ) {
             period = TimePeriod(
                 fromToRange = it
@@ -287,6 +294,12 @@ private fun MonthButton(
 @Suppress("ParameterNaming")
 private fun ColumnScope.FromToRange(
     timeRange: FromToTimeRange?,
+    pickDate: (
+        minDate: LocalDate?,
+        maxDate: LocalDate?,
+        initialDate: LocalDate?,
+        onDatePicked: (LocalDate) -> Unit
+    ) -> Unit,
     onSelected: (FromToTimeRange?) -> Unit,
 ) {
     Text(
@@ -305,7 +318,8 @@ private fun ColumnScope.FromToRange(
     IntervalFromToDate(
         border = IntervalBorder.FROM,
         dateTime = with(converter) { timeRange?.from?.toLocalDateTime() },
-        otherEndDateTime = with(converter) { timeRange?.to?.toLocalDateTime() }
+        otherEndDateTime = with(converter) { timeRange?.to?.toLocalDateTime() },
+        pickDate = pickDate,
     ) { from ->
         onSelected(
             if (from == null && timeRange?.to == null) {
@@ -327,6 +341,7 @@ private fun ColumnScope.FromToRange(
         border = IntervalBorder.TO,
         dateTime = with(converter) { timeRange?.to?.toLocalDateTime() },
         otherEndDateTime = with(converter) { timeRange?.from?.toLocalDateTime() },
+        pickDate = pickDate,
     ) { to ->
         onSelected(
             if (timeRange?.from == null && to == null) {
@@ -349,10 +364,14 @@ private fun IntervalFromToDate(
     border: IntervalBorder,
     dateTime: LocalDateTime?,
     otherEndDateTime: LocalDateTime?,
+    pickDate: (
+        minDate: LocalDate?,
+        maxDate: LocalDate?,
+        initialDate: LocalDate?,
+        onDatePicked: (LocalDate) -> Unit
+    ) -> Unit,
     onSelected: (LocalDateTime?) -> Unit
 ) {
-    val ivyContext = ivyWalletCtx()
-
     Row(
         modifier = Modifier
             .padding(horizontal = 24.dp)
@@ -360,22 +379,22 @@ private fun IntervalFromToDate(
             .clip(UI.shapes.rFull)
             .border(2.dp, UI.colors.medium, UI.shapes.rFull)
             .clickable {
-                ivyContext.datePicker(
-                    minDate = if (border == IntervalBorder.TO) {
+                pickDate(
+                    if (border == IntervalBorder.TO) {
                         otherEndDateTime
                             ?.toLocalDate()
                             ?.plusDays(1)
                     } else {
                         null
                     },
-                    maxDate = if (border == IntervalBorder.FROM) {
+                    if (border == IntervalBorder.FROM) {
                         otherEndDateTime
                             ?.toLocalDate()
                             ?.minusDays(1)
                     } else {
                         null
                     },
-                    initialDate = dateTime?.toLocalDate()
+                    dateTime?.toLocalDate()
                 ) {
                     onSelected(it.atStartOfDay())
                 }

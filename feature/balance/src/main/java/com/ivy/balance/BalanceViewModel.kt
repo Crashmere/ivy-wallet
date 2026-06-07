@@ -97,8 +97,10 @@ class BalanceViewModel @Inject constructor(
         val year = period.year ?: com.ivy.base.legacy.dateNowUTC().year
         numberOfMonthsAhead += 1
         if (month != null) {
+            val nextPeriod = month.incrementMonthPeriod(1L, year = year)
+            ivyContext.updateSelectedPeriodInMemory(nextPeriod)
             start(
-                timePeriod = month.incrementMonthPeriod(ivyContext, 1L, year = year)
+                timePeriod = nextPeriod
             )
         }
     }
@@ -108,8 +110,10 @@ class BalanceViewModel @Inject constructor(
         val year = period.year ?: com.ivy.base.legacy.dateNowUTC().year
         numberOfMonthsAhead -= 1
         if (month != null) {
+            val previousPeriod = month.incrementMonthPeriod(-1L, year = year)
+            ivyContext.updateSelectedPeriodInMemory(previousPeriod)
             start(
-                timePeriod = month.incrementMonthPeriod(ivyContext, -1L, year = year)
+                timePeriod = previousPeriod
             )
         }
     }

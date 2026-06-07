@@ -255,6 +255,16 @@ fun BoxWithConstraintsScope.HomeUi(
         dismiss = {
             choosePeriodModal = null
         },
+        saveSelectedPeriod = ivyContext::updateSelectedPeriodInMemory,
+        pickDate = { minDate, maxDate, initialDate, onDatePicked ->
+            ivyContext.datePicker(
+                minDate = minDate,
+                maxDate = maxDate,
+                initialDate = initialDate,
+            ) {
+                onDatePicked(it)
+            }
+        },
         onPeriodSelected = forward<TimePeriod>() then2 {
             HomeEvent.SetPeriod(it)
         } then2 onEvent

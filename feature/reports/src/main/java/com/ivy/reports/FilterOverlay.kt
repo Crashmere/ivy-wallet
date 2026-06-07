@@ -116,6 +116,7 @@ fun BoxWithConstraintsScope.FilterOverlay(
     var choosePeriodModal: ChoosePeriodModalData? by remember {
         mutableStateOf(null)
     }
+    val ivyContext = ivyWalletCtx()
     var minAmountModalShown by remember { mutableStateOf(false) }
     var maxAmountModalShown by remember { mutableStateOf(false) }
     var includeKeywordModalShown by remember { mutableStateOf(false) }
@@ -209,9 +210,9 @@ fun BoxWithConstraintsScope.FilterOverlay(
 
             FilterDivider()
 
-            val ivyContext = ivyWalletCtx()
             PeriodFilter(
                 filter = localFilter,
+                startDateOfMonth = ivyContext.startDayOfMonth,
                 onShowPeriodChooserModal = {
                     choosePeriodModal = ChoosePeriodModalData(
                         period = filter?.period ?: ivyContext.selectedPeriod
@@ -322,6 +323,16 @@ fun BoxWithConstraintsScope.FilterOverlay(
     ChoosePeriodModal(
         modal = choosePeriodModal,
         dismiss = { choosePeriodModal = null },
+        saveSelectedPeriod = ivyContext::updateSelectedPeriodInMemory,
+        pickDate = { minDate, maxDate, initialDate, onDatePicked ->
+            ivyContext.datePicker(
+                minDate = minDate,
+                maxDate = maxDate,
+                initialDate = initialDate,
+            ) {
+                onDatePicked(it)
+            }
+        },
     ) { selectedPeriod ->
         localFilter = nonNullFilter(localFilter).copy(
             period = selectedPeriod
@@ -614,6 +625,7 @@ private fun TypeFilterCheckbox(
 @Composable
 private fun PeriodFilter(
     filter: ReportFilter?,
+    startDateOfMonth: Int,
     onShowPeriodChooserModal: () -> Unit
 ) {
     FilterTitleText(
@@ -630,7 +642,7 @@ private fun PeriodFilter(
             .padding(horizontal = 24.dp),
         iconStart = R.drawable.ic_calendar,
         text = filter?.period?.toDisplayLong(
-            startDateOfMonth = ivyWalletCtx().startDayOfMonth,
+            startDateOfMonth = startDateOfMonth,
             timeProvider = LocalTimeProvider.current,
             timeConverter = LocalTimeConverter.current,
             timeFormatter = LocalTimeFormatter.current,

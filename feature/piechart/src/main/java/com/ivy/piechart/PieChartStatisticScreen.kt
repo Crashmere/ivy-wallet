@@ -96,6 +96,7 @@ private fun BoxWithConstraintsScope.UI(
     onEvent: (PieChartStatisticEvent) -> Unit = {}
 ) {
     val nav = navigation()
+    val ivyContext = ivyWalletCtx()
     val lazyState = rememberScrollPositionListState(
         key = "item_pie_chart_lazy_column"
     )
@@ -116,6 +117,7 @@ private fun BoxWithConstraintsScope.UI(
             Header(
                 transactionType = state.transactionType,
                 period = state.period,
+                startDateOfMonth = ivyContext.startDayOfMonth,
                 percentExpanded = percentExpanded,
                 currency = state.baseCurrency,
                 amount = state.totalAmount,
@@ -222,7 +224,17 @@ private fun BoxWithConstraintsScope.UI(
         modal = state.choosePeriodModal,
         dismiss = {
             onEvent(PieChartStatisticEvent.OnShowMonthModal(null))
-        }
+        },
+        saveSelectedPeriod = ivyContext::updateSelectedPeriodInMemory,
+        pickDate = { minDate, maxDate, initialDate, onDatePicked ->
+            ivyContext.datePicker(
+                minDate = minDate,
+                maxDate = maxDate,
+                initialDate = initialDate,
+            ) {
+                onDatePicked(it)
+            }
+        },
     ) {
         onEvent(PieChartStatisticEvent.OnSetPeriod(it))
     }
@@ -232,6 +244,7 @@ private fun BoxWithConstraintsScope.UI(
 private fun Header(
     transactionType: TransactionType,
     period: com.ivy.legacy.data.model.TimePeriod,
+    startDateOfMonth: Int,
     percentExpanded: Float,
 
     currency: String,
@@ -287,7 +300,7 @@ private fun Header(
                 ),
                 iconStart = R.drawable.ic_calendar,
                 text = period.toDisplayShort(
-                    startDateOfMonth = ivyWalletCtx().startDayOfMonth,
+                    startDateOfMonth = startDateOfMonth,
                     timeConverter = LocalTimeConverter.current,
                     timeProvider = LocalTimeProvider.current,
                     timeFormatter = LocalTimeFormatter.current,

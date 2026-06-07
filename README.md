@@ -369,7 +369,10 @@
 - 已把旧弹窗基础层继续收敛到 `shared:ui:legacy`：`IvyModal`、通用 modal action、删除/进度/货币/图标/起始日弹窗、排序弹窗、金额展示、预算/缓冲条、交易类型选择、分类选择和部分通用输入弹窗已迁出 `temp:legacy-code`。
 - 已把旧排序接口从 `com.ivy.wallet.domain.data.Reorderable` 收敛到 `shared:data:model` 的 `com.ivy.data.model.Reorderable`，避免 UI legacy 为了排序弹窗反向依赖 domain。
 - 已把计划付款复用的 `RecurringRuleModal` 通过外部 `pickDate` 回调与 `IvyWalletCtx` 解耦，并迁入 `shared:ui:legacy`。
-- 旧 theme 目录在 `temp:legacy-code` 中只剩仍直接依赖旧时间模型、旧账户/分类/借贷模型、旧创建参数或 DI 偏好读取的 9 个弹窗/组件，后续需要按业务边界单独迁移。
+- 已把旧时间范围兼容模型迁出 `temp:legacy-code`：纯 `ClosedTimeRange`、收入/支出统计值对象迁入 `shared:data:model`；仍带 UI 文案/格式化职责的旧 `TimePeriod`、`Month`、`FromToTimeRange`、`LastNTimeRange`、`MainTab`、`AccountData` 暂时迁入 `shared:ui:legacy` 的 legacy model 区。
+- 已把 `Month.incrementMonthPeriod` 改成只返回新周期，不再直接更新 `IvyWalletCtx`；各页面/ViewModel 在调用处显式保存选中周期，副作用更清楚。
+- 已把 `ChoosePeriodModal` 和 `PeriodSelector` 迁入 `shared:ui:legacy`，并通过外部 `saveSelectedPeriod`、`pickDate`、`startDateOfMonth` 参数替代内部直接读取 `IvyWalletCtx`。
+- 旧 theme 目录在 `temp:legacy-code` 中只剩仍直接依赖旧账户/分类/借贷模型、旧创建参数或 DI 偏好读取的 7 个弹窗/组件，后续需要按业务边界单独迁移。
 
 迁移分组：
 

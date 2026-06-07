@@ -26,7 +26,6 @@ import com.ivy.design.api.LocalTimeProvider
 import com.ivy.design.l0_system.UI
 import com.ivy.design.l0_system.style
 import com.ivy.legacy.data.model.TimePeriod
-import com.ivy.legacy.ivyWalletCtx
 import com.ivy.ui.R
 import com.ivy.wallet.ui.theme.components.IvyIcon
 
@@ -34,6 +33,7 @@ import com.ivy.wallet.ui.theme.components.IvyIcon
 @Composable
 fun PeriodSelector(
     period: TimePeriod,
+    startDateOfMonth: Int,
     onPreviousMonth: () -> Unit,
     onNextMonth: () -> Unit,
     onShowChoosePeriodModal: () -> Unit,
@@ -84,7 +84,7 @@ fun PeriodSelector(
 
             Text(
                 text = period.toDisplayShort(
-                    startDateOfMonth = ivyWalletCtx().startDayOfMonth,
+                    startDateOfMonth = startDateOfMonth,
                     timeConverter = LocalTimeConverter.current,
                     timeProvider = LocalTimeProvider.current,
                     timeFormatter = LocalTimeFormatter.current,

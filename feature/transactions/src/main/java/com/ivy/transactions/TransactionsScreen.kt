@@ -371,6 +371,7 @@ private fun BoxWithConstraintsScope.UI(
 
             choosePeriodModal(
                 period = period,
+                startDateOfMonth = ivyContext.startDayOfMonth,
                 itemColor = itemColor,
                 initWithTransactions = initWithTransactions,
                 onPreviousMonth = onPreviousMonth,
@@ -466,7 +467,17 @@ private fun BoxWithConstraintsScope.UI(
         modal = choosePeriodModal,
         dismiss = {
             onChoosePeriodModal(null)
-        }
+        },
+        saveSelectedPeriod = ivyContext::updateSelectedPeriodInMemory,
+        pickDate = { minDate, maxDate, initialDate, onDatePicked ->
+            ivyContext.datePicker(
+                minDate = minDate,
+                maxDate = maxDate,
+                initialDate = initialDate,
+            ) {
+                onDatePicked(it)
+            }
+        },
     ) {
         onSetPeriod(it)
     }
@@ -474,6 +485,7 @@ private fun BoxWithConstraintsScope.UI(
 
 private fun LazyListScope.choosePeriodModal(
     period: TimePeriod,
+    startDateOfMonth: Int,
     itemColor: Color,
     initWithTransactions: Boolean,
     onPreviousMonth: () -> Unit,
@@ -494,6 +506,7 @@ private fun LazyListScope.choosePeriodModal(
             PeriodSelector(
                 modifier = Modifier.padding(top = 16.dp),
                 period = period,
+                startDateOfMonth = startDateOfMonth,
                 onPreviousMonth = { if (!initWithTransactions) onPreviousMonth() },
                 onNextMonth = { if (!initWithTransactions) onNextMonth() },
                 onShowChoosePeriodModal = {
