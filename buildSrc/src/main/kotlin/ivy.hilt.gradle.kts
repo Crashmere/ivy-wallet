@@ -1,16 +1,19 @@
+import org.jetbrains.kotlin.gradle.dsl.KotlinAndroidProjectExtension
+
 plugins {
-    id("ivy.android-library")
     id("dagger.hilt.android.plugin")
     id("com.google.devtools.ksp")
 }
 
-kotlin {
-    sourceSets.all {
-        kotlin.srcDir("build/generated/ksp/$name/kotlin")
+pluginManager.withPlugin("org.jetbrains.kotlin.android") {
+    extensions.configure<KotlinAndroidProjectExtension>("kotlin") {
+        sourceSets.all {
+            kotlin.srcDir("build/generated/ksp/$name/kotlin")
+        }
     }
 }
 
 dependencies {
-    implementation(libs.bundles.hilt)
-    ksp(catalog.library("hilt-compiler"))
+    add("implementation", libs.bundles.hilt)
+    add("ksp", catalog.library("hilt-compiler"))
 }

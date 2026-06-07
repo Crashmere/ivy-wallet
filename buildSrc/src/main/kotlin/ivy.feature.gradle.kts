@@ -1,4 +1,4 @@
 plugins {
-    id("ivy.hilt")
     id("ivy.compose")
+    id("ivy.hilt")
 }
