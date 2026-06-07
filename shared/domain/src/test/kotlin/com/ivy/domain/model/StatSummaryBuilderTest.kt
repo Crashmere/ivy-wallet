@@ -1,4 +1,4 @@
-package com.ivy.domain.usecase.stat
+package com.ivy.domain.model
 
 import com.google.testing.junit.testparameterinjector.TestParameter
 import com.google.testing.junit.testparameterinjector.TestParameterInjector
@@ -6,8 +6,6 @@ import com.ivy.data.model.PositiveValue
 import com.ivy.data.model.primitive.AssetCode
 import com.ivy.data.model.primitive.NonNegativeInt
 import com.ivy.data.model.primitive.PositiveDouble
-import com.ivy.domain.model.StatSummary
-import com.ivy.domain.model.StatSummaryBuilder
 import io.kotest.matchers.shouldBe
 import org.junit.Test
 import org.junit.runner.RunWith
