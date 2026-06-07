@@ -11,7 +11,6 @@ android {
 dependencies {
     implementation(projects.shared.base)
     implementation(projects.shared.data.api)
-    implementation(projects.shared.data.core)
 
     implementation(libs.bundles.arrow)
     implementation(libs.datastore)
@@ -19,10 +18,12 @@ dependencies {
     implementation(libs.timber)
 
     testImplementation(projects.shared.baseTesting)
+    testImplementation(projects.shared.data.core)
     testImplementation(projects.shared.data.modelTesting)
     testImplementation(libs.bundles.testing)
 
     androidTestImplementation(projects.shared.baseTesting)
+    androidTestImplementation(projects.shared.data.core)
     androidTestImplementation(libs.bundles.ktor)
     androidTestImplementation(libs.bundles.room)
     androidTestImplementation(libs.room.testing)
