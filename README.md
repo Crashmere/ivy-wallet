@@ -451,7 +451,7 @@
 - 其余通用 helper 已继续拆出 `shared:base:legacy`：列表交换迁到 `com.ivy.base.collections`，随机区间数迁到 `com.ivy.base.random`，zip/unzip 迁到 `com.ivy.base.io`，余额正负号 helper 迁到 `com.ivy.ui.money`。
 - `shared:base` 中拼写错误的 `com.ivy.base.kotlinxserilzation` 包已更正为 `com.ivy.base.kotlinxserialization`；serializer descriptor 和编码方式保持不变。
 - 旧函数式 helper 已从顶层 `com.ivy.frp` 归入 `com.ivy.base.frp`；`shared:base` 源码现在只暴露在 `com.ivy.base.*` 根包下。
-- 日期、时间范围和 `IntervalType` 周期递增 helper 已迁到 `com.ivy.base.time`；旧交易兼容模型 `Transaction/LegacyTransaction/LegacyTag` 仍保留在 `com.ivy.data.model.legacy`，交易历史列表接口 `TransactionHistoryItem` 和日期分隔项已归位到正式 `com.ivy.data.model`。
+- 日期、时间范围和 `IntervalType` 周期递增 helper 已迁到 `com.ivy.base.time`；旧交易兼容模型 `Transaction/LegacyTransaction` 仍保留在 `com.ivy.data.model.legacy`，交易标签 DTO `LegacyTag`、交易历史列表接口 `TransactionHistoryItem` 和日期分隔项已归位到正式 `com.ivy.data.model`。
 - 旧主题枚举已迁到 `com.ivy.data.model.Theme`，数据库仍通过枚举 `name` 持久化，现有设置值不变；旧 `SharedPrefs` 已迁到 `com.ivy.base.prefs.SharedPrefs`，同一个 `ivy_wallet_prefs` 文件名和 key 保持不变。
 - `shared:base` 中的 `com.ivy.base.legacy` 包已经清空；后续重点从“迁出 legacy 包名”转向“减少 Android SharedPreferences 对 domain/data 的扩散”。
 - 偏好读写已抽出窄端口，`SharedPrefs` 只作为 Android 实现通过 Hilt 绑定；业务 key 集中到 `SharedPreferenceKeys`，domain 和数据备份恢复不再直接依赖 `SharedPrefs` 具体类。

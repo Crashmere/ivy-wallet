@@ -1,7 +1,7 @@
 package com.ivy.domain.mapper.legacy
 
 import com.ivy.data.model.TransactionType
-import com.ivy.data.model.legacy.LegacyTag
+import com.ivy.data.model.LegacyTag
 import com.ivy.data.model.legacy.LegacyTransaction
 import com.ivy.data.api.AccountStore
 import com.ivy.data.model.AccountId

@@ -30,7 +30,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.ivy.data.model.legacy.LegacyTag
+import com.ivy.data.model.LegacyTag
 import com.ivy.data.model.legacy.Transaction
 import com.ivy.data.model.TransactionType
 import com.ivy.data.model.Category

@@ -1,5 +1,6 @@
 package com.ivy.data.model.legacy
 
+import com.ivy.data.model.LegacyTag
 import com.ivy.data.model.TransactionHistoryItem
 import com.ivy.data.model.TransactionType
 import kotlinx.collections.immutable.ImmutableList
