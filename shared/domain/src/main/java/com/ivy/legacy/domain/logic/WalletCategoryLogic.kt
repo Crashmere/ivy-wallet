@@ -11,10 +11,10 @@ import com.ivy.data.model.CategoryId
 import com.ivy.data.repository.TransactionRepository
 import com.ivy.data.repository.mapper.TransactionMapper
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
-import com.ivy.legacy.domain.model.filterOverdue
-import com.ivy.legacy.domain.model.filterOverdueLegacy
-import com.ivy.legacy.domain.model.filterUpcoming
-import com.ivy.legacy.domain.model.filterUpcomingLegacy
+import com.ivy.legacy.domain.time.filterOverdue
+import com.ivy.legacy.domain.time.filterOverdueLegacy
+import com.ivy.legacy.domain.time.filterUpcoming
+import com.ivy.legacy.domain.time.filterUpcomingLegacy
 import com.ivy.legacy.domain.mapper.toLegacy
 import com.ivy.legacy.domain.mapper.toLegacyDomain
 import com.ivy.legacy.domain.pure.transaction.LegacyTrnDateDividers

@@ -11,11 +11,11 @@ import com.ivy.data.repository.TransactionRepository
 import com.ivy.data.repository.mapper.TransactionMapper
 import com.ivy.domain.usecase.currency.GetBaseCurrencyUseCase
 import com.ivy.legacy.domain.action.account.CalcAccBalanceAct
-import com.ivy.legacy.domain.model.filterOverdue
-import com.ivy.legacy.domain.model.filterUpcoming
 import com.ivy.legacy.domain.model.Account
 import com.ivy.legacy.domain.mapper.toDomain
 import com.ivy.legacy.domain.pure.transaction.getValue
+import com.ivy.legacy.domain.time.filterOverdue
+import com.ivy.legacy.domain.time.filterUpcoming
 import javax.inject.Inject
 import kotlin.math.abs
 import kotlin.math.absoluteValue

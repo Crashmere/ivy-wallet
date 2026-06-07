@@ -1,4 +1,4 @@
-package com.ivy.legacy.domain.model
+package com.ivy.legacy.domain.time
 
 import com.ivy.base.model.legacy.Transaction
 import com.ivy.base.time.TimeConverter
