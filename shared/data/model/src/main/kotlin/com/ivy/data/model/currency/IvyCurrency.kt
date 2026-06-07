@@ -1,4 +1,4 @@
-package com.ivy.wallet.domain.data
+package com.ivy.data.model.currency
 
 import android.icu.util.Currency
 import androidx.compose.runtime.Immutable

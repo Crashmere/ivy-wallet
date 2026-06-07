@@ -30,7 +30,7 @@ import androidx.compose.ui.zIndex
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.ivy.design.l0_system.UI
 import com.ivy.design.l0_system.style
-import com.ivy.legacy.utils.format
+import com.ivy.data.model.currency.format
 import com.ivy.navigation.BalanceScreen
 import com.ivy.navigation.navigation
 import com.ivy.ui.R

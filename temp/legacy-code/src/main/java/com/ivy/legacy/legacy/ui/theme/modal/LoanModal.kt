@@ -48,7 +48,7 @@ import com.ivy.legacy.utils.selectEndTextFieldValue
 import com.ivy.design.utils.thenIf
 import com.ivy.legacy.legacy.ui.theme.modal.ModalNameInput
 import com.ivy.ui.R
-import com.ivy.wallet.domain.data.IvyCurrency
+import com.ivy.data.model.currency.IvyCurrency
 import com.ivy.wallet.domain.deprecated.logic.model.CreateAccountData
 import com.ivy.wallet.domain.deprecated.logic.model.CreateLoanData
 import com.ivy.wallet.ui.theme.GradientIvy

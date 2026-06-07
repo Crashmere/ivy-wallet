@@ -20,7 +20,7 @@ import com.ivy.design.l0_system.style
 import com.ivy.design.l1_buildingBlocks.SpacerHor
 import com.ivy.design.l1_buildingBlocks.SpacerWeight
 import com.ivy.exchangerates.data.RateUi
-import com.ivy.legacy.utils.format
+import com.ivy.data.model.currency.format
 import com.ivy.wallet.ui.theme.components.DeleteButton
 
 @Composable

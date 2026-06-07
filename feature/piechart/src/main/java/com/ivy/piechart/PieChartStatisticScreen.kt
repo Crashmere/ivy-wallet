@@ -44,7 +44,7 @@ import com.ivy.design.l0_system.style
 import com.ivy.design.utils.thenIf
 import com.ivy.legacy.ivyWalletCtx
 import com.ivy.legacy.utils.drawColoredShadow
-import com.ivy.legacy.utils.format
+import com.ivy.data.model.currency.format
 import com.ivy.legacy.utils.horizontalSwipeListener
 import com.ivy.legacy.utils.rememberSwipeListenerState
 import com.ivy.navigation.EditTransactionScreen

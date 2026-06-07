@@ -18,11 +18,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ivy.design.l0_system.UI
 import com.ivy.design.l0_system.style
-import com.ivy.legacy.utils.amountToDoubleOrNull
-import com.ivy.legacy.utils.format
-import com.ivy.legacy.utils.formatInputAmount
-import com.ivy.legacy.utils.localDecimalSeparator
-import com.ivy.legacy.utils.normalizeExpression
+import com.ivy.data.model.currency.amountToDoubleOrNull
+import com.ivy.data.model.currency.format
+import com.ivy.data.model.currency.formatInputAmount
+import com.ivy.data.model.currency.localDecimalSeparator
+import com.ivy.data.model.currency.normalizeExpression
 import com.ivy.ui.R
 import com.ivy.wallet.ui.theme.Gray
 import com.ivy.wallet.ui.theme.Red

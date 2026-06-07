@@ -33,7 +33,7 @@ import com.ivy.legacy.utils.selectEndTextFieldValue
 import com.ivy.base.legacy.toLowerCaseLocal
 import com.ivy.base.legacy.toUpperCaseLocal
 import com.ivy.ui.R
-import com.ivy.wallet.domain.data.IvyCurrency
+import com.ivy.data.model.currency.IvyCurrency
 import com.ivy.wallet.domain.deprecated.logic.model.CreateAccountData
 import com.ivy.wallet.ui.theme.Gray
 import com.ivy.wallet.ui.theme.Ivy

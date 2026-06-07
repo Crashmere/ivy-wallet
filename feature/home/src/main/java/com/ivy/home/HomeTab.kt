@@ -49,7 +49,7 @@ import com.ivy.legacy.utils.verticalSwipeListener
 import com.ivy.navigation.screenScopedViewModel
 import com.ivy.ui.R
 import com.ivy.ui.rememberScrollPositionListState
-import com.ivy.wallet.domain.data.IvyCurrency
+import com.ivy.data.model.currency.IvyCurrency
 import com.ivy.wallet.domain.pure.data.IncomeExpensePair
 import com.ivy.wallet.ui.theme.modal.BufferModal
 import com.ivy.wallet.ui.theme.modal.BufferModalData

@@ -8,7 +8,7 @@ import com.ivy.data.db.dao.write.WriteSettingsDao
 import com.ivy.data.repository.CategoryRepository
 import com.ivy.legacy.datamodel.Settings
 import com.ivy.base.legacy.ioThread
-import com.ivy.wallet.domain.data.IvyCurrency
+import com.ivy.data.model.currency.IvyCurrency
 import com.ivy.wallet.domain.deprecated.logic.PreloadDataLogic
 import com.ivy.wallet.domain.deprecated.logic.notification.TransactionReminderLogic
 import javax.inject.Inject

@@ -19,7 +19,7 @@ import com.ivy.frp.test.TestIdlingResource
 import com.ivy.legacy.datamodel.Account
 import com.ivy.legacy.datamodel.Loan
 import com.ivy.legacy.domain.deprecated.logic.AccountCreator
-import com.ivy.legacy.utils.format
+import com.ivy.data.model.currency.format
 import com.ivy.base.legacy.getDefaultFIATCurrency
 import com.ivy.base.legacy.ioThread
 import com.ivy.loans.loan.data.DisplayLoan

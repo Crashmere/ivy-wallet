@@ -17,9 +17,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ivy.design.l0_system.UI
 import com.ivy.design.l0_system.style
-import com.ivy.legacy.utils.format
-import com.ivy.legacy.utils.shortenAmount
-import com.ivy.legacy.utils.shouldShortAmount
+import com.ivy.data.model.currency.format
+import com.ivy.data.model.currency.shortenAmount
+import com.ivy.data.model.currency.shouldShortAmount
 
 @Deprecated("Old design system. Use `:ivy-design` and Material3")
 @Composable

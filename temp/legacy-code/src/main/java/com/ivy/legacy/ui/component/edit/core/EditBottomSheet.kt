@@ -47,7 +47,7 @@ import com.ivy.legacy.utils.addKeyboardListener
 import com.ivy.legacy.utils.clickableNoIndication
 import com.ivy.legacy.utils.consumeClicks
 import com.ivy.legacy.utils.densityScope
-import com.ivy.legacy.utils.format
+import com.ivy.data.model.currency.format
 import com.ivy.legacy.utils.hideKeyboard
 import com.ivy.legacy.utils.keyboardOnlyWindowInsets
 import com.ivy.legacy.utils.lerp
@@ -60,7 +60,7 @@ import com.ivy.base.model.TransactionType
 import com.ivy.legacy.utils.rememberInteractionSource
 import com.ivy.legacy.utils.rememberSwipeListenerState
 import com.ivy.ui.R
-import com.ivy.wallet.domain.data.IvyCurrency
+import com.ivy.data.model.currency.IvyCurrency
 import com.ivy.wallet.ui.theme.Gradient
 import com.ivy.wallet.ui.theme.Ivy
 import com.ivy.wallet.ui.theme.components.ActionsRow

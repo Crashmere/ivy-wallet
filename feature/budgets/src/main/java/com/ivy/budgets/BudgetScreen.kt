@@ -28,7 +28,7 @@ import com.ivy.design.l0_system.UI
 import com.ivy.design.l0_system.style
 import com.ivy.legacy.legacy.ui.theme.components.BudgetBattery
 import com.ivy.legacy.utils.clickableNoIndication
-import com.ivy.legacy.utils.format
+import com.ivy.data.model.currency.format
 import com.ivy.legacy.utils.rememberInteractionSource
 import com.ivy.navigation.BudgetScreen
 import com.ivy.navigation.navigation

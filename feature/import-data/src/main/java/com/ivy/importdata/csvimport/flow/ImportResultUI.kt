@@ -20,7 +20,7 @@ import com.ivy.data.backup.ImportResult
 import com.ivy.design.l0_system.UI
 import com.ivy.design.l0_system.style
 import com.ivy.importdata.csv.Spacer8
-import com.ivy.legacy.utils.format
+import com.ivy.data.model.currency.format
 import com.ivy.navigation.CSVScreen
 import com.ivy.navigation.navigation
 import com.ivy.ui.R

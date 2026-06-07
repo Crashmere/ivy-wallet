@@ -44,7 +44,7 @@ import com.ivy.legacy.ui.component.ItemStatisticToolbar
 import com.ivy.legacy.ui.component.transaction.TypeAmountCurrency
 import com.ivy.legacy.utils.clickableNoIndication
 import com.ivy.legacy.utils.drawColoredShadow
-import com.ivy.legacy.utils.format
+import com.ivy.data.model.currency.format
 import com.ivy.legacy.utils.formatNicely
 import com.ivy.base.legacy.isNotNullOrBlank
 import com.ivy.legacy.utils.rememberInteractionSource
@@ -59,7 +59,7 @@ import com.ivy.navigation.TransactionsScreen
 import com.ivy.navigation.navigation
 import com.ivy.ui.R
 import com.ivy.ui.time.TimeFormatter
-import com.ivy.wallet.domain.data.IvyCurrency
+import com.ivy.data.model.currency.IvyCurrency
 import com.ivy.wallet.ui.theme.Gradient
 import com.ivy.wallet.ui.theme.Gray
 import com.ivy.wallet.ui.theme.MediumBlack
