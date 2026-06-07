@@ -34,6 +34,8 @@ import com.ivy.domain.usecase.tag.GetTagsUseCase
 import com.ivy.domain.usecase.tag.SearchTagsUseCase
 import com.ivy.domain.usecase.planned.PayOrSkipLegacyPlannedTransactionUseCase
 import com.ivy.domain.usecase.planned.PayOrSkipLegacyPlannedTransactionsUseCase
+import com.ivy.domain.usecase.planned.PayOrSkipPlannedTransactionUseCase
+import com.ivy.domain.usecase.planned.PayOrSkipPlannedTransactionsUseCase
 import com.ivy.domain.usecase.transaction.GetTransactionsByTagsUseCase
 import com.ivy.domain.usecase.transaction.GetTransactionsUseCase
 import com.ivy.domain.usecase.transaction.MapTransactionsToLegacyUseCase
@@ -51,7 +53,6 @@ import com.ivy.ui.preferences.asEnabledState
 import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
 import com.ivy.domain.usecase.transaction.BuildTransactionHistoryItemsUseCase
 import com.ivy.domain.usecase.transaction.CalculateTransactionsIncomeExpenseUseCase
-import com.ivy.legacy.domain.logic.PlannedPaymentsLogic
 import com.ivy.data.model.legacy.IncomeExpenseTransferPair
 import com.ivy.legacy.domain.pure.exchange.ExchangeData
 import com.ivy.legacy.domain.pure.transaction.getTransactionType
@@ -79,7 +80,8 @@ import javax.inject.Inject
 @Stable
 @HiltViewModel
 class ReportViewModel @Inject constructor(
-    private val plannedPaymentsLogic: PlannedPaymentsLogic,
+    private val payOrSkipPlannedTransactionUseCase: PayOrSkipPlannedTransactionUseCase,
+    private val payOrSkipPlannedTransactionsUseCase: PayOrSkipPlannedTransactionsUseCase,
     private val payOrSkipLegacyPlannedTransactionUseCase: PayOrSkipLegacyPlannedTransactionUseCase,
     private val payOrSkipLegacyPlannedTransactionsUseCase: PayOrSkipLegacyPlannedTransactionsUseCase,
     private val periodState: PeriodState,
@@ -557,9 +559,7 @@ class ReportViewModel @Inject constructor(
 
     private suspend fun payOrGet(transaction: Transaction) {
         uiThread {
-            plannedPaymentsLogic.payOrGet(
-                transaction = transaction
-            ) {
+            if (payOrSkipPlannedTransactionUseCase(transaction) != null) {
                 start()
                 setFilter(filter)
             }
@@ -589,10 +589,11 @@ class ReportViewModel @Inject constructor(
 
     private suspend fun skipTransaction(transaction: Transaction) {
         uiThread {
-            plannedPaymentsLogic.payOrGet(
+            val paidTransaction = payOrSkipPlannedTransactionUseCase(
                 transaction = transaction,
                 skipTransaction = true
-            ) {
+            )
+            if (paidTransaction != null) {
                 start()
                 setFilter(filter)
             }
@@ -614,10 +615,11 @@ class ReportViewModel @Inject constructor(
 
     private suspend fun skipTransactions(transactions: List<Transaction>) {
         uiThread {
-            plannedPaymentsLogic.payOrGet(
+            val paidTransactions = payOrSkipPlannedTransactionsUseCase(
                 transactions = transactions,
                 skipTransaction = true
-            ) {
+            )
+            if (paidTransactions.isNotEmpty()) {
                 start()
                 setFilter(filter)
             }

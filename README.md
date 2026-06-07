@@ -633,6 +633,7 @@
 - 余额页的计划付款区间金额统计已从 `PlannedPaymentsLogic` 拆到 `CalculatePlannedPaymentsAmountForRangeUseCase`；收入计正、支出计负、转账忽略和基础币种折算规则保持不变。
 - 计划付款列表页的规则列表和收入/支出汇总已从 `PlannedPaymentsLogic` 拆到 `GetPlannedPaymentsOverviewUseCase`；一次性、循环、月均折算和基础币种换算规则保持不变。
 - legacy 交易模型的计划付款支付/跳过处理已从 `PlannedPaymentsLogic` 拆到 `PayOrSkipLegacyPlannedTransactionUseCase` 和 `PayOrSkipLegacyPlannedTransactionsUseCase`；首页、交易详情、编辑交易和报表页不再为了 legacy 交易处理注入旧逻辑。
+- 新交易模型的计划付款支付/跳过处理已从 `PlannedPaymentsLogic` 拆到 `PayOrSkipPlannedTransactionUseCase` 和 `PayOrSkipPlannedTransactionsUseCase`；报表页不再注入旧逻辑，`PlannedPaymentsLogic` 已删除。
 - 编辑交易页数据边界已收敛：新增 `SaveLegacyTransactionUseCase`、`DeleteTransactionUseCase`、`GetLoanUseCase` 和一组标签读写/关联用例，交易保存、删除、复制、标签创建、标签编辑、标签删除和标签关联不再直接调用数据层 repository/mapper，`:feature:edit-transaction` 已去掉对 `shared:data:core` 的直接依赖。
 - 交易详情页数据边界已收敛：新增 `GetAccountUseCase`、`DeleteAccountUseCase`、`DeleteCategoryUseCase` 和 `MapTransactionsToLegacyWithTagsUseCase`，账户详情、分类详情、账户删除、分类删除和带标签历史列表不再直接注入数据层 repository/DAO/mapper，`:feature:transactions` 已去掉对 `shared:data:core` 的直接依赖。
 - 报表页数据边界已收敛：新增 `GetTransactionsUseCase` 和 `GetTransactionsByTagsUseCase`，报表筛选不再直接读取 `TransactionRepository/TagRepository`，新旧交易模型转换改走 `MapTransactionsToLegacyUseCase`；`ExportCsvUseCase` 的自定义导出回调不再暴露 `TransactionRepository` receiver，默认全量导出也改走 `GetTransactionsUseCase`，`:feature:reports` 已去掉对 `shared:data:core` 的直接依赖。
