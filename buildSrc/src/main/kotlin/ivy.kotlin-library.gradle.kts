@@ -1,17 +1,20 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     `java-library`
     id("org.jetbrains.kotlin.jvm")
 }
 
+val javaVersion = catalog.version("jvm-target")
+
 java {
-    val javaVersion = catalog.version("jvm-target")
     sourceCompatibility = JavaVersion.valueOf("VERSION_$javaVersion")
     targetCompatibility = JavaVersion.valueOf("VERSION_$javaVersion")
 }
 
-tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
-    kotlinOptions {
-        jvmTarget = catalog.version("jvm-target")
+kotlin {
+    compilerOptions {
+        jvmTarget.set(JvmTarget.fromTarget(javaVersion))
     }
 }
 

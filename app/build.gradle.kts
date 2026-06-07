@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -5,6 +7,8 @@ plugins {
     id("dagger.hilt.android.plugin")
     id("com.google.devtools.ksp")
 }
+
+val javaVersion = libs.versions.jvm.target.get()
 
 android {
     namespace = "com.ivy.wallet"
@@ -88,11 +92,6 @@ android {
         }
     }
 
-    val javaVersion = libs.versions.jvm.target.get()
-    kotlinOptions {
-        jvmTarget = javaVersion
-    }
-
     compileOptions {
         sourceCompatibility = JavaVersion.valueOf("VERSION_$javaVersion")
         targetCompatibility = JavaVersion.valueOf("VERSION_$javaVersion")
@@ -112,6 +111,12 @@ android {
         htmlOutput = file("${project.rootDir}/build/reports/lint/lint.html")
         xmlReport = true
         xmlOutput = file("${project.rootDir}/build/reports/lint/lint.xml")
+    }
+}
+
+kotlin {
+    compilerOptions {
+        jvmTarget.set(JvmTarget.fromTarget(javaVersion))
     }
 }
 
