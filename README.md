@@ -465,7 +465,7 @@
 - 已清理迁移过程中留下的 `com.ivy.legacy.legacy.ui.theme.*` 双重 legacy 包名：预算进度条和日期时间行归入 `com.ivy.legacy.ui.component`，弹窗名称输入归入 `com.ivy.legacy.ui.modal`。
 - 已把 `SortOrder`、`CustomExchangeRateState`、`TransactionHistoryDateDivider` 从旧 `com.ivy.wallet.domain.data` 迁到 `com.ivy.legacy.domain.data`；这些类型仍然服务旧页面状态和旧交易列表，先明确标记为 legacy domain 数据。
 - 旧创建/编辑参数已从早期的 `com.ivy.wallet.domain.deprecated.logic.model` 迁出；当前 `CreateAccountData`、`CreateBudgetData`、`CreateCategoryData`、`CreateLoanData`、`CreateLoanRecordData`、`EditLoanRecordData` 等纯参数对象归入 `com.ivy.data.model.legacy`，旧页面和正式 use case 继续使用同名语义。
-- 已把 `shared:domain` 中剩余旧业务逻辑从 `com.ivy.wallet.domain.deprecated.logic` 迁到 `com.ivy.legacy.domain.logic`，包括计划付款逻辑、账户/分类统计、汇率换算和借贷交易联动；同时把拼写错误的 `loantrasactions` 包名改为 `loantransactions`。账户、分类、预算、借贷 creator 和标题建议已进一步迁到正式 use case。
+- 已把 `shared:domain` 中旧业务逻辑从早期 deprecated/legacy logic 包继续迁出：计划付款、账户统计、分类统计、借贷交易联动和旧汇率换算已进入正式 use case 包；当前不再保留 `com.ivy.legacy.domain.logic` 源码。
 - 已把旧 FPAction/use-case 与 pure helper 从 `com.ivy.wallet.domain.action/pure` 迁到 `com.ivy.legacy.domain.action/pure`，并同步迁移 `ClosedTimeRange`、`IncomeExpensePair`、`IncomeExpenseTransferPair` 的旧统计值对象包名；这些代码仍是旧 domain 兼容层，但不再占用正式 Wallet 产品包名。
 - 已把旧 FRP/action helper 从 `shared:base` 物理下沉到 `shared:domain`，仍保留 `com.ivy.legacy.frp` 包名以避免大面积调用方 import churn；`shared:base` 不再承载这批旧 action 组合工具。
 - 旧 UI 专用的 `TestingContext` 已从 `shared:base` 的 FRP 包下沉到 `shared:ui:legacy` 的 `com.ivy.legacy.ui.testing`，基础层不再承载这段只服务旧 Compose UI 测试规避逻辑的全局开关。
@@ -519,9 +519,9 @@
    - `domain/action/*`
    - 目标：改成普通 use case 或直接内联到 ViewModel/domain use case。
 3. 旧业务逻辑
-   - `LoanTransactions*`
-   - `ExchangeRatesLogic`
-   - 目标：迁入 `shared:domain` 或对应 feature 的 domain 子包。
+   - `LoanTransactions*` 已迁到 `domain.usecase.loan`
+   - `ExchangeRatesLogic` 已迁到 `domain.usecase.exchange.LegacyExchangeRatesUseCase`
+   - 目标：继续压缩剩余 legacy 包，只保留真实兼容层。
 4. 旧 UI 组件和 modal
    - `AccountModal`
    - `CategoryModal`
@@ -629,6 +629,7 @@
 - 借贷页数据边界已收敛：新增 `GetLoansUseCase`、`GetLoanUseCase`、`GetLoanRecordsUseCase`、`ReorderLoansUseCase`、`GetLoanTransactionUseCase` 和 `HasLoanRecordTransactionUseCase`，借贷列表和借贷详情不再直接注入 `LoanRecordDao`、`WriteLoanDao`、`TransactionRepository` 或 `TransactionMapper`；旧 `LoansAct/LoanByIdAct` 已删除，`:feature:loans` 已去掉对 `shared:data:core` 的直接依赖。
 - 借贷写入边界已收敛：新增 `CreateLoanUseCase`、`UpdateLoanUseCase`、`DeleteLoanUseCase`、`CreateLoanRecordUseCase`、`UpdateLoanRecordUseCase` 和 `DeleteLoanRecordUseCase`；借贷列表和详情页不再注入旧 `LoanCreator/LoanRecordCreator`，关联交易创建、编辑和删除仍保持原有调用顺序。
 - 借贷关联交易同步已从 `legacy.domain.logic.loantransactions` 迁到 `domain.usecase.loan`：新增 `LoanTransactionSyncUseCase`、`LoanRecordTransactionSyncUseCase`、`UpdateAssociatedLoanDataUseCase` 和内部 `LoanTransactionSyncCore`；借贷页和编辑交易页不再注入旧 `LoanTransactionsLogic` 聚合器。
+- 旧模型仍需使用的汇率换算入口已从 `legacy.domain.logic.currency.ExchangeRatesLogic` 迁到 `domain.usecase.exchange.LegacyExchangeRatesUseCase`；计划付款、分类详情、借贷同步、编辑交易和旧日期分组不再引用 legacy logic 包。
 - 计划付款编辑页数据边界已收敛：新增 `GetPlannedPaymentRuleUseCase`、`SavePlannedPaymentRuleUseCase`、`DeletePlannedPaymentRuleUseCase` 和 `GetCategoryUseCase`，计划付款保存仍会生成未来交易、删除仍会清理未发生的生成交易，`:feature:planned-payments` 已去掉对 `shared:data:core` 的直接依赖。
 - 计划付款未来交易生成器已从旧 `PlannedPaymentsGenerator` 迁到正式 `GeneratePlannedPaymentTransactionsUseCase`；一次性规则、循环规则、72 条生成上限和跳过已发生交易的规则保持不变。
 - 余额页的计划付款区间金额统计已从 `PlannedPaymentsLogic` 拆到 `CalculatePlannedPaymentsAmountForRangeUseCase`；收入计正、支出计负、转账忽略和基础币种折算规则保持不变。

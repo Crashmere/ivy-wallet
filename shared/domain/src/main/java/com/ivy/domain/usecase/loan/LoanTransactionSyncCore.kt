@@ -30,7 +30,7 @@ import com.ivy.legacy.domain.mapper.toEntity
 import com.ivy.legacy.domain.mapper.toLegacyDomain
 import com.ivy.base.coroutines.computationThread
 import com.ivy.base.coroutines.ioThread
-import com.ivy.legacy.domain.logic.currency.ExchangeRatesLogic
+import com.ivy.domain.usecase.exchange.LegacyExchangeRatesUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -47,7 +47,7 @@ class LoanTransactionSyncCore @Inject constructor(
     private val loanDao: LoanDao,
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
     private val accountsDao: AccountDao,
-    private val exchangeRatesLogic: ExchangeRatesLogic,
+    private val exchangeRatesLogic: LegacyExchangeRatesUseCase,
     private val transactionRepo: TransactionRepository,
     private val transactionMapper: TransactionMapper,
     private val writeLoanRecordDao: WriteLoanRecordDao,

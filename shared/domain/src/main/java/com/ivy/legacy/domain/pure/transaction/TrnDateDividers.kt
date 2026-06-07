@@ -17,7 +17,7 @@ import com.ivy.legacy.domain.mapper.toImmutableLegacyTags
 import com.ivy.legacy.domain.mapper.toLegacyDomain
 import com.ivy.base.time.toEpochSeconds
 import com.ivy.legacy.domain.data.TransactionHistoryDateDivider
-import com.ivy.legacy.domain.logic.currency.ExchangeRatesLogic
+import com.ivy.domain.usecase.exchange.LegacyExchangeRatesUseCase
 import com.ivy.legacy.domain.pure.exchange.ExchangeData
 import com.ivy.legacy.domain.pure.exchange.ExchangeTrnArgument
 import com.ivy.legacy.domain.pure.exchange.exchangeInBaseCurrency
@@ -30,7 +30,7 @@ import java.math.BigDecimal
 import java.util.UUID
 
 suspend fun List<Transaction>.withDateDividers(
-    exchangeRatesLogic: ExchangeRatesLogic,
+    exchangeRatesLogic: LegacyExchangeRatesUseCase,
     baseCurrencyCode: String,
     accountDao: AccountDao,
     tagRepository: TagRepository,
@@ -103,7 +103,7 @@ suspend fun transactionsWithDateDividers(
 
 object LegacyTrnDateDividers {
         suspend fun List<com.ivy.base.model.legacy.Transaction>.withDateDividers(
-        exchangeRatesLogic: ExchangeRatesLogic,
+        exchangeRatesLogic: LegacyExchangeRatesUseCase,
         baseCurrencyCode: String,
         accountDao: AccountDao,
         timeConverter: TimeConverter,

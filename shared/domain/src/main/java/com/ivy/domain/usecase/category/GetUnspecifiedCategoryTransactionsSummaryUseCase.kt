@@ -10,8 +10,8 @@ import com.ivy.data.model.legacy.FromToTimeRange
 import com.ivy.data.repository.TransactionRepository
 import com.ivy.data.repository.mapper.TransactionMapper
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
-import com.ivy.legacy.domain.logic.currency.ExchangeRatesLogic
-import com.ivy.legacy.domain.logic.currency.sumInBaseCurrency
+import com.ivy.domain.usecase.exchange.LegacyExchangeRatesUseCase
+import com.ivy.domain.usecase.exchange.sumInBaseCurrency
 import com.ivy.legacy.domain.mapper.toLegacy
 import com.ivy.legacy.domain.pure.transaction.LegacyTrnDateDividers
 import com.ivy.legacy.domain.time.filterOverdueLegacy
@@ -21,7 +21,7 @@ import javax.inject.Inject
 class GetUnspecifiedCategoryTransactionsSummaryUseCase @Inject constructor(
     private val accountDao: AccountDao,
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
-    private val exchangeRatesLogic: ExchangeRatesLogic,
+    private val exchangeRatesLogic: LegacyExchangeRatesUseCase,
     private val transactionRepository: TransactionRepository,
     private val transactionMapper: TransactionMapper,
     private val timeProvider: TimeProvider,

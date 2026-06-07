@@ -58,9 +58,9 @@ import com.ivy.ui.R
 import com.ivy.ui.time.impl.DateTimePicker
 import com.ivy.domain.usecase.account.GetLegacyAccountUseCase
 import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
+import com.ivy.domain.usecase.exchange.LegacyExchangeRatesUseCase
 import com.ivy.domain.usecase.loan.UpdateAssociatedLoanDataUseCase
 import com.ivy.legacy.domain.data.CustomExchangeRateState
-import com.ivy.legacy.domain.logic.currency.ExchangeRatesLogic
 import com.ivy.data.model.legacy.CreateAccountData
 import com.ivy.data.model.legacy.CreateCategoryData
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -93,7 +93,7 @@ class EditTransactionViewModel @Inject constructor(
     private val getLoanUseCase: GetLoanUseCase,
     private val nav: Navigation,
     private val appPreferences: AppPreferences,
-    private val exchangeRatesLogic: ExchangeRatesLogic,
+    private val exchangeRatesLogic: LegacyExchangeRatesUseCase,
     private val createCategoryUseCase: CreateCategoryUseCase,
     private val updateCategoryUseCase: UpdateCategoryUseCase,
     private val createAccountWithBalanceUseCase: CreateAccountWithBalanceUseCase,

@@ -8,7 +8,7 @@ import com.ivy.data.model.IntervalType
 import com.ivy.data.model.legacy.Account
 import com.ivy.data.model.legacy.PlannedPaymentRule
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
-import com.ivy.legacy.domain.logic.currency.ExchangeRatesLogic
+import com.ivy.domain.usecase.exchange.LegacyExchangeRatesUseCase
 import com.ivy.legacy.domain.mapper.toLegacyDomain
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -25,7 +25,7 @@ data class PlannedPaymentsOverview(
 class GetPlannedPaymentsOverviewUseCase @Inject constructor(
     private val plannedPaymentRuleDao: PlannedPaymentRuleDao,
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
-    private val exchangeRatesLogic: ExchangeRatesLogic,
+    private val exchangeRatesLogic: LegacyExchangeRatesUseCase,
     private val accountDao: AccountDao,
     private val dispatchers: DispatchersProvider
 ) {

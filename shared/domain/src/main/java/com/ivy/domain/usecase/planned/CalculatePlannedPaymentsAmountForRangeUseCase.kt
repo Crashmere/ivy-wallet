@@ -6,7 +6,7 @@ import com.ivy.data.db.dao.read.AccountDao
 import com.ivy.data.db.dao.read.TransactionDao
 import com.ivy.data.model.legacy.FromToTimeRange
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
-import com.ivy.legacy.domain.logic.currency.ExchangeRatesLogic
+import com.ivy.domain.usecase.exchange.LegacyExchangeRatesUseCase
 import com.ivy.legacy.domain.mapper.toLegacyDomain
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -14,7 +14,7 @@ import javax.inject.Inject
 class CalculatePlannedPaymentsAmountForRangeUseCase @Inject constructor(
     private val transactionDao: TransactionDao,
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
-    private val exchangeRatesLogic: ExchangeRatesLogic,
+    private val exchangeRatesLogic: LegacyExchangeRatesUseCase,
     private val accountDao: AccountDao,
     private val dispatchers: DispatchersProvider
 ) {

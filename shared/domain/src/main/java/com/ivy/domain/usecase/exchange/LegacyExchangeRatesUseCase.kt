@@ -1,4 +1,4 @@
-package com.ivy.legacy.domain.logic.currency
+package com.ivy.domain.usecase.exchange
 
 import com.ivy.base.model.legacy.Transaction
 import com.ivy.data.db.dao.read.AccountDao
@@ -9,7 +9,7 @@ import com.ivy.legacy.domain.mapper.toLegacyDomain
 import java.util.UUID
 import javax.inject.Inject
 
-class ExchangeRatesLogic @Inject constructor(
+class LegacyExchangeRatesUseCase @Inject constructor(
     private val exchangeRatesDao: ExchangeRatesDao
 ) {
     suspend fun amountBaseCurrency(
@@ -116,7 +116,7 @@ class ExchangeRatesLogic @Inject constructor(
 }
 
 suspend fun Iterable<Transaction>.sumInBaseCurrency(
-    exchangeRatesLogic: ExchangeRatesLogic,
+    exchangeRatesLogic: LegacyExchangeRatesUseCase,
     baseCurrency: String,
     accountDao: AccountDao,
 ): Double {
@@ -132,7 +132,7 @@ suspend fun Iterable<Transaction>.sumInBaseCurrency(
 }
 
 suspend fun Iterable<PlannedPaymentRule>.sumByDoublePlannedInBaseCurrency(
-    exchangeRatesLogic: ExchangeRatesLogic,
+    exchangeRatesLogic: LegacyExchangeRatesUseCase,
     baseCurrency: String,
     accountDao: AccountDao,
 ): Double {
