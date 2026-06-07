@@ -1,6 +1,4 @@
 package com.ivy.wallet.domain.deprecated.logic
-
-import androidx.compose.ui.graphics.toArgb
 import com.ivy.data.db.dao.read.LoanDao
 import com.ivy.data.db.dao.write.WriteLoanDao
 import com.ivy.legacy.datamodel.Loan
@@ -30,7 +28,7 @@ class LoanCreator @Inject constructor(
                     name = name.trim(),
                     amount = data.amount,
                     type = data.type,
-                    color = data.color.toArgb(),
+                    color = data.color,
                     icon = data.icon,
                     note = data.note,
                     orderNum = dao.findMaxOrderNum().nextOrderNum(),

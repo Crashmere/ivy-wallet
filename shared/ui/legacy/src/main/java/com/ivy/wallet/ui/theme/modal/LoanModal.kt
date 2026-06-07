@@ -635,7 +635,7 @@ private fun save(
                 name = nameTextFieldValue.text.trim(),
                 type = type,
                 amount = amount,
-                color = color,
+                color = color.toArgb(),
                 icon = icon,
                 account = selectedAccount,
                 createLoanTransaction = createLoanTransaction,

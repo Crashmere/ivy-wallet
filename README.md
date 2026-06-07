@@ -57,8 +57,8 @@
 
 现状：
 
-- 大多数 `feature:*` 仍依赖 `:temp:legacy-code`。
-- `temp:legacy-code` 里混杂旧数据模型、旧 domain action、旧 UI 组件、modal、工具函数、通知 worker、启动初始化逻辑。
+- 大多数 `feature:*` 对 `:temp:legacy-code` 的直接业务依赖已经迁走，但 `app` 仍通过旧全局上下文和启动兼容逻辑依赖 `temp`。
+- `temp:legacy-code` 已不再承载旧 UI 组件、通用工具、旧 action 或大部分旧业务逻辑；当前只剩 `IvyWalletCtx`、`IvyComposeApp` 和仍依赖 Android 字符串资源的默认数据预置逻辑。
 - 旧设计系统源码已经迁入 `shared:ui:core` 作为兼容层，仍保留 `com.ivy.design.*` 包名和旧 `IvyUI`、`IvyContext`、`UI.colors` 等概念。
 
 问题：
@@ -369,19 +369,21 @@
 - 已把旧弹窗基础层继续收敛到 `shared:ui:legacy`：`IvyModal`、通用 modal action、删除/进度/货币/图标/起始日弹窗、排序弹窗、金额展示、预算/缓冲条、交易类型选择、分类选择和部分通用输入弹窗已迁出 `temp:legacy-code`。
 - 已把旧排序接口从 `com.ivy.wallet.domain.data.Reorderable` 收敛到 `shared:data:model` 的 `com.ivy.data.model.Reorderable`，避免 UI legacy 为了排序弹窗反向依赖 domain。
 - 已把计划付款复用的 `RecurringRuleModal` 通过外部 `pickDate` 回调与 `IvyWalletCtx` 解耦，并迁入 `shared:ui:legacy`。
-- 已把旧时间范围兼容模型迁出 `temp:legacy-code`：纯 `ClosedTimeRange`、收入/支出统计值对象迁入 `shared:data:model`；仍带 UI 文案/格式化职责的旧 `TimePeriod`、`Month`、`FromToTimeRange`、`LastNTimeRange`、`MainTab`、`AccountData` 暂时迁入 `shared:ui:legacy` 的 legacy model 区。
+- 已把旧时间范围兼容模型迁出 `temp:legacy-code`：纯 `ClosedTimeRange`、收入/支出统计值对象迁入 `shared:data:model`；`FromToTimeRange`、overdue/upcoming 过滤函数和 `AccountData` 已迁入 `shared:domain`；仍带 UI 文案/格式化职责的旧 `TimePeriod`、`Month`、`LastNTimeRange`、`MainTab` 暂时保留在 `shared:ui:legacy` 的 legacy model 区。
+- 已把 `FromToTimeRange.toDisplay(...)` 从 domain 模型上拆成 `shared:ui:legacy` 的 UI 扩展，避免 `shared:domain` 依赖 `TimeFormatter`。
 - 已把 `Month.incrementMonthPeriod` 改成只返回新周期，不再直接更新 `IvyWalletCtx`；各页面/ViewModel 在调用处显式保存选中周期，副作用更清楚。
 - 已把 `ChoosePeriodModal` 和 `PeriodSelector` 迁入 `shared:ui:legacy`，并通过外部 `saveSelectedPeriod`、`pickDate`、`startDateOfMonth` 参数替代内部直接读取 `IvyWalletCtx`。
 - 已把金额输入弹窗、计算器弹窗和缓冲金额弹窗迁入 `shared:ui:legacy`。其中金额键盘仍通过 Hilt EntryPoint 读取“标准键盘布局”偏好，因此 `shared:ui:legacy` 暂时显式依赖 `shared:domain` 和 `keval`；后续偏好设置重构时应改为由调用方或 CompositionLocal 提供键盘布局。
-- 已把旧 `legacy.datamodel` 整体迁入 `shared:domain`，把旧创建参数模型迁入 `shared:ui:legacy` 作为过渡兼容模型。
+- 已把旧 `legacy.datamodel` 整体迁入 `shared:domain`，把旧创建参数模型迁入 `shared:domain`，并把账户/分类/借贷创建参数里的颜色从 Compose `Color` 改为普通 ARGB `Int`，由 UI 弹窗在边界处转换。
 - 已把旧颜色选择器、账户弹窗、分类弹窗、借贷弹窗和借贷记录弹窗迁入 `shared:ui:legacy`。颜色选择器移除了旧付费锁显示分支；当前 `IvyWalletCtx.isPremium` 固定为 `true`，因此不改变当前实际显示。
 - 已把旧 UI 状态模型 `AppBaseData`、`LegacyDueSection`、`BufferInfo`、`EditTransactionDisplayLoan` 迁入 `shared:ui:legacy`，作为迁移期的 UI 兼容数据。
 - 已把搜索框、收入/支出卡片、详情工具栏、标签弹窗、交易卡片和交易列表组件迁入 `shared:ui:legacy`；交易卡片查找账户/分类时改为只使用调用方传入的数据，去掉了对 `IvyWalletCtx` 缓存的读取。
 - 已把 `SortOrder`、`CustomExchangeRateState`、`TransactionHistoryDateDivider` 迁入 `shared:domain`，它们本来已经以 `com.ivy.wallet.domain.data` 包名被 feature 使用。
 - 已把编辑交易/计划付款复用的底部表单组件迁入 `shared:ui:legacy`；`EditBottomSheet` 改用 Compose 屏幕高度，不再为了底部操作条位置读取 `IvyWalletCtx`。
 - 已把旧 domain 层对 `IvyWalletCtx` 的直接依赖拆掉：账户/分类缓存 action 已删除，起始日 action 只负责读写偏好，调用方显式更新旧 UI 上下文；借贷交易逻辑去掉固定为 true 的付费判断分支。
-- 已把大部分旧 `domain/action`、`domain/pure` 和旧汇率换算逻辑迁入 `shared:domain`。仍暂留 `temp:legacy-code` 的 action 只剩 `AccountDataAct` 与 `TrnsWithRangeAndAccFiltersAct`，原因是它们仍输入/输出 `shared:ui:legacy` 中的旧 UI 兼容模型。
-- `temp:legacy-code` 的 UI 源码目录已经没有 Kotlin 文件，旧 domain 源码也不再反向依赖 `IvyWalletCtx`。下一步应把 `PreloadDataLogic` 等仍依赖 UI 资源/旧表单模型的 deprecated logic 拆到合适模块，再继续拆全局 `IvyWalletCtx`。
+- 已把旧 `domain/action`、`domain/pure`、旧汇率换算逻辑、账户数据 action、交易范围过滤 action 迁入 `shared:domain`。
+- 已把旧 creator、计划付款逻辑、标题建议、账户/分类统计逻辑和借贷交易联动逻辑迁入 `shared:domain`；其中 `AccountCreator`、`BudgetCreator` 也统一改到 `com.ivy.wallet.domain.deprecated.logic` 包名。
+- `temp:legacy-code` 的 UI 源码目录已经没有 Kotlin 文件，旧 domain 源码也不再反向依赖 `IvyWalletCtx`。当前 `temp:legacy-code` 只剩 `IvyWalletCtx`、`IvyComposeApp` 和 `PreloadDataLogic`；下一步应把 `PreloadDataLogic` 拆到 app 启动/默认数据初始化边界，再继续拆全局 `IvyWalletCtx`。
 
 迁移分组：
 
@@ -661,6 +663,6 @@ shared:ui:core
 
 下一步建议执行：
 
-1. 开始阶段 5：优先从 `temp:legacy-code` 中的纯工具函数、旧 UI helper 和明显可归位的小组件迁移，避免先碰账户余额、导入导出、Room migration 等高风险逻辑。
-2. 继续逐步替换旧设计兼容 API，例如 `UI.colors`、`IvyUI`、`IvyContext` 和旧 building block。
-3. 每完成一组模块边界调整后运行 `:app:assembleDemo`，确认构建没有被迁移影响。
+1. 收尾阶段 5：把 `PreloadDataLogic` 从 `temp:legacy-code` 移到 app 启动/默认数据初始化边界，或先把默认账户/分类文案改为由 app 层提供，避免 domain 逻辑依赖 Android 字符串资源。
+2. 继续拆 `IvyWalletCtx` 和 `IvyComposeApp`：把主题、起始日、选中周期、日期选择器、生物识别锁、文件选择/分享等能力拆成更窄的 app/platform 或 UI 状态接口。
+3. 每完成一组跨模块边界调整后运行 `:app:assembleDemo`，确认构建没有被迁移影响；涉及数据库、备份恢复或导入导出时再补充对应测试。

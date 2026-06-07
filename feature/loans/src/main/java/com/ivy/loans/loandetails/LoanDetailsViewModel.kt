@@ -20,7 +20,7 @@ import com.ivy.legacy.datamodel.Loan
 import com.ivy.legacy.datamodel.LoanRecord
 import com.ivy.legacy.datamodel.temp.toLegacy
 import com.ivy.legacy.datamodel.temp.toLegacyDomain
-import com.ivy.legacy.domain.deprecated.logic.AccountCreator
+import com.ivy.wallet.domain.deprecated.logic.AccountCreator
 import com.ivy.base.legacy.computationThread
 import com.ivy.base.legacy.ioThread
 import com.ivy.loans.loan.data.DisplayLoanRecord

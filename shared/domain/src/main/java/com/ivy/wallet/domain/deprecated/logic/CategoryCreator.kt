@@ -1,6 +1,4 @@
 package com.ivy.wallet.domain.deprecated.logic
-
-import androidx.compose.ui.graphics.toArgb
 import arrow.core.raise.either
 import com.ivy.data.model.Category
 import com.ivy.data.model.CategoryId
@@ -29,7 +27,7 @@ class CategoryCreator @Inject constructor(
                 val newCategory: Category? = either {
                     Category(
                         name = NotBlankTrimmedString.from(name.trim()).bind(),
-                        color = ColorInt(data.color.toArgb()),
+                        color = ColorInt(data.color),
                         icon = data.icon?.let(IconAsset::from)?.getOrNull(),
                         orderNum = categoryRepository.findMaxOrderNum().nextOrderNum(),
                         id = CategoryId(UUID.randomUUID()),

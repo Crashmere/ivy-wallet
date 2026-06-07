@@ -33,7 +33,7 @@ import com.ivy.domain.features.Features
 import com.ivy.legacy.data.EditTransactionDisplayLoan
 import com.ivy.legacy.datamodel.Account
 import com.ivy.legacy.datamodel.temp.toDomain
-import com.ivy.legacy.domain.deprecated.logic.AccountCreator
+import com.ivy.wallet.domain.deprecated.logic.AccountCreator
 import com.ivy.base.legacy.computationThread
 import com.ivy.base.legacy.ioThread
 import com.ivy.base.legacy.toLowerCaseLocal

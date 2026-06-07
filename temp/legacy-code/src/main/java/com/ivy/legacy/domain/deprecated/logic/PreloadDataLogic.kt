@@ -1,6 +1,5 @@
 package com.ivy.wallet.domain.deprecated.logic
 
-import androidx.compose.ui.graphics.toArgb
 import arrow.core.raise.either
 import com.ivy.base.legacy.stringRes
 import com.ivy.data.model.Category
@@ -11,31 +10,6 @@ import com.ivy.data.model.primitive.NotBlankTrimmedString
 import com.ivy.data.repository.AccountRepository
 import com.ivy.data.repository.CategoryRepository
 import com.ivy.data.repository.CurrencyRepository
-import com.ivy.design.l0_system.Blue
-import com.ivy.design.l0_system.Blue2
-import com.ivy.design.l0_system.Blue2Light
-import com.ivy.design.l0_system.Blue3
-import com.ivy.design.l0_system.BlueDark
-import com.ivy.design.l0_system.BlueLight
-import com.ivy.design.l0_system.Green
-import com.ivy.design.l0_system.Green2
-import com.ivy.design.l0_system.Green2Light
-import com.ivy.design.l0_system.GreenLight
-import com.ivy.design.l0_system.Ivy
-import com.ivy.design.l0_system.IvyDark
-import com.ivy.design.l0_system.IvyLight
-import com.ivy.design.l0_system.Orange
-import com.ivy.design.l0_system.Orange2
-import com.ivy.design.l0_system.Orange3
-import com.ivy.design.l0_system.Orange3Light
-import com.ivy.design.l0_system.Purple1
-import com.ivy.design.l0_system.Purple2
-import com.ivy.design.l0_system.Red
-import com.ivy.design.l0_system.Red3
-import com.ivy.design.l0_system.Red3Light
-import com.ivy.design.l0_system.RedLight
-import com.ivy.design.l0_system.Yellow
-import com.ivy.design.l0_system.YellowLight
 import com.ivy.legacy.datamodel.Account
 import com.ivy.ui.R
 import com.ivy.wallet.domain.deprecated.logic.model.CreateAccountData
@@ -58,7 +32,7 @@ class PreloadDataLogic @Inject constructor(
         val cash = Account(
             name = stringRes(R.string.cash),
             currency = null,
-            color = Green.toArgb(),
+            color = Green,
             icon = "cash",
             orderNum = 0.0,
             isSynced = false
@@ -67,7 +41,7 @@ class PreloadDataLogic @Inject constructor(
         val bank = Account(
             name = stringRes(R.string.bank),
             currency = null,
-            color = IvyDark.toArgb(),
+            color = IvyDark,
             icon = "bank",
             orderNum = 1.0,
             isSynced = false
@@ -182,7 +156,7 @@ class PreloadDataLogic @Inject constructor(
         val category: Category? = either {
             Category(
                 name = NotBlankTrimmedString.from(data.name).bind(),
-                color = ColorInt(data.color.toArgb()),
+                color = ColorInt(data.color),
                 icon = data.icon?.let(IconAsset::from)?.getOrNull(),
                 orderNum = categoryOrderNum++,
                 id = CategoryId(UUID.randomUUID()),
@@ -289,3 +263,29 @@ class PreloadDataLogic @Inject constructor(
             )
         ).toImmutableList()
 }
+
+private val Ivy = 0xFF6B4DFF.toInt()
+private val IvyLight = 0xFFD5CCFF.toInt()
+private val IvyDark = 0xFF352680.toInt()
+private val Purple1 = 0xFFC34CFF.toInt()
+private val Purple2 = 0xFFFF4CFF.toInt()
+private val Blue = 0xFF4CC3FF.toInt()
+private val Blue2 = 0xFF45E6E6.toInt()
+private val Blue2Light = 0xFFB3FFFF.toInt()
+private val Blue3 = 0xFF457BE6.toInt()
+private val BlueLight = 0xFFB3E6FF.toInt()
+private val BlueDark = 0xFF266280.toInt()
+private val Green = 0xFF14CC9E.toInt()
+private val Green2 = 0xFF45E67B.toInt()
+private val Green2Light = 0xFF99FFBB.toInt()
+private val GreenLight = 0xFFAAF2E0.toInt()
+private val Yellow = 0xFFFFEE33.toInt()
+private val YellowLight = 0xFFFFF799.toInt()
+private val Orange = 0xFFF29F30.toInt()
+private val Orange2 = 0xFFE67B45.toInt()
+private val Orange3 = 0xFFFFC34C.toInt()
+private val Orange3Light = 0xFFFFDC99.toInt()
+private val Red = 0xFFFF4060.toInt()
+private val RedLight = 0xFFFFCCD5.toInt()
+private val Red3 = 0xFFFF4CA6.toInt()
+private val Red3Light = 0xFFFFCCE6.toInt()

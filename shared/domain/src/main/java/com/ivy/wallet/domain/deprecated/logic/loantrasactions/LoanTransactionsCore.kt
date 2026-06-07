@@ -1,6 +1,5 @@
-package com.ivy.legacy.domain.deprecated.logic.loantrasactions
+package com.ivy.wallet.domain.deprecated.logic.loantrasactions
 
-import androidx.compose.ui.graphics.toArgb
 import com.ivy.base.legacy.Transaction
 import com.ivy.base.model.LoanRecordType
 import com.ivy.base.model.TransactionType
@@ -22,7 +21,6 @@ import com.ivy.data.model.primitive.NotBlankTrimmedString
 import com.ivy.data.repository.CategoryRepository
 import com.ivy.data.repository.TransactionRepository
 import com.ivy.data.repository.mapper.TransactionMapper
-import com.ivy.design.IVY_COLOR_PICKER_COLORS_FREE
 import com.ivy.legacy.datamodel.Account
 import com.ivy.legacy.datamodel.Loan
 import com.ivy.legacy.datamodel.LoanRecord
@@ -56,7 +54,7 @@ class LoanTransactionsCore @Inject constructor(
     private var baseCurrencyCode: String? = null
 
     companion object {
-        const val DEFAULT_COLOR_INDEX = 4
+        val DEFAULT_LOAN_CATEGORY_COLOR = 0xFF45E6E6.toInt()
     }
 
     init {
@@ -230,7 +228,7 @@ class LoanTransactionsCore @Inject constructor(
 
             Category(
                 name = NotBlankTrimmedString.unsafe("Loans"),
-                color = ColorInt(IVY_COLOR_PICKER_COLORS_FREE[DEFAULT_COLOR_INDEX].toArgb()),
+                color = ColorInt(DEFAULT_LOAN_CATEGORY_COLOR),
                 icon = IconAsset.unsafe("loan"),
                 id = CategoryId(UUID.randomUUID()),
                 orderNum = 0.0,

@@ -9,7 +9,7 @@ import com.ivy.domain.usecase.exchange.SyncExchangeRatesUseCase
 import com.ivy.frp.test.TestIdlingResource
 import com.ivy.legacy.IvyWalletCtx
 import com.ivy.legacy.data.model.MainTab
-import com.ivy.legacy.domain.deprecated.logic.AccountCreator
+import com.ivy.wallet.domain.deprecated.logic.AccountCreator
 import com.ivy.base.legacy.asLiveData
 import com.ivy.base.legacy.ioThread
 import com.ivy.navigation.MainScreen

@@ -282,7 +282,7 @@ private fun save(
             CreateAccountData(
                 name = nameTextFieldValue.text.trim(),
                 currency = currency,
-                color = color,
+                color = color.toArgb(),
                 icon = icon,
                 balance = amount,
                 includeBalance = includeInBalance

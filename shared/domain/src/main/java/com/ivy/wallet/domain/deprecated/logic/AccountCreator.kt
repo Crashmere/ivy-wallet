@@ -1,6 +1,4 @@
-package com.ivy.legacy.domain.deprecated.logic
-
-import androidx.compose.ui.graphics.toArgb
+package com.ivy.wallet.domain.deprecated.logic
 import arrow.core.raise.either
 import com.ivy.data.db.dao.read.AccountDao
 import com.ivy.data.model.Account
@@ -12,7 +10,6 @@ import com.ivy.data.model.primitive.NotBlankTrimmedString
 import com.ivy.data.repository.AccountRepository
 import com.ivy.data.repository.CurrencyRepository
 import com.ivy.base.legacy.ioThread
-import com.ivy.wallet.domain.deprecated.logic.WalletAccountLogic
 import com.ivy.wallet.domain.deprecated.logic.model.CreateAccountData
 import com.ivy.wallet.domain.pure.util.nextOrderNum
 import java.util.UUID
@@ -36,7 +33,7 @@ class AccountCreator @Inject constructor(
                     id = AccountId(value = UUID.randomUUID()),
                     name = NotBlankTrimmedString.from(data.name).bind(),
                     asset = AssetCode.from(data.currency).bind(),
-                    color = ColorInt(data.color.toArgb()),
+                    color = ColorInt(data.color),
                     icon = data.icon?.let(IconAsset::from)?.getOrNull(),
                     includeInBalance = data.includeBalance,
                     orderNum = accountDao.findMaxOrderNum().nextOrderNum(),
@@ -47,7 +44,7 @@ class AccountCreator @Inject constructor(
             val legacyAccount = LegacyAccount(
                 name = data.name,
                 currency = data.currency,
-                color = data.color.toArgb(),
+                color = data.color,
                 icon = data.icon,
                 includeInBalance = data.includeBalance,
                 orderNum = accountDao.findMaxOrderNum().nextOrderNum(),

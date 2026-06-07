@@ -21,7 +21,7 @@ import com.ivy.data.repository.TransactionRepository
 import com.ivy.legacy.datamodel.Account
 import com.ivy.legacy.datamodel.PlannedPaymentRule
 import com.ivy.legacy.datamodel.temp.toLegacyDomain
-import com.ivy.legacy.domain.deprecated.logic.AccountCreator
+import com.ivy.wallet.domain.deprecated.logic.AccountCreator
 import com.ivy.base.legacy.ioThread
 import com.ivy.navigation.EditPlannedScreen
 import com.ivy.navigation.Navigation

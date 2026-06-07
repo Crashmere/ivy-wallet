@@ -25,7 +25,7 @@ import com.ivy.legacy.data.model.FromToTimeRange
 import com.ivy.legacy.data.model.toCloseTimeRange
 import com.ivy.legacy.datamodel.Account
 import com.ivy.legacy.datamodel.Budget
-import com.ivy.legacy.domain.deprecated.logic.BudgetCreator
+import com.ivy.wallet.domain.deprecated.logic.BudgetCreator
 import com.ivy.data.model.currency.format
 import com.ivy.base.legacy.isNotNullOrBlank
 import com.ivy.ui.ComposeViewModel

@@ -1,4 +1,4 @@
-package com.ivy.legacy.domain.deprecated.logic
+package com.ivy.wallet.domain.deprecated.logic
 
 import com.ivy.data.db.dao.read.BudgetDao
 import com.ivy.data.db.dao.write.WriteBudgetDao

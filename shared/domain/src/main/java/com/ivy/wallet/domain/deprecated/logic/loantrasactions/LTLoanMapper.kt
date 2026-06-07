@@ -8,7 +8,6 @@ import com.ivy.legacy.datamodel.Account
 import com.ivy.legacy.datamodel.Loan
 import com.ivy.legacy.datamodel.LoanRecord
 import com.ivy.legacy.datamodel.temp.toLegacyDomain
-import com.ivy.legacy.domain.deprecated.logic.loantrasactions.LoanTransactionsCore
 import com.ivy.base.legacy.computationThread
 import com.ivy.base.legacy.scopedIOThread
 import com.ivy.wallet.domain.deprecated.logic.model.CreateLoanData

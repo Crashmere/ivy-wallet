@@ -35,7 +35,7 @@ import com.ivy.legacy.data.model.TimePeriod
 import com.ivy.legacy.data.model.toCloseTimeRange
 import com.ivy.legacy.datamodel.temp.toImmutableLegacyTags
 import com.ivy.legacy.datamodel.temp.toLegacyDomain
-import com.ivy.legacy.domain.deprecated.logic.AccountCreator
+import com.ivy.wallet.domain.deprecated.logic.AccountCreator
 import com.ivy.base.legacy.computationThread
 import com.ivy.base.legacy.dateNowUTC
 import com.ivy.base.legacy.ioThread

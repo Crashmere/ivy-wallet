@@ -109,7 +109,7 @@ fun BoxWithConstraintsScope.CategoryModal(
                     onCreateCategory(
                         CreateCategoryData(
                             name = nameTextFieldValue.text.trim(),
-                            color = color,
+                            color = color.toArgb(),
                             icon = icon?.id
                         )
                     )
