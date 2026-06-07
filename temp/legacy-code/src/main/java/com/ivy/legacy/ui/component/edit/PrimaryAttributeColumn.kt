@@ -20,8 +20,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.ivy.design.l0_system.UI
 import com.ivy.design.l0_system.style
-import com.ivy.legacy.utils.clickableNoIndication
-import com.ivy.legacy.utils.rememberInteractionSource
+import com.ivy.ui.legacy.clickableNoIndication
+import com.ivy.ui.legacy.rememberInteractionSource
 import com.ivy.wallet.ui.theme.components.IvyIcon
 import androidx.compose.ui.res.stringResource
 import com.ivy.ui.R

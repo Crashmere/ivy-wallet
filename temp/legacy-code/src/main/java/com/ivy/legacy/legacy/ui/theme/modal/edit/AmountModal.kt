@@ -42,9 +42,9 @@ import com.ivy.data.model.currency.amountToDoubleOrNull
 import com.ivy.data.model.currency.format
 import com.ivy.data.model.currency.formatInputAmount
 import com.ivy.data.model.currency.formatInt
-import com.ivy.legacy.utils.hideKeyboard
+import com.ivy.ui.legacy.hideKeyboard
 import com.ivy.data.model.currency.localDecimalSeparator
-import com.ivy.legacy.utils.onScreenStart
+import com.ivy.ui.legacy.onScreenStart
 import com.ivy.ui.R
 import com.ivy.wallet.ui.theme.Red
 import com.ivy.wallet.ui.theme.components.IvyIcon

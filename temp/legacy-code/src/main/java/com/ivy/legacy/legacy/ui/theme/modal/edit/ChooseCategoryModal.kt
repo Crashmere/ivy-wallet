@@ -28,9 +28,9 @@ import com.ivy.data.model.Category
 import com.ivy.design.l0_system.UI
 import com.ivy.design.l0_system.style
 import com.ivy.design.utils.thenIf
-import com.ivy.legacy.utils.drawColoredShadow
-import com.ivy.legacy.utils.hideKeyboard
-import com.ivy.legacy.utils.onScreenStart
+import com.ivy.ui.legacy.drawColoredShadow
+import com.ivy.ui.legacy.hideKeyboard
+import com.ivy.ui.legacy.onScreenStart
 import com.ivy.ui.R
 import com.ivy.wallet.ui.theme.Gradient
 import com.ivy.wallet.ui.theme.Ivy

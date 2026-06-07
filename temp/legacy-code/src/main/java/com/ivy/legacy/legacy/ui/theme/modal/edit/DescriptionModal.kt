@@ -25,10 +25,10 @@ import com.ivy.design.l0_system.UI
 import com.ivy.design.l0_system.style
 import com.ivy.design.utils.hideKeyboard
 import com.ivy.legacy.rootView
-import com.ivy.legacy.utils.clickableNoIndication
-import com.ivy.legacy.utils.onScreenStart
-import com.ivy.legacy.utils.rememberInteractionSource
-import com.ivy.legacy.utils.selectEndTextFieldValue
+import com.ivy.ui.legacy.clickableNoIndication
+import com.ivy.ui.legacy.onScreenStart
+import com.ivy.ui.legacy.rememberInteractionSource
+import com.ivy.ui.legacy.selectEndTextFieldValue
 import com.ivy.ui.R
 import com.ivy.wallet.ui.theme.components.IvyDescriptionTextField
 import com.ivy.wallet.ui.theme.modal.IvyModal

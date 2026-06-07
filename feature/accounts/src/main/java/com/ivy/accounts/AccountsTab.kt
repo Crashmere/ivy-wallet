@@ -31,10 +31,10 @@ import androidx.compose.ui.unit.sp
 import com.ivy.design.l0_system.UI
 import com.ivy.design.l0_system.style
 import com.ivy.legacy.data.model.AccountData
-import com.ivy.legacy.utils.clickableNoIndication
-import com.ivy.legacy.utils.horizontalSwipeListener
-import com.ivy.legacy.utils.rememberInteractionSource
-import com.ivy.legacy.utils.rememberSwipeListenerState
+import com.ivy.ui.legacy.clickableNoIndication
+import com.ivy.ui.legacy.horizontalSwipeListener
+import com.ivy.ui.legacy.rememberInteractionSource
+import com.ivy.ui.legacy.rememberSwipeListenerState
 import com.ivy.navigation.TransactionsScreen
 import com.ivy.navigation.navigation
 import com.ivy.navigation.screenScopedViewModel

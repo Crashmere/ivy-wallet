@@ -15,7 +15,7 @@ import com.ivy.base.model.TransactionType
 import com.ivy.home.HomeTab
 import com.ivy.legacy.data.model.MainTab
 import com.ivy.legacy.ivyWalletCtx
-import com.ivy.legacy.utils.onScreenStart
+import com.ivy.ui.legacy.onScreenStart
 import com.ivy.navigation.EditPlannedScreen
 import com.ivy.navigation.EditTransactionScreen
 import com.ivy.navigation.MainScreen

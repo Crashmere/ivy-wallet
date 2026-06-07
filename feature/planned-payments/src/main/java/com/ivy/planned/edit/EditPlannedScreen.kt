@@ -27,7 +27,7 @@ import com.ivy.base.model.TransactionType
 import com.ivy.data.model.Category
 import com.ivy.data.model.IntervalType
 import com.ivy.legacy.datamodel.Account
-import com.ivy.legacy.utils.onScreenStart
+import com.ivy.ui.legacy.onScreenStart
 import com.ivy.navigation.EditPlannedScreen
 import com.ivy.navigation.screenScopedViewModel
 import com.ivy.ui.R

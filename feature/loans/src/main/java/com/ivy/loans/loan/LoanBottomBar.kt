@@ -27,8 +27,8 @@ import androidx.compose.ui.zIndex
 import com.ivy.design.l0_system.UI
 import com.ivy.design.l0_system.style
 import com.ivy.legacy.ivyWalletCtx
-import com.ivy.legacy.utils.navigationBarInset
-import com.ivy.legacy.utils.toDensityPx
+import com.ivy.ui.legacy.navigationBarInset
+import com.ivy.ui.legacy.toDensityPx
 import com.ivy.ui.R
 import com.ivy.wallet.ui.theme.GradientPurple
 import com.ivy.wallet.ui.theme.Green

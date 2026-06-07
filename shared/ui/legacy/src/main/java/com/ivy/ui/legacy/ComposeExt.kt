@@ -1,4 +1,4 @@
-package com.ivy.legacy.utils
+package com.ivy.ui.legacy
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.clickable

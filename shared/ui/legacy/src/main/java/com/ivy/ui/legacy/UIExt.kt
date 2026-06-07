@@ -1,4 +1,4 @@
-package com.ivy.legacy.utils
+package com.ivy.ui.legacy
 
 import android.animation.ArgbEvaluator
 import android.annotation.SuppressLint
@@ -32,7 +32,7 @@ fun keyboardVisibleState(): State<Boolean> {
         mutableStateOf(false)
     }
 
-    com.ivy.legacy.utils.onScreenStart {
+    onScreenStart {
         rootView.addKeyboardListener {
             keyboardVisible.value = it
         }

@@ -25,7 +25,7 @@ import com.ivy.base.legacy.toEpochMilli
 import com.ivy.base.model.TransactionType
 import com.ivy.data.model.Category
 import com.ivy.design.l0_system.UI
-import com.ivy.legacy.utils.drawColoredShadow
+import com.ivy.ui.legacy.drawColoredShadow
 import com.ivy.legacy.utils.timeNowUTC
 import com.ivy.ui.R
 import com.ivy.wallet.ui.theme.Black
@@ -103,8 +103,8 @@ private class PieChartView(context: Context) : View(context) {
     val rectangle = RectF(
         0f,
         0f,
-        com.ivy.legacy.utils.convertDpToPixel(context, 2 * RADIUS_DP),
-        com.ivy.legacy.utils.convertDpToPixel(context, 2 * RADIUS_DP)
+        com.ivy.ui.legacy.convertDpToPixel(context, 2 * RADIUS_DP),
+        com.ivy.ui.legacy.convertDpToPixel(context, 2 * RADIUS_DP)
     )
 
     var onCategoryClicked: (Category?) -> Unit = {}
@@ -147,7 +147,7 @@ private class PieChartView(context: Context) : View(context) {
     private fun paintFor(color: Color): Paint {
         return Paint().apply {
             this.color = color.toArgb()
-            this.strokeWidth = com.ivy.legacy.utils.convertDpToPixel(context, 2f)
+            this.strokeWidth = com.ivy.ui.legacy.convertDpToPixel(context, 2f)
             this.strokeCap = Paint.Cap.ROUND
             this.strokeJoin = Paint.Join.ROUND
             this.isAntiAlias = true

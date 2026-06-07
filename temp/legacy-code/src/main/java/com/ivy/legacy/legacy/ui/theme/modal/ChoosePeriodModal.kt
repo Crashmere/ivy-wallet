@@ -40,10 +40,10 @@ import com.ivy.legacy.data.model.Month.Companion.fromMonthValue
 import com.ivy.legacy.data.model.Month.Companion.monthsList
 import com.ivy.legacy.data.model.TimePeriod
 import com.ivy.legacy.ivyWalletCtx
-import com.ivy.legacy.utils.addKeyboardListener
+import com.ivy.ui.legacy.addKeyboardListener
 import com.ivy.legacy.utils.dateNowUTC
 import com.ivy.legacy.utils.formatDateOnlyWithYear
-import com.ivy.legacy.utils.onScreenStart
+import com.ivy.ui.legacy.onScreenStart
 import com.ivy.ui.R
 import com.ivy.wallet.ui.theme.Gradient
 import com.ivy.wallet.ui.theme.GradientIvy

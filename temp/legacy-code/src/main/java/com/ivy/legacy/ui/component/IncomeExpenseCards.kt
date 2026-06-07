@@ -25,7 +25,7 @@ import com.ivy.base.legacy.stringRes
 import com.ivy.base.model.TransactionType
 import com.ivy.design.l0_system.UI
 import com.ivy.design.l0_system.style
-import com.ivy.legacy.utils.drawColoredShadow
+import com.ivy.ui.legacy.drawColoredShadow
 import com.ivy.data.model.currency.format
 import com.ivy.ui.R
 import com.ivy.data.model.currency.IvyCurrency

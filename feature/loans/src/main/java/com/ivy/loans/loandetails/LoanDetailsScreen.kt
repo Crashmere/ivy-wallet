@@ -42,13 +42,13 @@ import com.ivy.legacy.datamodel.LoanRecord
 import com.ivy.legacy.humanReadableType
 import com.ivy.legacy.ui.component.ItemStatisticToolbar
 import com.ivy.legacy.ui.component.transaction.TypeAmountCurrency
-import com.ivy.legacy.utils.clickableNoIndication
-import com.ivy.legacy.utils.drawColoredShadow
+import com.ivy.ui.legacy.clickableNoIndication
+import com.ivy.ui.legacy.drawColoredShadow
 import com.ivy.data.model.currency.format
 import com.ivy.legacy.utils.formatNicely
 import com.ivy.base.legacy.isNotNullOrBlank
-import com.ivy.legacy.utils.rememberInteractionSource
-import com.ivy.legacy.utils.setStatusBarDarkTextCompat
+import com.ivy.ui.legacy.rememberInteractionSource
+import com.ivy.ui.legacy.setStatusBarDarkTextCompat
 import com.ivy.loans.loan.data.DisplayLoanRecord
 import com.ivy.loans.loandetails.events.DeleteLoanModalEvent
 import com.ivy.loans.loandetails.events.LoanDetailsScreenEvent

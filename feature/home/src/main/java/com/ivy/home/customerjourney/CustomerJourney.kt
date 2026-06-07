@@ -24,7 +24,7 @@ import com.ivy.design.l0_system.style
 import com.ivy.domain.RootScreen
 import com.ivy.legacy.ivyWalletCtx
 import com.ivy.legacy.rootScreen
-import com.ivy.legacy.utils.drawColoredShadow
+import com.ivy.ui.legacy.drawColoredShadow
 import com.ivy.navigation.navigation
 import com.ivy.ui.R
 import com.ivy.wallet.ui.theme.Gradient

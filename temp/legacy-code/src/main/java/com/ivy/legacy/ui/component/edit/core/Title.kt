@@ -23,8 +23,8 @@ import androidx.compose.ui.unit.dp
 import com.ivy.base.model.TransactionType
 import com.ivy.design.l0_system.UI
 import com.ivy.design.l0_system.style
-import com.ivy.legacy.utils.keyboardVisibleState
-import com.ivy.legacy.utils.selectEndTextFieldValue
+import com.ivy.ui.legacy.keyboardVisibleState
+import com.ivy.ui.legacy.selectEndTextFieldValue
 import com.ivy.ui.R
 import com.ivy.wallet.domain.deprecated.logic.SUGGESTIONS_LIMIT
 import com.ivy.wallet.ui.theme.components.IvyTitleTextField

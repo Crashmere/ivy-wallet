@@ -40,7 +40,7 @@ import com.ivy.base.legacy.computationThread
 import com.ivy.legacy.utils.dateNowUTC
 import com.ivy.base.legacy.ioThread
 import com.ivy.base.legacy.isNotNullOrBlank
-import com.ivy.legacy.utils.selectEndTextFieldValue
+import com.ivy.ui.legacy.selectEndTextFieldValue
 import com.ivy.navigation.Navigation
 import com.ivy.navigation.TransactionsScreen
 import com.ivy.ui.ComposeViewModel

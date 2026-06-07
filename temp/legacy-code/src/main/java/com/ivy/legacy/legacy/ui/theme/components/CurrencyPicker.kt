@@ -42,11 +42,11 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.ivy.design.l0_system.UI
 import com.ivy.design.l0_system.style
-import com.ivy.legacy.utils.addKeyboardListener
-import com.ivy.legacy.utils.densityScope
-import com.ivy.legacy.utils.hideKeyboard
-import com.ivy.legacy.utils.keyboardOnlyWindowInsets
-import com.ivy.legacy.utils.onScreenStart
+import com.ivy.ui.legacy.addKeyboardListener
+import com.ivy.ui.legacy.densityScope
+import com.ivy.ui.legacy.hideKeyboard
+import com.ivy.ui.legacy.keyboardOnlyWindowInsets
+import com.ivy.ui.legacy.onScreenStart
 import com.ivy.base.legacy.toLowerCaseLocal
 import com.ivy.ui.R
 import com.ivy.data.model.currency.IvyCurrency

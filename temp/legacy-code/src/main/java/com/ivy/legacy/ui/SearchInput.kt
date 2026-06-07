@@ -17,8 +17,8 @@ import androidx.compose.ui.unit.dp
 import com.ivy.design.l0_system.Gray
 import com.ivy.design.l0_system.UI
 import com.ivy.design.l1_buildingBlocks.IvyIcon
-import com.ivy.legacy.utils.onScreenStart
-import com.ivy.legacy.utils.selectEndTextFieldValue
+import com.ivy.ui.legacy.onScreenStart
+import com.ivy.ui.legacy.selectEndTextFieldValue
 import com.ivy.ui.R
 import com.ivy.wallet.ui.theme.components.IvyBasicTextField
 

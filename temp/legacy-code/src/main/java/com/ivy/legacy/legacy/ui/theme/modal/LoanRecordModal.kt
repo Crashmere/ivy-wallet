@@ -40,8 +40,8 @@ import com.ivy.legacy.datamodel.LoanRecord
 import com.ivy.legacy.legacy.ui.theme.components.DateTimeRow
 import com.ivy.legacy.legacy.ui.theme.modal.ModalNameInput
 import com.ivy.base.legacy.getDefaultFIATCurrency
-import com.ivy.legacy.utils.onScreenStart
-import com.ivy.legacy.utils.selectEndTextFieldValue
+import com.ivy.ui.legacy.onScreenStart
+import com.ivy.ui.legacy.selectEndTextFieldValue
 import com.ivy.ui.R
 import com.ivy.wallet.domain.deprecated.logic.model.CreateAccountData
 import com.ivy.wallet.domain.deprecated.logic.model.CreateLoanRecordData

@@ -43,9 +43,9 @@ import com.ivy.legacy.data.model.TimePeriod
 import com.ivy.legacy.ivyWalletCtx
 import com.ivy.legacy.ui.component.transaction.TransactionsDividerLine
 import com.ivy.legacy.ui.component.transaction.transactions
-import com.ivy.legacy.utils.horizontalSwipeListener
-import com.ivy.legacy.utils.rememberSwipeListenerState
-import com.ivy.legacy.utils.verticalSwipeListener
+import com.ivy.ui.legacy.horizontalSwipeListener
+import com.ivy.ui.legacy.rememberSwipeListenerState
+import com.ivy.ui.legacy.verticalSwipeListener
 import com.ivy.navigation.screenScopedViewModel
 import com.ivy.ui.R
 import com.ivy.ui.rememberScrollPositionListState

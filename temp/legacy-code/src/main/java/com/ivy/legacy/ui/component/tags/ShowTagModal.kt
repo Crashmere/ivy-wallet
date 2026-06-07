@@ -35,10 +35,10 @@ import com.ivy.design.l0_system.UI
 import com.ivy.design.l0_system.style
 import com.ivy.design.utils.thenIf
 import com.ivy.legacy.ui.SearchInput
-import com.ivy.legacy.utils.drawColoredShadow
-import com.ivy.legacy.utils.hideKeyboard
-import com.ivy.legacy.utils.onScreenStart
-import com.ivy.legacy.utils.selectEndTextFieldValue
+import com.ivy.ui.legacy.drawColoredShadow
+import com.ivy.ui.legacy.hideKeyboard
+import com.ivy.ui.legacy.onScreenStart
+import com.ivy.ui.legacy.selectEndTextFieldValue
 import com.ivy.wallet.ui.theme.Gradient
 import com.ivy.wallet.ui.theme.components.IvyBorderButton
 import com.ivy.wallet.ui.theme.components.IvyCircleButton

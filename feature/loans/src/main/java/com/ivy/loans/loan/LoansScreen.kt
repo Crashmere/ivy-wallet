@@ -35,8 +35,8 @@ import com.ivy.design.l0_system.style
 import com.ivy.legacy.humanReadableType
 import com.ivy.legacy.ivyWalletCtx
 import com.ivy.base.legacy.getDefaultFIATCurrency
-import com.ivy.legacy.utils.horizontalSwipeListener
-import com.ivy.legacy.utils.rememberSwipeListenerState
+import com.ivy.ui.legacy.horizontalSwipeListener
+import com.ivy.ui.legacy.rememberSwipeListenerState
 import com.ivy.loans.loan.Constants.SWIPE_HORIZONTAL_THRESHOLD
 import com.ivy.loans.loan.data.DisplayLoan
 import com.ivy.navigation.LoanDetailsScreen

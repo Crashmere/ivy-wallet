@@ -12,7 +12,7 @@ import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.ivy.design.l0_system.UI
-import com.ivy.legacy.utils.drawColoredShadow
+import com.ivy.ui.legacy.drawColoredShadow
 import com.ivy.design.utils.thenIf
 import com.ivy.wallet.ui.theme.Gradient
 import com.ivy.wallet.ui.theme.GradientIvy

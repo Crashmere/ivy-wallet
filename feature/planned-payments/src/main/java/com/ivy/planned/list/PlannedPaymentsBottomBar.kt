@@ -12,8 +12,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.ivy.design.l0_system.UI
-import com.ivy.legacy.utils.navigationBarInset
-import com.ivy.legacy.utils.toDensityDp
+import com.ivy.ui.legacy.navigationBarInset
+import com.ivy.ui.legacy.toDensityDp
 import com.ivy.ui.R
 import com.ivy.wallet.ui.theme.components.ActionsRow
 import com.ivy.wallet.ui.theme.components.CloseButton

@@ -27,9 +27,9 @@ import com.ivy.design.api.LocalTimeFormatter
 import com.ivy.design.l0_system.UI
 import com.ivy.design.l0_system.style
 import com.ivy.legacy.legacy.ui.theme.components.BudgetBattery
-import com.ivy.legacy.utils.clickableNoIndication
+import com.ivy.ui.legacy.clickableNoIndication
 import com.ivy.data.model.currency.format
-import com.ivy.legacy.utils.rememberInteractionSource
+import com.ivy.ui.legacy.rememberInteractionSource
 import com.ivy.navigation.BudgetScreen
 import com.ivy.navigation.navigation
 import com.ivy.navigation.screenScopedViewModel

@@ -19,10 +19,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.ivy.design.l0_system.UI
 import com.ivy.design.l0_system.style
-import com.ivy.legacy.utils.clickableNoIndication
+import com.ivy.ui.legacy.clickableNoIndication
 import com.ivy.data.model.currency.format
-import com.ivy.legacy.utils.rememberInteractionSource
-import com.ivy.legacy.utils.springBounce
+import com.ivy.ui.legacy.rememberInteractionSource
+import com.ivy.ui.legacy.springBounce
 import com.ivy.ui.R
 import com.ivy.wallet.ui.theme.components.IvyDividerDot
 import com.ivy.wallet.ui.theme.components.IvyIcon

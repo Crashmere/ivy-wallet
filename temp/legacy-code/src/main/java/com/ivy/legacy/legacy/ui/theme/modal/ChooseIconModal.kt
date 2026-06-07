@@ -31,8 +31,8 @@ import com.ivy.design.l1_buildingBlocks.DividerW
 import com.ivy.design.l1_buildingBlocks.IvyText
 import com.ivy.design.l1_buildingBlocks.SpacerHor
 import com.ivy.design.l1_buildingBlocks.SpacerVer
-import com.ivy.legacy.utils.hideKeyboard
-import com.ivy.legacy.utils.onScreenStart
+import com.ivy.ui.legacy.hideKeyboard
+import com.ivy.ui.legacy.onScreenStart
 import com.ivy.design.utils.thenIf
 import com.ivy.ui.R
 import com.ivy.wallet.ui.theme.Ivy
