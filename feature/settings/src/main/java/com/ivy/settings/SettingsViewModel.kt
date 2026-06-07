@@ -19,9 +19,10 @@ import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.domain.usecase.currency.SetBaseCurrencyUseCase
 import com.ivy.domain.usecase.csv.ExportCsvUseCase
 import com.ivy.domain.usecase.exchange.SyncExchangeRatesUseCase
+import com.ivy.domain.usecase.settings.GetStartDayOfMonthUseCase
 import com.ivy.domain.usecase.settings.GetThemeUseCase
+import com.ivy.domain.usecase.settings.SetStartDayOfMonthUseCase
 import com.ivy.domain.usecase.settings.SwitchThemeUseCase
-import com.ivy.legacy.frp.monad.Res
 import com.ivy.ui.theme.ThemeState
 import com.ivy.legacy.ui.state.PeriodState
 import com.ivy.base.time.getISOFormattedDateTime
@@ -30,8 +31,6 @@ import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.platform.FilePicker
 import com.ivy.ui.platform.FileSharer
 import com.ivy.ui.platform.LocaleSettingsLauncher
-import com.ivy.legacy.domain.action.global.StartDayOfMonthAct
-import com.ivy.legacy.domain.action.global.UpdateStartDayOfMonthAct
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -50,8 +49,8 @@ class SettingsViewModel @Inject constructor(
     private val resetWalletDataUseCase: ResetWalletDataUseCase,
     private val appPreferences: AppPreferences,
     private val exportBackupUseCase: ExportBackupUseCase,
-    private val startDayOfMonthAct: StartDayOfMonthAct,
-    private val updateStartDayOfMonthAct: UpdateStartDayOfMonthAct,
+    private val getStartDayOfMonth: GetStartDayOfMonthUseCase,
+    private val setStartDayOfMonth: SetStartDayOfMonthUseCase,
     private val syncExchangeRatesUseCase: SyncExchangeRatesUseCase,
     private val preferenceToggles: PreferenceToggles,
     private val preferenceToggleRepository: PreferenceToggleRepository,
@@ -159,8 +158,8 @@ class SettingsViewModel @Inject constructor(
         sortCategoriesAscending.value = preferenceToggleRepository.isEnabled(preferenceToggles.sortCategoriesAscending)
     }
 
-    private suspend fun initializeStartDateOfMonth() {
-        val startDay = startDayOfMonthAct(Unit)
+    private fun initializeStartDateOfMonth() {
+        val startDay = getStartDayOfMonth()
         periodState.updateStartDayOfMonth(startDay)
         startDateOfMonth.intValue = startDay
     }
@@ -443,18 +442,13 @@ class SettingsViewModel @Inject constructor(
 
     private fun setStartDateOfMonth(startDate: Int) {
         viewModelScope.launch {
-            when (val res = updateStartDayOfMonthAct(startDate)) {
-                is Res.Err -> {}
-                is Res.Ok -> {
-                    val startDay = res.data
-                    periodState.updateStartDayOfMonth(startDay)
-                    periodState.initSelectedPeriod(
-                        startDayOfMonth = startDay,
-                        forceReinitialize = true
-                    )
-                    startDateOfMonth.intValue = startDay
-                }
-            }
+            val startDay = setStartDayOfMonth(startDate) ?: return@launch
+            periodState.updateStartDayOfMonth(startDay)
+            periodState.initSelectedPeriod(
+                startDayOfMonth = startDay,
+                forceReinitialize = true
+            )
+            startDateOfMonth.intValue = startDay
         }
     }
 

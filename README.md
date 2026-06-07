@@ -400,7 +400,7 @@
 - 已把搜索框、收入/支出卡片、详情工具栏、标签弹窗、交易卡片和交易列表组件迁入 `shared:ui:legacy`；交易卡片查找账户/分类时改为只使用调用方传入的数据，去掉了对 `IvyWalletCtx` 缓存的读取。
 - 已把 `SortOrder`、`CustomExchangeRateState`、`TransactionHistoryDateDivider` 迁入 `shared:domain`，它们本来已经以 `com.ivy.wallet.domain.data` 包名被 feature 使用。
 - 已把编辑交易/计划付款复用的底部表单组件迁入 `shared:ui:legacy`；`EditBottomSheet` 改用 Compose 屏幕高度，不再为了底部操作条位置读取 `IvyWalletCtx`。
-- 已把旧 domain 层对 `IvyWalletCtx` 的直接依赖拆掉：账户/分类缓存 action 已删除，起始日 action 只负责读写偏好，调用方显式更新旧 UI 上下文；借贷交易逻辑去掉固定为 true 的付费判断分支。
+- 已把旧 domain 层对 `IvyWalletCtx` 的直接依赖拆掉：账户/分类缓存 action 已删除，起始日状态由 `PeriodState` 和正式 settings use case 承接，调用方显式更新旧 UI 上下文；借贷交易逻辑去掉固定为 true 的付费判断分支。
 - 已把旧 `domain/action`、`domain/pure`、旧汇率换算逻辑、账户数据 action、交易范围过滤 action 迁入 `shared:domain`。
 - 已把旧 creator、计划付款逻辑、标题建议、账户/分类统计逻辑和借贷交易联动逻辑迁入 `shared:domain`；其中 `AccountCreator`、`BudgetCreator` 也统一改到 `com.ivy.wallet.domain.deprecated.logic` 包名。
 - 已把仍依赖 Android 字符串资源的 `PreloadDataLogic` 从 `temp:legacy-code` 移到 app 默认数据初始化边界，避免 `temp` 继续承载旧业务逻辑。
@@ -578,7 +578,8 @@
 当前进展：
 
 - 已新增 `com.ivy.domain.preferences.AppPreferences` 作为 `SharedPrefs` 的业务语义封装，底层仍使用原有 `ivy_wallet_prefs` 文件和原 key，暂不改变存储格式、备份格式或恢复逻辑。
-- 已把设置页、根启动流程、首次启动默认数据、交易提醒、起始日 action、隐藏余额/收入 action，以及账户/交易/饼图/旧账户逻辑里的全局偏好读取迁到 `AppPreferences`。
+- 已把设置页、根启动流程、首次启动默认数据、交易提醒、起始日偏好、隐藏余额/收入偏好，以及账户/交易/饼图/旧账户逻辑里的全局偏好读取迁到 `AppPreferences`。
+- 起始日读写已收敛到 `GetStartDayOfMonthUseCase` 和 `SetStartDayOfMonthUseCase`，设置页的 1..31 校验语义保持不变；旧 `StartDayOfMonthAct` 和 `UpdateStartDayOfMonthAct` 已删除。
 - 已把分类排序、最近选择账户和客户旅程卡片关闭状态迁到 `AppPreferences`，feature 层不再直接注入 `SharedPrefs`。
 - 已把重置钱包流程改为通过 `AppPreferences.clearAll()` 清空 legacy 偏好；app/feature 层不再直接注入 `SharedPrefs`。
 - 功能开关 `BoolFeature` 不再通过 `Context.dataStore` 读写；根部 `RootContent` 显式提供 `LocalFeatureDataStore` 和 `LocalFeatures`，设置页、编辑交易分类排序、金额格式化和金额键盘都改为使用同一个注入的数据源。

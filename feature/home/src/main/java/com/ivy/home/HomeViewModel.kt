@@ -23,6 +23,7 @@ import com.ivy.domain.usecase.exchange.SyncExchangeRatesUseCase
 import com.ivy.domain.usecase.transaction.HasTransactionsUseCase
 import com.ivy.domain.usecase.transaction.MapTransactionsToLegacyUseCase
 import com.ivy.domain.usecase.settings.GetBufferAmountUseCase
+import com.ivy.domain.usecase.settings.GetStartDayOfMonthUseCase
 import com.ivy.domain.usecase.settings.GetThemeUseCase
 import com.ivy.domain.usecase.settings.SetBufferAmountUseCase
 import com.ivy.domain.usecase.settings.SwitchThemeUseCase
@@ -47,7 +48,6 @@ import com.ivy.ui.navigation.Navigation
 import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.preferences.asEnabledState
 import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
-import com.ivy.legacy.domain.action.global.StartDayOfMonthAct
 import com.ivy.legacy.domain.action.settings.CalcBufferDiffAct
 import com.ivy.legacy.domain.action.transaction.HistoryWithDateDivsAct
 import com.ivy.legacy.domain.action.viewmodel.home.OverdueAct
@@ -83,12 +83,12 @@ class HomeViewModel @Inject constructor(
     private val switchThemeUseCase: SwitchThemeUseCase,
     private val getBufferAmountUseCase: GetBufferAmountUseCase,
     private val setBufferAmountUseCase: SetBufferAmountUseCase,
+    private val getStartDayOfMonth: GetStartDayOfMonthUseCase,
     private val getLegacyAccountsUseCase: GetLegacyAccountsUseCase,
     private val getCategoriesUseCase: GetCategoriesUseCase,
     private val calcBufferDiffAct: CalcBufferDiffAct,
     private val upcomingAct: UpcomingAct,
     private val overdueAct: OverdueAct,
-    private val startDayOfMonthAct: StartDayOfMonthAct,
     private val appPreferences: AppPreferences,
     private val syncExchangeRatesUseCase: SyncExchangeRatesUseCase,
     private val hasTransactionsUseCase: HasTransactionsUseCase,
@@ -264,7 +264,7 @@ class HomeViewModel @Inject constructor(
     }
 
     private suspend fun start() {
-        val startDay = startDayOfMonthAct(Unit)
+        val startDay = getStartDayOfMonth()
         periodState.updateStartDayOfMonth(startDay)
         periodState.initSelectedPeriod(
             startDayOfMonth = startDay
