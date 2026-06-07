@@ -18,7 +18,7 @@ import com.ivy.domain.usecase.planned.DeletePlannedPaymentRuleUseCase
 import com.ivy.domain.usecase.planned.GetPlannedPaymentRuleUseCase
 import com.ivy.domain.usecase.planned.SavePlannedPaymentRuleUseCase
 import com.ivy.data.model.legacy.Account
-import com.ivy.data.model.legacy.PlannedPaymentRule
+import com.ivy.data.model.PlannedPaymentRule
 import com.ivy.ui.navigation.EditPlannedScreen
 import com.ivy.ui.navigation.Navigation
 import com.ivy.ui.ComposeViewModel

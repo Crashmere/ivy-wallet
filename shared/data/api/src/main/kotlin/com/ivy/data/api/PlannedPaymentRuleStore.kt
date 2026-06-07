@@ -1,6 +1,6 @@
 package com.ivy.data.api
 
-import com.ivy.data.model.legacy.PlannedPaymentRule
+import com.ivy.data.model.PlannedPaymentRule
 import java.util.UUID
 
 interface PlannedPaymentRuleStore {

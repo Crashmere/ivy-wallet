@@ -13,7 +13,7 @@ import com.ivy.data.model.Category
 import com.ivy.domain.usecase.category.GetCategoriesUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.data.model.legacy.Account
-import com.ivy.data.model.legacy.PlannedPaymentRule
+import com.ivy.data.model.PlannedPaymentRule
 import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
 import com.ivy.domain.usecase.planned.GetPlannedPaymentsOverviewUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel

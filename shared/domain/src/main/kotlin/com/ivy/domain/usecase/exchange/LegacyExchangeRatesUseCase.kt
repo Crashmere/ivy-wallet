@@ -4,7 +4,7 @@ import com.ivy.data.model.legacy.Transaction
 import com.ivy.data.api.AccountStore
 import com.ivy.data.api.ExchangeRateStore
 import com.ivy.data.model.legacy.Account
-import com.ivy.data.model.legacy.PlannedPaymentRule
+import com.ivy.data.model.PlannedPaymentRule
 import com.ivy.data.model.primitive.AssetCode
 import com.ivy.domain.mapper.legacy.toLegacyDomain
 import java.util.UUID

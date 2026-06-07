@@ -5,7 +5,7 @@ import com.ivy.data.api.PlannedPaymentRuleStore
 import com.ivy.data.model.IntervalType
 import com.ivy.data.model.TransactionType
 import com.ivy.data.model.legacy.Account
-import com.ivy.data.model.legacy.PlannedPaymentRule
+import com.ivy.data.model.PlannedPaymentRule
 import com.ivy.domain.mapper.legacy.toLegacyDomain
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.domain.usecase.exchange.LegacyExchangeRatesUseCase

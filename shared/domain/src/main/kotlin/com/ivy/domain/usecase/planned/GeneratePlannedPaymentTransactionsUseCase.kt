@@ -2,7 +2,7 @@ package com.ivy.domain.usecase.planned
 
 import com.ivy.data.model.legacy.Transaction
 import com.ivy.data.api.AccountStore
-import com.ivy.data.model.legacy.PlannedPaymentRule
+import com.ivy.data.model.PlannedPaymentRule
 import com.ivy.data.api.TransactionStore
 import com.ivy.data.model.incrementDate
 import com.ivy.domain.mapper.legacy.toDomain

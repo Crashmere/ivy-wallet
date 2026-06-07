@@ -1,7 +1,7 @@
 package com.ivy.domain.usecase.planned
 
 import com.ivy.data.api.PlannedPaymentRuleStore
-import com.ivy.data.model.legacy.PlannedPaymentRule
+import com.ivy.data.model.PlannedPaymentRule
 import javax.inject.Inject
 
 class SavePlannedPaymentRuleUseCase @Inject constructor(

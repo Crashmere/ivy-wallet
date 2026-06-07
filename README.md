@@ -508,7 +508,7 @@
 - 预算模型 `Budget` 已从 `com.ivy.data.model.legacy` 归位到正式 `com.ivy.data.model`；字段、序列化 ID 字符串、软删除标记和 Room/备份格式保持不变，预算页和预算相关 use case 继续使用同一模型语义。
 - 无调用方的旧 `ExchangeRate` 兼容模型已删除，汇率读写、同步和页面展示统一使用正式 `com.ivy.data.model.ExchangeRate`。无调用方的旧 `Category` 兼容模型和 mapper 已删除，分类功能继续使用正式 `com.ivy.data.model.Category`。
 - 借贷模型 `Loan`、`LoanRecord` 已从 `com.ivy.legacy.domain.model` 下沉并归位到正式 `com.ivy.data.model`；借贷数据库转换 `toEntity()` 已移入 legacy domain mapper。字段、`isDeleted` 软删除语义、日期类型和 Room/备份格式保持不变。
-- 旧账户模型 `Account`、计划付款规则 `PlannedPaymentRule` 已从 `com.ivy.legacy.domain.model` 下沉到 `com.ivy.data.model.legacy`；旧交易 `toEntity()` 已从 model 包合并进 `com.ivy.domain.mapper.legacy.TransactionExt`。`com.ivy.legacy.domain.model` 源码目录已经清空。
+- 旧账户模型 `Account` 仍保留在 `com.ivy.data.model.legacy`；计划付款规则 `PlannedPaymentRule` 已归位到正式 `com.ivy.data.model`。旧交易 `toEntity()` 已从 model 包合并进 `com.ivy.domain.mapper.legacy.TransactionExt`。`com.ivy.legacy.domain.model` 源码目录已经清空。
 - 已把剩余 UI 兼容状态模型从 `com.ivy.legacy.data` 迁到 `com.ivy.legacy.ui.model`，并把周期选择模型迁到 `com.ivy.legacy.ui.model.period`；`com.ivy.legacy.data.*` 包名已经从源码中清空。
 - 已把新旧交易模型桥接 helper 从 `com.ivy.data.temp.migration` 改名到 `com.ivy.data.legacy`，它们仍用于预算、报表和旧 domain 统计，但不再伪装成临时 migration 工具。
 - 已把旧 UI helper 从 `com.ivy.ui.legacy` 迁到 `com.ivy.legacy.ui`，包括 Compose 扩展、手势、动画、日期/间隔格式化和 Android UI 扩展；功能不变，只让旧 UI 工具回到统一 legacy UI 包根。
