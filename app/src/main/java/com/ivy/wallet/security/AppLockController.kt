@@ -1,7 +1,6 @@
 package com.ivy.wallet.security
 
 import androidx.biometric.BiometricPrompt
-import com.ivy.base.coroutines.readOnly
 import com.ivy.base.resource.ResourceProvider
 import com.ivy.domain.usecase.settings.GetAppLockEnabledPreferenceUseCase
 import com.ivy.ui.R
@@ -11,6 +10,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.util.concurrent.atomic.AtomicLong
@@ -28,7 +28,7 @@ class AppLockController @Inject constructor(
     private var appLockEnabled = false
 
     private val _appLocked = MutableStateFlow<Boolean?>(null)
-    val appLocked = _appLocked.readOnly()
+    val appLocked = _appLocked.asStateFlow()
 
     private val userInactiveTime = AtomicLong(0)
     private var userInactiveJob: Job? = null

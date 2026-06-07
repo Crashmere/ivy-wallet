@@ -25,13 +25,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
 import com.ivy.base.random.numberBetween
-import com.ivy.base.collections.swap
 import com.ivy.data.model.Reorderable
 import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.GradientGreen
 import com.ivy.legacy.ui.theme.White
 import com.ivy.legacy.ui.modal.IvyModal
-import java.util.*
+import java.util.Collections
+import java.util.UUID
 
 @Suppress("UNCHECKED_CAST", "ParameterNaming")
 @Composable
@@ -192,7 +192,7 @@ private class Adapter<T : Reorderable>(
     }
 
     fun moveItem(from: Int, to: Int) {
-        data.swap(from, to)
+        Collections.swap(data, from, to)
         notifyItemMoved(from, to)
     }
 
