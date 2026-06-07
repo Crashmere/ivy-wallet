@@ -688,6 +688,7 @@
 - 新增薄模块 `shared:data:api` 承载数据层端口；备份导入导出已改为依赖 `BackupStore`，data core 的 `BackupDataUseCase` 只作为实现绑定到该端口，feature 仍只通过 domain use case 使用备份功能。
 - 基础币种和设置表访问已抽成 `CurrencyStore` 与 `SettingsStore` 端口；domain 的币种/设置 use case 不再直接注入 data core repository，data core 继续保留 Room-backed 实现和内部 mapper 依赖。
 - 汇率读写和远程同步入口已抽成 `ExchangeRateStore` 端口；汇率同步、设置页汇率列表和重置钱包流程不再直接依赖 data core 的 `ExchangeRatesRepository`。
+- 标签读写、标签关联和标签搜索已抽成 `TagStore` 端口；编辑交易、历史列表、按标签筛选和重置钱包流程不再直接依赖 data core 的 `TagRepository`。
 
 建议顺序：
 

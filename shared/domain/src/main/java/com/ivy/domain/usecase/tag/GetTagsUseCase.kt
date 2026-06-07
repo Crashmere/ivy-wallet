@@ -1,13 +1,13 @@
 package com.ivy.domain.usecase.tag
 
+import com.ivy.data.api.TagStore
 import com.ivy.data.model.Tag
-import com.ivy.data.repository.TagRepository
 import javax.inject.Inject
 
 class GetTagsUseCase @Inject constructor(
-    private val tagRepository: TagRepository
+    private val tagStore: TagStore
 ) {
     suspend operator fun invoke(): List<Tag> {
-        return tagRepository.findAll()
+        return tagStore.findAll()
     }
 }

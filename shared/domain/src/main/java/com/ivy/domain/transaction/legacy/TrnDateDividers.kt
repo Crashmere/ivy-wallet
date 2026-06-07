@@ -6,12 +6,12 @@ import com.ivy.base.model.legacy.TransactionHistoryItem
 import com.ivy.base.model.legacy.TransactionHistoryDateDivider
 import com.ivy.base.time.TimeConverter
 import com.ivy.domain.time.convertToLocal
+import com.ivy.data.api.TagStore
 import com.ivy.data.db.dao.read.AccountDao
 import com.ivy.data.model.Tag
 import com.ivy.data.model.TagId
 import com.ivy.data.model.Transaction
 import com.ivy.data.repository.AccountRepository
-import com.ivy.data.repository.TagRepository
 import com.ivy.data.repository.mapper.TransactionMapper
 import com.ivy.data.model.legacy.Account
 import com.ivy.domain.mapper.legacy.toImmutableLegacyTags
@@ -28,14 +28,14 @@ suspend fun List<Transaction>.withDateDividers(
     exchangeRatesLogic: LegacyExchangeRatesUseCase,
     baseCurrencyCode: String,
     accountDao: AccountDao,
-    tagRepository: TagRepository,
+    tagStore: TagStore,
     accountRepository: AccountRepository,
 ): List<TransactionHistoryItem> {
     return transactionsWithDateDividers(
         transactions = this,
         baseCurrencyCode = baseCurrencyCode,
         getAccount = { accountId -> accountDao.findById(accountId)?.toLegacyDomain() },
-        getTags = { tagsIds -> tagRepository.findByIds(tagsIds) },
+        getTags = { tagsIds -> tagStore.findByIds(tagsIds) },
         accountRepository = accountRepository,
         exchange = { data, amount ->
             exchangeRatesLogic.convertAmount(

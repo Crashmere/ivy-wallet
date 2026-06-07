@@ -2,6 +2,7 @@ package com.ivy.data.repository
 
 import com.ivy.base.threading.DispatchersProvider
 import com.ivy.data.DataWriteEvent
+import com.ivy.data.api.TagStore
 import com.ivy.data.db.dao.read.TagAssociationDao
 import com.ivy.data.db.dao.read.TagDao
 import com.ivy.data.db.dao.write.WriteTagAssociationDao
@@ -27,18 +28,18 @@ class TagRepository @Inject constructor(
     private val writeTagAssociationDao: WriteTagAssociationDao,
     private val dispatchersProvider: DispatchersProvider,
     memoFactory: RepositoryMemoFactory,
-) {
+) : TagStore {
     private val memo = memoFactory.createMemo(
         getDataWriteSaveEvent = DataWriteEvent::SaveTags,
         getDateWriteDeleteEvent = DataWriteEvent::DeleteTags,
     )
 
-    suspend fun findById(id: TagId): Tag? = memo.findById(
+    override suspend fun findById(id: TagId): Tag? = memo.findById(
         id = id,
         findByIdOperation = ::findByIdOperation
     )
 
-    suspend fun findByIds(ids: List<TagId>): List<Tag> = memo.findByIds(
+    override suspend fun findByIds(ids: List<TagId>): List<Tag> = memo.findByIds(
         ids = ids,
         findByIdOperation = ::findByIdOperation,
     )
@@ -48,7 +49,7 @@ class TagRepository @Inject constructor(
             with(mapper) { it.toDomain().getOrNull() }
         }
 
-    suspend fun findByAssociatedId(id: AssociationId): List<Tag> {
+    override suspend fun findByAssociatedId(id: AssociationId): List<Tag> {
         return withContext(dispatchersProvider.io) {
             tagDao.findTagsByAssociatedId(id.value).let { entities ->
                 entities.mapNotNull {
@@ -60,7 +61,7 @@ class TagRepository @Inject constructor(
         }
     }
 
-    suspend fun findByAssociatedId(
+    override suspend fun findByAssociatedId(
         ids: List<AssociationId>
     ): Map<AssociationId, List<Tag>> {
         return ids.chunked(MAX_SQL_LITE_QUERY_SIZE).map {
@@ -82,7 +83,7 @@ class TagRepository @Inject constructor(
             .associate { it.key to it.value }
     }
 
-    suspend fun findAll(): List<Tag> = memo.findAll(
+    override suspend fun findAll(): List<Tag> = memo.findAll(
         findAllOperation = {
             tagDao.findAll().let { entities ->
                 entities.mapNotNull {
@@ -95,7 +96,7 @@ class TagRepository @Inject constructor(
         }
     )
 
-    suspend fun findByText(text: String): List<Tag> {
+    override suspend fun findByText(text: String): List<Tag> {
         return withContext(dispatchersProvider.io) {
             tagDao.findByText(text).let { entities ->
                 entities.mapNotNull {
@@ -105,7 +106,7 @@ class TagRepository @Inject constructor(
         }
     }
 
-    suspend fun findByAllAssociatedIdForTagId(
+    override suspend fun findByAllAssociatedIdForTagId(
         tagIds: List<TagId>
     ): Map<TagId, List<TagAssociation>> {
         return withContext(dispatchersProvider.io) {
@@ -119,7 +120,7 @@ class TagRepository @Inject constructor(
         }
     }
 
-    suspend fun findByAllTagsForAssociations(): Map<AssociationId, List<TagAssociation>> {
+    override suspend fun findByAllTagsForAssociations(): Map<AssociationId, List<TagAssociation>> {
         return withContext(dispatchersProvider.io) {
             tagAssociationDao.findAll().groupBy {
                 AssociationId(it.associatedId)
@@ -131,7 +132,7 @@ class TagRepository @Inject constructor(
         }
     }
 
-    suspend fun associateTagToEntity(associationId: AssociationId, tagId: TagId) {
+    override suspend fun associateTagToEntity(associationId: AssociationId, tagId: TagId) {
         withContext(dispatchersProvider.io) {
             writeTagAssociationDao.save(
                 with(mapper) {
@@ -141,17 +142,17 @@ class TagRepository @Inject constructor(
         }
     }
 
-    suspend fun removeTagAssociation(associationId: AssociationId, tagId: TagId) {
+    override suspend fun removeTagAssociation(associationId: AssociationId, tagId: TagId) {
         withContext(dispatchersProvider.io) {
             writeTagAssociationDao.deleteId(tagId = tagId.value, associatedId = associationId.value)
         }
     }
 
-    suspend fun save(value: Tag): Unit = memo.save(value) {
+    override suspend fun save(value: Tag): Unit = memo.save(value) {
         writeTagDao.save(with(mapper) { it.toEntity() })
     }
 
-    suspend fun deleteById(id: TagId): Unit = memo.deleteById(
+    override suspend fun deleteById(id: TagId): Unit = memo.deleteById(
         id = id,
         deleteByIdOperation = {
             writeTagAssociationDao.deleteAssociationsByTagId(it.value)
@@ -159,7 +160,7 @@ class TagRepository @Inject constructor(
         }
     )
 
-    suspend fun deleteAll(): Unit = memo.deleteAll {
+    override suspend fun deleteAll(): Unit = memo.deleteAll {
         writeTagAssociationDao.deleteAll()
         writeTagDao.deleteAll()
     }

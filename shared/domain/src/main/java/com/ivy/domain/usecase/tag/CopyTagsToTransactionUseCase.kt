@@ -1,17 +1,17 @@
 package com.ivy.domain.usecase.tag
 
+import com.ivy.data.api.TagStore
 import com.ivy.data.model.TagId
 import com.ivy.data.model.primitive.AssociationId
-import com.ivy.data.repository.TagRepository
 import java.util.UUID
 import javax.inject.Inject
 
 class CopyTagsToTransactionUseCase @Inject constructor(
-    private val tagRepository: TagRepository
+    private val tagStore: TagStore
 ) {
     suspend operator fun invoke(tagIds: List<TagId>, transactionId: UUID) {
-        tagRepository.findByIds(tagIds).forEach { tag ->
-            tagRepository.associateTagToEntity(
+        tagStore.findByIds(tagIds).forEach { tag ->
+            tagStore.associateTagToEntity(
                 associationId = AssociationId(transactionId),
                 tagId = tag.id
             )
