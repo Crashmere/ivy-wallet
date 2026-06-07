@@ -29,6 +29,8 @@ import com.ivy.domain.usecase.settings.SetBufferAmountUseCase
 import com.ivy.domain.usecase.settings.SwitchThemeUseCase
 import com.ivy.legacy.frp.then
 import com.ivy.legacy.frp.thenInvokeAfter
+import com.ivy.domain.usecase.wallet.CalculateWalletBalanceUseCase
+import com.ivy.domain.usecase.wallet.CalculateWalletIncomeExpenseUseCase
 import com.ivy.home.customerjourney.CustomerJourneyCardModel
 import com.ivy.home.customerjourney.CustomerJourneyCardsProvider
 import com.ivy.ui.theme.ThemeState
@@ -51,8 +53,6 @@ import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
 import com.ivy.legacy.domain.action.transaction.HistoryWithDateDivsAct
 import com.ivy.legacy.domain.action.viewmodel.home.OverdueAct
 import com.ivy.legacy.domain.action.viewmodel.home.UpcomingAct
-import com.ivy.legacy.domain.action.wallet.CalcIncomeExpenseAct
-import com.ivy.legacy.domain.action.wallet.CalcWalletBalanceAct
 import com.ivy.legacy.domain.logic.PlannedPaymentsLogic
 import com.ivy.data.model.legacy.ClosedTimeRange
 import com.ivy.data.model.legacy.IncomeExpensePair
@@ -74,8 +74,8 @@ class HomeViewModel @Inject constructor(
     private val plannedPaymentsLogic: PlannedPaymentsLogic,
     private val customerJourneyLogic: CustomerJourneyCardsProvider,
     private val historyWithDateDivsAct: HistoryWithDateDivsAct,
-    private val calcIncomeExpenseAct: CalcIncomeExpenseAct,
-    private val calcWalletBalanceAct: CalcWalletBalanceAct,
+    private val calculateWalletIncomeExpenseUseCase: CalculateWalletIncomeExpenseUseCase,
+    private val calculateWalletBalanceUseCase: CalculateWalletBalanceUseCase,
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
     private val setBaseCurrency: SetBaseCurrencyUseCase,
     private val getThemeUseCase: GetThemeUseCase,
@@ -325,16 +325,14 @@ class HomeViewModel @Inject constructor(
     ): Triple<HomePreferences, ClosedTimeRange, BigDecimal> {
         val (preferences, timeRange, accounts) = input
 
-        val incomeExpense = calcIncomeExpenseAct(
-            CalcIncomeExpenseAct.Input(
-                baseCurrency = preferences.baseCurrency,
-                accounts = accounts,
-                range = timeRange
-            )
+        val incomeExpense = calculateWalletIncomeExpenseUseCase(
+            baseCurrency = preferences.baseCurrency,
+            accounts = accounts,
+            range = timeRange
         )
 
-        val balanceAmount = calcWalletBalanceAct(
-            CalcWalletBalanceAct.Input(baseCurrency = preferences.baseCurrency)
+        val balanceAmount = calculateWalletBalanceUseCase(
+            baseCurrency = preferences.baseCurrency
         )
 
         balance = balanceAmount

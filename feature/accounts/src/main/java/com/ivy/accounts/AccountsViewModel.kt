@@ -24,7 +24,7 @@ import com.ivy.base.coroutines.ioThread
 import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.R
 import com.ivy.ui.preferences.asEnabledState
-import com.ivy.legacy.domain.action.wallet.CalcWalletBalanceAct
+import com.ivy.domain.usecase.wallet.CalculateWalletBalanceUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
@@ -39,7 +39,7 @@ class AccountsViewModel @Inject constructor(
     private val resourceProvider: ResourceProvider,
     private val periodState: PeriodState,
     private val appPreferences: AppPreferences,
-    private val calcWalletBalanceAct: CalcWalletBalanceAct,
+    private val calculateWalletBalanceUseCase: CalculateWalletBalanceUseCase,
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
     private val getAccountsUseCase: GetAccountsUseCase,
     private val saveAccountUseCase: SaveAccountUseCase,
@@ -180,17 +180,13 @@ class AccountsViewModel @Inject constructor(
             )
         )
 
-        val totalBalanceWithExcludedAccounts = calcWalletBalanceAct(
-            CalcWalletBalanceAct.Input(
-                baseCurrency = baseCurrencyCode,
-                withExcluded = true
-            )
+        val totalBalanceWithExcludedAccounts = calculateWalletBalanceUseCase(
+            baseCurrency = baseCurrencyCode,
+            withExcluded = true
         ).toDouble()
 
-        val totalBalanceWithoutExcludedAccounts = calcWalletBalanceAct(
-            CalcWalletBalanceAct.Input(
-                baseCurrency = baseCurrencyCode
-            )
+        val totalBalanceWithoutExcludedAccounts = calculateWalletBalanceUseCase(
+            baseCurrency = baseCurrencyCode
         ).toDouble()
 
         baseCurrency = baseCurrencyCode

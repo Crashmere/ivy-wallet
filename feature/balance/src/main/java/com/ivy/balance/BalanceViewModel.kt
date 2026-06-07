@@ -16,7 +16,7 @@ import com.ivy.legacy.ui.state.PeriodState
 import com.ivy.ui.ComposeViewModel
 import com.ivy.legacy.ui.model.period.TimePeriod
 import com.ivy.base.coroutines.ioThread
-import com.ivy.legacy.domain.action.wallet.CalcWalletBalanceAct
+import com.ivy.domain.usecase.wallet.CalculateWalletBalanceUseCase
 import com.ivy.legacy.domain.logic.PlannedPaymentsLogic
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -29,7 +29,7 @@ class BalanceViewModel @Inject constructor(
     private val plannedPaymentsLogic: PlannedPaymentsLogic,
     private val periodState: PeriodState,
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
-    private val calcWalletBalanceAct: CalcWalletBalanceAct,
+    private val calculateWalletBalanceUseCase: CalculateWalletBalanceUseCase,
     private val timeProvider: TimeProvider,
     private val timeConverter: TimeConverter,
 ) : ComposeViewModel<BalanceState, BalanceEvent>() {
@@ -71,8 +71,8 @@ class BalanceViewModel @Inject constructor(
             baseCurrencyCode = getBaseCurrencyCode()
             period = timePeriod
 
-            currentBalance = calcWalletBalanceAct(
-                CalcWalletBalanceAct.Input(baseCurrencyCode)
+            currentBalance = calculateWalletBalanceUseCase(
+                baseCurrency = baseCurrencyCode
             ).toDouble()
 
             plannedPaymentsAmount = ioThread {
