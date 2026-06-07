@@ -6,7 +6,6 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.biometric.BiometricPrompt
 import androidx.core.view.WindowCompat
 import com.ivy.domain.preferences.toggles.PreferenceToggleService
 import com.ivy.domain.preferences.toggles.PreferenceToggles
@@ -96,9 +95,7 @@ class RootActivity : AppCompatActivity() {
                 intent = intent,
                 hasLockScreen = { deviceHasLockScreen(this) },
                 onShowOSBiometricsModal = {
-                    authenticateWithOSBiometricsModal(
-                        biometricPromptCallback = viewModel.handleBiometricAuthResult()
-                    )
+                    biometricAuthenticator.authenticate(viewModel.handleBiometricAuthResult())
                 }
             )
         }
@@ -131,12 +128,6 @@ class RootActivity : AppCompatActivity() {
         if (viewModel.isAppLockEnabled()) {
             viewModel.startUserInactiveTimeCounter()
         }
-    }
-
-    private fun authenticateWithOSBiometricsModal(
-        biometricPromptCallback: BiometricPrompt.AuthenticationCallback
-    ) {
-        biometricAuthenticator.authenticate(biometricPromptCallback)
     }
 
     private fun handleRootBackPressed() {

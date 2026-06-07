@@ -894,6 +894,7 @@
 - 账户页和编辑交易页 ViewModel 的字符串读取已改为注入式 `ResourceProvider`；feature ViewModel 不再为了 `getString(...)` 持有 Android `Context` 或保留 `StaticFieldLeak` 抑制。
 - `BiometricAuthenticator` 承接系统生物识别 Prompt 构造。
 - `SecureWindowController` 承接应用锁失焦时的 `FLAG_SECURE` 窗口保护。
+- `RootActivity` 已去掉仅转调生物识别认证的私有中转方法，锁屏 UI 回调直接调用 `BiometricAuthenticator`，Activity 不再额外暴露 `BiometricPrompt` 类型。
 - `AppLockController` 承接应用锁启用状态、锁定状态、生物识别结果回调和用户非活跃计时，`RootViewModel` 只保留启动编排和委托方法。
 - `RootContent` 承接根部 Compose 内容、锁屏/主导航切换、旧 UI root 注入和 Material3 theme 包装，`RootActivity` 主要保留生命周期、平台注册和平台能力委托。
 - `RootScreen` 已被 `FileSharer`、`BuildInfoProvider` 拆分替代，首页客户旅程卡片也不再为了未使用的参数依赖 Activity 平台接口。
