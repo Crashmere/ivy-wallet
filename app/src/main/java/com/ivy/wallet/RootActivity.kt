@@ -2,7 +2,6 @@ package com.ivy.wallet
 
 import android.net.Uri
 import android.os.Bundle
-import android.view.WindowManager
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
@@ -36,6 +35,7 @@ import com.ivy.wallet.platform.ActivityDatePicker
 import com.ivy.wallet.platform.ActivityFileSharer
 import com.ivy.wallet.platform.ActivityResultFilePicker
 import com.ivy.wallet.platform.BiometricAuthenticator
+import com.ivy.wallet.platform.SecureWindowController
 import com.ivy.wallet.platform.registerActivityResultLaunchers
 import com.ivy.wallet.platform.registerMaterialDatePicker
 import com.ivy.wallet.ui.applocked.AppLockedScreen
@@ -77,6 +77,7 @@ class RootActivity : AppCompatActivity(),
     private val viewModel: RootViewModel by viewModels()
     private val activityFileSharer by lazy { ActivityFileSharer(this) }
     private val biometricAuthenticator by lazy { BiometricAuthenticator(this) }
+    private val secureWindowController by lazy { SecureWindowController(window) }
 
     @OptIn(ExperimentalFoundationApi::class, ExperimentalAnimationApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -163,14 +164,10 @@ class RootActivity : AppCompatActivity(),
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
-        if (viewModel.isAppLockEnabled() && !hasFocus) {
-            window.setFlags(
-                WindowManager.LayoutParams.FLAG_SECURE,
-                WindowManager.LayoutParams.FLAG_SECURE
-            )
-        } else {
-            window.clearFlags(WindowManager.LayoutParams.FLAG_SECURE)
-        }
+        secureWindowController.updateForWindowFocus(
+            appLockEnabled = viewModel.isAppLockEnabled(),
+            hasFocus = hasFocus
+        )
     }
 
     override fun onResume() {

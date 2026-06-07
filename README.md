@@ -578,6 +578,8 @@
 - `ActivityFilePickerHost` 承接 Activity Result 文件创建/打开注册，`RootActivity` 不再保存 launcher 和文件回调。
 - `ActivityFileSharer` 承接 CSV 分享和 zip 分享。
 - `BiometricAuthenticator` 承接系统生物识别 Prompt 构造。
+- `SecureWindowController` 承接应用锁失焦时的 `FLAG_SECURE` 窗口保护。
+- `AppLockController` 承接应用锁启用状态、锁定状态、生物识别结果回调和用户非活跃计时，`RootViewModel` 只保留启动编排和委托方法。
 - `RootScreen` 已被 `FileSharer`、`BuildInfoProvider` 拆分替代，首页客户旅程卡片也不再为了未使用的参数依赖 Activity 平台接口。
 
 ### 阶段 9：feature 模块收敛
@@ -724,6 +726,6 @@ shared:ui:core
 
 下一步建议执行：
 
-1. 继续减轻 `RootActivity`：把应用锁窗口保护、暂停/恢复计时和生物识别触发逻辑整理成更明确的 app lock controller。
+1. 继续减轻 `RootActivity`：评估根部 Compose 内容是否需要拆成 `RootContent`，让 Activity 只负责生命周期和平台注册。
 2. 继续收敛平台桥接：评估 `FileSharer`、`BuildInfoProvider` 是否需要从 `LocalContext.current as ...` 改成 CompositionLocal。
 3. 平台层稳定后再进入数据库遗留清理：先梳理 `UserEntity/UserDao`、`SettingsEntity`、同步字段和备份恢复格式，不直接改 schema。

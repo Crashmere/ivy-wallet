@@ -5,29 +5,20 @@ import androidx.biometric.BiometricPrompt
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ivy.base.legacy.Theme
-import com.ivy.base.legacy.stringRes
 import com.ivy.base.model.TransactionType
 import com.ivy.data.db.dao.read.SettingsDao
 import com.ivy.domain.preferences.AppPreferences
 import com.ivy.ui.theme.ThemeState
 import com.ivy.legacy.ui.state.PeriodState
 import com.ivy.base.legacy.ioThread
-import com.ivy.base.legacy.readOnly
 import com.ivy.navigation.EditTransactionScreen
 import com.ivy.navigation.MainScreen
 import com.ivy.navigation.Navigation
-import com.ivy.ui.R
 import com.ivy.wallet.notification.reminder.TransactionReminderLogic
 import com.ivy.wallet.domain.startup.InitialDataSetup
+import com.ivy.wallet.security.AppLockController
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.cancel
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
-import timber.log.Timber
-import java.util.concurrent.atomic.AtomicLong
 import javax.inject.Inject
 
 @HiltViewModel
@@ -38,20 +29,16 @@ class RootViewModel @Inject constructor(
     private val nav: Navigation,
     private val settingsDao: SettingsDao,
     private val appPreferences: AppPreferences,
+    private val appLockController: AppLockController,
     private val transactionReminderLogic: TransactionReminderLogic,
     private val initialDataSetup: InitialDataSetup,
 ) : ViewModel() {
 
     companion object {
         const val EXTRA_ADD_TRANSACTION_TYPE = "add_transaction_type_extra"
-
-        const val USER_INACTIVITY_TIME_LIMIT = 60 // Time in seconds
     }
 
-    private var appLockEnabled = false
-
-    private val _appLocked = MutableStateFlow<Boolean?>(null)
-    val appLocked = _appLocked.readOnly()
+    val appLocked = appLockController.appLocked
 
     fun start(systemDarkMode: Boolean, intent: Intent) {
         viewModelScope.launch {
@@ -69,9 +56,7 @@ class RootViewModel @Inject constructor(
         viewModelScope.launch {
 
             ioThread {
-                appLockEnabled = appPreferences.appLockEnabled
-                // initial app locked state
-                _appLocked.value = appLockEnabled
+                appLockController.initialize()
 
                 if (isInitialSetupCompleted()) {
                     navigateOnboardedUser(intent)
@@ -118,20 +103,7 @@ class RootViewModel @Inject constructor(
     fun handleBiometricAuthResult(
         onAuthSuccess: () -> Unit = {}
     ): BiometricPrompt.AuthenticationCallback {
-        return object : BiometricPrompt.AuthenticationCallback() {
-            override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
-                Timber.d(stringRes(R.string.authentication_succeeded))
-                unlockApp()
-                onAuthSuccess()
-            }
-
-            override fun onAuthenticationFailed() {
-                Timber.d(stringRes(R.string.authentication_failed))
-            }
-
-            override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
-            }
-        }
+        return appLockController.handleBiometricAuthResult(onAuthSuccess)
     }
 
     private fun isInitialSetupCompleted(): Boolean {
@@ -140,55 +112,22 @@ class RootViewModel @Inject constructor(
 
     // App Lock & UserInactivity --------------------------------------------------------------------
     fun isAppLockEnabled(): Boolean {
-        return appLockEnabled
+        return appLockController.isAppLockEnabled()
     }
 
     fun isAppLocked(): Boolean {
-        // by default we assume that the app is locked
-        return appLocked.value ?: true
-    }
-
-    fun lockApp() {
-        _appLocked.value = true
+        return appLockController.isAppLocked()
     }
 
     fun unlockApp() {
-        _appLocked.value = false
+        appLockController.unlockApp()
     }
 
-    private val userInactiveTime = AtomicLong(0)
-    private var userInactiveJob: Job? = null
-
-    @Suppress("MagicNumber")
     fun startUserInactiveTimeCounter() {
-        if (userInactiveJob != null && userInactiveJob!!.isActive) return
-
-        userInactiveJob = viewModelScope.launch(Dispatchers.IO) {
-            while (userInactiveTime.get() < USER_INACTIVITY_TIME_LIMIT &&
-                userInactiveJob != null && !userInactiveJob?.isCancelled!!
-            ) {
-                delay(1000)
-                userInactiveTime.incrementAndGet()
-            }
-
-            if (!isAppLocked()) {
-                lockApp()
-            }
-
-            cancel()
-        }
+        appLockController.startUserInactiveTimeCounter(viewModelScope)
     }
 
     fun checkUserInactiveTimeStatus() {
-        if (userInactiveTime.get() < USER_INACTIVITY_TIME_LIMIT) {
-            if (userInactiveJob != null && userInactiveJob?.isCancelled == false) {
-                userInactiveJob?.cancel()
-                resetUserInactiveTimer()
-            }
-        }
-    }
-
-    fun resetUserInactiveTimer() {
-        userInactiveTime.set(0)
+        appLockController.checkUserInactiveTimeStatus()
     }
 }
