@@ -35,7 +35,7 @@ class WalletCategoryLogic @Inject constructor(
 
     suspend fun calculateCategoryBalance(
         category: Category,
-        range: com.ivy.legacy.domain.model.FromToTimeRange,
+        range: com.ivy.data.model.legacy.FromToTimeRange,
         accountFilterSet: Set<UUID> = emptySet(),
         transactions: List<Transaction> = emptyList()
     ): Double {
@@ -65,7 +65,7 @@ class WalletCategoryLogic @Inject constructor(
 
     suspend fun calculateCategoryIncome(
         category: Category,
-        range: com.ivy.legacy.domain.model.FromToTimeRange,
+        range: com.ivy.data.model.legacy.FromToTimeRange,
         accountFilterSet: Set<UUID> = emptySet(),
     ): Double {
         return transactionRepository
@@ -102,7 +102,7 @@ class WalletCategoryLogic @Inject constructor(
 
     suspend fun calculateCategoryExpenses(
         category: Category,
-        range: com.ivy.legacy.domain.model.FromToTimeRange,
+        range: com.ivy.data.model.legacy.FromToTimeRange,
         accountFilterSet: Set<UUID> = emptySet(),
     ): Double {
         return transactionRepository
@@ -140,11 +140,11 @@ class WalletCategoryLogic @Inject constructor(
             )
     }
 
-    suspend fun calculateUnspecifiedBalance(range: com.ivy.legacy.domain.model.FromToTimeRange): Double {
+    suspend fun calculateUnspecifiedBalance(range: com.ivy.data.model.legacy.FromToTimeRange): Double {
         return calculateUnspecifiedIncome(range) - calculateUnspecifiedExpenses(range)
     }
 
-    suspend fun calculateUnspecifiedIncome(range: com.ivy.legacy.domain.model.FromToTimeRange): Double {
+    suspend fun calculateUnspecifiedIncome(range: com.ivy.data.model.legacy.FromToTimeRange): Double {
         return transactionRepository
             .findAllUnspecifiedAndTypeAndBetween(
                 type = TransactionType.INCOME,
@@ -158,7 +158,7 @@ class WalletCategoryLogic @Inject constructor(
             )
     }
 
-    suspend fun calculateUnspecifiedExpenses(range: com.ivy.legacy.domain.model.FromToTimeRange): Double {
+    suspend fun calculateUnspecifiedExpenses(range: com.ivy.data.model.legacy.FromToTimeRange): Double {
         return transactionRepository
             .findAllUnspecifiedAndTypeAndBetween(
                 type = TransactionType.EXPENSE,
@@ -174,7 +174,7 @@ class WalletCategoryLogic @Inject constructor(
 
     suspend fun historyByCategoryAccountWithDateDividers(
         category: Category,
-        range: com.ivy.legacy.domain.model.FromToTimeRange,
+        range: com.ivy.data.model.legacy.FromToTimeRange,
         accountFilterSet: Set<UUID>,
         transactions: List<Transaction> = emptyList()
     ): List<TransactionHistoryItem> {
@@ -194,7 +194,7 @@ class WalletCategoryLogic @Inject constructor(
 
     suspend fun historyByCategory(
         category: Category,
-        range: com.ivy.legacy.domain.model.FromToTimeRange,
+        range: com.ivy.data.model.legacy.FromToTimeRange,
         accountFilterSet: Set<UUID> = emptySet(),
         transactions: List<Transaction> = emptyList()
     ): List<Transaction> {
@@ -212,7 +212,7 @@ class WalletCategoryLogic @Inject constructor(
         }
     }
 
-    suspend fun historyUnspecified(range: com.ivy.legacy.domain.model.FromToTimeRange): List<TransactionHistoryItem> {
+    suspend fun historyUnspecified(range: com.ivy.data.model.legacy.FromToTimeRange): List<TransactionHistoryItem> {
         return with(LegacyTrnDateDividers) {
             transactionRepository
                 .findAllUnspecifiedAndBetween(
@@ -230,7 +230,7 @@ class WalletCategoryLogic @Inject constructor(
 
     suspend fun calculateUpcomingIncomeByCategory(
         category: Category,
-        range: com.ivy.legacy.domain.model.FromToTimeRange
+        range: com.ivy.data.model.legacy.FromToTimeRange
     ): Double {
         return upcomingByCategoryLegacy(category = category, range = range)
             .filter { it.type == TransactionType.INCOME }
@@ -243,7 +243,7 @@ class WalletCategoryLogic @Inject constructor(
 
     suspend fun calculateUpcomingExpensesByCategory(
         category: Category,
-        range: com.ivy.legacy.domain.model.FromToTimeRange
+        range: com.ivy.data.model.legacy.FromToTimeRange
     ): Double {
         return upcomingByCategoryLegacy(category = category, range = range)
             .filter { it.type == TransactionType.EXPENSE }
@@ -254,7 +254,7 @@ class WalletCategoryLogic @Inject constructor(
             )
     }
 
-    suspend fun calculateUpcomingIncomeUnspecified(range: com.ivy.legacy.domain.model.FromToTimeRange): Double {
+    suspend fun calculateUpcomingIncomeUnspecified(range: com.ivy.data.model.legacy.FromToTimeRange): Double {
         return upcomingUnspecifiedLegacy(range = range)
             .filter { it.type == TransactionType.INCOME }
             .sumInBaseCurrency(
@@ -264,7 +264,7 @@ class WalletCategoryLogic @Inject constructor(
             )
     }
 
-    suspend fun calculateUpcomingExpensesUnspecified(range: com.ivy.legacy.domain.model.FromToTimeRange): Double {
+    suspend fun calculateUpcomingExpensesUnspecified(range: com.ivy.data.model.legacy.FromToTimeRange): Double {
         return upcomingUnspecifiedLegacy(range = range)
             .filter { it.type == TransactionType.EXPENSE }
             .sumInBaseCurrency(
@@ -276,7 +276,7 @@ class WalletCategoryLogic @Inject constructor(
 
         suspend fun upcomingByCategoryLegacy(
         category: Category,
-        range: com.ivy.legacy.domain.model.FromToTimeRange
+        range: com.ivy.data.model.legacy.FromToTimeRange
     ): List<Transaction> {
         return transactionRepository.findAllDueToBetweenByCategory(
             categoryId = CategoryId(category.id.value),
@@ -291,7 +291,7 @@ class WalletCategoryLogic @Inject constructor(
 
     suspend fun upcomingByCategory(
         category: Category,
-        range: com.ivy.legacy.domain.model.FromToTimeRange
+        range: com.ivy.data.model.legacy.FromToTimeRange
     ): List<com.ivy.data.model.Transaction> {
         return transactionRepository.findAllDueToBetweenByCategory(
             categoryId = CategoryId(category.id.value),
@@ -300,7 +300,7 @@ class WalletCategoryLogic @Inject constructor(
         ).filterUpcoming(timeProvider)
     }
 
-        suspend fun upcomingUnspecifiedLegacy(range: com.ivy.legacy.domain.model.FromToTimeRange): List<Transaction> {
+        suspend fun upcomingUnspecifiedLegacy(range: com.ivy.data.model.legacy.FromToTimeRange): List<Transaction> {
         return transactionRepository.findAllDueToBetweenByCategoryUnspecified(
             startDate = range.upcomingFrom(timeProvider),
             endDate = range.to()
@@ -312,7 +312,7 @@ class WalletCategoryLogic @Inject constructor(
     }
 
     suspend fun upcomingUnspecified(
-        range: com.ivy.legacy.domain.model.FromToTimeRange
+        range: com.ivy.data.model.legacy.FromToTimeRange
     ): List<com.ivy.data.model.Transaction> {
         return transactionRepository.findAllDueToBetweenByCategoryUnspecified(
             startDate = range.upcomingFrom(timeProvider),
@@ -322,7 +322,7 @@ class WalletCategoryLogic @Inject constructor(
 
     suspend fun calculateOverdueIncomeByCategory(
         category: Category,
-        range: com.ivy.legacy.domain.model.FromToTimeRange
+        range: com.ivy.data.model.legacy.FromToTimeRange
     ): Double {
         return overdueByCategoryLegacy(category, range = range)
             .filter { it.type == TransactionType.INCOME }
@@ -335,7 +335,7 @@ class WalletCategoryLogic @Inject constructor(
 
     suspend fun calculateOverdueExpensesByCategory(
         category: Category,
-        range: com.ivy.legacy.domain.model.FromToTimeRange
+        range: com.ivy.data.model.legacy.FromToTimeRange
     ): Double {
         return overdueByCategoryLegacy(category, range = range)
             .filter { it.type == TransactionType.EXPENSE }
@@ -346,7 +346,7 @@ class WalletCategoryLogic @Inject constructor(
             )
     }
 
-    suspend fun calculateOverdueIncomeUnspecified(range: com.ivy.legacy.domain.model.FromToTimeRange): Double {
+    suspend fun calculateOverdueIncomeUnspecified(range: com.ivy.data.model.legacy.FromToTimeRange): Double {
         return overdueUnspecifiedLegacy(range = range)
             .filter { it.type == TransactionType.INCOME }
             .sumInBaseCurrency(
@@ -356,7 +356,7 @@ class WalletCategoryLogic @Inject constructor(
             )
     }
 
-    suspend fun calculateOverdueExpensesUnspecified(range: com.ivy.legacy.domain.model.FromToTimeRange): Double {
+    suspend fun calculateOverdueExpensesUnspecified(range: com.ivy.data.model.legacy.FromToTimeRange): Double {
         return overdueUnspecifiedLegacy(range = range)
             .filter { it.type == TransactionType.EXPENSE }
             .sumInBaseCurrency(
@@ -368,7 +368,7 @@ class WalletCategoryLogic @Inject constructor(
 
         suspend fun overdueByCategoryLegacy(
         category: Category,
-        range: com.ivy.legacy.domain.model.FromToTimeRange
+        range: com.ivy.data.model.legacy.FromToTimeRange
     ): List<Transaction> {
         return transactionRepository.findAllDueToBetweenByCategory(
             categoryId = CategoryId(category.id.value),
@@ -383,7 +383,7 @@ class WalletCategoryLogic @Inject constructor(
 
     suspend fun overdueByCategory(
         category: Category,
-        range: com.ivy.legacy.domain.model.FromToTimeRange
+        range: com.ivy.data.model.legacy.FromToTimeRange
     ): List<com.ivy.data.model.Transaction> {
         return transactionRepository.findAllDueToBetweenByCategory(
             categoryId = CategoryId(category.id.value),
@@ -393,7 +393,7 @@ class WalletCategoryLogic @Inject constructor(
             .filterOverdue(timeProvider)
     }
 
-        suspend fun overdueUnspecifiedLegacy(range: com.ivy.legacy.domain.model.FromToTimeRange): List<Transaction> {
+        suspend fun overdueUnspecifiedLegacy(range: com.ivy.data.model.legacy.FromToTimeRange): List<Transaction> {
         return transactionRepository.findAllDueToBetweenByCategoryUnspecified(
             startDate = range.from(),
             endDate = range.overdueTo(timeProvider)
@@ -405,7 +405,7 @@ class WalletCategoryLogic @Inject constructor(
     }
 
     suspend fun overdueUnspecified(
-        range: com.ivy.legacy.domain.model.FromToTimeRange
+        range: com.ivy.data.model.legacy.FromToTimeRange
     ): List<com.ivy.data.model.Transaction> {
         return transactionRepository.findAllDueToBetweenByCategoryUnspecified(
             startDate = range.from(),

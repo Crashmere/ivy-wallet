@@ -100,7 +100,7 @@ class WalletAccountLogic @Inject constructor(
 
     suspend fun calculateUpcomingIncome(
         account: Account,
-        range: com.ivy.legacy.domain.model.FromToTimeRange
+        range: com.ivy.data.model.legacy.FromToTimeRange
     ): Double =
         upcoming(account, range = range)
             .filterIsInstance<Income>()
@@ -108,7 +108,7 @@ class WalletAccountLogic @Inject constructor(
 
     suspend fun calculateUpcomingExpenses(
         account: Account,
-        range: com.ivy.legacy.domain.model.FromToTimeRange
+        range: com.ivy.data.model.legacy.FromToTimeRange
     ): Double =
         upcoming(account = account, range = range)
             .filterIsInstance<Expense>()
@@ -116,7 +116,7 @@ class WalletAccountLogic @Inject constructor(
 
     suspend fun calculateOverdueIncome(
         account: Account,
-        range: com.ivy.legacy.domain.model.FromToTimeRange
+        range: com.ivy.data.model.legacy.FromToTimeRange
     ): Double =
         overdue(account, range = range)
             .filterIsInstance<Income>()
@@ -124,7 +124,7 @@ class WalletAccountLogic @Inject constructor(
 
     suspend fun calculateOverdueExpenses(
         account: Account,
-        range: com.ivy.legacy.domain.model.FromToTimeRange
+        range: com.ivy.data.model.legacy.FromToTimeRange
     ): Double =
         overdue(account, range = range)
             .filterIsInstance<Expense>()
@@ -132,7 +132,7 @@ class WalletAccountLogic @Inject constructor(
 
     suspend fun upcoming(
         account: Account,
-        range: com.ivy.legacy.domain.model.FromToTimeRange
+        range: com.ivy.data.model.legacy.FromToTimeRange
     ): List<com.ivy.data.model.Transaction> {
         return transactionRepository.findAllDueToBetweenByAccount(
             accountId = AccountId(account.id),
@@ -143,7 +143,7 @@ class WalletAccountLogic @Inject constructor(
 
     suspend fun overdue(
         account: Account,
-        range: com.ivy.legacy.domain.model.FromToTimeRange
+        range: com.ivy.data.model.legacy.FromToTimeRange
     ): List<com.ivy.data.model.Transaction> {
         return transactionRepository.findAllDueToBetweenByAccount(
             accountId = AccountId(account.id),

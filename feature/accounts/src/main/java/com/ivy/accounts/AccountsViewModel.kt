@@ -19,7 +19,7 @@ import com.ivy.domain.usecase.account.SaveAccountUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.legacy.ui.state.PeriodState
 import com.ivy.legacy.domain.model.AccountData
-import com.ivy.legacy.domain.model.toCloseTimeRange
+import com.ivy.data.model.legacy.toCloseTimeRange
 import com.ivy.data.model.currency.format
 import com.ivy.base.coroutines.ioThread
 import com.ivy.ui.ComposeViewModel

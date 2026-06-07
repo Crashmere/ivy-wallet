@@ -8,7 +8,7 @@ import com.ivy.base.time.atEndOfDay
 import com.ivy.base.time.endOfMonth
 import com.ivy.base.time.startOfMonth
 import com.ivy.base.time.withDayOfMonthSafe
-import com.ivy.legacy.domain.model.FromToTimeRange
+import com.ivy.data.model.legacy.FromToTimeRange
 import com.ivy.ui.time.TimeFormatter
 import java.time.Instant
 import java.time.LocalDate

@@ -34,7 +34,7 @@ import com.ivy.legacy.ui.model.AppBaseData
 import com.ivy.legacy.ui.model.BufferInfo
 import com.ivy.legacy.ui.model.LegacyDueSection
 import com.ivy.legacy.ui.model.period.TimePeriod
-import com.ivy.legacy.domain.model.toUTCCloseTimeRange
+import com.ivy.data.model.legacy.toUTCCloseTimeRange
 import com.ivy.legacy.domain.model.Account
 import com.ivy.legacy.domain.action.viewmodel.home.ShouldHideIncomeAct
 import com.ivy.base.coroutines.ioThread

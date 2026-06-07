@@ -286,7 +286,7 @@ class PieChartAct @Inject constructor(
 
     data class Input(
         val baseCurrency: String,
-        val range: com.ivy.legacy.domain.model.FromToTimeRange,
+        val range: com.ivy.data.model.legacy.FromToTimeRange,
         val type: TransactionType,
         val accountIdFilterList: List<UUID>,
         val treatTransferAsIncExp: Boolean = false,

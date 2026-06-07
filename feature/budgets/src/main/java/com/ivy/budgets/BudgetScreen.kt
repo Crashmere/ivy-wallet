@@ -166,7 +166,7 @@ private fun BoxWithConstraintsScope.UI(
 
 @Composable
 private fun Toolbar(
-    timeRange: com.ivy.legacy.domain.model.FromToTimeRange?,
+    timeRange: com.ivy.data.model.legacy.FromToTimeRange?,
     totalRemainingBudgetText: String?,
     baseCurrency: String,
     appBudgetMax: Double,

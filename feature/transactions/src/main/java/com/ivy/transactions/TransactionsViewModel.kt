@@ -34,7 +34,7 @@ import com.ivy.domain.preferences.toggles.PreferenceToggles
 import com.ivy.legacy.frp.then
 import com.ivy.legacy.ui.state.PeriodState
 import com.ivy.legacy.ui.model.period.TimePeriod
-import com.ivy.legacy.domain.model.toCloseTimeRange
+import com.ivy.data.model.legacy.toCloseTimeRange
 import com.ivy.legacy.domain.logic.AccountCreator
 import com.ivy.base.coroutines.computationThread
 import com.ivy.base.coroutines.ioThread

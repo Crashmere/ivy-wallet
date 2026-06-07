@@ -17,8 +17,8 @@ import com.ivy.data.model.Transaction
 import com.ivy.data.model.Transfer
 import com.ivy.legacy.frp.sumOfSuspend
 import com.ivy.legacy.ui.state.PeriodState
-import com.ivy.legacy.domain.model.FromToTimeRange
-import com.ivy.legacy.domain.model.toCloseTimeRange
+import com.ivy.data.model.legacy.FromToTimeRange
+import com.ivy.data.model.legacy.toCloseTimeRange
 import com.ivy.legacy.domain.model.Account
 import com.ivy.legacy.domain.model.Budget
 import com.ivy.legacy.domain.logic.BudgetCreator
