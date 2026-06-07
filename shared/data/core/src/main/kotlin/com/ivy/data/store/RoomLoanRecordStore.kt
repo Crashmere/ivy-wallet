@@ -1,4 +1,4 @@
-package com.ivy.data.repository
+package com.ivy.data.store
 
 import com.ivy.data.api.LoanRecordStore
 import com.ivy.data.db.dao.read.LoanRecordDao
@@ -10,7 +10,7 @@ import kotlinx.coroutines.withContext
 import java.util.UUID
 import javax.inject.Inject
 
-class LoanRecordStoreImpl @Inject constructor(
+class RoomLoanRecordStore @Inject constructor(
     private val loanRecordDao: LoanRecordDao,
     private val loanRecordWriter: WriteLoanRecordDao,
 ) : LoanRecordStore {

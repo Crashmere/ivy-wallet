@@ -1,4 +1,4 @@
-package com.ivy.data.repository
+package com.ivy.data.store
 
 import com.ivy.data.api.CurrencyStore
 import com.ivy.data.db.dao.read.SettingsDao
@@ -12,7 +12,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class CurrencyRepository @Inject constructor(
+class RoomCurrencyStore @Inject constructor(
     private val settingsDao: SettingsDao,
     private val writeSettingsDao: WriteSettingsDao,
 ) : CurrencyStore {

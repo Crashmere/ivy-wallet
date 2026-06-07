@@ -13,9 +13,9 @@ import com.ivy.data.db.dao.fake.FakeTagAssociationDao
 import com.ivy.data.db.dao.fake.FakeTagDao
 import com.ivy.data.db.dao.fake.FakeTransactionDao
 import com.ivy.data.di.SerializationModule
-import com.ivy.data.repository.AccountRepository
-import com.ivy.data.repository.CurrencyRepository
-import com.ivy.data.repository.fake.fakeRepositoryCacheFactory
+import com.ivy.data.store.RoomAccountStore
+import com.ivy.data.store.RoomCurrencyStore
+import com.ivy.data.store.fake.fakeStoreCacheFactory
 import com.ivy.data.repository.mapper.AccountMapper
 import com.ivy.data.testResource
 import io.kotest.matchers.ints.shouldBeGreaterThan
@@ -38,7 +38,7 @@ class BackupDataUseCaseTest {
         tagAssociationDao: FakeTagAssociationDao = FakeTagAssociationDao()
     ): BackupDataUseCase {
         val accountMapper = AccountMapper(
-            CurrencyRepository(
+            RoomCurrencyStore(
                 settingsDao = settingsDao,
                 writeSettingsDao = settingsDao,
             )
@@ -46,11 +46,11 @@ class BackupDataUseCaseTest {
         return BackupDataUseCase(
             accountDao = accountDao,
             accountMapper = accountMapper,
-            accountStore = AccountRepository(
+            accountStore = RoomAccountStore(
                 accountDao = accountDao,
                 writeAccountDao = accountDao,
                 mapper = accountMapper,
-                cacheFactory = fakeRepositoryCacheFactory(),
+                cacheFactory = fakeStoreCacheFactory(),
             ),
             budgetDao = budgetDao,
             categoryDao = categoryDao,

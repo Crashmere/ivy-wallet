@@ -1,4 +1,4 @@
-package com.ivy.data.repository
+package com.ivy.data.store
 
 import arrow.core.Either
 import arrow.core.left
@@ -18,17 +18,17 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
 
-class ExchangeRatesRepositoryTest {
+class DefaultExchangeRateStoreTest {
     private val mapper = mockk<ExchangeRateMapper>()
     private val exchangeRatesDao = mockk<ExchangeRatesDao>()
     private val writeExchangeRatesDao = mockk<WriteExchangeRatesDao>()
     private val remoteExchangeRatesDataSource = mockk<RemoteExchangeRatesDataSource>()
 
-    private lateinit var repository: ExchangeRatesRepository
+    private lateinit var repository: DefaultExchangeRateStore
 
     @Before
     fun setup() {
-        repository = ExchangeRatesRepository(
+        repository = DefaultExchangeRateStore(
             mapper = mapper,
             exchangeRatesDao = exchangeRatesDao,
             writeExchangeRatesDao = writeExchangeRatesDao,

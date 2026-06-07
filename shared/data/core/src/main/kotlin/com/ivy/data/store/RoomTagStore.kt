@@ -1,4 +1,4 @@
-package com.ivy.data.repository
+package com.ivy.data.store
 
 import com.ivy.data.api.DataWriteEvent
 import com.ivy.data.api.TagStore
@@ -20,13 +20,13 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class TagRepository @Inject constructor(
+class RoomTagStore @Inject constructor(
     private val mapper: TagMapper,
     private val tagDao: TagDao,
     private val tagAssociationDao: TagAssociationDao,
     private val writeTagDao: WriteTagDao,
     private val writeTagAssociationDao: WriteTagAssociationDao,
-    cacheFactory: RepositoryCacheFactory,
+    cacheFactory: StoreCacheFactory,
 ) : TagStore {
     private val cache = cacheFactory.createCache(
         getDataWriteSaveEvent = DataWriteEvent::SaveTags,

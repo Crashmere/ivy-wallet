@@ -1,4 +1,4 @@
-package com.ivy.data.repository
+package com.ivy.data.store
 
 import com.ivy.data.db.dao.fake.FakeSettingsDao
 import com.ivy.data.db.dao.read.AccountDao
@@ -9,7 +9,7 @@ import com.ivy.data.model.AccountId
 import com.ivy.data.model.primitive.AssetCode
 import com.ivy.data.model.primitive.ColorInt
 import com.ivy.data.model.primitive.NotBlankTrimmedString
-import com.ivy.data.repository.fake.fakeRepositoryCacheFactory
+import com.ivy.data.store.fake.fakeStoreCacheFactory
 import com.ivy.data.repository.mapper.AccountMapper
 import io.kotest.matchers.shouldBe
 import io.mockk.coEvery
@@ -22,24 +22,24 @@ import org.junit.Before
 import org.junit.Test
 import java.util.UUID
 
-class AccountRepositoryTest {
+class RoomAccountStoreTest {
     val accountDao = mockk<AccountDao>()
     val writeAccountDao = mockk<WriteAccountDao>()
-    private lateinit var repository: AccountRepository
+    private lateinit var repository: RoomAccountStore
 
     @Before
     fun setup() {
         val settingsDao = FakeSettingsDao()
-        repository = AccountRepository(
+        repository = RoomAccountStore(
             mapper = AccountMapper(
-                CurrencyRepository(
+                RoomCurrencyStore(
                     settingsDao = settingsDao,
                     writeSettingsDao = settingsDao,
                 )
             ),
             accountDao = accountDao,
             writeAccountDao = writeAccountDao,
-            cacheFactory = fakeRepositoryCacheFactory(),
+            cacheFactory = fakeStoreCacheFactory(),
         )
     }
 

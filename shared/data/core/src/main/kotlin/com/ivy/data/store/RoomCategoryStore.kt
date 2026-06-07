@@ -1,4 +1,4 @@
-package com.ivy.data.repository
+package com.ivy.data.store
 
 import com.ivy.data.api.DataWriteEvent
 import com.ivy.data.api.CategoryStore
@@ -13,11 +13,11 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class CategoryRepository @Inject constructor(
+class RoomCategoryStore @Inject constructor(
     private val mapper: CategoryMapper,
     private val writeCategoryDao: WriteCategoryDao,
     private val categoryDao: CategoryDao,
-    cacheFactory: RepositoryCacheFactory,
+    cacheFactory: StoreCacheFactory,
 ) : CategoryStore {
     private val cache = cacheFactory.createCache(
         getDataWriteSaveEvent = DataWriteEvent::SaveCategories,

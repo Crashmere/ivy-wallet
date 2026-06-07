@@ -1,4 +1,4 @@
-package com.ivy.data.repository
+package com.ivy.data.store
 
 import arrow.core.Either
 import arrow.core.raise.either
@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class ExchangeRatesRepository @Inject constructor(
+class DefaultExchangeRateStore @Inject constructor(
     private val mapper: ExchangeRateMapper,
     private val exchangeRatesDao: ExchangeRatesDao,
     private val writeExchangeRatesDao: WriteExchangeRatesDao,

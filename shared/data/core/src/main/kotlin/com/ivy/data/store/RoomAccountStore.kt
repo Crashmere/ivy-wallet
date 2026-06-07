@@ -1,4 +1,4 @@
-package com.ivy.data.repository
+package com.ivy.data.store
 
 import com.ivy.data.api.AccountStore
 import com.ivy.data.api.DataWriteEvent
@@ -13,11 +13,11 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class AccountRepository @Inject constructor(
+class RoomAccountStore @Inject constructor(
     private val mapper: AccountMapper,
     private val accountDao: AccountDao,
     private val writeAccountDao: WriteAccountDao,
-    cacheFactory: RepositoryCacheFactory,
+    cacheFactory: StoreCacheFactory,
 ) : AccountStore {
     private val cache = cacheFactory.createCache(
         getDataWriteSaveEvent = DataWriteEvent::SaveAccounts,

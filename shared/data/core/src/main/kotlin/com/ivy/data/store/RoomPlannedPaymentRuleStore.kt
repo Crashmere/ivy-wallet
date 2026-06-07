@@ -1,4 +1,4 @@
-package com.ivy.data.repository
+package com.ivy.data.store
 
 import com.ivy.data.api.PlannedPaymentRuleStore
 import com.ivy.data.db.dao.read.PlannedPaymentRuleDao
@@ -10,7 +10,7 @@ import kotlinx.coroutines.withContext
 import java.util.UUID
 import javax.inject.Inject
 
-class PlannedPaymentRuleStoreImpl @Inject constructor(
+class RoomPlannedPaymentRuleStore @Inject constructor(
     private val plannedPaymentRuleDao: PlannedPaymentRuleDao,
     private val plannedPaymentRuleWriter: WritePlannedPaymentRuleDao,
 ) : PlannedPaymentRuleStore {

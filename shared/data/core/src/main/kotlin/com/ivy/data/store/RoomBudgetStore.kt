@@ -1,4 +1,4 @@
-package com.ivy.data.repository
+package com.ivy.data.store
 
 import com.ivy.data.api.BudgetStore
 import com.ivy.data.db.dao.read.BudgetDao
@@ -10,7 +10,7 @@ import kotlinx.coroutines.withContext
 import java.util.UUID
 import javax.inject.Inject
 
-class BudgetStoreImpl @Inject constructor(
+class RoomBudgetStore @Inject constructor(
     private val budgetDao: BudgetDao,
     private val budgetWriter: WriteBudgetDao,
 ) : BudgetStore {

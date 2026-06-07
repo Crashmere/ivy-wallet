@@ -713,7 +713,7 @@
 - 标签读写、标签关联和标签搜索已抽成 `TagStore` 端口；编辑交易、历史列表、按标签筛选和重置钱包流程不再直接依赖 data core 的 `TagRepository`。
 - 标签创建已停止注入 data core 的 `TagMapper`；`CreateTagUseCase` 直接构造 data model `Tag` 并通过 `TagStore` 保存。
 - 账户与分类读写已抽成 `AccountStore/CategoryStore` 端口；对应 domain use case、交易历史构建、借贷同步和重置钱包流程不再直接注入 data core repository，`TransactionMapper` 也改为依赖账户端口。
-- 账户、分类和标签 repository 共享的内部读取缓存已从 `RepositoryMemo` 改名为 `RepositoryCache`；它只服务 data-core 内部 DAO 读取缓存和数据变化事件发布，不再使用含义含混的 memo 命名。
+- 账户、分类和标签 store 共享的内部读取缓存已从早期 `RepositoryMemo/RepositoryCache` 收敛为 `StoreCache`；它只服务 data-core 内部 DAO 读取缓存和数据变化事件发布。
 - 交易读写、到期交易、计划付款关联交易和借贷关联交易已抽成 `TransactionStore` 端口；domain 中的账户、分类、首页、计划付款、借贷、重置和交易 use case 不再直接注入 data core 的 `TransactionRepository`。
 - 交易剩余读路径已继续收敛到 `TransactionStore`；`hasAny()`、智能标题建议查询、按账户/分类标题计数、旧账户交易列表、计划付款金额统计和借贷同步不再直接注入 `TransactionDao`。
 - 交易 legacy/modern 转换已改为基于 data model 和 `AccountStore` 直接完成；`shared:domain` 主源码不再依赖 data core 的 `TransactionMapper` 或 `TransactionEntity`。
@@ -809,6 +809,7 @@
 - `shared:ui:core` 已移除 Hilt 插件和内部 Hilt Module，并显式声明基础 `lifecycle-viewmodel`；主题状态、时间服务、日期时间选择器和 Toaster 的应用级绑定集中到 app 的 DI 模块。
 - `shared:ui:navigation` 和 `shared:ui:legacy` 已移除最后的 `javax.inject` 依赖；`Navigation/MainTabState/PeriodState` 作为普通状态类由 app 统一提供单例。
 - `SettingsStore` 的 Room 实现已从泛化的 `SettingsRepository` 改名为 `RoomSettingsStore`；外部端口不变，先把设置存储边界表达清楚。
+- data-core 的 Store 实现已整体归位到 `com.ivy.data.store`：账户、分类、币种、标签、交易、预算、借贷、计划付款和设置的 Room 实现统一命名为 `Room*Store`，汇率实现命名为 `DefaultExchangeRateStore`。
 - data-core 内部的备份导入、账户映射和交易仓库已改为依赖 `AccountStore/CurrencyStore/TagStore` 端口，不再直接依赖对应具体 Repository 实现。
 - 账户旧读取路径已收敛到 `AccountStore`；旧 legacy 账户模型现在由 data model 账户映射而来，`shared:domain` 主源码不再直接注入 `AccountDao` 或依赖 `AccountEntity` mapper。
 - 旧交易卡片已移除重复账户查找 TODO：渲染前先解析来源/目标账户，再复用同一结果处理点击和币种展示，行为不变但 legacy UI 内部职责更清楚。

@@ -1,4 +1,4 @@
-package com.ivy.data.repository
+package com.ivy.data.store
 
 import com.ivy.data.model.Theme
 import com.ivy.data.db.entity.SettingsEntity

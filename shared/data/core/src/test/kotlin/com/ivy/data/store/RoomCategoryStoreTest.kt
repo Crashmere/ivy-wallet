@@ -1,4 +1,4 @@
-package com.ivy.data.repository
+package com.ivy.data.store
 
 import com.ivy.data.db.dao.read.CategoryDao
 import com.ivy.data.db.dao.write.WriteCategoryDao
@@ -7,7 +7,7 @@ import com.ivy.data.model.Category
 import com.ivy.data.model.CategoryId
 import com.ivy.data.model.primitive.ColorInt
 import com.ivy.data.model.primitive.NotBlankTrimmedString
-import com.ivy.data.repository.fake.fakeRepositoryCacheFactory
+import com.ivy.data.store.fake.fakeStoreCacheFactory
 import com.ivy.data.repository.mapper.CategoryMapper
 import io.kotest.matchers.shouldBe
 import io.mockk.coEvery
@@ -20,19 +20,19 @@ import org.junit.Before
 import org.junit.Test
 import java.util.UUID
 
-class CategoryRepositoryTest {
+class RoomCategoryStoreTest {
     private val categoryDao = mockk<CategoryDao>()
     private val writeCategoryDao = mockk<WriteCategoryDao>()
 
-    private lateinit var repository: CategoryRepository
+    private lateinit var repository: RoomCategoryStore
 
     @Before
     fun setup() {
-        repository = CategoryRepository(
+        repository = RoomCategoryStore(
             mapper = CategoryMapper(),
             categoryDao = categoryDao,
             writeCategoryDao = writeCategoryDao,
-            cacheFactory = fakeRepositoryCacheFactory(),
+            cacheFactory = fakeStoreCacheFactory(),
         )
     }
 

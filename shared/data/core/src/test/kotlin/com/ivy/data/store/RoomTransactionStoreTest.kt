@@ -1,4 +1,4 @@
-package com.ivy.data.repository
+package com.ivy.data.store
 
 import arrow.core.Either
 import arrow.core.Some
@@ -39,14 +39,14 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
 
-class TransactionRepositoryTest {
+class RoomTransactionStoreTest {
 
     private val mapper = mockk<TransactionMapper>()
     private val transactionDao = mockk<TransactionDao>()
     private val writeTransactionDao = mockk<WriteTransactionDao>()
     private val tagStore = mockk<TagStore>(relaxed = true)
 
-    private lateinit var repository: TransactionRepository
+    private lateinit var repository: RoomTransactionStore
 
     @Before
     fun setup() {
@@ -55,7 +55,7 @@ class TransactionRepositoryTest {
 
     private fun newRepository(
         fakeDao: FakeTransactionDao?,
-    ): TransactionRepository = TransactionRepository(
+    ): RoomTransactionStore = RoomTransactionStore(
         mapper = mapper,
         transactionDao = fakeDao ?: transactionDao,
         writeTransactionDao = fakeDao ?: writeTransactionDao,

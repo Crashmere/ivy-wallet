@@ -1,4 +1,4 @@
-package com.ivy.data.repository
+package com.ivy.data.store
 
 import com.ivy.data.api.DataChangePublisher
 import com.ivy.data.api.DataWriteEvent
@@ -9,20 +9,20 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class RepositoryCacheFactory @Inject constructor(
+class StoreCacheFactory @Inject constructor(
     private val dataChangePublisher: DataChangePublisher,
 ) {
     fun <T : Identifiable<TID>, TID : UniqueId> createCache(
         getDataWriteSaveEvent: (List<T>) -> DataWriteEvent,
         getDateWriteDeleteEvent: (DeleteOperation<TID>) -> DataWriteEvent
-    ): RepositoryCache<T, TID> = RepositoryCache(
+    ): StoreCache<T, TID> = StoreCache(
         dataChangePublisher = dataChangePublisher,
         getDataWriteSaveEvent = getDataWriteSaveEvent,
         getDataWriteDeleteEvent = getDateWriteDeleteEvent,
     )
 }
 
-class RepositoryCache<T : Identifiable<TID>, TID : UniqueId> internal constructor(
+class StoreCache<T : Identifiable<TID>, TID : UniqueId> internal constructor(
     private val dataChangePublisher: DataChangePublisher,
     private val getDataWriteSaveEvent: (List<T>) -> DataWriteEvent,
     private val getDataWriteDeleteEvent: (DeleteOperation<TID>) -> DataWriteEvent,

@@ -13,9 +13,9 @@ import com.ivy.data.di.SerializationModule
 import com.ivy.data.file.FileSystem
 import com.ivy.data.model.importing.ImportResult
 import com.ivy.data.preferences.SharedPrefsAppPreferenceStore
-import com.ivy.data.repository.AccountRepository
-import com.ivy.data.repository.CurrencyRepository
-import com.ivy.data.repository.fake.fakeRepositoryCacheFactory
+import com.ivy.data.store.RoomAccountStore
+import com.ivy.data.store.RoomCurrencyStore
+import com.ivy.data.store.fake.fakeStoreCacheFactory
 import com.ivy.data.repository.mapper.AccountMapper
 import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.ints.shouldBeGreaterThan
@@ -38,7 +38,7 @@ class BackupDataUseCaseAndroidTest {
         db = Room.inMemoryDatabaseBuilder(context, IvyRoomDatabase::class.java).build()
         val appContext = InstrumentationRegistry.getInstrumentation().context
         val accountMapper = AccountMapper(
-            currencyStore = CurrencyRepository(
+            currencyStore = RoomCurrencyStore(
                 settingsDao = db.settingsDao,
                 writeSettingsDao = db.writeSettingsDao,
             )
@@ -54,11 +54,11 @@ class BackupDataUseCaseAndroidTest {
             transactionDao = db.transactionDao,
             transactionWriter = db.writeTransactionDao,
             appPreferenceStore = SharedPrefsAppPreferenceStore(appContext),
-            accountStore = AccountRepository(
+            accountStore = RoomAccountStore(
                 accountDao = db.accountDao,
                 writeAccountDao = db.writeAccountDao,
                 mapper = accountMapper,
-                cacheFactory = fakeRepositoryCacheFactory(),
+                cacheFactory = fakeStoreCacheFactory(),
             ),
             accountMapper = accountMapper,
             categoryWriter = db.writeCategoryDao,

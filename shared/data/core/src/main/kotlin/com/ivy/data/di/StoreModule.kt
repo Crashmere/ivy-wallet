@@ -15,17 +15,17 @@ import com.ivy.data.api.PreferenceToggleStore
 import com.ivy.data.api.SettingsStore
 import com.ivy.data.api.TagStore
 import com.ivy.data.api.TransactionStore
-import com.ivy.data.repository.AccountRepository
-import com.ivy.data.repository.BudgetStoreImpl
-import com.ivy.data.repository.CategoryRepository
-import com.ivy.data.repository.CurrencyRepository
-import com.ivy.data.repository.ExchangeRatesRepository
-import com.ivy.data.repository.LoanRecordStoreImpl
-import com.ivy.data.repository.LoanStoreImpl
-import com.ivy.data.repository.PlannedPaymentRuleStoreImpl
-import com.ivy.data.repository.RoomSettingsStore
-import com.ivy.data.repository.TagRepository
-import com.ivy.data.repository.TransactionRepository
+import com.ivy.data.store.RoomAccountStore
+import com.ivy.data.store.RoomBudgetStore
+import com.ivy.data.store.RoomCategoryStore
+import com.ivy.data.store.RoomCurrencyStore
+import com.ivy.data.store.DefaultExchangeRateStore
+import com.ivy.data.store.RoomLoanRecordStore
+import com.ivy.data.store.RoomLoanStore
+import com.ivy.data.store.RoomPlannedPaymentRuleStore
+import com.ivy.data.store.RoomSettingsStore
+import com.ivy.data.store.RoomTagStore
+import com.ivy.data.store.RoomTransactionStore
 import com.ivy.data.datastore.DataStorePreferenceToggleStore
 import com.ivy.data.preferences.SharedPrefsAppPreferenceStore
 import dagger.Binds
@@ -40,35 +40,35 @@ abstract class StoreModule {
     abstract fun bindDataChangePublisher(eventBus: DataWriteEventBus): DataChangePublisher
 
     @Binds
-    abstract fun bindAccountStore(repository: AccountRepository): AccountStore
+    abstract fun bindAccountStore(store: RoomAccountStore): AccountStore
 
     @Binds
     abstract fun bindAppPreferenceStore(store: SharedPrefsAppPreferenceStore): AppPreferenceStore
 
     @Binds
-    abstract fun bindBudgetStore(store: BudgetStoreImpl): BudgetStore
+    abstract fun bindBudgetStore(store: RoomBudgetStore): BudgetStore
 
     @Binds
-    abstract fun bindCategoryStore(repository: CategoryRepository): CategoryStore
+    abstract fun bindCategoryStore(store: RoomCategoryStore): CategoryStore
 
     @Binds
-    abstract fun bindCurrencyStore(repository: CurrencyRepository): CurrencyStore
+    abstract fun bindCurrencyStore(store: RoomCurrencyStore): CurrencyStore
 
     @Binds
     abstract fun bindSettingsStore(store: RoomSettingsStore): SettingsStore
 
     @Binds
-    abstract fun bindExchangeRateStore(repository: ExchangeRatesRepository): ExchangeRateStore
+    abstract fun bindExchangeRateStore(store: DefaultExchangeRateStore): ExchangeRateStore
 
     @Binds
-    abstract fun bindLoanStore(store: LoanStoreImpl): LoanStore
+    abstract fun bindLoanStore(store: RoomLoanStore): LoanStore
 
     @Binds
-    abstract fun bindLoanRecordStore(store: LoanRecordStoreImpl): LoanRecordStore
+    abstract fun bindLoanRecordStore(store: RoomLoanRecordStore): LoanRecordStore
 
     @Binds
     abstract fun bindPlannedPaymentRuleStore(
-        store: PlannedPaymentRuleStoreImpl
+        store: RoomPlannedPaymentRuleStore
     ): PlannedPaymentRuleStore
 
     @Binds
@@ -77,8 +77,8 @@ abstract class StoreModule {
     ): PreferenceToggleStore
 
     @Binds
-    abstract fun bindTagStore(repository: TagRepository): TagStore
+    abstract fun bindTagStore(store: RoomTagStore): TagStore
 
     @Binds
-    abstract fun bindTransactionStore(repository: TransactionRepository): TransactionStore
+    abstract fun bindTransactionStore(store: RoomTransactionStore): TransactionStore
 }

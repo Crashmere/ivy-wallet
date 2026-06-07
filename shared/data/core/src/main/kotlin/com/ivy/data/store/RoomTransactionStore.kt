@@ -1,4 +1,4 @@
-package com.ivy.data.repository
+package com.ivy.data.store
 
 import com.ivy.data.api.TransactionStore
 import com.ivy.data.api.TagStore
@@ -25,7 +25,7 @@ import java.time.Instant
 import java.util.UUID
 import javax.inject.Inject
 
-class TransactionRepository @Inject constructor(
+class RoomTransactionStore @Inject constructor(
     private val mapper: TransactionMapper,
     private val transactionDao: TransactionDao,
     private val writeTransactionDao: WriteTransactionDao,
