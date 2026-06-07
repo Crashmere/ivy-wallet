@@ -25,7 +25,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.ivy.base.legacy.Transaction
 import com.ivy.base.legacy.TransactionHistoryItem
-import com.ivy.base.legacy.stringRes
 import com.ivy.ui.time.LocalTimeConverter
 import com.ivy.ui.platform.LocalDatePicker
 import com.ivy.ui.time.LocalTimeFormatter
@@ -334,6 +333,16 @@ fun HomeLazyColumn(
     val timeProvider = LocalTimeProvider.current
     val timeConverter = LocalTimeConverter.current
     val timeFormatter = LocalTimeFormatter.current
+    val noTransactionsTitle = stringResource(R.string.no_transactions)
+    val noTransactionsText = stringResource(
+        R.string.no_transactions_description,
+        period.toDisplayLong(
+            startDateOfMonth = periodState.startDayOfMonth,
+            timeProvider = timeProvider,
+            timeConverter = timeConverter,
+            timeFormatter = timeFormatter,
+        )
+    )
     LazyColumn(
         modifier = modifier
             .fillMaxSize()
@@ -380,16 +389,8 @@ fun HomeLazyColumn(
             setOverdueExpanded = setOverdueExpanded,
             history = history,
             onPayOrGet = onPayOrGet,
-            emptyStateTitle = stringRes(R.string.no_transactions),
-            emptyStateText = stringRes(
-                R.string.no_transactions_description,
-                period.toDisplayLong(
-                    startDateOfMonth = periodState.startDayOfMonth,
-                    timeProvider = timeProvider,
-                    timeConverter = timeConverter,
-                    timeFormatter = timeFormatter,
-                )
-            ),
+            emptyStateTitle = noTransactionsTitle,
+            emptyStateText = noTransactionsText,
             shouldShowAccountSpecificColorInTransactions = shouldShowAccountSpecificColorInTransactions,
             onSkipTransaction = onSkipTransaction,
             onSkipAllTransactions = onSkipAllTransactions

@@ -23,7 +23,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.ivy.base.legacy.stringRes
 import com.ivy.base.model.TransactionType
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
@@ -80,6 +79,8 @@ private fun BoxWithConstraintsScope.UI(
     val platformFileSharer = fileSharer()
 
     val listState = rememberScrollPositionListState(key = "reports")
+    val noTransactionsTitle = stringResource(R.string.no_transactions)
+    val noTransactionsForFilter = stringResource(R.string.no_transactions_for_your_filter)
 
     if (state.loading) {
         Box(
@@ -248,8 +249,8 @@ private fun BoxWithConstraintsScope.UI(
                 onPayOrGet = {
                     onEventHandler.invoke(ReportScreenEvent.OnPayOrGetLegacy(transaction = it))
                 },
-                emptyStateTitle = stringRes(R.string.no_transactions),
-                emptyStateText = stringRes(R.string.no_transactions_for_your_filter),
+                emptyStateTitle = noTransactionsTitle,
+                emptyStateText = noTransactionsForFilter,
                 shouldShowAccountSpecificColorInTransactions = state.showAccountColorsInTransactions,
                 onSkipTransaction = {
                     onEventHandler.invoke(ReportScreenEvent.SkipTransactionLegacy(transaction = it))
