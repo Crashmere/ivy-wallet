@@ -11,7 +11,7 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.lifecycle.viewModelScope
 import com.ivy.data.api.file.ExternalFile
 import com.ivy.data.model.legacy.LegacyTransaction
-import com.ivy.data.model.legacy.TransactionHistoryItem
+import com.ivy.data.model.TransactionHistoryItem
 import com.ivy.data.model.TransactionType
 import com.ivy.ui.resource.ResourceProvider
 import com.ivy.data.model.Category

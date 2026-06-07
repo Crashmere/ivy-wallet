@@ -7,7 +7,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.graphics.toArgb
 import androidx.lifecycle.viewModelScope
 import com.ivy.data.model.legacy.Transaction
-import com.ivy.data.model.legacy.TransactionHistoryItem
+import com.ivy.data.model.TransactionHistoryItem
 import com.ivy.data.model.TransactionType
 import com.ivy.ui.resource.ResourceProvider
 import com.ivy.data.model.AccountId

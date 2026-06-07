@@ -2,8 +2,8 @@ package com.ivy.domain.transaction.legacy
 
 import arrow.core.Option
 import arrow.core.toOption
-import com.ivy.data.model.legacy.TransactionHistoryItem
-import com.ivy.data.model.legacy.TransactionHistoryDateDivider
+import com.ivy.data.model.TransactionHistoryItem
+import com.ivy.data.model.TransactionHistoryDateDivider
 import com.ivy.data.api.AccountStore
 import com.ivy.data.model.AccountId
 import com.ivy.data.model.legacy.Account

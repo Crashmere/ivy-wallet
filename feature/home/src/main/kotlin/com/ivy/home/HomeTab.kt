@@ -24,7 +24,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.legacy.Transaction
-import com.ivy.data.model.legacy.TransactionHistoryItem
+import com.ivy.data.model.TransactionHistoryItem
 import com.ivy.ui.platform.LocalDatePicker
 import com.ivy.home.Constants.SWIPE_HORIZONTAL_THRESHOLD
 import com.ivy.home.customerjourney.CustomerJourney

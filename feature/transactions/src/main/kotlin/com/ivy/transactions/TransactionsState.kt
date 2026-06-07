@@ -2,7 +2,7 @@ package com.ivy.transactions
 
 import androidx.compose.runtime.Immutable
 import com.ivy.data.model.legacy.Transaction
-import com.ivy.data.model.legacy.TransactionHistoryItem
+import com.ivy.data.model.TransactionHistoryItem
 import com.ivy.data.model.Category
 import com.ivy.legacy.ui.model.period.TimePeriod
 import com.ivy.data.model.legacy.Account

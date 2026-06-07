@@ -9,8 +9,8 @@ import com.ivy.data.model.Tag
 import com.ivy.data.model.TagId
 import com.ivy.data.model.Transaction
 import com.ivy.data.model.legacy.Account
-import com.ivy.data.model.legacy.TransactionHistoryDateDivider
-import com.ivy.data.model.legacy.TransactionHistoryItem
+import com.ivy.data.model.TransactionHistoryDateDivider
+import com.ivy.data.model.TransactionHistoryItem
 import com.ivy.domain.exchange.ExchangeData
 import com.ivy.domain.exchange.ExchangeTransactionArgument
 import com.ivy.domain.exchange.exchangeInBaseCurrency

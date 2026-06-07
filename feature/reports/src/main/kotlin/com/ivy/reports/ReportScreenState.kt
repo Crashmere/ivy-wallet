@@ -1,6 +1,6 @@
 package com.ivy.reports
 
-import com.ivy.data.model.legacy.TransactionHistoryItem
+import com.ivy.data.model.TransactionHistoryItem
 import com.ivy.data.model.Category
 import com.ivy.data.model.Tag
 import com.ivy.data.model.legacy.Account

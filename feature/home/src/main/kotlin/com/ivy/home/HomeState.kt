@@ -2,7 +2,7 @@ package com.ivy.home
 
 import androidx.compose.runtime.Immutable
 import com.ivy.data.model.Theme
-import com.ivy.data.model.legacy.TransactionHistoryItem
+import com.ivy.data.model.TransactionHistoryItem
 import com.ivy.home.customerjourney.CustomerJourneyCardModel
 import com.ivy.legacy.ui.model.AppBaseData
 import com.ivy.legacy.ui.model.BufferInfo

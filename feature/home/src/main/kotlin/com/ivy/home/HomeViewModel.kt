@@ -9,7 +9,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
 import com.ivy.data.model.Theme
 import com.ivy.data.model.legacy.Transaction
-import com.ivy.data.model.legacy.TransactionHistoryItem
+import com.ivy.data.model.TransactionHistoryItem
 import com.ivy.data.model.primitive.AssetCode
 import com.ivy.domain.preferences.toggles.PreferenceToggleService
 import com.ivy.domain.preferences.toggles.PreferenceToggles

@@ -2,7 +2,7 @@ package com.ivy.domain.usecase.category
 
 import com.ivy.data.model.TransactionType
 import com.ivy.data.model.legacy.Transaction
-import com.ivy.data.model.legacy.TransactionHistoryItem
+import com.ivy.data.model.TransactionHistoryItem
 import com.ivy.data.api.AccountStore
 import com.ivy.data.model.Category
 import com.ivy.data.model.CategoryId

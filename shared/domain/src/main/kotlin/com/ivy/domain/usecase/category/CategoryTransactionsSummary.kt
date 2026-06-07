@@ -1,7 +1,7 @@
 package com.ivy.domain.usecase.category
 
 import com.ivy.data.model.legacy.Transaction
-import com.ivy.data.model.legacy.TransactionHistoryItem
+import com.ivy.data.model.TransactionHistoryItem
 
 data class CategoryTransactionsSummary(
     val balance: Double,

@@ -415,7 +415,7 @@
 - 已把旧颜色选择器、账户弹窗、分类弹窗、借贷弹窗和借贷记录弹窗迁入 `shared:ui:legacy`。颜色选择器移除了旧付费锁显示分支，不再依赖会员状态。
 - 已把旧 UI 状态模型 `AppBaseData`、`LegacyDueSection`、`BufferInfo`、`EditTransactionDisplayLoan` 迁入 `shared:ui:legacy`，作为迁移期的 UI 兼容数据。
 - 已把搜索框、收入/支出卡片、详情工具栏、标签弹窗、交易卡片和交易列表组件迁入 `shared:ui:legacy`；交易卡片查找账户/分类时改为只使用调用方传入的数据，去掉了对 `IvyWalletCtx` 缓存的读取。
-- 早期迁入 `shared:domain` 的旧页面状态值对象已继续下沉：`SortOrder` 进入分类 feature，`CustomExchangeRateState` 进入编辑交易 feature，`TransactionHistoryDateDivider` 进入 `shared:base` 的 legacy history item 模型包。
+- 早期迁入 `shared:domain` 的旧页面状态值对象已继续下沉：`SortOrder` 进入分类 feature，`CustomExchangeRateState` 进入编辑交易 feature，`TransactionHistoryDateDivider` 已进一步归位到正式 `com.ivy.data.model`。
 - 已把编辑交易/计划付款复用的底部表单组件迁入 `shared:ui:legacy`；`EditBottomSheet` 改用 Compose 屏幕高度，不再为了底部操作条位置读取 `IvyWalletCtx`。
 - 已把旧 domain 层对 `IvyWalletCtx` 的直接依赖拆掉：账户/分类缓存 action 已删除，起始日状态由 `PeriodState` 和正式 settings use case 承接，调用方显式更新旧 UI 上下文；借贷交易逻辑去掉固定为 true 的付费判断分支。
 - 已把旧 `domain/action`、`domain/pure`、旧汇率换算逻辑、账户数据 action、交易范围过滤 action 迁入 `shared:domain`。
@@ -451,7 +451,7 @@
 - 其余通用 helper 已继续拆出 `shared:base:legacy`：列表交换迁到 `com.ivy.base.collections`，随机区间数迁到 `com.ivy.base.random`，zip/unzip 迁到 `com.ivy.base.io`，余额正负号 helper 迁到 `com.ivy.ui.money`。
 - `shared:base` 中拼写错误的 `com.ivy.base.kotlinxserilzation` 包已更正为 `com.ivy.base.kotlinxserialization`；serializer descriptor 和编码方式保持不变。
 - 旧函数式 helper 已从顶层 `com.ivy.frp` 归入 `com.ivy.base.frp`；`shared:base` 源码现在只暴露在 `com.ivy.base.*` 根包下。
-- 日期、时间范围和 `IntervalType` 周期递增 helper 已迁到 `com.ivy.base.time`；旧交易兼容模型 `Transaction/LegacyTransaction/TransactionHistoryItem/LegacyTag` 已迁到 `com.ivy.base.model.legacy`，继续留在 `shared:base` 以保持现有导航和旧 UI 依赖不变。
+- 日期、时间范围和 `IntervalType` 周期递增 helper 已迁到 `com.ivy.base.time`；旧交易兼容模型 `Transaction/LegacyTransaction/LegacyTag` 仍保留在 `com.ivy.data.model.legacy`，交易历史列表接口 `TransactionHistoryItem` 和日期分隔项已归位到正式 `com.ivy.data.model`。
 - 旧主题枚举已迁到 `com.ivy.data.model.Theme`，数据库仍通过枚举 `name` 持久化，现有设置值不变；旧 `SharedPrefs` 已迁到 `com.ivy.base.prefs.SharedPrefs`，同一个 `ivy_wallet_prefs` 文件名和 key 保持不变。
 - `shared:base` 中的 `com.ivy.base.legacy` 包已经清空；后续重点从“迁出 legacy 包名”转向“减少 Android SharedPreferences 对 domain/data 的扩散”。
 - 偏好读写已抽出窄端口，`SharedPrefs` 只作为 Android 实现通过 Hilt 绑定；业务 key 集中到 `SharedPreferenceKeys`，domain 和数据备份恢复不再直接依赖 `SharedPrefs` 具体类。
@@ -482,7 +482,7 @@
 - 已把旧 `wallet` UI 子包里的金额/货币展示和周期选择组件并入 `com.ivy.legacy.ui.component`；`com.ivy.wallet.ui.theme.*` 包名已经从源码中清空。
 - 已把编辑交易/计划付款复用的旧底部表单组件从 `com.ivy.wallet.ui.edit.core` 迁到 `com.ivy.legacy.ui.edit.core`；除 app 自身锁屏包名外，旧 shared/feature UI 不再使用 `com.ivy.wallet.ui.*`。
 - 已清理迁移过程中留下的 `com.ivy.legacy.legacy.ui.theme.*` 双重 legacy 包名：预算进度条和日期时间行归入 `com.ivy.legacy.ui.component`，弹窗名称输入归入 `com.ivy.legacy.ui.modal`。
-- 已把 `TransactionHistoryDateDivider` 从旧 `com.ivy.wallet.domain.data` 迁到 `com.ivy.base.model.legacy`；它仍服务旧交易列表和旧日期分组，并与 `TransactionHistoryItem` 位于同一基础模型包。`SortOrder/CustomExchangeRateState` 已进一步下沉到对应 feature。
+- 已把 `TransactionHistoryDateDivider` 从旧 `com.ivy.wallet.domain.data` 归位到正式 `com.ivy.data.model`；它仍服务旧交易列表和旧日期分组，并与 `TransactionHistoryItem` 位于同一模型包。`SortOrder/CustomExchangeRateState` 已进一步下沉到对应 feature。
 - 旧创建/编辑参数已从早期的 `com.ivy.wallet.domain.deprecated.logic.model` 迁出；当前 `CreateAccountData`、`CreateBudgetData`、`CreateCategoryData`、`CreateLoanData`、`CreateLoanRecordData`、`EditLoanRecordData` 已归位到正式 `com.ivy.data.model`，旧页面和正式 use case 继续使用同名语义。借贷创建参数内部仍显式引用 legacy 账户/借贷记录模型，待借贷模型整体归位时再收敛。
 - 已把 `shared:domain` 中旧业务逻辑从早期 deprecated/legacy logic 包继续迁出：计划付款、账户统计、分类统计、借贷交易联动和旧汇率换算已进入正式 use case 包；当前不再保留 `com.ivy.legacy.domain.logic` 源码。
 - 已把旧 FPAction/use-case 与 pure helper 从 `com.ivy.wallet.domain.action/pure` 迁到 `com.ivy.legacy.domain.action/pure`；`ClosedTimeRange`、`FromToTimeRange`、`IncomeExpensePair`、`IncomeExpenseTransferPair` 已进一步归位到正式 data model。旧 action/helper 仍是 domain 兼容层，但不再占用正式 Wallet 产品包名。
@@ -821,7 +821,7 @@
 - 新版交易折叠/求和 helper 已从 `legacy/FoldTransactions.kt` 拆到正式 `com.ivy.domain.transaction.TransactionFolds`；legacy 文件只保留旧交易模型折叠对象。
 - 新版钱包收入/支出汇总函数已从 `legacy/WalletValueFunctions.kt` 拆到正式 `com.ivy.domain.transaction.WalletValueFunctions`；legacy 文件只保留旧交易模型汇总对象。
 - 新版交易币种 helper 已从旧 `trnCurrency` 改为正式 `transactionCurrency`，并从 legacy 文件迁到 `com.ivy.domain.transaction.TransactionCurrency`；legacy 包中的 `LegacyTransactionFunctions` 现在只处理旧交易模型。
-- 新版交易到旧历史列表 UI item 的桥接函数已从 `legacy/TrnDateDividers.kt` 拆到正式 `com.ivy.domain.transaction.TransactionHistoryItems`；legacy 日期分组对象只保留旧交易模型入口。
+- 新版交易到旧历史列表 UI item 的桥接函数已从 `legacy/TrnDateDividers.kt` 拆到正式 `com.ivy.domain.transaction.TransactionHistoryItems`；legacy 日期分组入口只保留旧交易模型适配逻辑，列表项模型已归位到正式 data model。
 - 旧交易兼容目录中的文件名已和对象名对齐：`LegacyTransactionFunctions`、`LegacyFoldTransactions`、`LegacyWalletValueFunctions`、`LegacyTransactionDateDividers` 均保留在 `com.ivy.domain.transaction.legacy`，目录中不再混用新版语义文件名；交易求和 helper 也从 `sumTrns` 改为 `sumTransactions`。
 - 交易汇率换算相关旧缩写继续收敛：`ExchangeTrns.kt` 已改为 `ExchangeTransactions.kt`，`ExchangeTrnArgument`/`LegacyExchangeTrns`/`trnCurrency` 改为完整的 `ExchangeTransactionArgument`/`LegacyExchangeTransactions`/`transactionCurrency` 命名；行为不变。
 - 旧账户模型 helper 已从泛化 `com.ivy.domain.account.AccountFunctions` 迁到 `com.ivy.domain.account.legacy.LegacyAccountFunctions`，并改名为 `includedLegacyAccounts`/`legacyAccountCurrency`；调用方现在能明确看出这些函数仍依赖 legacy 账户模型。

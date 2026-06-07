@@ -1,6 +1,6 @@
 package com.ivy.domain.usecase.transaction
 
-import com.ivy.data.model.legacy.TransactionHistoryItem
+import com.ivy.data.model.TransactionHistoryItem
 import com.ivy.data.api.AccountStore
 import com.ivy.data.api.TagStore
 import com.ivy.data.model.AccountId
