@@ -10,7 +10,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
 import com.ivy.ui.ComposeViewModel
 import com.ivy.data.model.Category
-import com.ivy.data.repository.CategoryRepository
+import com.ivy.domain.usecase.category.GetCategoriesUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.legacy.domain.model.Account
 import com.ivy.legacy.domain.model.PlannedPaymentRule
@@ -29,7 +29,7 @@ import javax.inject.Inject
 class PlannedPaymentsViewModel @Inject constructor(
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
     private val plannedPaymentsLogic: PlannedPaymentsLogic,
-    private val categoriesRepository: CategoryRepository,
+    private val getCategoriesUseCase: GetCategoriesUseCase,
     private val accountsAct: AccountsAct
 ) : ComposeViewModel<PlannedPaymentsScreenState, PlannedPaymentsScreenEvent>() {
 
@@ -138,7 +138,7 @@ class PlannedPaymentsViewModel @Inject constructor(
         viewModelScope.launch {
             currency = getBaseCurrencyCode()
 
-            categories = categoriesRepository.findAll().toImmutableList()
+            categories = getCategoriesUseCase().toImmutableList()
             accounts = accountsAct(Unit)
 
             oneTimePlannedPayment =

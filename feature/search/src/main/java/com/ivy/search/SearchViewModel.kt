@@ -10,8 +10,8 @@ import com.ivy.base.model.legacy.TransactionHistoryItem
 import com.ivy.data.model.primitive.NotBlankTrimmedString
 import com.ivy.ui.ComposeViewModel
 import com.ivy.data.model.Category
-import com.ivy.data.repository.CategoryRepository
 import com.ivy.domain.preferences.toggles.PreferenceToggles
+import com.ivy.domain.usecase.category.GetCategoriesUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.legacy.domain.model.Account
 import com.ivy.base.currency.getDefaultFIATCurrency
@@ -31,7 +31,7 @@ import javax.inject.Inject
 class SearchViewModel @Inject constructor(
     private val trnsWithDateDivsAct: TrnsWithDateDivsAct,
     private val accountsAct: AccountsAct,
-    private val categoryRepository: CategoryRepository,
+    private val getCategoriesUseCase: GetCategoriesUseCase,
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
     private val allTrnsAct: AllTrnsAct,
     private val preferenceToggles: PreferenceToggles
@@ -93,7 +93,7 @@ class SearchViewModel @Inject constructor(
             transactions.value = queryResult
             baseCurrency.value = getBaseCurrencyCode()
             accounts.value = accountsAct(Unit)
-            categories.value = categoryRepository.findAll().toImmutableList()
+            categories.value = getCategoriesUseCase().toImmutableList()
         }
     }
 

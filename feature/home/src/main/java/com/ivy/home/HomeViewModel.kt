@@ -14,9 +14,9 @@ import com.ivy.base.model.legacy.TransactionHistoryItem
 import com.ivy.base.time.TimeConverter
 import com.ivy.base.time.TimeProvider
 import com.ivy.data.model.primitive.AssetCode
-import com.ivy.data.repository.CategoryRepository
 import com.ivy.data.repository.mapper.TransactionMapper
 import com.ivy.domain.preferences.toggles.PreferenceToggles
+import com.ivy.domain.usecase.category.GetCategoriesUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.domain.usecase.currency.SetBaseCurrencyUseCase
 import com.ivy.domain.usecase.exchange.SyncExchangeRatesUseCase
@@ -85,7 +85,7 @@ class HomeViewModel @Inject constructor(
     private val getBufferAmountUseCase: GetBufferAmountUseCase,
     private val setBufferAmountUseCase: SetBufferAmountUseCase,
     private val accountsAct: AccountsAct,
-    private val categoryRepository: CategoryRepository,
+    private val getCategoriesUseCase: GetCategoriesUseCase,
     private val calcBufferDiffAct: CalcBufferDiffAct,
     private val upcomingAct: UpcomingAct,
     private val overdueAct: OverdueAct,
@@ -312,7 +312,7 @@ class HomeViewModel @Inject constructor(
     ): Triple<HomePreferences, ClosedTimeRange, List<Account>> {
         val (preferences, timeRange) = input
         val accounts = accountsAct(Unit)
-        val categories = categoryRepository.findAll()
+        val categories = getCategoriesUseCase()
 
         baseData = AppBaseData(
             baseCurrency = preferences.baseCurrency,

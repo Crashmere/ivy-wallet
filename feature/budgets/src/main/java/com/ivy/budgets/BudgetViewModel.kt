@@ -16,7 +16,6 @@ import com.ivy.data.model.Expense
 import com.ivy.data.model.Income
 import com.ivy.data.model.Transaction
 import com.ivy.data.model.Transfer
-import com.ivy.data.repository.CategoryRepository
 import com.ivy.data.legacy.getAccountId
 import com.ivy.data.legacy.getValue
 import com.ivy.legacy.frp.sumOfSuspend
@@ -28,6 +27,7 @@ import com.ivy.legacy.domain.model.Budget
 import com.ivy.legacy.domain.logic.BudgetCreator
 import com.ivy.data.model.currency.format
 import com.ivy.base.text.isNotNullOrBlank
+import com.ivy.domain.usecase.category.GetCategoriesUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.R
@@ -53,7 +53,7 @@ class BudgetViewModel @Inject constructor(
     private val budgetCreator: BudgetCreator,
     private val periodState: PeriodState,
     private val accountsAct: AccountsAct,
-    private val categoryRepository: CategoryRepository,
+    private val getCategoriesUseCase: GetCategoriesUseCase,
     private val budgetsAct: BudgetsAct,
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
     private val historyTrnsAct: HistoryTrnsAct,
@@ -182,7 +182,7 @@ class BudgetViewModel @Inject constructor(
 
     private fun start() {
         viewModelScope.launch {
-            categories.value = categoryRepository.findAll().toImmutableList()
+            categories.value = getCategoriesUseCase().toImmutableList()
             val accounts = accountsAct(Unit)
             val baseCurrency = getBaseCurrencyCode()
             val startDateOfMonth = periodState.startDayOfMonth

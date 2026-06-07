@@ -26,13 +26,13 @@ import com.ivy.data.model.TransactionId
 import com.ivy.data.model.Transfer
 import com.ivy.data.model.primitive.ColorInt
 import com.ivy.data.model.primitive.NotBlankTrimmedString
-import com.ivy.data.repository.CategoryRepository
 import com.ivy.data.repository.TagRepository
 import com.ivy.data.repository.TransactionRepository
 import com.ivy.data.repository.mapper.TransactionMapper
 import com.ivy.data.legacy.getTransactionType
 import com.ivy.data.legacy.getValue
 import com.ivy.domain.preferences.toggles.PreferenceToggles
+import com.ivy.domain.usecase.category.GetCategoriesUseCase
 import com.ivy.domain.usecase.csv.ExportCsvUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.legacy.frp.filterSuspend
@@ -82,7 +82,7 @@ class ReportViewModel @Inject constructor(
     private val periodState: PeriodState,
     private val exchangeAct: ExchangeAct,
     private val accountsAct: AccountsAct,
-    private val categoryRepository: CategoryRepository,
+    private val getCategoriesUseCase: GetCategoriesUseCase,
     private val trnsWithDateDivsAct: TrnsWithDateDivsAct,
     private val calcTrnsIncomeExpenseAct: CalcTrnsIncomeExpenseAct,
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
@@ -219,7 +219,7 @@ class ReportViewModel @Inject constructor(
             baseCurrency = getBaseCurrencyCode()
             accounts = accountsAct(Unit)
             categories =
-                (listOf(unSpecifiedCategory) + categoryRepository.findAll()).toImmutableList()
+                (listOf(unSpecifiedCategory) + getCategoriesUseCase()).toImmutableList()
             allTags = tagRepository.findAll().toImmutableList()
         }
     }

@@ -9,7 +9,7 @@ import com.ivy.data.model.CategoryId
 import com.ivy.data.model.primitive.ColorInt
 import com.ivy.data.model.primitive.IconAsset
 import com.ivy.data.model.primitive.NotBlankTrimmedString
-import com.ivy.data.repository.CategoryRepository
+import com.ivy.domain.usecase.category.GetCategoriesUseCase
 import com.ivy.legacy.ui.theme.system.RedLight
 import com.ivy.legacy.frp.Pure
 import com.ivy.legacy.frp.SideEffect
@@ -36,7 +36,7 @@ class PieChartAct @Inject constructor(
     private val accountsAct: AccountsAct,
     private val trnsWithRangeAndAccFiltersAct: TrnsWithRangeAndAccFiltersAct,
     private val calcTrnsIncomeExpenseAct: LegacyCalcTrnsIncomeExpenseAct,
-    private val categoryRepository: CategoryRepository,
+    private val getCategoriesUseCase: GetCategoriesUseCase,
     private val categoryIncomeWithAccountFiltersAct: LegacyCategoryIncomeWithAccountFiltersAct,
     private val resourceProvider: ResourceProvider,
 ) : FPAction<PieChartAct.Input, PieChartAct.Output>() {
@@ -87,7 +87,7 @@ class PieChartAct @Inject constructor(
                 baseCurrency = baseCurrency,
                 allCategories = suspend {
                     // add null element for unspecified category
-                    categoryRepository.findAll().plus(null)
+                    getCategoriesUseCase().plus(null)
                 },
                 transactions = suspend { transactions },
                 accountsUsed = suspend { accountsUsed },
