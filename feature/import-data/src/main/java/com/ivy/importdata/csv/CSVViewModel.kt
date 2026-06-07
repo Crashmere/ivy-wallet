@@ -551,7 +551,7 @@ class CSVViewModel @Inject constructor(
                     descriptionStatus = emptyStatus,
                 ),
                 onProgress = { progressPercent ->
-                    com.ivy.base.legacy.uiThread {
+                    com.ivy.base.coroutines.uiThread {
                         uiState = UIState.Processing(
                             (progressPercent * 100).roundToInt()
                         )

@@ -6,8 +6,8 @@ import androidx.lifecycle.viewModelScope
 import com.ivy.data.repository.CurrencyRepository
 import com.ivy.domain.usecase.exchange.SyncExchangeRatesUseCase
 import com.ivy.legacy.domain.logic.AccountCreator
-import com.ivy.base.legacy.asLiveData
-import com.ivy.base.legacy.ioThread
+import com.ivy.base.lifecycle.asLiveData
+import com.ivy.base.coroutines.ioThread
 import com.ivy.navigation.MainTab
 import com.ivy.navigation.MainScreen
 import com.ivy.navigation.MainTabState

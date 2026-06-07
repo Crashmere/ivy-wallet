@@ -20,8 +20,8 @@ import com.ivy.legacy.domain.model.LoanRecord
 import com.ivy.legacy.domain.mapper.toLegacy
 import com.ivy.legacy.domain.mapper.toLegacyDomain
 import com.ivy.legacy.domain.logic.AccountCreator
-import com.ivy.base.legacy.computationThread
-import com.ivy.base.legacy.ioThread
+import com.ivy.base.coroutines.computationThread
+import com.ivy.base.coroutines.ioThread
 import com.ivy.loans.loan.data.DisplayLoanRecord
 import com.ivy.loans.loandetails.events.DeleteLoanModalEvent
 import com.ivy.loans.loandetails.events.LoanDetailsScreenEvent

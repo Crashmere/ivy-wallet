@@ -3,7 +3,7 @@ package com.ivy.wallet.domain.reset
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
-import com.ivy.base.legacy.ioThread
+import com.ivy.base.coroutines.ioThread
 import com.ivy.data.DataObserver
 import com.ivy.data.DataWriteEvent
 import com.ivy.data.db.dao.write.WriteBudgetDao

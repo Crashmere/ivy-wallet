@@ -36,10 +36,10 @@ import com.ivy.legacy.ui.model.EditTransactionDisplayLoan
 import com.ivy.legacy.domain.model.Account
 import com.ivy.legacy.domain.mapper.toDomain
 import com.ivy.legacy.domain.logic.AccountCreator
-import com.ivy.base.legacy.computationThread
-import com.ivy.base.legacy.ioThread
+import com.ivy.base.coroutines.computationThread
+import com.ivy.base.coroutines.ioThread
 import com.ivy.base.legacy.toLowerCaseLocal
-import com.ivy.base.legacy.uiThread
+import com.ivy.base.coroutines.uiThread
 import com.ivy.navigation.EditTransactionScreen
 import com.ivy.navigation.MainScreen
 import com.ivy.navigation.Navigation

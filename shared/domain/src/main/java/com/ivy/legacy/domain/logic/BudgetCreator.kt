@@ -3,7 +3,7 @@ package com.ivy.legacy.domain.logic
 import com.ivy.data.db.dao.read.BudgetDao
 import com.ivy.data.db.dao.write.WriteBudgetDao
 import com.ivy.legacy.domain.model.Budget
-import com.ivy.base.legacy.ioThread
+import com.ivy.base.coroutines.ioThread
 import com.ivy.legacy.domain.model.CreateBudgetData
 import com.ivy.legacy.domain.pure.util.nextOrderNum
 import javax.inject.Inject

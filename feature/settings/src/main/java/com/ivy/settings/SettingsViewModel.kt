@@ -30,7 +30,7 @@ import com.ivy.frp.monad.Res
 import com.ivy.ui.theme.ThemeState
 import com.ivy.legacy.ui.state.PeriodState
 import com.ivy.base.legacy.getISOFormattedDateTime
-import com.ivy.base.legacy.uiThread
+import com.ivy.base.coroutines.uiThread
 import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.platform.FilePicker
 import com.ivy.ui.platform.FileSharer

@@ -20,7 +20,7 @@ import com.ivy.legacy.ui.state.PeriodState
 import com.ivy.legacy.domain.model.AccountData
 import com.ivy.legacy.domain.model.toCloseTimeRange
 import com.ivy.data.model.currency.format
-import com.ivy.base.legacy.ioThread
+import com.ivy.base.coroutines.ioThread
 import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.R
 import com.ivy.legacy.domain.action.settings.BaseCurrencyAct

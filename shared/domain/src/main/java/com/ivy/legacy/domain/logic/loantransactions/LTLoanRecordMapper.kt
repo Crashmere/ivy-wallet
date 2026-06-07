@@ -4,7 +4,7 @@ import com.ivy.base.legacy.Transaction
 import com.ivy.legacy.domain.model.Loan
 import com.ivy.legacy.domain.model.LoanRecord
 import com.ivy.legacy.domain.mapper.toLegacyDomain
-import com.ivy.base.legacy.computationThread
+import com.ivy.base.coroutines.computationThread
 import com.ivy.legacy.domain.model.CreateLoanRecordData
 import java.util.UUID
 import javax.inject.Inject

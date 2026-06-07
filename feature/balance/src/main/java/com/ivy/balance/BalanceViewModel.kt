@@ -14,7 +14,7 @@ import com.ivy.base.time.TimeProvider
 import com.ivy.legacy.ui.state.PeriodState
 import com.ivy.ui.ComposeViewModel
 import com.ivy.legacy.ui.model.period.TimePeriod
-import com.ivy.base.legacy.ioThread
+import com.ivy.base.coroutines.ioThread
 import com.ivy.legacy.domain.action.settings.BaseCurrencyAct
 import com.ivy.legacy.domain.action.wallet.CalcWalletBalanceAct
 import com.ivy.legacy.domain.logic.PlannedPaymentsLogic

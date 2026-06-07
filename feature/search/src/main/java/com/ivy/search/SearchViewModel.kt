@@ -13,7 +13,7 @@ import com.ivy.data.repository.CategoryRepository
 import com.ivy.domain.preferences.toggles.PreferenceToggles
 import com.ivy.legacy.domain.model.Account
 import com.ivy.base.legacy.getDefaultFIATCurrency
-import com.ivy.base.legacy.ioThread
+import com.ivy.base.coroutines.ioThread
 import com.ivy.legacy.domain.action.account.AccountsAct
 import com.ivy.legacy.domain.action.settings.BaseCurrencyAct
 import com.ivy.legacy.domain.action.transaction.AllTrnsAct

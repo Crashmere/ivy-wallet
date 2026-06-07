@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ivy.data.backup.BackupDataUseCase
 import com.ivy.data.backup.ImportResult
-import com.ivy.base.legacy.asLiveData
+import com.ivy.base.lifecycle.asLiveData
 import com.ivy.navigation.ImportScreen
 import com.ivy.navigation.Navigation
 import com.ivy.ui.platform.FilePicker
@@ -56,7 +56,7 @@ class ImportViewModel @Inject constructor(
                 _importResult.value = backupDataUseCase.importBackupFile(
                     backupFileUri = fileUri
                 ) { progressPercent ->
-                    com.ivy.base.legacy.uiThread {
+                    com.ivy.base.coroutines.uiThread {
                         _importProgressPercent.value =
                             (progressPercent * 100).roundToInt()
                     }

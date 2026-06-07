@@ -8,8 +8,8 @@ import com.ivy.legacy.domain.model.Account
 import com.ivy.legacy.domain.model.Loan
 import com.ivy.legacy.domain.model.LoanRecord
 import com.ivy.legacy.domain.mapper.toLegacyDomain
-import com.ivy.base.legacy.computationThread
-import com.ivy.base.legacy.scopedIOThread
+import com.ivy.base.coroutines.computationThread
+import com.ivy.base.coroutines.scopedIOThread
 import com.ivy.legacy.domain.model.CreateLoanData
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll

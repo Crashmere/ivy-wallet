@@ -16,7 +16,7 @@ import com.ivy.data.repository.CurrencyRepository
 import com.ivy.domain.preferences.AppPreferences
 import com.ivy.legacy.ui.state.PeriodState
 import com.ivy.legacy.ui.model.period.TimePeriod
-import com.ivy.base.legacy.ioThread
+import com.ivy.base.coroutines.ioThread
 import com.ivy.navigation.PieChartStatisticScreen
 import com.ivy.piechart.action.PieChartAct
 import com.ivy.ui.ComposeViewModel

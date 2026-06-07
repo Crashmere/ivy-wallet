@@ -33,7 +33,7 @@ import com.ivy.legacy.domain.model.toUTCCloseTimeRange
 import com.ivy.legacy.domain.model.Account
 import com.ivy.legacy.domain.mapper.toLegacyDomain
 import com.ivy.legacy.domain.action.viewmodel.home.ShouldHideIncomeAct
-import com.ivy.base.legacy.ioThread
+import com.ivy.base.coroutines.ioThread
 import com.ivy.navigation.BalanceScreen
 import com.ivy.navigation.MainTab
 import com.ivy.navigation.MainScreen

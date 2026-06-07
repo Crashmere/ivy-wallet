@@ -2,7 +2,7 @@ package com.ivy.legacy.domain.logic
 import com.ivy.data.db.dao.read.LoanDao
 import com.ivy.data.db.dao.write.WriteLoanDao
 import com.ivy.legacy.domain.model.Loan
-import com.ivy.base.legacy.ioThread
+import com.ivy.base.coroutines.ioThread
 import com.ivy.legacy.domain.model.CreateLoanData
 import com.ivy.legacy.domain.pure.util.nextOrderNum
 import java.util.UUID

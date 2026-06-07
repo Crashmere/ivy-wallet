@@ -17,7 +17,7 @@ import com.ivy.legacy.domain.model.Account
 import com.ivy.legacy.domain.model.PlannedPaymentRule
 import com.ivy.legacy.domain.mapper.toDomain
 import com.ivy.legacy.domain.mapper.toLegacyDomain
-import com.ivy.base.legacy.ioThread
+import com.ivy.base.coroutines.ioThread
 import com.ivy.legacy.domain.logic.currency.ExchangeRatesLogic
 import com.ivy.legacy.domain.logic.currency.sumByDoublePlannedInBaseCurrency
 import javax.inject.Inject

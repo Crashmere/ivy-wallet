@@ -1,7 +1,7 @@
 package com.ivy.legacy.domain.logic.loantransactions
 
 import com.ivy.base.legacy.Transaction
-import com.ivy.base.legacy.computationThread
+import com.ivy.base.coroutines.computationThread
 import javax.inject.Inject
 
 data class LoanTransactionsLogic @Inject constructor(

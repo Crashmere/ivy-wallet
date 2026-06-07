@@ -1,20 +1,8 @@
-package com.ivy.base.legacy
+package com.ivy.base.coroutines
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.withContext
-
-fun <T> MutableLiveData<T>.asLiveData(): LiveData<T> {
-    return this
-}
-
-fun <T> MutableStateFlow<T>.readOnly(): StateFlow<T> {
-    return this
-}
 
 suspend fun <T> ioThread(action: suspend () -> T): T = withContext(Dispatchers.IO) {
     return@withContext action()

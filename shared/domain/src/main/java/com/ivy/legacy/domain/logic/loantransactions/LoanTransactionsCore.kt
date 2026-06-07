@@ -26,8 +26,8 @@ import com.ivy.legacy.domain.model.Loan
 import com.ivy.legacy.domain.model.LoanRecord
 import com.ivy.legacy.domain.mapper.toDomain
 import com.ivy.legacy.domain.mapper.toLegacyDomain
-import com.ivy.base.legacy.computationThread
-import com.ivy.base.legacy.ioThread
+import com.ivy.base.coroutines.computationThread
+import com.ivy.base.coroutines.ioThread
 import com.ivy.legacy.domain.logic.currency.ExchangeRatesLogic
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

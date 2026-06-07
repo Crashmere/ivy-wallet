@@ -38,9 +38,9 @@ import com.ivy.legacy.ui.state.PeriodState
 import com.ivy.legacy.domain.model.Account
 import com.ivy.legacy.domain.mapper.toLegacy
 import com.ivy.base.legacy.getISOFormattedDateTime
-import com.ivy.base.legacy.scopedIOThread
+import com.ivy.base.coroutines.scopedIOThread
 import com.ivy.base.legacy.toLowerCaseLocal
-import com.ivy.base.legacy.uiThread
+import com.ivy.base.coroutines.uiThread
 import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.R
 import com.ivy.ui.platform.FilePicker

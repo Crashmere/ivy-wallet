@@ -36,8 +36,8 @@ import com.ivy.legacy.domain.model.toCloseTimeRange
 import com.ivy.legacy.domain.mapper.toImmutableLegacyTags
 import com.ivy.legacy.domain.mapper.toLegacyDomain
 import com.ivy.legacy.domain.logic.AccountCreator
-import com.ivy.base.legacy.computationThread
-import com.ivy.base.legacy.ioThread
+import com.ivy.base.coroutines.computationThread
+import com.ivy.base.coroutines.ioThread
 import com.ivy.base.legacy.isNotNullOrBlank
 import com.ivy.legacy.ui.selectEndTextFieldValue
 import com.ivy.navigation.Navigation
