@@ -96,6 +96,13 @@ fun TransactionCard(
     onSkipTransaction: (Transaction) -> Unit = {},
     onClick: (Transaction) -> Unit,
 ) {
+    val sourceAccount = remember(baseData.accounts, transaction.accountId) {
+        baseData.accounts.find { it.id == transaction.accountId }
+    }
+    val targetAccount = remember(baseData.accounts, transaction.toAccountId) {
+        baseData.accounts.find { it.id == transaction.toAccountId }
+    }
+
     Column(
         modifier = modifier
             .fillMaxWidth()
@@ -103,21 +110,15 @@ fun TransactionCard(
             .padding(top = 12.dp)
             .clip(LegacyTheme.shapes.r4)
             .clickable {
-                if (baseData.accounts.find { it.id == transaction.accountId } != null) {
+                if (sourceAccount != null) {
                     onClick(transaction)
                 }
             }
             .background(LegacyTheme.colors.medium, LegacyTheme.shapes.r4)
             .testTag("transaction_card")
     ) {
-        // TODO: Optimize this
-        val transactionCurrency =
-            baseData.accounts.find { it.id == transaction.accountId }?.currency
-                ?: baseData.baseCurrency
-
-        val toAccountCurrency =
-            baseData.accounts.find { it.id == transaction.toAccountId }?.currency
-                ?: baseData.baseCurrency
+        val transactionCurrency = sourceAccount?.currency ?: baseData.baseCurrency
+        val toAccountCurrency = targetAccount?.currency ?: baseData.baseCurrency
 
         Spacer(Modifier.height(20.dp))
 

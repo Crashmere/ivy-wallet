@@ -46,7 +46,7 @@ import java.io.FileOutputStream
 import java.util.UUID
 import javax.inject.Inject
 
-// TODO: Legacy code, needs improvements
+// Keeps the existing ZIP/JSON backup format compatible with older local data.
 class BackupDataUseCase @Inject constructor(
     private val accountDao: AccountDao,
     private val budgetDao: BudgetDao,

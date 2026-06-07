@@ -282,7 +282,7 @@
 - `shared:domain` 已移除 Ktor 依赖；汇率同步测试改用 `ExchangeRateStore` fake 验证业务转换与保存行为，真实网络 client 继续留在 data core 实现边界。
 - `ivy.room` 已从 `ivy.module` 改为基于 `ivy.android-library`，不再隐式带入 Hilt 和 kotlinx serialization；`shared:data:core` 改为显式声明这两个依赖。
 - `shared:ui:core`、`shared:ui:legacy`、`shared:ui:navigation` 已从 `ivy.feature` 迁到 `ivy.compose`；shared UI 模块不再伪装成 feature。
-- `ivy.compose` 已收敛为纯 Android Compose 配置，不再隐式套用 `ivy.module` 或引入未使用的 Molecule 插件；feature 模块继续由 `ivy.feature` 组合 `ivy.module + ivy.compose`，需要 Hilt Module 的 shared UI 模块才显式声明 `ivy.hilt`。
+- `ivy.compose` 已收敛为纯 Android Compose 配置，不再隐式套用 `ivy.module` 或引入未使用的 Molecule 插件；feature 模块继续由 `ivy.feature` 组合 Hilt 与 Compose 能力，需要 Hilt Module 的 shared UI 模块才显式声明 `ivy.hilt`。
 - 版本目录里的 Compose LiveData 依赖别名已从临时/拼写错误的 `compose-runtime-livedate-temp` 改为 `compose-runtime-livedata`，保留依赖本身不变。
 - 删除无运行时调用方的 `FormatMoneyUseCase` 和对应测试，`shared:ui:core` 不再因为这段旧金额格式化草稿依赖 `shared:domain` 或 DataStore；当前实际金额展示继续使用既有 data model currency formatting 与旧 UI 展示逻辑。
 - `shared:ui:navigation` 已移除未使用的 `shared:domain` 依赖；导航模块当前只依赖基础类型、UI core 和自身导航状态。
@@ -297,7 +297,7 @@
 - `feature:accounts` 已显式声明 Arrow 依赖；账户页源码直接使用 `toOption`，不再靠 `shared:data:model` 传递提供。
 - `ivy.module` 不再默认启用 kotlinx serialization；当前 `ivy.feature` 页面模块没有序列化源码引用，序列化能力只保留在 `shared:base` 和 `shared:data:core` 等实际需要的模块中。
 - app 模块已移除 Kotlin serialization 插件；应用壳本身没有序列化源码，序列化继续由 `shared:base` 和 `shared:data:core` 提供。
-- 空壳 `ivy.module` 约定插件已删除；`ivy.feature` 现在直接组合 `ivy.android-library`、`ivy.hilt` 和 `ivy.compose`，模块能力来源更直观。
+- 空壳 `ivy.module` 约定插件已删除；`ivy.feature` 现在只保留 `ivy.hilt` 和 `ivy.compose` 两个页面能力入口，不再重复声明基础 Android library 插件。
 - app 与 `ivy.android-library` 已移除重复的旧式 `kotlin-android` 插件 ID，只保留正式 `org.jetbrains.kotlin.android` 插件；版本目录中仅包含 Android 协程运行时的依赖 bundle 已改名为 `kotlin-android-runtime`，避免和插件 ID 混淆。
 - 根目录 `temp/` 已加入 `.gitignore`；旧 `temp:*` 模块不再被 Gradle include，后续本地残留构建目录不会被误加回版本库。
 
@@ -699,6 +699,7 @@
 - 编辑交易页的标题建议逻辑已从旧 `SmartTitleSuggestionsLogic` 迁到正式 `SuggestTransactionTitlesUseCase`；按标题、分类和账户使用频次生成建议的规则保持不变。
 - 文本文件读写已抽成 `TextFileStore` 基础端口，data core 的 Android `FileSystem` 负责实现；CSV 导出和手动 CSV 读取不再直接依赖 data core 文件类，备份导入导出后续单独拆分。
 - 新增薄模块 `shared:data:api` 承载数据层端口；备份导入导出已改为依赖 `BackupStore`，data core 的 `BackupDataUseCase` 只作为实现绑定到该端口，feature 仍只通过 domain use case 使用备份功能。
+- `BackupDataUseCase` 的泛化 legacy TODO 已改成明确的备份格式兼容说明；这段实现暂时继续承担旧 ZIP/JSON 备份格式和旧本地数据兼容职责，后续拆分时应围绕该边界处理。
 - 基础币种和设置表访问已抽成 `CurrencyStore` 与 `SettingsStore` 端口；domain 的币种/设置 use case 不再直接注入 data core repository，data core 继续保留 Room-backed 实现和内部 mapper 依赖。
 - 汇率读写和远程同步入口已抽成 `ExchangeRateStore` 端口；汇率同步、设置页汇率列表和重置钱包流程不再直接依赖 data core 的 `ExchangeRatesRepository`。
 - 汇率单条查询已收敛到 `ExchangeRateStore.findByBaseCurrencyAndCurrency()`；汇率换算 use case 不再直接注入 `ExchangeRatesDao`，legacy 汇率 mapper 也不再依赖 `ExchangeRateEntity`。
@@ -715,6 +716,7 @@
 - 借贷和借贷记录读写已抽成 `LoanStore/LoanRecordStore` 端口；借贷 CRUD、借贷记录 CRUD、借贷交易同步和重置钱包流程不再直接注入 `LoanDao/LoanRecordDao/WriteLoanDao/WriteLoanRecordDao`，旧 `LoanExt/LoanRecordExt` 实体 mapper 已删除。
 - 设置表清空已收敛到 `SettingsStore.deleteAll()`；重置钱包流程不再直接注入 `WriteSettingsDao`。
 - 账户旧读取路径已收敛到 `AccountStore`；旧 legacy 账户模型现在由 data model 账户映射而来，`shared:domain` 主源码不再直接注入 `AccountDao` 或依赖 `AccountEntity` mapper。
+- 旧交易卡片已移除重复账户查找 TODO：渲染前先解析来源/目标账户，再复用同一结果处理点击和币种展示，行为不变但 legacy UI 内部职责更清楚。
 
 建议顺序：
 
