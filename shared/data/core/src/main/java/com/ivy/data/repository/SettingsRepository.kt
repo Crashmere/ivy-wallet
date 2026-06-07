@@ -2,6 +2,7 @@ package com.ivy.data.repository
 
 import com.ivy.base.theme.Theme
 import com.ivy.base.threading.DispatchersProvider
+import com.ivy.data.api.SettingsStore
 import com.ivy.data.db.dao.read.SettingsDao
 import com.ivy.data.db.dao.write.WriteSettingsDao
 import com.ivy.data.db.entity.SettingsEntity
@@ -16,16 +17,16 @@ class SettingsRepository @Inject constructor(
     private val settingsDao: SettingsDao,
     private val writeSettingsDao: WriteSettingsDao,
     private val dispatchersProvider: DispatchersProvider,
-) {
-    suspend fun getTheme(fallback: Theme = Theme.AUTO): Theme = withContext(dispatchersProvider.io) {
+) : SettingsStore {
+    override suspend fun getTheme(fallback: Theme): Theme = withContext(dispatchersProvider.io) {
         settingsDao.findFirstOrNull()?.theme ?: fallback
     }
 
-    suspend fun getTheme(systemDarkMode: Boolean): Theme = getTheme(
+    override suspend fun getTheme(systemDarkMode: Boolean): Theme = getTheme(
         fallback = if (systemDarkMode) Theme.DARK else Theme.LIGHT
     )
 
-    suspend fun ensureInitialized(
+    override suspend fun ensureInitialized(
         systemDarkMode: Boolean,
         currencyCode: String,
         bufferAmount: Double,
@@ -43,18 +44,18 @@ class SettingsRepository @Inject constructor(
         }
     }
 
-    suspend fun switchTheme(): Theme = withContext(dispatchersProvider.io) {
+    override suspend fun switchTheme(): Theme = withContext(dispatchersProvider.io) {
         val currentEntity = settingsEntityOrDefault()
         val newTheme = currentEntity.theme.next()
         writeSettingsDao.save(currentEntity.copy(theme = newTheme))
         newTheme
     }
 
-    suspend fun getBufferAmount(): BigDecimal = withContext(dispatchersProvider.io) {
+    override suspend fun getBufferAmount(): BigDecimal = withContext(dispatchersProvider.io) {
         settingsDao.findFirstOrNull()?.bufferAmount?.toBigDecimal() ?: BigDecimal.ZERO
     }
 
-    suspend fun setBufferAmount(amount: BigDecimal): BigDecimal = withContext(dispatchersProvider.io) {
+    override suspend fun setBufferAmount(amount: BigDecimal): BigDecimal = withContext(dispatchersProvider.io) {
         val currentEntity = settingsEntityOrDefault()
         writeSettingsDao.save(currentEntity.copy(bufferAmount = amount.toDouble()))
         amount

@@ -1,13 +1,13 @@
 package com.ivy.domain.usecase.currency
 
 import com.ivy.data.model.primitive.AssetCode
-import com.ivy.data.repository.CurrencyRepository
+import com.ivy.data.api.CurrencyStore
 import javax.inject.Inject
 
 class GetBaseCurrencyUseCase @Inject constructor(
-    private val currencyRepository: CurrencyRepository
+    private val currencyStore: CurrencyStore
 ) {
     suspend operator fun invoke(): AssetCode {
-        return currencyRepository.getBaseCurrency()
+        return currencyStore.getBaseCurrency()
     }
 }

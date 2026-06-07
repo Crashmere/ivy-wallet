@@ -3,6 +3,7 @@ package com.ivy.data.repository
 import android.icu.util.Currency
 import com.ivy.base.theme.Theme
 import com.ivy.base.threading.DispatchersProvider
+import com.ivy.data.api.CurrencyStore
 import com.ivy.data.db.dao.read.SettingsDao
 import com.ivy.data.db.dao.write.WriteSettingsDao
 import com.ivy.data.db.entity.SettingsEntity
@@ -18,14 +19,14 @@ class CurrencyRepository @Inject constructor(
     private val settingsDao: SettingsDao,
     private val writeSettingsDao: WriteSettingsDao,
     private val dispatchersProvider: DispatchersProvider,
-) {
+) : CurrencyStore {
     companion object {
         const val FALLBACK_DEFAULT_CURRENCY = "USD"
     }
 
     private var baseCurrencyMemo: AssetCode? = null
 
-    suspend fun getBaseCurrency(): AssetCode = withContext(dispatchersProvider.io) {
+    override suspend fun getBaseCurrency(): AssetCode = withContext(dispatchersProvider.io) {
         val baseCurrency = baseCurrencyMemo
         if (baseCurrency != null) return@withContext baseCurrency
 
@@ -35,13 +36,13 @@ class CurrencyRepository @Inject constructor(
             ?: AssetCode.unsafe(FALLBACK_DEFAULT_CURRENCY)
     }
 
-    suspend fun getBaseCurrencyCode(): String = getBaseCurrency().code
+    override suspend fun getBaseCurrencyCode(): String = getBaseCurrency().code
 
     private fun getDefaultFIATCurrency(): Currency? {
         return Currency.getInstance(Locale.getDefault())
     }
 
-    suspend fun setBaseCurrency(newCurrency: AssetCode) {
+    override suspend fun setBaseCurrency(newCurrency: AssetCode) {
         withContext(dispatchersProvider.io) {
             val currentEntity = settingsDao.findFirstOrNull()
                 ?: SettingsEntity(

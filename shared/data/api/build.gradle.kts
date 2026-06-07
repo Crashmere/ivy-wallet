@@ -7,5 +7,6 @@ android {
 }
 
 dependencies {
+    api(projects.shared.base)
     api(projects.shared.data.model)
 }
