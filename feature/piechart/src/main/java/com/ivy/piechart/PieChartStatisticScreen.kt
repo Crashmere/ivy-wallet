@@ -43,7 +43,7 @@ import com.ivy.design.api.LocalTimeProvider
 import com.ivy.design.l0_system.UI
 import com.ivy.design.l0_system.style
 import com.ivy.design.utils.thenIf
-import com.ivy.legacy.ivyWalletCtx
+import com.ivy.legacy.LocalPeriodState
 import com.ivy.ui.legacy.drawColoredShadow
 import com.ivy.data.model.currency.format
 import com.ivy.ui.legacy.horizontalSwipeListener
@@ -97,7 +97,7 @@ private fun BoxWithConstraintsScope.UI(
     onEvent: (PieChartStatisticEvent) -> Unit = {}
 ) {
     val nav = navigation()
-    val ivyContext = ivyWalletCtx()
+    val periodState = LocalPeriodState.current
     val datePicker = LocalDatePicker.current
     val lazyState = rememberScrollPositionListState(
         key = "item_pie_chart_lazy_column"
@@ -119,7 +119,7 @@ private fun BoxWithConstraintsScope.UI(
             Header(
                 transactionType = state.transactionType,
                 period = state.period,
-                startDateOfMonth = ivyContext.startDayOfMonth,
+                startDateOfMonth = periodState.startDayOfMonth,
                 percentExpanded = percentExpanded,
                 currency = state.baseCurrency,
                 amount = state.totalAmount,
@@ -227,7 +227,7 @@ private fun BoxWithConstraintsScope.UI(
         dismiss = {
             onEvent(PieChartStatisticEvent.OnShowMonthModal(null))
         },
-        saveSelectedPeriod = ivyContext::updateSelectedPeriodInMemory,
+        saveSelectedPeriod = periodState::select,
         pickDate = { minDate, maxDate, initialDate, onDatePicked ->
             datePicker.pickDate(
                 minDate = minDate,

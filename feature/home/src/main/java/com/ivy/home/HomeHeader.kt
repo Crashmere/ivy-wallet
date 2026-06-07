@@ -35,8 +35,8 @@ import com.ivy.design.api.LocalTimeProvider
 import com.ivy.design.l0_system.UI
 import com.ivy.design.l0_system.style
 import com.ivy.design.utils.thenIf
+import com.ivy.legacy.LocalPeriodState
 import com.ivy.legacy.data.model.TimePeriod
-import com.ivy.legacy.ivyWalletCtx
 import com.ivy.legacy.ui.component.transaction.TransactionsDividerLine
 import com.ivy.ui.legacy.clickableNoIndication
 import com.ivy.ui.legacy.drawColoredShadow
@@ -124,6 +124,8 @@ private fun HeaderStickyRow(
     onHiddenBalanceClick: () -> Unit,
     onSelectPreviousMonth: () -> Unit,
 ) {
+    val periodState = LocalPeriodState.current
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -169,7 +171,7 @@ private fun HeaderStickyRow(
             ),
             iconStart = R.drawable.ic_calendar,
             text = period.toDisplayShort(
-                startDateOfMonth = ivyWalletCtx().startDayOfMonth,
+                startDateOfMonth = periodState.startDayOfMonth,
                 timeConverter = LocalTimeConverter.current,
                 timeProvider = LocalTimeProvider.current,
                 timeFormatter = LocalTimeFormatter.current,

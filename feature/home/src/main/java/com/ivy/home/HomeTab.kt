@@ -40,7 +40,7 @@ import com.ivy.legacy.data.BufferInfo
 import com.ivy.legacy.data.LegacyDueSection
 import com.ivy.legacy.data.model.Month
 import com.ivy.legacy.data.model.TimePeriod
-import com.ivy.legacy.ivyWalletCtx
+import com.ivy.legacy.LocalPeriodState
 import com.ivy.legacy.ui.component.transaction.TransactionsDividerLine
 import com.ivy.legacy.ui.component.transaction.transactions
 import com.ivy.ui.legacy.horizontalSwipeListener
@@ -81,7 +81,7 @@ fun BoxWithConstraintsScope.HomeUi(
     onEvent: (HomeEvent) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val ivyContext = ivyWalletCtx()
+    val periodState = LocalPeriodState.current
     val datePicker = LocalDatePicker.current
     val mainTabState = LocalMainTabState.current
 
@@ -254,7 +254,7 @@ fun BoxWithConstraintsScope.HomeUi(
         dismiss = {
             choosePeriodModal = null
         },
-        saveSelectedPeriod = ivyContext::updateSelectedPeriodInMemory,
+        saveSelectedPeriod = periodState::select,
         pickDate = { minDate, maxDate, initialDate, onDatePicked ->
             datePicker.pickDate(
                 minDate = minDate,
@@ -316,7 +316,7 @@ fun HomeLazyColumn(
     onSkipAllTransactions: (List<Transaction>) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val ivyContext = ivyWalletCtx()
+    val periodState = LocalPeriodState.current
 
     val nestedScrollConnection = remember {
         object : NestedScrollConnection {
@@ -384,7 +384,7 @@ fun HomeLazyColumn(
             emptyStateText = stringRes(
                 R.string.no_transactions_description,
                 period.toDisplayLong(
-                    startDateOfMonth = ivyContext.startDayOfMonth,
+                    startDateOfMonth = periodState.startDayOfMonth,
                     timeProvider = timeProvider,
                     timeConverter = timeConverter,
                     timeFormatter = timeFormatter,

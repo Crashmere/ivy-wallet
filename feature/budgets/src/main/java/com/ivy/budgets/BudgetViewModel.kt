@@ -7,7 +7,6 @@ import androidx.compose.runtime.mutableDoubleStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewModelScope
-import com.ivy.base.legacy.SharedPrefs
 import com.ivy.base.time.TimeConverter
 import com.ivy.base.time.TimeProvider
 import com.ivy.budgets.model.DisplayBudget
@@ -21,6 +20,7 @@ import com.ivy.data.repository.CategoryRepository
 import com.ivy.data.temp.migration.getAccountId
 import com.ivy.data.temp.migration.getValue
 import com.ivy.frp.sumOfSuspend
+import com.ivy.legacy.PeriodState
 import com.ivy.legacy.data.model.FromToTimeRange
 import com.ivy.legacy.data.model.toCloseTimeRange
 import com.ivy.legacy.datamodel.Account
@@ -49,10 +49,9 @@ import kotlin.math.abs
 @Stable
 @HiltViewModel
 class BudgetViewModel @Inject constructor(
-    private val sharedPrefs: SharedPrefs,
     private val budgetWriter: WriteBudgetDao,
     private val budgetCreator: BudgetCreator,
-    private val ivyContext: com.ivy.legacy.IvyWalletCtx,
+    private val periodState: PeriodState,
     private val accountsAct: AccountsAct,
     private val categoryRepository: CategoryRepository,
     private val budgetsAct: BudgetsAct,
@@ -186,7 +185,7 @@ class BudgetViewModel @Inject constructor(
             categories.value = categoryRepository.findAll().toImmutableList()
             val accounts = accountsAct(Unit)
             val baseCurrency = baseCurrencyAct(Unit)
-            val startDateOfMonth = ivyContext.initStartDayOfMonthInMemory(sharedPrefs = sharedPrefs)
+            val startDateOfMonth = periodState.startDayOfMonth
             val timeRange = com.ivy.legacy.data.model.TimePeriod.currentMonth(
                 startDayOfMonth = startDateOfMonth
             ).toRange(startDateOfMonth = startDateOfMonth, timeConverter, timeProvider)

@@ -14,7 +14,7 @@ import com.ivy.base.time.TimeConverter
 import com.ivy.base.time.TimeProvider
 import com.ivy.data.db.dao.read.SettingsDao
 import com.ivy.data.model.Category
-import com.ivy.legacy.IvyWalletCtx
+import com.ivy.legacy.PeriodState
 import com.ivy.legacy.data.model.TimePeriod
 import com.ivy.base.legacy.ioThread
 import com.ivy.navigation.PieChartStatisticScreen
@@ -34,7 +34,7 @@ import javax.inject.Inject
 @HiltViewModel
 class PieChartStatisticViewModel @Inject constructor(
     private val settingsDao: SettingsDao,
-    private val ivyContext: IvyWalletCtx,
+    private val periodState: PeriodState,
     private val pieChartAct: PieChartAct,
     private val sharedPrefs: SharedPrefs,
     private val timeProvider: TimeProvider,
@@ -144,7 +144,7 @@ class PieChartStatisticViewModel @Inject constructor(
     ) {
         viewModelScope.launch(Dispatchers.Default) {
             startInternally(
-                period = ivyContext.selectedPeriod,
+                period = periodState.selectedPeriod,
                 type = screen.type,
                 accountIdFilterList = screen.accountList,
                 filterExclude = screen.filterExcluded,
@@ -193,7 +193,7 @@ class PieChartStatisticViewModel @Inject constructor(
         val accountIdFilterList = accountIdFilterList
         val transactions = transactions
         val baseCurrency = baseCurrency
-        val range = periodValue.toRange(ivyContext.startDayOfMonth, timeConverter, timeProvider)
+        val range = periodValue.toRange(periodState.startDayOfMonth, timeConverter, timeProvider)
 
         val treatTransferAsIncExp =
             sharedPrefs.getBoolean(
@@ -225,7 +225,7 @@ class PieChartStatisticViewModel @Inject constructor(
     }
 
     private suspend fun onSetPeriod(periodValue: TimePeriod) {
-        ivyContext.updateSelectedPeriodInMemory(periodValue)
+        periodState.select(periodValue)
         load(
             periodValue = periodValue
         )
@@ -236,7 +236,7 @@ class PieChartStatisticViewModel @Inject constructor(
         val year = period.year ?: com.ivy.base.legacy.dateNowUTC().year
         if (month != null) {
             val nextPeriod = month.incrementMonthPeriod(1L, year)
-            ivyContext.updateSelectedPeriodInMemory(nextPeriod)
+            periodState.select(nextPeriod)
             load(
                 periodValue = nextPeriod
             )
@@ -248,7 +248,7 @@ class PieChartStatisticViewModel @Inject constructor(
         val year = period.year ?: com.ivy.base.legacy.dateNowUTC().year
         if (month != null) {
             val previousPeriod = month.incrementMonthPeriod(-1L, year)
-            ivyContext.updateSelectedPeriodInMemory(previousPeriod)
+            periodState.select(previousPeriod)
             load(
                 periodValue = previousPeriod
             )

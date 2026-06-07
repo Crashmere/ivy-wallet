@@ -48,7 +48,7 @@ import com.ivy.design.l0_system.UI
 import com.ivy.design.l0_system.style
 import com.ivy.domain.legacy.ui.theme.components.ListItem
 import com.ivy.legacy.datamodel.Account
-import com.ivy.legacy.ivyWalletCtx
+import com.ivy.legacy.LocalPeriodState
 import com.ivy.legacy.ui.component.tags.AddTagButton
 import com.ivy.legacy.ui.component.tags.ShowTagModal
 import com.ivy.base.legacy.capitalizeLocal
@@ -117,7 +117,7 @@ fun BoxWithConstraintsScope.FilterOverlay(
     var choosePeriodModal: ChoosePeriodModalData? by remember {
         mutableStateOf(null)
     }
-    val ivyContext = ivyWalletCtx()
+    val periodState = LocalPeriodState.current
     val datePicker = LocalDatePicker.current
     var minAmountModalShown by remember { mutableStateOf(false) }
     var maxAmountModalShown by remember { mutableStateOf(false) }
@@ -214,10 +214,10 @@ fun BoxWithConstraintsScope.FilterOverlay(
 
             PeriodFilter(
                 filter = localFilter,
-                startDateOfMonth = ivyContext.startDayOfMonth,
+                startDateOfMonth = periodState.startDayOfMonth,
                 onShowPeriodChooserModal = {
                     choosePeriodModal = ChoosePeriodModalData(
-                        period = filter?.period ?: ivyContext.selectedPeriod
+                        period = filter?.period ?: periodState.selectedPeriod
                     )
                 }
             )
@@ -325,7 +325,7 @@ fun BoxWithConstraintsScope.FilterOverlay(
     ChoosePeriodModal(
         modal = choosePeriodModal,
         dismiss = { choosePeriodModal = null },
-        saveSelectedPeriod = ivyContext::updateSelectedPeriodInMemory,
+        saveSelectedPeriod = periodState::select,
         pickDate = { minDate, maxDate, initialDate, onDatePicked ->
             datePicker.pickDate(
                 minDate = minDate,

@@ -14,6 +14,7 @@ import com.ivy.data.repository.CategoryRepository
 import com.ivy.domain.features.Features
 import com.ivy.frp.action.thenMap
 import com.ivy.frp.thenInvokeAfter
+import com.ivy.legacy.PeriodState
 import com.ivy.legacy.data.model.TimePeriod
 import com.ivy.legacy.datamodel.Account
 import com.ivy.base.legacy.ioThread
@@ -42,7 +43,7 @@ import javax.inject.Inject
 class CategoriesViewModel @Inject constructor(
     private val categoryCreator: CategoryCreator,
     private val categoryRepository: CategoryRepository,
-    private val ivyContext: com.ivy.legacy.IvyWalletCtx,
+    private val periodState: PeriodState,
     private val sharedPrefs: SharedPrefs,
     private val baseCurrencyAct: BaseCurrencyAct,
     private val accountsAct: AccountsAct,
@@ -138,9 +139,9 @@ class CategoriesViewModel @Inject constructor(
     private suspend fun initialise() {
         ioThread {
             val range = TimePeriod.currentMonth(
-                startDayOfMonth = ivyContext.startDayOfMonth
+                startDayOfMonth = periodState.startDayOfMonth
             ).toRange(
-                ivyContext.startDayOfMonth,
+                periodState.startDayOfMonth,
                 timeConverter,
                 timeProvider
             ) // this must be monthly

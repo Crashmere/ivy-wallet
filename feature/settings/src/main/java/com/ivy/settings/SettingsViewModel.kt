@@ -26,6 +26,7 @@ import com.ivy.domain.usecase.csv.ExportCsvUseCase
 import com.ivy.domain.usecase.exchange.SyncExchangeRatesUseCase
 import com.ivy.frp.monad.Res
 import com.ivy.legacy.IvyWalletCtx
+import com.ivy.legacy.PeriodState
 import com.ivy.legacy.domain.action.settings.UpdateSettingsAct
 import com.ivy.base.legacy.getISOFormattedDateTime
 import com.ivy.base.legacy.ioThread
@@ -48,6 +49,7 @@ import javax.inject.Inject
 class SettingsViewModel @Inject constructor(
     private val settingsDao: SettingsDao,
     private val ivyContext: IvyWalletCtx,
+    private val periodState: PeriodState,
     private val resetWalletDataUseCase: ResetWalletDataUseCase,
     private val sharedPrefs: SharedPrefs,
     private val backupDataUseCase: BackupDataUseCase,
@@ -172,7 +174,7 @@ class SettingsViewModel @Inject constructor(
 
     private suspend fun initializeStartDateOfMonth() {
         val startDay = startDayOfMonthAct(Unit)
-        ivyContext.setStartDayOfMonth(startDay)
+        periodState.updateStartDayOfMonth(startDay)
         startDateOfMonth.intValue = startDay
     }
 
@@ -469,8 +471,8 @@ class SettingsViewModel @Inject constructor(
                 is Res.Err -> {}
                 is Res.Ok -> {
                     val startDay = res.data
-                    ivyContext.setStartDayOfMonth(startDay)
-                    ivyContext.initSelectedPeriodInMemory(
+                    periodState.updateStartDayOfMonth(startDay)
+                    periodState.initSelectedPeriod(
                         startDayOfMonth = startDay,
                         forceReinitialize = true
                     )

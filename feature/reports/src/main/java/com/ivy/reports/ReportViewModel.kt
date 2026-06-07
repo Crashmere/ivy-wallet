@@ -36,7 +36,7 @@ import com.ivy.domain.RootScreen
 import com.ivy.domain.features.Features
 import com.ivy.domain.usecase.csv.ExportCsvUseCase
 import com.ivy.frp.filterSuspend
-import com.ivy.legacy.IvyWalletCtx
+import com.ivy.legacy.PeriodState
 import com.ivy.legacy.datamodel.Account
 import com.ivy.legacy.datamodel.temp.toLegacy
 import com.ivy.base.legacy.getISOFormattedDateTime
@@ -79,7 +79,7 @@ import javax.inject.Inject
 class ReportViewModel @Inject constructor(
     private val plannedPaymentsLogic: PlannedPaymentsLogic,
     private val transactionRepository: TransactionRepository,
-    private val ivyContext: IvyWalletCtx,
+    private val periodState: PeriodState,
     private val exchangeAct: ExchangeAct,
     private val accountsAct: AccountsAct,
     private val categoryRepository: CategoryRepository,
@@ -383,7 +383,7 @@ class ReportViewModel @Inject constructor(
         val filterCategoryIds =
             filter.categories.map { if (it.id.value == unSpecifiedCategory.id.value) null else it.id }
         val filterRange =
-            filter.period?.toRange(ivyContext.startDayOfMonth, timeConverter, timeProvider)
+            filter.period?.toRange(periodState.startDayOfMonth, timeConverter, timeProvider)
 
         val transactions = if (filter.includedTags.isNotEmpty()) {
             tagRepository.findByAllAssociatedIdForTagId(filter.includedTags)

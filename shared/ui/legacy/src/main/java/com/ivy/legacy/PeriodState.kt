@@ -1,0 +1,52 @@
+package com.ivy.legacy
+
+import androidx.compose.runtime.compositionLocalOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import com.ivy.base.legacy.SharedPrefs
+import com.ivy.legacy.data.model.TimePeriod
+import javax.inject.Inject
+import javax.inject.Singleton
+
+@Singleton
+class PeriodState @Inject constructor() {
+    var startDayOfMonth by mutableIntStateOf(1)
+        private set
+
+    var selectedPeriod by mutableStateOf(TimePeriod.currentMonth(startDayOfMonth))
+        private set
+
+    private var selectedPeriodInitialized = false
+
+    fun updateStartDayOfMonth(day: Int) {
+        startDayOfMonth = day
+    }
+
+    fun initStartDayOfMonth(sharedPrefs: SharedPrefs): Int {
+        startDayOfMonth = sharedPrefs.getInt(SharedPrefs.START_DATE_OF_MONTH, 1)
+        return startDayOfMonth
+    }
+
+    fun initSelectedPeriod(
+        startDayOfMonth: Int = this.startDayOfMonth,
+        forceReinitialize: Boolean = false
+    ): TimePeriod {
+        if (!selectedPeriodInitialized || forceReinitialize) {
+            selectedPeriod = TimePeriod.currentMonth(
+                startDayOfMonth = startDayOfMonth
+            )
+            selectedPeriodInitialized = true
+        }
+
+        return selectedPeriod
+    }
+
+    fun select(period: TimePeriod) {
+        selectedPeriod = period
+    }
+}
+
+@Suppress("CompositionLocalAllowlist")
+val LocalPeriodState = compositionLocalOf<PeriodState> { error("No LocalPeriodState") }

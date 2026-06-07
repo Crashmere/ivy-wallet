@@ -51,6 +51,7 @@ import com.ivy.legacy.data.LegacyDueSection
 import com.ivy.legacy.data.model.Month
 import com.ivy.legacy.data.model.TimePeriod
 import com.ivy.legacy.datamodel.Account
+import com.ivy.legacy.LocalPeriodState
 import com.ivy.legacy.ivyWalletCtx
 import com.ivy.legacy.ui.component.IncomeExpensesCards
 import com.ivy.legacy.ui.component.ItemStatisticToolbar
@@ -260,6 +261,7 @@ private fun BoxWithConstraintsScope.UI(
     onChoosePeriodModal: (ChoosePeriodModalData?) -> Unit,
 ) {
     val ivyContext = ivyWalletCtx()
+    val periodState = LocalPeriodState.current
     val datePicker = LocalDatePicker.current
     val itemColor = (account?.color ?: category?.color?.value)?.toComposeColor() ?: Gray
 
@@ -373,7 +375,7 @@ private fun BoxWithConstraintsScope.UI(
 
             choosePeriodModal(
                 period = period,
-                startDateOfMonth = ivyContext.startDayOfMonth,
+                startDateOfMonth = periodState.startDayOfMonth,
                 itemColor = itemColor,
                 initWithTransactions = initWithTransactions,
                 onPreviousMonth = onPreviousMonth,
@@ -421,7 +423,7 @@ private fun BoxWithConstraintsScope.UI(
                 emptyStateText = stringRes(
                     R.string.no_transactions_for_period,
                     period.toDisplayLong(
-                        startDateOfMonth = ivyContext.startDayOfMonth,
+                        startDateOfMonth = periodState.startDayOfMonth,
                         timeProvider = timeProvider,
                         timeConverter = timeConverter,
                         timeFormatter = timeFormatter,
@@ -470,7 +472,7 @@ private fun BoxWithConstraintsScope.UI(
         dismiss = {
             onChoosePeriodModal(null)
         },
-        saveSelectedPeriod = ivyContext::updateSelectedPeriodInMemory,
+        saveSelectedPeriod = periodState::select,
         pickDate = { minDate, maxDate, initialDate, onDatePicked ->
             datePicker.pickDate(
                 minDate = minDate,

@@ -32,7 +32,7 @@ import com.ivy.design.api.LocalDatePicker
 import com.ivy.design.l0_system.UI
 import com.ivy.design.l0_system.style
 import com.ivy.data.model.currency.format
-import com.ivy.legacy.ivyWalletCtx
+import com.ivy.legacy.LocalPeriodState
 import com.ivy.navigation.BalanceScreen
 import com.ivy.navigation.navigation
 import com.ivy.ui.R
@@ -66,7 +66,7 @@ private fun BoxWithConstraintsScope.UI(
     onEvent: (BalanceEvent) -> Unit = {}
 ) {
     var choosePeriodModal: ChoosePeriodModalData? by remember { mutableStateOf(null) }
-    val ivyContext = ivyWalletCtx()
+    val periodState = LocalPeriodState.current
     val datePicker = LocalDatePicker.current
 
     Column(
@@ -79,7 +79,7 @@ private fun BoxWithConstraintsScope.UI(
 
         PeriodSelector(
             period = state.period,
-            startDateOfMonth = ivyContext.startDayOfMonth,
+            startDateOfMonth = periodState.startDayOfMonth,
             onPreviousMonth = { onEvent(BalanceEvent.OnPreviousMonth) },
             onNextMonth = { onEvent(BalanceEvent.OnNextMonth) },
             onShowChoosePeriodModal = {
@@ -124,7 +124,7 @@ private fun BoxWithConstraintsScope.UI(
         dismiss = {
             choosePeriodModal = null
         },
-        saveSelectedPeriod = ivyContext::updateSelectedPeriodInMemory,
+        saveSelectedPeriod = periodState::select,
         pickDate = { minDate, maxDate, initialDate, onDatePicked ->
             datePicker.pickDate(
                 minDate = minDate,

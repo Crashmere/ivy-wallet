@@ -11,6 +11,7 @@ import com.ivy.base.model.TransactionType
 import com.ivy.data.db.dao.read.SettingsDao
 import com.ivy.frp.test.TestIdlingResource
 import com.ivy.legacy.IvyWalletCtx
+import com.ivy.legacy.PeriodState
 import com.ivy.base.legacy.ioThread
 import com.ivy.base.legacy.readOnly
 import com.ivy.navigation.EditTransactionScreen
@@ -34,6 +35,7 @@ import javax.inject.Inject
 @Suppress("LongParameterList", "TooManyFunctions")
 class RootViewModel @Inject constructor(
     private val ivyContext: IvyWalletCtx,
+    private val periodState: PeriodState,
     private val nav: Navigation,
     private val settingsDao: SettingsDao,
     private val sharedPrefs: SharedPrefs,
@@ -61,7 +63,7 @@ class RootViewModel @Inject constructor(
                     ?: if (systemDarkMode) Theme.DARK else Theme.LIGHT
                 ivyContext.switchTheme(theme)
 
-                ivyContext.initStartDayOfMonthInMemory(sharedPrefs = sharedPrefs)
+                periodState.initStartDayOfMonth(sharedPrefs = sharedPrefs)
             }
 
             TestIdlingResource.decrement()

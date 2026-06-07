@@ -23,6 +23,7 @@ import com.ivy.frp.thenInvokeAfter
 import com.ivy.home.customerjourney.CustomerJourneyCardModel
 import com.ivy.home.customerjourney.CustomerJourneyCardsProvider
 import com.ivy.legacy.IvyWalletCtx
+import com.ivy.legacy.PeriodState
 import com.ivy.legacy.data.AppBaseData
 import com.ivy.legacy.data.BufferInfo
 import com.ivy.legacy.data.LegacyDueSection
@@ -90,10 +91,11 @@ class HomeViewModel @Inject constructor(
     private val timeProvider: TimeProvider,
     private val timeConverter: TimeConverter,
     private val features: Features,
+    private val periodState: PeriodState,
     private val mainTabState: MainTabState
 ) : ComposeViewModel<HomeState, HomeEvent>() {
     private var currentTheme by mutableStateOf(Theme.AUTO)
-    private var period by mutableStateOf(ivyContext.selectedPeriod)
+    private var period by mutableStateOf(periodState.selectedPeriod)
     private var baseData by mutableStateOf(
         AppBaseData(
             baseCurrency = "",
@@ -249,8 +251,8 @@ class HomeViewModel @Inject constructor(
 
     private suspend fun start() {
         val startDay = startDayOfMonthAct(Unit)
-        ivyContext.setStartDayOfMonth(startDay)
-        ivyContext.initSelectedPeriodInMemory(
+        periodState.updateStartDayOfMonth(startDay)
+        periodState.initSelectedPeriod(
             startDayOfMonth = startDay
         )
         reload()
@@ -258,7 +260,7 @@ class HomeViewModel @Inject constructor(
 
     // -----------------------------------------------------------------------------------
     private suspend fun reload(
-        timePeriod: TimePeriod = ivyContext.selectedPeriod
+        timePeriod: TimePeriod = periodState.selectedPeriod
     ) = suspend {
         val settings = settingsAct(Unit)
         val hideBalance = shouldHideBalanceAct(Unit)
@@ -275,7 +277,7 @@ class HomeViewModel @Inject constructor(
         Pair(
             settings,
             period.toRange(
-                startDateOfMonth = ivyContext.startDayOfMonth,
+                startDateOfMonth = periodState.startDayOfMonth,
                 timeConverter = timeConverter,
                 timeProvider = timeProvider
             ).toUTCCloseTimeRange()
@@ -499,7 +501,7 @@ class HomeViewModel @Inject constructor(
         val year = period.year ?: dateNowUTC().year
         val period = month?.incrementMonthPeriod(1L, year = year)
         if (period != null) {
-            ivyContext.updateSelectedPeriodInMemory(period)
+            periodState.select(period)
             setPeriod(period)
         }
     }
@@ -509,7 +511,7 @@ class HomeViewModel @Inject constructor(
         val year = period.year ?: dateNowUTC().year
         val period = month?.incrementMonthPeriod(-1L, year = year)
         if (period != null) {
-            ivyContext.updateSelectedPeriodInMemory(period)
+            periodState.select(period)
             setPeriod(period)
         }
     }

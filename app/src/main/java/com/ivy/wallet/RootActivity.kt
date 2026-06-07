@@ -18,6 +18,7 @@ import androidx.biometric.BiometricPrompt
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -36,6 +37,8 @@ import com.ivy.design.api.systems.IvyWalletDesign
 import com.ivy.design.system.IvyMaterial3Theme
 import com.ivy.domain.RootScreen
 import com.ivy.legacy.IvyWalletCtx
+import com.ivy.legacy.LocalPeriodState
+import com.ivy.legacy.PeriodState
 import com.ivy.navigation.Navigation
 import com.ivy.navigation.NavigationRoot
 import com.ivy.ui.R
@@ -55,6 +58,9 @@ import javax.inject.Inject
 class RootActivity : AppCompatActivity(), RootScreen {
     @Inject
     lateinit var ivyContext: IvyWalletCtx
+
+    @Inject
+    lateinit var periodState: PeriodState
 
     @Inject
     lateinit var navigation: Navigation
@@ -91,62 +97,64 @@ class RootActivity : AppCompatActivity(), RootScreen {
         super.onCreate(savedInstanceState)
         setupApp()
         setContent {
-            val viewModel: RootViewModel = viewModel()
-            val isSystemInDarkTheme = isSystemInDarkTheme()
+            CompositionLocalProvider(LocalPeriodState provides periodState) {
+                val viewModel: RootViewModel = viewModel()
+                val isSystemInDarkTheme = isSystemInDarkTheme()
 
-            LaunchedEffect(isSystemInDarkTheme) {
-                viewModel.start(isSystemInDarkTheme, intent)
-            }
-
-            val appLocked by viewModel.appLocked.collectAsState()
-            when (appLocked) {
-                null -> { // display nothing
+                LaunchedEffect(isSystemInDarkTheme) {
+                    viewModel.start(isSystemInDarkTheme, intent)
                 }
-                true -> {
-                    IvyUI(
-                        design = appDesign(ivyContext),
-                        timeConverter = timeConverter,
-                        timeProvider = timeProvider,
-                        timeFormatter = timeFormatter,
-                        datePicker = datePicker,
-                    ) {
-                        AppLockedScreen(
-                            onShowOSBiometricsModal = {
-                                authenticateWithOSBiometricsModal(
-                                    biometricPromptCallback = viewModel.handleBiometricAuthResult()
-                                )
-                            },
-                            onContinueWithoutAuthentication = {
-                                viewModel.unlockApp()
-                            }
-                        )
+
+                val appLocked by viewModel.appLocked.collectAsState()
+                when (appLocked) {
+                    null -> { // display nothing
                     }
-                }
-
-                false -> {
-                    NavigationRoot(navigation = navigation) { screen ->
+                    true -> {
                         IvyUI(
                             design = appDesign(ivyContext),
-                            includeSurface = screen?.isLegacy ?: true,
                             timeConverter = timeConverter,
                             timeProvider = timeProvider,
                             timeFormatter = timeFormatter,
                             datePicker = datePicker,
                         ) {
-                            IvyNavGraph(screen)
+                            AppLockedScreen(
+                                onShowOSBiometricsModal = {
+                                    authenticateWithOSBiometricsModal(
+                                        biometricPromptCallback = viewModel.handleBiometricAuthResult()
+                                    )
+                                },
+                                onContinueWithoutAuthentication = {
+                                    viewModel.unlockApp()
+                                }
+                            )
+                        }
+                    }
+
+                    false -> {
+                        NavigationRoot(navigation = navigation) { screen ->
+                            IvyUI(
+                                design = appDesign(ivyContext),
+                                includeSurface = screen?.isLegacy ?: true,
+                                timeConverter = timeConverter,
+                                timeProvider = timeProvider,
+                                timeFormatter = timeFormatter,
+                                datePicker = datePicker,
+                            ) {
+                                IvyNavGraph(screen)
+                            }
                         }
                     }
                 }
-            }
 
-            IvyMaterial3Theme(
-                dark = isDarkThemeEnabled(
-                    ivyDesign = appDesign(ivyContext),
-                    systemDarkTheme = isSystemInDarkTheme
-                ),
-                isTrueBlack = appDesign(ivyContext).context().theme == Theme.AMOLED_DARK
-            ) {
-                dateTimePicker.Content()
+                IvyMaterial3Theme(
+                    dark = isDarkThemeEnabled(
+                        ivyDesign = appDesign(ivyContext),
+                        systemDarkTheme = isSystemInDarkTheme
+                    ),
+                    isTrueBlack = appDesign(ivyContext).context().theme == Theme.AMOLED_DARK
+                ) {
+                    dateTimePicker.Content()
+                }
             }
         }
     }
