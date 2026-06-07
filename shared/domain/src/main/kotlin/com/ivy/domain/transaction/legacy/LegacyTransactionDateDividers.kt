@@ -11,7 +11,6 @@ import com.ivy.domain.mapper.legacy.toLegacyDomain
 import com.ivy.domain.usecase.exchange.LegacyExchangeRatesUseCase
 import com.ivy.domain.exchange.ExchangeData
 import com.ivy.domain.exchange.ExchangeTransactionArgument
-import com.ivy.domain.exchange.exchangeInBaseCurrency
 import com.ivy.domain.time.toLocalDateInSystemZone
 import java.math.BigDecimal
 import java.time.LocalDateTime

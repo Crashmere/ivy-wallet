@@ -3,7 +3,6 @@ package com.ivy.domain.transaction.legacy
 import com.ivy.data.model.TransactionType
 import com.ivy.data.model.legacy.Account
 import com.ivy.domain.exchange.ExchangeEffect
-import com.ivy.domain.exchange.LegacyExchangeTransactions
 import java.math.BigDecimal
 
 object WalletValueFunctionsLegacy {

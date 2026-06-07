@@ -827,6 +827,7 @@
 - 旧账户模型 helper 已从泛化 `com.ivy.domain.account.AccountFunctions` 迁到 `com.ivy.domain.account.legacy.LegacyAccountFunctions`，并改名为 `includedLegacyAccounts`/`legacyAccountCurrency`；调用方现在能明确看出这些函数仍依赖 legacy 账户模型。
 - 旧交易 due date 筛选已从 `com.ivy.domain.time.TransactionDateFilters` 拆到 `com.ivy.domain.transaction.legacy.LegacyTransactionDateFilters`；`domain.time` 只保留新版交易日期筛选和通用时间转换。
 - 核心汇率换算函数已从 legacy `ExchangeRate` 对象依赖改成只接收 `BigDecimal` 汇率值，`ExchangeRateExt.toLegacyDomain()` 随之删除；汇率数据模型到算法的边界更窄。
+- 旧交易汇率换算重载和 `LegacyExchangeTransactions` 已从正式 `domain.exchange.ExchangeTransactions` 迁到 `domain.transaction.legacy.LegacyExchangeTransactions`；exchange 包继续保留通用换算与新版交易入口。
 - 功能开关偏好门面已从 `PreferenceToggleRepository` 改名为 `PreferenceToggleService`：它只负责把 domain 层 `BoolPreference` 映射到底层 `PreferenceToggleStore`，不再用 repository 命名暗示数据仓库职责。
 - 旧 `Logic` 注入变量名已继续收敛：`LegacyExchangeRatesUseCase` 的调用方统一使用 `exchangeRatesUseCase`，首页客户旅程卡片也改用 `customerJourneyCardsProvider` 命名，避免把 provider/use case 误读成旧 logic 层。
 - 旧到期交易 UI 模型 `LegacyDueSection` 的 `trns` 字段已改为 `transactions`，legacy 交易列表内部私有 `trnItems/trnCount` 也改为完整命名；首页、报表和交易页调用方同步更新，展示行为不变。
