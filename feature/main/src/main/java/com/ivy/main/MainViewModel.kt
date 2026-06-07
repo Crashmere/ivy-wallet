@@ -1,13 +1,13 @@
 package com.ivy.main
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ivy.base.coroutines.ioThread
 import com.ivy.domain.usecase.currency.GetBaseCurrencyUseCase
 import com.ivy.domain.usecase.exchange.SyncExchangeRatesUseCase
 import com.ivy.legacy.domain.logic.AccountCreator
-import com.ivy.base.lifecycle.asLiveData
-import com.ivy.base.coroutines.ioThread
 import com.ivy.ui.navigation.MainTab
 import com.ivy.ui.navigation.MainScreen
 import com.ivy.ui.navigation.MainTabState
@@ -27,7 +27,7 @@ class MainViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _currency = MutableLiveData<String>()
-    val currency = _currency.asLiveData()
+    val currency: LiveData<String> = _currency
 
     fun start(screen: MainScreen) {
         nav.registerScreenBackHandler(screen) {

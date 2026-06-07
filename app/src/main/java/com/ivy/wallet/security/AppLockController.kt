@@ -1,7 +1,7 @@
 package com.ivy.wallet.security
 
 import androidx.biometric.BiometricPrompt
-import com.ivy.base.lifecycle.readOnly
+import com.ivy.base.coroutines.readOnly
 import com.ivy.base.resource.ResourceProvider
 import com.ivy.domain.preferences.AppPreferences
 import com.ivy.ui.R

@@ -9,7 +9,5 @@ android {
 }
 
 dependencies {
-    implementation(libs.androidx.lifecycle.livedata.core)
-
     testImplementation(libs.bundles.testing)
 }

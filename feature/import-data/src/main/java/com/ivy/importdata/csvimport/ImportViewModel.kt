@@ -1,9 +1,9 @@
 package com.ivy.importdata.csvimport
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ivy.base.lifecycle.asLiveData
 import com.ivy.data.model.importing.ImportResult
 import com.ivy.domain.usecase.backup.ImportBackupUseCase
 import com.ivy.ui.navigation.ImportScreen
@@ -21,13 +21,13 @@ class ImportViewModel @Inject constructor(
     private val importBackupUseCase: ImportBackupUseCase
 ) : ViewModel() {
     private val _importStep = MutableLiveData<ImportStep>()
-    val importStep = _importStep.asLiveData()
+    val importStep: LiveData<ImportStep> = _importStep
 
     private val _importProgressPercent = MutableLiveData<Int>()
-    val importProgressPercent = _importProgressPercent.asLiveData()
+    val importProgressPercent: LiveData<Int> = _importProgressPercent
 
     private val _importResult = MutableLiveData<ImportResult>()
-    val importResult = _importResult.asLiveData()
+    val importResult: LiveData<ImportResult> = _importResult
 
     fun start(screen: ImportScreen) {
         nav.registerScreenBackHandler(screen) {

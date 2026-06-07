@@ -429,7 +429,7 @@
 - 周期模型和 domain 交易过滤已停止使用 deprecated 的全局当前日期函数：`TimePeriod`、`Month`、`PeriodState`、月份切换和 upcoming/overdue 过滤都通过显式传入的 `TimeProvider` 或 `LocalDate` 计算当前周期与今天边界。
 - 已删除 `shared:base` 中旧全局当前时间函数和手写 UTC/local 转换 helper；旧日期展示改为用 `LocalDateTime.toInstant(UTC)` 加标准 `DateTimeFormatter.withZone(...)` 格式化，计划付款页面顺手清理了残留的无用旧时间 import。
 - 旧 `DateTimeUtil` 毫秒转换已从 `com.ivy.base.legacy` 迁到 `com.ivy.base.time`，用 `toUtcEpochMilli()` / `epochMilliToUtcLocalDateTime()` 明确保留原有 UTC 持久化语义；旧 legacy 文件已删除。
-- 旧 `MVVMExt` 已拆出 `com.ivy.base.legacy`：dispatcher helper 迁到 `com.ivy.base.coroutines`，LiveData/StateFlow 只读视图 helper 迁到 `com.ivy.base.lifecycle`；调用方只改 import，行为不变。
+- 旧 `MVVMExt` 已拆出 `com.ivy.base.legacy`：dispatcher helper 和 `StateFlow.readOnly()` 迁到 `com.ivy.base.coroutines`；原 LiveData 只读 helper 已删除，仍使用 LiveData 的 ViewModel 直接暴露 `LiveData<T>` 类型。
 - 字符串本地化大小写/判空 helper 已迁到 `com.ivy.base.text`，默认系统法币 helper 已迁到 `com.ivy.base.currency`；`shared:base:legacy` 不再承载这类通用文本和货币工具。
 - 其余通用 helper 已继续拆出 `shared:base:legacy`：列表交换迁到 `com.ivy.base.collections`，随机区间数迁到 `com.ivy.base.random`，zip/unzip 迁到 `com.ivy.base.io`，余额正负号 helper 迁到 `com.ivy.base.money`。
 - `shared:base` 中拼写错误的 `com.ivy.base.kotlinxserilzation` 包已更正为 `com.ivy.base.kotlinxserialization`；serializer descriptor 和编码方式保持不变。
@@ -445,6 +445,7 @@
 - `shared:data:core` 的测试 fake DAO 已停止使用 Compose Locale helper，并移除 `ivy.compose-runtime` 插件；数据层不再为测试字符串处理引入 Compose 配置。
 - `shared:data:model` 已删除剩余数据类上的 Compose `@Immutable` 注解，并移除 `compose.runtime` 依赖；纯数据模型不再依赖 UI runtime。
 - `shared:base` 已删除基础枚举和旧交易兼容模型上的 Compose `@Immutable` 注解，并移除 `compose.runtime` 依赖；基础层不再依赖 UI runtime。
+- `shared:base` 已移除只为旧 LiveData helper 保留的 `androidx.lifecycle:lifecycle-livedata-core` 依赖；基础层目前不再依赖 Lifecycle。
 - `shared:ui:navigation` 和 `shared:ui:legacy` 已移除 `ivy.hilt` 插件；它们只保留轻量 `javax.inject` 注解依赖，继续通过 app 的 Hilt 图提供 `Navigation`、`MainTabState` 和 `PeriodState` 单例。
 - `shared:ui:navigation` 已从顶层 `com.ivy.navigation` 归入 `com.ivy.ui.navigation`，模块 namespace 与 UI 分层保持一致；路由对象和导航状态行为不变。
 - `app` 的 AndroidManifest 已删除被 AGP 忽略的 `package` 属性，应用命名空间继续由模块 `namespace = "com.ivy.wallet"` 提供。
