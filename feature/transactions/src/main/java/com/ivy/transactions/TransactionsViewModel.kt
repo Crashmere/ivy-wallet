@@ -464,7 +464,6 @@ class TransactionsViewModel @Inject constructor(
         }
 
         // Upcoming
-        // TODO: Rework Upcoming to FP
         upcomingIncome.doubleValue = ioThread {
             categoryLogic.calculateUpcomingIncomeByCategory(initialCategory, range)
         }
@@ -478,7 +477,6 @@ class TransactionsViewModel @Inject constructor(
         }
 
         // Overdue
-        // TODO: Rework Overdue to FP
         overdueIncome.doubleValue = ioThread {
             categoryLogic.calculateOverdueIncomeByCategory(initialCategory, range)
         }
@@ -554,7 +552,6 @@ class TransactionsViewModel @Inject constructor(
             }
 
             // Upcoming
-            // TODO: Rework Upcoming to FP
             upcomingIncome.doubleValue = ioThread {
                 categoryLogic.calculateUpcomingIncomeByCategory(initialCategory, range)
             }
@@ -568,7 +565,6 @@ class TransactionsViewModel @Inject constructor(
             }
 
             // Overdue
-            // TODO: Rework Overdue to FP
             overdueIncome.doubleValue = ioThread {
                 categoryLogic.calculateOverdueIncomeByCategory(initialCategory, range)
             }

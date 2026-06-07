@@ -2,8 +2,6 @@ package com.ivy.legacy.frp
 
 import com.ivy.legacy.frp.action.Action
 
-// TODO: Implement properly
-
 infix fun <A, B, C, D> ((A, B) -> C).then(f: (C) -> D): (A, B) -> D = { a, b ->
     val c = this(a, b)
     f(c)

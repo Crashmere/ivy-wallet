@@ -229,7 +229,6 @@ class BudgetViewModel @Inject constructor(
         baseCurrencyCode: String,
         accounts: List<Account>
     ): Double {
-        // TODO: Re-work this by creating an FPAction for it
         val accountsFilter = budget.parseAccountIds()
         val categoryFilter = budget.parseCategoryIds()
 
