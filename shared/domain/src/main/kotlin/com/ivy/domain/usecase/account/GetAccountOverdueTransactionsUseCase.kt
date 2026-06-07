@@ -1,16 +1,15 @@
 package com.ivy.domain.usecase.account
 
-import com.ivy.base.time.TimeProvider
 import com.ivy.data.model.AccountId
 import com.ivy.data.model.Transaction
 import com.ivy.data.model.legacy.FromToTimeRange
 import com.ivy.data.api.TransactionStore
 import com.ivy.domain.time.filterOverdue
+import com.ivy.domain.time.nowUtc
 import javax.inject.Inject
 
 class GetAccountOverdueTransactionsUseCase @Inject constructor(
     private val transactionRepository: TransactionStore,
-    private val timeProvider: TimeProvider
 ) {
     suspend operator fun invoke(
         accountId: AccountId,
@@ -19,7 +18,7 @@ class GetAccountOverdueTransactionsUseCase @Inject constructor(
         return transactionRepository.findAllDueToBetweenByAccount(
             accountId = accountId,
             startDate = range.from(),
-            endDate = range.overdueTo(timeProvider.utcNow())
-        ).filterOverdue(timeProvider)
+            endDate = range.overdueTo(nowUtc())
+        ).filterOverdue()
     }
 }

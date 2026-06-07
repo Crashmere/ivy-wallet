@@ -3,13 +3,11 @@ plugins {
 }
 
 dependencies {
-    implementation(projects.shared.base)
     api(projects.shared.data.api)
 
     implementation(libs.bundles.arrow)
     implementation(libs.javax.inject)
 
-    testImplementation(projects.shared.baseTesting)
     testImplementation(projects.shared.data.modelTesting)
     testImplementation(libs.bundles.opencsv)
     testImplementation(libs.bundles.testing)

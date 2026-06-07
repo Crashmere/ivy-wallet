@@ -1,7 +1,6 @@
 package com.ivy.domain.usecase.csv
 
 import arrow.core.Some
-import com.ivy.base.time.impl.TestTimeConverter
 import com.ivy.data.api.AccountStore
 import com.ivy.data.api.CategoryStore
 import com.ivy.data.api.TransactionStore
@@ -33,7 +32,6 @@ class ExportCsvUseCasePropertyTest {
     private val categoryStore = mockk<CategoryStore>(relaxed = true)
     private val transactionStore = mockk<TransactionStore>()
     private val textFileStore = mockk<TextFileStore>()
-    private val timeConverter = TestTimeConverter()
 
     private lateinit var useCase: ExportCsvUseCase
 
@@ -44,7 +42,6 @@ class ExportCsvUseCasePropertyTest {
             getCategoriesUseCase = GetCategoriesUseCase(categoryStore),
             getTransactionsUseCase = GetTransactionsUseCase(transactionStore),
             textFileStore = textFileStore,
-            timeConverter = timeConverter
         )
     }
 

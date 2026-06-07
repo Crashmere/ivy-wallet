@@ -3,8 +3,6 @@ package com.ivy.domain.usecase.category
 import com.ivy.data.model.TransactionType
 import com.ivy.data.model.legacy.Transaction
 import com.ivy.data.model.legacy.TransactionHistoryItem
-import com.ivy.base.time.TimeConverter
-import com.ivy.base.time.TimeProvider
 import com.ivy.data.api.AccountStore
 import com.ivy.data.model.legacy.FromToTimeRange
 import com.ivy.data.api.TransactionStore
@@ -15,6 +13,7 @@ import com.ivy.domain.mapper.legacy.toLegacy
 import com.ivy.domain.transaction.legacy.LegacyTrnDateDividers
 import com.ivy.domain.time.filterOverdueLegacy
 import com.ivy.domain.time.filterUpcomingLegacy
+import com.ivy.domain.time.nowUtc
 import javax.inject.Inject
 
 class GetUnspecifiedCategoryTransactionsSummaryUseCase @Inject constructor(
@@ -22,8 +21,6 @@ class GetUnspecifiedCategoryTransactionsSummaryUseCase @Inject constructor(
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
     private val exchangeRatesLogic: LegacyExchangeRatesUseCase,
     private val transactionRepository: TransactionStore,
-    private val timeProvider: TimeProvider,
-    private val timeConverter: TimeConverter,
 ) {
     suspend operator fun invoke(range: FromToTimeRange): CategoryTransactionsSummary {
         val income = calculateUnspecifiedIncome(range)
@@ -69,18 +66,17 @@ class GetUnspecifiedCategoryTransactionsSummaryUseCase @Inject constructor(
                     exchangeRatesLogic = exchangeRatesLogic,
                     baseCurrencyCode = getBaseCurrencyCode(),
                     accountStore = accountStore,
-                    timeConverter = timeConverter,
                 )
         }
     }
 
     private suspend fun upcomingUnspecified(range: FromToTimeRange): CategoryDueTransactionsSummary {
         val transactions = transactionRepository.findAllDueToBetweenByCategoryUnspecified(
-            startDate = range.upcomingFrom(timeProvider.utcNow()),
+            startDate = range.upcomingFrom(nowUtc()),
             endDate = range.to()
         ).map {
             it.toLegacy()
-        }.filterUpcomingLegacy(timeProvider, timeConverter)
+        }.filterUpcomingLegacy()
 
         return CategoryDueTransactionsSummary(
             income = transactions.incomeInBaseCurrency(),
@@ -92,10 +88,10 @@ class GetUnspecifiedCategoryTransactionsSummaryUseCase @Inject constructor(
     private suspend fun overdueUnspecified(range: FromToTimeRange): CategoryDueTransactionsSummary {
         val transactions = transactionRepository.findAllDueToBetweenByCategoryUnspecified(
             startDate = range.from(),
-            endDate = range.overdueTo(timeProvider.utcNow())
+            endDate = range.overdueTo(nowUtc())
         ).map {
             it.toLegacy()
-        }.filterOverdueLegacy(timeProvider, timeConverter)
+        }.filterOverdueLegacy()
 
         return CategoryDueTransactionsSummary(
             income = transactions.incomeInBaseCurrency(),

@@ -1,17 +1,16 @@
 package com.ivy.domain.usecase.account
 
 import arrow.core.nonEmptyListOf
-import com.ivy.base.time.TimeProvider
 import com.ivy.data.model.Account
 import com.ivy.data.model.legacy.ClosedTimeRange
 import com.ivy.domain.transaction.AccountValueFunctions
 import com.ivy.domain.transaction.foldTransactions
+import com.ivy.domain.time.nowUtc
 import java.math.BigDecimal
 import javax.inject.Inject
 
 class CalculateAccountBalanceUseCase @Inject constructor(
     private val getAccountTransactionsUseCase: GetAccountTransactionsUseCase,
-    private val timeProvider: TimeProvider,
 ) {
     suspend operator fun invoke(
         account: Account,
@@ -19,7 +18,7 @@ class CalculateAccountBalanceUseCase @Inject constructor(
     ): BigDecimal {
         val transactions = getAccountTransactionsUseCase(
             accountId = account.id,
-            range = range ?: ClosedTimeRange.allTimeIvy(timeProvider.utcNow())
+            range = range ?: ClosedTimeRange.allTimeIvy(nowUtc())
         )
         return foldTransactions(
             transactions = transactions,

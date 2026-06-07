@@ -3,7 +3,6 @@ package com.ivy.domain.usecase.loan
 import com.ivy.data.model.legacy.Transaction
 import com.ivy.data.model.LoanRecordType
 import com.ivy.data.model.TransactionType
-import com.ivy.base.time.TimeProvider
 import com.ivy.data.api.AccountStore
 import com.ivy.data.api.CategoryStore
 import com.ivy.data.api.LoanRecordStore
@@ -24,6 +23,7 @@ import com.ivy.data.model.legacy.LoanRecord
 import com.ivy.domain.mapper.legacy.toDomain
 import com.ivy.domain.mapper.legacy.toLegacy
 import com.ivy.domain.mapper.legacy.toLegacyDomain
+import com.ivy.domain.time.nowUtc
 import com.ivy.domain.usecase.exchange.LegacyExchangeRatesUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -43,7 +43,6 @@ class LoanTransactionSyncCore @Inject constructor(
     private val accountStore: AccountStore,
     private val exchangeRatesLogic: LegacyExchangeRatesUseCase,
     private val transactionRepo: TransactionStore,
-    private val timeProvider: TimeProvider,
 ) {
     private var baseCurrencyCode: String? = null
 
@@ -121,7 +120,7 @@ class LoanTransactionSyncCore @Inject constructor(
                 selectedAccountId = selectedAccountId,
                 title = title ?: transaction.title,
                 categoryId = category?.id?.value ?: transaction.categoryId,
-                time = time ?: transaction.dateTime ?: timeProvider.utcNow(),
+                time = time ?: transaction.dateTime ?: nowUtc(),
                 isLoanRecord = isLoanRecord,
                 transaction = transaction,
                 loanRecordType = loanRecordType
@@ -135,7 +134,7 @@ class LoanTransactionSyncCore @Inject constructor(
                 selectedAccountId = selectedAccountId,
                 title = title,
                 categoryId = category?.id?.value,
-                time = time ?: timeProvider.utcNow(),
+                time = time ?: nowUtc(),
                 isLoanRecord = isLoanRecord,
                 transaction = transaction,
                 loanRecordType = loanRecordType
@@ -153,7 +152,7 @@ class LoanTransactionSyncCore @Inject constructor(
         selectedAccountId: UUID?,
         title: String? = null,
         categoryId: UUID? = null,
-        time: Instant = timeProvider.utcNow(),
+        time: Instant = nowUtc(),
         isLoanRecord: Boolean = false,
         transaction: Transaction? = null,
         loanRecordType: LoanRecordType

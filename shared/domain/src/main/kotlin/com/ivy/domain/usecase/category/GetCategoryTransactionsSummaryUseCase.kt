@@ -3,8 +3,6 @@ package com.ivy.domain.usecase.category
 import com.ivy.data.model.TransactionType
 import com.ivy.data.model.legacy.Transaction
 import com.ivy.data.model.legacy.TransactionHistoryItem
-import com.ivy.base.time.TimeConverter
-import com.ivy.base.time.TimeProvider
 import com.ivy.data.api.AccountStore
 import com.ivy.data.model.Category
 import com.ivy.data.model.CategoryId
@@ -18,6 +16,7 @@ import com.ivy.domain.mapper.legacy.toLegacyDomain
 import com.ivy.domain.transaction.legacy.LegacyTrnDateDividers
 import com.ivy.domain.time.filterOverdueLegacy
 import com.ivy.domain.time.filterUpcomingLegacy
+import com.ivy.domain.time.nowUtc
 import java.util.UUID
 import javax.inject.Inject
 
@@ -26,8 +25,6 @@ class GetCategoryTransactionsSummaryUseCase @Inject constructor(
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
     private val exchangeRatesLogic: LegacyExchangeRatesUseCase,
     private val transactionRepository: TransactionStore,
-    private val timeProvider: TimeProvider,
-    private val timeConverter: TimeConverter,
 ) {
     suspend operator fun invoke(
         category: Category,
@@ -154,7 +151,6 @@ class GetCategoryTransactionsSummaryUseCase @Inject constructor(
                 exchangeRatesLogic = exchangeRatesLogic,
                 baseCurrencyCode = getBaseCurrencyCode(),
                     accountStore = accountStore,
-                timeConverter = timeConverter,
             )
         }
     }
@@ -183,11 +179,11 @@ class GetCategoryTransactionsSummaryUseCase @Inject constructor(
     ): CategoryDueTransactionsSummary {
         val transactions = transactionRepository.findAllDueToBetweenByCategory(
             categoryId = CategoryId(category.id.value),
-            startDate = range.upcomingFrom(timeProvider.utcNow()),
+            startDate = range.upcomingFrom(nowUtc()),
             endDate = range.to()
         ).map {
             it.toLegacy()
-        }.filterUpcomingLegacy(timeProvider, timeConverter)
+        }.filterUpcomingLegacy()
 
         return CategoryDueTransactionsSummary(
             income = transactions.incomeInBaseCurrency(),
@@ -203,10 +199,10 @@ class GetCategoryTransactionsSummaryUseCase @Inject constructor(
         val transactions = transactionRepository.findAllDueToBetweenByCategory(
             categoryId = CategoryId(category.id.value),
             startDate = range.from(),
-            endDate = range.overdueTo(timeProvider.utcNow())
+            endDate = range.overdueTo(nowUtc())
         ).map {
             it.toLegacy()
-        }.filterOverdueLegacy(timeProvider, timeConverter)
+        }.filterOverdueLegacy()
 
         return CategoryDueTransactionsSummary(
             income = transactions.incomeInBaseCurrency(),

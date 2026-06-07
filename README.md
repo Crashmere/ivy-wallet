@@ -787,6 +787,7 @@
 - `shared:data:core` 的仓库、Store 实现和备份导入导出已改为标准 `Dispatchers.IO`，移除 `DispatchersProvider` 构造参数以及对 `shared:base/base-testing` 的依赖；DAO 访问、缓存写入事件、备份 ZIP/JSON 格式和导入进度逻辑保持不变。
 - `shared:domain` 中剩余只服务 use case 外层切线程的 `DispatchersProvider` 注入已移除，账户/分类创建编辑、旧账户/交易读取、计划付款汇总、账户统计和 CSV 导出改用标准 `Dispatchers.IO/Default`；时间端口仍保留在 base，用于现有日期语义。
 - 最后一个 UI 调用方 `Toaster` 已改用标准 `Dispatchers.Main`；`DispatchersProvider/IvyDispatchersProvider/TestDispatchersProvider` 和 app 绑定随之删除，基础层不再保留线程调度端口。
+- `shared:domain` 的账户统计、分类汇总、计划付款、贷款同步、CSV 导出和旧交易历史分组已改用 domain 内部 `java.time` helper；domain 不再注入 `TimeProvider/TimeConverter`，也不再依赖 `shared:base/base-testing`。
 - `PeriodState` 已承接 legacy 周期的当前月、范围解析和月份前后移动逻辑；账户、分类、预算、余额、首页、交易和饼图页不再直接注入 `TimeProvider/TimeConverter`，并移除对 `shared:base` 的 Gradle 依赖。
 - `feature:reports` 的筛选周期范围和周期显示已改走 `PeriodState`/legacy 周期显示 helper，CSV 导出文件名使用 JDK `Instant.now()` 生成 UTC 时间戳；报表模块不再直接依赖 `shared:base`。
 - `feature:edit-transaction` 的交易日期、时间和 due date 转换已用局部系统时区 `java.time` helper 表达，创建/复制交易默认时间改用 `Instant.now()`；编辑交易模块不再直接依赖 `shared:base`。

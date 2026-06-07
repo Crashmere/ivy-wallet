@@ -1,6 +1,5 @@
 package com.ivy.domain.usecase.csv
 
-import com.ivy.base.time.TimeConverter
 import com.ivy.data.api.file.ExternalFile
 import com.ivy.data.api.file.TextFileStore
 import com.ivy.data.model.Account
@@ -17,6 +16,7 @@ import com.ivy.data.model.primitive.toNonNegative
 import com.ivy.domain.usecase.account.GetAccountsUseCase
 import com.ivy.domain.usecase.category.GetCategoriesUseCase
 import com.ivy.domain.usecase.transaction.GetTransactionsUseCase
+import com.ivy.domain.time.toLocalDateTimeInSystemZone
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.text.DecimalFormat
@@ -32,7 +32,6 @@ class ExportCsvUseCase @Inject constructor(
     private val getCategoriesUseCase: GetCategoriesUseCase,
     private val getTransactionsUseCase: GetTransactionsUseCase,
     private val textFileStore: TextFileStore,
-    private val timeConverter: TimeConverter
 ) {
 
     suspend fun exportToFile(
@@ -72,7 +71,7 @@ class ExportCsvUseCase @Inject constructor(
         categoriesMap: Map<CategoryId, Category>,
     ): String = csvRow {
         // Date
-        csvAppend(date?.csvFormat(timeConverter))
+        csvAppend(date?.csvFormat())
         // Title
         csvAppend(title?.value)
         // Category
@@ -98,7 +97,7 @@ class ExportCsvUseCase @Inject constructor(
         // Description
         csvAppend(description?.value)
         // Due Date
-        csvAppend(dueData?.csvFormat(timeConverter))
+        csvAppend(dueData?.csvFormat())
         // ID
         csvAppend(id.value.toString())
     }
@@ -194,11 +193,8 @@ class ExportCsvUseCase @Inject constructor(
         id = id
     )
 
-    private fun Instant.csvFormat(timeConverter: TimeConverter): String {
-        return with(timeConverter) {
-            this@csvFormat.toLocalDateTime()
-        }.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
-    }
+    private fun Instant.csvFormat(): String =
+        toLocalDateTimeInSystemZone().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
 
     private fun Double.csvFormat(): String = DecimalFormat(NUMBER_FORMAT).apply {
         decimalFormatSymbols = DecimalFormatSymbols.getInstance(Locale.ENGLISH)

@@ -4,7 +4,6 @@ import arrow.core.Option
 import arrow.core.toOption
 import com.ivy.data.model.legacy.TransactionHistoryItem
 import com.ivy.data.model.legacy.TransactionHistoryDateDivider
-import com.ivy.base.time.TimeConverter
 import com.ivy.data.api.AccountStore
 import com.ivy.data.model.AccountId
 import com.ivy.data.model.legacy.Account
@@ -13,6 +12,7 @@ import com.ivy.domain.usecase.exchange.LegacyExchangeRatesUseCase
 import com.ivy.domain.exchange.ExchangeData
 import com.ivy.domain.exchange.ExchangeTrnArgument
 import com.ivy.domain.exchange.exchangeInBaseCurrency
+import com.ivy.domain.time.toLocalDateInSystemZone
 import java.math.BigDecimal
 import java.time.LocalDateTime
 import java.time.ZoneOffset
@@ -25,7 +25,6 @@ object LegacyTrnDateDividers {
         exchangeRatesLogic: LegacyExchangeRatesUseCase,
         baseCurrencyCode: String,
         accountStore: AccountStore,
-        timeConverter: TimeConverter,
     ): List<TransactionHistoryItem> {
         return transactionsWithDateDividers(
             transactions = this,
@@ -39,21 +38,19 @@ object LegacyTrnDateDividers {
                     amount = amount.toDouble()
                 ).toBigDecimal().toOption()
             },
-            timeConverter = timeConverter,
         )
     }
 
     suspend fun transactionsWithDateDividers(
         transactions: List<com.ivy.data.model.legacy.Transaction>,
         baseCurrencyCode: String,
-        timeConverter: TimeConverter,
         getAccount: suspend (accountId: UUID) -> Account?,
         exchange: suspend (ExchangeData, BigDecimal) -> Option<BigDecimal>
     ): List<TransactionHistoryItem> {
         if (transactions.isEmpty()) return emptyList()
 
         return transactions
-            .groupBy { with(timeConverter) { it.dateTime?.toLocalDate() } }
+            .groupBy { it.dateTime?.toLocalDateInSystemZone() }
             .filterKeys { it != null }
             .toSortedMap { date1, date2 ->
                 if (date1 == null || date2 == null) return@toSortedMap 0 // this case shouldn't happen
