@@ -61,4 +61,20 @@ class RoomCurrencyStoreTest {
         settings.currency shouldBe "GBP"
         settings.bufferAmount shouldBe 19.0
     }
+
+    @Test
+    fun `get base currency reflects later settings table changes`() = runTest {
+        settingsDao.save(
+            SettingsEntity(
+                theme = Theme.LIGHT,
+                currency = "USD",
+                bufferAmount = 0.0,
+            )
+        )
+        currencyStore.setBaseCurrency(AssetCode.GBP)
+
+        settingsDao.save(settingsDao.findFirst().copy(currency = "EUR"))
+
+        currencyStore.getBaseCurrency() shouldBe AssetCode.EUR
+    }
 }

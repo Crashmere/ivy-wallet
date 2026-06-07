@@ -11,12 +11,7 @@ import javax.inject.Singleton
 class RoomCurrencyStore @Inject constructor(
     private val settingsTable: SettingsTable,
 ) : CurrencyStore {
-    private var baseCurrencyMemo: AssetCode? = null
-
     override suspend fun getBaseCurrency(): AssetCode {
-        val baseCurrency = baseCurrencyMemo
-        if (baseCurrency != null) return baseCurrency
-
         val currencyCode = settingsTable.findOrNull()?.currency
             ?: getDefaultFIATCurrency()?.currencyCode
         return currencyCode?.let(AssetCode::from)?.getOrNull()
@@ -31,7 +26,6 @@ class RoomCurrencyStore @Inject constructor(
 
     override suspend fun setBaseCurrency(newCurrency: AssetCode) {
         val currentEntity = settingsTable.findOrDefault()
-        baseCurrencyMemo = newCurrency
         settingsTable.save(
             currentEntity.copy(
                 currency = newCurrency.code
