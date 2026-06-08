@@ -1,5 +1,6 @@
 package com.ivy.wallet
 
+import android.annotation.SuppressLint
 import android.app.PendingIntent
 import android.content.Intent
 import android.os.Build
@@ -25,6 +26,7 @@ class PaymentTileService : TileService() {
     }
 
     @Suppress("DEPRECATION")
+    @SuppressLint("StartActivityAndCollapseDeprecated")
     private fun startActivityAndCollapseCompat(intent: Intent) {
         startActivityAndCollapse(intent)
     }

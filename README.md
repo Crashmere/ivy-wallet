@@ -1051,6 +1051,8 @@
 - `RootViewModel`、交易提醒 `TransactionReminderWorker` 和 `NotificationService` 也收为 app 模块内部类；外部仍只通过 Android 入口、WorkManager 调度和 feature 级窄接口触达这些能力。
 - Android Manifest 删除无源码调用的旧权限和旧外部存储兼容标记；当前只保留通知、开机后恢复提醒和网络访问所需权限，文件导入/导出继续走系统文档选择器。
 - 文件创建/打开的 Activity Result host 删除旧外部存储初始目录 hint，不再调用 `Environment.getExternalStoragePublicDirectory()`；系统文档选择器继续负责实际文件位置。
+- Lint 配置删除已经不存在的 `ComposeViewModelInjection` issue 禁用项；快捷磁贴的 Android 14 以下兼容分支显式标注旧 API suppress，保留 Android 14+ 的 `PendingIntent` 启动路径。
+- adaptive launcher icon 从多余的 `mipmap-anydpi-v26` 合并到 `mipmap-anydpi`；当前 minSdk 28 下不再需要 v26 资源限定目录。
 
 ### 阶段 9：feature 模块收敛
 
