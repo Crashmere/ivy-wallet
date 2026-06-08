@@ -9,15 +9,14 @@ import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Paint
 import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.Insets
 import androidx.core.view.WindowInsetsCompat
+import com.ivy.ui.compose.densityScope
 import com.ivy.ui.navigation.navigation
 
 @Composable
@@ -49,11 +48,6 @@ fun keyboardOnlyWindowInsets(): Insets {
     return windowInsets.getInsets(
         WindowInsetsCompat.Type.ime()
     )
-}
-
-@Composable
-fun <T> densityScope(densityScope: @Composable Density.() -> T): T {
-    return with(LocalDensity.current) { densityScope() }
 }
 
 @SuppressLint("ComposableNaming")

@@ -43,7 +43,7 @@ import androidx.compose.ui.unit.dp
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
 import com.ivy.legacy.ui.addKeyboardListener
-import com.ivy.legacy.ui.densityScope
+import com.ivy.ui.compose.densityScope
 import com.ivy.legacy.ui.hideKeyboard
 import com.ivy.legacy.ui.keyboardOnlyWindowInsets
 import com.ivy.legacy.ui.onScreenStart
