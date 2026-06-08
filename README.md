@@ -92,6 +92,7 @@
 - 主底栏、首页更多菜单、报表筛选浮层和旧弹窗内部返回处理已改走 `shared:ui:core` 的 `BackPressHandler`；`shared:ui:legacy` 删除早期遗留的 `AddModalBackHandling` 包装入口。
 - 删除 `shared:ui:legacy` 中已经没有调用方的旧 `ReorderButton`；重排功能继续通过 `ReorderModalSingleType` 自身的确认按钮完成。
 - 删除 `shared:ui:legacy` 中已经没有调用方的旧 `AmountCurrencyB2Row`；当前金额展示继续使用仍被页面调用的 `AmountCurrencyB1` 或 feature 私有金额行。
+- 标签编辑弹窗的标题输入框已移回 `AddOrEditTagModal` 文件私有实现；`shared:ui:legacy` 删除不再作为通用组件使用的 `IvyTitleTextField` 文件。
 - CSV 导入结果页的返回按钮已改为 `feature:import-data` 私有实现；`shared:ui:legacy` 的 `BackButton` 收窄为模块内部给旧工具栏使用。
 - 饼图页不再直接调用底层 `ItemIconM`，改用带默认图标的包装入口；`shared:ui:legacy` 的 `ItemIconM` 收窄为模块内部实现。
 - 计划付款列表改用本 feature 私有的分组分隔条；`shared:ui:legacy` 的交易 `SectionDivider` 收窄为交易列表内部实现。
@@ -1349,7 +1350,7 @@ shared:ui:core
 - 编辑交易和计划付款编辑页的描述编辑弹窗已改为各自 feature 私有实现；`shared:ui:legacy` 不再导出只服务编辑流程的 `DescriptionModal` 或描述输入框内部细节。
 - 编辑交易和计划付款编辑页的描述展示卡片和添加描述按钮已改为各自 feature 私有实现；`shared:ui:legacy` 删除只服务该展示入口的 `Description`、`PrimaryAttributeColumn` 和 `AddPrimaryAttributeButton`。
 - 编辑交易和计划付款编辑页的分类按钮和顶部工具栏已改为各自 feature 私有实现；`shared:ui:legacy` 删除只服务这两个编辑页的 `edit.core.Category` 和 `edit.core.Toolbar`。
-- 编辑交易和计划付款编辑页的标题输入和标题建议列表已改为各自 feature 私有实现；`shared:ui:legacy` 删除只服务这两个编辑页的 `edit.core.Title`，旧 `IvyTitleTextField` 暂留给 legacy 标签弹窗内部使用。
+- 编辑交易和计划付款编辑页的标题输入和标题建议列表已改为各自 feature 私有实现；`shared:ui:legacy` 删除只服务这两个编辑页的 `edit.core.Title`，随后标签弹窗专用的旧 `IvyTitleTextField` 也已移回标签弹窗文件私有实现。
 - 编辑交易和计划付款编辑页的底部金额/账户面板已改为各自 feature 私有实现；`shared:ui:legacy` 删除最后一个 `edit.core.EditBottomSheet`，`legacy.ui.edit.core` 包不再承载编辑页业务 UI。
 - 删除 `shared:ui:legacy` 中已经没有调用方的旧描述输入框和旧日期时间行；描述输入和日期时间展示现在由对应 feature 私有实现承担。
 - 删除 `shared:ui:legacy` 中已经没有调用方的旧 `ModalNameInput`；旧名称输入框底层实现仍作为分类弹窗内部细节保留。
