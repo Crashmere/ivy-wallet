@@ -47,7 +47,7 @@ fun View.addKeyboardListener(keyboardCallback: (visible: Boolean) -> Unit) {
     }
 }
 
-fun isKeyboardOpen(rootView: View): Boolean {
+private fun isKeyboardOpen(rootView: View): Boolean {
     return try {
         WindowInsetsCompat.toWindowInsetsCompat(rootView.rootWindowInsets, rootView)
             .isVisible(WindowInsetsCompat.Type.ime())

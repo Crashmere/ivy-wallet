@@ -80,6 +80,7 @@
 - 收回旧账户保存转换边界：新增 `SaveLegacyAccountUseCase`，CSV 导入 feature 不再直接调用 legacy 账户 mapper；`toDomainAccount()` 改为 domain 内部实现。
 - 收回排序号工具边界：CSV 导入用本地私有 helper 计算导入账户/分类排序号，feature 层不再直接引用 `domain.util`；domain 的 `nextOrderNum()` 改为内部工具。
 - 收窄 data-model 工具公开面：金额格式化内部常量和 helper 改为文件私有，未使用的 `Value` 模型和 `toCloseTimeRangeUnsafe()` 扩展已删除，`PositiveValue.round()` 的内部 `roundTo()` 改为私有；金额输入、金额展示和时间范围公共 API 保持不变。
+- 收窄 UI core 平台工具公开面：WindowInsets、键盘状态、状态栏兼容和安全时间边界中只服务内部实现的 helper 改为私有或模块内部可见；饼图内部尺寸常量改为私有，并删除未使用的 dp 转 px Int 重载。
 
 当前仍保留：
 

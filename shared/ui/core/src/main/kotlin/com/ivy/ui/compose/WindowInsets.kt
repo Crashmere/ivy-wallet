@@ -6,7 +6,7 @@ import androidx.core.graphics.Insets
 import androidx.core.view.WindowInsetsCompat
 
 @Composable
-fun windowInsets(): WindowInsetsCompat {
+private fun windowInsets(): WindowInsetsCompat {
     val rootView = LocalView.current
     return WindowInsetsCompat.toWindowInsetsCompat(rootView.rootWindowInsets, rootView)
 }

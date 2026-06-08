@@ -29,7 +29,7 @@ fun setStatusBarDarkTextCompat(view: View, darkText: Boolean) {
 }
 
 @RequiresApi(Build.VERSION_CODES.R)
-fun WindowInsetsController.setStatusBarDarkText(darkText: Boolean) {
+private fun WindowInsetsController.setStatusBarDarkText(darkText: Boolean) {
     setSystemBarsAppearance(
         if (darkText) WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS else 0,
         WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS,
@@ -37,7 +37,7 @@ fun WindowInsetsController.setStatusBarDarkText(darkText: Boolean) {
 }
 
 @Suppress("DEPRECATION")
-fun setStatusBarDarkTextOld(window: Window, darkText: Boolean) {
+private fun setStatusBarDarkTextOld(window: Window, darkText: Boolean) {
     window.decorView.systemUiVisibility = if (darkText) {
         window.decorView.systemUiVisibility or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
     } else {

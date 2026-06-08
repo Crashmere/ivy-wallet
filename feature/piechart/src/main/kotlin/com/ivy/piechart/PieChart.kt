@@ -36,8 +36,8 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlin.math.acos
 import kotlin.math.sqrt
 
-const val PIE_CHART_RADIUS_DP = 128
-const val RADIUS_DP = 112f
+private const val PIE_CHART_RADIUS_DP = 128
+private const val RADIUS_DP = 112f
 
 @Composable
 fun PieChart(
