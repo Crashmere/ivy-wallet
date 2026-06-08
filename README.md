@@ -128,6 +128,7 @@
 - 旧交易列表点击事件继续收窄：`transactions()` 不再通过数据层 `TransactionType` 回传交易类型，改用交易列表自己的 `TransactionListTransactionType`；调用页面在导航或业务回调边界自行映射。
 - 旧交易列表交易输入继续收窄：到期/逾期分组和历史交易行不再直接传完整 `Transaction`，改用只含卡片渲染字段的 `TransactionListTransaction`；正式交易模型只在首页、搜索、报表和交易页适配层使用。
 - 旧交易卡片的金额行 `TypeAmountCurrency` 已收窄为 `TransactionCard` 文件私有实现；`legacy.ui.transaction` 对外继续只暴露交易列表入口和必要的列表输入模型。
+- 旧标签弹窗回调继续收窄：标签选择、反选和删除事件不再向 feature 层回传完整 `Tag`，只回传 `TagId`；完整标签对象暂时只保留给旧弹窗内部编辑流程和保存回调。
 - 旧弹窗标题 `ModalTitle` 已迁入 `shared:ui:core` 的 `com.ivy.ui.modal.ModalTitle`；feature 和 legacy 弹窗继续保留原标题字号、字重、颜色和左右间距，`legacy.ui.modal` 少暴露一个纯展示标题入口。
 - 旧弹窗保存/新增主按钮 `ModalSave`、`ModalAdd` 已迁入 `shared:ui:core` 的 `com.ivy.ui.modal`；feature 和 legacy 弹窗继续保留原绿色渐变、禁用灰色、近白文字和圆角展示。
 - 旧弹窗金额展示区 `ModalAmountSection` 已迁入 `shared:ui:core` 的 `com.ivy.ui.modal.ModalAmountSection`；预算、首页缓冲金额、借贷和旧账户弹窗继续保留原分隔线、标签、金额行和点击打开金额弹窗行为。

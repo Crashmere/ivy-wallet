@@ -425,12 +425,12 @@ internal fun BoxWithConstraintsScope.FilterOverlay(
         },
         onTagSelected = {
             localFilter = nonNullFilter(localFilter).copy(
-                includedTags = nonNullFilter(localFilter).includedTags.plus(it.id)
+                includedTags = nonNullFilter(localFilter).includedTags.plus(it)
             )
         },
         onTagDeSelected = {
             localFilter = nonNullFilter(localFilter).copy(
-                includedTags = nonNullFilter(localFilter).includedTags.minus(it.id)
+                includedTags = nonNullFilter(localFilter).includedTags.minus(it)
             )
         },
         onTagSearch = {
@@ -459,12 +459,12 @@ internal fun BoxWithConstraintsScope.FilterOverlay(
         },
         onTagSelected = {
             localFilter = nonNullFilter(localFilter).copy(
-                excludedTags = nonNullFilter(localFilter).excludedTags.plus(it.id)
+                excludedTags = nonNullFilter(localFilter).excludedTags.plus(it)
             )
         },
         onTagDeSelected = {
             localFilter = nonNullFilter(localFilter).copy(
-                excludedTags = nonNullFilter(localFilter).excludedTags.minus(it.id)
+                excludedTags = nonNullFilter(localFilter).excludedTags.minus(it)
             )
         },
         onTagSearch = {

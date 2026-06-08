@@ -60,9 +60,9 @@ fun BoxWithConstraintsScope.ShowTagModal(
     selectedTagList: ImmutableList<TagId>,
     onTagAdd: (String) -> Unit,
     onTagEdit: (oldTag: Tag, newTag: Tag) -> Unit,
-    onTagDelete: (Tag) -> Unit,
-    onTagSelected: (Tag) -> Unit,
-    onTagDeSelected: (Tag) -> Unit,
+    onTagDelete: (TagId) -> Unit,
+    onTagSelected: (TagId) -> Unit,
+    onTagDeSelected: (TagId) -> Unit,
     id: UUID = UUID.randomUUID(),
     visible: Boolean = false,
     selectOnlyMode: Boolean = false,
@@ -128,10 +128,10 @@ fun BoxWithConstraintsScope.ShowTagModal(
                 showTagAddModal = true
             },
             onTagSelected = {
-                onTagSelected(it)
+                onTagSelected(it.id)
             },
             onTagDeSelected = {
-                onTagDeSelected(it)
+                onTagDeSelected(it.id)
             },
             onTagLongClick = {
                 if (!selectOnlyMode) {
@@ -174,7 +174,7 @@ fun BoxWithConstraintsScope.ShowTagModal(
     ) {
         if (selectedTag != null) {
             deleteTagModalVisible = false
-            onTagDelete(selectedTag!!)
+            onTagDelete(selectedTag!!.id)
             showTagAddModal = false
             selectedTag = null
         }
