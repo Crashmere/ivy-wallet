@@ -117,7 +117,7 @@ fun BoxWithConstraintsScope.ChoosePeriodModal(
 
         Spacer(Modifier.height(32.dp))
 
-        IvyDividerLine(
+        PeriodDividerLine(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 24.dp)
@@ -458,6 +458,18 @@ private fun IntervalFromToDate(
 
 private enum class IntervalBorder {
     FROM, TO
+}
+
+@Composable
+private fun PeriodDividerLine(
+    modifier: Modifier = Modifier
+) {
+    Spacer(
+        modifier = modifier
+            .fillMaxWidth()
+            .height(2.dp)
+            .background(LegacyTheme.colors.medium)
+    )
 }
 
 @Composable
