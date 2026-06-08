@@ -1334,6 +1334,7 @@ shared:ui:core
 - 报表页和报表筛选浮层改用报表模块私有复选行；`shared:ui:legacy` 的 `IvyCheckboxWithText` 收窄为旧账户/借贷弹窗内部实现。
 - 借贷列表和借贷详情页改用借贷模块私有进度条；`shared:ui:legacy` 删除不再被复用的 `ProgressBar`。
 - 计划付款底栏和饼图统计底栏改用各自模块私有操作行；`shared:ui:legacy` 的 `ActionsRow` 收窄为旧弹窗/旧编辑底栏内部构件。
+- 分类、预算和汇率页底部返回栏改用各自模块私有实现；`shared:ui:legacy` 删除不再被复用的 `BackBottomBar`。
 - app 仍保留文件选择、文件分享、Material 日期选择器、BuildInfo、Locale 设置、生物识别和窗口安全等真正依赖 Activity 或 Android app 壳层的装配。
 
 ## 高风险区域
