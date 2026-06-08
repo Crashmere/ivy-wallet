@@ -65,6 +65,7 @@
 - 收窄汇率换算边界：feature 层不再直接构造 `ExchangeData` 或调用 `transactionCurrency()`，改用 `ExchangeAmountUseCase` 的简单币种入口和 `ExchangeTransactionAmountUseCase`；`ExchangeData`、`exchange()` 与交易币种推断已收回 domain 内部。
 - 收窄 domain 时间 helper 边界：`nowUtc()`、日期转换、到期/未来交易过滤等时间工具只作为 domain 内部实现保留，feature 层继续使用各自 UI/页面侧的时间处理入口。
 - 删除正式交易日期分组的无调用方扩展：正式交易历史入口继续由 `BuildTransactionHistoryItemsUseCase` 提供，`TransactionHistoryItems` 不再保留一层未使用的 `withDateDividers(...)` 包装。
+- 收窄 data-api 公开面：SharedPreferences key 常量已从 `shared:data:api` 移入 `shared:data:core` 的偏好实现包，API 模块继续只暴露 Store 端口。
 
 当前仍保留：
 

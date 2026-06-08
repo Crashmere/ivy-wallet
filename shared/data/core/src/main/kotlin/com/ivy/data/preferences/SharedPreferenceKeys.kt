@@ -1,6 +1,6 @@
-package com.ivy.data.api
+package com.ivy.data.preferences
 
-object SharedPreferenceKeys {
+internal object SharedPreferenceKeys {
     const val INITIAL_SETUP_COMPLETED = "onboarding_completed"
 
     const val LAST_SELECTED_ACCOUNT_ID = "last_selected_account_id"
