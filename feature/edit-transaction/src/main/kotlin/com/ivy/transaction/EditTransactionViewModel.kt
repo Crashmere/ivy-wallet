@@ -363,11 +363,11 @@ internal class EditTransactionViewModel @Inject internal constructor(
     private fun handleTagEvent(event: EditTransactionViewEvent.TagEvent) {
         when (event) {
             is EditTransactionViewEvent.TagEvent.SaveTag -> onTagSaved(event.name)
-            is EditTransactionViewEvent.TagEvent.OnTagSelect -> associateTagToTransaction(event.selectedTag)
-            is EditTransactionViewEvent.TagEvent.OnTagDeSelect -> removeTagAssociation(event.selectedTag)
+            is EditTransactionViewEvent.TagEvent.OnTagSelect -> associateTagToTransaction(event.tagId)
+            is EditTransactionViewEvent.TagEvent.OnTagDeSelect -> removeTagAssociation(event.tagId)
             is EditTransactionViewEvent.TagEvent.OnTagSearch -> searchTag(event.query)
-            is EditTransactionViewEvent.TagEvent.OnTagDelete -> deleteTag(event.selectedTag)
-            is EditTransactionViewEvent.TagEvent.OnTagEdit -> updateTagInformation(event.newTag)
+            is EditTransactionViewEvent.TagEvent.OnTagDelete -> deleteTag(event.tagId)
+            is EditTransactionViewEvent.TagEvent.OnTagEdit -> updateTagInformation(event.updatedTag)
         }
     }
 
@@ -926,17 +926,17 @@ internal class EditTransactionViewModel @Inject internal constructor(
         }
     }
 
-    private fun associateTagToTransaction(selectedTag: Tag) {
+    private fun associateTagToTransaction(tagId: TagId) {
         viewModelScope.launch(Dispatchers.IO) {
-            associateTagToTransactionUseCase(loadedTransaction().id, selectedTag.id)
+            associateTagToTransactionUseCase(loadedTransaction().id, tagId)
             transactionAssociatedTags =
                 getTransactionTagIdsUseCase(loadedTransaction().id).toImmutableList()
         }
     }
 
-    private fun removeTagAssociation(selectedTag: Tag) {
+    private fun removeTagAssociation(tagId: TagId) {
         viewModelScope.launch(Dispatchers.IO) {
-            removeTagFromTransactionUseCase(loadedTransaction().id, selectedTag.id)
+            removeTagFromTransactionUseCase(loadedTransaction().id, tagId)
             transactionAssociatedTags =
                 getTransactionTagIdsUseCase(loadedTransaction().id).toImmutableList()
         }
@@ -959,9 +959,9 @@ internal class EditTransactionViewModel @Inject internal constructor(
         }
     }
 
-    private fun deleteTag(selectedTag: Tag) {
+    private fun deleteTag(tagId: TagId) {
         viewModelScope.launch(Dispatchers.IO) {
-            deleteTagUseCase(selectedTag.id)
+            deleteTagUseCase(tagId)
             tags = getAllTags()
         }
     }

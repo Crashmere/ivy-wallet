@@ -637,17 +637,17 @@ private fun BoxWithConstraintsScope.UI(
         onTagAdd = {
             onTagOperation(EditTransactionViewEvent.TagEvent.SaveTag(name = it))
         },
-        onTagEdit = { oldTag, newTag ->
-            onTagOperation(EditTransactionViewEvent.TagEvent.OnTagEdit(oldTag, newTag))
+        onTagEdit = { _, newTag ->
+            onTagOperation(EditTransactionViewEvent.TagEvent.OnTagEdit(newTag))
         },
         onTagDelete = {
-            onTagOperation(EditTransactionViewEvent.TagEvent.OnTagDelete(it))
+            onTagOperation(EditTransactionViewEvent.TagEvent.OnTagDelete(it.id))
         },
         onTagSelected = {
-            onTagOperation(EditTransactionViewEvent.TagEvent.OnTagSelect(it))
+            onTagOperation(EditTransactionViewEvent.TagEvent.OnTagSelect(it.id))
         },
         onTagDeSelected = {
-            onTagOperation(EditTransactionViewEvent.TagEvent.OnTagDeSelect(it))
+            onTagOperation(EditTransactionViewEvent.TagEvent.OnTagDeSelect(it.id))
         },
         onTagSearch = {
             onTagOperation(EditTransactionViewEvent.TagEvent.OnTagSearch(it))

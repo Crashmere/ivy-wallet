@@ -1181,6 +1181,7 @@
 - 编辑交易页的账户选择事件已收窄为只传账户 ID；旧表单组件仍可用完整账户对象渲染和选择，但 Screen 到 ViewModel 的事件边界不再传递 `LegacyAccount`。
 - 计划付款编辑页的账户选择事件同样收窄为只传账户 ID；规则保存和币种更新继续使用原账户 ID 语义。
 - 饼图分类点击事件已收窄为只传分类 ID；ViewModel 从当前分类金额列表解析选中项，完整 `Category` 不再穿过事件层。
+- 编辑交易页的标签选择、取消选择和删除事件已收窄为只传 `TagId`；标签编辑事件删除未使用的旧标签参数，只保存更新后的标签。
 - 旧重排弹窗的底层多类型 `ReorderModal` 已收为 `shared:ui:legacy` 私有实现；feature 层继续只通过 `ReorderModalSingleType`、`ReorderButton` 和 `ReorderableItem` 使用现有排序 UI。
 - 旧主题外层色板继续收窄：`Blue`、`IvyLight`、`GreenLight`、`RedLight` 和 `IvyDark` 没有模块外调用点，已改为 `shared:ui:legacy` 内部常量；feature 层继续通过 `LegacyTheme` 和仍公开的实际使用色板访问旧主题。
 
