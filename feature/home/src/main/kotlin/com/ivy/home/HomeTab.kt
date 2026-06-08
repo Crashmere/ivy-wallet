@@ -25,8 +25,10 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.Category
+import com.ivy.data.model.TransactionHistoryDateDivider
 import com.ivy.data.model.TransactionType
 import com.ivy.data.model.TransactionHistoryItem
+import com.ivy.data.model.TransactionHistoryTransaction
 import com.ivy.ui.platform.LocalDatePicker
 import com.ivy.home.Constants.SWIPE_HORIZONTAL_THRESHOLD
 import com.ivy.home.customerjourney.CustomerJourney
@@ -36,6 +38,9 @@ import com.ivy.legacy.ui.transaction.TransactionListAccount
 import com.ivy.legacy.ui.transaction.TransactionListCategory
 import com.ivy.legacy.ui.transaction.TransactionListData
 import com.ivy.legacy.ui.transaction.TransactionListDueSection
+import com.ivy.legacy.ui.transaction.TransactionListHistoryDateDivider
+import com.ivy.legacy.ui.transaction.TransactionListHistoryItem
+import com.ivy.legacy.ui.transaction.TransactionListHistoryTransaction
 import com.ivy.ui.period.Month
 import com.ivy.ui.period.TimePeriod
 import com.ivy.ui.period.displayLong
@@ -478,7 +483,7 @@ internal fun HomeLazyColumn(
             setUpcomingExpanded = setUpcomingExpanded,
             overdue = overdue.toTransactionListDueSection(),
             setOverdueExpanded = setOverdueExpanded,
-            history = history,
+            history = history.map { it.toTransactionListHistoryItem() },
             onPayOrGet = onPayOrGet,
             onTransactionClick = onTransactionClick,
             onAccountClick = onAccountClick,
@@ -523,6 +528,23 @@ private fun HomeDueSection.toTransactionListDueSection(): TransactionListDueSect
         income = stats.income.toDouble(),
         expenses = stats.expense.abs().toDouble(),
     )
+}
+
+private fun TransactionHistoryItem.toTransactionListHistoryItem(): TransactionListHistoryItem {
+    return when (this) {
+        is TransactionHistoryTransaction -> TransactionListHistoryTransaction(
+            transaction = transaction,
+            tags = tags,
+        )
+
+        is TransactionHistoryDateDivider -> TransactionListHistoryDateDivider(
+            date = date,
+            income = income,
+            expenses = expenses,
+        )
+
+        else -> error("Unsupported transaction history item: ${this::class.simpleName}")
+    }
 }
 
 private fun TransactionType.toRouteType(): TransactionRouteType {

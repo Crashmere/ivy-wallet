@@ -42,7 +42,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ivy.data.model.Theme
+import com.ivy.data.model.TransactionHistoryDateDivider
 import com.ivy.data.model.TransactionHistoryItem
+import com.ivy.data.model.TransactionHistoryTransaction
 import com.ivy.data.model.TransactionType
 import com.ivy.data.model.Category
 import com.ivy.ui.platform.LocalDatePicker
@@ -53,6 +55,9 @@ import com.ivy.legacy.ui.transaction.TransactionListData
 import com.ivy.legacy.ui.transaction.TransactionListAccount
 import com.ivy.legacy.ui.transaction.TransactionListCategory
 import com.ivy.legacy.ui.transaction.TransactionListDueSection
+import com.ivy.legacy.ui.transaction.TransactionListHistoryDateDivider
+import com.ivy.legacy.ui.transaction.TransactionListHistoryItem
+import com.ivy.legacy.ui.transaction.TransactionListHistoryTransaction
 import com.ivy.ui.period.Month
 import com.ivy.ui.period.TimePeriod
 import com.ivy.ui.period.displayLong
@@ -480,7 +485,7 @@ private fun BoxWithConstraintsScope.UI(
                 overdue = overdue.toTransactionListDueSection(),
                 setOverdueExpanded = setOverdueExpanded,
 
-                history = history,
+                history = history.map { it.toTransactionListHistoryItem() },
                 lastItemSpacer = screenHeight * 0.7f,
 
                 onPayOrGet = onPayOrGet,
@@ -568,6 +573,23 @@ private fun TransactionsDueSection.toTransactionListDueSection(): TransactionLis
         expenses = expenses,
         expanded = expanded
     )
+}
+
+private fun TransactionHistoryItem.toTransactionListHistoryItem(): TransactionListHistoryItem {
+    return when (this) {
+        is TransactionHistoryTransaction -> TransactionListHistoryTransaction(
+            transaction = transaction,
+            tags = tags,
+        )
+
+        is TransactionHistoryDateDivider -> TransactionListHistoryDateDivider(
+            date = date,
+            income = income,
+            expenses = expenses,
+        )
+
+        else -> error("Unsupported transaction history item: ${this::class.simpleName}")
+    }
 }
 
 private fun TransactionsListAccount.toTransactionListAccount() = TransactionListAccount(

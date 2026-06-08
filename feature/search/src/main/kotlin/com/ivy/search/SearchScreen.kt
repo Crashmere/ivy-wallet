@@ -19,11 +19,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.Category
+import com.ivy.data.model.TransactionHistoryDateDivider
+import com.ivy.data.model.TransactionHistoryItem
+import com.ivy.data.model.TransactionHistoryTransaction
 import com.ivy.data.model.TransactionType
 import com.ivy.ui.search.SearchInput
 import com.ivy.legacy.ui.transaction.TransactionListAccount
 import com.ivy.legacy.ui.transaction.TransactionListCategory
 import com.ivy.legacy.ui.transaction.TransactionListData
+import com.ivy.legacy.ui.transaction.TransactionListHistoryDateDivider
+import com.ivy.legacy.ui.transaction.TransactionListHistoryItem
+import com.ivy.legacy.ui.transaction.TransactionListHistoryTransaction
 import com.ivy.legacy.ui.transaction.transactions
 import com.ivy.ui.compose.densityScope
 import com.ivy.ui.compose.keyboardOnlyWindowInsets
@@ -105,7 +111,7 @@ private fun SearchUi(
                 setUpcomingExpanded = { },
                 overdue = null,
                 setOverdueExpanded = { },
-                history = uiState.transactions,
+                history = uiState.transactions.map { it.toTransactionListHistoryItem() },
                 onPayOrGet = { },
                 onTransactionClick = { transactionId, transactionType ->
                     nav.navigateTo(
@@ -171,3 +177,20 @@ private fun Category.toTransactionListCategory() = TransactionListCategory(
     color = color.value,
     icon = icon?.id,
 )
+
+private fun TransactionHistoryItem.toTransactionListHistoryItem(): TransactionListHistoryItem {
+    return when (this) {
+        is TransactionHistoryTransaction -> TransactionListHistoryTransaction(
+            transaction = transaction,
+            tags = tags,
+        )
+
+        is TransactionHistoryDateDivider -> TransactionListHistoryDateDivider(
+            date = date,
+            income = income,
+            expenses = expenses,
+        )
+
+        else -> error("Unsupported transaction history item: ${this::class.simpleName}")
+    }
+}

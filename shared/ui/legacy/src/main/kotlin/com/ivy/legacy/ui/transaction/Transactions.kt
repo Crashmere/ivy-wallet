@@ -18,9 +18,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.TransactionType
-import com.ivy.data.model.TransactionHistoryDateDivider
-import com.ivy.data.model.TransactionHistoryItem
-import com.ivy.data.model.TransactionHistoryTransaction
 import com.ivy.data.model.Transaction
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.R
@@ -39,7 +36,7 @@ fun LazyListScope.transactions(
 
     upcoming: TransactionListDueSection?,
     overdue: TransactionListDueSection?,
-    history: List<TransactionHistoryItem>,
+    history: List<TransactionListHistoryItem>,
 
     emptyStateTitle: String,
     emptyStateText: String,
@@ -265,7 +262,7 @@ private fun LazyListScope.transactionItems(
 private fun LazyListScope.historySection(
     baseData: TransactionListData,
 
-    history: List<TransactionHistoryItem>,
+    history: List<TransactionListHistoryItem>,
     shouldShowAccountSpecificColorInTransactions: Boolean,
     dateDividerMarginTop: Dp? = null,
 
@@ -279,14 +276,14 @@ private fun LazyListScope.historySection(
             items = history,
             key = {
                 when (it) {
-                    is TransactionHistoryTransaction -> it.transaction.id.value.toString()
-                    is TransactionHistoryDateDivider -> it.date.toString()
+                    is TransactionListHistoryTransaction -> it.transaction.id.value.toString()
+                    is TransactionListHistoryDateDivider -> it.date.toString()
                     else -> "unknown"
                 }
             }
         ) {
             when (it) {
-                is TransactionHistoryTransaction -> {
+                is TransactionListHistoryTransaction -> {
                     TransactionCard(
                         baseData = baseData,
 
@@ -300,7 +297,7 @@ private fun LazyListScope.historySection(
                     )
                 }
 
-                is TransactionHistoryDateDivider -> {
+                is TransactionListHistoryDateDivider -> {
                     HistoryDateDivider(
                         date = it.date,
                         spacerTop = dateDividerMarginTop
@@ -359,7 +356,7 @@ private fun LazyItemScope.NoTransactionsEmptyState(
 }
 
 private fun LazyListScope.scrollHackSpacer(
-    history: List<TransactionHistoryItem>,
+    history: List<TransactionListHistoryItem>,
     upcoming: TransactionListDueSection?,
     overdue: TransactionListDueSection?,
 
