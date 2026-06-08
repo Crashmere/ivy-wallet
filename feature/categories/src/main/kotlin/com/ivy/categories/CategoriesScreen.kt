@@ -374,7 +374,7 @@ private fun CompactCategoryCard(
 }
 
 @Composable
-fun AddedSpent(
+internal fun AddedSpent(
     monthlyIncome: Double,
     monthlyExpenses: Double,
     currency: String,
@@ -534,7 +534,7 @@ private fun CategoryHeader(
 }
 
 @Composable
-fun BoxWithConstraintsScope.SortModal(
+internal fun BoxWithConstraintsScope.SortModal(
     items: ImmutableList<SortOrder>,
     visible: Boolean,
     initialType: SortOrder,

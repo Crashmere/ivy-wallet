@@ -3,7 +3,7 @@ package com.ivy.categories
 import com.ivy.data.model.Category
 import com.ivy.legacy.ui.component.ReorderableItem
 
-data class CategoryData(
+internal data class CategoryData(
     val category: Category,
     val monthlyBalance: Double,
     val monthlyExpenses: Double,

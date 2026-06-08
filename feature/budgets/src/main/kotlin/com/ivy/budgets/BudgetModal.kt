@@ -41,7 +41,7 @@ import com.ivy.legacy.ui.modal.edit.AmountModal
 import com.ivy.legacy.ui.theme.toComposeColor
 import java.util.UUID
 
-data class BudgetModalData(
+internal data class BudgetModalData(
     val budget: Budget?,
 
     val baseCurrency: String,
@@ -53,7 +53,7 @@ data class BudgetModalData(
 )
 
 @Composable
-fun BoxWithConstraintsScope.BudgetModal(
+internal fun BoxWithConstraintsScope.BudgetModal(
     modal: BudgetModalData?,
 
     onCreate: (CreateBudgetData) -> Unit,

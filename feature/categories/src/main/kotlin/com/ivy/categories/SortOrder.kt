@@ -1,6 +1,6 @@
 package com.ivy.categories
 
-enum class SortOrder(val orderNum: Int, val displayName: String) {
+internal enum class SortOrder(val orderNum: Int, val displayName: String) {
     DEFAULT(0, "Default"),
     BALANCE_AMOUNT(1, "Balance Amount"),
     EXPENSES(2, "Expenses"),

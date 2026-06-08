@@ -3,7 +3,7 @@ package com.ivy.categories
 import com.ivy.data.model.CreateCategoryData
 import com.ivy.ui.modal.CategoryModalData
 
-sealed interface CategoriesScreenEvent {
+internal sealed interface CategoriesScreenEvent {
     data class OnReorder(
         val newOrder: List<CategoryData>,
         val sortOrder: SortOrder = SortOrder.DEFAULT

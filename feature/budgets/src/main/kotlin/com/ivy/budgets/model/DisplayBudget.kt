@@ -5,7 +5,7 @@ import com.ivy.data.model.Budget
 import com.ivy.legacy.ui.component.ReorderableItem
 
 @Immutable
-data class DisplayBudget(
+internal data class DisplayBudget(
     val budget: Budget,
     val spentAmount: Double
 ) : ReorderableItem {

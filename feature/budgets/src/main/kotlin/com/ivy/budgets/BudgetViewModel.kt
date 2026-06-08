@@ -45,7 +45,7 @@ import kotlin.math.abs
 
 @Stable
 @HiltViewModel
-class BudgetViewModel @Inject constructor(
+internal class BudgetViewModel @Inject constructor(
     private val reorderBudgetsUseCase: ReorderBudgetsUseCase,
     private val createBudgetUseCase: CreateBudgetUseCase,
     private val updateBudgetUseCase: UpdateBudgetUseCase,
@@ -284,7 +284,7 @@ class BudgetViewModel @Inject constructor(
     }
 }
 
-fun calculateTotalRemainingBudget(
+internal fun calculateTotalRemainingBudget(
     budgets: ImmutableList<DisplayBudget>,
     categoryBudgetsTotal: Double
 ): Double {

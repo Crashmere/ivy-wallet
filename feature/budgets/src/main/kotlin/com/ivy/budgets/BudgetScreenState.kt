@@ -8,7 +8,7 @@ import kotlinx.collections.immutable.ImmutableList
 import javax.annotation.concurrent.Immutable
 
 @Immutable
-data class BudgetScreenState(
+internal data class BudgetScreenState(
     val baseCurrency: String,
     val budgets: ImmutableList<DisplayBudget>,
     val categories: ImmutableList<Category>,

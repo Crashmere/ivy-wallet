@@ -5,7 +5,7 @@ import androidx.compose.ui.res.stringResource
 import com.ivy.ui.R
 
 @Composable
-fun determineBudgetType(categoriesCount: Int): String {
+internal fun determineBudgetType(categoriesCount: Int): String {
     return when (categoriesCount) {
         0 -> stringResource(R.string.total_budget)
         1 -> stringResource(R.string.category_budget)
