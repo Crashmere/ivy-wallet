@@ -58,7 +58,6 @@ import com.ivy.ui.R
 import com.ivy.ui.theme.colors.IvyGradients
 import com.ivy.legacy.ui.icon.ItemIconSDefaultIcon
 import com.ivy.legacy.ui.button.IvyButton
-import com.ivy.legacy.ui.icon.IvyIcon
 import com.ivy.legacy.ui.button.IvyOutlinedButton
 import com.ivy.legacy.ui.modal.ChoosePeriodModal
 import com.ivy.legacy.ui.modal.edit.AmountModal
@@ -68,6 +67,7 @@ import com.ivy.ui.theme.colors.toComposeColor
 import com.ivy.legacy.ui.money.AmountCurrencyB1
 import com.ivy.ui.compose.BackPressHandler
 import com.ivy.ui.compose.CloseIconButton
+import com.ivy.ui.compose.ResourceIcon
 import com.ivy.ui.compose.thenIf
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
@@ -753,7 +753,7 @@ private fun ReportOutlinedButtonFillMaxWidth(
         if (iconStart != null) {
             Spacer(Modifier.width(12.dp))
 
-            IvyIcon(
+            ResourceIcon(
                 icon = iconStart,
                 tint = iconTint,
             )
@@ -776,7 +776,7 @@ private fun ReportOutlinedButtonFillMaxWidth(
         if (iconStart != null) {
             Spacer(Modifier.width(12.dp))
 
-            IvyIcon(
+            ResourceIcon(
                 icon = iconStart,
                 tint = Color.Transparent,
             )

@@ -54,9 +54,9 @@ import com.ivy.ui.rememberScrollPositionListState
 import com.ivy.data.model.IncomeExpensePair
 import com.ivy.legacy.ui.money.BalanceRow
 import com.ivy.legacy.ui.button.IvyButton
-import com.ivy.legacy.ui.icon.IvyIcon
 import com.ivy.legacy.ui.button.IvyOutlinedButton
 import com.ivy.ui.compose.FilledIconButton
+import com.ivy.ui.compose.ResourceIcon
 import kotlinx.collections.immutable.toImmutableList
 
 @ExperimentalFoundationApi
@@ -367,7 +367,7 @@ private fun NoFilterEmptyState(
     ) {
         Spacer(Modifier.height(16.dp))
 
-        IvyIcon(
+        ResourceIcon(
             icon = R.drawable.ic_filter_l,
             tint = LegacyTheme.colors.gray
         )
