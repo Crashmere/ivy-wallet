@@ -83,8 +83,11 @@ import com.ivy.legacy.ui.theme.toComposeColor
 fun BoxWithConstraintsScope.LoanDetailsScreen(screen: LoanDetailsScreen) {
     val viewModel: LoanDetailsViewModel = screenScopedViewModel()
     val nav = navigation()
-    viewModel.screen = screen
     val state = viewModel.uiState()
+
+    LaunchedEffect(viewModel, screen.loanId) {
+        viewModel.start(screen.loanId)
+    }
 
     LaunchedEffect(viewModel) {
         viewModel.uiEvents.collect { event ->

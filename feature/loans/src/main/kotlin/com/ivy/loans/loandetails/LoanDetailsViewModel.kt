@@ -1,7 +1,6 @@
 package com.ivy.loans.loandetails
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.mutableDoubleStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -28,7 +27,6 @@ import com.ivy.loans.loandetails.events.DeleteLoanModalEvent
 import com.ivy.loans.loandetails.events.LoanDetailsScreenEvent
 import com.ivy.loans.loandetails.events.LoanModalEvent
 import com.ivy.loans.loandetails.events.LoanRecordModalEvent
-import com.ivy.ui.navigation.LoanDetailsScreen
 import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.time.DateTimePicker
 import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
@@ -96,14 +94,9 @@ internal class LoanDetailsViewModel @Inject internal constructor(
     private var dateTime = mutableStateOf<Instant>(nowUtc())
     private val _uiEvents = MutableSharedFlow<LoanDetailsUiEvent>()
     val uiEvents: SharedFlow<LoanDetailsUiEvent> = _uiEvents.asSharedFlow()
-    lateinit var screen: LoanDetailsScreen
 
     @Composable
     override fun uiState(): LoanDetailsScreenState {
-        LaunchedEffect(Unit) {
-            start()
-        }
-
         return LoanDetailsScreenState(
             baseCurrency = baseCurrency.value,
             loan = loan.value,
@@ -252,8 +245,8 @@ internal class LoanDetailsViewModel @Inject internal constructor(
         }
     }
 
-    private fun start() {
-        load(loanId = screen.loanId)
+    fun start(loanId: UUID) {
+        load(loanId = loanId)
     }
 
     private fun load(loanId: UUID) {
