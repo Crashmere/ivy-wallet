@@ -28,7 +28,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.ivy.data.model.Tag
 import com.ivy.ui.modal.DeleteModal
 import com.ivy.ui.modal.IvyModal
 import com.ivy.ui.modal.ModalPositiveButton
@@ -50,15 +49,20 @@ import com.ivy.ui.theme.colors.findContrastTextColor
 import kotlinx.collections.immutable.ImmutableList
 import java.util.UUID
 
+data class TagModalTag(
+    val id: UUID,
+    val name: String,
+)
+
 @ExperimentalFoundationApi
 @Suppress("ParameterNaming")
 @Composable
 fun BoxWithConstraintsScope.ShowTagModal(
     onDismiss: () -> Unit,
-    allTagList: ImmutableList<Tag>,
+    allTagList: ImmutableList<TagModalTag>,
     selectedTagList: ImmutableList<UUID>,
     onTagAdd: (String) -> Unit,
-    onTagEdit: (oldTag: Tag, newTag: Tag) -> Unit,
+    onTagEdit: (tagId: UUID, name: String) -> Unit,
     onTagDelete: (UUID) -> Unit,
     onTagSelected: (UUID) -> Unit,
     onTagDeSelected: (UUID) -> Unit,
@@ -76,11 +80,11 @@ fun BoxWithConstraintsScope.ShowTagModal(
     }
 
     var selectedTag by remember {
-        mutableStateOf<Tag?>(null)
+        mutableStateOf<TagModalTag?>(null)
     }
 
     var selectedTagId by remember(selectedTag) {
-        mutableStateOf(selectedTag?.id?.value ?: UUID.randomUUID())
+        mutableStateOf(selectedTag?.id ?: UUID.randomUUID())
     }
 
     var searchQueryTextFieldValue by remember(visible) {
@@ -127,10 +131,10 @@ fun BoxWithConstraintsScope.ShowTagModal(
                 showTagAddModal = true
             },
             onTagSelected = {
-                onTagSelected(it.id.value)
+                onTagSelected(it.id)
             },
             onTagDeSelected = {
-                onTagDeSelected(it.id.value)
+                onTagDeSelected(it.id)
             },
             onTagLongClick = {
                 if (!selectOnlyMode) {
@@ -160,20 +164,20 @@ fun BoxWithConstraintsScope.ShowTagModal(
             deleteTagModalVisible = true
             view.hideKeyboard()
         },
-        onTagEdit = { oldTag, newTag ->
-            onTagEdit(oldTag, newTag)
+        onTagEdit = { oldTag, newName ->
+            onTagEdit(oldTag.id, newName)
         }
     )
 
     DeleteModal(
         visible = deleteTagModalVisible,
         title = stringResource(R.string.confirm_deletion),
-        description = "Are you sure you want to delete the following tag:\t'${selectedTag?.name?.value}' ?",
+        description = "Are you sure you want to delete the following tag:\t'${selectedTag?.name}' ?",
         dismiss = { deleteTagModalVisible = false }
     ) {
         if (selectedTag != null) {
             deleteTagModalVisible = false
-            onTagDelete(selectedTag!!.id.value)
+            onTagDelete(selectedTag!!.id)
             showTagAddModal = false
             selectedTag = null
         }
@@ -184,13 +188,13 @@ fun BoxWithConstraintsScope.ShowTagModal(
 @Suppress("ParameterNaming")
 @Composable
 private fun ColumnScope.TagList(
-    transactionTags: ImmutableList<Tag>,
+    transactionTags: ImmutableList<TagModalTag>,
     onAddNewTag: () -> Unit,
     selectedTagList: ImmutableList<UUID>,
     selectOnlyMode: Boolean,
-    onTagSelected: (Tag) -> Unit = {},
-    onTagDeSelected: (Tag) -> Unit = {},
-    onTagLongClick: (Tag) -> Unit = {}
+    onTagSelected: (TagModalTag) -> Unit = {},
+    onTagDeSelected: (TagModalTag) -> Unit = {},
+    onTagLongClick: (TagModalTag) -> Unit = {}
 ) {
     val tagListWithAddNewTag: List<Any> by remember(transactionTags) {
         if (selectOnlyMode) {
@@ -208,10 +212,10 @@ private fun ColumnScope.TagList(
         items = tagListWithAddNewTag
     ) {
         when (it) {
-            is Tag -> {
+            is TagModalTag -> {
                 ExistingTag(
                     tag = it,
-                    selected = selectedTagList.contains(it.id.value),
+                    selected = selectedTagList.contains(it.id),
                     onClick = { onTagSelected(it) },
                     onLongClick = { onTagLongClick(it) },
                     onDeselect = {
@@ -230,7 +234,7 @@ private fun ColumnScope.TagList(
 @ExperimentalFoundationApi
 @Composable
 private fun ExistingTag(
-    tag: Tag,
+    tag: TagModalTag,
     selected: Boolean,
     onClick: () -> Unit,
     onLongClick: () -> Unit,
@@ -278,7 +282,7 @@ private fun ExistingTag(
                     end = if (selected) 20.dp else 24.dp
                 )
                 .weight(1f, fill = false),
-            text = "#${tag.name.value}",
+            text = "#${tag.name}",
             style = LegacyTheme.typo.b2.copy(
                 color = if (selected) findContrastTextColor(tagColor) else LegacyTheme.colors.pureInverse,
                 fontWeight = FontWeight.SemiBold,

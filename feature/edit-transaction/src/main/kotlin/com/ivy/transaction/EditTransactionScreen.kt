@@ -42,10 +42,12 @@ import com.ivy.data.model.TransactionType
 import com.ivy.data.model.Category
 import com.ivy.data.model.Tag
 import com.ivy.data.model.TagId
+import com.ivy.data.model.primitive.NotBlankTrimmedString
 import com.ivy.ui.platform.LocalDatePicker
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.platform.hideKeyboard
 import com.ivy.legacy.ui.tags.ShowTagModal
+import com.ivy.legacy.ui.tags.TagModalTag
 import com.ivy.ui.tags.AddTagButton
 import com.ivy.ui.navigation.onScreenStart
 import com.ivy.ui.navigation.EditPlannedScreen
@@ -647,13 +649,18 @@ private fun BoxWithConstraintsScope.UI(
             // Reset TagList, avoids showing incorrect tag list when user has searched for a tag
             onTagOperation(EditTransactionViewEvent.TagEvent.OnTagSearch(""))
         },
-        allTagList = tags,
+        allTagList = tags.map { it.toTagModalTag() }.toImmutableList(),
         selectedTagList = transactionAssociatedTags.map { it.value }.toImmutableList(),
         onTagAdd = {
             onTagOperation(EditTransactionViewEvent.TagEvent.SaveTag(name = it))
         },
-        onTagEdit = { _, newTag ->
-            onTagOperation(EditTransactionViewEvent.TagEvent.OnTagEdit(newTag))
+        onTagEdit = { tagId, name ->
+            val updatedTag = tags.firstOrNull { it.id.value == tagId }?.copy(
+                name = NotBlankTrimmedString.unsafe(name)
+            )
+            if (updatedTag != null) {
+                onTagOperation(EditTransactionViewEvent.TagEvent.OnTagEdit(updatedTag))
+            }
         },
         onTagDelete = {
             onTagOperation(EditTransactionViewEvent.TagEvent.OnTagDelete(TagId(it)))
@@ -688,6 +695,11 @@ private fun TransactionType.toRouteType(): TransactionRouteType {
 private fun TransactionRouteType.toTransactionType(): TransactionType {
     return TransactionType.valueOf(name)
 }
+
+private fun Tag.toTagModalTag() = TagModalTag(
+    id = id.value,
+    name = name.value,
+)
 
 private fun Instant.toLocalDateInSystemZone() =
     atZone(ZoneId.systemDefault()).toLocalDate()

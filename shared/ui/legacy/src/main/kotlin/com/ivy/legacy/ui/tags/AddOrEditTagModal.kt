@@ -39,8 +39,6 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.ivy.data.model.Tag
-import com.ivy.data.model.primitive.NotBlankTrimmedString
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.modal.IvyModal
 import com.ivy.ui.modal.ModalPositiveButton
@@ -59,10 +57,10 @@ import java.util.UUID
 internal fun BoxWithConstraintsScope.AddOrEditTagModal(
     id: UUID,
     visible: Boolean = false,
-    initialTag: Tag? = null,
+    initialTag: TagModalTag? = null,
     onTagAdd: (String) -> Unit = {},
-    onTagEdit: (oldTag: Tag, newTag: Tag) -> Unit = { _, _ -> },
-    onTagDelete: (Tag) -> Unit = {},
+    onTagEdit: (oldTag: TagModalTag, newName: String) -> Unit = { _, _ -> },
+    onTagDelete: (TagModalTag) -> Unit = {},
     onDismiss: () -> Unit
 ) {
     val titleFocus = FocusRequester()
@@ -70,14 +68,14 @@ internal fun BoxWithConstraintsScope.AddOrEditTagModal(
     var titleTextFieldValue by remember(id) {
         mutableStateOf(
             TextFieldValue(
-                initialTag?.name?.value ?: "",
-                selection = TextRange(initialTag?.name?.value?.length ?: 0)
+                initialTag?.name ?: "",
+                selection = TextRange(initialTag?.name?.length ?: 0)
             )
         )
     }
 
     var filename by remember(id) {
-        mutableStateOf(initialTag?.name?.value ?: "")
+        mutableStateOf(initialTag?.name ?: "")
     }
 
     IvyModal(
@@ -90,9 +88,7 @@ internal fun BoxWithConstraintsScope.AddOrEditTagModal(
                     if (initialTag != null) {
                         onTagEdit(
                             initialTag,
-                            initialTag.copy(
-                                name = NotBlankTrimmedString.unsafe(filename)
-                            )
+                            filename
                         )
                     } else {
                         onTagAdd(filename)

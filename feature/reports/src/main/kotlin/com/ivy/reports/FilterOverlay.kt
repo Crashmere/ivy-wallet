@@ -51,6 +51,7 @@ import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.period.displayLong
 import com.ivy.ui.period.LocalPeriodState
 import com.ivy.legacy.ui.tags.ShowTagModal
+import com.ivy.legacy.ui.tags.TagModalTag
 import com.ivy.ui.tags.AddTagButton
 import com.ivy.ui.animation.springBounce
 import com.ivy.ui.R
@@ -412,12 +413,12 @@ internal fun BoxWithConstraintsScope.FilterOverlay(
             // Reset TagList, avoids showing incorrect tag list if user had searched for a tag previously
             onTagSearch("")
         },
-        allTagList = allTags,
+        allTagList = allTags.map { it.toTagModalTag() }.toImmutableList(),
         selectedTagList = includedTags.map { it.value }.toImmutableList(),
         onTagAdd = {
             // Do Nothing
         },
-        onTagEdit = { oldTag, newTag ->
+        onTagEdit = { _, _ ->
             // Do Nothing
         },
         onTagDelete = {
@@ -446,12 +447,12 @@ internal fun BoxWithConstraintsScope.FilterOverlay(
             // Reset TagList, avoids showing incorrect tag list if user had searched for a tag previously
             onTagSearch("")
         },
-        allTagList = allTags,
+        allTagList = allTags.map { it.toTagModalTag() }.toImmutableList(),
         selectedTagList = excludedTags.map { it.value }.toImmutableList(),
         onTagAdd = {
             // Do Nothing
         },
-        onTagEdit = { oldTag, newTag ->
+        onTagEdit = { _, _ ->
             // Do Nothing
         },
         onTagDelete = {
@@ -1204,6 +1205,11 @@ private fun AddKeywordButton(text: String, modifier: Modifier = Modifier, onClic
 }
 
 private class AddKeywordButton
+
+private fun Tag.toTagModalTag() = TagModalTag(
+    id = id.value,
+    name = name.value,
+)
 
 @SuppressLint("ComposeContentEmitterReturningValues", "ComposeMultipleContentEmitters")
 @Composable
