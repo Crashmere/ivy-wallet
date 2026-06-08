@@ -22,7 +22,7 @@ import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.legacy.ui.theme.style
 import com.ivy.ui.compose.drawColoredShadow
 import com.ivy.ui.R
-import com.ivy.legacy.ui.theme.Gradient
+import com.ivy.ui.theme.colors.Gradient
 import com.ivy.legacy.ui.button.IvyButton
 import com.ivy.legacy.ui.icon.IvyIcon
 import com.ivy.legacy.ui.theme.dynamicContrast

@@ -37,8 +37,8 @@ import androidx.compose.ui.unit.dp
 import com.ivy.legacy.ui.button.IvyButton
 import com.ivy.legacy.ui.button.IvyCircleButton
 import com.ivy.legacy.ui.modal.IvyModal
-import com.ivy.legacy.ui.theme.Gradient
-import com.ivy.legacy.ui.theme.GradientGreen
+import com.ivy.ui.theme.colors.Gradient
+import com.ivy.ui.theme.colors.IvyGradients
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.theme.colors.IvyFixedColors.White
 import com.ivy.legacy.ui.theme.style
@@ -188,7 +188,7 @@ private fun DescriptionModalPositiveButton(
     IvyButton(
         modifier = if (testTag != null) modifier.testTag(testTag) else modifier,
         text = text,
-        backgroundGradient = GradientGreen,
+        backgroundGradient = IvyGradients.Green,
         iconStart = iconStart,
         onClick = onClick
     )

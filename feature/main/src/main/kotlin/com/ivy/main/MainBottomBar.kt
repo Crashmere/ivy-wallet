@@ -51,9 +51,8 @@ import com.ivy.ui.animation.springBounceFast
 import com.ivy.ui.compose.toDensityDp
 import com.ivy.ui.compose.toDensityPx
 import com.ivy.ui.R
-import com.ivy.legacy.ui.theme.Gradient
-import com.ivy.legacy.ui.theme.GradientGreen
-import com.ivy.legacy.ui.theme.GradientIvy
+import com.ivy.ui.theme.colors.Gradient
+import com.ivy.ui.theme.colors.IvyGradients
 import com.ivy.ui.theme.colors.IvyFixedColors.Ivy
 import com.ivy.ui.theme.colors.IvyFixedColors.White
 import com.ivy.legacy.ui.button.IvyCircleButton
@@ -229,11 +228,11 @@ internal fun BoxWithConstraintsScope.BottomBar(
         icon = R.drawable.ic_add,
         backgroundGradient = when (tab) {
             MainTab.HOME -> {
-                if (!expanded) GradientIvy else Gradient.solid(LegacyTheme.colors.gray)
+                if (!expanded) IvyGradients.Ivy else Gradient.solid(LegacyTheme.colors.gray)
             }
 
             MainTab.ACCOUNTS -> {
-                GradientGreen
+                IvyGradients.Green
             }
         },
         hasShadow = !expanded,
@@ -370,7 +369,7 @@ private fun AddIncomeButton(
             .size(FabButtonSize)
             .zIndex(200f),
         icon = R.drawable.ic_income,
-        backgroundGradient = GradientGreen,
+        backgroundGradient = IvyGradients.Green,
         tint = White,
         onClick = onAddIncome
     )
@@ -542,7 +541,7 @@ private fun AddTransferButton(
             .size(FabButtonSize)
             .zIndex(200f),
         icon = R.drawable.ic_transfer,
-        backgroundGradient = GradientIvy,
+        backgroundGradient = IvyGradients.Ivy,
         tint = White,
         onClick = onAddTransfer
     )

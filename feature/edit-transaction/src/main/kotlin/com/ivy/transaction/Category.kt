@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.Category
 import com.ivy.legacy.ui.button.IvyButton
-import com.ivy.legacy.ui.theme.Gradient
+import com.ivy.ui.theme.colors.Gradient
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.legacy.ui.theme.findContrastTextColor
 import com.ivy.legacy.ui.theme.style

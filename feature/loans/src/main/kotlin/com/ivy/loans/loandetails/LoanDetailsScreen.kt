@@ -65,9 +65,8 @@ import com.ivy.ui.navigation.navigation
 import com.ivy.ui.R
 import com.ivy.ui.time.TimeFormatter
 import com.ivy.data.model.currency.IvyCurrency
-import com.ivy.legacy.ui.theme.Gradient
-import com.ivy.legacy.ui.theme.GradientGreen
-import com.ivy.legacy.ui.theme.GradientIvy
+import com.ivy.ui.theme.colors.Gradient
+import com.ivy.ui.theme.colors.IvyGradients
 import com.ivy.ui.theme.colors.IvyFixedColors.Ivy
 import com.ivy.legacy.ui.money.AmountCurrencyB1
 import com.ivy.legacy.ui.money.BalanceRow
@@ -979,7 +978,7 @@ private fun LoanRecordAmountRow(
         val style = when (transactionType) {
             TransactionType.INCOME -> LoanRecordAmountTypeStyle(
                 icon = R.drawable.ic_income,
-                gradient = GradientGreen,
+                gradient = IvyGradients.Green,
                 iconTint = White,
                 textColor = LegacyTheme.colors.green
             )
@@ -993,7 +992,7 @@ private fun LoanRecordAmountRow(
 
             TransactionType.TRANSFER -> LoanRecordAmountTypeStyle(
                 icon = R.drawable.ic_transfer,
-                gradient = GradientIvy,
+                gradient = IvyGradients.Ivy,
                 iconTint = White,
                 textColor = Ivy
             )

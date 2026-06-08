@@ -48,7 +48,7 @@ import com.ivy.ui.R
 import com.ivy.data.model.currency.IvyCurrency
 import com.ivy.data.model.CreateAccountData
 import com.ivy.data.model.CreateLoanData
-import com.ivy.legacy.ui.theme.GradientIvy
+import com.ivy.ui.theme.colors.IvyGradients
 import com.ivy.ui.theme.colors.IvyFixedColors.Ivy
 import com.ivy.ui.theme.colors.IvyFixedColors.White
 import com.ivy.legacy.ui.modal.AccountModalData
@@ -528,7 +528,7 @@ private fun RowScope.SelectorButton(
             }
             .padding(vertical = 8.dp)
             .thenIf(selected) {
-                background(GradientIvy.asHorizontalBrush(), rFull)
+                background(IvyGradients.Ivy.asHorizontalBrush(), rFull)
             }
             .padding(vertical = 8.dp),
         text = label,

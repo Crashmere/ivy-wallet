@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.legacy.ui.theme.style
 import com.ivy.ui.R
-import com.ivy.legacy.ui.theme.GradientGreen
+import com.ivy.ui.theme.colors.IvyGradients
 
 @Composable
 internal fun ImportProcessing(
@@ -92,7 +92,7 @@ private fun ProgressBar(
                 modifier = Modifier
                     .weight(progressPercent.toFloat())
                     .height(32.dp)
-                    .background(GradientGreen.asHorizontalBrush(), LegacyTheme.shapes.rFull),
+                    .background(IvyGradients.Green.asHorizontalBrush(), LegacyTheme.shapes.rFull),
             )
         }
 

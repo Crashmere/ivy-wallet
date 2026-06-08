@@ -52,8 +52,8 @@ import com.ivy.ui.navigation.navigation
 import com.ivy.ui.navigation.screenScopedViewModel
 import com.ivy.ui.R
 import com.ivy.ui.rememberScrollPositionListState
-import com.ivy.legacy.ui.theme.Gradient
-import com.ivy.legacy.ui.theme.GradientGreen
+import com.ivy.ui.theme.colors.Gradient
+import com.ivy.ui.theme.colors.IvyGradients
 import com.ivy.ui.theme.colors.IvyFixedColors.White
 import com.ivy.legacy.ui.money.BalanceRow
 import com.ivy.legacy.ui.button.CircleButtonFilled
@@ -598,7 +598,7 @@ internal fun BoxWithConstraintsScope.SortModal(
 private fun SortModalSetButton(onClick: () -> Unit) {
     IvyButton(
         text = stringResource(R.string.set),
-        backgroundGradient = GradientGreen,
+        backgroundGradient = IvyGradients.Green,
         iconStart = R.drawable.ic_check,
         onClick = onClick
     )
@@ -609,7 +609,7 @@ private fun SelectTypeButton(
     text: String,
     @DrawableRes icon: Int,
     selected: Boolean,
-    selectedGradient: Gradient = GradientGreen,
+    selectedGradient: Gradient = IvyGradients.Green,
     textSelectedColor: Color = White,
     onClick: () -> Unit
 ) {

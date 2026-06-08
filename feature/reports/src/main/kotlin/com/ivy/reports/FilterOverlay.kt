@@ -56,7 +56,7 @@ import com.ivy.legacy.ui.tags.AddTagButton
 import com.ivy.legacy.ui.tags.ShowTagModal
 import com.ivy.ui.animation.springBounce
 import com.ivy.ui.R
-import com.ivy.legacy.ui.theme.GradientGreen
+import com.ivy.ui.theme.colors.IvyGradients
 import com.ivy.legacy.ui.button.CloseButton
 import com.ivy.legacy.ui.icon.ItemIconSDefaultIcon
 import com.ivy.legacy.ui.button.IvyButton
@@ -294,7 +294,7 @@ internal fun BoxWithConstraintsScope.FilterOverlay(
         IvyButton(
             text = stringResource(R.string.apply_filter),
             iconStart = R.drawable.ic_filter_xs,
-            backgroundGradient = GradientGreen,
+            backgroundGradient = IvyGradients.Green,
             padding = 10.dp,
         ) {
             if (localFilter != null) {

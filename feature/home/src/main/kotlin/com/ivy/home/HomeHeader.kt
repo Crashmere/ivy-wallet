@@ -44,8 +44,8 @@ import com.ivy.ui.compose.rememberSwipeListenerState
 import com.ivy.ui.animation.springBounce
 import com.ivy.ui.compose.verticalSwipeListener
 import com.ivy.ui.R
-import com.ivy.legacy.ui.theme.Gradient
-import com.ivy.legacy.ui.theme.GradientGreen
+import com.ivy.ui.theme.colors.Gradient
+import com.ivy.ui.theme.colors.IvyGradients
 import com.ivy.ui.theme.colors.IvyFixedColors.White
 import com.ivy.legacy.ui.money.BalanceRow
 import com.ivy.legacy.ui.icon.IvyIcon
@@ -281,7 +281,7 @@ private fun IncomeExpenses(
         HeaderCard(
             percentVisible = percentExpanded,
             icon = R.drawable.ic_income,
-            backgroundGradient = GradientGreen,
+            backgroundGradient = IvyGradients.Green,
             textColor = White,
             label = stringResource(R.string.income),
             currency = currency,

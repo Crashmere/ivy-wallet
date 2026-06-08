@@ -22,7 +22,7 @@ import com.ivy.importdata.csv.Spacer8
 import com.ivy.data.model.importing.ImportResult
 import com.ivy.data.model.currency.format
 import com.ivy.ui.R
-import com.ivy.legacy.ui.theme.GradientIvy
+import com.ivy.ui.theme.colors.IvyGradients
 import com.ivy.ui.theme.colors.IvyFixedColors.White
 import kotlinx.collections.immutable.persistentListOf
 
@@ -124,7 +124,7 @@ internal fun ImportResultUI(
                 .padding(horizontal = 16.dp),
             text = stringResource(R.string.finish),
             textColor = White,
-            backgroundGradient = GradientIvy,
+            backgroundGradient = IvyGradients.Ivy,
             hasNext = true,
             enabled = true
         ) {

@@ -48,9 +48,8 @@ import com.ivy.legacy.ui.button.IvyCircleButton
 import com.ivy.legacy.ui.icon.IvyIcon
 import com.ivy.legacy.ui.modal.IvyModal
 import com.ivy.legacy.ui.modal.ModalTitle
-import com.ivy.legacy.ui.theme.Gradient
-import com.ivy.legacy.ui.theme.GradientGreen
-import com.ivy.legacy.ui.theme.GradientIvy
+import com.ivy.ui.theme.colors.Gradient
+import com.ivy.ui.theme.colors.IvyGradients
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.theme.colors.IvyFixedColors.White
 import com.ivy.legacy.ui.theme.style
@@ -189,7 +188,7 @@ private fun RecurringRuleSetButton(
     IvyButton(
         modifier = modifier,
         text = stringResource(R.string.set),
-        backgroundGradient = GradientGreen,
+        backgroundGradient = IvyGradients.Green,
         iconStart = R.drawable.ic_check,
         enabled = enabled,
         onClick = onClick
@@ -247,7 +246,7 @@ private fun RowScope.TimesSelectorButton(
             }
             .padding(vertical = 8.dp)
             .thenIf(selected) {
-                background(GradientIvy.asHorizontalBrush(), rFull)
+                background(IvyGradients.Ivy.asHorizontalBrush(), rFull)
             }
             .padding(vertical = 8.dp),
         text = label,
@@ -449,7 +448,7 @@ private fun RepeatIntervalPickerRow(
             modifier = Modifier
                 .background(
                     brush = if (validInput) {
-                        GradientIvy.asHorizontalBrush()
+                        IvyGradients.Ivy.asHorizontalBrush()
                     } else {
                         Gradient.solid(LegacyTheme.colors.medium).asHorizontalBrush()
                     },

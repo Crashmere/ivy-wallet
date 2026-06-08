@@ -35,9 +35,8 @@ import com.ivy.ui.time.formatDateOnly
 import com.ivy.ui.time.formatDateOnlyWithYear
 import com.ivy.ui.R
 import com.ivy.legacy.ui.money.AmountCurrencyB1
-import com.ivy.legacy.ui.theme.Gradient
-import com.ivy.legacy.ui.theme.GradientGreen
-import com.ivy.legacy.ui.theme.GradientIvy
+import com.ivy.ui.theme.colors.Gradient
+import com.ivy.ui.theme.colors.IvyGradients
 import com.ivy.ui.theme.colors.IvyFixedColors.Ivy
 import com.ivy.ui.theme.colors.IvyFixedColors.White
 import com.ivy.legacy.ui.button.IvyButton
@@ -140,7 +139,7 @@ private fun PlannedPaymentAmountRow(
         val style = when (transactionType) {
             TransactionType.INCOME -> PlannedAmountTypeStyle(
                 icon = R.drawable.ic_income,
-                gradient = GradientGreen,
+                gradient = IvyGradients.Green,
                 iconTint = White,
                 textColor = LegacyTheme.colors.green
             )
@@ -154,7 +153,7 @@ private fun PlannedPaymentAmountRow(
 
             TransactionType.TRANSFER -> PlannedAmountTypeStyle(
                 icon = R.drawable.ic_transfer,
-                gradient = GradientIvy,
+                gradient = IvyGradients.Ivy,
                 iconTint = White,
                 textColor = Ivy
             )

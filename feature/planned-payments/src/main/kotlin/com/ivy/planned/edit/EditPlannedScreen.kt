@@ -41,7 +41,7 @@ import com.ivy.legacy.ui.modal.edit.AccountModal
 import com.ivy.legacy.ui.modal.edit.CategoryModal
 import com.ivy.legacy.ui.modal.CategoryModalData
 import com.ivy.legacy.ui.modal.edit.ChooseCategoryModal
-import com.ivy.legacy.ui.theme.GradientGreen
+import com.ivy.ui.theme.colors.IvyGradients
 import kotlinx.collections.immutable.persistentListOf
 import java.time.LocalDateTime
 
@@ -384,7 +384,7 @@ private fun EditPlannedSetButton(
     IvyButton(
         modifier = modifier,
         text = stringResource(R.string.set),
-        backgroundGradient = GradientGreen,
+        backgroundGradient = IvyGradients.Green,
         iconStart = R.drawable.ic_check,
         onClick = onClick
     )

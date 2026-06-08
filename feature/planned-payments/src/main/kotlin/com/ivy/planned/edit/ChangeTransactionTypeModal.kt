@@ -29,9 +29,8 @@ import com.ivy.legacy.ui.button.IvyButton
 import com.ivy.legacy.ui.icon.IvyIcon
 import com.ivy.legacy.ui.modal.IvyModal
 import com.ivy.legacy.ui.modal.ModalTitle
-import com.ivy.legacy.ui.theme.Gradient
-import com.ivy.legacy.ui.theme.GradientGreen
-import com.ivy.legacy.ui.theme.GradientIvy
+import com.ivy.ui.theme.colors.Gradient
+import com.ivy.ui.theme.colors.IvyGradients
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.theme.colors.IvyFixedColors.White
 import com.ivy.legacy.ui.theme.style
@@ -76,7 +75,7 @@ internal fun BoxWithConstraintsScope.ChangeTransactionTypeModal(
         TransactionTypeButton(
             transactionType = TransactionType.INCOME,
             selected = transactionType == TransactionType.INCOME,
-            selectedGradient = GradientGreen,
+            selectedGradient = IvyGradients.Green,
             textSelectedColor = White
         ) {
             transactionType = TransactionType.INCOME
@@ -101,7 +100,7 @@ internal fun BoxWithConstraintsScope.ChangeTransactionTypeModal(
             TransactionTypeButton(
                 transactionType = TransactionType.TRANSFER,
                 selected = transactionType == TransactionType.TRANSFER,
-                selectedGradient = GradientIvy,
+                selectedGradient = IvyGradients.Ivy,
                 textSelectedColor = White
             ) {
                 transactionType = TransactionType.TRANSFER
@@ -126,7 +125,7 @@ private fun save(
 private fun TransactionTypeModalSetButton(onClick: () -> Unit) {
     IvyButton(
         text = stringResource(R.string.set),
-        backgroundGradient = GradientGreen,
+        backgroundGradient = IvyGradients.Green,
         iconStart = R.drawable.ic_check,
         onClick = onClick
     )

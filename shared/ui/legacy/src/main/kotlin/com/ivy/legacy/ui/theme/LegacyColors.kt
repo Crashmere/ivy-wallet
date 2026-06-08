@@ -2,10 +2,12 @@ package com.ivy.legacy.ui.theme
 
 import androidx.annotation.ColorInt
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.core.graphics.ColorUtils
+import com.ivy.ui.theme.colors.IvyGradients
+
+typealias Gradient = com.ivy.ui.theme.colors.Gradient
 
 val White = Color(0xFFFAFAFA)
 
@@ -61,11 +63,11 @@ internal val MediumWhite = Color(0xFFEFEEF0)
 
 internal val GradientRed = Gradient(Red, Color(0xFFFF99AB))
 
-val GradientGreen = Gradient(Green, Color(0xFF49F2C8))
+val GradientGreen = IvyGradients.Green
 
 internal val GradientOrangeRevert = Gradient(Color(0xFFF2CD9E), Orange)
 
-val GradientIvy = Gradient(Ivy, Color(0xFFAA99FF))
+val GradientIvy = IvyGradients.Ivy
 
 @Composable
 internal fun mediumBlur() = LegacyTheme.colors.medium.copy(alpha = 0.95f)
@@ -73,21 +75,8 @@ internal fun mediumBlur() = LegacyTheme.colors.medium.copy(alpha = 0.95f)
 @Composable
 internal fun gradientExpenses() = Gradient(LegacyTheme.colors.pureInverse, LegacyTheme.colors.gray)
 
-data class Gradient(
-    val startColor: Color,
-    val endColor: Color
-) {
-    companion object {
-        fun solid(color: Color) = Gradient(color, color)
-
-        @Composable
-        internal fun black() = Gradient(LegacyTheme.colors.gray, LegacyTheme.colors.pureInverse)
-    }
-
-    fun asHorizontalBrush() = Brush.horizontalGradient(colors = listOf(startColor, endColor))
-
-    internal fun asVerticalBrush() = Brush.verticalGradient(colors = listOf(startColor, endColor))
-}
+@Composable
+internal fun gradientBlack() = Gradient(LegacyTheme.colors.gray, LegacyTheme.colors.pureInverse)
 
 fun findContrastTextColor(backgroundColor: Color): Color {
     return if (isDarkColor(backgroundColor.toArgb())) White else Black

@@ -24,8 +24,8 @@ import com.ivy.legacy.ui.theme.style
 import com.ivy.ui.compose.navigationBarInset
 import com.ivy.ui.compose.toDensityDp
 import com.ivy.ui.R
-import com.ivy.legacy.ui.theme.Gradient
-import com.ivy.legacy.ui.theme.GradientGreen
+import com.ivy.ui.theme.colors.Gradient
+import com.ivy.ui.theme.colors.IvyGradients
 import com.ivy.ui.theme.colors.IvyFixedColors.White
 import com.ivy.legacy.ui.button.CloseButton
 import com.ivy.legacy.ui.button.IvyButton
@@ -64,7 +64,7 @@ internal fun BoxWithConstraintsScope.PieChartStatisticBottomBar(
             } else {
                 stringResource(id = R.string.add_expense)
             },
-            backgroundGradient = if (isIncome) GradientGreen else Gradient.solid(LegacyTheme.colors.pureInverse),
+            backgroundGradient = if (isIncome) IvyGradients.Green else Gradient.solid(LegacyTheme.colors.pureInverse),
             textStyle = LegacyTheme.typo.b2.style(
                 color = if (isIncome) White else LegacyTheme.colors.pure,
                 fontWeight = FontWeight.ExtraBold

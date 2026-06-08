@@ -24,7 +24,7 @@ import com.ivy.data.model.TransactionType
 import com.ivy.legacy.ui.button.CloseButton
 import com.ivy.legacy.ui.button.IvyCircleButton
 import com.ivy.legacy.ui.button.IvyOutlinedButton
-import com.ivy.legacy.ui.theme.Gradient
+import com.ivy.ui.theme.colors.Gradient
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.theme.colors.IvyFixedColors.White
 import com.ivy.ui.R

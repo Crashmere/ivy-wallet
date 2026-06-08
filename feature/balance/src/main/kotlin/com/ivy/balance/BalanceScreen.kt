@@ -36,7 +36,7 @@ import com.ivy.data.model.currency.format
 import com.ivy.ui.period.LocalPeriodState
 import com.ivy.ui.navigation.navigation
 import com.ivy.ui.R
-import com.ivy.legacy.ui.theme.Gradient
+import com.ivy.ui.theme.colors.Gradient
 import com.ivy.ui.theme.colors.IvyFixedColors.White
 import com.ivy.legacy.ui.money.BalanceRow
 import com.ivy.legacy.ui.button.IvyCircleButton

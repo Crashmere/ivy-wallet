@@ -59,8 +59,8 @@ import com.ivy.ui.platform.buildInfoProvider
 import com.ivy.ui.platform.fileSharer
 import com.ivy.ui.R
 import com.ivy.data.model.currency.IvyCurrency
-import com.ivy.legacy.ui.theme.Gradient
-import com.ivy.legacy.ui.theme.GradientGreen
+import com.ivy.ui.theme.colors.Gradient
+import com.ivy.ui.theme.colors.IvyGradients
 import com.ivy.ui.theme.colors.IvyFixedColors.White
 import com.ivy.legacy.ui.modal.CurrencyModal
 import com.ivy.legacy.ui.modal.DeleteModal
@@ -512,7 +512,7 @@ private fun DataManagementSection(
     SettingsPrimaryButton(
         icon = R.drawable.ic_export_csv,
         text = stringResource(R.string.import_data),
-        backgroundGradient = GradientGreen
+        backgroundGradient = IvyGradients.Green
     ) {
         onImportData()
     }

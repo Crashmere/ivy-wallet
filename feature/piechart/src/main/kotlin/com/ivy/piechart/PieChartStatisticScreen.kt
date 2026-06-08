@@ -62,8 +62,8 @@ import com.ivy.ui.navigation.navigation
 import com.ivy.ui.navigation.screenScopedViewModel
 import com.ivy.ui.R
 import com.ivy.ui.rememberScrollPositionListState
-import com.ivy.legacy.ui.theme.Gradient
-import com.ivy.legacy.ui.theme.GradientGreen
+import com.ivy.ui.theme.colors.Gradient
+import com.ivy.ui.theme.colors.IvyGradients
 import com.ivy.ui.theme.colors.IvyFixedColors.White
 import com.ivy.legacy.ui.money.BalanceRow
 import com.ivy.legacy.ui.button.CloseButton
@@ -337,7 +337,7 @@ private fun Header(
                 val backgroundGradient = if (transactionType == TransactionType.EXPENSE) {
                     Gradient(LegacyTheme.colors.pureInverse, LegacyTheme.colors.gray)
                 } else {
-                    GradientGreen
+                    IvyGradients.Green
                 }
                 PieChartCircleButtonFilledGradient(
                     modifier = Modifier
