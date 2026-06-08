@@ -184,7 +184,7 @@ private fun handleOperator(expression: String, operator: String): String {
     }
 }
 
-fun Char.isOperator(): Boolean = when (this) {
+private fun Char.isOperator(): Boolean = when (this) {
     '+', '−', '×', '÷' -> true
     else -> false
 }

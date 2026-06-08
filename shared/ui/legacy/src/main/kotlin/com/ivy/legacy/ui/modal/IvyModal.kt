@@ -236,7 +236,7 @@ fun AddModalBackHandling(
 
 @Suppress("ParameterNaming")
 @Composable
-fun ModalActionsRow(
+private fun ModalActionsRow(
     visible: Boolean,
     modalPercentVisible: Float,
     keyboardShownInsetDp: Dp,

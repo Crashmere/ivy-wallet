@@ -21,7 +21,7 @@ import com.ivy.legacy.ui.component.IvyCircleButton
 import com.ivy.legacy.ui.component.IvyOutlinedButton
 
 @Composable
-fun ModalDynamicPrimaryAction(
+internal fun ModalDynamicPrimaryAction(
     initialEmpty: Boolean,
     initialChanged: Boolean,
 
@@ -142,7 +142,7 @@ fun ModalAdd(
 }
 
 @Composable
-fun ModalNegativeButton(
+internal fun ModalNegativeButton(
     text: String,
     @DrawableRes iconStart: Int,
     enabled: Boolean = true,
@@ -208,7 +208,7 @@ fun ModalTitle(
 }
 
 @Composable
-fun ModalSkip(
+internal fun ModalSkip(
     text: String = stringResource(R.string.skip),
     onClick: () -> Unit
 ) {

@@ -186,7 +186,7 @@ fun BoxWithConstraintsScope.AmountModal(
 
 @SuppressLint("ComposeModifierMissing")
 @Composable
-fun AmountCurrency(
+private fun AmountCurrency(
     amount: String,
     currency: String,
 ) {
@@ -217,7 +217,7 @@ fun AmountCurrency(
 }
 
 @Composable
-fun AmountInput(
+private fun AmountInput(
     currency: String,
     amount: String,
     decimalCountMax: Int = 2,
@@ -302,7 +302,7 @@ private fun formatNumber(number: String): String? {
 )
 @Suppress("ParameterNaming")
 @Composable
-fun AmountKeyboard(
+internal fun AmountKeyboard(
     forCalculator: Boolean,
     onNumberPressed: (String) -> Unit,
     onDecimalPoint: () -> Unit,
@@ -411,7 +411,7 @@ fun AmountKeyboard(
 
 @Composable
 @Suppress("ParameterNaming")
-fun CircleNumberButton(
+internal fun CircleNumberButton(
     forCalculator: Boolean,
     value: String,
     onNumberPressed: (String) -> Unit,
@@ -431,7 +431,7 @@ fun CircleNumberButton(
 
 @SuppressLint("ComposeModifierMissing")
 @Composable
-fun KeypadCircleButton(
+internal fun KeypadCircleButton(
     text: String,
     testTag: String,
     textColor: Color = LegacyTheme.colors.pureInverse,

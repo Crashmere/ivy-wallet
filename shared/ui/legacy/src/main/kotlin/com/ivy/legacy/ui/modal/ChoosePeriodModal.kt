@@ -237,7 +237,7 @@ private fun ColumnScope.ChooseMonth(
     }
 }
 
-data class MonthYear(
+private data class MonthYear(
     val month: com.ivy.ui.period.Month,
     val year: Int
 ) {
