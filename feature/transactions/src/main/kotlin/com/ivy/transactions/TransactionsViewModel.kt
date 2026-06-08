@@ -27,8 +27,8 @@ import com.ivy.domain.usecase.category.GetUnspecifiedCategoryTransactionsSummary
 import com.ivy.domain.usecase.category.UpdateCategoryUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.domain.usecase.exchange.ExchangeAmountUseCase
-import com.ivy.domain.usecase.transaction.MapTransactionsToLegacyUseCase
-import com.ivy.domain.usecase.transaction.MapTransactionsToLegacyWithTagsUseCase
+import com.ivy.domain.usecase.transaction.MapTransactionsToLegacyTransactionsUseCase
+import com.ivy.domain.usecase.transaction.MapTransactionsToLegacyTransactionsWithTagsUseCase
 import com.ivy.legacy.ui.theme.system.RedLight
 import com.ivy.domain.preferences.toggles.PreferenceToggleService
 import com.ivy.domain.preferences.toggles.PreferenceToggles
@@ -95,8 +95,8 @@ class TransactionsViewModel @Inject constructor(
     private val calculateAccountIncomeExpenseUseCase: CalculateAccountIncomeExpenseUseCase,
     private val calculateLegacyTransactionsIncomeExpenseUseCase: CalculateLegacyTransactionsIncomeExpenseUseCase,
     private val exchangeAmountUseCase: ExchangeAmountUseCase,
-    private val mapTransactionsToLegacyUseCase: MapTransactionsToLegacyUseCase,
-    private val mapTransactionsToLegacyWithTagsUseCase: MapTransactionsToLegacyWithTagsUseCase,
+    private val mapTransactionsToLegacyTransactionsUseCase: MapTransactionsToLegacyTransactionsUseCase,
+    private val mapTransactionsToLegacyTransactionsWithTagsUseCase: MapTransactionsToLegacyTransactionsWithTagsUseCase,
     private val resourceProvider: ResourceProvider,
     private val preferenceToggleService: PreferenceToggleService,
     private val preferenceToggles: PreferenceToggles
@@ -375,7 +375,7 @@ class TransactionsViewModel @Inject constructor(
 
         history.value = buildLegacyTransactionHistoryItemsUseCase(
             baseCurrency = baseCurrency.value,
-            transactions = mapTransactionsToLegacyWithTagsUseCase(
+            transactions = mapTransactionsToLegacyTransactionsWithTagsUseCase(
                 getAccountTransactionsUseCase(
                     accountId = AccountId(initialAccount.id),
                     range = range.toCloseTimeRange()
@@ -388,7 +388,7 @@ class TransactionsViewModel @Inject constructor(
         }
         upcomingIncome.doubleValue = upcomingSummary.income
         upcomingExpenses.doubleValue = upcomingSummary.expenses
-        upcoming.value = mapTransactionsToLegacyUseCase(upcomingSummary.transactions)
+        upcoming.value = mapTransactionsToLegacyTransactionsUseCase(upcomingSummary.transactions)
             .toImmutableList()
 
         val overdueSummary = withContext(Dispatchers.IO) {
@@ -396,7 +396,7 @@ class TransactionsViewModel @Inject constructor(
         }
         overdueIncome.doubleValue = overdueSummary.income
         overdueExpenses.doubleValue = overdueSummary.expenses
-        overdue.value = mapTransactionsToLegacyUseCase(overdueSummary.transactions)
+        overdue.value = mapTransactionsToLegacyTransactionsUseCase(overdueSummary.transactions)
             .toImmutableList()
     }
 

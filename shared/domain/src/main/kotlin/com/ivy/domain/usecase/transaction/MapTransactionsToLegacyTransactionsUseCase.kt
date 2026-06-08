@@ -5,7 +5,7 @@ import com.ivy.data.model.Transaction
 import com.ivy.domain.mapper.legacy.toLegacyTransaction
 import javax.inject.Inject
 
-class MapTransactionsToLegacyUseCase @Inject constructor() {
+class MapTransactionsToLegacyTransactionsUseCase @Inject constructor() {
     operator fun invoke(transactions: List<Transaction>): List<LegacyTransaction> {
         return transactions.map { it.toLegacyTransaction() }
     }

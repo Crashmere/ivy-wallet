@@ -646,7 +646,7 @@
 - 预算创建、编辑和删除已从旧 `BudgetCreator` 拆成 `CreateBudgetUseCase`、`UpdateBudgetUseCase` 和 `DeleteBudgetUseCase`；预算页只依赖正式 use case，旧 `BudgetCreator` 已删除。
 - 账户创建和编辑已从旧 `AccountCreator` 拆成 `CreateAccountWithBalanceUseCase` 和 `UpdateAccountWithBalanceUseCase`；主页面、编辑交易、计划付款、借贷和交易详情页不再注入旧 creator，账户保存后自动生成余额调平交易的行为保持不变。
 - 分类创建和编辑已从旧 `CategoryCreator` 拆成 `CreateCategoryUseCase` 和 `UpdateCategoryUseCase`；分类页、编辑交易、计划付款和交易详情页不再注入旧 creator，分类排序号、图标、颜色和空名称校验保持不变。
-- 首页数据边界已收敛：新增 `GetCustomerJourneyStatsUseCase` 封装首页引导卡片需要的交易/计划付款计数，新增 `MapTransactionsToLegacyUseCase` 封装新旧交易模型转换，`:feature:home` 不再直接依赖 `TransactionRepository`、`PlannedPaymentRuleDao` 或 `TransactionMapper`，并已去掉对 `shared:data:core` 的直接依赖。
+- 首页数据边界已收敛：新增 `GetCustomerJourneyStatsUseCase` 封装首页引导卡片需要的交易/计划付款计数，新增 `MapTransactionsToLegacyTransactionsUseCase` 封装新旧交易模型转换，`:feature:home` 不再直接依赖 `TransactionRepository`、`PlannedPaymentRuleDao` 或 `TransactionMapper`，并已去掉对 `shared:data:core` 的直接依赖。
 - 首页的偏好和交易存在性读取继续收窄：新增 `HasTransactionsUseCase` 替代旧 `HasTrnsAct`，隐藏余额/收入状态直接读取 `AppPreferences`，旧 `HasTrnsAct`、`ShouldHideBalanceAct` 和 `ShouldHideIncomeAct` 已删除。
 - 首页缓冲金额差值已直接内联为 `balance - bufferAmount`，无业务增量的旧 `CalcBufferDiffAct` 已删除。
 - 借贷页数据边界已收敛：新增 `GetLoansUseCase`、`GetLoanUseCase`、`GetLoanRecordsUseCase`、`ReorderLoansUseCase`、`GetLoanTransactionUseCase` 和 `HasLoanRecordTransactionUseCase`，借贷列表和借贷详情不再直接注入 `LoanRecordDao`、`WriteLoanDao`、`TransactionRepository` 或 `TransactionMapper`；旧 `LoansAct/LoanByIdAct` 已删除，`:feature:loans` 已去掉对 `shared:data:core` 的直接依赖。
@@ -660,8 +660,8 @@
 - legacy 交易模型的计划付款支付/跳过处理已从 `PlannedPaymentsLogic` 拆到 `PayOrSkipLegacyPlannedTransactionUseCase` 和 `PayOrSkipLegacyPlannedTransactionsUseCase`；首页、交易详情、编辑交易和报表页不再为了 legacy 交易处理注入旧逻辑。
 - 新交易模型的计划付款支付/跳过处理已从 `PlannedPaymentsLogic` 拆到 `PayOrSkipPlannedTransactionUseCase` 和 `PayOrSkipPlannedTransactionsUseCase`；报表页不再注入旧逻辑，`PlannedPaymentsLogic` 已删除。
 - 编辑交易页数据边界已收敛：新增 `SaveLegacyTransactionUseCase`、`DeleteTransactionUseCase`、`GetLoanUseCase` 和一组标签读写/关联用例，交易保存、删除、复制、标签创建、标签编辑、标签删除和标签关联不再直接调用数据层 repository/mapper，`:feature:edit-transaction` 已去掉对 `shared:data:core` 的直接依赖。
-- 交易详情页数据边界已收敛：新增 `GetAccountUseCase`、`DeleteAccountUseCase`、`DeleteCategoryUseCase` 和 `MapTransactionsToLegacyWithTagsUseCase`，账户详情、分类详情、账户删除、分类删除和带标签历史列表不再直接注入数据层 repository/DAO/mapper，`:feature:transactions` 已去掉对 `shared:data:core` 的直接依赖。
-- 报表页数据边界已收敛：新增 `GetTransactionsUseCase` 和 `GetTransactionsByTagsUseCase`，报表筛选不再直接读取 `TransactionRepository/TagRepository`，新旧交易模型转换改走 `MapTransactionsToLegacyUseCase`；`ExportCsvUseCase` 的自定义导出回调不再暴露 `TransactionRepository` receiver，默认全量导出也改走 `GetTransactionsUseCase`，`:feature:reports` 已去掉对 `shared:data:core` 的直接依赖。
+- 交易详情页数据边界已收敛：新增 `GetAccountUseCase`、`DeleteAccountUseCase`、`DeleteCategoryUseCase` 和 `MapTransactionsToLegacyTransactionsWithTagsUseCase`，账户详情、分类详情、账户删除、分类删除和带标签历史列表不再直接注入数据层 repository/DAO/mapper，`:feature:transactions` 已去掉对 `shared:data:core` 的直接依赖。
+- 报表页数据边界已收敛：新增 `GetTransactionsUseCase` 和 `GetTransactionsByTagsUseCase`，报表筛选不再直接读取 `TransactionRepository/TagRepository`，新旧交易模型转换改走 `MapTransactionsToLegacyTransactionsUseCase`；`ExportCsvUseCase` 的自定义导出回调不再暴露 `TransactionRepository` receiver，默认全量导出也改走 `GetTransactionsUseCase`，`:feature:reports` 已去掉对 `shared:data:core` 的直接依赖。
 - 导入页数据边界已收敛：`ImportResult/ImportCsvRow` 已迁到 `shared:data:model`，备份恢复改走 `ImportBackupUseCase`，手动 CSV 文件读取改走 `ReadTextFileUseCase`，CSV 导入读取/保存改走 `GetLegacyAccountsUseCase/SaveAccountUseCase/SaveCategoryUseCase/SaveLegacyTransactionUseCase`；`:feature:import-data` 已去掉对 `shared:data:core` 的直接依赖。
 - 交易读取 action 已进一步收敛：搜索改走 `GetTransactionsUseCase`，预算和历史分组改走 `GetTransactionsBetweenUseCase`，首页到期交易改走 `GetDueTransactionsUseCase`，编辑交易按 ID 读取改走 `GetLegacyTransactionUseCase`，分类/饼图的账户过滤读取改走 `GetLegacyTransactionsForAccountsUseCase`；旧 `AllTrnsAct`、`HistoryTrnsAct`、`DueTrnsAct`、`TrnByIdAct` 和 `TrnsWithRangeAndAccFiltersAct` 已删除。
 - 账户交易读取已收敛到 `GetAccountTransactionsUseCase`；账户余额、账户收支、首页钱包收支和交易详情账户历史不再依赖旧 `AccTrnsAct`，金额折算和统计口径保持不变。
@@ -836,6 +836,7 @@
 - 剩余旧模型全限定类型写法已收敛：报表页面状态/事件和 legacy 交易 helper 不再散落 `com.ivy.data.model.legacy.LegacyTransaction` FQN，而是统一通过 import 表达旧模型边界。
 - 正式账户到旧账户的 mapper 已从泛化 `toLegacyDomain()` 改名为 `toLegacyAccount()`，调用方现在能直接看出这是账户模型兼容转换，而不是泛化 legacy domain 转换。
 - 正式交易到旧交易的 mapper 已从泛化 `toLegacy()`/`toDomain()` 改名为 `toLegacyTransaction()`/`toTransaction()`；调用方现在能明确区分正式交易模型和旧交易兼容模型之间的转换，避免和 data-core 的实体 `toDomain()` 命名混在一起。
+- 交易列表、首页和报表使用的新旧交易批量转换 use case 已从 `MapTransactionsToLegacy*` 改名为 `MapTransactionsToLegacyTransactions*`，避免把 legacy 误读成整套旧 domain 边界。
 - 功能开关偏好门面已从 `PreferenceToggleRepository` 改名为 `PreferenceToggleService`：它只负责把 domain 层 `BoolPreference` 映射到底层 `PreferenceToggleStore`，不再用 repository 命名暗示数据仓库职责。
 - 旧 `Logic` 注入变量名已继续收敛：`LegacyExchangeRatesUseCase` 的调用方统一使用 `exchangeRatesUseCase`，首页客户旅程卡片也改用 `customerJourneyCardsProvider` 命名，避免把 provider/use case 误读成旧 logic 层。
 - 旧到期交易 UI 模型 `LegacyDueSection` 的 `trns` 字段已改为 `transactions`，legacy 交易列表内部私有 `trnItems/trnCount` 也改为完整命名；首页、报表和交易页调用方同步更新，展示行为不变。

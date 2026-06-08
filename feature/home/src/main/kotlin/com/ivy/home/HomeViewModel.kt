@@ -18,7 +18,7 @@ import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.domain.usecase.currency.SetBaseCurrencyUseCase
 import com.ivy.domain.usecase.exchange.SyncExchangeRatesUseCase
 import com.ivy.domain.usecase.transaction.HasTransactionsUseCase
-import com.ivy.domain.usecase.transaction.MapTransactionsToLegacyUseCase
+import com.ivy.domain.usecase.transaction.MapTransactionsToLegacyTransactionsUseCase
 import com.ivy.domain.usecase.settings.GetBufferAmountUseCase
 import com.ivy.domain.usecase.settings.GetHideCurrentBalancePreferenceUseCase
 import com.ivy.domain.usecase.settings.GetHideIncomePreferenceUseCase
@@ -90,7 +90,7 @@ class HomeViewModel @Inject constructor(
     private val getHideIncomePreference: GetHideIncomePreferenceUseCase,
     private val syncExchangeRatesUseCase: SyncExchangeRatesUseCase,
     private val hasTransactionsUseCase: HasTransactionsUseCase,
-    private val mapTransactionsToLegacyUseCase: MapTransactionsToLegacyUseCase,
+    private val mapTransactionsToLegacyTransactionsUseCase: MapTransactionsToLegacyTransactionsUseCase,
     private val preferenceToggles: PreferenceToggles,
     private val preferenceToggleService: PreferenceToggleService,
     private val periodState: PeriodState,
@@ -372,7 +372,7 @@ class HomeViewModel @Inject constructor(
             range = timeRange
         )
         upcoming = LegacyDueSection(
-            transactions = mapTransactionsToLegacyUseCase(upcomingResult.transactions).toImmutableList(),
+            transactions = mapTransactionsToLegacyTransactionsUseCase(upcomingResult.transactions).toImmutableList(),
             stats = upcomingResult.incomeExpense,
             expanded = upcoming.expanded
         )
@@ -382,7 +382,7 @@ class HomeViewModel @Inject constructor(
             toRange = timeRange.to
         )
         overdue = LegacyDueSection(
-            transactions = mapTransactionsToLegacyUseCase(overdueResult.transactions).toImmutableList(),
+            transactions = mapTransactionsToLegacyTransactionsUseCase(overdueResult.transactions).toImmutableList(),
             stats = overdueResult.incomeExpense,
             expanded = overdue.expanded
         )

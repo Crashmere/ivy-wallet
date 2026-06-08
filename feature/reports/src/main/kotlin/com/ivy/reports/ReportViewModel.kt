@@ -37,7 +37,7 @@ import com.ivy.domain.usecase.planned.PayOrSkipPlannedTransactionUseCase
 import com.ivy.domain.usecase.planned.PayOrSkipPlannedTransactionsUseCase
 import com.ivy.domain.usecase.transaction.GetTransactionsByTagsUseCase
 import com.ivy.domain.usecase.transaction.GetTransactionsUseCase
-import com.ivy.domain.usecase.transaction.MapTransactionsToLegacyUseCase
+import com.ivy.domain.usecase.transaction.MapTransactionsToLegacyTransactionsUseCase
 import com.ivy.legacy.ui.state.PeriodState
 import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.ui.ComposeViewModel
@@ -93,7 +93,7 @@ class ReportViewModel @Inject constructor(
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
     private val getTransactionsUseCase: GetTransactionsUseCase,
     private val getTransactionsByTagsUseCase: GetTransactionsByTagsUseCase,
-    private val mapTransactionsToLegacyUseCase: MapTransactionsToLegacyUseCase,
+    private val mapTransactionsToLegacyTransactionsUseCase: MapTransactionsToLegacyTransactionsUseCase,
     private val getTagsUseCase: GetTagsUseCase,
     private val searchTagsUseCase: SearchTagsUseCase,
     private val exportCsvUseCase: ExportCsvUseCase,
@@ -326,13 +326,13 @@ class ReportViewModel @Inject constructor(
                 upcomingIncomeExpenseTransferPair = upcomingIncomeExpense,
                 overDueIncomeExpenseTransferPair = overdueIncomeExpense,
                 history = historyWithDateDividers.await().toImmutableList(),
-                upcomingTransactions = mapTransactionsToLegacyUseCase(upcomingTransactionsList)
+                upcomingTransactions = mapTransactionsToLegacyTransactionsUseCase(upcomingTransactionsList)
                     .toImmutableList(),
-                overdueTransactions = mapTransactionsToLegacyUseCase(overdue).toImmutableList(),
+                overdueTransactions = mapTransactionsToLegacyTransactionsUseCase(overdue).toImmutableList(),
                 accounts = selectedAccounts.toImmutableList(),
                 reportFilter = reportFilter,
                 accountIdFilters = accountFilterIdList.await().toImmutableList(),
-                transactions = mapTransactionsToLegacyUseCase(transactionsList).toImmutableList(),
+                transactions = mapTransactionsToLegacyTransactionsUseCase(transactionsList).toImmutableList(),
                 balanceValue = displayBalance
             )
 
