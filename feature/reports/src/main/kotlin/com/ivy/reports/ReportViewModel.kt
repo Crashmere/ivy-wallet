@@ -32,8 +32,8 @@ import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.domain.usecase.exchange.ExchangeTransactionAmountUseCase
 import com.ivy.domain.usecase.tag.GetTagsUseCase
 import com.ivy.domain.usecase.tag.SearchTagsUseCase
-import com.ivy.domain.usecase.planned.PayOrSkipLegacyPlannedTransactionUseCase
-import com.ivy.domain.usecase.planned.PayOrSkipLegacyPlannedTransactionsUseCase
+import com.ivy.domain.usecase.planned.PayOrSkipPlannedTransactionByIdUseCase
+import com.ivy.domain.usecase.planned.PayOrSkipPlannedTransactionsByIdsUseCase
 import com.ivy.domain.usecase.transaction.GetTransactionsByTagsUseCase
 import com.ivy.domain.usecase.transaction.GetTransactionsUseCase
 import com.ivy.domain.usecase.transaction.MapTransactionsToLegacyTransactionsUseCase
@@ -76,8 +76,8 @@ private val UnspecifiedCategoryColorArgb = 0xFF939199.toInt()
 @Stable
 @HiltViewModel
 internal class ReportViewModel @Inject internal constructor(
-    private val payOrSkipLegacyPlannedTransactionUseCase: PayOrSkipLegacyPlannedTransactionUseCase,
-    private val payOrSkipLegacyPlannedTransactionsUseCase: PayOrSkipLegacyPlannedTransactionsUseCase,
+    private val payOrSkipPlannedTransactionByIdUseCase: PayOrSkipPlannedTransactionByIdUseCase,
+    private val payOrSkipPlannedTransactionsByIdsUseCase: PayOrSkipPlannedTransactionsByIdsUseCase,
     private val periodState: PeriodState,
     private val exchangeTransactionAmountUseCase: ExchangeTransactionAmountUseCase,
     private val getAccountsUseCase: GetAccountsUseCase,
@@ -572,8 +572,7 @@ internal class ReportViewModel @Inject internal constructor(
 
     private suspend fun payOrGetTransaction(transactionId: UUID) {
         withContext(Dispatchers.Main) {
-            val transaction = findDueTransaction(transactionId) ?: return@withContext
-            if (payOrSkipLegacyPlannedTransactionUseCase(transaction) != null) {
+            if (payOrSkipPlannedTransactionByIdUseCase(transactionId)) {
                 start()
                 setFilter(filter)
             }
@@ -594,12 +593,11 @@ internal class ReportViewModel @Inject internal constructor(
 
     private suspend fun skipTransaction(transactionId: UUID) {
         withContext(Dispatchers.Main) {
-            val transaction = findDueTransaction(transactionId) ?: return@withContext
-            val paidTransaction = payOrSkipLegacyPlannedTransactionUseCase(
-                transaction = transaction,
+            val paidTransaction = payOrSkipPlannedTransactionByIdUseCase(
+                transactionId = transactionId,
                 skipTransaction = true
             )
-            if (paidTransaction != null) {
+            if (paidTransaction) {
                 start()
                 setFilter(filter)
             }
@@ -608,31 +606,15 @@ internal class ReportViewModel @Inject internal constructor(
 
     private suspend fun skipTransactions(transactionIds: List<UUID>) {
         withContext(Dispatchers.Main) {
-            val transactions = findDueTransactions(transactionIds)
-            if (transactions.isEmpty()) return@withContext
-
-            val paidTransactions = payOrSkipLegacyPlannedTransactionsUseCase(
-                transactions = transactions,
+            val paidTransactions = payOrSkipPlannedTransactionsByIdsUseCase(
+                transactionIds = transactionIds,
                 skipTransaction = true
             )
-            if (paidTransactions.isNotEmpty()) {
+            if (paidTransactions > 0) {
                 start()
                 setFilter(filter)
             }
         }
-    }
-
-    private fun findDueTransaction(transactionId: UUID): LegacyTransaction? {
-        return upcoming.transactions
-            .plus(overdue.transactions)
-            .firstOrNull { it.id == transactionId }
-    }
-
-    private fun findDueTransactions(transactionIds: List<UUID>): List<LegacyTransaction> {
-        val transactionIdSet = transactionIds.toSet()
-        return upcoming.transactions
-            .plus(overdue.transactions)
-            .filter { it.id in transactionIdSet }
     }
 }
 

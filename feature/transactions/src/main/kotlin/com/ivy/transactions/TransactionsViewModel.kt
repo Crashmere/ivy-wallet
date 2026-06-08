@@ -45,8 +45,8 @@ import com.ivy.domain.usecase.account.GetAccountsUseCase
 import com.ivy.domain.usecase.account.GetAccountOverdueTransactionsSummaryUseCase
 import com.ivy.domain.usecase.account.GetAccountUpcomingTransactionsSummaryUseCase
 import com.ivy.domain.usecase.account.UpdateAccountWithBalanceUseCase
-import com.ivy.domain.usecase.planned.PayOrSkipLegacyPlannedTransactionUseCase
-import com.ivy.domain.usecase.planned.PayOrSkipLegacyPlannedTransactionsUseCase
+import com.ivy.domain.usecase.planned.PayOrSkipPlannedTransactionByIdUseCase
+import com.ivy.domain.usecase.planned.PayOrSkipPlannedTransactionsByIdsUseCase
 import com.ivy.domain.usecase.settings.GetTransfersAsIncomeExpensePreferenceUseCase
 import com.ivy.domain.usecase.transaction.BuildLegacyTransactionHistoryItemsUseCase
 import com.ivy.domain.usecase.transaction.CalculateLegacyTransactionsIncomeExpenseUseCase
@@ -73,8 +73,8 @@ internal class TransactionsViewModel @Inject internal constructor(
     private val periodState: PeriodState,
     private val updateCategoryUseCase: UpdateCategoryUseCase,
     private val updateAccountWithBalanceUseCase: UpdateAccountWithBalanceUseCase,
-    private val payOrSkipLegacyPlannedTransactionUseCase: PayOrSkipLegacyPlannedTransactionUseCase,
-    private val payOrSkipLegacyPlannedTransactionsUseCase: PayOrSkipLegacyPlannedTransactionsUseCase,
+    private val payOrSkipPlannedTransactionByIdUseCase: PayOrSkipPlannedTransactionByIdUseCase,
+    private val payOrSkipPlannedTransactionsByIdsUseCase: PayOrSkipPlannedTransactionsByIdsUseCase,
     private val getTransfersAsIncomeExpensePreference: GetTransfersAsIncomeExpensePreferenceUseCase,
     private val getAccountsUseCase: GetAccountsUseCase,
     private val getAccountTransactionsUseCase: GetAccountTransactionsUseCase,
@@ -573,8 +573,7 @@ internal class TransactionsViewModel @Inject internal constructor(
 
     private fun payOrGet(transactionId: UUID) {
         viewModelScope.launch {
-            val transaction = findDueTransaction(transactionId) ?: return@launch
-            if (payOrSkipLegacyPlannedTransactionUseCase(transaction) != null) {
+            if (payOrSkipPlannedTransactionByIdUseCase(transactionId)) {
                 restartCurrentScreen()
             }
         }
@@ -582,12 +581,11 @@ internal class TransactionsViewModel @Inject internal constructor(
 
     private fun skipTransaction(transactionId: UUID) {
         viewModelScope.launch {
-            val transaction = findDueTransaction(transactionId) ?: return@launch
-            val paidTransaction = payOrSkipLegacyPlannedTransactionUseCase(
-                transaction = transaction,
+            val paidTransaction = payOrSkipPlannedTransactionByIdUseCase(
+                transactionId = transactionId,
                 skipTransaction = true
             )
-            if (paidTransaction != null) {
+            if (paidTransaction) {
                 restartCurrentScreen()
             }
         }
@@ -595,32 +593,14 @@ internal class TransactionsViewModel @Inject internal constructor(
 
     private fun skipTransactions(transactionIds: List<UUID>) {
         viewModelScope.launch {
-            val transactions = findDueTransactions(transactionIds)
-            if (transactions.isEmpty()) return@launch
-
-            val paidTransactions = payOrSkipLegacyPlannedTransactionsUseCase(
-                transactions = transactions,
+            val paidTransactions = payOrSkipPlannedTransactionsByIdsUseCase(
+                transactionIds = transactionIds,
                 skipTransaction = true
             )
-            if (paidTransactions.isNotEmpty()) {
+            if (paidTransactions > 0) {
                 restartCurrentScreen()
             }
         }
-    }
-
-    private fun findDueTransaction(transactionId: UUID): LegacyTransaction? {
-        return upcoming.value
-            .transactions
-            .plus(overdue.value.transactions)
-            .firstOrNull { it.id == transactionId }
-    }
-
-    private fun findDueTransactions(transactionIds: List<UUID>): List<LegacyTransaction> {
-        val transactionIdSet = transactionIds.toSet()
-        return upcoming.value
-            .transactions
-            .plus(overdue.value.transactions)
-            .filter { it.id in transactionIdSet }
     }
 
     private fun updateAccountDeletionState(confirmationText: String) {

@@ -235,6 +235,7 @@
 - 收窄借贷同步写入边界：借贷和借贷记录的关联交易仍接收旧交易展示模型以兼容编辑页，但创建/更新关联交易时直接构造正式 `Income`/`Expense` 并保存，不再通过 `LegacyTransaction.toTransaction(accountStore)` 写回。
 - 删除 domain 旧交易反向 mapper：`shared:domain` 已无 `LegacyTransaction.toTransaction(accountStore)` 调用点，正式模型到旧展示模型的转换仍保留给现有旧 UI/旧统计入口使用。
 - 收窄首页计划付款操作边界：首页到期交易列表暂时继续向旧 UI 组件提供旧展示模型，但支付/跳过操作改为通过交易 ID 调用正式计划付款用例；首页 ViewModel 不再为了操作到期交易而查找或传递完整 `LegacyTransaction`。
+- 收窄交易列表和报表计划付款操作边界：两个页面的到期交易列表仍暂时提供旧展示模型，但支付/跳过操作同样改为通过交易 ID 调用正式计划付款用例；无调用方的批量旧计划付款操作 use case 已删除。
 - 收窄饼图页输入缓存：饼图 ViewModel 不再长期保存由 route ID 还原出的旧交易对象，只保存交易 ID，并在重算图表时局部读取。
 - 收窄借贷详情关联交易缓存：借贷详情不再把贷款关联旧交易对象保存在 ViewModel 字段中，加载时只设置开关状态，编辑时局部读取。
 
