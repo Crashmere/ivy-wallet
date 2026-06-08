@@ -8,6 +8,7 @@ import androidx.compose.runtime.mutableDoubleStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
+import com.ivy.data.model.Account
 import com.ivy.data.model.ExternalFile
 import com.ivy.data.model.legacy.LegacyTransaction
 import com.ivy.data.model.TransactionHistoryItem
@@ -42,7 +43,7 @@ import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.R
 import com.ivy.ui.platform.FilePicker
 import com.ivy.ui.preferences.asEnabledState
-import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
+import com.ivy.domain.usecase.account.GetAccountsUseCase
 import com.ivy.domain.usecase.transaction.BuildTransactionHistoryItemsUseCase
 import com.ivy.domain.usecase.transaction.CalculateTransactionsIncomeExpenseUseCase
 import com.ivy.data.model.IncomeExpenseTransferPair
@@ -79,7 +80,7 @@ internal class ReportViewModel @Inject internal constructor(
     private val payOrSkipLegacyPlannedTransactionsUseCase: PayOrSkipLegacyPlannedTransactionsUseCase,
     private val periodState: PeriodState,
     private val exchangeTransactionAmountUseCase: ExchangeTransactionAmountUseCase,
-    private val getLegacyAccountsUseCase: GetLegacyAccountsUseCase,
+    private val getAccountsUseCase: GetAccountsUseCase,
     private val getCategoriesUseCase: GetCategoriesUseCase,
     private val buildTransactionHistoryItemsUseCase: BuildTransactionHistoryItemsUseCase,
     private val calculateTransactionsIncomeExpenseUseCase: CalculateTransactionsIncomeExpenseUseCase,
@@ -127,7 +128,7 @@ internal class ReportViewModel @Inject internal constructor(
             expenses = 0.0,
         )
     )
-    private var legacyAccounts: ImmutableList<LegacyAccount> = persistentListOf()
+    private var accountModels: ImmutableList<Account> = persistentListOf()
     private var accounts by mutableStateOf<ImmutableList<ReportAccount>>(persistentListOf())
     private var loading by mutableStateOf(false)
     private var accountIdFilters by mutableStateOf<ImmutableList<UUID>>(persistentListOf())
@@ -150,7 +151,7 @@ internal class ReportViewModel @Inject internal constructor(
         val history: ImmutableList<TransactionHistoryItem>,
         val upcomingTransactions: ImmutableList<LegacyTransaction>,
         val overdueTransactions: ImmutableList<LegacyTransaction>,
-        val accounts: ImmutableList<LegacyAccount>,
+        val accounts: ImmutableList<Account>,
         val reportFilter: ReportFilter?,
         val accountIdFilters: ImmutableList<UUID>,
         val transactionSummary: ReportTransactionSummary,
@@ -234,8 +235,8 @@ internal class ReportViewModel @Inject internal constructor(
     private fun start() {
         viewModelScope.launch(Dispatchers.IO) {
             baseCurrency = getBaseCurrencyCode()
-            legacyAccounts = getLegacyAccountsUseCase()
-            accounts = legacyAccounts.map { it.toReportAccount() }.toImmutableList()
+            accountModels = getAccountsUseCase().toImmutableList()
+            accounts = accountModels.map { it.toReportAccount() }.toImmutableList()
             categories =
                 (listOf(unspecifiedCategory) + getCategoriesUseCase()).toImmutableList()
             allTags = getTagsUseCase().toImmutableList()
@@ -255,7 +256,7 @@ internal class ReportViewModel @Inject internal constructor(
                         history = persistentListOf(),
                         upcomingTransactions = persistentListOf(),
                         overdueTransactions = persistentListOf(),
-                        accounts = getLegacyAccountsUseCase(),
+                        accounts = getAccountsUseCase().toImmutableList(),
                         reportFilter = filter,
                         accountIdFilters = persistentListOf(),
                         transactionSummary = ReportTransactionSummary(),
@@ -266,15 +267,16 @@ internal class ReportViewModel @Inject internal constructor(
             }
 
             if (!reportFilter.validate()) return@withContext
-            val allAccounts = getLegacyAccountsUseCase()
-            val selectedAccounts = allAccounts.filter { it.id in reportFilter.accountIds }
+            val allAccounts = getAccountsUseCase().toImmutableList()
+            val selectedAccounts = allAccounts.filter { it.id.value in reportFilter.accountIds }
             if (selectedAccounts.isEmpty()) return@withContext
+            val legacyAccounts = allAccounts.toLegacyAccounts()
             val baseCurrency = baseCurrency
             loading = true
 
             val transactionsList = filterTransactions(
                 baseCurrency = baseCurrency,
-                accounts = allAccounts,
+                accounts = legacyAccounts,
                 filter = reportFilter
             )
 
@@ -290,7 +292,7 @@ internal class ReportViewModel @Inject internal constructor(
 
             historyIncomeExpense = calculateTransactionsIncomeExpenseUseCase(
                 transactions = historyTransactions,
-                accounts = allAccounts,
+                accounts = legacyAccounts,
                 baseCurrency = baseCurrency
             )
 
@@ -302,7 +304,7 @@ internal class ReportViewModel @Inject internal constructor(
 
             val displayBalance = calculateBalance(historyIncomeExpense).toDouble()
 
-            val accountFilterIdList = scope.async { selectedAccounts.map { it.id } }
+            val accountFilterIdList = scope.async { selectedAccounts.map { it.id.value } }
 
             val timeNowUTC = utcNow()
 
@@ -317,7 +319,7 @@ internal class ReportViewModel @Inject internal constructor(
 
             val upcomingIncomeExpense = calculateTransactionsIncomeExpenseUseCase(
                 transactions = upcomingTransactionsList,
-                accounts = allAccounts,
+                accounts = legacyAccounts,
                 baseCurrency = baseCurrency
             )
             // Overdue
@@ -329,7 +331,7 @@ internal class ReportViewModel @Inject internal constructor(
             }.toImmutableList()
             val overdueIncomeExpense = calculateTransactionsIncomeExpenseUseCase(
                 transactions = overdue,
-                accounts = allAccounts,
+                accounts = legacyAccounts,
                 baseCurrency = baseCurrency
             )
 
@@ -369,7 +371,7 @@ internal class ReportViewModel @Inject internal constructor(
             income = values.overdueIncomeExpense.income.toDouble(),
             expenses = values.overdueIncomeExpense.expense.toDouble(),
         )
-        this.legacyAccounts = values.accounts
+        this.accountModels = values.accounts
         this.accounts = values.accounts.map { it.toReportAccount() }.toImmutableList()
         this.filter = values.reportFilter
         this.accountIdFilters = values.accountIdFilters
@@ -540,7 +542,7 @@ internal class ReportViewModel @Inject internal constructor(
                     exportScope = {
                         filterTransactions(
                             baseCurrency = baseCurrency,
-                            accounts = legacyAccounts,
+                            accounts = accountModels.toLegacyAccounts(),
                             filter = filter
                         )
                     }
@@ -633,3 +635,18 @@ internal class ReportViewModel @Inject internal constructor(
             .filter { it.id in transactionIdSet }
     }
 }
+
+private fun Iterable<Account>.toLegacyAccounts(): ImmutableList<LegacyAccount> {
+    return map { it.toLegacyAccount() }.toImmutableList()
+}
+
+private fun Account.toLegacyAccount() = LegacyAccount(
+    name = name.value,
+    currency = asset.code,
+    color = color.value,
+    icon = icon?.id,
+    orderNum = orderNum,
+    includeInBalance = includeInBalance,
+    isDeleted = false,
+    id = id.value,
+)

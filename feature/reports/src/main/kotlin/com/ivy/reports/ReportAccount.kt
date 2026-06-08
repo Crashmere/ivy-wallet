@@ -1,7 +1,7 @@
 package com.ivy.reports
 
 import androidx.compose.runtime.Immutable
-import com.ivy.data.model.legacy.LegacyAccount
+import com.ivy.data.model.Account
 import com.ivy.legacy.ui.transaction.TransactionListAccount
 import java.util.UUID
 
@@ -15,12 +15,12 @@ internal data class ReportAccount(
     val orderNum: Double,
 )
 
-internal fun LegacyAccount.toReportAccount() = ReportAccount(
-    id = id,
-    name = name,
-    color = color,
-    icon = icon,
-    currency = currency,
+internal fun Account.toReportAccount() = ReportAccount(
+    id = id.value,
+    name = name.value,
+    color = color.value,
+    icon = icon?.id,
+    currency = asset.code,
     orderNum = orderNum,
 )
 
