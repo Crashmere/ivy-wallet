@@ -84,7 +84,7 @@ fun BoxWithConstraintsScope.PieChartStatisticScreen(
     LaunchedEffect(Unit) {
         viewModel.start(
             type = screen.type.toTransactionType(),
-            accountIdFilterList = screen.accountList,
+            accountIdFilterList = screen.accountIdFilterList,
             filterExcluded = screen.filterExcluded,
             inputTransactionIds = screen.transactionIds,
             transfersAsIncomeExpense = screen.treatTransfersAsIncomeExpense

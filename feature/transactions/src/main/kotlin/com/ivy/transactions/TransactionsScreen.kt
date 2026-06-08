@@ -735,7 +735,7 @@ private fun Header(
                     nav.navigateTo(
                         PieChartStatisticScreen(
                             type = TransactionRouteType.INCOME,
-                            accountList = persistentListOf(account.id),
+                            accountIdFilterList = persistentListOf(account.id),
                             filterExcluded = false,
                             treatTransfersAsIncomeExpense = treatTransfersAsIncomeExpense
                         )
@@ -747,7 +747,7 @@ private fun Header(
                     nav.navigateTo(
                         PieChartStatisticScreen(
                             type = TransactionRouteType.EXPENSE,
-                            accountList = persistentListOf(account.id),
+                            accountIdFilterList = persistentListOf(account.id),
                             filterExcluded = false,
                             treatTransfersAsIncomeExpense = treatTransfersAsIncomeExpense
                         )

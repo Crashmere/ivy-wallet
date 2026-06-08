@@ -1267,6 +1267,7 @@ shared:ui:core
 - 交易列表 ViewModel 完全脱离导航 route 类型；`TransactionsScreen` 到本地 `TransactionsQuery` 的转换下沉到页面入口，ViewModel 只复用查询参数执行加载、翻月和刷新。
 - 交易列表内部查询参数继续去 legacy 命名：本地 `TransactionsQuery` 使用 `transactionIds`，加载流程用 `inputTransactions` 表达从 ID 局部读取出的交易；编辑交易和报表的标签搜索 debounce 常量也修正为 `Millis` 命名。
 - 交易列表和饼图导航 route 的交易 ID 参数也已从 `legacyTransactionIds` 改为 `transactionIds`；route 只表达 ID 列表，不再暗示跨页面传递完整旧交易模型。
+- 饼图导航 route 的账户筛选参数已从含糊的 `accountList` 改为 `accountIdFilterList`，与交易列表 route 和 ViewModel 内部查询命名保持一致。
 - 报表导出事件不再携带 `FileSharer` 平台分享器；ViewModel 只生成 CSV 并发出 `ShareCsvFile` UI 事件，页面入口负责调用平台分享能力。
 - 设置页导出 CSV 和备份 zip 也不再通过事件传递 `FileSharer`；ViewModel 写入文件后发出分享 UI 事件，Screen 统一调用平台分享能力。
 - 报表页面事件统一为 `sealed interface`，与其他 feature 的事件定义风格保持一致，减少无意义的 `ReportScreenEvent()` 继承样板。
