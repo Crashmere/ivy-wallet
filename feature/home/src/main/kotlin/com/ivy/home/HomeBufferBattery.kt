@@ -18,15 +18,15 @@ import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.currency.format
 import com.ivy.legacy.ui.icon.IvyIcon
-import com.ivy.ui.theme.colors.IvyFixedColors.Ivy
 import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.ui.theme.colors.IvyFixedColors.White
-import com.ivy.legacy.ui.theme.style
 import com.ivy.ui.R
 import com.ivy.ui.compose.thenIf
+import com.ivy.ui.theme.colors.IvyFixedColors.Ivy
+import com.ivy.ui.theme.colors.IvyFixedColors.White
 import kotlin.math.abs
 
 @Composable
@@ -99,9 +99,10 @@ internal fun HomeBufferBattery(
                 } else {
                     stringResource(R.string.left_to_spend)
                 },
-                style = LegacyTheme.typo.c.style(
+                style = LegacyTheme.typo.c.copy(
                     color = textColor,
-                    fontWeight = FontWeight.ExtraBold
+                    fontWeight = FontWeight.ExtraBold,
+                    textAlign = TextAlign.Start
                 )
             )
 
@@ -127,17 +128,19 @@ private fun HomeBufferAmountCurrencyRow(
     ) {
         Text(
             text = amount.format(currency),
-            style = LegacyTheme.typo.nB2.style(
+            style = LegacyTheme.typo.nB2.copy(
                 fontWeight = FontWeight.ExtraBold,
-                color = textColor
+                color = textColor,
+                textAlign = TextAlign.Start
             )
         )
         Spacer(modifier = Modifier.width(4.dp))
         Text(
             text = currency,
-            style = LegacyTheme.typo.nB2.style(
+            style = LegacyTheme.typo.nB2.copy(
                 fontWeight = FontWeight.Normal,
-                color = textColor
+                color = textColor,
+                textAlign = TextAlign.Start
             )
         )
     }

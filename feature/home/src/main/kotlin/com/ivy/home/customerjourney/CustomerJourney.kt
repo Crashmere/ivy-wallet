@@ -17,9 +17,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.legacy.ui.theme.style
 import com.ivy.ui.compose.drawColoredShadow
 import com.ivy.ui.R
 import com.ivy.ui.theme.colors.Gradient
@@ -86,9 +86,10 @@ internal fun CustomerJourneyCard(
                     .weight(1f)
                     .padding(start = 24.dp, end = 16.dp),
                 text = cardData.title,
-                style = LegacyTheme.typo.b1.style(
+                style = LegacyTheme.typo.b1.copy(
                     fontWeight = FontWeight.ExtraBold,
-                    color = findContrastTextColor(backgroundColor)
+                    color = findContrastTextColor(backgroundColor),
+                    textAlign = TextAlign.Start
                 )
             )
 
@@ -115,9 +116,10 @@ internal fun CustomerJourneyCard(
                 .fillMaxWidth()
                 .padding(start = 24.dp, end = 32.dp),
             text = cardData.description,
-            style = LegacyTheme.typo.b2.style(
+            style = LegacyTheme.typo.b2.copy(
                 fontWeight = FontWeight.Medium,
-                color = findContrastTextColor(backgroundColor)
+                color = findContrastTextColor(backgroundColor),
+                textAlign = TextAlign.Start
             )
         )
 
@@ -133,9 +135,10 @@ internal fun CustomerJourneyCard(
                 shadowAlpha = 0f,
                 iconStart = cardData.ctaIcon,
                 iconTint = backgroundColor,
-                textStyle = LegacyTheme.typo.b2.style(
+                textStyle = LegacyTheme.typo.b2.copy(
                     color = backgroundColor,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Start
                 ),
                 padding = 8.dp,
                 backgroundGradient = Gradient.solid(findContrastTextColor(backgroundColor))

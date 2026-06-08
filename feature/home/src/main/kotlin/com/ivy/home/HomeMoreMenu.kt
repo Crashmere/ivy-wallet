@@ -45,7 +45,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import com.ivy.data.model.Theme
 import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.legacy.ui.theme.style
 import com.ivy.ui.compose.BackPressHandler
 import com.ivy.ui.compose.thenIf
 import com.ivy.ui.compose.clickableNoIndication
@@ -274,9 +273,10 @@ private fun SearchButton(
                 vertical = 12.dp,
             ),
             text = stringResource(R.string.search_transactions),
-            style = LegacyTheme.typo.b2.style(
+            style = LegacyTheme.typo.b2.copy(
                 fontWeight = FontWeight.SemiBold,
-                color = LegacyTheme.colors.pureInverse
+                color = LegacyTheme.colors.pureInverse,
+                textAlign = TextAlign.Start
             )
         )
 
@@ -304,9 +304,10 @@ private fun ColumnScope.Buffer(
 
         Text(
             text = stringResource(R.string.savings_goal),
-            style = LegacyTheme.typo.b1.style(
+            style = LegacyTheme.typo.b1.copy(
                 color = LegacyTheme.colors.pureInverse,
-                fontWeight = FontWeight.ExtraBold
+                fontWeight = FontWeight.ExtraBold,
+                textAlign = TextAlign.Start
             )
         )
 
@@ -343,7 +344,11 @@ private fun QuickAccess(
         Text(
             modifier = Modifier.padding(start = 24.dp),
             text = stringResource(R.string.quick_access),
-            style = LegacyTheme.typo.b2.style()
+            style = LegacyTheme.typo.b2.copy(
+                color = LegacyTheme.colors.pureInverse,
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Start
+            )
         )
 
         Spacer(Modifier.height(16.dp))
@@ -485,7 +490,7 @@ private fun MoreMenuButton(
                     onClick()
                 },
             text = label,
-            style = LegacyTheme.typo.c.style(
+            style = LegacyTheme.typo.c.copy(
                 color = LegacyTheme.colors.pureInverse,
                 fontWeight = FontWeight.ExtraBold,
                 textAlign = TextAlign.Center

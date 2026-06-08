@@ -27,10 +27,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.legacy.ui.theme.style
 import com.ivy.ui.compose.thenIf
 import com.ivy.ui.period.LocalPeriodState
 import com.ivy.ui.period.TimePeriod
@@ -249,8 +249,10 @@ internal fun CashFlowInfo(
                     cashflow.format(currency),
                     currency,
                 ),
-                style = LegacyTheme.typo.nB2.style(
+                style = LegacyTheme.typo.nB2.copy(
                     color = if (cashflow < 0) LegacyTheme.colors.gray else LegacyTheme.colors.green,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Start
                 ),
             )
 
@@ -355,9 +357,10 @@ private fun RowScope.HeaderCard(
 
             Text(
                 text = label,
-                style = LegacyTheme.typo.c.style(
+                style = LegacyTheme.typo.c.copy(
                     color = textColor,
                     fontWeight = FontWeight.ExtraBold,
+                    textAlign = TextAlign.Start
                 ),
             )
         }
