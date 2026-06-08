@@ -20,6 +20,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.platform.testTag
@@ -31,10 +32,10 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.ivy.legacy.ui.button.IvyButton
 import com.ivy.legacy.ui.modal.IvyModal
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.R
+import com.ivy.ui.compose.GradientButton
 import com.ivy.ui.platform.hideKeyboard
 import com.ivy.ui.theme.colors.Gradient
 import java.util.UUID
@@ -62,10 +63,18 @@ internal fun BoxWithConstraintsScope.TransactionsDeleteConfirmationModal(
         visible = visible,
         dismiss = dismiss,
         PrimaryAction = {
-            IvyButton(
+            GradientButton(
                 text = buttonText,
                 backgroundGradient = Gradient.solid(LegacyTheme.colors.red),
+                disabledBackgroundColor = LegacyTheme.colors.gray,
+                shape = LegacyTheme.shapes.rFull,
+                textStyle = LegacyTheme.typo.b2.copy(
+                    color = Color(0xFFFAFAFA),
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Start
+                ),
                 iconStart = iconStart,
+                iconTint = Color(0xFFFAFAFA),
                 enabled = enableDeletionButton,
                 onClick = onDelete
             )

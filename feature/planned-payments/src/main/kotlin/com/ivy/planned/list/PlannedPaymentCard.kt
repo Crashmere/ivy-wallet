@@ -39,7 +39,7 @@ import com.ivy.ui.theme.colors.Gradient
 import com.ivy.ui.theme.colors.IvyGradients
 import com.ivy.ui.theme.colors.IvyFixedColors.Ivy
 import com.ivy.ui.theme.colors.IvyFixedColors.White
-import com.ivy.legacy.ui.button.IvyButton
+import com.ivy.ui.compose.GradientButton
 import com.ivy.ui.compose.ResourceIcon
 import com.ivy.ui.icon.getCustomIconIdS
 import com.ivy.ui.theme.colors.findContrastTextColor
@@ -215,7 +215,7 @@ private fun PlannedPaymentHeaderRow(
             val category =
                 plannedPayment.categoryId?.let { targetId -> categories.find { it.id == targetId } }
             if (category != null) {
-                IvyButton(
+                GradientButton(
                     iconTint = findContrastTextColor(category.color.toComposeColor()),
                     iconStart = getCustomIconIdS(
                         category.icon,
@@ -223,6 +223,8 @@ private fun PlannedPaymentHeaderRow(
                     ),
                     text = category.name,
                     backgroundGradient = Gradient.solid(category.color.toComposeColor()),
+                    disabledBackgroundColor = LegacyTheme.colors.gray,
+                    shape = LegacyTheme.shapes.rFull,
                     textStyle = LegacyTheme.typo.c.copy(
                         color = findContrastTextColor(category.color.toComposeColor()),
                         fontWeight = FontWeight.ExtraBold,
@@ -238,8 +240,10 @@ private fun PlannedPaymentHeaderRow(
             }
 
             val account = accounts.find { it.id == plannedPayment.accountId }
-            IvyButton(
+            GradientButton(
                 backgroundGradient = Gradient.solid(LegacyTheme.colors.pure),
+                disabledBackgroundColor = LegacyTheme.colors.gray,
+                shape = LegacyTheme.shapes.rFull,
                 text = account?.name ?: stringResource(R.string.deleted),
                 iconTint = LegacyTheme.colors.pureInverse,
                 iconStart = getCustomIconIdS(account?.icon, R.drawable.ic_custom_account_s),

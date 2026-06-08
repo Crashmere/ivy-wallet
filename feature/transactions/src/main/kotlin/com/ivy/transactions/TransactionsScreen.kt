@@ -76,7 +76,7 @@ import com.ivy.ui.rememberScrollPositionListState
 import com.ivy.data.model.IncomeExpensePair
 import com.ivy.legacy.ui.money.BalanceRow
 import com.ivy.ui.compose.GradientIconButton
-import com.ivy.legacy.ui.button.IvyOutlinedButton
+import com.ivy.ui.compose.OutlinedPillButton
 import com.ivy.ui.icon.ItemIconMDefaultIcon
 import com.ivy.ui.theme.colors.Gradient
 import com.ivy.ui.theme.colors.IvyFixedColors.White
@@ -852,13 +852,19 @@ private fun TransactionsStatisticToolbar(
         Spacer(Modifier.weight(1f))
 
         if (showEditButton) {
-            IvyOutlinedButton(
+            OutlinedPillButton(
                 iconStart = R.drawable.ic_edit,
                 text = stringResource(R.string.edit),
+                shape = LegacyTheme.shapes.rFull,
+                solidBackground = false,
+                backgroundColor = LegacyTheme.colors.pure,
                 borderColor = contrastColor,
                 iconTint = contrastColor,
-                textColor = contrastColor,
-                solidBackground = false
+                textStyle = LegacyTheme.typo.b2.copy(
+                    fontWeight = FontWeight.Bold,
+                    color = contrastColor,
+                    textAlign = TextAlign.Start,
+                ),
             ) {
                 onEdit()
             }
