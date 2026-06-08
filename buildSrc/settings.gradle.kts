@@ -10,7 +10,7 @@ rootProject.name = "IvyWalletBuildSrc"
 dependencyResolutionManagement {
     repositories {
         google()
-        gradlePluginPortal()
+        mavenCentral()
     }
 
     versionCatalogs {
