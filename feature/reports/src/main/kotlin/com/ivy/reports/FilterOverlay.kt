@@ -34,6 +34,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.layout.layout
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -65,7 +66,6 @@ import com.ivy.legacy.ui.component.IvyCheckboxWithText
 import com.ivy.legacy.ui.component.IvyDividerLine
 import com.ivy.legacy.ui.component.IvyIcon
 import com.ivy.legacy.ui.component.IvyOutlinedButton
-import com.ivy.legacy.ui.component.WrapContentRow
 import com.ivy.legacy.ui.modal.AddKeywordModal
 import com.ivy.legacy.ui.modal.AddModalBackHandling
 import com.ivy.legacy.ui.modal.ChoosePeriodModal
@@ -993,7 +993,7 @@ private fun KeywordsFilter(
     Spacer(Modifier.height(12.dp))
 
     val includes = nonNullFilter(filter).includeKeywords + listOf(AddKeywordButton())
-    WrapContentRow(
+    ReportWrapContentRow(
         modifier = Modifier.padding(horizontal = 24.dp),
         items = includes
     ) { item ->
@@ -1034,7 +1034,7 @@ private fun KeywordsFilter(
     Spacer(Modifier.height(12.dp))
 
     val excludes = nonNullFilter(filter).excludeKeywords + listOf(AddKeywordButton())
-    WrapContentRow(
+    ReportWrapContentRow(
         modifier = Modifier.padding(horizontal = 24.dp),
         items = excludes
     ) { item ->
@@ -1058,6 +1058,55 @@ private fun KeywordsFilter(
                 AddKeywordButton(text = stringResource(R.string.add_keyword)) {
                     onShowExcludeKeywordModal()
                 }
+            }
+        }
+    }
+}
+
+@Composable
+private fun <T> ReportWrapContentRow(
+    modifier: Modifier = Modifier,
+    items: List<T>,
+    verticalMarginBetweenRows: Dp = 8.dp,
+    horizontalMarginBetweenItems: Dp = 8.dp,
+    ItemContent: @Composable (item: T) -> Unit
+) {
+    if (items.isEmpty()) return
+
+    Layout(
+        modifier = modifier,
+        content = {
+            for (item in items) {
+                ItemContent(item)
+            }
+        }
+    ) { measurables, constraints ->
+        val childConstraints = constraints.copy(minWidth = 0, minHeight = 0)
+        val placeables = measurables.map { it.measure(childConstraints) }
+        val itemHeight = placeables.maxOfOrNull { it.height } ?: 0
+
+        var x = 0
+        var height = 0
+        for (placeable in placeables) {
+            if (x + placeable.width > constraints.maxWidth) {
+                x = 0
+                height += itemHeight + verticalMarginBetweenRows.roundToPx()
+            }
+            x += placeable.width + horizontalMarginBetweenItems.roundToPx()
+        }
+        height += itemHeight
+
+        layout(constraints.maxWidth, height) {
+            x = 0
+            var y = 0
+            placeables.forEach { placeable ->
+                if (x + placeable.width > constraints.maxWidth) {
+                    x = 0
+                    y += itemHeight + verticalMarginBetweenRows.roundToPx()
+                }
+
+                placeable.place(x, y)
+                x += placeable.width + horizontalMarginBetweenItems.roundToPx()
             }
         }
     }

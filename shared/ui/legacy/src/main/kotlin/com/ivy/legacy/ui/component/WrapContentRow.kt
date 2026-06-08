@@ -20,7 +20,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun <T> WrapContentRow(
+internal fun <T> WrapContentRow(
     modifier: Modifier = Modifier,
     items: List<T>,
     verticalMarginBetweenRows: Dp = 8.dp,

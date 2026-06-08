@@ -91,6 +91,7 @@
 - 计划付款列表改用本 feature 私有的分组分隔条；`shared:ui:legacy` 的交易 `SectionDivider` 收窄为交易列表内部实现。
 - 汇率列表项改用本 feature 私有的删除按钮；`shared:ui:legacy` 的 `DeleteButton` 收窄为旧 UI 内部实现。
 - 汇率新增弹窗改用本 feature 私有的名称输入框；`shared:ui:legacy` 的 `IvyNameTextField` 收窄为旧弹窗内部实现。
+- 报表筛选关键词区域改用本 feature 私有的换行布局；`shared:ui:legacy` 的 `WrapContentRow` 收窄为旧弹窗内部实现。
 - 收窄旧主题色板公开面：颜色选择器专用色板、旧 UI 内部红色/橙色渐变、透明色、底部渐变遮罩、旧弹窗背景模糊和 `asBrush()` 扩展改为 `shared:ui:legacy` 内部实现，feature 层仍可使用现有公开颜色和主题门面。
 - 收窄 domain 内部工具公开面：新旧模型 mapper 中只被 domain 使用的转换方向、CSV 导出行模型和 Arrow 数值 helper 改为模块内部实现；CSV 导入仍需要的 `toDomainAccount()` 暂时保留公开入口。
 - 收回旧账户保存转换边界：新增 `SaveLegacyAccountUseCase`，CSV 导入 feature 不再直接调用 legacy 账户 mapper；`toDomainAccount()` 改为 domain 内部实现。
