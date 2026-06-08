@@ -1,14 +1,18 @@
 package com.ivy.ui.modal
 
 import androidx.annotation.DrawableRes
+import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
 import com.ivy.ui.R
 import com.ivy.ui.compose.GradientButton
+import com.ivy.ui.compose.GradientIconButton
+import com.ivy.ui.compose.OutlinedPillButton
 import com.ivy.ui.theme.colors.IvyGradients
 
 @Composable
@@ -53,6 +57,67 @@ fun ModalSet(
         text = label,
         iconStart = R.drawable.ic_check,
         enabled = enabled,
+        onClick = onClick
+    )
+}
+
+@Composable
+fun ModalPositiveButton(
+    modifier: Modifier = Modifier,
+    text: String,
+    @DrawableRes iconStart: Int,
+    enabled: Boolean = true,
+    onClick: () -> Unit,
+) {
+    ModalPrimaryButton(
+        modifier = modifier,
+        text = text,
+        iconStart = iconStart,
+        enabled = enabled,
+        onClick = onClick
+    )
+}
+
+@Composable
+fun ModalDelete(
+    enabled: Boolean = true,
+    testTag: String = "modal_delete",
+    onClick: () -> Unit
+) {
+    val buttonTheme = ModalPrimaryButtonTheme
+    GradientIconButton(
+        modifier = Modifier
+            .size(40.dp)
+            .testTag(testTag),
+        icon = R.drawable.ic_delete,
+        backgroundGradient = IvyGradients.Red,
+        enabled = enabled,
+        disabledBackgroundColor = buttonTheme.colors.gray,
+        tint = buttonTheme.colors.white,
+        onClick = onClick
+    )
+}
+
+@Composable
+fun ModalSkip(
+    text: String = stringResource(R.string.skip),
+    onClick: () -> Unit
+) {
+    val modalTheme = IvyModalTheme
+    val buttonTheme = ModalPrimaryButtonTheme
+    OutlinedPillButton(
+        text = text,
+        iconStart = null,
+        shape = buttonTheme.shapes.rFull,
+        solidBackground = true,
+        backgroundColor = modalTheme.colors.pure,
+        iconTint = modalTheme.colors.pureInverse,
+        borderColor = modalTheme.colors.medium,
+        textStyle = buttonTheme.typo.b2.copy(
+            fontWeight = FontWeight.Bold,
+            color = modalTheme.colors.pureInverse,
+            textAlign = TextAlign.Start,
+        ),
         onClick = onClick
     )
 }

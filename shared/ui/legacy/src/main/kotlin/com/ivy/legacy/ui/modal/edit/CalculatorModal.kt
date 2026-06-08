@@ -26,7 +26,7 @@ import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.Gray
 import com.ivy.legacy.ui.theme.Red
 import com.ivy.ui.modal.IvyModal
-import com.ivy.legacy.ui.modal.ModalSet
+import com.ivy.ui.modal.ModalSet
 import com.ivy.ui.modal.ModalTitle
 import com.notkamui.keval.Keval
 import java.util.UUID
