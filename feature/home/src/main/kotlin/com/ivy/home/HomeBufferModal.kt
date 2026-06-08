@@ -20,28 +20,27 @@ import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.R
 import java.util.UUID
 
-internal data class HomeBufferModalData(
-    val balance: Double,
-    val buffer: Double,
-    val currency: String,
-    val id: UUID = UUID.randomUUID(),
-)
-
 @Composable
 internal fun BoxWithConstraintsScope.HomeBufferModal(
-    modal: HomeBufferModalData?,
+    visible: Boolean,
+    balance: Double,
+    buffer: Double,
+    currency: String,
     dismiss: () -> Unit,
     onBufferChanged: (Double) -> Unit,
 ) {
-    var newBufferAmount by remember(modal) {
-        mutableStateOf(modal?.buffer ?: 0.0)
+    val modalId = remember(visible) {
+        UUID.randomUUID()
+    }
+    var newBufferAmount by remember(visible, buffer) {
+        mutableStateOf(buffer)
     }
 
     var amountModalVisible by remember { mutableStateOf(false) }
 
     IvyModal(
-        id = modal?.id,
-        visible = modal != null,
+        id = modalId,
+        visible = visible,
         dismiss = dismiss,
         PrimaryAction = {
             ModalSave {
@@ -55,8 +54,8 @@ internal fun BoxWithConstraintsScope.HomeBufferModal(
         HomeBufferBattery(
             modifier = Modifier.padding(horizontal = 16.dp),
             buffer = newBufferAmount,
-            balance = modal?.balance ?: 0.0,
-            currency = modal?.currency ?: "",
+            balance = balance,
+            currency = currency,
             backgroundNotFilled = LegacyTheme.colors.medium,
         )
 
@@ -64,20 +63,20 @@ internal fun BoxWithConstraintsScope.HomeBufferModal(
 
         ModalAmountSection(
             label = stringResource(R.string.edit_savings_goal),
-            currency = modal?.currency ?: "",
+            currency = currency,
             amount = newBufferAmount
         ) {
             amountModalVisible = true
         }
     }
 
-    val amountModalId = remember(modal, newBufferAmount) {
+    val amountModalId = remember(visible, newBufferAmount) {
         UUID.randomUUID()
     }
     AmountModal(
         id = amountModalId,
         visible = amountModalVisible,
-        currency = modal?.currency ?: "",
+        currency = currency,
         initialAmount = newBufferAmount,
         dismiss = { amountModalVisible = false }
     ) {

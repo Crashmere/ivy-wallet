@@ -127,7 +127,7 @@
 - 报表筛选关键词区域改用本 feature 私有的换行布局；`shared:ui:legacy` 的 `WrapContentRow` 收窄为旧弹窗内部实现。
 - 旧工具栏公开 API 不再暴露 `BackButtonType` 枚举；报表页通过 `showCloseButton = true` 请求关闭按钮，旧工具栏内部自行选择返回/关闭图标。
 - 首页更多菜单改用本 feature 私有的缓冲金额电池；`shared:ui:legacy` 的 `BufferBattery` 收窄为旧缓冲弹窗内部实现。
-- 首页缓冲金额弹窗和弹窗状态已移回 `feature:home` 私有实现；`shared:ui:legacy` 不再导出 `BufferModal`、`BufferModalData` 或缓冲金额电池组件。
+- 首页缓冲金额弹窗和弹窗状态已移回 `feature:home` 私有实现，并已改为显式参数；`shared:ui:legacy` 不再导出 `BufferModal`、`BufferModalData` 或缓冲金额电池组件。
 - 报表筛选的关键词添加弹窗已移回 `feature:reports` 私有实现；`shared:ui:legacy` 不再导出只服务报表筛选的 `AddKeywordModal`。
 - 设置页的每月起始日选择弹窗已移回 `feature:settings` 私有实现；`shared:ui:legacy` 不再导出只服务设置页的 `ChooseStartDateOfMonthModal`。
 - 交易列表的删除二次确认弹窗已移回 `feature:transactions` 私有实现；`shared:ui:legacy` 只继续保留多页面复用的普通 `DeleteModal`。

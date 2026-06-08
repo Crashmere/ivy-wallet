@@ -168,7 +168,7 @@ internal fun BoxWithConstraintsScope.HomeUi(
     val periodState = LocalPeriodState.current
     val datePicker = LocalDatePicker.current
 
-    var bufferModalData: HomeBufferModalData? by remember { mutableStateOf(null) }
+    var bufferModalVisible by remember { mutableStateOf(false) }
     var currencyModalVisible by remember { mutableStateOf(false) }
     var choosePeriodModal: TimePeriod? by remember {
         mutableStateOf(null)
@@ -294,11 +294,7 @@ internal fun BoxWithConstraintsScope.HomeUi(
         },
         setExpanded = setMoreMenuExpanded,
         onBufferClick = {
-            bufferModalData = HomeBufferModalData(
-                balance = uiState.balance.toDouble(),
-                currency = baseCurrency,
-                buffer = uiState.buffer.amount.toDouble()
-            )
+            bufferModalVisible = true
         },
         onCurrencyClick = {
             currencyModalVisible = true
@@ -307,9 +303,12 @@ internal fun BoxWithConstraintsScope.HomeUi(
     )
 
     HomeBufferModal(
-        modal = bufferModalData,
+        visible = bufferModalVisible,
+        balance = uiState.balance.toDouble(),
+        currency = baseCurrency,
+        buffer = uiState.buffer.amount.toDouble(),
         dismiss = {
-            bufferModalData = null
+            bufferModalVisible = false
         },
         onBufferChanged = { onEvent(HomeEvent.SetBuffer(it)) }
     )
