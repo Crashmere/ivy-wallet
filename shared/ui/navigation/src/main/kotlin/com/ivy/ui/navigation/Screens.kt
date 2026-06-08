@@ -1,6 +1,5 @@
 package com.ivy.ui.navigation
 
-import com.ivy.data.model.legacy.LegacyTransaction
 import com.ivy.data.model.TransactionType
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
@@ -33,7 +32,8 @@ data class TransactionsScreen(
     val unspecifiedCategory: Boolean? = false,
     val transactionType: TransactionType? = null,
     val accountIdFilterList: List<UUID> = persistentListOf(),
-    val legacyTransactions: List<LegacyTransaction> = persistentListOf()
+    val legacyTransactionIds: List<UUID> = persistentListOf(),
+    val containsTransferTransactions: Boolean = false
 ) : Screen {
     override val isLegacy: Boolean
         get() = true
@@ -43,7 +43,7 @@ data class PieChartStatisticScreen(
     val type: TransactionType,
     val filterExcluded: Boolean = true,
     val accountList: ImmutableList<UUID> = persistentListOf(),
-    val legacyTransactions: ImmutableList<LegacyTransaction> = persistentListOf(),
+    val legacyTransactionIds: ImmutableList<UUID> = persistentListOf(),
     val treatTransfersAsIncomeExpense: Boolean = false
 ) : Screen {
     override val isLegacy: Boolean

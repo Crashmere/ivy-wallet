@@ -12,6 +12,7 @@ import com.ivy.data.model.TransactionType
 import com.ivy.data.model.Category
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.domain.usecase.settings.GetTransfersAsIncomeExpensePreferenceUseCase
+import com.ivy.domain.usecase.transaction.GetLegacyTransactionsByIdsUseCase
 import com.ivy.ui.period.PeriodState
 import com.ivy.ui.period.TimePeriod
 import com.ivy.ui.navigation.PieChartStatisticScreen
@@ -34,6 +35,7 @@ class PieChartStatisticViewModel @Inject constructor(
     private val periodState: PeriodState,
     private val buildPieChartDataUseCase: BuildPieChartDataUseCase,
     private val getTransfersAsIncomeExpensePreference: GetTransfersAsIncomeExpensePreferenceUseCase,
+    private val getLegacyTransactionsByIdsUseCase: GetLegacyTransactionsByIdsUseCase,
 ) : ComposeViewModel<PieChartStatisticState, PieChartStatisticEvent>() {
 
     private var treatTransfersAsIncomeExpense by mutableStateOf(false)
@@ -143,7 +145,8 @@ class PieChartStatisticViewModel @Inject constructor(
                 type = screen.type,
                 accountIdFilterList = screen.accountList,
                 filterExclude = screen.filterExcluded,
-                transactions = screen.legacyTransactions,
+                transactions = getLegacyTransactionsByIdsUseCase(screen.legacyTransactionIds)
+                    .toImmutableList(),
                 transfersAsIncomeExpenseValue = screen.treatTransfersAsIncomeExpense
             )
         }

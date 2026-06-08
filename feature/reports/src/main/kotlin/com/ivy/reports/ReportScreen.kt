@@ -165,7 +165,9 @@ private fun BoxWithConstraintsScope.UI(
                         nav.navigateTo(
                             PieChartStatisticScreen(
                                 type = TransactionType.INCOME,
-                                legacyTransactions = legacyTransactions.toImmutableList(),
+                                legacyTransactionIds = legacyTransactions
+                                    .map { it.id }
+                                    .toImmutableList(),
                                 accountList = state.accountIdFilters,
                                 treatTransfersAsIncomeExpense = state.treatTransfersAsIncExp
                             )
@@ -177,7 +179,9 @@ private fun BoxWithConstraintsScope.UI(
                         nav.navigateTo(
                             PieChartStatisticScreen(
                                 type = TransactionType.EXPENSE,
-                                legacyTransactions = legacyTransactions.toImmutableList(),
+                                legacyTransactionIds = legacyTransactions
+                                    .map { it.id }
+                                    .toImmutableList(),
                                 accountList = state.accountIdFilters,
                                 treatTransfersAsIncomeExpense = state.treatTransfersAsIncExp
                             )

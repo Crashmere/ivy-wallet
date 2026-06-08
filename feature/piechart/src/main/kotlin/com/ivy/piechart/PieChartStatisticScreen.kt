@@ -209,7 +209,10 @@ private fun BoxWithConstraintsScope.UI(
                             categoryId = item.category?.id?.value,
                             unspecifiedCategory = item.isCategoryUnspecified,
                             accountIdFilterList = state.accountIdFilterList,
-                            legacyTransactions = item.associatedTransactions
+                            legacyTransactionIds = item.associatedTransactions.map { it.id },
+                            containsTransferTransactions = item.associatedTransactions.any {
+                                it.type == TransactionType.TRANSFER
+                            }
                         )
                     )
                 }

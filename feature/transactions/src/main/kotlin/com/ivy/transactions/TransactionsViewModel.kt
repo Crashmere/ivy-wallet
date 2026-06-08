@@ -52,6 +52,7 @@ import com.ivy.domain.usecase.planned.PayOrSkipLegacyPlannedTransactionsUseCase
 import com.ivy.domain.usecase.settings.GetTransfersAsIncomeExpensePreferenceUseCase
 import com.ivy.domain.usecase.transaction.BuildLegacyTransactionHistoryItemsUseCase
 import com.ivy.domain.usecase.transaction.CalculateLegacyTransactionsIncomeExpenseUseCase
+import com.ivy.domain.usecase.transaction.GetLegacyTransactionsByIdsUseCase
 import com.ivy.domain.exchange.ExchangeData
 import com.ivy.legacy.ui.modal.ChoosePeriodModalData
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -94,6 +95,7 @@ class TransactionsViewModel @Inject constructor(
     private val calculateAccountBalanceUseCase: CalculateAccountBalanceUseCase,
     private val calculateAccountIncomeExpenseUseCase: CalculateAccountIncomeExpenseUseCase,
     private val calculateLegacyTransactionsIncomeExpenseUseCase: CalculateLegacyTransactionsIncomeExpenseUseCase,
+    private val getLegacyTransactionsByIdsUseCase: GetLegacyTransactionsByIdsUseCase,
     private val exchangeAmountUseCase: ExchangeAmountUseCase,
     private val mapTransactionsToLegacyTransactionsUseCase: MapTransactionsToLegacyTransactionsUseCase,
     private val mapTransactionsToLegacyTransactionsWithTagsUseCase: MapTransactionsToLegacyTransactionsWithTagsUseCase,
@@ -683,30 +685,32 @@ class TransactionsViewModel @Inject constructor(
             initWithTransactions.value = false
             treatTransfersAsIncomeExpense.value =
                 getTransfersAsIncomeExpensePreference()
+            val legacyTransactionsFromNavigation =
+                getLegacyTransactionsByIdsUseCase(screen.legacyTransactionIds)
 
             when {
                 screen.accountId != null -> {
                     initForAccount(screen.accountId!!)
                 }
 
-                screen.categoryId != null && screen.legacyTransactions.isEmpty() -> {
+                screen.categoryId != null && legacyTransactionsFromNavigation.isEmpty() -> {
                     initForCategory(screen.categoryId!!, screen.accountIdFilterList)
                 }
                 // Reports use a synthetic account-transfers category; keep it separate from
                 // the real unspecified-category branch.
-                screen.categoryId != null && screen.legacyTransactions.isNotEmpty() &&
+                screen.categoryId != null && legacyTransactionsFromNavigation.isNotEmpty() &&
                         screen.unspecifiedCategory == false -> {
                     initForCategoryWithTransactions(
                         screen.categoryId!!,
                         screen.accountIdFilterList,
-                        screen.legacyTransactions
+                        legacyTransactionsFromNavigation
                     )
                 }
 
-                screen.unspecifiedCategory == true && screen.legacyTransactions.isNotEmpty() -> {
+                screen.unspecifiedCategory == true && legacyTransactionsFromNavigation.isNotEmpty() -> {
                     initForAccountTransfersCategory(
                         screen.accountIdFilterList,
-                        screen.legacyTransactions
+                        legacyTransactionsFromNavigation
                     )
                 }
 

@@ -34,7 +34,7 @@
 - 补齐 `buildSrc` 根项目名，消除 Gradle type-safe project accessors 针对 buildSrc checkout 路径的缓存警告。
 - 收窄 Gradle 仓库配置：普通依赖解析不再使用 Gradle Plugin Portal，`buildSrc` 普通依赖也不再保留 JitPack；插件解析入口继续保留 Gradle Plugin Portal。
 - 删除根工程 JitPack 仓库：当前剩余第三方依赖均可从 Google/Maven Central 解析，项目不再依赖额外的 JitPack 仓库入口。
-- 显式标记导航旧交易参数：`TransactionsScreen` 与 `PieChartStatisticScreen` 中穿过导航的旧交易列表已改名为 `legacyTransactions`，为后续替换成 ID/展示模型边界做准备。
+- 收窄导航旧交易参数：`TransactionsScreen` 与 `PieChartStatisticScreen` 不再通过导航携带完整 `LegacyTransaction`，改为传递交易 ID，并由目标 ViewModel 按需读取展示模型。
 
 当前仍保留：
 
