@@ -91,6 +91,7 @@
 - 精简 data-core 日志依赖：备份导入失败继续按原逻辑返回空导入结果并发布数据变更事件，但不再为了这一条错误日志依赖 Timber。
 - 删除旧同步 UI 文案：无代码引用的 `sync_transactions`、`syncing_transactions`、`bank_sync_enabled`、`syncing`、`tap_to_sync`、`sync_failed` 多语言字符串已移除；汇率同步功能继续使用当前页面自己的状态文案。
 - 扩大资源清理：删除无代码引用且属于旧登录、教程、反馈、推广、第三方导入或旧设置入口的多语言字符串；默认分类、预算、图表和周期等可能承载实际功能的文案继续保留。
+- 收尾无引用字符串：默认资源中剩余无 `R.string` 调用的旧图表标签、旧周期快捷项、旧客户旅程说明和旧默认分类名已删除；当前初始化数据使用的新默认分类文案继续保留。
 - 移除 Timber 运行时依赖：app 不再初始化 DebugTree，通知展示失败继续按原有吞异常策略处理，版本目录和 app 依赖中删除 Timber。
 - 收窄饼图页旧交易泄漏：`CategoryAmount` 只向 UI 暴露关联交易的 `id/type` 轻量引用，`PieChartStatisticState` 不再携带完整 `LegacyTransaction` 列表；统计计算内部仍沿用现有旧交易算法。
 - 删除无调用方的新模型计划付款付/跳过 use case；当前实际 UI 路径继续使用 legacy 计划付款处理用例。
