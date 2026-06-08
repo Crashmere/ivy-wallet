@@ -154,10 +154,11 @@ private fun BoxWithConstraintsScope.UI(
             Spacer(Modifier.height(20.dp))
 
             IncomeExpensesCards(
-                history = state.history,
                 currency = state.baseCurrency,
                 income = state.income,
                 expenses = state.expenses,
+                incomeTransactionCount = state.transactions.count { it.type == TransactionType.INCOME },
+                expenseTransactionCount = state.transactions.count { it.type == TransactionType.EXPENSE },
                 hasAddButtons = false,
                 itemColor = LegacyTheme.colors.pure,
                 incomeHeaderCardClicked = {

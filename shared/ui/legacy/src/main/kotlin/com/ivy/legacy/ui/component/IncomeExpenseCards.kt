@@ -19,8 +19,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.ivy.data.model.legacy.LegacyTransaction
-import com.ivy.data.model.TransactionHistoryItem
 import com.ivy.data.model.TransactionType
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.legacy.ui.theme.style
@@ -39,10 +37,11 @@ import com.ivy.legacy.ui.theme.isDarkColor
 @Suppress("ParameterNaming")
 @Composable
 fun IncomeExpensesCards(
-    history: List<TransactionHistoryItem>,
     currency: String,
     income: Double,
     expenses: Double,
+    incomeTransactionCount: Int,
+    expenseTransactionCount: Int,
 
     hasAddButtons: Boolean,
     itemColor: Color,
@@ -61,9 +60,7 @@ fun IncomeExpensesCards(
             title = stringResource(R.string.income_uppercase),
             currencyCode = currency,
             amount = income,
-            transactionCount = history
-                .filterIsInstance(LegacyTransaction::class.java)
-                .count { it.type == TransactionType.INCOME },
+            transactionCount = incomeTransactionCount,
             addButtonText = if (hasAddButtons) stringResource(R.string.add_income) else null,
             isIncome = true,
 
@@ -79,9 +76,7 @@ fun IncomeExpensesCards(
             title = stringResource(R.string.expenses_uppercase),
             currencyCode = currency,
             amount = expenses,
-            transactionCount = history
-                .filterIsInstance(LegacyTransaction::class.java)
-                .count { it.type == TransactionType.EXPENSE },
+            transactionCount = expenseTransactionCount,
             addButtonText = if (hasAddButtons) stringResource(R.string.add_expense) else null,
             isIncome = false,
 

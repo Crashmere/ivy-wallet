@@ -127,6 +127,7 @@
 - 删除对象路由页面的无用入参：Main、Balance、Categories、PlannedPayments、Report、Budget、Loans 和 Search 页面入口不再接收没有数据可读的 `screen` 参数。
 - 收窄计划付款 route 职责：`EditPlannedScreen` 只保存导航数据，初始必填项判断移回计划付款编辑页面内部。
 - 收窄交易列表 route 数据：`unspecifiedCategory` 不再使用没有语义的可空布尔值，改为明确的 true/false 分支。
+- 收窄旧收支汇总卡片输入：卡片只接收收入/支出交易数量，不再自己解析完整旧交易历史。
 
 当前仍保留：
 
@@ -1224,6 +1225,7 @@ shared:ui:core
 - 对象路由页面入口已删除无用 `screen` 参数；仍携带 ID、筛选条件或初始值的 route 页面继续接收对应 `screen` 数据。
 - `EditPlannedScreen` route 已删除页面校验 helper；计划付款编辑页在本模块内判断初始金额和账户是否足够进入后续流程。
 - `TransactionsScreen.unspecifiedCategory` 已从 `Boolean?` 收为 `Boolean`，交易列表初始化分支不再携带不存在的 null 状态。
+- 旧收支汇总卡片不再接收完整交易历史，只接收页面已经算好的收入/支出交易数量；通用 UI 组件不再依赖 `LegacyTransaction` 或 `TransactionHistoryItem`。
 - app 仍保留文件选择、文件分享、Material 日期选择器、BuildInfo、Locale 设置、生物识别和窗口安全等真正依赖 Activity 或 Android app 壳层的装配。
 
 ## 高风险区域

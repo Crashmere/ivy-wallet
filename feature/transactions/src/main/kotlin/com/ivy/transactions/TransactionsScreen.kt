@@ -721,10 +721,11 @@ private fun Header(
 
         val nav = navigation()
         IncomeExpensesCards(
-            history = history,
             currency = currency,
             income = income,
             expenses = expenses,
+            incomeTransactionCount = history.countTransactionType(TransactionType.INCOME),
+            expenseTransactionCount = history.countTransactionType(TransactionType.EXPENSE),
 
             hasAddButtons = true,
 
@@ -766,6 +767,10 @@ private fun Header(
 
         Spacer(Modifier.height(20.dp))
     }
+}
+
+private fun List<TransactionHistoryItem>.countTransactionType(type: TransactionType): Int {
+    return filterIsInstance<LegacyTransaction>().count { it.type == type }
 }
 
 @Composable
