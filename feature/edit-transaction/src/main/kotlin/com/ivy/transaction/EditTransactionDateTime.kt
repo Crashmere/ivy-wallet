@@ -1,4 +1,4 @@
-package com.ivy.legacy.ui.component.edit
+package com.ivy.transaction
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -16,24 +16,23 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.ivy.ui.time.LocalTimeConverter
-import com.ivy.ui.time.LocalTimeFormatter
-import com.ivy.ui.time.LocalTimeProvider
+import com.ivy.legacy.ui.component.IvyIcon
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.legacy.ui.theme.style
 import com.ivy.ui.R
+import com.ivy.ui.time.LocalTimeConverter
+import com.ivy.ui.time.LocalTimeFormatter
+import com.ivy.ui.time.LocalTimeProvider
 import com.ivy.ui.time.TimeFormatter
-import com.ivy.legacy.ui.component.IvyIcon
 import java.time.Instant
 
-@Suppress("MultipleEmitters")
 @Composable
-fun TransactionDateTime(
+internal fun EditTransactionDateTime(
     dateTime: Instant?,
     dueDateTime: Instant?,
     onEditDate: () -> Unit,
     onEditTime: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     if (dueDateTime == null || dateTime != null) {
         Spacer(modifier.height(12.dp))

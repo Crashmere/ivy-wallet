@@ -1,4 +1,4 @@
-package com.ivy.legacy.ui.edit.core
+package com.ivy.transaction
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -15,33 +15,18 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.ivy.ui.time.LocalTimeFormatter
+import com.ivy.legacy.ui.component.IvyIcon
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.legacy.ui.theme.style
 import com.ivy.ui.R
+import com.ivy.ui.time.LocalTimeFormatter
 import com.ivy.ui.time.TimeFormatter
-import com.ivy.legacy.ui.component.IvyIcon
 import java.time.Instant
-import com.ivy.ui.time.LocalTimeProvider
-import java.util.concurrent.TimeUnit
 
 @Composable
-fun DueDate(
+internal fun EditTransactionDueDate(
     dueDate: Instant,
     onPickDueDate: () -> Unit,
-) {
-    DueDateCard(
-        dueDate = dueDate,
-        onClick = {
-            onPickDueDate()
-        }
-    )
-}
-
-@Composable
-private fun DueDateCard(
-    dueDate: Instant,
-    onClick: () -> Unit,
 ) {
     Row(
         modifier = Modifier
@@ -49,7 +34,7 @@ private fun DueDateCard(
             .padding(horizontal = 16.dp)
             .clip(LegacyTheme.shapes.r4)
             .background(LegacyTheme.colors.medium, LegacyTheme.shapes.r4)
-            .clickable(onClick = onClick)
+            .clickable(onClick = onPickDueDate)
             .padding(vertical = 20.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {

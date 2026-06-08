@@ -38,7 +38,6 @@ import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.legacy.ui.theme.style
 import com.ivy.ui.platform.hideKeyboard
 import com.ivy.data.model.legacy.LegacyAccount
-import com.ivy.legacy.ui.component.edit.TransactionDateTime
 import com.ivy.legacy.ui.component.edit.core.Description
 import com.ivy.legacy.ui.component.tags.AddTagButton
 import com.ivy.legacy.ui.component.tags.ShowTagModal
@@ -54,7 +53,6 @@ import com.ivy.data.model.currency.IvyCurrency
 import com.ivy.data.model.CreateAccountData
 import com.ivy.data.model.CreateCategoryData
 import com.ivy.legacy.ui.edit.core.Category
-import com.ivy.legacy.ui.edit.core.DueDate
 import com.ivy.legacy.ui.edit.core.EditBottomSheet
 import com.ivy.legacy.ui.edit.core.Title
 import com.ivy.legacy.ui.edit.core.Toolbar
@@ -372,7 +370,7 @@ private fun BoxWithConstraintsScope.UI(
 
         val datePicker = LocalDatePicker.current
         if (dueDate != null) {
-            DueDate(dueDate = dueDate) {
+            EditTransactionDueDate(dueDate = dueDate) {
                 datePicker.pickDate(
                     initialDate = dueDate.toLocalDateInSystemZone(),
                     onDatePicked = {
@@ -390,7 +388,7 @@ private fun BoxWithConstraintsScope.UI(
             onEditDescription = { descriptionModalVisible = true }
         )
 
-        TransactionDateTime(
+        EditTransactionDateTime(
             dateTime = dateTime,
             dueDateTime = dueDate,
             onEditDate = onSetDate,
