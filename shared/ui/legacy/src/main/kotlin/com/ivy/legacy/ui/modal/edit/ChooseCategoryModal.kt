@@ -37,7 +37,7 @@ import com.ivy.legacy.ui.theme.Ivy
 import com.ivy.legacy.ui.component.ItemIconSDefaultIcon
 import com.ivy.legacy.ui.component.IvyBorderButton
 import com.ivy.legacy.ui.component.IvyCircleButton
-import com.ivy.legacy.ui.component.WrapContentRow
+import com.ivy.legacy.ui.layout.WrapContentRow
 import com.ivy.legacy.ui.theme.findContrastTextColor
 import com.ivy.legacy.ui.modal.IvyModal
 import com.ivy.legacy.ui.modal.ModalSkip
