@@ -18,7 +18,6 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.datastore)
     implementation(libs.bundles.ktor)
-    implementation(libs.timber)
 
     testImplementation(projects.shared.data.modelTesting)
     testImplementation(libs.bundles.testing)

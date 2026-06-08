@@ -39,7 +39,6 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import timber.log.Timber
 import java.io.File
 import java.io.FileOutputStream
 import java.util.UUID
@@ -166,7 +165,6 @@ class DefaultBackupStore @Inject constructor(
 
             importJson(jsonString, onProgress, clearCacheDir = true)
         } catch (e: Exception) {
-            Timber.e("Import error: $e")
             ImportResult(
                 rowsFound = 0,
                 transactionsImported = 0,
