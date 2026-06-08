@@ -64,7 +64,6 @@ internal class BudgetViewModel @Inject internal constructor(
     private val timeRange = mutableStateOf<FromToTimeRange?>(null)
     private val budgets = mutableStateOf<ImmutableList<DisplayBudget>>(persistentListOf())
     private val categories = mutableStateOf<ImmutableList<Category>>(persistentListOf())
-    private val accounts = mutableStateOf<ImmutableList<LegacyAccount>>(persistentListOf())
     private val categoryBudgetsTotal = mutableDoubleStateOf(0.0)
     private val appBudgetMax = mutableDoubleStateOf(0.0)
     private val totalRemainingBudget = mutableDoubleStateOf(0.0)
@@ -80,7 +79,6 @@ internal class BudgetViewModel @Inject internal constructor(
         return BudgetScreenState(
             baseCurrency = getBaseCurrency(),
             categories = getCategories(),
-            accounts = getAccounts(),
             budgets = getBudgets(),
             categoryBudgetsTotal = getCategoryBudgetsTotal(),
             appBudgetMax = getAppBudgetMax(),
@@ -104,11 +102,6 @@ internal class BudgetViewModel @Inject internal constructor(
     @Composable
     private fun getCategories(): ImmutableList<Category> {
         return categories.value
-    }
-
-    @Composable
-    private fun getAccounts(): ImmutableList<LegacyAccount> {
-        return accounts.value
     }
 
     @Composable
@@ -211,7 +204,6 @@ internal class BudgetViewModel @Inject internal constructor(
                 budgets = this@BudgetViewModel.budgets.value,
                 categoryBudgetsTotal = categoryBudgetsTotal.doubleValue
             )
-            this@BudgetViewModel.accounts.value = accounts
             this@BudgetViewModel.baseCurrency.value = baseCurrency
             this@BudgetViewModel.timeRange.value = timeRange
         }

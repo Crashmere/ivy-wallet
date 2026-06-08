@@ -90,7 +90,6 @@ private fun BoxWithConstraintsScope.UI(
                             budget = item.budget,
                             baseCurrency = state.baseCurrency,
                             categories = state.categories,
-                            accounts = state.accounts,
                             autoFocusKeyboard = false
                         )
                     )
@@ -120,8 +119,7 @@ private fun BoxWithConstraintsScope.UI(
                     BudgetModalData(
                         budget = null,
                         baseCurrency = state.baseCurrency,
-                        categories = state.categories,
-                        accounts = state.accounts
+                        categories = state.categories
                     )
                 )
             )
