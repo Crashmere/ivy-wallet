@@ -16,6 +16,7 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -23,7 +24,6 @@ import androidx.recyclerview.widget.ItemTouchHelper.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.legacy.ui.theme.style
 import com.ivy.ui.R
 import com.ivy.legacy.ui.button.IvyCircleButton
 import com.ivy.legacy.ui.icon.IvyIcon
@@ -42,9 +42,10 @@ fun <T> BoxScope.ReorderModalSingleType(
         Text(
             modifier = Modifier.padding(start = 32.dp),
             text = stringResource(R.string.reorder),
-            style = LegacyTheme.typo.b1.style(
-                LegacyTheme.colors.pureInverse,
-                FontWeight.ExtraBold
+            style = LegacyTheme.typo.b1.copy(
+                color = LegacyTheme.colors.pureInverse,
+                fontWeight = FontWeight.ExtraBold,
+                textAlign = TextAlign.Start
             )
         )
     },
@@ -83,9 +84,10 @@ private fun <T> BoxScope.ReorderModal(
         Text(
             modifier = Modifier.padding(start = 32.dp),
             text = stringResource(R.string.reorder),
-            style = LegacyTheme.typo.b1.style(
-                LegacyTheme.colors.pureInverse,
-                FontWeight.ExtraBold
+            style = LegacyTheme.typo.b1.copy(
+                color = LegacyTheme.colors.pureInverse,
+                fontWeight = FontWeight.ExtraBold,
+                textAlign = TextAlign.Start
             )
         )
     },

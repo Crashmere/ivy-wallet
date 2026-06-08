@@ -10,11 +10,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.legacy.ui.theme.style
 import com.ivy.ui.compose.clickableNoIndication
 import com.ivy.ui.compose.rememberInteractionSource
 import com.ivy.legacy.ui.money.BalanceRow
@@ -42,9 +42,10 @@ fun ModalAmountSection(
 
         Text(
             text = label,
-            style = LegacyTheme.typo.c.style(
+            style = LegacyTheme.typo.c.copy(
                 color = LegacyTheme.colors.gray,
-                fontWeight = FontWeight.ExtraBold
+                fontWeight = FontWeight.ExtraBold,
+                textAlign = TextAlign.Start
             )
         )
 

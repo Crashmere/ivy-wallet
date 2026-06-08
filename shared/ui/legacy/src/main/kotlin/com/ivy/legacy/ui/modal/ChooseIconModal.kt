@@ -26,9 +26,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.legacy.ui.theme.style
 import com.ivy.ui.platform.hideKeyboard
 import com.ivy.ui.compose.onCompositionStart
 import com.ivy.ui.compose.thenIf
@@ -309,8 +310,10 @@ private fun Section(
 
         Text(
             text = title,
-            style = LegacyTheme.typo.b1.style(
+            style = LegacyTheme.typo.b1.copy(
                 color = LegacyTheme.colors.pureInverse,
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Start
             )
         )
 

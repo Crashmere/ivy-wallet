@@ -10,9 +10,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.legacy.ui.theme.style
 import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.Red
 import java.util.UUID
@@ -47,9 +47,10 @@ fun BoxWithConstraintsScope.DeleteModal(
         Text(
             modifier = Modifier.padding(horizontal = 32.dp),
             text = title,
-            style = LegacyTheme.typo.b1.style(
+            style = LegacyTheme.typo.b1.copy(
                 color = Red,
-                fontWeight = FontWeight.ExtraBold
+                fontWeight = FontWeight.ExtraBold,
+                textAlign = TextAlign.Start
             )
         )
 
@@ -58,9 +59,10 @@ fun BoxWithConstraintsScope.DeleteModal(
         Text(
             modifier = Modifier.padding(horizontal = 32.dp),
             text = description,
-            style = LegacyTheme.typo.b2.style(
+            style = LegacyTheme.typo.b2.copy(
                 color = LegacyTheme.colors.pureInverse,
-                fontWeight = FontWeight.Medium
+                fontWeight = FontWeight.Medium,
+                textAlign = TextAlign.Start
             )
         )
 

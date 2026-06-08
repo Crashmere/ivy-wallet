@@ -9,9 +9,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.legacy.ui.theme.style
 import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.GradientGreen
 import com.ivy.legacy.ui.theme.GradientRed
@@ -200,9 +200,10 @@ fun ModalTitle(
     Text(
         modifier = Modifier.padding(horizontal = 32.dp),
         text = text,
-        style = LegacyTheme.typo.b1.style(
+        style = LegacyTheme.typo.b1.copy(
             color = LegacyTheme.colors.pureInverse,
-            fontWeight = FontWeight.ExtraBold
+            fontWeight = FontWeight.ExtraBold,
+            textAlign = TextAlign.Start
         )
     )
 }

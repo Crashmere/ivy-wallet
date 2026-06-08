@@ -37,7 +37,6 @@ import androidx.compose.ui.unit.dp
 import com.ivy.data.model.IntervalType
 import com.ivy.legacy.ui.icon.IvyIcon
 import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.legacy.ui.theme.style
 import com.ivy.ui.time.forDisplay
 import com.ivy.ui.compose.selectEndTextFieldValue
 import com.ivy.ui.R
@@ -135,7 +134,7 @@ private fun IvyNumberTextField(
                 modifier = textModifier,
                 text = hint!!,
                 textAlign = TextAlign.Start,
-                style = LegacyTheme.typo.nB2.style(
+                style = LegacyTheme.typo.nB2.copy(
                     color = hintColor,
                     fontWeight = fontWeight,
                     textAlign = TextAlign.Center
@@ -149,7 +148,7 @@ private fun IvyNumberTextField(
                 .testTag("base_number_input"),
             value = value,
             onValueChange = onValueChanged,
-            textStyle = LegacyTheme.typo.nB2.style(
+            textStyle = LegacyTheme.typo.nB2.copy(
                 color = textColor,
                 fontWeight = fontWeight,
                 textAlign = TextAlign.Center
@@ -219,9 +218,10 @@ private fun RowScope.IntervalTypeSelector(
 
         Text(
             text = intervalType.forDisplay(intervalN).capitalizeLocal(),
-            style = LegacyTheme.typo.b2.style(
+            style = LegacyTheme.typo.b2.copy(
                 color = LegacyTheme.colors.pureInverse,
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Start
             )
         )
 
