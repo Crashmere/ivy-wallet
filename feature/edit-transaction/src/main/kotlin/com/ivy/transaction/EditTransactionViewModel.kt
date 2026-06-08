@@ -8,14 +8,23 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
 import com.ivy.data.model.legacy.LegacyTransaction
+import com.ivy.data.model.AccountId
 import com.ivy.data.model.TransactionType
 import com.ivy.ui.resource.ResourceProvider
 import com.ivy.data.model.Category
 import com.ivy.data.model.CategoryId
+import com.ivy.data.model.Expense
+import com.ivy.data.model.Income
+import com.ivy.data.model.PositiveValue
 import com.ivy.data.model.Tag
 import com.ivy.data.model.TagId
+import com.ivy.data.model.Transaction
 import com.ivy.data.model.TransactionId
+import com.ivy.data.model.TransactionMetadata
+import com.ivy.data.model.Transfer
+import com.ivy.data.model.primitive.AssetCode
 import com.ivy.data.model.primitive.NotBlankTrimmedString
+import com.ivy.data.model.primitive.PositiveDouble
 import com.ivy.domain.preferences.toggles.PreferenceToggleService
 import com.ivy.domain.preferences.toggles.PreferenceToggleCatalog
 import com.ivy.domain.usecase.category.GetCategoriesUseCase
@@ -41,7 +50,7 @@ import com.ivy.domain.usecase.account.GetLastSelectedAccountIdUseCase
 import com.ivy.domain.usecase.transaction.DeleteTransactionUseCase
 import com.ivy.domain.usecase.transaction.GetTransactionUseCase
 import com.ivy.domain.usecase.transaction.MapTransactionsToLegacyTransactionsUseCase
-import com.ivy.domain.usecase.transaction.SaveLegacyTransactionUseCase
+import com.ivy.domain.usecase.transaction.SaveTransactionUseCase
 import com.ivy.domain.usecase.transaction.SuggestTransactionTitlesUseCase
 import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.R
@@ -101,7 +110,7 @@ internal class EditTransactionViewModel @Inject internal constructor(
     private val getCategoriesUseCase: GetCategoriesUseCase,
     private val getTransactionUseCase: GetTransactionUseCase,
     private val mapTransactionsToLegacyTransactionsUseCase: MapTransactionsToLegacyTransactionsUseCase,
-    private val saveLegacyTransactionUseCase: SaveLegacyTransactionUseCase,
+    private val saveTransactionUseCase: SaveTransactionUseCase,
     private val deleteTransactionUseCase: DeleteTransactionUseCase,
     private val getTransactionTagIdsUseCase: GetTransactionTagIdsUseCase,
     private val createTagUseCase: CreateTagUseCase,
@@ -646,7 +655,8 @@ internal class EditTransactionViewModel @Inject internal constructor(
                         id = id,
                         dateTime = Instant.now(),
                     )
-                    .let { saveLegacyTransactionUseCase(it) }
+                    .toTransaction()
+                    ?.let { saveTransactionUseCase(it) }
 
                 copyTagsToTransactionUseCase(transactionAssociatedTags, id)
 
@@ -765,7 +775,9 @@ internal class EditTransactionViewModel @Inject internal constructor(
                     accountsChanged = false
                 }
 
-                saveLegacyTransactionUseCase(loadedTransaction())
+                loadedTransaction().toTransaction()?.let {
+                    saveTransactionUseCase(it)
+                }
 
             }
 
@@ -800,6 +812,94 @@ internal class EditTransactionViewModel @Inject internal constructor(
 
     private suspend fun closeScreen() {
         _uiEvents.emit(EditTransactionUiEvent.CloseScreen)
+    }
+
+    private suspend fun LegacyTransaction.toTransaction(): Transaction? {
+        val selectedAccount = account ?: accountById(accountId) ?: return null
+        val value = selectedAccount.valueOf(amount.toDouble()) ?: return null
+        val transactionTime = dateTime ?: dueDate ?: return null
+        val transactionId = TransactionId(id)
+        val notBlankTitle = title?.let(NotBlankTrimmedString::from)?.getOrNull()
+        val notBlankDescription = description?.let(NotBlankTrimmedString::from)?.getOrNull()
+        val selectedCategory = categoryId?.let(::CategoryId)
+        val metadata = TransactionMetadata(
+            recurringRuleId = recurringRuleId,
+            paidForDateTime = paidFor,
+            loanId = loanId,
+            loanRecordId = loanRecordId
+        )
+
+        return when (type) {
+            TransactionType.INCOME -> Income(
+                id = transactionId,
+                title = notBlankTitle,
+                description = notBlankDescription,
+                category = selectedCategory,
+                time = transactionTime,
+                settled = dateTime != null,
+                metadata = metadata,
+                tags = emptyList(),
+                value = value,
+                account = AccountId(selectedAccount.id),
+            )
+
+            TransactionType.EXPENSE -> Expense(
+                id = transactionId,
+                title = notBlankTitle,
+                description = notBlankDescription,
+                category = selectedCategory,
+                time = transactionTime,
+                settled = dateTime != null,
+                metadata = metadata,
+                tags = emptyList(),
+                value = value,
+                account = AccountId(selectedAccount.id),
+            )
+
+            TransactionType.TRANSFER -> {
+                val targetAccount = toAccount ?: toAccountId?.let(::accountById) ?: return null
+                if (selectedAccount.id == targetAccount.id) return null
+                Transfer(
+                    id = transactionId,
+                    title = notBlankTitle,
+                    description = notBlankDescription,
+                    category = selectedCategory,
+                    time = transactionTime,
+                    settled = dateTime != null,
+                    metadata = metadata,
+                    tags = emptyList(),
+                    fromAccount = AccountId(selectedAccount.id),
+                    fromValue = value,
+                    toAccount = AccountId(targetAccount.id),
+                    toValue = targetAccount.valueOf(
+                        amount = toAmount.toDouble(),
+                        fallbackAmount = value.amount
+                    ) ?: return null,
+                )
+            }
+        }
+    }
+
+    private fun accountById(accountId: UUID): EditTransactionAccount? {
+        return accounts.firstOrNull { it.id == accountId }
+    }
+
+    private suspend fun EditTransactionAccount.valueOf(
+        amount: Double,
+        fallbackAmount: PositiveDouble? = null,
+    ): PositiveValue? {
+        val positiveAmount = PositiveDouble.from(amount).getOrNull()
+            ?: fallbackAmount
+            ?: return null
+        val asset = currency
+            ?.let(AssetCode::from)
+            ?.getOrNull()
+            ?: AssetCode.from(baseCurrency()).getOrNull()
+            ?: return null
+        return PositiveValue(
+            amount = positiveAmount,
+            asset = asset
+        )
     }
 
     @Suppress("ReturnCount")
