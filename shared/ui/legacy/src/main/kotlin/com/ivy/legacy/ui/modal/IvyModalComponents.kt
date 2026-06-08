@@ -93,7 +93,7 @@ fun ModalCheck(
 }
 
 @Composable
-fun <T> ModalAddSave(
+internal fun <T> ModalAddSave(
     item: T,
     enabled: Boolean = true,
     onClick: () -> Unit
@@ -176,7 +176,7 @@ internal fun ModalPositiveButton(
 }
 
 @Composable
-fun ModalDelete(
+internal fun ModalDelete(
     enabled: Boolean = true,
     testTag: String = "modal_delete",
     onClick: () -> Unit

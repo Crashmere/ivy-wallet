@@ -26,15 +26,12 @@ import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.legacy.ui.theme.style
 import com.ivy.legacy.ui.component.ListItem
 import com.ivy.data.model.Budget
-import com.ivy.legacy.ui.modal.ModalNameInput
 import com.ivy.ui.compose.selectEndTextFieldValue
 import com.ivy.ui.R
 import com.ivy.data.model.CreateBudgetData
 import com.ivy.legacy.ui.modal.DeleteModal
 import com.ivy.legacy.ui.modal.IvyModal
-import com.ivy.legacy.ui.modal.ModalAddSave
 import com.ivy.legacy.ui.modal.ModalAmountSection
-import com.ivy.legacy.ui.modal.ModalDelete
 import com.ivy.legacy.ui.modal.ModalTitle
 import com.ivy.legacy.ui.modal.edit.AmountModal
 import com.ivy.legacy.ui.theme.toComposeColor
@@ -81,8 +78,8 @@ internal fun BoxWithConstraintsScope.BudgetModal(
         visible = modal != null,
         dismiss = dismiss,
         PrimaryAction = {
-            ModalAddSave(
-                item = modal?.budget,
+            BudgetModalAddSave(
+                isEdit = modal?.budget != null,
                 enabled = nameTextFieldValue.text.isNullOrBlank().not() && amount > 0.0
             ) {
                 if (initialBudget != null) {
@@ -127,7 +124,7 @@ internal fun BoxWithConstraintsScope.BudgetModal(
             if (initialBudget != null) {
                 Spacer(Modifier.weight(1f))
 
-                ModalDelete {
+                BudgetModalDelete {
                     deleteModalVisible = true
                 }
 
@@ -137,7 +134,7 @@ internal fun BoxWithConstraintsScope.BudgetModal(
 
         Spacer(Modifier.height(24.dp))
 
-        ModalNameInput(
+        BudgetNameInput(
             hint = stringResource(R.string.budget_name),
             autoFocusKeyboard = modal?.autoFocusKeyboard ?: true,
             textFieldValue = nameTextFieldValue,

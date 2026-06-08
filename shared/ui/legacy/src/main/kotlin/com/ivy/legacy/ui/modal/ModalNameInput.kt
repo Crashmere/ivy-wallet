@@ -18,7 +18,7 @@ import com.ivy.ui.compose.onCompositionStart
 import com.ivy.legacy.ui.component.IvyNameTextField
 
 @Composable
-fun ModalNameInput(
+internal fun ModalNameInput(
     hint: String,
     autoFocusKeyboard: Boolean,
     textFieldValue: TextFieldValue,
