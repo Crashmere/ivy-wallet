@@ -50,6 +50,7 @@ import com.ivy.legacy.ui.theme.Gray
 import com.ivy.legacy.ui.theme.Green
 import com.ivy.legacy.ui.theme.White
 import com.ivy.ui.compose.FilledIconButton
+import com.ivy.ui.modal.IvyModal
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime

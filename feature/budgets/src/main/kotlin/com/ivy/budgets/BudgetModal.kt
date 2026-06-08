@@ -36,7 +36,7 @@ import com.ivy.ui.R
 import com.ivy.data.model.CreateBudgetData
 import com.ivy.ui.icon.ItemIconSDefaultIcon
 import com.ivy.legacy.ui.modal.DeleteModal
-import com.ivy.legacy.ui.modal.IvyModal
+import com.ivy.ui.modal.IvyModal
 import com.ivy.ui.modal.ModalAmountSection
 import com.ivy.ui.modal.ModalTitle
 import com.ivy.legacy.ui.modal.edit.AmountModal

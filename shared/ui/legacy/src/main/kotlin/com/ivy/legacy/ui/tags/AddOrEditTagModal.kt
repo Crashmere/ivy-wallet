@@ -45,7 +45,7 @@ import com.ivy.data.model.TagId
 import com.ivy.legacy.ui.theme.GradientRed
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.legacy.ui.theme.White
-import com.ivy.legacy.ui.modal.IvyModal
+import com.ivy.ui.modal.IvyModal
 import com.ivy.legacy.ui.modal.ModalPositiveButton
 import com.ivy.ui.modal.ModalTitle
 import com.ivy.ui.R

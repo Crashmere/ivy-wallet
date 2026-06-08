@@ -32,7 +32,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.Alignment
-import com.ivy.legacy.ui.modal.IvyModal
+import com.ivy.ui.modal.IvyModal
 import com.ivy.ui.modal.ModalAdd
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.R

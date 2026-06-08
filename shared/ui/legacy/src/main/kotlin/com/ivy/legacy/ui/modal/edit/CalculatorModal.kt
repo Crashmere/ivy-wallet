@@ -25,7 +25,7 @@ import com.ivy.data.model.currency.normalizeExpression
 import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.Gray
 import com.ivy.legacy.ui.theme.Red
-import com.ivy.legacy.ui.modal.IvyModal
+import com.ivy.ui.modal.IvyModal
 import com.ivy.legacy.ui.modal.ModalSet
 import com.ivy.ui.modal.ModalTitle
 import com.notkamui.keval.Keval

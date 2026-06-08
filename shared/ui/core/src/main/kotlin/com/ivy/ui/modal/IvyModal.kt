@@ -1,4 +1,4 @@
-package com.ivy.legacy.ui.modal
+package com.ivy.ui.modal
 
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState
@@ -22,9 +22,11 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -40,26 +42,21 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
-import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.ui.compose.rememberInteractionSource
-import com.ivy.ui.platform.addKeyboardListener
-import com.ivy.ui.compose.consumeClicks
-import com.ivy.ui.compose.densityScope
-import com.ivy.ui.platform.hideKeyboard
-import com.ivy.ui.compose.keyboardOnlyWindowInsets
-import com.ivy.ui.compose.navigationBarInsets
 import com.ivy.ui.animation.DURATION_MODAL_ANIM
 import com.ivy.ui.compose.BackPressHandler
 import com.ivy.ui.compose.CloseIconButton
+import com.ivy.ui.compose.consumeClicks
+import com.ivy.ui.compose.densityScope
 import com.ivy.ui.compose.gradientCutBackgroundTop
+import com.ivy.ui.compose.keyboardOnlyWindowInsets
+import com.ivy.ui.compose.navigationBarInsets
 import com.ivy.ui.compose.onCompositionStart
+import com.ivy.ui.compose.rememberInteractionSource
 import com.ivy.ui.compose.thenIf
-import com.ivy.legacy.ui.theme.mediumBlur
+import com.ivy.ui.platform.addKeyboardListener
+import com.ivy.ui.platform.hideKeyboard
 import java.util.UUID
 import kotlin.math.roundToInt
-import androidx.compose.material3.Text
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
 
 private const val DURATION_BACKGROUND_BLUR_ANIM = 400
 
@@ -106,13 +103,15 @@ fun BoxScope.IvyModal(
         animationSpec = tween(DURATION_MODAL_ANIM),
         visibilityThreshold = 0.01f
     )
+    val theme = IvyModalTheme
+    val modalColors = theme.colors
 
     if (visible || blurAlpha > 0.01f) {
         Box(
             modifier = Modifier
                 .fillMaxSize()
                 .alpha(blurAlpha)
-                .background(mediumBlur())
+                .background(modalColors.mediumBlur)
                 .testTag("modal_outside_blur")
                 .clickable(
                     onClick = {
@@ -147,7 +146,7 @@ fun BoxScope.IvyModal(
                 .fillMaxWidth()
                 .statusBarsPadding()
                 .padding(top = 24.dp)
-                .background(LegacyTheme.colors.pure, LegacyTheme.shapes.r2Top)
+                .background(modalColors.pure, theme.shapes.r2Top)
                 .consumeClicks(rememberInteractionSource())
                 .thenIf(scrollState != null) {
                     verticalScroll(scrollState!!)
@@ -162,7 +161,6 @@ fun BoxScope.IvyModal(
 
             Content()
 
-            // Bottom padding
             if (includeActionsRowPadding) {
                 Spacer(Modifier.height(densityScope { actionsRowHeight.toDp() }))
             }
@@ -193,7 +191,7 @@ fun BoxScope.IvyModal(
 @Composable
 private fun ActionsRow(
     modifier: Modifier = Modifier,
-    lineColor: Color = LegacyTheme.colors.medium,
+    lineColor: Color = IvyModalTheme.colors.medium,
     Content: @Composable RowScope.() -> Unit
 ) {
     Row(
@@ -249,6 +247,8 @@ private fun ModalActionsRow(
 ) {
     if (visible || modalPercentVisible > 0.01f) {
         val screenHeight = LocalConfiguration.current.screenHeightDp.dp
+        val theme = IvyModalTheme
+        val modalColors = theme.colors
         ActionsRow(
             modifier = Modifier
                 .onSizeChanged {
@@ -269,7 +269,7 @@ private fun ModalActionsRow(
                     }
                 }
                 .gradientCutBackgroundTop(
-                    pure = LegacyTheme.colors.pure,
+                    pure = modalColors.pure,
                     density = LocalDensity.current,
                     endY = 16.dp
                 )
@@ -281,9 +281,9 @@ private fun ModalActionsRow(
 
             CloseIconButton(
                 modifier = Modifier.testTag("modal_close_button"),
-                backgroundColor = LegacyTheme.colors.pure,
-                borderColor = LegacyTheme.colors.medium,
-                tint = LegacyTheme.colors.pureInverse,
+                backgroundColor = modalColors.pure,
+                borderColor = modalColors.medium,
+                tint = modalColors.pureInverse,
                 onClick = onClose
             )
 
@@ -297,4 +297,3 @@ private fun ModalActionsRow(
         }
     }
 }
-

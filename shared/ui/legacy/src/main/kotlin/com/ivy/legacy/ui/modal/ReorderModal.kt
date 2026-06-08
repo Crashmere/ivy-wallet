@@ -29,6 +29,7 @@ import com.ivy.legacy.ui.theme.GradientGreen
 import com.ivy.legacy.ui.theme.White
 import com.ivy.ui.compose.GradientIconButton
 import com.ivy.ui.compose.ResourceIcon
+import com.ivy.ui.modal.IvyModal
 import java.util.Collections
 import java.util.Random
 import java.util.UUID

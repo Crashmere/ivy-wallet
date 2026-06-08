@@ -16,6 +16,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.legacy.ui.theme.Red
+import com.ivy.ui.modal.IvyModal
 import java.util.UUID
 
 @Composable

@@ -53,7 +53,7 @@ import com.ivy.ui.icon.ItemIconMDefaultIcon
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.legacy.ui.theme.dynamicContrast
 import com.ivy.legacy.ui.modal.ChooseIconModal
-import com.ivy.legacy.ui.modal.IvyModal
+import com.ivy.ui.modal.IvyModal
 import com.ivy.legacy.ui.modal.ModalAddSave
 import com.ivy.ui.modal.ModalTitle
 import androidx.compose.runtime.getValue

@@ -39,7 +39,7 @@ import com.ivy.legacy.ui.theme.Gray
 import com.ivy.legacy.ui.theme.Ivy
 import com.ivy.legacy.ui.modal.ChooseIconModal
 import com.ivy.legacy.ui.modal.CurrencyModal
-import com.ivy.legacy.ui.modal.IvyModal
+import com.ivy.ui.modal.IvyModal
 import com.ivy.legacy.ui.modal.ModalAddSave
 import com.ivy.ui.modal.ModalAmountSection
 import com.ivy.ui.modal.ModalTitle

@@ -1534,6 +1534,7 @@ shared:ui:core
 - 标签新增入口、标签弹窗新增入口和分类选择弹窗新增入口已直接使用 `shared:ui:core` 的 `OutlinedPillButton`；`shared:ui:legacy` 删除 `legacy.ui.selection.IvyBorderButton` 包装文件和空目录。
 - 分类选择、标签列表和报表关键词筛选的换行布局已统一改用 `shared:ui:core` 的 `WrapContentRow`；删除 `shared:ui:legacy` 中的旧 `legacy.ui.layout.WrapContentRow` 包装和空目录，以及报表筛选浮层内的重复私有实现。
 - 周期选择弹窗的分隔线已收回 `ChoosePeriodModal` 文件私有实现；`shared:ui:legacy` 删除只剩单个调用方的旧 `IvyDividerLine` 文件。
+- 旧弹窗底层容器 `IvyModal` 已迁入 `shared:ui:core`，并用 core 内部主题 token 承接原背景、遮罩、圆角、键盘避让、返回键和底部操作栏行为；feature 与 legacy 内部弹窗统一改用 `com.ivy.ui.modal.IvyModal`。
 - app 仍保留文件选择、文件分享、Material 日期选择器、BuildInfo、Locale 设置、生物识别和窗口安全等真正依赖 Activity 或 Android app 壳层的装配。
 
 ## 高风险区域

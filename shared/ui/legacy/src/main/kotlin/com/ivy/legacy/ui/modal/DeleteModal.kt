@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.Red
+import com.ivy.ui.modal.IvyModal
 import java.util.UUID
 
 @SuppressLint("ComposeModifierMissing")
