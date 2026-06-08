@@ -37,6 +37,8 @@ import com.ivy.ui.compose.selectEndTextFieldValue
 import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.R
 import com.ivy.ui.preferences.asEnabledState
+import com.ivy.legacy.ui.transaction.TransactionListAccount
+import com.ivy.legacy.ui.transaction.toTransactionListAccount
 import com.ivy.domain.usecase.account.CalculateAccountBalanceUseCase
 import com.ivy.domain.usecase.account.CalculateAccountIncomeExpenseUseCase
 import com.ivy.domain.usecase.account.GetAccountTransactionsUseCase
@@ -102,7 +104,8 @@ internal class TransactionsViewModel @Inject internal constructor(
 
     private val period = mutableStateOf(periodState.selectedPeriod)
     private val categories = mutableStateOf<ImmutableList<Category>>(persistentListOf())
-    private val accounts = mutableStateOf<ImmutableList<LegacyAccount>>(persistentListOf())
+    private var legacyAccounts: ImmutableList<LegacyAccount> = persistentListOf()
+    private val accounts = mutableStateOf<ImmutableList<TransactionListAccount>>(persistentListOf())
     private val baseCurrency = mutableStateOf("")
     private val currency = mutableStateOf("")
     private val balance = mutableDoubleStateOf(0.0)
@@ -207,7 +210,7 @@ internal class TransactionsViewModel @Inject internal constructor(
     }
 
     @Composable
-    private fun getAccounts(): ImmutableList<LegacyAccount> {
+    private fun getAccounts(): ImmutableList<TransactionListAccount> {
         return accounts.value
     }
 
@@ -472,7 +475,9 @@ internal class TransactionsViewModel @Inject internal constructor(
 
         val historyIncomeExpense = calculateLegacyTransactionsIncomeExpenseUseCase(
             transactions = filteredTransactions,
-            accounts = accountFilterList.mapNotNull { accountId -> accounts.value.find { it.id == accountId } },
+            accounts = accountFilterList.mapNotNull { accountId ->
+                legacyAccounts.find { it.id == accountId }
+            },
             baseCurrency = baseCurrency.value
         )
 
@@ -564,7 +569,7 @@ internal class TransactionsViewModel @Inject internal constructor(
     }
 
     private fun editAccount(accountId: UUID, newBalance: Double) {
-        val account = accounts.value.firstOrNull { it.id == accountId } ?: return
+        val account = legacyAccounts.firstOrNull { it.id == accountId } ?: return
 
         viewModelScope.launch {
             updateAccountWithBalanceUseCase(account, newBalance)
@@ -649,7 +654,8 @@ internal class TransactionsViewModel @Inject internal constructor(
             currency.value = baseCurrency.value
 
             categories.value = getCategoriesUseCase().toImmutableList()
-            accounts.value = getLegacyAccountsUseCase()
+            legacyAccounts = getLegacyAccountsUseCase()
+            accounts.value = legacyAccounts.map { it.toTransactionListAccount() }.toImmutableList()
             initWithTransactions.value = false
             treatTransfersAsIncomeExpense.value =
                 getTransfersAsIncomeExpensePreference()
@@ -706,7 +712,7 @@ internal class TransactionsViewModel @Inject internal constructor(
 
     private fun selectedAccount(): LegacyAccount? {
         val id = accountId.value ?: return null
-        return accounts.value.firstOrNull { it.id == id }
+        return legacyAccounts.firstOrNull { it.id == id }
     }
 }
 

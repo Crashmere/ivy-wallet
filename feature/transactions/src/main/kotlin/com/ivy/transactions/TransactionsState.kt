@@ -6,6 +6,7 @@ import com.ivy.data.model.TransactionHistoryItem
 import com.ivy.data.model.Category
 import com.ivy.ui.period.TimePeriod
 import com.ivy.data.model.legacy.LegacyAccount
+import com.ivy.legacy.ui.transaction.TransactionListAccount
 import kotlinx.collections.immutable.ImmutableList
 
 @Immutable
@@ -14,7 +15,7 @@ internal data class TransactionsState(
     val baseCurrency: String,
     val currency: String,
     val categories: ImmutableList<Category>,
-    val accounts: ImmutableList<LegacyAccount>,
+    val accounts: ImmutableList<TransactionListAccount>,
     val account: LegacyAccount?,
     val category: Category?,
     val balance: Double,
