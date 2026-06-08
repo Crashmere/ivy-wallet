@@ -1,6 +1,5 @@
 package com.ivy.importdata.csv.domain
 
-import androidx.compose.ui.graphics.toArgb
 import com.ivy.data.model.legacy.LegacyTransaction
 import com.ivy.data.model.TransactionType
 import com.ivy.data.model.Category
@@ -16,7 +15,6 @@ import com.ivy.domain.usecase.category.GetCategoriesUseCase
 import com.ivy.domain.usecase.category.SaveCategoryUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyUseCase
 import com.ivy.domain.usecase.transaction.SaveLegacyTransactionUseCase
-import com.ivy.legacy.ui.theme.IVY_COLOR_PICKER_COLORS_FREE
 import com.ivy.importdata.csv.ImportantFields
 import com.ivy.importdata.csv.OptionalFields
 import com.ivy.importdata.csv.TransferFields
@@ -25,8 +23,6 @@ import com.ivy.data.model.currency.IvyCurrency
 import com.ivy.domain.mapper.legacy.toDomainAccount
 import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
 import com.ivy.domain.util.nextOrderNum
-import com.ivy.legacy.ui.theme.Green
-import com.ivy.legacy.ui.theme.IvyDark
 import kotlinx.collections.immutable.toImmutableList
 import java.time.LocalDateTime
 import java.time.ZoneId
@@ -254,18 +250,18 @@ class CsvTransactionImporter @Inject constructor(
         // create new account
         val colorArgb = color ?: when {
             accountNameString.lowercase(Locale.getDefault()).contains("cash") -> {
-                Green
+                cashAccountColor
             }
 
             accountNameString.lowercase(Locale.getDefault()).contains("revolut") -> {
-                IvyDark
+                revolutAccountColor
             }
 
-            else -> IVY_COLOR_PICKER_COLORS_FREE.getOrElse(newAccountColorIndex++) {
+            else -> defaultImportColorPalette.getOrElse(newAccountColorIndex++) {
                 newAccountColorIndex = 0
-                IVY_COLOR_PICKER_COLORS_FREE.first()
+                defaultImportColorPalette.first()
             }
-        }.toArgb()
+        }
 
         val newAccount = LegacyAccount(
             name = accountNameString,
@@ -316,10 +312,10 @@ class CsvTransactionImporter @Inject constructor(
         }
 
         // create new category
-        val colorArgb = color ?: IVY_COLOR_PICKER_COLORS_FREE.getOrElse(newCategoryColorIndex++) {
+        val colorArgb = color ?: defaultImportColorPalette.getOrElse(newCategoryColorIndex++) {
             newCategoryColorIndex = 0
-            IVY_COLOR_PICKER_COLORS_FREE.first()
-        }.toArgb()
+            defaultImportColorPalette.first()
+        }
 
         val categoryName = NotBlankTrimmedString.from(categoryNameString).getOrNull()
             ?: return null
