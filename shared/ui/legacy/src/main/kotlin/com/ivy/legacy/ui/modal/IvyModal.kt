@@ -45,6 +45,7 @@ import com.ivy.ui.compose.densityScope
 import com.ivy.ui.platform.hideKeyboard
 import com.ivy.ui.compose.keyboardOnlyWindowInsets
 import com.ivy.ui.compose.navigationBarInsets
+import com.ivy.ui.animation.DURATION_MODAL_ANIM
 import com.ivy.ui.navigation.onScreenStart
 import com.ivy.ui.compose.thenIf
 import com.ivy.ui.navigation.navigation
@@ -59,8 +60,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 
 private const val DURATION_BACKGROUND_BLUR_ANIM = 400
-
-const val DURATION_MODAL_ANIM = 200
 
 @Composable
 fun BoxScope.IvyModal(

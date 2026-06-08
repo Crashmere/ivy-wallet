@@ -7,6 +7,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import kotlin.math.roundToInt
 
+const val DURATION_MODAL_ANIM = 200
+
 fun <T> springBounce(
     stiffness: Float = 500f,
 ) = spring<T>(

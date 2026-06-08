@@ -53,7 +53,7 @@ import com.ivy.legacy.ui.theme.GradientGreen
 import com.ivy.legacy.ui.theme.GradientIvy
 import com.ivy.legacy.ui.theme.Ivy
 import com.ivy.legacy.ui.theme.White
-import com.ivy.legacy.ui.modal.DURATION_MODAL_ANIM
+import com.ivy.ui.animation.DURATION_MODAL_ANIM
 import java.util.Locale
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue

@@ -28,7 +28,7 @@ import com.ivy.ui.compose.selectEndTextFieldValue
 import com.ivy.ui.navigation.SearchScreen
 import com.ivy.ui.navigation.screenScopedViewModel
 import com.ivy.ui.R
-import com.ivy.legacy.ui.modal.DURATION_MODAL_ANIM
+import com.ivy.ui.animation.DURATION_MODAL_ANIM
 
 @Composable
 fun SearchScreen(screen: SearchScreen) {

@@ -69,7 +69,7 @@ import com.ivy.legacy.ui.component.ItemIconSDefaultIcon
 import com.ivy.legacy.ui.component.IvyButton
 import com.ivy.legacy.ui.component.IvyIcon
 import com.ivy.legacy.ui.theme.findContrastTextColor
-import com.ivy.legacy.ui.modal.DURATION_MODAL_ANIM
+import com.ivy.ui.animation.DURATION_MODAL_ANIM
 import com.ivy.legacy.ui.modal.edit.AmountModal
 import com.ivy.legacy.ui.theme.toComposeColor
 import kotlinx.coroutines.launch
