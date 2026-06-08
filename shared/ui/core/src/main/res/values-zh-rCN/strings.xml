@@ -412,7 +412,7 @@
     <string name="manual_csv_import">手动导入 CSV 文件</string>
     <string name="csv_import_failed">如果这不起作用，请尝试手动导入 CSV 文件。</string>
     <string name="import_csv_continue">继续</string>
-    <string name="warning_import_csv_file">"\n!!!⚠️警告：导入可能会导致交易重复！！！\n重复的交易无法轻松删除，您需要手动删除每一笔重复的交易！\n原因：我们无法解析交易 ID，因为 Ivy Wallet 仅使用 UUID，而其他应用程序不使用。\n如果您是从头开始的，不用担心-请忽略此消息。"</string>
+    <string name="warning_import_csv_file">"\n!!!⚠️警告：导入可能会导致交易重复！！！\n重复交易无法轻松删除，可能需要逐笔手动删除。\n原因：CSV 文件通常不包含 Ivy Wallet 的交易 UUID，因此无法可靠匹配已有记录。\n如果您是从空钱包开始导入，可以忽略此消息。"</string>
     <string name="select_tags">选择标签</string>
     <string name="language">语言</string>
     <string name="budget_exceeded_info">预算超出 %1$s %2$s</string>

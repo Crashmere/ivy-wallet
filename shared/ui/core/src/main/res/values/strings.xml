@@ -414,7 +414,7 @@
     <string name="manual_csv_import">Manual CSV import</string>
     <string name="csv_import_failed">If this doesn\'t work, consider using manual CSV import.</string>
     <string name="import_csv_continue">Continue</string>
-    <string name="warning_import_csv_file">"\n!!!⚠️ WARNING: Importing may create duplicate transactions!!!\nPlease note that duplicate transactions cannot be easily removed and will need to be deleted individually.\nReason: We cannot parse transaction IDs because Ivy Wallet uses UUIDs exclusively, while other apps do not.\nIf you\'re starting fresh, you can safely ignore this message."</string>
+    <string name="warning_import_csv_file">"\n!!!⚠️ WARNING: Importing may create duplicate transactions!!!\nDuplicate transactions cannot be easily removed and may need to be deleted individually.\nReason: CSV files usually do not include Ivy Wallet transaction UUIDs, so existing records cannot be matched reliably.\nIf you\'re starting with an empty wallet, you can safely ignore this message."</string>
     <string name="select_tags">Select Tags</string>
     <string name="bill_paid">Your bill for %1$s %2$s has been paid</string>
     <string name="language">Language</string>

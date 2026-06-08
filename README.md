@@ -9,6 +9,7 @@
 - 删除社区协作、开源展示和发布流程相关内容：GitHub workflow、Issue/PR 模板、开发规范、Fastlane、发布日志、贡献者、开源致谢、投票问卷、原仓库入口、分享 Ivy、Google Play 评分、Telegram/推广文案等。
 - 删除 Google/Firebase/商店发布相关接线：Google Services、Crashlytics、Google Play Review、Firebase Firestore、GitHub 自动备份迁移残留等。
 - 删除不再需要的功能模块和入口：contributors、releases、attributions、poll、disclaimer、onboarding、widget，以及第三方 App 导入模板和教程。
+- 手动 CSV 导入继续保留，但导入警告文案不再把重复风险归因于“其他 App”，改为说明 CSV 通常缺少 Ivy 交易 UUID。
 - 删除失去实现意义的云端删除入口：设置页不再显示“删除云端数据”链路，`ResetWalletDataUseCase` 不再保留空的 cloud reset 方法。
 - 整顿设置页：合并原高级特性页，改成个人偏好设置；重排设置分组；删除匿名账户入口和首页问候语。
 - 精简测试和预览基础设施：删除 Paparazzi 截图测试、快照图片、仅服务 IDE 的 Compose `@Preview` 示例函数和预览 helper。
