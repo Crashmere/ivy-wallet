@@ -1,4 +1,4 @@
-package com.ivy.legacy.ui.modal
+package com.ivy.ui.modal
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -29,19 +29,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.platform.hideKeyboard
 import com.ivy.ui.compose.onCompositionStart
 import com.ivy.ui.compose.thenIf
 import com.ivy.ui.R
-import com.ivy.legacy.ui.theme.Ivy
 import com.ivy.ui.icon.ItemIconS
-import com.ivy.legacy.ui.theme.dynamicContrast
-import com.ivy.ui.modal.IvyModal
-import com.ivy.ui.modal.ModalSave
-import com.ivy.ui.modal.ModalTitle
-import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.toImmutableList
+import com.ivy.ui.theme.colors.dynamicContrast
 import java.util.UUID
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
@@ -221,8 +214,6 @@ private fun LazyListScope.addIconsRowIfNotEmpty(
 
     onIconSelected: (String) -> Unit
 ) {
-    val rowAcc = rowAcc.toImmutableList()
-
     if (rowAcc.isNotEmpty()) {
         item {
             IconsRow(
@@ -241,7 +232,7 @@ private fun LazyListScope.addIconsRowIfNotEmpty(
 @Composable
 @Suppress("ParameterNaming")
 private fun IconsRow(
-    icons: ImmutableList<String>,
+    icons: List<String>,
     selectedIcon: String?,
     color: Color,
 
@@ -283,7 +274,7 @@ private fun Icon(
     ItemIconS(
         modifier = Modifier
             .clip(CircleShape)
-            .border(2.dp, if (selected) color else LegacyTheme.colors.medium, CircleShape)
+            .border(2.dp, if (selected) color else ChooseIconModalTheme.colors.medium, CircleShape)
             .thenIf(selected) {
                 background(color, CircleShape)
             }
@@ -293,7 +284,7 @@ private fun Icon(
             .padding(all = 8.dp)
             .testTag(icon),
         iconName = icon,
-        tint = if (selected) color.dynamicContrast() else LegacyTheme.colors.mediumInverse
+        tint = if (selected) color.dynamicContrast() else ChooseIconModalTheme.colors.mediumInverse
     )
 }
 
@@ -313,8 +304,8 @@ private fun Section(
 
         Text(
             text = title,
-            style = LegacyTheme.typo.b1.copy(
-                color = LegacyTheme.colors.pureInverse,
+            style = ChooseIconModalTheme.typo.b1.copy(
+                color = ChooseIconModalTheme.colors.pureInverse,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Start
             )
@@ -334,7 +325,7 @@ private fun RowScope.SectionDivider() {
         modifier = Modifier
             .weight(1f)
             .height(1.dp)
-            .background(LegacyTheme.colors.gray, LegacyTheme.shapes.rFull)
+            .background(ChooseIconModalTheme.colors.gray, ChooseIconModalTheme.shapes.rFull)
     )
 }
 
