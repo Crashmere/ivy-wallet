@@ -33,6 +33,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.layout.layout
@@ -60,7 +61,6 @@ import com.ivy.legacy.ui.theme.GradientGreen
 import com.ivy.legacy.ui.theme.Green
 import com.ivy.legacy.ui.theme.Red
 import com.ivy.legacy.ui.component.CloseButton
-import com.ivy.legacy.ui.component.GradientCutBottom
 import com.ivy.legacy.ui.component.IvyButton
 import com.ivy.legacy.ui.component.IvyCheckboxWithText
 import com.ivy.legacy.ui.component.IvyDividerLine
@@ -317,7 +317,7 @@ internal fun BoxWithConstraintsScope.FilterOverlay(
     }
 
     if (percentVisible > 0.01f) {
-        GradientCutBottom(
+        ReportGradientCutBottom(
             height = 196.dp,
             alpha = percentVisible,
             zIndex = 150f
@@ -472,6 +472,29 @@ internal fun BoxWithConstraintsScope.FilterOverlay(
         onTagSearch = {
             onTagSearch(it)
         }
+    )
+}
+
+@Composable
+private fun BoxWithConstraintsScope.ReportGradientCutBottom(
+    height: Dp = 96.dp,
+    alpha: Float = 1f,
+    zIndex: Float? = null
+) {
+    Spacer(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(height)
+            .thenIf(zIndex != null) {
+                zIndex(zIndex!!)
+            }
+            .background(
+                Brush.verticalGradient(
+                    colors = listOf(Color.Transparent, LegacyTheme.colors.pure)
+                )
+            )
+            .align(Alignment.BottomCenter)
+            .alpha(alpha = alpha)
     )
 }
 
