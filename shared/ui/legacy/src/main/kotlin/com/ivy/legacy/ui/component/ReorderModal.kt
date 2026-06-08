@@ -24,7 +24,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.legacy.ui.theme.style
-import com.ivy.data.model.Reorderable
 import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.GradientGreen
 import com.ivy.legacy.ui.theme.White
@@ -33,9 +32,17 @@ import java.util.Collections
 import java.util.Random
 import java.util.UUID
 
+interface ReorderableItem {
+    val orderNum: Double
+
+    fun withNewOrderNum(newOrderNum: Double): ReorderableItem {
+        error("Reordering is unsupported for ${this::class.simpleName}")
+    }
+}
+
 @Suppress("UNCHECKED_CAST", "ParameterNaming")
 @Composable
-fun <T : Reorderable> BoxScope.ReorderModalSingleType(
+fun <T : ReorderableItem> BoxScope.ReorderModalSingleType(
     visible: Boolean,
     id: UUID = UUID.randomUUID(),
     TitleContent: @Composable ColumnScope.() -> Unit = {
@@ -76,7 +83,7 @@ fun <T : Reorderable> BoxScope.ReorderModalSingleType(
 
 @Suppress("ParameterNaming")
 @Composable
-fun <T : Reorderable> BoxScope.ReorderModal(
+fun <T : ReorderableItem> BoxScope.ReorderModal(
     visible: Boolean,
     id: UUID = UUID.randomUUID(),
     TitleContent: @Composable ColumnScope.() -> Unit = {
@@ -176,7 +183,7 @@ fun <T : Reorderable> BoxScope.ReorderModal(
 }
 
 @Suppress("UNCHECKED_CAST")
-private class Adapter<T : Reorderable>(
+private class Adapter<T : ReorderableItem>(
     private val itemTouchHelper: ItemTouchHelper,
     private val ItemContent: @Composable RowScope.(Int, Any) -> Unit,
     private val addItemOrderNumUpdate: (item: T, orderNum: Double) -> Unit,
@@ -203,7 +210,7 @@ private class Adapter<T : Reorderable>(
         )
 
         data[to] = item.withNewOrderNum(newOrderNum) as? T
-            ?: error("Incorrect Reorderable implementation for $item")
+            ?: error("Incorrect ReorderableItem implementation for $item")
         addItemOrderNumUpdate(item, newOrderNum)
     }
 
@@ -271,7 +278,7 @@ private class Adapter<T : Reorderable>(
 }
 
 @Suppress("UNCHECKED_CAST")
-private fun <T : Reorderable> itemTouchHelper(
+private fun <T : ReorderableItem> itemTouchHelper(
     colorMedium: Color,
 ): ItemTouchHelper {
     // 1. Note that I am specifying all 4 directions.
@@ -348,7 +355,7 @@ private fun <T : Reorderable> itemTouchHelper(
 }
 
 @Suppress("UNCHECKED_CAST")
-private fun <T : Reorderable> RecyclerView.adapter() = adapter as? Adapter<T>
+private fun <T : ReorderableItem> RecyclerView.adapter() = adapter as? Adapter<T>
     ?: error("Adapter not set or wrong adapter set to recyclerview.")
 
 @Composable
@@ -365,7 +372,7 @@ fun ReorderButton(
 }
 
 @Suppress("UNCHECKED_CAST")
-private fun <T : Reorderable> calculateOrderNum(
+private fun <T : ReorderableItem> calculateOrderNum(
     itemsInNewOrder: List<*>,
     to: Int
 ): Double {

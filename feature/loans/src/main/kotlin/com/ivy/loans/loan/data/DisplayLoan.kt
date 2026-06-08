@@ -2,7 +2,7 @@ package com.ivy.loans.loan.data
 
 import com.ivy.data.model.Loan
 import com.ivy.data.model.currency.getDefaultFIATCurrency
-import com.ivy.data.model.Reorderable
+import com.ivy.legacy.ui.component.ReorderableItem
 
 data class DisplayLoan(
     val loan: Loan,
@@ -11,11 +11,11 @@ data class DisplayLoan(
     val currencyCode: String? = getDefaultFIATCurrency().currencyCode,
     val formattedDisplayText: String = "",
     val percentPaid: Double = 0.0
-) : Reorderable {
+) : ReorderableItem {
     override val orderNum: Double
         get() = loan.orderNum
 
-    override fun withNewOrderNum(newOrderNum: Double): Reorderable {
+    override fun withNewOrderNum(newOrderNum: Double): ReorderableItem {
         return this.copy(
             loan = loan.copy(
                 orderNum = newOrderNum

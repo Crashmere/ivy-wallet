@@ -475,7 +475,7 @@
 - 已把不依赖 legacy datamodel/domain 的部分交易分隔组件从 `temp:legacy-code` 迁入 `shared:ui:legacy`，并去掉它们对 temp 旧 theme 组件的依赖。
 - 已把旧 theme 的颜色常量和 30 个基础组件从 `temp:legacy-code` 迁入 `shared:ui:legacy`；仍与 modal、wallet、legacy datamodel 耦合的少数组件暂留 temp。
 - 已把旧弹窗基础层继续收敛到 `shared:ui:legacy`：`IvyModal`、通用 modal action、删除/进度/货币/图标/起始日弹窗、排序弹窗、金额展示、预算/缓冲条、交易类型选择、分类选择和部分通用输入弹窗已迁出 `temp:legacy-code`。
-- 已把旧排序接口从 `com.ivy.wallet.domain.data.Reorderable` 收敛到 `shared:data:model` 的 `com.ivy.data.model.Reorderable`，避免 UI legacy 为了排序弹窗反向依赖 domain。
+- 已把旧排序接口从 `com.ivy.wallet.domain.data.Reorderable` 迁出 domain，随后继续收窄到 `shared:ui:legacy` 的排序弹窗边界；`Account/Category/Tag` 等正式数据模型不再实现 UI 拖拽排序契约。
 - 已把计划付款复用的 `RecurringRuleModal` 通过外部 `pickDate` 回调与 `IvyWalletCtx` 解耦，并迁入 `shared:ui:legacy`。
 - 已把旧时间范围兼容模型迁出 `temp:legacy-code`：纯 `ClosedTimeRange`、`FromToTimeRange`、收入/支出统计值对象已进入正式 `com.ivy.data.model`；overdue/upcoming 过滤函数和账户页展示聚合已分别迁入 domain/feature 边界；仍带 UI 文案/格式化职责的旧 `TimePeriod`、`Month`、`LastNTimeRange`、`MainTab` 暂时保留在 `shared:ui:legacy` 的 legacy model 区。
 - 已把 `FromToTimeRange.toDisplay(...)` 从 domain 模型上拆成 `shared:ui:legacy` 的 UI 扩展，避免 `shared:domain` 依赖 `TimeFormatter`。

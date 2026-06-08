@@ -1,7 +1,7 @@
 package com.ivy.accounts
 
 import com.ivy.data.model.Account
-import com.ivy.data.model.Reorderable
+import com.ivy.legacy.ui.component.ReorderableItem
 
 data class AccountData(
     val account: Account,
@@ -9,7 +9,7 @@ data class AccountData(
     val balanceBaseCurrency: Double?,
     val monthlyExpenses: Double,
     val monthlyIncome: Double
-) : Reorderable {
+) : ReorderableItem {
     override val orderNum: Double
         get() = account.orderNum
 
