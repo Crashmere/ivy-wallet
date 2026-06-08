@@ -58,7 +58,7 @@ import com.ivy.ui.R
 import com.ivy.ui.time.DateTimePicker
 import com.ivy.domain.usecase.account.GetAccountsUseCase
 import com.ivy.domain.usecase.account.SetLastSelectedAccountIdUseCase
-import com.ivy.domain.usecase.exchange.LegacyExchangeRatesUseCase
+import com.ivy.domain.usecase.exchange.ExchangeAmountUseCase
 import com.ivy.domain.usecase.loan.UpdateAssociatedLoanDataUseCase
 import com.ivy.data.model.CreateAccountData
 import com.ivy.data.model.CreateCategoryData
@@ -100,7 +100,7 @@ internal class EditTransactionViewModel @Inject internal constructor(
     private val getLoanUseCase: GetLoanUseCase,
     private val getLastSelectedAccountId: GetLastSelectedAccountIdUseCase,
     private val setLastSelectedAccountId: SetLastSelectedAccountIdUseCase,
-    private val exchangeRatesUseCase: LegacyExchangeRatesUseCase,
+    private val exchangeAmountUseCase: ExchangeAmountUseCase,
     private val createCategoryUseCase: CreateCategoryUseCase,
     private val updateCategoryUseCase: UpdateCategoryUseCase,
     private val createAccountWithBalanceUseCase: CreateAccountWithBalanceUseCase,
@@ -804,7 +804,7 @@ internal class EditTransactionViewModel @Inject internal constructor(
         val toCurrency = toAccount?.currency ?: baseCurrency()
         val fromCurrency = account?.currency ?: baseCurrency()
 
-        return exchangeRatesUseCase.convertAmount(
+        return convertAmount(
             baseCurrency = baseCurrency(),
             amount = amount,
             fromCurrency = fromCurrency,
@@ -982,7 +982,7 @@ internal class EditTransactionViewModel @Inject internal constructor(
                 ) {
                     customExchangeRateState.exchangeRate
                 } else {
-                    exchangeRatesUseCase.convertAmount(
+                    convertAmount(
                         baseCurrency = baseCurrencyCode,
                         amount = 1.0,
                         fromCurrency = fromAccCurrencyCode,
@@ -1014,6 +1014,20 @@ internal class EditTransactionViewModel @Inject internal constructor(
         return customExchangeRateState.showCard &&
                 toAccCurrencyCode == customExchangeRateState.toCurrencyCode &&
                 fromAccCurrencyCode == customExchangeRateState.fromCurrencyCode
+    }
+
+    private suspend fun convertAmount(
+        baseCurrency: String,
+        amount: Double,
+        fromCurrency: String,
+        toCurrency: String,
+    ): Double {
+        return exchangeAmountUseCase(
+            amount = amount.toBigDecimal(),
+            baseCurrency = baseCurrency,
+            fromCurrency = fromCurrency,
+            toCurrency = toCurrency
+        ).getOrNull()?.toDouble() ?: amount
     }
 
     private fun saveIfEditMode(closeScreen: Boolean = false) {
