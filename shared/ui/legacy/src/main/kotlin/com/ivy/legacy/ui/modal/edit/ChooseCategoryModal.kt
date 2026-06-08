@@ -35,7 +35,6 @@ import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.Gradient
 import com.ivy.legacy.ui.theme.Ivy
 import com.ivy.ui.icon.ItemIconSDefaultIcon
-import com.ivy.legacy.ui.layout.WrapContentRow
 import com.ivy.legacy.ui.theme.findContrastTextColor
 import com.ivy.legacy.ui.modal.IvyModal
 import com.ivy.legacy.ui.modal.ModalSkip
@@ -43,6 +42,7 @@ import com.ivy.legacy.ui.modal.ModalTitle
 import com.ivy.legacy.ui.theme.toComposeColor
 import com.ivy.ui.compose.GradientIconButton
 import com.ivy.ui.compose.OutlinedPillButton
+import com.ivy.ui.compose.WrapContentRow
 import java.util.UUID
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue

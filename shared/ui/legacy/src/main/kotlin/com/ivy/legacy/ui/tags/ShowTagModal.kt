@@ -30,7 +30,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.Tag
 import com.ivy.data.model.TagId
-import com.ivy.legacy.ui.layout.WrapContentRow
 import com.ivy.legacy.ui.modal.DeleteModal
 import com.ivy.legacy.ui.modal.IvyModal
 import com.ivy.legacy.ui.modal.ModalPositiveButton
@@ -42,6 +41,7 @@ import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.legacy.ui.theme.findContrastTextColor
 import com.ivy.ui.compose.GradientIconButton
 import com.ivy.ui.compose.OutlinedPillButton
+import com.ivy.ui.compose.WrapContentRow
 import com.ivy.ui.compose.thenIf
 import com.ivy.ui.compose.drawColoredShadow
 import com.ivy.ui.compose.onCompositionStart

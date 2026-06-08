@@ -109,7 +109,7 @@
 - 旧弹窗分隔线已从通用组件包移入旧弹窗包；`IvyDividerLine` 只继续服务金额区和周期选择弹窗。
 - 旧编辑弹窗颜色选择器已从通用组件包移入 `modal.edit` 包；`IvyColorPicker` 只继续服务账户和分类编辑弹窗。
 - 周期间隔选择行已从通用组件包移入旧周期选择弹窗包；`IntervalPickerRow` 只继续服务 `ChoosePeriodModal`。
-- 换行布局 helper 已从旧通用组件包移入 `legacy.ui.layout`；`WrapContentRow` 继续服务分类选择和标签列表，但不再混在按钮/卡片组件目录中。
+- 换行布局 helper 已迁入 `shared:ui:core` 的 `WrapContentRow`；分类选择、标签列表和报表关键词筛选共用同一个实现，`shared:ui:legacy` 不再保留 `legacy.ui.layout` 包。
 - 旧分类/标签选择用描边按钮后续已直接改用 `shared:ui:core` 的 `OutlinedPillButton`；`legacy.ui.selection.IvyBorderButton` 包装和空目录已删除。
 - 重排弹窗已从旧通用组件包移入 `legacy.ui.modal`；账户、分类、预算和借贷页面继续使用同一个 `ReorderModalSingleType`，但依赖的是弹窗边界而不是根组件目录。
 - 账户、分类、预算和借贷页面的重排入口按钮已改为页面侧直接使用 `CircleButtonFilled` 和拖拽手柄图标，不再依赖已删除的旧 `ReorderButton` 包装。
@@ -1522,6 +1522,7 @@ shared:ui:core
 - 借贷详情页和借贷弹窗的日期/时间按钮、编辑按钮、账户标签、利息标签、初始记录标签和新增记录按钮已改用 `shared:ui:core` 按钮入口；当前 feature 层不再直接依赖 legacy 按钮包装，剩余旧按钮包装只服务 `shared:ui:legacy` 内部旧弹窗、标签和交易列表组件。
 - 旧弹窗、标签、收入支出汇总和旧交易列表内部也已改用 `shared:ui:core` 按钮入口；`shared:ui:legacy` 删除 `legacy.ui.button.IvyButton/IvyOutlinedButton` 包装文件和空目录。
 - 标签新增入口、标签弹窗新增入口和分类选择弹窗新增入口已直接使用 `shared:ui:core` 的 `OutlinedPillButton`；`shared:ui:legacy` 删除 `legacy.ui.selection.IvyBorderButton` 包装文件和空目录。
+- 分类选择、标签列表和报表关键词筛选的换行布局已统一改用 `shared:ui:core` 的 `WrapContentRow`；删除 `shared:ui:legacy` 中的旧 `legacy.ui.layout.WrapContentRow` 包装和空目录，以及报表筛选浮层内的重复私有实现。
 - app 仍保留文件选择、文件分享、Material 日期选择器、BuildInfo、Locale 设置、生物识别和窗口安全等真正依赖 Activity 或 Android app 壳层的装配。
 
 ## 高风险区域
