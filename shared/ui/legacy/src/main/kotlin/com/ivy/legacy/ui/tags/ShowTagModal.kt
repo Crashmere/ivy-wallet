@@ -29,7 +29,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.Tag
-import com.ivy.data.model.TagId
 import com.ivy.ui.modal.DeleteModal
 import com.ivy.ui.modal.IvyModal
 import com.ivy.ui.modal.ModalPositiveButton
@@ -57,12 +56,12 @@ import java.util.UUID
 fun BoxWithConstraintsScope.ShowTagModal(
     onDismiss: () -> Unit,
     allTagList: ImmutableList<Tag>,
-    selectedTagList: ImmutableList<TagId>,
+    selectedTagList: ImmutableList<UUID>,
     onTagAdd: (String) -> Unit,
     onTagEdit: (oldTag: Tag, newTag: Tag) -> Unit,
-    onTagDelete: (TagId) -> Unit,
-    onTagSelected: (TagId) -> Unit,
-    onTagDeSelected: (TagId) -> Unit,
+    onTagDelete: (UUID) -> Unit,
+    onTagSelected: (UUID) -> Unit,
+    onTagDeSelected: (UUID) -> Unit,
     id: UUID = UUID.randomUUID(),
     visible: Boolean = false,
     selectOnlyMode: Boolean = false,
@@ -81,7 +80,7 @@ fun BoxWithConstraintsScope.ShowTagModal(
     }
 
     var selectedTagId by remember(selectedTag) {
-        mutableStateOf(selectedTag?.id ?: TagId(UUID.randomUUID()))
+        mutableStateOf(selectedTag?.id?.value ?: UUID.randomUUID())
     }
 
     var searchQueryTextFieldValue by remember(visible) {
@@ -128,10 +127,10 @@ fun BoxWithConstraintsScope.ShowTagModal(
                 showTagAddModal = true
             },
             onTagSelected = {
-                onTagSelected(it.id)
+                onTagSelected(it.id.value)
             },
             onTagDeSelected = {
-                onTagDeSelected(it.id)
+                onTagDeSelected(it.id.value)
             },
             onTagLongClick = {
                 if (!selectOnlyMode) {
@@ -155,7 +154,7 @@ fun BoxWithConstraintsScope.ShowTagModal(
         onTagAdd = {
             onTagAdd(it)
             selectedTag = null
-            selectedTagId = TagId(UUID.randomUUID())
+            selectedTagId = UUID.randomUUID()
         },
         onTagDelete = {
             deleteTagModalVisible = true
@@ -174,7 +173,7 @@ fun BoxWithConstraintsScope.ShowTagModal(
     ) {
         if (selectedTag != null) {
             deleteTagModalVisible = false
-            onTagDelete(selectedTag!!.id)
+            onTagDelete(selectedTag!!.id.value)
             showTagAddModal = false
             selectedTag = null
         }
@@ -187,7 +186,7 @@ fun BoxWithConstraintsScope.ShowTagModal(
 private fun ColumnScope.TagList(
     transactionTags: ImmutableList<Tag>,
     onAddNewTag: () -> Unit,
-    selectedTagList: ImmutableList<TagId>,
+    selectedTagList: ImmutableList<UUID>,
     selectOnlyMode: Boolean,
     onTagSelected: (Tag) -> Unit = {},
     onTagDeSelected: (Tag) -> Unit = {},
@@ -212,7 +211,7 @@ private fun ColumnScope.TagList(
             is Tag -> {
                 ExistingTag(
                     tag = it,
-                    selected = selectedTagList.contains(it.id),
+                    selected = selectedTagList.contains(it.id.value),
                     onClick = { onTagSelected(it) },
                     onLongClick = { onTagLongClick(it) },
                     onDeselect = {

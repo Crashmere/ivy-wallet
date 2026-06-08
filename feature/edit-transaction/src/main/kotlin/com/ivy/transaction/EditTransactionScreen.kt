@@ -71,6 +71,7 @@ import com.ivy.ui.compose.ResourceIcon
 import com.ivy.ui.theme.colors.IvyGradients
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.ImmutableSet
+import kotlinx.collections.immutable.toImmutableList
 import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneId
@@ -647,7 +648,7 @@ private fun BoxWithConstraintsScope.UI(
             onTagOperation(EditTransactionViewEvent.TagEvent.OnTagSearch(""))
         },
         allTagList = tags,
-        selectedTagList = transactionAssociatedTags,
+        selectedTagList = transactionAssociatedTags.map { it.value }.toImmutableList(),
         onTagAdd = {
             onTagOperation(EditTransactionViewEvent.TagEvent.SaveTag(name = it))
         },
@@ -655,13 +656,13 @@ private fun BoxWithConstraintsScope.UI(
             onTagOperation(EditTransactionViewEvent.TagEvent.OnTagEdit(newTag))
         },
         onTagDelete = {
-            onTagOperation(EditTransactionViewEvent.TagEvent.OnTagDelete(it))
+            onTagOperation(EditTransactionViewEvent.TagEvent.OnTagDelete(TagId(it)))
         },
         onTagSelected = {
-            onTagOperation(EditTransactionViewEvent.TagEvent.OnTagSelect(it))
+            onTagOperation(EditTransactionViewEvent.TagEvent.OnTagSelect(TagId(it)))
         },
         onTagDeSelected = {
-            onTagOperation(EditTransactionViewEvent.TagEvent.OnTagDeSelect(it))
+            onTagOperation(EditTransactionViewEvent.TagEvent.OnTagDeSelect(TagId(it)))
         },
         onTagSearch = {
             onTagOperation(EditTransactionViewEvent.TagEvent.OnTagSearch(it))

@@ -413,7 +413,7 @@ internal fun BoxWithConstraintsScope.FilterOverlay(
             onTagSearch("")
         },
         allTagList = allTags,
-        selectedTagList = includedTags,
+        selectedTagList = includedTags.map { it.value }.toImmutableList(),
         onTagAdd = {
             // Do Nothing
         },
@@ -425,12 +425,12 @@ internal fun BoxWithConstraintsScope.FilterOverlay(
         },
         onTagSelected = {
             localFilter = nonNullFilter(localFilter).copy(
-                includedTags = nonNullFilter(localFilter).includedTags.plus(it)
+                includedTags = nonNullFilter(localFilter).includedTags.plus(TagId(it))
             )
         },
         onTagDeSelected = {
             localFilter = nonNullFilter(localFilter).copy(
-                includedTags = nonNullFilter(localFilter).includedTags.minus(it)
+                includedTags = nonNullFilter(localFilter).includedTags.minus(TagId(it))
             )
         },
         onTagSearch = {
@@ -447,7 +447,7 @@ internal fun BoxWithConstraintsScope.FilterOverlay(
             onTagSearch("")
         },
         allTagList = allTags,
-        selectedTagList = excludedTags,
+        selectedTagList = excludedTags.map { it.value }.toImmutableList(),
         onTagAdd = {
             // Do Nothing
         },
@@ -459,12 +459,12 @@ internal fun BoxWithConstraintsScope.FilterOverlay(
         },
         onTagSelected = {
             localFilter = nonNullFilter(localFilter).copy(
-                excludedTags = nonNullFilter(localFilter).excludedTags.plus(it)
+                excludedTags = nonNullFilter(localFilter).excludedTags.plus(TagId(it))
             )
         },
         onTagDeSelected = {
             localFilter = nonNullFilter(localFilter).copy(
-                excludedTags = nonNullFilter(localFilter).excludedTags.minus(it)
+                excludedTags = nonNullFilter(localFilter).excludedTags.minus(TagId(it))
             )
         },
         onTagSearch = {
