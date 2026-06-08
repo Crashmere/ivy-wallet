@@ -90,3 +90,9 @@ fun Transaction.getToAccount(): AccountId? = when (this) {
     is Income -> null
     is Transfer -> toAccount
 }
+
+fun Transaction.getTransactionType(): TransactionType = when (this) {
+    is Expense -> TransactionType.EXPENSE
+    is Income -> TransactionType.INCOME
+    is Transfer -> TransactionType.TRANSFER
+}

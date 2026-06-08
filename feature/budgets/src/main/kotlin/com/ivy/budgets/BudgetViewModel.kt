@@ -13,6 +13,8 @@ import com.ivy.data.model.Expense
 import com.ivy.data.model.Income
 import com.ivy.data.model.Transaction
 import com.ivy.data.model.Transfer
+import com.ivy.data.model.getFromAccount
+import com.ivy.data.model.getFromValue
 import com.ivy.ui.period.PeriodState
 import com.ivy.data.model.FromToTimeRange
 import com.ivy.data.model.toCloseTimeRange
@@ -33,8 +35,6 @@ import com.ivy.ui.R
 import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
 import com.ivy.data.model.CreateBudgetData
 import com.ivy.domain.exchange.ExchangeData
-import com.ivy.domain.transaction.getAccountId
-import com.ivy.domain.transaction.getValue
 import com.ivy.domain.transaction.transactionCurrency
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
@@ -230,7 +230,7 @@ class BudgetViewModel @Inject constructor(
 
         var spentAmount = 0.0
         for (transaction in transactions
-            .filter { accountsFilter.isEmpty() || accountsFilter.contains(it.getAccountId()) }
+            .filter { accountsFilter.isEmpty() || accountsFilter.contains(it.getFromAccount().value) }
             .filter { categoryFilter.isEmpty() || categoryFilter.contains(it.category?.value) }) {
             spentAmount += when (transaction) {
                     is Income -> {
@@ -244,7 +244,7 @@ class BudgetViewModel @Inject constructor(
                                 baseCurrency = baseCurrencyCode,
                                 fromCurrency = transactionCurrency(transaction, accounts, baseCurrencyCode)
                             ),
-                            amount = transaction.getValue()
+                            amount = transaction.getFromValue().amount.value.toBigDecimal()
                         ).getOrNull()?.toDouble() ?: 0.0
                     }
 

@@ -20,6 +20,8 @@ import com.ivy.data.model.Income
 import com.ivy.data.model.Tag
 import com.ivy.data.model.Transaction
 import com.ivy.data.model.Transfer
+import com.ivy.data.model.getFromValue
+import com.ivy.data.model.getTransactionType
 import com.ivy.data.model.primitive.ColorInt
 import com.ivy.data.model.primitive.NotBlankTrimmedString
 import com.ivy.domain.preferences.toggles.PreferenceToggleService
@@ -49,8 +51,6 @@ import com.ivy.domain.usecase.transaction.BuildTransactionHistoryItemsUseCase
 import com.ivy.domain.usecase.transaction.CalculateTransactionsIncomeExpenseUseCase
 import com.ivy.data.model.IncomeExpenseTransferPair
 import com.ivy.domain.exchange.ExchangeData
-import com.ivy.domain.transaction.getTransactionType
-import com.ivy.domain.transaction.getValue
 import com.ivy.domain.transaction.transactionCurrency
 import com.ivy.domain.util.orZero
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -490,7 +490,7 @@ class ReportViewModel @Inject constructor(
                     baseCurrency = baseCurrency,
                     fromCurrency = transactionCurrency(transaction, accounts, baseCurrency),
                 ),
-                amount = transaction.getValue()
+                amount = transaction.getFromValue().amount.value.toBigDecimal()
             ).orZero().toDouble()
 
             if ((filter.minAmount == null || transactionAmountBaseCurrency >= filter.minAmount) &&
