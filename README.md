@@ -118,6 +118,7 @@
 - 搜索输入框已迁入 `shared:ui:core` 的 `com.ivy.ui.search.SearchInput`；分类、汇率、搜索页和标签弹窗继续复用原搜索、清空、自动聚焦和键盘隐藏行为，`shared:ui:legacy` 不再保留 `legacy.ui.search` 包。
 - 标签入口按钮已迁入 `shared:ui:core` 的 `com.ivy.ui.tags.AddTagButton`；编辑交易页和报表筛选页继续保留原新增/查看标签按钮展示，`shared:ui:legacy` 的 `legacy.ui.tags` 对外只剩标签弹窗入口。
 - 旧颜色选择器调色板已从 `legacy.ui.theme` 移回 `IvyColorPicker` 文件私有常量；主题包继续只保留旧主题门面、旧色板 token 和仍被旧组件复用的颜色工具。
+- 旧交易列表公开模型的集合入参已从 `ImmutableList` 收窄为普通 `List`；首页、搜索、报表和交易页不再为了调用旧交易列表额外转换账户集合，交易列表展示、到期/逾期 section 和标签展示行为不变。
 - 金额展示组件已从 `shared:ui:legacy` 迁入 `shared:ui:core` 的 `com.ivy.ui.money`；`BalanceRow` 和 `AmountCurrencyB1` 继续保留原金额格式化、隐藏金额和大数字缩写行为，feature 层不再为了金额文本依赖 legacy money 包。
 - 旧按钮基础控件已从根组件目录移入 `legacy.ui.button`；图标基础控件后续已继续迁入 `shared:ui:core`，`component` 根目录不再承载通用基础控件文件。
 - 旧标签 UI 已从 `component.tags` 迁入 `legacy.ui.tags`；编辑交易和报表筛选继续复用原添加标签按钮与标签弹窗。

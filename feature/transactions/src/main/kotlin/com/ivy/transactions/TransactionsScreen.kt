@@ -471,8 +471,7 @@ private fun BoxWithConstraintsScope.UI(
                 baseData = TransactionListData(
                     baseCurrency,
                     accounts
-                        .map { it.toTransactionListAccount() }
-                        .toImmutableList(),
+                        .map { it.toTransactionListAccount() },
                     categories
                 ),
                 upcoming = upcoming.toDueSection(),

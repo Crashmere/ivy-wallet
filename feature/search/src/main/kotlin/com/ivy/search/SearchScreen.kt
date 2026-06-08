@@ -34,7 +34,6 @@ import com.ivy.ui.navigation.navigation
 import com.ivy.ui.navigation.screenScopedViewModel
 import com.ivy.ui.R
 import com.ivy.ui.animation.DURATION_MODAL_ANIM
-import kotlinx.collections.immutable.toImmutableList
 
 @Composable
 fun SearchScreen() {
@@ -97,8 +96,7 @@ private fun SearchUi(
                 baseData = TransactionListData(
                     baseCurrency = uiState.baseCurrency,
                     accounts = uiState.accounts
-                        .map { it.toTransactionListAccount() }
-                        .toImmutableList(),
+                        .map { it.toTransactionListAccount() },
                     categories = uiState.categories
                 ),
                 upcoming = null,

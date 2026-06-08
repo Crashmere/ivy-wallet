@@ -59,7 +59,6 @@ import com.ivy.ui.compose.GradientButton
 import com.ivy.ui.compose.OutlinedPillButton
 import com.ivy.ui.compose.ResourceIcon
 import com.ivy.ui.theme.colors.IvyGradients
-import kotlinx.collections.immutable.toImmutableList
 
 @ExperimentalFoundationApi
 @Composable
@@ -231,7 +230,7 @@ private fun BoxWithConstraintsScope.UI(
                 baseData = TransactionListData(
                     baseCurrency = state.baseCurrency,
                     categories = state.categories,
-                    accounts = state.accounts.map { it.toTransactionListAccount() }.toImmutableList(),
+                    accounts = state.accounts.map { it.toTransactionListAccount() },
                 ),
 
                 upcoming = state.upcoming.toDueSection(),

@@ -68,8 +68,6 @@ import com.ivy.legacy.ui.theme.toComposeColor
 import com.ivy.ui.money.AmountCurrencyB1
 import com.ivy.ui.compose.GradientButton
 import com.ivy.ui.compose.ResourceIcon
-import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.persistentListOf
 import java.math.BigDecimal
 import java.time.Instant
 import java.time.LocalDateTime
@@ -81,7 +79,7 @@ import java.util.UUID
 internal fun TransactionCard(
     baseData: TransactionListData,
     transaction: Transaction,
-    tags: ImmutableList<Tag> = persistentListOf(),
+    tags: List<Tag> = emptyList(),
     shouldShowAccountSpecificColorInTransactions: Boolean,
     onPayOrGet: (UUID) -> Unit,
     modifier: Modifier = Modifier,
@@ -288,10 +286,10 @@ private data class TransactionCardData(
     val recurringRuleId: UUID?,
     val paidFor: Instant?,
     val id: UUID,
-    val tags: ImmutableList<Tag>,
+    val tags: List<Tag>,
 )
 
-private fun Transaction.toTransactionCardData(tags: ImmutableList<Tag>): TransactionCardData {
+private fun Transaction.toTransactionCardData(tags: List<Tag>): TransactionCardData {
     val amount = getFromValue().amount.value.toBigDecimal()
     return TransactionCardData(
         accountId = getFromAccount().value,
@@ -316,7 +314,7 @@ private fun Transaction.toTransactionCardData(tags: ImmutableList<Tag>): Transac
 }
 
 @Composable
-private fun ColumnScope.TransactionTags(tags: ImmutableList<Tag>) {
+private fun ColumnScope.TransactionTags(tags: List<Tag>) {
     Spacer(Modifier.height(12.dp))
 
     LazyRow(

@@ -494,8 +494,7 @@ private fun HomeTransactionListData.toTransactionListData(): TransactionListData
     return TransactionListData(
         baseCurrency = baseCurrency,
         accounts = accounts
-            .map { it.toTransactionListAccount() }
-            .toImmutableList(),
+            .map { it.toTransactionListAccount() },
         categories = categories
     )
 }
