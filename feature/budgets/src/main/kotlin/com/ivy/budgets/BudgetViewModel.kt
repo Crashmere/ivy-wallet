@@ -40,6 +40,7 @@ import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.UUID
 import javax.inject.Inject
 import kotlin.math.abs
 
@@ -160,7 +161,7 @@ internal class BudgetViewModel @Inject internal constructor(
             }
 
             is BudgetScreenEvent.OnDeleteBudget -> {
-                deleteBudget(event.budget)
+                deleteBudget(event.budgetId)
             }
 
             is BudgetScreenEvent.OnReorder -> {
@@ -268,7 +269,8 @@ internal class BudgetViewModel @Inject internal constructor(
         }
     }
 
-    private fun deleteBudget(budget: Budget) {
+    private fun deleteBudget(budgetId: UUID) {
+        val budget = budgets.value.firstOrNull { it.budget.id == budgetId }?.budget ?: return
         viewModelScope.launch {
             if (deleteBudgetUseCase(budget)) {
                 start()

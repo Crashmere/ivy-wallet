@@ -156,7 +156,7 @@ private fun BoxWithConstraintsScope.UI(
         modal = state.budgetModalData,
         onCreate = { onEvent(BudgetScreenEvent.OnCreateBudget(it)) },
         onEdit = { onEvent(BudgetScreenEvent.OnEditBudget(it)) },
-        onDelete = { onEvent(BudgetScreenEvent.OnDeleteBudget(it)) },
+        onDelete = { onEvent(BudgetScreenEvent.OnDeleteBudget(it.id)) },
         dismiss = {
             onEvent(BudgetScreenEvent.OnBudgetModalData(null))
         }
