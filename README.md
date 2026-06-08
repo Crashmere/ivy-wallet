@@ -1354,6 +1354,7 @@ shared:ui:core
 - 借贷列表 ViewModel 内部选中账户 helper 已从返回完整 `LegacyAccount` 收窄为只解析币种字符串；新建借贷弹窗仍通过账户 ID 传递初始选择。
 - 借贷详情 ViewModel 内部选中账户 helper 同样收窄为只解析币种字符串；完整旧账户对象仅保留在账户列表和记录展示模型构建边界。
 - 首页和报表页的交易分隔线已改为各自 feature 私有实现；`shared:ui:legacy` 删除不再需要公开的 `TransactionsDividerLine`。
+- 导入、设置和报表页的顶部工具栏已改为各自 feature 私有实现；`shared:ui:legacy` 删除页面级 `IvyToolbar`，并移除只服务该工具栏的旧 `BackButton`。
 - app 仍保留文件选择、文件分享、Material 日期选择器、BuildInfo、Locale 设置、生物识别和窗口安全等真正依赖 Activity 或 Android app 壳层的装配。
 
 ## 高风险区域

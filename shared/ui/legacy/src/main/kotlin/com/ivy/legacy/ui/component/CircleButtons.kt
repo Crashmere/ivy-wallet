@@ -75,15 +75,3 @@ fun CircleButtonFilled(
     )
 }
 
-@Composable
-internal fun BackButton(
-    modifier: Modifier = Modifier,
-    onClick: () -> Unit,
-) {
-    CircleButton(
-        modifier = modifier,
-        icon = R.drawable.ic_back,
-        contentDescription = "back",
-        onClick = onClick,
-    )
-}

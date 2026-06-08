@@ -2,9 +2,12 @@ package com.ivy.reports
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraintsScope
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -13,12 +16,17 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -52,7 +60,6 @@ import com.ivy.legacy.ui.component.CircleButtonFilled
 import com.ivy.legacy.ui.component.IvyButton
 import com.ivy.legacy.ui.component.IvyIcon
 import com.ivy.legacy.ui.component.IvyOutlinedButton
-import com.ivy.legacy.ui.component.IvyToolbar
 import com.ivy.legacy.ui.theme.pureBlur
 
 @ExperimentalFoundationApi
@@ -402,10 +409,28 @@ private fun Toolbar(
     onExport: () -> Unit,
     onFilter: () -> Unit
 ) {
-    IvyToolbar(
-        showCloseButton = true,
-        onBack = onBack
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(LegacyTheme.colors.pure)
+            .padding(top = 16.dp, bottom = 16.dp),
+        verticalAlignment = Alignment.CenterVertically
     ) {
+        Spacer(Modifier.width(20.dp))
+
+        Icon(
+            modifier = Modifier
+                .testTag("toolbar_close")
+                .clip(CircleShape)
+                .background(LegacyTheme.colors.pure, CircleShape)
+                .border(2.dp, LegacyTheme.colors.medium, CircleShape)
+                .clickable(onClick = onBack)
+                .padding(6.dp),
+            painter = painterResource(id = R.drawable.ic_dismiss),
+            contentDescription = "close",
+            tint = LegacyTheme.colors.pureInverse,
+        )
+
         Spacer(Modifier.weight(1f))
 
         // Export CSV

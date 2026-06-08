@@ -23,6 +23,8 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -62,7 +64,6 @@ import com.ivy.legacy.ui.theme.GradientGreen
 import com.ivy.legacy.ui.theme.Gray
 import com.ivy.legacy.ui.theme.Red
 import com.ivy.legacy.ui.theme.White
-import com.ivy.legacy.ui.component.IvyToolbar
 import com.ivy.legacy.ui.modal.CurrencyModal
 import com.ivy.legacy.ui.modal.DeleteModal
 import com.ivy.legacy.ui.modal.ProgressModal
@@ -248,7 +249,7 @@ private fun BoxWithConstraintsScope.UI(
             .testTag("settings_lazy_column")
     ) {
         stickyHeader {
-            IvyToolbar(
+            SettingsToolbarFrame(
                 onBack = {
                     if (settingsPage == SettingsPage.Main) {
                         nav.back()
@@ -444,6 +445,37 @@ private fun BoxWithConstraintsScope.UI(
         description = stringResource(R.string.exporting_data_description),
         visible = progressState
     )
+}
+
+@Composable
+private fun SettingsToolbarFrame(
+    onBack: () -> Unit,
+    content: @Composable RowScope.() -> Unit = {},
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(LegacyTheme.colors.pure)
+            .padding(top = 16.dp, bottom = 16.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Spacer(Modifier.width(20.dp))
+
+        Icon(
+            modifier = Modifier
+                .testTag("toolbar_back")
+                .clip(CircleShape)
+                .background(LegacyTheme.colors.pure, CircleShape)
+                .border(2.dp, LegacyTheme.colors.medium, CircleShape)
+                .clickable(onClick = onBack)
+                .padding(6.dp),
+            painter = painterResource(id = R.drawable.ic_back),
+            contentDescription = "back",
+            tint = LegacyTheme.colors.pureInverse,
+        )
+
+        content()
+    }
 }
 
 @Composable
