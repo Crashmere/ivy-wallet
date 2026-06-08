@@ -42,15 +42,15 @@ import androidx.compose.ui.unit.dp
 import com.ivy.data.model.Tag
 import com.ivy.data.model.primitive.NotBlankTrimmedString
 import com.ivy.data.model.TagId
-import com.ivy.legacy.ui.theme.GradientRed
 import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.legacy.ui.theme.White
 import com.ivy.ui.modal.IvyModal
 import com.ivy.ui.modal.ModalPositiveButton
 import com.ivy.ui.modal.ModalTitle
 import com.ivy.ui.R
 import com.ivy.ui.compose.GradientIconButton
 import com.ivy.ui.platform.hideKeyboard
+import com.ivy.ui.theme.colors.IvyFixedColors
+import com.ivy.ui.theme.colors.IvyGradients
 
 @Suppress("DEPRECATION")
 @SuppressLint("ComposeModifierMissing")
@@ -168,10 +168,10 @@ private fun DeleteButton(
             .testTag("delete_button"),
         backgroundPadding = 6.dp,
         icon = R.drawable.ic_delete,
-        backgroundGradient = GradientRed,
+        backgroundGradient = IvyGradients.Red,
         enabled = true,
         hasShadow = hasShadow,
-        tint = White,
+        tint = IvyFixedColors.White,
         onClick = onClick
     )
 }

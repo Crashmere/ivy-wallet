@@ -45,10 +45,10 @@ import com.ivy.ui.platform.hideKeyboard
 import com.ivy.data.model.currency.localDecimalSeparator
 import com.ivy.ui.compose.onCompositionStart
 import com.ivy.ui.R
-import com.ivy.legacy.ui.theme.Red
 import com.ivy.ui.modal.IvyModal
 import com.ivy.ui.modal.ModalPositiveButton
 import com.ivy.ui.compose.ResourceIcon
+import com.ivy.ui.theme.colors.IvyFixedColors
 import java.util.UUID
 import kotlin.math.truncate
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -402,7 +402,7 @@ internal fun AmountKeyboard(
                 .padding(all = 24.dp)
                 .testTag("key_del"),
             icon = R.drawable.ic_backspace,
-            tint = Red
+            tint = IvyFixedColors.Red
         )
 
         FourthRowExtra?.invoke(this)
