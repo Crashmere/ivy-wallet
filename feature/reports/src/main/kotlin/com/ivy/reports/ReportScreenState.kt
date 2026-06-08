@@ -1,10 +1,11 @@
 package com.ivy.reports
-import com.ivy.data.model.legacy.LegacyTransaction
 
+import androidx.compose.runtime.Immutable
 import com.ivy.data.model.TransactionHistoryItem
 import com.ivy.data.model.Category
 import com.ivy.data.model.Tag
 import com.ivy.data.model.legacy.LegacyAccount
+import com.ivy.data.model.legacy.LegacyTransaction
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import java.util.*
@@ -15,17 +16,21 @@ internal data class ReportScreenState(
     val balance: Double = 0.0,
     val income: Double = 0.0,
     val expenses: Double = 0.0,
-    val upcomingIncome: Double = 0.0,
-    val upcomingExpenses: Double = 0.0,
-    val overdueIncome: Double = 0.0,
-    val overdueExpenses: Double = 0.0,
     val history: ImmutableList<TransactionHistoryItem> = persistentListOf(),
-    val upcomingTransactions: ImmutableList<LegacyTransaction> = persistentListOf(),
-    val overdueTransactions: ImmutableList<LegacyTransaction> = persistentListOf(),
+    val upcoming: ReportDueSection = ReportDueSection(
+        transactions = persistentListOf(),
+        expanded = false,
+        income = 0.0,
+        expenses = 0.0,
+    ),
+    val overdue: ReportDueSection = ReportDueSection(
+        transactions = persistentListOf(),
+        expanded = false,
+        income = 0.0,
+        expenses = 0.0,
+    ),
     val categories: ImmutableList<Category> = persistentListOf(),
     val accounts: ImmutableList<LegacyAccount> = persistentListOf(),
-    val upcomingExpanded: Boolean = false,
-    val overdueExpanded: Boolean = false,
     val filter: ReportFilter? = null,
     val loading: Boolean = false,
     val accountIdFilters: ImmutableList<UUID> = persistentListOf(),
@@ -35,4 +40,12 @@ internal data class ReportScreenState(
     val treatTransfersAsIncExp: Boolean = false,
     val allTags: ImmutableList<Tag> = persistentListOf(),
     val showAccountColorsInTransactions: Boolean = false
+)
+
+@Immutable
+internal data class ReportDueSection(
+    val transactions: ImmutableList<LegacyTransaction>,
+    val expanded: Boolean,
+    val income: Double,
+    val expenses: Double,
 )

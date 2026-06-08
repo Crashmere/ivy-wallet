@@ -108,18 +108,24 @@ internal class ReportViewModel @Inject internal constructor(
     private var balance by mutableDoubleStateOf(0.0)
     private var income by mutableDoubleStateOf(0.0)
     private var expenses by mutableDoubleStateOf(0.0)
-    private var upcomingIncome by mutableDoubleStateOf(0.0)
-    private var upcomingExpenses by mutableDoubleStateOf(0.0)
-    private var overdueIncome by mutableDoubleStateOf(0.0)
-    private var overdueExpenses by mutableDoubleStateOf(0.0)
     private var history by mutableStateOf<ImmutableList<TransactionHistoryItem>>(persistentListOf())
-    private var upcomingTransactions by
-    mutableStateOf<ImmutableList<LegacyTransaction>>(persistentListOf())
-    private var overdueTransactions by
-    mutableStateOf<ImmutableList<LegacyTransaction>>(persistentListOf())
+    private var upcoming by mutableStateOf(
+        ReportDueSection(
+            transactions = persistentListOf(),
+            expanded = false,
+            income = 0.0,
+            expenses = 0.0,
+        )
+    )
+    private var overdue by mutableStateOf(
+        ReportDueSection(
+            transactions = persistentListOf(),
+            expanded = false,
+            income = 0.0,
+            expenses = 0.0,
+        )
+    )
     private var accounts by mutableStateOf<ImmutableList<LegacyAccount>>(persistentListOf())
-    private var upcomingExpanded by mutableStateOf(false)
-    private var overdueExpanded by mutableStateOf(false)
     private var loading by mutableStateOf(false)
     private var accountIdFilters by mutableStateOf<ImmutableList<UUID>>(persistentListOf())
     private var transactions by mutableStateOf<ImmutableList<LegacyTransaction>>(persistentListOf())
@@ -156,17 +162,11 @@ internal class ReportViewModel @Inject internal constructor(
             history = history,
             income = income,
             loading = loading,
-            overdueExpanded = overdueExpanded,
-            overdueExpenses = overdueExpenses,
-            overdueIncome = overdueIncome,
-            overdueTransactions = overdueTransactions,
+            overdue = overdue,
             showTransfersAsIncExpCheckbox = showTransfersAsIncExpCheckbox,
             transactions = transactions,
             treatTransfersAsIncExp = treatTransfersAsIncExp,
-            upcomingExpanded = upcomingExpanded,
-            upcomingExpenses = upcomingExpenses,
-            upcomingIncome = upcomingIncome,
-            upcomingTransactions = upcomingTransactions,
+            upcoming = upcoming,
             allTags = allTags,
             showAccountColorsInTransactions = getShouldShowAccountSpecificColorInTransactions()
         )
@@ -344,13 +344,17 @@ internal class ReportViewModel @Inject internal constructor(
     ) {
         this.income = income
         this.expenses = expense
-        this.upcomingExpenses = upcomingIncomeExpenseTransferPair.expense.toDouble()
-        this.upcomingIncome = upcomingIncomeExpenseTransferPair.income.toDouble()
-        this.overdueIncome = overDueIncomeExpenseTransferPair.income.toDouble()
-        this.overdueExpenses = overDueIncomeExpenseTransferPair.expense.toDouble()
         this.history = history
-        this.upcomingTransactions = upcomingTransactions
-        this.overdueTransactions = overdueTransactions
+        this.upcoming = upcoming.copy(
+            transactions = upcomingTransactions,
+            income = upcomingIncomeExpenseTransferPair.income.toDouble(),
+            expenses = upcomingIncomeExpenseTransferPair.expense.toDouble(),
+        )
+        this.overdue = overdue.copy(
+            transactions = overdueTransactions,
+            income = overDueIncomeExpenseTransferPair.income.toDouble(),
+            expenses = overDueIncomeExpenseTransferPair.expense.toDouble(),
+        )
         this.accounts = accounts
         this.filter = reportFilter
         this.accountIdFilters = accountIdFilters
@@ -528,7 +532,7 @@ internal class ReportViewModel @Inject internal constructor(
     }
 
     private fun setUpcomingExpandedValue(expanded: Boolean) {
-        upcomingExpanded = expanded
+        upcoming = upcoming.copy(expanded = expanded)
     }
 
     private fun utcNow() =
@@ -539,7 +543,7 @@ internal class ReportViewModel @Inject internal constructor(
     private fun utcTimestamp(): String = utcNow().format(exportTimestampFormatter)
 
     private fun setOverdueExpandedValue(expanded: Boolean) {
-        overdueExpanded = expanded
+        overdue = overdue.copy(expanded = expanded)
     }
 
     private suspend fun payOrGetTransaction(transactionId: UUID) {
@@ -595,15 +599,15 @@ internal class ReportViewModel @Inject internal constructor(
     }
 
     private fun findDueTransaction(transactionId: UUID): LegacyTransaction? {
-        return upcomingTransactions
-            .plus(overdueTransactions)
+        return upcoming.transactions
+            .plus(overdue.transactions)
             .firstOrNull { it.id == transactionId }
     }
 
     private fun findDueTransactions(transactionIds: List<UUID>): List<LegacyTransaction> {
         val transactionIdSet = transactionIds.toSet()
-        return upcomingTransactions
-            .plus(overdueTransactions)
+        return upcoming.transactions
+            .plus(overdue.transactions)
             .filter { it.id in transactionIdSet }
     }
 }

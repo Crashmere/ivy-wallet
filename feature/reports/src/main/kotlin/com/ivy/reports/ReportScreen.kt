@@ -223,27 +223,13 @@ private fun BoxWithConstraintsScope.UI(
                     accounts = state.accounts,
                 ),
 
-                upcoming = LegacyDueSection(
-                    transactions = state.upcomingTransactions,
-                    stats = IncomeExpensePair(
-                        income = state.upcomingIncome.toBigDecimal(),
-                        expense = state.upcomingExpenses.toBigDecimal()
-                    ),
-                    expanded = state.upcomingExpanded
-                ),
+                upcoming = state.upcoming.toLegacyDueSection(),
 
                 setUpcomingExpanded = {
                     onEventHandler.invoke(ReportScreenEvent.OnUpcomingExpanded(upcomingExpanded = it))
                 },
 
-                overdue = LegacyDueSection(
-                    transactions = state.overdueTransactions,
-                    stats = IncomeExpensePair(
-                        income = state.overdueIncome.toBigDecimal(),
-                        expense = state.overdueExpenses.toBigDecimal()
-                    ),
-                    expanded = state.overdueExpanded
-                ),
+                overdue = state.overdue.toLegacyDueSection(),
                 setOverdueExpanded = {
                     onEventHandler.invoke(ReportScreenEvent.OnOverdueExpanded(overdueExpanded = it))
                 },
@@ -327,6 +313,17 @@ private fun BoxWithConstraintsScope.UI(
         onTagSearch = {
             onEventHandler.invoke(ReportScreenEvent.OnTagSearch(data = it))
         }
+    )
+}
+
+private fun ReportDueSection.toLegacyDueSection(): LegacyDueSection {
+    return LegacyDueSection(
+        transactions = transactions,
+        stats = IncomeExpensePair(
+            income = income.toBigDecimal(),
+            expense = expenses.toBigDecimal()
+        ),
+        expanded = expanded
     )
 }
 
