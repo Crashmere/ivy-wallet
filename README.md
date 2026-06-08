@@ -1493,6 +1493,7 @@ shared:ui:core
 - 旧到期交易 section 契约已改名为 `DueSection`；该模型现在只表达正式 `Transaction`、展开状态和收支统计，不再带旧交易模型语义。
 - 编辑交易页内部的可变工作副本已从共享 `LegacyTransaction` 改为 feature 私有 `EditTransactionDraft`；保存前仍统一转换为正式 `Transaction`，编辑、复制、计划付款支付和贷款同步语义保持不变。
 - `shared:data:model` 中已经没有调用方的 `LegacyTransaction`、`LegacyAccount` 和 `LegacyTag` 定义已删除，数据模型层不再保留 `data.model.legacy` 包。
+- data-core 中计划付款规则、借贷和借贷记录 Store 的私有实体映射函数已从 `toLegacyModel()` 改名为 `toDomainModel()`，避免在当前领域模型路径上继续保留误导性 legacy 命名。
 - app 仍保留文件选择、文件分享、Material 日期选择器、BuildInfo、Locale 设置、生物识别和窗口安全等真正依赖 Activity 或 Android app 壳层的装配。
 
 ## 高风险区域

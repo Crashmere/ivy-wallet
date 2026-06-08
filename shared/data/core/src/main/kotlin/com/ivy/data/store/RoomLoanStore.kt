@@ -15,11 +15,11 @@ internal class RoomLoanStore @Inject internal constructor(
     private val loanWriter: WriteLoanDao,
 ) : LoanStore {
     override suspend fun findAll(): List<Loan> = withContext(Dispatchers.IO) {
-        loanDao.findAll().map { it.toLegacyModel() }
+        loanDao.findAll().map { it.toDomainModel() }
     }
 
     override suspend fun findById(id: UUID): Loan? = withContext(Dispatchers.IO) {
-        loanDao.findById(id)?.toLegacyModel()
+        loanDao.findById(id)?.toDomainModel()
     }
 
     override suspend fun findMaxOrderNum(): Double = withContext(Dispatchers.IO) {
@@ -50,7 +50,7 @@ internal class RoomLoanStore @Inject internal constructor(
         }
     }
 
-    private fun LoanEntity.toLegacyModel(): Loan = Loan(
+    private fun LoanEntity.toDomainModel(): Loan = Loan(
         name = name,
         amount = amount,
         type = type,

@@ -15,17 +15,17 @@ internal class RoomPlannedPaymentRuleStore @Inject internal constructor(
     private val plannedPaymentRuleWriter: WritePlannedPaymentRuleDao,
 ) : PlannedPaymentRuleStore {
     override suspend fun findAll(): List<PlannedPaymentRule> = withContext(Dispatchers.IO) {
-        plannedPaymentRuleDao.findAll().map { it.toLegacyModel() }
+        plannedPaymentRuleDao.findAll().map { it.toDomainModel() }
     }
 
     override suspend fun findAllByOneTime(
         oneTime: Boolean
     ): List<PlannedPaymentRule> = withContext(Dispatchers.IO) {
-        plannedPaymentRuleDao.findAllByOneTime(oneTime).map { it.toLegacyModel() }
+        plannedPaymentRuleDao.findAllByOneTime(oneTime).map { it.toDomainModel() }
     }
 
     override suspend fun findById(id: UUID): PlannedPaymentRule? = withContext(Dispatchers.IO) {
-        plannedPaymentRuleDao.findById(id)?.toLegacyModel()
+        plannedPaymentRuleDao.findById(id)?.toDomainModel()
     }
 
     override suspend fun countPlannedPayments(): Long = withContext(Dispatchers.IO) {
@@ -62,7 +62,7 @@ internal class RoomPlannedPaymentRuleStore @Inject internal constructor(
         }
     }
 
-    private fun PlannedPaymentRuleEntity.toLegacyModel(): PlannedPaymentRule = PlannedPaymentRule(
+    private fun PlannedPaymentRuleEntity.toDomainModel(): PlannedPaymentRule = PlannedPaymentRule(
         startDate = startDate,
         intervalN = intervalN,
         intervalType = intervalType,

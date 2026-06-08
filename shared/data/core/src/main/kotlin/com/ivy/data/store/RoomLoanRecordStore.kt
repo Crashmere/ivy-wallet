@@ -15,16 +15,16 @@ internal class RoomLoanRecordStore @Inject internal constructor(
     private val loanRecordWriter: WriteLoanRecordDao,
 ) : LoanRecordStore {
     override suspend fun findAll(): List<LoanRecord> = withContext(Dispatchers.IO) {
-        loanRecordDao.findAll().map { it.toLegacyModel() }
+        loanRecordDao.findAll().map { it.toDomainModel() }
     }
 
     override suspend fun findById(id: UUID): LoanRecord? = withContext(Dispatchers.IO) {
-        loanRecordDao.findById(id)?.toLegacyModel()
+        loanRecordDao.findById(id)?.toDomainModel()
     }
 
     override suspend fun findAllByLoanId(loanId: UUID): List<LoanRecord> =
         withContext(Dispatchers.IO) {
-            loanRecordDao.findAllByLoanId(loanId).map { it.toLegacyModel() }
+            loanRecordDao.findAllByLoanId(loanId).map { it.toDomainModel() }
         }
 
     override suspend fun save(value: LoanRecord) {
@@ -51,7 +51,7 @@ internal class RoomLoanRecordStore @Inject internal constructor(
         }
     }
 
-    private fun LoanRecordEntity.toLegacyModel(): LoanRecord = LoanRecord(
+    private fun LoanRecordEntity.toDomainModel(): LoanRecord = LoanRecord(
         loanId = loanId,
         amount = amount,
         note = note,
