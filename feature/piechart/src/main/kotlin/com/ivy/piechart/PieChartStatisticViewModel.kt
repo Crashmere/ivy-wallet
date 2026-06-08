@@ -126,12 +126,11 @@ class PieChartStatisticViewModel @Inject constructor(
                 is PieChartStatisticEvent.OnSetPeriod -> onSetPeriod(event.timePeriod)
                 is PieChartStatisticEvent.OnShowMonthModal -> configureMonthModal(event.timePeriod)
                 is PieChartStatisticEvent.OnCategoryClicked -> onCategoryClicked(event.category)
-                is PieChartStatisticEvent.OnStart -> start(event.screen)
             }
         }
     }
 
-    private fun start(
+    fun start(
         screen: PieChartStatisticScreen
     ) {
         viewModelScope.launch(Dispatchers.Default) {

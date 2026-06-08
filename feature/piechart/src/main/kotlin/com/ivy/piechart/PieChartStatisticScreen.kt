@@ -81,7 +81,7 @@ fun BoxWithConstraintsScope.PieChartStatisticScreen(
     val uiState = viewModel.uiState()
 
     LaunchedEffect(Unit) {
-        viewModel.onEvent(PieChartStatisticEvent.OnStart(screen))
+        viewModel.start(screen)
     }
 
     UI(
