@@ -34,7 +34,7 @@ import java.util.Locale
 import java.util.UUID
 import javax.inject.Inject
 
-class LoanTransactionSyncCore @Inject constructor(
+internal class LoanTransactionSyncCore @Inject constructor(
     private val categoryStore: CategoryStore,
     private val getCategoriesUseCase: GetCategoriesUseCase,
     private val loanRecordStore: LoanRecordStore,
@@ -47,7 +47,7 @@ class LoanTransactionSyncCore @Inject constructor(
     private var baseCurrencyCode: String? = null
 
     companion object {
-        val DEFAULT_LOAN_CATEGORY_COLOR = 0xFF45E6E6.toInt()
+        private val DEFAULT_LOAN_CATEGORY_COLOR = 0xFF45E6E6.toInt()
     }
 
     init {

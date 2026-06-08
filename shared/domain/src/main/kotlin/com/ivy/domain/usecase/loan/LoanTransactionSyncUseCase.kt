@@ -15,7 +15,7 @@ import kotlinx.coroutines.withContext
 import java.util.UUID
 import javax.inject.Inject
 
-class LoanTransactionSyncUseCase @Inject constructor(
+class LoanTransactionSyncUseCase @Inject internal constructor(
     private val ltCore: LoanTransactionSyncCore
 ) {
 

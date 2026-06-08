@@ -9,7 +9,7 @@ import kotlinx.coroutines.withContext
 import java.util.UUID
 import javax.inject.Inject
 
-class LoanRecordTransactionSyncUseCase @Inject constructor(
+class LoanRecordTransactionSyncUseCase @Inject internal constructor(
     private val ltCore: LoanTransactionSyncCore
 ) {
     suspend fun editAssociatedLoanRecordTransaction(
