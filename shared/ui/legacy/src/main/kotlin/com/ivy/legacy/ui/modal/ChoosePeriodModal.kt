@@ -57,12 +57,13 @@ import java.util.concurrent.TimeUnit
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import java.time.LocalDate
+import java.util.UUID
 
 @SuppressLint("ComposeModifierMissing")
 @Suppress("ParameterNaming")
 @Composable
 fun BoxWithConstraintsScope.ChoosePeriodModal(
-    modal: ChoosePeriodModalData?,
+    modal: TimePeriod?,
 
     dismiss: () -> Unit,
     saveSelectedPeriod: (TimePeriod) -> Unit,
@@ -75,14 +76,17 @@ fun BoxWithConstraintsScope.ChoosePeriodModal(
     onPeriodSelected: (TimePeriod) -> Unit
 ) {
     var period by remember(modal) {
-        mutableStateOf(modal?.period)
+        mutableStateOf(modal)
+    }
+    val modalId = remember(modal) {
+        modal?.let { UUID.randomUUID() }
     }
 
     val modalScrollState = rememberScrollState()
     val currentDate = LocalTimeProvider.current.localDateNow()
 
     IvyModal(
-        id = modal?.id,
+        id = modalId,
         visible = modal != null,
         dismiss = dismiss,
         scrollState = modalScrollState,

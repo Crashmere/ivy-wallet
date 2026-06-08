@@ -70,7 +70,6 @@ import com.ivy.legacy.ui.icon.ItemIconMDefaultIcon
 import com.ivy.legacy.ui.button.IvyOutlinedButton
 import com.ivy.ui.theme.colors.findContrastTextColor
 import com.ivy.legacy.ui.modal.ChoosePeriodModal
-import com.ivy.legacy.ui.modal.ChoosePeriodModalData
 import com.ivy.ui.theme.colors.toComposeColor
 import com.ivy.legacy.ui.money.AmountCurrencyB1
 import kotlinx.collections.immutable.toImmutableList
@@ -117,7 +116,7 @@ private fun BoxWithConstraintsScope.UI(
         animationSpec = com.ivy.ui.animation.springBounce(),
         label = "percent expanded"
     )
-    var choosePeriodModal: ChoosePeriodModalData? by remember { mutableStateOf(null) }
+    var choosePeriodModal: TimePeriod? by remember { mutableStateOf(null) }
 
     LazyColumn(
         modifier = Modifier
@@ -134,7 +133,7 @@ private fun BoxWithConstraintsScope.UI(
                 currency = state.baseCurrency,
                 amount = state.totalAmount,
                 onShowMonthModal = {
-                    choosePeriodModal = ChoosePeriodModalData(period = state.period)
+                    choosePeriodModal = state.period
                 },
                 onSelectNextMonth = {
                     onEvent(PieChartStatisticEvent.OnSelectNextMonth)

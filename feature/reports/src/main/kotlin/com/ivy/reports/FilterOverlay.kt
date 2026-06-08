@@ -62,8 +62,8 @@ import com.ivy.legacy.ui.button.IvyButton
 import com.ivy.legacy.ui.icon.IvyIcon
 import com.ivy.legacy.ui.button.IvyOutlinedButton
 import com.ivy.legacy.ui.modal.ChoosePeriodModal
-import com.ivy.legacy.ui.modal.ChoosePeriodModalData
 import com.ivy.legacy.ui.modal.edit.AmountModal
+import com.ivy.ui.period.TimePeriod
 import com.ivy.ui.theme.colors.findContrastTextColor
 import com.ivy.ui.theme.colors.toComposeColor
 import com.ivy.legacy.ui.money.AmountCurrencyB1
@@ -112,7 +112,7 @@ internal fun BoxWithConstraintsScope.FilterOverlay(
         currentFilter ?: baseFilter
     }
 
-    var choosePeriodModal: ChoosePeriodModalData? by remember {
+    var choosePeriodModal: TimePeriod? by remember {
         mutableStateOf(null)
     }
     val periodState = LocalPeriodState.current
@@ -210,9 +210,7 @@ internal fun BoxWithConstraintsScope.FilterOverlay(
                 filter = localFilter,
                 startDateOfMonth = periodState.startDayOfMonth,
                 onShowPeriodChooserModal = {
-                    choosePeriodModal = ChoosePeriodModalData(
-                        period = filter?.period ?: periodState.selectedPeriod
-                    )
+                    choosePeriodModal = filter?.period ?: periodState.selectedPeriod
                 }
             )
 

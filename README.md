@@ -693,8 +693,8 @@
 - `SearchInput` 已归入 legacy 组件包，金额输入偏好 CompositionLocal 已归入 `shared:ui:core` 的 preferences 包，`LegacyUiRoot` 对外包名已改为 `com.ivy.legacy.ui`，与 `shared:ui:legacy` 模块保持一致。
 - 首页缓冲金额展示模型 `BufferInfo` 和编辑交易借贷提示模型 `EditTransactionDisplayLoan` 已移回各自 feature；`shared:ui:legacy` 不再保存这两段页面私有状态。
 - 周期选择模型和状态 `TimePeriod/Month/LastNTimeRange/PeriodState` 已从 legacy UI 迁到 `shared:ui:core` 的 `com.ivy.ui.period`；首页、交易、报表、饼图、预算和根部状态继续共用同一周期语义，但不再依赖 legacy 包。
-- 周期模型和弹窗动画时长已分别归入 `shared:ui:core` 的 period/animation 包；周期选择弹窗的 `ChoosePeriodModalData` 作为旧弹窗入参保留在 `shared:ui:legacy`。
-- 账户、分类、缓冲金额、借贷、借贷记录、周期选择和计划付款重复规则弹窗的 `*ModalData` 已归回 `shared:ui:legacy`；这些数据对象本质上仍是旧弹窗入参，不再伪装成 UI core 公共 API。
+- 周期模型和弹窗动画时长已分别归入 `shared:ui:core` 的 period/animation 包；周期选择弹窗后续已改为直接接收 `TimePeriod?`，不再公开额外的弹窗 data class。
+- 账户、分类、缓冲金额、借贷、借贷记录和计划付款重复规则弹窗的 `*ModalData` 已归回 `shared:ui:legacy`；这些数据对象本质上仍是旧弹窗入参，不再伪装成 UI core 公共 API。
 - CSV 导入器的新账户/分类默认颜色已改用导入功能自己的 ARGB 调色板；导入解析逻辑不再为了颜色值依赖 Compose `Color` 或 legacy theme。
 - 首页客户旅程卡片模型已改为保存普通 ARGB 背景色，卡片 provider 不再依赖 legacy theme；只有实际 Composable 绘制边界继续把颜色转成旧 UI 渐变。
 - 交易、报表和饼图的 ViewModel/UseCase 中用于占位分类的颜色已改成本地 ARGB 常量；非绘制逻辑不再为了 `Color.toArgb()` 依赖 Compose graphics 或 legacy theme。
@@ -1499,6 +1499,7 @@ shared:ui:core
 - 首页状态和 ViewModel 已改用本 feature 的 `HomeTransactionListAccount`，旧交易列表账户类型同样只在 `HomeTab` 进入旧交易列表 UI 前临时适配。
 - 交易列表页状态和 ViewModel 已改用本 feature 的 `TransactionsListAccount`，旧交易列表账户类型只在 `TransactionsScreen` 调用旧列表组件前临时适配。
 - 报表账户展示模型已脱离旧交易列表账户类型；`ReportAccount` 只保留报表/筛选所需字段，旧列表适配函数移到 `ReportScreen` 本地。
+- 周期选择弹窗不再公开 `ChoosePeriodModalData` 状态对象；调用页面只保存 `TimePeriod?`，旧弹窗内部自行维护弹窗 id。
 - 旧主题系统新增 `LegacyColors`、`LegacyTypography` 和 `LegacyShapes` 作为外层门面类型；`theme.system` 下的 `IvyColors/IvyTypography/IvyShapes` 已收窄为 `shared:ui:legacy` 内部实现细节。
 - app 仍保留文件选择、文件分享、Material 日期选择器、BuildInfo、Locale 设置、生物识别和窗口安全等真正依赖 Activity 或 Android app 壳层的装配。
 

@@ -41,8 +41,8 @@ import com.ivy.ui.theme.colors.IvyFixedColors.White
 import com.ivy.legacy.ui.money.BalanceRow
 import com.ivy.legacy.ui.button.IvyCircleButton
 import com.ivy.legacy.ui.modal.ChoosePeriodModal
-import com.ivy.legacy.ui.modal.ChoosePeriodModalData
 import com.ivy.legacy.ui.period.PeriodSelector
+import com.ivy.ui.period.TimePeriod
 
 private val FabButtonSize = 56.dp
 
@@ -62,7 +62,7 @@ private fun BoxWithConstraintsScope.UI(
     state: BalanceState,
     onEvent: (BalanceEvent) -> Unit = {}
 ) {
-    var choosePeriodModal: ChoosePeriodModalData? by remember { mutableStateOf(null) }
+    var choosePeriodModal: TimePeriod? by remember { mutableStateOf(null) }
     val periodState = LocalPeriodState.current
     val datePicker = LocalDatePicker.current
 
@@ -80,9 +80,7 @@ private fun BoxWithConstraintsScope.UI(
             onPreviousMonth = { onEvent(BalanceEvent.OnPreviousMonth) },
             onNextMonth = { onEvent(BalanceEvent.OnNextMonth) },
             onShowChoosePeriodModal = {
-                choosePeriodModal = ChoosePeriodModalData(
-                    period = state.period
-                )
+                choosePeriodModal = state.period
             }
         )
 

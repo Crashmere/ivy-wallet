@@ -84,7 +84,6 @@ import com.ivy.ui.theme.colors.dynamicContrast
 import com.ivy.ui.theme.colors.findContrastTextColor
 import com.ivy.ui.theme.colors.isDarkColor
 import com.ivy.legacy.ui.modal.ChoosePeriodModal
-import com.ivy.legacy.ui.modal.ChoosePeriodModalData
 import com.ivy.legacy.ui.modal.AccountModalData
 import com.ivy.legacy.ui.modal.DeleteModal
 import com.ivy.legacy.ui.modal.edit.AccountModal
@@ -326,7 +325,7 @@ private fun BoxWithConstraintsScope.UI(
 
     var categoryModalData: CategoryModalData? by remember { mutableStateOf(null) }
     var accountModalData: AccountModalData? by remember { mutableStateOf(null) }
-    var choosePeriodModal: ChoosePeriodModalData? by remember { mutableStateOf(null) }
+    var choosePeriodModal: TimePeriod? by remember { mutableStateOf(null) }
     var skipAllTransactionIds by remember { mutableStateOf<List<UUID>>(emptyList()) }
 
     val swipeListenerState = rememberSwipeListenerState()
@@ -563,7 +562,7 @@ private fun LazyListScope.choosePeriodModal(
     initWithTransactions: Boolean,
     onPreviousMonth: () -> Unit,
     onNextMonth: () -> Unit,
-    onChoosePeriodModal: (ChoosePeriodModalData?) -> Unit,
+    onChoosePeriodModal: (TimePeriod?) -> Unit,
 ) {
     item {
         // Rounded corners top effect
@@ -584,11 +583,7 @@ private fun LazyListScope.choosePeriodModal(
                 onNextMonth = { if (!initWithTransactions) onNextMonth() },
                 onShowChoosePeriodModal = {
                     if (!initWithTransactions) {
-                        onChoosePeriodModal(
-                            ChoosePeriodModalData(
-                                period = period
-                            )
-                        )
+                        onChoosePeriodModal(period)
                     }
                 }
             )

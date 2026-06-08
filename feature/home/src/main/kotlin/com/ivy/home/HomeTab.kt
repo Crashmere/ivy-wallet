@@ -63,7 +63,6 @@ import com.ivy.ui.rememberScrollPositionListState
 import com.ivy.data.model.currency.IvyCurrency
 import com.ivy.data.model.IncomeExpensePair
 import com.ivy.legacy.ui.modal.ChoosePeriodModal
-import com.ivy.legacy.ui.modal.ChoosePeriodModalData
 import com.ivy.legacy.ui.modal.CurrencyModal
 import com.ivy.legacy.ui.modal.DeleteModal
 import kotlinx.collections.immutable.ImmutableList
@@ -171,7 +170,7 @@ internal fun BoxWithConstraintsScope.HomeUi(
 
     var bufferModalData: HomeBufferModalData? by remember { mutableStateOf(null) }
     var currencyModalVisible by remember { mutableStateOf(false) }
-    var choosePeriodModal: ChoosePeriodModalData? by remember {
+    var choosePeriodModal: TimePeriod? by remember {
         mutableStateOf(null)
     }
     var moreMenuExpanded by remember { mutableStateOf(false) }
@@ -216,9 +215,7 @@ internal fun BoxWithConstraintsScope.HomeUi(
             hideBalance = uiState.hideBalance,
 
             onShowMonthModal = {
-                choosePeriodModal = ChoosePeriodModalData(
-                    period = uiState.period
-                )
+                choosePeriodModal = uiState.period
             },
             onBalanceClick = {
                 onEvent(HomeEvent.BalanceClick)
