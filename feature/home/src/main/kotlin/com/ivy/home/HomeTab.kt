@@ -101,6 +101,38 @@ fun BoxWithConstraintsScope.HomeTab(
         onOpenExpensePieChart = {
             nav.navigateTo(PieChartStatisticScreen(type = TransactionRouteType.EXPENSE))
         },
+        onAddPlannedPayment = {
+            nav.navigateTo(
+                EditPlannedScreen(
+                    type = TransactionRouteType.EXPENSE,
+                    plannedPaymentRuleId = null
+                )
+            )
+        },
+        onTransactionClick = { transactionId, transactionType ->
+            nav.navigateTo(
+                EditTransactionScreen(
+                    initialTransactionId = transactionId,
+                    type = transactionType.toRouteType()
+                )
+            )
+        },
+        onAccountClick = { accountId ->
+            nav.navigateTo(
+                TransactionsScreen(
+                    accountId = accountId,
+                    categoryId = null
+                )
+            )
+        },
+        onCategoryClick = { categoryId ->
+            nav.navigateTo(
+                TransactionsScreen(
+                    accountId = null,
+                    categoryId = categoryId
+                )
+            )
+        },
         onMoreMenuDestinationClick = { destination ->
             when (destination) {
                 MoreMenuDestination.Search -> nav.navigateTo(SearchScreen)
@@ -125,6 +157,10 @@ internal fun BoxWithConstraintsScope.HomeUi(
     onOpenAccountsTab: () -> Unit,
     onOpenIncomePieChart: () -> Unit,
     onOpenExpensePieChart: () -> Unit,
+    onAddPlannedPayment: () -> Unit,
+    onTransactionClick: (UUID, TransactionType) -> Unit,
+    onAccountClick: (UUID) -> Unit,
+    onCategoryClick: (UUID) -> Unit,
     onMoreMenuDestinationClick: (MoreMenuDestination) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -238,6 +274,10 @@ internal fun BoxWithConstraintsScope.HomeUi(
             onOpenAccountsTab = onOpenAccountsTab,
             onOpenIncomePieChart = onOpenIncomePieChart,
             onOpenExpensePieChart = onOpenExpensePieChart,
+            onAddPlannedPayment = onAddPlannedPayment,
+            onTransactionClick = onTransactionClick,
+            onAccountClick = onAccountClick,
+            onCategoryClick = onCategoryClick,
             onSkipAllTransactions = {
                 skipAllModalVisible = true
             }
@@ -351,10 +391,13 @@ internal fun HomeLazyColumn(
     onOpenAccountsTab: () -> Unit,
     onOpenIncomePieChart: () -> Unit,
     onOpenExpensePieChart: () -> Unit,
+    onAddPlannedPayment: () -> Unit,
+    onTransactionClick: (UUID, TransactionType) -> Unit,
+    onAccountClick: (UUID) -> Unit,
+    onCategoryClick: (UUID) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val periodState = LocalPeriodState.current
-    val nav = navigation()
 
     val nestedScrollConnection = remember {
         object : NestedScrollConnection {
@@ -418,18 +461,11 @@ internal fun HomeLazyColumn(
                         }
 
                         CustomerJourneyAction.AddPlannedPayment -> {
-                            nav.navigateTo(
-                                EditPlannedScreen(
-                                    type = TransactionRouteType.EXPENSE,
-                                    plannedPaymentRuleId = null
-                                )
-                            )
+                            onAddPlannedPayment()
                         }
 
                         CustomerJourneyAction.OpenExpensePieChart -> {
-                            nav.navigateTo(
-                                PieChartStatisticScreen(type = TransactionRouteType.EXPENSE)
-                            )
+                            onOpenExpensePieChart()
                         }
                     }
                 },
@@ -444,30 +480,9 @@ internal fun HomeLazyColumn(
             setOverdueExpanded = setOverdueExpanded,
             history = history,
             onPayOrGet = onPayOrGet,
-            onTransactionClick = { transactionId, transactionType ->
-                nav.navigateTo(
-                    EditTransactionScreen(
-                        initialTransactionId = transactionId,
-                        type = transactionType.toRouteType()
-                    )
-                )
-            },
-            onAccountClick = {
-                nav.navigateTo(
-                    TransactionsScreen(
-                        accountId = it,
-                        categoryId = null
-                    )
-                )
-            },
-            onCategoryClick = {
-                nav.navigateTo(
-                    TransactionsScreen(
-                        accountId = null,
-                        categoryId = it
-                    )
-                )
-            },
+            onTransactionClick = onTransactionClick,
+            onAccountClick = onAccountClick,
+            onCategoryClick = onCategoryClick,
             emptyStateTitle = noTransactionsTitle,
             emptyStateText = noTransactionsText,
             shouldShowAccountSpecificColorInTransactions = shouldShowAccountSpecificColorInTransactions,

@@ -54,7 +54,7 @@
 - 收窄编辑交易导航职责：保存、删除、复制、计划交易支付和空账户退出后的关闭页面动作改为 `CloseScreen` UI 事件；编辑交易 ViewModel 不再注入 `Navigation`，原先无返回栈时回主界面的语义移到 Screen 执行。
 - 收窄重置数据导航职责：`ResetWalletDataUseCaseImpl` 不再注入 `Navigation` 或跳转主界面；设置页在重置完成后通过 `WalletDataReset` UI 事件重置返回栈并回到主界面。
 - 收窄首页客户旅程模型职责：客户旅程卡片不再携带 `(Navigation, MainTabState) -> Unit` 回调，改为声明 `CustomerJourneyAction` 意图；Composable 层负责把意图翻译为导航或 Tab 切换。
-- 首页客户旅程 UI 组件也已停止直接调用 `navigation()` 或构造 route；`HomeLazyColumn` 负责把 `CustomerJourneyAction` 翻译为打开账户 tab、计划付款编辑或支出饼图。
+- 首页客户旅程 UI 组件也已停止直接调用 `navigation()` 或构造 route；`HomeLazyColumn` 继续只上报客户旅程、交易、账户和分类点击意图，所有首页内部列表跳转都由 `HomeTab` 页面入口统一翻译为导航 route。
 - 首页 Header 的收入/支出卡片不再直接构造饼图 route；点击动作改为普通回调，由 `HomeTab` 顶层统一执行导航。
 - 首页更多菜单不再直接引用各功能 route；菜单按钮改为上报 `MoreMenuDestination`，由 `HomeTab` 统一映射到搜索、设置、分类、计划付款、报表、预算和借贷页面。
 - 收窄计划付款列表导航职责：计划付款列表和卡片不再直接调用 `navigation()` 或构造 route，改为向页面入口暴露点击回调；`PlannedPaymentsScreen` 统一把卡片、分类和账户点击翻译为编辑页或交易筛选页导航。
