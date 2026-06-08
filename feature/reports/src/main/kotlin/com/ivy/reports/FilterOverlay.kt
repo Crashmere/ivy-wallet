@@ -62,7 +62,6 @@ import com.ivy.legacy.ui.theme.Red
 import com.ivy.legacy.ui.component.CloseButton
 import com.ivy.legacy.ui.component.ItemIconSDefaultIcon
 import com.ivy.legacy.ui.component.IvyButton
-import com.ivy.legacy.ui.component.IvyDividerLine
 import com.ivy.legacy.ui.component.IvyIcon
 import com.ivy.legacy.ui.component.IvyOutlinedButton
 import com.ivy.legacy.ui.modal.AddModalBackHandling
@@ -1230,8 +1229,11 @@ private class AddKeywordButton
 private fun FilterDivider() {
     Spacer(modifier = Modifier.height(24.dp))
 
-    IvyDividerLine(
-        modifier = Modifier.fillMaxWidth()
+    Spacer(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(2.dp)
+            .background(LegacyTheme.colors.medium)
     )
 
     Spacer(modifier = Modifier.height(24.dp))

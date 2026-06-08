@@ -45,7 +45,6 @@ import androidx.compose.ui.unit.dp
 import com.ivy.data.model.IntervalType
 import com.ivy.legacy.ui.component.IvyButton
 import com.ivy.legacy.ui.component.IvyCircleButton
-import com.ivy.legacy.ui.component.IvyDividerLine
 import com.ivy.legacy.ui.component.IvyIcon
 import com.ivy.legacy.ui.modal.IvyModal
 import com.ivy.legacy.ui.modal.ModalTitle
@@ -313,7 +312,7 @@ private fun MultipleTimes(
 
     Spacer(Modifier.height(32.dp))
 
-    IvyDividerLine(
+    RecurringRuleDividerLine(
         modifier = Modifier.padding(horizontal = 24.dp)
     )
 
@@ -352,6 +351,18 @@ private fun MultipleTimes(
     )
 
     Spacer(Modifier.height(48.dp))
+}
+
+@Composable
+private fun RecurringRuleDividerLine(
+    modifier: Modifier = Modifier,
+) {
+    Spacer(
+        modifier = modifier
+            .fillMaxWidth()
+            .height(2.dp)
+            .background(LegacyTheme.colors.medium)
+    )
 }
 
 @Composable
