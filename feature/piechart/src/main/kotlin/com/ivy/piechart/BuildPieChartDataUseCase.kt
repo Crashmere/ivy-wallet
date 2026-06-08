@@ -43,6 +43,11 @@ internal class BuildPieChartDataUseCase @Inject internal constructor(
             orderNum = 0.0,
         )
 
+    private data class UsableAccounts(
+        val accounts: List<LegacyAccount>,
+        val accountIdFilterSet: Set<UUID>,
+    )
+
     suspend operator fun invoke(
         baseCurrency: String,
         range: FromToTimeRange,
@@ -52,16 +57,16 @@ internal class BuildPieChartDataUseCase @Inject internal constructor(
         showAccountTransfersCategory: Boolean = treatTransferAsIncExp,
         existingTransactions: List<LegacyTransaction> = emptyList(),
     ): PieChartData {
-        val (accountsUsed, accountIdFilterSet) = getUsableAccounts(accountIdFilterList)
+        val usableAccounts = getUsableAccounts(accountIdFilterList)
         val transactions = existingTransactions.ifEmpty {
             getLegacyTransactionsForAccountsUseCase(
                 range = range,
-                accountIdFilterSet = accountIdFilterSet
+                accountIdFilterSet = usableAccounts.accountIdFilterSet
             )
         }
         val incomeExpenseTransfer = calculateLegacyTransactionsIncomeExpenseUseCase(
             transactions = transactions,
-            accounts = accountsUsed,
+            accounts = usableAccounts.accounts,
             baseCurrency = baseCurrency
         )
         val categoryAmounts = calculateCategoryAmounts(
@@ -69,7 +74,7 @@ internal class BuildPieChartDataUseCase @Inject internal constructor(
             baseCurrency = baseCurrency,
             allCategories = getCategoriesUseCase().plus(null),
             transactions = transactions,
-            accountsUsed = accountsUsed,
+            accountsUsed = usableAccounts.accounts,
             addAssociatedTransToCategoryAmt = existingTransactions.isNotEmpty()
         )
         val categoryAmountsWithTransfers = addAccountTransfersCategory(
@@ -95,14 +100,17 @@ internal class BuildPieChartDataUseCase @Inject internal constructor(
 
     private suspend fun getUsableAccounts(
         accountIdFilterList: List<UUID>,
-    ): Pair<List<LegacyAccount>, Set<UUID>> {
+    ): UsableAccounts {
         val allAccounts = getLegacyAccountsUseCase()
         val accountsUsed = if (accountIdFilterList.isEmpty()) {
             includedLegacyAccounts(allAccounts)
         } else {
             allAccounts.filter { accountIdFilterList.contains(it.id) }
         }
-        return accountsUsed to accountsUsed.map { it.id }.toHashSet()
+        return UsableAccounts(
+            accounts = accountsUsed,
+            accountIdFilterSet = accountsUsed.map { it.id }.toHashSet()
+        )
     }
 
     private suspend fun calculateCategoryAmounts(

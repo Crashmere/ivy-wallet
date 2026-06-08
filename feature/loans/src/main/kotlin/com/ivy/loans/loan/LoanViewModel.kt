@@ -58,6 +58,10 @@ internal class LoanViewModel @Inject internal constructor(
     private val getLegacyAccountsUseCase: GetLegacyAccountsUseCase,
     private val dateTimePicker: DateTimePicker
 ) : ComposeViewModel<LoanScreenState, LoanScreenEvent>() {
+    private data class LoanAmounts(
+        val amountPaid: Double,
+        val totalAmount: Double,
+    )
 
     private var baseCurrencyCode by mutableStateOf(getDefaultFIATCurrency().currencyCode)
     private var completedLoans by mutableStateOf<ImmutableList<DisplayLoan>>(persistentListOf())
@@ -201,26 +205,29 @@ internal class LoanViewModel @Inject internal constructor(
             allLoans = withContext(Dispatchers.IO) {
                 getLoansUseCase()
                     .map { loan ->
-                        val (amountPaid, loanTotalAmount) = calculateAmountPaidAndTotalAmount(loan)
-                        val percentPaid = if (loanTotalAmount != 0.0) {
-                            amountPaid / loanTotalAmount
+                        val loanAmounts = calculateAmounts(loan)
+                        val percentPaid = if (loanAmounts.totalAmount != 0.0) {
+                            loanAmounts.amountPaid / loanAmounts.totalAmount
                         } else {
                             0.0
                         }
-                        var currCode = findCurrencyCode(accounts, loan.accountId)
+                        val currCode = findCurrencyCode(accounts, loan.accountId)
 
                         when (loan.type) {
-                            LoanType.BORROW -> totalOweAmount += (loanTotalAmount - amountPaid)
-                            LoanType.LEND -> totalOwedAmount += (loanTotalAmount - amountPaid)
+                            LoanType.BORROW -> totalOweAmount +=
+                                (loanAmounts.totalAmount - loanAmounts.amountPaid)
+
+                            LoanType.LEND -> totalOwedAmount +=
+                                (loanAmounts.totalAmount - loanAmounts.amountPaid)
                         }
 
                         DisplayLoan(
                             loan = loan,
-                            loanTotalAmount = loanTotalAmount,
-                            amountPaid = amountPaid,
+                            loanTotalAmount = loanAmounts.totalAmount,
+                            amountPaid = loanAmounts.amountPaid,
                             currencyCode = currCode,
-                            formattedDisplayText = "${amountPaid.format(currCode)} $currCode / ${
-                                loanTotalAmount.format(
+                            formattedDisplayText = "${loanAmounts.amountPaid.format(currCode)} $currCode / ${
+                                loanAmounts.totalAmount.format(
                                     currCode
                                 )
                             } $currCode (${
@@ -367,23 +374,26 @@ internal class LoanViewModel @Inject internal constructor(
         } ?: defaultCurrencyCode
     }
 
-    /**
-     *  Calculates the total amount paid and the total loan amount including any changes made to the loan.
-     *  @return A Pair containing the total amount paid and the total loan amount.
-     */
-    private suspend fun calculateAmountPaidAndTotalAmount(loan: Loan): Pair<Double, Double> {
+    private suspend fun calculateAmounts(loan: Loan): LoanAmounts {
         val loanRecords = getLoanRecordsUseCase(loan.id)
-        val (amountPaid, loanTotalAmount) = loanRecords.fold(0.0 to loan.amount) { value, loanRecord ->
-            val (currentAmountPaid, currentLoanTotalAmount) = value
-            if (loanRecord.interest) return@fold value
+        return loanRecords.fold(
+            LoanAmounts(
+                amountPaid = 0.0,
+                totalAmount = loan.amount
+            )
+        ) { amounts, loanRecord ->
+            if (loanRecord.interest) return@fold amounts
             val convertedAmount = loanRecord.convertedAmount ?: loanRecord.amount
 
             loanRecord.loanRecordType.processByType(
-                decreaseAction = { currentAmountPaid + convertedAmount to currentLoanTotalAmount },
-                increaseAction = { currentAmountPaid to currentLoanTotalAmount + convertedAmount }
+                decreaseAction = {
+                    amounts.copy(amountPaid = amounts.amountPaid + convertedAmount)
+                },
+                increaseAction = {
+                    amounts.copy(totalAmount = amounts.totalAmount + convertedAmount)
+                }
             )
         }
-        return amountPaid to loanTotalAmount
     }
 
     private fun updatePaidOffLoanVisibility() {
