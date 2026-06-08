@@ -193,6 +193,30 @@ fun BoxWithConstraintsScope.TransactionsScreen(screen: TransactionsScreen) {
         onSkipAllTransactions = { transactionIds ->
             viewModel.onEvent(TransactionsEvent.SkipTransactions(transactionIds))
         },
+        onTransactionClick = { transactionId, transactionType ->
+            nav.navigateTo(
+                EditTransactionScreen(
+                    initialTransactionId = transactionId,
+                    type = transactionType.toRouteType()
+                )
+            )
+        },
+        onAccountClick = {
+            nav.navigateTo(
+                TransactionsScreen(
+                    accountId = it,
+                    categoryId = null
+                )
+            )
+        },
+        onCategoryClick = {
+            nav.navigateTo(
+                TransactionsScreen(
+                    accountId = null,
+                    categoryId = it
+                )
+            )
+        },
         updateAccountNameConfirmation = {
             viewModel.onEvent(TransactionsEvent.UpdateAccountDeletionState(it))
         },
@@ -267,8 +291,10 @@ private fun BoxWithConstraintsScope.UI(
     onPayOrGet: (UUID) -> Unit = {},
     onSkipTransaction: (UUID) -> Unit = {},
     onSkipAllTransactions: (List<UUID>) -> Unit = {},
+    onTransactionClick: (UUID, TransactionType) -> Unit,
+    onAccountClick: (UUID) -> Unit,
+    onCategoryClick: (UUID) -> Unit,
 ) {
-    val nav = navigation()
     val periodState = LocalPeriodState.current
     val datePicker = LocalDatePicker.current
     val screenHeight = maxHeight
@@ -412,30 +438,9 @@ private fun BoxWithConstraintsScope.UI(
                 lastItemSpacer = screenHeight * 0.7f,
 
                 onPayOrGet = onPayOrGet,
-                onTransactionClick = { transactionId, transactionType ->
-                    nav.navigateTo(
-                        EditTransactionScreen(
-                            initialTransactionId = transactionId,
-                            type = transactionType.toRouteType()
-                        )
-                    )
-                },
-                onAccountClick = {
-                    nav.navigateTo(
-                        TransactionsScreen(
-                            accountId = it,
-                            categoryId = null
-                        )
-                    )
-                },
-                onCategoryClick = {
-                    nav.navigateTo(
-                        TransactionsScreen(
-                            accountId = null,
-                            categoryId = it
-                        )
-                    )
-                },
+                onTransactionClick = onTransactionClick,
+                onAccountClick = onAccountClick,
+                onCategoryClick = onCategoryClick,
                 onSkipTransaction = onSkipTransaction,
                 onSkipAllTransactions = { transactionIds ->
                     skipAllTransactionIds = transactionIds
