@@ -1,29 +1,30 @@
-package com.ivy.legacy.ui.component
+package com.ivy.exchangerates.component
 
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
-import com.ivy.ui.R
-import com.ivy.legacy.ui.theme.GradientRed
+import com.ivy.legacy.ui.component.IvyCircleButton
+import com.ivy.legacy.ui.theme.Gradient
+import com.ivy.legacy.ui.theme.Red
 import com.ivy.legacy.ui.theme.White
+import com.ivy.ui.R
 
 @Composable
-internal fun DeleteButton(
+internal fun ExchangeRateDeleteButton(
     modifier: Modifier = Modifier,
-    hasShadow: Boolean = true,
     onClick: () -> Unit,
 ) {
     IvyCircleButton(
         modifier = modifier
             .size(48.dp)
-            .testTag("delete_button"),
+            .testTag("exchange_rate_delete_button"),
         backgroundPadding = 6.dp,
         icon = R.drawable.ic_delete,
-        backgroundGradient = GradientRed,
+        backgroundGradient = Gradient.solid(Red),
         enabled = true,
-        hasShadow = hasShadow,
+        hasShadow = true,
         tint = White,
         onClick = onClick
     )

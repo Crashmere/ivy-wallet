@@ -21,7 +21,6 @@ import com.ivy.data.model.currency.format
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.legacy.ui.theme.style
 import com.ivy.exchangerates.model.RateUi
-import com.ivy.legacy.ui.component.DeleteButton
 
 @Composable
 internal fun RateItem(
@@ -67,7 +66,7 @@ internal fun RateItem(
 
             if (onDelete != null) {
                 Spacer(Modifier.weight(1f))
-                DeleteButton(onClick = onDelete)
+                ExchangeRateDeleteButton(onClick = onDelete)
             }
         }
     }
