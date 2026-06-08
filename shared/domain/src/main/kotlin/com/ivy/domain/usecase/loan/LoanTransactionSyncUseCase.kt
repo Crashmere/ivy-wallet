@@ -2,6 +2,7 @@ package com.ivy.domain.usecase.loan
 
 import com.ivy.data.model.legacy.LegacyTransaction
 import com.ivy.data.model.LoanRecordType
+import com.ivy.data.model.Transaction
 import com.ivy.data.model.TransactionType
 import com.ivy.data.model.LoanType
 import com.ivy.data.model.legacy.LegacyAccount
@@ -37,7 +38,7 @@ class LoanTransactionSyncUseCase @Inject internal constructor(
     suspend fun editAssociatedLoanTransaction(
         loan: Loan,
         createLoanTransaction: Boolean = false,
-        transaction: LegacyTransaction?
+        transaction: Transaction?
     ) {
         withContext(Dispatchers.Default) {
             ltCore.updateAssociatedTransaction(
@@ -49,7 +50,7 @@ class LoanTransactionSyncUseCase @Inject internal constructor(
                 title = loan.name,
                 isLoanRecord = false,
                 transaction = transaction,
-                time = transaction?.dateTime,
+                time = transaction?.time,
                 loanRecordType = LoanRecordType.DECREASE
             )
         }

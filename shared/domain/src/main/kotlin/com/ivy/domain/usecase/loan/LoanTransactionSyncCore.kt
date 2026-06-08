@@ -1,6 +1,5 @@
 package com.ivy.domain.usecase.loan
 
-import com.ivy.data.model.legacy.LegacyTransaction
 import com.ivy.data.model.AccountId
 import com.ivy.data.model.Expense
 import com.ivy.data.model.Income
@@ -27,7 +26,6 @@ import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.data.model.Loan
 import com.ivy.data.model.LoanRecord
-import com.ivy.domain.mapper.legacy.toLegacyTransaction
 import com.ivy.domain.mapper.legacy.toLegacyAccount
 import com.ivy.domain.time.nowUtc
 import com.ivy.domain.usecase.exchange.ExchangeAmountUseCase
@@ -61,12 +59,11 @@ internal class LoanTransactionSyncCore @Inject internal constructor(
         }
 
         withContext(Dispatchers.IO) {
-            val transactions: List<LegacyTransaction?> =
+            val transactions: List<Transaction?> =
                 if (loanId != null) {
                     transactionRepo.findAllByLoanId(loanId = loanId)
-                        .map { it.toLegacyTransaction() }
                 } else {
-                    listOf(transactionRepo.findLoanRecordTransaction(loanRecordId!!)?.toLegacyTransaction())
+                    listOf(transactionRepo.findLoanRecordTransaction(loanRecordId!!))
                 }
 
             transactions.forEach { transaction ->
@@ -100,7 +97,7 @@ internal class LoanTransactionSyncCore @Inject internal constructor(
         category: Category? = null,
         time: Instant? = null,
         isLoanRecord: Boolean = false,
-        transaction: LegacyTransaction? = null,
+        transaction: Transaction? = null,
         loanRecordType: LoanRecordType
     ) {
         if (isLoanRecord && loanRecordId == null) {
@@ -114,9 +111,9 @@ internal class LoanTransactionSyncCore @Inject internal constructor(
                 amount = amount,
                 loanType = loanType,
                 selectedAccountId = selectedAccountId,
-                title = title ?: transaction.title,
-                categoryId = category?.id?.value ?: transaction.categoryId,
-                time = time ?: transaction.dateTime ?: nowUtc(),
+                title = title ?: transaction.title?.value,
+                categoryId = category?.id?.value ?: transaction.category?.value,
+                time = time ?: transaction.time,
                 isLoanRecord = isLoanRecord,
                 transaction = transaction,
                 loanRecordType = loanRecordType
@@ -150,7 +147,7 @@ internal class LoanTransactionSyncCore @Inject internal constructor(
         categoryId: UUID? = null,
         time: Instant = nowUtc(),
         isLoanRecord: Boolean = false,
-        transaction: LegacyTransaction? = null,
+        transaction: Transaction? = null,
         loanRecordType: LoanRecordType
     ) {
         if (selectedAccountId == null) {
@@ -165,16 +162,16 @@ internal class LoanTransactionSyncCore @Inject internal constructor(
 
         withContext(Dispatchers.IO) {
             loanTransaction(
-                transactionId = transaction?.id ?: UUID.randomUUID(),
+                transactionId = transaction?.id?.value ?: UUID.randomUUID(),
                 accountId = selectedAccountId,
                 type = transactionType,
                 amount = amount,
                 categoryId = transactionCategoryId,
                 title = title,
-                description = transaction?.description,
+                description = transaction?.description?.value,
                 time = time,
-                recurringRuleId = transaction?.recurringRuleId,
-                paidFor = transaction?.paidFor,
+                recurringRuleId = transaction?.metadata?.recurringRuleId,
+                paidFor = transaction?.metadata?.paidForDateTime,
                 loanId = loanId,
                 loanRecordId = if (isLoanRecord) loanRecordId else null
             )?.let {
@@ -246,10 +243,10 @@ internal class LoanTransactionSyncCore @Inject internal constructor(
         }
     }
 
-    private suspend fun deleteTransaction(transaction: LegacyTransaction?) {
+    private suspend fun deleteTransaction(transaction: Transaction?) {
         withContext(Dispatchers.IO) {
             transaction?.let {
-                transactionRepo.deleteById(TransactionId(it.id))
+                transactionRepo.deleteById(it.id)
             }
         }
     }
@@ -384,10 +381,10 @@ internal class LoanTransactionSyncCore @Inject internal constructor(
         loanStore.findById(loanId)
     }
 
-    suspend fun fetchLoanRecordTransaction(loanRecordId: UUID?): LegacyTransaction? {
+    suspend fun fetchLoanRecordTransaction(loanRecordId: UUID?): Transaction? {
         return loanRecordId?.let {
             withContext(Dispatchers.IO) {
-                transactionRepo.findLoanRecordTransaction(it)?.toLegacyTransaction()
+                transactionRepo.findLoanRecordTransaction(it)
             }
         }
     }
