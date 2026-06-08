@@ -24,8 +24,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ivy.budgets.model.DisplayBudget
 import com.ivy.ui.time.LocalTimeFormatter
-import com.ivy.legacy.ui.theme.system.LegacyTheme
-import com.ivy.legacy.ui.theme.system.style
+import com.ivy.legacy.ui.theme.LegacyTheme
+import com.ivy.legacy.ui.theme.style
 import com.ivy.ui.period.toDisplay
 import com.ivy.legacy.ui.component.BudgetBattery
 import com.ivy.ui.compose.clickableNoIndication

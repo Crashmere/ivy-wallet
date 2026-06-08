@@ -37,9 +37,9 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.ivy.ui.navigation.navigation
 import com.ivy.ui.navigation.screenScopedViewModel
-import com.ivy.legacy.ui.theme.system.LegacyTheme
-import com.ivy.legacy.ui.theme.system.colorAs
-import com.ivy.legacy.ui.theme.system.style
+import com.ivy.legacy.ui.theme.LegacyTheme
+import com.ivy.legacy.ui.theme.colorAs
+import com.ivy.legacy.ui.theme.style
 import com.ivy.ui.compose.thenIf
 import com.ivy.importdata.csvimport.flow.ImportProcessing
 import com.ivy.importdata.csvimport.flow.ImportResultUI

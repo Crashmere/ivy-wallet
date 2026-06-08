@@ -41,8 +41,8 @@ import com.ivy.data.model.Category
 import com.ivy.data.model.Tag
 import com.ivy.data.model.TagId
 import com.ivy.ui.platform.LocalDatePicker
-import com.ivy.legacy.ui.theme.system.LegacyTheme
-import com.ivy.legacy.ui.theme.system.style
+import com.ivy.legacy.ui.theme.LegacyTheme
+import com.ivy.legacy.ui.theme.style
 import com.ivy.legacy.ui.component.ListItem
 import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.ui.period.displayLong

@@ -39,8 +39,8 @@ import com.ivy.data.model.TransactionType
 import com.ivy.data.model.Category
 import com.ivy.ui.platform.LocalDatePicker
 import com.ivy.ui.theme.LocalThemeState
-import com.ivy.legacy.ui.theme.system.LegacyTheme
-import com.ivy.legacy.ui.theme.system.style
+import com.ivy.legacy.ui.theme.LegacyTheme
+import com.ivy.legacy.ui.theme.style
 import com.ivy.ui.compose.thenIf
 import com.ivy.legacy.ui.component.transaction.LegacyDueSection
 import com.ivy.legacy.ui.component.transaction.TransactionListData

@@ -30,8 +30,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ivy.ui.navigation.screenScopedViewModel
-import com.ivy.legacy.ui.theme.system.LegacyTheme
-import com.ivy.legacy.ui.theme.system.style
+import com.ivy.legacy.ui.theme.LegacyTheme
+import com.ivy.legacy.ui.theme.style
 import com.ivy.loans.humanReadableType
 import com.ivy.data.model.currency.getDefaultFIATCurrency
 import com.ivy.ui.compose.horizontalSwipeListener

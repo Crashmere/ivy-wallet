@@ -12,7 +12,6 @@ import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.ColorUtils
-import com.ivy.legacy.ui.theme.system.LegacyTheme
 
 val White = Color(0xFFFAFAFA)
 

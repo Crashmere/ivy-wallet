@@ -67,6 +67,7 @@
 - 删除正式交易日期分组的无调用方扩展：正式交易历史入口继续由 `BuildTransactionHistoryItemsUseCase` 提供，`TransactionHistoryItems` 不再保留一层未使用的 `withDateDividers(...)` 包装。
 - 收窄 data-api 公开面：SharedPreferences key 常量已从 `shared:data:api` 移入 `shared:data:core` 的偏好实现包，API 模块继续只暴露 Store 端口。
 - 收窄数据写入事件：当前只有账户页订阅账户变更，分类/标签写入事件已从 `DataWriteEvent` 中移除；分类/标签 Store 仍保留本地缓存，但不再发布无人消费的事件。
+- 收窄旧主题外部入口：feature 层不再直接导入 `legacy.ui.theme.system` 的 `LegacyTheme/style/colorAs`，改走 `legacy.ui.theme` 门面；`system` 包继续作为 `shared:ui:legacy` 内部实现。
 
 当前仍保留：
 
