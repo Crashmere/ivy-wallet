@@ -231,6 +231,7 @@
 - 删除旧交易保存 use case：编辑交易页保存和复制时继续复用当前旧编辑状态，但在页面内组装正式 `Transaction` 后通过 `SaveTransactionUseCase` 保存，`SaveLegacyTransactionUseCase` 已无调用点并删除。
 - 收窄计划付款生成边界：计划付款规则生成未来交易时不再临时构造 `LegacyTransaction` 再转正式模型，改为直接按规则构造正式 `Income`/`Expense` 并保存；转账规则继续沿用当前校验禁止保存的行为。
 - 收窄账户余额调整写入边界：调整账户余额生成的补差收入/支出交易不再临时构造 `LegacyTransaction`，改为直接使用正式 `Account` 的资产信息构造正式 `Income`/`Expense`，并移除该用例对 `AccountStore` 和 legacy mapper 的依赖。
+- 收窄计划付款支付写入边界：单条支付/跳过和批量跳过仍接收旧交易展示模型以兼容现有 UI，但支付时改为按 ID 读取正式 `Transaction` 后标记为已结算并保存，不再通过 `LegacyTransaction.toTransaction(accountStore)` 写回。
 - 收窄饼图页输入缓存：饼图 ViewModel 不再长期保存由 route ID 还原出的旧交易对象，只保存交易 ID，并在重算图表时局部读取。
 - 收窄借贷详情关联交易缓存：借贷详情不再把贷款关联旧交易对象保存在 ViewModel 字段中，加载时只设置开关状态，编辑时局部读取。
 
