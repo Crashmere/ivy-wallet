@@ -982,7 +982,7 @@
 - `fileSharer()` 和 `buildInfoProvider()` 薄 helper 已从 `shared:ui:legacy` 移到 `shared:ui:core`；设置页和报表页不再为了平台服务 helper 依赖 legacy 桥接包，旧 UI 模块只保留真正的旧组件和旧主题兼容层。
 - app 平台实现的公开面已收窄：Activity result launcher helper、文件选择/日期选择注册入口、文件分享器、构建信息 provider、生物识别封装、Secure Window 控制器和设备锁屏检查都改为 app 模块内可见；Hilt 绑定类和 `shared:ui:core` 暴露的窄接口保持不变。
 - app 根部公开面继续收窄：`RootContent` 只作为 `RootActivity` 的内部 Compose 内容函数，`RootIntentExtras` 只作为 app 内部启动参数常量；Hilt ViewModel 和绑定实现暂时保持 public 以避免影响生成代码。
-- 已删除只有单实现且只被提醒 worker 使用的 `AppStarter` 接口；提醒通知现在直接注入 `RootIntentFactory` 创建 `RootActivity` intent，同时移除未被调用的默认启动/添加交易启动方法和对应 Hilt binding。
+- 已删除只有单实现且只被提醒 worker 使用的 `AppStarter` 接口；随后继续删除只包装 `RootActivity` intent 的 `RootIntentFactory`，提醒通知和快捷磁贴现在共用 app 内部 `Context.createRootIntent()` helper。
 - 旧 UI 组件的公开面继续收窄：`IvyCheckbox` 改为文字版 checkbox 的私有实现，`PrimaryAttributeColumn`、`IconNameRow`、`DateTimeRow`、`CurrencyPicker`、`IvyBorderButton`、`IvyColorPicker`、`IvyTitleTextField` 和 `IvyDescriptionTextField` 都只作为 `shared:ui:legacy` 内部构件保留；feature 层仍可调用实际页面正在使用的旧组件入口。
 - 旧主题的 `theme.system` 进一步收敛为内部实现层：feature 层不再直接导入其中的具体颜色常量，内部色板、系统 Gradient、CompositionLocal 和颜色算法 helper 均改为 `shared:ui:legacy` 内可见；外部继续通过 `LegacyTheme`、`style()` 和外层 `legacy.ui.theme` 色板使用旧样式。
 - 交易提醒通知封装继续收窄：`IvyNotification`、`IvyNotificationChannel` 和 `NotificationService` 的通知构建/展示方法只作为 app 内部实现使用，并删除未被调用的通知 dismiss helper；提醒 worker 的实际通知行为不变。

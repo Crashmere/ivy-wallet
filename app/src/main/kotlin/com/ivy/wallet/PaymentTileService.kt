@@ -13,7 +13,7 @@ class PaymentTileService : TileService() {
     }
 
     private fun startRootActivity() {
-        val intent = Intent(applicationContext, RootActivity::class.java).apply {
+        val intent = applicationContext.createRootIntent().apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
