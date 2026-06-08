@@ -1,4 +1,4 @@
-package com.ivy.legacy.ui.component
+package com.ivy.legacy.ui.modal
 
 import android.annotation.SuppressLint
 import android.view.View
@@ -25,9 +25,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.legacy.ui.theme.style
 import com.ivy.ui.R
+import com.ivy.legacy.ui.component.IvyCircleButton
+import com.ivy.legacy.ui.component.IvyIcon
 import com.ivy.legacy.ui.theme.GradientGreen
 import com.ivy.legacy.ui.theme.White
-import com.ivy.legacy.ui.modal.IvyModal
 import java.util.Collections
 import java.util.Random
 import java.util.UUID

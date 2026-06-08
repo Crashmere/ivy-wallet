@@ -39,9 +39,9 @@ import com.ivy.ui.navigation.screenScopedViewModel
 import com.ivy.ui.R
 import com.ivy.ui.rememberScrollPositionListState
 import com.ivy.legacy.ui.component.BalanceRow
+import com.ivy.legacy.ui.component.CircleButtonFilled
 import com.ivy.legacy.ui.component.ItemIconSDefaultIcon
-import com.ivy.legacy.ui.component.ReorderButton
-import com.ivy.legacy.ui.component.ReorderModalSingleType
+import com.ivy.legacy.ui.modal.ReorderModalSingleType
 import com.ivy.legacy.ui.theme.dynamicContrast
 import com.ivy.legacy.ui.theme.findContrastTextColor
 import com.ivy.legacy.ui.theme.toComposeColor
@@ -107,7 +107,10 @@ private fun BoxWithConstraintsScope.UI(
 
                 Spacer(Modifier.weight(1f))
 
-                ReorderButton {
+                CircleButtonFilled(
+                    icon = R.drawable.ic_drag_handle,
+                    contentDescription = "reorder"
+                ) {
                     onEvent(
                         AccountsEvent.OnReorderModalVisible(reorderVisible = true)
                     )

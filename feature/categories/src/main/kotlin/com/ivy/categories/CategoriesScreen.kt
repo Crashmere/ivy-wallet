@@ -60,8 +60,7 @@ import com.ivy.legacy.ui.component.CircleButtonFilled
 import com.ivy.legacy.ui.component.ItemIconSDefaultIcon
 import com.ivy.legacy.ui.component.IvyButton
 import com.ivy.legacy.ui.component.IvyIcon
-import com.ivy.legacy.ui.component.ReorderButton
-import com.ivy.legacy.ui.component.ReorderModalSingleType
+import com.ivy.legacy.ui.modal.ReorderModalSingleType
 import com.ivy.legacy.ui.theme.findContrastTextColor
 import com.ivy.legacy.ui.modal.IvyModal
 import com.ivy.legacy.ui.modal.ModalTitle
@@ -133,7 +132,10 @@ private fun BoxWithConstraintsScope.UI(
 
                 Spacer(modifier = Modifier.width(16.dp))
 
-                ReorderButton {
+                CircleButtonFilled(
+                    icon = R.drawable.ic_drag_handle,
+                    contentDescription = "reorder"
+                ) {
                     onEvent(CategoriesScreenEvent.OnReorderModalVisible(true))
                 }
 

@@ -47,8 +47,7 @@ import com.ivy.legacy.ui.component.BalanceRow
 import com.ivy.legacy.ui.component.CircleButtonFilled
 import com.ivy.legacy.ui.component.ItemIconSDefaultIcon
 import com.ivy.legacy.ui.component.IvyIcon
-import com.ivy.legacy.ui.component.ReorderButton
-import com.ivy.legacy.ui.component.ReorderModalSingleType
+import com.ivy.legacy.ui.modal.ReorderModalSingleType
 import com.ivy.legacy.ui.theme.dynamicContrast
 import com.ivy.legacy.ui.theme.findContrastTextColor
 import com.ivy.loans.modal.LoanModal
@@ -254,7 +253,10 @@ private fun Toolbar(
 
         Spacer(Modifier.width(8.dp))
 
-        ReorderButton {
+        CircleButtonFilled(
+            icon = R.drawable.ic_drag_handle,
+            contentDescription = "reorder"
+        ) {
             setReorderModalVisible(true)
         }
 

@@ -34,9 +34,9 @@ import com.ivy.ui.navigation.navigation
 import com.ivy.ui.navigation.screenScopedViewModel
 import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.Gray
+import com.ivy.legacy.ui.component.CircleButtonFilled
 import com.ivy.legacy.ui.component.IvyIcon
-import com.ivy.legacy.ui.component.ReorderButton
-import com.ivy.legacy.ui.component.ReorderModalSingleType
+import com.ivy.legacy.ui.modal.ReorderModalSingleType
 import com.ivy.legacy.ui.component.AmountCurrencyB1
 
 @Composable
@@ -260,7 +260,10 @@ private fun Toolbar(
             }
         }
 
-        ReorderButton {
+        CircleButtonFilled(
+            icon = R.drawable.ic_drag_handle,
+            contentDescription = "reorder"
+        ) {
             setReorderModalVisible(true)
         }
 
