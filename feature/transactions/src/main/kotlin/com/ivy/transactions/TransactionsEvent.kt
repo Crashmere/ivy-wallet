@@ -2,7 +2,7 @@ package com.ivy.transactions
 
 import com.ivy.data.model.legacy.LegacyTransaction
 import com.ivy.data.model.Category
-import com.ivy.legacy.ui.model.period.TimePeriod
+import com.ivy.ui.period.TimePeriod
 import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.ui.navigation.TransactionsScreen
 import com.ivy.legacy.ui.modal.ChoosePeriodModalData

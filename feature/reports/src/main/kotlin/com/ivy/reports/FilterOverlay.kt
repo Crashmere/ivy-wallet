@@ -45,8 +45,8 @@ import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
 import com.ivy.legacy.ui.component.ListItem
 import com.ivy.data.model.legacy.LegacyAccount
-import com.ivy.legacy.ui.model.period.displayLong
-import com.ivy.legacy.ui.state.LocalPeriodState
+import com.ivy.ui.period.displayLong
+import com.ivy.ui.period.LocalPeriodState
 import com.ivy.legacy.ui.component.tags.AddTagButton
 import com.ivy.legacy.ui.component.tags.ShowTagModal
 import com.ivy.ui.animation.springBounce

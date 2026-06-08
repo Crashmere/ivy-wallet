@@ -31,10 +31,10 @@ import com.ivy.domain.usecase.wallet.CalculateWalletIncomeExpenseUseCase
 import com.ivy.home.customerjourney.CustomerJourneyCardModel
 import com.ivy.home.customerjourney.CustomerJourneyCardsProvider
 import com.ivy.ui.theme.ThemeState
-import com.ivy.legacy.ui.state.PeriodState
+import com.ivy.ui.period.PeriodState
 import com.ivy.legacy.ui.model.AppBaseData
 import com.ivy.legacy.ui.model.LegacyDueSection
-import com.ivy.legacy.ui.model.period.TimePeriod
+import com.ivy.ui.period.TimePeriod
 import com.ivy.data.model.toUTCCloseTimeRange
 import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.ui.navigation.BalanceScreen

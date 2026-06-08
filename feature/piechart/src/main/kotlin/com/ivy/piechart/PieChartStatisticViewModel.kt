@@ -12,8 +12,8 @@ import com.ivy.data.model.TransactionType
 import com.ivy.data.model.Category
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.domain.usecase.settings.GetTransfersAsIncomeExpensePreferenceUseCase
-import com.ivy.legacy.ui.state.PeriodState
-import com.ivy.legacy.ui.model.period.TimePeriod
+import com.ivy.ui.period.PeriodState
+import com.ivy.ui.period.TimePeriod
 import com.ivy.ui.navigation.PieChartStatisticScreen
 import com.ivy.ui.ComposeViewModel
 import com.ivy.legacy.ui.modal.ChoosePeriodModalData

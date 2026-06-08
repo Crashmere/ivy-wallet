@@ -44,11 +44,11 @@ import com.ivy.legacy.ui.theme.system.style
 import com.ivy.ui.compose.thenIf
 import com.ivy.legacy.ui.model.AppBaseData
 import com.ivy.legacy.ui.model.LegacyDueSection
-import com.ivy.legacy.ui.model.period.Month
-import com.ivy.legacy.ui.model.period.TimePeriod
-import com.ivy.legacy.ui.model.period.displayLong
+import com.ivy.ui.period.Month
+import com.ivy.ui.period.TimePeriod
+import com.ivy.ui.period.displayLong
 import com.ivy.data.model.legacy.LegacyAccount
-import com.ivy.legacy.ui.state.LocalPeriodState
+import com.ivy.ui.period.LocalPeriodState
 import com.ivy.legacy.ui.component.IncomeExpensesCards
 import com.ivy.legacy.ui.component.ItemStatisticToolbar
 import com.ivy.legacy.ui.component.transaction.transactions

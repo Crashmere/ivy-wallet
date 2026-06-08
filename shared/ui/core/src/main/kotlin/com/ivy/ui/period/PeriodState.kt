@@ -1,4 +1,4 @@
-package com.ivy.legacy.ui.state
+package com.ivy.ui.period
 
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.getValue
@@ -6,7 +6,6 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import com.ivy.data.model.FromToTimeRange
-import com.ivy.legacy.ui.model.period.TimePeriod
 import com.ivy.ui.time.TimeConverter
 import com.ivy.ui.time.TimeProvider
 import java.time.ZoneOffset

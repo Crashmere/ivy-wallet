@@ -1,4 +1,4 @@
-package com.ivy.legacy.ui.model.period
+package com.ivy.ui.period
 
 import androidx.compose.runtime.Composable
 import com.ivy.ui.time.LocalTimeConverter

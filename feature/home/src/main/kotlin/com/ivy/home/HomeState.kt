@@ -6,7 +6,7 @@ import com.ivy.data.model.TransactionHistoryItem
 import com.ivy.home.customerjourney.CustomerJourneyCardModel
 import com.ivy.legacy.ui.model.AppBaseData
 import com.ivy.legacy.ui.model.LegacyDueSection
-import com.ivy.legacy.ui.model.period.TimePeriod
+import com.ivy.ui.period.TimePeriod
 import com.ivy.data.model.IncomeExpensePair
 import kotlinx.collections.immutable.ImmutableList
 import java.math.BigDecimal

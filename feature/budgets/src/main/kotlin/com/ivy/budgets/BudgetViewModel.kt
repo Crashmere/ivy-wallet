@@ -13,7 +13,7 @@ import com.ivy.data.model.Expense
 import com.ivy.data.model.Income
 import com.ivy.data.model.Transaction
 import com.ivy.data.model.Transfer
-import com.ivy.legacy.ui.state.PeriodState
+import com.ivy.ui.period.PeriodState
 import com.ivy.data.model.FromToTimeRange
 import com.ivy.data.model.toCloseTimeRange
 import com.ivy.data.model.legacy.LegacyAccount

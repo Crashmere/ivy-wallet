@@ -1,7 +1,7 @@
 package com.ivy.wallet.di
 
 import android.content.Context
-import com.ivy.legacy.ui.state.PeriodState
+import com.ivy.ui.period.PeriodState
 import com.ivy.ui.platform.Toaster
 import com.ivy.ui.resource.ResourceProvider
 import com.ivy.ui.navigation.MainTabState

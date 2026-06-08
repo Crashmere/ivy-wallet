@@ -31,10 +31,10 @@ import com.ivy.home.customerjourney.CustomerJourney
 import com.ivy.home.customerjourney.CustomerJourneyCardModel
 import com.ivy.legacy.ui.model.AppBaseData
 import com.ivy.legacy.ui.model.LegacyDueSection
-import com.ivy.legacy.ui.model.period.Month
-import com.ivy.legacy.ui.model.period.TimePeriod
-import com.ivy.legacy.ui.model.period.displayLong
-import com.ivy.legacy.ui.state.LocalPeriodState
+import com.ivy.ui.period.Month
+import com.ivy.ui.period.TimePeriod
+import com.ivy.ui.period.displayLong
+import com.ivy.ui.period.LocalPeriodState
 import com.ivy.legacy.ui.component.transaction.TransactionsDividerLine
 import com.ivy.legacy.ui.component.transaction.transactions
 import com.ivy.ui.compose.horizontalSwipeListener

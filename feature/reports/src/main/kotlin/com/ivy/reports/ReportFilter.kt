@@ -3,7 +3,7 @@ package com.ivy.reports
 import com.ivy.data.model.TransactionType
 import com.ivy.data.model.Category
 import com.ivy.data.model.TagId
-import com.ivy.legacy.ui.model.period.TimePeriod
+import com.ivy.ui.period.TimePeriod
 import com.ivy.data.model.legacy.LegacyAccount
 import java.util.UUID
 

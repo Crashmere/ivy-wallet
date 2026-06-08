@@ -32,8 +32,8 @@ import com.ivy.domain.usecase.transaction.MapTransactionsToLegacyTransactionsWit
 import com.ivy.legacy.ui.theme.system.RedLight
 import com.ivy.domain.preferences.toggles.PreferenceToggleService
 import com.ivy.domain.preferences.toggles.PreferenceToggles
-import com.ivy.legacy.ui.state.PeriodState
-import com.ivy.legacy.ui.model.period.TimePeriod
+import com.ivy.ui.period.PeriodState
+import com.ivy.ui.period.TimePeriod
 import com.ivy.data.model.toCloseTimeRange
 import com.ivy.ui.compose.selectEndTextFieldValue
 import com.ivy.ui.navigation.Navigation

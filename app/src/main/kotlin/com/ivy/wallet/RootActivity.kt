@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import com.ivy.domain.preferences.toggles.PreferenceToggleService
 import com.ivy.domain.preferences.toggles.PreferenceToggles
-import com.ivy.legacy.ui.state.PeriodState
+import com.ivy.ui.period.PeriodState
 import com.ivy.ui.navigation.Navigation
 import com.ivy.ui.theme.ThemeState
 import com.ivy.ui.time.TimeConverter

@@ -32,9 +32,9 @@ import com.ivy.data.model.TransactionType
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
 import com.ivy.ui.compose.thenIf
-import com.ivy.legacy.ui.state.LocalPeriodState
-import com.ivy.legacy.ui.model.period.TimePeriod
-import com.ivy.legacy.ui.model.period.displayShort
+import com.ivy.ui.period.LocalPeriodState
+import com.ivy.ui.period.TimePeriod
+import com.ivy.ui.period.displayShort
 import com.ivy.legacy.ui.component.transaction.TransactionsDividerLine
 import com.ivy.ui.compose.clickableNoIndication
 import com.ivy.ui.compose.drawColoredShadow

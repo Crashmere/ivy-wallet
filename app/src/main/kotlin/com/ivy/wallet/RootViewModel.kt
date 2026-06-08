@@ -9,7 +9,7 @@ import com.ivy.domain.usecase.settings.GetStartDayOfMonthUseCase
 import com.ivy.domain.usecase.settings.GetThemeUseCase
 import com.ivy.domain.usecase.settings.IsInitialSetupCompletedUseCase
 import com.ivy.ui.theme.ThemeState
-import com.ivy.legacy.ui.state.PeriodState
+import com.ivy.ui.period.PeriodState
 import com.ivy.ui.navigation.EditTransactionScreen
 import com.ivy.ui.navigation.MainScreen
 import com.ivy.ui.navigation.Navigation

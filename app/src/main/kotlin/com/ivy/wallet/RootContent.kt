@@ -18,8 +18,8 @@ import com.ivy.ui.LegacyUiRoot
 import com.ivy.ui.preferences.AmountInputPreferences
 import com.ivy.ui.preferences.LocalAmountInputPreferences
 import com.ivy.ui.preferences.UiBoolPreference
-import com.ivy.legacy.ui.state.LocalPeriodState
-import com.ivy.legacy.ui.state.PeriodState
+import com.ivy.ui.period.LocalPeriodState
+import com.ivy.ui.period.PeriodState
 import com.ivy.ui.navigation.Navigation
 import com.ivy.ui.navigation.NavigationRoot
 import com.ivy.ui.platform.BuildInfoProvider

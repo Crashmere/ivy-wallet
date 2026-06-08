@@ -2,7 +2,7 @@ package com.ivy.home
 
 import com.ivy.data.model.legacy.LegacyTransaction
 import com.ivy.home.customerjourney.CustomerJourneyCardModel
-import com.ivy.legacy.ui.model.period.TimePeriod
+import com.ivy.ui.period.TimePeriod
 
 sealed interface HomeEvent {
     data class SetUpcomingExpanded(val expanded: Boolean) : HomeEvent

@@ -33,7 +33,7 @@ import com.ivy.domain.usecase.settings.SetStartDayOfMonthUseCase
 import com.ivy.domain.usecase.settings.SetTransfersAsIncomeExpensePreferenceUseCase
 import com.ivy.domain.usecase.settings.SwitchThemeUseCase
 import com.ivy.ui.theme.ThemeState
-import com.ivy.legacy.ui.state.PeriodState
+import com.ivy.ui.period.PeriodState
 import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.platform.FilePicker
 import com.ivy.ui.platform.FileSharer

@@ -10,9 +10,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
-import com.ivy.legacy.ui.state.PeriodState
+import com.ivy.ui.period.PeriodState
 import com.ivy.ui.ComposeViewModel
-import com.ivy.legacy.ui.model.period.TimePeriod
+import com.ivy.ui.period.TimePeriod
 import com.ivy.domain.usecase.planned.CalculatePlannedPaymentsAmountForRangeUseCase
 import com.ivy.domain.usecase.wallet.CalculateWalletBalanceUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
