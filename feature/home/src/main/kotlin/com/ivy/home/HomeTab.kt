@@ -64,7 +64,7 @@ import com.ivy.data.model.currency.IvyCurrency
 import com.ivy.data.model.IncomeExpensePair
 import com.ivy.legacy.ui.modal.ChoosePeriodModal
 import com.ivy.legacy.ui.modal.CurrencyModal
-import com.ivy.legacy.ui.modal.DeleteModal
+import com.ivy.ui.modal.DeleteModal
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 import java.math.BigDecimal

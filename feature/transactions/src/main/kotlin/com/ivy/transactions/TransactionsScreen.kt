@@ -85,7 +85,7 @@ import com.ivy.ui.theme.colors.findContrastTextColor
 import com.ivy.ui.theme.colors.isDarkColor
 import com.ivy.legacy.ui.modal.ChoosePeriodModal
 import com.ivy.legacy.ui.modal.AccountModalAccount
-import com.ivy.legacy.ui.modal.DeleteModal
+import com.ivy.ui.modal.DeleteModal
 import com.ivy.legacy.ui.modal.edit.AccountModal
 import com.ivy.legacy.ui.modal.edit.CategoryModal
 import com.ivy.ui.theme.colors.toComposeColor

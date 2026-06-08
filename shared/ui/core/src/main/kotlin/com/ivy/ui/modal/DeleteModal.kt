@@ -1,6 +1,7 @@
-package com.ivy.legacy.ui.modal
+package com.ivy.ui.modal
 
 import android.annotation.SuppressLint
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.BoxWithConstraintsScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
@@ -8,14 +9,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.R
-import com.ivy.legacy.ui.theme.Red
-import com.ivy.ui.modal.IvyModal
+import com.ivy.ui.compose.GradientButton
+import com.ivy.ui.theme.colors.Gradient
 import java.util.UUID
 
 @SuppressLint("ComposeModifierMissing")
@@ -27,15 +28,17 @@ fun BoxWithConstraintsScope.DeleteModal(
     dismiss: () -> Unit,
     id: UUID = UUID.randomUUID(),
     buttonText: String = stringResource(R.string.delete),
-    iconStart: Int = R.drawable.ic_delete,
+    @DrawableRes iconStart: Int = R.drawable.ic_delete,
     onDelete: () -> Unit,
 ) {
+    val theme = ModalStatusTheme
+    val colors = theme.colors
     IvyModal(
         id = id,
         visible = visible,
         dismiss = dismiss,
         PrimaryAction = {
-            ModalNegativeButton(
+            DeleteModalButton(
                 text = buttonText,
                 iconStart = iconStart
             ) {
@@ -48,8 +51,8 @@ fun BoxWithConstraintsScope.DeleteModal(
         Text(
             modifier = Modifier.padding(horizontal = 32.dp),
             text = title,
-            style = LegacyTheme.typo.b1.copy(
-                color = Red,
+            style = theme.typo.b1.copy(
+                color = colors.red,
                 fontWeight = FontWeight.ExtraBold,
                 textAlign = TextAlign.Start
             )
@@ -60,8 +63,8 @@ fun BoxWithConstraintsScope.DeleteModal(
         Text(
             modifier = Modifier.padding(horizontal = 32.dp),
             text = description,
-            style = LegacyTheme.typo.b2.copy(
-                color = LegacyTheme.colors.pureInverse,
+            style = theme.typo.b2.copy(
+                color = colors.pureInverse,
                 fontWeight = FontWeight.Medium,
                 textAlign = TextAlign.Start
             )
@@ -69,4 +72,30 @@ fun BoxWithConstraintsScope.DeleteModal(
 
         Spacer(Modifier.height(48.dp))
     }
+}
+
+@Composable
+private fun DeleteModalButton(
+    text: String,
+    @DrawableRes iconStart: Int,
+    enabled: Boolean = true,
+    onClick: () -> Unit,
+) {
+    val theme = ModalStatusTheme
+    val colors = theme.colors
+    GradientButton(
+        text = text,
+        backgroundGradient = Gradient(colors.red, Color(0xFFFF99AB)),
+        disabledBackgroundColor = colors.gray,
+        shape = theme.shapes.rFull,
+        textStyle = theme.typo.b2.copy(
+            color = colors.white,
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Start
+        ),
+        iconStart = iconStart,
+        iconTint = colors.white,
+        onClick = onClick,
+        enabled = enabled
+    )
 }

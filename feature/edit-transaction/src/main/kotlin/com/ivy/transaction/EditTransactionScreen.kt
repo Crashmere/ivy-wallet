@@ -58,10 +58,10 @@ import com.ivy.ui.R
 import com.ivy.data.model.currency.IvyCurrency
 import com.ivy.data.model.CreateAccountData
 import com.ivy.data.model.CreateCategoryData
-import com.ivy.legacy.ui.modal.DeleteModal
+import com.ivy.ui.modal.DeleteModal
 import com.ivy.ui.modal.ModalAdd
 import com.ivy.ui.modal.ModalSave
-import com.ivy.legacy.ui.modal.ProgressModal
+import com.ivy.ui.modal.ProgressModal
 import com.ivy.legacy.ui.modal.edit.AccountModal
 import com.ivy.legacy.ui.modal.edit.AmountModal
 import com.ivy.legacy.ui.modal.edit.CategoryModal
