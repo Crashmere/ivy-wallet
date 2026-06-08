@@ -3,7 +3,8 @@ package com.ivy.domain.usecase.category
 import com.ivy.data.api.AccountStore
 import com.ivy.data.model.FromToTimeRange
 import com.ivy.domain.mapper.legacy.toLegacyAccount
-import com.ivy.domain.usecase.transaction.GetLegacyTransactionsForAccountsUseCase
+import com.ivy.domain.mapper.legacy.toLegacyTransaction
+import com.ivy.domain.usecase.transaction.GetTransactionsForAccountsUseCase
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
@@ -12,7 +13,7 @@ import javax.inject.Inject
 class GetCategoryMonthlyStatsUseCase @Inject internal constructor(
     private val getCategoriesUseCase: GetCategoriesUseCase,
     private val accountStore: AccountStore,
-    private val getLegacyTransactionsForAccountsUseCase: GetLegacyTransactionsForAccountsUseCase,
+    private val getTransactionsForAccountsUseCase: GetTransactionsForAccountsUseCase,
     private val calculateCategoryIncomeWithAccountFiltersUseCase: CalculateCategoryIncomeWithAccountFiltersUseCase,
 ) {
     suspend operator fun invoke(
@@ -20,10 +21,10 @@ class GetCategoryMonthlyStatsUseCase @Inject internal constructor(
         baseCurrency: String,
     ): List<CategoryMonthlyStats> {
         val accounts = accountStore.findAll().map { it.toLegacyAccount() }
-        val transactions = getLegacyTransactionsForAccountsUseCase(
+        val transactions = getTransactionsForAccountsUseCase(
             range = range,
             accountIdFilterSet = accounts.map { it.id }.toHashSet()
-        )
+        ).map { it.toLegacyTransaction() }
 
         return coroutineScope {
             getCategoriesUseCase().map { category ->

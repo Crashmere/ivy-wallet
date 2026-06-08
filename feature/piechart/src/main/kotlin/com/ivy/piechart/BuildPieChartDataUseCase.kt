@@ -16,7 +16,8 @@ import com.ivy.domain.usecase.account.GetAccountsUseCase
 import com.ivy.domain.usecase.category.CalculateCategoryIncomeWithAccountFiltersUseCase
 import com.ivy.domain.usecase.category.GetCategoriesUseCase
 import com.ivy.domain.usecase.transaction.CalculateLegacyTransactionsIncomeExpenseUseCase
-import com.ivy.domain.usecase.transaction.GetLegacyTransactionsForAccountsUseCase
+import com.ivy.domain.usecase.transaction.GetTransactionsForAccountsUseCase
+import com.ivy.domain.usecase.transaction.MapTransactionsToLegacyTransactionsUseCase
 import com.ivy.ui.R
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
@@ -28,7 +29,8 @@ private val AccountTransfersCategoryColorArgb = 0xFFFFCCD5.toInt()
 
 internal class BuildPieChartDataUseCase @Inject internal constructor(
     private val getAccountsUseCase: GetAccountsUseCase,
-    private val getLegacyTransactionsForAccountsUseCase: GetLegacyTransactionsForAccountsUseCase,
+    private val getTransactionsForAccountsUseCase: GetTransactionsForAccountsUseCase,
+    private val mapTransactionsToLegacyTransactionsUseCase: MapTransactionsToLegacyTransactionsUseCase,
     private val calculateLegacyTransactionsIncomeExpenseUseCase: CalculateLegacyTransactionsIncomeExpenseUseCase,
     private val getCategoriesUseCase: GetCategoriesUseCase,
     private val calculateCategoryIncomeWithAccountFiltersUseCase: CalculateCategoryIncomeWithAccountFiltersUseCase,
@@ -59,9 +61,11 @@ internal class BuildPieChartDataUseCase @Inject internal constructor(
     ): PieChartData {
         val usableAccounts = getUsableAccounts(accountIdFilterList)
         val transactions = existingTransactions.ifEmpty {
-            getLegacyTransactionsForAccountsUseCase(
-                range = range,
-                accountIdFilterSet = usableAccounts.accountIdFilterSet
+            mapTransactionsToLegacyTransactionsUseCase(
+                getTransactionsForAccountsUseCase(
+                    range = range,
+                    accountIdFilterSet = usableAccounts.accountIdFilterSet
+                )
             )
         }
         val incomeExpenseTransfer = calculateLegacyTransactionsIncomeExpenseUseCase(
