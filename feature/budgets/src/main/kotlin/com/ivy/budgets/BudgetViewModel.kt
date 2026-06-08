@@ -14,7 +14,6 @@ import com.ivy.data.model.Income
 import com.ivy.data.model.Transaction
 import com.ivy.data.model.Transfer
 import com.ivy.data.model.getFromAccount
-import com.ivy.data.model.getFromValue
 import com.ivy.ui.period.PeriodState
 import com.ivy.data.model.FromToTimeRange
 import com.ivy.data.model.toCloseTimeRange
@@ -28,14 +27,12 @@ import com.ivy.domain.usecase.budget.ReorderBudgetsUseCase
 import com.ivy.domain.usecase.budget.UpdateBudgetUseCase
 import com.ivy.domain.usecase.category.GetCategoriesUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
-import com.ivy.domain.usecase.exchange.ExchangeAmountUseCase
+import com.ivy.domain.usecase.exchange.ExchangeTransactionAmountUseCase
 import com.ivy.domain.usecase.transaction.GetTransactionsBetweenUseCase
 import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.R
 import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
 import com.ivy.data.model.CreateBudgetData
-import com.ivy.domain.exchange.ExchangeData
-import com.ivy.domain.transaction.transactionCurrency
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
@@ -59,7 +56,7 @@ class BudgetViewModel @Inject constructor(
     private val getBudgetsUseCase: GetBudgetsUseCase,
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
     private val getTransactionsBetweenUseCase: GetTransactionsBetweenUseCase,
-    private val exchangeAmountUseCase: ExchangeAmountUseCase,
+    private val exchangeTransactionAmountUseCase: ExchangeTransactionAmountUseCase,
 ) : ComposeViewModel<BudgetScreenState, BudgetScreenEvent>() {
 
     private val baseCurrency = mutableStateOf("")
@@ -239,13 +236,11 @@ class BudgetViewModel @Inject constructor(
 
                     is Expense -> {
                         // increment spent amount
-                        exchangeAmountUseCase(
-                            data = ExchangeData(
-                                baseCurrency = baseCurrencyCode,
-                                fromCurrency = transactionCurrency(transaction, accounts, baseCurrencyCode)
-                            ),
-                            amount = transaction.getFromValue().amount.value.toBigDecimal()
-                        ).getOrNull()?.toDouble() ?: 0.0
+                        exchangeTransactionAmountUseCase(
+                            transaction = transaction,
+                            accounts = accounts,
+                            baseCurrency = baseCurrencyCode
+                        ).toDouble()
                     }
 
                     is Transfer -> {

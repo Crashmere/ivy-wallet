@@ -26,7 +26,7 @@ import java.util.UUID
 
 private fun LocalDateTime.toEpochSeconds() = toEpochSecond(ZoneOffset.UTC)
 
-suspend fun List<Transaction>.withDateDividers(
+internal suspend fun List<Transaction>.withDateDividers(
     exchangeRatesUseCase: LegacyExchangeRatesUseCase,
     baseCurrencyCode: String,
     tagStore: TagStore,
@@ -48,7 +48,7 @@ suspend fun List<Transaction>.withDateDividers(
     )
 }
 
-suspend fun transactionsWithDateDividers(
+internal suspend fun transactionsWithDateDividers(
     transactions: List<Transaction>,
     baseCurrencyCode: String,
     getAccount: suspend (accountId: UUID) -> LegacyAccount?,

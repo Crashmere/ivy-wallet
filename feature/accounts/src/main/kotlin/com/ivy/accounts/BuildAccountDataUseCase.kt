@@ -5,7 +5,6 @@ import com.ivy.data.model.ClosedTimeRange
 import com.ivy.domain.usecase.account.CalculateAccountBalanceUseCase
 import com.ivy.domain.usecase.account.CalculateAccountIncomeExpenseUseCase
 import com.ivy.domain.usecase.exchange.ExchangeAmountUseCase
-import com.ivy.domain.exchange.ExchangeData
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 import javax.inject.Inject
@@ -25,11 +24,9 @@ class BuildAccountDataUseCase @Inject constructor(
             val balance = calculateAccountBalanceUseCase(account)
             val balanceBaseCurrency = if (account.asset.code != baseCurrency) {
                 exchangeAmountUseCase(
-                    data = ExchangeData.fromCurrencyCode(
-                        baseCurrency = baseCurrency,
-                        fromCurrency = account.asset.code
-                    ),
-                    amount = balance
+                    amount = balance,
+                    baseCurrency = baseCurrency,
+                    fromCurrency = account.asset.code
                 ).getOrNull()
             } else {
                 null

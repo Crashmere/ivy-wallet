@@ -52,7 +52,6 @@ import com.ivy.domain.usecase.settings.GetTransfersAsIncomeExpensePreferenceUseC
 import com.ivy.domain.usecase.transaction.BuildLegacyTransactionHistoryItemsUseCase
 import com.ivy.domain.usecase.transaction.CalculateLegacyTransactionsIncomeExpenseUseCase
 import com.ivy.domain.usecase.transaction.GetLegacyTransactionsByIdsUseCase
-import com.ivy.domain.exchange.ExchangeData
 import com.ivy.ui.modal.ChoosePeriodModalData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
@@ -360,11 +359,9 @@ class TransactionsViewModel @Inject constructor(
         balance.doubleValue = balanceValue
         if (baseCurrency.value != currency.value) {
             balanceBaseCurrency.value = exchangeAmountUseCase(
-                data = ExchangeData.fromCurrencyCode(
-                    baseCurrency = baseCurrency.value,
-                    fromCurrency = currency.value
-                ),
-                amount = balanceValue.toBigDecimal()
+                amount = balanceValue.toBigDecimal(),
+                baseCurrency = baseCurrency.value,
+                fromCurrency = currency.value
             ).getOrNull()?.toDouble()
         }
 

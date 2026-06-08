@@ -20,7 +20,6 @@ import com.ivy.data.model.Income
 import com.ivy.data.model.Tag
 import com.ivy.data.model.Transaction
 import com.ivy.data.model.Transfer
-import com.ivy.data.model.getFromValue
 import com.ivy.data.model.getTransactionType
 import com.ivy.data.model.primitive.ColorInt
 import com.ivy.data.model.primitive.NotBlankTrimmedString
@@ -29,7 +28,7 @@ import com.ivy.domain.preferences.toggles.PreferenceToggles
 import com.ivy.domain.usecase.category.GetCategoriesUseCase
 import com.ivy.domain.usecase.csv.ExportCsvUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
-import com.ivy.domain.usecase.exchange.ExchangeAmountUseCase
+import com.ivy.domain.usecase.exchange.ExchangeTransactionAmountUseCase
 import com.ivy.domain.usecase.tag.GetTagsUseCase
 import com.ivy.domain.usecase.tag.SearchTagsUseCase
 import com.ivy.domain.usecase.planned.PayOrSkipLegacyPlannedTransactionUseCase
@@ -50,9 +49,6 @@ import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
 import com.ivy.domain.usecase.transaction.BuildTransactionHistoryItemsUseCase
 import com.ivy.domain.usecase.transaction.CalculateTransactionsIncomeExpenseUseCase
 import com.ivy.data.model.IncomeExpenseTransferPair
-import com.ivy.domain.exchange.ExchangeData
-import com.ivy.domain.transaction.transactionCurrency
-import com.ivy.domain.util.orZero
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
@@ -84,7 +80,7 @@ class ReportViewModel @Inject constructor(
     private val payOrSkipLegacyPlannedTransactionUseCase: PayOrSkipLegacyPlannedTransactionUseCase,
     private val payOrSkipLegacyPlannedTransactionsUseCase: PayOrSkipLegacyPlannedTransactionsUseCase,
     private val periodState: PeriodState,
-    private val exchangeAmountUseCase: ExchangeAmountUseCase,
+    private val exchangeTransactionAmountUseCase: ExchangeTransactionAmountUseCase,
     private val getLegacyAccountsUseCase: GetLegacyAccountsUseCase,
     private val getCategoriesUseCase: GetCategoriesUseCase,
     private val buildTransactionHistoryItemsUseCase: BuildTransactionHistoryItemsUseCase,
@@ -485,13 +481,11 @@ class ReportViewModel @Inject constructor(
     ): List<Transaction> {
         val amountFilteredTransactions = mutableListOf<Transaction>()
         for (transaction in this) {
-            val transactionAmountBaseCurrency = exchangeAmountUseCase(
-                data = ExchangeData(
-                    baseCurrency = baseCurrency,
-                    fromCurrency = transactionCurrency(transaction, accounts, baseCurrency),
-                ),
-                amount = transaction.getFromValue().amount.value.toBigDecimal()
-            ).orZero().toDouble()
+            val transactionAmountBaseCurrency = exchangeTransactionAmountUseCase(
+                transaction = transaction,
+                accounts = accounts,
+                baseCurrency = baseCurrency,
+            ).toDouble()
 
             if ((filter.minAmount == null || transactionAmountBaseCurrency >= filter.minAmount) &&
                 (filter.maxAmount == null || transactionAmountBaseCurrency <= filter.maxAmount)

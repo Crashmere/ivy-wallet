@@ -7,7 +7,7 @@ import arrow.core.raise.option
 import arrow.core.toOption
 import java.math.BigDecimal
 
-data class ExchangeData(
+internal data class ExchangeData(
     val baseCurrency: String,
     val fromCurrency: Option<String>,
     val toCurrency: String = baseCurrency,
@@ -26,7 +26,7 @@ data class ExchangeData(
         }
     }
 }
-suspend fun exchange(
+internal suspend fun exchange(
     data: ExchangeData,
     amount: BigDecimal,
     getExchangeRate: suspend (baseCurrency: String, toCurrency: String) -> BigDecimal?,
@@ -101,7 +101,7 @@ suspend fun exchange(
 private fun String.validateCurrency(): Option<String> {
     return if (this.isNullOrBlank().not()) return Some(this) else None
 }
-suspend fun validExchangeRate(
+private suspend fun validExchangeRate(
     baseCurrency: String,
     toCurrency: String,
     retrieveExchangeRate: suspend (baseCurrency: String, toCurrency: String) -> BigDecimal?,

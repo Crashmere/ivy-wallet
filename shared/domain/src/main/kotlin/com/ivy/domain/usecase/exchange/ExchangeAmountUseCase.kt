@@ -12,6 +12,22 @@ class ExchangeAmountUseCase @Inject constructor(
     private val exchangeRateStore: ExchangeRateStore,
 ) {
     suspend operator fun invoke(
+        amount: BigDecimal,
+        baseCurrency: String,
+        fromCurrency: String?,
+        toCurrency: String = baseCurrency,
+    ): Option<BigDecimal> {
+        return invoke(
+            data = ExchangeData.fromCurrencyCode(
+                baseCurrency = baseCurrency,
+                fromCurrency = fromCurrency,
+                toCurrency = toCurrency
+            ),
+            amount = amount
+        )
+    }
+
+    internal suspend operator fun invoke(
         data: ExchangeData,
         amount: BigDecimal
     ): Option<BigDecimal> {

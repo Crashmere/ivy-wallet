@@ -62,6 +62,7 @@
 - 收窄 domain 正式交易计算公开面：交易折叠、钱包/账户统计函数、交易类型过滤和交易汇率换算 helper 改为 domain 模块内可见；当前仍被 feature 使用的交易值扩展暂时保留 public。
 - 下沉纯交易类型判断：`getTransactionType()` 归入 `shared:data:model`，预算和报表 feature 不再为了读取交易类型/基础金额直接依赖 `domain.transaction` 的内部扩展。
 - 下沉 legacy 账户纯模型 helper：`includedLegacyAccounts()` 和 `legacyAccountCurrency()` 归入 `shared:data:model` 的 `LegacyAccount` 边界，删除 `domain.account.legacy` 小包。
+- 收窄汇率换算边界：feature 层不再直接构造 `ExchangeData` 或调用 `transactionCurrency()`，改用 `ExchangeAmountUseCase` 的简单币种入口和 `ExchangeTransactionAmountUseCase`；`ExchangeData`、`exchange()` 与交易币种推断已收回 domain 内部。
 
 当前仍保留：
 
@@ -1152,7 +1153,7 @@ shared:ui:core
 下一步建议执行：
 
 1. 继续审计 `LegacyTransaction` 在 UI/统计路径中的真实必要性；优先从只做展示或参数传递的页面状态开始，评估是否能接收正式 `Transaction`、交易 ID 或更小的展示模型。
-2. 继续检查 shared/feature 模块依赖，优先处理公共模块中“只因历史写法而依赖更底层数据模型”的情况。
+2. 继续检查 shared/feature 模块依赖，优先处理 feature 仍直接引用 domain 内部算法模型、legacy 兼容模型或过宽 use case 的位置。
 3. 偏好设置代码边界已基本收窄，短期不再为清理而迁移存储格式；若后续要处理 `SettingsEntity`、SharedPrefs 或 DataStore 归并，必须单独规划 schema/备份兼容迁移。
 4. 继续数据库只读审计：`isDeleted` 目前先保留为本地软删除语义；不再把业务表里的 `isDeleted` 当作纯云同步字段批量删除。
 5. feature 模块合并属于较大结构调整，短期只在实际修改某个功能时收敛依赖；真正合并模块前需要先确认导航、资源和 Hilt 边界。
