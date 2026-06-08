@@ -37,7 +37,7 @@ import com.ivy.wallet.ui.applocked.AppLockedScreen
 
 @OptIn(ExperimentalFoundationApi::class, ExperimentalAnimationApi::class)
 @Composable
-fun RootContent(
+internal fun RootContent(
     themeState: ThemeState,
     periodState: PeriodState,
     navigation: Navigation,
