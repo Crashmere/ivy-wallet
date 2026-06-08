@@ -43,9 +43,7 @@ import com.ivy.legacy.ui.theme.Orange
 import com.ivy.legacy.ui.component.ChangeTransactionTypeModal
 import com.ivy.legacy.ui.component.IvyButton
 import com.ivy.legacy.ui.modal.DeleteModal
-import com.ivy.legacy.ui.modal.RecurringRuleModal
 import com.ivy.legacy.ui.modal.AccountModalData
-import com.ivy.legacy.ui.modal.RecurringRuleModalData
 import com.ivy.legacy.ui.modal.edit.AccountModal
 import com.ivy.legacy.ui.modal.edit.CategoryModal
 import com.ivy.legacy.ui.modal.CategoryModalData
