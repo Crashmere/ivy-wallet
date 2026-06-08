@@ -1,9 +1,7 @@
 package com.ivy.legacy.ui.modal
 
 import androidx.annotation.DrawableRes
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
@@ -207,21 +205,6 @@ internal fun ModalDelete(
         disabledBackgroundColor = LegacyTheme.colors.gray,
         tint = White,
         onClick = onClick
-    )
-}
-
-@Composable
-fun ModalTitle(
-    text: String
-) {
-    Text(
-        modifier = Modifier.padding(horizontal = 32.dp),
-        text = text,
-        style = LegacyTheme.typo.b1.copy(
-            color = LegacyTheme.colors.pureInverse,
-            fontWeight = FontWeight.ExtraBold,
-            textAlign = TextAlign.Start
-        )
     )
 }
 

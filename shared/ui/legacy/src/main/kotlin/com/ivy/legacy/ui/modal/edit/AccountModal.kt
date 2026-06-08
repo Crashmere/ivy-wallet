@@ -42,7 +42,7 @@ import com.ivy.legacy.ui.modal.CurrencyModal
 import com.ivy.legacy.ui.modal.IvyModal
 import com.ivy.legacy.ui.modal.ModalAddSave
 import com.ivy.legacy.ui.modal.ModalAmountSection
-import com.ivy.legacy.ui.modal.ModalTitle
+import com.ivy.ui.modal.ModalTitle
 import java.util.Locale
 import java.util.UUID
 import androidx.compose.runtime.getValue

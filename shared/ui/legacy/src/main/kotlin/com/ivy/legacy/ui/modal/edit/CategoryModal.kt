@@ -55,7 +55,7 @@ import com.ivy.legacy.ui.theme.dynamicContrast
 import com.ivy.legacy.ui.modal.ChooseIconModal
 import com.ivy.legacy.ui.modal.IvyModal
 import com.ivy.legacy.ui.modal.ModalAddSave
-import com.ivy.legacy.ui.modal.ModalTitle
+import com.ivy.ui.modal.ModalTitle
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import java.util.UUID

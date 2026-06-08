@@ -20,7 +20,7 @@ import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.exchangerates.model.RateUi
 import com.ivy.legacy.ui.modal.IvyModal
 import com.ivy.legacy.ui.modal.ModalAdd
-import com.ivy.legacy.ui.modal.ModalTitle
+import com.ivy.ui.modal.ModalTitle
 import com.ivy.legacy.ui.modal.edit.AmountModal
 import com.ivy.ui.compose.selectEndTextFieldValue
 import java.util.UUID

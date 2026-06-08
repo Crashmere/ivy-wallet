@@ -47,7 +47,7 @@ import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.legacy.ui.theme.White
 import com.ivy.legacy.ui.modal.IvyModal
 import com.ivy.legacy.ui.modal.ModalPositiveButton
-import com.ivy.legacy.ui.modal.ModalTitle
+import com.ivy.ui.modal.ModalTitle
 import com.ivy.ui.R
 import com.ivy.ui.compose.GradientIconButton
 import com.ivy.ui.platform.hideKeyboard

@@ -23,6 +23,7 @@ import com.ivy.legacy.ui.theme.Gray
 import java.util.UUID
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
+import com.ivy.ui.modal.ModalTitle
 
 @Composable
 fun BoxWithConstraintsScope.CurrencyModal(

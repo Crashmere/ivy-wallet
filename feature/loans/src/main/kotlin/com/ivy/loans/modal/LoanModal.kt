@@ -56,7 +56,7 @@ import com.ivy.legacy.ui.modal.CurrencyModal
 import com.ivy.legacy.ui.modal.DeleteModal
 import com.ivy.legacy.ui.modal.IvyModal
 import com.ivy.legacy.ui.modal.ModalAmountSection
-import com.ivy.legacy.ui.modal.ModalTitle
+import com.ivy.ui.modal.ModalTitle
 import com.ivy.legacy.ui.modal.edit.AccountModal
 import com.ivy.legacy.ui.modal.edit.AmountModal
 import com.ivy.legacy.ui.theme.LegacyTheme

@@ -38,7 +38,7 @@ import com.ivy.ui.icon.ItemIconSDefaultIcon
 import com.ivy.legacy.ui.theme.findContrastTextColor
 import com.ivy.legacy.ui.modal.IvyModal
 import com.ivy.legacy.ui.modal.ModalSkip
-import com.ivy.legacy.ui.modal.ModalTitle
+import com.ivy.ui.modal.ModalTitle
 import com.ivy.legacy.ui.theme.toComposeColor
 import com.ivy.ui.compose.GradientIconButton
 import com.ivy.ui.compose.OutlinedPillButton
