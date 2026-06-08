@@ -42,7 +42,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
-import com.ivy.legacy.ui.SearchInput
+import com.ivy.legacy.ui.component.SearchInput
 import com.ivy.ui.money.balancePrefix
 import com.ivy.ui.money.compactBalancePrefix
 import com.ivy.data.model.currency.format

@@ -1,4 +1,4 @@
-package com.ivy.legacy.ui.preferences
+package com.ivy.ui.preferences
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState

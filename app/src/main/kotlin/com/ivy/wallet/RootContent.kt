@@ -14,10 +14,10 @@ import com.ivy.IvyNavGraph
 import com.ivy.data.model.Theme
 import com.ivy.domain.preferences.toggles.PreferenceToggleService
 import com.ivy.domain.preferences.toggles.PreferenceToggles
-import com.ivy.legacy.ui.LegacyUiRoot
-import com.ivy.legacy.ui.preferences.AmountInputPreferences
-import com.ivy.legacy.ui.preferences.LocalAmountInputPreferences
-import com.ivy.legacy.ui.preferences.UiBoolPreference
+import com.ivy.ui.LegacyUiRoot
+import com.ivy.ui.preferences.AmountInputPreferences
+import com.ivy.ui.preferences.LocalAmountInputPreferences
+import com.ivy.ui.preferences.UiBoolPreference
 import com.ivy.legacy.ui.state.LocalPeriodState
 import com.ivy.legacy.ui.state.PeriodState
 import com.ivy.ui.navigation.Navigation
