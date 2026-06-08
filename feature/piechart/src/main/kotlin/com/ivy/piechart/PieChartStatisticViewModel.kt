@@ -10,7 +10,8 @@ import androidx.lifecycle.viewModelScope
 import com.ivy.data.model.TransactionType
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.domain.usecase.settings.GetTransfersAsIncomeExpensePreferenceUseCase
-import com.ivy.domain.usecase.transaction.GetLegacyTransactionsByIdsUseCase
+import com.ivy.domain.usecase.transaction.GetTransactionsByIdsUseCase
+import com.ivy.domain.usecase.transaction.MapTransactionsToLegacyTransactionsUseCase
 import com.ivy.ui.period.PeriodState
 import com.ivy.ui.period.TimePeriod
 import com.ivy.ui.ComposeViewModel
@@ -31,7 +32,8 @@ internal class PieChartStatisticViewModel @Inject internal constructor(
     private val periodState: PeriodState,
     private val buildPieChartDataUseCase: BuildPieChartDataUseCase,
     private val getTransfersAsIncomeExpensePreference: GetTransfersAsIncomeExpensePreferenceUseCase,
-    private val getLegacyTransactionsByIdsUseCase: GetLegacyTransactionsByIdsUseCase,
+    private val getTransactionsByIdsUseCase: GetTransactionsByIdsUseCase,
+    private val mapTransactionsToLegacyTransactionsUseCase: MapTransactionsToLegacyTransactionsUseCase,
 ) : ComposeViewModel<PieChartStatisticState, PieChartStatisticEvent>() {
 
     private var treatTransfersAsIncomeExpense by mutableStateOf(false)
@@ -185,7 +187,9 @@ internal class PieChartStatisticViewModel @Inject internal constructor(
             val inputTransactions = if (inputTransactionIds.isEmpty()) {
                 emptyList()
             } else {
-                getLegacyTransactionsByIdsUseCase(inputTransactionIds)
+                mapTransactionsToLegacyTransactionsUseCase(
+                    getTransactionsByIdsUseCase(inputTransactionIds)
+                )
             }
             buildPieChartDataUseCase(
                 baseCurrency = baseCurrency,

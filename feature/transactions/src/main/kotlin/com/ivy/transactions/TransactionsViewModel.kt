@@ -50,7 +50,7 @@ import com.ivy.domain.usecase.planned.PayOrSkipLegacyPlannedTransactionsUseCase
 import com.ivy.domain.usecase.settings.GetTransfersAsIncomeExpensePreferenceUseCase
 import com.ivy.domain.usecase.transaction.BuildLegacyTransactionHistoryItemsUseCase
 import com.ivy.domain.usecase.transaction.CalculateLegacyTransactionsIncomeExpenseUseCase
-import com.ivy.domain.usecase.transaction.GetLegacyTransactionsByIdsUseCase
+import com.ivy.domain.usecase.transaction.GetTransactionsByIdsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
@@ -91,7 +91,7 @@ internal class TransactionsViewModel @Inject internal constructor(
     private val calculateAccountBalanceUseCase: CalculateAccountBalanceUseCase,
     private val calculateAccountIncomeExpenseUseCase: CalculateAccountIncomeExpenseUseCase,
     private val calculateLegacyTransactionsIncomeExpenseUseCase: CalculateLegacyTransactionsIncomeExpenseUseCase,
-    private val getLegacyTransactionsByIdsUseCase: GetLegacyTransactionsByIdsUseCase,
+    private val getTransactionsByIdsUseCase: GetTransactionsByIdsUseCase,
     private val exchangeAmountUseCase: ExchangeAmountUseCase,
     private val mapTransactionsToLegacyTransactionsUseCase: MapTransactionsToLegacyTransactionsUseCase,
     private val mapTransactionsToLegacyTransactionsWithTagsUseCase: MapTransactionsToLegacyTransactionsWithTagsUseCase,
@@ -653,8 +653,9 @@ internal class TransactionsViewModel @Inject internal constructor(
             initWithTransactions.value = false
             treatTransfersAsIncomeExpense.value =
                 getTransfersAsIncomeExpensePreference()
-            val inputTransactions =
-                getLegacyTransactionsByIdsUseCase(query.transactionIds)
+            val inputTransactions = mapTransactionsToLegacyTransactionsUseCase(
+                getTransactionsByIdsUseCase(query.transactionIds)
+            )
 
             when {
                 query.accountId != null -> {
