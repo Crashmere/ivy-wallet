@@ -27,7 +27,6 @@ import com.ivy.data.model.TransactionType
 import com.ivy.data.model.Category
 import com.ivy.data.model.IntervalType
 import com.ivy.ui.platform.LocalDatePicker
-import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.ui.navigation.onScreenStart
 import com.ivy.ui.navigation.EditPlannedScreen
 import com.ivy.ui.navigation.TransactionRouteType
@@ -206,7 +205,7 @@ private fun BoxWithConstraintsScope.UI(
         if (screen.plannedPaymentRuleId == null) {
             // Create mode
             if (screen.hasMandatoryInitialData()) {
-                // Flow Convert (Amount, LegacyAccount, Category)
+                // Flow Convert (Amount, Account, Category)
                 showRecurringRuleModal()
             } else {
                 // Flow Empty

@@ -3,7 +3,6 @@ package com.ivy.planned.edit
 import com.ivy.data.model.TransactionType
 import com.ivy.data.model.Category
 import com.ivy.data.model.IntervalType
-import com.ivy.data.model.legacy.LegacyAccount
 import kotlinx.collections.immutable.ImmutableList
 import java.time.LocalDateTime
 import javax.annotation.concurrent.Immutable
@@ -19,8 +18,8 @@ internal data class EditPlannedScreenState(
     val initialTitle: String?,
     val description: String?,
     val categories: ImmutableList<Category>,
-    val accounts: ImmutableList<LegacyAccount>,
-    val account: LegacyAccount?,
+    val accounts: ImmutableList<EditPlannedAccount>,
+    val account: EditPlannedAccount?,
     val category: Category?,
     val amount: Double,
     val categoryModalVisible: Boolean,

@@ -17,7 +17,6 @@ import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.domain.usecase.planned.DeletePlannedPaymentRuleUseCase
 import com.ivy.domain.usecase.planned.GetPlannedPaymentRuleUseCase
 import com.ivy.domain.usecase.planned.SavePlannedPaymentRuleUseCase
-import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.data.model.PlannedPaymentRule
 import com.ivy.ui.ComposeViewModel
 import com.ivy.domain.usecase.account.CreateAccountWithBalanceUseCase
@@ -67,7 +66,7 @@ internal class EditPlannedViewModel @Inject internal constructor(
     private var amount by mutableDoubleStateOf(0.0)
     private var currency by mutableStateOf("")
     private var categories by mutableStateOf<ImmutableList<Category>>(persistentListOf())
-    private var accounts by mutableStateOf<ImmutableList<LegacyAccount>>(persistentListOf())
+    private var accounts by mutableStateOf<ImmutableList<EditPlannedAccount>>(persistentListOf())
     private var categoryModalVisible by mutableStateOf(false)
     private var descriptionModalVisible by mutableStateOf(false)
     private var deleteTransactionModalVisible by mutableStateOf(false)
@@ -115,7 +114,7 @@ internal class EditPlannedViewModel @Inject internal constructor(
     }
 
     @Composable
-    private fun getAccounts(): ImmutableList<LegacyAccount> {
+    private fun getAccounts(): ImmutableList<EditPlannedAccount> {
         return accounts
     }
 
@@ -155,7 +154,7 @@ internal class EditPlannedViewModel @Inject internal constructor(
     }
 
     @Composable
-    private fun getAccount(): LegacyAccount? {
+    private fun getAccount(): EditPlannedAccount? {
         val selectedAccountId = accountId ?: return null
         return accounts.firstOrNull { it.id == selectedAccountId }
     }
@@ -245,12 +244,12 @@ internal class EditPlannedViewModel @Inject internal constructor(
             transactionType = type
             editMode = plannedPaymentRuleId != null
 
-            val accounts = getLegacyAccountsUseCase()
-            if (accounts.isEmpty()) {
+            val loadedAccounts = loadAccounts()
+            if (loadedAccounts.isEmpty()) {
                 _uiEvents.emit(EditPlannedUiEvent.CloseScreen)
                 return@launch
             }
-            this@EditPlannedViewModel.accounts = accounts
+            this@EditPlannedViewModel.accounts = loadedAccounts
             categories = getCategoriesUseCase().toImmutableList()
 
             reset()
@@ -264,7 +263,7 @@ internal class EditPlannedViewModel @Inject internal constructor(
                 oneTime = false,
                 type = type,
                 amount = amount ?: 0.0,
-                accountId = accountId ?: accounts.first().id,
+                accountId = accountId ?: loadedAccounts.first().id,
                 categoryId = categoryId,
                 title = title,
                 description = description
@@ -469,8 +468,14 @@ internal class EditPlannedViewModel @Inject internal constructor(
     private fun createAccount(data: CreateAccountData) {
         viewModelScope.launch {
             createAccountWithBalanceUseCase(data)
-            accounts = getLegacyAccountsUseCase()
+            accounts = loadAccounts()
         }
+    }
+
+    private suspend fun loadAccounts(): ImmutableList<EditPlannedAccount> {
+        return getLegacyAccountsUseCase()
+            .map { it.toEditPlannedAccount() }
+            .toImmutableList()
     }
 
     private fun reset() {
