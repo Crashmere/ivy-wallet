@@ -74,7 +74,7 @@ import java.util.UUID
 
 @Suppress("CyclomaticComplexMethod", "LongMethod")
 @Composable
-fun TransactionCard(
+internal fun TransactionCard(
     baseData: AppBaseData,
     transaction: LegacyTransaction,
     shouldShowAccountSpecificColorInTransactions: Boolean,
@@ -369,7 +369,7 @@ private fun findAccount(
 }
 
 @Composable
-fun CategoryBadgeDisplay(
+private fun CategoryBadgeDisplay(
     category: Category,
     nav: Navigation,
 ) {

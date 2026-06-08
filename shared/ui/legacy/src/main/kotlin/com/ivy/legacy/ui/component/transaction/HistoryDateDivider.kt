@@ -25,7 +25,7 @@ import com.ivy.ui.time.LocalTimeProvider
 import java.time.LocalDate
 
 @Composable
-fun HistoryDateDivider(
+internal fun HistoryDateDivider(
     date: LocalDate,
     spacerTop: Dp,
     baseCurrency: String,
