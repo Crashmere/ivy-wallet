@@ -20,7 +20,6 @@ import com.ivy.domain.usecase.planned.SavePlannedPaymentRuleUseCase
 import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.data.model.PlannedPaymentRule
 import com.ivy.ui.navigation.EditPlannedScreen
-import com.ivy.ui.navigation.Navigation
 import com.ivy.ui.navigation.TransactionRouteType
 import com.ivy.ui.ComposeViewModel
 import com.ivy.domain.usecase.account.CreateAccountWithBalanceUseCase
@@ -37,6 +36,9 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import java.time.Instant
 import java.time.LocalDateTime
@@ -52,7 +54,6 @@ class EditPlannedViewModel @Inject constructor(
     private val getPlannedPaymentRuleUseCase: GetPlannedPaymentRuleUseCase,
     private val savePlannedPaymentRuleUseCase: SavePlannedPaymentRuleUseCase,
     private val deletePlannedPaymentRuleUseCase: DeletePlannedPaymentRuleUseCase,
-    private val nav: Navigation,
     private val createCategoryUseCase: CreateCategoryUseCase,
     private val updateCategoryUseCase: UpdateCategoryUseCase,
     private val createAccountWithBalanceUseCase: CreateAccountWithBalanceUseCase,
@@ -85,6 +86,8 @@ class EditPlannedViewModel @Inject constructor(
     private var loadedRule: PlannedPaymentRule? = null
     private var editMode = false
     private var title: String? = null
+    private val _uiEvents = MutableSharedFlow<EditPlannedUiEvent>()
+    val uiEvents: SharedFlow<EditPlannedUiEvent> = _uiEvents.asSharedFlow()
 
     @Composable
     override fun uiState(): EditPlannedScreenState {
@@ -272,7 +275,7 @@ class EditPlannedViewModel @Inject constructor(
 
             val accounts = getLegacyAccountsUseCase()
             if (accounts.isEmpty()) {
-                nav.back()
+                _uiEvents.emit(EditPlannedUiEvent.CloseScreen)
                 return@launch
             }
             this@EditPlannedViewModel.accounts = accounts
@@ -436,7 +439,7 @@ private fun TransactionRouteType.toTransactionType(): TransactionType {
                 savePlannedPaymentRuleUseCase(loadedRule())
 
                 if (closeScreen) {
-                    nav.back()
+                    _uiEvents.emit(EditPlannedUiEvent.CloseScreen)
                 }
             } catch (_: Exception) {
             }
@@ -472,7 +475,7 @@ private fun TransactionRouteType.toTransactionType(): TransactionType {
             loadedRule?.let {
                 deletePlannedPaymentRuleUseCase(it.id)
             }
-            nav.back()
+            _uiEvents.emit(EditPlannedUiEvent.CloseScreen)
         }
     }
 

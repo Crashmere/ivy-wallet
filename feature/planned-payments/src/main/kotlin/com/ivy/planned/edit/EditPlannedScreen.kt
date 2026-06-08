@@ -57,7 +57,17 @@ import java.time.LocalDateTime
 @Composable
 fun BoxWithConstraintsScope.EditPlannedScreen(screen: EditPlannedScreen) {
     val viewModel: EditPlannedViewModel = screenScopedViewModel()
+    val nav = navigation()
     val uiState = viewModel.uiState()
+
+    LaunchedEffect(viewModel) {
+        viewModel.uiEvents.collect { event ->
+            when (event) {
+                EditPlannedUiEvent.CloseScreen -> nav.back()
+            }
+        }
+    }
+
     LaunchedEffect(Unit) {
         viewModel.start(screen)
     }
