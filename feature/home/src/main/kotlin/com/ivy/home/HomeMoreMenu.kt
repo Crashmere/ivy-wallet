@@ -50,11 +50,11 @@ import com.ivy.ui.compose.thenIf
 import com.ivy.ui.compose.clickableNoIndication
 import com.ivy.legacy.ui.colorLerp
 import com.ivy.legacy.ui.lerp
-import com.ivy.legacy.ui.navigationBarInset
+import com.ivy.ui.compose.navigationBarInset
 import com.ivy.ui.compose.rememberInteractionSource
 import com.ivy.legacy.ui.rememberSwipeListenerState
 import com.ivy.legacy.ui.springBounce
-import com.ivy.legacy.ui.statusBarInset
+import com.ivy.ui.compose.statusBarInset
 import com.ivy.ui.compose.toDensityPx
 import com.ivy.legacy.ui.verticalSwipeListener
 import com.ivy.ui.navigation.BudgetScreen

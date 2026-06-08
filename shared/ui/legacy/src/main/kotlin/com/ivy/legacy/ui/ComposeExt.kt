@@ -3,41 +3,7 @@ package com.ivy.legacy.ui
 import android.annotation.SuppressLint
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalView
-import androidx.core.graphics.Insets
-import androidx.core.view.WindowInsetsCompat
 import com.ivy.ui.navigation.navigation
-
-@Composable
-fun windowInsets(): WindowInsetsCompat {
-    val rootView = LocalView.current
-    return WindowInsetsCompat.toWindowInsetsCompat(rootView.rootWindowInsets, rootView)
-}
-
-@Composable
-fun statusBarInset(): Int {
-    val windowInsets = windowInsets()
-    return windowInsets.getInsets(WindowInsetsCompat.Type.statusBars()).top
-}
-
-@Composable
-fun navigationBarInset(): Int {
-    return navigationBarInsets().bottom
-}
-
-@Composable
-fun navigationBarInsets(): Insets {
-    val windowInsets = windowInsets()
-    return windowInsets.getInsets(WindowInsetsCompat.Type.navigationBars())
-}
-
-@Composable
-fun keyboardOnlyWindowInsets(): Insets {
-    val windowInsets = windowInsets()
-    return windowInsets.getInsets(
-        WindowInsetsCompat.Type.ime()
-    )
-}
 
 @SuppressLint("ComposableNaming")
 @Composable

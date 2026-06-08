@@ -45,7 +45,7 @@ import com.ivy.ui.compose.thenIf
 import com.ivy.ui.navigation.MainTab
 import com.ivy.ui.compose.clickableNoIndication
 import com.ivy.legacy.ui.lerp
-import com.ivy.legacy.ui.navigationBarInset
+import com.ivy.ui.compose.navigationBarInset
 import com.ivy.ui.compose.rememberInteractionSource
 import com.ivy.legacy.ui.springBounceFast
 import com.ivy.ui.compose.toDensityDp

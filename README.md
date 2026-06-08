@@ -445,6 +445,7 @@
 - `selectEndTextFieldValue()` 已从 legacy UI 迁到 `shared:ui:core`，交易、分类、预算、搜索、汇率和旧弹窗输入框不再为了光标定位 helper 依赖 legacy 包。
 - `drawColoredShadow()` 已从 legacy UI 迁到 `shared:ui:core`，首页、饼图、设置、借贷和旧按钮组件的通用阴影绘制不再挂在 legacy 包下。
 - `toDensityPx()/toDensityDp()` 密度换算扩展已从 legacy UI 迁到 `shared:ui:core`，底部栏和旧返回栏不再为了尺寸换算 helper 依赖 legacy 包。
+- `windowInsets/statusBarInset/navigationBarInset/navigationBarInsets/keyboardOnlyWindowInsets` 已从 legacy UI 迁到 `shared:ui:core`，搜索页、首页更多菜单和各底部栏改为使用通用窗口 inset helper。
 - 旧日期/周期显示链路已停止使用全局 `stringRes()`：月份模型改为只保存 `monthValue`，月份名、interval 单位、Last N 周期和“今天/昨天/明天”文案都在 Composable 显示边界通过 `stringResource()` 获取；无调用方的旧 `stringRes()` 兼容函数已经删除。
 - 已删除 `shared:base` 中最后的全局 `appContext` 入口；`IvyAndroidApp` 不再在启动时写入全局 Context，旧 `SharedPrefs` 和平台类继续通过构造参数或 Hilt 注入获取 Context。
 - 第一批 UI 层当前时间读取已停止使用 deprecated 的全局时间函数：饼图点击计时改用 `SystemClock.elapsedRealtime()`，旧交易卡片、日期分隔、日期格式化和周期选择弹窗改为通过 `LocalTimeProvider` 获取当前日期/时间，并删除无调用方的 `getTrueDate()` 桥接函数。

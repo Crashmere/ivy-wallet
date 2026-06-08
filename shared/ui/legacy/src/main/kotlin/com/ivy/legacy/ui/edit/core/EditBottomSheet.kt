@@ -48,9 +48,9 @@ import com.ivy.ui.compose.consumeClicks
 import com.ivy.ui.compose.densityScope
 import com.ivy.data.model.currency.format
 import com.ivy.legacy.ui.hideKeyboard
-import com.ivy.legacy.ui.keyboardOnlyWindowInsets
+import com.ivy.ui.compose.keyboardOnlyWindowInsets
 import com.ivy.legacy.ui.lerp
-import com.ivy.legacy.ui.navigationBarInsets
+import com.ivy.ui.compose.navigationBarInsets
 import com.ivy.legacy.ui.onScreenStart
 import com.ivy.legacy.ui.springBounce
 import com.ivy.legacy.ui.testing.TestingContext

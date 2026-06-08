@@ -22,7 +22,7 @@ import com.ivy.legacy.ui.model.AppBaseData
 import com.ivy.legacy.ui.SearchInput
 import com.ivy.legacy.ui.component.transaction.transactions
 import com.ivy.ui.compose.densityScope
-import com.ivy.legacy.ui.keyboardOnlyWindowInsets
+import com.ivy.ui.compose.keyboardOnlyWindowInsets
 import com.ivy.legacy.ui.keyboardVisibleState
 import com.ivy.ui.compose.selectEndTextFieldValue
 import com.ivy.ui.navigation.SearchScreen

@@ -43,8 +43,8 @@ import com.ivy.legacy.ui.addKeyboardListener
 import com.ivy.ui.compose.consumeClicks
 import com.ivy.ui.compose.densityScope
 import com.ivy.legacy.ui.hideKeyboard
-import com.ivy.legacy.ui.keyboardOnlyWindowInsets
-import com.ivy.legacy.ui.navigationBarInsets
+import com.ivy.ui.compose.keyboardOnlyWindowInsets
+import com.ivy.ui.compose.navigationBarInsets
 import com.ivy.legacy.ui.onScreenStart
 import com.ivy.ui.compose.thenIf
 import com.ivy.ui.navigation.navigation
