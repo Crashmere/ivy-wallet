@@ -24,11 +24,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.TransactionType
-import com.ivy.data.model.Category
 import com.ivy.data.model.IntervalType
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.legacy.ui.theme.style
-import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.data.model.PlannedPaymentRule
 import com.ivy.ui.time.forDisplay
 import com.ivy.legacy.ui.component.transaction.TypeAmountCurrency
@@ -53,8 +51,8 @@ import java.util.UUID
 @Composable
 internal fun LazyItemScope.PlannedPaymentCard(
     baseCurrency: String,
-    categories: ImmutableList<Category>,
-    accounts: ImmutableList<LegacyAccount>,
+    categories: ImmutableList<PlannedPaymentCategory>,
+    accounts: ImmutableList<PlannedPaymentAccount>,
     plannedPayment: PlannedPaymentRule,
     onClick: (PlannedPaymentRule) -> Unit,
     onCategoryClick: (UUID) -> Unit,
@@ -128,8 +126,8 @@ private fun Instant.toLocalDateTimeInSystemZone() =
 @Composable
 private fun PlannedPaymentHeaderRow(
     plannedPayment: PlannedPaymentRule,
-    categories: ImmutableList<Category>,
-    accounts: ImmutableList<LegacyAccount>,
+    categories: ImmutableList<PlannedPaymentCategory>,
+    accounts: ImmutableList<PlannedPaymentAccount>,
     onCategoryClick: (UUID) -> Unit,
     onAccountClick: (UUID) -> Unit,
 ) {
@@ -149,24 +147,24 @@ private fun PlannedPaymentHeaderRow(
             Spacer(Modifier.width(12.dp))
 
             val category =
-                plannedPayment.categoryId?.let { targetId -> categories.find { it.id.value == targetId } }
+                plannedPayment.categoryId?.let { targetId -> categories.find { it.id == targetId } }
             if (category != null) {
                 IvyButton(
-                    iconTint = findContrastTextColor(category.color.value.toComposeColor()),
+                    iconTint = findContrastTextColor(category.color.toComposeColor()),
                     iconStart = getCustomIconIdS(
-                        category.icon?.id,
+                        category.icon,
                         R.drawable.ic_custom_category_s
                     ),
-                    text = category.name.value,
-                    backgroundGradient = Gradient.solid(category.color.value.toComposeColor()),
+                    text = category.name,
+                    backgroundGradient = Gradient.solid(category.color.toComposeColor()),
                     textStyle = LegacyTheme.typo.c.style(
-                        color = findContrastTextColor(category.color.value.toComposeColor()),
+                        color = findContrastTextColor(category.color.toComposeColor()),
                         fontWeight = FontWeight.ExtraBold
                     ),
                     padding = 8.dp,
                     iconEdgePadding = 10.dp
                 ) {
-                    onCategoryClick(category.id.value)
+                    onCategoryClick(category.id)
                 }
 
                 Spacer(Modifier.width(12.dp))

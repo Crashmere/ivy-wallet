@@ -33,8 +33,8 @@ internal class PlannedPaymentsViewModel @Inject internal constructor(
 ) : ComposeViewModel<PlannedPaymentsScreenState, PlannedPaymentsScreenEvent>() {
 
     private var currency by mutableStateOf("")
-    private var categories by mutableStateOf<ImmutableList<Category>>(persistentListOf())
-    private var accounts by mutableStateOf<ImmutableList<LegacyAccount>>(persistentListOf())
+    private var categories by mutableStateOf<ImmutableList<PlannedPaymentCategory>>(persistentListOf())
+    private var accounts by mutableStateOf<ImmutableList<PlannedPaymentAccount>>(persistentListOf())
     private var oneTimePlannedPayment by
         mutableStateOf<ImmutableList<PlannedPaymentRule>>(persistentListOf())
     private var recurringPlannedPayment by
@@ -73,12 +73,12 @@ internal class PlannedPaymentsViewModel @Inject internal constructor(
     }
 
     @Composable
-    private fun getCategories(): ImmutableList<Category> {
+    private fun getCategories(): ImmutableList<PlannedPaymentCategory> {
         return categories
     }
 
     @Composable
-    private fun getAccounts(): ImmutableList<LegacyAccount> {
+    private fun getAccounts(): ImmutableList<PlannedPaymentAccount> {
         return accounts
     }
 
@@ -137,8 +137,12 @@ internal class PlannedPaymentsViewModel @Inject internal constructor(
         viewModelScope.launch {
             currency = getBaseCurrencyCode()
 
-            categories = getCategoriesUseCase().toImmutableList()
+            categories = getCategoriesUseCase()
+                .map(Category::toPlannedPaymentCategory)
+                .toImmutableList()
             accounts = getLegacyAccountsUseCase()
+                .map(LegacyAccount::toPlannedPaymentAccount)
+                .toImmutableList()
 
             val overview = getPlannedPaymentsOverviewUseCase()
             oneTimePlannedPayment = overview.oneTime.toImmutableList()
@@ -150,3 +154,17 @@ internal class PlannedPaymentsViewModel @Inject internal constructor(
         }
     }
 }
+
+private fun Category.toPlannedPaymentCategory() = PlannedPaymentCategory(
+    id = id.value,
+    name = name.value,
+    color = color.value,
+    icon = icon?.id,
+)
+
+private fun LegacyAccount.toPlannedPaymentAccount() = PlannedPaymentAccount(
+    id = id,
+    name = name,
+    icon = icon,
+    currency = currency,
+)

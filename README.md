@@ -1189,6 +1189,7 @@
 - 借贷交易同步内部参数拼写已从 `oldLonRecordConvertedAmount` 修正为 `oldLoanRecordConvertedAmount`，并把 `newLoanRecordAccountID` 收敛为 `newLoanRecordAccountId`；只收敛命名，不改变换算逻辑。
 - 旧重排弹窗的底层多类型 `ReorderModal` 已收为 `shared:ui:legacy` 私有实现；feature 层继续只通过 `ReorderModalSingleType`、`ReorderButton` 和 `ReorderableItem` 使用现有排序 UI。
 - 旧主题外层色板继续收窄：`Blue`、`IvyLight`、`GreenLight`、`RedLight` 和 `IvyDark` 没有模块外调用点，已改为 `shared:ui:legacy` 内部常量；feature 层继续通过 `LegacyTheme` 和仍公开的实际使用色板访问旧主题。
+- 计划付款列表状态中的账户和分类已换成本 feature 的轻量展示模型，只保留 ID、名称、图标、币种和颜色等渲染/导航字段；完整 `LegacyAccount/Category` 只在 ViewModel 加载时转换，不再进入页面状态和列表 UI 组件。
 
 ### 阶段 10：最终依赖方向
 

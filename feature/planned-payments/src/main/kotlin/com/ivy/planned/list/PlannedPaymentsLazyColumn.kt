@@ -22,10 +22,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.ivy.data.model.Category
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.legacy.ui.theme.style
-import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.data.model.PlannedPaymentRule
 import com.ivy.legacy.ui.component.transaction.SectionDivider
 import com.ivy.ui.R
@@ -40,8 +38,8 @@ import kotlin.math.absoluteValue
 internal fun PlannedPaymentsLazyColumn(
     Header: @Composable () -> Unit,
     currency: String,
-    categories: ImmutableList<Category>,
-    accounts: ImmutableList<LegacyAccount>,
+    categories: ImmutableList<PlannedPaymentCategory>,
+    accounts: ImmutableList<PlannedPaymentAccount>,
     oneTime: ImmutableList<PlannedPaymentRule>,
     oneTimeIncome: Double,
     oneTimeExpenses: Double,
@@ -94,8 +92,8 @@ internal fun PlannedPaymentsLazyColumn(
 @Suppress("LongParameterList")
 private fun LazyListScope.plannedPaymentItems(
     currency: String,
-    categories: ImmutableList<Category>,
-    accounts: ImmutableList<LegacyAccount>,
+    categories: ImmutableList<PlannedPaymentCategory>,
+    accounts: ImmutableList<PlannedPaymentAccount>,
     onPlannedPaymentClick: (PlannedPaymentRule) -> Unit,
     onCategoryClick: (UUID) -> Unit,
     onAccountClick: (UUID) -> Unit,
