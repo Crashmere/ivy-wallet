@@ -1,20 +1,25 @@
 package com.ivy.domain.usecase.account
 
-import com.ivy.data.api.AccountStore
 import com.ivy.data.api.TransactionStore
 import com.ivy.data.model.Account
+import com.ivy.data.model.Expense
+import com.ivy.data.model.Income
+import com.ivy.data.model.PositiveValue
+import com.ivy.data.model.Transaction
+import com.ivy.data.model.TransactionId
+import com.ivy.data.model.TransactionMetadata
 import com.ivy.data.model.TransactionType
-import com.ivy.data.model.legacy.LegacyTransaction
-import com.ivy.domain.mapper.legacy.toTransaction
+import com.ivy.data.model.primitive.NotBlankTrimmedString
+import com.ivy.data.model.primitive.PositiveDouble
 import com.ivy.domain.time.nowUtc
 import java.math.BigDecimal
+import java.util.UUID
 import javax.inject.Inject
 import kotlin.math.abs
 import kotlin.math.absoluteValue
 
 internal class AdjustAccountBalanceUseCase @Inject internal constructor(
     private val transactionStore: TransactionStore,
-    private val accountStore: AccountStore,
     private val calculateAccountBalanceUseCase: CalculateAccountBalanceUseCase,
 ) {
     suspend operator fun invoke(
@@ -55,15 +60,64 @@ internal class AdjustAccountBalanceUseCase @Inject internal constructor(
         amount: BigDecimal,
         title: String
     ) {
-        LegacyTransaction(
+        adjustmentTransaction(
+            account = account,
             type = type,
-            title = title,
             amount = amount,
-            toAmount = amount,
-            dateTime = nowUtc(),
-            accountId = account.id.value,
-        ).toTransaction(accountStore)?.let {
+            title = title
+        )?.let {
             transactionStore.save(it)
+        }
+    }
+
+    private fun adjustmentTransaction(
+        account: Account,
+        type: TransactionType,
+        amount: BigDecimal,
+        title: String,
+    ): Transaction? {
+        val positiveAmount = PositiveDouble.from(amount.toDouble()).getOrNull() ?: return null
+        val value = PositiveValue(
+            amount = positiveAmount,
+            asset = account.asset
+        )
+        val transactionTitle = NotBlankTrimmedString.from(title).getOrNull()
+        val metadata = TransactionMetadata(
+            recurringRuleId = null,
+            paidForDateTime = null,
+            loanId = null,
+            loanRecordId = null
+        )
+        val transactionId = TransactionId(UUID.randomUUID())
+
+        return when (type) {
+            TransactionType.INCOME -> Income(
+                id = transactionId,
+                title = transactionTitle,
+                description = null,
+                category = null,
+                time = nowUtc(),
+                settled = true,
+                metadata = metadata,
+                tags = emptyList(),
+                value = value,
+                account = account.id,
+            )
+
+            TransactionType.EXPENSE -> Expense(
+                id = transactionId,
+                title = transactionTitle,
+                description = null,
+                category = null,
+                time = nowUtc(),
+                settled = true,
+                metadata = metadata,
+                tags = emptyList(),
+                value = value,
+                account = account.id,
+            )
+
+            TransactionType.TRANSFER -> null
         }
     }
 }
