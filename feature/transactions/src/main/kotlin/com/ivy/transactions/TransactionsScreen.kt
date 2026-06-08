@@ -42,8 +42,8 @@ import com.ivy.ui.theme.LocalThemeState
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
 import com.ivy.ui.compose.thenIf
-import com.ivy.ui.transaction.AppBaseData
 import com.ivy.legacy.ui.component.transaction.LegacyDueSection
+import com.ivy.legacy.ui.component.transaction.TransactionListData
 import com.ivy.ui.period.Month
 import com.ivy.ui.period.TimePeriod
 import com.ivy.ui.period.displayLong
@@ -379,7 +379,7 @@ private fun BoxWithConstraintsScope.UI(
             )
 
             transactions(
-                baseData = AppBaseData(
+                baseData = TransactionListData(
                     baseCurrency,
                     accounts,
                     categories

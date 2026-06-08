@@ -22,7 +22,6 @@ import com.ivy.data.model.TransactionHistoryDateDivider
 import com.ivy.data.model.TransactionHistoryItem
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
-import com.ivy.ui.transaction.AppBaseData
 import com.ivy.ui.navigation.EditTransactionScreen
 import com.ivy.ui.navigation.Navigation
 import com.ivy.ui.navigation.navigation
@@ -37,7 +36,7 @@ import com.ivy.legacy.ui.component.IvyButton
 import com.ivy.legacy.ui.component.IvyIcon
 
 fun LazyListScope.transactions(
-    baseData: AppBaseData,
+    baseData: TransactionListData,
 
     upcoming: LegacyDueSection?,
     overdue: LegacyDueSection?,
@@ -106,7 +105,7 @@ fun LazyListScope.transactions(
 }
 
 private fun LazyListScope.upcomingSection(
-    baseData: AppBaseData,
+    baseData: TransactionListData,
 
     upcoming: LegacyDueSection?,
     shouldShowAccountSpecificColorInTransactions: Boolean,
@@ -145,7 +144,7 @@ private fun LazyListScope.upcomingSection(
 }
 
 private fun LazyListScope.overdueSection(
-    baseData: AppBaseData,
+    baseData: TransactionListData,
 
     overdue: LegacyDueSection?,
     shouldShowAccountSpecificColorInTransactions: Boolean,
@@ -208,7 +207,7 @@ private fun LazyListScope.overdueSection(
 }
 
 private fun LazyListScope.transactionItems(
-    baseData: AppBaseData,
+    baseData: TransactionListData,
 
     transactions: List<LegacyTransaction>,
     shouldShowAccountSpecificColorInTransactions: Boolean,
@@ -237,7 +236,7 @@ private fun LazyListScope.transactionItems(
 }
 
 private fun LazyListScope.historySection(
-    baseData: AppBaseData,
+    baseData: TransactionListData,
 
     history: List<TransactionHistoryItem>,
     shouldShowAccountSpecificColorInTransactions: Boolean,

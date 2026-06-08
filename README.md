@@ -23,6 +23,7 @@
 - 继续清理历史包名：旧 Room migration 和 type converter 已从 `com.ivy.domain.db` 归位到 `com.ivy.data.db`，旧 UI 组件中误挂到 domain 包名下的 `ListItem/IvyColorPicker` 已归位到 `com.ivy.legacy.ui.component`。
 - 清理非业务路径上的旧调试输出：预算 ID 解析、币种代码解析、键盘可见性判断、金额输入确认和 CSV 初次解析失败不再打印堆栈，继续按原有空值/无操作策略处理。
 - 收窄 UI core 职责：旧交易列表专用的 `LegacyDueSection` 已从 `shared:ui:core` 迁回 `shared:ui:legacy` 的交易组件包。
+- 继续收窄 UI core 职责：旧交易列表基础入参 `AppBaseData` 已改名为 `TransactionListData`，并迁入 `shared:ui:legacy` 的交易组件包。
 
 当前仍保留：
 

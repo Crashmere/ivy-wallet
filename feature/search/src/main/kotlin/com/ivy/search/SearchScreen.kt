@@ -18,8 +18,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.ivy.ui.transaction.AppBaseData
 import com.ivy.legacy.ui.component.SearchInput
+import com.ivy.legacy.ui.component.transaction.TransactionListData
 import com.ivy.legacy.ui.component.transaction.transactions
 import com.ivy.ui.compose.densityScope
 import com.ivy.ui.compose.keyboardOnlyWindowInsets
@@ -86,7 +86,7 @@ private fun SearchUi(
 
         ) {
             transactions(
-                baseData = AppBaseData(
+                baseData = TransactionListData(
                     baseCurrency = uiState.baseCurrency,
                     accounts = uiState.accounts,
                     categories = uiState.categories

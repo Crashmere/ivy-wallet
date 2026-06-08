@@ -32,8 +32,8 @@ import com.ivy.home.customerjourney.CustomerJourneyCardModel
 import com.ivy.home.customerjourney.CustomerJourneyCardsProvider
 import com.ivy.ui.theme.ThemeState
 import com.ivy.ui.period.PeriodState
-import com.ivy.ui.transaction.AppBaseData
 import com.ivy.legacy.ui.component.transaction.LegacyDueSection
+import com.ivy.legacy.ui.component.transaction.TransactionListData
 import com.ivy.ui.period.TimePeriod
 import com.ivy.data.model.toUTCCloseTimeRange
 import com.ivy.data.model.legacy.LegacyAccount
@@ -98,7 +98,7 @@ class HomeViewModel @Inject constructor(
     private var currentTheme by mutableStateOf(Theme.AUTO)
     private var period by mutableStateOf(periodState.selectedPeriod)
     private var baseData by mutableStateOf(
-        AppBaseData(
+        TransactionListData(
             baseCurrency = "",
             accounts = persistentListOf(),
             categories = persistentListOf()
@@ -181,7 +181,7 @@ class HomeViewModel @Inject constructor(
     }
 
     @Composable
-    private fun getBaseData(): AppBaseData {
+    private fun getBaseData(): TransactionListData {
         return baseData
     }
 
@@ -283,8 +283,8 @@ class HomeViewModel @Inject constructor(
 
         val timeRange = periodState.rangeOf(period).toUTCCloseTimeRange()
 
-        val appDataInput = loadAppBaseData(preferences to timeRange)
-        val balanceInput = loadIncomeExpenseBalance(appDataInput)
+        val transactionListInput = loadTransactionListData(preferences to timeRange)
+        val balanceInput = loadIncomeExpenseBalance(transactionListInput)
         val historyInput = loadBuffer(balanceInput)
         val dueInput = loadTransactionHistory(historyInput)
         loadDueTransactions(dueInput)
@@ -299,14 +299,14 @@ class HomeViewModel @Inject constructor(
         )
     }
 
-    private suspend fun loadAppBaseData(
+    private suspend fun loadTransactionListData(
         input: Pair<HomePreferences, ClosedTimeRange>
     ): Triple<HomePreferences, ClosedTimeRange, List<LegacyAccount>> {
         val (preferences, timeRange) = input
         val accounts = getLegacyAccountsUseCase()
         val categories = getCategoriesUseCase()
 
-        baseData = AppBaseData(
+        baseData = TransactionListData(
             baseCurrency = preferences.baseCurrency,
             categories = categories.toImmutableList(),
             accounts = accounts.toImmutableList()

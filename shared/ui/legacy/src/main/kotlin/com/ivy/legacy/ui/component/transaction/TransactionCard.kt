@@ -40,7 +40,6 @@ import com.ivy.ui.time.LocalTimeProvider
 import com.ivy.legacy.ui.theme.system.BlueLight
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
-import com.ivy.ui.transaction.AppBaseData
 import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.data.model.currency.format
 import com.ivy.ui.navigation.Navigation
@@ -75,7 +74,7 @@ import java.util.UUID
 @Suppress("CyclomaticComplexMethod", "LongMethod")
 @Composable
 internal fun TransactionCard(
-    baseData: AppBaseData,
+    baseData: TransactionListData,
     transaction: LegacyTransaction,
     shouldShowAccountSpecificColorInTransactions: Boolean,
     onPayOrGet: (LegacyTransaction) -> Unit,

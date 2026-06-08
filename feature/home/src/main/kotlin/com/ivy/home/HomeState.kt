@@ -4,8 +4,8 @@ import androidx.compose.runtime.Immutable
 import com.ivy.data.model.Theme
 import com.ivy.data.model.TransactionHistoryItem
 import com.ivy.home.customerjourney.CustomerJourneyCardModel
-import com.ivy.ui.transaction.AppBaseData
 import com.ivy.legacy.ui.component.transaction.LegacyDueSection
+import com.ivy.legacy.ui.component.transaction.TransactionListData
 import com.ivy.ui.period.TimePeriod
 import com.ivy.data.model.IncomeExpensePair
 import kotlinx.collections.immutable.ImmutableList
@@ -16,7 +16,7 @@ data class HomeState(
     val theme: Theme,
 
     val period: TimePeriod,
-    val baseData: AppBaseData,
+    val baseData: TransactionListData,
 
     val history: ImmutableList<TransactionHistoryItem>,
     val stats: IncomeExpensePair,
