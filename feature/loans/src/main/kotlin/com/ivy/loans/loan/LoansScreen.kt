@@ -46,10 +46,10 @@ import com.ivy.ui.navigation.navigation
 import com.ivy.ui.R
 import com.ivy.ui.rememberScrollPositionListState
 import com.ivy.legacy.ui.money.BalanceRow
-import com.ivy.legacy.ui.button.CircleButtonFilled
 import com.ivy.legacy.ui.icon.ItemIconSDefaultIcon
 import com.ivy.legacy.ui.icon.IvyIcon
 import com.ivy.legacy.ui.modal.ReorderModalSingleType
+import com.ivy.ui.compose.FilledIconButton
 import com.ivy.ui.theme.colors.dynamicContrast
 import com.ivy.ui.theme.colors.findContrastTextColor
 import com.ivy.loans.modal.LoanModal
@@ -253,17 +253,21 @@ private fun Toolbar(
             }
         }
 
-        CircleButtonFilled(
+        FilledIconButton(
             modifier = Modifier,
             icon = R.drawable.ic_dismiss,
+            backgroundColor = LegacyTheme.colors.medium,
+            tint = LegacyTheme.colors.pureInverse,
             onClick = onDismiss
         )
 
         Spacer(Modifier.width(8.dp))
 
-        CircleButtonFilled(
+        FilledIconButton(
             icon = R.drawable.ic_drag_handle,
-            contentDescription = "reorder"
+            contentDescription = "reorder",
+            backgroundColor = LegacyTheme.colors.medium,
+            tint = LegacyTheme.colors.pureInverse,
         ) {
             setReorderModalVisible(true)
         }

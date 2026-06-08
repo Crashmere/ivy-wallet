@@ -49,7 +49,7 @@ import com.ivy.legacy.ui.theme.GradientIvy
 import com.ivy.legacy.ui.theme.Gray
 import com.ivy.legacy.ui.theme.Green
 import com.ivy.legacy.ui.theme.White
-import com.ivy.legacy.ui.button.CircleButtonFilled
+import com.ivy.ui.compose.FilledIconButton
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
@@ -441,8 +441,10 @@ private fun IntervalFromToDate(
         if (dateTime != null) {
             Spacer(Modifier.weight(1f))
 
-            CircleButtonFilled(
-                icon = R.drawable.ic_dismiss
+            FilledIconButton(
+                icon = R.drawable.ic_dismiss,
+                backgroundColor = LegacyTheme.colors.medium,
+                tint = LegacyTheme.colors.pureInverse,
             ) {
                 onSelected(null)
             }

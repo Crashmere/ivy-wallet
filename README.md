@@ -141,6 +141,7 @@
 - 借贷主弹窗已改为显式参数入口；借贷列表页和借贷详情页不再创建 `LoanModalData`，详情页只保留显示、当前借贷和自动聚焦/自动打开金额输入等明确状态。
 - 借贷还款记录弹窗已改为显式参数入口；借贷详情页不再创建 `LoanRecordModalData`，记录、币种、账户、主交易和利息标记都作为明确状态传递。
 - 关闭按钮基础绘制迁入 `shared:ui:core` 的 `CloseIconButton`；feature 层和旧弹窗内部都不再导入 legacy 的 `CloseButton` 包装，`shared:ui:legacy` 已删除该包装入口。
+- 圆形填充图标按钮基础绘制迁入 `shared:ui:core` 的 `FilledIconButton`；feature 层和旧周期弹窗都不再导入 legacy 的 `CircleButtonFilled` 包装，`shared:ui:legacy` 已删除该包装入口。
 - 导入流程和报表筛选浮层的底部渐隐遮罩已改为各自页面私有实现；`shared:ui:legacy` 删除不再复用的 `GradientCutBottom`。
 - 预算分类选择和报表筛选列表项已改为各自 feature 私有实现；`shared:ui:legacy` 删除不再复用的通用 `ListItem`。
 - 编辑交易页和计划付款编辑页的“添加计划日期”按钮已改为各自 feature 私有实现；`shared:ui:legacy` 的 `AddPrimaryAttributeButton` 收窄为旧描述组件内部实现。

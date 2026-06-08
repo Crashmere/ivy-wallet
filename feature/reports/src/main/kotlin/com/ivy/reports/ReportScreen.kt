@@ -53,10 +53,10 @@ import com.ivy.ui.platform.fileSharer
 import com.ivy.ui.rememberScrollPositionListState
 import com.ivy.data.model.IncomeExpensePair
 import com.ivy.legacy.ui.money.BalanceRow
-import com.ivy.legacy.ui.button.CircleButtonFilled
 import com.ivy.legacy.ui.button.IvyButton
 import com.ivy.legacy.ui.icon.IvyIcon
 import com.ivy.legacy.ui.button.IvyOutlinedButton
+import com.ivy.ui.compose.FilledIconButton
 import kotlinx.collections.immutable.toImmutableList
 
 @ExperimentalFoundationApi
@@ -457,8 +457,10 @@ private fun Toolbar(
         Spacer(Modifier.width(16.dp))
 
         // Filter
-        CircleButtonFilled(
-            icon = R.drawable.ic_filter_xs
+        FilledIconButton(
+            icon = R.drawable.ic_filter_xs,
+            backgroundColor = LegacyTheme.colors.medium,
+            tint = LegacyTheme.colors.pureInverse,
         ) {
             onFilter()
         }

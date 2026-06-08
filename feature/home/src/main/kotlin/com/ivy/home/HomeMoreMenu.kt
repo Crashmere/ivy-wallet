@@ -58,9 +58,9 @@ import com.ivy.ui.compose.statusBarInset
 import com.ivy.ui.compose.toDensityPx
 import com.ivy.ui.compose.verticalSwipeListener
 import com.ivy.ui.R
-import com.ivy.legacy.ui.button.CircleButtonFilled
 import com.ivy.legacy.ui.icon.IvyIcon
 import com.ivy.legacy.ui.money.AmountCurrencyB1
+import com.ivy.ui.compose.FilledIconButton
 import kotlin.math.roundToInt
 
 private const val SWIPE_UP_THRESHOLD_CLOSE_MORE_MENU = 300
@@ -182,7 +182,7 @@ internal fun BoxWithConstraintsScope.MoreMenu(
         }
     }
 
-    CircleButtonFilled(
+    FilledIconButton(
         modifier = Modifier
             .layout { measurable, constraints ->
                 val placeable = measurable.measure(constraints)
@@ -200,6 +200,7 @@ internal fun BoxWithConstraintsScope.MoreMenu(
             }
             .testTag("home_more_menu_arrow"),
         backgroundColor = colorLerp(LegacyTheme.colors.medium, LegacyTheme.colors.pure, percentExpanded),
+        tint = LegacyTheme.colors.pureInverse,
         icon = R.drawable.ic_expandarrow
     ) {
         setExpanded(!expanded)
@@ -473,7 +474,7 @@ private fun MoreMenuButton(
     Column(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        CircleButtonFilled(
+        FilledIconButton(
             icon = icon,
             backgroundColor = backgroundColor,
             tint = tint,

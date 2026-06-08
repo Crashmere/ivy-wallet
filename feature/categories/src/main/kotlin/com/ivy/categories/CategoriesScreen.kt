@@ -55,11 +55,11 @@ import com.ivy.ui.theme.colors.Gradient
 import com.ivy.ui.theme.colors.IvyGradients
 import com.ivy.ui.theme.colors.IvyFixedColors.White
 import com.ivy.legacy.ui.money.BalanceRow
-import com.ivy.legacy.ui.button.CircleButtonFilled
 import com.ivy.legacy.ui.icon.ItemIconSDefaultIcon
 import com.ivy.legacy.ui.button.IvyButton
 import com.ivy.legacy.ui.icon.IvyIcon
 import com.ivy.legacy.ui.modal.ReorderModalSingleType
+import com.ivy.ui.compose.FilledIconButton
 import com.ivy.ui.theme.colors.findContrastTextColor
 import com.ivy.legacy.ui.modal.IvyModal
 import com.ivy.legacy.ui.modal.ModalTitle
@@ -121,8 +121,10 @@ private fun BoxWithConstraintsScope.UI(
 
                 Spacer(Modifier.weight(1f))
 
-                CircleButtonFilled(
+                FilledIconButton(
                     icon = R.drawable.ic_sort_by_alpha_24,
+                    backgroundColor = LegacyTheme.colors.medium,
+                    tint = LegacyTheme.colors.pureInverse,
                     onClick = {
                         onEvent(CategoriesScreenEvent.OnSortOrderModalVisible(visible = true))
                     },
@@ -131,9 +133,11 @@ private fun BoxWithConstraintsScope.UI(
 
                 Spacer(modifier = Modifier.width(16.dp))
 
-                CircleButtonFilled(
+                FilledIconButton(
                     icon = R.drawable.ic_drag_handle,
-                    contentDescription = "reorder"
+                    contentDescription = "reorder",
+                    backgroundColor = LegacyTheme.colors.medium,
+                    tint = LegacyTheme.colors.pureInverse,
                 ) {
                     onEvent(CategoriesScreenEvent.OnReorderModalVisible(true))
                 }

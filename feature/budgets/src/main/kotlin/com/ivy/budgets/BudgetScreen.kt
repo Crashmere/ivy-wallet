@@ -37,10 +37,10 @@ import com.ivy.ui.compose.rememberInteractionSource
 import com.ivy.ui.navigation.navigation
 import com.ivy.ui.navigation.screenScopedViewModel
 import com.ivy.ui.R
-import com.ivy.legacy.ui.button.CircleButtonFilled
 import com.ivy.legacy.ui.icon.IvyIcon
 import com.ivy.legacy.ui.modal.ReorderModalSingleType
 import com.ivy.legacy.ui.money.AmountCurrencyB1
+import com.ivy.ui.compose.FilledIconButton
 
 @Composable
 fun BoxWithConstraintsScope.BudgetScreen() {
@@ -263,9 +263,11 @@ private fun Toolbar(
             }
         }
 
-        CircleButtonFilled(
+        FilledIconButton(
             icon = R.drawable.ic_drag_handle,
-            contentDescription = "reorder"
+            contentDescription = "reorder",
+            backgroundColor = LegacyTheme.colors.medium,
+            tint = LegacyTheme.colors.pureInverse,
         ) {
             setReorderModalVisible(true)
         }

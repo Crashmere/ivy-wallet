@@ -1,4 +1,4 @@
-package com.ivy.legacy.ui.button
+package com.ivy.ui.compose
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
@@ -13,15 +13,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.ivy.legacy.ui.theme.LegacyTheme
 
 @Composable
-fun CircleButtonFilled(
+fun FilledIconButton(
     modifier: Modifier = Modifier,
     @DrawableRes icon: Int,
     contentDescription: String = "icon",
-    backgroundColor: Color = LegacyTheme.colors.medium,
-    tint: Color? = LegacyTheme.colors.pureInverse,
+    backgroundColor: Color,
+    tint: Color?,
     clickAreaPadding: Dp = 8.dp,
     onClick: () -> Unit,
 ) {
@@ -29,11 +28,10 @@ fun CircleButtonFilled(
         modifier = modifier
             .clip(CircleShape)
             .background(backgroundColor, CircleShape)
-            .clickable(onClick = onClick) // enlarge click area
+            .clickable(onClick = onClick)
             .padding(clickAreaPadding),
         painter = painterResource(id = icon),
         contentDescription = contentDescription,
         tint = tint ?: Color.Unspecified,
     )
 }
-
