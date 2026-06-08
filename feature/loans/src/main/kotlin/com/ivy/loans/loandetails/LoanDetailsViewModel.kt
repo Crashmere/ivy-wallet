@@ -86,7 +86,7 @@ internal class LoanDetailsViewModel @Inject internal constructor(
     private val amountPaid = mutableDoubleStateOf(0.0)
     private val accounts = mutableStateOf<ImmutableList<LegacyAccount>>(persistentListOf())
     private val loanInterestAmountPaid = mutableDoubleStateOf(0.0)
-    private val selectedLoanAccount = mutableStateOf<LegacyAccount?>(null)
+    private val selectedLoanAccountId = mutableStateOf<UUID?>(null)
     private val createLoanTransaction = mutableStateOf(false)
     private var defaultCurrencyCode = ""
     private val loanModalData = mutableStateOf<LoanModalData?>(null)
@@ -112,7 +112,7 @@ internal class LoanDetailsViewModel @Inject internal constructor(
             amountPaid = amountPaid.doubleValue,
             loanAmountPaid = loanInterestAmountPaid.doubleValue,
             accounts = accounts.value,
-            selectedLoanAccount = selectedLoanAccount.value,
+            selectedLoanAccount = selectedLoanAccount(),
             createLoanTransaction = createLoanTransaction.value,
             loanModalData = loanModalData.value,
             loanRecordModalData = loanRecordModalData.value,
@@ -221,7 +221,7 @@ internal class LoanDetailsViewModel @Inject internal constructor(
                     baseCurrency = baseCurrency.value,
                     autoFocusKeyboard = false,
                     autoOpenAmountModal = true,
-                    selectedAccount = selectedLoanAccount.value,
+                    selectedAccount = selectedLoanAccount(),
                     createLoanTransaction = createLoanTransaction.value
                 )
             }
@@ -231,7 +231,7 @@ internal class LoanDetailsViewModel @Inject internal constructor(
                     loan = loan.value,
                     baseCurrency = baseCurrency.value,
                     autoFocusKeyboard = false,
-                    selectedAccount = selectedLoanAccount.value,
+                    selectedAccount = selectedLoanAccount(),
                     createLoanTransaction = createLoanTransaction.value
                 )
             }
@@ -240,7 +240,7 @@ internal class LoanDetailsViewModel @Inject internal constructor(
                 loanRecordModalData.value = LoanRecordModalData(
                     loanRecord = null,
                     baseCurrency = baseCurrency.value,
-                    selectedAccount = selectedLoanAccount.value
+                    selectedAccount = selectedLoanAccount()
                 )
             }
 
@@ -268,13 +268,10 @@ internal class LoanDetailsViewModel @Inject internal constructor(
             accounts.value = getLegacyAccountsUseCase()
 
             loan.value = getLoanUseCase(loanId)
+            selectedLoanAccountId.value = loan.value?.accountId
 
             loan.value?.let { loan ->
-                selectedLoanAccount.value = accounts.value.find {
-                    loan.accountId == it.id
-                }
-
-                selectedLoanAccount.value?.let { acc ->
+                selectedLoanAccount()?.let { acc ->
                     baseCurrency.value = acc.currency ?: defaultCurrencyCode
                 }
             }
@@ -294,7 +291,7 @@ internal class LoanDetailsViewModel @Inject internal constructor(
                             account = account,
                             loanRecordTransaction = hasTransaction,
                             loanRecordCurrencyCode = account?.currency ?: defaultCurrencyCode,
-                            loanCurrencyCode = selectedLoanAccount.value?.currency
+                            loanCurrencyCode = selectedLoanAccount()?.currency
                                 ?: defaultCurrencyCode
                         )
                     }.toImmutableList()
@@ -555,5 +552,10 @@ internal class LoanDetailsViewModel @Inject internal constructor(
                 acc.id == uuid
             }
         }
+    }
+
+    private fun selectedLoanAccount(): LegacyAccount? {
+        val accountId = selectedLoanAccountId.value ?: return null
+        return findAccount(accounts.value, accountId)
     }
 }
