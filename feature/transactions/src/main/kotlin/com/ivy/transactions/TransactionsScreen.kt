@@ -59,7 +59,6 @@ import com.ivy.data.model.primitive.IconAsset
 import com.ivy.data.model.primitive.NotBlankTrimmedString
 import com.ivy.ui.platform.LocalDatePicker
 import com.ivy.ui.theme.LocalThemeState
-import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.compose.thenIf
 import com.ivy.ui.transaction.TransactionListData
 import com.ivy.ui.transaction.TransactionListAccount
@@ -340,7 +339,7 @@ private fun BoxWithConstraintsScope.UI(
     val datePicker = LocalDatePicker.current
     val screenHeight = maxHeight
     val itemColor = (account?.color ?: category?.color?.value)?.toComposeColor()
-        ?: LegacyTheme.colors.gray
+        ?: TransactionsTheme.colors.gray
 
     var categoryModalVisible by remember { mutableStateOf(false) }
     var categoryModalCategory: Category? by remember { mutableStateOf(null) }
@@ -400,8 +399,8 @@ private fun BoxWithConstraintsScope.UI(
                 .fillMaxSize()
                 .statusBarsPadding()
                 .padding(top = 16.dp)
-                .clip(LegacyTheme.shapes.r1Top)
-                .background(LegacyTheme.colors.pure)
+                .clip(TransactionsTheme.shapes.r1Top)
+                .background(TransactionsTheme.colors.pure)
                 .testTag("item_stats_lazy_column"),
             state = listState,
         ) {
@@ -678,7 +677,7 @@ private fun LazyListScope.choosePeriodModal(
                     .height(32.dp)
                     .fillMaxWidth()
                     .background(itemColor) // itemColor is displayed below the clip
-                    .background(LegacyTheme.colors.pure, LegacyTheme.shapes.r1Top)
+                    .background(TransactionsTheme.colors.pure, TransactionsTheme.shapes.r1Top)
             )
 
             PeriodSelector(
@@ -943,12 +942,12 @@ private fun TransactionsStatisticToolbar(
             OutlinedPillButton(
                 iconStart = R.drawable.ic_edit,
                 text = stringResource(R.string.edit),
-                shape = LegacyTheme.shapes.rFull,
+                shape = TransactionsTheme.shapes.rFull,
                 solidBackground = false,
-                backgroundColor = LegacyTheme.colors.pure,
+                backgroundColor = TransactionsTheme.colors.pure,
                 borderColor = contrastColor,
                 iconTint = contrastColor,
-                textStyle = LegacyTheme.typo.b2.copy(
+                textStyle = TransactionsTheme.typo.b2.copy(
                     fontWeight = FontWeight.Bold,
                     color = contrastColor,
                     textAlign = TextAlign.Start,
@@ -999,7 +998,7 @@ private fun StatisticToolbarDeleteButton(
             .testTag("delete_button"),
         backgroundPadding = 6.dp,
         icon = R.drawable.ic_delete,
-        backgroundGradient = Gradient.solid(LegacyTheme.colors.red),
+        backgroundGradient = Gradient.solid(TransactionsTheme.colors.red),
         enabled = true,
         tint = White,
         onClick = onDelete
@@ -1043,7 +1042,7 @@ private fun Item(
 
                 Text(
                     text = account.name,
-                    style = LegacyTheme.typo.b1.copy(
+                    style = TransactionsTheme.typo.b1.copy(
                         color = contrastColor,
                         fontWeight = FontWeight.ExtraBold,
                         textAlign = TextAlign.Start
@@ -1055,7 +1054,7 @@ private fun Item(
 
                     Text(
                         text = stringResource(R.string.excluded),
-                        style = LegacyTheme.typo.c.copy(
+                        style = TransactionsTheme.typo.c.copy(
                             color = account.color.toComposeColor().dynamicContrast(),
                             fontWeight = FontWeight.Bold,
                             textAlign = TextAlign.Start
@@ -1075,7 +1074,7 @@ private fun Item(
 
                 Text(
                     text = category.name.value,
-                    style = LegacyTheme.typo.b1.copy(
+                    style = TransactionsTheme.typo.b1.copy(
                         color = contrastColor,
                         fontWeight = FontWeight.ExtraBold,
                         textAlign = TextAlign.Start
@@ -1095,7 +1094,7 @@ private fun Item(
 
                 Text(
                     text = stringResource(R.string.unspecified),
-                    style = LegacyTheme.typo.b1.copy(
+                    style = TransactionsTheme.typo.b1.copy(
                         color = contrastColor,
                         fontWeight = FontWeight.ExtraBold,
                         textAlign = TextAlign.Start
