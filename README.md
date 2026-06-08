@@ -137,6 +137,7 @@
 - 收窄报表页顶部摘要状态：报表页不再为了收支卡片计数和饼图跳转保存完整旧交易列表，只保留交易 ID 和收入/支出数量摘要。
 - 收窄交易列表页顶部摘要计算：交易列表页顶部收支卡片不再在 Composable 中过滤旧交易对象，收入/支出交易数量由状态层提供。
 - 收窄分类页统计加载状态：分类页不再把月度旧交易列表作为 ViewModel 字段长期保存，只在加载分类统计时作为局部输入使用。
+- 收窄饼图页输入缓存：饼图 ViewModel 不再长期保存由 route ID 还原出的旧交易对象，只保存交易 ID，并在重算图表时局部读取。
 
 当前仍保留：
 
@@ -1244,6 +1245,7 @@ shared:ui:core
 - 报表页顶部收支卡片已改用轻量 `ReportTransactionSummary`；完整旧交易列表不再进入 `ReportScreenState.transactions` 这类页面级状态字段。
 - 交易列表页顶部收支卡片的收入/支出交易数量已从 UI 过滤逻辑移回状态层；`TransactionsScreen` 不再为了计数直接引用 `LegacyTransaction`。
 - 分类页月度统计所需的账户和旧交易列表已收敛为一次加载流程的局部输入，避免把旧交易列表挂在 ViewModel 长期可变字段上。
+- 饼图页从报表/交易列表进入时只在 ViewModel 中保留输入交易 ID；`LegacyTransaction` 列表只在 `BuildPieChartDataUseCase` 调用前局部加载。
 - app 仍保留文件选择、文件分享、Material 日期选择器、BuildInfo、Locale 设置、生物识别和窗口安全等真正依赖 Activity 或 Android app 壳层的装配。
 
 ## 高风险区域

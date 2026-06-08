@@ -7,7 +7,6 @@ import androidx.compose.runtime.mutableDoubleStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
-import com.ivy.data.model.legacy.LegacyTransaction
 import com.ivy.data.model.TransactionType
 import com.ivy.data.model.Category
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
@@ -49,7 +48,7 @@ internal class PieChartStatisticViewModel @Inject internal constructor(
     private var accountIdFilterList by mutableStateOf<ImmutableList<UUID>>(persistentListOf())
     private var showCloseButtonOnly by mutableStateOf(false)
     private var filterExcluded by mutableStateOf(false)
-    private var inputTransactions: List<LegacyTransaction> = emptyList()
+    private var inputTransactionIds by mutableStateOf<ImmutableList<UUID>>(persistentListOf())
     private var choosePeriodModal by mutableStateOf<ChoosePeriodModalData?>(null)
 
     @Composable
@@ -139,7 +138,7 @@ internal class PieChartStatisticViewModel @Inject internal constructor(
                 type = screen.type.toTransactionType(),
                 accountIdFilterList = screen.accountList,
                 filterExclude = screen.filterExcluded,
-                inputTransactions = getLegacyTransactionsByIdsUseCase(screen.legacyTransactionIds),
+                inputTransactionIds = screen.legacyTransactionIds,
                 transfersAsIncomeExpenseValue = screen.treatTransfersAsIncomeExpense
             )
         }
@@ -150,10 +149,10 @@ internal class PieChartStatisticViewModel @Inject internal constructor(
         type: TransactionType,
         accountIdFilterList: ImmutableList<UUID>,
         filterExclude: Boolean,
-        inputTransactions: List<LegacyTransaction>,
+        inputTransactionIds: ImmutableList<UUID>,
         transfersAsIncomeExpenseValue: Boolean
     ) {
-        initialise(period, type, accountIdFilterList, filterExclude, inputTransactions)
+        initialise(period, type, accountIdFilterList, filterExclude, inputTransactionIds)
         treatTransfersAsIncomeExpense = transfersAsIncomeExpenseValue
         load(periodValue = period)
     }
@@ -163,7 +162,7 @@ internal class PieChartStatisticViewModel @Inject internal constructor(
         type: TransactionType,
         accountIdFilterListValue: ImmutableList<UUID>,
         filterExcludedValue: Boolean,
-        inputTransactionsValue: List<LegacyTransaction>
+        inputTransactionIdsValue: ImmutableList<UUID>
     ) {
         val baseCurrencyValue = getBaseCurrencyCode()
 
@@ -171,8 +170,8 @@ internal class PieChartStatisticViewModel @Inject internal constructor(
         transactionType = type
         accountIdFilterList = accountIdFilterListValue
         filterExcluded = filterExcludedValue
-        inputTransactions = inputTransactionsValue
-        showCloseButtonOnly = inputTransactionsValue.isNotEmpty()
+        inputTransactionIds = inputTransactionIdsValue
+        showCloseButtonOnly = inputTransactionIdsValue.isNotEmpty()
         baseCurrency = baseCurrencyValue
     }
 
@@ -181,7 +180,7 @@ internal class PieChartStatisticViewModel @Inject internal constructor(
     ) {
         val type = transactionType
         val accountIdFilterList = accountIdFilterList
-        val inputTransactions = inputTransactions
+        val inputTransactionIds = inputTransactionIds
         val baseCurrency = baseCurrency
         val range = periodState.rangeOf(periodValue)
 
@@ -191,6 +190,11 @@ internal class PieChartStatisticViewModel @Inject internal constructor(
                     treatTransfersAsIncomeExpense
 
         val pieChartActOutput = withContext(Dispatchers.IO) {
+            val inputTransactions = if (inputTransactionIds.isEmpty()) {
+                emptyList()
+            } else {
+                getLegacyTransactionsByIdsUseCase(inputTransactionIds)
+            }
             buildPieChartDataUseCase(
                 baseCurrency = baseCurrency,
                 range = range,
