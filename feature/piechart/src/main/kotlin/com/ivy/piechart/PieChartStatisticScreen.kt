@@ -43,7 +43,7 @@ import com.ivy.ui.compose.thenIf
 import com.ivy.legacy.ui.state.LocalPeriodState
 import com.ivy.legacy.ui.model.period.TimePeriod
 import com.ivy.legacy.ui.model.period.displayShort
-import com.ivy.legacy.ui.drawColoredShadow
+import com.ivy.ui.compose.drawColoredShadow
 import com.ivy.data.model.currency.format
 import com.ivy.legacy.ui.horizontalSwipeListener
 import com.ivy.legacy.ui.rememberSwipeListenerState

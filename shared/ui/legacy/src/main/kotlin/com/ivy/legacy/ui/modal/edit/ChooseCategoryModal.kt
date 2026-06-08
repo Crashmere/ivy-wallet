@@ -28,7 +28,7 @@ import com.ivy.data.model.Category
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
 import com.ivy.ui.compose.thenIf
-import com.ivy.legacy.ui.drawColoredShadow
+import com.ivy.ui.compose.drawColoredShadow
 import com.ivy.legacy.ui.hideKeyboard
 import com.ivy.legacy.ui.onScreenStart
 import com.ivy.ui.R

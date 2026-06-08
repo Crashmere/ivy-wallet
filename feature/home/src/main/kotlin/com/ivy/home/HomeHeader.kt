@@ -37,7 +37,7 @@ import com.ivy.legacy.ui.model.period.TimePeriod
 import com.ivy.legacy.ui.model.period.displayShort
 import com.ivy.legacy.ui.component.transaction.TransactionsDividerLine
 import com.ivy.ui.compose.clickableNoIndication
-import com.ivy.legacy.ui.drawColoredShadow
+import com.ivy.ui.compose.drawColoredShadow
 import com.ivy.data.model.currency.format
 import com.ivy.legacy.ui.horizontalSwipeListener
 import com.ivy.ui.compose.rememberInteractionSource

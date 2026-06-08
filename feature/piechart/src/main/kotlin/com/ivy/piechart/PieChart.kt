@@ -25,7 +25,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import com.ivy.data.model.TransactionType
 import com.ivy.data.model.Category
 import com.ivy.legacy.ui.theme.system.LegacyTheme
-import com.ivy.legacy.ui.drawColoredShadow
+import com.ivy.ui.compose.drawColoredShadow
 import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.Black
 import com.ivy.legacy.ui.theme.Gradient

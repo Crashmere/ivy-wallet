@@ -3,10 +3,6 @@ package com.ivy.legacy.ui
 import android.annotation.SuppressLint
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.drawBehind
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Paint
-import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -57,38 +53,6 @@ fun onScreenStart(
     DisposableEffect(navigation().currentScreen) {
         latestStart()
         onDispose { latestCleanup() }
-    }
-}
-
-fun Modifier.drawColoredShadow(
-    color: Color,
-    alpha: Float = 0.15f,
-    borderRadius: Dp = 0.dp,
-    shadowRadius: Dp = 16.dp,
-    offsetX: Dp = 0.dp,
-    offsetY: Dp = 8.dp
-) = this.drawBehind {
-    val transparentColor = android.graphics.Color.toArgb(color.copy(alpha = 0.0f).value.toLong())
-    val shadowColor = android.graphics.Color.toArgb(color.copy(alpha = alpha).value.toLong())
-    this.drawIntoCanvas {
-        val paint = Paint()
-        val frameworkPaint = paint.asFrameworkPaint()
-        frameworkPaint.color = transparentColor
-        frameworkPaint.setShadowLayer(
-            shadowRadius.toPx(),
-            offsetX.toPx(),
-            offsetY.toPx(),
-            shadowColor
-        )
-        it.drawRoundRect(
-            0f,
-            0f,
-            this.size.width,
-            this.size.height,
-            borderRadius.toPx(),
-            borderRadius.toPx(),
-            paint
-        )
     }
 }
 

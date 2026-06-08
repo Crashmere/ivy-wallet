@@ -43,7 +43,7 @@ import com.ivy.loans.humanReadableType
 import com.ivy.legacy.ui.component.ItemStatisticToolbar
 import com.ivy.legacy.ui.component.transaction.TypeAmountCurrency
 import com.ivy.ui.compose.clickableNoIndication
-import com.ivy.legacy.ui.drawColoredShadow
+import com.ivy.ui.compose.drawColoredShadow
 import com.ivy.data.model.currency.format
 import com.ivy.legacy.ui.formatNicely
 import com.ivy.ui.compose.rememberInteractionSource
