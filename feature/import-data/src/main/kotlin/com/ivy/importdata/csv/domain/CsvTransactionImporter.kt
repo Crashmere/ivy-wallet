@@ -38,13 +38,6 @@ internal class CsvTransactionImporter @Inject internal constructor(
     private val saveCategoryUseCase: SaveCategoryUseCase,
     private val saveLegacyTransactionUseCase: SaveLegacyTransactionUseCase,
 ) {
-
-    lateinit var accounts: List<LegacyAccount>
-    lateinit var categories: List<Category>
-
-    private var newCategoryColorIndex = 0
-    private var newAccountColorIndex = 0
-
     suspend fun import(
         csv: List<CSVRow>,
         importantFields: ImportantFields,
@@ -55,16 +48,13 @@ internal class CsvTransactionImporter @Inject internal constructor(
         val rows = csv.drop(1) // drop the header
         val rowsCount = rows.size
 
-        newCategoryColorIndex = 0
-        newAccountColorIndex = 0
-
-        accounts = getLegacyAccountsUseCase()
-        val initialAccountsCount = accounts.size
-
-        categories = getCategoriesUseCase()
-        val initialCategoriesCount = categories.size
-
-        val baseCurrency = getBaseCurrency()
+        val context = CsvImportContext(
+            accounts = getLegacyAccountsUseCase(),
+            categories = getCategoriesUseCase(),
+            baseCurrency = getBaseCurrency(),
+        )
+        val initialAccountsCount = context.accounts.size
+        val initialCategoriesCount = context.categories.size
 
         val failedRows = mutableListOf<ImportCsvRow>()
 
@@ -77,7 +67,7 @@ internal class CsvTransactionImporter @Inject internal constructor(
             onProgress(progressPercent / 2)
 
             val transaction = mapToTransaction(
-                baseCurrency = baseCurrency,
+                context = context,
                 importantFields = importantFields,
                 transferFields = transferFields,
                 optionalFields = optionalFields,
@@ -108,14 +98,14 @@ internal class CsvTransactionImporter @Inject internal constructor(
         return ImportResult(
             rowsFound = rowsCount,
             transactionsImported = transactions.size,
-            accountsImported = accounts.size - initialAccountsCount,
-            categoriesImported = categories.size - initialCategoriesCount,
+            accountsImported = context.accounts.size - initialAccountsCount,
+            categoriesImported = context.categories.size - initialCategoriesCount,
             failedRows = failedRows.toImmutableList()
         )
     }
 
     private suspend fun mapToTransaction(
-        baseCurrency: AssetCode,
+        context: CsvImportContext,
         row: CSVRow,
         importantFields: ImportantFields,
         transferFields: TransferFields,
@@ -128,7 +118,7 @@ internal class CsvTransactionImporter @Inject internal constructor(
 
         val toAccount = if (type == TransactionType.TRANSFER) {
             mapAccount(
-                baseCurrency = baseCurrency,
+                context = context,
                 accountNameString = parseToAccount(
                     value = row.extractValue(transferFields.toAccount),
                     metadata = transferFields.toAccount.metadata
@@ -181,7 +171,7 @@ internal class CsvTransactionImporter @Inject internal constructor(
         ) ?: return null
 
         val account = mapAccount(
-            baseCurrency = baseCurrency,
+            context = context,
             accountNameString = parseAccount(
                 value = row.extractValue(importantFields.account),
                 metadata = importantFields.account.metadata
@@ -196,6 +186,7 @@ internal class CsvTransactionImporter @Inject internal constructor(
         ) ?: return null
 
         val category = mapCategory(
+            context = context,
             categoryNameString = parseCategory(
                 value = row.extractValue(optionalFields.category),
                 metadata = optionalFields.category.metadata
@@ -229,7 +220,7 @@ internal class CsvTransactionImporter @Inject internal constructor(
     }
 
     private suspend fun mapAccount(
-        baseCurrency: AssetCode,
+        context: CsvImportContext,
         accountNameString: String?,
         color: Int?,
         icon: String?,
@@ -238,7 +229,7 @@ internal class CsvTransactionImporter @Inject internal constructor(
     ): LegacyAccount? {
         if (accountNameString == null || accountNameString.isBlank()) return null
 
-        val existingAccount = accounts.firstOrNull {
+        val existingAccount = context.accounts.firstOrNull {
             accountNameString.lowercase(Locale.getDefault()) == it.name.lowercase(Locale.getDefault())
         }
         if (existingAccount != null) {
@@ -255,8 +246,8 @@ internal class CsvTransactionImporter @Inject internal constructor(
                 revolutAccountColor
             }
 
-            else -> defaultImportColorPalette.getOrElse(newAccountColorIndex++) {
-                newAccountColorIndex = 0
+            else -> defaultImportColorPalette.getOrElse(context.newAccountColorIndex++) {
+                context.newAccountColorIndex = 0
                 defaultImportColorPalette.first()
             }
         }
@@ -264,16 +255,16 @@ internal class CsvTransactionImporter @Inject internal constructor(
         val newAccount = LegacyAccount(
             name = accountNameString,
             currency = mapCurrency(
-                baseCurrency = baseCurrency.code,
+                baseCurrency = context.baseCurrency.code,
                 currencyCode = currencyRawString
             ),
             color = colorArgb,
             icon = icon,
-            orderNum = orderNum ?: accounts.maxOfOrNull { it.orderNum }.nextImportOrderNum()
+            orderNum = orderNum ?: context.accounts.maxOfOrNull { it.orderNum }.nextImportOrderNum()
         )
-        val accountSaved = saveLegacyAccountUseCase(newAccount, baseCurrency)
+        val accountSaved = saveLegacyAccountUseCase(newAccount, context.baseCurrency)
         if (!accountSaved) return null
-        accounts = getLegacyAccountsUseCase()
+        context.accounts = getLegacyAccountsUseCase()
 
         return newAccount
     }
@@ -294,6 +285,7 @@ internal class CsvTransactionImporter @Inject internal constructor(
     }
 
     private suspend fun mapCategory(
+        context: CsvImportContext,
         categoryNameString: String?,
         color: Int?,
         icon: String?,
@@ -301,7 +293,7 @@ internal class CsvTransactionImporter @Inject internal constructor(
     ): Category? {
         if (categoryNameString == null || categoryNameString.isBlank()) return null
 
-        val existingCategory = categories.firstOrNull {
+        val existingCategory = context.categories.firstOrNull {
             categoryNameString.lowercase(Locale.getDefault()) == it.name.value.lowercase(Locale.getDefault())
         }
         if (existingCategory != null) {
@@ -309,8 +301,8 @@ internal class CsvTransactionImporter @Inject internal constructor(
         }
 
         // create new category
-        val colorArgb = color ?: defaultImportColorPalette.getOrElse(newCategoryColorIndex++) {
-            newCategoryColorIndex = 0
+        val colorArgb = color ?: defaultImportColorPalette.getOrElse(context.newCategoryColorIndex++) {
+            context.newCategoryColorIndex = 0
             defaultImportColorPalette.first()
         }
 
@@ -321,11 +313,11 @@ internal class CsvTransactionImporter @Inject internal constructor(
             name = categoryName,
             color = ColorInt(colorArgb),
             icon = icon?.let(IconAsset::from)?.getOrNull(),
-            orderNum = orderNum ?: categories.maxOfOrNull { it.orderNum }.nextImportOrderNum(),
+            orderNum = orderNum ?: context.categories.maxOfOrNull { it.orderNum }.nextImportOrderNum(),
         )
 
         saveCategoryUseCase(newCategory)
-        categories = getCategoriesUseCase()
+        context.categories = getCategoriesUseCase()
 
         return newCategory
     }
@@ -335,3 +327,11 @@ internal class CsvTransactionImporter @Inject internal constructor(
 
     private fun Double?.nextImportOrderNum(): Double = this?.plus(1) ?: 0.0
 }
+
+private data class CsvImportContext(
+    var accounts: List<LegacyAccount>,
+    var categories: List<Category>,
+    val baseCurrency: AssetCode,
+    var newCategoryColorIndex: Int = 0,
+    var newAccountColorIndex: Int = 0,
+)
