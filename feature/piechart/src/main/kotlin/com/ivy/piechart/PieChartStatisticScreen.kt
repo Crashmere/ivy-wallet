@@ -69,7 +69,6 @@ import com.ivy.legacy.ui.theme.White
 import com.ivy.legacy.ui.component.BalanceRow
 import com.ivy.legacy.ui.component.BalanceRowMini
 import com.ivy.legacy.ui.component.CloseButton
-import com.ivy.legacy.ui.component.ItemIconM
 import com.ivy.legacy.ui.component.ItemIconMDefaultIcon
 import com.ivy.legacy.ui.component.IvyOutlinedButton
 import com.ivy.legacy.ui.theme.findContrastTextColor
@@ -439,19 +438,12 @@ private fun CategoryAmountCard(
     ) {
         Spacer(Modifier.width(20.dp))
 
-        ItemIconM(
+        ItemIconMDefaultIcon(
             modifier = Modifier.background(categoryColor, CircleShape),
             iconName = category?.icon?.id,
+            defaultIcon = R.drawable.ic_custom_category_m,
             tint = findContrastTextColor(categoryColor),
             iconContentScale = ContentScale.None,
-            Default = {
-                ItemIconMDefaultIcon(
-                    modifier = Modifier.background(categoryColor, CircleShape),
-                    iconName = category?.icon?.id,
-                    defaultIcon = R.drawable.ic_custom_category_m,
-                    tint = findContrastTextColor(categoryColor)
-                )
-            }
         )
 
         Spacer(Modifier.width(16.dp))

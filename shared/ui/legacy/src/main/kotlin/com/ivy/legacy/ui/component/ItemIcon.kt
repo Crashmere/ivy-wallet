@@ -22,12 +22,14 @@ fun ItemIconMDefaultIcon(
     modifier: Modifier = Modifier,
     iconName: String?,
     tint: Color = LegacyTheme.colors.pureInverse,
-    @DrawableRes defaultIcon: Int
+    @DrawableRes defaultIcon: Int,
+    iconContentScale: ContentScale? = null,
 ) {
     ItemIconM(
         modifier = modifier,
         iconName = iconName,
         tint = tint,
+        iconContentScale = iconContentScale,
         Default = {
             Image(
                 modifier = modifier,
@@ -40,7 +42,7 @@ fun ItemIconMDefaultIcon(
 }
 
 @Composable
-fun ItemIconM(
+internal fun ItemIconM(
     modifier: Modifier = Modifier,
     iconName: String?,
     tint: Color = LegacyTheme.colors.pureInverse,
