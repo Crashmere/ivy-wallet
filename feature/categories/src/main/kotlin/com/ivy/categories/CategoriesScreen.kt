@@ -40,6 +40,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.ivy.data.model.CreateCategoryData
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.search.SearchInput
 import com.ivy.ui.money.balancePrefix
@@ -64,6 +65,7 @@ import com.ivy.ui.theme.colors.findContrastTextColor
 import com.ivy.ui.modal.IvyModal
 import com.ivy.ui.modal.ModalTitle
 import com.ivy.legacy.ui.modal.edit.CategoryModal
+import com.ivy.legacy.ui.modal.edit.CategoryModalSaveData
 import com.ivy.ui.theme.colors.toComposeColor
 import com.ivy.ui.money.AmountCurrencyB1
 import kotlinx.collections.immutable.ImmutableList
@@ -219,9 +221,9 @@ private fun BoxWithConstraintsScope.UI(
         visible = categoryModalVisible,
         category = null,
         onCreateCategory = {
-            onEvent(CategoriesScreenEvent.OnCreateCategory(it))
+            onEvent(CategoriesScreenEvent.OnCreateCategory(it.toCreateCategoryData()))
         },
-        onEditCategory = { },
+        onEditCategory = { _, _ -> },
         dismiss = {
             categoryModalVisible = false
         }
@@ -712,3 +714,9 @@ private fun SearchField(
         }
     )
 }
+
+private fun CategoryModalSaveData.toCreateCategoryData() = CreateCategoryData(
+    name = name,
+    color = color,
+    icon = icon,
+)

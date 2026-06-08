@@ -54,6 +54,9 @@ import com.ivy.data.model.TransactionType
 import com.ivy.data.model.Transfer
 import com.ivy.data.model.getFromAccount
 import com.ivy.data.model.getFromValue
+import com.ivy.data.model.primitive.ColorInt
+import com.ivy.data.model.primitive.IconAsset
+import com.ivy.data.model.primitive.NotBlankTrimmedString
 import com.ivy.ui.platform.LocalDatePicker
 import com.ivy.ui.theme.LocalThemeState
 import com.ivy.legacy.ui.theme.LegacyTheme
@@ -103,6 +106,8 @@ import com.ivy.ui.modal.AccountModalAccount
 import com.ivy.ui.modal.DeleteModal
 import com.ivy.legacy.ui.modal.edit.AccountModal
 import com.ivy.legacy.ui.modal.edit.CategoryModal
+import com.ivy.legacy.ui.modal.edit.CategoryModalCategory
+import com.ivy.legacy.ui.modal.edit.CategoryModalSaveData
 import com.ivy.ui.theme.colors.toComposeColor
 import com.ivy.ui.period.PeriodSelector
 import kotlinx.collections.immutable.ImmutableList
@@ -534,10 +539,15 @@ private fun BoxWithConstraintsScope.UI(
 
     CategoryModal(
         visible = categoryModalVisible,
-        category = categoryModalCategory,
+        category = categoryModalCategory?.toCategoryModalCategory(),
         autoFocusKeyboard = categoryModalAutoFocus,
-        onCreateCategory = { },
-        onEditCategory = onEditCategory,
+        onCreateCategory = { _ -> },
+        onEditCategory = { _, data ->
+            val editedCategory = categoryModalCategory?.withModalSaveData(data)
+            if (editedCategory != null) {
+                onEditCategory(editedCategory)
+            }
+        },
         dismiss = {
             categoryModalVisible = false
         }
@@ -1106,4 +1116,17 @@ private fun TransactionsScreen.toQuery() = TransactionsQuery(
     unspecifiedCategory = unspecifiedCategory,
     accountIdFilterList = accountIdFilterList,
     transactionIds = transactionIds,
+)
+
+private fun Category.toCategoryModalCategory() = CategoryModalCategory(
+    id = id.value,
+    name = name.value,
+    color = color.value,
+    icon = icon?.id,
+)
+
+private fun Category.withModalSaveData(data: CategoryModalSaveData) = copy(
+    name = NotBlankTrimmedString.unsafe(data.name),
+    color = ColorInt(data.color),
+    icon = data.icon?.let { IconAsset.unsafe(it) },
 )

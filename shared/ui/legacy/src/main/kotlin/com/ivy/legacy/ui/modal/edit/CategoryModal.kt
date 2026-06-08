@@ -39,15 +39,10 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.ivy.data.model.Category
-import com.ivy.data.model.primitive.ColorInt
-import com.ivy.data.model.primitive.IconAsset
-import com.ivy.data.model.primitive.NotBlankTrimmedString
 import com.ivy.ui.platform.hideKeyboard
 import com.ivy.ui.compose.onCompositionStart
 import com.ivy.ui.compose.selectEndTextFieldValue
 import com.ivy.ui.R
-import com.ivy.data.model.CreateCategoryData
 import com.ivy.ui.icon.ItemIconMDefaultIcon
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.modal.ChooseIconModal
@@ -61,21 +56,34 @@ import com.ivy.ui.theme.colors.dynamicContrast
 import com.ivy.ui.theme.colors.IvyFixedColors
 import java.util.UUID
 
+data class CategoryModalCategory(
+    val id: UUID,
+    val name: String,
+    val color: Int,
+    val icon: String?,
+)
+
+data class CategoryModalSaveData(
+    val name: String,
+    val color: Int,
+    val icon: String?,
+)
+
 @Composable
 fun BoxWithConstraintsScope.CategoryModal(
     visible: Boolean,
-    category: Category?,
+    category: CategoryModalCategory?,
     autoFocusKeyboard: Boolean = true,
-    onCreateCategory: (CreateCategoryData) -> Unit,
-    onEditCategory: (Category) -> Unit,
+    onCreateCategory: (CategoryModalSaveData) -> Unit,
+    onEditCategory: (categoryId: UUID, data: CategoryModalSaveData) -> Unit,
     dismiss: () -> Unit,
 ) {
     val initialCategory = category
     var nameTextFieldValue by remember(visible, initialCategory) {
-        mutableStateOf(selectEndTextFieldValue(initialCategory?.name?.value))
+        mutableStateOf(selectEndTextFieldValue(initialCategory?.name))
     }
     var color by remember(visible, initialCategory) {
-        mutableStateOf(initialCategory?.color?.let { Color(it.value) } ?: IvyFixedColors.Ivy)
+        mutableStateOf(initialCategory?.color?.let { Color(it) } ?: IvyFixedColors.Ivy)
     }
     var icon by remember(visible, initialCategory) {
         mutableStateOf(initialCategory?.icon)
@@ -95,22 +103,15 @@ fun BoxWithConstraintsScope.CategoryModal(
         PrimaryAction = {
             val enabled = nameTextFieldValue.text.isNullOrBlank().not()
             val onSave = {
+                val data = CategoryModalSaveData(
+                    name = nameTextFieldValue.text.trim(),
+                    color = color.toArgb(),
+                    icon = icon,
+                )
                 if (initialCategory != null) {
-                    onEditCategory(
-                        initialCategory.copy(
-                            name = NotBlankTrimmedString.unsafe(nameTextFieldValue.text.trim()),
-                            color = ColorInt(color.toArgb()),
-                            icon = icon
-                        )
-                    )
+                    onEditCategory(initialCategory.id, data)
                 } else {
-                    onCreateCategory(
-                        CreateCategoryData(
-                            name = nameTextFieldValue.text.trim(),
-                            color = color.toArgb(),
-                            icon = icon?.id
-                        )
-                    )
+                    onCreateCategory(data)
                 }
 
                 dismiss()
@@ -146,7 +147,7 @@ fun BoxWithConstraintsScope.CategoryModal(
             hint = stringResource(R.string.category_name),
             defaultIcon = R.drawable.ic_custom_category_m,
             color = color,
-            icon = icon?.id,
+            icon = icon,
 
             autoFocusKeyboard = autoFocusKeyboard,
 
@@ -169,11 +170,11 @@ fun BoxWithConstraintsScope.CategoryModal(
 
     ChooseIconModal(
         visible = chooseIconModalVisible,
-        initialIcon = icon?.id ?: "category",
+        initialIcon = icon ?: "category",
         color = color,
         dismiss = { chooseIconModalVisible = false }
     ) {
-        icon = it?.let { iconId -> IconAsset.unsafe(iconId) }
+        icon = it
     }
 }
 

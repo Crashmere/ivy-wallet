@@ -28,7 +28,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.TransactionType
 import com.ivy.data.model.Category
+import com.ivy.data.model.CreateCategoryData
 import com.ivy.data.model.IntervalType
+import com.ivy.data.model.primitive.ColorInt
+import com.ivy.data.model.primitive.IconAsset
+import com.ivy.data.model.primitive.NotBlankTrimmedString
 import com.ivy.ui.platform.LocalDatePicker
 import com.ivy.ui.navigation.onScreenStart
 import com.ivy.ui.navigation.EditPlannedScreen
@@ -39,6 +43,8 @@ import com.ivy.ui.R
 import com.ivy.ui.modal.DeleteModal
 import com.ivy.legacy.ui.modal.edit.AccountModal
 import com.ivy.legacy.ui.modal.edit.CategoryModal
+import com.ivy.legacy.ui.modal.edit.CategoryModalCategory
+import com.ivy.legacy.ui.modal.edit.CategoryModalSaveData
 import com.ivy.legacy.ui.modal.edit.ChooseCategoryModal
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.compose.GradientButton
@@ -282,10 +288,15 @@ private fun BoxWithConstraintsScope.UI(
 
     CategoryModal(
         visible = categoryModalVisible,
-        category = categoryModalCategory,
-        onCreateCategory = { onEvent(EditPlannedScreenEvent.OnCreateCategory(it)) },
-        onEditCategory = {
-            onEvent(EditPlannedScreenEvent.OnEditCategory(it))
+        category = categoryModalCategory?.toCategoryModalCategory(),
+        onCreateCategory = {
+            onEvent(EditPlannedScreenEvent.OnCreateCategory(it.toCreateCategoryData()))
+        },
+        onEditCategory = { _, data ->
+            val editedCategory = categoryModalCategory?.withModalSaveData(data)
+            if (editedCategory != null) {
+                onEvent(EditPlannedScreenEvent.OnEditCategory(editedCategory))
+            }
         },
         dismiss = {
             categoryModalVisible = false
@@ -404,6 +415,25 @@ private fun shouldFocusCategory(
     category: Category?,
     type: TransactionType,
 ): Boolean = category == null && type != TransactionType.TRANSFER
+
+private fun Category.toCategoryModalCategory() = CategoryModalCategory(
+    id = id.value,
+    name = name.value,
+    color = color.value,
+    icon = icon?.id,
+)
+
+private fun CategoryModalSaveData.toCreateCategoryData() = CreateCategoryData(
+    name = name,
+    color = color,
+    icon = icon,
+)
+
+private fun Category.withModalSaveData(data: CategoryModalSaveData) = copy(
+    name = NotBlankTrimmedString.unsafe(data.name),
+    color = ColorInt(data.color),
+    icon = data.icon?.let { IconAsset.unsafe(it) },
+)
 
 private fun EditPlannedScreen.hasMandatoryInitialData(): Boolean {
     val initialAmount = amount

@@ -42,6 +42,8 @@ import com.ivy.data.model.TransactionType
 import com.ivy.data.model.Category
 import com.ivy.data.model.Tag
 import com.ivy.data.model.TagId
+import com.ivy.data.model.primitive.ColorInt
+import com.ivy.data.model.primitive.IconAsset
 import com.ivy.data.model.primitive.NotBlankTrimmedString
 import com.ivy.ui.platform.LocalDatePicker
 import com.ivy.legacy.ui.theme.LegacyTheme
@@ -67,6 +69,8 @@ import com.ivy.ui.modal.ProgressModal
 import com.ivy.legacy.ui.modal.edit.AccountModal
 import com.ivy.legacy.ui.modal.edit.AmountModal
 import com.ivy.legacy.ui.modal.edit.CategoryModal
+import com.ivy.legacy.ui.modal.edit.CategoryModalCategory
+import com.ivy.legacy.ui.modal.edit.CategoryModalSaveData
 import com.ivy.legacy.ui.modal.edit.ChooseCategoryModal
 import com.ivy.ui.compose.GradientButton
 import com.ivy.ui.compose.ResourceIcon
@@ -556,12 +560,17 @@ private fun BoxWithConstraintsScope.UI(
 
     CategoryModal(
         visible = categoryModalVisible,
-        category = categoryModalCategory,
+        category = categoryModalCategory?.toCategoryModalCategory(),
         onCreateCategory = { createData ->
-            onCreateCategory(createData)
+            onCreateCategory(createData.toCreateCategoryData())
             chooseCategoryModalVisible = false
         },
-        onEditCategory = onEditCategory,
+        onEditCategory = { _, data ->
+            val editedCategory = categoryModalCategory?.withModalSaveData(data)
+            if (editedCategory != null) {
+                onEditCategory(editedCategory)
+            }
+        },
         dismiss = {
             categoryModalVisible = false
         }
@@ -699,6 +708,25 @@ private fun TransactionRouteType.toTransactionType(): TransactionType {
 private fun Tag.toTagModalTag() = TagModalTag(
     id = id.value,
     name = name.value,
+)
+
+private fun Category.toCategoryModalCategory() = CategoryModalCategory(
+    id = id.value,
+    name = name.value,
+    color = color.value,
+    icon = icon?.id,
+)
+
+private fun CategoryModalSaveData.toCreateCategoryData() = CreateCategoryData(
+    name = name,
+    color = color,
+    icon = icon,
+)
+
+private fun Category.withModalSaveData(data: CategoryModalSaveData) = copy(
+    name = NotBlankTrimmedString.unsafe(data.name),
+    color = ColorInt(data.color),
+    icon = data.icon?.let { IconAsset.unsafe(it) },
 )
 
 private fun Instant.toLocalDateInSystemZone() =
