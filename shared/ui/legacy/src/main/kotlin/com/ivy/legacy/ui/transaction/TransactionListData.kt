@@ -1,7 +1,6 @@
 package com.ivy.legacy.ui.transaction
 
 import androidx.compose.runtime.Immutable
-import com.ivy.data.model.Account
 import com.ivy.data.model.Category
 import kotlinx.collections.immutable.ImmutableList
 import java.util.UUID
@@ -20,12 +19,4 @@ data class TransactionListAccount(
     val color: Int,
     val icon: String?,
     val currency: String?,
-)
-
-fun Account.toTransactionListAccount() = TransactionListAccount(
-    id = id.value,
-    name = name.value,
-    color = color.value,
-    icon = icon?.id,
-    currency = asset.code,
 )

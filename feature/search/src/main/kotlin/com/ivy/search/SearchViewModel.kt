@@ -5,6 +5,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.viewModelScope
+import com.ivy.data.model.Account
 import com.ivy.data.model.TransactionHistoryItem
 import com.ivy.data.model.primitive.NotBlankTrimmedString
 import com.ivy.ui.ComposeViewModel
@@ -18,7 +19,6 @@ import com.ivy.domain.usecase.account.GetAccountsUseCase
 import com.ivy.domain.usecase.transaction.BuildTransactionHistoryItemsUseCase
 import com.ivy.domain.usecase.transaction.GetTransactionsUseCase
 import com.ivy.legacy.ui.transaction.TransactionListAccount
-import com.ivy.legacy.ui.transaction.toTransactionListAccount
 import com.ivy.ui.preferences.asEnabledState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
@@ -107,3 +107,11 @@ internal class SearchViewModel @Inject internal constructor(
         return this?.value?.lowercase()?.contains(query) == true
     }
 }
+
+private fun Account.toTransactionListAccount() = TransactionListAccount(
+    id = id.value,
+    name = name.value,
+    color = color.value,
+    icon = icon?.id,
+    currency = asset.code,
+)
