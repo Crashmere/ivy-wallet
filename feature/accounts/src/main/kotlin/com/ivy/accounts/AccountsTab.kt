@@ -28,7 +28,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.compose.clickableNoIndication
 import com.ivy.ui.compose.horizontalSwipeListener
 import com.ivy.ui.compose.rememberInteractionSource
@@ -98,8 +97,8 @@ private fun BoxWithConstraintsScope.UI(
                 Column {
                     Text(
                         text = stringResource(R.string.accounts),
-                        style = LegacyTheme.typo.b1.copy(
-                            color = LegacyTheme.colors.pureInverse,
+                        style = AccountsTheme.typo.b1.copy(
+                            color = AccountsTheme.colors.pureInverse,
                             fontWeight = FontWeight.ExtraBold,
                             textAlign = TextAlign.Start
                         )
@@ -111,8 +110,8 @@ private fun BoxWithConstraintsScope.UI(
                 FilledIconButton(
                     icon = R.drawable.ic_drag_handle,
                     contentDescription = "reorder",
-                    backgroundColor = LegacyTheme.colors.medium,
-                    tint = LegacyTheme.colors.pureInverse,
+                    backgroundColor = AccountsTheme.colors.medium,
+                    tint = AccountsTheme.colors.pureInverse,
                 ) {
                     onEvent(
                         AccountsEvent.OnReorderModalVisible(reorderVisible = true)
@@ -188,7 +187,7 @@ private fun BoxWithConstraintsScope.UI(
                 .padding(end = 24.dp)
                 .padding(vertical = 8.dp),
             text = item.account.name.value,
-            style = LegacyTheme.typo.b1.copy(
+            style = AccountsTheme.typo.b1.copy(
                 color = item.account.color.value.toComposeColor(),
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Start
@@ -209,8 +208,8 @@ private fun AccountCard(
         modifier = Modifier
             .padding(horizontal = 16.dp)
             .fillMaxWidth()
-            .clip(LegacyTheme.shapes.r4)
-            .border(2.dp, LegacyTheme.colors.medium, LegacyTheme.shapes.r4)
+            .clip(AccountsTheme.shapes.r4)
+            .border(2.dp, AccountsTheme.colors.medium, AccountsTheme.shapes.r4)
             .clickable(
                 onClick = onClick
             )
@@ -256,7 +255,7 @@ private fun AccountHeader(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .background(account.color.value.toComposeColor(), LegacyTheme.shapes.r4Top)
+            .background(account.color.value.toComposeColor(), AccountsTheme.shapes.r4Top)
     ) {
         Spacer(Modifier.height(16.dp))
 
@@ -275,7 +274,7 @@ private fun AccountHeader(
 
             Text(
                 text = account.name.value,
-                style = LegacyTheme.typo.b1.copy(
+                style = AccountsTheme.typo.b1.copy(
                     color = contrastColor,
                     fontWeight = FontWeight.ExtraBold,
                     textAlign = TextAlign.Start
@@ -287,7 +286,7 @@ private fun AccountHeader(
 
                 Text(
                     text = stringResource(R.string.excluded),
-                    style = LegacyTheme.typo.c.copy(
+                    style = AccountsTheme.typo.c.copy(
                         color = account.color.value.toComposeColor().dynamicContrast(),
                         fontWeight = FontWeight.Bold,
                         textAlign = TextAlign.Start

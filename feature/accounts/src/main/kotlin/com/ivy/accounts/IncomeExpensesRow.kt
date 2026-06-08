@@ -17,7 +17,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.R
 import com.ivy.ui.money.AmountCurrencyB1
 
@@ -27,8 +26,8 @@ internal fun IncomeExpensesRow(
     expenses: Double,
     currency: String,
     modifier: Modifier = Modifier,
-    textColor: Color = LegacyTheme.colors.pureInverse,
-    dividerColor: Color = LegacyTheme.colors.medium,
+    textColor: Color = AccountsTheme.colors.pureInverse,
+    dividerColor: Color = AccountsTheme.colors.medium,
     incomeLabel: String = stringResource(R.string.income_uppercase),
     expensesLabel: String = stringResource(R.string.expenses_uppercase),
     center: Boolean = true,
@@ -63,7 +62,7 @@ internal fun IncomeExpensesRow(
             modifier = Modifier
                 .width(2.dp)
                 .height(48.dp)
-                .background(dividerColor, LegacyTheme.shapes.rFull)
+                .background(dividerColor, AccountsTheme.shapes.rFull)
         )
 
         if (center) {
@@ -101,7 +100,7 @@ private fun LabelAmountColumn(
     ) {
         Text(
             text = label,
-            style = LegacyTheme.typo.c.copy(
+            style = AccountsTheme.typo.c.copy(
                 color = textColor,
                 fontWeight = FontWeight.ExtraBold,
                 textAlign = TextAlign.Start
