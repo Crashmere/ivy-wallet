@@ -54,7 +54,7 @@ private val exportTimestampFormatter = DateTimeFormatter.ofPattern("yyyyMMdd-HHm
 
 @Stable
 @HiltViewModel
-internal class SettingsViewModel @Inject constructor(
+internal class SettingsViewModel @Inject internal constructor(
     private val themeState: ThemeState,
     private val periodState: PeriodState,
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,

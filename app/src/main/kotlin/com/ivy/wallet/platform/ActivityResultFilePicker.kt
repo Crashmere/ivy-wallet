@@ -6,7 +6,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-internal class ActivityResultFilePicker @Inject constructor() : FilePicker {
+internal class ActivityResultFilePicker @Inject internal constructor() : FilePicker {
     private var createFileLauncher: ((String, (Uri) -> Unit) -> Unit)? = null
     private var openFileLauncher: (((Uri) -> Unit) -> Unit)? = null
 

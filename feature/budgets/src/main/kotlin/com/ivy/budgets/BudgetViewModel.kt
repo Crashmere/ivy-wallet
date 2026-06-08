@@ -45,7 +45,7 @@ import kotlin.math.abs
 
 @Stable
 @HiltViewModel
-internal class BudgetViewModel @Inject constructor(
+internal class BudgetViewModel @Inject internal constructor(
     private val reorderBudgetsUseCase: ReorderBudgetsUseCase,
     private val createBudgetUseCase: CreateBudgetUseCase,
     private val updateBudgetUseCase: UpdateBudgetUseCase,

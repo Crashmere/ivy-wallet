@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 import java.util.concurrent.atomic.AtomicLong
 import javax.inject.Inject
 
-internal class AppLockController @Inject constructor(
+internal class AppLockController @Inject internal constructor(
     private val getAppLockEnabledPreference: GetAppLockEnabledPreferenceUseCase,
 ) {
     private companion object {

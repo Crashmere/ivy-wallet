@@ -10,7 +10,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-internal class InitialDataSetup @Inject constructor(
+internal class InitialDataSetup @Inject internal constructor(
     private val getAccountsUseCase: GetAccountsUseCase,
     private val getCategoriesUseCase: GetCategoriesUseCase,
     private val ensureSettingsInitialized: EnsureSettingsInitializedUseCase,

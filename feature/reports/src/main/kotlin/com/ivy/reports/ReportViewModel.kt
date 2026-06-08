@@ -72,7 +72,7 @@ private val UnspecifiedCategoryColorArgb = 0xFF939199.toInt()
 
 @Stable
 @HiltViewModel
-internal class ReportViewModel @Inject constructor(
+internal class ReportViewModel @Inject internal constructor(
     private val payOrSkipLegacyPlannedTransactionUseCase: PayOrSkipLegacyPlannedTransactionUseCase,
     private val payOrSkipLegacyPlannedTransactionsUseCase: PayOrSkipLegacyPlannedTransactionsUseCase,
     private val periodState: PeriodState,

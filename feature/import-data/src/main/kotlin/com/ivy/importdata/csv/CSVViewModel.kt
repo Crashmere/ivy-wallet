@@ -41,7 +41,7 @@ import javax.inject.Inject
 import kotlin.math.roundToInt
 
 @HiltViewModel
-internal class CSVViewModel @Inject constructor(
+internal class CSVViewModel @Inject internal constructor(
     private val readTextFileUseCase: ReadTextFileUseCase,
     private val csvImporter: CsvTransactionImporter,
     private val filePicker: FilePicker,

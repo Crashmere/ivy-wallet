@@ -19,7 +19,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 @Suppress("LongParameterList", "TooManyFunctions")
-internal class RootViewModel @Inject constructor(
+internal class RootViewModel @Inject internal constructor(
     private val themeState: ThemeState,
     private val periodState: PeriodState,
     private val getTheme: GetThemeUseCase,

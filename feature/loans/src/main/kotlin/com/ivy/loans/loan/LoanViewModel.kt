@@ -46,7 +46,7 @@ import javax.inject.Inject
 
 @Stable
 @HiltViewModel
-internal class LoanViewModel @Inject constructor(
+internal class LoanViewModel @Inject internal constructor(
     private val getBaseCurrencyCodeUseCase: GetBaseCurrencyCodeUseCase,
     private val getLoanRecordsUseCase: GetLoanRecordsUseCase,
     private val reorderLoansUseCase: ReorderLoansUseCase,

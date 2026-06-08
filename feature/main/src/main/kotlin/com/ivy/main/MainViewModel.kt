@@ -19,7 +19,7 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
-internal class MainViewModel @Inject constructor(
+internal class MainViewModel @Inject internal constructor(
     private val syncExchangeRatesUseCase: SyncExchangeRatesUseCase,
     private val createAccountWithBalanceUseCase: CreateAccountWithBalanceUseCase,
     private val getBaseCurrency: GetBaseCurrencyUseCase,

@@ -33,7 +33,7 @@ import javax.inject.Inject
 
 @Stable
 @HiltViewModel
-internal class AccountsViewModel @Inject constructor(
+internal class AccountsViewModel @Inject internal constructor(
     private val resourceProvider: ResourceProvider,
     private val periodState: PeriodState,
     private val getTransfersAsIncomeExpensePreference: GetTransfersAsIncomeExpensePreferenceUseCase,

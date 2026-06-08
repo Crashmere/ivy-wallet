@@ -118,6 +118,7 @@
 - 收窄设置用例构造边界：设置相关 domain use case 继续作为 feature 可注入的公开入口，但它们的 `@Inject` 构造函数收为模块内部实现，避免外部直接依赖底层 Store 装配细节。
 - 收窄全部 domain use case 构造边界：外部模块继续注入公开 use case 类型，具体构造函数统一收为 domain 模块内部细节。
 - 收窄 data-core 实现构造边界：Room Store、偏好 Store、mapper、文件系统和远程汇率源等实现类继续留在 `shared:data:core` 内部，注入构造函数也统一收为内部细节。
+- 收窄 app/feature 内部注入构造边界：ViewModel、页面内部 helper 和平台适配器仍由 Hilt 创建，但手动构造入口不再作为跨模块可见细节暴露。
 
 当前仍保留：
 
@@ -1206,6 +1207,7 @@ shared:ui:core
 - 设置相关 domain use case 的构造函数已收为 `internal`；feature 层仍通过公开 use case 类型注入和调用设置能力，底层偏好 Store 依赖不再作为外部可构造细节暴露。
 - domain 下剩余 use case 的 `@Inject` 构造函数也已统一收为 `internal`；模块外只依赖 use case 能力本身，不再依赖构造细节。
 - data-core 内部实现类的 `@Inject` 构造函数已统一收为 `internal`；模块外继续只依赖 `shared:data:api` 暴露的 Store 端口。
+- app 和 feature 中已是 `internal` 的注入类也统一收窄构造函数；导航入口和 Composable 页面 API 不变。
 - app 仍保留文件选择、文件分享、Material 日期选择器、BuildInfo、Locale 设置、生物识别和窗口安全等真正依赖 Activity 或 Android app 壳层的装配。
 
 ## 高风险区域

@@ -26,7 +26,7 @@ import javax.inject.Inject
 
 private val AccountTransfersCategoryColorArgb = 0xFFFFCCD5.toInt()
 
-internal class BuildPieChartDataUseCase @Inject constructor(
+internal class BuildPieChartDataUseCase @Inject internal constructor(
     private val getLegacyAccountsUseCase: GetLegacyAccountsUseCase,
     private val getLegacyTransactionsForAccountsUseCase: GetLegacyTransactionsForAccountsUseCase,
     private val calculateLegacyTransactionsIncomeExpenseUseCase: CalculateLegacyTransactionsIncomeExpenseUseCase,

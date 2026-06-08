@@ -21,7 +21,7 @@ import javax.inject.Inject
 
 @Stable
 @HiltViewModel
-internal class BalanceViewModel @Inject constructor(
+internal class BalanceViewModel @Inject internal constructor(
     private val calculatePlannedPaymentsAmountForRangeUseCase: CalculatePlannedPaymentsAmountForRangeUseCase,
     private val periodState: PeriodState,
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,

@@ -38,7 +38,7 @@ import javax.inject.Inject
 
 @Stable
 @HiltViewModel
-internal class CategoriesViewModel @Inject constructor(
+internal class CategoriesViewModel @Inject internal constructor(
     private val createCategoryUseCase: CreateCategoryUseCase,
     private val getCategoriesUseCase: GetCategoriesUseCase,
     private val saveCategoryUseCase: SaveCategoryUseCase,

@@ -6,7 +6,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-internal class ActivityDatePicker @Inject constructor() : DatePicker {
+internal class ActivityDatePicker @Inject internal constructor() : DatePicker {
     private var picker: ((
         minDate: LocalDate?,
         maxDate: LocalDate?,

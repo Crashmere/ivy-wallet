@@ -30,7 +30,7 @@ import javax.inject.Inject
 
 @Stable
 @HiltViewModel
-internal class SearchViewModel @Inject constructor(
+internal class SearchViewModel @Inject internal constructor(
     private val buildTransactionHistoryItemsUseCase: BuildTransactionHistoryItemsUseCase,
     private val getLegacyAccountsUseCase: GetLegacyAccountsUseCase,
     private val getCategoriesUseCase: GetCategoriesUseCase,
