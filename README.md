@@ -96,6 +96,7 @@
 - 移除 Timber 运行时依赖：app 不再初始化 DebugTree，通知展示失败继续按原有吞异常策略处理，版本目录和 app 依赖中删除 Timber。
 - 收窄饼图页旧交易泄漏：`CategoryAmount` 只向 UI 暴露关联交易的 `id/type` 轻量引用，`PieChartStatisticState` 不再携带完整 `LegacyTransaction` 列表；统计计算内部仍沿用现有旧交易算法。
 - 删除无调用方的新模型计划付款付/跳过 use case；当前实际 UI 路径继续使用 legacy 计划付款处理用例。
+- 删除偏好开关的旧分组元数据：设置页已经显式组织“外观与显示”“输入与列表”等分组，`BoolPreference` 不再携带无人读取的 `PreferenceGroup`。
 
 当前仍保留：
 
@@ -369,7 +370,7 @@
 - `ivy.android-library` 不再给所有 Android library 默认添加整套单元测试依赖；当前有 `src/test` 的 `shared:data:model`、`shared:test-support`、`shared:data:core`、`shared:domain` 和 `shared:ui:core` 改为在各自模块里显式声明测试 bundle。
 - 新增 `ivy.kotlin-library` 作为纯 JVM/Kotlin 模块约定；`shared:data:model`、`shared:test-support`、`shared:data:api` 和 `shared:domain` 已从 Android library 改成 JVM 模块，不再需要 namespace、Android manifest、min/compile SDK 或 Android Kotlin runtime。
 - `shared:data:core` 的 DataStore 依赖已从 `api` 收窄为 `implementation`；DataStore 绑定仍由 data core 提供，但不再通过 data core 传递暴露给其他模块。
-- `shared:domain` 已移除 AndroidX DataStore 依赖；偏好开关的存储能力抽成 `PreferenceToggleStore` 端口，DataStore 读写和清空由 `shared:data:core` 实现，domain 只保留业务级 `PreferenceToggleRepository` 和开关元数据。
+- `shared:domain` 已移除 AndroidX DataStore 依赖；偏好开关的存储能力抽成 `PreferenceToggleStore` 端口，DataStore 读写和清空由 `shared:data:core` 实现，domain 只保留业务级 `PreferenceToggleService` 和开关元数据。
 - `shared:data:api` 已显式暴露 Arrow 依赖；`ExchangeRateStore` 的公开签名直接使用 `Either`，不再依赖 `shared:data:model` 间接传递 Arrow。
 - `ExchangeData` 已增加普通字符串工厂方法，账户页和交易页不再为了构造币种 `Option` 直接依赖 Arrow；`feature:accounts` 和 `feature:transactions` 已移除 Arrow Gradle 依赖。
 - 汇率页保存/删除手动汇率时已从 `either/bind` DSL 改为普通顺序校验，`feature:exchange-rates` 不再直接声明 Arrow 依赖；数据模型层仍负责暴露值对象校验结果。
@@ -702,7 +703,7 @@
 - 已把分类排序、最近选择账户和客户旅程卡片关闭状态迁到 `AppPreferences`，feature 层不再直接注入 `SharedPrefs`。
 - 已把重置钱包流程改为通过 `AppPreferences.clearAll()` 清空 legacy 偏好；app/feature 层不再直接注入 `SharedPrefs`。
 - 功能开关 `BoolFeature` 不再通过 `Context.dataStore` 读写；偏好开关已重命名为普通本地偏好，设置页、编辑交易分类排序、金额格式化和金额键盘都改为使用同一个注入的 `PreferenceToggleRepository`。
-- 原 `shared/domain/features` 已迁到 `shared/domain/preferences/toggles`，`Features/BoolFeature/FeatureGroup` 重命名并收敛为 `PreferenceToggleCatalog/BoolPreference/PreferenceGroup`；底层 DataStore key 仍沿用 `feature_...` 前缀，保证已安装设备上的偏好开关不丢失。
+- 原 `shared/domain/features` 已迁到 `shared/domain/preferences/toggles`，`Features/BoolFeature` 重命名并收敛为 `PreferenceToggleCatalog/BoolPreference`；旧分组元数据已删除，底层 DataStore key 仍沿用 `feature_...` 前缀，保证已安装设备上的偏好开关不丢失。
 - 偏好开关定义不再保留单实现的 `PreferenceToggles` 接口；当前直接注入 `PreferenceToggleCatalog`，设置页和各 feature 仍读取同一批 `BoolPreference` 定义，key 和默认值不变。
 - 删除未接入运行时和设置页的 `showDecimalNumber` 偏好定义，以及对应“未来 PR 再打开”的注释；当前可见偏好项和已使用 key 不变。
 - feature ViewModel 中的偏好开关读取不再依赖 `shared:ui:legacy` 的 CompositionLocal；账户、分类、首页、搜索、交易、报表和编辑交易页改为注入 `PreferenceToggleRepository`，再通过 `shared:ui:core` 的 Flow 状态 helper 在 Compose 状态层读取。

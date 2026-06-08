@@ -2,7 +2,6 @@ package com.ivy.domain.preferences.toggles
 
 class BoolPreference(
     val key: String,
-    val group: PreferenceGroup? = null,
     val name: String? = null,
     val description: String? = null,
     val defaultValue: Boolean
