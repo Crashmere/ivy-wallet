@@ -463,8 +463,7 @@ class CSVViewModel @Inject constructor(
     private suspend fun importCSV(uri: Uri, normalizeCSV: Boolean): Unit = try {
         csv = processFile(uri, normalizeCSV = normalizeCSV)?.toImmutableList()
         columns = csv?.firstOrNull()
-    } catch (e: Exception) {
-        e.printStackTrace()
+    } catch (_: Exception) {
     }
 
     private suspend fun processFile(

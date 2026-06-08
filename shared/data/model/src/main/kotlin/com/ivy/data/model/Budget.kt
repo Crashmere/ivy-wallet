@@ -35,8 +35,7 @@ data class Budget(
             idsString
                 .split(",")
                 .map { UUID.fromString(it) }
-        } catch (e: Exception) {
-            e.printStackTrace()
+        } catch (_: Exception) {
             emptyList()
         }
     }

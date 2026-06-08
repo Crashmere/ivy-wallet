@@ -114,8 +114,7 @@ fun BoxWithConstraintsScope.AmountModal(
                 try {
                     onAmountChanged(amount.amountToDouble())
                     dismiss()
-                } catch (e: Exception) {
-                    e.printStackTrace()
+                } catch (_: Exception) {
                 }
             }
         },
