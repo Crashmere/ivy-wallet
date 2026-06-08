@@ -4,7 +4,7 @@ import com.ivy.data.api.AccountStore
 import com.ivy.data.api.PlannedPaymentRuleStore
 import com.ivy.data.model.IntervalType
 import com.ivy.data.model.TransactionType
-import com.ivy.data.model.legacy.Account
+import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.data.model.PlannedPaymentRule
 import com.ivy.domain.mapper.legacy.toLegacyDomain
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
@@ -68,7 +68,7 @@ class GetPlannedPaymentsOverviewUseCase @Inject constructor(
 
     private suspend fun Iterable<PlannedPaymentRule>.sumPlannedInBaseCurrency(
         baseCurrency: String,
-        accounts: List<Account>
+        accounts: List<LegacyAccount>
     ): Double =
         sumOf {
             exchangeRatesUseCase.amountBaseCurrency(
@@ -80,7 +80,7 @@ class GetPlannedPaymentsOverviewUseCase @Inject constructor(
 
     private suspend fun Iterable<PlannedPaymentRule>.sumRecurringForMonthInBaseCurrency(
         baseCurrency: String,
-        accounts: List<Account>
+        accounts: List<LegacyAccount>
     ): Double =
         sumOf {
             amountForMonthInBaseCurrency(
@@ -93,7 +93,7 @@ class GetPlannedPaymentsOverviewUseCase @Inject constructor(
     private suspend fun amountForMonthInBaseCurrency(
         plannedPayment: PlannedPaymentRule,
         baseCurrency: String,
-        accounts: List<Account>
+        accounts: List<LegacyAccount>
     ): Double {
         val amountBaseCurrency = exchangeRatesUseCase.amountBaseCurrency(
             plannedPayment = plannedPayment,

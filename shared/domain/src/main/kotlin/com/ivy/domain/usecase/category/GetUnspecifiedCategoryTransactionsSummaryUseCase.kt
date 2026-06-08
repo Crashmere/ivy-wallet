@@ -1,7 +1,7 @@
 package com.ivy.domain.usecase.category
 
 import com.ivy.data.model.TransactionType
-import com.ivy.data.model.legacy.Transaction
+import com.ivy.data.model.legacy.LegacyTransaction
 import com.ivy.data.model.TransactionHistoryItem
 import com.ivy.data.api.AccountStore
 import com.ivy.data.model.FromToTimeRange
@@ -100,7 +100,7 @@ class GetUnspecifiedCategoryTransactionsSummaryUseCase @Inject constructor(
         )
     }
 
-    private suspend fun List<Transaction>.sumInBaseCurrency(): Double {
+    private suspend fun List<LegacyTransaction>.sumInBaseCurrency(): Double {
         return sumInBaseCurrency(
             exchangeRatesUseCase = exchangeRatesUseCase,
             baseCurrency = getBaseCurrencyCode(),
@@ -108,12 +108,12 @@ class GetUnspecifiedCategoryTransactionsSummaryUseCase @Inject constructor(
         )
     }
 
-    private suspend fun List<Transaction>.incomeInBaseCurrency(): Double {
+    private suspend fun List<LegacyTransaction>.incomeInBaseCurrency(): Double {
         return filter { it.type == TransactionType.INCOME }
             .sumInBaseCurrency()
     }
 
-    private suspend fun List<Transaction>.expensesInBaseCurrency(): Double {
+    private suspend fun List<LegacyTransaction>.expensesInBaseCurrency(): Double {
         return filter { it.type == TransactionType.EXPENSE }
             .sumInBaseCurrency()
     }

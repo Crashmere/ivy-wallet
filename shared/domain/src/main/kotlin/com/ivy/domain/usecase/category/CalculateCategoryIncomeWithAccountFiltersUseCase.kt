@@ -1,8 +1,8 @@
 package com.ivy.domain.usecase.category
 
-import com.ivy.data.model.legacy.Transaction
+import com.ivy.data.model.legacy.LegacyTransaction
 import com.ivy.data.model.Category
-import com.ivy.data.model.legacy.Account
+import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.data.model.IncomeExpenseTransferPair
 import com.ivy.domain.usecase.transaction.CalculateLegacyTransactionsIncomeExpenseUseCase
 import javax.inject.Inject
@@ -11,8 +11,8 @@ class CalculateCategoryIncomeWithAccountFiltersUseCase @Inject constructor(
     private val calculateLegacyTransactionsIncomeExpenseUseCase: CalculateLegacyTransactionsIncomeExpenseUseCase
 ) {
     suspend operator fun invoke(
-        transactions: List<Transaction>,
-        accountFilterList: List<Account>,
+        transactions: List<LegacyTransaction>,
+        accountFilterList: List<LegacyAccount>,
         category: Category?,
         baseCurrency: String
     ): IncomeExpenseTransferPair {

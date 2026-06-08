@@ -2,7 +2,7 @@ package com.ivy.domain.usecase.transaction
 
 import arrow.core.nonEmptyListOf
 import com.ivy.data.model.Transaction
-import com.ivy.data.model.legacy.Account
+import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.data.model.IncomeExpenseTransferPair
 import com.ivy.domain.usecase.exchange.ExchangeAmountUseCase
 import com.ivy.domain.transaction.WalletValueFunctions
@@ -15,7 +15,7 @@ class CalculateTransactionsIncomeExpenseUseCase @Inject constructor(
     suspend operator fun invoke(
         transactions: List<Transaction>,
         baseCurrency: String,
-        accounts: List<Account>
+        accounts: List<LegacyAccount>
     ): IncomeExpenseTransferPair {
         val values = foldTransactionsSuspend(
             transactions = transactions,

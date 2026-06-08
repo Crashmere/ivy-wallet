@@ -1,6 +1,6 @@
 package com.ivy.domain.usecase.loan
 
-import com.ivy.data.model.legacy.Transaction
+import com.ivy.data.model.legacy.LegacyTransaction
 import com.ivy.data.model.Loan
 import com.ivy.data.model.LoanRecord
 import com.ivy.data.model.CreateLoanRecordData
@@ -61,7 +61,7 @@ class LoanRecordTransactionSyncUseCase @Inject constructor(
     }
 
     suspend fun updateAssociatedLoanRecord(
-        transaction: Transaction?,
+        transaction: LegacyTransaction?,
         onBackgroundProcessingStart: suspend () -> Unit = {},
         onBackgroundProcessingEnd: suspend () -> Unit = {},
     ) {

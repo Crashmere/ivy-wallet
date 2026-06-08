@@ -1,6 +1,6 @@
 package com.ivy.domain.usecase.loan
 
-import com.ivy.data.model.legacy.Transaction
+import com.ivy.data.model.legacy.LegacyTransaction
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -10,7 +10,7 @@ class UpdateAssociatedLoanDataUseCase @Inject constructor(
     private val loanRecordTransactionSyncUseCase: LoanRecordTransactionSyncUseCase
 ) {
     suspend operator fun invoke(
-        transaction: Transaction?,
+        transaction: LegacyTransaction?,
         onBackgroundProcessingStart: suspend () -> Unit = {},
         onBackgroundProcessingEnd: suspend () -> Unit = {},
         accountsChanged: Boolean = true

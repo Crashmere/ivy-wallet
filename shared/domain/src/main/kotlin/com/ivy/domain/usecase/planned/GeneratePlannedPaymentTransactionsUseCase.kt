@@ -1,6 +1,6 @@
 package com.ivy.domain.usecase.planned
 
-import com.ivy.data.model.legacy.Transaction
+import com.ivy.data.model.legacy.LegacyTransaction
 import com.ivy.data.api.AccountStore
 import com.ivy.data.model.PlannedPaymentRule
 import com.ivy.data.api.TransactionStore
@@ -75,7 +75,7 @@ class GeneratePlannedPaymentTransactionsUseCase @Inject constructor(
         rule: PlannedPaymentRule,
         dueDate: Instant
     ) {
-        Transaction(
+        LegacyTransaction(
             type = rule.type,
             accountId = rule.accountId,
             recurringRuleId = rule.id,

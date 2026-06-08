@@ -8,8 +8,8 @@ import java.math.BigDecimal
 
 object LegacyFoldTransactions {
     suspend fun <Arg> foldTransactionsSuspend(
-        transactions: List<com.ivy.data.model.legacy.Transaction>,
-        valueFunctions: NonEmptyList<suspend (com.ivy.data.model.legacy.Transaction, Arg) -> BigDecimal>,
+        transactions: List<com.ivy.data.model.legacy.LegacyTransaction>,
+        valueFunctions: NonEmptyList<suspend (com.ivy.data.model.legacy.LegacyTransaction, Arg) -> BigDecimal>,
         arg: Arg
     ): NonEmptyList<BigDecimal> = sumTransactionsSuspendInternal(
         transactions = transactions,
@@ -18,9 +18,9 @@ object LegacyFoldTransactions {
     )
 
     internal tailrec suspend fun <A> sumTransactionsSuspendInternal(
-        transactions: List<com.ivy.data.model.legacy.Transaction>,
+        transactions: List<com.ivy.data.model.legacy.LegacyTransaction>,
         valueFunctionArgument: A,
-        valueFunctions: NonEmptyList<suspend (com.ivy.data.model.legacy.Transaction, A) -> BigDecimal>,
+        valueFunctions: NonEmptyList<suspend (com.ivy.data.model.legacy.LegacyTransaction, A) -> BigDecimal>,
         sum: NonEmptyList<BigDecimal> = nonEmptyListOfZeros(n = valueFunctions.size)
     ): NonEmptyList<BigDecimal> {
         return if (transactions.isEmpty()) {
@@ -39,8 +39,8 @@ object LegacyFoldTransactions {
     }
 
     suspend fun <A> sumTransactions(
-        transactions: List<com.ivy.data.model.legacy.Transaction>,
-        valueFunction: suspend (com.ivy.data.model.legacy.Transaction, A) -> BigDecimal,
+        transactions: List<com.ivy.data.model.legacy.LegacyTransaction>,
+        valueFunction: suspend (com.ivy.data.model.legacy.LegacyTransaction, A) -> BigDecimal,
         argument: A
     ): BigDecimal {
         return sumTransactionsSuspendInternal(

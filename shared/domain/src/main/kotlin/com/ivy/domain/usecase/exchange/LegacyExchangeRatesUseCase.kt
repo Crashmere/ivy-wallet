@@ -1,9 +1,9 @@
 package com.ivy.domain.usecase.exchange
 
-import com.ivy.data.model.legacy.Transaction
+import com.ivy.data.model.legacy.LegacyTransaction
 import com.ivy.data.api.AccountStore
 import com.ivy.data.api.ExchangeRateStore
-import com.ivy.data.model.legacy.Account
+import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.data.model.PlannedPaymentRule
 import com.ivy.data.model.primitive.AssetCode
 import com.ivy.domain.mapper.legacy.toLegacyDomain
@@ -16,7 +16,7 @@ class LegacyExchangeRatesUseCase @Inject constructor(
     suspend fun amountBaseCurrency(
         plannedPayment: PlannedPaymentRule,
         baseCurrency: String,
-        accounts: List<Account> // helper
+        accounts: List<LegacyAccount> // helper
     ): Double {
         return amountBaseCurrency(
             amount = plannedPayment.amount,
@@ -27,9 +27,9 @@ class LegacyExchangeRatesUseCase @Inject constructor(
     }
 
     suspend fun amountBaseCurrency(
-        transaction: Transaction,
+        transaction: LegacyTransaction,
         baseCurrency: String,
-        accounts: List<Account> // helper
+        accounts: List<LegacyAccount> // helper
     ): Double {
         return amountBaseCurrency(
             amount = transaction.amount.toDouble(),
@@ -40,9 +40,9 @@ class LegacyExchangeRatesUseCase @Inject constructor(
     }
 
     suspend fun toAmountBaseCurrency(
-        transaction: Transaction,
+        transaction: LegacyTransaction,
         baseCurrency: String,
-        accounts: List<Account> // helper
+        accounts: List<LegacyAccount> // helper
     ): Double {
         val amount = transaction.toAmount ?: transaction.amount
         val toCurrency = accounts.find { it.id == transaction.toAccountId }?.currency
@@ -59,7 +59,7 @@ class LegacyExchangeRatesUseCase @Inject constructor(
         amount: Double,
         accountId: UUID,
         baseCurrency: String,
-        accounts: List<Account> // helper
+        accounts: List<LegacyAccount> // helper
     ): Double {
         val transactionCurrency = accounts.find { it.id == accountId }?.currency
             ?: return amount // no conversion
@@ -118,7 +118,7 @@ class LegacyExchangeRatesUseCase @Inject constructor(
     }
 }
 
-suspend fun Iterable<Transaction>.sumInBaseCurrency(
+suspend fun Iterable<LegacyTransaction>.sumInBaseCurrency(
     exchangeRatesUseCase: LegacyExchangeRatesUseCase,
     baseCurrency: String,
     accountStore: AccountStore,

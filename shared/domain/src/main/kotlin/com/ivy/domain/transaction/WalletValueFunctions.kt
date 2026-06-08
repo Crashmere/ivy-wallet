@@ -4,14 +4,14 @@ import com.ivy.data.model.Expense
 import com.ivy.data.model.Income
 import com.ivy.data.model.Transaction
 import com.ivy.data.model.Transfer
-import com.ivy.data.model.legacy.Account
+import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.domain.exchange.ExchangeEffect
 import com.ivy.domain.exchange.exchangeInBaseCurrency
 import java.math.BigDecimal
 
 object WalletValueFunctions {
     data class Argument(
-        val accounts: List<Account>,
+        val accounts: List<LegacyAccount>,
         val baseCurrency: String,
         val exchange: ExchangeEffect
     )

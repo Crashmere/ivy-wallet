@@ -1,7 +1,7 @@
 package com.ivy.domain.usecase.category
 
 import com.ivy.data.model.TransactionType
-import com.ivy.data.model.legacy.Transaction
+import com.ivy.data.model.legacy.LegacyTransaction
 import com.ivy.data.model.TransactionHistoryItem
 import com.ivy.data.api.AccountStore
 import com.ivy.data.model.Category
@@ -30,7 +30,7 @@ class GetCategoryTransactionsSummaryUseCase @Inject constructor(
         category: Category,
         range: FromToTimeRange,
         accountFilterSet: Set<UUID> = emptySet(),
-        providedTransactions: List<Transaction>? = null
+        providedTransactions: List<LegacyTransaction>? = null
     ): CategoryTransactionsSummary {
         val balanceTransactions = providedTransactions?.filter {
             it.type != TransactionType.TRANSFER && it.categoryId == category.id.value
@@ -76,7 +76,7 @@ class GetCategoryTransactionsSummaryUseCase @Inject constructor(
         category: Category,
         range: FromToTimeRange,
         accountFilterSet: Set<UUID>,
-        transactions: List<Transaction>?
+        transactions: List<LegacyTransaction>?
     ): Double {
         val baseCurrency = getBaseCurrencyCode()
         val accounts = accountStore.findAll().map { it.toLegacyDomain() }
@@ -105,7 +105,7 @@ class GetCategoryTransactionsSummaryUseCase @Inject constructor(
         category: Category,
         range: FromToTimeRange,
         accountFilterSet: Set<UUID>,
-        transactions: List<Transaction>?
+        transactions: List<LegacyTransaction>?
     ): Double {
         val incomeTransactions = transactions ?: transactionStore
             .findAllByCategoryAndTypeAndBetween(
@@ -122,7 +122,7 @@ class GetCategoryTransactionsSummaryUseCase @Inject constructor(
         category: Category,
         range: FromToTimeRange,
         accountFilterSet: Set<UUID>,
-        transactions: List<Transaction>?
+        transactions: List<LegacyTransaction>?
     ): Double {
         val expenseTransactions = transactions ?: transactionStore
             .findAllByCategoryAndTypeAndBetween(
@@ -139,7 +139,7 @@ class GetCategoryTransactionsSummaryUseCase @Inject constructor(
         category: Category,
         range: FromToTimeRange,
         accountFilterSet: Set<UUID>,
-        transactions: List<Transaction>?
+        transactions: List<LegacyTransaction>?
     ): List<TransactionHistoryItem> {
         return with(LegacyTransactionDateDividers) {
             historyByCategory(
@@ -159,8 +159,8 @@ class GetCategoryTransactionsSummaryUseCase @Inject constructor(
         category: Category,
         range: FromToTimeRange,
         accountFilterSet: Set<UUID>,
-        transactions: List<Transaction>?
-    ): List<Transaction> {
+        transactions: List<LegacyTransaction>?
+    ): List<LegacyTransaction> {
         val resolvedTransactions = transactions ?: transactionStore
             .findAllByCategoryAndBetween(
                 categoryId = category.id.value,
@@ -211,7 +211,7 @@ class GetCategoryTransactionsSummaryUseCase @Inject constructor(
         )
     }
 
-    private suspend fun List<Transaction>.sumInBaseCurrency(accountFilterSet: Set<UUID>): Double {
+    private suspend fun List<LegacyTransaction>.sumInBaseCurrency(accountFilterSet: Set<UUID>): Double {
         return filter {
             accountFilterSet.isEmpty() || accountFilterSet.contains(it.accountId)
         }.sumInBaseCurrency(
@@ -221,12 +221,12 @@ class GetCategoryTransactionsSummaryUseCase @Inject constructor(
         )
     }
 
-    private suspend fun List<Transaction>.incomeInBaseCurrency(): Double {
+    private suspend fun List<LegacyTransaction>.incomeInBaseCurrency(): Double {
         return filter { it.type == TransactionType.INCOME }
             .sumInBaseCurrency(emptySet())
     }
 
-    private suspend fun List<Transaction>.expensesInBaseCurrency(): Double {
+    private suspend fun List<LegacyTransaction>.expensesInBaseCurrency(): Double {
         return filter { it.type == TransactionType.EXPENSE }
             .sumInBaseCurrency(emptySet())
     }

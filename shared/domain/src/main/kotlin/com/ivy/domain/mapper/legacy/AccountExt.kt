@@ -1,7 +1,7 @@
 package com.ivy.domain.mapper.legacy
 
 import com.ivy.data.model.Account
-import com.ivy.data.model.legacy.Account as LegacyAccount
+import com.ivy.data.model.legacy.LegacyAccount
 
 fun Account.toLegacyDomain(): LegacyAccount = LegacyAccount(
     name = name.value,

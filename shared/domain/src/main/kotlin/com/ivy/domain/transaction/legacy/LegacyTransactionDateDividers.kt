@@ -6,7 +6,7 @@ import com.ivy.data.model.TransactionHistoryItem
 import com.ivy.data.model.TransactionHistoryDateDivider
 import com.ivy.data.api.AccountStore
 import com.ivy.data.model.AccountId
-import com.ivy.data.model.legacy.Account
+import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.domain.mapper.legacy.toLegacyDomain
 import com.ivy.domain.usecase.exchange.LegacyExchangeRatesUseCase
 import com.ivy.domain.exchange.ExchangeData
@@ -20,7 +20,7 @@ import java.util.UUID
 private fun LocalDateTime.toEpochSeconds() = toEpochSecond(ZoneOffset.UTC)
 
 object LegacyTransactionDateDividers {
-    suspend fun List<com.ivy.data.model.legacy.Transaction>.withDateDividers(
+    suspend fun List<com.ivy.data.model.legacy.LegacyTransaction>.withDateDividers(
         exchangeRatesUseCase: LegacyExchangeRatesUseCase,
         baseCurrencyCode: String,
         accountStore: AccountStore,
@@ -41,9 +41,9 @@ object LegacyTransactionDateDividers {
     }
 
     suspend fun transactionsWithDateDividers(
-        transactions: List<com.ivy.data.model.legacy.Transaction>,
+        transactions: List<com.ivy.data.model.legacy.LegacyTransaction>,
         baseCurrencyCode: String,
-        getAccount: suspend (accountId: UUID) -> Account?,
+        getAccount: suspend (accountId: UUID) -> LegacyAccount?,
         exchange: suspend (ExchangeData, BigDecimal) -> Option<BigDecimal>
     ): List<TransactionHistoryItem> {
         if (transactions.isEmpty()) return emptyList()

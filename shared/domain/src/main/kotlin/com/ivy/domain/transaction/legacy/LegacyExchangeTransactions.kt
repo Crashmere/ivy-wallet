@@ -2,8 +2,8 @@ package com.ivy.domain.transaction.legacy
 
 import arrow.core.Option
 import arrow.core.toOption
-import com.ivy.data.model.legacy.Account
-import com.ivy.data.model.legacy.Transaction
+import com.ivy.data.model.legacy.LegacyAccount
+import com.ivy.data.model.legacy.LegacyTransaction
 import com.ivy.domain.account.legacy.legacyAccountCurrency
 import com.ivy.domain.exchange.ExchangeData
 import com.ivy.domain.exchange.ExchangeEffect
@@ -11,7 +11,7 @@ import com.ivy.domain.exchange.ExchangeTransactionArgument
 import java.math.BigDecimal
 
 suspend fun exchangeInBaseCurrency(
-    transaction: Transaction,
+    transaction: LegacyTransaction,
     arg: ExchangeTransactionArgument
 ): BigDecimal {
     val fromCurrency = arg.getAccount(transaction.accountId)?.let {
@@ -28,7 +28,7 @@ suspend fun exchangeInBaseCurrency(
 }
 
 suspend fun exchangeInCurrency(
-    transaction: Transaction,
+    transaction: LegacyTransaction,
     baseCurrency: String,
     transactionCurrency: Option<String>,
     toCurrency: String,
@@ -46,9 +46,9 @@ suspend fun exchangeInCurrency(
 
 object LegacyExchangeTransactions {
     suspend fun exchangeInBaseCurrency(
-        transaction: Transaction,
+        transaction: LegacyTransaction,
         baseCurrency: String,
-        accounts: List<Account>,
+        accounts: List<LegacyAccount>,
         exchange: ExchangeEffect
     ): BigDecimal = exchangeInCurrency(
         transaction = transaction,
@@ -59,9 +59,9 @@ object LegacyExchangeTransactions {
     )
 
     suspend fun exchangeInCurrency(
-        transaction: Transaction,
+        transaction: LegacyTransaction,
         baseCurrency: String,
-        accounts: List<Account>,
+        accounts: List<LegacyAccount>,
         toCurrency: String,
         exchange: ExchangeEffect
     ): BigDecimal {

@@ -11,8 +11,8 @@ import java.math.BigDecimal
 import javax.inject.Inject
 import kotlin.math.abs
 import kotlin.math.absoluteValue
-import com.ivy.data.model.legacy.Transaction as LegacyTransaction
-import com.ivy.data.model.legacy.Account as LegacyAccount
+import com.ivy.data.model.legacy.LegacyTransaction
+import com.ivy.data.model.legacy.LegacyAccount
 
 class AdjustAccountBalanceUseCase @Inject constructor(
     private val transactionStore: TransactionStore,

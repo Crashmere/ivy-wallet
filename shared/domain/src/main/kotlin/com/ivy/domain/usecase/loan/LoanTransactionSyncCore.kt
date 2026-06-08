@@ -1,6 +1,6 @@
 package com.ivy.domain.usecase.loan
 
-import com.ivy.data.model.legacy.Transaction
+import com.ivy.data.model.legacy.LegacyTransaction
 import com.ivy.data.model.LoanRecordType
 import com.ivy.data.model.TransactionType
 import com.ivy.data.api.AccountStore
@@ -17,7 +17,7 @@ import com.ivy.data.model.primitive.IconAsset
 import com.ivy.data.model.primitive.NotBlankTrimmedString
 import com.ivy.domain.usecase.category.GetCategoriesUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
-import com.ivy.data.model.legacy.Account
+import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.data.model.Loan
 import com.ivy.data.model.LoanRecord
 import com.ivy.domain.mapper.legacy.toDomain
@@ -65,7 +65,7 @@ class LoanTransactionSyncCore @Inject constructor(
         }
 
         withContext(Dispatchers.IO) {
-            val transactions: List<Transaction?> =
+            val transactions: List<LegacyTransaction?> =
                 if (loanId != null) {
                     transactionRepo.findAllByLoanId(loanId = loanId)
                         .map { it.toLegacy() }
@@ -80,9 +80,9 @@ class LoanTransactionSyncCore @Inject constructor(
     }
 
     fun findAccount(
-        accounts: List<Account>,
+        accounts: List<LegacyAccount>,
         accountId: UUID?,
-    ): Account? {
+    ): LegacyAccount? {
         return accountId?.let { uuid ->
             accounts.find { acc ->
                 acc.id == uuid
@@ -104,7 +104,7 @@ class LoanTransactionSyncCore @Inject constructor(
         category: Category? = null,
         time: Instant? = null,
         isLoanRecord: Boolean = false,
-        transaction: Transaction? = null,
+        transaction: LegacyTransaction? = null,
         loanRecordType: LoanRecordType
     ) {
         if (isLoanRecord && loanRecordId == null) {
@@ -154,7 +154,7 @@ class LoanTransactionSyncCore @Inject constructor(
         categoryId: UUID? = null,
         time: Instant = nowUtc(),
         isLoanRecord: Boolean = false,
-        transaction: Transaction? = null,
+        transaction: LegacyTransaction? = null,
         loanRecordType: LoanRecordType
     ) {
         if (selectedAccountId == null) {
@@ -167,7 +167,7 @@ class LoanTransactionSyncCore @Inject constructor(
 
         val transCategoryId: UUID? = getCategoryId(existingCategoryId = categoryId)
 
-        val modifiedTransaction: Transaction = transaction?.copy(
+        val modifiedTransaction: LegacyTransaction = transaction?.copy(
             loanId = loanId,
             loanRecordId = if (isLoanRecord) loanRecordId else null,
             amount = amount.toBigDecimal(),
@@ -177,7 +177,7 @@ class LoanTransactionSyncCore @Inject constructor(
             categoryId = transCategoryId,
             dateTime = time
         )
-            ?: Transaction(
+            ?: LegacyTransaction(
                 accountId = selectedAccountId,
                 type = transType,
                 amount = amount.toBigDecimal(),
@@ -195,7 +195,7 @@ class LoanTransactionSyncCore @Inject constructor(
         }
     }
 
-    private suspend fun deleteTransaction(transaction: Transaction?) {
+    private suspend fun deleteTransaction(transaction: LegacyTransaction?) {
         withContext(Dispatchers.IO) {
             transaction?.let {
                 transactionRepo.deleteById(TransactionId(it.id))
@@ -244,7 +244,7 @@ class LoanTransactionSyncCore @Inject constructor(
         newLoanRecordAccountID: UUID?,
         newLoanRecordAmount: Double,
         loanAccountId: UUID?,
-        accounts: List<Account>,
+        accounts: List<LegacyAccount>,
         reCalculateLoanAmount: Boolean = false,
     ): Double? {
         return withContext(Dispatchers.Default) {
@@ -287,7 +287,7 @@ class LoanTransactionSyncCore @Inject constructor(
         }
     }
 
-    private suspend fun UUID?.fetchAssociatedCurrencyCode(accountsList: List<Account>): String {
+    private suspend fun UUID?.fetchAssociatedCurrencyCode(accountsList: List<LegacyAccount>): String {
         return findAccount(accountsList, this)?.currency ?: baseCurrency()
     }
 
@@ -319,7 +319,7 @@ class LoanTransactionSyncCore @Inject constructor(
         loanStore.findById(loanId)
     }
 
-    suspend fun fetchLoanRecordTransaction(loanRecordId: UUID?): Transaction? {
+    suspend fun fetchLoanRecordTransaction(loanRecordId: UUID?): LegacyTransaction? {
         return loanRecordId?.let {
             withContext(Dispatchers.IO) {
                 transactionRepo.findLoanRecordTransaction(it)?.toLegacy()

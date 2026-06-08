@@ -1,10 +1,10 @@
 package com.ivy.domain.usecase.loan
 
-import com.ivy.data.model.legacy.Transaction
+import com.ivy.data.model.legacy.LegacyTransaction
 import com.ivy.data.model.LoanRecordType
 import com.ivy.data.model.TransactionType
 import com.ivy.data.model.LoanType
-import com.ivy.data.model.legacy.Account
+import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.data.model.Loan
 import com.ivy.data.model.LoanRecord
 import com.ivy.data.model.CreateLoanData
@@ -37,7 +37,7 @@ class LoanTransactionSyncUseCase @Inject constructor(
     suspend fun editAssociatedLoanTransaction(
         loan: Loan,
         createLoanTransaction: Boolean = false,
-        transaction: Transaction?
+        transaction: LegacyTransaction?
     ) {
         withContext(Dispatchers.Default) {
             ltCore.updateAssociatedTransaction(
@@ -83,7 +83,7 @@ class LoanTransactionSyncUseCase @Inject constructor(
     }
 
     suspend fun updateAssociatedLoan(
-        transaction: Transaction?,
+        transaction: LegacyTransaction?,
         onBackgroundProcessingStart: suspend () -> Unit = {},
         onBackgroundProcessingEnd: suspend () -> Unit = {},
         accountsChanged: Boolean = true
@@ -141,7 +141,7 @@ class LoanTransactionSyncUseCase @Inject constructor(
         }
     }
 
-    private suspend fun UUID?.fetchAssociatedCurrencyCode(accountsList: List<Account>): String {
+    private suspend fun UUID?.fetchAssociatedCurrencyCode(accountsList: List<LegacyAccount>): String {
         return ltCore.findAccount(accountsList, this)?.currency ?: ltCore.baseCurrency()
     }
 }

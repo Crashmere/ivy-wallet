@@ -8,7 +8,7 @@ import com.ivy.data.model.AccountId
 import com.ivy.data.model.Tag
 import com.ivy.data.model.TagId
 import com.ivy.data.model.Transaction
-import com.ivy.data.model.legacy.Account
+import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.data.model.TransactionHistoryDateDivider
 import com.ivy.data.model.TransactionHistoryItem
 import com.ivy.domain.exchange.ExchangeData
@@ -51,7 +51,7 @@ suspend fun List<Transaction>.withDateDividers(
 suspend fun transactionsWithDateDividers(
     transactions: List<Transaction>,
     baseCurrencyCode: String,
-    getAccount: suspend (accountId: UUID) -> Account?,
+    getAccount: suspend (accountId: UUID) -> LegacyAccount?,
     exchange: suspend (ExchangeData, BigDecimal) -> Option<BigDecimal>,
     getTags: suspend (tagIds: List<TagId>) -> List<Tag> = { emptyList() },
 ): List<TransactionHistoryItem> {

@@ -1,6 +1,6 @@
 package com.ivy.domain.usecase.transaction
 
-import com.ivy.data.model.legacy.Transaction
+import com.ivy.data.model.legacy.LegacyTransaction
 import com.ivy.data.model.TransactionHistoryItem
 import com.ivy.data.api.AccountStore
 import com.ivy.data.model.AccountId
@@ -15,7 +15,7 @@ class BuildLegacyTransactionHistoryItemsUseCase @Inject constructor(
 ) {
     suspend operator fun invoke(
         baseCurrency: String,
-        transactions: List<Transaction>
+        transactions: List<LegacyTransaction>
     ): List<TransactionHistoryItem> {
         return LegacyTransactionDateDividers.transactionsWithDateDividers(
             transactions = transactions,

@@ -4,7 +4,7 @@ import com.ivy.domain.usecase.currency.GetBaseCurrencyUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
-import com.ivy.data.model.legacy.Account as LegacyAccount
+import com.ivy.data.model.legacy.LegacyAccount
 
 class UpdateAccountWithBalanceUseCase @Inject constructor(
     private val adjustAccountBalanceUseCase: AdjustAccountBalanceUseCase,

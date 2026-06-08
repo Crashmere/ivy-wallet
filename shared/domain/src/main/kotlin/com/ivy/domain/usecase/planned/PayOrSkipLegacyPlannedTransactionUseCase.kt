@@ -1,6 +1,6 @@
 package com.ivy.domain.usecase.planned
 
-import com.ivy.data.model.legacy.Transaction
+import com.ivy.data.model.legacy.LegacyTransaction
 import com.ivy.data.api.AccountStore
 import com.ivy.data.api.PlannedPaymentRuleStore
 import com.ivy.data.api.TransactionStore
@@ -15,9 +15,9 @@ class PayOrSkipLegacyPlannedTransactionUseCase @Inject constructor(
     private val transactionStore: TransactionStore,
 ) {
     suspend operator fun invoke(
-        transaction: Transaction,
+        transaction: LegacyTransaction,
         skipTransaction: Boolean = false
-    ): Transaction? {
+    ): LegacyTransaction? {
         if (transaction.dueDate == null || transaction.dateTime != null) return null
 
         val paidTransaction = transaction.copy(

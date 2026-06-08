@@ -1,6 +1,6 @@
 package com.ivy.domain.usecase.category
 
-import com.ivy.data.model.legacy.Transaction
+import com.ivy.data.model.legacy.LegacyTransaction
 import com.ivy.data.model.TransactionHistoryItem
 
 data class CategoryTransactionsSummary(
@@ -15,5 +15,5 @@ data class CategoryTransactionsSummary(
 data class CategoryDueTransactionsSummary(
     val income: Double,
     val expenses: Double,
-    val transactions: List<Transaction>
+    val transactions: List<LegacyTransaction>
 )

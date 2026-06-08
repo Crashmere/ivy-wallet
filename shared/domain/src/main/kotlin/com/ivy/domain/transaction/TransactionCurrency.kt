@@ -3,12 +3,12 @@ package com.ivy.domain.transaction
 import arrow.core.Option
 import arrow.core.toOption
 import com.ivy.data.model.Transaction
-import com.ivy.data.model.legacy.Account
+import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.domain.account.legacy.legacyAccountCurrency
 
 fun transactionCurrency(
     transaction: Transaction,
-    accounts: List<Account>,
+    accounts: List<LegacyAccount>,
     baseCurrency: String
 ): Option<String> {
     val account = accounts.find {
