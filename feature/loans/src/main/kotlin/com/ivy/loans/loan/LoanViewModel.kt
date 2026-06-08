@@ -265,8 +265,8 @@ internal class LoanViewModel @Inject internal constructor(
         val accountsList = getLegacyAccountsUseCase()
         accounts = accountsList
         selectedAccountId = defaultAccountId(accountsList)
-        selectedAccount()?.let {
-            baseCurrencyCode = it.currency ?: defaultCurrencyCode
+        selectedAccountCurrencyCode()?.let {
+            baseCurrencyCode = it
         }
     }
 
@@ -363,9 +363,9 @@ internal class LoanViewModel @Inject internal constructor(
         }
     }
 
-    private fun selectedAccount(): LegacyAccount? {
+    private fun selectedAccountCurrencyCode(): String? {
         val accountId = selectedAccountId ?: return null
-        return accounts.firstOrNull { it.id == accountId }
+        return accounts.firstOrNull { it.id == accountId }?.currency
     }
 
     private fun findCurrencyCode(accounts: List<LegacyAccount>, accountId: UUID?): String {
