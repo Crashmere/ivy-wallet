@@ -45,7 +45,7 @@ import com.ivy.domain.usecase.transaction.SuggestTransactionTitlesUseCase
 import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.R
 import com.ivy.ui.time.DateTimePicker
-import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
+import com.ivy.domain.usecase.account.GetAccountsUseCase
 import com.ivy.domain.usecase.account.SetLastSelectedAccountIdUseCase
 import com.ivy.domain.usecase.exchange.LegacyExchangeRatesUseCase
 import com.ivy.domain.usecase.loan.UpdateAssociatedLoanDataUseCase
@@ -96,7 +96,7 @@ internal class EditTransactionViewModel @Inject internal constructor(
     private val payOrSkipLegacyPlannedTransactionUseCase: PayOrSkipLegacyPlannedTransactionUseCase,
     private val suggestTransactionTitlesUseCase: SuggestTransactionTitlesUseCase,
     private val updateAssociatedLoanDataUseCase: UpdateAssociatedLoanDataUseCase,
-    private val getLegacyAccountsUseCase: GetLegacyAccountsUseCase,
+    private val getAccountsUseCase: GetAccountsUseCase,
     private val getCategoriesUseCase: GetCategoriesUseCase,
     private val getLegacyTransactionUseCase: GetLegacyTransactionUseCase,
     private val saveLegacyTransactionUseCase: SaveLegacyTransactionUseCase,
@@ -703,7 +703,7 @@ internal class EditTransactionViewModel @Inject internal constructor(
     }
 
     private suspend fun loadAccounts(): ImmutableList<EditTransactionAccount> {
-        return getLegacyAccountsUseCase()
+        return getAccountsUseCase()
             .map { it.toEditTransactionAccount() }
             .toImmutableList()
     }

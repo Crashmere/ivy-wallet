@@ -1,7 +1,7 @@
 package com.ivy.planned.edit
 
 import androidx.compose.runtime.Immutable
-import com.ivy.data.model.legacy.LegacyAccount
+import com.ivy.data.model.Account
 import java.util.UUID
 
 @Immutable
@@ -13,10 +13,10 @@ internal data class EditPlannedAccount(
     val currency: String?,
 )
 
-internal fun LegacyAccount.toEditPlannedAccount() = EditPlannedAccount(
-    id = id,
-    name = name,
-    color = color,
-    icon = icon,
-    currency = currency,
+internal fun Account.toEditPlannedAccount() = EditPlannedAccount(
+    id = id.value,
+    name = name.value,
+    color = color.value,
+    icon = icon?.id,
+    currency = asset.code,
 )

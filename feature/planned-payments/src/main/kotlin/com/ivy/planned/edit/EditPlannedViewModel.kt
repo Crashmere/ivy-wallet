@@ -20,7 +20,7 @@ import com.ivy.domain.usecase.planned.SavePlannedPaymentRuleUseCase
 import com.ivy.data.model.PlannedPaymentRule
 import com.ivy.ui.ComposeViewModel
 import com.ivy.domain.usecase.account.CreateAccountWithBalanceUseCase
-import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
+import com.ivy.domain.usecase.account.GetAccountsUseCase
 import com.ivy.domain.usecase.category.CreateCategoryUseCase
 import com.ivy.domain.usecase.category.UpdateCategoryUseCase
 import com.ivy.data.model.CreateAccountData
@@ -51,7 +51,7 @@ internal class EditPlannedViewModel @Inject internal constructor(
     private val createCategoryUseCase: CreateCategoryUseCase,
     private val updateCategoryUseCase: UpdateCategoryUseCase,
     private val createAccountWithBalanceUseCase: CreateAccountWithBalanceUseCase,
-    private val getLegacyAccountsUseCase: GetLegacyAccountsUseCase,
+    private val getAccountsUseCase: GetAccountsUseCase,
 ) : ComposeViewModel<EditPlannedScreenState, EditPlannedScreenEvent>() {
 
     private var transactionType by mutableStateOf(TransactionType.INCOME)
@@ -473,7 +473,7 @@ internal class EditPlannedViewModel @Inject internal constructor(
     }
 
     private suspend fun loadAccounts(): ImmutableList<EditPlannedAccount> {
-        return getLegacyAccountsUseCase()
+        return getAccountsUseCase()
             .map { it.toEditPlannedAccount() }
             .toImmutableList()
     }
