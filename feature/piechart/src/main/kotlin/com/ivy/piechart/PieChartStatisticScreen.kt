@@ -45,7 +45,6 @@ import androidx.compose.ui.unit.sp
 import com.ivy.data.model.TransactionType
 import com.ivy.ui.platform.LocalDatePicker
 import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.legacy.ui.theme.style
 import com.ivy.ui.compose.thenIf
 import com.ivy.ui.period.LocalPeriodState
 import com.ivy.ui.period.TimePeriod
@@ -170,8 +169,10 @@ private fun BoxWithConstraintsScope.UI(
                 } else {
                     stringResource(R.string.income)
                 },
-                style = LegacyTheme.typo.b1.style(
-                    fontWeight = FontWeight.ExtraBold
+                style = LegacyTheme.typo.b1.copy(
+                    color = LegacyTheme.colors.pureInverse,
+                    fontWeight = FontWeight.ExtraBold,
+                    textAlign = TextAlign.Start
                 )
             )
 
@@ -459,7 +460,7 @@ private fun CategoryAmountCard(
                         .weight(1f)
                         .padding(end = 16.dp),
                     text = category?.name?.value ?: stringResource(R.string.unspecified),
-                    style = LegacyTheme.typo.b2.style(
+                    style = LegacyTheme.typo.b2.copy(
                         color = textColor,
                         fontWeight = FontWeight.Bold,
                         textAlign = TextAlign.Start
@@ -503,9 +504,10 @@ private fun PercentText(
         } else {
             stringResource(R.string.percent, "0")
         },
-        style = LegacyTheme.typo.nB2.style(
+        style = LegacyTheme.typo.nB2.copy(
             color = if (selectedState) contrastColor else LegacyTheme.colors.pureInverse,
-            fontWeight = FontWeight.Normal
+            fontWeight = FontWeight.Normal,
+            textAlign = TextAlign.Start
         )
     )
 }

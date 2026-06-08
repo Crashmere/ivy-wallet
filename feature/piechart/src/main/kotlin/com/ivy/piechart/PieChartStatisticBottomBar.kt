@@ -16,11 +16,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.TransactionType
 import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.legacy.ui.theme.style
 import com.ivy.ui.compose.navigationBarInset
 import com.ivy.ui.compose.toDensityDp
 import com.ivy.ui.R
@@ -65,9 +65,10 @@ internal fun BoxWithConstraintsScope.PieChartStatisticBottomBar(
                 stringResource(id = R.string.add_expense)
             },
             backgroundGradient = if (isIncome) IvyGradients.Green else Gradient.solid(LegacyTheme.colors.pureInverse),
-            textStyle = LegacyTheme.typo.b2.style(
+            textStyle = LegacyTheme.typo.b2.copy(
                 color = if (isIncome) White else LegacyTheme.colors.pure,
-                fontWeight = FontWeight.ExtraBold
+                fontWeight = FontWeight.ExtraBold,
+                textAlign = TextAlign.Start
             ),
             iconTint = if (isIncome) White else LegacyTheme.colors.pure
         ) {
