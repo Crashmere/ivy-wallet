@@ -7,7 +7,7 @@ import com.ivy.data.model.FromToTimeRange
 import com.ivy.domain.transaction.getValue
 import javax.inject.Inject
 
-class GetAccountUpcomingTransactionsSummaryUseCase @Inject constructor(
+class GetAccountUpcomingTransactionsSummaryUseCase @Inject internal constructor(
     private val getAccountUpcomingTransactionsUseCase: GetAccountUpcomingTransactionsUseCase
 ) {
     suspend operator fun invoke(
