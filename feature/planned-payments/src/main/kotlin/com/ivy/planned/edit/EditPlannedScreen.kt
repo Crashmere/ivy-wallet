@@ -40,7 +40,6 @@ import com.ivy.legacy.ui.edit.core.EditBottomSheet
 import com.ivy.legacy.ui.edit.core.Title
 import com.ivy.legacy.ui.edit.core.Toolbar
 import com.ivy.legacy.ui.theme.Orange
-import com.ivy.legacy.ui.component.ChangeTransactionTypeModal
 import com.ivy.legacy.ui.component.IvyButton
 import com.ivy.legacy.ui.modal.DeleteModal
 import com.ivy.legacy.ui.modal.AccountModalData

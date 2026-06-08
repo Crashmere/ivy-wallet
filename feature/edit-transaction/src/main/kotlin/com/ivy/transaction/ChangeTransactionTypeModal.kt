@@ -1,4 +1,4 @@
-package com.ivy.legacy.ui.component
+package com.ivy.transaction
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -11,8 +11,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -23,23 +25,22 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.TransactionType
-import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.legacy.ui.theme.style
-import com.ivy.ui.R
+import com.ivy.legacy.ui.component.IvyButton
+import com.ivy.legacy.ui.component.IvyIcon
+import com.ivy.legacy.ui.modal.IvyModal
+import com.ivy.legacy.ui.modal.ModalTitle
 import com.ivy.legacy.ui.theme.Gradient
 import com.ivy.legacy.ui.theme.GradientGreen
 import com.ivy.legacy.ui.theme.GradientIvy
+import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.legacy.ui.theme.White
-import com.ivy.legacy.ui.modal.IvyModal
-import com.ivy.legacy.ui.modal.ModalSet
-import com.ivy.legacy.ui.modal.ModalTitle
+import com.ivy.legacy.ui.theme.style
+import com.ivy.ui.R
 import java.util.UUID
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
 
 @Suppress("ParameterNaming")
 @Composable
-fun BoxWithConstraintsScope.ChangeTransactionTypeModal(
+internal fun BoxWithConstraintsScope.ChangeTransactionTypeModal(
     title: String = stringResource(R.string.set_transaction_type),
     visible: Boolean,
     includeTransferType: Boolean,
@@ -57,7 +58,7 @@ fun BoxWithConstraintsScope.ChangeTransactionTypeModal(
         visible = visible,
         dismiss = dismiss,
         PrimaryAction = {
-            ModalSet {
+            TransactionTypeModalSetButton {
                 save(
                     transactionType = transactionType,
                     onTransactionTypeChanged = onTransactionTypeChanged,
@@ -79,11 +80,7 @@ fun BoxWithConstraintsScope.ChangeTransactionTypeModal(
             textSelectedColor = White
         ) {
             transactionType = TransactionType.INCOME
-            save(
-                transactionType = transactionType,
-                onTransactionTypeChanged = onTransactionTypeChanged,
-                dismiss = dismiss,
-            )
+            save(transactionType, onTransactionTypeChanged, dismiss)
         }
 
         Spacer(Modifier.height(12.dp))
@@ -95,11 +92,7 @@ fun BoxWithConstraintsScope.ChangeTransactionTypeModal(
             textSelectedColor = LegacyTheme.colors.pure
         ) {
             transactionType = TransactionType.EXPENSE
-            save(
-                transactionType = transactionType,
-                onTransactionTypeChanged = onTransactionTypeChanged,
-                dismiss = dismiss,
-            )
+            save(transactionType, onTransactionTypeChanged, dismiss)
         }
 
         if (includeTransferType) {
@@ -112,11 +105,7 @@ fun BoxWithConstraintsScope.ChangeTransactionTypeModal(
                 textSelectedColor = White
             ) {
                 transactionType = TransactionType.TRANSFER
-                save(
-                    transactionType = transactionType,
-                    onTransactionTypeChanged = onTransactionTypeChanged,
-                    dismiss = dismiss,
-                )
+                save(transactionType, onTransactionTypeChanged, dismiss)
             }
         }
 
@@ -131,6 +120,16 @@ private fun save(
 ) {
     onTransactionTypeChanged(transactionType)
     dismiss()
+}
+
+@Composable
+private fun TransactionTypeModalSetButton(onClick: () -> Unit) {
+    IvyButton(
+        text = stringResource(R.string.set),
+        backgroundGradient = GradientGreen,
+        iconStart = R.drawable.ic_check,
+        onClick = onClick
+    )
 }
 
 @Composable
