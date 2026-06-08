@@ -32,7 +32,7 @@ import com.ivy.ui.compose.drawColoredShadow
 import com.ivy.ui.platform.hideKeyboard
 import com.ivy.ui.compose.onCompositionStart
 import com.ivy.ui.R
-import com.ivy.legacy.ui.theme.Gradient
+import com.ivy.ui.theme.colors.Gradient
 import com.ivy.ui.icon.ItemIconSDefaultIcon
 import com.ivy.legacy.ui.theme.findContrastTextColor
 import com.ivy.ui.modal.IvyModal

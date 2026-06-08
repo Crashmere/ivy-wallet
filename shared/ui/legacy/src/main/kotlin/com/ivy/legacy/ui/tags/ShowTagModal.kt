@@ -35,8 +35,7 @@ import com.ivy.ui.modal.IvyModal
 import com.ivy.ui.modal.ModalPositiveButton
 import com.ivy.ui.modal.ModalTitle
 import com.ivy.ui.search.SearchInput
-import com.ivy.legacy.ui.theme.Blue2Dark
-import com.ivy.legacy.ui.theme.Gradient
+import com.ivy.ui.theme.colors.Gradient
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.legacy.ui.theme.findContrastTextColor
 import com.ivy.ui.compose.GradientIconButton
@@ -48,6 +47,7 @@ import com.ivy.ui.compose.onCompositionStart
 import com.ivy.ui.compose.selectEndTextFieldValue
 import com.ivy.ui.R
 import com.ivy.ui.platform.hideKeyboard
+import com.ivy.ui.theme.colors.IvyFixedColors
 import kotlinx.collections.immutable.ImmutableList
 import java.util.UUID
 
@@ -237,7 +237,7 @@ private fun ExistingTag(
     onLongClick: () -> Unit,
     onDeselect: () -> Unit,
 ) {
-    val tagColor = Blue2Dark
+    val tagColor = IvyFixedColors.Blue2Dark
     val rFull = LegacyTheme.shapes.rFull
 
     Row(
