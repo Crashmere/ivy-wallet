@@ -1085,6 +1085,7 @@
 当前进展：
 
 - 饼图统计页已继续收窄 legacy 交易状态：从导航传入的交易列表只作为重新计算图表的输入保留在 ViewModel 私有字段中，不再作为 Compose state 或页面状态暴露；分类关联交易仍使用更小的 `AssociatedTransaction` 展示/导航模型。
+- 首页计划付款付/跳过事件已从传递完整 `LegacyTransaction` 收窄为传递交易 ID；旧交易对象仍只保留在列表展示状态和 ViewModel 内部执行边界。
 
 ### 阶段 10：最终依赖方向
 

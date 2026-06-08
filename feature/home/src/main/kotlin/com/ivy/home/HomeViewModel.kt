@@ -59,6 +59,7 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.math.BigDecimal
+import java.util.UUID
 import javax.inject.Inject
 
 @Stable
@@ -239,9 +240,9 @@ class HomeViewModel @Inject constructor(
                 HomeEvent.BalanceClick -> onBalanceClick()
                 HomeEvent.HiddenBalanceClick -> onHiddenBalanceClick()
                 HomeEvent.HiddenIncomeClick -> onHiddenIncomeClick()
-                is HomeEvent.PayOrGetPlanned -> payOrGetPlanned(event.transaction)
-                is HomeEvent.SkipPlanned -> skipPlanned(event.transaction)
-                is HomeEvent.SkipAllPlanned -> skipAllPlanned(event.transactions)
+                is HomeEvent.PayOrGetPlanned -> payOrGetPlanned(event.transactionId)
+                is HomeEvent.SkipPlanned -> skipPlanned(event.transactionId)
+                is HomeEvent.SkipAllPlanned -> skipAllPlanned(event.transactionIds)
                 is HomeEvent.SetPeriod -> setPeriod(event.period)
                 HomeEvent.SelectNextMonth -> onSelectNextMonth()
                 HomeEvent.SelectPreviousMonth -> onSelectPreviousMonth()
@@ -449,7 +450,8 @@ class HomeViewModel @Inject constructor(
         reload()
     }
 
-    private suspend fun payOrGetPlanned(transaction: LegacyTransaction) {
+    private suspend fun payOrGetPlanned(transactionId: UUID) {
+        val transaction = findDueTransaction(transactionId) ?: return
         val paidTransaction = payOrSkipLegacyPlannedTransactionUseCase(
             transaction = transaction,
             skipTransaction = false
@@ -459,7 +461,8 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    private suspend fun skipPlanned(transaction: LegacyTransaction) {
+    private suspend fun skipPlanned(transactionId: UUID) {
+        val transaction = findDueTransaction(transactionId) ?: return
         val paidTransaction = payOrSkipLegacyPlannedTransactionUseCase(
             transaction = transaction,
             skipTransaction = true
@@ -469,7 +472,10 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    private suspend fun skipAllPlanned(transactions: List<LegacyTransaction>) {
+    private suspend fun skipAllPlanned(transactionIds: List<UUID>) {
+        val transactions = findDueTransactions(transactionIds)
+        if (transactions.isEmpty()) return
+
         val paidTransactions = payOrSkipLegacyPlannedTransactionsUseCase(
             transactions = transactions,
             skipTransaction = true
@@ -477,6 +483,19 @@ class HomeViewModel @Inject constructor(
         if (paidTransactions.isNotEmpty()) {
             reload()
         }
+    }
+
+    private fun findDueTransaction(transactionId: UUID): LegacyTransaction? {
+        return upcoming.transactions
+            .plus(overdue.transactions)
+            .firstOrNull { it.id == transactionId }
+    }
+
+    private fun findDueTransactions(transactionIds: List<UUID>): List<LegacyTransaction> {
+        val transactionIdSet = transactionIds.toSet()
+        return upcoming.transactions
+            .plus(overdue.transactions)
+            .filter { it.id in transactionIdSet }
     }
 
     private suspend fun dismissCustomerJourneyCard(card: CustomerJourneyCardModel) {

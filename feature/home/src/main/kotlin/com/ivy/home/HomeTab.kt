@@ -25,7 +25,6 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.TransactionType
-import com.ivy.data.model.legacy.LegacyTransaction
 import com.ivy.data.model.TransactionHistoryItem
 import com.ivy.ui.platform.LocalDatePicker
 import com.ivy.home.Constants.SWIPE_HORIZONTAL_THRESHOLD
@@ -63,6 +62,7 @@ import com.ivy.legacy.ui.modal.CurrencyModal
 import com.ivy.legacy.ui.modal.DeleteModal
 import kotlinx.collections.immutable.ImmutableList
 import java.math.BigDecimal
+import java.util.UUID
 
 @ExperimentalAnimationApi
 @ExperimentalFoundationApi
@@ -276,7 +276,7 @@ fun BoxWithConstraintsScope.HomeUi(
             skipAllModalVisible = false
         }
     ) {
-        onEvent(HomeEvent.SkipAllPlanned(uiState.overdue.transactions))
+        onEvent(HomeEvent.SkipAllPlanned(uiState.overdue.transactions.map { it.id }))
         skipAllModalVisible = false
     }
 }
@@ -308,12 +308,12 @@ fun HomeLazyColumn(
     onOpenMoreMenu: () -> Unit,
     onBalanceClick: () -> Unit,
 
-    onPayOrGet: (LegacyTransaction) -> Unit,
+    onPayOrGet: (UUID) -> Unit,
     onDismiss: (CustomerJourneyCardModel) -> Unit,
     onHiddenBalanceClick: () -> Unit,
     onHiddenIncomeClick: () -> Unit,
-    onSkipTransaction: (LegacyTransaction) -> Unit,
-    onSkipAllTransactions: (List<LegacyTransaction>) -> Unit,
+    onSkipTransaction: (UUID) -> Unit,
+    onSkipAllTransactions: (List<UUID>) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val periodState = LocalPeriodState.current
@@ -382,7 +382,7 @@ fun HomeLazyColumn(
             overdue = overdue,
             setOverdueExpanded = setOverdueExpanded,
             history = history,
-            onPayOrGet = onPayOrGet,
+            onPayOrGet = { onPayOrGet(it.id) },
             onTransactionClick = {
                 nav.navigateTo(
                     EditTransactionScreen(
@@ -410,8 +410,10 @@ fun HomeLazyColumn(
             emptyStateTitle = noTransactionsTitle,
             emptyStateText = noTransactionsText,
             shouldShowAccountSpecificColorInTransactions = shouldShowAccountSpecificColorInTransactions,
-            onSkipTransaction = onSkipTransaction,
-            onSkipAllTransactions = onSkipAllTransactions
+            onSkipTransaction = { onSkipTransaction(it.id) },
+            onSkipAllTransactions = { transactions ->
+                onSkipAllTransactions(transactions.map { it.id })
+            }
         )
     }
 }

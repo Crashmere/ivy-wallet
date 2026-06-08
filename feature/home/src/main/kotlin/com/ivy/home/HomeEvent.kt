@@ -1,8 +1,8 @@
 package com.ivy.home
 
-import com.ivy.data.model.legacy.LegacyTransaction
 import com.ivy.home.customerjourney.CustomerJourneyCardModel
 import com.ivy.ui.period.TimePeriod
+import java.util.UUID
 
 sealed interface HomeEvent {
     data class SetUpcomingExpanded(val expanded: Boolean) : HomeEvent
@@ -21,9 +21,9 @@ sealed interface HomeEvent {
 
     data class SetPeriod(val period: TimePeriod) : HomeEvent
 
-    data class PayOrGetPlanned(val transaction: LegacyTransaction) : HomeEvent
-    data class SkipPlanned(val transaction: LegacyTransaction) : HomeEvent
-    data class SkipAllPlanned(val transactions: List<LegacyTransaction>) : HomeEvent
+    data class PayOrGetPlanned(val transactionId: UUID) : HomeEvent
+    data class SkipPlanned(val transactionId: UUID) : HomeEvent
+    data class SkipAllPlanned(val transactionIds: List<UUID>) : HomeEvent
 
     data class DismissCustomerJourneyCard(val card: CustomerJourneyCardModel) : HomeEvent
 
