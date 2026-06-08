@@ -2,13 +2,12 @@ package com.ivy.domain.usecase.planned
 
 import com.ivy.data.api.AccountStore
 import com.ivy.data.api.PlannedPaymentRuleStore
+import com.ivy.data.model.Account
 import com.ivy.data.model.IntervalType
 import com.ivy.data.model.TransactionType
-import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.data.model.PlannedPaymentRule
-import com.ivy.domain.mapper.legacy.toLegacyAccount
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
-import com.ivy.domain.usecase.exchange.LegacyExchangeRatesUseCase
+import com.ivy.domain.usecase.exchange.ExchangeAmountUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -25,7 +24,7 @@ data class PlannedPaymentsOverview(
 class GetPlannedPaymentsOverviewUseCase @Inject internal constructor(
     private val plannedPaymentRuleStore: PlannedPaymentRuleStore,
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
-    private val exchangeRatesUseCase: LegacyExchangeRatesUseCase,
+    private val exchangeAmountUseCase: ExchangeAmountUseCase,
     private val accountStore: AccountStore,
 ) {
     suspend operator fun invoke(): PlannedPaymentsOverview {
@@ -33,7 +32,7 @@ class GetPlannedPaymentsOverviewUseCase @Inject internal constructor(
             val oneTime = plannedPaymentRuleStore.findAllByOneTime(oneTime = true)
             val recurring = plannedPaymentRuleStore.findAllByOneTime(oneTime = false)
             val baseCurrency = getBaseCurrencyCode()
-            val accounts = accountStore.findAll().map { it.toLegacyAccount() }
+            val accounts = accountStore.findAll()
 
             PlannedPaymentsOverview(
                 oneTime = oneTime,
@@ -68,11 +67,10 @@ class GetPlannedPaymentsOverviewUseCase @Inject internal constructor(
 
     private suspend fun Iterable<PlannedPaymentRule>.sumPlannedInBaseCurrency(
         baseCurrency: String,
-        accounts: List<LegacyAccount>
+        accounts: List<Account>
     ): Double =
         sumOf {
-            exchangeRatesUseCase.amountBaseCurrency(
-                plannedPayment = it,
+            it.amountBaseCurrency(
                 baseCurrency = baseCurrency,
                 accounts = accounts
             )
@@ -80,7 +78,7 @@ class GetPlannedPaymentsOverviewUseCase @Inject internal constructor(
 
     private suspend fun Iterable<PlannedPaymentRule>.sumRecurringForMonthInBaseCurrency(
         baseCurrency: String,
-        accounts: List<LegacyAccount>
+        accounts: List<Account>
     ): Double =
         sumOf {
             amountForMonthInBaseCurrency(
@@ -93,10 +91,9 @@ class GetPlannedPaymentsOverviewUseCase @Inject internal constructor(
     private suspend fun amountForMonthInBaseCurrency(
         plannedPayment: PlannedPaymentRule,
         baseCurrency: String,
-        accounts: List<LegacyAccount>
+        accounts: List<Account>
     ): Double {
-        val amountBaseCurrency = exchangeRatesUseCase.amountBaseCurrency(
-            plannedPayment = plannedPayment,
+        val amountBaseCurrency = plannedPayment.amountBaseCurrency(
             baseCurrency = baseCurrency,
             accounts = accounts,
         )
@@ -131,6 +128,19 @@ class GetPlannedPaymentsOverviewUseCase @Inject internal constructor(
 
             null -> amountBaseCurrency
         }
+    }
+
+    private suspend fun PlannedPaymentRule.amountBaseCurrency(
+        baseCurrency: String,
+        accounts: List<Account>,
+    ): Double {
+        val amountCurrency = accounts.find { it.id.value == accountId }?.asset?.code
+            ?: return amount
+        return exchangeAmountUseCase(
+            amount = amount.toBigDecimal(),
+            baseCurrency = baseCurrency,
+            fromCurrency = amountCurrency,
+        ).getOrNull()?.toDouble() ?: amount
     }
 
     private companion object {
