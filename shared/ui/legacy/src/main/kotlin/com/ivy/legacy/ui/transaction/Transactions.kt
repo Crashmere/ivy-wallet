@@ -31,7 +31,7 @@ import com.ivy.legacy.ui.theme.Orange
 import com.ivy.legacy.ui.theme.Red
 import com.ivy.legacy.ui.theme.White
 import com.ivy.legacy.ui.button.IvyButton
-import com.ivy.legacy.ui.icon.IvyIcon
+import com.ivy.ui.compose.ResourceIcon
 import java.util.UUID
 
 fun LazyListScope.transactions(
@@ -323,7 +323,7 @@ private fun LazyItemScope.NoTransactionsEmptyState(
     ) {
         Spacer(Modifier.height(32.dp))
 
-        IvyIcon(
+        ResourceIcon(
             icon = R.drawable.ic_notransactions,
             tint = Gray
         )

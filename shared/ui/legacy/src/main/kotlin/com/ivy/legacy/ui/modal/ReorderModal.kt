@@ -25,10 +25,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.R
-import com.ivy.legacy.ui.icon.IvyIcon
 import com.ivy.legacy.ui.theme.GradientGreen
 import com.ivy.legacy.ui.theme.White
 import com.ivy.ui.compose.GradientIconButton
+import com.ivy.ui.compose.ResourceIcon
 import java.util.Collections
 import java.util.Random
 import java.util.UUID
@@ -248,7 +248,7 @@ private class Adapter<T>(
                 ) {
                     Spacer(Modifier.width(24.dp))
 
-                    IvyIcon(
+                    ResourceIcon(
                         modifier = Modifier
                             .pointerInput(Unit) {
                                 detectTapGestures(

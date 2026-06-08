@@ -46,9 +46,9 @@ import com.ivy.data.model.currency.localDecimalSeparator
 import com.ivy.ui.compose.onCompositionStart
 import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.Red
-import com.ivy.legacy.ui.icon.IvyIcon
 import com.ivy.legacy.ui.modal.IvyModal
 import com.ivy.legacy.ui.modal.ModalPositiveButton
+import com.ivy.ui.compose.ResourceIcon
 import java.util.UUID
 import kotlin.math.truncate
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -91,7 +91,7 @@ fun BoxWithConstraintsScope.AmountModal(
         visible = visible,
         dismiss = dismiss,
         PrimaryAction = {
-            IvyIcon(
+            ResourceIcon(
                 modifier = circleButtonModifier(
                     size = 52.dp,
                     onClick = {
@@ -397,7 +397,7 @@ internal fun AmountKeyboard(
             onNumberPressed = onNumberPressed
         )
 
-        IvyIcon(
+        ResourceIcon(
             modifier = circleButtonModifier(onClick = onBackspace)
                 .padding(all = 24.dp)
                 .testTag("key_del"),

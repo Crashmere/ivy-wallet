@@ -62,12 +62,12 @@ import com.ivy.legacy.ui.theme.Red
 import com.ivy.legacy.ui.theme.White
 import com.ivy.legacy.ui.icon.ItemIconSDefaultIcon
 import com.ivy.legacy.ui.button.IvyButton
-import com.ivy.legacy.ui.icon.IvyIcon
 import com.ivy.legacy.ui.theme.findContrastTextColor
 import com.ivy.legacy.ui.theme.gradientBlack
 import com.ivy.legacy.ui.theme.gradientExpenses
 import com.ivy.legacy.ui.theme.toComposeColor
 import com.ivy.legacy.ui.money.AmountCurrencyB1
+import com.ivy.ui.compose.ResourceIcon
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import java.math.BigDecimal
@@ -571,7 +571,7 @@ private fun TransferHeader(
 
         Spacer(Modifier.width(12.dp))
 
-        IvyIcon(icon = R.drawable.ic_arrow_right, tint = accountContrastColor)
+        ResourceIcon(icon = R.drawable.ic_arrow_right, tint = accountContrastColor)
 
         Spacer(Modifier.width(12.dp))
 
@@ -679,7 +679,7 @@ internal fun TypeAmountCurrency(
             }
         }
 
-        IvyIcon(
+        ResourceIcon(
             modifier = Modifier
                 .background(style.gradient.asHorizontalBrush(), CircleShape),
             icon = style.icon,

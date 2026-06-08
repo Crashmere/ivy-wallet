@@ -1474,6 +1474,7 @@ shared:ui:core
 - feature 层已停止直接导入旧 `Gradient`、`GradientGreen` 和 `GradientIvy`；通用渐变数据结构和固定绿色/紫色渐变迁入 `shared:ui:core` 的 `Gradient`/`IvyGradients`，`shared:ui:legacy` 暂时保留同名兼容别名给旧组件内部使用。
 - feature 层已停止直接导入旧颜色工具 `toComposeColor`、`findContrastTextColor`、`dynamicContrast` 和 `isDarkColor`；这些纯颜色转换/对比度算法迁入 `shared:ui:core`，`shared:ui:legacy` 暂时保留同名转发入口给旧组件内部使用。
 - `shared:ui:legacy` 的旧固定色板、旧渐变别名和旧颜色 helper 已收窄为模块内部实现；公开按钮 API 改为直接暴露 `shared:ui:core` 的正式 `Gradient` 类型，外部模块不再能导入 legacy theme 色板常量。
+- `shared:ui:legacy` 内部也已改用 `shared:ui:core` 的 `ResourceIcon` 绘制基础资源图标；旧 `IvyIcon` 包装文件删除，基础图标绘制入口不再滞留在 legacy 模块中。
 - `feature:exchange-rates` 已停止直接导入旧 `style` 文本样式扩展；文本样式改用显式 `TextStyle.copy()`，保留旧扩展原本默认的颜色、字重和对齐行为。
 - `feature:balance`、`feature:main` 和 `feature:accounts` 已停止直接导入旧 `style` 文本样式扩展；文本样式改用显式 `TextStyle.copy()`，继续保留旧扩展原本默认的颜色、字重和对齐行为。
 - `feature:categories` 和 `feature:piechart` 已停止直接导入旧 `style` 文本样式扩展；分类列表、排序弹窗和饼图统计页的文本样式改用显式 `TextStyle.copy()`，继续保留原视觉行为。

@@ -21,8 +21,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.legacy.ui.icon.IvyIcon
 import com.ivy.ui.compose.thenIf
+import com.ivy.ui.compose.ResourceIcon
 
 @Composable
 fun IvyOutlinedButton(
@@ -57,7 +57,7 @@ fun IvyOutlinedButton(
         if (iconStart != null) {
             Spacer(Modifier.width(12.dp))
 
-            IvyIcon(
+            ResourceIcon(
                 icon = iconStart,
                 tint = iconTint,
             )

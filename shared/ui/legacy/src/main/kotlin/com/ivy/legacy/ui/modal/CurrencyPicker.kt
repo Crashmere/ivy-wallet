@@ -48,12 +48,12 @@ import com.ivy.ui.compose.keyboardOnlyWindowInsets
 import com.ivy.ui.compose.onCompositionStart
 import com.ivy.ui.R
 import com.ivy.data.model.currency.IvyCurrency
-import com.ivy.legacy.ui.icon.IvyIcon
 import com.ivy.legacy.ui.theme.GradientGreen
 import com.ivy.legacy.ui.theme.GradientIvy
 import com.ivy.legacy.ui.theme.Ivy
 import com.ivy.legacy.ui.theme.White
 import com.ivy.ui.animation.DURATION_MODAL_ANIM
+import com.ivy.ui.compose.ResourceIcon
 import java.util.Locale
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
@@ -152,9 +152,10 @@ private fun SearchInput(
     ) {
         Spacer(Modifier.width(16.dp))
 
-        IvyIcon(
+        ResourceIcon(
             modifier = Modifier.padding(vertical = 8.dp),
-            icon = R.drawable.ic_search
+            icon = R.drawable.ic_search,
+            tint = LegacyTheme.colors.pureInverse
         )
 
         Spacer(Modifier.width(8.dp))
@@ -250,7 +251,7 @@ private fun SelectedCurrencyCard(
 
         Spacer(Modifier.weight(1f))
 
-        IvyIcon(
+        ResourceIcon(
             icon = R.drawable.ic_check,
             tint = White
         )
