@@ -80,7 +80,7 @@
 - 收窄数据写入事件：当前只有账户页订阅账户变更，分类/标签写入事件已从 `DataWriteEvent` 中移除；分类/标签 Store 仍保留本地缓存，但不再发布无人消费的事件。
 - 收窄旧主题外部入口：feature 层不再直接导入 `legacy.ui.theme.system` 的 `LegacyTheme/style/colorAs`，改走 `legacy.ui.theme` 门面；`system` 包继续作为 `shared:ui:legacy` 内部实现。
 - 收窄旧主题内部调用面：旧 UI 组件和弹窗也已改走 `legacy.ui.theme` 门面，`system.LegacyTheme` 收窄为模块内部实现，并删除重复的 `system` typography 扩展。
-- 继续收窄旧主题 system 包：旧 UI 组件不再直接导入 `theme.system` 颜色/工具，外层旧色板补齐仍需公开的颜色和 `asBrush()`；底层 `Colors.kt` 删除重复的 gradient/对比度工具，只保留主题默认值需要的颜色常量。
+- 继续收窄旧主题 system 包：旧 UI 组件不再直接导入 `theme.system` 颜色/工具；底层 `Colors.kt` 已删除重复的 gradient/对比度工具和颜色选择器专用色板，只保留旧主题默认值需要的颜色常量。
 - 收窄标签弹窗公开面：`AddOrEditTagModal` 改为 `shared:ui:legacy` 内部实现，feature 层继续只通过 `ShowTagModal` 和 `AddTagButton` 访问标签 UI。
 - 收窄 data-core 内部远程源：删除只有单实现且只被 `DefaultExchangeRateStore` 使用的 `RemoteExchangeRatesDataSource` 接口；domain 仍只依赖 `ExchangeRateStore`，汇率同步行为不变。
 - 清理旧 UI 无效参数：删除 `ShowTagModal` 和 `ModalAmountSection` 中未使用的 `modifier` 参数及对应 suppress，调用方和展示行为不变。
@@ -117,7 +117,7 @@
 - 收入/支出汇总卡片已迁入 `shared:ui:core` 的 `com.ivy.ui.summary.IncomeExpensesCards`；交易页和报表页继续复用原金额、交易数量、添加收入/支出按钮和点击入口行为，`shared:ui:legacy` 不再保留 `legacy.ui.summary` 包。
 - 搜索输入框已迁入 `shared:ui:core` 的 `com.ivy.ui.search.SearchInput`；分类、汇率、搜索页和标签弹窗继续复用原搜索、清空、自动聚焦和键盘隐藏行为，`shared:ui:legacy` 不再保留 `legacy.ui.search` 包。
 - 标签入口按钮已迁入 `shared:ui:core` 的 `com.ivy.ui.tags.AddTagButton`；编辑交易页和报表筛选页继续保留原新增/查看标签按钮展示，`shared:ui:legacy` 的 `legacy.ui.tags` 对外只剩标签弹窗入口。
-- 旧颜色选择器调色板已从 `legacy.ui.theme` 移回 `IvyColorPicker` 文件私有常量；主题包继续只保留旧主题门面、旧色板 token 和仍被旧组件复用的颜色工具。
+- 旧颜色选择器调色板已从旧主题 system 色板移回 `IvyColorPicker` 文件私有常量；主题包继续只保留旧主题门面和主题默认值实际需要的色板 token。
 - 旧交易列表公开模型的集合入参已从 `ImmutableList` 收窄为普通 `List`；首页、搜索、报表和交易页不再为了调用旧交易列表额外转换账户集合，交易列表展示、到期/逾期 section 和标签展示行为不变。
 - 旧交易卡片的金额行 `TypeAmountCurrency` 已收窄为 `TransactionCard` 文件私有实现；`legacy.ui.transaction` 对外继续只暴露交易列表入口和必要的列表输入模型。
 - 旧弹窗标题 `ModalTitle` 已迁入 `shared:ui:core` 的 `com.ivy.ui.modal.ModalTitle`；feature 和 legacy 弹窗继续保留原标题字号、字重、颜色和左右间距，`legacy.ui.modal` 少暴露一个纯展示标题入口。
@@ -1543,6 +1543,7 @@ shared:ui:core
 - 旧交易列表固定色继续迁出：空状态、到期/逾期标题、交易类型金额行和历史日期分隔条改用 `shared:ui:core` 的固定色与固定渐变；`legacy.ui.transaction` 不再直接导入 legacy 主题固定色板。
 - 旧主题门面继续收窄：剩余 `Gradient` typealias 调用已改到 `shared:ui:core`，旧主题 helper 文件不再保留 `Gradient` 别名、固定色或固定渐变别名。
 - 旧主题颜色工具继续收窄：旧组件直接使用 `shared:ui:core` 的颜色对比、动态对比和 ARGB 转 Compose 颜色工具；legacy 交易卡片内联最后两个动态渐变后，旧主题 helper 文件已删除，`LegacyColors` 仅继续作为旧主题色板接口存在。
+- 旧颜色选择器不再直接导入 `legacy.ui.theme.system` 的整套调色板；颜色选择器专用基础色/浅色/深色变体改为文件私有常量，旧主题 `Colors.kt` 只保留 `LegacyThemeDefaults` 需要的主题 token。
 - 币种选择弹窗和内部币种选择器已迁入 `shared:ui:core`，`CurrencyModal` / `CurrencyPicker` 继续保留原搜索、加密货币分组、预选/选中卡片、键盘避让和保存行为；设置、首页、借贷和账户弹窗改用 core 入口。
 - 图标选择弹窗已迁入 `shared:ui:core`，`ChooseIconModal` 继续保留原图标清单、分区、选中边框、动态对比色和保存行为；借贷、账户和分类编辑弹窗改用 core 入口。
 - 周期选择弹窗和内部间隔选择行已迁入 `shared:ui:core`，`ChoosePeriodModal` / `IntervalPickerRow` 继续保留原月份横向列表、自定义起止日期、最近 N 天/周/月/年、全时间范围、键盘避让和保存行为；首页、余额、交易、报表和饼图统计页改用 core 入口。
