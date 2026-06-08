@@ -55,7 +55,6 @@ import com.ivy.legacy.ui.transaction.TransactionListAccount
 import com.ivy.ui.period.Month
 import com.ivy.ui.period.TimePeriod
 import com.ivy.ui.period.displayLong
-import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.ui.period.LocalPeriodState
 import com.ivy.legacy.ui.summary.IncomeExpensesCards
 import com.ivy.legacy.ui.transaction.transactions
@@ -180,8 +179,8 @@ fun BoxWithConstraintsScope.TransactionsScreen(screen: TransactionsScreen) {
         onEditCategory = {
             viewModel.onEvent(TransactionsEvent.EditCategory(it))
         },
-        onEditAccount = { acc, newBalance ->
-            viewModel.onEvent(TransactionsEvent.EditAccount(acc.id, newBalance))
+        onEditAccount = { accountId, newBalance ->
+            viewModel.onEvent(TransactionsEvent.EditAccount(accountId, newBalance))
         },
         onPayOrGet = { transactionId ->
             viewModel.onEvent(TransactionsEvent.PayOrGet(transactionId))
@@ -262,7 +261,7 @@ private fun BoxWithConstraintsScope.UI(
     skipAllModalVisible: Boolean,
     onSkipAllModalVisible: (Boolean) -> Unit,
 
-    account: LegacyAccount?,
+    account: TransactionsAccount?,
     category: Category?,
 
     updateAccountNameConfirmation: (String) -> Unit,
@@ -284,7 +283,7 @@ private fun BoxWithConstraintsScope.UI(
     onPreviousMonth: () -> Unit,
     onNextMonth: () -> Unit,
     onSetPeriod: (TimePeriod) -> Unit,
-    onEditAccount: (LegacyAccount, Double) -> Unit,
+    onEditAccount: (UUID, Double) -> Unit,
     onEditCategory: (Category) -> Unit,
     onDelete: () -> Unit,
     deleteModal1Visible: Boolean,
@@ -389,7 +388,7 @@ private fun BoxWithConstraintsScope.UI(
                         when {
                             account != null -> {
                                 accountModalData = AccountModalData(
-                                    account = account,
+                                    account = account.toLegacyAccount(),
                                     baseCurrency = currency,
                                     balance = balance,
                                     autoFocusKeyboard = false
@@ -409,7 +408,7 @@ private fun BoxWithConstraintsScope.UI(
                         when {
                             account != null -> {
                                 accountModalData = AccountModalData(
-                                    account = account,
+                                    account = account.toLegacyAccount(),
                                     baseCurrency = currency,
                                     balance = balance,
                                     adjustBalanceMode = true,
@@ -426,7 +425,7 @@ private fun BoxWithConstraintsScope.UI(
                     },
                     showAccountModal = {
                         accountModalData = AccountModalData(
-                            account = account,
+                            account = account?.toLegacyAccount(),
                             baseCurrency = currency,
                             balance = balance,
                             adjustBalanceMode = false,
@@ -508,7 +507,9 @@ private fun BoxWithConstraintsScope.UI(
     AccountModal(
         modal = accountModalData,
         onCreateAccount = { },
-        onEditAccount = onEditAccount,
+        onEditAccount = { account, newBalance ->
+            onEditAccount(account.id, newBalance)
+        },
         dismiss = {
             accountModalData = null
         }
@@ -588,7 +589,7 @@ private fun LazyListScope.choosePeriodModal(
 private fun BoxWithConstraintsScope.DeleteModals(
     deleteModal1Visible: Boolean,
     setDeleteModal1Visible: (Boolean) -> Unit,
-    account: LegacyAccount?,
+    account: TransactionsAccount?,
     category: Category?,
     updateAccountNameConfirmation: (String) -> Unit,
     enableDeletionButton: Boolean,
@@ -660,7 +661,7 @@ private fun Header(
     currency: String,
     baseCurrency: String,
     itemColor: Color,
-    account: LegacyAccount?,
+    account: TransactionsAccount?,
     category: Category?,
     balance: Double,
     balanceBaseCurrency: Double?,
@@ -882,7 +883,7 @@ private fun StatisticToolbarDeleteButton(
 @Composable
 private fun Item(
     contrastColor: Color,
-    account: LegacyAccount?,
+    account: TransactionsAccount?,
     category: Category?,
 
     showCategoryModal: () -> Unit,

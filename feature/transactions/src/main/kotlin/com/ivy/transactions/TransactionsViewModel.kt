@@ -194,8 +194,8 @@ internal class TransactionsViewModel @Inject internal constructor(
     }
 
     @Composable
-    private fun getAccount(): LegacyAccount? {
-        return selectedAccount()
+    private fun getAccount(): TransactionsAccount? {
+        return selectedAccount()?.toTransactionsAccount()
     }
 
     @Composable
