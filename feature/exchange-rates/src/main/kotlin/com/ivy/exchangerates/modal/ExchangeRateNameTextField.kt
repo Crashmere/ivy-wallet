@@ -29,7 +29,6 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.legacy.ui.theme.style
 import com.ivy.ui.platform.hideKeyboard
 
 @Composable
@@ -60,7 +59,7 @@ internal fun ExchangeRateNameTextField(
             if (isEmpty && hint.isNullOrBlank().not()) {
                 Text(
                     text = hint!!,
-                    style = LegacyTheme.typo.b2.style(
+                    style = LegacyTheme.typo.b2.copy(
                         color = LegacyTheme.colors.gray,
                         fontWeight = FontWeight.SemiBold,
                         textAlign = TextAlign.Start
@@ -75,7 +74,7 @@ internal fun ExchangeRateNameTextField(
                     .focusRequester(focusRequester),
                 value = value,
                 onValueChange = onValueChanged,
-                textStyle = LegacyTheme.typo.b1.style(
+                textStyle = LegacyTheme.typo.b1.copy(
                     color = textColor,
                     fontWeight = FontWeight.ExtraBold,
                     textAlign = TextAlign.Start

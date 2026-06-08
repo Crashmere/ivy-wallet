@@ -16,10 +16,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.currency.format
 import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.legacy.ui.theme.style
 import com.ivy.exchangerates.model.RateUi
 
 @Composable
@@ -77,19 +77,25 @@ private fun RateColumn(label: String, rate: String, value: String) {
     Column {
         Text(
             text = label,
-            style = LegacyTheme.typo.c.style(
+            style = LegacyTheme.typo.c.copy(
+                color = LegacyTheme.colors.pureInverse,
+                textAlign = TextAlign.Start,
                 fontWeight = FontWeight.Normal
             )
         )
         Text(
             text = rate,
-            style = LegacyTheme.typo.nB1.style(
+            style = LegacyTheme.typo.nB1.copy(
+                color = LegacyTheme.colors.pureInverse,
+                textAlign = TextAlign.Start,
                 fontWeight = FontWeight.ExtraBold
             )
         )
         Text(
             text = value,
-            style = LegacyTheme.typo.nB2.style(
+            style = LegacyTheme.typo.nB2.copy(
+                color = LegacyTheme.colors.pureInverse,
+                textAlign = TextAlign.Start,
                 fontWeight = FontWeight.Normal
             )
         )

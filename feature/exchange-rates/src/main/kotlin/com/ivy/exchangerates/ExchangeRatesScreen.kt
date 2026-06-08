@@ -24,11 +24,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ivy.ui.navigation.screenScopedViewModel
 import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.legacy.ui.theme.style
 import com.ivy.exchangerates.component.RateItem
 import com.ivy.exchangerates.model.RateUi
 import com.ivy.exchangerates.modal.AddRateModal
@@ -139,8 +139,9 @@ private fun BoxWithConstraintsScope.UI(
                         .fillMaxWidth()
                         .padding(horizontal = 16.dp),
                     text = "${it.from}-${it.to}",
-                    style = LegacyTheme.typo.nH2.style(
+                    style = LegacyTheme.typo.nH2.copy(
                         textAlign = TextAlign.Center,
+                        fontWeight = FontWeight.Bold,
                         color = LegacyTheme.colors.primary
                     )
                 )
