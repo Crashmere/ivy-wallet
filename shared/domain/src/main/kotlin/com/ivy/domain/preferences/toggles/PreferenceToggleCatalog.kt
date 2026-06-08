@@ -4,7 +4,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class PreferenceToggleCatalog @Inject constructor() {
+class PreferenceToggleCatalog @Inject internal constructor() {
 
     val sortCategoriesAscending = BoolPreference(
         key = "sort_categories_ascending",

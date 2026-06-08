@@ -123,6 +123,7 @@
 - 删除 Android 系统自动备份规则：manifest 已保持 `allowBackup=false`，不再保留无实际作用的 `dataExtractionRules/fullBackupContent` 资源；应用内 zip 备份、恢复和 CSV 导入导出不受影响。
 - 收窄 Android manifest 平台配置：远程汇率接口全部使用 HTTPS，app 不再允许明文流量；`INTERNET` 权限只由 app 壳层声明，data-core 不再通过库 manifest 暗中合并权限。
 - 删除导航全局页面返回处理器：主页面、导入恢复页和交易筛选页改用页面内 `BackHandler` 处理局部返回行为，`Navigation` 只继续负责页面栈。
+- 收窄剩余 domain 注入构造边界：偏好开关服务、偏好开关目录和借贷交易同步核心仍可由 Hilt 注入，但构造函数不再作为模块外可手动调用入口。
 
 当前仍保留：
 
@@ -1216,6 +1217,7 @@ shared:ui:core
 - Android manifest 已删除系统自动备份规则引用和对应 XML；当前分支继续通过 Ivy 自己的数据管理入口处理 zip 备份、恢复和 CSV 导入导出。
 - Android manifest 已删除明文流量开关，汇率同步继续使用现有 HTTPS 接口；`INTERNET` 权限保留在 app 壳层，`shared:data:core` 不再携带库 manifest 权限声明。
 - 导航模块已删除全局页面返回处理器 Map；主页面账户 Tab 返回、导入恢复流程内部返回和交易页状态栏恢复都由页面内 `BackHandler` 承担。
+- domain 中剩余的偏好开关服务、偏好开关目录和内部借贷交易同步核心构造函数已收为 `internal`；模块外继续只依赖它们的注入类型和公开方法。
 - app 仍保留文件选择、文件分享、Material 日期选择器、BuildInfo、Locale 设置、生物识别和窗口安全等真正依赖 Activity 或 Android app 壳层的装配。
 
 ## 高风险区域

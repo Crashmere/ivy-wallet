@@ -34,7 +34,7 @@ import java.util.Locale
 import java.util.UUID
 import javax.inject.Inject
 
-internal class LoanTransactionSyncCore @Inject constructor(
+internal class LoanTransactionSyncCore @Inject internal constructor(
     private val categoryStore: CategoryStore,
     private val getCategoriesUseCase: GetCategoriesUseCase,
     private val loanRecordStore: LoanRecordStore,
