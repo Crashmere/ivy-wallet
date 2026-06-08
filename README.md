@@ -1259,6 +1259,7 @@ shared:ui:core
 - 借贷详情 ViewModel 不再通过 `lateinit screen` 保存整个导航 route；页面入口显式传入 `loanId` 启动加载，详情展示和编辑流程不变。
 - 交易列表 ViewModel 不再长期保存完整 `TransactionsScreen` route；翻月、删除和刷新只复用本地 `TransactionsQuery` 中的账户、分类、未分类标记和交易 ID 筛选参数。
 - feature 内部展示模型包名继续统一：借贷展示模型已从列表页子包 `loans.loan.data` 归位到 `loans.model`，汇率页 `RateUi` 也从 `exchangerates.data` 归位到 `exchangerates.model`，避免和真正数据层命名混淆。
+- UI core 删除通用 `Modifier.thenWhen` helper；唯一遗留调用点已改为 `ItemIcon` 私有 padding helper，保留仍被页面和 legacy 组件使用的 `thenIf`、点击、阴影和密度转换工具。
 - app 仍保留文件选择、文件分享、Material 日期选择器、BuildInfo、Locale 设置、生物识别和窗口安全等真正依赖 Activity 或 Android app 壳层的装配。
 
 ## 高风险区域

@@ -15,7 +15,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.ui.compose.thenWhen
 import java.util.Locale
 
 @Composable
@@ -118,27 +117,7 @@ private fun ItemIcon(
 
     if (iconInfo != null) {
         Image(
-            modifier = modifier
-                .thenWhen {
-                    if (!iconInfo.newFormat) {
-                        // do nothing for the old format of icons
-                        return@thenWhen this
-                    }
-
-                    when (iconInfo.style) {
-                        IconStyle.L ->
-                            // 64.dp - 48.dp = 16.dp / 4 = 4.dp
-                            this.padding(all = 4.dp)
-                        IconStyle.M ->
-                            // 48.dp - 32.dp = 16.dp / 4 = 4.dp
-                            this.padding(all = 4.dp)
-                        IconStyle.S ->
-                            // 32.dp - 24.dp = 8.dp / 4 = 2.dp
-                            // 2.dp is too small padding
-                            this.padding(all = 4.dp)
-                        IconStyle.UNKNOWN -> this
-                    }
-                },
+            modifier = modifier.applyIconPadding(iconInfo),
             painter = painterResource(id = iconInfo.iconId),
             colorFilter = ColorFilter.tint(tint),
             alignment = Alignment.Center,
@@ -151,6 +130,28 @@ private fun ItemIcon(
         )
     } else {
         Default?.invoke()
+    }
+}
+
+private fun Modifier.applyIconPadding(iconInfo: IconInfo): Modifier {
+    if (!iconInfo.newFormat) {
+        return this
+    }
+
+    return when (iconInfo.style) {
+        IconStyle.L ->
+            // 64.dp - 48.dp = 16.dp / 4 = 4.dp
+            padding(all = 4.dp)
+
+        IconStyle.M ->
+            // 48.dp - 32.dp = 16.dp / 4 = 4.dp
+            padding(all = 4.dp)
+
+        IconStyle.S ->
+            // 32.dp - 24.dp = 8.dp / 4 = 2.dp, which is too small here.
+            padding(all = 4.dp)
+
+        IconStyle.UNKNOWN -> this
     }
 }
 
