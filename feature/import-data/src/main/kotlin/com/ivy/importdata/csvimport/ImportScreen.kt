@@ -11,19 +11,25 @@ import com.ivy.importdata.csvimport.flow.ImportFrom
 import com.ivy.importdata.csvimport.flow.ImportProcessing
 import com.ivy.importdata.csvimport.flow.ImportResultUI
 import com.ivy.ui.navigation.ImportScreen
+import com.ivy.ui.navigation.navigation
 import com.ivy.ui.navigation.onScreenStart
 
 @ExperimentalFoundationApi
 @Composable
 fun BoxWithConstraintsScope.ImportCSVScreen() {
     val viewModel: ImportViewModel = screenScopedViewModel()
+    val nav = navigation()
 
     val importStep by viewModel.importStep.collectAsState()
     val importProgressPercent by viewModel.importProgressPercent.collectAsState()
     val importResult by viewModel.importResult.collectAsState()
 
-    onScreenStart {
-        viewModel.start(ImportScreen)
+    onScreenStart(
+        cleanUp = {
+            nav.unregisterScreenBackHandler(ImportScreen)
+        }
+    ) {
+        nav.registerScreenBackHandler(ImportScreen, viewModel::handleBack)
     }
 
     UI(

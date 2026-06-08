@@ -30,11 +30,17 @@ import com.ivy.ui.modal.AccountModalData
 @Composable
 fun BoxWithConstraintsScope.MainScreen(screen: MainScreen) {
     val viewModel: MainViewModel = screenScopedViewModel()
+    val nav = navigation()
 
     val currency by viewModel.currency.collectAsState()
 
-    onScreenStart {
-        viewModel.start(screen)
+    onScreenStart(
+        cleanUp = {
+            nav.unregisterScreenBackHandler(screen)
+        }
+    ) {
+        viewModel.start()
+        nav.registerScreenBackHandler(screen, viewModel::handleBack)
     }
 
     CompositionLocalProvider(LocalMainTabState provides viewModel.mainTabState) {

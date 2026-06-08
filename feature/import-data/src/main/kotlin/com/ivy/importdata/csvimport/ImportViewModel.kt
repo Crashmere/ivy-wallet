@@ -5,7 +5,6 @@ import androidx.lifecycle.viewModelScope
 import com.ivy.data.api.file.ExternalFile
 import com.ivy.data.model.importing.ImportResult
 import com.ivy.domain.usecase.backup.ImportBackupUseCase
-import com.ivy.ui.navigation.ImportScreen
 import com.ivy.ui.navigation.Navigation
 import com.ivy.ui.platform.FilePicker
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -31,19 +30,17 @@ class ImportViewModel @Inject constructor(
     private val _importResult = MutableStateFlow<ImportResult?>(null)
     val importResult: StateFlow<ImportResult?> = _importResult.asStateFlow()
 
-    fun start(screen: ImportScreen) {
-        nav.registerScreenBackHandler(screen) {
-            when (importStep.value) {
-                ImportStep.IMPORT_FROM -> false
-                ImportStep.LOADING -> {
-                    // do nothing, disable back
-                    true
-                }
+    fun handleBack(): Boolean {
+        return when (importStep.value) {
+            ImportStep.IMPORT_FROM -> false
+            ImportStep.LOADING -> {
+                // do nothing, disable back
+                true
+            }
 
-                ImportStep.RESULT -> {
-                    _importStep.value = ImportStep.IMPORT_FROM
-                    true
-                }
+            ImportStep.RESULT -> {
+                _importStep.value = ImportStep.IMPORT_FROM
+                true
             }
         }
     }

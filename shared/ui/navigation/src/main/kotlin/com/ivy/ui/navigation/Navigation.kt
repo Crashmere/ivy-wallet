@@ -20,6 +20,10 @@ class Navigation {
     screenBackHandlers[screen] = handler
   }
 
+  fun unregisterScreenBackHandler(screen: Screen) {
+    screenBackHandlers.remove(screen)
+  }
+
   fun navigateTo(screen: Screen) {
     val previousScreen = lastScreen
     if (previousScreen != null) {

@@ -42,6 +42,7 @@
 - 删除无效 legacy screen 标记：当前所有页面统一走 `LegacyUiRoot` surface，`Screen` 不再暴露 `isLegacy`，`NavigationRoot` 删除只服务非 legacy 分支的 ViewModelStore 清理逻辑。
 - 收窄旧弹窗状态职责：账户、分类、缓冲金额、周期、借贷、借贷记录和计划付款重复规则的 `*ModalData` 已从 `shared:ui:legacy` 迁到 `shared:ui:core` 的 `com.ivy.ui.modal` 包；feature 状态层不再为了保存弹窗数据直接引用 legacy 弹窗实现包。
 - 收窄导航返回职责：旧弹窗返回键处理改用 Compose `BackHandler`，`Navigation` 删除 modal back handler 栈，只继续处理页面级返回和根返回栈。
+- 收窄页面级返回职责：主界面、CSV 恢复页和交易统计页的返回回调改为随 `onScreenStart` 注册/注销；ViewModel 只保留返回行为判断，不再负责把回调长期挂到导航对象上。
 - 切断 legacy UI 对导航模块的依赖：legacy 内部初始化副作用改用 `shared:ui:core` 的 `onCompositionStart()`，`shared:ui:legacy` 不再声明 `shared:ui:navigation` 依赖。
 - 继续收窄导航模块依赖：`shared:ui:navigation` 已移除未使用的 `shared:ui:core` 依赖，当前只保留自身导航状态、Compose ViewModel owner 和 route 需要的 immutable collection。
 - 集中 ViewModel 获取入口：剩余直接使用 `viewModel()` 的 feature 页面已改用 `screenScopedViewModel()`，`lifecycle-viewmodel-compose` 依赖只保留在 `shared:ui:navigation`。
@@ -984,7 +985,7 @@
 - `RootViewModel` 的首次初始化判断已去掉同名私有包装函数，注入字段改为 `isInitialSetupCompletedUseCase`，启动编排直接调用 use case，避免函数和依赖同名造成误读。
 - `RootViewModel.start()` 不再用外层 `Dispatchers.IO` 包住 UI 状态更新和导航；主题读取、默认数据初始化等耗时工作由各自用例/初始化器处理，`ThemeState/PeriodState/Navigation` 更新留在主协程。
 - 根启动 Intent extra 已从 `RootViewModel` companion 移到 `RootIntentExtras`；`IvyAppStarter` 不再为了启动协议依赖 ViewModel 常量。
-- 导航返回处理已收窄为 `Navigation.handleRootBack()` 和 `registerScreenBackHandler()`；旧弹窗改用 Compose `BackHandler`，页面和旧 modal 不再直接访问导航内部的返回栈和 handler map。
+- 导航返回处理已收窄为 `Navigation.handleRootBack()`、`registerScreenBackHandler()` 和 `unregisterScreenBackHandler()`；旧弹窗改用 Compose `BackHandler`，页面级返回回调随页面生命周期注册/注销，旧 modal 不再直接访问导航内部的返回栈和 handler map。
 - `LocalTimeConverter/LocalTimeProvider/LocalTimeFormatter` 现在作为根部显式提供的 UI 时间平台入口保留，不再用废弃注解把当前页面的正常调用标成警告。
 - `RootContent` 接收的旧 Material 日期选择器已从 app 具体实现 `ActivityDatePicker` 收窄为 UI 层 `DatePicker` 接口；Activity 仍负责注册 FragmentManager 相关实现。
 - 交易提醒调度已删除无调用方的 `testNow()` 调试入口和旧 work name 常量，只保留当前实际使用的每日提醒任务。

@@ -17,7 +17,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -63,6 +62,7 @@ import com.ivy.ui.navigation.PieChartStatisticScreen
 import com.ivy.ui.navigation.TransactionRouteType
 import com.ivy.ui.navigation.TransactionsScreen
 import com.ivy.ui.navigation.navigation
+import com.ivy.ui.navigation.onScreenStart
 import com.ivy.ui.navigation.screenScopedViewModel
 import com.ivy.ui.R
 import com.ivy.ui.rememberScrollPositionListState
@@ -97,7 +97,11 @@ fun BoxWithConstraintsScope.TransactionsScreen(screen: TransactionsScreen) {
     val uiState = viewModel.uiState()
 
     val view = LocalView.current
-    LaunchedEffect(Unit) {
+    onScreenStart(
+        cleanUp = {
+            nav.unregisterScreenBackHandler(screen)
+        }
+    ) {
         viewModel.start(screen)
 
         nav.registerScreenBackHandler(screen) {
