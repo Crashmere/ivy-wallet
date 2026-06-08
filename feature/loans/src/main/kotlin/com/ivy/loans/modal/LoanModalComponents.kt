@@ -36,7 +36,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ivy.ui.compose.GradientIconButton
 import com.ivy.legacy.ui.button.IvyOutlinedButton
-import com.ivy.legacy.ui.icon.ItemIconMDefaultIcon
+import com.ivy.ui.icon.ItemIconMDefaultIcon
 import com.ivy.legacy.ui.modal.ModalAdd
 import com.ivy.legacy.ui.modal.ModalSave
 import com.ivy.ui.theme.colors.Gradient

@@ -40,7 +40,7 @@ import com.ivy.ui.R
 import com.ivy.data.model.CreateAccountData
 import com.ivy.data.model.CreateLoanRecordData
 import com.ivy.data.model.EditLoanRecordData
-import com.ivy.legacy.ui.icon.ItemIconSDefaultIcon
+import com.ivy.ui.icon.ItemIconSDefaultIcon
 import com.ivy.legacy.ui.modal.DeleteModal
 import com.ivy.legacy.ui.modal.IvyModal
 import com.ivy.legacy.ui.modal.ModalAmountSection

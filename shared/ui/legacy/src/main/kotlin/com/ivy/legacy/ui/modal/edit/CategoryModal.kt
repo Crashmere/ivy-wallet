@@ -49,7 +49,7 @@ import com.ivy.ui.compose.selectEndTextFieldValue
 import com.ivy.ui.R
 import com.ivy.data.model.CreateCategoryData
 import com.ivy.legacy.ui.theme.Ivy
-import com.ivy.legacy.ui.icon.ItemIconMDefaultIcon
+import com.ivy.ui.icon.ItemIconMDefaultIcon
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.legacy.ui.theme.dynamicContrast
 import com.ivy.legacy.ui.modal.ChooseIconModal

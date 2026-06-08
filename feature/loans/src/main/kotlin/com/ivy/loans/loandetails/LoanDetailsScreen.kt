@@ -69,7 +69,7 @@ import com.ivy.ui.theme.colors.IvyGradients
 import com.ivy.ui.theme.colors.IvyFixedColors.Ivy
 import com.ivy.legacy.ui.money.AmountCurrencyB1
 import com.ivy.legacy.ui.money.BalanceRow
-import com.ivy.legacy.ui.icon.ItemIconMDefaultIcon
+import com.ivy.ui.icon.ItemIconMDefaultIcon
 import com.ivy.legacy.ui.button.IvyButton
 import com.ivy.ui.compose.GradientIconButton
 import com.ivy.ui.compose.ResourceIcon

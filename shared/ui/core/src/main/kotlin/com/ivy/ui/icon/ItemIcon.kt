@@ -1,4 +1,4 @@
-package com.ivy.legacy.ui.icon
+package com.ivy.ui.icon
 
 import android.content.Context
 import androidx.annotation.DrawableRes
@@ -14,14 +14,13 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.ivy.legacy.ui.theme.LegacyTheme
 import java.util.Locale
 
 @Composable
 fun ItemIconMDefaultIcon(
     modifier: Modifier = Modifier,
     iconName: String?,
-    tint: Color = LegacyTheme.colors.pureInverse,
+    tint: Color,
     @DrawableRes defaultIcon: Int,
     iconContentScale: ContentScale? = null,
 ) {
@@ -35,28 +34,27 @@ fun ItemIconMDefaultIcon(
                 modifier = modifier,
                 painter = painterResource(id = defaultIcon),
                 colorFilter = ColorFilter.tint(tint),
-                contentDescription = "item icon"
+                contentDescription = "item icon",
             )
-        }
+        },
     )
 }
 
 @Composable
-internal fun ItemIconM(
+fun ItemIconM(
     modifier: Modifier = Modifier,
     iconName: String?,
-    tint: Color = LegacyTheme.colors.pureInverse,
+    tint: Color,
     iconContentScale: ContentScale? = null,
-    Default: (@Composable () -> Unit)? = null
+    Default: (@Composable () -> Unit)? = null,
 ) {
     ItemIcon(
-        modifier = modifier
-            .size(48.dp),
-        size = "m",
+        modifier = modifier.size(48.dp),
+        size = DynamicIconSize.M,
         iconName = iconName,
         tint = tint,
         iconContentScale = iconContentScale,
-        Default = Default
+        Default = Default,
     )
 }
 
@@ -64,8 +62,8 @@ internal fun ItemIconM(
 fun ItemIconSDefaultIcon(
     modifier: Modifier = Modifier,
     iconName: String?,
-    tint: Color = LegacyTheme.colors.pureInverse,
-    @DrawableRes defaultIcon: Int
+    tint: Color,
+    @DrawableRes defaultIcon: Int,
 ) {
     ItemIconS(
         modifier = modifier,
@@ -76,28 +74,27 @@ fun ItemIconSDefaultIcon(
                 modifier = modifier,
                 painter = painterResource(id = defaultIcon),
                 colorFilter = ColorFilter.tint(tint),
-                contentDescription = "item icon"
+                contentDescription = "item icon",
             )
-        }
+        },
     )
 }
 
 @Composable
-internal fun ItemIconS(
+fun ItemIconS(
     modifier: Modifier = Modifier,
     iconName: String?,
-    tint: Color = LegacyTheme.colors.pureInverse,
+    tint: Color,
     iconContentScale: ContentScale? = null,
-    Default: (@Composable () -> Unit)? = null
+    Default: (@Composable () -> Unit)? = null,
 ) {
     ItemIcon(
-        modifier = modifier
-            .size(32.dp),
-        size = "s",
+        modifier = modifier.size(32.dp),
+        size = DynamicIconSize.S,
         iconName = iconName,
         tint = tint,
         iconContentScale = iconContentScale,
-        Default = Default
+        Default = Default,
     )
 }
 
@@ -105,16 +102,15 @@ internal fun ItemIconS(
 private fun ItemIcon(
     modifier: Modifier = Modifier,
     iconName: String?,
-    size: String,
-    tint: Color = LegacyTheme.colors.pureInverse,
+    size: DynamicIconSize,
+    tint: Color,
     iconContentScale: ContentScale? = null,
-    Default: (@Composable () -> Unit)? = null
+    Default: (@Composable () -> Unit)? = null,
 ) {
-    val context = LocalContext.current
-    val iconInfo = getCustomIconId(
-        context = context,
+    val iconInfo = getDynamicIconInfo(
+        context = LocalContext.current,
         iconName = iconName,
-        size = size
+        size = size,
     )
 
     if (iconInfo != null) {
@@ -128,115 +124,96 @@ private fun ItemIcon(
             } else {
                 ContentScale.None
             },
-            contentDescription = iconName ?: "item icon"
+            contentDescription = iconName ?: "item icon",
         )
     } else {
         Default?.invoke()
     }
 }
 
-private fun Modifier.applyIconPadding(iconInfo: IconInfo): Modifier {
+private fun Modifier.applyIconPadding(iconInfo: DynamicIconInfo): Modifier {
     if (!iconInfo.newFormat) {
         return this
     }
 
-    return when (iconInfo.style) {
-        IconStyle.L ->
-            // 64.dp - 48.dp = 16.dp / 4 = 4.dp
-            padding(all = 4.dp)
-
-        IconStyle.M ->
-            // 48.dp - 32.dp = 16.dp / 4 = 4.dp
-            padding(all = 4.dp)
-
-        IconStyle.S ->
-            // 32.dp - 24.dp = 8.dp / 4 = 2.dp, which is too small here.
-            padding(all = 4.dp)
-
-        IconStyle.UNKNOWN -> this
+    return when (iconInfo.size) {
+        DynamicIconSize.L -> padding(all = 4.dp)
+        DynamicIconSize.M -> padding(all = 4.dp)
+        DynamicIconSize.S -> padding(all = 4.dp)
+        DynamicIconSize.UNKNOWN -> this
     }
 }
 
-private fun getCustomIconId(
+private fun getDynamicIconInfo(
     context: Context,
     iconName: String?,
-    size: String,
-): IconInfo? {
-    val iconStyle = when (size) {
-        "l" -> IconStyle.L
-        "m" -> IconStyle.M
-        "s" -> IconStyle.S
-        else -> IconStyle.UNKNOWN
-    }
-
+    size: DynamicIconSize,
+): DynamicIconInfo? {
     return iconName?.let {
         try {
-            val iconNameNormalized = iconName
-                .replace(" ", "")
-                .trim()
-                .lowercase(Locale.getDefault())
+            val iconNameNormalized = iconName.normalizedIconName()
 
             val itemId = context.resources.getIdentifier(
-                "ic_custom_${iconNameNormalized}_$size",
+                "ic_custom_${iconNameNormalized}_${size.resourceSuffix}",
                 "drawable",
-                context.packageName
+                context.packageName,
             ).takeIf { it != 0 }
 
             itemId?.let { nonNullId ->
-                IconInfo(
+                DynamicIconInfo(
                     iconId = nonNullId,
-                    style = iconStyle,
-                    newFormat = false
+                    size = size,
+                    newFormat = false,
                 )
             } ?: fallbackToNewIconFormat(
                 context = context,
                 iconName = iconName,
-                iconStyle = iconStyle
+                size = size,
             )
         } catch (e: Exception) {
             fallbackToNewIconFormat(
                 context = context,
                 iconName = iconName,
-                iconStyle = iconStyle
+                size = size,
             )
         }
     }
 }
 
-private data class IconInfo(
+private data class DynamicIconInfo(
     @DrawableRes
     val iconId: Int,
-    val style: IconStyle,
-    val newFormat: Boolean
+    val size: DynamicIconSize,
+    val newFormat: Boolean,
 )
 
-private enum class IconStyle {
-    L, M, S, UNKNOWN
+private enum class DynamicIconSize(
+    val resourceSuffix: String,
+) {
+    L("l"),
+    M("m"),
+    S("s"),
+    UNKNOWN(""),
 }
 
 private fun fallbackToNewIconFormat(
-    iconStyle: IconStyle,
     context: Context,
     iconName: String?,
-): IconInfo? {
+    size: DynamicIconSize,
+): DynamicIconInfo? {
     return iconName?.let {
         try {
-            val iconNameNormalized = iconName
-                .replace(" ", "")
-                .trim()
-                .lowercase(Locale.getDefault())
-
             val iconId = context.resources.getIdentifier(
-                iconNameNormalized,
+                iconName.normalizedIconName(),
                 "drawable",
-                context.packageName
+                context.packageName,
             ).takeIf { it != 0 }
 
             iconId?.let { nonNullId ->
-                IconInfo(
+                DynamicIconInfo(
                     iconId = nonNullId,
-                    style = iconStyle,
-                    newFormat = true
+                    size = size,
+                    newFormat = true,
                 )
             }
         } catch (e: Exception) {
@@ -244,3 +221,8 @@ private fun fallbackToNewIconFormat(
         }
     }
 }
+
+private fun String.normalizedIconName(): String =
+    replace(" ", "")
+        .trim()
+        .lowercase(Locale.getDefault())

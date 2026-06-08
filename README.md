@@ -116,7 +116,7 @@
 - 周期选择条和收入/支出汇总卡片已从旧通用组件包分别移入 `legacy.ui.period` 与 `legacy.ui.summary`；它们继续被现有页面复用，但不再挤在根组件目录中。
 - 旧搜索输入框已从根组件目录移入 `legacy.ui.search`；分类、标签、汇率和搜索页继续复用原搜索输入行为。
 - 旧金额展示组件已从根组件目录移入 `legacy.ui.money`；`BalanceRow` 和 `AmountCurrencyB1` 继续保留原金额格式化、隐藏金额和大数字缩写行为。
-- 旧按钮和图标基础控件已从根组件目录移入 `legacy.ui.button` 与 `legacy.ui.icon`；`component` 根目录不再承载通用基础控件文件。
+- 旧按钮基础控件已从根组件目录移入 `legacy.ui.button`；图标基础控件后续已继续迁入 `shared:ui:core`，`component` 根目录不再承载通用基础控件文件。
 - 旧标签 UI 已从 `component.tags` 迁入 `legacy.ui.tags`；编辑交易和报表筛选继续复用原添加标签按钮与标签弹窗。
 - 旧交易列表 UI 已从 `component.transaction` 迁入 `legacy.ui.transaction`；首页、搜索、报表和交易页继续复用原交易列表、交易卡片、到期分组和日期分隔展示。
 - CSV 导入结果页的返回按钮已改为 `feature:import-data` 私有实现；`shared:ui:legacy` 的 `BackButton` 收窄为模块内部给旧工具栏使用。
@@ -1475,6 +1475,7 @@ shared:ui:core
 - feature 层已停止直接导入旧颜色工具 `toComposeColor`、`findContrastTextColor`、`dynamicContrast` 和 `isDarkColor`；这些纯颜色转换/对比度算法迁入 `shared:ui:core`，`shared:ui:legacy` 暂时保留同名转发入口给旧组件内部使用。
 - `shared:ui:legacy` 的旧固定色板、旧渐变别名和旧颜色 helper 已收窄为模块内部实现；公开按钮 API 改为直接暴露 `shared:ui:core` 的正式 `Gradient` 类型，外部模块不再能导入 legacy theme 色板常量。
 - `shared:ui:legacy` 内部也已改用 `shared:ui:core` 的 `ResourceIcon` 绘制基础资源图标；旧 `IvyIcon` 包装文件删除，基础图标绘制入口不再滞留在 legacy 模块中。
+- 旧动态业务图标渲染也已迁入 `shared:ui:core` 的 `com.ivy.ui.icon.ItemIcon*` 入口，保留原新旧资源名回退、尺寸和 padding 规则；`shared:ui:legacy` 的 `legacy.ui.icon` 包已清空。
 - `feature:exchange-rates` 已停止直接导入旧 `style` 文本样式扩展；文本样式改用显式 `TextStyle.copy()`，保留旧扩展原本默认的颜色、字重和对齐行为。
 - `feature:balance`、`feature:main` 和 `feature:accounts` 已停止直接导入旧 `style` 文本样式扩展；文本样式改用显式 `TextStyle.copy()`，继续保留旧扩展原本默认的颜色、字重和对齐行为。
 - `feature:categories` 和 `feature:piechart` 已停止直接导入旧 `style` 文本样式扩展；分类列表、排序弹窗和饼图统计页的文本样式改用显式 `TextStyle.copy()`，继续保留原视觉行为。

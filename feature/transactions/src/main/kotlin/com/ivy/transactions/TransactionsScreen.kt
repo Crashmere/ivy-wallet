@@ -77,7 +77,7 @@ import com.ivy.data.model.IncomeExpensePair
 import com.ivy.legacy.ui.money.BalanceRow
 import com.ivy.ui.compose.GradientIconButton
 import com.ivy.legacy.ui.button.IvyOutlinedButton
-import com.ivy.legacy.ui.icon.ItemIconMDefaultIcon
+import com.ivy.ui.icon.ItemIconMDefaultIcon
 import com.ivy.ui.theme.colors.Gradient
 import com.ivy.ui.theme.colors.IvyFixedColors.White
 import com.ivy.ui.theme.colors.dynamicContrast

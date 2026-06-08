@@ -56,7 +56,7 @@ import com.ivy.legacy.ui.tags.ShowTagModal
 import com.ivy.ui.animation.springBounce
 import com.ivy.ui.R
 import com.ivy.ui.theme.colors.IvyGradients
-import com.ivy.legacy.ui.icon.ItemIconSDefaultIcon
+import com.ivy.ui.icon.ItemIconSDefaultIcon
 import com.ivy.legacy.ui.button.IvyButton
 import com.ivy.legacy.ui.button.IvyOutlinedButton
 import com.ivy.legacy.ui.modal.ChoosePeriodModal

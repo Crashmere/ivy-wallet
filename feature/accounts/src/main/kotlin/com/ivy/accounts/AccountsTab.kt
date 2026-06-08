@@ -39,7 +39,7 @@ import com.ivy.ui.navigation.screenScopedViewModel
 import com.ivy.ui.R
 import com.ivy.ui.rememberScrollPositionListState
 import com.ivy.legacy.ui.money.BalanceRow
-import com.ivy.legacy.ui.icon.ItemIconSDefaultIcon
+import com.ivy.ui.icon.ItemIconSDefaultIcon
 import com.ivy.legacy.ui.modal.ReorderModalSingleType
 import com.ivy.ui.compose.FilledIconButton
 import com.ivy.ui.theme.colors.dynamicContrast

@@ -70,7 +70,7 @@ import com.ivy.data.model.currency.IvyCurrency
 import com.ivy.ui.theme.colors.Gradient
 import com.ivy.ui.theme.colors.IvyFixedColors.Ivy
 import com.ivy.legacy.ui.money.BalanceRow
-import com.ivy.legacy.ui.icon.ItemIconSDefaultIcon
+import com.ivy.ui.icon.ItemIconSDefaultIcon
 import com.ivy.legacy.ui.button.IvyButton
 import com.ivy.ui.compose.ResourceIcon
 import com.ivy.ui.theme.colors.findContrastTextColor
