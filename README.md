@@ -1264,6 +1264,7 @@ shared:ui:core
 - 计划付款编辑 ViewModel 不再接收 `EditPlannedScreen` 导航 route；页面入口负责拆出计划规则 ID、交易类型、金额、账户、分类、标题和描述，编辑/新建行为不变。
 - 编辑交易 ViewModel 不再接收 `EditTransactionScreen` 导航 route；页面入口负责拆出初始交易 ID、交易类型、账户和分类参数，已有交易编辑和新建交易默认账户选择逻辑不变。
 - 交易列表 ViewModel 完全脱离导航 route 类型；`TransactionsScreen` 到本地 `TransactionsQuery` 的转换下沉到页面入口，ViewModel 只复用查询参数执行加载、翻月和刷新。
+- 交易列表内部查询参数继续去 legacy 命名：本地 `TransactionsQuery` 使用 `transactionIds`，加载流程用 `inputTransactions` 表达从 ID 局部读取出的交易；编辑交易和报表的标签搜索 debounce 常量也修正为 `Millis` 命名。
 - app 仍保留文件选择、文件分享、Material 日期选择器、BuildInfo、Locale 设置、生物识别和窗口安全等真正依赖 Activity 或 Android app 壳层的装配。
 
 ## 高风险区域

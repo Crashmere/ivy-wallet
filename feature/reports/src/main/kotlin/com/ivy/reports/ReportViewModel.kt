@@ -135,7 +135,7 @@ internal class ReportViewModel @Inject internal constructor(
     private var allTags by mutableStateOf<ImmutableList<Tag>>(persistentListOf())
 
     private var tagSearchJob: Job? = null
-    private val tagSearchDebounceTimeInMills: Long = 500
+    private val tagSearchDebounceTimeInMillis: Long = 500
 
     @Composable
     fun getShouldShowAccountSpecificColorInTransactions(): Boolean {
@@ -195,7 +195,7 @@ internal class ReportViewModel @Inject internal constructor(
     private suspend fun onTagSearch(query: String) {
         withContext(Dispatchers.IO) {
             tagSearchJob?.cancelAndJoin()
-            delay(tagSearchDebounceTimeInMills) // Debounce effect
+            delay(tagSearchDebounceTimeInMillis)
             tagSearchJob = launch(Dispatchers.IO) {
                 NotBlankTrimmedString.from(query.lowercase(Locale.getDefault()))
                     .fold(

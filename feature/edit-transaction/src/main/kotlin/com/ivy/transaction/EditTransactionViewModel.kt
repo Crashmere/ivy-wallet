@@ -153,7 +153,7 @@ internal class EditTransactionViewModel @Inject internal constructor(
     private var title: String? = null
     private lateinit var baseUserCurrency: String
     private var tagSearchJob: Job? = null
-    private val tagSearchDebounceTimeInMills: Long = 500
+    private val tagSearchDebounceTimeInMillis: Long = 500
     private val _uiEvents = MutableSharedFlow<EditTransactionUiEvent>()
     val uiEvents: SharedFlow<EditTransactionUiEvent> = _uiEvents.asSharedFlow()
 
@@ -941,7 +941,7 @@ internal class EditTransactionViewModel @Inject internal constructor(
     private fun searchTag(query: String) {
         viewModelScope.launch(Dispatchers.IO) {
             tagSearchJob?.cancelAndJoin()
-            delay(tagSearchDebounceTimeInMills) // Debounce effect
+            delay(tagSearchDebounceTimeInMillis)
             tagSearchJob = launch(Dispatchers.IO) {
                 NotBlankTrimmedString.from(query.lowercase(Locale.getDefault()))
                     .onRight {

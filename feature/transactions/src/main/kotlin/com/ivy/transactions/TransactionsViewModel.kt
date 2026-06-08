@@ -667,32 +667,32 @@ internal class TransactionsViewModel @Inject internal constructor(
             initWithTransactions.value = false
             treatTransfersAsIncomeExpense.value =
                 getTransfersAsIncomeExpensePreference()
-            val legacyTransactionsFromNavigation =
-                getLegacyTransactionsByIdsUseCase(query.legacyTransactionIds)
+            val inputTransactions =
+                getLegacyTransactionsByIdsUseCase(query.transactionIds)
 
             when {
                 query.accountId != null -> {
                     initForAccount(query.accountId)
                 }
 
-                query.categoryId != null && legacyTransactionsFromNavigation.isEmpty() -> {
+                query.categoryId != null && inputTransactions.isEmpty() -> {
                     initForCategory(query.categoryId, query.accountIdFilterList)
                 }
                 // Reports use a synthetic account-transfers category; keep it separate from
                 // the real unspecified-category branch.
-                query.categoryId != null && legacyTransactionsFromNavigation.isNotEmpty() &&
+                query.categoryId != null && inputTransactions.isNotEmpty() &&
                         !query.unspecifiedCategory -> {
                     initForCategoryWithTransactions(
                         query.categoryId,
                         query.accountIdFilterList,
-                        legacyTransactionsFromNavigation
+                        inputTransactions
                     )
                 }
 
-                query.unspecifiedCategory && legacyTransactionsFromNavigation.isNotEmpty() -> {
+                query.unspecifiedCategory && inputTransactions.isNotEmpty() -> {
                     initForAccountTransfersCategory(
                         query.accountIdFilterList,
-                        legacyTransactionsFromNavigation
+                        inputTransactions
                     )
                 }
 
@@ -733,5 +733,5 @@ internal data class TransactionsQuery(
     val categoryId: UUID?,
     val unspecifiedCategory: Boolean,
     val accountIdFilterList: ImmutableList<UUID>,
-    val legacyTransactionIds: ImmutableList<UUID>,
+    val transactionIds: ImmutableList<UUID>,
 )
