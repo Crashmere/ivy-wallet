@@ -7,7 +7,7 @@ import com.ivy.data.model.Transfer
 import java.math.BigDecimal
 import java.util.UUID
 
-object AccountValueFunctions {
+internal object AccountValueFunctions {
     fun balance(
         transaction: Transaction,
         accountId: UUID

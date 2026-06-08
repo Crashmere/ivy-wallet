@@ -8,10 +8,10 @@ import com.ivy.domain.util.mapIndexedNelSuspend
 import com.ivy.domain.util.nonEmptyListOfZeros
 import java.math.BigDecimal
 
-typealias ValueFunction<A> = (Transaction, A) -> BigDecimal
-typealias SuspendValueFunction<A> = suspend (Transaction, A) -> BigDecimal
+internal typealias ValueFunction<A> = (Transaction, A) -> BigDecimal
+internal typealias SuspendValueFunction<A> = suspend (Transaction, A) -> BigDecimal
 
-fun <Arg> foldTransactions(
+internal fun <Arg> foldTransactions(
     transactions: List<Transaction>,
     valueFunctions: NonEmptyList<ValueFunction<Arg>>,
     arg: Arg
@@ -42,7 +42,7 @@ internal tailrec fun <A> sumTransactionsInternal(
     }
 }
 
-suspend fun <Arg> foldTransactionsSuspend(
+internal suspend fun <Arg> foldTransactionsSuspend(
     transactions: List<Transaction>,
     valueFunctions: NonEmptyList<SuspendValueFunction<Arg>>,
     arg: Arg
@@ -73,7 +73,7 @@ internal tailrec suspend fun <A> sumTransactionsSuspendInternal(
     }
 }
 
-suspend fun <A> sumTransactions(
+internal suspend fun <A> sumTransactions(
     transactions: List<Transaction>,
     valueFunction: SuspendValueFunction<A>,
     argument: A

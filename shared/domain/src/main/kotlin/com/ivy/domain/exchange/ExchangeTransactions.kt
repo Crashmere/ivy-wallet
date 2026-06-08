@@ -11,14 +11,15 @@ import com.ivy.domain.transaction.transactionCurrency
 import java.math.BigDecimal
 import java.util.UUID
 
-typealias ExchangeEffect = suspend (ExchangeData, BigDecimal) -> Option<BigDecimal>
+internal typealias ExchangeEffect = suspend (ExchangeData, BigDecimal) -> Option<BigDecimal>
 
-data class ExchangeTransactionArgument(
+internal data class ExchangeTransactionArgument(
     val baseCurrency: String,
     val getAccount: suspend (accountId: UUID) -> LegacyAccount?,
     val exchange: ExchangeEffect
 )
-suspend fun exchangeInBaseCurrency(
+
+internal suspend fun exchangeInBaseCurrency(
     transaction: Transaction,
     arg: ExchangeTransactionArgument
 ): BigDecimal {
@@ -34,7 +35,7 @@ suspend fun exchangeInBaseCurrency(
         exchange = arg.exchange
     )
 }
-suspend fun exchangeInBaseCurrency(
+internal suspend fun exchangeInBaseCurrency(
     transaction: Transaction,
     baseCurrency: String,
     accounts: List<LegacyAccount>,
@@ -46,7 +47,7 @@ suspend fun exchangeInBaseCurrency(
     toCurrency = baseCurrency,
     exchange = exchange
 )
-suspend fun exchangeInCurrency(
+internal suspend fun exchangeInCurrency(
     transaction: Transaction,
     baseCurrency: String,
     accounts: List<LegacyAccount>,
@@ -63,7 +64,7 @@ suspend fun exchangeInCurrency(
     ).getOrNull() ?: BigDecimal.ZERO
 }
 
-suspend fun exchangeInCurrency(
+internal suspend fun exchangeInCurrency(
     transaction: Transaction,
     baseCurrency: String,
     transactionCurrency: Option<String>,

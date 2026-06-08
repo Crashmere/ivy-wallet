@@ -9,7 +9,7 @@ import com.ivy.domain.exchange.ExchangeEffect
 import com.ivy.domain.exchange.exchangeInBaseCurrency
 import java.math.BigDecimal
 
-object WalletValueFunctions {
+internal object WalletValueFunctions {
     data class Argument(
         val accounts: List<LegacyAccount>,
         val baseCurrency: String,
