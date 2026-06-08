@@ -33,11 +33,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ivy.legacy.ui.button.IvyButton
 import com.ivy.legacy.ui.modal.IvyModal
-import com.ivy.ui.theme.colors.Gradient
 import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.legacy.ui.theme.style
 import com.ivy.ui.R
 import com.ivy.ui.platform.hideKeyboard
+import com.ivy.ui.theme.colors.Gradient
 import java.util.UUID
 
 @SuppressLint("ComposeModifierMissing")
@@ -77,9 +76,10 @@ internal fun BoxWithConstraintsScope.TransactionsDeleteConfirmationModal(
         Text(
             modifier = Modifier.padding(horizontal = 32.dp),
             text = title,
-            style = LegacyTheme.typo.b1.style(
+            style = LegacyTheme.typo.b1.copy(
                 color = LegacyTheme.colors.red,
-                fontWeight = FontWeight.ExtraBold
+                fontWeight = FontWeight.ExtraBold,
+                textAlign = TextAlign.Start
             )
         )
 
@@ -88,9 +88,10 @@ internal fun BoxWithConstraintsScope.TransactionsDeleteConfirmationModal(
         Text(
             modifier = Modifier.padding(horizontal = 32.dp),
             text = description,
-            style = LegacyTheme.typo.b2.style(
+            style = LegacyTheme.typo.b2.copy(
                 color = LegacyTheme.colors.pureInverse,
-                fontWeight = FontWeight.Medium
+                fontWeight = FontWeight.Medium,
+                textAlign = TextAlign.Start
             )
         )
 
@@ -143,7 +144,7 @@ private fun ConfirmationNameTextField(
             if (isEmpty && hint.isNullOrBlank().not()) {
                 Text(
                     text = hint.orEmpty(),
-                    style = LegacyTheme.typo.b2.style(
+                    style = LegacyTheme.typo.b2.copy(
                         color = LegacyTheme.colors.gray,
                         fontWeight = FontWeight.SemiBold,
                         textAlign = TextAlign.Start
@@ -155,7 +156,7 @@ private fun ConfirmationNameTextField(
                 modifier = Modifier.testTag("base_input"),
                 value = value,
                 onValueChange = onValueChanged,
-                textStyle = LegacyTheme.typo.b1.style(
+                textStyle = LegacyTheme.typo.b1.copy(
                     color = LegacyTheme.colors.pureInverse,
                     fontWeight = FontWeight.ExtraBold,
                     textAlign = TextAlign.Start

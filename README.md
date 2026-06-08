@@ -1413,6 +1413,7 @@ shared:ui:core
 - `feature:exchange-rates` 已停止直接导入旧 `style` 文本样式扩展；文本样式改用显式 `TextStyle.copy()`，保留旧扩展原本默认的颜色、字重和对齐行为。
 - `feature:balance`、`feature:main` 和 `feature:accounts` 已停止直接导入旧 `style` 文本样式扩展；文本样式改用显式 `TextStyle.copy()`，继续保留旧扩展原本默认的颜色、字重和对齐行为。
 - `feature:categories` 和 `feature:piechart` 已停止直接导入旧 `style` 文本样式扩展；分类列表、排序弹窗和饼图统计页的文本样式改用显式 `TextStyle.copy()`，继续保留原视觉行为。
+- `feature:transactions` 已停止直接导入旧 `style` 文本样式扩展；交易删除确认弹窗和交易统计头部文本改用显式 `TextStyle.copy()`，继续保留原视觉行为。
 - app 仍保留文件选择、文件分享、Material 日期选择器、BuildInfo、Locale 设置、生物识别和窗口安全等真正依赖 Activity 或 Android app 壳层的装配。
 
 ## 高风险区域

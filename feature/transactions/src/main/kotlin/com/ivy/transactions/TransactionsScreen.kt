@@ -38,6 +38,7 @@ import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ivy.data.model.Theme
@@ -47,7 +48,6 @@ import com.ivy.data.model.Category
 import com.ivy.ui.platform.LocalDatePicker
 import com.ivy.ui.theme.LocalThemeState
 import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.legacy.ui.theme.style
 import com.ivy.ui.compose.thenIf
 import com.ivy.legacy.ui.transaction.LegacyDueSection
 import com.ivy.legacy.ui.transaction.TransactionListData
@@ -915,9 +915,10 @@ private fun Item(
 
                 Text(
                     text = account.name,
-                    style = LegacyTheme.typo.b1.style(
+                    style = LegacyTheme.typo.b1.copy(
                         color = contrastColor,
-                        fontWeight = FontWeight.ExtraBold
+                        fontWeight = FontWeight.ExtraBold,
+                        textAlign = TextAlign.Start
                     )
                 )
 
@@ -926,8 +927,10 @@ private fun Item(
 
                     Text(
                         text = stringResource(R.string.excluded),
-                        style = LegacyTheme.typo.c.style(
-                            color = account.color.toComposeColor().dynamicContrast()
+                        style = LegacyTheme.typo.c.copy(
+                            color = account.color.toComposeColor().dynamicContrast(),
+                            fontWeight = FontWeight.Bold,
+                            textAlign = TextAlign.Start
                         )
                     )
                 }
@@ -944,9 +947,10 @@ private fun Item(
 
                 Text(
                     text = category.name.value,
-                    style = LegacyTheme.typo.b1.style(
+                    style = LegacyTheme.typo.b1.copy(
                         color = contrastColor,
-                        fontWeight = FontWeight.ExtraBold
+                        fontWeight = FontWeight.ExtraBold,
+                        textAlign = TextAlign.Start
                     )
                 )
             }
@@ -963,9 +967,10 @@ private fun Item(
 
                 Text(
                     text = stringResource(R.string.unspecified),
-                    style = LegacyTheme.typo.b1.style(
+                    style = LegacyTheme.typo.b1.copy(
                         color = contrastColor,
-                        fontWeight = FontWeight.ExtraBold
+                        fontWeight = FontWeight.ExtraBold,
+                        textAlign = TextAlign.Start
                     )
                 )
             }
