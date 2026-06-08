@@ -1,7 +1,6 @@
 package com.ivy.ui.platform
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.os.Build
 import android.view.View
 import android.view.Window
@@ -23,7 +22,7 @@ fun setStatusBarDarkTextCompat(view: View, darkText: Boolean) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
         view.windowInsetsController?.setStatusBarDarkText(darkText)
     } else {
-        val window = (view.context as Activity).window
+        val window = view.context.findActivity()?.window ?: return
         setStatusBarDarkTextOld(window, darkText)
     }
 }
