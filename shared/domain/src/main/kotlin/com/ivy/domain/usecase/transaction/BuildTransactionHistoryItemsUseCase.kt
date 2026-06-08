@@ -6,7 +6,6 @@ import com.ivy.data.api.TagStore
 import com.ivy.data.model.AccountId
 import com.ivy.data.model.Transaction
 import com.ivy.domain.usecase.exchange.ExchangeAmountUseCase
-import com.ivy.domain.mapper.legacy.toLegacyAccount
 import com.ivy.domain.transaction.transactionsWithDateDividers
 import javax.inject.Inject
 
@@ -23,7 +22,7 @@ class BuildTransactionHistoryItemsUseCase @Inject internal constructor(
             transactions = transactions,
             baseCurrencyCode = baseCurrency,
             getTags = { tagIds -> tagStore.findByIds(tagIds) },
-            getAccount = { accountId -> accountStore.findById(AccountId(accountId))?.toLegacyAccount() },
+            getAccount = { accountId -> accountStore.findById(AccountId(accountId)) },
             exchange = exchangeAmountUseCase::invoke
         )
     }

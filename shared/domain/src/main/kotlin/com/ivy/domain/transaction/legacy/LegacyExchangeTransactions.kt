@@ -7,12 +7,18 @@ import com.ivy.data.model.legacy.LegacyTransaction
 import com.ivy.data.model.legacy.legacyAccountCurrency
 import com.ivy.domain.exchange.ExchangeData
 import com.ivy.domain.exchange.ExchangeEffect
-import com.ivy.domain.exchange.ExchangeTransactionArgument
 import java.math.BigDecimal
+import java.util.UUID
+
+internal data class LegacyExchangeTransactionArgument(
+    val baseCurrency: String,
+    val getAccount: suspend (accountId: UUID) -> LegacyAccount?,
+    val exchange: ExchangeEffect
+)
 
 internal suspend fun exchangeInBaseCurrency(
     transaction: LegacyTransaction,
-    arg: ExchangeTransactionArgument
+    arg: LegacyExchangeTransactionArgument
 ): BigDecimal {
     val fromCurrency = arg.getAccount(transaction.accountId)?.let {
         legacyAccountCurrency(it, arg.baseCurrency)

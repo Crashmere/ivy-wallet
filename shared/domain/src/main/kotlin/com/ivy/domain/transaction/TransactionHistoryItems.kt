@@ -1,10 +1,10 @@
 package com.ivy.domain.transaction
 
 import arrow.core.Option
+import com.ivy.data.model.Account
 import com.ivy.data.model.Tag
 import com.ivy.data.model.TagId
 import com.ivy.data.model.Transaction
-import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.data.model.TransactionHistoryDateDivider
 import com.ivy.data.model.TransactionHistoryItem
 import com.ivy.domain.exchange.ExchangeData
@@ -23,7 +23,7 @@ private fun LocalDateTime.toEpochSeconds() = toEpochSecond(ZoneOffset.UTC)
 internal suspend fun transactionsWithDateDividers(
     transactions: List<Transaction>,
     baseCurrencyCode: String,
-    getAccount: suspend (accountId: UUID) -> LegacyAccount?,
+    getAccount: suspend (accountId: UUID) -> Account?,
     exchange: suspend (ExchangeData, BigDecimal) -> Option<BigDecimal>,
     getTags: suspend (tagIds: List<TagId>) -> List<Tag> = { emptyList() },
 ): List<TransactionHistoryItem> {

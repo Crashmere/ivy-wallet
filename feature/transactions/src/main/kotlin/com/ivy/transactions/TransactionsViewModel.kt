@@ -474,7 +474,7 @@ internal class TransactionsViewModel @Inject internal constructor(
         val historyIncomeExpense = calculateTransactionsIncomeExpenseUseCase(
             transactions = filteredTransactions,
             accounts = accountFilterList.mapNotNull { accountId ->
-                loadedAccounts.find { it.id.value == accountId }?.toLegacyAccount()
+                loadedAccounts.find { it.id.value == accountId }
             },
             baseCurrency = baseCurrency.value
         )

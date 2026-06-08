@@ -2,18 +2,17 @@ package com.ivy.domain.transaction
 
 import arrow.core.Option
 import arrow.core.toOption
+import com.ivy.data.model.Account
 import com.ivy.data.model.Transaction
-import com.ivy.data.model.legacy.LegacyAccount
-import com.ivy.data.model.legacy.legacyAccountCurrency
 
 internal fun transactionCurrency(
     transaction: Transaction,
-    accounts: List<LegacyAccount>,
+    accounts: List<Account>,
     baseCurrency: String
 ): Option<String> {
     val account = accounts.find {
-        it.id == transaction.getAccountId()
+        it.id.value == transaction.getAccountId()
     }
         ?: return baseCurrency.toOption()
-    return legacyAccountCurrency(account, baseCurrency).toOption()
+    return account.asset.code.toOption()
 }

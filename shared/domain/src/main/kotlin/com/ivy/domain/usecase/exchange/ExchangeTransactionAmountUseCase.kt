@@ -1,8 +1,8 @@
 package com.ivy.domain.usecase.exchange
 
+import com.ivy.data.model.Account
 import com.ivy.data.model.Transaction
 import com.ivy.data.model.getFromValue
-import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.domain.transaction.transactionCurrency
 import java.math.BigDecimal
 import javax.inject.Inject
@@ -12,7 +12,7 @@ class ExchangeTransactionAmountUseCase @Inject internal constructor(
 ) {
     suspend operator fun invoke(
         transaction: Transaction,
-        accounts: List<LegacyAccount>,
+        accounts: List<Account>,
         baseCurrency: String,
         toCurrency: String = baseCurrency,
     ): BigDecimal {

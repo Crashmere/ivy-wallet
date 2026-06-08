@@ -7,8 +7,7 @@ import com.ivy.data.model.Income
 import com.ivy.data.model.Transaction
 import com.ivy.data.model.Transfer
 import com.ivy.data.model.getFromAccount
-import com.ivy.data.model.legacy.LegacyAccount
-import com.ivy.domain.mapper.legacy.toLegacyAccount
+import com.ivy.data.model.Account
 import com.ivy.domain.usecase.exchange.ExchangeTransactionAmountUseCase
 import javax.inject.Inject
 
@@ -21,7 +20,7 @@ class CalculateBudgetSpentAmountsUseCase @Inject internal constructor(
         transactions: List<Transaction>,
         baseCurrencyCode: String,
     ): List<BudgetSpentAmount> {
-        val accounts = accountStore.findAll().map { it.toLegacyAccount() }
+        val accounts = accountStore.findAll()
 
         return budgets.map { budget ->
             BudgetSpentAmount(
@@ -40,7 +39,7 @@ class CalculateBudgetSpentAmountsUseCase @Inject internal constructor(
         budget: Budget,
         transactions: List<Transaction>,
         baseCurrencyCode: String,
-        accounts: List<LegacyAccount>,
+        accounts: List<Account>,
     ): Double {
         val accountFilter = budget.parseAccountIds()
         val categoryFilter = budget.parseCategoryIds()

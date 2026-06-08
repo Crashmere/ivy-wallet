@@ -9,7 +9,6 @@ import com.ivy.data.model.getTransactionType
 import com.ivy.ui.resource.ResourceProvider
 import com.ivy.data.model.Category
 import com.ivy.data.model.CategoryId
-import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.data.model.FromToTimeRange
 import com.ivy.data.model.IncomeExpenseTransferPair
 import com.ivy.data.model.primitive.ColorInt
@@ -47,7 +46,7 @@ internal class BuildPieChartDataUseCase @Inject internal constructor(
         )
 
     private data class UsableAccounts(
-        val accounts: List<LegacyAccount>,
+        val accounts: List<Account>,
         val accountIdFilterSet: Set<UUID>,
     )
 
@@ -110,10 +109,9 @@ internal class BuildPieChartDataUseCase @Inject internal constructor(
         } else {
             allAccounts.filter { accountIdFilterList.contains(it.id.value) }
         }
-        val legacyAccountsUsed = accountsUsed.map { it.toLegacyAccount() }
         return UsableAccounts(
-            accounts = legacyAccountsUsed,
-            accountIdFilterSet = legacyAccountsUsed.map { it.id }.toHashSet()
+            accounts = accountsUsed,
+            accountIdFilterSet = accountsUsed.map { it.id.value }.toHashSet()
         )
     }
 
@@ -123,7 +121,7 @@ internal class BuildPieChartDataUseCase @Inject internal constructor(
         addAssociatedTransToCategoryAmt: Boolean = false,
         allCategories: List<Category?>,
         transactions: List<Transaction>,
-        accountsUsed: List<LegacyAccount>,
+        accountsUsed: List<Account>,
     ): List<CategoryAmount> {
         return allCategories.map { category ->
             val categoryTransactions = if (addAssociatedTransToCategoryAmt) {
@@ -236,17 +234,6 @@ private fun Transaction.toAssociatedTransaction(): AssociatedTransaction {
         type = getTransactionType(),
     )
 }
-
-private fun Account.toLegacyAccount() = LegacyAccount(
-    name = name.value,
-    currency = asset.code,
-    color = color.value,
-    icon = icon?.id,
-    orderNum = orderNum,
-    includeInBalance = includeInBalance,
-    isDeleted = false,
-    id = id.value,
-)
 
 internal data class PieChartData(
     val totalAmount: Double,

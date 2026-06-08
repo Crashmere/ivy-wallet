@@ -9,7 +9,6 @@ import com.ivy.domain.usecase.exchange.ExchangeAmountUseCase
 import com.ivy.domain.usecase.transaction.GetDueTransactionsUseCase
 import com.ivy.domain.exchange.ExchangeTransactionArgument
 import com.ivy.domain.exchange.exchangeInBaseCurrency
-import com.ivy.domain.mapper.legacy.toLegacyAccount
 import com.ivy.domain.transaction.expenses
 import com.ivy.domain.transaction.incomes
 import com.ivy.domain.transaction.sumTransactions
@@ -34,7 +33,7 @@ internal class CalculateDueTransactionsInfoUseCase @Inject internal constructor(
             baseCurrency = baseCurrency,
             exchange = exchangeAmountUseCase::invoke,
             getAccount = { accountId ->
-                accountStore.findById(AccountId(accountId))?.toLegacyAccount()
+                accountStore.findById(AccountId(accountId))
             }
         )
 

@@ -256,6 +256,7 @@
 - 收窄分类历史分组边界：分类和未分类汇总的历史列表改用正式 `BuildTransactionHistoryItemsUseCase` 构建，route 输入交易继续以正式 `Transaction` 传入 domain；无调用方的旧交易日期分组 helper 已删除。
 - 收窄借贷关联交易同步边界：借贷详情页创建、编辑、删除关联交易，以及编辑交易页保存后反推更新贷款/还款记录都改用正式 `Transaction`；借贷同步 use case 不再暴露或生成旧交易模型。
 - 清空借贷 use case 包的 legacy 模型依赖：借贷同步内部的账户币种判断改用正式 `Account.asset`，`shared:domain` 的 loan use case 包不再依赖 `LegacyTransaction`、`LegacyAccount` 或 legacy mapper。
+- 收窄正式交易统计账户边界：交易金额换算、收入/支出/转账汇总、预算已花金额、首页到期汇总、分类月度统计、报表筛选和饼图统计改用正式 `Account`，不再为了读取账户币种临时转换 `LegacyAccount`。
 
 当前仍保留：
 

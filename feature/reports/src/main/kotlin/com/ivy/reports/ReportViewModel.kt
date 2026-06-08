@@ -39,7 +39,6 @@ import com.ivy.domain.usecase.planned.PayOrSkipPlannedTransactionsByIdsUseCase
 import com.ivy.domain.usecase.transaction.GetTransactionsByTagsUseCase
 import com.ivy.domain.usecase.transaction.GetTransactionsUseCase
 import com.ivy.ui.period.PeriodState
-import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.R
 import com.ivy.ui.platform.FilePicker
@@ -270,13 +269,12 @@ internal class ReportViewModel @Inject internal constructor(
             val allAccounts = getAccountsUseCase().toImmutableList()
             val selectedAccounts = allAccounts.filter { it.id.value in reportFilter.accountIds }
             if (selectedAccounts.isEmpty()) return@withContext
-            val legacyAccounts = allAccounts.toLegacyAccounts()
             val baseCurrency = baseCurrency
             loading = true
 
             val transactionsList = filterTransactions(
                 baseCurrency = baseCurrency,
-                accounts = legacyAccounts,
+                accounts = allAccounts,
                 filter = reportFilter
             )
 
@@ -292,7 +290,7 @@ internal class ReportViewModel @Inject internal constructor(
 
             historyIncomeExpense = calculateTransactionsIncomeExpenseUseCase(
                 transactions = historyTransactions,
-                accounts = legacyAccounts,
+                accounts = allAccounts,
                 baseCurrency = baseCurrency
             )
 
@@ -319,7 +317,7 @@ internal class ReportViewModel @Inject internal constructor(
 
             val upcomingIncomeExpense = calculateTransactionsIncomeExpenseUseCase(
                 transactions = upcomingTransactionsList,
-                accounts = legacyAccounts,
+                accounts = allAccounts,
                 baseCurrency = baseCurrency
             )
             // Overdue
@@ -331,7 +329,7 @@ internal class ReportViewModel @Inject internal constructor(
             }.toImmutableList()
             val overdueIncomeExpense = calculateTransactionsIncomeExpenseUseCase(
                 transactions = overdue,
-                accounts = legacyAccounts,
+                accounts = allAccounts,
                 baseCurrency = baseCurrency
             )
 
@@ -382,7 +380,7 @@ internal class ReportViewModel @Inject internal constructor(
 
     private suspend fun filterTransactions(
         baseCurrency: String,
-        accounts: List<LegacyAccount>,
+        accounts: List<Account>,
         filter: ReportFilter,
     ): ImmutableList<Transaction> {
         val filterAccountIds = filter.accountIds.toSet()
@@ -490,7 +488,7 @@ internal class ReportViewModel @Inject internal constructor(
 
     private suspend fun List<Transaction>.filterByAmount(
         baseCurrency: String,
-        accounts: List<LegacyAccount>,
+        accounts: List<Account>,
         filter: ReportFilter
     ): List<Transaction> {
         val amountFilteredTransactions = mutableListOf<Transaction>()
@@ -541,7 +539,7 @@ internal class ReportViewModel @Inject internal constructor(
                     exportScope = {
                         filterTransactions(
                             baseCurrency = baseCurrency,
-                            accounts = accountModels.toLegacyAccounts(),
+                            accounts = accountModels,
                             filter = filter
                         )
                     }
@@ -617,10 +615,6 @@ internal class ReportViewModel @Inject internal constructor(
     }
 }
 
-private fun Iterable<Account>.toLegacyAccounts(): ImmutableList<LegacyAccount> {
-    return map { it.toLegacyAccount() }.toImmutableList()
-}
-
 private fun Iterable<Transaction>.toLegacyTransactions(): ImmutableList<LegacyTransaction> {
     return map { it.toLegacyTransaction() }.toImmutableList()
 }
@@ -651,14 +645,3 @@ private fun Transaction.toLegacyTransaction(): LegacyTransaction {
         tags = persistentListOf(),
     )
 }
-
-private fun Account.toLegacyAccount() = LegacyAccount(
-    name = name.value,
-    currency = asset.code,
-    color = color.value,
-    icon = icon?.id,
-    orderNum = orderNum,
-    includeInBalance = includeInBalance,
-    isDeleted = false,
-    id = id.value,
-)

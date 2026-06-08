@@ -1,17 +1,17 @@
 package com.ivy.domain.transaction
 
+import com.ivy.data.model.Account
 import com.ivy.data.model.Expense
 import com.ivy.data.model.Income
 import com.ivy.data.model.Transaction
 import com.ivy.data.model.Transfer
-import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.domain.exchange.ExchangeEffect
 import com.ivy.domain.exchange.exchangeInBaseCurrency
 import java.math.BigDecimal
 
 internal object WalletValueFunctions {
     data class Argument(
-        val accounts: List<LegacyAccount>,
+        val accounts: List<Account>,
         val baseCurrency: String,
         val exchange: ExchangeEffect
     )
@@ -36,7 +36,7 @@ internal object WalletValueFunctions {
         transaction: Transaction,
         arg: Argument
     ): BigDecimal = with(transaction) {
-        val condition = arg.accounts.any { it.id == (this as? Transfer)?.toAccount?.value }
+        val condition = arg.accounts.any { it.id == (this as? Transfer)?.toAccount }
         if (!condition) {
             return BigDecimal.ZERO
         }
@@ -73,7 +73,7 @@ internal object WalletValueFunctions {
         transaction: Transaction,
         arg: Argument
     ): BigDecimal = with(transaction) {
-        val condition = arg.accounts.any { it.id == this.getAccountId() }
+        val condition = arg.accounts.any { it.id.value == this.getAccountId() }
         if (!condition) {
             return BigDecimal.ZERO
         }
