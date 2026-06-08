@@ -21,7 +21,6 @@ import com.ivy.domain.usecase.loan.UpdateLoanUseCase
 import com.ivy.domain.usecase.account.CreateAccountWithBalanceUseCase
 import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.data.model.Loan
-import com.ivy.data.model.LoanRecord
 import com.ivy.loans.model.DisplayLoanRecord
 import com.ivy.loans.loandetails.events.DeleteLoanModalEvent
 import com.ivy.loans.loandetails.events.LoanDetailsScreenEvent
@@ -127,13 +126,14 @@ internal class LoanDetailsViewModel @Inject internal constructor(
     private fun handleLoanRecordModalEvents(event: LoanDetailsScreenEvent) {
         when (event) {
             is LoanRecordModalEvent.OnClickLoanRecord -> {
+                val displayLoanRecord = displayLoanRecordById(event.loanRecordId) ?: return
                 loanRecordModalData.value = LoanRecordModalData(
-                    loanRecord = event.displayLoanRecord.loanRecord,
-                    baseCurrency = event.displayLoanRecord.loanRecordCurrencyCode,
-                    selectedAccount = event.displayLoanRecord.account,
-                    createLoanRecordTransaction = event.displayLoanRecord.loanRecordTransaction,
-                    isLoanInterest = event.displayLoanRecord.loanRecord.interest,
-                    loanAccountCurrencyCode = event.displayLoanRecord.loanCurrencyCode
+                    loanRecord = displayLoanRecord.loanRecord,
+                    baseCurrency = displayLoanRecord.loanRecordCurrencyCode,
+                    selectedAccount = displayLoanRecord.account,
+                    createLoanRecordTransaction = displayLoanRecord.loanRecordTransaction,
+                    isLoanInterest = displayLoanRecord.loanRecord.interest,
+                    loanAccountCurrencyCode = displayLoanRecord.loanCurrencyCode
                 )
             }
 
@@ -142,7 +142,7 @@ internal class LoanDetailsViewModel @Inject internal constructor(
             }
 
             is LoanRecordModalEvent.OnDeleteLoanRecord -> {
-                deleteLoanRecord(event.loanRecord)
+                deleteLoanRecord(event.loanRecordId)
             }
 
             LoanRecordModalEvent.OnDismissLoanRecord -> {
@@ -431,8 +431,9 @@ internal class LoanDetailsViewModel @Inject internal constructor(
         }
     }
 
-    private fun deleteLoanRecord(loanRecord: LoanRecord) {
+    private fun deleteLoanRecord(loanRecordId: UUID) {
         val loanId = loan.value?.id ?: return
+        val loanRecord = displayLoanRecordById(loanRecordId)?.loanRecord ?: return
 
         viewModelScope.launch {
 
@@ -443,6 +444,10 @@ internal class LoanDetailsViewModel @Inject internal constructor(
             loanRecordTransactionSyncUseCase.deleteAssociatedLoanRecordTransaction(loanRecordId = loanRecord.id)
 
         }
+    }
+
+    private fun displayLoanRecordById(loanRecordId: UUID): DisplayLoanRecord? {
+        return displayLoanRecords.value.firstOrNull { it.loanRecord.id == loanRecordId }
     }
 
     private fun handleChangeDate() {

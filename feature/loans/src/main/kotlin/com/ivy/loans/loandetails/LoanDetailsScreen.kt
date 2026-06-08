@@ -78,6 +78,7 @@ import com.ivy.legacy.ui.modal.LoanModal
 import com.ivy.legacy.ui.modal.LoanRecordModal
 import com.ivy.legacy.ui.modal.ProgressModal
 import com.ivy.legacy.ui.theme.toComposeColor
+import java.util.UUID
 
 @Composable
 fun BoxWithConstraintsScope.LoanDetailsScreen(screen: LoanDetailsScreen) {
@@ -171,10 +172,10 @@ private fun BoxWithConstraintsScope.UI(
                 loanRecords(
                     loan = state.loan,
                     displayLoanRecords = state.displayLoanRecords,
-                    onClick = { displayLoanRecord ->
+                    onClick = { loanRecordId ->
                         onEventHandler.invoke(
                             LoanRecordModalEvent.OnClickLoanRecord(
-                                displayLoanRecord
+                                loanRecordId
                             )
                         )
                     }
@@ -228,7 +229,7 @@ private fun BoxWithConstraintsScope.UI(
     }, onEdit = {
         onEventHandler.invoke(LoanRecordModalEvent.OnEditLoanRecord(it))
     }, onDelete = { loanRecord ->
-        onEventHandler.invoke(LoanRecordModalEvent.OnDeleteLoanRecord(loanRecord))
+        onEventHandler.invoke(LoanRecordModalEvent.OnDeleteLoanRecord(loanRecord.id))
     }, accounts = state.accounts, dismiss = {
         onEventHandler.invoke(LoanRecordModalEvent.OnDismissLoanRecord)
     }, onCreateAccount = { createAccountData ->
@@ -624,7 +625,7 @@ private fun LoanInfoCard(
 internal fun LazyListScope.loanRecords(
     loan: Loan,
     displayLoanRecords: List<DisplayLoanRecord> = emptyList(),
-    onClick: (DisplayLoanRecord) -> Unit
+    onClick: (UUID) -> Unit
 ) {
     items(items = displayLoanRecords) { displayLoanRecord ->
         LoanRecordItem(
@@ -634,7 +635,7 @@ internal fun LazyListScope.loanRecords(
             account = displayLoanRecord.account,
             loanBaseCurrency = displayLoanRecord.loanCurrencyCode
         ) {
-            onClick(displayLoanRecord)
+            onClick(displayLoanRecord.loanRecord.id)
         }
 
         Spacer(modifier = Modifier.height(16.dp))
