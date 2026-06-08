@@ -1578,6 +1578,7 @@ shared:ui:core
 - 分类编辑/选择弹窗迁出 legacy：`CategoryModal`、`ChooseCategoryModal`、`CategoryModalCategory` 和 `CategoryModalSaveData` 已迁入 `shared:ui:core` 的 `com.ivy.ui.modal` 包；编辑交易、计划付款和交易列表页继续保留原分类创建、编辑、选择和取消选择行为，但不再从 legacy modal 包导入分类弹窗。
 - 标签选择/编辑弹窗迁出 legacy：`ShowTagModal`、`TagModalTag` 和内部新增/编辑标签弹窗已迁入 `shared:ui:core` 的 `com.ivy.ui.tags` 包；编辑交易和报表筛选继续保留原标签新增、编辑、删除、搜索、选择和取消选择行为。
 - 交易列表页样式依赖继续收窄：`feature:transactions` 增加本模块私有 `TransactionsTheme` 承接原交易筛选页、头部工具栏和删除确认弹窗所需 token；交易列表模块已移除对 `shared:ui:legacy` 的直接依赖。
+- 报表页样式依赖继续收窄：`feature:reports` 增加本模块私有 `ReportsTheme` 承接原报表页、筛选浮层、关键词弹窗和勾选控件所需 token；报表模块已移除对 `shared:ui:legacy` 的直接依赖。
 - app 仍保留文件选择、文件分享、Material 日期选择器、BuildInfo、Locale 设置、生物识别和窗口安全等真正依赖 Activity 或 Android app 壳层的装配。
 
 ## 高风险区域

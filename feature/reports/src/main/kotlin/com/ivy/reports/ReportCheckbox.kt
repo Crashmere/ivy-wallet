@@ -18,7 +18,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.R
 import com.ivy.ui.compose.clickableNoIndication
 import com.ivy.ui.compose.rememberInteractionSource
@@ -46,8 +45,8 @@ internal fun ReportCheckboxWithText(
 
         Text(
             text = text,
-            style = LegacyTheme.typo.b2.copy(
-                color = LegacyTheme.colors.pureInverse,
+            style = ReportsTheme.typo.b2.copy(
+                color = ReportsTheme.colors.pureInverse,
                 fontWeight = FontWeight.SemiBold,
                 textAlign = TextAlign.Start
             )
@@ -73,6 +72,6 @@ private fun ReportCheckbox(
             id = if (checked) R.drawable.ic_checkbox_checked else R.drawable.ic_checkbox_unchecked
         ),
         contentDescription = null,
-        tint = if (checked) Color.Unspecified else LegacyTheme.colors.gray
+        tint = if (checked) Color.Unspecified else ReportsTheme.colors.gray
     )
 }

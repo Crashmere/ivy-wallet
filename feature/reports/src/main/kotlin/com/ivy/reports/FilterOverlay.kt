@@ -47,7 +47,6 @@ import com.ivy.data.model.Category
 import com.ivy.data.model.Tag
 import com.ivy.data.model.TagId
 import com.ivy.ui.platform.LocalDatePicker
-import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.period.displayLong
 import com.ivy.ui.period.LocalPeriodState
 import com.ivy.ui.tags.ShowTagModal
@@ -152,7 +151,7 @@ internal fun BoxWithConstraintsScope.FilterOverlay(
                         )
                     }
                 }
-                .background(LegacyTheme.colors.pure)
+                .background(ReportsTheme.colors.pure)
                 .systemBarsPadding()
                 .verticalScroll(rememberScrollState()),
         ) {
@@ -170,8 +169,8 @@ internal fun BoxWithConstraintsScope.FilterOverlay(
                         start = 32.dp
                     ),
                     text = stringResource(R.string.filter),
-                    style = LegacyTheme.typo.h2.copy(
-                        color = LegacyTheme.colors.pureInverse,
+                    style = ReportsTheme.typo.h2.copy(
+                        color = ReportsTheme.colors.pureInverse,
                         fontWeight = FontWeight.ExtraBold,
                         textAlign = TextAlign.Start
                     )
@@ -187,7 +186,7 @@ internal fun BoxWithConstraintsScope.FilterOverlay(
                         }
                         .padding(all = 4.dp), // expand click area
                     text = stringResource(R.string.clean_filter),
-                    style = LegacyTheme.typo.b2.copy(
+                    style = ReportsTheme.typo.b2.copy(
                         fontWeight = FontWeight.Bold,
                         color = Color.Gray,
                         textAlign = TextAlign.Start
@@ -296,9 +295,9 @@ internal fun BoxWithConstraintsScope.FilterOverlay(
             text = stringResource(R.string.apply_filter),
             iconStart = R.drawable.ic_filter_xs,
             backgroundGradient = IvyGradients.Green,
-            disabledBackgroundColor = LegacyTheme.colors.gray,
-            shape = LegacyTheme.shapes.rFull,
-            textStyle = LegacyTheme.typo.b2.copy(
+            disabledBackgroundColor = ReportsTheme.colors.gray,
+            shape = ReportsTheme.shapes.rFull,
+            textStyle = ReportsTheme.typo.b2.copy(
                 color = Color(0xFFFAFAFA),
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Start
@@ -489,7 +488,7 @@ private fun BoxWithConstraintsScope.ReportGradientCutBottom(
             }
             .background(
                 Brush.verticalGradient(
-                    colors = listOf(Color.Transparent, LegacyTheme.colors.pure)
+                    colors = listOf(Color.Transparent, ReportsTheme.colors.pure)
                 )
             )
             .align(Alignment.BottomCenter)
@@ -508,15 +507,15 @@ private fun ReportListItem(
     val textColor = if (selectedColor != null) {
         findContrastTextColor(selectedColor)
     } else {
-        LegacyTheme.colors.pureInverse
+        ReportsTheme.colors.pureInverse
     }
 
-    val medium = LegacyTheme.colors.medium
-    val rFull = LegacyTheme.shapes.rFull
+    val medium = ReportsTheme.colors.medium
+    val rFull = ReportsTheme.shapes.rFull
 
     Row(
         modifier = Modifier
-            .clip(LegacyTheme.shapes.rFull)
+            .clip(ReportsTheme.shapes.rFull)
             .thenIf(selectedColor == null) {
                 border(2.dp, medium, rFull)
             }
@@ -541,7 +540,7 @@ private fun ReportListItem(
         Text(
             modifier = Modifier.padding(vertical = 10.dp),
             text = text,
-            style = LegacyTheme.typo.b2.copy(
+            style = ReportsTheme.typo.b2.copy(
                 color = textColor,
                 fontWeight = FontWeight.ExtraBold,
                 textAlign = TextAlign.Start
@@ -570,8 +569,8 @@ internal fun ColumnScope.TagsFilter(
     Text(
         modifier = Modifier.padding(start = 32.dp),
         text = stringResource(R.string.includes_uppercase),
-        style = LegacyTheme.typo.b2.copy(
-            color = LegacyTheme.colors.pureInverse,
+        style = ReportsTheme.typo.b2.copy(
+            color = ReportsTheme.colors.pureInverse,
             fontWeight = FontWeight.ExtraBold,
             textAlign = TextAlign.Start
         )
@@ -587,8 +586,8 @@ internal fun ColumnScope.TagsFilter(
     Text(
         modifier = Modifier.padding(start = 32.dp),
         text = stringResource(R.string.excludes_uppercase),
-        style = LegacyTheme.typo.b2.copy(
-            color = LegacyTheme.colors.pureInverse,
+        style = ReportsTheme.typo.b2.copy(
+            color = ReportsTheme.colors.pureInverse,
             fontWeight = FontWeight.ExtraBold,
             textAlign = TextAlign.Start
         )
@@ -631,7 +630,7 @@ private fun TypeFilter(
     FilterTitleText(
         text = stringResource(R.string.by_type),
         active = filter != null && filter.transactionTypes.isNotEmpty(),
-        inactiveColor = LegacyTheme.colors.red
+        inactiveColor = ReportsTheme.colors.red
     )
 
     Spacer(Modifier.height(12.dp))
@@ -715,7 +714,7 @@ private fun PeriodFilter(
     FilterTitleText(
         text = stringResource(R.string.time_period),
         active = filter?.period != null,
-        inactiveColor = LegacyTheme.colors.red
+        inactiveColor = ReportsTheme.colors.red
     )
 
     Spacer(Modifier.height(16.dp))
@@ -740,14 +739,14 @@ private fun ReportOutlinedButtonFillMaxWidth(
     text: String,
     @DrawableRes iconStart: Int?,
     solidBackground: Boolean = false,
-    iconTint: Color = LegacyTheme.colors.pureInverse,
-    borderColor: Color = LegacyTheme.colors.medium,
-    textColor: Color = LegacyTheme.colors.pureInverse,
+    iconTint: Color = ReportsTheme.colors.pureInverse,
+    borderColor: Color = ReportsTheme.colors.medium,
+    textColor: Color = ReportsTheme.colors.pureInverse,
     padding: Dp = 16.dp,
     onClick: () -> Unit,
 ) {
-    val pure = LegacyTheme.colors.pure
-    val rFull = LegacyTheme.shapes.rFull
+    val pure = ReportsTheme.colors.pure
+    val rFull = ReportsTheme.shapes.rFull
     Row(
         modifier = modifier
             .fillMaxWidth()
@@ -773,7 +772,7 @@ private fun ReportOutlinedButtonFillMaxWidth(
         Text(
             modifier = Modifier.padding(vertical = padding),
             text = text,
-            style = LegacyTheme.typo.b2.copy(
+            style = ReportsTheme.typo.b2.copy(
                 fontWeight = FontWeight.Bold,
                 color = textColor,
                 textAlign = TextAlign.Start
@@ -957,7 +956,7 @@ private fun ListFilterTitle(
         FilterTitleText(
             text = text,
             active = active,
-            inactiveColor = LegacyTheme.colors.red
+            inactiveColor = ReportsTheme.colors.red
         )
 
         Spacer(Modifier.weight(1f))
@@ -973,7 +972,7 @@ private fun ListFilterTitle(
                 }
                 .padding(all = 4.dp), // expand click area
             text = if (itemsSelected > 0) stringResource(R.string.clear_all) else stringResource(R.string.select_all),
-            style = LegacyTheme.typo.b2.copy(
+            style = ReportsTheme.typo.b2.copy(
                 fontWeight = FontWeight.Bold,
                 color = Color.Gray,
                 textAlign = TextAlign.Start
@@ -1013,8 +1012,8 @@ private fun AmountFilter(
         ) {
             Text(
                 text = stringResource(R.string.from),
-                style = LegacyTheme.typo.b2.copy(
-                    color = LegacyTheme.colors.pureInverse,
+                style = ReportsTheme.typo.b2.copy(
+                    color = ReportsTheme.colors.pureInverse,
                     fontWeight = FontWeight.ExtraBold,
                     textAlign = TextAlign.Start
                 )
@@ -1038,8 +1037,8 @@ private fun AmountFilter(
         ) {
             Text(
                 text = stringResource(R.string.to),
-                style = LegacyTheme.typo.b2.copy(
-                    color = LegacyTheme.colors.pureInverse,
+                style = ReportsTheme.typo.b2.copy(
+                    color = ReportsTheme.colors.pureInverse,
                     fontWeight = FontWeight.ExtraBold,
                     textAlign = TextAlign.Start
                 )
@@ -1077,8 +1076,8 @@ private fun KeywordsFilter(
     Text(
         modifier = Modifier.padding(start = 32.dp),
         text = stringResource(R.string.includes_uppercase),
-        style = LegacyTheme.typo.b2.copy(
-            color = LegacyTheme.colors.pureInverse,
+        style = ReportsTheme.typo.b2.copy(
+            color = ReportsTheme.colors.pureInverse,
             fontWeight = FontWeight.ExtraBold,
             textAlign = TextAlign.Start
         )
@@ -1095,7 +1094,7 @@ private fun KeywordsFilter(
             is String -> {
                 Keyword(
                     keyword = item,
-                    borderColor = LegacyTheme.colors.pureInverse
+                    borderColor = ReportsTheme.colors.pureInverse
                 ) {
                     // Remove keyword
                     onSetFilter(
@@ -1120,8 +1119,8 @@ private fun KeywordsFilter(
     Text(
         modifier = Modifier.padding(start = 32.dp),
         text = stringResource(R.string.excludes_uppercase),
-        style = LegacyTheme.typo.b2.copy(
-            color = LegacyTheme.colors.pureInverse,
+        style = ReportsTheme.typo.b2.copy(
+            color = ReportsTheme.colors.pureInverse,
             fontWeight = FontWeight.ExtraBold,
             textAlign = TextAlign.Start
         )
@@ -1138,7 +1137,7 @@ private fun KeywordsFilter(
             is String -> {
                 Keyword(
                     keyword = item,
-                    borderColor = LegacyTheme.colors.pureInverse
+                    borderColor = ReportsTheme.colors.pureInverse
                 ) {
                     // Remove keyword
                     onSetFilter(
@@ -1168,13 +1167,13 @@ private fun Keyword(
     OutlinedPillButton(
         text = keyword,
         iconStart = R.drawable.ic_remove,
-        shape = LegacyTheme.shapes.rFull,
-        backgroundColor = LegacyTheme.colors.pure,
-        iconTint = LegacyTheme.colors.red,
+        shape = ReportsTheme.shapes.rFull,
+        backgroundColor = ReportsTheme.colors.pure,
+        iconTint = ReportsTheme.colors.red,
         borderColor = borderColor,
-        textStyle = LegacyTheme.typo.b2.copy(
+        textStyle = ReportsTheme.typo.b2.copy(
             fontWeight = FontWeight.Bold,
-            color = LegacyTheme.colors.pureInverse,
+            color = ReportsTheme.colors.pureInverse,
             textAlign = TextAlign.Start,
         ),
         padding = 10.dp,
@@ -1189,13 +1188,13 @@ private fun AddKeywordButton(text: String, modifier: Modifier = Modifier, onClic
         modifier = modifier,
         text = text,
         iconStart = R.drawable.ic_plus,
-        shape = LegacyTheme.shapes.rFull,
-        backgroundColor = LegacyTheme.colors.pure,
-        iconTint = LegacyTheme.colors.pureInverse,
-        borderColor = LegacyTheme.colors.medium,
-        textStyle = LegacyTheme.typo.b2.copy(
+        shape = ReportsTheme.shapes.rFull,
+        backgroundColor = ReportsTheme.colors.pure,
+        iconTint = ReportsTheme.colors.pureInverse,
+        borderColor = ReportsTheme.colors.medium,
+        textStyle = ReportsTheme.typo.b2.copy(
             fontWeight = FontWeight.Bold,
-            color = LegacyTheme.colors.pureInverse,
+            color = ReportsTheme.colors.pureInverse,
             textAlign = TextAlign.Start,
         ),
         padding = 10.dp,
@@ -1220,7 +1219,7 @@ private fun FilterDivider() {
         modifier = Modifier
             .fillMaxWidth()
             .height(2.dp)
-            .background(LegacyTheme.colors.medium)
+            .background(ReportsTheme.colors.medium)
     )
 
     Spacer(modifier = Modifier.height(24.dp))
@@ -1235,9 +1234,9 @@ private fun FilterTitleText(
     Text(
         modifier = Modifier.padding(start = 32.dp),
         text = text,
-        style = LegacyTheme.typo.b1.copy(
+        style = ReportsTheme.typo.b1.copy(
             fontWeight = FontWeight.Medium,
-            color = if (active) LegacyTheme.colors.pureInverse else inactiveColor,
+            color = if (active) ReportsTheme.colors.pureInverse else inactiveColor,
             textAlign = TextAlign.Start
         )
     )
@@ -1258,9 +1257,9 @@ private fun CloseButton(
 ) {
     CloseIconButton(
         modifier = modifier,
-        backgroundColor = LegacyTheme.colors.pure,
-        borderColor = LegacyTheme.colors.medium,
-        tint = LegacyTheme.colors.pureInverse,
+        backgroundColor = ReportsTheme.colors.pure,
+        borderColor = ReportsTheme.colors.medium,
+        tint = ReportsTheme.colors.pureInverse,
         onClick = onClick,
     )
 }

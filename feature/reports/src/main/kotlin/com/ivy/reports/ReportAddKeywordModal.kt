@@ -34,7 +34,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.Alignment
 import com.ivy.ui.modal.IvyModal
 import com.ivy.ui.modal.ModalAdd
-import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.R
 import com.ivy.ui.compose.onCompositionStart
 import com.ivy.ui.compose.selectEndTextFieldValue
@@ -67,9 +66,9 @@ internal fun BoxWithConstraintsScope.ReportAddKeywordModal(
         Text(
             modifier = Modifier.padding(start = 32.dp),
             text = stringResource(R.string.add_keyword),
-            style = LegacyTheme.typo.b1.copy(
+            style = ReportsTheme.typo.b1.copy(
                 fontWeight = FontWeight.ExtraBold,
-                color = LegacyTheme.colors.pureInverse,
+                color = ReportsTheme.colors.pureInverse,
                 textAlign = TextAlign.Start
             )
         )
@@ -114,8 +113,8 @@ private fun ColumnScope.ReportKeywordTextField(
         if (isEmpty && hint.isNullOrBlank().not()) {
             Text(
                 text = hint.orEmpty(),
-                style = LegacyTheme.typo.h2.copy(
-                    color = LegacyTheme.colors.gray,
+                style = ReportsTheme.typo.h2.copy(
+                    color = ReportsTheme.colors.gray,
                     fontWeight = FontWeight.Black,
                     textAlign = TextAlign.Start
                 ),
@@ -129,13 +128,13 @@ private fun ColumnScope.ReportKeywordTextField(
                 .testTag("input_field"),
             value = value,
             onValueChange = onValueChanged,
-            textStyle = LegacyTheme.typo.h2.copy(
-                color = LegacyTheme.colors.pureInverse,
+            textStyle = ReportsTheme.typo.h2.copy(
+                color = ReportsTheme.colors.pureInverse,
                 fontWeight = FontWeight.Black,
                 textAlign = TextAlign.Start
             ),
             singleLine = false,
-            cursorBrush = SolidColor(LegacyTheme.colors.pureInverse),
+            cursorBrush = SolidColor(ReportsTheme.colors.pureInverse),
             keyboardOptions = KeyboardOptions(
                 autoCorrect = true,
                 keyboardType = KeyboardType.Text,
@@ -156,6 +155,6 @@ private fun ColumnScope.ReportKeywordTextField(
         modifier = dividerModifier
             .fillMaxWidth()
             .height(2.dp)
-            .background(LegacyTheme.colors.medium, LegacyTheme.shapes.rFull),
+            .background(ReportsTheme.colors.medium, ReportsTheme.shapes.rFull),
     )
 }

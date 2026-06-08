@@ -46,7 +46,6 @@ import com.ivy.data.model.TransactionHistoryTransaction
 import com.ivy.data.model.Transfer
 import com.ivy.data.model.getFromAccount
 import com.ivy.data.model.getFromValue
-import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.transaction.TransactionListAccount
 import com.ivy.ui.transaction.TransactionListCategory
 import com.ivy.ui.transaction.TransactionListData
@@ -115,7 +114,7 @@ private fun BoxWithConstraintsScope.UI(
             modifier = Modifier
                 .fillMaxSize()
                 .zIndex(1000f)
-                .background(LegacyTheme.colors.pure.copy(alpha = 0.95f))
+                .background(ReportsTheme.colors.pure.copy(alpha = 0.95f))
                 .clickableNoIndication(rememberInteractionSource()) {
                     // consume clicks
                 },
@@ -123,9 +122,9 @@ private fun BoxWithConstraintsScope.UI(
         ) {
             Text(
                 text = stringResource(R.string.generating_report),
-                style = LegacyTheme.typo.b1.copy(
+                style = ReportsTheme.typo.b1.copy(
                     fontWeight = FontWeight.ExtraBold,
-                    color = LegacyTheme.colors.orange,
+                    color = ReportsTheme.colors.orange,
                     textAlign = TextAlign.Start
                 )
             )
@@ -160,8 +159,8 @@ private fun BoxWithConstraintsScope.UI(
                     start = 32.dp
                 ),
                 text = stringResource(R.string.reports),
-                style = LegacyTheme.typo.h2.copy(
-                    color = LegacyTheme.colors.pureInverse,
+                style = ReportsTheme.typo.h2.copy(
+                    color = ReportsTheme.colors.pureInverse,
                     fontWeight = FontWeight.ExtraBold,
                     textAlign = TextAlign.Start
                 )
@@ -172,7 +171,7 @@ private fun BoxWithConstraintsScope.UI(
             BalanceRow(
                 modifier = Modifier
                     .padding(start = 32.dp),
-                textColor = LegacyTheme.colors.pureInverse,
+                textColor = ReportsTheme.colors.pureInverse,
                 currency = state.baseCurrency,
                 balance = state.balance,
                 balanceAmountPrefix = when {
@@ -190,7 +189,7 @@ private fun BoxWithConstraintsScope.UI(
                 incomeTransactionCount = transactionSummary.incomeTransactionCount,
                 expenseTransactionCount = transactionSummary.expenseTransactionCount,
                 hasAddButtons = false,
-                itemColor = LegacyTheme.colors.pure,
+                itemColor = ReportsTheme.colors.pure,
                 incomeHeaderCardClicked = {
                     if (transactionSummary.hasTransactions) {
                         nav.navigateTo(
@@ -350,7 +349,7 @@ private fun ReportTransactionsDividerLine(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = paddingHorizontal),
-        color = LegacyTheme.colors.medium,
+        color = ReportsTheme.colors.medium,
         thickness = 2.dp
     )
 }
@@ -436,15 +435,15 @@ private fun NoFilterEmptyState(
 
         ResourceIcon(
             icon = R.drawable.ic_filter_l,
-            tint = LegacyTheme.colors.gray
+            tint = ReportsTheme.colors.gray
         )
 
         Spacer(Modifier.height(8.dp))
 
         Text(
             text = stringResource(R.string.no_filter),
-            style = LegacyTheme.typo.b1.copy(
-                color = LegacyTheme.colors.gray,
+            style = ReportsTheme.typo.b1.copy(
+                color = ReportsTheme.colors.gray,
                 fontWeight = FontWeight.ExtraBold,
                 textAlign = TextAlign.Start
             )
@@ -455,8 +454,8 @@ private fun NoFilterEmptyState(
         Text(
             modifier = Modifier.padding(horizontal = 32.dp),
             text = stringResource(R.string.invalid_filter_warning),
-            style = LegacyTheme.typo.b2.copy(
-                color = LegacyTheme.colors.gray,
+            style = ReportsTheme.typo.b2.copy(
+                color = ReportsTheme.colors.gray,
                 fontWeight = FontWeight.Medium,
                 textAlign = TextAlign.Center
             )
@@ -468,9 +467,9 @@ private fun NoFilterEmptyState(
             iconStart = R.drawable.ic_filter_xs,
             text = stringResource(R.string.set_filter),
             backgroundGradient = IvyGradients.Ivy,
-            disabledBackgroundColor = LegacyTheme.colors.gray,
-            shape = LegacyTheme.shapes.rFull,
-            textStyle = LegacyTheme.typo.b2.copy(
+            disabledBackgroundColor = ReportsTheme.colors.gray,
+            shape = ReportsTheme.shapes.rFull,
+            textStyle = ReportsTheme.typo.b2.copy(
                 color = Color(0xFFFAFAFA),
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Start
@@ -497,7 +496,7 @@ private fun Toolbar(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .background(LegacyTheme.colors.pure)
+            .background(ReportsTheme.colors.pure)
             .padding(top = 16.dp, bottom = 16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -507,13 +506,13 @@ private fun Toolbar(
             modifier = Modifier
                 .testTag("toolbar_close")
                 .clip(CircleShape)
-                .background(LegacyTheme.colors.pure, CircleShape)
-                .border(2.dp, LegacyTheme.colors.medium, CircleShape)
+                .background(ReportsTheme.colors.pure, CircleShape)
+                .border(2.dp, ReportsTheme.colors.medium, CircleShape)
                 .clickable(onClick = onBack)
                 .padding(6.dp),
             painter = painterResource(id = R.drawable.ic_dismiss),
             contentDescription = "close",
-            tint = LegacyTheme.colors.pureInverse,
+            tint = ReportsTheme.colors.pureInverse,
         )
 
         Spacer(Modifier.weight(1f))
@@ -522,14 +521,14 @@ private fun Toolbar(
         OutlinedPillButton(
             text = stringResource(R.string.export),
             iconStart = R.drawable.ic_export_csv,
-            shape = LegacyTheme.shapes.rFull,
+            shape = ReportsTheme.shapes.rFull,
             solidBackground = true,
-            backgroundColor = LegacyTheme.colors.pure,
-            iconTint = LegacyTheme.colors.green,
-            borderColor = LegacyTheme.colors.medium,
-            textStyle = LegacyTheme.typo.b2.copy(
+            backgroundColor = ReportsTheme.colors.pure,
+            iconTint = ReportsTheme.colors.green,
+            borderColor = ReportsTheme.colors.medium,
+            textStyle = ReportsTheme.typo.b2.copy(
                 fontWeight = FontWeight.Bold,
-                color = LegacyTheme.colors.green,
+                color = ReportsTheme.colors.green,
                 textAlign = TextAlign.Start,
             ),
             padding = 8.dp,
@@ -542,8 +541,8 @@ private fun Toolbar(
         // Filter
         FilledIconButton(
             icon = R.drawable.ic_filter_xs,
-            backgroundColor = LegacyTheme.colors.medium,
-            tint = LegacyTheme.colors.pureInverse,
+            backgroundColor = ReportsTheme.colors.medium,
+            tint = ReportsTheme.colors.pureInverse,
         ) {
             onFilter()
         }
