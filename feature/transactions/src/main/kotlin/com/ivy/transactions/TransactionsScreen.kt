@@ -217,6 +217,27 @@ fun BoxWithConstraintsScope.TransactionsScreen(screen: TransactionsScreen) {
                 )
             )
         },
+        onClose = nav::back,
+        onOpenPieChart = { transactionType, accountId, treatTransfersAsIncomeExpense ->
+            nav.navigateTo(
+                PieChartStatisticScreen(
+                    type = transactionType.toRouteType(),
+                    accountIdFilterList = persistentListOf(accountId),
+                    filterExcluded = false,
+                    treatTransfersAsIncomeExpense = treatTransfersAsIncomeExpense
+                )
+            )
+        },
+        onAddTransaction = { transactionType, accountId, categoryId ->
+            nav.navigateTo(
+                EditTransactionScreen(
+                    initialTransactionId = null,
+                    type = transactionType.toRouteType(),
+                    accountId = accountId,
+                    categoryId = categoryId
+                )
+            )
+        },
         updateAccountNameConfirmation = {
             viewModel.onEvent(TransactionsEvent.UpdateAccountDeletionState(it))
         },
@@ -294,6 +315,9 @@ private fun BoxWithConstraintsScope.UI(
     onTransactionClick: (UUID, TransactionType) -> Unit,
     onAccountClick: (UUID) -> Unit,
     onCategoryClick: (UUID) -> Unit,
+    onClose: () -> Unit,
+    onOpenPieChart: (TransactionType, UUID, Boolean) -> Unit,
+    onAddTransaction: (TransactionType, UUID?, UUID?) -> Unit,
 ) {
     val periodState = LocalPeriodState.current
     val datePicker = LocalDatePicker.current
@@ -408,7 +432,10 @@ private fun BoxWithConstraintsScope.UI(
                             adjustBalanceMode = false,
                             autoFocusKeyboard = false
                         )
-                    }
+                    },
+                    onClose = onClose,
+                    onOpenPieChart = onOpenPieChart,
+                    onAddTransaction = onAddTransaction
                 )
             }
 
@@ -647,10 +674,12 @@ private fun Header(
     onBalanceClick: () -> Unit,
     showCategoryModal: () -> Unit,
     showAccountModal: () -> Unit,
+    onClose: () -> Unit,
+    onOpenPieChart: (TransactionType, UUID, Boolean) -> Unit,
+    onAddTransaction: (TransactionType, UUID?, UUID?) -> Unit,
     treatTransfersAsIncomeExpense: Boolean = false,
 ) {
     val contrastColor = findContrastTextColor(itemColor)
-    val nav = navigation()
 
     val darkColor = isDarkColor(itemColor)
     setStatusBarDarkTextCompat(darkText = !darkColor)
@@ -665,9 +694,7 @@ private fun Header(
 
         TransactionsStatisticToolbar(
             contrastColor = contrastColor,
-            onClose = {
-                nav.back()
-            },
+            onClose = onClose,
             onEdit = onEdit,
             onDelete = onDelete,
             showEditButton = hideEditAndDeleteButtonForAccountTransfer,
@@ -730,7 +757,6 @@ private fun Header(
 
         Spacer(Modifier.height(20.dp))
 
-        val nav = navigation()
         IncomeExpensesCards(
             currency = currency,
             income = income,
@@ -743,36 +769,27 @@ private fun Header(
             itemColor = itemColor,
             incomeHeaderCardClicked = {
                 if (account != null) {
-                    nav.navigateTo(
-                        PieChartStatisticScreen(
-                            type = TransactionRouteType.INCOME,
-                            accountIdFilterList = persistentListOf(account.id),
-                            filterExcluded = false,
-                            treatTransfersAsIncomeExpense = treatTransfersAsIncomeExpense
-                        )
+                    onOpenPieChart(
+                        TransactionType.INCOME,
+                        account.id,
+                        treatTransfersAsIncomeExpense
                     )
                 }
             },
             expenseHeaderCardClicked = {
                 if (account != null) {
-                    nav.navigateTo(
-                        PieChartStatisticScreen(
-                            type = TransactionRouteType.EXPENSE,
-                            accountIdFilterList = persistentListOf(account.id),
-                            filterExcluded = false,
-                            treatTransfersAsIncomeExpense = treatTransfersAsIncomeExpense
-                        )
+                    onOpenPieChart(
+                        TransactionType.EXPENSE,
+                        account.id,
+                        treatTransfersAsIncomeExpense
                     )
                 }
             }
         ) { transactionType ->
-            nav.navigateTo(
-                EditTransactionScreen(
-                    initialTransactionId = null,
-                    type = transactionType.toRouteType(),
-                    accountId = account?.id,
-                    categoryId = category?.id?.value
-                )
+            onAddTransaction(
+                transactionType,
+                account?.id,
+                category?.id?.value
             )
         }
 

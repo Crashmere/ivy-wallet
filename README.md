@@ -39,6 +39,7 @@
 - 收窄导航交易类型参数：`shared:ui:navigation` 不再依赖 `shared:data:model` 的 `TransactionType`，route 改用轻量 `TransactionRouteType`，并删除无读取点的 `TransactionsScreen.transactionType` 参数。
 - 收窄旧交易列表组件职责：`shared:ui:legacy` 的交易列表/交易卡片不再直接构造编辑页或筛选页 route，改由首页、搜索、报表和交易页传入点击回调。
 - 交易列表页继续收窄内部导航职责：旧交易列表项的交易、账户和分类点击不再由 `UI` 主体直接调用 `navigation()`，而是作为普通回调上报到 `TransactionsScreen` 页面入口统一构造 route。
+- 交易列表页 Header 继续收窄导航职责：关闭按钮、收入/支出饼图入口和新增交易入口不再由 Header 或 `UI` 主体直接构造 route，统一由 `TransactionsScreen` 页面入口处理。
 - 收窄旧 toolbar 组件职责：交易统计 toolbar 和编辑页 toolbar 不再直接调用 `nav.back()`，关闭行为由对应 feature 页面传入。
 - 收窄导航模块职责：主界面 tab 状态 `MainTab/MainTabState/LocalMainTabState` 已从 `shared:ui:navigation` 迁到 `shared:ui:core` 的 `com.ivy.ui.main` 包，navigation 模块继续聚焦 route、栈和返回处理。
 - 收窄主界面 Tab 状态职责：`MainTabState` 不再作为 app Hilt 单例提供，改由 `MainViewModel` 作为主页面状态持有，再通过 `LocalMainTabState` 提供给首页和账户页。
