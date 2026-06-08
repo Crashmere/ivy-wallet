@@ -21,7 +21,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.TransactionType
-import com.ivy.legacy.ui.button.IvyCircleButton
+import com.ivy.ui.compose.GradientIconButton
 import com.ivy.legacy.ui.button.IvyOutlinedButton
 import com.ivy.ui.theme.colors.Gradient
 import com.ivy.legacy.ui.theme.LegacyTheme
@@ -108,7 +108,7 @@ private fun DuplicateButton(onClick: () -> Unit) {
 
 @Composable
 private fun DeleteToolbarButton(onClick: () -> Unit) {
-    IvyCircleButton(
+    GradientIconButton(
         modifier = Modifier
             .size(48.dp)
             .testTag("delete_button"),

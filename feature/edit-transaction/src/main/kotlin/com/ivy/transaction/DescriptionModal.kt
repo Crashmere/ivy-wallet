@@ -35,7 +35,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ivy.legacy.ui.button.IvyButton
-import com.ivy.legacy.ui.button.IvyCircleButton
+import com.ivy.ui.compose.GradientIconButton
 import com.ivy.legacy.ui.modal.IvyModal
 import com.ivy.ui.theme.colors.Gradient
 import com.ivy.ui.theme.colors.IvyGradients
@@ -199,7 +199,7 @@ private fun DescriptionModalDeleteButton(
     testTag: String,
     onClick: () -> Unit
 ) {
-    IvyCircleButton(
+    GradientIconButton(
         modifier = Modifier
             .size(40.dp)
             .testTag(testTag),

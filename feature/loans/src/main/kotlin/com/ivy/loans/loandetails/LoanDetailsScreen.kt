@@ -71,7 +71,7 @@ import com.ivy.legacy.ui.money.AmountCurrencyB1
 import com.ivy.legacy.ui.money.BalanceRow
 import com.ivy.legacy.ui.icon.ItemIconMDefaultIcon
 import com.ivy.legacy.ui.button.IvyButton
-import com.ivy.legacy.ui.button.IvyCircleButton
+import com.ivy.ui.compose.GradientIconButton
 import com.ivy.legacy.ui.icon.IvyIcon
 import com.ivy.legacy.ui.button.IvyOutlinedButton
 import com.ivy.ui.icon.getCustomIconIdS
@@ -443,7 +443,7 @@ private fun LoanStatisticToolbarCloseButton(
 private fun LoanStatisticToolbarDeleteButton(
     onDelete: () -> Unit
 ) {
-    IvyCircleButton(
+    GradientIconButton(
         modifier = Modifier
             .size(48.dp)
             .testTag("delete_button"),

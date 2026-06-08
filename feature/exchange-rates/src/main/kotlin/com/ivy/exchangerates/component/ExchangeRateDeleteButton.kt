@@ -5,7 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
-import com.ivy.legacy.ui.button.IvyCircleButton
+import com.ivy.ui.compose.GradientIconButton
 import com.ivy.ui.theme.colors.Gradient
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.theme.colors.IvyFixedColors.White
@@ -16,7 +16,7 @@ internal fun ExchangeRateDeleteButton(
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
 ) {
-    IvyCircleButton(
+    GradientIconButton(
         modifier = modifier
             .size(48.dp)
             .testTag("exchange_rate_delete_button"),

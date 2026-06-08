@@ -75,7 +75,7 @@ import com.ivy.ui.R
 import com.ivy.ui.rememberScrollPositionListState
 import com.ivy.data.model.IncomeExpensePair
 import com.ivy.legacy.ui.money.BalanceRow
-import com.ivy.legacy.ui.button.IvyCircleButton
+import com.ivy.ui.compose.GradientIconButton
 import com.ivy.legacy.ui.button.IvyOutlinedButton
 import com.ivy.legacy.ui.icon.ItemIconMDefaultIcon
 import com.ivy.ui.theme.colors.Gradient
@@ -899,7 +899,7 @@ private fun StatisticToolbarCloseButton(
 private fun StatisticToolbarDeleteButton(
     onDelete: () -> Unit
 ) {
-    IvyCircleButton(
+    GradientIconButton(
         modifier = Modifier
             .size(48.dp)
             .testTag("delete_button"),

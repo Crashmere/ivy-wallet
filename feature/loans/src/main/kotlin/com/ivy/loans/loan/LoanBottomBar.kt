@@ -31,7 +31,7 @@ import com.ivy.ui.compose.toDensityPx
 import com.ivy.ui.R
 import com.ivy.ui.theme.colors.Gradient
 import com.ivy.ui.theme.colors.IvyFixedColors.White
-import com.ivy.legacy.ui.button.IvyCircleButton
+import com.ivy.ui.compose.GradientIconButton
 import com.ivy.legacy.ui.icon.IvyIcon
 import kotlin.math.roundToInt
 
@@ -81,7 +81,7 @@ internal fun BoxWithConstraintsScope.LoanBottomBar(
     val fabStartY = screenHeightPx - navigationBarInset() -
             30.dp.toDensityPx() - FabButtonSize.toDensityPx()
 
-    IvyCircleButton(
+    GradientIconButton(
         modifier = Modifier
             .layout { measurable, constraints ->
                 val placeable = measurable.measure(constraints)

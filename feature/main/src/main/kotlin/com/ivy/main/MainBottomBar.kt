@@ -54,7 +54,7 @@ import com.ivy.ui.theme.colors.Gradient
 import com.ivy.ui.theme.colors.IvyGradients
 import com.ivy.ui.theme.colors.IvyFixedColors.Ivy
 import com.ivy.ui.theme.colors.IvyFixedColors.White
-import com.ivy.legacy.ui.button.IvyCircleButton
+import com.ivy.ui.compose.GradientIconButton
 import com.ivy.legacy.ui.icon.IvyIcon
 import com.ivy.legacy.ui.button.IvyOutlinedButton
 import kotlin.math.abs
@@ -167,7 +167,7 @@ internal fun BoxWithConstraintsScope.BottomBar(
         mutableStateOf(Offset.Zero)
     }
     // + & x button
-    IvyCircleButton(
+    GradientIconButton(
         modifier = Modifier
             .layout { measurable, constraints ->
                 val placeable = measurable.measure(constraints)
@@ -346,7 +346,7 @@ private fun AddIncomeButton(
     clickAreaWidth: Int,
     onAddIncome: () -> Unit,
 ) {
-    IvyCircleButton(
+    GradientIconButton(
         modifier = Modifier
             .layout { measurable, constraints ->
                 val placeable = measurable.measure(constraints)
@@ -431,7 +431,7 @@ private fun AddExpenseButton(
     clickAreaWidth: Int,
     onAddExpense: () -> Unit,
 ) {
-    IvyCircleButton(
+    GradientIconButton(
         modifier = Modifier
             .layout { measurable, constraints ->
                 val placeable = measurable.measure(constraints)
@@ -518,7 +518,7 @@ private fun AddTransferButton(
     clickAreaWidth: Int,
     onAddTransfer: () -> Unit,
 ) {
-    IvyCircleButton(
+    GradientIconButton(
         modifier = Modifier
             .layout { measurable, constraints ->
                 val placeable = measurable.measure(constraints)

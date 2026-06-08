@@ -39,7 +39,7 @@ import com.ivy.ui.R
 import com.ivy.ui.theme.colors.Gradient
 import com.ivy.ui.theme.colors.IvyFixedColors.White
 import com.ivy.legacy.ui.money.BalanceRow
-import com.ivy.legacy.ui.button.IvyCircleButton
+import com.ivy.ui.compose.GradientIconButton
 import com.ivy.legacy.ui.modal.ChoosePeriodModal
 import com.ivy.legacy.ui.period.PeriodSelector
 import com.ivy.ui.period.TimePeriod
@@ -242,7 +242,7 @@ private fun ColumnScope.BalanceAfterPlannedPayments(
 @Composable
 private fun ColumnScope.CloseButton() {
     val nav = navigation()
-    IvyCircleButton(
+    GradientIconButton(
         modifier = Modifier
             .align(Alignment.CenterHorizontally)
             .size(FabButtonSize)

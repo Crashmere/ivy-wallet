@@ -26,7 +26,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.ivy.legacy.ui.button.IvyCircleButton
+import com.ivy.ui.compose.GradientIconButton
 import com.ivy.legacy.ui.modal.ModalAdd
 import com.ivy.legacy.ui.modal.ModalSave
 import com.ivy.legacy.ui.theme.LegacyTheme
@@ -59,7 +59,7 @@ internal fun BudgetModalAddSave(
 internal fun BudgetModalDelete(
     onClick: () -> Unit,
 ) {
-    IvyCircleButton(
+    GradientIconButton(
         modifier = Modifier
             .size(40.dp)
             .testTag("modal_delete"),

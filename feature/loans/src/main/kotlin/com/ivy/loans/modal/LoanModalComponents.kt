@@ -34,7 +34,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.ivy.legacy.ui.button.IvyCircleButton
+import com.ivy.ui.compose.GradientIconButton
 import com.ivy.legacy.ui.button.IvyOutlinedButton
 import com.ivy.legacy.ui.icon.ItemIconMDefaultIcon
 import com.ivy.legacy.ui.modal.ModalAdd
@@ -277,13 +277,14 @@ internal fun LoanModalDelete(
     @DrawableRes icon: Int = R.drawable.ic_delete,
     onClick: () -> Unit
 ) {
-    IvyCircleButton(
+    GradientIconButton(
         modifier = Modifier
             .size(40.dp)
             .testTag(testTag),
         icon = icon,
         backgroundGradient = Gradient(LegacyTheme.colors.red, Color(0xFFFF99AB)),
         enabled = enabled,
+        disabledBackgroundColor = LegacyTheme.colors.gray,
         tint = White,
         onClick = onClick
     )
