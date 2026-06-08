@@ -270,8 +270,8 @@ internal class LoanDetailsViewModel @Inject internal constructor(
             selectedLoanAccountId.value = loan.value?.accountId
 
             loan.value?.let { loan ->
-                selectedLoanAccount()?.let { acc ->
-                    baseCurrency.value = acc.currency ?: defaultCurrencyCode
+                selectedLoanAccountCurrencyCode()?.let { currencyCode ->
+                    baseCurrency.value = currencyCode
                 }
             }
 
@@ -296,8 +296,7 @@ internal class LoanDetailsViewModel @Inject internal constructor(
                             },
                             loanRecordTransaction = hasTransaction,
                             loanRecordCurrencyCode = account?.currency ?: defaultCurrencyCode,
-                            loanCurrencyCode = selectedLoanAccount()?.currency
-                                ?: defaultCurrencyCode
+                            loanCurrencyCode = selectedLoanAccountCurrencyCode() ?: defaultCurrencyCode
                         )
                     }.toImmutableList()
             }
@@ -562,8 +561,8 @@ internal class LoanDetailsViewModel @Inject internal constructor(
         }
     }
 
-    private fun selectedLoanAccount(): LegacyAccount? {
+    private fun selectedLoanAccountCurrencyCode(): String? {
         val accountId = selectedLoanAccountId.value ?: return null
-        return findAccount(accounts.value, accountId)
+        return findAccount(accounts.value, accountId)?.currency
     }
 }
