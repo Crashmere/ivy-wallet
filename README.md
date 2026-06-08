@@ -115,6 +115,7 @@
 - 账户、分类、预算和借贷页面的重排入口按钮已改为页面侧直接使用 `CircleButtonFilled` 和拖拽手柄图标，不再依赖已删除的旧 `ReorderButton` 包装。
 - 周期选择条已迁入 `shared:ui:core` 的 `com.ivy.ui.period.PeriodSelector`；交易页和余额页继续复用原切月、打开周期弹窗和周期短文案行为，`shared:ui:legacy` 不再保留 `legacy.ui.period` 包。
 - 收入/支出汇总卡片已迁入 `shared:ui:core` 的 `com.ivy.ui.summary.IncomeExpensesCards`；交易页和报表页继续复用原金额、交易数量、添加收入/支出按钮和点击入口行为，`shared:ui:legacy` 不再保留 `legacy.ui.summary` 包。
+- 收入/支出汇总卡片 API 继续收窄：`IncomeExpensesCards` 不再通过 `TransactionType` 回传新增动作，改为暴露 `onAddIncome/onAddExpense` 两个 UI 回调；交易类型枚举留在交易页业务导航层。
 - 搜索输入框已迁入 `shared:ui:core` 的 `com.ivy.ui.search.SearchInput`；分类、汇率、搜索页和标签弹窗继续复用原搜索、清空、自动聚焦和键盘隐藏行为，`shared:ui:legacy` 不再保留 `legacy.ui.search` 包。
 - 标签入口按钮已迁入 `shared:ui:core` 的 `com.ivy.ui.tags.AddTagButton`；编辑交易页和报表筛选页继续保留原新增/查看标签按钮展示，`shared:ui:legacy` 的 `legacy.ui.tags` 对外只剩标签弹窗入口。
 - 标签入口按钮 API 继续收窄：`AddTagButton` 不再接收 `TagId` 列表，只接收已选标签数量；业务标签 ID 继续留在编辑交易和报表筛选状态层。

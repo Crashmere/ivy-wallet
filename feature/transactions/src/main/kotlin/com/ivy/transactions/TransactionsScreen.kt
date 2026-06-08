@@ -816,14 +816,22 @@ private fun Header(
                         treatTransfersAsIncomeExpense
                     )
                 }
+            },
+            onAddIncome = {
+                onAddTransaction(
+                    TransactionType.INCOME,
+                    account?.id,
+                    category?.id?.value
+                )
+            },
+            onAddExpense = {
+                onAddTransaction(
+                    TransactionType.EXPENSE,
+                    account?.id,
+                    category?.id?.value
+                )
             }
-        ) { transactionType ->
-            onAddTransaction(
-                transactionType,
-                account?.id,
-                category?.id?.value
-            )
-        }
+        )
 
         Spacer(Modifier.height(20.dp))
     }

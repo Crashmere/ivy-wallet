@@ -20,7 +20,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.ivy.data.model.TransactionType
 import com.ivy.data.model.currency.IvyCurrency
 import com.ivy.data.model.currency.format
 import com.ivy.ui.R
@@ -45,7 +44,8 @@ fun IncomeExpensesCards(
 
     incomeHeaderCardClicked: () -> Unit = {},
     expenseHeaderCardClicked: () -> Unit = {},
-    onAddTransaction: (TransactionType) -> Unit = {},
+    onAddIncome: () -> Unit = {},
+    onAddExpense: () -> Unit = {},
 ) {
     Row(
         modifier = Modifier.fillMaxWidth(),
@@ -63,7 +63,7 @@ fun IncomeExpensesCards(
             itemColor = itemColor,
             onHeaderCardClicked = { incomeHeaderCardClicked() }
         ) {
-            onAddTransaction(TransactionType.INCOME)
+            onAddIncome()
         }
 
         Spacer(Modifier.width(12.dp))
@@ -78,7 +78,7 @@ fun IncomeExpensesCards(
             itemColor = itemColor,
             onHeaderCardClicked = { expenseHeaderCardClicked() }
         ) {
-            onAddTransaction(TransactionType.EXPENSE)
+            onAddExpense()
         }
 
         Spacer(Modifier.width(16.dp))
