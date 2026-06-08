@@ -376,8 +376,9 @@ internal class ReportViewModel @Inject internal constructor(
         filter: ReportFilter,
     ): ImmutableList<Transaction> {
         val filterAccountIds = filter.accountIds.toSet()
-        val filterCategoryIds =
-            filter.categories.map { if (it.id.value == unSpecifiedCategory.id.value) null else it.id }
+        val filterCategoryIds = filter.categoryIds
+            .map { it.takeUnless { categoryId -> categoryId == unSpecifiedCategory.id } }
+            .toSet()
         val filterRange =
             filter.period?.let(periodState::rangeOf)
 

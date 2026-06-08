@@ -1,7 +1,7 @@
 package com.ivy.reports
 
+import com.ivy.data.model.CategoryId
 import com.ivy.data.model.TransactionType
-import com.ivy.data.model.Category
 import com.ivy.data.model.TagId
 import com.ivy.ui.period.TimePeriod
 import java.util.UUID
@@ -11,7 +11,7 @@ internal data class ReportFilter(
     val transactionTypes: List<TransactionType>,
     val period: TimePeriod?,
     val accountIds: List<UUID>,
-    val categories: List<Category>,
+    val categoryIds: List<CategoryId>,
     val currency: String,
     val minAmount: Double?,
     val maxAmount: Double?,
@@ -28,7 +28,7 @@ internal data class ReportFilter(
             transactionTypes = emptyList(),
             period = null,
             accountIds = emptyList(),
-            categories = emptyList(),
+            categoryIds = emptyList(),
             currency = baseCurrency,
             includeKeywords = emptyList(),
             excludeKeywords = emptyList(),
@@ -46,7 +46,7 @@ internal data class ReportFilter(
 
         if (accountIds.isEmpty()) return false
 
-        if (categories.isEmpty()) return false
+        if (categoryIds.isEmpty()) return false
 
         if (minAmount != null && maxAmount != null) {
             if (minAmount > maxAmount) return false

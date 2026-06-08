@@ -729,23 +729,23 @@ private fun CategoriesFilter(
     onSetFilter: (ReportFilter) -> Unit
 ) {
     val myNonNullFilter = nonNullFilter(filter)
-    val selectedItemsCount = filter?.categories?.size ?: 0
+    val selectedCategoryIds = filter?.categoryIds.orEmpty()
 
     ListFilterTitle(
-        text = stringResource(R.string.categories_number, selectedItemsCount),
-        active = filter != null && filter.categories.isNotEmpty(),
-        itemsSelected = selectedItemsCount,
+        text = stringResource(R.string.categories_number, selectedCategoryIds.size),
+        active = filter != null && selectedCategoryIds.isNotEmpty(),
+        itemsSelected = selectedCategoryIds.size,
         onClearAll = {
             onSetFilter(
                 myNonNullFilter.copy(
-                    categories = emptyList()
+                    categoryIds = emptyList()
                 )
             )
         },
         onSelectAll = {
             onSetFilter(
                 myNonNullFilter.copy(
-                    categories = allCategories
+                    categoryIds = allCategories.map(Category::toReportFilterCategoryId)
                 )
             )
         }
@@ -759,27 +759,30 @@ private fun CategoriesFilter(
         }
 
         items(items = allCategories) { category ->
+            val categoryId = category.toReportFilterCategoryId()
             ListItem(
                 icon = category.icon?.id,
                 defaultIcon = R.drawable.ic_custom_category_s,
                 text = category.name.value,
                 selectedColor = category.color.value.toComposeColor().takeIf {
-                    filter?.categories?.contains(category) == true
+                    categoryId in selectedCategoryIds
                 }
             ) { selected ->
                 if (selected) {
                     // remove category
                     onSetFilter(
                         myNonNullFilter.copy(
-                            categories = myNonNullFilter.categories.filter { it != category }
+                            categoryIds = myNonNullFilter.categoryIds.filter { it != categoryId }
                         )
                     )
                 } else {
                     // add category
+                    val newCategoryIds = myNonNullFilter.categoryIds.plus(categoryId).toSet()
                     onSetFilter(
                         myNonNullFilter.copy(
-                            categories = myNonNullFilter.categories
-                                .plus(category).sortedBy { it.orderNum }
+                            categoryIds = allCategories
+                                .map(Category::toReportFilterCategoryId)
+                                .filter { it in newCategoryIds }
                         )
                     )
                 }
@@ -791,6 +794,8 @@ private fun CategoriesFilter(
         }
     }
 }
+
+private fun Category.toReportFilterCategoryId() = id
 
 @Composable
 private fun ListFilterTitle(
