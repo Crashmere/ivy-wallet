@@ -222,6 +222,7 @@
 - 删除无调用方的旧单账户读取 use case：到期交易统计改为在 domain 用例内部从 `AccountStore` 局部读取账户并转换为旧统计所需模型后，`GetLegacyAccountUseCase` 已无调用点。
 - 收窄 domain 统计用例的旧账户读取入口：分类月度统计和预算已花金额统计不再注入 `GetLegacyAccountsUseCase`，改为在各自用例内部从 `AccountStore` 局部读取正式账户并转换给现有旧换算算法。
 - 收窄报表页账户缓存边界：报表 ViewModel 改为缓存正式 `Account`，筛选 UI 使用本模块轻量 `ReportAccount`，金额过滤、CSV 导出和旧收入/支出统计入口才局部转换为 `LegacyAccount`。
+- 收窄饼图统计账户读取边界：饼图数据构建改用正式 `GetAccountsUseCase`，账户筛选和默认纳入余额判断基于正式 `Account` 完成，旧收入/支出和分类金额算法入口才局部转换为 `LegacyAccount`。
 - 收窄饼图页输入缓存：饼图 ViewModel 不再长期保存由 route ID 还原出的旧交易对象，只保存交易 ID，并在重算图表时局部读取。
 - 收窄借贷详情关联交易缓存：借贷详情不再把贷款关联旧交易对象保存在 ViewModel 字段中，加载时只设置开关状态，编辑时局部读取。
 

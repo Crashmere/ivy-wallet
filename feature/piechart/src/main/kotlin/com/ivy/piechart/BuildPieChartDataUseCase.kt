@@ -1,18 +1,18 @@
 package com.ivy.piechart
 
+import com.ivy.data.model.Account
 import com.ivy.data.model.TransactionType
 import com.ivy.data.model.legacy.LegacyTransaction
 import com.ivy.ui.resource.ResourceProvider
 import com.ivy.data.model.Category
 import com.ivy.data.model.CategoryId
 import com.ivy.data.model.legacy.LegacyAccount
-import com.ivy.data.model.legacy.includedLegacyAccounts
 import com.ivy.data.model.FromToTimeRange
 import com.ivy.data.model.IncomeExpenseTransferPair
 import com.ivy.data.model.primitive.ColorInt
 import com.ivy.data.model.primitive.IconAsset
 import com.ivy.data.model.primitive.NotBlankTrimmedString
-import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
+import com.ivy.domain.usecase.account.GetAccountsUseCase
 import com.ivy.domain.usecase.category.CalculateCategoryIncomeWithAccountFiltersUseCase
 import com.ivy.domain.usecase.category.GetCategoriesUseCase
 import com.ivy.domain.usecase.transaction.CalculateLegacyTransactionsIncomeExpenseUseCase
@@ -27,7 +27,7 @@ import javax.inject.Inject
 private val AccountTransfersCategoryColorArgb = 0xFFFFCCD5.toInt()
 
 internal class BuildPieChartDataUseCase @Inject internal constructor(
-    private val getLegacyAccountsUseCase: GetLegacyAccountsUseCase,
+    private val getAccountsUseCase: GetAccountsUseCase,
     private val getLegacyTransactionsForAccountsUseCase: GetLegacyTransactionsForAccountsUseCase,
     private val calculateLegacyTransactionsIncomeExpenseUseCase: CalculateLegacyTransactionsIncomeExpenseUseCase,
     private val getCategoriesUseCase: GetCategoriesUseCase,
@@ -101,15 +101,16 @@ internal class BuildPieChartDataUseCase @Inject internal constructor(
     private suspend fun getUsableAccounts(
         accountIdFilterList: List<UUID>,
     ): UsableAccounts {
-        val allAccounts = getLegacyAccountsUseCase()
+        val allAccounts = getAccountsUseCase()
         val accountsUsed = if (accountIdFilterList.isEmpty()) {
-            includedLegacyAccounts(allAccounts)
+            allAccounts.filter { it.includeInBalance }
         } else {
-            allAccounts.filter { accountIdFilterList.contains(it.id) }
+            allAccounts.filter { accountIdFilterList.contains(it.id.value) }
         }
+        val legacyAccountsUsed = accountsUsed.map { it.toLegacyAccount() }
         return UsableAccounts(
-            accounts = accountsUsed,
-            accountIdFilterSet = accountsUsed.map { it.id }.toHashSet()
+            accounts = legacyAccountsUsed,
+            accountIdFilterSet = legacyAccountsUsed.map { it.id }.toHashSet()
         )
     }
 
@@ -232,6 +233,17 @@ private fun LegacyTransaction.toAssociatedTransaction(): AssociatedTransaction {
         type = type,
     )
 }
+
+private fun Account.toLegacyAccount() = LegacyAccount(
+    name = name.value,
+    currency = asset.code,
+    color = color.value,
+    icon = icon?.id,
+    orderNum = orderNum,
+    includeInBalance = includeInBalance,
+    isDeleted = false,
+    id = id.value,
+)
 
 internal data class PieChartData(
     val totalAmount: Double,
