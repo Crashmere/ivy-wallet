@@ -42,8 +42,8 @@ import com.ivy.ui.theme.LocalThemeState
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
 import com.ivy.ui.compose.thenIf
-import com.ivy.legacy.ui.model.AppBaseData
-import com.ivy.legacy.ui.model.LegacyDueSection
+import com.ivy.legacy.ui.component.transaction.AppBaseData
+import com.ivy.legacy.ui.component.transaction.LegacyDueSection
 import com.ivy.ui.period.Month
 import com.ivy.ui.period.TimePeriod
 import com.ivy.ui.period.displayLong

@@ -22,8 +22,8 @@ import com.ivy.data.model.TransactionHistoryDateDivider
 import com.ivy.data.model.TransactionHistoryItem
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
-import com.ivy.legacy.ui.model.AppBaseData
-import com.ivy.legacy.ui.model.LegacyDueSection
+import com.ivy.legacy.ui.component.transaction.AppBaseData
+import com.ivy.legacy.ui.component.transaction.LegacyDueSection
 import com.ivy.ui.navigation.EditTransactionScreen
 import com.ivy.ui.navigation.Navigation
 import com.ivy.ui.navigation.navigation
