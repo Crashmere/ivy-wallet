@@ -4,9 +4,6 @@ import com.ivy.data.model.TransactionType
 import com.ivy.data.model.Category
 import com.ivy.data.model.IntervalType
 import com.ivy.data.model.legacy.LegacyAccount
-import com.ivy.legacy.ui.modal.AccountModalData
-import com.ivy.legacy.ui.modal.RecurringRuleModalData
-import com.ivy.legacy.ui.modal.CategoryModalData
 import kotlinx.collections.immutable.ImmutableList
 import java.time.LocalDateTime
 import javax.annotation.concurrent.Immutable
@@ -29,9 +26,6 @@ internal data class EditPlannedScreenState(
     val categoryModalVisible: Boolean,
     val descriptionModalVisible: Boolean,
     val deleteTransactionModalVisible: Boolean,
-    val categoryModalData: CategoryModalData?,
-    val accountModalData: AccountModalData?,
-    val recurringRuleModalData: RecurringRuleModalData?,
     val transactionTypeModalVisible: Boolean,
     val amountModalVisible: Boolean
 )

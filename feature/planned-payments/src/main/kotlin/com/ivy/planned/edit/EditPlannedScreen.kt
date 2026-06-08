@@ -109,6 +109,18 @@ private fun BoxWithConstraintsScope.UI(
         )
     }
     val titleFocus = FocusRequester()
+    var categoryModalData: CategoryModalData? by remember { mutableStateOf(null) }
+    var accountModalData: AccountModalData? by remember { mutableStateOf(null) }
+    var recurringRuleModalData: RecurringRuleModalData? by remember { mutableStateOf(null) }
+
+    fun showRecurringRuleModal() {
+        recurringRuleModalData = RecurringRuleModalData(
+            initialStartDate = state.startDate,
+            initialIntervalN = state.intervalN,
+            initialIntervalType = state.intervalType,
+            initialOneTime = state.oneTime
+        )
+    }
 
     Column(
         modifier = Modifier
@@ -156,16 +168,7 @@ private fun BoxWithConstraintsScope.UI(
                         state.intervalType,
                         state.oneTime
                     ) -> {
-                        onEvent(
-                            EditPlannedScreenEvent.OnRecurringRuleModalDataChanged(
-                                RecurringRuleModalData(
-                                    initialStartDate = state.startDate,
-                                    initialIntervalN = state.intervalN,
-                                    initialIntervalType = state.intervalType,
-                                    initialOneTime = state.oneTime
-                                )
-                            )
-                        )
+                        showRecurringRuleModal()
                     }
 
                     else -> {
@@ -194,16 +197,7 @@ private fun BoxWithConstraintsScope.UI(
             intervalType = state.intervalType,
             oneTime = state.oneTime,
             onShowRecurringRuleModal = {
-                onEvent(
-                    EditPlannedScreenEvent.OnRecurringRuleModalDataChanged(
-                        RecurringRuleModalData(
-                            initialStartDate = state.startDate,
-                            initialIntervalN = state.intervalN,
-                            initialIntervalType = state.intervalType,
-                            initialOneTime = state.oneTime
-                        )
-                    )
-                )
+                showRecurringRuleModal()
             }
         )
 
@@ -223,16 +217,7 @@ private fun BoxWithConstraintsScope.UI(
             // Create mode
             if (screen.hasMandatoryInitialData()) {
                 // Flow Convert (Amount, LegacyAccount, Category)
-                onEvent(
-                    EditPlannedScreenEvent.OnRecurringRuleModalDataChanged(
-                        RecurringRuleModalData(
-                            initialStartDate = state.startDate,
-                            initialIntervalN = state.intervalN,
-                            initialIntervalType = state.intervalType,
-                            initialOneTime = state.oneTime
-                        )
-                    )
-                )
+                showRecurringRuleModal()
             } else {
                 // Flow Empty
                 onEvent(EditPlannedScreenEvent.OnTransactionTypeModalVisible(true))
@@ -275,16 +260,7 @@ private fun BoxWithConstraintsScope.UI(
                     state.intervalType,
                     state.oneTime
                 ) -> {
-                    onEvent(
-                        EditPlannedScreenEvent.OnRecurringRuleModalDataChanged(
-                            RecurringRuleModalData(
-                                initialStartDate = state.startDate,
-                                initialIntervalN = state.intervalN,
-                                initialIntervalType = state.intervalType,
-                                initialOneTime = state.oneTime
-                            )
-                        )
-                    )
+                    showRecurringRuleModal()
                 }
 
                 shouldFocusTitle(titleTextFieldValue, state.transactionType) -> {
@@ -295,14 +271,10 @@ private fun BoxWithConstraintsScope.UI(
         onSelectedAccountChanged = { onEvent(EditPlannedScreenEvent.OnAccountChanged(it.id)) },
         onToAccountChanged = { },
         onAddNewAccount = {
-            onEvent(
-                EditPlannedScreenEvent.OnAccountModalDataChanged(
-                    AccountModalData(
-                        account = null,
-                        baseCurrency = state.currency,
-                        balance = 0.0
-                    )
-                )
+            accountModalData = AccountModalData(
+                account = null,
+                baseCurrency = state.currency,
+                balance = 0.0
             )
         }
     )
@@ -313,24 +285,11 @@ private fun BoxWithConstraintsScope.UI(
         initialCategory = state.category,
         categories = state.categories,
         showCategoryModal = {
-            onEvent(
-                EditPlannedScreenEvent.OnCategoryModalDataChanged(
-                    CategoryModalData(it)
-                )
-            )
+            categoryModalData = CategoryModalData(it)
         },
         onCategoryChanged = {
             onEvent(EditPlannedScreenEvent.OnCategoryChanged(it?.id))
-            onEvent(
-                EditPlannedScreenEvent.OnRecurringRuleModalDataChanged(
-                    RecurringRuleModalData(
-                        initialStartDate = state.startDate,
-                        initialIntervalN = state.intervalN,
-                        initialIntervalType = state.intervalType,
-                        initialOneTime = state.oneTime
-                    )
-                )
-            )
+            showRecurringRuleModal()
         },
         dismiss = {
             onEvent(EditPlannedScreenEvent.OnCategoryModalVisible(false))
@@ -338,22 +297,22 @@ private fun BoxWithConstraintsScope.UI(
     )
 
     CategoryModal(
-        modal = state.categoryModalData,
+        modal = categoryModalData,
         onCreateCategory = { onEvent(EditPlannedScreenEvent.OnCreateCategory(it)) },
         onEditCategory = {
             onEvent(EditPlannedScreenEvent.OnEditCategory(it))
         },
         dismiss = {
-            onEvent(EditPlannedScreenEvent.OnCategoryModalDataChanged(null))
+            categoryModalData = null
         }
     )
 
     AccountModal(
-        modal = state.accountModalData,
+        modal = accountModalData,
         onCreateAccount = { onEvent(EditPlannedScreenEvent.OnCreateAccount(it)) },
         onEditAccount = { _, _ -> },
         dismiss = {
-            onEvent(EditPlannedScreenEvent.OnAccountModalDataChanged(null))
+            accountModalData = null
         }
     )
 
@@ -392,7 +351,7 @@ private fun BoxWithConstraintsScope.UI(
 
     val datePicker = LocalDatePicker.current
     RecurringRuleModal(
-        modal = state.recurringRuleModalData,
+        modal = recurringRuleModalData,
         pickDate = { initialDate, onDatePicked ->
             datePicker.pickDate(
                 initialDate = initialDate,
@@ -422,7 +381,7 @@ private fun BoxWithConstraintsScope.UI(
             }
         },
         dismiss = {
-            onEvent(EditPlannedScreenEvent.OnRecurringRuleModalDataChanged(null))
+            recurringRuleModalData = null
         }
     )
 }

@@ -26,9 +26,6 @@ import com.ivy.domain.usecase.category.CreateCategoryUseCase
 import com.ivy.domain.usecase.category.UpdateCategoryUseCase
 import com.ivy.data.model.CreateAccountData
 import com.ivy.data.model.CreateCategoryData
-import com.ivy.legacy.ui.modal.AccountModalData
-import com.ivy.legacy.ui.modal.RecurringRuleModalData
-import com.ivy.legacy.ui.modal.CategoryModalData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
@@ -76,9 +73,6 @@ internal class EditPlannedViewModel @Inject internal constructor(
     private var deleteTransactionModalVisible by mutableStateOf(false)
     private var transactionTypeModalVisible by mutableStateOf(false)
     private var amountModalVisible by mutableStateOf(false)
-    private var recurringRuleModalData by mutableStateOf<RecurringRuleModalData?>(null)
-    private var categoryModalData by mutableStateOf<CategoryModalData?>(null)
-    private var accountModalData by mutableStateOf<AccountModalData?>(null)
 
     private var loadedRule: PlannedPaymentRule? = null
     private var editMode = false
@@ -103,13 +97,10 @@ internal class EditPlannedViewModel @Inject internal constructor(
             description = getDescription(),
             intervalType = getIntervalType(),
             categoryModalVisible = getCategoryModalVisibility(),
-            categoryModalData = getCategoryModalData(),
-            accountModalData = getAccountModalData(),
             deleteTransactionModalVisible = getDeleteTransactionModalVisibility(),
             descriptionModalVisible = getDescriptionModalVisibility(),
             amountModalVisible = getAmountModalVisibility(),
-            transactionTypeModalVisible = getTransactionTypeModalVisibility(),
-            recurringRuleModalData = getRecurringRuleModalData()
+            transactionTypeModalVisible = getTransactionTypeModalVisibility()
         )
     }
 
@@ -204,21 +195,6 @@ internal class EditPlannedViewModel @Inject internal constructor(
         return amountModalVisible
     }
 
-    @Composable
-    private fun getCategoryModalData(): CategoryModalData? {
-        return categoryModalData
-    }
-
-    @Composable
-    private fun getAccountModalData(): AccountModalData? {
-        return accountModalData
-    }
-
-    @Composable
-    private fun getRecurringRuleModalData(): RecurringRuleModalData? {
-        return recurringRuleModalData
-    }
-
     override fun onEvent(event: EditPlannedScreenEvent) {
         when (event) {
             is EditPlannedScreenEvent.OnSave -> save()
@@ -242,12 +218,6 @@ internal class EditPlannedViewModel @Inject internal constructor(
             is EditPlannedScreenEvent.OnCategoryModalVisible ->
                 categoryModalVisible = event.visible
 
-            is EditPlannedScreenEvent.OnCategoryModalDataChanged ->
-                categoryModalData = event.categoryModalData
-
-            is EditPlannedScreenEvent.OnAccountModalDataChanged ->
-                accountModalData = event.accountModalData
-
             is EditPlannedScreenEvent.OnDescriptionModalVisible ->
                 descriptionModalVisible = event.visible
 
@@ -259,9 +229,6 @@ internal class EditPlannedViewModel @Inject internal constructor(
 
             is EditPlannedScreenEvent.OnDeleteTransactionModalVisible ->
                 deleteTransactionModalVisible = event.visible
-
-            is EditPlannedScreenEvent.OnRecurringRuleModalDataChanged ->
-                recurringRuleModalData = event.recurringRuleModalData
         }
     }
 

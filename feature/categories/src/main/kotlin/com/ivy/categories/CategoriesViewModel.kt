@@ -23,7 +23,6 @@ import com.ivy.domain.usecase.category.CreateCategoryUseCase
 import com.ivy.domain.usecase.category.GetCategorySortOrderPreferenceUseCase
 import com.ivy.domain.usecase.category.SetCategorySortOrderPreferenceUseCase
 import com.ivy.data.model.CreateCategoryData
-import com.ivy.legacy.ui.modal.CategoryModalData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
@@ -58,7 +57,6 @@ internal class CategoriesViewModel @Inject internal constructor(
         mutableStateOf<ImmutableList<CategoryData>>(persistentListOf<CategoryData>())
     private val searchQuery = mutableStateOf("")
     private val reorderModalVisible = mutableStateOf(false)
-    private val categoryModalData = mutableStateOf<CategoryModalData?>(null)
     private val sortModalVisible = mutableStateOf(false)
     private val sortOrder = mutableStateOf(SortOrder.DEFAULT)
 
@@ -72,7 +70,6 @@ internal class CategoriesViewModel @Inject internal constructor(
             baseCurrency = getBaseCurrency(),
             categories = getCategories(),
             reorderModalVisible = getReorderModalVisible(),
-            categoryModalData = getCategoryModalData(),
             sortOrder = getSortOrder(),
             sortModalVisible = getSortModalVisible(),
             compactCategoriesModeEnabled = getCompactCategoriesMode(),
@@ -112,11 +109,6 @@ internal class CategoriesViewModel @Inject internal constructor(
     @Composable
     private fun getReorderModalVisible(): Boolean {
         return reorderModalVisible.value
-    }
-
-    @Composable
-    private fun getCategoryModalData(): CategoryModalData? {
-        return categoryModalData.value
     }
 
     @Composable
@@ -253,10 +245,6 @@ internal class CategoriesViewModel @Inject internal constructor(
 
                 is CategoriesScreenEvent.OnSortOrderModalVisible -> {
                     sortModalVisible.value = event.visible
-                }
-
-                is CategoriesScreenEvent.OnCategoryModalVisible -> {
-                    categoryModalData.value = event.categoryModalData
                 }
 
                 is CategoriesScreenEvent.OnSearchQueryUpdate -> updateSearchQuery(event.queryString)

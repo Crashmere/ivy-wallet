@@ -1,7 +1,6 @@
 package com.ivy.categories
 
 import com.ivy.data.model.CreateCategoryData
-import com.ivy.legacy.ui.modal.CategoryModalData
 
 internal sealed interface CategoriesScreenEvent {
     data class OnReorder(
@@ -14,7 +13,5 @@ internal sealed interface CategoriesScreenEvent {
 
     data class OnReorderModalVisible(val visible: Boolean) : CategoriesScreenEvent
     data class OnSortOrderModalVisible(val visible: Boolean) : CategoriesScreenEvent
-    data class OnCategoryModalVisible(val categoryModalData: CategoryModalData?) :
-        CategoriesScreenEvent
     data class OnSearchQueryUpdate(val queryString: String) : CategoriesScreenEvent
 }

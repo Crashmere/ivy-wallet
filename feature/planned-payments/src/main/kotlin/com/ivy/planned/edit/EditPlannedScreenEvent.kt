@@ -6,9 +6,6 @@ import com.ivy.data.model.CategoryId
 import com.ivy.data.model.IntervalType
 import com.ivy.data.model.CreateAccountData
 import com.ivy.data.model.CreateCategoryData
-import com.ivy.legacy.ui.modal.AccountModalData
-import com.ivy.legacy.ui.modal.RecurringRuleModalData
-import com.ivy.legacy.ui.modal.CategoryModalData
 import java.time.LocalDateTime
 import java.util.UUID
 
@@ -38,12 +35,4 @@ internal sealed interface EditPlannedScreenEvent {
     data class OnDeleteTransactionModalVisible(val visible: Boolean) : EditPlannedScreenEvent
     data class OnAmountModalVisible(val visible: Boolean) : EditPlannedScreenEvent
     data class OnTransactionTypeModalVisible(val visible: Boolean) : EditPlannedScreenEvent
-    data class OnCategoryModalDataChanged(val categoryModalData: CategoryModalData?) :
-        EditPlannedScreenEvent
-
-    data class OnRecurringRuleModalDataChanged(val recurringRuleModalData: RecurringRuleModalData?) :
-        EditPlannedScreenEvent
-
-    data class OnAccountModalDataChanged(val accountModalData: AccountModalData?) :
-        EditPlannedScreenEvent
 }

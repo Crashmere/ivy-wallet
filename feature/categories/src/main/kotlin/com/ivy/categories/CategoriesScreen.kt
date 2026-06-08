@@ -95,6 +95,8 @@ private fun BoxWithConstraintsScope.UI(
     val listState = rememberScrollPositionListState(
         key = "categories_lazy_column"
     )
+    var categoryModalData: CategoryModalData? by remember { mutableStateOf(null) }
+
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -169,11 +171,7 @@ private fun BoxWithConstraintsScope.UI(
     }
     CategoriesBottomBar(
         onAddCategory = {
-            onEvent(
-                CategoriesScreenEvent.OnCategoryModalVisible(
-                    CategoryModalData(category = null)
-                )
-            )
+            categoryModalData = CategoryModalData(category = null)
         },
         onClose = {
             nav.back()
@@ -204,13 +202,13 @@ private fun BoxWithConstraintsScope.UI(
     }
 
     CategoryModal(
-        modal = state.categoryModalData,
+        modal = categoryModalData,
         onCreateCategory = {
             onEvent(CategoriesScreenEvent.OnCreateCategory(it))
         },
         onEditCategory = { },
         dismiss = {
-            onEvent(CategoriesScreenEvent.OnCategoryModalVisible(null))
+            categoryModalData = null
         }
     )
 
