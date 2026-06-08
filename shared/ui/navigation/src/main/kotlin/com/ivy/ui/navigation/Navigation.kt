@@ -4,7 +4,6 @@ import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import java.util.Stack
 
 @Stable
 class Navigation {
@@ -13,7 +12,7 @@ class Navigation {
 
   private val screenBackHandlers: MutableMap<Screen, () -> Boolean> = mutableMapOf()
 
-  private val backStack: Stack<Screen> = Stack()
+  private val backStack = ArrayDeque<Screen>()
   var lastScreen: Screen? = null
     private set
 
@@ -22,16 +21,17 @@ class Navigation {
   }
 
   fun navigateTo(screen: Screen) {
-    if (lastScreen != null) {
-      backStack.push(lastScreen)
+    val previousScreen = lastScreen
+    if (previousScreen != null) {
+      backStack.addLast(previousScreen)
     }
     switchScreen(screen)
   }
 
-  fun backStackEmpty() = backStack.empty()
+  fun backStackEmpty() = backStack.isEmpty()
 
   private fun popBackStack() {
-    backStack.pop()
+    backStack.removeLast()
   }
 
   fun handleRootBack(): Boolean {
@@ -40,8 +40,8 @@ class Navigation {
   }
 
   fun back(): Boolean {
-    if (!backStack.empty()) {
-      switchScreen(backStack.pop())
+    if (backStack.isNotEmpty()) {
+      switchScreen(backStack.removeLast())
       return true
     }
     return false
