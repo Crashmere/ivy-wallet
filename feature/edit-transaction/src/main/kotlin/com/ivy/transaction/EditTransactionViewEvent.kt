@@ -12,6 +12,7 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.ImmutableSet
 import java.time.Instant
 import java.time.LocalDateTime
+import java.util.UUID
 
 @Immutable
 internal data class EditTransactionViewState(
@@ -41,8 +42,8 @@ internal sealed interface EditTransactionViewEvent {
     data class OnTitleChanged(val newTitle: String?) : EditTransactionViewEvent
     data class OnDescriptionChanged(val newDescription: String?) : EditTransactionViewEvent
     data class OnCategoryChanged(val newCategory: Category?) : EditTransactionViewEvent
-    data class OnAccountChanged(val newAccount: LegacyAccount) : EditTransactionViewEvent
-    data class OnToAccountChanged(val newAccount: LegacyAccount) : EditTransactionViewEvent
+    data class OnAccountChanged(val accountId: UUID) : EditTransactionViewEvent
+    data class OnToAccountChanged(val accountId: UUID) : EditTransactionViewEvent
     data class OnDueDateChanged(val newDueDate: LocalDateTime?) : EditTransactionViewEvent
     data object OnChangeDate : EditTransactionViewEvent
     data object OnChangeTime : EditTransactionViewEvent

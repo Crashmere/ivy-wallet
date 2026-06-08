@@ -338,7 +338,7 @@ internal class EditTransactionViewModel @Inject internal constructor(
             EditTransactionViewEvent.Delete -> delete()
             EditTransactionViewEvent.Duplicate -> duplicate()
             is EditTransactionViewEvent.EditCategory -> editCategory(event.updatedCategory)
-            is EditTransactionViewEvent.OnAccountChanged -> onAccountChanged(event.newAccount)
+            is EditTransactionViewEvent.OnAccountChanged -> onAccountChanged(event.accountId)
             is EditTransactionViewEvent.OnAmountChanged -> onAmountChanged(event.newAmount)
             is EditTransactionViewEvent.OnCategoryChanged -> onCategoryChanged(event.newCategory)
             is EditTransactionViewEvent.OnDescriptionChanged ->
@@ -352,7 +352,7 @@ internal class EditTransactionViewModel @Inject internal constructor(
                 onSetTransactionType(event.newTransactionType)
 
             is EditTransactionViewEvent.OnTitleChanged -> onTitleChanged(event.newTitle)
-            is EditTransactionViewEvent.OnToAccountChanged -> onToAccountChanged(event.newAccount)
+            is EditTransactionViewEvent.OnToAccountChanged -> onToAccountChanged(event.accountId)
             is EditTransactionViewEvent.Save -> save(event.closeScreen)
             is EditTransactionViewEvent.SetHasChanges -> setHasChanges(event.hasChangesValue)
             is EditTransactionViewEvent.UpdateExchangeRate -> updateExchangeRate(event.exRate)
@@ -506,7 +506,9 @@ internal class EditTransactionViewModel @Inject internal constructor(
         saveIfEditMode()
     }
 
-    private fun onAccountChanged(newAccount: LegacyAccount) {
+    private fun onAccountChanged(accountId: UUID) {
+        val newAccount = accounts.firstOrNull { it.id == accountId } ?: return
+
         viewModelScope.launch {
             loadedTransaction = loadedTransaction().copy(
                 accountId = newAccount.id
@@ -534,7 +536,9 @@ internal class EditTransactionViewModel @Inject internal constructor(
         currency = account.currency ?: baseCurrency()
     }
 
-    private fun onToAccountChanged(newAccount: LegacyAccount) {
+    private fun onToAccountChanged(accountId: UUID) {
+        val newAccount = accounts.firstOrNull { it.id == accountId } ?: return
+
         viewModelScope.launch {
             loadedTransaction = loadedTransaction().copy(
                 toAccountId = newAccount.id
