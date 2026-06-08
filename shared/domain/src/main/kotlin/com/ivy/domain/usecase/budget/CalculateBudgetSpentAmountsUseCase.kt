@@ -1,5 +1,6 @@
 package com.ivy.domain.usecase.budget
 
+import com.ivy.data.api.AccountStore
 import com.ivy.data.model.Budget
 import com.ivy.data.model.Expense
 import com.ivy.data.model.Income
@@ -7,12 +8,12 @@ import com.ivy.data.model.Transaction
 import com.ivy.data.model.Transfer
 import com.ivy.data.model.getFromAccount
 import com.ivy.data.model.legacy.LegacyAccount
-import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
+import com.ivy.domain.mapper.legacy.toLegacyAccount
 import com.ivy.domain.usecase.exchange.ExchangeTransactionAmountUseCase
 import javax.inject.Inject
 
 class CalculateBudgetSpentAmountsUseCase @Inject internal constructor(
-    private val getLegacyAccountsUseCase: GetLegacyAccountsUseCase,
+    private val accountStore: AccountStore,
     private val exchangeTransactionAmountUseCase: ExchangeTransactionAmountUseCase,
 ) {
     suspend operator fun invoke(
@@ -20,7 +21,7 @@ class CalculateBudgetSpentAmountsUseCase @Inject internal constructor(
         transactions: List<Transaction>,
         baseCurrencyCode: String,
     ): List<BudgetSpentAmount> {
-        val accounts = getLegacyAccountsUseCase()
+        val accounts = accountStore.findAll().map { it.toLegacyAccount() }
 
         return budgets.map { budget ->
             BudgetSpentAmount(
