@@ -3,7 +3,7 @@ package com.ivy.accounts
 import com.ivy.data.model.Account
 import com.ivy.legacy.ui.component.ReorderableItem
 
-data class AccountData(
+internal data class AccountData(
     val account: Account,
     val balance: Double,
     val balanceBaseCurrency: Double?,

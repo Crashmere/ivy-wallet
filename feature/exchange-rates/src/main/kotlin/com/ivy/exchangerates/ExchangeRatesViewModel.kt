@@ -29,7 +29,7 @@ import javax.inject.Inject
 
 @Stable
 @HiltViewModel
-class ExchangeRatesViewModel @Inject constructor(
+internal class ExchangeRatesViewModel @Inject constructor(
     private val syncExchangeRatesUseCase: SyncExchangeRatesUseCase,
     private val getBaseCurrency: GetBaseCurrencyUseCase,
     private val observeExchangeRatesUseCase: ObserveExchangeRatesUseCase,

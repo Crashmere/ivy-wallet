@@ -98,6 +98,7 @@
 - 删除无调用方的新模型计划付款付/跳过 use case；当前实际 UI 路径继续使用 legacy 计划付款处理用例。
 - 删除偏好开关的旧分组元数据：设置页已经显式组织“外观与显示”“输入与列表”等分组，`BoolPreference` 不再携带无人读取的 `PreferenceGroup`。
 - 收窄饼图 feature 公开面：除 app 导航图需要调用的 `PieChartStatisticScreen` 入口外，饼图状态、事件、ViewModel、内部图表组件和构图用例都改为模块内部实现。
+- 继续收窄基础 feature 公开面：账户、余额、汇率和搜索模块只保留被主页面或 app 导航图调用的页面入口，状态、事件、ViewModel 和模块内展示模型改为内部实现。
 
 当前仍保留：
 
@@ -1102,6 +1103,7 @@
 
 - 饼图统计页已继续收窄 legacy 交易状态：从导航传入的交易列表只作为重新计算图表的输入保留在 ViewModel 私有字段中，不再作为 Compose state 或页面状态暴露；分类关联交易仍使用更小的 `AssociatedTransaction` 展示/导航模型。
 - 饼图 feature 的内部公开面已收窄：`BuildPieChartDataUseCase`、`PieChartData`、`CategoryAmount`、`AssociatedTransaction`、`SelectedCategory`、状态、事件、ViewModel 和底部栏/图表组件都改为模块内部可见；app 仍只通过页面入口参与导航装配。
+- 账户、余额、汇率和搜索 feature 的公开面也已收窄：`AccountsTab`、`BalanceScreen`、`ExchangeRatesScreen` 和 `SearchScreen` 继续作为外部入口，其余状态、事件、ViewModel、展示模型和模块内部 helper 不再作为跨模块 API 暴露。
 - 首页计划付款付/跳过事件已从传递完整 `LegacyTransaction` 收窄为传递交易 ID；旧交易对象仍只保留在列表展示状态和 ViewModel 内部执行边界。
 - 交易列表页计划付款付/跳过事件也已收窄为传递交易 ID；跳过全部弹窗只保存待确认的交易 ID 列表，ViewModel 在执行前从当前 due 状态解析旧交易对象。
 - 报表页计划付款付/跳过事件同样收窄为传递交易 ID，并删除未被 UI 触发的新模型计划交易事件分支及对应 use case 注入。

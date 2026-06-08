@@ -47,7 +47,7 @@ import com.ivy.legacy.ui.modal.ChoosePeriodModal
 import com.ivy.ui.modal.ChoosePeriodModalData
 import com.ivy.legacy.ui.component.PeriodSelector
 
-val FAB_BUTTON_SIZE = 56.dp
+private val FabButtonSize = 56.dp
 
 @Composable
 fun BoxWithConstraintsScope.BalanceScreen(screen: BalanceScreen) {
@@ -234,7 +234,7 @@ private fun ColumnScope.CloseButton() {
     IvyCircleButton(
         modifier = Modifier
             .align(Alignment.CenterHorizontally)
-            .size(FAB_BUTTON_SIZE)
+            .size(FabButtonSize)
             .rotate(45f)
             .zIndex(200f),
         backgroundPadding = 8.dp,

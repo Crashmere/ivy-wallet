@@ -4,7 +4,7 @@ import androidx.compose.runtime.Immutable
 import com.ivy.ui.period.TimePeriod
 
 @Immutable
-data class BalanceState(
+internal data class BalanceState(
     val period: TimePeriod,
     val baseCurrencyCode: String,
     val currentBalance: Double,

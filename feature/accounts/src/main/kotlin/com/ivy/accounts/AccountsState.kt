@@ -4,7 +4,7 @@ import androidx.compose.runtime.Immutable
 import kotlinx.collections.immutable.ImmutableList
 
 @Immutable
-data class AccountsState(
+internal data class AccountsState(
     val baseCurrency: String,
     val accountsData: ImmutableList<AccountData>,
     val totalBalanceWithExcluded: String,

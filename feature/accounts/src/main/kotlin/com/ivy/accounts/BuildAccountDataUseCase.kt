@@ -9,7 +9,7 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 import javax.inject.Inject
 
-class BuildAccountDataUseCase @Inject constructor(
+internal class BuildAccountDataUseCase @Inject constructor(
     private val exchangeAmountUseCase: ExchangeAmountUseCase,
     private val calculateAccountBalanceUseCase: CalculateAccountBalanceUseCase,
     private val calculateAccountIncomeExpenseUseCase: CalculateAccountIncomeExpenseUseCase

@@ -22,7 +22,7 @@ import com.ivy.ui.R
 import com.ivy.legacy.ui.component.AmountCurrencyB1
 
 @Composable
-fun IncomeExpensesRow(
+internal fun IncomeExpensesRow(
     income: Double,
     expenses: Double,
     currency: String,
