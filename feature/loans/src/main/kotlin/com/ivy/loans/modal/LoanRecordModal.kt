@@ -32,7 +32,6 @@ import com.ivy.data.model.primitive.NotBlankTrimmedString
 import com.ivy.ui.time.LocalTimeConverter
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.compose.thenIf
-import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.data.model.LoanRecord
 import com.ivy.data.model.currency.getDefaultFIATCurrency
 import com.ivy.ui.compose.onCompositionStart
@@ -49,6 +48,7 @@ import com.ivy.legacy.ui.modal.ModalAmountSection
 import com.ivy.legacy.ui.modal.ModalTitle
 import com.ivy.legacy.ui.modal.edit.AccountModal
 import com.ivy.legacy.ui.modal.edit.AmountModal
+import com.ivy.loans.model.LoanAccount
 import java.time.Instant
 import java.util.UUID
 
@@ -64,7 +64,7 @@ internal fun BoxWithConstraintsScope.LoanRecordModal(
     onEdit: (EditLoanRecordData) -> Unit,
     onDelete: (LoanRecord) -> Unit,
     dismiss: () -> Unit,
-    accounts: List<LegacyAccount> = emptyList(),
+    accounts: List<LoanAccount> = emptyList(),
     onCreateAccount: (CreateAccountData) -> Unit = {},
 ) {
     val initialRecord = modal?.loanRecord
@@ -378,7 +378,7 @@ private fun save(
     dateTime: Instant,
     loanRecordInterest: Boolean = false,
     createLoanRecordTransaction: Boolean = false,
-    selectedAccount: LegacyAccount? = null,
+    selectedAccount: LoanAccount? = null,
     reCalculateAmount: Boolean = false,
     loanRecordType: LoanRecordType,
 

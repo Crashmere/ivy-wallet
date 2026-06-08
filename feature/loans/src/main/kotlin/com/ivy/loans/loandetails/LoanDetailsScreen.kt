@@ -54,6 +54,7 @@ import com.ivy.ui.compose.rememberInteractionSource
 import com.ivy.ui.platform.setStatusBarDarkTextCompat
 import com.ivy.loans.model.DisplayLoanAccount
 import com.ivy.loans.model.DisplayLoanRecord
+import com.ivy.loans.model.toLoanAccount
 import com.ivy.loans.loandetails.events.DeleteLoanModalEvent
 import com.ivy.loans.loandetails.events.LoanDetailsScreenEvent
 import com.ivy.loans.loandetails.events.LoanModalEvent
@@ -134,6 +135,7 @@ private fun BoxWithConstraintsScope.UI(
     val selectedLoanAccount = state.accounts.firstOrNull { account ->
         account.id == state.selectedLoanAccountId
     }
+    val loanAccounts = state.accounts.map { it.toLoanAccount() }
 
     Column(
         modifier = Modifier
@@ -239,7 +241,7 @@ private fun BoxWithConstraintsScope.UI(
         onEventHandler.invoke(LoanModalEvent.OnDismissLoanModal)
     }, onCreateAccount = { createAccountData ->
         onEventHandler.invoke(LoanDetailsScreenEvent.OnCreateAccount(createAccountData))
-    }, accounts = state.accounts, onPerformCalculations = {
+    }, accounts = loanAccounts, onPerformCalculations = {
         onEventHandler.invoke(LoanModalEvent.PerformCalculation)
     }, dateTime = state.dateTime,
         onSetDate = {
@@ -257,7 +259,7 @@ private fun BoxWithConstraintsScope.UI(
         onEventHandler.invoke(LoanRecordModalEvent.OnEditLoanRecord(it))
     }, onDelete = { loanRecord ->
         onEventHandler.invoke(LoanRecordModalEvent.OnDeleteLoanRecord(loanRecord.id))
-    }, accounts = state.accounts, dismiss = {
+    }, accounts = loanAccounts, dismiss = {
         onEventHandler.invoke(LoanRecordModalEvent.OnDismissLoanRecord)
     }, onCreateAccount = { createAccountData ->
         onEventHandler.invoke(LoanDetailsScreenEvent.OnCreateAccount(createAccountData))

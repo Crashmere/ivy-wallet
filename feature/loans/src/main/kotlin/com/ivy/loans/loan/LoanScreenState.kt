@@ -1,7 +1,7 @@
 package com.ivy.loans.loan
 
-import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.loans.model.DisplayLoan
+import com.ivy.loans.model.LoanAccount
 import com.ivy.loans.modal.LoanModalData
 import kotlinx.collections.immutable.ImmutableList
 import java.time.Instant
@@ -10,7 +10,7 @@ internal data class LoanScreenState(
     val baseCurrency: String,
     val completedLoans: ImmutableList<DisplayLoan>,
     val pendingLoans: ImmutableList<DisplayLoan>,
-    val accounts: ImmutableList<LegacyAccount>,
+    val accounts: ImmutableList<LoanAccount>,
     val loanModalData: LoanModalData?,
     val reorderModalVisible: Boolean,
     val totalOweAmount: String,

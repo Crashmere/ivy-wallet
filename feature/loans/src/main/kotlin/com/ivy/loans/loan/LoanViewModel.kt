@@ -10,6 +10,7 @@ import androidx.lifecycle.viewModelScope
 import com.ivy.data.model.processByType
 import com.ivy.data.model.LoanType
 import com.ivy.domain.usecase.account.CreateAccountWithBalanceUseCase
+import com.ivy.domain.usecase.account.GetAccountsUseCase
 import com.ivy.domain.usecase.account.GetLastSelectedAccountIdUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.domain.usecase.loan.CreateLoanUseCase
@@ -17,14 +18,14 @@ import com.ivy.domain.usecase.loan.GetLoanRecordsUseCase
 import com.ivy.domain.usecase.loan.GetLoansUseCase
 import com.ivy.domain.usecase.loan.LoanTransactionSyncUseCase
 import com.ivy.domain.usecase.loan.ReorderLoansUseCase
-import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.data.model.Loan
 import com.ivy.data.model.currency.format
 import com.ivy.data.model.currency.getDefaultFIATCurrency
 import com.ivy.loans.model.DisplayLoan
+import com.ivy.loans.model.LoanAccount
+import com.ivy.loans.model.toLoanAccount
 import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.time.DateTimePicker
-import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
 import com.ivy.data.model.CreateAccountData
 import com.ivy.data.model.CreateLoanData
 import com.ivy.loans.modal.LoanModalData
@@ -55,7 +56,7 @@ internal class LoanViewModel @Inject internal constructor(
     private val createAccountWithBalanceUseCase: CreateAccountWithBalanceUseCase,
     private val loanTransactionSyncUseCase: LoanTransactionSyncUseCase,
     private val getLoansUseCase: GetLoansUseCase,
-    private val getLegacyAccountsUseCase: GetLegacyAccountsUseCase,
+    private val getAccountsUseCase: GetAccountsUseCase,
     private val dateTimePicker: DateTimePicker
 ) : ComposeViewModel<LoanScreenState, LoanScreenEvent>() {
     private data class LoanAmounts(
@@ -66,7 +67,7 @@ internal class LoanViewModel @Inject internal constructor(
     private var baseCurrencyCode by mutableStateOf(getDefaultFIATCurrency().currencyCode)
     private var completedLoans by mutableStateOf<ImmutableList<DisplayLoan>>(persistentListOf())
     private var pendingLoans by mutableStateOf<ImmutableList<DisplayLoan>>(persistentListOf())
-    private var accounts by mutableStateOf<ImmutableList<LegacyAccount>>(persistentListOf())
+    private var accounts by mutableStateOf<ImmutableList<LoanAccount>>(persistentListOf())
     private var selectedAccountId by mutableStateOf<UUID?>(null)
     private var loanModalData by mutableStateOf<LoanModalData?>(null)
     private var reorderModalVisible by mutableStateOf(false)
@@ -262,7 +263,9 @@ internal class LoanViewModel @Inject internal constructor(
     }
 
     private suspend fun initialiseAccounts() {
-        val accountsList = getLegacyAccountsUseCase()
+        val accountsList = getAccountsUseCase()
+            .map { it.toLoanAccount() }
+            .toImmutableList()
         accounts = accountsList
         selectedAccountId = defaultAccountId(accountsList)
         selectedAccountCurrencyCode()?.let {
@@ -347,12 +350,14 @@ internal class LoanViewModel @Inject internal constructor(
     private fun createAccount(data: CreateAccountData) {
         viewModelScope.launch {
             createAccountWithBalanceUseCase(data)
-            accounts = getLegacyAccountsUseCase()
+            accounts = getAccountsUseCase()
+                .map { it.toLoanAccount() }
+                .toImmutableList()
         }
     }
 
     private fun defaultAccountId(
-        accounts: List<LegacyAccount>,
+        accounts: List<LoanAccount>,
     ): UUID? {
         val lastSelectedId = getLastSelectedAccountId()
 
@@ -368,7 +373,7 @@ internal class LoanViewModel @Inject internal constructor(
         return accounts.firstOrNull { it.id == accountId }?.currency
     }
 
-    private fun findCurrencyCode(accounts: List<LegacyAccount>, accountId: UUID?): String {
+    private fun findCurrencyCode(accounts: List<LoanAccount>, accountId: UUID?): String {
         return accountId?.let {
             accounts.find { account -> account.id == it }?.currency
         } ?: defaultCurrencyCode

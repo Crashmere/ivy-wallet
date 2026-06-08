@@ -22,10 +22,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.legacy.ui.icon.ItemIconSDefaultIcon
 import com.ivy.legacy.ui.icon.IvyIcon
 import com.ivy.legacy.ui.theme.LegacyTheme
+import com.ivy.loans.model.LoanAccount
 import com.ivy.ui.theme.colors.findContrastTextColor
 import com.ivy.ui.theme.colors.toComposeColor
 import com.ivy.ui.R
@@ -33,9 +33,9 @@ import com.ivy.ui.compose.thenIf
 
 @Composable
 internal fun LoanAccountPickerRow(
-    accounts: List<LegacyAccount>,
-    selectedAccount: LegacyAccount?,
-    onSelectedAccountChanged: (LegacyAccount) -> Unit,
+    accounts: List<LoanAccount>,
+    selectedAccount: LoanAccount?,
+    onSelectedAccountChanged: (LoanAccount) -> Unit,
     onAddNewAccount: () -> Unit,
     modifier: Modifier = Modifier,
     childrenTestTag: String? = null,
@@ -84,7 +84,7 @@ internal fun LoanAccountPickerRow(
 
 @Composable
 private fun LoanAccountChip(
-    account: LegacyAccount,
+    account: LoanAccount,
     selected: Boolean,
     testTag: String,
     onClick: () -> Unit

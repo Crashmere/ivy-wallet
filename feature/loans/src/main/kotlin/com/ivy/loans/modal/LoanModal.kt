@@ -38,7 +38,6 @@ import androidx.compose.ui.unit.dp
 import com.ivy.data.model.LoanType
 import com.ivy.data.model.primitive.NotBlankTrimmedString
 import com.ivy.ui.time.LocalTimeConverter
-import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.data.model.Loan
 import com.ivy.data.model.currency.getDefaultFIATCurrency
 import com.ivy.ui.compose.onCompositionStart
@@ -48,6 +47,7 @@ import com.ivy.ui.R
 import com.ivy.data.model.currency.IvyCurrency
 import com.ivy.data.model.CreateAccountData
 import com.ivy.data.model.CreateLoanData
+import com.ivy.loans.model.LoanAccount
 import com.ivy.ui.theme.colors.IvyGradients
 import com.ivy.ui.theme.colors.IvyFixedColors.Ivy
 import com.ivy.ui.theme.colors.IvyFixedColors.White
@@ -75,7 +75,7 @@ internal fun BoxWithConstraintsScope.LoanModal(
     onSetTime: () -> Unit,
     onCreateLoan: (CreateLoanData) -> Unit,
     onEditLoan: (Loan, Boolean) -> Unit,
-    accounts: List<LegacyAccount> = emptyList(),
+    accounts: List<LoanAccount> = emptyList(),
     onCreateAccount: (CreateAccountData) -> Unit = {},
     onPerformCalculations: () -> Unit = {},
     dismiss: () -> Unit,
@@ -552,7 +552,7 @@ private fun save(
     color: Color,
     icon: String?,
     amount: Double,
-    selectedAccount: LegacyAccount? = null,
+    selectedAccount: LoanAccount? = null,
     createLoanTransaction: Boolean = false,
 
     onCreateLoan: (CreateLoanData) -> Unit,
