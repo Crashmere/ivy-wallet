@@ -27,7 +27,6 @@ import com.ivy.ui.time.LocalTimeFormatter
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.legacy.ui.theme.style
 import com.ivy.ui.period.toDisplay
-import com.ivy.legacy.ui.component.BudgetBattery
 import com.ivy.ui.compose.clickableNoIndication
 import com.ivy.data.model.currency.format
 import com.ivy.ui.compose.rememberInteractionSource

@@ -1,4 +1,4 @@
-package com.ivy.legacy.ui.component
+package com.ivy.transaction
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -18,15 +18,16 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.legacy.ui.theme.style
-import com.ivy.data.model.currency.format
-import com.ivy.ui.R
 import com.ivy.data.model.currency.IvyCurrency
+import com.ivy.data.model.currency.format
+import com.ivy.legacy.ui.component.IvyIcon
+import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.legacy.ui.theme.Orange
+import com.ivy.legacy.ui.theme.style
+import com.ivy.ui.R
 
 @Composable
-fun CustomExchangeRateCard(
+internal fun CustomExchangeRateCard(
     fromCurrencyCode: String,
     toCurrencyCode: String,
     exchangeRate: Double,

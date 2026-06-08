@@ -60,7 +60,6 @@ import com.ivy.legacy.ui.edit.core.Title
 import com.ivy.legacy.ui.edit.core.Toolbar
 import com.ivy.legacy.ui.component.AddPrimaryAttributeButton
 import com.ivy.legacy.ui.component.ChangeTransactionTypeModal
-import com.ivy.legacy.ui.component.CustomExchangeRateCard
 import com.ivy.legacy.ui.modal.DeleteModal
 import com.ivy.legacy.ui.modal.ModalAdd
 import com.ivy.legacy.ui.modal.ModalCheck

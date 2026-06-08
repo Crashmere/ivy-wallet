@@ -1,4 +1,4 @@
-package com.ivy.legacy.ui.component
+package com.ivy.budgets
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -19,22 +19,21 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.legacy.ui.theme.style
-import com.ivy.ui.compose.thenIf
 import com.ivy.data.model.currency.format
-import com.ivy.ui.R
+import com.ivy.legacy.ui.component.IvyIcon
 import com.ivy.legacy.ui.theme.Green
 import com.ivy.legacy.ui.theme.Ivy
+import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.legacy.ui.theme.Orange
 import com.ivy.legacy.ui.theme.Red
 import com.ivy.legacy.ui.theme.White
-import com.ivy.legacy.ui.component.IvyIcon
-import com.ivy.legacy.ui.component.AmountCurrencyB2Row
+import com.ivy.legacy.ui.theme.style
+import com.ivy.ui.R
+import com.ivy.ui.compose.thenIf
 import kotlin.math.abs
 
 @Composable
-fun BudgetBattery(
+internal fun BudgetBattery(
     modifier: Modifier = Modifier,
     currency: String,
     expenses: Double,
@@ -46,34 +45,16 @@ fun BudgetBattery(
     val percentSpent = expenses / budget
 
     val textColor = when {
-        percentSpent <= 0.30 -> {
-            LegacyTheme.colors.pureInverse
-        }
-
-        percentSpent <= 0.50 -> {
-            White
-        }
-
-        percentSpent <= 0.75 -> {
-            White
-        }
-
+        percentSpent <= 0.30 -> LegacyTheme.colors.pureInverse
+        percentSpent <= 0.50 -> White
+        percentSpent <= 0.75 -> White
         else -> White
     }
 
     val captionTextColor = when {
-        percentSpent <= 0.30 -> {
-            LegacyTheme.colors.mediumInverse
-        }
-
-        percentSpent <= 0.50 -> {
-            White
-        }
-
-        percentSpent <= 0.75 -> {
-            White
-        }
-
+        percentSpent <= 0.30 -> LegacyTheme.colors.mediumInverse
+        percentSpent <= 0.50 -> White
+        percentSpent <= 0.75 -> White
         else -> White
     }
 
@@ -85,18 +66,9 @@ fun BudgetBattery(
             .drawBehind {
                 drawRect(
                     color = when {
-                        percentSpent <= 0.25 -> {
-                            Green
-                        }
-
-                        percentSpent <= 0.50 -> {
-                            Ivy
-                        }
-
-                        percentSpent <= 0.75 -> {
-                            Orange
-                        }
-
+                        percentSpent <= 0.25 -> Green
+                        percentSpent <= 0.50 -> Ivy
+                        percentSpent <= 0.75 -> Orange
                         else -> Red
                     },
                     size = size.copy(
@@ -124,10 +96,7 @@ fun BudgetBattery(
         Column {
             Text(
                 text = when {
-                    percentSpent <= 1 -> {
-                        stringResource(R.string.left_to_spend)
-                    }
-
+                    percentSpent <= 1 -> stringResource(R.string.left_to_spend)
                     else -> stringResource(R.string.budget_exceeded_by)
                 },
                 style = LegacyTheme.typo.c.style(
@@ -138,7 +107,7 @@ fun BudgetBattery(
 
             Spacer(Modifier.height(4.dp))
 
-            AmountCurrencyB2Row(
+            BudgetAmountCurrencyRow(
                 amount = abs(budget - expenses),
                 currency = currency,
                 textColor = textColor
@@ -154,5 +123,32 @@ fun BudgetBattery(
                 )
             )
         }
+    }
+}
+
+@Composable
+private fun BudgetAmountCurrencyRow(
+    amount: Double,
+    currency: String,
+    textColor: Color = LegacyTheme.colors.pureInverse
+) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            text = amount.format(currency),
+            style = LegacyTheme.typo.nB2.style(
+                fontWeight = FontWeight.ExtraBold,
+                color = textColor
+            )
+        )
+        Spacer(modifier = Modifier.width(4.dp))
+        Text(
+            text = currency,
+            style = LegacyTheme.typo.nB2.style(
+                fontWeight = FontWeight.Normal,
+                color = textColor
+            )
+        )
     }
 }
