@@ -27,7 +27,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.ivy.ui.R
-import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.compose.GradientButton
 import com.ivy.ui.compose.gradientCutBackgroundTop
 import com.ivy.ui.compose.navigationBarInset
@@ -43,9 +42,9 @@ internal fun BoxWithConstraintsScope.ExchangeRatesBottomBar(
         GradientButton(
             text = stringResource(R.string.add_manual_exchange_rate),
             backgroundGradient = IvyGradients.Ivy,
-            disabledBackgroundColor = LegacyTheme.colors.gray,
-            shape = LegacyTheme.shapes.rFull,
-            textStyle = LegacyTheme.typo.b2.copy(
+            disabledBackgroundColor = ExchangeRatesTheme.colors.gray,
+            shape = ExchangeRatesTheme.shapes.rFull,
+            textStyle = ExchangeRatesTheme.typo.b2.copy(
                 color = Color(0xFFFAFAFA),
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Start
@@ -64,8 +63,8 @@ private fun BoxWithConstraintsScope.ExchangeRatesBackBottomBar(
     onBack: () -> Unit,
     primaryAction: @Composable () -> Unit,
 ) {
-    val pure = LegacyTheme.colors.pure
-    val medium = LegacyTheme.colors.medium
+    val pure = ExchangeRatesTheme.colors.pure
+    val medium = ExchangeRatesTheme.colors.medium
 
     Row(
         modifier = Modifier
@@ -110,12 +109,12 @@ private fun BottomBarBackButton(
         modifier = Modifier
             .rotate(180f)
             .clip(CircleShape)
-            .background(LegacyTheme.colors.pure, CircleShape)
-            .border(2.dp, LegacyTheme.colors.medium, CircleShape)
+            .background(ExchangeRatesTheme.colors.pure, CircleShape)
+            .border(2.dp, ExchangeRatesTheme.colors.medium, CircleShape)
             .clickable(onClick = onBack)
             .padding(6.dp),
         painter = painterResource(id = R.drawable.ic_arrow_right),
         contentDescription = "back",
-        tint = LegacyTheme.colors.pureInverse,
+        tint = ExchangeRatesTheme.colors.pureInverse,
     )
 }

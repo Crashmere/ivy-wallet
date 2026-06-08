@@ -28,7 +28,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ivy.ui.navigation.screenScopedViewModel
-import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.exchangerates.component.RateItem
 import com.ivy.exchangerates.model.RateUi
 import com.ivy.exchangerates.modal.AddRateModal
@@ -139,10 +138,10 @@ private fun BoxWithConstraintsScope.UI(
                         .fillMaxWidth()
                         .padding(horizontal = 16.dp),
                     text = "${it.from}-${it.to}",
-                    style = LegacyTheme.typo.nH2.copy(
+                    style = ExchangeRatesTheme.typo.nH2.copy(
                         textAlign = TextAlign.Center,
                         fontWeight = FontWeight.Bold,
-                        color = LegacyTheme.colors.primary
+                        color = ExchangeRatesTheme.colors.primary
                     )
                 )
             }
@@ -165,7 +164,7 @@ private fun LazyListScope.ratesSection(
             Spacer(Modifier.width(16.dp))
             Text(
                 text = text,
-                style = LegacyTheme.typo.h2
+                style = ExchangeRatesTheme.typo.h2
             )
             Spacer(Modifier.width(16.dp))
             SectionDivider()
@@ -179,7 +178,7 @@ private fun RowScope.SectionDivider() {
         modifier = Modifier
             .weight(1f)
             .height(1.dp)
-            .background(LegacyTheme.colors.gray, LegacyTheme.shapes.rFull)
+            .background(ExchangeRatesTheme.colors.gray, ExchangeRatesTheme.shapes.rFull)
     )
 }
 

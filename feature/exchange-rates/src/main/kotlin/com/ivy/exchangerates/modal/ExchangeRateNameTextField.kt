@@ -1,5 +1,7 @@
 package com.ivy.exchangerates.modal
 
+import com.ivy.exchangerates.ExchangeRatesTheme
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -28,7 +30,6 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.platform.hideKeyboard
 
 @Composable
@@ -36,7 +37,7 @@ internal fun ExchangeRateNameTextField(
     modifier: Modifier = Modifier,
     underlineModifier: Modifier = Modifier,
     value: TextFieldValue,
-    textColor: Color = LegacyTheme.colors.pureInverse,
+    textColor: Color = ExchangeRatesTheme.colors.pureInverse,
     hint: String?,
     visualTransformation: VisualTransformation = VisualTransformation.None,
     keyboardOptions: KeyboardOptions = KeyboardOptions(
@@ -59,8 +60,8 @@ internal fun ExchangeRateNameTextField(
             if (isEmpty && hint.isNullOrBlank().not()) {
                 Text(
                     text = hint!!,
-                    style = LegacyTheme.typo.b2.copy(
-                        color = LegacyTheme.colors.gray,
+                    style = ExchangeRatesTheme.typo.b2.copy(
+                        color = ExchangeRatesTheme.colors.gray,
                         fontWeight = FontWeight.SemiBold,
                         textAlign = TextAlign.Start
                     ),
@@ -74,13 +75,13 @@ internal fun ExchangeRateNameTextField(
                     .focusRequester(focusRequester),
                 value = value,
                 onValueChange = onValueChanged,
-                textStyle = LegacyTheme.typo.b1.copy(
+                textStyle = ExchangeRatesTheme.typo.b1.copy(
                     color = textColor,
                     fontWeight = FontWeight.ExtraBold,
                     textAlign = TextAlign.Start
                 ),
                 singleLine = false,
-                cursorBrush = SolidColor(LegacyTheme.colors.pureInverse),
+                cursorBrush = SolidColor(ExchangeRatesTheme.colors.pureInverse),
                 visualTransformation = visualTransformation,
                 keyboardOptions = keyboardOptions,
                 keyboardActions = keyboardActions ?: KeyboardActions(
@@ -97,7 +98,7 @@ internal fun ExchangeRateNameTextField(
             modifier = underlineModifier
                 .fillMaxWidth()
                 .height(2.dp)
-                .background(LegacyTheme.colors.medium, LegacyTheme.shapes.rFull)
+                .background(ExchangeRatesTheme.colors.medium, ExchangeRatesTheme.shapes.rFull)
         )
     }
 }

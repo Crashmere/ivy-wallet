@@ -1,5 +1,7 @@
 package com.ivy.exchangerates.component
 
+import com.ivy.exchangerates.ExchangeRatesTheme
+
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -19,7 +21,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.currency.format
-import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.exchangerates.model.RateUi
 
 @Composable
@@ -35,7 +36,7 @@ internal fun RateItem(
                 horizontal = 16.dp
             )
             .clickable(onClick = onClick)
-            .border(2.dp, LegacyTheme.colors.medium, LegacyTheme.shapes.r4)
+            .border(2.dp, ExchangeRatesTheme.colors.medium, ExchangeRatesTheme.shapes.r4)
 
     ) {
         Row(
@@ -77,24 +78,24 @@ private fun RateColumn(label: String, rate: String, value: String) {
     Column {
         Text(
             text = label,
-            style = LegacyTheme.typo.c.copy(
-                color = LegacyTheme.colors.pureInverse,
+            style = ExchangeRatesTheme.typo.c.copy(
+                color = ExchangeRatesTheme.colors.pureInverse,
                 textAlign = TextAlign.Start,
                 fontWeight = FontWeight.Normal
             )
         )
         Text(
             text = rate,
-            style = LegacyTheme.typo.nB1.copy(
-                color = LegacyTheme.colors.pureInverse,
+            style = ExchangeRatesTheme.typo.nB1.copy(
+                color = ExchangeRatesTheme.colors.pureInverse,
                 textAlign = TextAlign.Start,
                 fontWeight = FontWeight.ExtraBold
             )
         )
         Text(
             text = value,
-            style = LegacyTheme.typo.nB2.copy(
-                color = LegacyTheme.colors.pureInverse,
+            style = ExchangeRatesTheme.typo.nB2.copy(
+                color = ExchangeRatesTheme.colors.pureInverse,
                 textAlign = TextAlign.Start,
                 fontWeight = FontWeight.Normal
             )
