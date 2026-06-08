@@ -13,7 +13,7 @@
 - 删除失去实现意义的云端删除入口：设置页不再显示“删除云端数据”链路，`ResetWalletDataUseCase` 不再保留空的 cloud reset 方法。
 - 整顿设置页：合并原高级特性页，改成个人偏好设置；重排设置分组；删除匿名账户入口和首页问候语。
 - 精简测试和预览基础设施：删除 Paparazzi 截图测试、快照图片、仅服务 IDE 的 Compose `@Preview` 示例函数和预览 helper。
-- 持续清理 `temp:legacy-code` 中确认无引用的旧代码、工具、组件和残留模型。
+- `:temp:*` Gradle 模块已经删除；后续工作集中在继续收窄 `shared:ui:legacy` 中保留下来的旧 UI/旧模型兼容边界。
 - 删除空的 `:shared:data:core-testing` 模块，并把测试专用 `FakeRepositoryMemo` 从生产源码移入测试源集。
 - 删除未引用的第三方导入 logo、widget 预览/图标、推广/分享/捐赠图片，以及 `help_us_grow` 多语言推广文案。
 - 删除无代码引用的 `data_synced_to_cloud` 多语言云同步完成文案。
@@ -1175,30 +1175,30 @@ shared:ui:core
 推荐从低风险到高风险这样推进：
 
 1. **资源和文案瘦身**
-   - 删除未引用的第三方导入 logo、widget 预览图、推广/分享文案。
-   - 可选：只保留中文和默认资源。
+   - 第三方导入 logo、widget 预览图、推广/分享文案已经删除。
+   - 后续只处理明确无引用或明显过期的文案；多语言资源暂时保留，避免无意义地降低现有 UI 覆盖。
 2. **构建约定插件整理**
-   - `shared:base` 已删除；继续检查 `shared:data:model`、`shared:data:api`、`shared:domain` 是否只声明真实需要的能力。
-   - 再处理 `shared:data:core`、`shared:domain`。
+   - `shared:base` 已删除；`shared:data:model`、`shared:data:api`、`shared:domain` 和 `shared:test-support` 已是 JVM 模块。
+   - 后续只在实际改到某个模块时继续删多余依赖，不为追求形式统一批量改 Gradle。
 3. **测试 helper 归位**
-   - 新建或整理 `shared:test-support`。
-   - 移动 fake DAO、test dispatcher、test resource provider、test time converter。
+   - `shared:test-support` 已建立，跨模块复用的测试生成器和断言已迁入。
+   - fake DAO 继续留在 data-core 测试源集；后续只在出现新的跨模块复用需求时再移动。
 4. **收尾旧设计兼容层**
    - `:temp:old-design` 已删除。
-   - 后续替换 `LegacyTheme`、旧颜色常量和旧组件。
-5. **迁移 `temp:legacy-code`**
-   - 从工具函数和 modal 开始。
-   - 再处理旧 domain action。
+   - 后续替换或收窄 `LegacyTheme`、旧颜色常量和旧组件。
+5. **收窄 `shared:ui:legacy`**
+   - 优先继续缩小旧交易列表、旧弹窗和旧主题对 feature 暴露的模型。
+   - 只在页面调用点已经只需要 ID、枚举或小展示模型时，再把完整旧模型收回组件内部。
 6. **偏好设置重构**
    - 继续保持 feature 不直接访问 `SharedPrefs`。
    - 后续只在确实需要迁移数据格式时再评估 `SettingsEntity`、SharedPrefs 和 DataStore 的归并。
 7. **平台能力拆分**
-   - 拆 `RootActivity`。
-   - 删除 `RootScreen` 大接口，改用窄平台接口。
+   - `RootActivity` 和 `RootScreen` 大接口已基本拆完。
+   - 后续只处理仍能明确降低 Activity/app 边界负担的小平台适配器。
 8. **数据库遗留迁移**
    - 用户表、同步字段、旧设置表单独处理。
 9. **feature 模块合并**
-   - 在 temp 依赖减少后再做。
+   - 在 `shared:ui:legacy` 边界继续收窄后再做，避免只是把旧耦合搬进更大的 feature 模块。
 
 ## 每轮提交建议
 
