@@ -18,10 +18,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.TransactionType
 import com.ivy.data.model.Category
@@ -33,11 +36,12 @@ import com.ivy.ui.navigation.TransactionRouteType
 import com.ivy.ui.navigation.navigation
 import com.ivy.ui.navigation.screenScopedViewModel
 import com.ivy.ui.R
-import com.ivy.legacy.ui.button.IvyButton
 import com.ivy.legacy.ui.modal.DeleteModal
 import com.ivy.legacy.ui.modal.edit.AccountModal
 import com.ivy.legacy.ui.modal.edit.CategoryModal
 import com.ivy.legacy.ui.modal.edit.ChooseCategoryModal
+import com.ivy.legacy.ui.theme.LegacyTheme
+import com.ivy.ui.compose.GradientButton
 import com.ivy.ui.theme.colors.IvyGradients
 import kotlinx.collections.immutable.persistentListOf
 import java.time.LocalDateTime
@@ -379,11 +383,19 @@ private fun EditPlannedSetButton(
     modifier: Modifier = Modifier,
     onClick: () -> Unit
 ) {
-    IvyButton(
+    GradientButton(
         modifier = modifier,
         text = stringResource(R.string.set),
         backgroundGradient = IvyGradients.Green,
+        disabledBackgroundColor = LegacyTheme.colors.gray,
+        shape = LegacyTheme.shapes.rFull,
+        textStyle = LegacyTheme.typo.b2.copy(
+            color = Color(0xFFFAFAFA),
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Start
+        ),
         iconStart = R.drawable.ic_check,
+        iconTint = Color(0xFFFAFAFA),
         onClick = onClick
     )
 }

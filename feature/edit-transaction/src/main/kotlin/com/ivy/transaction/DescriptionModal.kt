@@ -34,7 +34,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.ivy.legacy.ui.button.IvyButton
+import com.ivy.ui.compose.GradientButton
 import com.ivy.ui.compose.GradientIconButton
 import com.ivy.legacy.ui.modal.IvyModal
 import com.ivy.ui.theme.colors.Gradient
@@ -185,11 +185,19 @@ private fun DescriptionModalPositiveButton(
     @DrawableRes iconStart: Int,
     onClick: () -> Unit,
 ) {
-    IvyButton(
+    GradientButton(
         modifier = if (testTag != null) modifier.testTag(testTag) else modifier,
         text = text,
         backgroundGradient = IvyGradients.Green,
+        disabledBackgroundColor = LegacyTheme.colors.gray,
+        shape = LegacyTheme.shapes.rFull,
+        textStyle = LegacyTheme.typo.b2.copy(
+            color = Color(0xFFFAFAFA),
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Start
+        ),
         iconStart = iconStart,
+        iconTint = Color(0xFFFAFAFA),
         onClick = onClick
     )
 }

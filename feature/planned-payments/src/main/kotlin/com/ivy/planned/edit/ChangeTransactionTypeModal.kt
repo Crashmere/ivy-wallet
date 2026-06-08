@@ -26,9 +26,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.TransactionType
-import com.ivy.legacy.ui.button.IvyButton
 import com.ivy.legacy.ui.modal.IvyModal
 import com.ivy.legacy.ui.modal.ModalTitle
+import com.ivy.ui.compose.GradientButton
 import com.ivy.ui.compose.ResourceIcon
 import com.ivy.ui.theme.colors.Gradient
 import com.ivy.ui.theme.colors.IvyGradients
@@ -123,10 +123,18 @@ private fun save(
 
 @Composable
 private fun TransactionTypeModalSetButton(onClick: () -> Unit) {
-    IvyButton(
+    GradientButton(
         text = stringResource(R.string.set),
         backgroundGradient = IvyGradients.Green,
+        disabledBackgroundColor = LegacyTheme.colors.gray,
+        shape = LegacyTheme.shapes.rFull,
+        textStyle = LegacyTheme.typo.b2.copy(
+            color = Color(0xFFFAFAFA),
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Start
+        ),
         iconStart = R.drawable.ic_check,
+        iconTint = Color(0xFFFAFAFA),
         onClick = onClick
     )
 }

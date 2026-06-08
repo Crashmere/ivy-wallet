@@ -1515,6 +1515,7 @@ shared:ui:core
 - 预算弹窗不再通过 `BudgetModalData` 进入 ViewModel/State/Event；预算页改用 Screen 本地状态控制弹窗，ViewModel 只处理预算创建、编辑、删除和重排事件。
 - 借贷列表页的新建借贷弹窗状态已从 ViewModel/State 移回 Screen 本地；ViewModel 继续负责账户加载、日期时间选择、借贷创建和列表刷新。
 - 旧主题系统新增 `LegacyColors`、`LegacyTypography` 和 `LegacyShapes` 作为外层门面类型；`theme.system` 下的 `IvyColors/IvyTypography/IvyShapes` 已收窄为 `shared:ui:legacy` 内部实现细节。
+- 编辑交易页和计划付款编辑页的分类按钮、交易类型弹窗、描述弹窗、工具栏交易类型按钮、转账底部账户按钮、计划付款重复规则确认按钮和保存/确认按钮已改用 `shared:ui:core` 的 `GradientButton` / `OutlinedPillButton`，并显式保留旧主题圆角、禁用态灰色、渐变、文字色和图标 tint。
 - app 仍保留文件选择、文件分享、Material 日期选择器、BuildInfo、Locale 设置、生物识别和窗口安全等真正依赖 Activity 或 Android app 壳层的装配。
 
 ## 高风险区域

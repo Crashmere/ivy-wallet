@@ -19,10 +19,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.TransactionType
 import com.ivy.ui.compose.GradientIconButton
-import com.ivy.legacy.ui.button.IvyOutlinedButton
+import com.ivy.ui.compose.OutlinedPillButton
 import com.ivy.ui.theme.colors.Gradient
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.theme.colors.IvyFixedColors.White
@@ -49,9 +51,18 @@ internal fun Toolbar(
 
         when (type) {
             TransactionType.INCOME -> {
-                IvyOutlinedButton(
+                OutlinedPillButton(
                     text = stringResource(R.string.income),
                     iconStart = R.drawable.ic_income,
+                    shape = LegacyTheme.shapes.rFull,
+                    backgroundColor = LegacyTheme.colors.pure,
+                    iconTint = LegacyTheme.colors.pureInverse,
+                    borderColor = LegacyTheme.colors.medium,
+                    textStyle = LegacyTheme.typo.b2.copy(
+                        fontWeight = FontWeight.Bold,
+                        color = LegacyTheme.colors.pureInverse,
+                        textAlign = TextAlign.Start,
+                    ),
                     onClick = onChangeTransactionTypeModal
                 )
 
@@ -59,9 +70,18 @@ internal fun Toolbar(
             }
 
             TransactionType.EXPENSE -> {
-                IvyOutlinedButton(
+                OutlinedPillButton(
                     text = stringResource(R.string.expense),
                     iconStart = R.drawable.ic_expense,
+                    shape = LegacyTheme.shapes.rFull,
+                    backgroundColor = LegacyTheme.colors.pure,
+                    iconTint = LegacyTheme.colors.pureInverse,
+                    borderColor = LegacyTheme.colors.medium,
+                    textStyle = LegacyTheme.typo.b2.copy(
+                        fontWeight = FontWeight.Bold,
+                        color = LegacyTheme.colors.pureInverse,
+                        textAlign = TextAlign.Start,
+                    ),
                     onClick = onChangeTransactionTypeModal
                 )
 

@@ -71,8 +71,8 @@ import com.ivy.ui.theme.colors.Gradient
 import com.ivy.ui.theme.colors.IvyFixedColors.Ivy
 import com.ivy.legacy.ui.money.BalanceRow
 import com.ivy.ui.icon.ItemIconSDefaultIcon
-import com.ivy.legacy.ui.button.IvyButton
 import com.ivy.ui.compose.ResourceIcon
+import com.ivy.ui.compose.GradientButton
 import com.ivy.ui.theme.colors.findContrastTextColor
 import com.ivy.ui.animation.DURATION_MODAL_ANIM
 import com.ivy.legacy.ui.modal.edit.AmountModal
@@ -451,10 +451,12 @@ private fun TransferRowMini(
 
         val fromColor = fromAccount?.color?.toComposeColor() ?: Ivy
         val fromContrastColor = findContrastTextColor(fromColor)
-        IvyButton(
+        GradientButton(
             text = fromAccount?.name ?: "Null",
             iconStart = R.drawable.ic_accounts,
             backgroundGradient = Gradient.solid(fromColor),
+            disabledBackgroundColor = LegacyTheme.colors.gray,
+            shape = LegacyTheme.shapes.rFull,
             iconTint = fromContrastColor,
             textStyle = LegacyTheme.typo.b2.copy(
                 color = fromContrastColor,
@@ -473,10 +475,12 @@ private fun TransferRowMini(
 
         val toColor = toAccount?.color?.toComposeColor() ?: Ivy
         val toContrastColor = findContrastTextColor(toColor)
-        IvyButton(
+        GradientButton(
             text = toAccount?.name ?: "Null",
             iconStart = R.drawable.ic_accounts,
             backgroundGradient = Gradient.solid(toColor),
+            disabledBackgroundColor = LegacyTheme.colors.gray,
+            shape = LegacyTheme.shapes.rFull,
             iconTint = toContrastColor,
             textStyle = LegacyTheme.typo.b2.copy(
                 color = toContrastColor,

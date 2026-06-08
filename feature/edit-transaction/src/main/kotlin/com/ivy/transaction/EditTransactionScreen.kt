@@ -28,6 +28,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.layout.positionInParent
@@ -57,7 +58,6 @@ import com.ivy.ui.R
 import com.ivy.data.model.currency.IvyCurrency
 import com.ivy.data.model.CreateAccountData
 import com.ivy.data.model.CreateCategoryData
-import com.ivy.legacy.ui.button.IvyButton
 import com.ivy.legacy.ui.modal.DeleteModal
 import com.ivy.legacy.ui.modal.ModalAdd
 import com.ivy.legacy.ui.modal.ModalSave
@@ -66,6 +66,7 @@ import com.ivy.legacy.ui.modal.edit.AccountModal
 import com.ivy.legacy.ui.modal.edit.AmountModal
 import com.ivy.legacy.ui.modal.edit.CategoryModal
 import com.ivy.legacy.ui.modal.edit.ChooseCategoryModal
+import com.ivy.ui.compose.GradientButton
 import com.ivy.ui.compose.ResourceIcon
 import com.ivy.ui.theme.colors.IvyGradients
 import kotlinx.collections.immutable.ImmutableList
@@ -727,10 +728,18 @@ private fun PayOrGetPlannedButton(
     label: String,
     onClick: () -> Unit,
 ) {
-    IvyButton(
+    GradientButton(
         text = label,
         backgroundGradient = IvyGradients.Green,
+        disabledBackgroundColor = LegacyTheme.colors.gray,
+        shape = LegacyTheme.shapes.rFull,
+        textStyle = LegacyTheme.typo.b2.copy(
+            color = Color(0xFFFAFAFA),
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Start
+        ),
         iconStart = R.drawable.ic_check,
+        iconTint = Color(0xFFFAFAFA),
         onClick = onClick
     )
 }

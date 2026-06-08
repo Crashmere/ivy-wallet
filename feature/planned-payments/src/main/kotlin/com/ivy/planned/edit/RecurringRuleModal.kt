@@ -31,6 +31,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.platform.testTag
@@ -43,7 +44,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.IntervalType
-import com.ivy.legacy.ui.button.IvyButton
+import com.ivy.ui.compose.GradientButton
 import com.ivy.ui.compose.GradientIconButton
 import com.ivy.ui.compose.ResourceIcon
 import com.ivy.legacy.ui.modal.IvyModal
@@ -183,10 +184,18 @@ private fun RecurringRuleSetButton(
     enabled: Boolean = true,
     onClick: () -> Unit
 ) {
-    IvyButton(
+    GradientButton(
         modifier = modifier,
         text = stringResource(R.string.set),
         backgroundGradient = IvyGradients.Green,
+        disabledBackgroundColor = LegacyTheme.colors.gray,
+        shape = LegacyTheme.shapes.rFull,
+        textStyle = LegacyTheme.typo.b2.copy(
+            color = Color(0xFFFAFAFA),
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Start
+        ),
+        iconTint = Color(0xFFFAFAFA),
         iconStart = R.drawable.ic_check,
         enabled = enabled,
         onClick = onClick

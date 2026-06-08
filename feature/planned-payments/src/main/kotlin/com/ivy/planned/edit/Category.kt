@@ -22,7 +22,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.Category
-import com.ivy.legacy.ui.button.IvyButton
+import com.ivy.ui.compose.GradientButton
 import com.ivy.ui.theme.colors.Gradient
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.theme.colors.findContrastTextColor
@@ -55,7 +55,7 @@ private fun CategoryButton(
 ) {
     val categoryColor = category.color.value.toComposeColor()
     val contrastColor = findContrastTextColor(categoryColor)
-    IvyButton(
+    GradientButton(
         modifier = Modifier.padding(start = 24.dp),
         text = category.name.value,
         iconStart = getCustomIconIdS(
@@ -63,6 +63,8 @@ private fun CategoryButton(
             defaultIcon = R.drawable.ic_custom_category_s
         ),
         backgroundGradient = Gradient.solid(categoryColor),
+        disabledBackgroundColor = LegacyTheme.colors.gray,
+        shape = LegacyTheme.shapes.rFull,
         textStyle = LegacyTheme.typo.b2.copy(
             color = contrastColor,
             fontWeight = FontWeight.Bold,
