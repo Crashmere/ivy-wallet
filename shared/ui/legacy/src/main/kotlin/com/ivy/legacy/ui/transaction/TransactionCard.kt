@@ -65,7 +65,7 @@ import com.ivy.legacy.ui.theme.findContrastTextColor
 import com.ivy.legacy.ui.theme.gradientBlack
 import com.ivy.legacy.ui.theme.gradientExpenses
 import com.ivy.legacy.ui.theme.toComposeColor
-import com.ivy.legacy.ui.money.AmountCurrencyB1
+import com.ivy.ui.money.AmountCurrencyB1
 import com.ivy.ui.compose.GradientButton
 import com.ivy.ui.compose.ResourceIcon
 import kotlinx.collections.immutable.ImmutableList

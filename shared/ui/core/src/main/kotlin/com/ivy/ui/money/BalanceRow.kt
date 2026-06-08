@@ -1,4 +1,4 @@
-package com.ivy.legacy.ui.money
+package com.ivy.ui.money
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -15,8 +15,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.data.model.currency.format
 import com.ivy.data.model.currency.shortenAmount
 import com.ivy.data.model.currency.shouldShortAmount
@@ -26,7 +24,7 @@ fun BalanceRow(
     currency: String,
     balance: Double,
     modifier: Modifier = Modifier,
-    textColor: Color = LegacyTheme.colors.pureInverse,
+    textColor: Color = MoneyDisplayTheme.colors.pureInverse,
     hiddenMode: Boolean = false,
     spacerCurrency: Dp = 12.dp,
     currencyFontSize: TextUnit? = null,
@@ -45,17 +43,17 @@ fun BalanceRow(
 
     Column(
         modifier = modifier,
-        verticalArrangement = Arrangement.Center
+        verticalArrangement = Arrangement.Center,
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
+            horizontalArrangement = Arrangement.SpaceBetween,
         ) {
             if (doubleRowDisplay) {
                 Currency(
                     currency = currency,
                     textColor = textColor,
-                    currencyFontSize = currencyFontSize
+                    currencyFontSize = currencyFontSize,
                 )
                 Spacer(Modifier.width(spacerCurrency))
             }
@@ -75,20 +73,12 @@ fun BalanceRow(
 
                 Text(
                     text = balanceCurrencyText,
-                    style = if (balanceFontSize == null) {
-                        LegacyTheme.typo.nH1.copy(
-                            fontWeight = FontWeight.ExtraBold,
-                            color = textColor,
-                            textAlign = TextAlign.Start
-                        )
-                    } else {
-                        LegacyTheme.typo.nH1.copy(
-                            fontWeight = FontWeight.ExtraBold,
-                            color = textColor,
-                            textAlign = TextAlign.Start,
-                            fontSize = balanceFontSize
-                        )
-                    }
+                    style = MoneyDisplayTheme.typo.nH1.copy(
+                        fontWeight = FontWeight.ExtraBold,
+                        color = textColor,
+                        textAlign = TextAlign.Start,
+                        fontSize = balanceFontSize ?: MoneyDisplayTheme.typo.nH1.fontSize,
+                    ),
                 )
             }
         }
@@ -96,7 +86,7 @@ fun BalanceRow(
         if (doubleRowDisplay) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
+                horizontalArrangement = Arrangement.SpaceBetween,
             ) {
                 Text(
                     text = when {
@@ -104,20 +94,12 @@ fun BalanceRow(
                         balanceAmountPrefix != null -> "$balanceAmountPrefix$integerPartFormatted"
                         else -> integerPartFormatted
                     },
-                    style = if (balanceFontSize == null) {
-                        LegacyTheme.typo.nH1.copy(
-                            fontWeight = FontWeight.ExtraBold,
-                            color = textColor,
-                            textAlign = TextAlign.Start
-                        )
-                    } else {
-                        LegacyTheme.typo.nH1.copy(
-                            fontWeight = FontWeight.ExtraBold,
-                            color = textColor,
-                            textAlign = TextAlign.Start,
-                            fontSize = balanceFontSize
-                        )
-                    }
+                    style = MoneyDisplayTheme.typo.nH1.copy(
+                        fontWeight = FontWeight.ExtraBold,
+                        color = textColor,
+                        textAlign = TextAlign.Start,
+                        fontSize = balanceFontSize ?: MoneyDisplayTheme.typo.nH1.fontSize,
+                    ),
                 )
             }
         }
@@ -132,19 +114,11 @@ private fun Currency(
 ) {
     Text(
         text = currency,
-        style = if (currencyFontSize == null) {
-            LegacyTheme.typo.h1.copy(
-                fontWeight = FontWeight.Light,
-                color = textColor,
-                textAlign = TextAlign.Start
-            )
-        } else {
-            LegacyTheme.typo.h1.copy(
-                fontWeight = FontWeight.Light,
-                color = textColor,
-                textAlign = TextAlign.Start,
-                fontSize = currencyFontSize
-            )
-        }
+        style = MoneyDisplayTheme.typo.h1.copy(
+            fontWeight = FontWeight.Light,
+            color = textColor,
+            textAlign = TextAlign.Start,
+            fontSize = currencyFontSize ?: MoneyDisplayTheme.typo.h1.fontSize,
+        ),
     )
 }

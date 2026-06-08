@@ -74,7 +74,7 @@ import com.ivy.ui.navigation.screenScopedViewModel
 import com.ivy.ui.R
 import com.ivy.ui.rememberScrollPositionListState
 import com.ivy.data.model.IncomeExpensePair
-import com.ivy.legacy.ui.money.BalanceRow
+import com.ivy.ui.money.BalanceRow
 import com.ivy.ui.compose.GradientIconButton
 import com.ivy.ui.compose.OutlinedPillButton
 import com.ivy.ui.icon.ItemIconMDefaultIcon

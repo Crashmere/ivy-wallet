@@ -58,7 +58,7 @@ import com.ivy.ui.compose.statusBarInset
 import com.ivy.ui.compose.toDensityPx
 import com.ivy.ui.compose.verticalSwipeListener
 import com.ivy.ui.R
-import com.ivy.legacy.ui.money.AmountCurrencyB1
+import com.ivy.ui.money.AmountCurrencyB1
 import com.ivy.ui.compose.FilledIconButton
 import com.ivy.ui.compose.ResourceIcon
 import kotlin.math.roundToInt

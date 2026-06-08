@@ -53,7 +53,7 @@ import com.ivy.ui.R
 import com.ivy.ui.platform.fileSharer
 import com.ivy.ui.rememberScrollPositionListState
 import com.ivy.data.model.IncomeExpensePair
-import com.ivy.legacy.ui.money.BalanceRow
+import com.ivy.ui.money.BalanceRow
 import com.ivy.ui.compose.FilledIconButton
 import com.ivy.ui.compose.GradientButton
 import com.ivy.ui.compose.OutlinedPillButton

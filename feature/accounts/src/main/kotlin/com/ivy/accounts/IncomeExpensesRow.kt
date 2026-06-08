@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.R
-import com.ivy.legacy.ui.money.AmountCurrencyB1
+import com.ivy.ui.money.AmountCurrencyB1
 
 @Composable
 internal fun IncomeExpensesRow(
