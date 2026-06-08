@@ -1267,6 +1267,7 @@ shared:ui:core
 - 交易列表内部查询参数继续去 legacy 命名：本地 `TransactionsQuery` 使用 `transactionIds`，加载流程用 `inputTransactions` 表达从 ID 局部读取出的交易；编辑交易和报表的标签搜索 debounce 常量也修正为 `Millis` 命名。
 - 报表导出事件不再携带 `FileSharer` 平台分享器；ViewModel 只生成 CSV 并发出 `ShareCsvFile` UI 事件，页面入口负责调用平台分享能力。
 - 设置页导出 CSV 和备份 zip 也不再通过事件传递 `FileSharer`；ViewModel 写入文件后发出分享 UI 事件，Screen 统一调用平台分享能力。
+- 报表页面事件统一为 `sealed interface`，与其他 feature 的事件定义风格保持一致，减少无意义的 `ReportScreenEvent()` 继承样板。
 - app 仍保留文件选择、文件分享、Material 日期选择器、BuildInfo、Locale 设置、生物识别和窗口安全等真正依赖 Activity 或 Android app 壳层的装配。
 
 ## 高风险区域

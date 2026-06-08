@@ -2,22 +2,22 @@ package com.ivy.reports
 
 import java.util.UUID
 
-internal sealed class ReportScreenEvent {
-    data class OnFilter(val filter: ReportFilter?) : ReportScreenEvent()
-    data object OnExport : ReportScreenEvent()
-    data class OnUpcomingExpanded(val upcomingExpanded: Boolean) : ReportScreenEvent()
-    data class OnOverdueExpanded(val overdueExpanded: Boolean) : ReportScreenEvent()
-    data class OnFilterOverlayVisible(val filterOverlayVisible: Boolean) : ReportScreenEvent()
-    data class OnTagSearch(val data: String) : ReportScreenEvent()
+internal sealed interface ReportScreenEvent {
+    data class OnFilter(val filter: ReportFilter?) : ReportScreenEvent
+    data object OnExport : ReportScreenEvent
+    data class OnUpcomingExpanded(val upcomingExpanded: Boolean) : ReportScreenEvent
+    data class OnOverdueExpanded(val overdueExpanded: Boolean) : ReportScreenEvent
+    data class OnFilterOverlayVisible(val filterOverlayVisible: Boolean) : ReportScreenEvent
+    data class OnTagSearch(val data: String) : ReportScreenEvent
     data class OnTreatTransfersAsIncomeExpense(val transfersAsIncomeExpense: Boolean) :
-        ReportScreenEvent()
+        ReportScreenEvent
 
     data class SkipTransactions(val transactionIds: List<UUID>) :
-        ReportScreenEvent()
+        ReportScreenEvent
 
     data class SkipTransaction(val transactionId: UUID) :
-        ReportScreenEvent()
+        ReportScreenEvent
 
     data class OnPayOrGetTransaction(val transactionId: UUID) :
-        ReportScreenEvent()
+        ReportScreenEvent
 }
