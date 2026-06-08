@@ -5,7 +5,7 @@ import com.ivy.data.api.TransactionStore
 import com.ivy.data.model.TransactionType
 import com.ivy.data.model.FromToTimeRange
 import com.ivy.domain.mapper.legacy.toLegacyAccount
-import com.ivy.domain.mapper.legacy.toLegacy
+import com.ivy.domain.mapper.legacy.toLegacyTransaction
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.domain.usecase.exchange.LegacyExchangeRatesUseCase
 import kotlinx.coroutines.Dispatchers
@@ -27,7 +27,7 @@ class CalculatePlannedPaymentsAmountForRangeUseCase @Inject constructor(
                 startDate = range.from(),
                 endDate = range.to()
             ).sumOf { transaction ->
-                val legacyTransaction = transaction.toLegacy()
+                val legacyTransaction = transaction.toLegacyTransaction()
                 val amount = exchangeRatesUseCase.amountBaseCurrency(
                     transaction = legacyTransaction,
                     baseCurrency = baseCurrency,

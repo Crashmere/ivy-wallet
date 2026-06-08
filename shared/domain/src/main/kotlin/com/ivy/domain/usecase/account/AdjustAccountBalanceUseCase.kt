@@ -5,7 +5,7 @@ import com.ivy.data.model.TransactionType
 import com.ivy.data.api.AccountStore
 import com.ivy.data.api.TransactionStore
 import com.ivy.domain.usecase.currency.GetBaseCurrencyUseCase
-import com.ivy.domain.mapper.legacy.toDomain
+import com.ivy.domain.mapper.legacy.toTransaction
 import com.ivy.domain.mapper.legacy.toDomainAccount
 import com.ivy.domain.time.nowUtc
 import java.math.BigDecimal
@@ -70,7 +70,7 @@ class AdjustAccountBalanceUseCase @Inject constructor(
             toAmount = amount,
             dateTime = nowUtc(),
             accountId = account.id,
-        ).toDomain(accountStore)?.let {
+        ).toTransaction(accountStore)?.let {
             transactionStore.save(it)
         }
     }

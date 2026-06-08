@@ -15,7 +15,7 @@ import com.ivy.domain.exchange.ExchangeData
 import com.ivy.domain.exchange.ExchangeTransactionArgument
 import com.ivy.domain.exchange.exchangeInBaseCurrency
 import com.ivy.domain.mapper.legacy.toImmutableLegacyTags
-import com.ivy.domain.mapper.legacy.toLegacy
+import com.ivy.domain.mapper.legacy.toLegacyTransaction
 import com.ivy.domain.mapper.legacy.toLegacyAccount
 import com.ivy.domain.time.convertToLocal
 import com.ivy.domain.usecase.exchange.LegacyExchangeRatesUseCase
@@ -72,7 +72,7 @@ suspend fun transactionsWithDateDividers(
 
             // Required to be interoperable with [TransactionHistoryItem]
             val legacyTransactionsForDate = transactionsForDate.map {
-                it.toLegacy(tags = getTags(it.tags).toImmutableLegacyTags())
+                it.toLegacyTransaction(tags = getTags(it.tags).toImmutableLegacyTags())
             }
             listOf<TransactionHistoryItem>(
                 TransactionHistoryDateDivider(

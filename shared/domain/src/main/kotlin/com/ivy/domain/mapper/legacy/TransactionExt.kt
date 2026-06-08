@@ -23,7 +23,7 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 
-fun Transaction.toLegacy(
+fun Transaction.toLegacyTransaction(
     tags: ImmutableList<LegacyTag> = persistentListOf()
 ): LegacyTransaction {
     val amount = getFromValue().amount.value.toBigDecimal()
@@ -52,7 +52,7 @@ fun Transaction.toLegacy(
     )
 }
 
-suspend fun LegacyTransaction.toDomain(accountStore: AccountStore): Transaction? {
+suspend fun LegacyTransaction.toTransaction(accountStore: AccountStore): Transaction? {
     val time = dateTime ?: dueDate ?: return null
     val sourceAccountId = AccountId(accountId)
     val sourceAccount = accountStore.findById(sourceAccountId) ?: return null

@@ -4,7 +4,7 @@ import com.ivy.data.model.legacy.LegacyTransaction
 import com.ivy.data.api.TagStore
 import com.ivy.data.model.Transaction
 import com.ivy.domain.mapper.legacy.toImmutableLegacyTags
-import com.ivy.domain.mapper.legacy.toLegacy
+import com.ivy.domain.mapper.legacy.toLegacyTransaction
 import javax.inject.Inject
 
 class MapTransactionsToLegacyWithTagsUseCase @Inject constructor(
@@ -13,7 +13,7 @@ class MapTransactionsToLegacyWithTagsUseCase @Inject constructor(
     suspend operator fun invoke(transactions: List<Transaction>): List<LegacyTransaction> {
         return transactions.map {
             val tags = tagStore.findByIds(it.tags).toImmutableLegacyTags()
-            it.toLegacy(tags)
+            it.toLegacyTransaction(tags)
         }
     }
 }

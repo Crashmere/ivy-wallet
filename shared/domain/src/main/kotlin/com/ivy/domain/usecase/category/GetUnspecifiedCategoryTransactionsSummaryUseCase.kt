@@ -9,7 +9,7 @@ import com.ivy.data.api.TransactionStore
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.domain.usecase.exchange.LegacyExchangeRatesUseCase
 import com.ivy.domain.usecase.exchange.sumInBaseCurrency
-import com.ivy.domain.mapper.legacy.toLegacy
+import com.ivy.domain.mapper.legacy.toLegacyTransaction
 import com.ivy.domain.transaction.legacy.LegacyTransactionDateDividers
 import com.ivy.domain.transaction.legacy.filterOverdueLegacy
 import com.ivy.domain.transaction.legacy.filterUpcomingLegacy
@@ -41,7 +41,7 @@ class GetUnspecifiedCategoryTransactionsSummaryUseCase @Inject constructor(
                 type = TransactionType.INCOME,
                 startDate = range.from(),
                 endDate = range.to()
-            ).map { it.toLegacy() }
+            ).map { it.toLegacyTransaction() }
             .sumInBaseCurrency()
     }
 
@@ -51,7 +51,7 @@ class GetUnspecifiedCategoryTransactionsSummaryUseCase @Inject constructor(
                 type = TransactionType.EXPENSE,
                 startDate = range.from(),
                 endDate = range.to()
-            ).map { it.toLegacy() }
+            ).map { it.toLegacyTransaction() }
             .sumInBaseCurrency()
     }
 
@@ -61,7 +61,7 @@ class GetUnspecifiedCategoryTransactionsSummaryUseCase @Inject constructor(
                 .findAllUnspecifiedAndBetween(
                     startDate = range.from(),
                     endDate = range.to()
-                ).map { it.toLegacy() }
+                ).map { it.toLegacyTransaction() }
                 .withDateDividers(
                     exchangeRatesUseCase = exchangeRatesUseCase,
                     baseCurrencyCode = getBaseCurrencyCode(),
@@ -75,7 +75,7 @@ class GetUnspecifiedCategoryTransactionsSummaryUseCase @Inject constructor(
             startDate = range.upcomingFrom(nowUtc()),
             endDate = range.to()
         ).map {
-            it.toLegacy()
+            it.toLegacyTransaction()
         }.filterUpcomingLegacy()
 
         return CategoryDueTransactionsSummary(
@@ -90,7 +90,7 @@ class GetUnspecifiedCategoryTransactionsSummaryUseCase @Inject constructor(
             startDate = range.from(),
             endDate = range.overdueTo(nowUtc())
         ).map {
-            it.toLegacy()
+            it.toLegacyTransaction()
         }.filterOverdueLegacy()
 
         return CategoryDueTransactionsSummary(

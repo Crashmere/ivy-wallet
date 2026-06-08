@@ -5,7 +5,7 @@ import com.ivy.data.api.AccountStore
 import com.ivy.data.model.PlannedPaymentRule
 import com.ivy.data.api.TransactionStore
 import com.ivy.data.model.incrementDate
-import com.ivy.domain.mapper.legacy.toDomain
+import com.ivy.domain.mapper.legacy.toTransaction
 import java.time.Instant
 import javax.inject.Inject
 
@@ -86,7 +86,7 @@ class GeneratePlannedPaymentTransactionsUseCase @Inject constructor(
             dueDate = dueDate,
             dateTime = null,
             toAccountId = null,
-        ).toDomain(accountStore)?.let {
+        ).toTransaction(accountStore)?.let {
             transactionStore.save(it)
         }
     }

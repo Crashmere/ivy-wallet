@@ -3,7 +3,7 @@ package com.ivy.domain.usecase.transaction
 import com.ivy.data.api.TransactionStore
 import com.ivy.data.model.FromToTimeRange
 import com.ivy.data.model.legacy.LegacyTransaction
-import com.ivy.domain.mapper.legacy.toLegacy
+import com.ivy.domain.mapper.legacy.toLegacyTransaction
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.util.UUID
@@ -18,7 +18,7 @@ class GetLegacyTransactionsForAccountsUseCase @Inject constructor(
     ): List<LegacyTransaction> {
         return withContext(Dispatchers.IO) {
             transactionStore.findAllBetween(range.from(), range.to())
-                .map { it.toLegacy() }
+                .map { it.toLegacyTransaction() }
                 .filter {
                     accountIdFilterSet.contains(it.accountId) ||
                             accountIdFilterSet.contains(it.toAccountId)

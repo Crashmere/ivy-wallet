@@ -835,6 +835,7 @@
 - `LegacyAccount.toDomainAccount()` 已从 data model 类成员迁到 `com.ivy.domain.mapper.legacy` 扩展函数；旧账户模型本体现在只保留旧字段，正式账户转换由 domain mapper 负责。
 - 剩余旧模型全限定类型写法已收敛：报表页面状态/事件和 legacy 交易 helper 不再散落 `com.ivy.data.model.legacy.LegacyTransaction` FQN，而是统一通过 import 表达旧模型边界。
 - 正式账户到旧账户的 mapper 已从泛化 `toLegacyDomain()` 改名为 `toLegacyAccount()`，调用方现在能直接看出这是账户模型兼容转换，而不是泛化 legacy domain 转换。
+- 正式交易到旧交易的 mapper 已从泛化 `toLegacy()`/`toDomain()` 改名为 `toLegacyTransaction()`/`toTransaction()`；调用方现在能明确区分正式交易模型和旧交易兼容模型之间的转换，避免和 data-core 的实体 `toDomain()` 命名混在一起。
 - 功能开关偏好门面已从 `PreferenceToggleRepository` 改名为 `PreferenceToggleService`：它只负责把 domain 层 `BoolPreference` 映射到底层 `PreferenceToggleStore`，不再用 repository 命名暗示数据仓库职责。
 - 旧 `Logic` 注入变量名已继续收敛：`LegacyExchangeRatesUseCase` 的调用方统一使用 `exchangeRatesUseCase`，首页客户旅程卡片也改用 `customerJourneyCardsProvider` 命名，避免把 provider/use case 误读成旧 logic 层。
 - 旧到期交易 UI 模型 `LegacyDueSection` 的 `trns` 字段已改为 `transactions`，legacy 交易列表内部私有 `trnItems/trnCount` 也改为完整命名；首页、报表和交易页调用方同步更新，展示行为不变。
@@ -1072,7 +1073,7 @@ shared:ui:core
 下一步建议执行：
 
 1. shared 模块依赖审计暂时没有发现可直接删除的低风险依赖；后续在改动具体调用方时继续顺手收缩 Gradle 依赖。
-2. 继续审计 `LegacyTransaction` 与正式 `Transaction` 的转换边界，优先把转换函数和旧历史列表桥接集中到 domain mapper/legacy helper 中，再评估哪些只做展示或参数传递的路径可以切到正式模型。
+2. 继续审计 `LegacyTransaction` 在 UI/统计路径中的真实必要性；优先从只做展示或参数传递的页面状态开始，评估是否能接收正式 `Transaction` 或更小的展示模型。
 3. 偏好设置代码边界已基本收窄，短期不再为清理而迁移存储格式；若后续要处理 `SettingsEntity`、SharedPrefs 或 DataStore 归并，必须单独规划 schema/备份兼容迁移。
 4. 继续数据库只读审计：`isDeleted` 目前先保留为本地软删除语义；不再把业务表里的 `isDeleted` 当作纯云同步字段批量删除。
 5. feature 模块合并属于较大结构调整，短期只在实际修改某个功能时收敛依赖；真正合并模块前需要先确认导航、资源和 Hilt 边界。

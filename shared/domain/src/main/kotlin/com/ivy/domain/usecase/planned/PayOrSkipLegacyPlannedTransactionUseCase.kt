@@ -5,7 +5,7 @@ import com.ivy.data.api.AccountStore
 import com.ivy.data.api.PlannedPaymentRuleStore
 import com.ivy.data.api.TransactionStore
 import com.ivy.data.model.TransactionId
-import com.ivy.domain.mapper.legacy.toDomain
+import com.ivy.domain.mapper.legacy.toTransaction
 import com.ivy.domain.time.nowUtc
 import javax.inject.Inject
 
@@ -33,7 +33,7 @@ class PayOrSkipLegacyPlannedTransactionUseCase @Inject constructor(
         if (skipTransaction) {
             transactionStore.deleteById(TransactionId(paidTransaction.id))
         } else {
-            paidTransaction.toDomain(accountStore)?.let {
+            paidTransaction.toTransaction(accountStore)?.let {
                 transactionStore.save(it)
             }
         }

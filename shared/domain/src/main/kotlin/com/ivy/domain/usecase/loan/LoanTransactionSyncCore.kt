@@ -20,8 +20,8 @@ import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.data.model.Loan
 import com.ivy.data.model.LoanRecord
-import com.ivy.domain.mapper.legacy.toDomain
-import com.ivy.domain.mapper.legacy.toLegacy
+import com.ivy.domain.mapper.legacy.toTransaction
+import com.ivy.domain.mapper.legacy.toLegacyTransaction
 import com.ivy.domain.mapper.legacy.toLegacyAccount
 import com.ivy.domain.time.nowUtc
 import com.ivy.domain.usecase.exchange.LegacyExchangeRatesUseCase
@@ -68,9 +68,9 @@ class LoanTransactionSyncCore @Inject constructor(
             val transactions: List<LegacyTransaction?> =
                 if (loanId != null) {
                     transactionRepo.findAllByLoanId(loanId = loanId)
-                        .map { it.toLegacy() }
+                        .map { it.toLegacyTransaction() }
                 } else {
-                    listOf(transactionRepo.findLoanRecordTransaction(loanRecordId!!)?.toLegacy())
+                    listOf(transactionRepo.findLoanRecordTransaction(loanRecordId!!)?.toLegacyTransaction())
                 }
 
             transactions.forEach { transaction ->
@@ -189,7 +189,7 @@ class LoanTransactionSyncCore @Inject constructor(
             )
 
         withContext(Dispatchers.IO) {
-            modifiedTransaction.toDomain(accountStore)?.let {
+            modifiedTransaction.toTransaction(accountStore)?.let {
                 transactionRepo.save(it)
             }
         }
@@ -322,7 +322,7 @@ class LoanTransactionSyncCore @Inject constructor(
     suspend fun fetchLoanRecordTransaction(loanRecordId: UUID?): LegacyTransaction? {
         return loanRecordId?.let {
             withContext(Dispatchers.IO) {
-                transactionRepo.findLoanRecordTransaction(it)?.toLegacy()
+                transactionRepo.findLoanRecordTransaction(it)?.toLegacyTransaction()
             }
         }
     }
