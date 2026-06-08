@@ -77,7 +77,7 @@ fun ModalSet(
 }
 
 @Composable
-fun ModalCheck(
+internal fun ModalCheck(
     modifier: Modifier = Modifier,
     label: String,
     enabled: Boolean = true,

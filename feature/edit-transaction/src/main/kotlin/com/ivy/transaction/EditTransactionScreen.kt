@@ -58,9 +58,9 @@ import com.ivy.legacy.ui.edit.core.Title
 import com.ivy.legacy.ui.edit.core.Toolbar
 import com.ivy.legacy.ui.component.AddPrimaryAttributeButton
 import com.ivy.legacy.ui.component.ChangeTransactionTypeModal
+import com.ivy.legacy.ui.component.IvyButton
 import com.ivy.legacy.ui.modal.DeleteModal
 import com.ivy.legacy.ui.modal.ModalAdd
-import com.ivy.legacy.ui.modal.ModalCheck
 import com.ivy.legacy.ui.modal.ModalSave
 import com.ivy.legacy.ui.modal.ProgressModal
 import com.ivy.legacy.ui.modal.AccountModalData
@@ -70,6 +70,7 @@ import com.ivy.legacy.ui.modal.edit.CategoryModal
 import com.ivy.legacy.ui.modal.CategoryModalData
 import com.ivy.legacy.ui.modal.edit.ChooseCategoryModal
 import com.ivy.legacy.ui.modal.edit.DescriptionModal
+import com.ivy.legacy.ui.theme.GradientGreen
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.ImmutableSet
 import java.time.Instant
@@ -469,7 +470,7 @@ private fun BoxWithConstraintsScope.UI(
                         }
                     } else {
                         // no changes, pay
-                        ModalCheck(
+                        PayOrGetPlannedButton(
                             label = if (transactionType == TransactionType.EXPENSE) {
                                 stringResource(
                                     R.string.pay
@@ -673,3 +674,16 @@ private fun TransactionRouteType.toTransactionType(): TransactionType {
 
 private fun Instant.toLocalDateInSystemZone() =
     atZone(ZoneId.systemDefault()).toLocalDate()
+
+@Composable
+private fun PayOrGetPlannedButton(
+    label: String,
+    onClick: () -> Unit,
+) {
+    IvyButton(
+        text = label,
+        backgroundGradient = GradientGreen,
+        iconStart = R.drawable.ic_check,
+        onClick = onClick
+    )
+}
