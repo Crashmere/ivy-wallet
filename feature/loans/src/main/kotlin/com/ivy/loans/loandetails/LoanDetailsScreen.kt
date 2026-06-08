@@ -78,7 +78,6 @@ import com.ivy.legacy.ui.button.IvyCircleButton
 import com.ivy.legacy.ui.icon.IvyIcon
 import com.ivy.legacy.ui.button.IvyOutlinedButton
 import com.ivy.ui.icon.getCustomIconIdS
-import com.ivy.legacy.ui.theme.Red
 import com.ivy.legacy.ui.theme.White
 import com.ivy.legacy.ui.theme.dynamicContrast
 import com.ivy.legacy.ui.theme.findContrastTextColor
@@ -439,7 +438,7 @@ private fun LoanStatisticToolbarDeleteButton(
             .testTag("delete_button"),
         backgroundPadding = 6.dp,
         icon = R.drawable.ic_delete,
-        backgroundGradient = Gradient.solid(Red),
+        backgroundGradient = Gradient.solid(LegacyTheme.colors.red),
         enabled = true,
         tint = White,
         onClick = onDelete

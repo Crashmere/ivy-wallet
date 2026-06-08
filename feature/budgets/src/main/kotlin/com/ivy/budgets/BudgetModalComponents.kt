@@ -31,7 +31,6 @@ import com.ivy.legacy.ui.modal.ModalAdd
 import com.ivy.legacy.ui.modal.ModalSave
 import com.ivy.legacy.ui.theme.Gradient
 import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.legacy.ui.theme.Red
 import com.ivy.legacy.ui.theme.White
 import com.ivy.legacy.ui.theme.style
 import com.ivy.ui.R
@@ -66,7 +65,7 @@ internal fun BudgetModalDelete(
             .size(40.dp)
             .testTag("modal_delete"),
         icon = R.drawable.ic_delete,
-        backgroundGradient = Gradient.solid(Red),
+        backgroundGradient = Gradient.solid(LegacyTheme.colors.red),
         tint = White,
         onClick = onClick
     )

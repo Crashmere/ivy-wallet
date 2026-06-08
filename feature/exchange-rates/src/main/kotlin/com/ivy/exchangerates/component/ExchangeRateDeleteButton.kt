@@ -7,7 +7,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import com.ivy.legacy.ui.button.IvyCircleButton
 import com.ivy.legacy.ui.theme.Gradient
-import com.ivy.legacy.ui.theme.Red
+import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.legacy.ui.theme.White
 import com.ivy.ui.R
 
@@ -22,7 +22,7 @@ internal fun ExchangeRateDeleteButton(
             .testTag("exchange_rate_delete_button"),
         backgroundPadding = 6.dp,
         icon = R.drawable.ic_delete,
-        backgroundGradient = Gradient.solid(Red),
+        backgroundGradient = Gradient.solid(LegacyTheme.colors.red),
         enabled = true,
         hasShadow = true,
         tint = White,

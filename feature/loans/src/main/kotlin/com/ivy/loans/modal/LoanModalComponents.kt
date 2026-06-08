@@ -41,7 +41,6 @@ import com.ivy.legacy.ui.modal.ModalAdd
 import com.ivy.legacy.ui.modal.ModalSave
 import com.ivy.legacy.ui.theme.Gradient
 import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.legacy.ui.theme.Red
 import com.ivy.legacy.ui.theme.White
 import com.ivy.legacy.ui.theme.dynamicContrast
 import com.ivy.legacy.ui.theme.style
@@ -284,7 +283,7 @@ internal fun LoanModalDelete(
             .size(40.dp)
             .testTag(testTag),
         icon = icon,
-        backgroundGradient = Gradient(Red, Color(0xFFFF99AB)),
+        backgroundGradient = Gradient(LegacyTheme.colors.red, Color(0xFFFF99AB)),
         enabled = enabled,
         tint = White,
         onClick = onClick

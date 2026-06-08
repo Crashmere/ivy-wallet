@@ -58,7 +58,6 @@ import com.ivy.ui.animation.springBounce
 import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.GradientGreen
 import com.ivy.legacy.ui.theme.Green
-import com.ivy.legacy.ui.theme.Red
 import com.ivy.legacy.ui.button.CloseButton
 import com.ivy.legacy.ui.icon.ItemIconSDefaultIcon
 import com.ivy.legacy.ui.button.IvyButton
@@ -619,7 +618,7 @@ private fun TypeFilter(
     FilterTitleText(
         text = stringResource(R.string.by_type),
         active = filter != null && filter.transactionTypes.isNotEmpty(),
-        inactiveColor = Red
+        inactiveColor = LegacyTheme.colors.red
     )
 
     Spacer(Modifier.height(12.dp))
@@ -703,7 +702,7 @@ private fun PeriodFilter(
     FilterTitleText(
         text = stringResource(R.string.time_period),
         active = filter?.period != null,
-        inactiveColor = Red
+        inactiveColor = LegacyTheme.colors.red
     )
 
     Spacer(Modifier.height(16.dp))
@@ -944,7 +943,7 @@ private fun ListFilterTitle(
         FilterTitleText(
             text = text,
             active = active,
-            inactiveColor = Red
+            inactiveColor = LegacyTheme.colors.red
         )
 
         Spacer(Modifier.weight(1f))
@@ -1195,7 +1194,7 @@ private fun Keyword(
     IvyOutlinedButton(
         text = keyword,
         iconStart = R.drawable.ic_remove,
-        iconTint = Red,
+        iconTint = LegacyTheme.colors.red,
         borderColor = borderColor,
         padding = 10.dp,
     ) {

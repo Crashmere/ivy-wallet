@@ -26,7 +26,6 @@ import com.ivy.legacy.ui.button.IvyCircleButton
 import com.ivy.legacy.ui.button.IvyOutlinedButton
 import com.ivy.legacy.ui.theme.Gradient
 import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.legacy.ui.theme.Red
 import com.ivy.legacy.ui.theme.White
 import com.ivy.ui.R
 import java.util.UUID
@@ -115,7 +114,7 @@ private fun DeleteToolbarButton(onClick: () -> Unit) {
             .testTag("delete_button"),
         backgroundPadding = 6.dp,
         icon = R.drawable.ic_delete,
-        backgroundGradient = Gradient(Red, Color(0xFFFF99AB)),
+        backgroundGradient = Gradient(LegacyTheme.colors.red, Color(0xFFFF99AB)),
         enabled = true,
         hasShadow = false,
         tint = White,

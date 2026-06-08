@@ -25,7 +25,6 @@ import com.ivy.legacy.ui.theme.Green
 import com.ivy.legacy.ui.theme.Ivy
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.legacy.ui.theme.Orange
-import com.ivy.legacy.ui.theme.Red
 import com.ivy.legacy.ui.theme.White
 import com.ivy.legacy.ui.theme.style
 import com.ivy.ui.R
@@ -43,6 +42,7 @@ internal fun BudgetBattery(
 ) {
     if (budget == 0.0) return
     val percentSpent = expenses / budget
+    val red = LegacyTheme.colors.red
 
     val textColor = when {
         percentSpent <= 0.30 -> LegacyTheme.colors.pureInverse
@@ -69,7 +69,7 @@ internal fun BudgetBattery(
                         percentSpent <= 0.25 -> Green
                         percentSpent <= 0.50 -> Ivy
                         percentSpent <= 0.75 -> Orange
-                        else -> Red
+                        else -> red
                     },
                     size = size.copy(
                         width = (size.width * percentSpent).toFloat()

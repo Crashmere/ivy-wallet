@@ -35,7 +35,6 @@ import com.ivy.legacy.ui.button.IvyButton
 import com.ivy.legacy.ui.modal.IvyModal
 import com.ivy.legacy.ui.theme.Gradient
 import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.legacy.ui.theme.Red
 import com.ivy.legacy.ui.theme.style
 import com.ivy.ui.R
 import com.ivy.ui.platform.hideKeyboard
@@ -66,7 +65,7 @@ internal fun BoxWithConstraintsScope.TransactionsDeleteConfirmationModal(
         PrimaryAction = {
             IvyButton(
                 text = buttonText,
-                backgroundGradient = Gradient.solid(Red),
+                backgroundGradient = Gradient.solid(LegacyTheme.colors.red),
                 iconStart = iconStart,
                 enabled = enableDeletionButton,
                 onClick = onDelete
@@ -79,7 +78,7 @@ internal fun BoxWithConstraintsScope.TransactionsDeleteConfirmationModal(
             modifier = Modifier.padding(horizontal = 32.dp),
             text = title,
             style = LegacyTheme.typo.b1.style(
-                color = Red,
+                color = LegacyTheme.colors.red,
                 fontWeight = FontWeight.ExtraBold
             )
         )

@@ -25,7 +25,6 @@ import com.ivy.legacy.ui.theme.Green
 import com.ivy.legacy.ui.theme.Ivy
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.legacy.ui.theme.Orange
-import com.ivy.legacy.ui.theme.Red
 import com.ivy.legacy.ui.theme.White
 import com.ivy.legacy.ui.theme.style
 import com.ivy.ui.R
@@ -56,6 +55,7 @@ internal fun HomeBufferBattery(
         bufferExceededPercent <= 0.75 -> White
         else -> White
     }
+    val red = LegacyTheme.colors.red
 
     Row(
         modifier = modifier
@@ -68,7 +68,7 @@ internal fun HomeBufferBattery(
                         bufferExceededPercent <= 0.25 -> Green
                         bufferExceededPercent <= 0.50 -> Ivy
                         bufferExceededPercent <= 0.75 -> Orange
-                        else -> Red
+                        else -> red
                     },
                     size = size.copy(
                         width = (size.width * bufferExceededPercent).toFloat()

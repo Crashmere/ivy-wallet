@@ -24,7 +24,6 @@ import com.ivy.data.model.currency.format
 import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.GradientIvy
 import com.ivy.legacy.ui.theme.Green
-import com.ivy.legacy.ui.theme.Red
 import com.ivy.legacy.ui.theme.White
 import kotlinx.collections.immutable.persistentListOf
 
@@ -58,7 +57,7 @@ internal fun ImportResultUI(
             text = if (importSuccess) stringResource(R.string.success) else stringResource(R.string.failure),
             style = LegacyTheme.typo.h2.style(
                 fontWeight = FontWeight.Black,
-                color = if (importSuccess) LegacyTheme.colors.pureInverse else Red
+                color = if (importSuccess) LegacyTheme.colors.pureInverse else LegacyTheme.colors.red
             )
         )
 
@@ -224,7 +223,7 @@ private fun FailedSectionUI(
             text = stringResource(R.string.failed),
             style = LegacyTheme.typo.b1.style(
                 fontWeight = FontWeight.Black,
-                color = Red
+                color = LegacyTheme.colors.red
             )
         )
 

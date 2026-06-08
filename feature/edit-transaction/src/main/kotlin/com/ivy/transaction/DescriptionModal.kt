@@ -40,7 +40,6 @@ import com.ivy.legacy.ui.modal.IvyModal
 import com.ivy.legacy.ui.theme.Gradient
 import com.ivy.legacy.ui.theme.GradientGreen
 import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.legacy.ui.theme.Red
 import com.ivy.legacy.ui.theme.White
 import com.ivy.legacy.ui.theme.style
 import com.ivy.ui.R
@@ -205,7 +204,7 @@ private fun DescriptionModalDeleteButton(
             .size(40.dp)
             .testTag(testTag),
         icon = R.drawable.ic_delete,
-        backgroundGradient = Gradient(Red, Color(0xFFFF99AB)),
+        backgroundGradient = Gradient(LegacyTheme.colors.red, Color(0xFFFF99AB)),
         tint = White,
         onClick = onClick
     )

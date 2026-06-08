@@ -11,7 +11,6 @@ import com.ivy.legacy.ui.theme.Green
 import com.ivy.legacy.ui.theme.Ivy
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.legacy.ui.theme.Orange
-import com.ivy.legacy.ui.theme.Red
 
 @Composable
 internal fun LoanProgressBar(
@@ -20,6 +19,8 @@ internal fun LoanProgressBar(
     positiveProgress: Boolean = true,
     percent: Double
 ) {
+    val red = LegacyTheme.colors.red
+
     Spacer(
         modifier = modifier
             .clip(LegacyTheme.shapes.r4)
@@ -27,10 +28,10 @@ internal fun LoanProgressBar(
             .drawBehind {
                 drawRect(
                     color = when {
-                        percent <= 0.25 -> if (positiveProgress) Red else Green
+                        percent <= 0.25 -> if (positiveProgress) red else Green
                         percent <= 0.50 -> if (positiveProgress) Orange else Ivy
                         percent <= 0.75 -> if (positiveProgress) Ivy else Orange
-                        else -> if (positiveProgress) Green else Red
+                        else -> if (positiveProgress) Green else red
                     },
                     size = size.copy(
                         width = (size.width * percent).toFloat()

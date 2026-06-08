@@ -61,7 +61,6 @@ import com.ivy.ui.R
 import com.ivy.data.model.currency.IvyCurrency
 import com.ivy.legacy.ui.theme.Gradient
 import com.ivy.legacy.ui.theme.GradientGreen
-import com.ivy.legacy.ui.theme.Red
 import com.ivy.legacy.ui.theme.White
 import com.ivy.legacy.ui.modal.CurrencyModal
 import com.ivy.legacy.ui.modal.DeleteModal
@@ -759,7 +758,7 @@ private fun DangerZoneSection(
 ) {
     SettingsSectionDivider(
         text = stringResource(R.string.danger_zone),
-        color = Red
+        color = LegacyTheme.colors.red
     )
 
     Spacer(Modifier.height(16.dp))
@@ -767,7 +766,7 @@ private fun DangerZoneSection(
     SettingsPrimaryButton(
         icon = R.drawable.ic_delete,
         text = stringResource(R.string.delete_all_user_data),
-        backgroundGradient = Gradient.solid(Red)
+        backgroundGradient = Gradient.solid(LegacyTheme.colors.red)
     ) {
         onDeleteAllDataClick()
     }
