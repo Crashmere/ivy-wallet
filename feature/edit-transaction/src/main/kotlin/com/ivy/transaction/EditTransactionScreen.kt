@@ -69,10 +69,10 @@ import com.ivy.ui.modal.ProgressModal
 import com.ivy.ui.modal.AccountModal
 import com.ivy.ui.modal.AccountModalSaveData
 import com.ivy.ui.modal.AmountModal
-import com.ivy.legacy.ui.modal.edit.CategoryModal
-import com.ivy.legacy.ui.modal.edit.CategoryModalCategory
-import com.ivy.legacy.ui.modal.edit.CategoryModalSaveData
-import com.ivy.legacy.ui.modal.edit.ChooseCategoryModal
+import com.ivy.ui.modal.CategoryModal
+import com.ivy.ui.modal.CategoryModalCategory
+import com.ivy.ui.modal.CategoryModalSaveData
+import com.ivy.ui.modal.ChooseCategoryModal
 import com.ivy.ui.compose.GradientButton
 import com.ivy.ui.compose.ResourceIcon
 import com.ivy.ui.theme.colors.IvyGradients

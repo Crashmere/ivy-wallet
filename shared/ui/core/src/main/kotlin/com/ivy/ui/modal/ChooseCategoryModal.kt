@@ -1,4 +1,4 @@
-package com.ivy.legacy.ui.modal.edit
+package com.ivy.ui.modal
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -25,7 +25,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.compose.thenIf
 import com.ivy.ui.compose.drawColoredShadow
 import com.ivy.ui.platform.hideKeyboard
@@ -33,9 +32,6 @@ import com.ivy.ui.compose.onCompositionStart
 import com.ivy.ui.R
 import com.ivy.ui.theme.colors.Gradient
 import com.ivy.ui.icon.ItemIconSDefaultIcon
-import com.ivy.ui.modal.IvyModal
-import com.ivy.ui.modal.ModalSkip
-import com.ivy.ui.modal.ModalTitle
 import com.ivy.ui.compose.GradientIconButton
 import com.ivy.ui.compose.OutlinedPillButton
 import com.ivy.ui.compose.WrapContentRow
@@ -181,22 +177,22 @@ private fun CategoryButton(
 ) {
     val categoryColor = category.color.toComposeColor()
 
-    val rFull = LegacyTheme.shapes.rFull
+    val rFull = CategoryModalTheme.shapes.rFull
 
     Row(
         modifier = Modifier
             .thenIf(selected) {
                 drawColoredShadow(categoryColor)
             }
-            .clip(LegacyTheme.shapes.rFull)
+            .clip(CategoryModalTheme.shapes.rFull)
             .combinedClickable(
                 onClick = onClick,
                 onLongClick = onLongClick
             )
             .border(
                 width = 2.dp,
-                color = if (selected) LegacyTheme.colors.pureInverse else LegacyTheme.colors.medium,
-                shape = LegacyTheme.shapes.rFull
+                color = if (selected) CategoryModalTheme.colors.pureInverse else CategoryModalTheme.colors.medium,
+                shape = CategoryModalTheme.shapes.rFull
             )
             .thenIf(selected) {
                 background(categoryColor, rFull)
@@ -222,11 +218,11 @@ private fun CategoryButton(
                     end = if (selected) 20.dp else 24.dp
                 ),
             text = category.name,
-            style = LegacyTheme.typo.b2.copy(
+            style = CategoryModalTheme.typo.b2.copy(
                 color = if (selected) {
                     findContrastTextColor(categoryColor)
                 } else {
-                    LegacyTheme.colors.pureInverse
+                    CategoryModalTheme.colors.pureInverse
                 },
                 fontWeight = FontWeight.SemiBold,
                 textAlign = TextAlign.Start
@@ -259,12 +255,12 @@ private fun AddNewButton(
         modifier = modifier,
         text = stringResource(R.string.add_new),
         iconStart = R.drawable.ic_plus,
-        shape = LegacyTheme.shapes.rFull,
-        backgroundColor = LegacyTheme.colors.pure,
-        iconTint = LegacyTheme.colors.pureInverse,
-        borderColor = LegacyTheme.colors.mediumInverse,
-        textStyle = LegacyTheme.typo.b2.copy(
-            color = LegacyTheme.colors.pureInverse,
+        shape = CategoryModalTheme.shapes.rFull,
+        backgroundColor = CategoryModalTheme.colors.pure,
+        iconTint = CategoryModalTheme.colors.pureInverse,
+        borderColor = CategoryModalTheme.colors.mediumInverse,
+        textStyle = CategoryModalTheme.typo.b2.copy(
+            color = CategoryModalTheme.colors.pureInverse,
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Start
         ),

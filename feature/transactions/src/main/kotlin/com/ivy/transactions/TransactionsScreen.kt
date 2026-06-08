@@ -105,9 +105,9 @@ import com.ivy.ui.modal.ChoosePeriodModal
 import com.ivy.ui.modal.AccountModalAccount
 import com.ivy.ui.modal.DeleteModal
 import com.ivy.ui.modal.AccountModal
-import com.ivy.legacy.ui.modal.edit.CategoryModal
-import com.ivy.legacy.ui.modal.edit.CategoryModalCategory
-import com.ivy.legacy.ui.modal.edit.CategoryModalSaveData
+import com.ivy.ui.modal.CategoryModal
+import com.ivy.ui.modal.CategoryModalCategory
+import com.ivy.ui.modal.CategoryModalSaveData
 import com.ivy.ui.theme.colors.toComposeColor
 import com.ivy.ui.period.PeriodSelector
 import kotlinx.collections.immutable.ImmutableList
