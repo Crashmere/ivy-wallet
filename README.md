@@ -39,6 +39,7 @@
 - 收窄旧交易列表组件职责：`shared:ui:legacy` 的交易列表/交易卡片不再直接构造编辑页或筛选页 route，改由首页、搜索、报表和交易页传入点击回调。
 - 收窄旧 toolbar 组件职责：交易统计 toolbar 和编辑页 toolbar 不再直接调用 `nav.back()`，关闭行为由对应 feature 页面传入。
 - 收窄导航模块职责：主界面 tab 状态 `MainTab/MainTabState/LocalMainTabState` 已从 `shared:ui:navigation` 迁到 `shared:ui:core` 的 `com.ivy.ui.main` 包，navigation 模块继续聚焦 route、栈和返回处理。
+- 删除无效 legacy screen 标记：当前所有页面统一走 `LegacyUiRoot` surface，`Screen` 不再暴露 `isLegacy`，`NavigationRoot` 删除只服务非 legacy 分支的 ViewModelStore 清理逻辑。
 
 当前仍保留：
 

@@ -3,7 +3,6 @@ package com.ivy.ui.navigation
 import android.annotation.SuppressLint
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.compositionLocalOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -20,15 +19,6 @@ fun NavigationRoot(
     CompositionLocalProvider(
         LocalNavigation provides navigation,
     ) {
-        val viewModelStore = LocalViewModelStoreOwner.current
-        DisposableEffect(navigation.currentScreen) {
-            onDispose {
-                // Destroy viewModels only for non-legacy screens
-                if (navigation.lastScreen?.isLegacy == false) {
-                    viewModelStore?.viewModelStore?.clear()
-                }
-            }
-        }
         navGraph(navigation.currentScreen)
     }
 }
@@ -39,10 +29,7 @@ fun navigation(): Navigation {
 }
 
 /**
- * Provides a [ViewModel] instance scoped the screen's life.
- * When the user navigates away from the screen all screen scoped
- * viewModels are destroyed.
- * Does not apply for legacy screens.
+ * Provides a [ViewModel] instance from the current [LocalViewModelStoreOwner].
  */
 @Composable
 inline fun <reified T : ViewModel> screenScopedViewModel(

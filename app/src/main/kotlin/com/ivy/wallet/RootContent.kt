@@ -104,7 +104,7 @@ internal fun RootContent(
             false -> {
                 NavigationRoot(navigation = navigation) { screen ->
                     LegacyUiRoot(
-                        includeSurface = screen?.isLegacy ?: true,
+                        includeSurface = true,
                         timeConverter = timeConverter,
                         timeProvider = timeProvider,
                         timeFormatter = timeFormatter,

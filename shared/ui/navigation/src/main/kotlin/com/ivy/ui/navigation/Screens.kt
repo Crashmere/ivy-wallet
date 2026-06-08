@@ -4,15 +4,9 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import java.util.UUID
 
-data object MainScreen : Screen {
-    override val isLegacy: Boolean
-        get() = true
-}
+data object MainScreen : Screen
 
-data object CSVScreen : Screen {
-    override val isLegacy: Boolean
-        get() = true
-}
+data object CSVScreen : Screen
 
 data class EditTransactionScreen(
     val initialTransactionId: UUID?,
@@ -20,10 +14,7 @@ data class EditTransactionScreen(
     // extras
     val accountId: UUID? = null,
     val categoryId: UUID? = null
-) : Screen {
-    override val isLegacy: Boolean
-        get() = true
-}
+) : Screen
 
 data class TransactionsScreen(
     val accountId: UUID? = null,
@@ -32,10 +23,7 @@ data class TransactionsScreen(
     val accountIdFilterList: List<UUID> = persistentListOf(),
     val legacyTransactionIds: List<UUID> = persistentListOf(),
     val containsTransferTransactions: Boolean = false
-) : Screen {
-    override val isLegacy: Boolean
-        get() = true
-}
+) : Screen
 
 data class PieChartStatisticScreen(
     val type: TransactionRouteType,
@@ -43,10 +31,7 @@ data class PieChartStatisticScreen(
     val accountList: ImmutableList<UUID> = persistentListOf(),
     val legacyTransactionIds: ImmutableList<UUID> = persistentListOf(),
     val treatTransfersAsIncomeExpense: Boolean = false
-) : Screen {
-    override val isLegacy: Boolean
-        get() = true
-}
+) : Screen
 
 data class EditPlannedScreen(
     val plannedPaymentRuleId: UUID?,
@@ -57,68 +42,32 @@ data class EditPlannedScreen(
     val title: String? = null,
     val description: String? = null,
 ) : Screen {
-    override val isLegacy: Boolean
-        get() = true
-
     fun mandatoryFilled(): Boolean {
         return amount != null && amount > 0.0 &&
                 accountId != null
     }
 }
 
-data object BalanceScreen : Screen {
-    override val isLegacy: Boolean
-        get() = true
-}
+data object BalanceScreen : Screen
 
-data object PlannedPaymentsScreen : Screen {
-    override val isLegacy: Boolean
-        get() = true
-}
+data object PlannedPaymentsScreen : Screen
 
-data object CategoriesScreen : Screen {
-    override val isLegacy: Boolean
-        get() = true
-}
+data object CategoriesScreen : Screen
 
-data object SettingsScreen : Screen {
-    override val isLegacy: Boolean
-        get() = true
-}
+data object SettingsScreen : Screen
 
-data object ImportScreen : Screen {
-    override val isLegacy: Boolean
-        get() = true
-}
+data object ImportScreen : Screen
 
-data object ReportScreen : Screen {
-    override val isLegacy: Boolean
-        get() = true
-}
+data object ReportScreen : Screen
 
-data object BudgetScreen : Screen {
-    override val isLegacy: Boolean
-        get() = true
-}
+data object BudgetScreen : Screen
 
-data object LoansScreen : Screen {
-    override val isLegacy: Boolean
-        get() = true
-}
+data object LoansScreen : Screen
 
-data object SearchScreen : Screen {
-    override val isLegacy: Boolean
-        get() = true
-}
+data object SearchScreen : Screen
 
 data class LoanDetailsScreen(
     val loanId: UUID
-) : Screen {
-    override val isLegacy: Boolean
-        get() = true
-}
+) : Screen
 
-data object ExchangeRatesScreen : Screen {
-    override val isLegacy: Boolean
-        get() = true
-}
+data object ExchangeRatesScreen : Screen
