@@ -28,9 +28,6 @@ import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.time.DateTimePicker
 import com.ivy.data.model.CreateAccountData
 import com.ivy.data.model.CreateLoanData
-import com.ivy.loans.modal.LoanModalData
-import com.ivy.loans.nowLocalDate
-import com.ivy.loans.nowLocalTime
 import com.ivy.loans.nowUtc
 import com.ivy.loans.toUtcInstant
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -42,6 +39,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.time.Instant
 import java.time.LocalDateTime
+import java.time.ZoneId
 import java.util.UUID
 import javax.inject.Inject
 
@@ -69,7 +67,6 @@ internal class LoanViewModel @Inject internal constructor(
     private var pendingLoans by mutableStateOf<ImmutableList<DisplayLoan>>(persistentListOf())
     private var accounts by mutableStateOf<ImmutableList<LoanAccount>>(persistentListOf())
     private var selectedAccountId by mutableStateOf<UUID?>(null)
-    private var loanModalData by mutableStateOf<LoanModalData?>(null)
     private var reorderModalVisible by mutableStateOf(false)
     private var dateTime by mutableStateOf<Instant>(nowUtc())
     private var selectedTab by mutableStateOf(LoanTab.PENDING)
@@ -92,7 +89,7 @@ internal class LoanViewModel @Inject internal constructor(
         return LoanScreenState(
             baseCurrency = getBaseCurrencyCode(),
             accounts = getAccounts(),
-            loanModalData = getLoanModalData(),
+            selectedAccountId = selectedAccountId,
             reorderModalVisible = getReorderModalVisible(),
             totalOweAmount = getTotalOweAmount(totalOweAmount, defaultCurrencyCode),
             totalOwedAmount = getTotalOwedAmount(totalOwedAmount, defaultCurrencyCode),
@@ -127,9 +124,6 @@ internal class LoanViewModel @Inject internal constructor(
     private fun getReorderModalVisible() = reorderModalVisible
 
     @Composable
-    private fun getLoanModalData() = loanModalData
-
-    @Composable
     private fun getBaseCurrencyCode(): String {
         return baseCurrencyCode
     }
@@ -146,16 +140,7 @@ internal class LoanViewModel @Inject internal constructor(
                 createLoan(event.createLoanData)
             }
 
-            is LoanScreenEvent.OnAddLoan -> {
-                loanModalData = LoanModalData(
-                    loan = null,
-                    baseCurrency = baseCurrencyCode,
-                    selectedAccountId = selectedAccountId
-                )
-            }
-
             is LoanScreenEvent.OnLoanModalDismiss -> {
-                loanModalData = null
                 dateTime = nowUtc()
             }
 
@@ -275,13 +260,9 @@ internal class LoanViewModel @Inject internal constructor(
 
     private fun handleChangeDate() {
         dateTimePicker.pickDate(
-            initialDate = loanModalData?.loan?.dateTime?.let {
-                it.toUtcInstant()
-            } ?: nowUtc()
+            initialDate = dateTime
         ) { localDate ->
-            val localTime = loanModalData?.loan?.dateTime?.let {
-                it.toLocalTime()
-            } ?: nowLocalTime()
+            val localTime = dateTime.atZone(ZoneId.systemDefault()).toLocalTime()
 
             updateDateTime(localDate.atTime(localTime))
         }
@@ -289,28 +270,16 @@ internal class LoanViewModel @Inject internal constructor(
 
     private fun handleChangeTime() {
         dateTimePicker.pickTime(
-            initialTime = loanModalData?.loan?.dateTime?.let {
-                it.toLocalTime()
-            } ?: nowLocalTime()
+            initialTime = dateTime.atZone(ZoneId.systemDefault()).toLocalTime()
         ) { localTime ->
-            val localDate = loanModalData?.loan?.dateTime?.let {
-                it.toLocalDate()
-            } ?: nowLocalDate()
+            val localDate = dateTime.atZone(ZoneId.systemDefault()).toLocalDate()
 
             updateDateTime(localDate.atTime(localTime))
         }
     }
 
     private fun updateDateTime(newDateTime: LocalDateTime) {
-        val newDateTimeUtc = newDateTime.toUtcInstant()
-        loanModalData?.let { currentData ->
-            loanModalData = currentData.copy(
-                loan = currentData.loan?.copy(
-                    dateTime = newDateTime
-                )
-            )
-            dateTime = newDateTimeUtc
-        }
+        dateTime = newDateTime.toUtcInstant()
     }
 
     private fun createLoan(data: CreateLoanData) {

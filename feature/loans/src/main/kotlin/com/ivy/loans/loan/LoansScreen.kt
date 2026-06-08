@@ -19,6 +19,10 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -49,6 +53,7 @@ import com.ivy.legacy.ui.modal.ReorderModalSingleType
 import com.ivy.ui.theme.colors.dynamicContrast
 import com.ivy.ui.theme.colors.findContrastTextColor
 import com.ivy.loans.modal.LoanModal
+import com.ivy.loans.modal.LoanModalData
 import com.ivy.ui.theme.colors.toComposeColor
 import com.ivy.loans.LoanProgressBar
 
@@ -68,6 +73,8 @@ private fun BoxWithConstraintsScope.UI(
     onEventHandler: (LoanScreenEvent) -> Unit = {}
 ) {
     val nav = navigation()
+    var loanModalData: LoanModalData? by remember { mutableStateOf(null) }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -142,7 +149,11 @@ private fun BoxWithConstraintsScope.UI(
         tab = state.selectedTab,
         selectTab = { onEventHandler.invoke(LoanScreenEvent.OnTabChanged(it)) },
         onAdd = {
-            onEventHandler.invoke(LoanScreenEvent.OnAddLoan)
+            loanModalData = LoanModalData(
+                loan = null,
+                baseCurrency = state.baseCurrency,
+                selectedAccountId = state.selectedAccountId
+            )
         }
     )
 
@@ -178,18 +189,19 @@ private fun BoxWithConstraintsScope.UI(
         )
     }
 
-    if (state.loanModalData != null) {
+    if (loanModalData != null) {
         LoanModal(
             accounts = state.accounts,
             onCreateAccount = {
                 onEventHandler.invoke(LoanScreenEvent.OnCreateAccount(accountData = it))
             },
-            modal = state.loanModalData,
+            modal = loanModalData,
             onCreateLoan = {
                 onEventHandler.invoke(LoanScreenEvent.OnLoanCreate(createLoanData = it))
             },
             onEditLoan = { _, _ -> },
             dismiss = {
+                loanModalData = null
                 onEventHandler.invoke(LoanScreenEvent.OnLoanModalDismiss)
             },
             dateTime = state.dateTime,
