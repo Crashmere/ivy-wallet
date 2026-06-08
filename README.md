@@ -1366,6 +1366,7 @@ shared:ui:core
 - 计划付款编辑页的账户状态和底部账户选择 UI 已收窄为本 feature 私有的 `EditPlannedAccount`；完整 `LegacyAccount` 只在 ViewModel 加载/新建账户后立即映射，不再进入页面状态。
 - 编辑交易页的账户状态和底部账户选择 UI 已收窄为本 feature 私有的 `EditTransactionAccount`；旧账户对象只在加载旧交易、读取旧账户列表后作为映射输入，保存、转账和汇率逻辑继续使用账户 ID 与币种字段。
 - 交易列表页当前账户详情状态已收窄为本 feature 私有的 `TransactionsAccount`；打开旧账户编辑弹窗时才临时转成 legacy 兼容对象，完整 `LegacyAccount` 不再进入 feature 页面状态。
+- 编辑交易页不再注入单账户 legacy 查询用例；当前账户和转入账户直接从已加载的轻量账户列表按 ID 解析，减少一次旧账户读取路径。
 - 饼图导航 route 的账户筛选参数已从含糊的 `accountList` 改为 `accountIdFilterList`，与交易列表 route 和 ViewModel 内部查询命名保持一致。
 - 饼图数据构建和借贷列表金额汇总中的内部 `Pair` 已改成私有命名结果对象；账户过滤集合、已还金额和贷款总额不再靠 `first/second` 或解构位置表达。
 - 报表导出事件不再携带 `FileSharer` 平台分享器；ViewModel 只生成 CSV 并发出 `ShareCsvFile` UI 事件，页面入口负责调用平台分享能力。

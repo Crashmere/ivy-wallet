@@ -45,7 +45,6 @@ import com.ivy.domain.usecase.transaction.SuggestTransactionTitlesUseCase
 import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.R
 import com.ivy.ui.time.DateTimePicker
-import com.ivy.domain.usecase.account.GetLegacyAccountUseCase
 import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
 import com.ivy.domain.usecase.account.SetLastSelectedAccountIdUseCase
 import com.ivy.domain.usecase.exchange.LegacyExchangeRatesUseCase
@@ -100,7 +99,6 @@ internal class EditTransactionViewModel @Inject internal constructor(
     private val getLegacyAccountsUseCase: GetLegacyAccountsUseCase,
     private val getCategoriesUseCase: GetCategoriesUseCase,
     private val getLegacyTransactionUseCase: GetLegacyTransactionUseCase,
-    private val getLegacyAccountUseCase: GetLegacyAccountUseCase,
     private val saveLegacyTransactionUseCase: SaveLegacyTransactionUseCase,
     private val deleteTransactionUseCase: DeleteTransactionUseCase,
     private val getTransactionTagIdsUseCase: GetTransactionTagIdsUseCase,
@@ -401,12 +399,11 @@ internal class EditTransactionViewModel @Inject internal constructor(
         description = transaction.description
         dueDate = transaction.dueDate
         paidHistory = transaction.paidFor
-        val selectedAccount = getLegacyAccountUseCase(transaction.accountId)!!
-            .toEditTransactionAccount()
+        val selectedAccount = accounts.first { it.id == transaction.accountId }
         account = selectedAccount
         toAccount = transaction.toAccountId?.let {
-            getLegacyAccountUseCase(it)
-        }?.toEditTransactionAccount()
+            accountId -> accounts.firstOrNull { it.id == accountId }
+        }
         category = transaction.categoryId?.let {
             getCategoryUseCase(CategoryId(it))
         }
