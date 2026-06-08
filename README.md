@@ -1257,6 +1257,7 @@ shared:ui:core
 - 借贷交易同步核心已去掉实例级基础币种缓存和初始化协程；需要换算时直接读取当前基础币种，交易创建、删除和保存入口不变。
 - CSV 日期解析已删除从未写入成功值的文件级格式缓存；解析仍按原有日期格式列表逐项尝试。
 - 借贷详情 ViewModel 不再通过 `lateinit screen` 保存整个导航 route；页面入口显式传入 `loanId` 启动加载，详情展示和编辑流程不变。
+- 交易列表 ViewModel 不再长期保存完整 `TransactionsScreen` route；翻月、删除和刷新只复用本地 `TransactionsQuery` 中的账户、分类、未分类标记和交易 ID 筛选参数。
 - app 仍保留文件选择、文件分享、Material 日期选择器、BuildInfo、Locale 设置、生物识别和窗口安全等真正依赖 Activity 或 Android app 壳层的装配。
 
 ## 高风险区域

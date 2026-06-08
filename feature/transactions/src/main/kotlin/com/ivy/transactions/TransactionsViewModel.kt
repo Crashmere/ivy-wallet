@@ -147,7 +147,7 @@ internal class TransactionsViewModel @Inject internal constructor(
     private val choosePeriodModal = mutableStateOf<ChoosePeriodModalData?>(null)
     private val _uiEvents = MutableSharedFlow<TransactionsUiEvent>()
     val uiEvents: SharedFlow<TransactionsUiEvent> = _uiEvents.asSharedFlow()
-    private var currentScreen: TransactionsScreen? = null
+    private var currentQuery: TransactionsQuery? = null
 
     @Composable
     override fun uiState(): TransactionsState {
@@ -534,14 +534,14 @@ internal class TransactionsViewModel @Inject internal constructor(
 
     private fun delete() {
         viewModelScope.launch {
-            val screen = currentScreen ?: return@launch
+            val query = currentQuery ?: return@launch
             when {
-                screen.accountId != null -> {
-                    deleteAccount(screen.accountId!!)
+                query.accountId != null -> {
+                    deleteAccount(query.accountId)
                 }
 
-                screen.categoryId != null -> {
-                    deleteCategory(screen.categoryId!!)
+                query.categoryId != null -> {
+                    deleteCategory(query.categoryId)
                 }
             }
         }
@@ -650,7 +650,19 @@ internal class TransactionsViewModel @Inject internal constructor(
         timePeriod: TimePeriod? = periodState.selectedPeriod,
         reset: Boolean = true,
     ) {
-        currentScreen = screen
+        start(
+            query = screen.toQuery(),
+            timePeriod = timePeriod,
+            reset = reset,
+        )
+    }
+
+    private fun start(
+        query: TransactionsQuery,
+        timePeriod: TimePeriod? = periodState.selectedPeriod,
+        reset: Boolean = true,
+    ) {
+        currentQuery = query
 
         if (reset) {
             reset()
@@ -669,35 +681,35 @@ internal class TransactionsViewModel @Inject internal constructor(
             treatTransfersAsIncomeExpense.value =
                 getTransfersAsIncomeExpensePreference()
             val legacyTransactionsFromNavigation =
-                getLegacyTransactionsByIdsUseCase(screen.legacyTransactionIds)
+                getLegacyTransactionsByIdsUseCase(query.legacyTransactionIds)
 
             when {
-                screen.accountId != null -> {
-                    initForAccount(screen.accountId!!)
+                query.accountId != null -> {
+                    initForAccount(query.accountId)
                 }
 
-                screen.categoryId != null && legacyTransactionsFromNavigation.isEmpty() -> {
-                    initForCategory(screen.categoryId!!, screen.accountIdFilterList)
+                query.categoryId != null && legacyTransactionsFromNavigation.isEmpty() -> {
+                    initForCategory(query.categoryId, query.accountIdFilterList)
                 }
                 // Reports use a synthetic account-transfers category; keep it separate from
                 // the real unspecified-category branch.
-                screen.categoryId != null && legacyTransactionsFromNavigation.isNotEmpty() &&
-                        !screen.unspecifiedCategory -> {
+                query.categoryId != null && legacyTransactionsFromNavigation.isNotEmpty() &&
+                        !query.unspecifiedCategory -> {
                     initForCategoryWithTransactions(
-                        screen.categoryId!!,
-                        screen.accountIdFilterList,
+                        query.categoryId,
+                        query.accountIdFilterList,
                         legacyTransactionsFromNavigation
                     )
                 }
 
-                screen.unspecifiedCategory && legacyTransactionsFromNavigation.isNotEmpty() -> {
+                query.unspecifiedCategory && legacyTransactionsFromNavigation.isNotEmpty() -> {
                     initForAccountTransfersCategory(
-                        screen.accountIdFilterList,
+                        query.accountIdFilterList,
                         legacyTransactionsFromNavigation
                     )
                 }
 
-                screen.unspecifiedCategory -> {
+                query.unspecifiedCategory -> {
                     initForUnspecifiedCategory()
                 }
 
@@ -710,9 +722,9 @@ internal class TransactionsViewModel @Inject internal constructor(
         timePeriod: TimePeriod? = period.value,
         reset: Boolean = false,
     ) {
-        currentScreen?.let {
+        currentQuery?.let {
             start(
-                screen = it,
+                query = it,
                 timePeriod = timePeriod,
                 reset = reset
             )
@@ -728,3 +740,19 @@ internal class TransactionsViewModel @Inject internal constructor(
 private fun List<TransactionHistoryItem>.countTransactionType(type: TransactionType): Int {
     return filterIsInstance<LegacyTransaction>().count { it.type == type }
 }
+
+private data class TransactionsQuery(
+    val accountId: UUID?,
+    val categoryId: UUID?,
+    val unspecifiedCategory: Boolean,
+    val accountIdFilterList: ImmutableList<UUID>,
+    val legacyTransactionIds: ImmutableList<UUID>,
+)
+
+private fun TransactionsScreen.toQuery() = TransactionsQuery(
+    accountId = accountId,
+    categoryId = categoryId,
+    unspecifiedCategory = unspecifiedCategory,
+    accountIdFilterList = accountIdFilterList,
+    legacyTransactionIds = legacyTransactionIds,
+)
