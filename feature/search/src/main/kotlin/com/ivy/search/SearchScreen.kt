@@ -20,8 +20,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.TransactionType
 import com.ivy.legacy.ui.search.SearchInput
-import com.ivy.legacy.ui.component.transaction.TransactionListData
-import com.ivy.legacy.ui.component.transaction.transactions
+import com.ivy.legacy.ui.transaction.TransactionListData
+import com.ivy.legacy.ui.transaction.transactions
 import com.ivy.ui.compose.densityScope
 import com.ivy.ui.compose.keyboardOnlyWindowInsets
 import com.ivy.ui.platform.keyboardVisibleState

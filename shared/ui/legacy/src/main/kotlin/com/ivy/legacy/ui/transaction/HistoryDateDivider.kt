@@ -1,4 +1,4 @@
-package com.ivy.legacy.ui.component.transaction
+package com.ivy.legacy.ui.transaction
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row

@@ -31,13 +31,13 @@ import com.ivy.home.Constants.SWIPE_HORIZONTAL_THRESHOLD
 import com.ivy.home.customerjourney.CustomerJourney
 import com.ivy.home.customerjourney.CustomerJourneyAction
 import com.ivy.home.customerjourney.CustomerJourneyCardModel
-import com.ivy.legacy.ui.component.transaction.LegacyDueSection
-import com.ivy.legacy.ui.component.transaction.TransactionListData
+import com.ivy.legacy.ui.transaction.LegacyDueSection
+import com.ivy.legacy.ui.transaction.TransactionListData
 import com.ivy.ui.period.Month
 import com.ivy.ui.period.TimePeriod
 import com.ivy.ui.period.displayLong
 import com.ivy.ui.period.LocalPeriodState
-import com.ivy.legacy.ui.component.transaction.transactions
+import com.ivy.legacy.ui.transaction.transactions
 import com.ivy.ui.compose.horizontalSwipeListener
 import com.ivy.ui.compose.rememberSwipeListenerState
 import com.ivy.ui.compose.verticalSwipeListener

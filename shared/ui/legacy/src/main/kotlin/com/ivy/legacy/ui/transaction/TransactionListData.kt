@@ -1,4 +1,4 @@
-package com.ivy.legacy.ui.component.transaction
+package com.ivy.legacy.ui.transaction
 
 import androidx.compose.runtime.Immutable
 import com.ivy.data.model.Category

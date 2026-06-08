@@ -37,10 +37,10 @@ import com.ivy.ui.navigation.screenScopedViewModel
 import com.ivy.data.model.TransactionType
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.legacy.ui.theme.style
-import com.ivy.legacy.ui.component.transaction.LegacyDueSection
-import com.ivy.legacy.ui.component.transaction.TransactionListData
+import com.ivy.legacy.ui.transaction.LegacyDueSection
+import com.ivy.legacy.ui.transaction.TransactionListData
 import com.ivy.legacy.ui.summary.IncomeExpensesCards
-import com.ivy.legacy.ui.component.transaction.transactions
+import com.ivy.legacy.ui.transaction.transactions
 import com.ivy.ui.compose.clickableNoIndication
 import com.ivy.ui.compose.rememberInteractionSource
 import com.ivy.ui.navigation.EditTransactionScreen
