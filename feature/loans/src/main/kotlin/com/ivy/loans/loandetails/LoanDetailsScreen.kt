@@ -68,7 +68,6 @@ import com.ivy.data.model.currency.IvyCurrency
 import com.ivy.legacy.ui.theme.Gradient
 import com.ivy.legacy.ui.theme.GradientGreen
 import com.ivy.legacy.ui.theme.GradientIvy
-import com.ivy.legacy.ui.theme.Gray
 import com.ivy.legacy.ui.theme.Green
 import com.ivy.legacy.ui.theme.Ivy
 import com.ivy.legacy.ui.money.AmountCurrencyB1
@@ -135,7 +134,7 @@ private fun BoxWithConstraintsScope.UI(
     onClose: () -> Unit,
     onAccountClick: (UUID) -> Unit
 ) {
-    val itemColor = state.loan?.color?.toComposeColor() ?: Gray
+    val itemColor = state.loan?.color?.toComposeColor() ?: LegacyTheme.colors.gray
     val selectedLoanAccount = state.accounts.firstOrNull { account ->
         account.id == state.selectedLoanAccountId
     }
@@ -628,7 +627,7 @@ private fun LoanInfoCard(
                     baseCurrency
                 ),
                 style = LegacyTheme.typo.nB2.style(
-                    color = Gray,
+                    color = LegacyTheme.colors.gray,
                     fontWeight = FontWeight.ExtraBold
                 )
             )
@@ -690,7 +689,7 @@ private fun LoanInfoCard(
                         baseCurrency
                     ),
                     style = LegacyTheme.typo.nB2.style(
-                        color = Gray,
+                        color = LegacyTheme.colors.gray,
                         fontWeight = FontWeight.ExtraBold
                     )
                 )
@@ -840,7 +839,7 @@ private fun LoanRecordItem(
                 ).uppercase()
             },
             style = LegacyTheme.typo.nC.style(
-                color = Gray,
+                color = LegacyTheme.colors.gray,
                 fontWeight = FontWeight.Bold
             )
         )
@@ -885,7 +884,7 @@ private fun LoanRecordItem(
                 modifier = Modifier.padding(start = 68.dp),
                 text = loanRecord.convertedAmount!!.format(baseCurrency) + " $loanBaseCurrency",
                 style = LegacyTheme.typo.nB2.style(
-                    color = Gray,
+                    color = LegacyTheme.colors.gray,
                     fontWeight = FontWeight.Normal
                 )
             )
@@ -936,7 +935,7 @@ private fun InitialRecordItem(
                     ).uppercase()
                 },
                 style = LegacyTheme.typo.nC.style(
-                    color = Gray,
+                    color = LegacyTheme.colors.gray,
                     fontWeight = FontWeight.Bold
                 )
             )
@@ -1038,7 +1037,7 @@ private fun NoLoanRecordsEmptyState() {
 
         IvyIcon(
             icon = R.drawable.ic_notransactions,
-            tint = Gray
+            tint = LegacyTheme.colors.gray
         )
 
         Spacer(Modifier.height(24.dp))
@@ -1046,7 +1045,7 @@ private fun NoLoanRecordsEmptyState() {
         Text(
             text = stringResource(R.string.no_records),
             style = LegacyTheme.typo.b1.style(
-                color = Gray,
+                color = LegacyTheme.colors.gray,
                 fontWeight = FontWeight.ExtraBold
             )
         )
@@ -1057,7 +1056,7 @@ private fun NoLoanRecordsEmptyState() {
             modifier = Modifier.padding(horizontal = 32.dp),
             text = stringResource(R.string.no_records_for_the_loan),
             style = LegacyTheme.typo.b2.style(
-                color = Gray,
+                color = LegacyTheme.colors.gray,
                 fontWeight = FontWeight.Medium,
                 textAlign = TextAlign.Center
             )

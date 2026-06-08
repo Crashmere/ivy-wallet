@@ -1404,6 +1404,7 @@ shared:ui:core
 - 余额页改用本 feature 私有分隔线；`shared:ui:legacy` 的 `IvyDividerLine` 继续收窄到仍实际复用的旧弹窗和少数页面。
 - 计划付款重复规则弹窗和报表筛选浮层也已改用各自私有分隔线；`IvyDividerLine` 现在只剩 `shared:ui:legacy` 内部旧弹窗调用。
 - `shared:ui:legacy` 的 `IvyDividerLine` 已改为模块内部实现，外部 feature 不再能直接引用这条旧分隔线。
+- 交易筛选、饼图统计、饼图自定义 View 和借贷详情页已停止直接导入旧 `Gray` 静态常量；未指定对象和辅助文字的灰色统一改用当前 `LegacyTheme.colors.gray`。
 - app 仍保留文件选择、文件分享、Material 日期选择器、BuildInfo、Locale 设置、生物识别和窗口安全等真正依赖 Activity 或 Android app 壳层的装配。
 
 ## 高风险区域

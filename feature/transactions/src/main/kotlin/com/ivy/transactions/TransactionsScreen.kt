@@ -74,7 +74,6 @@ import com.ivy.ui.navigation.screenScopedViewModel
 import com.ivy.ui.R
 import com.ivy.ui.rememberScrollPositionListState
 import com.ivy.data.model.IncomeExpensePair
-import com.ivy.legacy.ui.theme.Gray
 import com.ivy.legacy.ui.money.BalanceRow
 import com.ivy.legacy.ui.button.IvyCircleButton
 import com.ivy.legacy.ui.button.IvyOutlinedButton
@@ -322,7 +321,8 @@ private fun BoxWithConstraintsScope.UI(
     val periodState = LocalPeriodState.current
     val datePicker = LocalDatePicker.current
     val screenHeight = maxHeight
-    val itemColor = (account?.color ?: category?.color?.value)?.toComposeColor() ?: Gray
+    val itemColor = (account?.color ?: category?.color?.value)?.toComposeColor()
+        ?: LegacyTheme.colors.gray
 
     var categoryModalData: CategoryModalData? by remember { mutableStateOf(null) }
     var accountModalData: AccountModalData? by remember { mutableStateOf(null) }

@@ -28,7 +28,6 @@ import com.ivy.data.model.Category
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.compose.drawColoredShadow
 import com.ivy.ui.R
-import com.ivy.legacy.ui.theme.Gray
 import com.ivy.legacy.ui.icon.IvyIcon
 import com.ivy.legacy.ui.theme.toComposeColor
 import kotlinx.collections.immutable.ImmutableList
@@ -47,6 +46,8 @@ internal fun PieChart(
     modifier: Modifier = Modifier,
     onCategoryClick: (Category?) -> Unit = {}
 ) {
+    val unspecifiedCategoryColor = LegacyTheme.colors.gray
+
     Box(
         modifier = modifier.fillMaxWidth(),
         contentAlignment = Alignment.Center
@@ -78,6 +79,7 @@ internal fun PieChart(
                 view.display(
                     categoryAmounts = categoryAmounts.sortedByDescending { it.amount },
                     selectedCategory = selectedCategory,
+                    unspecifiedCategoryColor = unspecifiedCategoryColor,
                     onCategoryClicked = onCategoryClick
                 )
             }
@@ -90,7 +92,7 @@ internal fun PieChart(
                 .background(LegacyTheme.colors.medium)
                 .padding(all = 20.dp),
             icon = if (type == TransactionType.INCOME) R.drawable.ic_income else R.drawable.ic_expense,
-            tint = Gray
+            tint = unspecifiedCategoryColor
         )
     }
 }
@@ -112,6 +114,7 @@ private class PieChartView(context: Context) : View(context) {
     fun display(
         categoryAmounts: List<CategoryAmount>,
         selectedCategory: SelectedCategory?,
+        unspecifiedCategoryColor: Color,
         onCategoryClicked: (Category?) -> Unit
     ) {
         this.onCategoryClicked = onCategoryClicked
@@ -122,7 +125,8 @@ private class PieChartView(context: Context) : View(context) {
         this.paints = categoryAmounts
             .map {
                 val category = it.category
-                val categoryColor = category?.color?.value?.toComposeColor() ?: Gray
+                val categoryColor =
+                    category?.color?.value?.toComposeColor() ?: unspecifiedCategoryColor
                 val color = if (selectedCategory == null) {
                     categoryColor
                 } else {

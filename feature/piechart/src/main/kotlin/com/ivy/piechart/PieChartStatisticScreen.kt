@@ -64,7 +64,6 @@ import com.ivy.ui.R
 import com.ivy.ui.rememberScrollPositionListState
 import com.ivy.legacy.ui.theme.Gradient
 import com.ivy.legacy.ui.theme.GradientGreen
-import com.ivy.legacy.ui.theme.Gray
 import com.ivy.legacy.ui.theme.White
 import com.ivy.legacy.ui.money.BalanceRow
 import com.ivy.legacy.ui.button.CloseButton
@@ -400,8 +399,8 @@ private fun CategoryAmountCard(
     val category = categoryAmount.category
     val amount = categoryAmount.amount
 
-    val categoryColor =
-        category?.color?.value?.toComposeColor() ?: Gray // Unspecified category = Gray
+    val categoryColor = category?.color?.value?.toComposeColor()
+        ?: LegacyTheme.colors.gray
     val selectedState = when {
         selectedCategory == null -> {
             // no selectedCategory
