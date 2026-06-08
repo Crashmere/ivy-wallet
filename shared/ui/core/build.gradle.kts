@@ -13,6 +13,7 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.compose.activity)
     implementation(libs.androidx.lifecycle.viewmodel)
+    implementation(libs.androidx.recyclerview)
 
     testImplementation(libs.bundles.testing)
 }

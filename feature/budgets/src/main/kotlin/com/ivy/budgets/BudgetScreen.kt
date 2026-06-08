@@ -37,7 +37,7 @@ import com.ivy.ui.compose.rememberInteractionSource
 import com.ivy.ui.navigation.navigation
 import com.ivy.ui.navigation.screenScopedViewModel
 import com.ivy.ui.R
-import com.ivy.legacy.ui.modal.ReorderModalSingleType
+import com.ivy.ui.modal.ReorderModalSingleType
 import com.ivy.ui.money.AmountCurrencyB1
 import com.ivy.ui.compose.FilledIconButton
 import com.ivy.ui.compose.ResourceIcon

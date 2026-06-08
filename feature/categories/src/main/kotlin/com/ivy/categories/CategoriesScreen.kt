@@ -56,7 +56,7 @@ import com.ivy.ui.theme.colors.IvyGradients
 import com.ivy.ui.theme.colors.IvyFixedColors.White
 import com.ivy.ui.money.BalanceRow
 import com.ivy.ui.icon.ItemIconSDefaultIcon
-import com.ivy.legacy.ui.modal.ReorderModalSingleType
+import com.ivy.ui.modal.ReorderModalSingleType
 import com.ivy.ui.compose.FilledIconButton
 import com.ivy.ui.compose.GradientButton
 import com.ivy.ui.compose.ResourceIcon

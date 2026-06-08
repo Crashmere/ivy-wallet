@@ -1,4 +1,4 @@
-package com.ivy.legacy.ui.modal
+package com.ivy.ui.modal
 
 import android.annotation.SuppressLint
 import android.view.View
@@ -23,13 +23,11 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.ItemTouchHelper.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.R
-import com.ivy.legacy.ui.theme.GradientGreen
-import com.ivy.legacy.ui.theme.White
 import com.ivy.ui.compose.GradientIconButton
 import com.ivy.ui.compose.ResourceIcon
-import com.ivy.ui.modal.IvyModal
+import com.ivy.ui.theme.colors.IvyFixedColors
+import com.ivy.ui.theme.colors.IvyGradients
 import java.util.Collections
 import java.util.Random
 import java.util.UUID
@@ -43,8 +41,8 @@ fun <T> BoxScope.ReorderModalSingleType(
         Text(
             modifier = Modifier.padding(start = 32.dp),
             text = stringResource(R.string.reorder),
-            style = LegacyTheme.typo.b1.copy(
-                color = LegacyTheme.colors.pureInverse,
+            style = ReorderModalTheme.typo.b1.copy(
+                color = ReorderModalTheme.colors.pureInverse,
                 fontWeight = FontWeight.ExtraBold,
                 textAlign = TextAlign.Start
             )
@@ -85,8 +83,8 @@ private fun <T> BoxScope.ReorderModal(
         Text(
             modifier = Modifier.padding(start = 32.dp),
             text = stringResource(R.string.reorder),
-            style = LegacyTheme.typo.b1.copy(
-                color = LegacyTheme.colors.pureInverse,
+            style = ReorderModalTheme.typo.b1.copy(
+                color = ReorderModalTheme.colors.pureInverse,
                 fontWeight = FontWeight.ExtraBold,
                 textAlign = TextAlign.Start
             )
@@ -124,9 +122,9 @@ private fun <T> BoxScope.ReorderModal(
                 modifier = Modifier
                     .size(48.dp)
                     .testTag("reorder_done"),
-                backgroundGradient = GradientGreen,
+                backgroundGradient = IvyGradients.Green,
                 icon = R.drawable.ic_check,
-                tint = White
+                tint = IvyFixedColors.White
             ) {
                 orderNumUpdates.forEach { (item, newOrderNum) ->
                     onUpdateItemOrderNum(items, item, newOrderNum)
@@ -143,7 +141,7 @@ private fun <T> BoxScope.ReorderModal(
 
         Spacer(Modifier.height(24.dp))
 
-        val colorMedium = LegacyTheme.colors.medium
+        val colorMedium = ReorderModalTheme.colors.medium
         AndroidView(
             modifier = Modifier
                 .fillMaxWidth()
@@ -260,7 +258,7 @@ private class Adapter<T>(
                             }
                             .testTag("reorder_drag_handle"),
                         icon = R.drawable.ic_drag_handle,
-                        tint = LegacyTheme.colors.gray,
+                        tint = ReorderModalTheme.colors.gray,
                         contentDescription = "reorder_$position"
                     )
 
