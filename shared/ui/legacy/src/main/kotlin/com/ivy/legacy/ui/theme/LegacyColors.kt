@@ -26,37 +26,37 @@ val Green = Color(0xFF14CC9E)
 
 val Orange = Color(0xFFF29F30)
 
-val Orange3 = Color(0xFFFFC34C)
+internal val Orange3 = Color(0xFFFFC34C)
 
 val Red = Color(0xFFFF4060)
 
-val Red3 = Color(0xFFFF4CA6)
+internal val Red3 = Color(0xFFFF4CA6)
 
 // Light
 val IvyLight = Color(0xFFD5CCFF)
 
-val BlueLight = Color(0xFFB3E6FF)
+internal val BlueLight = Color(0xFFB3E6FF)
 
 val GreenLight = Color(0xFFAAF2E0)
 
-val OrangeLight = Color(0xFFFFDEB3)
+internal val OrangeLight = Color(0xFFFFDEB3)
 
 val RedLight = Color(0xFFFFCCD5)
 
-val Red3Light = Color(0xFFFFCCE6)
+internal val Red3Light = Color(0xFFFFCCE6)
 
 // Dark
 val IvyDark = Color(0xFF352680)
 
-val Purple1Dark = Color(0xFF622680)
+internal val Purple1Dark = Color(0xFF622680)
 
 val Purple = Color(0xFFA020F0)
 
-val Blue2Dark = Color(0xFF227373)
+internal val Blue2Dark = Color(0xFF227373)
 
 val GreenDark = Color(0xFF0A664F)
 
-val OrangeDark = Color(0xFF734B17)
+internal val OrangeDark = Color(0xFF734B17)
 // --------------------------------------------------------------------------------------------------
 
 val MediumBlack = Color(0xFF2B2C2D)
@@ -65,15 +65,15 @@ val Gray = Color(0xFF939199)
 
 val MediumWhite = Color(0xFFEFEEF0)
 
-val Transparent = Color(0x00000000)
+internal val Transparent = Color(0x00000000)
 
-val GradientRed = Gradient(Red, Color(0xFFFF99AB))
+internal val GradientRed = Gradient(Red, Color(0xFFFF99AB))
 
 val GradientPurple = Gradient(Purple, Color(0xFFED3EF7))
 
 val GradientGreen = Gradient(Green, Color(0xFF49F2C8))
 
-val GradientOrangeRevert = Gradient(Color(0xFFF2CD9E), Orange)
+internal val GradientOrangeRevert = Gradient(Color(0xFFF2CD9E), Orange)
 
 val GradientIvy = Gradient(Ivy, Color(0xFFAA99FF))
 
@@ -95,7 +95,7 @@ fun Modifier.gradientCutBackgroundTop(
     ).padding(top = 16.dp)
 }
 
-fun Modifier.gradientCutBackgroundBottom(
+internal fun Modifier.gradientCutBackgroundBottom(
     pure: Color,
     paddingBottom: Dp,
 ): Modifier {
@@ -113,7 +113,7 @@ fun Modifier.gradientCutBackgroundBottom(
 fun pureBlur() = LegacyTheme.colors.pure.copy(alpha = 0.95f)
 
 @Composable
-fun mediumBlur() = LegacyTheme.colors.medium.copy(alpha = 0.95f)
+internal fun mediumBlur() = LegacyTheme.colors.medium.copy(alpha = 0.95f)
 
 @Composable
 fun gradientExpenses() = Gradient(LegacyTheme.colors.pureInverse, LegacyTheme.colors.gray)
@@ -139,7 +139,7 @@ data class Gradient(
     fun asVerticalBrush() = Brush.verticalGradient(colors = listOf(startColor, endColor))
 }
 
-fun Color.asBrush(): Brush {
+internal fun Color.asBrush(): Brush {
     return Brush.linearGradient(colors = listOf(this, this))
 }
 

@@ -75,6 +75,7 @@
 - 清理旧 UI 无效参数：删除 `ShowTagModal` 和 `ModalAmountSection` 中未使用的 `modifier` 参数及对应 suppress，调用方和展示行为不变。
 - 继续清理旧 UI 无效参数：删除编辑交易/计划付款共用的 `EditBottomSheet` 中未使用的 `modifier` 参数，编辑入口调用和底部表单展示行为不变。
 - 收窄旧 UI 内部构件公开面：`IntervalPickerRow`、小号内部图标、图标选择弹窗、计算器弹窗和弹窗绿色主按钮改为 `shared:ui:legacy` 内部实现，feature 层继续只使用现有页面级弹窗入口。
+- 收窄旧主题色板公开面：颜色选择器专用色板、旧 UI 内部红色/橙色渐变、透明色、底部渐变遮罩、旧弹窗背景模糊和 `asBrush()` 扩展改为 `shared:ui:legacy` 内部实现，feature 层仍可使用现有公开颜色和主题门面。
 
 当前仍保留：
 
