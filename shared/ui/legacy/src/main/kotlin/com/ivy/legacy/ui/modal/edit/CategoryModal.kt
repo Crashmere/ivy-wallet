@@ -53,7 +53,6 @@ import com.ivy.legacy.ui.theme.Ivy
 import com.ivy.legacy.ui.icon.ItemIconMDefaultIcon
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.legacy.ui.theme.dynamicContrast
-import com.ivy.legacy.ui.theme.style
 import com.ivy.legacy.ui.modal.ChooseIconModal
 import com.ivy.legacy.ui.modal.IvyModal
 import com.ivy.legacy.ui.modal.ModalAddSave
@@ -191,7 +190,7 @@ private fun IvyNameTextField(
             if (isEmpty && hint.isNullOrBlank().not()) {
                 Text(
                     text = hint!!,
-                    style = LegacyTheme.typo.b2.style(
+                    style = LegacyTheme.typo.b2.copy(
                         color = LegacyTheme.colors.gray,
                         fontWeight = FontWeight.SemiBold,
                         textAlign = TextAlign.Start
@@ -206,7 +205,7 @@ private fun IvyNameTextField(
                     .focusRequester(focusRequester),
                 value = value,
                 onValueChange = onValueChanged,
-                textStyle = LegacyTheme.typo.b1.style(
+                textStyle = LegacyTheme.typo.b1.copy(
                     color = textColor,
                     fontWeight = FontWeight.ExtraBold,
                     textAlign = TextAlign.Start

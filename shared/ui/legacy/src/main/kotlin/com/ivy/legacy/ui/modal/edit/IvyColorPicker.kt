@@ -24,12 +24,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ivy.legacy.ui.theme.IVY_COLOR_PICKER_BASE_COLORS
 import com.ivy.legacy.ui.theme.IVY_COLOR_PICKER_VARIANT_COLORS
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.legacy.ui.theme.dynamicContrast
-import com.ivy.legacy.ui.theme.style
 import com.ivy.ui.compose.densityScope
 import com.ivy.ui.compose.thenIf
 import com.ivy.ui.compose.onCompositionStart
@@ -49,9 +49,10 @@ internal fun ColumnScope.IvyColorPicker(
     Text(
         modifier = Modifier.padding(horizontal = 32.dp),
         text = stringResource(R.string.choose_color),
-        style = LegacyTheme.typo.b2.style(
+        style = LegacyTheme.typo.b2.copy(
             color = LegacyTheme.colors.pureInverse,
-            fontWeight = FontWeight.ExtraBold
+            fontWeight = FontWeight.ExtraBold,
+            textAlign = TextAlign.Start
         )
     )
 

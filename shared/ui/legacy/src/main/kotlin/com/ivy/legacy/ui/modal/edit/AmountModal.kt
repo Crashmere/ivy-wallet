@@ -36,7 +36,6 @@ import androidx.compose.ui.unit.sp
 import com.ivy.ui.preferences.LocalAmountInputPreferences
 import com.ivy.ui.preferences.asEnabledState
 import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.legacy.ui.theme.style
 import com.ivy.data.model.currency.amountToDouble
 import com.ivy.data.model.currency.amountToDoubleOrNull
 import com.ivy.data.model.currency.format
@@ -197,17 +196,19 @@ private fun AmountCurrency(
 
         Text(
             text = amount.ifBlank { "0" },
-            style = LegacyTheme.typo.nH2.style(
+            style = LegacyTheme.typo.nH2.copy(
                 fontWeight = FontWeight.Bold,
-                color = LegacyTheme.colors.pureInverse
+                color = LegacyTheme.colors.pureInverse,
+                textAlign = TextAlign.Start
             )
         )
         Spacer(Modifier.width(4.dp))
         Text(
             text = currency,
-            style = LegacyTheme.typo.nH2.style(
+            style = LegacyTheme.typo.nH2.copy(
                 fontWeight = FontWeight.Normal,
-                color = LegacyTheme.colors.pureInverse
+                color = LegacyTheme.colors.pureInverse,
+                textAlign = TextAlign.Start
             )
         )
 
@@ -443,10 +444,9 @@ internal fun KeypadCircleButton(
             .testTag(testTag),
         text = text,
         fontSize = fontSize,
-        style = LegacyTheme.typo.nH2.style(
+        style = LegacyTheme.typo.nH2.copy(
             color = textColor,
-            fontWeight = FontWeight.Bold
-        ).copy(
+            fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center
         )
     )

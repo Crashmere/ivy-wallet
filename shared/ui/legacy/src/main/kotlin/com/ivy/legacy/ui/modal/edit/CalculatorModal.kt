@@ -17,7 +17,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.legacy.ui.theme.style
 import com.ivy.data.model.currency.amountToDoubleOrNull
 import com.ivy.data.model.currency.format
 import com.ivy.data.model.currency.formatInputAmount
@@ -76,7 +75,7 @@ internal fun BoxWithConstraintsScope.CalculatorModal(
                 .fillMaxWidth()
                 .padding(horizontal = 24.dp),
             text = if (isEmpty) stringResource(R.string.calculator_empty_expression) else expression,
-            style = LegacyTheme.typo.nH2.style(
+            style = LegacyTheme.typo.nH2.copy(
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center,
                 color = if (isEmpty) Gray else LegacyTheme.colors.pureInverse

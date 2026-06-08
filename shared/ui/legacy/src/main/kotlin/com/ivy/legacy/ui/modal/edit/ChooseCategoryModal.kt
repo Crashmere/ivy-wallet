@@ -23,10 +23,10 @@ import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.Category
 import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.legacy.ui.theme.style
 import com.ivy.ui.compose.thenIf
 import com.ivy.ui.compose.drawColoredShadow
 import com.ivy.ui.platform.hideKeyboard
@@ -230,13 +230,14 @@ private fun CategoryButton(
                     end = if (selected) 20.dp else 24.dp
                 ),
             text = category.name.value,
-            style = LegacyTheme.typo.b2.style(
+            style = LegacyTheme.typo.b2.copy(
                 color = if (selected) {
                     findContrastTextColor(categoryColor)
                 } else {
                     LegacyTheme.colors.pureInverse
                 },
-                fontWeight = FontWeight.SemiBold
+                fontWeight = FontWeight.SemiBold,
+                textAlign = TextAlign.Start
             )
         )
 
@@ -267,9 +268,10 @@ private fun AddNewButton(
         text = stringResource(R.string.add_new),
         backgroundGradient = Gradient.solid(LegacyTheme.colors.mediumInverse),
         iconStart = R.drawable.ic_plus,
-        textStyle = LegacyTheme.typo.b2.style(
+        textStyle = LegacyTheme.typo.b2.copy(
             color = LegacyTheme.colors.pureInverse,
-            fontWeight = FontWeight.Bold
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Start
         ),
         iconTint = LegacyTheme.colors.pureInverse,
         padding = 10.dp,

@@ -25,9 +25,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.legacy.ui.theme.style
 import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.legacy.ui.modal.AccountModalData
 import com.ivy.ui.compose.onCompositionStart
@@ -259,9 +259,10 @@ private fun IvyCheckboxWithText(
 
         Text(
             text = text,
-            style = LegacyTheme.typo.b2.style(
+            style = LegacyTheme.typo.b2.copy(
                 color = LegacyTheme.colors.pureInverse,
-                fontWeight = FontWeight.SemiBold
+                fontWeight = FontWeight.SemiBold,
+                textAlign = TextAlign.Start
             )
         )
     }
@@ -351,8 +352,10 @@ private fun AccountCurrency(
 
         Text(
             text = currencyCode.uppercase(Locale.getDefault()),
-            style = LegacyTheme.typo.b1.style(
-                fontWeight = FontWeight.ExtraBold
+            style = LegacyTheme.typo.b1.copy(
+                color = LegacyTheme.colors.pureInverse,
+                fontWeight = FontWeight.ExtraBold,
+                textAlign = TextAlign.Start
             )
         )
 
@@ -361,9 +364,10 @@ private fun AccountCurrency(
         val currencyName = IvyCurrency.fromCode(currencyCode)?.name ?: ""
         Text(
             text = "-$currencyName".lowercase(Locale.getDefault()),
-            style = LegacyTheme.typo.b2.style(
+            style = LegacyTheme.typo.b2.copy(
                 fontWeight = FontWeight.SemiBold,
-                color = Gray
+                color = Gray,
+                textAlign = TextAlign.Start
             )
         )
 
