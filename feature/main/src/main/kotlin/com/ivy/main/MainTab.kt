@@ -1,4 +1,4 @@
-package com.ivy.ui.main
+package com.ivy.main
 
 import androidx.compose.runtime.Immutable
 

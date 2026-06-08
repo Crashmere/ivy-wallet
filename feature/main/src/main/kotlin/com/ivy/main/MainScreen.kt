@@ -4,7 +4,6 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.BoxWithConstraintsScope
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -16,8 +15,6 @@ import com.ivy.home.HomeTab
 import com.ivy.ui.navigation.onScreenStart
 import com.ivy.ui.navigation.EditPlannedScreen
 import com.ivy.ui.navigation.EditTransactionScreen
-import com.ivy.ui.main.LocalMainTabState
-import com.ivy.ui.main.MainTab
 import com.ivy.ui.navigation.MainScreen
 import com.ivy.ui.navigation.TransactionRouteType
 import com.ivy.ui.navigation.navigation
@@ -43,15 +40,13 @@ fun BoxWithConstraintsScope.MainScreen(screen: MainScreen) {
         nav.registerScreenBackHandler(screen, viewModel::handleBack)
     }
 
-    CompositionLocalProvider(LocalMainTabState provides viewModel.mainTabState) {
-        UI(
-            screen = screen,
-            tab = viewModel.selectedTab(),
-            baseCurrency = currency,
-            selectTab = viewModel::selectTab,
-            onCreateAccount = viewModel::createAccount
-        )
-    }
+    UI(
+        screen = screen,
+        tab = viewModel.selectedTab,
+        baseCurrency = currency,
+        selectTab = viewModel::selectTab,
+        onCreateAccount = viewModel::createAccount
+    )
 }
 
 @ExperimentalAnimationApi
@@ -67,8 +62,17 @@ private fun BoxWithConstraintsScope.UI(
     onCreateAccount: (CreateAccountData) -> Unit,
 ) {
     when (tab) {
-        MainTab.HOME -> HomeTab()
-        MainTab.ACCOUNTS -> AccountsTab()
+        MainTab.HOME -> HomeTab(
+            onOpenAccountsTab = {
+                selectTab(MainTab.ACCOUNTS)
+            }
+        )
+
+        MainTab.ACCOUNTS -> AccountsTab(
+            onOpenHomeTab = {
+                selectTab(MainTab.HOME)
+            }
+        )
     }
 
     var accountModalData: AccountModalData? by remember { mutableStateOf(null) }

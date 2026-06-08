@@ -33,8 +33,6 @@ import com.ivy.ui.compose.clickableNoIndication
 import com.ivy.ui.compose.horizontalSwipeListener
 import com.ivy.ui.compose.rememberInteractionSource
 import com.ivy.ui.compose.rememberSwipeListenerState
-import com.ivy.ui.main.LocalMainTabState
-import com.ivy.ui.main.MainTab
 import com.ivy.ui.navigation.TransactionsScreen
 import com.ivy.ui.navigation.navigation
 import com.ivy.ui.navigation.screenScopedViewModel
@@ -50,23 +48,26 @@ import com.ivy.legacy.ui.theme.findContrastTextColor
 import com.ivy.legacy.ui.theme.toComposeColor
 
 @Composable
-fun BoxWithConstraintsScope.AccountsTab() {
+fun BoxWithConstraintsScope.AccountsTab(
+    onOpenHomeTab: () -> Unit,
+) {
     val viewModel: AccountsViewModel = screenScopedViewModel()
     val uiState = viewModel.uiState()
 
     UI(
         state = uiState,
-        onEvent = viewModel::onEvent
+        onEvent = viewModel::onEvent,
+        onOpenHomeTab = onOpenHomeTab,
     )
 }
 
 @Composable
 private fun BoxWithConstraintsScope.UI(
     state: AccountsState,
-    onEvent: (AccountsEvent) -> Unit = {}
+    onEvent: (AccountsEvent) -> Unit = {},
+    onOpenHomeTab: () -> Unit,
 ) {
     val nav = navigation()
-    val mainTabState = LocalMainTabState.current
     val listState = rememberScrollPositionListState(
         key = "accounts_lazy_column"
     )
@@ -79,10 +80,10 @@ private fun BoxWithConstraintsScope.UI(
                 sensitivity = 200,
                 state = rememberSwipeListenerState(),
                 onSwipeLeft = {
-                    mainTabState.select(MainTab.HOME)
+                    onOpenHomeTab()
                 },
                 onSwipeRight = {
-                    mainTabState.select(MainTab.HOME)
+                    onOpenHomeTab()
                 }
             ),
         state = listState

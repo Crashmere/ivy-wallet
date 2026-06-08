@@ -1,12 +1,13 @@
 package com.ivy.main
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ivy.domain.usecase.account.CreateAccountWithBalanceUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyUseCase
 import com.ivy.domain.usecase.exchange.SyncExchangeRatesUseCase
-import com.ivy.ui.main.MainTab
-import com.ivy.ui.main.MainTabState
 import com.ivy.data.model.CreateAccountData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -24,7 +25,8 @@ class MainViewModel @Inject constructor(
     private val getBaseCurrency: GetBaseCurrencyUseCase,
 ) : ViewModel() {
 
-    val mainTabState = MainTabState()
+    var selectedTab by mutableStateOf(MainTab.HOME)
+        private set
 
     private val _currency = MutableStateFlow("")
     val currency: StateFlow<String> = _currency.asStateFlow()
@@ -44,8 +46,8 @@ class MainViewModel @Inject constructor(
     }
 
     fun handleBack(): Boolean {
-        return if (mainTabState.selectedTab == MainTab.ACCOUNTS) {
-            mainTabState.select(MainTab.HOME)
+        return if (selectedTab == MainTab.ACCOUNTS) {
+            selectTab(MainTab.HOME)
             true
         } else {
             // Exiting (the backstack will close the app)
@@ -53,10 +55,8 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    fun selectedTab(): MainTab = mainTabState.selectedTab
-
     fun selectTab(tab: MainTab) {
-        mainTabState.select(tab)
+        selectedTab = tab
     }
 
     fun createAccount(data: CreateAccountData) {

@@ -21,8 +21,6 @@ import androidx.compose.ui.unit.dp
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.legacy.ui.theme.style
 import com.ivy.ui.compose.drawColoredShadow
-import com.ivy.ui.main.LocalMainTabState
-import com.ivy.ui.main.MainTab
 import com.ivy.ui.navigation.EditPlannedScreen
 import com.ivy.ui.navigation.PieChartStatisticScreen
 import com.ivy.ui.navigation.TransactionRouteType
@@ -40,8 +38,8 @@ fun CustomerJourney(
     customerJourneyCards: ImmutableList<CustomerJourneyCardModel>,
     modifier: Modifier = Modifier,
     onDismiss: (CustomerJourneyCardModel) -> Unit,
+    onOpenAccountsTab: () -> Unit,
 ) {
-    val mainTabState = LocalMainTabState.current
     val nav = navigation()
 
     if (customerJourneyCards.isNotEmpty()) {
@@ -60,7 +58,7 @@ fun CustomerJourney(
         ) {
             when (card.action) {
                 CustomerJourneyAction.OpenAccountsTab -> {
-                    mainTabState.select(MainTab.ACCOUNTS)
+                    onOpenAccountsTab()
                 }
 
                 CustomerJourneyAction.AddPlannedPayment -> {

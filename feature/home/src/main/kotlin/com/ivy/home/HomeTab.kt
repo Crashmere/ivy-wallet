@@ -43,8 +43,6 @@ import com.ivy.ui.compose.rememberSwipeListenerState
 import com.ivy.ui.compose.verticalSwipeListener
 import com.ivy.ui.navigation.BalanceScreen
 import com.ivy.ui.navigation.EditTransactionScreen
-import com.ivy.ui.main.LocalMainTabState
-import com.ivy.ui.main.MainTab
 import com.ivy.ui.navigation.MainScreen
 import com.ivy.ui.navigation.TransactionRouteType
 import com.ivy.ui.navigation.TransactionsScreen
@@ -67,10 +65,11 @@ import java.util.UUID
 @ExperimentalAnimationApi
 @ExperimentalFoundationApi
 @Composable
-fun BoxWithConstraintsScope.HomeTab() {
+fun BoxWithConstraintsScope.HomeTab(
+    onOpenAccountsTab: () -> Unit,
+) {
     val viewModel: HomeViewModel = screenScopedViewModel()
     val nav = navigation()
-    val mainTabState = LocalMainTabState.current
     val uiState = viewModel.uiState()
 
     LaunchedEffect(viewModel) {
@@ -78,14 +77,18 @@ fun BoxWithConstraintsScope.HomeTab() {
             when (event) {
                 HomeUiEvent.OpenBalance -> nav.navigateTo(BalanceScreen)
                 HomeUiEvent.OpenAccountsTab -> {
-                    mainTabState.select(MainTab.ACCOUNTS)
+                    onOpenAccountsTab()
                     nav.navigateTo(MainScreen)
                 }
             }
         }
     }
 
-    HomeUi(uiState, viewModel::onEvent)
+    HomeUi(
+        uiState = uiState,
+        onEvent = viewModel::onEvent,
+        onOpenAccountsTab = onOpenAccountsTab,
+    )
 }
 
 @Suppress("LongMethod")
@@ -95,11 +98,11 @@ fun BoxWithConstraintsScope.HomeTab() {
 fun BoxWithConstraintsScope.HomeUi(
     uiState: HomeState,
     onEvent: (HomeEvent) -> Unit,
+    onOpenAccountsTab: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val periodState = LocalPeriodState.current
     val datePicker = LocalDatePicker.current
-    val mainTabState = LocalMainTabState.current
 
     var bufferModalData: BufferModalData? by remember { mutableStateOf(null) }
     var currencyModalVisible by remember { mutableStateOf(false) }
@@ -129,10 +132,10 @@ fun BoxWithConstraintsScope.HomeUi(
                 sensitivity = SWIPE_HORIZONTAL_THRESHOLD,
                 state = rememberSwipeListenerState(),
                 onSwipeLeft = {
-                    mainTabState.select(MainTab.ACCOUNTS)
+                    onOpenAccountsTab()
                 },
                 onSwipeRight = {
-                    mainTabState.select(MainTab.ACCOUNTS)
+                    onOpenAccountsTab()
                 }
             )
     ) {
@@ -205,6 +208,7 @@ fun BoxWithConstraintsScope.HomeUi(
             onSkipTransaction = { onEvent(HomeEvent.SkipPlanned(it)) },
             setUpcomingExpanded = { onEvent(HomeEvent.SetUpcomingExpanded(it)) },
             setOverdueExpanded = { onEvent(HomeEvent.SetOverdueExpanded(it)) },
+            onOpenAccountsTab = onOpenAccountsTab,
             onSkipAllTransactions = {
                 skipAllModalVisible = true
             }
@@ -314,6 +318,7 @@ fun HomeLazyColumn(
     onHiddenIncomeClick: () -> Unit,
     onSkipTransaction: (UUID) -> Unit,
     onSkipAllTransactions: (List<UUID>) -> Unit,
+    onOpenAccountsTab: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val periodState = LocalPeriodState.current
@@ -371,7 +376,8 @@ fun HomeLazyColumn(
         item {
             CustomerJourney(
                 customerJourneyCards = customerJourneyCards,
-                onDismiss = onDismiss
+                onDismiss = onDismiss,
+                onOpenAccountsTab = onOpenAccountsTab,
             )
         }
 
