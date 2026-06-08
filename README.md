@@ -1561,6 +1561,7 @@ shared:ui:core
 - 旧标签弹窗标签列表继续收窄：`ShowTagModal` 不再接收或回传完整 `Tag` 作为公开 UI 契约，改用只含 id 和名称的 `TagModalTag`；编辑交易在业务边界把编辑结果映射回正式 `Tag`。
 - 旧分类编辑弹窗继续收窄：`CategoryModal` 不再接收或构造完整 `Category` / `CreateCategoryData`，改用 `CategoryModalCategory` 和 `CategoryModalSaveData`；分类管理、交易列表、编辑交易和计划付款编辑页在各自业务边界完成正式模型映射。
 - 旧分类选择弹窗继续收窄：`ChooseCategoryModal` 不再接收或回传完整 `Category`，改用 `CategoryModalCategory` 列表和分类 UUID；编辑交易与计划付款编辑页负责把 UUID 映射回自身业务事件。
+- 旧账户编辑弹窗继续收窄：`AccountModal` 不再构造 `CreateAccountData` 或回传编辑后的账户对象，改用 `AccountModalSaveData`；新增账户和调余额/编辑账户路径由各 feature 在业务边界转换。
 - app 仍保留文件选择、文件分享、Material 日期选择器、BuildInfo、Locale 设置、生物识别和窗口安全等真正依赖 Activity 或 Android app 壳层的装配。
 
 ## 高风险区域

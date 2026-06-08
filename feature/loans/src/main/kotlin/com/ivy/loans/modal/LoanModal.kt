@@ -58,6 +58,7 @@ import com.ivy.ui.modal.IvyModal
 import com.ivy.ui.modal.ModalAmountSection
 import com.ivy.ui.modal.ModalTitle
 import com.ivy.legacy.ui.modal.edit.AccountModal
+import com.ivy.legacy.ui.modal.edit.AccountModalSaveData
 import com.ivy.legacy.ui.modal.edit.AmountModal
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.theme.colors.dynamicContrast
@@ -333,7 +334,7 @@ internal fun BoxWithConstraintsScope.LoanModal(
         account = null,
         baseCurrency = accountModalBaseCurrency,
         balance = 0.0,
-        onCreateAccount = onCreateAccount,
+        onCreateAccount = { onCreateAccount(it.toCreateAccountData()) },
         onEditAccount = { _, _ -> },
         dismiss = {
             accountModalVisible = false
@@ -549,6 +550,15 @@ private fun RowScope.SelectorButton(
         )
     )
 }
+
+private fun AccountModalSaveData.toCreateAccountData() = CreateAccountData(
+    name = name,
+    currency = currency,
+    color = color,
+    icon = icon,
+    balance = balance,
+    includeBalance = includeInBalance,
+)
 
 private fun save(
     loan: Loan?,

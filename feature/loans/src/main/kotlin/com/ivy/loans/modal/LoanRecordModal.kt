@@ -46,6 +46,7 @@ import com.ivy.ui.modal.IvyModal
 import com.ivy.ui.modal.ModalAmountSection
 import com.ivy.ui.modal.ModalTitle
 import com.ivy.legacy.ui.modal.edit.AccountModal
+import com.ivy.legacy.ui.modal.edit.AccountModalSaveData
 import com.ivy.legacy.ui.modal.edit.AmountModal
 import com.ivy.loans.model.LoanAccount
 import java.time.Instant
@@ -340,7 +341,7 @@ internal fun BoxWithConstraintsScope.LoanRecordModal(
         account = null,
         baseCurrency = accountModalBaseCurrency,
         balance = 0.0,
-        onCreateAccount = onCreateAccount,
+        onCreateAccount = { onCreateAccount(it.toCreateAccountData()) },
         onEditAccount = { _, _ -> },
         dismiss = {
             accountModalVisible = false
@@ -377,6 +378,15 @@ internal fun BoxWithConstraintsScope.LoanRecordModal(
         accountChangeConformationModal = false
     }
 }
+
+private fun AccountModalSaveData.toCreateAccountData() = CreateAccountData(
+    name = name,
+    currency = currency,
+    color = color,
+    icon = icon,
+    balance = balance,
+    includeBalance = includeInBalance,
+)
 
 private fun save(
     loanRecord: LoanRecord?,

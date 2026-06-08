@@ -67,6 +67,7 @@ import com.ivy.ui.modal.ModalAdd
 import com.ivy.ui.modal.ModalSave
 import com.ivy.ui.modal.ProgressModal
 import com.ivy.legacy.ui.modal.edit.AccountModal
+import com.ivy.legacy.ui.modal.edit.AccountModalSaveData
 import com.ivy.legacy.ui.modal.edit.AmountModal
 import com.ivy.legacy.ui.modal.edit.CategoryModal
 import com.ivy.legacy.ui.modal.edit.CategoryModalCategory
@@ -581,7 +582,7 @@ private fun BoxWithConstraintsScope.UI(
         account = null,
         baseCurrency = baseCurrency,
         balance = 0.0,
-        onCreateAccount = onCreateAccount,
+        onCreateAccount = { onCreateAccount(it.toCreateAccountData()) },
         onEditAccount = { _, _ -> },
         dismiss = {
             accountModalVisible = false
@@ -721,6 +722,15 @@ private fun CategoryModalSaveData.toCreateCategoryData() = CreateCategoryData(
     name = name,
     color = color,
     icon = icon,
+)
+
+private fun AccountModalSaveData.toCreateAccountData() = CreateAccountData(
+    name = name,
+    currency = currency,
+    color = color,
+    icon = icon,
+    balance = balance,
+    includeBalance = includeInBalance,
 )
 
 private fun Category.withModalSaveData(data: CategoryModalSaveData) = copy(

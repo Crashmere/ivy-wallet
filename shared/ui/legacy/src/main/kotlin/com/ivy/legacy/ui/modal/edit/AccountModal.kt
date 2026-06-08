@@ -33,7 +33,6 @@ import com.ivy.ui.compose.onCompositionStart
 import com.ivy.ui.compose.selectEndTextFieldValue
 import com.ivy.ui.R
 import com.ivy.data.model.currency.IvyCurrency
-import com.ivy.data.model.CreateAccountData
 import com.ivy.ui.compose.clickableNoIndication
 import com.ivy.ui.modal.ChooseIconModal
 import com.ivy.ui.modal.CurrencyModal
@@ -49,6 +48,15 @@ import androidx.compose.runtime.setValue
 import com.ivy.ui.compose.rememberInteractionSource
 import com.ivy.ui.theme.colors.IvyFixedColors
 
+data class AccountModalSaveData(
+    val name: String,
+    val currency: String,
+    val color: Int,
+    val icon: String?,
+    val balance: Double,
+    val includeInBalance: Boolean,
+)
+
 @Composable
 fun BoxWithConstraintsScope.AccountModal(
     visible: Boolean,
@@ -58,8 +66,8 @@ fun BoxWithConstraintsScope.AccountModal(
     adjustBalanceMode: Boolean = false,
     forceNonZeroBalance: Boolean = false,
     autoFocusKeyboard: Boolean = true,
-    onCreateAccount: (CreateAccountData) -> Unit,
-    onEditAccount: (AccountModalAccount, balance: Double) -> Unit,
+    onCreateAccount: (AccountModalSaveData) -> Unit,
+    onEditAccount: (accountId: UUID, data: AccountModalSaveData) -> Unit,
     dismiss: () -> Unit,
 ) {
     var nameTextFieldValue by remember(visible, account) {
@@ -314,32 +322,22 @@ private fun save(
     amount: Double,
     includeInBalance: Boolean,
 
-    onCreateAccount: (CreateAccountData) -> Unit,
-    onEditAccount: (AccountModalAccount, balance: Double) -> Unit,
+    onCreateAccount: (AccountModalSaveData) -> Unit,
+    onEditAccount: (accountId: UUID, data: AccountModalSaveData) -> Unit,
     dismiss: () -> Unit
 ) {
+    val data = AccountModalSaveData(
+        name = nameTextFieldValue.text.trim(),
+        currency = currency,
+        color = color.toArgb(),
+        icon = icon,
+        balance = amount,
+        includeInBalance = includeInBalance,
+    )
     if (account != null) {
-        onEditAccount(
-            account.copy(
-                name = nameTextFieldValue.text.trim(),
-                currency = currency,
-                includeInBalance = includeInBalance,
-                icon = icon,
-                color = color.toArgb()
-            ),
-            amount
-        )
+        onEditAccount(account.id, data)
     } else {
-        onCreateAccount(
-            CreateAccountData(
-                name = nameTextFieldValue.text.trim(),
-                currency = currency,
-                color = color.toArgb(),
-                icon = icon,
-                balance = amount,
-                includeBalance = includeInBalance
-            )
-        )
+        onCreateAccount(data)
     }
 
     dismiss()

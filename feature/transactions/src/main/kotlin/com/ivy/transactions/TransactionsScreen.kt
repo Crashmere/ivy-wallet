@@ -560,9 +560,9 @@ private fun BoxWithConstraintsScope.UI(
         balance = accountModalBalance,
         adjustBalanceMode = accountModalAdjustBalanceMode,
         autoFocusKeyboard = accountModalAutoFocus,
-        onCreateAccount = { },
-        onEditAccount = { account, newBalance ->
-            onEditAccount(account.id, newBalance)
+        onCreateAccount = { _ -> },
+        onEditAccount = { accountId, data ->
+            onEditAccount(accountId, data.balance)
         },
         dismiss = {
             accountModalVisible = false
