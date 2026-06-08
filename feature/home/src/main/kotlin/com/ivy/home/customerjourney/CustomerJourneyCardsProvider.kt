@@ -4,10 +4,6 @@ import com.ivy.ui.resource.ResourceProvider
 import com.ivy.domain.usecase.home.DismissCustomerJourneyCardUseCase
 import com.ivy.domain.usecase.home.GetCustomerJourneyStatsUseCase
 import com.ivy.domain.usecase.home.IsCustomerJourneyCardDismissedUseCase
-import com.ivy.ui.navigation.EditPlannedScreen
-import com.ivy.ui.main.MainTab
-import com.ivy.ui.navigation.PieChartStatisticScreen
-import com.ivy.ui.navigation.TransactionRouteType
 import com.ivy.ui.R
 import javax.inject.Inject
 
@@ -55,9 +51,7 @@ class CustomerJourneyCardsProvider @Inject constructor(
         ctaIcon = R.drawable.ic_custom_account_s,
         backgroundColorArgb = CustomerJourneyIvy,
         hasDismiss = false,
-        onAction = { _, mainTabState ->
-            mainTabState.select(MainTab.ACCOUNTS)
-        }
+        action = CustomerJourneyAction.OpenAccountsTab
     )
 
     private fun addPlannedPaymentCard() = CustomerJourneyCardModel(
@@ -71,14 +65,7 @@ class CustomerJourneyCardsProvider @Inject constructor(
         ctaIcon = R.drawable.ic_planned_payments,
         backgroundColorArgb = CustomerJourneyOrange,
         hasDismiss = true,
-        onAction = { navigation, _ ->
-            navigation.navigateTo(
-                EditPlannedScreen(
-                    type = TransactionRouteType.EXPENSE,
-                    plannedPaymentRuleId = null
-                )
-            )
-        }
+        action = CustomerJourneyAction.AddPlannedPayment
     )
 
     private fun expensesPieChartCard() = CustomerJourneyCardModel(
@@ -92,9 +79,7 @@ class CustomerJourneyCardsProvider @Inject constructor(
         ctaIcon = R.drawable.ic_custom_bills_s,
         backgroundColorArgb = CustomerJourneyRed,
         hasDismiss = true,
-        onAction = { navigation, _ ->
-            navigation.navigateTo(PieChartStatisticScreen(type = TransactionRouteType.EXPENSE))
-        }
+        action = CustomerJourneyAction.OpenExpensePieChart
     )
 
     private companion object {

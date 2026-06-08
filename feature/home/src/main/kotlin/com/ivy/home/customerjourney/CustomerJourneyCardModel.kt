@@ -2,8 +2,12 @@ package com.ivy.home.customerjourney
 
 import androidx.annotation.DrawableRes
 import androidx.compose.runtime.Immutable
-import com.ivy.ui.main.MainTabState
-import com.ivy.ui.navigation.Navigation
+
+sealed interface CustomerJourneyAction {
+    data object OpenAccountsTab : CustomerJourneyAction
+    data object AddPlannedPayment : CustomerJourneyAction
+    data object OpenExpensePieChart : CustomerJourneyAction
+}
 
 @Immutable
 data class CustomerJourneyCardModel(
@@ -18,5 +22,5 @@ data class CustomerJourneyCardModel(
     val hasDismiss: Boolean = true,
 
     val backgroundColorArgb: Int,
-    val onAction: (Navigation, MainTabState) -> Unit
+    val action: CustomerJourneyAction
 )

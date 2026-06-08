@@ -22,6 +22,10 @@ import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
 import com.ivy.ui.compose.drawColoredShadow
 import com.ivy.ui.main.LocalMainTabState
+import com.ivy.ui.main.MainTab
+import com.ivy.ui.navigation.EditPlannedScreen
+import com.ivy.ui.navigation.PieChartStatisticScreen
+import com.ivy.ui.navigation.TransactionRouteType
 import com.ivy.ui.navigation.navigation
 import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.Gradient
@@ -54,7 +58,24 @@ fun CustomerJourney(
                 onDismiss(card)
             }
         ) {
-            card.onAction(nav, mainTabState)
+            when (card.action) {
+                CustomerJourneyAction.OpenAccountsTab -> {
+                    mainTabState.select(MainTab.ACCOUNTS)
+                }
+
+                CustomerJourneyAction.AddPlannedPayment -> {
+                    nav.navigateTo(
+                        EditPlannedScreen(
+                            type = TransactionRouteType.EXPENSE,
+                            plannedPaymentRuleId = null
+                        )
+                    )
+                }
+
+                CustomerJourneyAction.OpenExpensePieChart -> {
+                    nav.navigateTo(PieChartStatisticScreen(type = TransactionRouteType.EXPENSE))
+                }
+            }
         }
     }
 }
