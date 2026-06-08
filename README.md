@@ -136,7 +136,7 @@
 - 编辑交易页的计划交易支付/收取确认按钮已改为本页面私有实现；`shared:ui:legacy` 的 `ModalCheck` 收窄为旧弹窗内部实现。
 - feature 层不再直接导入 legacy 内部黑色、紫色、深绿和中性色板，也不再使用 `colorAs` 扩展；这些旧主题常量继续只在 `shared:ui:legacy` 内部使用。
 - 分类排序弹窗和计划付款编辑页底部操作改用本 feature 私有的 Set 按钮；`shared:ui:legacy` 的 `ModalSet` 收窄为旧弹窗内部实现。
-- 计划付款重复规则弹窗和对应弹窗状态已移回 `feature:planned-payments` 私有实现；`shared:ui:legacy` 不再导出 `RecurringRuleModal` 或 `RecurringRuleModalData`。
+- 计划付款重复规则弹窗和对应弹窗状态已移回 `feature:planned-payments` 私有实现，并已改为显式参数；`shared:ui:legacy` 不再导出 `RecurringRuleModal` 或 `RecurringRuleModalData`。
 - 借贷还款记录展示模型中的账户已从完整 `LegacyAccount` 收窄为本 feature 的轻量 `DisplayLoanAccount`，记录卡片只保留跳转和展示所需的账户 ID、名称与图标。
 - 导入流程和报表筛选浮层的底部渐隐遮罩已改为各自页面私有实现；`shared:ui:legacy` 删除不再复用的 `GradientCutBottom`。
 - 预算分类选择和报表筛选列表项已改为各自 feature 私有实现；`shared:ui:legacy` 删除不再复用的通用 `ListItem`。

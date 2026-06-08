@@ -74,41 +74,40 @@ import java.util.UUID
 
 private const val RepeatIntervalCharLimit = 5
 
-internal data class RecurringRuleModalData(
-    val initialStartDate: LocalDateTime?,
-    val initialIntervalN: Int?,
-    val initialIntervalType: IntervalType?,
-    val initialOneTime: Boolean = false,
-    val id: UUID = UUID.randomUUID()
-)
-
 @Suppress("ParameterNaming")
 @Composable
 internal fun BoxWithConstraintsScope.RecurringRuleModal(
-    modal: RecurringRuleModalData?,
+    visible: Boolean,
+    initialStartDate: LocalDateTime?,
+    initialIntervalN: Int?,
+    initialIntervalType: IntervalType?,
+    initialOneTime: Boolean,
     pickDate: (LocalDate, (LocalDateTime) -> Unit) -> Unit,
     dismiss: () -> Unit,
     onRuleChanged: (LocalDateTime, oneTime: Boolean, Int?, IntervalType?) -> Unit,
 ) {
     val timeProvider = LocalTimeProvider.current
-    var startDate by remember(modal) {
-        mutableStateOf(modal?.initialStartDate ?: timeProvider.localNow())
+    val modalId = remember(visible) {
+        UUID.randomUUID()
     }
-    var oneTime by remember(modal) {
-        mutableStateOf(modal?.initialOneTime ?: false)
+    var startDate by remember(visible, initialStartDate) {
+        mutableStateOf(initialStartDate ?: timeProvider.localNow())
     }
-    var intervalN by remember(modal) {
-        mutableStateOf(modal?.initialIntervalN ?: 1)
+    var oneTime by remember(visible, initialOneTime) {
+        mutableStateOf(initialOneTime)
     }
-    var intervalType by remember(modal) {
-        mutableStateOf(modal?.initialIntervalType ?: IntervalType.MONTH)
+    var intervalN by remember(visible, initialIntervalN) {
+        mutableStateOf(initialIntervalN ?: 1)
+    }
+    var intervalType by remember(visible, initialIntervalType) {
+        mutableStateOf(initialIntervalType ?: IntervalType.MONTH)
     }
 
     val modalScrollState = rememberScrollState()
 
     IvyModal(
-        id = modal?.id,
-        visible = modal != null,
+        id = modalId,
+        visible = visible,
         dismiss = dismiss,
         scrollState = modalScrollState,
         PrimaryAction = {

@@ -101,15 +101,10 @@ private fun BoxWithConstraintsScope.UI(
     var categoryModalVisible by remember { mutableStateOf(false) }
     var categoryModalCategory: Category? by remember { mutableStateOf(null) }
     var accountModalVisible by remember { mutableStateOf(false) }
-    var recurringRuleModalData: RecurringRuleModalData? by remember { mutableStateOf(null) }
+    var recurringRuleModalVisible by remember { mutableStateOf(false) }
 
     fun showRecurringRuleModal() {
-        recurringRuleModalData = RecurringRuleModalData(
-            initialStartDate = state.startDate,
-            initialIntervalN = state.intervalN,
-            initialIntervalType = state.intervalType,
-            initialOneTime = state.oneTime
-        )
+        recurringRuleModalVisible = true
     }
 
     Column(
@@ -340,7 +335,11 @@ private fun BoxWithConstraintsScope.UI(
 
     val datePicker = LocalDatePicker.current
     RecurringRuleModal(
-        modal = recurringRuleModalData,
+        visible = recurringRuleModalVisible,
+        initialStartDate = state.startDate,
+        initialIntervalN = state.intervalN,
+        initialIntervalType = state.intervalType,
+        initialOneTime = state.oneTime,
         pickDate = { initialDate, onDatePicked ->
             datePicker.pickDate(
                 initialDate = initialDate,
@@ -370,7 +369,7 @@ private fun BoxWithConstraintsScope.UI(
             }
         },
         dismiss = {
-            recurringRuleModalData = null
+            recurringRuleModalVisible = false
         }
     )
 }
