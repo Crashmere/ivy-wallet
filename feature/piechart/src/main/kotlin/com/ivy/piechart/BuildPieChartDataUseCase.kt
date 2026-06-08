@@ -117,7 +117,7 @@ class BuildPieChartDataUseCase @Inject constructor(
             val categoryTransactions = if (addAssociatedTransToCategoryAmt) {
                 transactions.filter {
                     it.type == type && it.categoryId == category?.id?.value
-                }
+                }.map { it.toAssociatedTransaction() }
             } else {
                 emptyList()
             }
@@ -202,7 +202,7 @@ class BuildPieChartDataUseCase @Inject constructor(
                     } else {
                         accountIdFilterSet.contains(it.toAccountId)
                     }
-                }
+                }.map { it.toAssociatedTransaction() }
 
             categoryAmounts.plus(
                 CategoryAmount(
@@ -216,6 +216,13 @@ class BuildPieChartDataUseCase @Inject constructor(
             }
         }
     }
+}
+
+private fun LegacyTransaction.toAssociatedTransaction(): AssociatedTransaction {
+    return AssociatedTransaction(
+        id = id,
+        type = type,
+    )
 }
 
 data class PieChartData(

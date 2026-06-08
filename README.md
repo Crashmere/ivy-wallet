@@ -89,6 +89,7 @@
 - 收窄 UI core 平台 helper：删除无调用方的 Composable `hideKeyboard()` 包装，保留仍被页面返回处理和旧 UI 调用的 `View` 扩展入口。
 - 精简 data-core 日志依赖：备份导入失败继续按原逻辑返回空导入结果并发布数据变更事件，但不再为了这一条错误日志依赖 Timber。
 - 移除 Timber 运行时依赖：app 不再初始化 DebugTree，通知展示失败继续按原有吞异常策略处理，版本目录和 app 依赖中删除 Timber。
+- 收窄饼图页旧交易泄漏：`CategoryAmount` 只向 UI 暴露关联交易的 `id/type` 轻量引用，`PieChartStatisticState` 不再携带完整 `LegacyTransaction` 列表；统计计算内部仍沿用现有旧交易算法。
 
 当前仍保留：
 

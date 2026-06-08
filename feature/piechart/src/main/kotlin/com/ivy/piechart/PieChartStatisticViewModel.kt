@@ -64,7 +64,6 @@ class PieChartStatisticViewModel @Inject constructor(
             accountIdFilterList = getAccountIdFilterList(),
             showCloseButtonOnly = getShowCloseButtonOnly(),
             filterExcluded = getFilterExcluded(),
-            transactions = getTransactions(),
             choosePeriodModal = getChoosePeriodModal()
         )
     }
@@ -112,11 +111,6 @@ class PieChartStatisticViewModel @Inject constructor(
     @Composable
     private fun getFilterExcluded(): Boolean {
         return filterExcluded
-    }
-
-    @Composable
-    private fun getTransactions(): ImmutableList<LegacyTransaction> {
-        return transactions
     }
 
     @Composable
