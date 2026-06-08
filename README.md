@@ -1095,6 +1095,7 @@
 - legacy 汇率求和扩展继续收窄：交易求和扩展改为 domain 内部可见，未使用的计划付款求和扩展已删除。
 - domain 内部链路继续收窄：账户 upcoming/overdue 基础查询和计划付款生成用例只服务同模块上层 use case，已改为 `internal`；对应上层公共 use case 只保留公共类型，注入构造函数收为模块内部细节。
 - UI core 的 Material3 色板实现继续收窄：`IvyColors` 与 `ColorShades` 只服务本模块主题实现，已改为 `internal`。
+- data-model 删除未使用的 `PositiveValue.round()` 扩展；金额值对象本身和现有格式化/计算入口保持不变。
 
 ### 阶段 10：最终依赖方向
 
