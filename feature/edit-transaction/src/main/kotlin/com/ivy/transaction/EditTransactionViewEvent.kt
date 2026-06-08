@@ -14,7 +14,7 @@ import java.time.Instant
 import java.time.LocalDateTime
 
 @Immutable
-data class EditTransactionViewState(
+internal data class EditTransactionViewState(
     val transactionType: TransactionType,
     val initialTitle: String?,
     val titleSuggestions: ImmutableSet<String>,
@@ -36,7 +36,7 @@ data class EditTransactionViewState(
     val transactionAssociatedTags: ImmutableList<TagId>
 )
 
-sealed interface EditTransactionViewEvent {
+internal sealed interface EditTransactionViewEvent {
     data class OnAmountChanged(val newAmount: Double) : EditTransactionViewEvent
     data class OnTitleChanged(val newTitle: String?) : EditTransactionViewEvent
     data class OnDescriptionChanged(val newDescription: String?) : EditTransactionViewEvent

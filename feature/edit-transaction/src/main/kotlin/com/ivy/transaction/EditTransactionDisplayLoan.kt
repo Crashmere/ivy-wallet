@@ -3,7 +3,7 @@ package com.ivy.transaction
 import androidx.compose.runtime.Immutable
 
 @Immutable
-data class EditTransactionDisplayLoan(
+internal data class EditTransactionDisplayLoan(
     val isLoan: Boolean = false,
     val isLoanRecord: Boolean = false,
     val loanCaption: String? = null,

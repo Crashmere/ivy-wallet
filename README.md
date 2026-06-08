@@ -106,6 +106,7 @@
 - 收窄设置 feature 公开面：只保留 `SettingsScreen` 作为 app 导航入口，设置状态、事件、UI 事件和 ViewModel 改为模块内部实现。
 - 收窄报表 feature 公开面：只保留 `ReportScreen` 作为 app 导航入口，报表筛选模型、状态、事件、ViewModel 和筛选浮层 UI 改为模块内部实现。
 - 收窄交易列表 feature 公开面：只保留 `TransactionsScreen` 作为 app 导航入口，交易列表状态、事件、UI 事件和 ViewModel 改为模块内部实现。
+- 收窄编辑交易 feature 公开面：只保留 `EditTransactionScreen` 作为 app 导航入口，编辑状态、事件、UI 事件、ViewModel 和页面展示模型改为模块内部实现。
 
 当前仍保留：
 
@@ -1118,6 +1119,7 @@
 - 设置 feature 的公开面已收窄：`SettingsScreen` 继续作为 app 导航入口，`SettingsState/SettingsEvent/SettingsUiEvent/SettingsViewModel` 都改为模块内部可见；设置页内部菜单和 section 组件本来已保持私有。
 - 报表 feature 的公开面已收窄：`ReportScreen` 继续作为 app 导航入口，`ReportFilter/ReportScreenState/ReportScreenEvent/ReportViewModel` 和筛选浮层相关 Composable 都改为模块内部可见。
 - 交易列表 feature 的公开面已收窄：`TransactionsScreen` 继续作为 app 导航入口，`TransactionsState/TransactionsEvent/TransactionsUiEvent/TransactionsViewModel` 都改为模块内部可见。
+- 编辑交易 feature 的公开面已收窄：`EditTransactionScreen` 继续作为 app 导航入口，`EditTransactionViewState/EditTransactionViewEvent/EditTransactionUiEvent/EditTransactionViewModel`、自定义汇率状态和借贷提示展示模型都改为模块内部可见。
 - 首页计划付款付/跳过事件已从传递完整 `LegacyTransaction` 收窄为传递交易 ID；旧交易对象仍只保留在列表展示状态和 ViewModel 内部执行边界。
 - 交易列表页计划付款付/跳过事件也已收窄为传递交易 ID；跳过全部弹窗只保存待确认的交易 ID 列表，ViewModel 在执行前从当前 due 状态解析旧交易对象。
 - 报表页计划付款付/跳过事件同样收窄为传递交易 ID，并删除未被 UI 触发的新模型计划交易事件分支及对应 use case 注入。

@@ -85,7 +85,7 @@ import javax.inject.Inject
 @Suppress("LargeClass")
 @Stable
 @HiltViewModel
-class EditTransactionViewModel @Inject constructor(
+internal class EditTransactionViewModel @Inject constructor(
     private val resourceProvider: ResourceProvider,
     private val toaster: Toaster,
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
