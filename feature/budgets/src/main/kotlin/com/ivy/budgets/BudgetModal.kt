@@ -26,10 +26,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.Category
 import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.legacy.ui.theme.style
 import com.ivy.data.model.Budget
 import com.ivy.ui.compose.selectEndTextFieldValue
 import com.ivy.ui.R
@@ -214,9 +214,10 @@ private fun CategoriesRow(
     Text(
         modifier = Modifier.padding(start = 32.dp),
         text = determineBudgetType(budgetCategoryIds.size),
-        style = LegacyTheme.typo.b1.style(
+        style = LegacyTheme.typo.b1.copy(
             fontWeight = FontWeight.Medium,
-            color = LegacyTheme.colors.pureInverse
+            color = LegacyTheme.colors.pureInverse,
+            textAlign = TextAlign.Start
         )
     )
 
@@ -298,9 +299,10 @@ private fun BudgetCategoryListItem(
         Text(
             modifier = Modifier.padding(vertical = 10.dp),
             text = text,
-            style = LegacyTheme.typo.b2.style(
+            style = LegacyTheme.typo.b2.copy(
                 color = textColor,
-                fontWeight = FontWeight.ExtraBold
+                fontWeight = FontWeight.ExtraBold,
+                textAlign = TextAlign.Start
             )
         )
 

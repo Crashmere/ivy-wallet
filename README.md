@@ -1415,6 +1415,7 @@ shared:ui:core
 - `feature:categories` 和 `feature:piechart` 已停止直接导入旧 `style` 文本样式扩展；分类列表、排序弹窗和饼图统计页的文本样式改用显式 `TextStyle.copy()`，继续保留原视觉行为。
 - `feature:transactions` 已停止直接导入旧 `style` 文本样式扩展；交易删除确认弹窗和交易统计头部文本改用显式 `TextStyle.copy()`，继续保留原视觉行为。
 - `feature:settings` 已停止直接导入旧 `style` 文本样式扩展；设置页标题、按钮说明、货币入口和每月起始日弹窗文本改用显式 `TextStyle.copy()`，继续保留原视觉行为。
+- `feature:budgets` 已停止直接导入旧 `style` 文本样式扩展；预算列表、预算电池、预算弹窗和名称输入文本改用显式 `TextStyle.copy()`，继续保留原视觉行为。
 - app 仍保留文件选择、文件分享、Material 日期选择器、BuildInfo、Locale 设置、生物识别和窗口安全等真正依赖 Activity 或 Android app 壳层的装配。
 
 ## 高风险区域

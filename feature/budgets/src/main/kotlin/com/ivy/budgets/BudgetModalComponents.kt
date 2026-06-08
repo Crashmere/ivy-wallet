@@ -29,13 +29,12 @@ import androidx.compose.ui.unit.dp
 import com.ivy.legacy.ui.button.IvyCircleButton
 import com.ivy.legacy.ui.modal.ModalAdd
 import com.ivy.legacy.ui.modal.ModalSave
-import com.ivy.ui.theme.colors.Gradient
 import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.ui.theme.colors.IvyFixedColors.White
-import com.ivy.legacy.ui.theme.style
 import com.ivy.ui.R
 import com.ivy.ui.compose.onCompositionStart
 import com.ivy.ui.platform.hideKeyboard
+import com.ivy.ui.theme.colors.Gradient
+import com.ivy.ui.theme.colors.IvyFixedColors.White
 
 @Composable
 internal fun BudgetModalAddSave(
@@ -100,7 +99,7 @@ internal fun BudgetNameInput(
             if (isEmpty && hint.isBlank().not()) {
                 androidx.compose.material3.Text(
                     text = hint,
-                    style = LegacyTheme.typo.b2.style(
+                    style = LegacyTheme.typo.b2.copy(
                         color = LegacyTheme.colors.gray,
                         fontWeight = FontWeight.SemiBold,
                         textAlign = TextAlign.Start
@@ -114,7 +113,7 @@ internal fun BudgetNameInput(
                     .focusRequester(nameFocus),
                 value = textFieldValue,
                 onValueChange = setTextFieldValue,
-                textStyle = LegacyTheme.typo.b1.style(
+                textStyle = LegacyTheme.typo.b1.copy(
                     color = LegacyTheme.colors.pureInverse,
                     fontWeight = FontWeight.ExtraBold,
                     textAlign = TextAlign.Start

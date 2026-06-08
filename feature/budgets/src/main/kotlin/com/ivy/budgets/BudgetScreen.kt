@@ -25,7 +25,6 @@ import androidx.compose.ui.unit.dp
 import com.ivy.budgets.model.DisplayBudget
 import com.ivy.ui.time.LocalTimeFormatter
 import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.legacy.ui.theme.style
 import com.ivy.ui.period.toDisplay
 import com.ivy.ui.compose.clickableNoIndication
 import com.ivy.data.model.currency.format
@@ -149,9 +148,10 @@ private fun BoxWithConstraintsScope.UI(
                 .padding(end = 24.dp)
                 .padding(vertical = 8.dp),
             text = item.budget.name,
-            style = LegacyTheme.typo.b1.style(
+            style = LegacyTheme.typo.b1.copy(
                 color = LegacyTheme.colors.pureInverse,
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Start
             )
         )
     }
@@ -187,9 +187,10 @@ private fun Toolbar(
         ) {
             Text(
                 text = stringResource(R.string.budgets),
-                style = LegacyTheme.typo.h2.style(
+                style = LegacyTheme.typo.h2.copy(
                     color = LegacyTheme.colors.pureInverse,
-                    fontWeight = FontWeight.ExtraBold
+                    fontWeight = FontWeight.ExtraBold,
+                    textAlign = TextAlign.Start
                 )
             )
 
@@ -198,9 +199,10 @@ private fun Toolbar(
 
                 Text(
                     text = timeRange.toDisplay(LocalTimeFormatter.current),
-                    style = LegacyTheme.typo.b2.style(
+                    style = LegacyTheme.typo.b2.copy(
                         color = LegacyTheme.colors.pureInverse,
-                        fontWeight = FontWeight.Medium
+                        fontWeight = FontWeight.Medium,
+                        textAlign = TextAlign.Start
                     )
                 )
             }
@@ -241,18 +243,20 @@ private fun Toolbar(
                     } else {
                         stringResource(R.string.budget_info, categoryBudgetText, appBudgetMaxText)
                     },
-                    style = LegacyTheme.typo.nC.style(
+                    style = LegacyTheme.typo.nC.copy(
                         color = LegacyTheme.colors.gray,
-                        fontWeight = FontWeight.ExtraBold
+                        fontWeight = FontWeight.ExtraBold,
+                        textAlign = TextAlign.Start
                     )
                 )
 
                 if (totalRemainingBudgetText != null) {
                     Text(
                         text = totalRemainingBudgetText,
-                        style = LegacyTheme.typo.nC.style(
+                        style = LegacyTheme.typo.nC.copy(
                             color = LegacyTheme.colors.gray,
-                            fontWeight = FontWeight.ExtraBold
+                            fontWeight = FontWeight.ExtraBold,
+                            textAlign = TextAlign.Start
                         )
                     )
                 }
@@ -292,9 +296,10 @@ private fun BudgetItem(
         ) {
             Text(
                 text = displayBudget.budget.name,
-                style = LegacyTheme.typo.b1.style(
+                style = LegacyTheme.typo.b1.copy(
                     color = LegacyTheme.colors.pureInverse,
-                    fontWeight = FontWeight.ExtraBold
+                    fontWeight = FontWeight.ExtraBold,
+                    textAlign = TextAlign.Start
                 )
             )
 
@@ -302,8 +307,10 @@ private fun BudgetItem(
 
             Text(
                 text = determineBudgetType(displayBudget.budget.parseCategoryIds().size),
-                style = LegacyTheme.typo.c.style(
-                    color = LegacyTheme.colors.gray
+                style = LegacyTheme.typo.c.copy(
+                    color = LegacyTheme.colors.gray,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Start
                 )
             )
         }
@@ -351,9 +358,10 @@ private fun NoBudgetsEmptyState(
 
         Text(
             text = emptyStateTitle,
-            style = LegacyTheme.typo.b1.style(
+            style = LegacyTheme.typo.b1.copy(
                 color = LegacyTheme.colors.gray,
-                fontWeight = FontWeight.ExtraBold
+                fontWeight = FontWeight.ExtraBold,
+                textAlign = TextAlign.Start
             )
         )
 
@@ -362,7 +370,7 @@ private fun NoBudgetsEmptyState(
         Text(
             modifier = Modifier.padding(horizontal = 32.dp),
             text = emptyStateText,
-            style = LegacyTheme.typo.b2.style(
+            style = LegacyTheme.typo.b2.copy(
                 color = LegacyTheme.colors.gray,
                 fontWeight = FontWeight.Medium,
                 textAlign = TextAlign.Center
