@@ -4,15 +4,15 @@ import com.ivy.data.model.TransactionType
 import com.ivy.data.model.legacy.LegacyTransaction
 import com.ivy.data.model.TransactionHistoryItem
 import com.ivy.data.api.AccountStore
+import com.ivy.data.model.Account
 import com.ivy.data.model.Category
 import com.ivy.data.model.CategoryId
 import com.ivy.data.model.FromToTimeRange
 import com.ivy.data.api.TransactionStore
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
+import com.ivy.domain.usecase.exchange.ExchangeAmountUseCase
 import com.ivy.domain.usecase.exchange.LegacyExchangeRatesUseCase
-import com.ivy.domain.usecase.exchange.sumInBaseCurrency
 import com.ivy.domain.mapper.legacy.toLegacyTransaction
-import com.ivy.domain.mapper.legacy.toLegacyAccount
 import com.ivy.domain.transaction.legacy.LegacyTransactionDateDividers
 import com.ivy.domain.transaction.legacy.filterOverdueLegacyTransactions
 import com.ivy.domain.transaction.legacy.filterUpcomingLegacyTransactions
@@ -23,6 +23,7 @@ import javax.inject.Inject
 class GetCategoryTransactionsSummaryUseCase @Inject internal constructor(
     private val accountStore: AccountStore,
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
+    private val exchangeAmountUseCase: ExchangeAmountUseCase,
     private val exchangeRatesUseCase: LegacyExchangeRatesUseCase,
     private val transactionStore: TransactionStore,
 ) {
@@ -79,7 +80,7 @@ class GetCategoryTransactionsSummaryUseCase @Inject internal constructor(
         transactions: List<LegacyTransaction>?
     ): Double {
         val baseCurrency = getBaseCurrencyCode()
-        val accounts = accountStore.findAll().map { it.toLegacyAccount() }
+        val accounts = accountStore.findAll()
 
         return historyByCategory(
             category = category,
@@ -87,8 +88,7 @@ class GetCategoryTransactionsSummaryUseCase @Inject internal constructor(
             accountFilterSet = accountFilterSet,
             transactions = transactions
         ).sumOf {
-            val amount = exchangeRatesUseCase.amountBaseCurrency(
-                transaction = it,
+            val amount = it.amountBaseCurrency(
                 baseCurrency = baseCurrency,
                 accounts = accounts
             )
@@ -212,13 +212,11 @@ class GetCategoryTransactionsSummaryUseCase @Inject internal constructor(
     }
 
     private suspend fun List<LegacyTransaction>.sumInBaseCurrency(accountFilterSet: Set<UUID>): Double {
+        val baseCurrency = getBaseCurrencyCode()
+        val accounts = accountStore.findAll()
         return filter {
             accountFilterSet.isEmpty() || accountFilterSet.contains(it.accountId)
-        }.sumInBaseCurrency(
-            exchangeRatesUseCase = exchangeRatesUseCase,
-            baseCurrency = getBaseCurrencyCode(),
-            accountStore = accountStore
-        )
+        }.sumOf { it.amountBaseCurrency(baseCurrency, accounts) }
     }
 
     private suspend fun List<LegacyTransaction>.incomeInBaseCurrency(): Double {
@@ -229,5 +227,18 @@ class GetCategoryTransactionsSummaryUseCase @Inject internal constructor(
     private suspend fun List<LegacyTransaction>.expensesInBaseCurrency(): Double {
         return filter { it.type == TransactionType.EXPENSE }
             .sumInBaseCurrency(emptySet())
+    }
+
+    private suspend fun LegacyTransaction.amountBaseCurrency(
+        baseCurrency: String,
+        accounts: List<Account>,
+    ): Double {
+        val amountCurrency = accounts.find { it.id.value == accountId }?.asset?.code
+            ?: return amount.toDouble()
+        return exchangeAmountUseCase(
+            amount = amount,
+            baseCurrency = baseCurrency,
+            fromCurrency = amountCurrency,
+        ).getOrNull()?.toDouble() ?: amount.toDouble()
     }
 }
