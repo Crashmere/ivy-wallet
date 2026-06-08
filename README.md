@@ -1345,6 +1345,7 @@ shared:ui:core
 - 编辑交易和计划付款编辑页的分类按钮和顶部工具栏已改为各自 feature 私有实现；`shared:ui:legacy` 删除只服务这两个编辑页的 `edit.core.Category` 和 `edit.core.Toolbar`。
 - 编辑交易和计划付款编辑页的标题输入和标题建议列表已改为各自 feature 私有实现；`shared:ui:legacy` 删除只服务这两个编辑页的 `edit.core.Title`，旧 `IvyTitleTextField` 暂留给 legacy 标签弹窗内部使用。
 - 编辑交易和计划付款编辑页的底部金额/账户面板已改为各自 feature 私有实现；`shared:ui:legacy` 删除最后一个 `edit.core.EditBottomSheet`，`legacy.ui.edit.core` 包不再承载编辑页业务 UI。
+- 删除 `shared:ui:legacy` 中已经没有调用方的旧描述输入框和旧日期时间行；描述输入和日期时间展示现在由对应 feature 私有实现承担。
 - app 仍保留文件选择、文件分享、Material 日期选择器、BuildInfo、Locale 设置、生物识别和窗口安全等真正依赖 Activity 或 Android app 壳层的装配。
 
 ## 高风险区域
