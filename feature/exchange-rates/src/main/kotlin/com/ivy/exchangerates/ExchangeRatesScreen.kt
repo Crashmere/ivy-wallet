@@ -32,7 +32,7 @@ import com.ivy.legacy.ui.theme.style
 import com.ivy.exchangerates.component.RateItem
 import com.ivy.exchangerates.model.RateUi
 import com.ivy.exchangerates.modal.AddRateModal
-import com.ivy.legacy.ui.component.SearchInput
+import com.ivy.legacy.ui.search.SearchInput
 import com.ivy.ui.compose.selectEndTextFieldValue
 import com.ivy.ui.navigation.navigation
 import com.ivy.legacy.ui.modal.edit.AmountModal

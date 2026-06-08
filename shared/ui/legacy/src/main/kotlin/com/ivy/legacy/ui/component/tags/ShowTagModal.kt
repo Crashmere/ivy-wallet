@@ -33,7 +33,7 @@ import com.ivy.legacy.ui.theme.Blue2Dark
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.legacy.ui.theme.style
 import com.ivy.ui.compose.thenIf
-import com.ivy.legacy.ui.component.SearchInput
+import com.ivy.legacy.ui.search.SearchInput
 import com.ivy.ui.compose.drawColoredShadow
 import com.ivy.ui.platform.hideKeyboard
 import com.ivy.ui.compose.onCompositionStart
