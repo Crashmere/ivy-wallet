@@ -13,6 +13,6 @@ class ObserveAccountChangesUseCase @Inject constructor(
     operator fun invoke(): Flow<Unit> {
         return dataChangePublisher.writeEvents
             .filterIsInstance<DataWriteEvent.AccountChange>()
-            .map { }
+            .map { Unit }
     }
 }

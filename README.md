@@ -1097,6 +1097,7 @@
 - UI core 的 Material3 色板实现继续收窄：`IvyColors` 与 `ColorShades` 只服务本模块主题实现，已改为 `internal`。
 - data-model 删除未使用的 `PositiveValue.round()` 扩展；金额值对象本身和现有格式化/计算入口保持不变。
 - 批量 legacy 计划付款付/跳过用例删除未使用的 `copy/map` 计算，并把局部命名从 `paidTransactions` 收敛为 `dueTransactions`；当前批量 UI 路径仍只执行跳过全部，行为不变。
+- data-core 的 Hilt 绑定模块、Room/Ktor/序列化 provider 模块和数据写入事件总线改为模块内部可见；domain 里的账户变更观察用例显式把事件流降维为 `Unit` 通知，语义不变。
 
 ### 阶段 10：最终依赖方向
 

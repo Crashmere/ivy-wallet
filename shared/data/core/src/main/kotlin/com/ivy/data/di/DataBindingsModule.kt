@@ -52,7 +52,7 @@ import dagger.hilt.components.SingletonComponent
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class DataBindingsModule {
+internal abstract class DataBindingsModule {
     @Binds
     abstract fun bindDataChangePublisher(eventBus: DataWriteEventBus): DataChangePublisher
 

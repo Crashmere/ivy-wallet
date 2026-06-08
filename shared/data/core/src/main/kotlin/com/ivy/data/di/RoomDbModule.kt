@@ -33,7 +33,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object RoomDbModule {
+internal object RoomDbModule {
 
     @Provides
     @Singleton
