@@ -1419,6 +1419,7 @@ shared:ui:core
 - `feature:home` 已停止直接导入旧 `style` 文本样式扩展；首页头部、更多菜单、缓冲金额条和客户旅程卡片文本改用显式 `TextStyle.copy()`，继续保留原视觉行为。
 - `feature:reports` 已停止直接导入旧 `style` 文本样式扩展；报表页、筛选浮层、关键词弹窗和报表复选行文本改用显式 `TextStyle.copy()`，继续保留原视觉行为。
 - `feature:import-data` 已停止直接导入旧 `style` 文本样式扩展；CSV 导入入口、手动映射、处理中、结果页和导入流程按钮文本改用显式 `TextStyle.copy()`，继续保留原视觉行为。
+- `feature:loans` 的借贷列表和借贷/还款记录弹窗已停止直接导入旧 `style` 文本样式扩展；详情页仍作为同模块下一步单独处理。
 - app 仍保留文件选择、文件分享、Material 日期选择器、BuildInfo、Locale 设置、生物识别和窗口安全等真正依赖 Activity 或 Android app 壳层的装配。
 
 ## 高风险区域

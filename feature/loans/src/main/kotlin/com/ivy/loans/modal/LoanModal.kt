@@ -62,7 +62,6 @@ import com.ivy.legacy.ui.modal.edit.AccountModal
 import com.ivy.legacy.ui.modal.edit.AmountModal
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.theme.colors.dynamicContrast
-import com.ivy.legacy.ui.theme.style
 import java.time.Instant
 import java.time.LocalDateTime
 import java.util.UUID
@@ -229,9 +228,10 @@ internal fun BoxWithConstraintsScope.LoanModal(
         Text(
             modifier = Modifier.padding(horizontal = 32.dp),
             text = stringResource(R.string.note),
-            style = LegacyTheme.typo.b2.style(
+            style = LegacyTheme.typo.b2.copy(
                 color = LegacyTheme.colors.pureInverse,
-                fontWeight = FontWeight.ExtraBold
+                fontWeight = FontWeight.ExtraBold,
+                textAlign = TextAlign.Start
             )
         )
 
@@ -251,9 +251,10 @@ internal fun BoxWithConstraintsScope.LoanModal(
         Text(
             modifier = Modifier.padding(horizontal = 32.dp),
             text = stringResource(R.string.associated_account),
-            style = LegacyTheme.typo.b2.style(
+            style = LegacyTheme.typo.b2.copy(
                 color = LegacyTheme.colors.pureInverse,
-                fontWeight = FontWeight.ExtraBold
+                fontWeight = FontWeight.ExtraBold,
+                textAlign = TextAlign.Start
             )
         )
 
@@ -382,9 +383,10 @@ private fun ColumnScope.LoanTypePicker(
     Text(
         modifier = Modifier.padding(horizontal = 32.dp),
         text = stringResource(R.string.loan_type),
-        style = LegacyTheme.typo.b2.style(
+        style = LegacyTheme.typo.b2.copy(
             color = LegacyTheme.colors.pureInverse,
-            fontWeight = FontWeight.ExtraBold
+            fontWeight = FontWeight.ExtraBold,
+            textAlign = TextAlign.Start
         )
     )
 
@@ -451,9 +453,10 @@ private fun ColumnScope.LoanColorPicker(
     Text(
         modifier = Modifier.padding(horizontal = 32.dp),
         text = stringResource(R.string.choose_color),
-        style = LegacyTheme.typo.b2.style(
+        style = LegacyTheme.typo.b2.copy(
             color = LegacyTheme.colors.pureInverse,
-            fontWeight = FontWeight.ExtraBold
+            fontWeight = FontWeight.ExtraBold,
+            textAlign = TextAlign.Start
         )
     )
 
@@ -532,7 +535,7 @@ private fun RowScope.SelectorButton(
             }
             .padding(vertical = 8.dp),
         text = label,
-        style = LegacyTheme.typo.b2.style(
+        style = LegacyTheme.typo.b2.copy(
             color = if (selected) White else LegacyTheme.colors.gray,
             fontWeight = FontWeight.ExtraBold,
             textAlign = TextAlign.Center

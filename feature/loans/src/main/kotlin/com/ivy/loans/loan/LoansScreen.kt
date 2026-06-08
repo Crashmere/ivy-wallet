@@ -31,7 +31,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ivy.ui.navigation.screenScopedViewModel
 import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.legacy.ui.theme.style
 import com.ivy.loans.humanReadableType
 import com.ivy.data.model.currency.getDefaultFIATCurrency
 import com.ivy.ui.compose.horizontalSwipeListener
@@ -171,9 +170,10 @@ private fun BoxWithConstraintsScope.UI(
                 .padding(end = 24.dp)
                 .padding(vertical = 8.dp),
             text = item.loan.name,
-            style = LegacyTheme.typo.b1.style(
+            style = LegacyTheme.typo.b1.copy(
                 color = LegacyTheme.colors.pureInverse,
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Start
             )
         )
     }
@@ -221,9 +221,10 @@ private fun Toolbar(
         ) {
             Text(
                 text = stringResource(R.string.loans),
-                style = LegacyTheme.typo.h2.style(
+                style = LegacyTheme.typo.h2.copy(
                     color = LegacyTheme.colors.pureInverse,
-                    fontWeight = FontWeight.ExtraBold
+                    fontWeight = FontWeight.ExtraBold,
+                    textAlign = TextAlign.Start
                 )
             )
             if (totalOweAmount.isNotEmpty()) {
@@ -326,17 +327,20 @@ private fun LoanHeader(
 
             Text(
                 text = loan.name,
-                style = LegacyTheme.typo.b1.style(
+                style = LegacyTheme.typo.b1.copy(
                     color = contrastColor,
-                    fontWeight = FontWeight.ExtraBold
+                    fontWeight = FontWeight.ExtraBold,
+                    textAlign = TextAlign.Start
                 )
             )
             Spacer(Modifier.width(8.dp))
 
             Text(
                 text = loan.humanReadableType(),
-                style = LegacyTheme.typo.c.style(
-                    color = loan.color.toComposeColor().dynamicContrast()
+                style = LegacyTheme.typo.c.copy(
+                    color = loan.color.toComposeColor().dynamicContrast(),
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Start
                 )
             )
         }
@@ -370,7 +374,8 @@ private fun ColumnScope.LoanInfo(
             .fillMaxWidth()
             .padding(horizontal = 24.dp),
         text = displayLoan.formattedDisplayText,
-        style = LegacyTheme.typo.nB2.style(
+        style = LegacyTheme.typo.nB2.copy(
+            color = LegacyTheme.colors.pureInverse,
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center
         )
@@ -409,9 +414,10 @@ private fun NoLoansEmptyState(
 
         Text(
             text = emptyStateTitle,
-            style = LegacyTheme.typo.b1.style(
+            style = LegacyTheme.typo.b1.copy(
                 color = LegacyTheme.colors.gray,
-                fontWeight = FontWeight.ExtraBold
+                fontWeight = FontWeight.ExtraBold,
+                textAlign = TextAlign.Start
             )
         )
 
@@ -420,7 +426,7 @@ private fun NoLoansEmptyState(
         Text(
             modifier = Modifier.padding(horizontal = 32.dp),
             text = emptyStateText,
-            style = LegacyTheme.typo.b2.style(
+            style = LegacyTheme.typo.b2.copy(
                 color = LegacyTheme.colors.gray,
                 fontWeight = FontWeight.Medium,
                 textAlign = TextAlign.Center

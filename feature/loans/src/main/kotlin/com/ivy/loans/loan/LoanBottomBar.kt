@@ -22,10 +22,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.layout
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.legacy.ui.theme.style
 import com.ivy.ui.compose.navigationBarInset
 import com.ivy.ui.compose.toDensityPx
 import com.ivy.ui.R
@@ -131,9 +131,10 @@ private fun RowScope.Tab(
 
             Text(
                 text = name,
-                style = LegacyTheme.typo.c.style(
+                style = LegacyTheme.typo.c.copy(
                     fontWeight = FontWeight.Bold,
-                    color = selectedColor
+                    color = selectedColor,
+                    textAlign = TextAlign.Start
                 )
             )
         }

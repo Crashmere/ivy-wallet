@@ -43,7 +43,6 @@ import com.ivy.ui.theme.colors.Gradient
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.theme.colors.IvyFixedColors.White
 import com.ivy.ui.theme.colors.dynamicContrast
-import com.ivy.legacy.ui.theme.style
 import com.ivy.ui.R
 import com.ivy.ui.compose.onCompositionStart
 import com.ivy.ui.platform.hideKeyboard
@@ -153,7 +152,7 @@ internal fun LoanIconNameRow(
                 if (nameTextFieldValue.text.isBlank()) {
                     Text(
                         text = hint,
-                        style = LegacyTheme.typo.b2.style(
+                        style = LegacyTheme.typo.b2.copy(
                             color = LegacyTheme.colors.gray,
                             fontWeight = FontWeight.SemiBold,
                             textAlign = TextAlign.Start
@@ -167,7 +166,7 @@ internal fun LoanIconNameRow(
                         .focusRequester(nameFocus),
                     value = nameTextFieldValue,
                     onValueChange = setNameTextFieldValue,
-                    textStyle = LegacyTheme.typo.b1.style(
+                    textStyle = LegacyTheme.typo.b1.copy(
                         color = LegacyTheme.colors.pureInverse,
                         fontWeight = FontWeight.ExtraBold,
                         textAlign = TextAlign.Start
@@ -225,7 +224,7 @@ internal fun LoanModalNameInput(
         if (textFieldValue.text.isBlank()) {
             Text(
                 text = hint,
-                style = LegacyTheme.typo.b2.style(
+                style = LegacyTheme.typo.b2.copy(
                     color = LegacyTheme.colors.gray,
                     fontWeight = FontWeight.SemiBold,
                     textAlign = TextAlign.Start
@@ -239,7 +238,7 @@ internal fun LoanModalNameInput(
                 .focusRequester(nameFocus),
             value = textFieldValue,
             onValueChange = setTextFieldValue,
-            textStyle = LegacyTheme.typo.b1.style(
+            textStyle = LegacyTheme.typo.b1.copy(
                 color = LegacyTheme.colors.pureInverse,
                 fontWeight = FontWeight.ExtraBold,
                 textAlign = TextAlign.Start
