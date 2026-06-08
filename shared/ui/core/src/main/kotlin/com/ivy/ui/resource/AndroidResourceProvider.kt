@@ -1,14 +1,10 @@
-package com.ivy.wallet.platform
+package com.ivy.ui.resource
 
 import android.content.Context
 import androidx.annotation.StringRes
-import com.ivy.ui.resource.ResourceProvider
-import dagger.hilt.android.qualifiers.ApplicationContext
-import javax.inject.Inject
 
 @Suppress("UnnecessaryPassThroughClass")
-internal class AndroidResourceProvider @Inject constructor(
-    @ApplicationContext
+internal class AndroidResourceProvider(
     private val context: Context,
 ) : ResourceProvider {
     override fun getString(@StringRes resId: Int): String = context.getString(resId)

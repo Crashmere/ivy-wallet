@@ -1,12 +1,10 @@
 package com.ivy.wallet.di
 
-import com.ivy.ui.resource.ResourceProvider
 import com.ivy.domain.usecase.reset.ResetWalletDataUseCase
 import com.ivy.ui.platform.DatePicker
 import com.ivy.ui.platform.FilePicker
 import com.ivy.ui.platform.LocaleSettingsLauncher
 import com.ivy.wallet.platform.AndroidLocaleSettingsLauncher
-import com.ivy.wallet.platform.AndroidResourceProvider
 import com.ivy.wallet.reset.AppResetWalletDataUseCase
 import com.ivy.wallet.platform.ActivityDatePicker
 import com.ivy.wallet.platform.ActivityResultFilePicker
@@ -38,8 +36,4 @@ internal abstract class AppBindingsModule {
         localeSettingsLauncher: AndroidLocaleSettingsLauncher
     ): LocaleSettingsLauncher
 
-    @Binds
-    abstract fun resourceProvider(
-        resourceProvider: AndroidResourceProvider
-    ): ResourceProvider
 }

@@ -3,6 +3,7 @@ package com.ivy.ui.di
 import android.content.Context
 import com.ivy.ui.period.PeriodState
 import com.ivy.ui.platform.Toaster
+import com.ivy.ui.resource.AndroidResourceProvider
 import com.ivy.ui.resource.ResourceProvider
 import com.ivy.ui.theme.ThemeState
 import com.ivy.ui.time.DateTimePicker
@@ -46,6 +47,11 @@ internal object UiCoreModule {
     fun timeConverter(timeProvider: TimeProvider): TimeConverter {
         return StandardTimeConverter(timeProvider)
     }
+
+    @Provides
+    fun resourceProvider(
+        @ApplicationContext context: Context
+    ): ResourceProvider = AndroidResourceProvider(context)
 
     @Provides
     fun timeFormatter(
