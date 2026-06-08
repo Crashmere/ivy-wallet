@@ -17,8 +17,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
-import com.ivy.legacy.ui.theme.Gray
-import com.ivy.legacy.ui.theme.Green
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.animation.springBounce
 
@@ -29,7 +27,7 @@ internal fun SettingsSwitch(
     onEnabledChange: (checked: Boolean) -> Unit
 ) {
     val color by animateColorAsState(
-        targetValue = if (enabled) Green else Gray,
+        targetValue = if (enabled) LegacyTheme.colors.green else LegacyTheme.colors.gray,
         animationSpec = springBounce()
     )
 
