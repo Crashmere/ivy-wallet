@@ -9,7 +9,6 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
 import com.ivy.data.model.Account
 import com.ivy.data.model.Theme
-import com.ivy.data.model.legacy.LegacyTransaction
 import com.ivy.data.model.TransactionHistoryItem
 import com.ivy.data.model.primitive.AssetCode
 import com.ivy.domain.preferences.toggles.PreferenceToggleService
@@ -40,8 +39,8 @@ import com.ivy.ui.preferences.asEnabledState
 import com.ivy.domain.usecase.account.GetAccountsUseCase
 import com.ivy.domain.usecase.home.GetOverdueTransactionsInfoUseCase
 import com.ivy.domain.usecase.home.GetUpcomingTransactionsInfoUseCase
-import com.ivy.domain.usecase.planned.PayOrSkipLegacyPlannedTransactionUseCase
-import com.ivy.domain.usecase.planned.PayOrSkipLegacyPlannedTransactionsUseCase
+import com.ivy.domain.usecase.planned.PayOrSkipPlannedTransactionByIdUseCase
+import com.ivy.domain.usecase.planned.PayOrSkipPlannedTransactionsByIdsUseCase
 import com.ivy.domain.usecase.transaction.GetTransactionHistoryItemsUseCase
 import com.ivy.data.model.ClosedTimeRange
 import com.ivy.data.model.IncomeExpensePair
@@ -65,8 +64,8 @@ import javax.inject.Inject
 @HiltViewModel
 internal class HomeViewModel @Inject internal constructor(
     private val themeState: ThemeState,
-    private val payOrSkipLegacyPlannedTransactionUseCase: PayOrSkipLegacyPlannedTransactionUseCase,
-    private val payOrSkipLegacyPlannedTransactionsUseCase: PayOrSkipLegacyPlannedTransactionsUseCase,
+    private val payOrSkipPlannedTransactionByIdUseCase: PayOrSkipPlannedTransactionByIdUseCase,
+    private val payOrSkipPlannedTransactionsByIdsUseCase: PayOrSkipPlannedTransactionsByIdsUseCase,
     private val customerJourneyCardsProvider: CustomerJourneyCardsProvider,
     private val getTransactionHistoryItemsUseCase: GetTransactionHistoryItemsUseCase,
     private val calculateWalletIncomeExpenseUseCase: CalculateWalletIncomeExpenseUseCase,
@@ -487,51 +486,33 @@ internal class HomeViewModel @Inject internal constructor(
     }
 
     private suspend fun payOrGetPlanned(transactionId: UUID) {
-        val transaction = findDueTransaction(transactionId) ?: return
-        val paidTransaction = payOrSkipLegacyPlannedTransactionUseCase(
-            transaction = transaction,
+        val paidTransaction = payOrSkipPlannedTransactionByIdUseCase(
+            transactionId = transactionId,
             skipTransaction = false
         )
-        if (paidTransaction != null) {
+        if (paidTransaction) {
             reload()
         }
     }
 
     private suspend fun skipPlanned(transactionId: UUID) {
-        val transaction = findDueTransaction(transactionId) ?: return
-        val paidTransaction = payOrSkipLegacyPlannedTransactionUseCase(
-            transaction = transaction,
+        val paidTransaction = payOrSkipPlannedTransactionByIdUseCase(
+            transactionId = transactionId,
             skipTransaction = true
         )
-        if (paidTransaction != null) {
+        if (paidTransaction) {
             reload()
         }
     }
 
     private suspend fun skipAllPlanned(transactionIds: List<UUID>) {
-        val transactions = findDueTransactions(transactionIds)
-        if (transactions.isEmpty()) return
-
-        val paidTransactions = payOrSkipLegacyPlannedTransactionsUseCase(
-            transactions = transactions,
+        val paidTransactions = payOrSkipPlannedTransactionsByIdsUseCase(
+            transactionIds = transactionIds,
             skipTransaction = true
         )
-        if (paidTransactions.isNotEmpty()) {
+        if (paidTransactions > 0) {
             reload()
         }
-    }
-
-    private fun findDueTransaction(transactionId: UUID): LegacyTransaction? {
-        return upcoming.transactions
-            .plus(overdue.transactions)
-            .firstOrNull { it.id == transactionId }
-    }
-
-    private fun findDueTransactions(transactionIds: List<UUID>): List<LegacyTransaction> {
-        val transactionIdSet = transactionIds.toSet()
-        return upcoming.transactions
-            .plus(overdue.transactions)
-            .filter { it.id in transactionIdSet }
     }
 
     private suspend fun dismissCustomerJourneyCard(card: CustomerJourneyCardModel) {
