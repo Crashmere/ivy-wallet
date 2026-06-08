@@ -1540,6 +1540,7 @@ shared:ui:core
 - 旧弹窗底部按钮继续收窄：绿色确认按钮、红色删除图标按钮和跳过按钮已迁入 `shared:ui:core` 的 `com.ivy.ui.modal`；账户和分类编辑弹窗直接使用 core 的新增/保存按钮，`shared:ui:legacy` 删除旧按钮组合包装文件。
 - 固定红色和红色渐变开始迁入 `shared:ui:core` 的 `IvyFixedColors` / `IvyGradients`；标签编辑弹窗的删除按钮和金额键盘退格图标不再依赖 legacy 主题色板。
 - 旧编辑弹窗固定色继续迁出：账户/分类默认紫色和计算器灰/红色改用 `shared:ui:core` 的 `IvyFixedColors`；`legacy.ui.modal.edit` 不再直接导入 legacy 固定色板。
+- 旧交易列表固定色继续迁出：空状态、到期/逾期标题、交易类型金额行和历史日期分隔条改用 `shared:ui:core` 的固定色与固定渐变；`legacy.ui.transaction` 不再直接导入 legacy 主题固定色板。
 - 币种选择弹窗和内部币种选择器已迁入 `shared:ui:core`，`CurrencyModal` / `CurrencyPicker` 继续保留原搜索、加密货币分组、预选/选中卡片、键盘避让和保存行为；设置、首页、借贷和账户弹窗改用 core 入口。
 - 图标选择弹窗已迁入 `shared:ui:core`，`ChooseIconModal` 继续保留原图标清单、分区、选中边框、动态对比色和保存行为；借贷、账户和分类编辑弹窗改用 core 入口。
 - 周期选择弹窗和内部间隔选择行已迁入 `shared:ui:core`，`ChoosePeriodModal` / `IntervalPickerRow` 继续保留原月份横向列表、自定义起止日期、最近 N 天/周/月/年、全时间范围、键盘避让和保存行为；首页、余额、交易、报表和饼图统计页改用 core 入口。

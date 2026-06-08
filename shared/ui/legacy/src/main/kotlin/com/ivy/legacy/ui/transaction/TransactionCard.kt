@@ -43,23 +43,11 @@ import com.ivy.data.model.getFromValue
 import com.ivy.ui.time.LocalTimeConverter
 import com.ivy.ui.time.LocalTimeFormatter
 import com.ivy.ui.time.LocalTimeProvider
-import com.ivy.legacy.ui.theme.BlueLight
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.data.model.currency.format
 import com.ivy.ui.R
 import com.ivy.ui.time.TimeFormatter
 import com.ivy.data.model.currency.IvyCurrency
-import com.ivy.legacy.ui.theme.Gradient
-import com.ivy.legacy.ui.theme.GradientGreen
-import com.ivy.legacy.ui.theme.GradientIvy
-import com.ivy.legacy.ui.theme.GradientOrangeRevert
-import com.ivy.legacy.ui.theme.GradientRed
-import com.ivy.legacy.ui.theme.Gray
-import com.ivy.legacy.ui.theme.Green
-import com.ivy.legacy.ui.theme.Ivy
-import com.ivy.legacy.ui.theme.Orange
-import com.ivy.legacy.ui.theme.Red
-import com.ivy.legacy.ui.theme.White
 import com.ivy.ui.icon.ItemIconSDefaultIcon
 import com.ivy.legacy.ui.theme.findContrastTextColor
 import com.ivy.legacy.ui.theme.gradientBlack
@@ -68,6 +56,18 @@ import com.ivy.legacy.ui.theme.toComposeColor
 import com.ivy.ui.money.AmountCurrencyB1
 import com.ivy.ui.compose.GradientButton
 import com.ivy.ui.compose.ResourceIcon
+import com.ivy.ui.theme.colors.Gradient
+import com.ivy.ui.theme.colors.IvyFixedColors.BlueLight
+import com.ivy.ui.theme.colors.IvyFixedColors.Gray
+import com.ivy.ui.theme.colors.IvyFixedColors.Green
+import com.ivy.ui.theme.colors.IvyFixedColors.Ivy
+import com.ivy.ui.theme.colors.IvyFixedColors.Orange
+import com.ivy.ui.theme.colors.IvyFixedColors.Red
+import com.ivy.ui.theme.colors.IvyFixedColors.White
+import com.ivy.ui.theme.colors.IvyGradients.Green as GradientGreen
+import com.ivy.ui.theme.colors.IvyGradients.Ivy as GradientIvy
+import com.ivy.ui.theme.colors.IvyGradients.OrangeRevert as GradientOrangeRevert
+import com.ivy.ui.theme.colors.IvyGradients.Red as GradientRed
 import java.math.BigDecimal
 import java.time.Instant
 import java.time.LocalDateTime

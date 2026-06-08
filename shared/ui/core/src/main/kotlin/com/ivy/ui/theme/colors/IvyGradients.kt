@@ -20,4 +20,5 @@ object IvyGradients {
     val Green = Gradient(Color(0xFF14CC9E), Color(0xFF49F2C8))
     val Red = Gradient(IvyFixedColors.Red, Color(0xFFFF99AB))
     val Ivy = Gradient(IvyFixedColors.Ivy, Color(0xFFAA99FF))
+    val OrangeRevert = Gradient(Color(0xFFF2CD9E), IvyFixedColors.Orange)
 }

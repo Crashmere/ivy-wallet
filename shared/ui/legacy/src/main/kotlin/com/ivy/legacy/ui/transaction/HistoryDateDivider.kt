@@ -16,12 +16,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.currency.format
-import com.ivy.legacy.ui.theme.Gray
-import com.ivy.legacy.ui.theme.Green
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.R
 import com.ivy.ui.time.formatLocal
 import com.ivy.ui.time.LocalTimeProvider
+import com.ivy.ui.theme.colors.IvyFixedColors.Gray
+import com.ivy.ui.theme.colors.IvyFixedColors.Green
 import java.time.LocalDate
 
 @Composable

@@ -24,14 +24,14 @@ import com.ivy.data.model.TransactionHistoryTransaction
 import com.ivy.data.model.Transaction
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.R
-import com.ivy.legacy.ui.theme.Black
-import com.ivy.legacy.ui.theme.Gradient
-import com.ivy.legacy.ui.theme.Gray
-import com.ivy.legacy.ui.theme.Orange
-import com.ivy.legacy.ui.theme.Red
-import com.ivy.legacy.ui.theme.White
 import com.ivy.ui.compose.GradientButton
 import com.ivy.ui.compose.ResourceIcon
+import com.ivy.ui.theme.colors.Gradient
+import com.ivy.ui.theme.colors.IvyFixedColors.Black
+import com.ivy.ui.theme.colors.IvyFixedColors.Gray
+import com.ivy.ui.theme.colors.IvyFixedColors.Orange
+import com.ivy.ui.theme.colors.IvyFixedColors.Red
+import com.ivy.ui.theme.colors.IvyFixedColors.White
 import java.util.UUID
 
 fun LazyListScope.transactions(
