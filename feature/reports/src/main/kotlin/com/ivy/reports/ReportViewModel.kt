@@ -95,7 +95,7 @@ internal class ReportViewModel @Inject internal constructor(
     private val preferenceToggleService: PreferenceToggleService,
     private val filePicker: FilePicker
 ) : ComposeViewModel<ReportScreenState, ReportScreenEvent>() {
-    private val unSpecifiedCategory =
+    private val unspecifiedCategory =
         Category(
             name = NotBlankTrimmedString.unsafe(resourceProvider.getString(R.string.unspecified)),
             color = ColorInt(UnspecifiedCategoryColorArgb),
@@ -235,7 +235,7 @@ internal class ReportViewModel @Inject internal constructor(
             baseCurrency = getBaseCurrencyCode()
             accounts = getLegacyAccountsUseCase()
             categories =
-                (listOf(unSpecifiedCategory) + getCategoriesUseCase()).toImmutableList()
+                (listOf(unspecifiedCategory) + getCategoriesUseCase()).toImmutableList()
             allTags = getTagsUseCase().toImmutableList()
         }
     }
@@ -383,7 +383,7 @@ internal class ReportViewModel @Inject internal constructor(
     ): ImmutableList<Transaction> {
         val filterAccountIds = filter.accountIds.toSet()
         val filterCategoryIds = filter.categoryIds
-            .map { it.takeUnless { categoryId -> categoryId == unSpecifiedCategory.id } }
+            .map { it.takeUnless { categoryId -> categoryId == unspecifiedCategory.id } }
             .toSet()
         val filterRange =
             filter.period?.let(periodState::rangeOf)

@@ -95,7 +95,7 @@ internal class LoanDetailsViewModel @Inject internal constructor(
     private val loanRecordModalData = mutableStateOf<LoanRecordModalData?>(null)
     private val waitModalVisible = mutableStateOf(false)
     private val isDeleteModalVisible = mutableStateOf(false)
-    private var dateTime = mutableStateOf<Instant>(nowUtc())
+    private val dateTime = mutableStateOf<Instant>(nowUtc())
     private val _uiEvents = MutableSharedFlow<LoanDetailsUiEvent>()
     val uiEvents: SharedFlow<LoanDetailsUiEvent> = _uiEvents.asSharedFlow()
 
