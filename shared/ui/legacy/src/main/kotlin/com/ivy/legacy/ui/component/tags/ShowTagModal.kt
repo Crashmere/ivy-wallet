@@ -63,7 +63,6 @@ fun BoxWithConstraintsScope.ShowTagModal(
     onTagDelete: (Tag) -> Unit,
     onTagSelected: (Tag) -> Unit,
     onTagDeSelected: (Tag) -> Unit,
-    @Suppress("UNUSED_PARAMETER") modifier: Modifier = Modifier,
     id: UUID = UUID.randomUUID(),
     visible: Boolean = false,
     selectOnlyMode: Boolean = false,

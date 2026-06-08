@@ -17,16 +17,14 @@ import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.legacy.ui.theme.style
 import com.ivy.ui.compose.clickableNoIndication
 import com.ivy.ui.compose.rememberInteractionSource
-import com.ivy.legacy.ui.component.BalanceRow
 import com.ivy.legacy.ui.component.IvyDividerLine
+import com.ivy.legacy.ui.component.BalanceRow
 
-@Suppress("UnusedParameter")
 @Composable
 fun ModalAmountSection(
     label: String,
     currency: String,
     amount: Double,
-    modifier: Modifier = Modifier,
     Header: (@Composable () -> Unit)? = null,
     amountPaddingTop: Dp = 48.dp,
     amountPaddingBottom: Dp = 48.dp,

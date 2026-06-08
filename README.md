@@ -72,6 +72,7 @@
 - 继续收窄旧主题 system 包：旧 UI 组件不再直接导入 `theme.system` 颜色/工具，外层旧色板补齐仍需公开的颜色和 `asBrush()`；底层 `Colors.kt` 删除重复的 gradient/对比度工具，只保留主题默认值需要的颜色常量。
 - 收窄标签弹窗公开面：`AddOrEditTagModal` 改为 `shared:ui:legacy` 内部实现，feature 层继续只通过 `ShowTagModal` 和 `AddTagButton` 访问标签 UI。
 - 收窄 data-core 内部远程源：删除只有单实现且只被 `DefaultExchangeRateStore` 使用的 `RemoteExchangeRatesDataSource` 接口；domain 仍只依赖 `ExchangeRateStore`，汇率同步行为不变。
+- 清理旧 UI 无效参数：删除 `ShowTagModal` 和 `ModalAmountSection` 中未使用的 `modifier` 参数及对应 suppress，调用方和展示行为不变。
 
 当前仍保留：
 
