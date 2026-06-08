@@ -30,7 +30,7 @@ import com.ivy.home.Constants.SWIPE_HORIZONTAL_THRESHOLD
 import com.ivy.home.customerjourney.CustomerJourney
 import com.ivy.home.customerjourney.CustomerJourneyCardModel
 import com.ivy.ui.transaction.AppBaseData
-import com.ivy.ui.transaction.LegacyDueSection
+import com.ivy.legacy.ui.component.transaction.LegacyDueSection
 import com.ivy.ui.period.Month
 import com.ivy.ui.period.TimePeriod
 import com.ivy.ui.period.displayLong

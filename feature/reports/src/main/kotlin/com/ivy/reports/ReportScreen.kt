@@ -27,7 +27,7 @@ import com.ivy.data.model.TransactionType
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
 import com.ivy.ui.transaction.AppBaseData
-import com.ivy.ui.transaction.LegacyDueSection
+import com.ivy.legacy.ui.component.transaction.LegacyDueSection
 import com.ivy.legacy.ui.component.IncomeExpensesCards
 import com.ivy.legacy.ui.component.transaction.TransactionsDividerLine
 import com.ivy.legacy.ui.component.transaction.transactions

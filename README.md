@@ -22,6 +22,7 @@
 - 开始拆分 `RootActivity` 平台能力：文件创建/打开、Material 日期选择器、生物识别弹窗和 CSV/zip 分享已经移入 `app` 的 platform 边界；`RootScreen` 大接口已删除，feature 改为依赖更窄的 UI platform 接口。
 - 继续清理历史包名：旧 Room migration 和 type converter 已从 `com.ivy.domain.db` 归位到 `com.ivy.data.db`，旧 UI 组件中误挂到 domain 包名下的 `ListItem/IvyColorPicker` 已归位到 `com.ivy.legacy.ui.component`。
 - 清理非业务路径上的旧调试输出：预算 ID 解析、币种代码解析、键盘可见性判断、金额输入确认和 CSV 初次解析失败不再打印堆栈，继续按原有空值/无操作策略处理。
+- 收窄 UI core 职责：旧交易列表专用的 `LegacyDueSection` 已从 `shared:ui:core` 迁回 `shared:ui:legacy` 的交易组件包。
 
 当前仍保留：
 

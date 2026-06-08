@@ -33,7 +33,7 @@ import com.ivy.home.customerjourney.CustomerJourneyCardsProvider
 import com.ivy.ui.theme.ThemeState
 import com.ivy.ui.period.PeriodState
 import com.ivy.ui.transaction.AppBaseData
-import com.ivy.ui.transaction.LegacyDueSection
+import com.ivy.legacy.ui.component.transaction.LegacyDueSection
 import com.ivy.ui.period.TimePeriod
 import com.ivy.data.model.toUTCCloseTimeRange
 import com.ivy.data.model.legacy.LegacyAccount
