@@ -257,6 +257,7 @@ private fun BoxWithConstraintsScope.UI(
     }
     val titleFocus = FocusRequester()
     val scrollState = rememberScrollState()
+    val nav = navigation()
 
     // This is to scroll the column to the customExchangeCard composable when it is shown
     var customExchangeRatePosition by remember { mutableFloatStateOf(0F) }
@@ -280,6 +281,9 @@ private fun BoxWithConstraintsScope.UI(
             // with loan record to hide the ChangeTransactionType Button
             type = if (loanData.isLoanRecord) TransactionType.TRANSFER else transactionType,
             initialTransactionId = screen.initialTransactionId,
+            onClose = {
+                nav.back()
+            },
             onDeleteTransactionModal = {
                 deleteTransactionModalVisible = true
             },
@@ -393,7 +397,6 @@ private fun BoxWithConstraintsScope.UI(
         if (dueDate == null && transactionType != TransactionType.TRANSFER && dateTime == null) {
             Spacer(Modifier.height(12.dp))
 
-            val nav = navigation()
             AddPrimaryAttributeButton(
                 icon = R.drawable.ic_planned_payments,
                 text = stringResource(R.string.add_planned_date_payment),

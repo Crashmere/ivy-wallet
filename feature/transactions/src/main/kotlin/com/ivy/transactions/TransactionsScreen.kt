@@ -629,6 +629,7 @@ private fun Header(
     treatTransfersAsIncomeExpense: Boolean = false,
 ) {
     val contrastColor = findContrastTextColor(itemColor)
+    val nav = navigation()
 
     val darkColor = isDarkColor(itemColor)
     setStatusBarDarkTextCompat(darkText = !darkColor)
@@ -643,6 +644,9 @@ private fun Header(
 
         ItemStatisticToolbar(
             contrastColor = contrastColor,
+            onClose = {
+                nav.back()
+            },
             onEdit = onEdit,
             onDelete = onDelete,
             showEditButton = hideEditAndDeleteButtonForAccountTransfer,

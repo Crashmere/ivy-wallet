@@ -30,6 +30,7 @@ import com.ivy.ui.platform.LocalDatePicker
 import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.ui.navigation.onScreenStart
 import com.ivy.ui.navigation.EditPlannedScreen
+import com.ivy.ui.navigation.navigation
 import com.ivy.ui.navigation.screenScopedViewModel
 import com.ivy.ui.R
 import com.ivy.legacy.ui.edit.core.Category
@@ -80,6 +81,7 @@ private fun BoxWithConstraintsScope.UI(
     state: EditPlannedScreenState,
     onEvent: (EditPlannedScreenEvent) -> Unit,
 ) {
+    val nav = navigation()
     var titleTextFieldValue by remember(state.initialTitle) {
         mutableStateOf(
             TextFieldValue(
@@ -101,6 +103,9 @@ private fun BoxWithConstraintsScope.UI(
         Toolbar(
             type = state.transactionType,
             initialTransactionId = screen.plannedPaymentRuleId,
+            onClose = {
+                nav.back()
+            },
             onDeleteTransactionModal = {
                 onEvent(EditPlannedScreenEvent.OnDeleteTransactionModalVisible(true))
             },

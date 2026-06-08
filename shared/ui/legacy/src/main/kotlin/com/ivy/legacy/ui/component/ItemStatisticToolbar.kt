@@ -11,7 +11,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.ivy.ui.navigation.navigation
 import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.Transparent
 import com.ivy.legacy.ui.component.CircleButton
@@ -22,6 +21,7 @@ import com.ivy.legacy.ui.component.IvyOutlinedButton
 @Composable
 fun ItemStatisticToolbar(
     contrastColor: Color,
+    onClose: () -> Unit,
     onEdit: () -> Unit,
     showEditButton: Boolean = true,
     showDeleteButton: Boolean = true,
@@ -32,7 +32,6 @@ fun ItemStatisticToolbar(
     ) {
         Spacer(Modifier.width(24.dp))
 
-        val nav = navigation()
         CircleButton(
             modifier = Modifier.testTag("toolbar_close"),
             icon = R.drawable.ic_dismiss,
@@ -40,7 +39,7 @@ fun ItemStatisticToolbar(
             tint = contrastColor,
             backgroundColor = Transparent
         ) {
-            nav.back()
+            onClose()
         }
 
         Spacer(Modifier.weight(1f))

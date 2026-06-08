@@ -22,7 +22,6 @@ import androidx.compose.ui.unit.dp
 import com.ivy.data.model.TransactionType
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.asBrush
-import com.ivy.ui.navigation.navigation
 import com.ivy.ui.R
 import com.ivy.legacy.ui.component.CloseButton
 import com.ivy.legacy.ui.component.DeleteButton
@@ -34,6 +33,7 @@ fun Toolbar(
     type: TransactionType,
     initialTransactionId: UUID?,
 
+    onClose: () -> Unit,
     onDeleteTransactionModal: () -> Unit,
     onChangeTransactionTypeModal: () -> Unit,
 
@@ -45,9 +45,8 @@ fun Toolbar(
     ) {
         Spacer(Modifier.width(24.dp))
 
-        val nav = navigation()
         CloseButton {
-            nav.back()
+            onClose()
         }
 
         Spacer(Modifier.weight(1f))
