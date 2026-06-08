@@ -22,6 +22,8 @@ internal data class TransactionsState(
     val balanceBaseCurrency: Double?,
     val income: Double,
     val expenses: Double,
+    val incomeTransactionCount: Int,
+    val expenseTransactionCount: Int,
     val initWithTransactions: Boolean,
     val treatTransfersAsIncomeExpense: Boolean,
     val history: ImmutableList<TransactionHistoryItem>,

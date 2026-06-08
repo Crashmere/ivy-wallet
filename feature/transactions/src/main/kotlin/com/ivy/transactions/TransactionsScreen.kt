@@ -37,7 +37,6 @@ import com.ivy.data.model.Theme
 import com.ivy.data.model.TransactionHistoryItem
 import com.ivy.data.model.TransactionType
 import com.ivy.data.model.Category
-import com.ivy.data.model.legacy.LegacyTransaction
 import com.ivy.ui.platform.LocalDatePicker
 import com.ivy.ui.theme.LocalThemeState
 import com.ivy.legacy.ui.theme.LegacyTheme
@@ -136,6 +135,8 @@ fun BoxWithConstraintsScope.TransactionsScreen(screen: TransactionsScreen) {
         balanceBaseCurrency = uiState.balanceBaseCurrency,
         income = uiState.income,
         expenses = uiState.expenses,
+        incomeTransactionCount = uiState.incomeTransactionCount,
+        expenseTransactionCount = uiState.expenseTransactionCount,
 
         initWithTransactions = uiState.initWithTransactions,
         treatTransfersAsIncomeExpense = uiState.treatTransfersAsIncomeExpense,
@@ -226,6 +227,8 @@ private fun BoxWithConstraintsScope.UI(
     balanceBaseCurrency: Double?,
     income: Double,
     expenses: Double,
+    incomeTransactionCount: Int,
+    expenseTransactionCount: Int,
     choosePeriodModal: ChoosePeriodModalData?,
 
     history: ImmutableList<TransactionHistoryItem>,
@@ -313,9 +316,10 @@ private fun BoxWithConstraintsScope.UI(
             item {
                 Header(
                     screen = screen,
-                    history = history,
                     income = income,
                     expenses = expenses,
+                    incomeTransactionCount = incomeTransactionCount,
+                    expenseTransactionCount = expenseTransactionCount,
                     currency = currency,
                     baseCurrency = baseCurrency,
                     itemColor = itemColor,
@@ -618,7 +622,6 @@ private fun BoxWithConstraintsScope.DeleteModals(
 @Composable
 private fun Header(
     screen: TransactionsScreen,
-    history: ImmutableList<TransactionHistoryItem>,
     currency: String,
     baseCurrency: String,
     itemColor: Color,
@@ -628,6 +631,8 @@ private fun Header(
     balanceBaseCurrency: Double?,
     income: Double,
     expenses: Double,
+    incomeTransactionCount: Int,
+    expenseTransactionCount: Int,
     onEdit: () -> Unit,
     onDelete: () -> Unit,
 
@@ -719,8 +724,8 @@ private fun Header(
             currency = currency,
             income = income,
             expenses = expenses,
-            incomeTransactionCount = history.countTransactionType(TransactionType.INCOME),
-            expenseTransactionCount = history.countTransactionType(TransactionType.EXPENSE),
+            incomeTransactionCount = incomeTransactionCount,
+            expenseTransactionCount = expenseTransactionCount,
 
             hasAddButtons = true,
 
@@ -762,10 +767,6 @@ private fun Header(
 
         Spacer(Modifier.height(20.dp))
     }
-}
-
-private fun List<TransactionHistoryItem>.countTransactionType(type: TransactionType): Int {
-    return filterIsInstance<LegacyTransaction>().count { it.type == type }
 }
 
 @Composable

@@ -165,6 +165,8 @@ internal class TransactionsViewModel @Inject internal constructor(
             balanceBaseCurrency = getBalanceBaseCurrency(),
             income = getIncome(),
             expenses = getExpenses(),
+            incomeTransactionCount = getIncomeTransactionCount(),
+            expenseTransactionCount = getExpenseTransactionCount(),
             initWithTransactions = getInitWithTransactions(),
             treatTransfersAsIncomeExpense = getTreatTransfersAsIncomeExpense(),
             history = getHistory(),
@@ -238,6 +240,16 @@ internal class TransactionsViewModel @Inject internal constructor(
     @Composable
     private fun getExpenses(): Double {
         return expenses.doubleValue
+    }
+
+    @Composable
+    private fun getIncomeTransactionCount(): Int {
+        return history.value.countTransactionType(TransactionType.INCOME)
+    }
+
+    @Composable
+    private fun getExpenseTransactionCount(): Int {
+        return history.value.countTransactionType(TransactionType.EXPENSE)
     }
 
     @Composable
@@ -708,4 +720,8 @@ internal class TransactionsViewModel @Inject internal constructor(
             )
         }
     }
+}
+
+private fun List<TransactionHistoryItem>.countTransactionType(type: TransactionType): Int {
+    return filterIsInstance<LegacyTransaction>().count { it.type == type }
 }
