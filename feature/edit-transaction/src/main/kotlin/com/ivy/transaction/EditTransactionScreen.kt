@@ -194,7 +194,22 @@ fun BoxWithConstraintsScope.EditTransactionScreen(screen: EditTransactionScreen)
         },
         onTagOperation = {
             viewModel.onEvent(it)
-        }
+        },
+        onClose = nav::back,
+        onAddPlannedPayment = { transactionType, amount, accountId, categoryId, title, description ->
+            nav.back()
+            nav.navigateTo(
+                EditPlannedScreen(
+                    plannedPaymentRuleId = null,
+                    type = transactionType.toRouteType(),
+                    amount = amount,
+                    accountId = accountId,
+                    categoryId = categoryId,
+                    title = title,
+                    description = description,
+                )
+            )
+        },
     )
 }
 
@@ -241,6 +256,8 @@ private fun BoxWithConstraintsScope.UI(
     onCreateAccount: (CreateAccountData) -> Unit,
     onExchangeRateChange: (Double?) -> Unit = { },
     onTagOperation: (EditTransactionViewEvent.TagEvent) -> Unit = {},
+    onClose: () -> Unit,
+    onAddPlannedPayment: (TransactionType, Double, UUID?, UUID?, String, String?) -> Unit,
     loanData: EditTransactionDisplayLoan = EditTransactionDisplayLoan(),
     backgroundProcessing: Boolean = false,
     hasChanges: Boolean = false,
@@ -277,7 +294,6 @@ private fun BoxWithConstraintsScope.UI(
     }
     val titleFocus = FocusRequester()
     val scrollState = rememberScrollState()
-    val nav = navigation()
 
     // This is to scroll the column to the customExchangeCard composable when it is shown
     var customExchangeRatePosition by remember { mutableFloatStateOf(0F) }
@@ -301,9 +317,7 @@ private fun BoxWithConstraintsScope.UI(
             // with loan record to hide the ChangeTransactionType Button
             type = if (loanData.isLoanRecord) TransactionType.TRANSFER else transactionType,
             initialTransactionId = screen.initialTransactionId,
-            onClose = {
-                nav.back()
-            },
+            onClose = onClose,
             onDeleteTransactionModal = {
                 deleteTransactionModalVisible = true
             },
@@ -418,17 +432,13 @@ private fun BoxWithConstraintsScope.UI(
             Spacer(Modifier.height(12.dp))
 
             EditTransactionAddPlannedDateButton {
-                nav.back()
-                nav.navigateTo(
-                    EditPlannedScreen(
-                        plannedPaymentRuleId = null,
-                        type = transactionType.toRouteType(),
-                        amount = amount,
-                        accountId = account?.id,
-                        categoryId = category?.id?.value,
-                        title = titleTextFieldValue.text,
-                        description = description,
-                    )
+                onAddPlannedPayment(
+                    transactionType,
+                    amount,
+                    account?.id,
+                    category?.id?.value,
+                    titleTextFieldValue.text,
+                    description
                 )
             }
         }
