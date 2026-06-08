@@ -1,14 +1,10 @@
 package com.ivy.legacy.ui.theme
 
 import androidx.annotation.ColorInt
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
-import androidx.compose.ui.unit.Dp
 import androidx.core.graphics.ColorUtils
 
 val White = Color(0xFFFAFAFA)
@@ -74,20 +70,6 @@ val GradientGreen = Gradient(Green, Color(0xFF49F2C8))
 internal val GradientOrangeRevert = Gradient(Color(0xFFF2CD9E), Orange)
 
 val GradientIvy = Gradient(Ivy, Color(0xFFAA99FF))
-
-internal fun Modifier.gradientCutBackgroundBottom(
-    pure: Color,
-    paddingBottom: Dp,
-): Modifier {
-    return background(
-        brush = Brush.verticalGradient(
-            colors = listOf(
-                pure,
-                Transparent
-            ),
-        )
-    ).padding(bottom = paddingBottom)
-}
 
 @Composable
 internal fun mediumBlur() = LegacyTheme.colors.medium.copy(alpha = 0.95f)
