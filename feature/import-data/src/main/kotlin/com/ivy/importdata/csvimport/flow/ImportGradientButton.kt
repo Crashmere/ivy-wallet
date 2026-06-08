@@ -1,4 +1,4 @@
-package com.ivy.legacy.ui.component
+package com.ivy.importdata.csvimport.flow
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
@@ -16,17 +16,15 @@ import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.ivy.legacy.ui.theme.Gradient
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.legacy.ui.theme.style
+import com.ivy.ui.R
 import com.ivy.ui.compose.drawColoredShadow
 import com.ivy.ui.compose.thenIf
-import com.ivy.ui.R
-import com.ivy.legacy.ui.theme.Gradient
-import androidx.compose.foundation.layout.fillMaxWidth
-import com.ivy.legacy.ui.theme.GradientIvy
 
 @Composable
-fun GradientButton(
+internal fun ImportGradientButton(
     modifier: Modifier = Modifier,
     text: String,
     textColor: Color,
