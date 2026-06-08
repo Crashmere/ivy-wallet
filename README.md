@@ -40,6 +40,7 @@
 - 收窄旧 toolbar 组件职责：交易统计 toolbar 和编辑页 toolbar 不再直接调用 `nav.back()`，关闭行为由对应 feature 页面传入。
 - 收窄导航模块职责：主界面 tab 状态 `MainTab/MainTabState/LocalMainTabState` 已从 `shared:ui:navigation` 迁到 `shared:ui:core` 的 `com.ivy.ui.main` 包，navigation 模块继续聚焦 route、栈和返回处理。
 - 删除无效 legacy screen 标记：当前所有页面统一走 `LegacyUiRoot` surface，`Screen` 不再暴露 `isLegacy`，`NavigationRoot` 删除只服务非 legacy 分支的 ViewModelStore 清理逻辑。
+- 收窄旧弹窗状态职责：账户、分类、缓冲金额、周期、借贷、借贷记录和计划付款重复规则的 `*ModalData` 已从 `shared:ui:legacy` 迁到 `shared:ui:core` 的 `com.ivy.ui.modal` 包；feature 状态层不再为了保存弹窗数据直接引用 legacy 弹窗实现包。
 
 当前仍保留：
 

@@ -44,7 +44,7 @@ import com.ivy.legacy.ui.component.BalanceRow
 import com.ivy.legacy.ui.component.IvyCircleButton
 import com.ivy.legacy.ui.component.IvyDividerLine
 import com.ivy.legacy.ui.modal.ChoosePeriodModal
-import com.ivy.legacy.ui.modal.ChoosePeriodModalData
+import com.ivy.ui.modal.ChoosePeriodModalData
 import com.ivy.legacy.ui.component.PeriodSelector
 
 val FAB_BUTTON_SIZE = 56.dp

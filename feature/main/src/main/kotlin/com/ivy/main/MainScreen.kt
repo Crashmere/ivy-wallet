@@ -23,7 +23,7 @@ import com.ivy.ui.navigation.TransactionRouteType
 import com.ivy.ui.navigation.navigation
 import com.ivy.data.model.CreateAccountData
 import com.ivy.legacy.ui.modal.edit.AccountModal
-import com.ivy.legacy.ui.modal.AccountModalData
+import com.ivy.ui.modal.AccountModalData
 
 @ExperimentalAnimationApi
 @ExperimentalFoundationApi

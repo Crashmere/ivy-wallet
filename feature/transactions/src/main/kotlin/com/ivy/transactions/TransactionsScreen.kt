@@ -76,13 +76,13 @@ import com.ivy.legacy.ui.theme.dynamicContrast
 import com.ivy.legacy.ui.theme.findContrastTextColor
 import com.ivy.legacy.ui.theme.isDarkColor
 import com.ivy.legacy.ui.modal.ChoosePeriodModal
-import com.ivy.legacy.ui.modal.ChoosePeriodModalData
+import com.ivy.ui.modal.ChoosePeriodModalData
 import com.ivy.legacy.ui.modal.DeleteConfirmationModal
 import com.ivy.legacy.ui.modal.DeleteModal
 import com.ivy.legacy.ui.modal.edit.AccountModal
-import com.ivy.legacy.ui.modal.AccountModalData
+import com.ivy.ui.modal.AccountModalData
 import com.ivy.legacy.ui.modal.edit.CategoryModal
-import com.ivy.legacy.ui.modal.CategoryModalData
+import com.ivy.ui.modal.CategoryModalData
 import com.ivy.legacy.ui.theme.toComposeColor
 import com.ivy.legacy.ui.component.PeriodSelector
 import kotlinx.collections.immutable.ImmutableList

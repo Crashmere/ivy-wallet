@@ -6,9 +6,9 @@ import com.ivy.data.model.IntervalType
 import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.data.model.CreateAccountData
 import com.ivy.data.model.CreateCategoryData
-import com.ivy.legacy.ui.modal.RecurringRuleModalData
-import com.ivy.legacy.ui.modal.AccountModalData
-import com.ivy.legacy.ui.modal.CategoryModalData
+import com.ivy.ui.modal.RecurringRuleModalData
+import com.ivy.ui.modal.AccountModalData
+import com.ivy.ui.modal.CategoryModalData
 import java.time.LocalDateTime
 
 sealed interface EditPlannedScreenEvent {

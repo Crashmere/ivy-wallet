@@ -12,6 +12,7 @@ import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.ui.R
 import com.ivy.legacy.ui.component.BufferBattery
 import com.ivy.legacy.ui.modal.edit.AmountModal
+import com.ivy.ui.modal.BufferModalData
 import java.util.*
 
 @Suppress("ParameterNaming")

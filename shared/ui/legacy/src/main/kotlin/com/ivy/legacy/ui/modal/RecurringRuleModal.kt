@@ -32,6 +32,7 @@ import com.ivy.data.model.IntervalType
 import com.ivy.ui.time.LocalTimeProvider
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
+import com.ivy.ui.modal.RecurringRuleModalData
 import com.ivy.ui.platform.addKeyboardListener
 import com.ivy.ui.compose.clickableNoIndication
 import com.ivy.ui.time.closeDay
