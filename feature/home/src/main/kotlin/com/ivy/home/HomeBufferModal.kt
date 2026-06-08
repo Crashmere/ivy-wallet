@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.ivy.legacy.ui.modal.IvyModal
-import com.ivy.legacy.ui.modal.ModalAmountSection
+import com.ivy.ui.modal.ModalAmountSection
 import com.ivy.ui.modal.ModalSave
 import com.ivy.legacy.ui.modal.edit.AmountModal
 import com.ivy.legacy.ui.theme.LegacyTheme

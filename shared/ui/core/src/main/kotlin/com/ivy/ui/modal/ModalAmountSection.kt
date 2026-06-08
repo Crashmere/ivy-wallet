@@ -1,5 +1,6 @@
-package com.ivy.legacy.ui.modal
+package com.ivy.ui.modal
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -14,7 +15,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.compose.clickableNoIndication
 import com.ivy.ui.compose.rememberInteractionSource
 import com.ivy.ui.money.BalanceRow
@@ -34,7 +34,7 @@ fun ModalAmountSection(
             .fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        IvyDividerLine()
+        ModalDividerLine()
 
         Header?.invoke()
 
@@ -42,8 +42,8 @@ fun ModalAmountSection(
 
         Text(
             text = label,
-            style = LegacyTheme.typo.c.copy(
-                color = LegacyTheme.colors.gray,
+            style = ModalAmountSectionTheme.typo.c.copy(
+                color = ModalAmountSectionTheme.colors.gray,
                 fontWeight = FontWeight.ExtraBold,
                 textAlign = TextAlign.Start
             )
@@ -70,4 +70,16 @@ fun ModalAmountSection(
 
         Spacer(Modifier.height(amountPaddingBottom))
     }
+}
+
+@Composable
+private fun ModalDividerLine(
+    modifier: Modifier = Modifier
+) {
+    Spacer(
+        modifier = modifier
+            .fillMaxWidth()
+            .height(2.dp)
+            .background(ModalAmountSectionTheme.colors.medium)
+    )
 }

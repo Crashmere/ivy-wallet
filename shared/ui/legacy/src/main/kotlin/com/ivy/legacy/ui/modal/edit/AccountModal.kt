@@ -41,7 +41,7 @@ import com.ivy.legacy.ui.modal.ChooseIconModal
 import com.ivy.legacy.ui.modal.CurrencyModal
 import com.ivy.legacy.ui.modal.IvyModal
 import com.ivy.legacy.ui.modal.ModalAddSave
-import com.ivy.legacy.ui.modal.ModalAmountSection
+import com.ivy.ui.modal.ModalAmountSection
 import com.ivy.ui.modal.ModalTitle
 import java.util.Locale
 import java.util.UUID

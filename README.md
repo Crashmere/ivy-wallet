@@ -122,6 +122,7 @@
 - 旧交易卡片的金额行 `TypeAmountCurrency` 已收窄为 `TransactionCard` 文件私有实现；`legacy.ui.transaction` 对外继续只暴露交易列表入口和必要的列表输入模型。
 - 旧弹窗标题 `ModalTitle` 已迁入 `shared:ui:core` 的 `com.ivy.ui.modal.ModalTitle`；feature 和 legacy 弹窗继续保留原标题字号、字重、颜色和左右间距，`legacy.ui.modal` 少暴露一个纯展示标题入口。
 - 旧弹窗保存/新增主按钮 `ModalSave`、`ModalAdd` 已迁入 `shared:ui:core` 的 `com.ivy.ui.modal`；feature 和 legacy 弹窗继续保留原绿色渐变、禁用灰色、近白文字和圆角展示。
+- 旧弹窗金额展示区 `ModalAmountSection` 已迁入 `shared:ui:core` 的 `com.ivy.ui.modal.ModalAmountSection`；预算、首页缓冲金额、借贷和旧账户弹窗继续保留原分隔线、标签、金额行和点击打开金额弹窗行为。
 - 金额展示组件已从 `shared:ui:legacy` 迁入 `shared:ui:core` 的 `com.ivy.ui.money`；`BalanceRow` 和 `AmountCurrencyB1` 继续保留原金额格式化、隐藏金额和大数字缩写行为，feature 层不再为了金额文本依赖 legacy money 包。
 - 旧按钮基础控件已从根组件目录移入 `legacy.ui.button`；图标基础控件后续已继续迁入 `shared:ui:core`，`component` 根目录不再承载通用基础控件文件。
 - 旧标签 UI 已从 `component.tags` 迁入 `legacy.ui.tags`；编辑交易和报表筛选继续复用原添加标签按钮与标签弹窗。
