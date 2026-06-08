@@ -131,6 +131,7 @@
 - 收窄旧收支汇总卡片输入：卡片只接收收入/支出交易数量，不再自己解析完整旧交易历史。
 - 清理报表页内部事件命名：计划付款交易的支付/收取、跳过和批量跳过事件已经只传交易 ID，不再在事件名中暴露 `LegacyTransaction`。
 - 收窄 ui-core 时间格式化内部端口：`DevicePreferences` 只作为 `IvyTimeFormatter` 的本模块适配接口，不再暴露给模块外部。
+- 收窄首页状态边界：`HomeState` 和 `HomeViewModel` 不再直接持有旧交易列表 UI 包装类型，只在首页调用旧列表组件时做适配转换。
 
 当前仍保留：
 
@@ -1232,6 +1233,7 @@ shared:ui:core
 - 旧收支汇总卡片不再接收完整交易历史，只接收页面已经算好的收入/支出交易数量；通用 UI 组件不再依赖 `LegacyTransaction` 或 `TransactionHistoryItem`。
 - 报表页内部支付/收取和跳过计划交易的事件名已去掉 `Legacy`，事件层继续只传交易 ID，旧模型查找限制在 ViewModel 私有实现内。
 - `DevicePreferences` 已收为 `shared:ui:core` 内部接口；模块外继续只注入公开的 `TimeFormatter`。
+- 首页状态层已切换为 feature 本地展示模型；`TransactionListData` 和 `LegacyDueSection` 只在 `HomeTab` 调用旧交易列表组件的适配层出现。
 - app 仍保留文件选择、文件分享、Material 日期选择器、BuildInfo、Locale 设置、生物识别和窗口安全等真正依赖 Activity 或 Android app 壳层的装配。
 
 ## 高风险区域

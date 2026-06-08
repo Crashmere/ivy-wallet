@@ -32,8 +32,6 @@ import com.ivy.home.customerjourney.CustomerJourneyCardModel
 import com.ivy.home.customerjourney.CustomerJourneyCardsProvider
 import com.ivy.ui.theme.ThemeState
 import com.ivy.ui.period.PeriodState
-import com.ivy.legacy.ui.component.transaction.LegacyDueSection
-import com.ivy.legacy.ui.component.transaction.TransactionListData
 import com.ivy.ui.period.TimePeriod
 import com.ivy.data.model.toUTCCloseTimeRange
 import com.ivy.data.model.legacy.LegacyAccount
@@ -95,7 +93,7 @@ internal class HomeViewModel @Inject internal constructor(
     private var currentTheme by mutableStateOf(Theme.AUTO)
     private var period by mutableStateOf(periodState.selectedPeriod)
     private var baseData by mutableStateOf(
-        TransactionListData(
+        HomeTransactionListData(
             baseCurrency = "",
             accounts = persistentListOf(),
             categories = persistentListOf()
@@ -111,14 +109,14 @@ internal class HomeViewModel @Inject internal constructor(
         )
     )
     private var upcoming by mutableStateOf(
-        LegacyDueSection(
+        HomeDueSection(
             transactions = persistentListOf(),
             stats = IncomeExpensePair.zero(),
             expanded = false,
         )
     )
     private var overdue by mutableStateOf(
-        LegacyDueSection(
+        HomeDueSection(
             transactions = persistentListOf(),
             stats = IncomeExpensePair.zero(),
             expanded = false,
@@ -180,7 +178,7 @@ internal class HomeViewModel @Inject internal constructor(
     }
 
     @Composable
-    private fun getBaseData(): TransactionListData {
+    private fun getBaseData(): HomeTransactionListData {
         return baseData
     }
 
@@ -205,12 +203,12 @@ internal class HomeViewModel @Inject internal constructor(
     }
 
     @Composable
-    private fun getUpcoming(): LegacyDueSection {
+    private fun getUpcoming(): HomeDueSection {
         return upcoming
     }
 
     @Composable
-    private fun getOverdue(): LegacyDueSection {
+    private fun getOverdue(): HomeDueSection {
         return overdue
     }
 
@@ -305,7 +303,7 @@ internal class HomeViewModel @Inject internal constructor(
         val accounts = getLegacyAccountsUseCase()
         val categories = getCategoriesUseCase()
 
-        baseData = TransactionListData(
+        baseData = HomeTransactionListData(
             baseCurrency = preferences.baseCurrency,
             categories = categories.toImmutableList(),
             accounts = accounts.toImmutableList()
@@ -369,7 +367,7 @@ internal class HomeViewModel @Inject internal constructor(
             baseCurrency = baseCurrency,
             range = timeRange
         )
-        upcoming = LegacyDueSection(
+        upcoming = HomeDueSection(
             transactions = mapTransactionsToLegacyTransactionsUseCase(upcomingResult.transactions).toImmutableList(),
             stats = upcomingResult.incomeExpense,
             expanded = upcoming.expanded
@@ -379,7 +377,7 @@ internal class HomeViewModel @Inject internal constructor(
             baseCurrency = baseCurrency,
             toRange = timeRange.to
         )
-        overdue = LegacyDueSection(
+        overdue = HomeDueSection(
             transactions = mapTransactionsToLegacyTransactionsUseCase(overdueResult.transactions).toImmutableList(),
             stats = overdueResult.incomeExpense,
             expanded = overdue.expanded

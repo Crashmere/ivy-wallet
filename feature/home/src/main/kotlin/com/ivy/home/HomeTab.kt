@@ -295,11 +295,11 @@ internal fun HomeLazyColumn(
     listState: LazyListState,
     period: TimePeriod,
 
-    baseData: TransactionListData,
+    baseData: HomeTransactionListData,
     shouldShowAccountSpecificColorInTransactions: Boolean,
 
-    upcoming: LegacyDueSection,
-    overdue: LegacyDueSection,
+    upcoming: HomeDueSection,
+    overdue: HomeDueSection,
     balance: BigDecimal,
     stats: IncomeExpensePair,
     history: ImmutableList<TransactionHistoryItem>,
@@ -382,10 +382,10 @@ internal fun HomeLazyColumn(
         }
 
         transactions(
-            baseData = baseData,
-            upcoming = upcoming,
+            baseData = baseData.toTransactionListData(),
+            upcoming = upcoming.toLegacyDueSection(),
             setUpcomingExpanded = setUpcomingExpanded,
-            overdue = overdue,
+            overdue = overdue.toLegacyDueSection(),
             setOverdueExpanded = setOverdueExpanded,
             history = history,
             onPayOrGet = onPayOrGet,
@@ -420,6 +420,22 @@ internal fun HomeLazyColumn(
             onSkipAllTransactions = onSkipAllTransactions
         )
     }
+}
+
+private fun HomeTransactionListData.toTransactionListData(): TransactionListData {
+    return TransactionListData(
+        baseCurrency = baseCurrency,
+        accounts = accounts,
+        categories = categories
+    )
+}
+
+private fun HomeDueSection.toLegacyDueSection(): LegacyDueSection {
+    return LegacyDueSection(
+        transactions = transactions,
+        expanded = expanded,
+        stats = stats
+    )
 }
 
 private fun TransactionType.toRouteType(): TransactionRouteType {
