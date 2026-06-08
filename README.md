@@ -112,6 +112,7 @@
 - 继续收窄旧主题色板公开面：外层旧主题门面中只被 `shared:ui:legacy` 内部使用的 `Blue`、`IvyLight`、`GreenLight`、`RedLight` 和 `IvyDark` 改为模块内部常量。
 - 下沉 UI 基础服务装配：`ThemeState`、`PeriodState`、时间服务、日期时间弹窗和 `Toaster` 由 `shared:ui:core` 自己声明 Hilt 绑定，`Navigation` 由 `shared:ui:navigation` 自己声明绑定；app 不再持有这些具体实现类的装配代码。
 - 下沉 Android 字符串资源适配器：`AndroidResourceProvider` 从 app 迁入 `shared:ui:core`，app 不再为通用 `ResourceProvider` 保留绑定。
+- 收窄根启动快捷方式参数：桌面 shortcut 的“添加交易类型”直接解析为导航层 `TransactionRouteType`，Root 启动事件不再先携带数据层 `TransactionType` 再转换。
 
 当前仍保留：
 
@@ -1194,6 +1195,7 @@ shared:ui:core
 - UI 基础状态和默认实现的 Hilt 装配已下沉到对应 shared 模块：`shared:ui:core` 提供主题、周期、时间、日期时间弹窗和 toast 服务，`shared:ui:navigation` 提供 `Navigation` 单例。
 - `com.ivy.ui.time.impl` 下的默认时间实现已收为 `shared:ui:core` 内部实现；app 继续只注入 `TimeProvider`、`TimeConverter`、`TimeFormatter`、`DateTimePicker` 等接口。
 - Android 字符串资源适配器已迁入 `shared:ui:core`，作为 `ResourceProvider` 的默认实现供 Hilt 图使用。
+- 根启动快捷方式参数已改用 `TransactionRouteType`，shortcut XML 的字符串值不变，打开添加收入/支出/转账入口的行为不变。
 - app 仍保留文件选择、文件分享、Material 日期选择器、BuildInfo、Locale 设置、生物识别和窗口安全等真正依赖 Activity 或 Android app 壳层的装配。
 
 ## 高风险区域

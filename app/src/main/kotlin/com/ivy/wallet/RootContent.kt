@@ -10,7 +10,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import com.ivy.data.model.Theme
-import com.ivy.data.model.TransactionType
 import com.ivy.domain.preferences.toggles.PreferenceToggleService
 import com.ivy.domain.preferences.toggles.PreferenceToggleCatalog
 import com.ivy.ui.LegacyUiRoot
@@ -54,7 +53,7 @@ internal fun RootContent(
     buildInfoProvider: BuildInfoProvider,
     fileSharer: FileSharer,
     viewModel: RootViewModel,
-    addTransactionType: TransactionType?,
+    addTransactionType: TransactionRouteType?,
     hasLockScreen: () -> Boolean,
     onShowOSBiometricsModal: () -> Unit,
 ) {
@@ -155,6 +154,6 @@ private fun isDarkThemeEnabled(theme: Theme, systemDarkTheme: Boolean): Boolean 
 private fun RootUiEvent.OpenAddTransaction.toEditTransactionScreen(): EditTransactionScreen {
     return EditTransactionScreen(
         initialTransactionId = null,
-        type = TransactionRouteType.valueOf(type.name)
+        type = type
     )
 }

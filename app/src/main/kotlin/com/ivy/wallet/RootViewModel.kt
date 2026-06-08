@@ -2,10 +2,10 @@ package com.ivy.wallet
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ivy.data.model.TransactionType
 import com.ivy.domain.usecase.settings.GetStartDayOfMonthUseCase
 import com.ivy.domain.usecase.settings.GetThemeUseCase
 import com.ivy.domain.usecase.settings.IsInitialSetupCompletedUseCase
+import com.ivy.ui.navigation.TransactionRouteType
 import com.ivy.ui.theme.ThemeState
 import com.ivy.ui.period.PeriodState
 import com.ivy.wallet.notification.reminder.TransactionReminderScheduler
@@ -35,7 +35,7 @@ internal class RootViewModel @Inject constructor(
 
     val appLocked = appLockController.appLocked
 
-    fun start(systemDarkMode: Boolean, addTransactionType: TransactionType?) {
+    fun start(systemDarkMode: Boolean, addTransactionType: TransactionRouteType?) {
         viewModelScope.launch {
             val theme = getTheme.withSystemFallback(systemDarkMode)
             themeState.update(theme)
@@ -54,7 +54,7 @@ internal class RootViewModel @Inject constructor(
         }
     }
 
-    private suspend fun openStartDestination(addTransactionType: TransactionType?) {
+    private suspend fun openStartDestination(addTransactionType: TransactionRouteType?) {
         if (addTransactionType != null) {
             _events.send(RootUiEvent.OpenAddTransaction(addTransactionType))
             return
@@ -96,5 +96,5 @@ internal class RootViewModel @Inject constructor(
 
 internal sealed interface RootUiEvent {
     data object OpenMain : RootUiEvent
-    data class OpenAddTransaction(val type: TransactionType) : RootUiEvent
+    data class OpenAddTransaction(val type: TransactionRouteType) : RootUiEvent
 }
