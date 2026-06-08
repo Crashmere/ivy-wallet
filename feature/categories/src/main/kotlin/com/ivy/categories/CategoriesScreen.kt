@@ -57,9 +57,9 @@ import com.ivy.ui.theme.colors.IvyFixedColors.White
 import com.ivy.legacy.ui.money.BalanceRow
 import com.ivy.legacy.ui.icon.ItemIconSDefaultIcon
 import com.ivy.legacy.ui.button.IvyButton
-import com.ivy.legacy.ui.icon.IvyIcon
 import com.ivy.legacy.ui.modal.ReorderModalSingleType
 import com.ivy.ui.compose.FilledIconButton
+import com.ivy.ui.compose.ResourceIcon
 import com.ivy.ui.theme.colors.findContrastTextColor
 import com.ivy.legacy.ui.modal.IvyModal
 import com.ivy.legacy.ui.modal.ModalTitle
@@ -644,7 +644,7 @@ private fun SelectTypeButton(
 
         val textColor = if (selected) textSelectedColor else LegacyTheme.colors.pureInverse
 
-        IvyIcon(
+        ResourceIcon(
             icon = icon,
             tint = textColor,
             modifier = Modifier.fillMaxHeight()
@@ -666,7 +666,7 @@ private fun SelectTypeButton(
         if (selected) {
             Spacer(Modifier.weight(1f))
 
-            IvyIcon(
+            ResourceIcon(
                 icon = R.drawable.ic_check,
                 tint = textSelectedColor
             )

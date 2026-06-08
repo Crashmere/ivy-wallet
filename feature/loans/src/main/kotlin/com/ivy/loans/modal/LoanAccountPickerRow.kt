@@ -23,9 +23,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ivy.legacy.ui.icon.ItemIconSDefaultIcon
-import com.ivy.legacy.ui.icon.IvyIcon
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.loans.model.LoanAccount
+import com.ivy.ui.compose.ResourceIcon
 import com.ivy.ui.theme.colors.findContrastTextColor
 import com.ivy.ui.theme.colors.toComposeColor
 import com.ivy.ui.R
@@ -151,7 +151,7 @@ private fun AddLoanAccountChip(
     ) {
         Spacer(Modifier.width(12.dp))
 
-        IvyIcon(
+        ResourceIcon(
             icon = R.drawable.ic_plus,
             tint = LegacyTheme.colors.pureInverse
         )

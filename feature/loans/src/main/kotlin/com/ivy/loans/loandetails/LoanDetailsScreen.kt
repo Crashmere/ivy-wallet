@@ -72,7 +72,7 @@ import com.ivy.legacy.ui.money.BalanceRow
 import com.ivy.legacy.ui.icon.ItemIconMDefaultIcon
 import com.ivy.legacy.ui.button.IvyButton
 import com.ivy.ui.compose.GradientIconButton
-import com.ivy.legacy.ui.icon.IvyIcon
+import com.ivy.ui.compose.ResourceIcon
 import com.ivy.legacy.ui.button.IvyOutlinedButton
 import com.ivy.ui.icon.getCustomIconIdS
 import com.ivy.ui.theme.colors.IvyFixedColors.White
@@ -1034,7 +1034,7 @@ private fun LoanRecordAmountRow(
             )
         }
 
-        IvyIcon(
+        ResourceIcon(
             modifier = Modifier
                 .background(style.gradient.asHorizontalBrush(), CircleShape),
             icon = style.icon,
@@ -1068,7 +1068,7 @@ private fun NoLoanRecordsEmptyState() {
     ) {
         Spacer(Modifier.height(32.dp))
 
-        IvyIcon(
+        ResourceIcon(
             icon = R.drawable.ic_notransactions,
             tint = LegacyTheme.colors.gray
         )

@@ -32,7 +32,7 @@ import com.ivy.ui.R
 import com.ivy.ui.theme.colors.Gradient
 import com.ivy.ui.theme.colors.IvyFixedColors.White
 import com.ivy.ui.compose.GradientIconButton
-import com.ivy.legacy.ui.icon.IvyIcon
+import com.ivy.ui.compose.ResourceIcon
 import kotlin.math.roundToInt
 
 private val FabButtonSize = 56.dp
@@ -121,7 +121,7 @@ private fun RowScope.Tab(
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        IvyIcon(
+        ResourceIcon(
             icon = icon,
             tint = if (selected) selectedColor else LegacyTheme.colors.pureInverse
         )
