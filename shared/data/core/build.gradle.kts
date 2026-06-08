@@ -3,11 +3,23 @@ plugins {
     id("ivy.hilt")
     id("ivy.kotlinx-serialization")
     id("ivy.room")
-    id("ivy.integration.testing")
 }
 
 android {
     namespace = "com.ivy.data"
+
+    defaultConfig {
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    packaging {
+        resources.pickFirsts.apply {
+            add("win32-x86-64/attach_hotspot_windows.dll")
+            add("win32-x86/attach_hotspot_windows.dll")
+            add("META-INF/**")
+            add("xsd/catalog.xml")
+        }
+    }
 }
 
 dependencies {
@@ -21,4 +33,6 @@ dependencies {
 
     testImplementation(projects.shared.testSupport)
     testImplementation(libs.bundles.testing)
+
+    androidTestImplementation(libs.bundles.integration.testing)
 }

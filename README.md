@@ -166,7 +166,7 @@
 
 目标：
 
-- 保持 `ivy.android-library`、`ivy.kotlin-library`、`ivy.compose`、`ivy.hilt`、`ivy.room`、`ivy.integration.testing` 这类窄约定。
+- 保持 `ivy.android-library`、`ivy.kotlin-library`、`ivy.compose`、`ivy.hilt`、`ivy.room` 这类仍被多个模块复用的窄约定；只服务单个模块的配置优先内联。
 - 每个模块显式声明自己需要的能力，不再恢复 `ivy.feature` 这类组合入口。
 
 ### 3. 测试 helper 已基本移出生产源码
@@ -344,9 +344,9 @@
 - `shared:base` 已删除；最后剩余的 `TimeProvider/TimeConverter`、设备时间实现和安全时间边界已归入 `shared:ui:core` 的 `com.ivy.ui.time` 包，原测试也迁到 `shared:ui:core/src/test`。
 - `shared:data:model` 已移除轻量 `compose-runtime`，纯数据模型不再依赖 UI runtime。
 - 过渡用的 `ivy.compose-runtime` 插件已经删除；当前非页面模块不再需要轻量 Compose 编译配置。
-- `ivy.integration.testing` 已从 `ivy.feature` 迁出并收敛为 instrumentation 测试配置，避免因为集成测试配置把完整 Compose UI 或 Android library 基础配置带入数据层。
+- 只被 data-core 使用的 instrumentation 测试配置已从 `ivy.integration.testing` 插件内联到 `shared:data:core`；buildSrc 不再保留单模块专用约定插件。
 - `shared:data:core`、`shared:domain` 已从 `ivy.feature` 迁出；其中 `shared:data:core` 继续作为 Android 数据实现模块显式声明 Room/Hilt 等能力，`shared:domain` 已进一步改成纯 JVM/Kotlin 模块。
-- `shared:domain` 已移除空 androidTest 源集使用的 `ivy.integration.testing` 插件；domain 当前只保留 JVM 单元测试，Room migration 和备份恢复这类设备测试继续留在 `shared:data:core`。
+- `shared:domain` 已移除空 androidTest 源集；domain 当前只保留 JVM 单元测试，Room migration 和备份恢复这类设备测试继续留在 `shared:data:core`。
 - `shared:domain` 已移除 `ivy.room` 和 `ivy.hilt` 插件；主源码只保留 `javax.inject` 构造注入注解供 app 侧 Hilt 图消费，domain 自身不再参与 Hilt 聚合，测试也不再为了 domain 行为验证创建内存 Room 数据库。
 - `shared:domain` 已移除 Ktor 依赖；汇率同步测试改用 `ExchangeRateStore` fake 验证业务转换与保存行为，真实网络 client 继续留在 data core 实现边界。
 - `ivy.room` 已从旧 `ivy.module` 迁出并收敛为 Room/KSP/schema 配置，不再隐式带入 Hilt、kotlinx serialization 或 Android library 基础配置；Room 模块必须先显式声明 Android library 能力。
