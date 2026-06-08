@@ -31,7 +31,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.ivy.data.model.Category
 import com.ivy.data.model.Expense
 import com.ivy.data.model.Income
 import com.ivy.data.model.Tag
@@ -354,7 +353,7 @@ private fun ColumnScope.TransactionTags(tags: List<Tag>) {
 @Composable
 private fun TransactionHeaderRow(
     transaction: TransactionCardData,
-    categories: List<Category>,
+    categories: List<TransactionListCategory>,
     accounts: List<TransactionListAccount>,
     shouldShowAccountSpecificColorInTransactions: Boolean,
     onAccountClick: (UUID) -> Unit,
@@ -416,10 +415,10 @@ private fun TransactionHeaderRow(
 
 private fun findCategory(
     categoryId: UUID?,
-    categories: List<Category>
-): Category? {
+    categories: List<TransactionListCategory>
+): TransactionListCategory? {
     val targetId = categoryId ?: return null
-    return categories.find { it.id.value == targetId }
+    return categories.find { it.id == targetId }
 }
 
 private fun findAccount(
@@ -432,16 +431,16 @@ private fun findAccount(
 
 @Composable
 private fun CategoryBadgeDisplay(
-    category: Category,
+    category: TransactionListCategory,
     onCategoryClick: (UUID) -> Unit,
 ) {
     TransactionBadge(
-        text = category.name.value,
-        backgroundColor = category.color.value.toComposeColor(),
-        icon = category.icon?.id,
+        text = category.name,
+        backgroundColor = category.color.toComposeColor(),
+        icon = category.icon,
         defaultIcon = R.drawable.ic_custom_category_s
     ) {
-        onCategoryClick(category.id.value)
+        onCategoryClick(category.id)
     }
 }
 

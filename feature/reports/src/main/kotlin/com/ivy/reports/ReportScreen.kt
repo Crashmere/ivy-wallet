@@ -35,10 +35,12 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import com.ivy.ui.navigation.screenScopedViewModel
+import com.ivy.data.model.Category
 import com.ivy.data.model.TransactionType
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.legacy.ui.transaction.DueSection
 import com.ivy.legacy.ui.transaction.TransactionListAccount
+import com.ivy.legacy.ui.transaction.TransactionListCategory
 import com.ivy.legacy.ui.transaction.TransactionListData
 import com.ivy.ui.summary.IncomeExpensesCards
 import com.ivy.legacy.ui.transaction.transactions
@@ -229,7 +231,7 @@ private fun BoxWithConstraintsScope.UI(
             transactions(
                 baseData = TransactionListData(
                     baseCurrency = state.baseCurrency,
-                    categories = state.categories,
+                    categories = state.categories.map { it.toTransactionListCategory() },
                     accounts = state.accounts.map { it.toTransactionListAccount() },
                 ),
 
@@ -356,6 +358,13 @@ private fun ReportAccount.toTransactionListAccount() = TransactionListAccount(
     color = color,
     icon = icon,
     currency = currency,
+)
+
+private fun Category.toTransactionListCategory() = TransactionListCategory(
+    id = id.value,
+    name = name.value,
+    color = color.value,
+    icon = icon?.id,
 )
 
 @Composable

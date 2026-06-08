@@ -52,6 +52,7 @@ import com.ivy.ui.compose.thenIf
 import com.ivy.legacy.ui.transaction.DueSection
 import com.ivy.legacy.ui.transaction.TransactionListData
 import com.ivy.legacy.ui.transaction.TransactionListAccount
+import com.ivy.legacy.ui.transaction.TransactionListCategory
 import com.ivy.ui.period.Month
 import com.ivy.ui.period.TimePeriod
 import com.ivy.ui.period.displayLong
@@ -472,7 +473,7 @@ private fun BoxWithConstraintsScope.UI(
                     baseCurrency,
                     accounts
                         .map { it.toTransactionListAccount() },
-                    categories
+                    categories.map { it.toTransactionListCategory() }
                 ),
                 upcoming = upcoming.toDueSection(),
                 setUpcomingExpanded = setUpcomingExpanded,
@@ -578,6 +579,13 @@ private fun TransactionsListAccount.toTransactionListAccount() = TransactionList
     color = color,
     icon = icon,
     currency = currency,
+)
+
+private fun Category.toTransactionListCategory() = TransactionListCategory(
+    id = id.value,
+    name = name.value,
+    color = color.value,
+    icon = icon?.id,
 )
 
 private fun LazyListScope.choosePeriodModal(

@@ -18,9 +18,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.ivy.data.model.Category
 import com.ivy.data.model.TransactionType
 import com.ivy.ui.search.SearchInput
 import com.ivy.legacy.ui.transaction.TransactionListAccount
+import com.ivy.legacy.ui.transaction.TransactionListCategory
 import com.ivy.legacy.ui.transaction.TransactionListData
 import com.ivy.legacy.ui.transaction.transactions
 import com.ivy.ui.compose.densityScope
@@ -97,7 +99,7 @@ private fun SearchUi(
                     baseCurrency = uiState.baseCurrency,
                     accounts = uiState.accounts
                         .map { it.toTransactionListAccount() },
-                    categories = uiState.categories
+                    categories = uiState.categories.map { it.toTransactionListCategory() }
                 ),
                 upcoming = null,
                 setUpcomingExpanded = { },
@@ -161,4 +163,11 @@ private fun SearchAccount.toTransactionListAccount() = TransactionListAccount(
     color = color,
     icon = icon,
     currency = currency,
+)
+
+private fun Category.toTransactionListCategory() = TransactionListCategory(
+    id = id.value,
+    name = name.value,
+    color = color.value,
+    icon = icon?.id,
 )

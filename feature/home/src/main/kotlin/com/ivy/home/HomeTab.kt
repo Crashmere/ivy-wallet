@@ -24,6 +24,7 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.ivy.data.model.Category
 import com.ivy.data.model.TransactionType
 import com.ivy.data.model.TransactionHistoryItem
 import com.ivy.ui.platform.LocalDatePicker
@@ -33,6 +34,7 @@ import com.ivy.home.customerjourney.CustomerJourneyAction
 import com.ivy.home.customerjourney.CustomerJourneyCardModel
 import com.ivy.legacy.ui.transaction.DueSection
 import com.ivy.legacy.ui.transaction.TransactionListAccount
+import com.ivy.legacy.ui.transaction.TransactionListCategory
 import com.ivy.legacy.ui.transaction.TransactionListData
 import com.ivy.ui.period.Month
 import com.ivy.ui.period.TimePeriod
@@ -495,7 +497,7 @@ private fun HomeTransactionListData.toTransactionListData(): TransactionListData
         baseCurrency = baseCurrency,
         accounts = accounts
             .map { it.toTransactionListAccount() },
-        categories = categories
+        categories = categories.map { it.toTransactionListCategory() }
     )
 }
 
@@ -505,6 +507,13 @@ private fun HomeTransactionListAccount.toTransactionListAccount() = TransactionL
     color = color,
     icon = icon,
     currency = currency,
+)
+
+private fun Category.toTransactionListCategory() = TransactionListCategory(
+    id = id.value,
+    name = name.value,
+    color = color.value,
+    icon = icon?.id,
 )
 
 private fun HomeDueSection.toDueSection(): DueSection {
