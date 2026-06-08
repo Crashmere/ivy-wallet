@@ -14,8 +14,6 @@ import com.ivy.domain.usecase.settings.GetTransfersAsIncomeExpensePreferenceUseC
 import com.ivy.domain.usecase.transaction.GetLegacyTransactionsByIdsUseCase
 import com.ivy.ui.period.PeriodState
 import com.ivy.ui.period.TimePeriod
-import com.ivy.ui.navigation.PieChartStatisticScreen
-import com.ivy.ui.navigation.TransactionRouteType
 import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.modal.ChoosePeriodModalData
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -130,16 +128,20 @@ internal class PieChartStatisticViewModel @Inject internal constructor(
     }
 
     fun start(
-        screen: PieChartStatisticScreen
+        type: TransactionType,
+        accountIdFilterList: ImmutableList<UUID>,
+        filterExcluded: Boolean,
+        inputTransactionIds: ImmutableList<UUID>,
+        transfersAsIncomeExpense: Boolean,
     ) {
         viewModelScope.launch(Dispatchers.Default) {
             startInternally(
                 period = periodState.selectedPeriod,
-                type = screen.type.toTransactionType(),
-                accountIdFilterList = screen.accountList,
-                filterExclude = screen.filterExcluded,
-                inputTransactionIds = screen.legacyTransactionIds,
-                transfersAsIncomeExpenseValue = screen.treatTransfersAsIncomeExpense
+                type = type,
+                accountIdFilterList = accountIdFilterList,
+                filterExclude = filterExcluded,
+                inputTransactionIds = inputTransactionIds,
+                transfersAsIncomeExpenseValue = transfersAsIncomeExpense
             )
         }
     }
@@ -275,8 +277,4 @@ internal class PieChartStatisticViewModel @Inject internal constructor(
         selectedCategory = selectedCategoryValue
         categoryAmounts = newCategoryAmounts
     }
-}
-
-private fun TransactionRouteType.toTransactionType(): TransactionType {
-    return TransactionType.valueOf(name)
 }

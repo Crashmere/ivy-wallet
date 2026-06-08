@@ -82,7 +82,13 @@ fun BoxWithConstraintsScope.PieChartStatisticScreen(
     val uiState = viewModel.uiState()
 
     LaunchedEffect(Unit) {
-        viewModel.start(screen)
+        viewModel.start(
+            type = screen.type.toTransactionType(),
+            accountIdFilterList = screen.accountList,
+            filterExcluded = screen.filterExcluded,
+            inputTransactionIds = screen.legacyTransactionIds,
+            transfersAsIncomeExpense = screen.treatTransfersAsIncomeExpense
+        )
     }
 
     UI(
@@ -248,6 +254,10 @@ private fun BoxWithConstraintsScope.UI(
 
 private fun TransactionType.toRouteType(): TransactionRouteType {
     return TransactionRouteType.valueOf(name)
+}
+
+private fun TransactionRouteType.toTransactionType(): TransactionType {
+    return TransactionType.valueOf(name)
 }
 
 @Composable
