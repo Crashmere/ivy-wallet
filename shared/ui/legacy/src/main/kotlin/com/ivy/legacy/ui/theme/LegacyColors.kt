@@ -61,8 +61,6 @@ internal val MediumWhite = Color(0xFFEFEEF0)
 
 internal val GradientRed = Gradient(Red, Color(0xFFFF99AB))
 
-internal val GradientPurple = Gradient(Purple, Color(0xFFED3EF7))
-
 val GradientGreen = Gradient(Green, Color(0xFF49F2C8))
 
 internal val GradientOrangeRevert = Gradient(Color(0xFFF2CD9E), Orange)
