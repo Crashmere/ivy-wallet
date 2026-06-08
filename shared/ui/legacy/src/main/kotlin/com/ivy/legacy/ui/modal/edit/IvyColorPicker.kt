@@ -1,4 +1,4 @@
-package com.ivy.legacy.ui.component
+package com.ivy.legacy.ui.modal.edit
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
