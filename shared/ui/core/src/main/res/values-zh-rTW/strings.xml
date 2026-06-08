@@ -12,8 +12,6 @@
     <string name="unlock">解鎖</string>
     <string name="current_balance">當前餘額</string>
     <string name="balance_after_payments">經常交易後的餘額</string>
-    <string name="connect">連接</string>
-    <string name="remove_customer">刪除客戶</string>
     <string name="add_budget">新增預算</string>
     <string name="no_budgets">沒有預算</string>
     <string name="no_budgets_text">您尚未設定任何預算。\n點擊 "+ 新增預算" 即可新增預算。</string>
@@ -35,10 +33,6 @@
     <string name="charts">圖表</string>
     <string name="period">期間: </string>
     <string name="categories">類別</string>
-    <string name="how_to">如何</string>
-    <string name="upload_csv_zip_file">上傳 CSV/ZIP 檔案</string>
-    <string name="online_csv_converter_free">線上 CSV 轉換器 免費</string>
-    <string name="check_email_spam">檢查電子郵件的「促銷」和「垃圾郵件」資料夾</string>
     <string name="please_wait">請稍候</string>
     <string name="importing_the_csv_file">導入 CSV 檔案</string>
     <string name="success">成功</string>
@@ -202,9 +196,6 @@
     <string name="exporting_data">匯出資料</string>
     <string name="exporting_data_description">請稍候，正在匯出資料</string>
     <string name="start_date_of_month">月份的開始日期</string>
-    <string name="roadmap">路線圖</string>
-    <string name="logout">登出</string>
-    <string name="login">登入</string>
     <string name="export_to_csv">匯出為 CSV</string>
     <string name="left_to_spend">剩餘費用</string>
     <string name="budget_exceeded_by">超出預算</string>
@@ -262,9 +253,6 @@
     <string name="multiple_times">多次</string>
     <string name="starts_on">開始於</string>
     <string name="repeats_every_text">重複每個</string>
-    <string name="submit">提交</string>
-    <string name="what_do_you_need">你需要什麼?</string>
-    <string name="explain_it_in_one_sentence">用一句話解釋一下 (支持markdown)。</string>
     <string name="last_12_months">過去 12 個月</string>
     <string name="last_6_months">過去 6 個月</string>
     <string name="last_4_weeks">過去 4 週</string>
@@ -278,7 +266,6 @@
     <string name="notification_3">您今天的交易記錄了嗎? 🏁</string>
     <string name="cash">現金</string>
     <string name="bank">銀行</string>
-    <string name="revoult">Revolut</string>
     <string name="food_drinks"><![CDATA[食品和飲料]]></string>
     <string name="bills_fees"><![CDATA[帳單和支出]]></string>
     <string name="transport">交通</string>
@@ -298,7 +285,6 @@
     <string name="fitness">健身</string>
     <string name="self_development">自我發展</string>
     <string name="clothes">衣服</string>
-    <string name="beauty">美麗</string>
     <string name="education">教育程度</string>
     <string name="pet">寵物</string>
     <string name="sports">運動</string>
@@ -348,9 +334,6 @@
     <string name="skip_all">全部跳過</string>
     <string name="confirm_skip_all">確認跳過全部</string>
     <string name="confirm_skip_all_description">您確定要跳過所有逾期的經常交易嗎?</string>
-    <string name="switch_to_offline_mode">切換到離線模式</string>
-    <string name="experimental">實驗</string>
-    <string name="experimental_settings">實驗設定</string>
     <string name="wallet_balance">錢包餘額</string>
     <string name="total_exclusive">總計 (不含): %1$s %2$s</string>
     <string name="total_balance">總餘額</string>
@@ -370,18 +353,12 @@
     <string name="this_transaction_is_associated_with_loan_record">* 此交易與借貸的借貸記錄相關聯: %1$s</string>
     <string name="note_transaction_associated_with_loan_record_of_loan">注意: 此交易與借貸的借貸記錄關聯: %1$s\n您正在嘗試將與借貸記錄關聯的帳戶更改為不同貨幣的帳戶\n借貸記錄將根據今天重新計算\的貨幣匯率</string>
     <string name="note_you_are_trying_to_change_the_account_associated_with_the_loan">注意: 您正在嘗試將與借貸關聯的帳戶: %1$s 更改為不同貨幣的帳戶，\n所有借貸記錄將根據今天的貨幣匯率重新計算</string>
-    <string name="icons">圖示</string>
-    <string name="fonts">字體</string>
-    <string name="tech_stack">技術堆疊</string>
     <string name="tap_to_switch_theme">點擊切換主題</string>
     <string name="do_not_use_for_backup_purposes">⚠\uFE0F 不要用於備份目的</string>
     <string name="done">完成</string>
-    <string name="error">錯誤</string>
-    <string name="loading">正在加載…</string>
     <string name="try_again">再試一次</string>
     <string name="you_can_see_a_piechart">點擊上面對應的卡片即可查看您的收入和支出的圓餅圖!</string>
     <string name="please_type_category_name">請輸入 \"%1$s\" 以刪除您的類別。</string>
-    <string name="your_data_will_be_saved_only_locally">您的資料將僅保存在您的手機本地。如果您卸載應用程式或更換設備，您可能會面臨遺失資料的風險。為了防止資料遺失，我們建議定期從設定中匯出備份。</string>
     <string name="you_owe">您欠: %1$s</string>
     <string name="you_are_owed">你欠%1$s</string>
     <string name="manual_csv_import">手動 CSV 導入</string>

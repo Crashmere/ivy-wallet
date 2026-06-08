@@ -12,8 +12,6 @@
     <string name="unlock">Sblocca</string>
     <string name="current_balance">SALDO ATTUALE</string>
     <string name="balance_after_payments">SALDO DOPO I PAGAMENTI PIANIFICATI</string>
-    <string name="connect">Connetti</string>
-    <string name="remove_customer">Rimuovi client</string>
     <string name="add_budget">Aggiungi budget</string>
     <string name="no_budgets">Nessun budget</string>
     <string name="no_budgets_text">Non hai nessun budget impostato.\nTocca \"+ Aggiungi budget\" per aggiungerne uno.</string>
@@ -34,10 +32,6 @@
     <string name="charts">Grafici</string>
     <string name="period">Periodo:</string>
     <string name="categories">Categorie</string>
-    <string name="how_to">Come fare</string>
-    <string name="upload_csv_zip_file">Carica il file CSV/ZIP</string>
-    <string name="online_csv_converter_free">Convertitore online di CSV GRATIS</string>
-    <string name="check_email_spam">Controlla le cartelle \"Promozioni\" e \"Spam\" della tua email</string>
     <string name="please_wait">Attendere prego</string>
     <string name="importing_the_csv_file">Importazione del file CSV</string>
     <string name="success">Completato</string>
@@ -198,9 +192,6 @@
     <string name="exporting_data">Esportando i dati</string>
     <string name="exporting_data_description">Attendi, esportazione dei dati in corso</string>
     <string name="start_date_of_month">Data di inizio del mese</string>
-    <string name="roadmap">Roadmap</string>
-    <string name="logout">Esci</string>
-    <string name="login">Accedi</string>
     <string name="export_to_csv">Esporta in CSV</string>
     <string name="left_to_spend">Rimangono da spendere</string>
     <string name="budget_exceeded_by">Budget superato di</string>
@@ -258,9 +249,6 @@
     <string name="multiple_times">Più volte</string>
     <string name="starts_on">Inizia</string>
     <string name="repeats_every_text">Ripeti ogni</string>
-    <string name="submit">Invia</string>
-    <string name="what_do_you_need">Di cosa hai bisogno?</string>
-    <string name="explain_it_in_one_sentence">Spiegalo in una frase in inglese. (è supportato il markdown)</string>
     <string name="last_12_months">Ultimi 12 mesi</string>
     <string name="last_6_months">Ultimi 6 mesi</string>
     <string name="last_4_weeks">Ultime 4 settimane</string>
@@ -274,7 +262,6 @@
     <string name="notification_3">Hai registrato le tue transazioni oggi? 🏁</string>
     <string name="cash">Contanti</string>
     <string name="bank">Banca</string>
-    <string name="revoult">Revolut</string>
     <string name="food_drinks"><![CDATA[Cibo e bevande]]></string>
     <string name="bills_fees"><![CDATA[Bollette e tasse]]></string>
     <string name="transport">Trasporti</string>
@@ -294,7 +281,6 @@
     <string name="fitness">Fitness</string>
     <string name="self_development">Self-development</string>
     <string name="clothes">Vestiti</string>
-    <string name="beauty">Bellezza</string>
     <string name="education">Istruzione</string>
     <string name="pet">Animali</string>
     <string name="sports">Sport</string>
@@ -344,9 +330,6 @@
     <string name="confirm_skip_all_description">Sei sicuro di voler ignorare tutti i pagamenti pianificati scaduti?</string>
     <string name="confirm_skip_all">Conferma e ignora tutto</string>
     <string name="skip_all">Ignora tutto</string>
-    <string name="switch_to_offline_mode">Passa alla modalità offline</string>
-    <string name="experimental">Sperimantale</string>
-    <string name="experimental_settings">Impostazioni Sperimentali</string>
     <string name="wallet_balance">Wallet balance</string>
     <string name="total_exclusive">Totale (esclusivo): %1$s %2$s</string>
     <string name="total_balance">Totale Saldo</string>
@@ -365,18 +348,12 @@
     <string name="this_transaction_is_associated_with_loan">* Questa transazione è associata al Prestito : %1$s</string>
     <string name="this_transaction_is_associated_with_loan_record">* Questa transazione è associata a un Registrazione del Prestito: %1$s.</string>
     <string name="note_transaction_associated_with_loan_record_of_loan">Nota: Questa transazione è associata a un Registrazione del Prestito : %1$s\nStai cercando di cambiare il conto associato alla registrazione del prestito con un conto di valuta diversa\n La registrazione del prestito verrà ricalcolata in base ai tassi di cambio della valuta odierna.</string>
-    <string name="icons">Icone</string>
-    <string name="fonts">Caratteri</string>
-    <string name="tech_stack">Tecnologie utilizzate</string>
     <string name="tap_to_switch_theme">Tocca per cambiare tema</string>
     <string name="do_not_use_for_backup_purposes">⚠\uFE0F Non utilizzare per il backup</string>
     <string name="done">Fatto</string>
-    <string name="error">Errore</string>
-    <string name="loading">Caricamento…</string>
     <string name="try_again">Riprova</string>
     <string name="you_can_see_a_piechart">Puoi visualizzare un grafico a torta delle tue spese! Fai clic sulla scheda Uscite nella parte superiore della dashboard.</string>
     <string name="please_type_category_name">Digita \"%1$s\" per eliminare la categoria</string>
-    <string name="your_data_will_be_saved_only_locally">I tuoi dati saranno salvati localmente sul tuo dispositivo. Rischi di perdere i tuoi dati se disinstalli l\'app o se cambi dispositivo. Per prevenire perdite di dati, raccomandiamo di esportare regolarmente un backup dalle impostazioni.</string>
     <string name="you_owe">Sei in debito di: %1$s</string>
     <string name="you_are_owed">Ti sono dovuti %1$s</string>
     <string name="language">Lingua</string>

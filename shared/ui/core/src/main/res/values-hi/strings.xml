@@ -12,8 +12,6 @@
     <string name="unlock">खोले</string>
     <string name="current_balance">वर्तमान राशि</string>
     <string name="balance_after_payments">नियोजित भुगतान के बाद शेष राशि</string>
-    <string name="connect">जोड़े</string>
-    <string name="remove_customer">ग्राहक निकालें</string>
     <string name="add_budget">बजट जोड़ें</string>
     <string name="no_budgets">कोई बजट नहीं</string>
     <string name="no_budgets_text">आपके पास कोई बजट सेट नहीं है। जोड़ने के लिए + बटन पर टैप करें।</string>
@@ -34,10 +32,6 @@
     <string name="charts">चार्ट</string>
     <string name="period">अवधि:</string>
     <string name="categories">श्रेणियाँ</string>
-    <string name="how_to">कैसे करें</string>
-    <string name="upload_csv_zip_file">CSV/ZIP फ़ाइल अपलोड करें</string>
-    <string name="online_csv_converter_free">ऑनलाइन CSV  कनवर्टर फ्री</string>
-    <string name="check_email_spam">अपने ईमेल के प्रमोशन और स्पैम फ़ोल्डर देखें</string>
     <string name="please_wait">कृपया प्रतीक्षा करें</string>
     <string name="importing_the_csv_file">CSV फ़ाइल इम्पोर्ट किया जा रहा हैं</string>
     <string name="success">सफल</string>
@@ -171,7 +165,6 @@
     <string name="sports">खेल</string>
     <string name="pet">पालतू जानवर</string>
     <string name="education">शिक्षा</string>
-    <string name="beauty">सुंदरता</string>
     <string name="clothes">कपड़े</string>
     <string name="self_development">आत्म विकास</string>
     <string name="fitness">स्वास्थ्य</string>
@@ -204,9 +197,6 @@
     <string name="last_4_weeks">पिछले 4 सप्ताह</string>
     <string name="last_6_months">पिछले 6 महीने</string>
     <string name="last_12_months">पिछले 12 महीने</string>
-    <string name="explain_it_in_one_sentence">इसे एक वाक्य में समझाइए। (मार्कडाउन सपोर्ट)</string>
-    <string name="what_do_you_need">आपको किस चीज़ की जरूरत है?</string>
-    <string name="submit">सबमिट</string>
     <string name="repeats_every_text">मै रिपीट करता है</string>
     <string name="starts_on">पर शुरू होता है</string>
     <string name="multiple_times">कई बार</string>
@@ -264,9 +254,6 @@
     <string name="buffer_exceeded_by">बफर इतने से अधिक हो गया</string>
     <string name="left_to_spend">खर्च करने के लिए छोड़ दिया गया</string>
     <string name="export_to_csv">CSV को एक्सपोर्ट करें</string>
-    <string name="login">लॉग इन करें</string>
-    <string name="logout">लॉग आउट</string>
-    <string name="roadmap">रोडमैप</string>
     <string name="start_date_of_month">महीने की शुरुआत की तारीख</string>
     <string name="exporting_data_description">कृपया प्रतीक्षा करें, डेटा एक्सपोर्ट किया जा रहा है</string>
     <string name="exporting_data">डेटा एक्सपोर्ट किया जा रहा है</string>
@@ -338,12 +325,8 @@
     <string name="no_transactions_for_your_filter">आपके पास इस फ़िल्टर के लिए कोई लेन-देन नहीं है।</string>
     <string name="no_filter">कोई फिल्टर नहीं</string>
     <string name="invalid_filter_warning">रिपोर्ट जनरेट करने के लिए आपको पहले एक मान्य फ़िल्टर सेट करना होगा।</string>
-    <string name="revoult">Revolut</string>
     <string name="adjust_initial_balance_description"><![CDATA[आइए आरंभ करें। \"खाते\" पर जाएं -> किसी खाते पर टैप करें -> उसके शेष पर टैप करें -> वर्तमान शेष राशि दर्ज करें। बस इतना ही!]]></string>
     <string name="transfers_as_income_expense_description">खाता स्थानान्तरण को खाता स्क्रीन में आय या व्यय के रूप में मानता है</string>
-    <string name="switch_to_offline_mode">ऑफ़लाइन मोड में स्विच करें</string>
-    <string name="experimental">Experimental</string>
-    <string name="experimental_settings">प्रायोगिक सेटिंग्स</string>
     <string name="wallet_balance">वॉलेट बैलेंस</string>
     <string name="total_exclusive">कुल (अनन्य): %1$s %2$s</string>
     <string name="total_balance">कुल बैलेंस</string>

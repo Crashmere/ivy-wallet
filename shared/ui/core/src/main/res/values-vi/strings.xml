@@ -12,8 +12,6 @@
     <string name="unlock">Mở khóa</string>
     <string name="current_balance">SỐ DƯ HIỆN TẠI</string>
     <string name="balance_after_payments">SỐ DƯ SAU THANH TOÁN</string>
-    <string name="connect">Kết nối</string>
-    <string name="remove_customer">Xóa khách hàng</string>
     <string name="add_budget">Thêm ngân sách</string>
     <string name="no_budgets">Không có ngân sách nào</string>
     <string name="no_budgets_text">Bạn chưa thêm bất kỳ ngân sách nào.\nNhấn vào "+ Thêm ngân sách" để tạo một ngân sách mới.</string>
@@ -34,10 +32,6 @@
     <string name="charts">Biểu đồ</string>
     <string name="period">Khoảng thời gian:</string>
     <string name="categories">Danh mục</string>
-    <string name="how_to">Hướng dẫn</string>
-    <string name="upload_csv_zip_file">Tải lên file CSV/ZIP</string>
-    <string name="online_csv_converter_free">Trình chuyển đổi file CSV trực tuyến MIỄN PHÍ</string>
-    <string name="check_email_spam">"Kiểm tra thư mục "Khuyến mãi" và "Thư rác" trong email của bạn".</string>
     <string name="please_wait">Vui lòng chờ</string>
     <string name="importing_the_csv_file">Đang tải lên tệp CSV</string>
     <string name="success">Thành công</string>
@@ -198,9 +192,6 @@
     <string name="exporting_data">Đang xuất dữ liệu</string>
     <string name="exporting_data_description">Vui lòng đợi, đang xuất dữ liệu</string>
     <string name="start_date_of_month">Ngày bắt đầu của tháng</string>
-    <string name="roadmap">Lộ trình</string>
-    <string name="logout">Đăng xuất</string>
-    <string name="login">Đăng nhập</string>
     <string name="export_to_csv">Xuất ra CSV</string>
     <string name="left_to_spend">Số dư còn lại</string>
     <string name="budget_exceeded_by">Vượt quá ngân sách</string>
@@ -258,9 +249,6 @@
     <string name="multiple_times">Nhiều lần</string>
     <string name="starts_on">Bắt đầu vào</string>
     <string name="repeats_every_text">Lặp lại mỗi</string>
-    <string name="submit">Xác nhận</string>
-    <string name="what_do_you_need">Bạn cần gì?</string>
-    <string name="explain_it_in_one_sentence">Giải thích trong một câu (hỗ trợ markdown).</string>
     <string name="last_12_months">12 tháng gần đây</string>
     <string name="last_6_months">6 tháng gần đây</string>
     <string name="last_4_weeks">4 tuần gần đây</string>
@@ -274,7 +262,6 @@
     <string name="notification_3">Bạn đã ghi lại các giao dịch của mình ngày hôm nay chưa? 🏁</string>
     <string name="cash">Tiền mặt</string>
     <string name="bank">Ngân hàng</string>
-    <string name="revoult">Revolut</string>
     <string name="food_drinks"><![CDATA[Ăn uống]]></string>
     <string name="bills_fees"><![CDATA[Hóa đơn]]></string>
     <string name="transport">Di chuyển</string>
@@ -294,7 +281,6 @@
     <string name="fitness">Fitness</string>
     <string name="self_development">Phát triển bản thân</string>
     <string name="clothes">Quần áo</string>
-    <string name="beauty">Sắc đẹp</string>
     <string name="education">Học tập</string>
     <string name="pet">Thú cưng</string>
     <string name="sports">Thể thao</string>
@@ -344,9 +330,6 @@
     <string name="skip_all">Bỏ qua tất cả</string>
     <string name="confirm_skip_all">Xác nhận bỏ qua tất cả</string>
     <string name="confirm_skip_all_description">Bạn có chắc chắn muốn bỏ qua tất cả các khoản thanh toán đã quá hạn theo kế hoạch không?</string>
-    <string name="switch_to_offline_mode">Chuyển sang chế độ ngoại tuyến</string>
-    <string name="experimental">Thử nghiệm</string>
-    <string name="experimental_settings">Cài đặt thử nghiệm</string>
     <string name="wallet_balance">Số dư trên ví</string>
     <string name="total_exclusive">Tổng (độc quyền): %1$s %2$s</string>
     <string name="total_balance">Tổng số dư</string>
@@ -366,18 +349,12 @@
     <string name="this_transaction_is_associated_with_loan_record">* Giao dịch này được liên kết với Bản ghi của Khoản vay : %1$s</string>
     <string name="note_transaction_associated_with_loan_record_of_loan">Lưu ý: Giao dịch này được liên kết với Bản ghi của Khoản vay : %1$s\nBạn đang cố gắng thay đổi tài khoản được liên kết với bản ghi khoản vay sang tài khoản có loại tiền tệ khác\n Bản ghi khoản vay sẽ được tính lại dựa trên tỷ giá hối đoái của ngày hôm nay</string>
     <string name="note_you_are_trying_to_change_the_account_associated_with_the_loan">Lưu ý: Bạn đang cố gắng thay đổi tài khoản được liên kết với khoản vay: %1$s bằng tài khoản có loại tiền tệ khác, \nTất cả hồ sơ khoản vay sẽ được tính lại dựa trên tỷ giá hối đoái của ngày hôm nay</string>
-    <string name="icons">Biểu tượng</string>
-    <string name="fonts">Phông chữ</string>
-    <string name="tech_stack">Công nghệ sử dụng</string>
     <string name="tap_to_switch_theme">Nhấn để chuyển chủ đề</string>
     <string name="do_not_use_for_backup_purposes">⚠\uFE0F Không sử dụng cho mục đích sao lưu</string>
     <string name="done">Xong</string>
-    <string name="error">Lỗi</string>
-    <string name="loading">Đang tải…</string>
     <string name="try_again">Thử lại</string>
     <string name="you_can_see_a_piechart">Bạn có thể xem Biểu đồ tròn cho các chi phí của mình! Nhấp vào thẻ Chi phí ở đầu trang của bảng điều khiển.</string>
     <string name="please_type_category_name">Vui lòng nhập \"%1$s\" để xóa danh mục của bạn.</string>
-    <string name="your_data_will_be_saved_only_locally">Dữ liệu của bạn sẽ chỉ được lưu trữ trên bộ nhớ điện thoại của bạn. Bạn có nguy cơ mất dữ liệu nếu gỡ bỏ ứng dụng hoặc thay đổi thiết bị. Để tránh mất dữ liệu, chúng tôi khuyên bạn nên xuất bản sao lưu từ cài đặt thường xuyên.</string>
     <string name="you_owe">Bạn nợ: %1$s</string>
     <string name="you_are_owed">Bạn đang nợ %1$s</string>
     <string name="manual_csv_import">Tải lên tệp CSV thủ công</string>

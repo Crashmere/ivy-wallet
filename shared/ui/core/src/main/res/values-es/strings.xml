@@ -12,8 +12,6 @@
     <string name="unlock">Desbloquear</string>
     <string name="current_balance">SALDO ACTUAL</string>
     <string name="balance_after_payments">SALDO DESPUÉS DE PAGOS PLANIFICADOS</string>
-    <string name="connect">Conectar</string>
-    <string name="remove_customer">Eliminar cliente</string>
     <string name="add_budget">Agregar presupuesto</string>
     <string name="no_budgets">Sin presupuestos</string>
     <string name="no_budgets_text">No tienes ningún presupuesto establecido..\nToque "+ Agregar presupuesto" para agregar uno.</string>
@@ -34,10 +32,6 @@
     <string name="charts">Gráficos</string>
     <string name="period">Periodo:</string>
     <string name="categories">Categorías</string>
-    <string name="how_to">Cómo</string>
-    <string name="upload_csv_zip_file">Subir archivo CSV/ZIP</string>
-    <string name="online_csv_converter_free">Convertidor CSV en línea GRATIS</string>
-    <string name="check_email_spam">Revisa las carpetas de "Promociones" y "Spam" de tus correos electrónicos</string>
     <string name="please_wait">Espere por favor</string>
     <string name="importing_the_csv_file">Importando el archivo CSV</string>
     <string name="success">Listo</string>
@@ -199,9 +193,6 @@
     <string name="exporting_data">Exportar datos</string>
     <string name="exporting_data_description">Por favor espere, exportando datos</string>
     <string name="start_date_of_month">Fecha de inicio del mes</string>
-    <string name="roadmap">Hoja de ruta</string>
-    <string name="logout">Cerrar sesión</string>
-    <string name="login">Iniciar sesión</string>
     <string name="export_to_csv">Exportar a CSV</string>
     <string name="left_to_spend">Queda para gastar</string>
     <string name="budget_exceeded_by">Presupuesto excedido por</string>
@@ -259,9 +250,6 @@
     <string name="multiple_times">Múltiples veces</string>
     <string name="starts_on">Comienza el</string>
     <string name="repeats_every_text">Se repite cada</string>
-    <string name="submit">Entregar</string>
-    <string name="what_do_you_need">¿Qué necesitas?</string>
-    <string name="explain_it_in_one_sentence">Explícalo en una frase. (admite Markdown)</string>
     <string name="last_12_months">últimos 12 meses</string>
     <string name="last_6_months">últimos 6 meses</string>
     <string name="last_4_weeks">últimas 4 semanas</string>
@@ -275,7 +263,6 @@
     <string name="notification_3">¿Has registrado tus transacciones hoy? 🏁</string>
     <string name="cash">Efectivo</string>
     <string name="bank">Banco</string>
-    <string name="revoult">Revolut</string>
     <string name="food_drinks"><![CDATA[Alimentos y Bebidas]]></string>
     <string name="bills_fees"><![CDATA[Facturas y tarifas]]></string>
     <string name="transport">Transporte</string>
@@ -295,7 +282,6 @@
     <string name="fitness">Condición física</string>
     <string name="self_development">Autodesarrollo</string>
     <string name="clothes">Ropa</string>
-    <string name="beauty">Belleza</string>
     <string name="education">Educación</string>
     <string name="pet">Mascota</string>
     <string name="sports">Deportes</string>
@@ -345,9 +331,6 @@
     <string name="skip_all">Saltar todo</string>
     <string name="confirm_skip_all">Confirmar saltar todo</string>
     <string name="confirm_skip_all_description">¿Está seguro de saltar todas las transacciones planeadas caducadas?</string>
-    <string name="switch_to_offline_mode">Cambiar a modo sin conexión</string>
-    <string name="experimental">Experimental</string>
-    <string name="experimental_settings">Ajustes experimentales</string>
     <string name="wallet_balance">Wallet balance</string>
     <string name="total_exclusive">Total (exclusivo): %1$s %2$s</string>
     <string name="total_balance">Total Balance</string>

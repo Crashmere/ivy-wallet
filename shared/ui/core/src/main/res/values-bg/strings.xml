@@ -12,8 +12,6 @@
     <string name="unlock">Отключи</string>
     <string name="current_balance">СЕГАШЕН БАЛАНС</string>
     <string name="balance_after_payments">БАЛАНС СЛЕД ПЛАНИРАНИ</string>
-    <string name="connect">Свързване</string>
-    <string name="remove_customer">Премахни потребител</string>
     <string name="add_budget">Добави бюджет</string>
     <string name="no_budgets">Няма бюджети</string>
     <string name="no_budgets_text">Нямате бюджети.\nНатиснете "+ Добави бюджет", за да създатете.</string>
@@ -34,10 +32,6 @@
     <string name="charts">Графики</string>
     <string name="period">Период:</string>
     <string name="categories">Категории</string>
-    <string name="how_to">Как да</string>
-    <string name="upload_csv_zip_file">Качи CSV/ZIP файл</string>
-    <string name="online_csv_converter_free">Безплатен онлайн CSV конвертор</string>
-    <string name="check_email_spam">Проверете "Promotions" и "Spam" папките в имейла си.</string>
     <string name="please_wait">Моля изчакайте</string>
     <string name="importing_the_csv_file">Импортиране на CSV файл</string>
     <string name="success">Успех</string>
@@ -195,9 +189,6 @@
     <string name="exporting_data">Експортиране</string>
     <string name="exporting_data_description">Моля изчакайте</string>
     <string name="start_date_of_month">Начална дата на месец</string>
-    <string name="roadmap">План</string>
-    <string name="logout">Изход</string>
-    <string name="login">Вход</string>
     <string name="export_to_csv">Ескпортиране в CSV</string>
     <string name="left_to_spend">Оставащи</string>
     <string name="budget_exceeded_by">Надвишен с</string>
@@ -255,9 +246,6 @@
     <string name="multiple_times">Многократно</string>
     <string name="starts_on">Започва на</string>
     <string name="repeats_every_text">Повтаря се всеки</string>
-    <string name="submit">Изпрати</string>
-    <string name="what_do_you_need">От какво имате нужда?</string>
-    <string name="explain_it_in_one_sentence">Обяснете в едно изречение. (supports markdown)</string>
     <string name="last_12_months">Последните 12 месеца</string>
     <string name="last_6_months">Последните 6 месеца</string>
     <string name="last_4_weeks">Последните 4 седмици</string>
@@ -271,7 +259,6 @@
     <string name="notification_3">Въведохте ли разходите си днес? 🏁</string>
     <string name="cash">Кеш</string>
     <string name="bank">Банка</string>
-    <string name="revoult">Revolut</string>
     <string name="food_drinks"><![CDATA[Храна и напитки]]></string>
     <string name="bills_fees"><![CDATA[Сметки]]></string>
     <string name="transport">Транспорт</string>
@@ -291,7 +278,6 @@
     <string name="fitness">Фитнес</string>
     <string name="self_development">Себе-развитие</string>
     <string name="clothes">Дрехи</string>
-    <string name="beauty">Красота</string>
     <string name="education">Образование</string>
     <string name="pet">Домашен любимец</string>
     <string name="sports">Спорт</string>
@@ -341,9 +327,6 @@
     <string name="skip_all">прескочете всички</string>
     <string name="confirm_skip_all">Потвърдете пропускането на всички</string>
     <string name="confirm_skip_all_description">Сигурни ли сте, че искате да пропуснете всички просрочени планирани операции?</string>
-    <string name="switch_to_offline_mode">Switch to offline mode</string>
-    <string name="experimental">Experimental</string>
-    <string name="experimental_settings">Experimental Settings</string>
     <string name="wallet_balance">Wallet balance</string>
     <string name="total_exclusive">Общо (без): %1$s %2$s</string>
     <string name="total_balance">Общо БАЛАНС</string>

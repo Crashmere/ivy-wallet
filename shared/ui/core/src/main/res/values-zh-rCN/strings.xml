@@ -12,8 +12,6 @@
     <string name="unlock">解锁</string>
     <string name="current_balance">当前余额</string>
     <string name="balance_after_payments">计划支付后余额</string>
-    <string name="connect">连接</string>
-    <string name="remove_customer">移除用户</string>
     <string name="add_budget">添加预算</string>
     <string name="no_budgets">无预算</string>
     <string name="no_budgets_text">您尚未设置任何预算。\n点击“+ 添加预算”添加一个。</string>
@@ -34,10 +32,6 @@
     <string name="charts">图表</string>
     <string name="period">周期：</string>
     <string name="categories">类别</string>
-    <string name="how_to">如何</string>
-    <string name="upload_csv_zip_file">上传CSV/ZIP文件</string>
-    <string name="online_csv_converter_free">免费在线CSV转换器</string>
-    <string name="check_email_spam">请检查您的电子邮件的“促销”和“垃圾邮件”文件夹</string>
     <string name="please_wait">请稍候</string>
     <string name="importing_the_csv_file">正在导入CSV文件</string>
     <string name="success">成功</string>
@@ -221,9 +215,6 @@
     <string name="exporting_data">正在导出数据</string>
     <string name="exporting_data_description">请稍候，正在导出数据</string>
     <string name="start_date_of_month">每月开始日期</string>
-    <string name="roadmap">路线图</string>
-    <string name="logout">注销</string>
-    <string name="login">登录</string>
     <string name="export_to_csv">导出为 CSV</string>
     <string name="left_to_spend">剩余可用</string>
     <string name="budget_exceeded_by">超出预算</string>
@@ -281,9 +272,6 @@
     <string name="multiple_times">多次</string>
     <string name="starts_on">开始日期</string>
     <string name="repeats_every_text">重复间隔</string>
-    <string name="submit">提交</string>
-    <string name="what_do_you_need">您需要什么？</string>
-    <string name="explain_it_in_one_sentence">用一句话说明（支持Markdown）。</string>
     <string name="last_12_months">过去 12 个月</string>
     <string name="last_6_months">过去 6 个月</string>
     <string name="last_4_weeks">过去 4 周</string>
@@ -297,7 +285,6 @@
     <string name="notification_3">您今天记录了您的交易吗？ 🏁</string>
     <string name="cash">现金</string>
     <string name="bank">银行</string>
-    <string name="revoult">Revolut</string>
     <string name="food_drinks"><![CDATA[食物和饮料]]></string>
     <string name="bills_fees"><![CDATA[账单和费用]]></string>
     <string name="transport">交通</string>
@@ -317,7 +304,6 @@
     <string name="fitness">健身</string>
     <string name="self_development">个人发展</string>
     <string name="clothes">服装</string>
-    <string name="beauty">美容</string>
     <string name="education">教育</string>
     <string name="pet">宠物</string>
     <string name="sports">运动</string>
@@ -367,9 +353,6 @@
     <string name="skip_all">全部跳过</string>
     <string name="confirm_skip_all">确认全部跳过</string>
     <string name="confirm_skip_all_description">您确定要跳过所有逾期的计划支付吗？</string>
-    <string name="switch_to_offline_mode">切换到离线模式</string>
-    <string name="experimental">实验性功能</string>
-    <string name="experimental_settings">实验性功能设置</string>
     <string name="wallet_balance">钱包余额</string>
     <string name="total_exclusive">总计（不包括）：%1$s %2$s</string>
     <string name="total_balance">总余额</string>
@@ -389,18 +372,12 @@
     <string name="this_transaction_is_associated_with_loan_record">* 此交易与贷款记录关联：%1$s</string>
     <string name="note_transaction_associated_with_loan_record_of_loan">注意：此交易与贷款记录关联：%1$s\n您正在尝试将贷款记录关联的账户更改为不同货币的账户\n贷款记录将根据当天的汇率重新计算</string>
     <string name="note_you_are_trying_to_change_the_account_associated_with_the_loan">注意：您正在尝试将贷款 %s 关联的账户更改为不同货币的账户\n所有贷款记录将根据当天的汇率重新计算</string>
-    <string name="icons">图标</string>
-    <string name="fonts">字体</string>
-    <string name="tech_stack">技术栈</string>
     <string name="tap_to_switch_theme">点击切换主题</string>
     <string name="do_not_use_for_backup_purposes">⚠\uFE0F 请勿用于备份目的</string>
     <string name="done">完成</string>
-    <string name="error">错误</string>
-    <string name="loading">加载中……</string>
     <string name="try_again">重试</string>
     <string name="you_can_see_a_piechart">通过点击上方适当的卡片，您可以查看收入和支出的饼图！</string>
     <string name="please_type_category_name">请键入“%1$s”以删除您的类别。</string>
-    <string name="your_data_will_be_saved_only_locally">您的数据将仅在手机本地保存。如果您卸载应用程序或更换设备，您将面临数据丢失的风险。为了防止数据丢失，我们建议定期从设置中导出备份。</string>
     <string name="you_owe">您借入：%1$s</string>
     <string name="you_are_owed">您贷出：%1$s</string>
     <string name="manual_csv_import">手动导入 CSV 文件</string>

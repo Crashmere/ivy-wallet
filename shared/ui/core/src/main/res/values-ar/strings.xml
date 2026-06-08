@@ -12,8 +12,6 @@
     <string name="unlock">إلغاء القفل</string>
     <string name="current_balance">الرصيد الحالي</string>
     <string name="balance_after_payments">الرصيد بعد الدفعات المحددة</string>
-    <string name="connect">اتصل</string>
-    <string name="remove_customer">حذف العميل</string>
     <string name="add_budget">أضف ميزانية</string>
     <string name="no_budgets">لا يوجد ميزانيات</string>
     <string name="no_budgets_text">لا يوجد لديك اي ميزانيات محددة. اضغط على "أضف ميزانية" لإضافة واحدة.</string>
@@ -34,10 +32,6 @@
     <string name="charts">المخططات</string>
     <string name="period">المدة:</string>
     <string name="categories">الفئات</string>
-    <string name="how_to">تعليمات</string>
-    <string name="upload_csv_zip_file">CSV/ZIP رفع ملف</string>
-    <string name="online_csv_converter_free">محول مجاني لملفات CSV</string>
-    <string name="check_email_spam">تحقق في مجلدات "االترويج" و "الرسائل الغير مرغوبة" في بريدك الالكتروني</string>
     <string name="please_wait">الرجاء الإنتظار</string>
     <string name="importing_the_csv_file">يتم استيراد ملف الcsv</string>
     <string name="success">تم بنجاح</string>
@@ -195,9 +189,6 @@
     <string name="exporting_data">يتم تصدير البيانات</string>
     <string name="exporting_data_description">الرجاء الانتظار, يتم تصدير البيانات</string>
     <string name="start_date_of_month">تاريخ بداية الشهر</string>
-    <string name="roadmap">الخطة</string>
-    <string name="logout">تسجيل الخروج</string>
-    <string name="login">تسجيل الدخول</string>
     <string name="export_to_csv">CSV التصدير لملف</string>
     <string name="left_to_spend">المتبقي للإنفاق</string>
     <string name="budget_exceeded_by">تجاوزت عن الميزانية ب</string>
@@ -255,9 +246,6 @@
     <string name="multiple_times">مرات متعددة</string>
     <string name="starts_on">تبدأ في</string>
     <string name="repeats_every_text">تتكرر كل</string>
-    <string name="submit">إرسال</string>
-    <string name="what_do_you_need">ماذا تحتاج؟</string>
-    <string name="explain_it_in_one_sentence">(Markdown تدعم صيغة) اشرحها في جملة واحدة</string>
     <string name="last_12_months">آخر 12 شهر</string>
     <string name="last_6_months">آخر 6 أشهر</string>
     <string name="last_4_weeks">آخر 4 أسابيع</string>
@@ -271,7 +259,6 @@
     <string name="notification_3">هل قمت بتسجيل معاملاتك اليوم؟ 🏁</string>
     <string name="cash">نقدي</string>
     <string name="bank">البنك</string>
-    <string name="revoult">Revolut</string>
     <string name="food_drinks">أطعمة ومشروبات</string>
     <string name="bills_fees">الفواتير والرسوم</string>
     <string name="transport">المواصلات</string>
@@ -291,7 +278,6 @@
     <string name="fitness">اللياقة البدنية</string>
     <string name="self_development">تطوير الذات</string>
     <string name="clothes">ملابس</string>
-    <string name="beauty">الجمال</string>
     <string name="education">التعليم</string>
     <string name="pet">الحيوان الأليف</string>
     <string name="sports">رياضات</string>
@@ -341,9 +327,6 @@
     <string name="skip_all">تخطي الكل</string>
     <string name="confirm_skip_all">تأكيد تخطي الكل</string>
     <string name="confirm_skip_all_description">هل أنت متأكد من أنك تريد تخطي جميع المعاملات المخطط لها المتأخرة؟</string>
-    <string name="switch_to_offline_mode">التبديل إلى وضع بدون انترنت</string>
-    <string name="experimental">تجريبي</string>
-    <string name="experimental_settings">الإعدادات التجريبية</string>
     <string name="wallet_balance">رصيد المحفظة</string>
     <string name="total_exclusive">%1$s %2$s: المجموع (حصريا)</string>
     <string name="total_balance">المجموع المحفظة</string>

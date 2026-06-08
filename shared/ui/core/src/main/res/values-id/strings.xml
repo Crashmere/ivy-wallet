@@ -12,8 +12,6 @@
     <string name="unlock">Buka kunci</string>
     <string name="current_balance">SALDO SAAT INI</string>
     <string name="balance_after_payments">SALDO SETELAH PEMBAYARAN TERENCANA</string>
-    <string name="connect">Hubungkan</string>
-    <string name="remove_customer">Hapus pelanggan</string>
     <string name="add_budget">Tambahkan anggaran</string>
     <string name="no_budgets">Tidak ada anggaran</string>
     <string name="no_budgets_text">Anda tidak memiliki anggaran yang diatur.\nKetuk "+ Tambahkan anggaran" untuk menambahkan satu.</string>
@@ -34,10 +32,6 @@
     <string name="charts">Grafik</string>
     <string name="period">Periode:</string>
     <string name="categories">Kategori</string>
-    <string name="how_to">Bagaimana</string>
-    <string name="upload_csv_zip_file">Unggah file CSV/ZIP</string>
-    <string name="online_csv_converter_free">Konverter CSV Online GRATIS</string>
-    <string name="check_email_spam">Periksa folder "Promosi" dan "Spam" email Anda</string>
     <string name="please_wait">Harap tunggu</string>
     <string name="importing_the_csv_file">Mengimpor file CSV</string>
     <string name="success">Berhasil</string>
@@ -198,9 +192,6 @@
     <string name="exporting_data">Mengekspor Data</string>
     <string name="exporting_data_description">Harap tunggu, mengekspor data</string>
     <string name="start_date_of_month">Tanggal Mulai Bulan</string>
-    <string name="roadmap">Rencana</string>
-    <string name="logout">Keluar</string>
-    <string name="login">Masuk</string>
     <string name="export_to_csv">Ekspor ke CSV</string>
     <string name="left_to_spend">Sisa yang dapat dihabiskan</string>
     <string name="budget_exceeded_by">Anggaran melebihi oleh</string>
@@ -258,9 +249,6 @@
     <string name="multiple_times">Beberapa kali</string>
     <string name="starts_on">Dimulai pada</string>
     <string name="repeats_every_text">Berulang setiap</string>
-    <string name="submit">Kirim</string>
-    <string name="what_do_you_need">Apa yang Anda butuhkan?</string>
-    <string name="explain_it_in_one_sentence">Jelaskan dalam satu kalimat. (mendukung markdown)</string>
     <string name="last_12_months">12 bulan terakhir</string>
     <string name="last_6_months">6 bulan terakhir</string>
     <string name="last_4_weeks">4 minggu terakhir</string>
@@ -274,7 +262,6 @@
     <string name="notification_3">Sudahkah Anda mencatat transaksi hari ini? 🏁</string>
     <string name="cash">Tunai</string>
     <string name="bank">Bank</string>
-    <string name="revoult">Revolut</string>
     <string name="food_drinks"><![CDATA[Makanan & Minuman]]></string>
     <string name="bills_fees"><![CDATA[Tagihan & Biaya]]></string>
     <string name="transport">Transportasi</string>
@@ -294,7 +281,6 @@
     <string name="fitness">Kebugaran</string>
     <string name="self_development">Pengembangan Diri</string>
     <string name="clothes">Pakaian</string>
-    <string name="beauty">Kecantikan</string>
     <string name="education">Pendidikan</string>
     <string name="pet">Hewan Peliharaan</string>
     <string name="sports">Olahraga</string>
@@ -344,9 +330,6 @@
     <string name="skip_all">Lewati semua</string>
     <string name="confirm_skip_all">Konfirmasi lewati semua</string>
     <string name="confirm_skip_all_description">Apakah Anda yakin ingin melewati semua pembayaran yang tertunda?</string>
-    <string name="switch_to_offline_mode">Beralih ke mode offline</string>
-    <string name="experimental">Eksperimental</string>
-    <string name="experimental_settings">Pengaturan Eksperimental</string>
     <string name="wallet_balance">Saldo dompet</string>
     <string name="total_exclusive">Total (eksklusif): %1$s %2$s</string>
     <string name="total_balance">Total dompet</string>

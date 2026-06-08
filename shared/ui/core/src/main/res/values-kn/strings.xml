@@ -12,8 +12,6 @@
     <string name="unlock">ತೆಗೆ</string>
     <string name="current_balance">ಪ್ರಸ್ತುತ ಮೊತ್ತ</string>
     <string name="balance_after_payments">ಯೋಜಿತ ಪಾವತಿಗಳ ನಂತರದ ಮೊತ್ತ</string>
-    <string name="connect">ಸೇರಿಸು</string>
-    <string name="remove_customer">ಗ್ರಾಹಕರನ್ನು ತೆಗೆದುಹಾಕಿ</string>
     <string name="add_budget">ಬಜೆಟ್ ಸೇರಿಸಿ</string>
     <string name="no_budgets">ಯಾವುದೇ ಬಜೆಟ್ ಇಲ್ಲ</string>
     <string name="no_budgets_text">ನಿಮ್ಮ ಬಳಿ ಯಾವುದೇ ಬಜೆಟ್ ಇಲ್ಲ.\nಬಜೆಟ್ ಸೇರಿಸಲು "+ಬಜೆಟ್ ಸೇರಿಸಿ" ಬಟನನ್ನು ಟ್ಯಾಪ್ ಮಾಡಿ.</string>
@@ -34,10 +32,6 @@
     <string name="charts">ನಕಾಶಗಳು</string>
     <string name="period">ಅವಧಿ:</string>
     <string name="categories">ವರ್ಗಗಳು</string>
-    <string name="how_to">ಹೇಗೆ</string>
-    <string name="upload_csv_zip_file">CSV/ZIP ಫೈಲ್ ಅನ್ನು ಅಪ್‌ಲೋಡ್ ಮಾಡಿ</string>
-    <string name="online_csv_converter_free">ಆನ್‌ಲೈನ್ CSV ಪರಿವರ್ತಕ ಫ್ರೀಯೇ</string>
-    <string name="check_email_spam">ನಿಮ್ಮ ಇಮೇಲ್‌ನ "ಪ್ರಚಾರಗಳು" ಮತ್ತು "ಸ್ಪ್ಯಾಮ್" ಫೋಲ್ಡರ್‌ಗಳನ್ನು ಪರಿಶೀಲಿಸಿ</string>
     <string name="please_wait">ದಯವಿಟ್ಟು ಸ್ವಲ್ಪ ನಿರೀಕ್ಷಿಸಿ</string>
     <string name="importing_the_csv_file">CSV ಫೈಲ್ ಅನ್ನು ಆಮದು ಮಾಡಲಾಗುತ್ತಿದೆ</string>
     <string name="success">ನೆರವೇರಿದೆ</string>
@@ -195,9 +189,6 @@
     <string name="exporting_data">ಡೇಟಾವನ್ನು ರಫ್ತು ಮಾಡಲಾಗುತ್ತಿದೆ</string>
     <string name="exporting_data_description">ದಯವಿಟ್ಟು ನಿರೀಕ್ಷಿಸಿ, ಡೇಟಾವನ್ನು ರಫ್ತು ಮಾಡಲಾಗುತ್ತಿದೆ</string>
     <string name="start_date_of_month">ತಿಂಗಳ ಪ್ರಾರಂಭ ದಿನಾಂಕ</string>
-    <string name="roadmap">ಮಾರ್ಗ ನಕ್ಷೆ</string>
-    <string name="logout">ಲಾಗ್ಔಟ್</string>
-    <string name="login">ಲಾಗಿನ್</string>
     <string name="export_to_csv">CSV ಗೆ ರಫ್ತು ಮಾಡಿ</string>
     <string name="left_to_spend">ಖರ್ಚು ಮಾಡಲು ಉಳಿದಿರುವ ಮೊತ್ತ</string>
     <string name="budget_exceeded_by">ಬಜೆಟ್ ಈ ಮೊತ್ತವನ್ನು ಮೀರಿದೆ</string>
@@ -255,9 +246,6 @@
     <string name="multiple_times">ಹಲವಾರು ಬಾರಿ</string>
     <string name="starts_on">ರಂದು ಆರಂಭವಾಗುತ್ತದೆ</string>
     <string name="repeats_every_text">ಪ್ರತಿ ಪುನರಾವರ್ತನೆ</string>
-    <string name="submit">ಸಲ್ಲಿಸಿ</string>
-    <string name="what_do_you_need">ನಿಮಗೆ ಏನು ಬೇಕು?</string>
-    <string name="explain_it_in_one_sentence">ಒಂದು ವಾಕ್ಯದಲ್ಲಿ ಅದನ್ನು ವಿವರಿಸಿ. (ಮಾರ್ಕ್‌ಡೌನ್ ಅನ್ನು ಬೆಂಬಲಿಸುತ್ತದೆ)</string>
     <string name="last_12_months">ಕಳೆದ 12 ತಿಂಗಳುಗಳು</string>
     <string name="last_6_months">ಕಳೆದ 6 ತಿಂಗಳುಗಳು</string>
     <string name="last_4_weeks">ಕಳೆದ 4 ವಾರಗಳು</string>
@@ -271,7 +259,6 @@
     <string name="notification_3">ನೀವು ಇಂದು ನಿಮ್ಮ ವಹಿವಾಟುಗಳನ್ನು ದಾಖಲಿಸಿದ್ದೀರಾ? 🏁</string>
     <string name="cash">ನಗದು</string>
     <string name="bank">ಬ್ಯಾಂಕ್</string>
-    <string name="revoult">Revolut</string>
     <string name="food_drinks"><![CDATA[ಆಹಾರ ಮತ್ತು ಪಾನೀಯಗಳು]]></string>
     <string name="bills_fees"><![CDATA[ಬಿಲ್‌ಗಳು ಮತ್ತು ಶುಲ್ಕಗಳು]]></string>
     <string name="transport">ಸಾರಿಗೆ</string>
@@ -291,7 +278,6 @@
     <string name="fitness">ಫಿಟ್ನೆಸ್</string>
     <string name="self_development">ಸ್ವಯಂ ಅಭಿವೃದ್ಧಿ</string>
     <string name="clothes">ಉಡುಪುಗಳು</string>
-    <string name="beauty">ಬ್ಯೂಟಿ</string>
     <string name="education">ವಿದ್ಯಾಭ್ಯಾಸ</string>
     <string name="pet">ಸಾಕುಪ್ರಾಣಿ</string>
     <string name="sports">ಕ್ರೀಡೆಗಳು</string>
@@ -341,9 +327,6 @@
     <string name="skip_all">ಎಲ್ಲವನ್ನೂ ಬಿಟ್ಟುಬಿಡಿ</string>
     <string name="confirm_skip_all">ಎಲ್ಲವನ್ನೂ ಬಿಟ್ಟುಬಿಡಿ ಎಂಬುದನ್ನು ದೃಢೀಕರಿಸಿ</string>
     <string name="confirm_skip_all_description">ಎಲ್ಲಾ ಮಿತಿಮೀರಿದ ಯೋಜಿತ ಪಾವತಿಗಳನ್ನು ಬಿಟ್ಟುಬಿಡಲು ನೀವು ಖಚಿತವಾಗಿ ಬಯಸುವಿರಾ?</string>
-    <string name="switch_to_offline_mode">ಆಫ್‌ಲೈನ್ ಮೋಡ್‌ಗೆ ಬದಲಿಸಿ</string>
-    <string name="experimental">ಪ್ರಯೋಗಾತ್ಮಕ</string>
-    <string name="experimental_settings">ಪ್ರಯೋಗಾತ್ಮಕ ಸೆಟ್ಟಿಂಗ್‌ಗಳು</string>
     <string name="wallet_balance">Wallet balance</string>
     <string name="total_exclusive">ಒಟ್ಟು (ವಿಶೇಷ): %1$s %2$s</string>
     <string name="total_balance">ಒಟ್ಟು ಮೊತ್ತ</string>

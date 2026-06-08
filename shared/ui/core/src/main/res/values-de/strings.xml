@@ -12,8 +12,6 @@
     <string name="unlock">Entsperren</string>
     <string name="current_balance">AKTUELLE BILANZ</string>
     <string name="balance_after_payments">BILANZ NACH GEPLANTEN ZAHLUNGEN</string>
-    <string name="connect">Verbinden</string>
-    <string name="remove_customer">Kund*in entfernen</string>
     <string name="add_budget">Budget hinzufügen</string>
     <string name="no_budgets">Keine Budgets</string>
     <string name="no_budgets_text">Du hast keine Budgets festgelegt.\nTippe auf "+ Budget hinzufügen", um eines hinzuzufügen.</string>
@@ -34,10 +32,6 @@
     <string name="charts">Diagramme</string>
     <string name="period">Zeitraum:</string>
     <string name="categories">Kategorien</string>
-    <string name="how_to">Wie man</string>
-    <string name="upload_csv_zip_file">CSV-/ZIP-Datei hochladen</string>
-    <string name="online_csv_converter_free">Online CSV-Konverter KOSTENLOS</string>
-    <string name="check_email_spam">Überprüfe den "Werbung"- und "Spam"-Ordner in deiner E-Mail</string>
     <string name="please_wait">Bitte warten</string>
     <string name="importing_the_csv_file">Importieren der CSV-Datei</string>
     <string name="success">Erfolg</string>
@@ -198,9 +192,6 @@
     <string name="exporting_data">Daten wird exportiert</string>
     <string name="exporting_data_description">Bitte warten, Daten wird exportiert</string>
     <string name="start_date_of_month">Startdatum des Monats</string>
-    <string name="roadmap">Entwicklungsplan</string>
-    <string name="logout">Abmelden</string>
-    <string name="login">Anmelden</string>
     <string name="export_to_csv">In CSV exportieren</string>
     <string name="left_to_spend">Übrig zum Ausgeben</string>
     <string name="budget_exceeded_by">Budget überschritten um</string>
@@ -257,9 +248,6 @@
     <string name="multiple_times">Wiederkehrend</string>
     <string name="starts_on">Startet am</string>
     <string name="repeats_every_text">Wiederholt sich alle</string>
-    <string name="submit">Einreichen</string>
-    <string name="what_do_you_need">Was brauchst du?</string>
-    <string name="explain_it_in_one_sentence">Erkläre es in einem Satz. (unterstützt Markdown)</string>
     <string name="last_12_months">Letzte 12 Monate</string>
     <string name="last_6_months">Letzte 6 Monate</string>
     <string name="last_4_weeks">Letzte 4 Wochen</string>
@@ -273,7 +261,6 @@
     <string name="notification_3">Hast du heute deine Transaktionen erfasst? 🏁</string>
     <string name="cash">Bargeld</string>
     <string name="bank">Bank</string>
-    <string name="revoult">Revolut</string>
     <string name="food_drinks"><![CDATA[Essen & Getränke]]></string>
     <string name="bills_fees"><![CDATA[Rechnungen & Gebühren]]></string>
     <string name="transport">Transport</string>
@@ -293,7 +280,6 @@
     <string name="fitness">Fitness</string>
     <string name="self_development">Selbstentfaltung</string>
     <string name="clothes">Kleidung</string>
-    <string name="beauty">Schönheit</string>
     <string name="education">Bildung</string>
     <string name="pet">Haustier</string>
     <string name="sports">Sport</string>
@@ -343,9 +329,6 @@
     <string name="skip_all">Alle überspringen</string>
     <string name="confirm_skip_all">Alle überspringen bestätigen</string>
     <string name="confirm_skip_all_description">Bist du sicher, dass du alle überfälligen geplanten Zahlungen überspringen willst?</string>
-    <string name="switch_to_offline_mode">In den Offline-Modus wechseln</string>
-    <string name="experimental">Experimentell</string>
-    <string name="experimental_settings">Experimentelle Einstellungen</string>
     <string name="wallet_balance">Bilanz der Wallet</string>
     <string name="total_exclusive">Gesamtsumme (exklusiv): %1$s %2$s</string>
     <string name="total_balance">Gesamtbilanz</string>
@@ -361,16 +344,10 @@
     <string name="search_tags">Tags durchsuchen</string>
     <string name="exchange_rates">Wechselkurse</string>
     <string name="add_tags">Tag hinzufügen</string>
-    <string name="icons">Icons</string>
-    <string name="fonts">Schriftarten</string>
-    <string name="tech_stack">Technologien</string>
     <string name="tap_to_switch_theme">Tippe um das Design zu wechseln</string>
     <string name="do_not_use_for_backup_purposes">⚠\uFE0F Nicht als Backup verwenden!</string>
     <string name="done">Fertig</string>
-    <string name="error">Fehler</string>
-    <string name="loading">Lade…</string>
     <string name="try_again">Erneut versuchen</string>
-    <string name="your_data_will_be_saved_only_locally">Deine Daten werden nur lokal auf dem Gerät gespeichert. Die Daten können verloren gehen, wenn du die App löscht oder zu einem anderen Gerät wechselst. Um Datenverlust zu vermeiden, empfehlen wir eine regelmäßige Sicherung in den Einstellungen durchzuführen.</string>
     <string name="selected_text">Ausgewählt</string>
     <string name="this_transaction_is_associated_with_loan">* Diese Transaktion ist verbundenen mit Kredit : %1$s</string>
     <string name="this_transaction_is_associated_with_loan_record">* Diese Transaktion ist verbundenen mit einer Darlehensaufzeichnung für Kredit : %1$s</string>
