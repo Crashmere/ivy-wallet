@@ -33,7 +33,7 @@ import com.ivy.domain.usecase.category.CreateCategoryUseCase
 import com.ivy.domain.usecase.category.UpdateCategoryUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.domain.usecase.loan.GetLoanUseCase
-import com.ivy.domain.usecase.planned.PayOrSkipLegacyPlannedTransactionUseCase
+import com.ivy.domain.usecase.planned.PayOrSkipPlannedTransactionByIdUseCase
 import com.ivy.domain.usecase.tag.AssociateTagToTransactionUseCase
 import com.ivy.domain.usecase.tag.CopyTagsToTransactionUseCase
 import com.ivy.domain.usecase.tag.CreateTagUseCase
@@ -103,7 +103,7 @@ internal class EditTransactionViewModel @Inject internal constructor(
     private val createCategoryUseCase: CreateCategoryUseCase,
     private val updateCategoryUseCase: UpdateCategoryUseCase,
     private val createAccountWithBalanceUseCase: CreateAccountWithBalanceUseCase,
-    private val payOrSkipLegacyPlannedTransactionUseCase: PayOrSkipLegacyPlannedTransactionUseCase,
+    private val payOrSkipPlannedTransactionByIdUseCase: PayOrSkipPlannedTransactionByIdUseCase,
     private val suggestTransactionTitlesUseCase: SuggestTransactionTitlesUseCase,
     private val updateAssociatedLoanDataUseCase: UpdateAssociatedLoanDataUseCase,
     private val getAccountsUseCase: GetAccountsUseCase,
@@ -620,17 +620,21 @@ internal class EditTransactionViewModel @Inject internal constructor(
 
     private fun onPayPlannedPayment() {
         viewModelScope.launch {
-            payOrSkipLegacyPlannedTransactionUseCase(
-                transaction = loadedTransaction()
-            )?.let { paidTransaction ->
+            val transaction = loadedTransaction()
+            if (payOrSkipPlannedTransactionByIdUseCase(transaction.id)) {
+                val paidTransaction = getTransactionUseCase(transaction.id)?.let {
+                    mapTransactionsToLegacyTransactionsUseCase(listOf(it)).singleOrNull()
+                } ?: transaction.copy(
+                    paidFor = transaction.dueDate,
+                    dueDate = null,
+                    dateTime = Instant.now(),
+                )
                 loadedTransaction = paidTransaction
                 paidHistory = paidTransaction.paidFor
                 dueDate = paidTransaction.dueDate
                 dateTime = paidTransaction.dateTime
 
-                saveIfEditMode(
-                    closeScreen = true
-                )
+                closeScreen()
             }
         }
     }
