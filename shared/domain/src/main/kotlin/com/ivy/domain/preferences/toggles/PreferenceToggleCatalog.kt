@@ -54,14 +54,6 @@ class PreferenceToggleCatalog @Inject constructor() {
         defaultValue = false
     )
 
-    val showDecimalNumber = BoolPreference(
-        key = "show_decimal_number",
-        group = PreferenceGroup.Other,
-        name = "Show values with decimals",
-        description = "Include the decimal part in amounts",
-        defaultValue = true
-    )
-
     val standardKeypadLayout = BoolPreference(
         key = "enable_standard_keypad_layout",
         group = PreferenceGroup.Other,
@@ -88,9 +80,5 @@ class PreferenceToggleCatalog @Inject constructor() {
             hideTotalBalance,
             standardKeypadLayout,
             showAccountColorsInTransactions
-            /* will be uncommented when this functionality
-             * will be available across the application in up-coming PRs
-            showDecimalNumber
-             */
         )
 }

@@ -696,6 +696,7 @@
 - 功能开关 `BoolFeature` 不再通过 `Context.dataStore` 读写；偏好开关已重命名为普通本地偏好，设置页、编辑交易分类排序、金额格式化和金额键盘都改为使用同一个注入的 `PreferenceToggleRepository`。
 - 原 `shared/domain/features` 已迁到 `shared/domain/preferences/toggles`，`Features/BoolFeature/FeatureGroup` 重命名并收敛为 `PreferenceToggleCatalog/BoolPreference/PreferenceGroup`；底层 DataStore key 仍沿用 `feature_...` 前缀，保证已安装设备上的偏好开关不丢失。
 - 偏好开关定义不再保留单实现的 `PreferenceToggles` 接口；当前直接注入 `PreferenceToggleCatalog`，设置页和各 feature 仍读取同一批 `BoolPreference` 定义，key 和默认值不变。
+- 删除未接入运行时和设置页的 `showDecimalNumber` 偏好定义，以及对应“未来 PR 再打开”的注释；当前可见偏好项和已使用 key 不变。
 - feature ViewModel 中的偏好开关读取不再依赖 `shared:ui:legacy` 的 CompositionLocal；账户、分类、首页、搜索、交易、报表和编辑交易页改为注入 `PreferenceToggleRepository`，再通过 `shared:ui:core` 的 Flow 状态 helper 在 Compose 状态层读取。
 - `PreferenceToggleRepository` 已从具体 DataStore 包装改成 domain 级业务仓库；底层 `PreferenceToggleStore` 端口放在 `shared:data:api`，Android DataStore 实现和全量清空放在 `shared:data:core`。
 - 备份恢复仍保留原始 `SharedPrefs` 访问；它需要处理全部历史 key 和外部备份格式，后续与备份格式重构一起处理。`SharedPrefs` 不再用废弃注解制造警告，迁移状态改由本计划追踪。
