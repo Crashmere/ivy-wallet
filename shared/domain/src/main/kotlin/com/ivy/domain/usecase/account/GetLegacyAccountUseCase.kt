@@ -3,7 +3,7 @@ package com.ivy.domain.usecase.account
 import com.ivy.data.api.AccountStore
 import com.ivy.data.model.AccountId
 import com.ivy.data.model.legacy.LegacyAccount
-import com.ivy.domain.mapper.legacy.toLegacyDomain
+import com.ivy.domain.mapper.legacy.toLegacyAccount
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.util.UUID
@@ -14,7 +14,7 @@ class GetLegacyAccountUseCase @Inject constructor(
 ) {
     suspend operator fun invoke(accountId: UUID): LegacyAccount? {
         return withContext(Dispatchers.IO) {
-            accountStore.findById(AccountId(accountId))?.toLegacyDomain()
+            accountStore.findById(AccountId(accountId))?.toLegacyAccount()
         }
     }
 }

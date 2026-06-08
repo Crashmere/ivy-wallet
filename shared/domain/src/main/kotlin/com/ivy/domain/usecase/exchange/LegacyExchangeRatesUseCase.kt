@@ -6,7 +6,7 @@ import com.ivy.data.api.ExchangeRateStore
 import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.data.model.PlannedPaymentRule
 import com.ivy.data.model.primitive.AssetCode
-import com.ivy.domain.mapper.legacy.toLegacyDomain
+import com.ivy.domain.mapper.legacy.toLegacyAccount
 import java.util.UUID
 import javax.inject.Inject
 
@@ -123,7 +123,7 @@ suspend fun Iterable<LegacyTransaction>.sumInBaseCurrency(
     baseCurrency: String,
     accountStore: AccountStore,
 ): Double {
-    val accounts = accountStore.findAll().map { it.toLegacyDomain() }
+    val accounts = accountStore.findAll().map { it.toLegacyAccount() }
 
     return sumOf {
         exchangeRatesUseCase.amountBaseCurrency(
@@ -139,7 +139,7 @@ suspend fun Iterable<PlannedPaymentRule>.sumByDoublePlannedInBaseCurrency(
     baseCurrency: String,
     accountStore: AccountStore,
 ): Double {
-    val accounts = accountStore.findAll().map { it.toLegacyDomain() }
+    val accounts = accountStore.findAll().map { it.toLegacyAccount() }
 
     return sumOf {
         exchangeRatesUseCase.amountBaseCurrency(

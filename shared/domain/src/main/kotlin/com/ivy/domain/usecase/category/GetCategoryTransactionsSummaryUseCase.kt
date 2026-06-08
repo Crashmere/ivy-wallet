@@ -12,7 +12,7 @@ import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.domain.usecase.exchange.LegacyExchangeRatesUseCase
 import com.ivy.domain.usecase.exchange.sumInBaseCurrency
 import com.ivy.domain.mapper.legacy.toLegacy
-import com.ivy.domain.mapper.legacy.toLegacyDomain
+import com.ivy.domain.mapper.legacy.toLegacyAccount
 import com.ivy.domain.transaction.legacy.LegacyTransactionDateDividers
 import com.ivy.domain.transaction.legacy.filterOverdueLegacy
 import com.ivy.domain.transaction.legacy.filterUpcomingLegacy
@@ -79,7 +79,7 @@ class GetCategoryTransactionsSummaryUseCase @Inject constructor(
         transactions: List<LegacyTransaction>?
     ): Double {
         val baseCurrency = getBaseCurrencyCode()
-        val accounts = accountStore.findAll().map { it.toLegacyDomain() }
+        val accounts = accountStore.findAll().map { it.toLegacyAccount() }
 
         return historyByCategory(
             category = category,

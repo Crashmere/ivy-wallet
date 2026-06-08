@@ -8,7 +8,7 @@ import com.ivy.data.model.TransactionHistoryDateDivider
 import com.ivy.data.api.AccountStore
 import com.ivy.data.model.AccountId
 import com.ivy.data.model.legacy.LegacyAccount
-import com.ivy.domain.mapper.legacy.toLegacyDomain
+import com.ivy.domain.mapper.legacy.toLegacyAccount
 import com.ivy.domain.usecase.exchange.LegacyExchangeRatesUseCase
 import com.ivy.domain.exchange.ExchangeData
 import com.ivy.domain.exchange.ExchangeTransactionArgument
@@ -29,7 +29,7 @@ object LegacyTransactionDateDividers {
         return transactionsWithDateDividers(
             transactions = this,
             baseCurrencyCode = baseCurrencyCode,
-            getAccount = { accountId -> accountStore.findById(AccountId(accountId))?.toLegacyDomain() },
+            getAccount = { accountId -> accountStore.findById(AccountId(accountId))?.toLegacyAccount() },
             exchange = { data, amount ->
                 exchangeRatesUseCase.convertAmount(
                     baseCurrency = data.baseCurrency,

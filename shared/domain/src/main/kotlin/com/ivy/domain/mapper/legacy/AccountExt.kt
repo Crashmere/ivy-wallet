@@ -10,7 +10,7 @@ import com.ivy.data.model.primitive.ColorInt
 import com.ivy.data.model.primitive.IconAsset
 import com.ivy.data.model.primitive.NotBlankTrimmedString
 
-fun Account.toLegacyDomain(): LegacyAccount = LegacyAccount(
+fun Account.toLegacyAccount(): LegacyAccount = LegacyAccount(
     name = name.value,
     currency = asset.code,
     color = color.value,

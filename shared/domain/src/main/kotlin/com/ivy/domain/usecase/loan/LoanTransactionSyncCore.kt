@@ -22,7 +22,7 @@ import com.ivy.data.model.Loan
 import com.ivy.data.model.LoanRecord
 import com.ivy.domain.mapper.legacy.toDomain
 import com.ivy.domain.mapper.legacy.toLegacy
-import com.ivy.domain.mapper.legacy.toLegacyDomain
+import com.ivy.domain.mapper.legacy.toLegacyAccount
 import com.ivy.domain.time.nowUtc
 import com.ivy.domain.usecase.exchange.LegacyExchangeRatesUseCase
 import kotlinx.coroutines.CoroutineScope
@@ -292,7 +292,7 @@ class LoanTransactionSyncCore @Inject constructor(
     }
 
     suspend fun fetchAccounts() = withContext(Dispatchers.IO) {
-        accountStore.findAll().map { it.toLegacyDomain() }
+        accountStore.findAll().map { it.toLegacyAccount() }
     }
 
     suspend fun saveLoanRecords(loanRecords: List<LoanRecord>) = withContext(Dispatchers.IO) {

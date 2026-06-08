@@ -6,7 +6,7 @@ import com.ivy.data.model.IntervalType
 import com.ivy.data.model.TransactionType
 import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.data.model.PlannedPaymentRule
-import com.ivy.domain.mapper.legacy.toLegacyDomain
+import com.ivy.domain.mapper.legacy.toLegacyAccount
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.domain.usecase.exchange.LegacyExchangeRatesUseCase
 import kotlinx.coroutines.Dispatchers
@@ -33,7 +33,7 @@ class GetPlannedPaymentsOverviewUseCase @Inject constructor(
             val oneTime = plannedPaymentRuleStore.findAllByOneTime(oneTime = true)
             val recurring = plannedPaymentRuleStore.findAllByOneTime(oneTime = false)
             val baseCurrency = getBaseCurrencyCode()
-            val accounts = accountStore.findAll().map { it.toLegacyDomain() }
+            val accounts = accountStore.findAll().map { it.toLegacyAccount() }
 
             PlannedPaymentsOverview(
                 oneTime = oneTime,

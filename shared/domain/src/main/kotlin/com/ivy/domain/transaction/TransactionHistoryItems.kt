@@ -16,7 +16,7 @@ import com.ivy.domain.exchange.ExchangeTransactionArgument
 import com.ivy.domain.exchange.exchangeInBaseCurrency
 import com.ivy.domain.mapper.legacy.toImmutableLegacyTags
 import com.ivy.domain.mapper.legacy.toLegacy
-import com.ivy.domain.mapper.legacy.toLegacyDomain
+import com.ivy.domain.mapper.legacy.toLegacyAccount
 import com.ivy.domain.time.convertToLocal
 import com.ivy.domain.usecase.exchange.LegacyExchangeRatesUseCase
 import java.math.BigDecimal
@@ -35,7 +35,7 @@ suspend fun List<Transaction>.withDateDividers(
     return transactionsWithDateDividers(
         transactions = this,
         baseCurrencyCode = baseCurrencyCode,
-        getAccount = { accountId -> accountStore.findById(AccountId(accountId))?.toLegacyDomain() },
+        getAccount = { accountId -> accountStore.findById(AccountId(accountId))?.toLegacyAccount() },
         getTags = { tagsIds -> tagStore.findByIds(tagsIds) },
         exchange = { data, amount ->
             exchangeRatesUseCase.convertAmount(

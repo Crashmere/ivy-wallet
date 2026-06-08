@@ -4,7 +4,7 @@ import com.ivy.data.api.AccountStore
 import com.ivy.data.api.TransactionStore
 import com.ivy.data.model.TransactionType
 import com.ivy.data.model.FromToTimeRange
-import com.ivy.domain.mapper.legacy.toLegacyDomain
+import com.ivy.domain.mapper.legacy.toLegacyAccount
 import com.ivy.domain.mapper.legacy.toLegacy
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.domain.usecase.exchange.LegacyExchangeRatesUseCase
@@ -21,7 +21,7 @@ class CalculatePlannedPaymentsAmountForRangeUseCase @Inject constructor(
     suspend operator fun invoke(range: FromToTimeRange): Double {
         return withContext(Dispatchers.IO) {
             val baseCurrency = getBaseCurrencyCode()
-            val accounts = accountStore.findAll().map { it.toLegacyDomain() }
+            val accounts = accountStore.findAll().map { it.toLegacyAccount() }
 
             transactionStore.findAllDueToBetween(
                 startDate = range.from(),
