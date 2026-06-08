@@ -1498,6 +1498,7 @@ shared:ui:core
 - 搜索页状态和 ViewModel 已改用本 feature 的 `SearchAccount`，旧交易列表需要的 `TransactionListAccount` 只在 `SearchScreen` 调用旧列表组件前临时适配。
 - 首页状态和 ViewModel 已改用本 feature 的 `HomeTransactionListAccount`，旧交易列表账户类型同样只在 `HomeTab` 进入旧交易列表 UI 前临时适配。
 - 交易列表页状态和 ViewModel 已改用本 feature 的 `TransactionsListAccount`，旧交易列表账户类型只在 `TransactionsScreen` 调用旧列表组件前临时适配。
+- 报表账户展示模型已脱离旧交易列表账户类型；`ReportAccount` 只保留报表/筛选所需字段，旧列表适配函数移到 `ReportScreen` 本地。
 - 旧主题系统新增 `LegacyColors`、`LegacyTypography` 和 `LegacyShapes` 作为外层门面类型；`theme.system` 下的 `IvyColors/IvyTypography/IvyShapes` 已收窄为 `shared:ui:legacy` 内部实现细节。
 - app 仍保留文件选择、文件分享、Material 日期选择器、BuildInfo、Locale 设置、生物识别和窗口安全等真正依赖 Activity 或 Android app 壳层的装配。
 

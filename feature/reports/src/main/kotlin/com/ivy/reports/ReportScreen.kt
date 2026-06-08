@@ -37,6 +37,7 @@ import com.ivy.ui.navigation.screenScopedViewModel
 import com.ivy.data.model.TransactionType
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.legacy.ui.transaction.DueSection
+import com.ivy.legacy.ui.transaction.TransactionListAccount
 import com.ivy.legacy.ui.transaction.TransactionListData
 import com.ivy.legacy.ui.summary.IncomeExpensesCards
 import com.ivy.legacy.ui.transaction.transactions
@@ -347,6 +348,14 @@ private fun ReportDueSection.toDueSection(): DueSection {
         expanded = expanded
     )
 }
+
+private fun ReportAccount.toTransactionListAccount() = TransactionListAccount(
+    id = id,
+    name = name,
+    color = color,
+    icon = icon,
+    currency = currency,
+)
 
 @Composable
 private fun NoFilterEmptyState(
