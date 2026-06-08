@@ -19,16 +19,20 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.ivy.ui.R
-import com.ivy.legacy.ui.button.IvyButton
 import com.ivy.legacy.ui.theme.LegacyTheme
+import com.ivy.ui.compose.GradientButton
 import com.ivy.ui.compose.gradientCutBackgroundTop
 import com.ivy.ui.compose.navigationBarInset
 import com.ivy.ui.compose.toDensityDp
+import com.ivy.ui.theme.colors.IvyGradients
 
 @Composable
 internal fun BoxWithConstraintsScope.CategoriesBottomBar(
@@ -36,9 +40,18 @@ internal fun BoxWithConstraintsScope.CategoriesBottomBar(
     onAddCategory: () -> Unit
 ) {
     CategoriesBackBottomBar(onBack = onClose) {
-        IvyButton(
+        GradientButton(
             text = stringResource(R.string.add_category),
-            iconStart = R.drawable.ic_plus
+            backgroundGradient = IvyGradients.Ivy,
+            disabledBackgroundColor = LegacyTheme.colors.gray,
+            shape = LegacyTheme.shapes.rFull,
+            textStyle = LegacyTheme.typo.b2.copy(
+                color = Color(0xFFFAFAFA),
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Start
+            ),
+            iconStart = R.drawable.ic_plus,
+            iconTint = Color(0xFFFAFAFA),
         ) {
             onAddCategory()
         }

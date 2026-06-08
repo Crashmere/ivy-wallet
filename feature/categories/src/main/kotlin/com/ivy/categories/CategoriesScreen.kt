@@ -56,9 +56,9 @@ import com.ivy.ui.theme.colors.IvyGradients
 import com.ivy.ui.theme.colors.IvyFixedColors.White
 import com.ivy.legacy.ui.money.BalanceRow
 import com.ivy.ui.icon.ItemIconSDefaultIcon
-import com.ivy.legacy.ui.button.IvyButton
 import com.ivy.legacy.ui.modal.ReorderModalSingleType
 import com.ivy.ui.compose.FilledIconButton
+import com.ivy.ui.compose.GradientButton
 import com.ivy.ui.compose.ResourceIcon
 import com.ivy.ui.theme.colors.findContrastTextColor
 import com.ivy.legacy.ui.modal.IvyModal
@@ -607,10 +607,18 @@ internal fun BoxWithConstraintsScope.SortModal(
 
 @Composable
 private fun SortModalSetButton(onClick: () -> Unit) {
-    IvyButton(
+    GradientButton(
         text = stringResource(R.string.set),
         backgroundGradient = IvyGradients.Green,
+        disabledBackgroundColor = LegacyTheme.colors.gray,
+        shape = LegacyTheme.shapes.rFull,
+        textStyle = LegacyTheme.typo.b2.copy(
+            color = Color(0xFFFAFAFA),
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Start
+        ),
         iconStart = R.drawable.ic_check,
+        iconTint = Color(0xFFFAFAFA),
         onClick = onClick
     )
 }
