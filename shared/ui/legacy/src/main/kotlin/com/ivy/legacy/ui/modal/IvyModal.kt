@@ -46,7 +46,7 @@ import com.ivy.ui.platform.hideKeyboard
 import com.ivy.ui.compose.keyboardOnlyWindowInsets
 import com.ivy.ui.compose.navigationBarInsets
 import com.ivy.ui.animation.DURATION_MODAL_ANIM
-import com.ivy.ui.navigation.onScreenStart
+import com.ivy.ui.compose.onCompositionStart
 import com.ivy.ui.compose.thenIf
 import com.ivy.legacy.ui.component.ActionsRow
 import com.ivy.legacy.ui.component.CloseButton
@@ -75,7 +75,7 @@ fun BoxScope.IvyModal(
     val rootView = LocalView.current
     var keyboardShown by remember { mutableStateOf(false) }
 
-    onScreenStart {
+    onCompositionStart {
         rootView.addKeyboardListener {
             keyboardShown = it
         }

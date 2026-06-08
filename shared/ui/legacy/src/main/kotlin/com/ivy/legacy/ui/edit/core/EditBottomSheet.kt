@@ -51,7 +51,7 @@ import com.ivy.ui.platform.hideKeyboard
 import com.ivy.ui.compose.keyboardOnlyWindowInsets
 import com.ivy.ui.animation.lerp
 import com.ivy.ui.compose.navigationBarInsets
-import com.ivy.ui.navigation.onScreenStart
+import com.ivy.ui.compose.onCompositionStart
 import com.ivy.ui.animation.springBounce
 import com.ivy.ui.compose.thenIf
 import com.ivy.ui.compose.verticalSwipeListener
@@ -114,7 +114,7 @@ fun BoxWithConstraintsScope.EditBottomSheet(
     val rootView = LocalView.current
     var keyboardShown by remember { mutableStateOf(false) }
 
-    onScreenStart {
+    onCompositionStart {
         rootView.addKeyboardListener {
             keyboardShown = it
         }

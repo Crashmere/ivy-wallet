@@ -14,7 +14,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import com.ivy.ui.platform.hideKeyboard
-import com.ivy.ui.navigation.onScreenStart
+import com.ivy.ui.compose.onCompositionStart
 import com.ivy.legacy.ui.component.IvyNameTextField
 
 @Composable
@@ -27,7 +27,7 @@ fun ModalNameInput(
 ) {
     val nameFocus = FocusRequester()
 
-    onScreenStart {
+    onCompositionStart {
         if (autoFocusKeyboard) {
             nameFocus.requestFocus()
         }

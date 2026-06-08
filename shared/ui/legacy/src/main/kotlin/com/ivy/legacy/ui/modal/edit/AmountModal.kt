@@ -44,7 +44,7 @@ import com.ivy.data.model.currency.formatInputAmount
 import com.ivy.data.model.currency.formatInt
 import com.ivy.ui.platform.hideKeyboard
 import com.ivy.data.model.currency.localDecimalSeparator
-import com.ivy.ui.navigation.onScreenStart
+import com.ivy.ui.compose.onCompositionStart
 import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.Red
 import com.ivy.legacy.ui.component.IvyIcon
@@ -148,7 +148,7 @@ fun BoxWithConstraintsScope.AmountModal(
         Spacer(Modifier.height(amountSpacerTop))
 
         val rootView = LocalView.current
-        onScreenStart {
+        onCompositionStart {
             rootView.hideKeyboard()
         }
 

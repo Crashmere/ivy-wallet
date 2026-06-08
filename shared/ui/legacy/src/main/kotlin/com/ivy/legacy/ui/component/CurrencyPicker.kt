@@ -46,7 +46,7 @@ import com.ivy.ui.platform.addKeyboardListener
 import com.ivy.ui.compose.densityScope
 import com.ivy.ui.platform.hideKeyboard
 import com.ivy.ui.compose.keyboardOnlyWindowInsets
-import com.ivy.ui.navigation.onScreenStart
+import com.ivy.ui.compose.onCompositionStart
 import com.ivy.ui.R
 import com.ivy.data.model.currency.IvyCurrency
 import com.ivy.legacy.ui.theme.GradientGreen
@@ -75,7 +75,7 @@ internal fun CurrencyPicker(
     val rootView = LocalView.current
     var keyboardShown by remember { mutableStateOf(false) }
 
-    onScreenStart {
+    onCompositionStart {
         rootView.addKeyboardListener {
             keyboardShown = it
             onKeyboardShown(it)

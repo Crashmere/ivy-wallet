@@ -42,6 +42,7 @@
 - 删除无效 legacy screen 标记：当前所有页面统一走 `LegacyUiRoot` surface，`Screen` 不再暴露 `isLegacy`，`NavigationRoot` 删除只服务非 legacy 分支的 ViewModelStore 清理逻辑。
 - 收窄旧弹窗状态职责：账户、分类、缓冲金额、周期、借贷、借贷记录和计划付款重复规则的 `*ModalData` 已从 `shared:ui:legacy` 迁到 `shared:ui:core` 的 `com.ivy.ui.modal` 包；feature 状态层不再为了保存弹窗数据直接引用 legacy 弹窗实现包。
 - 收窄导航返回职责：旧弹窗返回键处理改用 Compose `BackHandler`，`Navigation` 删除 modal back handler 栈，只继续处理页面级返回和根返回栈。
+- 切断 legacy UI 对导航模块的依赖：legacy 内部初始化副作用改用 `shared:ui:core` 的 `onCompositionStart()`，`shared:ui:legacy` 不再声明 `shared:ui:navigation` 依赖。
 
 当前仍保留：
 
@@ -467,7 +468,7 @@
 - `drawColoredShadow()` 已从 legacy UI 迁到 `shared:ui:core`，首页、饼图、设置、借贷和旧按钮组件的通用阴影绘制不再挂在 legacy 包下。
 - `toDensityPx()/toDensityDp()` 密度换算扩展已从 legacy UI 迁到 `shared:ui:core`，底部栏和旧返回栏不再为了尺寸换算 helper 依赖 legacy 包。
 - `windowInsets/statusBarInset/navigationBarInset/navigationBarInsets/keyboardOnlyWindowInsets` 已从 legacy UI 迁到 `shared:ui:core`，搜索页、首页更多菜单和各底部栏改为使用通用窗口 inset helper。
-- `onScreenStart()` 已从 legacy UI 迁到 `shared:ui:navigation`，页面进入副作用现在跟导航状态放在同一模块；原 legacy `ComposeExt.kt` 已删除。
+- 页面级 `onScreenStart()` 保留在 `shared:ui:navigation`，跟导航状态保持同一模块；legacy 组件内部不再使用它，改用 `shared:ui:core` 的 `onCompositionStart()` 表达普通组合生命周期副作用。
 - 键盘显示监听、隐藏键盘、状态栏深色文字控制和旧日期展示格式化已从 legacy UI 迁到 `shared:ui:core`；搜索、交易、借贷、计划付款和旧弹窗继续使用相同行为，但不再通过 legacy 包拿通用平台/时间 helper。
 - 弹簧动画、插值、颜色插值、滑动手势监听、dp 转 px 和 interval 类型文案已从 legacy UI 根包迁到 `shared:ui:core`；首页、主底栏、饼图、报表和旧弹窗保留原交互，但通用动画/手势工具不再挂在 legacy 根包下。
 - `SearchInput` 已归入 legacy 组件包，金额输入偏好 CompositionLocal 已归入 `shared:ui:core` 的 preferences 包，`LegacyUiRoot` 对外包名改为 `com.ivy.ui`；`com.ivy.legacy.ui` 根包不再承载公共入口。

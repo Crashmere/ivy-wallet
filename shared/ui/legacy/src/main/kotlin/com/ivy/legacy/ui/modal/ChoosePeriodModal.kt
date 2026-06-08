@@ -43,7 +43,7 @@ import com.ivy.ui.period.TimePeriod
 import com.ivy.ui.period.displayName
 import com.ivy.ui.platform.addKeyboardListener
 import com.ivy.ui.time.formatDateOnlyWithYear
-import com.ivy.ui.navigation.onScreenStart
+import com.ivy.ui.compose.onCompositionStart
 import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.Gradient
 import com.ivy.legacy.ui.theme.GradientIvy
@@ -194,7 +194,7 @@ private fun ColumnScope.ChooseMonth(
     val state = rememberLazyListState()
 
     val coroutineScope = rememberCoroutineScope()
-    onScreenStart {
+    onCompositionStart {
         if (selectedMonthYear != null) {
             val selectedMonthIndex = months.indexOf(selectedMonthYear)
             if (selectedMonthIndex != -1) {
@@ -463,7 +463,7 @@ private fun ColumnScope.LastNPeriod(
     val rootView = LocalView.current
     val coroutineScope = rememberCoroutineScope()
 
-    onScreenStart {
+    onCompositionStart {
         rootView.addKeyboardListener { keyboardShown ->
             if (keyboardShown) {
                 coroutineScope.launch {

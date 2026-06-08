@@ -36,7 +36,7 @@ import com.ivy.ui.compose.thenIf
 import com.ivy.legacy.ui.component.SearchInput
 import com.ivy.ui.compose.drawColoredShadow
 import com.ivy.ui.platform.hideKeyboard
-import com.ivy.ui.navigation.onScreenStart
+import com.ivy.ui.compose.onCompositionStart
 import com.ivy.ui.compose.selectEndTextFieldValue
 import com.ivy.legacy.ui.theme.Gradient
 import com.ivy.legacy.ui.component.IvyBorderButton
@@ -308,7 +308,7 @@ private fun ExistingTag(
 @Composable
 private fun HideKeyboard() {
     val view = LocalView.current
-    onScreenStart { view.hideKeyboard() }
+    onCompositionStart { view.hideKeyboard() }
 }
 
 @Composable

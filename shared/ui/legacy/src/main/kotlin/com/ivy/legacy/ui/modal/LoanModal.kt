@@ -41,7 +41,7 @@ import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.data.model.Loan
 import com.ivy.legacy.ui.component.DateTimeRow
 import com.ivy.data.model.currency.getDefaultFIATCurrency
-import com.ivy.ui.navigation.onScreenStart
+import com.ivy.ui.compose.onCompositionStart
 import com.ivy.ui.compose.selectEndTextFieldValue
 import com.ivy.ui.compose.thenIf
 import com.ivy.ui.R
@@ -168,7 +168,7 @@ fun BoxWithConstraintsScope.LoanModal(
             }
         }
     ) {
-        onScreenStart {
+        onCompositionStart {
             if (modal?.autoOpenAmountModal == true) {
                 amountModalVisible = true
             }

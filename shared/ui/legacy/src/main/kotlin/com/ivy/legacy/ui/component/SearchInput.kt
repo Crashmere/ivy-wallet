@@ -20,7 +20,7 @@ import com.ivy.legacy.ui.theme.system.Gray
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.ui.R
 import com.ivy.ui.compose.selectEndTextFieldValue
-import com.ivy.ui.navigation.onScreenStart
+import com.ivy.ui.compose.onCompositionStart
 
 @Suppress("MagicNumber")
 @Composable
@@ -56,7 +56,7 @@ fun SearchInput(
         )
 
         if (focus) {
-            onScreenStart {
+            onCompositionStart {
                 searchFocus.requestFocus()
             }
         }

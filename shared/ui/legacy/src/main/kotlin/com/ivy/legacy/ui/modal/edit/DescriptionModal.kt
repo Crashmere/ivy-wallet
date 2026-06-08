@@ -26,7 +26,7 @@ import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
 import com.ivy.ui.platform.hideKeyboard
 import com.ivy.ui.compose.clickableNoIndication
-import com.ivy.ui.navigation.onScreenStart
+import com.ivy.ui.compose.onCompositionStart
 import com.ivy.ui.compose.rememberInteractionSource
 import com.ivy.ui.compose.selectEndTextFieldValue
 import com.ivy.ui.R
@@ -91,7 +91,7 @@ fun BoxWithConstraintsScope.DescriptionModal(
         Spacer(Modifier.height(24.dp))
 
         val focus = FocusRequester()
-        onScreenStart {
+        onCompositionStart {
             focus.requestFocus()
         }
 

@@ -39,7 +39,7 @@ import com.ivy.ui.time.closeDay
 import com.ivy.ui.time.formatDateWeekDayLong
 import com.ivy.ui.time.formatNicely
 import com.ivy.ui.platform.hideKeyboard
-import com.ivy.ui.navigation.onScreenStart
+import com.ivy.ui.compose.onCompositionStart
 import com.ivy.ui.compose.thenIf
 import com.ivy.ui.compose.rememberInteractionSource
 import com.ivy.ui.R
@@ -106,7 +106,7 @@ fun BoxWithConstraintsScope.RecurringRuleModal(
         Spacer(Modifier.height(32.dp))
 
         val rootView = LocalView.current
-        onScreenStart {
+        onCompositionStart {
             rootView.hideKeyboard()
         }
 
@@ -298,7 +298,7 @@ private fun MultipleTimes(
     val rootView = LocalView.current
     val coroutineScope = rememberCoroutineScope()
 
-    onScreenStart {
+    onCompositionStart {
         rootView.addKeyboardListener { keyboardShown ->
             if (keyboardShown) {
                 coroutineScope.launch {
