@@ -35,7 +35,6 @@ import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.Gradient
 import com.ivy.legacy.ui.theme.Ivy
 import com.ivy.legacy.ui.icon.ItemIconSDefaultIcon
-import com.ivy.legacy.ui.button.IvyCircleButton
 import com.ivy.legacy.ui.layout.WrapContentRow
 import com.ivy.legacy.ui.selection.IvyBorderButton
 import com.ivy.legacy.ui.theme.findContrastTextColor
@@ -43,6 +42,7 @@ import com.ivy.legacy.ui.modal.IvyModal
 import com.ivy.legacy.ui.modal.ModalSkip
 import com.ivy.legacy.ui.modal.ModalTitle
 import com.ivy.legacy.ui.theme.toComposeColor
+import com.ivy.ui.compose.GradientIconButton
 import java.util.UUID
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
@@ -243,7 +243,7 @@ private fun CategoryButton(
 
         if (selected) {
             val deselectBtnBackground = findContrastTextColor(categoryColor)
-            IvyCircleButton(
+            GradientIconButton(
                 modifier = Modifier
                     .size(32.dp),
                 icon = R.drawable.ic_remove,

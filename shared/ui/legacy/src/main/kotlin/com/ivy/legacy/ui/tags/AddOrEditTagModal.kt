@@ -42,7 +42,6 @@ import androidx.compose.ui.unit.dp
 import com.ivy.data.model.Tag
 import com.ivy.data.model.primitive.NotBlankTrimmedString
 import com.ivy.data.model.TagId
-import com.ivy.legacy.ui.button.IvyCircleButton
 import com.ivy.legacy.ui.theme.GradientRed
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.legacy.ui.theme.White
@@ -50,6 +49,7 @@ import com.ivy.legacy.ui.modal.IvyModal
 import com.ivy.legacy.ui.modal.ModalPositiveButton
 import com.ivy.legacy.ui.modal.ModalTitle
 import com.ivy.ui.R
+import com.ivy.ui.compose.GradientIconButton
 import com.ivy.ui.platform.hideKeyboard
 
 @Suppress("DEPRECATION")
@@ -162,7 +162,7 @@ private fun DeleteButton(
     hasShadow: Boolean = true,
     onClick: () -> Unit,
 ) {
-    IvyCircleButton(
+    GradientIconButton(
         modifier = modifier
             .size(48.dp)
             .testTag("delete_button"),

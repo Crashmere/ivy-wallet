@@ -17,8 +17,8 @@ import com.ivy.legacy.ui.theme.GradientGreen
 import com.ivy.legacy.ui.theme.GradientRed
 import com.ivy.legacy.ui.theme.White
 import com.ivy.legacy.ui.button.IvyButton
-import com.ivy.legacy.ui.button.IvyCircleButton
 import com.ivy.legacy.ui.button.IvyOutlinedButton
+import com.ivy.ui.compose.GradientIconButton
 
 @Composable
 internal fun ModalDynamicPrimaryAction(
@@ -181,13 +181,14 @@ internal fun ModalDelete(
     testTag: String = "modal_delete",
     onClick: () -> Unit
 ) {
-    IvyCircleButton(
+    GradientIconButton(
         modifier = Modifier
             .size(40.dp)
             .testTag(testTag),
         icon = R.drawable.ic_delete,
         backgroundGradient = GradientRed,
         enabled = enabled,
+        disabledBackgroundColor = LegacyTheme.colors.gray,
         tint = White,
         onClick = onClick
     )

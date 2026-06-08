@@ -30,7 +30,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.Tag
 import com.ivy.data.model.TagId
-import com.ivy.legacy.ui.button.IvyCircleButton
 import com.ivy.legacy.ui.layout.WrapContentRow
 import com.ivy.legacy.ui.modal.DeleteModal
 import com.ivy.legacy.ui.modal.IvyModal
@@ -42,6 +41,7 @@ import com.ivy.legacy.ui.theme.Blue2Dark
 import com.ivy.legacy.ui.theme.Gradient
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.legacy.ui.theme.findContrastTextColor
+import com.ivy.ui.compose.GradientIconButton
 import com.ivy.ui.compose.thenIf
 import com.ivy.ui.compose.drawColoredShadow
 import com.ivy.ui.compose.onCompositionStart
@@ -291,7 +291,7 @@ private fun ExistingTag(
 
         if (selected) {
             val deselectBtnBackground = findContrastTextColor(tagColor)
-            IvyCircleButton(
+            GradientIconButton(
                 modifier = Modifier.size(32.dp),
                 icon = R.drawable.ic_remove,
                 backgroundGradient = Gradient.solid(deselectBtnBackground),
