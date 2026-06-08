@@ -79,7 +79,6 @@ import com.ivy.legacy.ui.theme.isDarkColor
 import com.ivy.legacy.ui.modal.ChoosePeriodModal
 import com.ivy.legacy.ui.modal.ChoosePeriodModalData
 import com.ivy.legacy.ui.modal.AccountModalData
-import com.ivy.legacy.ui.modal.DeleteConfirmationModal
 import com.ivy.legacy.ui.modal.DeleteModal
 import com.ivy.legacy.ui.modal.edit.AccountModal
 import com.ivy.legacy.ui.modal.edit.CategoryModal
@@ -575,7 +574,7 @@ private fun BoxWithConstraintsScope.DeleteModals(
         deleteModal3Visible = true
     }
 
-    DeleteConfirmationModal(
+    TransactionsDeleteConfirmationModal(
         visible = deleteModal3Visible,
         title = stringResource(id = R.string.confirm_deletion),
         description = if (account != null) {
