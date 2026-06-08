@@ -9,7 +9,7 @@ import com.ivy.domain.mapper.legacy.toTransaction
 import com.ivy.domain.time.nowUtc
 import javax.inject.Inject
 
-class PayOrSkipLegacyPlannedTransactionUseCase @Inject constructor(
+class PayOrSkipLegacyPlannedTransactionUseCase @Inject internal constructor(
     private val plannedPaymentRuleStore: PlannedPaymentRuleStore,
     private val accountStore: AccountStore,
     private val transactionStore: TransactionStore,

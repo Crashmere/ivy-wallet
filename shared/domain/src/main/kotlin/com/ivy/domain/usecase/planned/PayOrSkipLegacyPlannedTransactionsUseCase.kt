@@ -8,7 +8,7 @@ import com.ivy.data.model.TransactionId
 import com.ivy.domain.mapper.legacy.toTransaction
 import javax.inject.Inject
 
-class PayOrSkipLegacyPlannedTransactionsUseCase @Inject constructor(
+class PayOrSkipLegacyPlannedTransactionsUseCase @Inject internal constructor(
     private val plannedPaymentRuleStore: PlannedPaymentRuleStore,
     private val accountStore: AccountStore,
     private val transactionStore: TransactionStore,

@@ -8,7 +8,7 @@ import com.ivy.domain.time.filterUpcoming
 import com.ivy.domain.time.nowUtc
 import javax.inject.Inject
 
-internal class GetAccountUpcomingTransactionsUseCase @Inject constructor(
+internal class GetAccountUpcomingTransactionsUseCase @Inject internal constructor(
     private val transactionStore: TransactionStore,
 ) {
     suspend operator fun invoke(

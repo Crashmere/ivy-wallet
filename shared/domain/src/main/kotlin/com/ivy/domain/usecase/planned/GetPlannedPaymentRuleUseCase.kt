@@ -5,7 +5,7 @@ import com.ivy.data.model.PlannedPaymentRule
 import java.util.UUID
 import javax.inject.Inject
 
-class GetPlannedPaymentRuleUseCase @Inject constructor(
+class GetPlannedPaymentRuleUseCase @Inject internal constructor(
     private val plannedPaymentRuleStore: PlannedPaymentRuleStore,
 ) {
     suspend operator fun invoke(ruleId: UUID): PlannedPaymentRule? {

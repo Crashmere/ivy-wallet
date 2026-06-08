@@ -2,7 +2,7 @@ package com.ivy.domain.usecase.currency
 
 import javax.inject.Inject
 
-class GetBaseCurrencyCodeUseCase @Inject constructor(
+class GetBaseCurrencyCodeUseCase @Inject internal constructor(
     private val getBaseCurrency: GetBaseCurrencyUseCase
 ) {
     suspend operator fun invoke(): String {

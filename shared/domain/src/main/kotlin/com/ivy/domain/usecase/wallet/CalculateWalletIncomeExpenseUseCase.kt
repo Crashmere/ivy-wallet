@@ -15,7 +15,7 @@ import com.ivy.domain.transaction.foldTransactions
 import com.ivy.domain.util.orZero
 import javax.inject.Inject
 
-class CalculateWalletIncomeExpenseUseCase @Inject constructor(
+class CalculateWalletIncomeExpenseUseCase @Inject internal constructor(
     private val getAccountTransactionsUseCase: GetAccountTransactionsUseCase,
     private val exchangeAmountUseCase: ExchangeAmountUseCase,
 ) {

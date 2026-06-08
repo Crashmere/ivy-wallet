@@ -10,7 +10,7 @@ import com.ivy.domain.mapper.legacy.toLegacyAccount
 import java.util.UUID
 import javax.inject.Inject
 
-class LegacyExchangeRatesUseCase @Inject constructor(
+class LegacyExchangeRatesUseCase @Inject internal constructor(
     private val exchangeRateStore: ExchangeRateStore
 ) {
     suspend fun amountBaseCurrency(

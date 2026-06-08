@@ -4,7 +4,7 @@ import com.ivy.data.api.TransactionStore
 import java.util.UUID
 import javax.inject.Inject
 
-class HasLoanRecordTransactionUseCase @Inject constructor(
+class HasLoanRecordTransactionUseCase @Inject internal constructor(
     private val transactionStore: TransactionStore
 ) {
     suspend operator fun invoke(loanRecordId: UUID): Boolean {

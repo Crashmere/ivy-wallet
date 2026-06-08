@@ -7,7 +7,7 @@ import com.ivy.data.model.primitive.AssociationId
 import java.util.UUID
 import javax.inject.Inject
 
-class GetTransactionTagIdsUseCase @Inject constructor(
+class GetTransactionTagIdsUseCase @Inject internal constructor(
     private val tagStore: TagStore
 ) {
     suspend operator fun invoke(transactionId: UUID): List<TagId> {

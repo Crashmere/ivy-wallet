@@ -9,7 +9,7 @@ import com.ivy.domain.transaction.legacy.LegacyFoldTransactions
 import com.ivy.domain.transaction.legacy.LegacyWalletValueFunctions
 import javax.inject.Inject
 
-class CalculateLegacyTransactionsIncomeExpenseUseCase @Inject constructor(
+class CalculateLegacyTransactionsIncomeExpenseUseCase @Inject internal constructor(
     private val exchangeAmountUseCase: ExchangeAmountUseCase
 ) {
     suspend operator fun invoke(

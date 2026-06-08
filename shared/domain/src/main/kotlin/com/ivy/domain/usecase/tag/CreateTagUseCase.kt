@@ -9,7 +9,7 @@ import java.time.Instant
 import java.util.UUID
 import javax.inject.Inject
 
-class CreateTagUseCase @Inject constructor(
+class CreateTagUseCase @Inject internal constructor(
     private val tagStore: TagStore,
 ) {
     suspend operator fun invoke(name: NotBlankTrimmedString): Tag {

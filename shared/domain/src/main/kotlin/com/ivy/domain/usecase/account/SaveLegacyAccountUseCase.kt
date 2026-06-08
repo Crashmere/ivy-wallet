@@ -5,7 +5,7 @@ import com.ivy.data.model.primitive.AssetCode
 import com.ivy.domain.mapper.legacy.toDomainAccount
 import javax.inject.Inject
 
-class SaveLegacyAccountUseCase @Inject constructor(
+class SaveLegacyAccountUseCase @Inject internal constructor(
     private val saveAccountUseCase: SaveAccountUseCase,
 ) {
     suspend operator fun invoke(

@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-class ObserveAccountChangesUseCase @Inject constructor(
+class ObserveAccountChangesUseCase @Inject internal constructor(
     private val dataChangePublisher: DataChangePublisher
 ) {
     operator fun invoke(): Flow<Unit> {

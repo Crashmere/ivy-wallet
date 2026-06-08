@@ -8,7 +8,7 @@ import com.ivy.domain.time.filterOverdue
 import com.ivy.domain.time.nowUtc
 import javax.inject.Inject
 
-internal class GetAccountOverdueTransactionsUseCase @Inject constructor(
+internal class GetAccountOverdueTransactionsUseCase @Inject internal constructor(
     private val transactionStore: TransactionStore,
 ) {
     suspend operator fun invoke(

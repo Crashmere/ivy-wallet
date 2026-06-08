@@ -27,7 +27,7 @@ import java.util.Locale
 import javax.inject.Inject
 import kotlin.experimental.ExperimentalTypeInference
 
-class ExportCsvUseCase @Inject constructor(
+class ExportCsvUseCase @Inject internal constructor(
     private val getAccountsUseCase: GetAccountsUseCase,
     private val getCategoriesUseCase: GetCategoriesUseCase,
     private val getTransactionsUseCase: GetTransactionsUseCase,

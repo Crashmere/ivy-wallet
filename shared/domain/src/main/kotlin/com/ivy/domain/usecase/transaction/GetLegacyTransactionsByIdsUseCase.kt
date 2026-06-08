@@ -9,7 +9,7 @@ import kotlinx.coroutines.withContext
 import java.util.UUID
 import javax.inject.Inject
 
-class GetLegacyTransactionsByIdsUseCase @Inject constructor(
+class GetLegacyTransactionsByIdsUseCase @Inject internal constructor(
     private val transactionStore: TransactionStore,
 ) {
     suspend operator fun invoke(ids: List<UUID>): List<LegacyTransaction> {

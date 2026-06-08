@@ -7,7 +7,7 @@ import com.ivy.domain.mapper.legacy.toImmutableLegacyTags
 import com.ivy.domain.mapper.legacy.toLegacyTransaction
 import javax.inject.Inject
 
-class MapTransactionsToLegacyTransactionsWithTagsUseCase @Inject constructor(
+class MapTransactionsToLegacyTransactionsWithTagsUseCase @Inject internal constructor(
     private val tagStore: TagStore
 ) {
     suspend operator fun invoke(transactions: List<Transaction>): List<LegacyTransaction> {

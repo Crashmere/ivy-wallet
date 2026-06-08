@@ -5,7 +5,7 @@ import com.ivy.data.model.Loan
 import java.util.UUID
 import javax.inject.Inject
 
-class GetLoanUseCase @Inject constructor(
+class GetLoanUseCase @Inject internal constructor(
     private val loanStore: LoanStore,
 ) {
     suspend operator fun invoke(loanId: UUID): Loan? {

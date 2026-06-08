@@ -15,7 +15,7 @@ import com.ivy.domain.time.nowLocalDate
 import java.time.LocalDate
 import javax.inject.Inject
 
-internal class CalculateDueTransactionsInfoUseCase @Inject constructor(
+internal class CalculateDueTransactionsInfoUseCase @Inject internal constructor(
     private val getDueTransactionsUseCase: GetDueTransactionsUseCase,
     private val getLegacyAccountUseCase: GetLegacyAccountUseCase,
     private val exchangeAmountUseCase: ExchangeAmountUseCase,

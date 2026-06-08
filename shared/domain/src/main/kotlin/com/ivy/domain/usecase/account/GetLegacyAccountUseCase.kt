@@ -9,7 +9,7 @@ import kotlinx.coroutines.withContext
 import java.util.UUID
 import javax.inject.Inject
 
-class GetLegacyAccountUseCase @Inject constructor(
+class GetLegacyAccountUseCase @Inject internal constructor(
     private val accountStore: AccountStore,
 ) {
     suspend operator fun invoke(accountId: UUID): LegacyAccount? {

@@ -10,7 +10,7 @@ import com.ivy.domain.time.nowUtc
 import java.math.BigDecimal
 import javax.inject.Inject
 
-class CalculateAccountIncomeExpenseUseCase @Inject constructor(
+class CalculateAccountIncomeExpenseUseCase @Inject internal constructor(
     private val getAccountTransactionsUseCase: GetAccountTransactionsUseCase,
 ) {
     suspend operator fun invoke(

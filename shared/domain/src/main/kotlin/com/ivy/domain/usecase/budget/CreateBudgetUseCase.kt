@@ -6,7 +6,7 @@ import com.ivy.data.model.CreateBudgetData
 import com.ivy.domain.util.nextOrderNum
 import javax.inject.Inject
 
-class CreateBudgetUseCase @Inject constructor(
+class CreateBudgetUseCase @Inject internal constructor(
     private val budgetStore: BudgetStore,
 ) {
     suspend operator fun invoke(data: CreateBudgetData): Budget? {

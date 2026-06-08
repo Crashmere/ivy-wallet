@@ -20,7 +20,7 @@ import com.ivy.domain.time.nowUtc
 import java.util.UUID
 import javax.inject.Inject
 
-class GetCategoryTransactionsSummaryUseCase @Inject constructor(
+class GetCategoryTransactionsSummaryUseCase @Inject internal constructor(
     private val accountStore: AccountStore,
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
     private val exchangeRatesUseCase: LegacyExchangeRatesUseCase,

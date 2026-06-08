@@ -14,7 +14,7 @@ import kotlinx.coroutines.withContext
 import java.util.UUID
 import javax.inject.Inject
 
-class CreateCategoryUseCase @Inject constructor(
+class CreateCategoryUseCase @Inject internal constructor(
     private val categoryStore: CategoryStore,
     private val saveCategoryUseCase: SaveCategoryUseCase,
 ) {

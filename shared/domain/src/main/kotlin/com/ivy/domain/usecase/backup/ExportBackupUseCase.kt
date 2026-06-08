@@ -4,7 +4,7 @@ import com.ivy.data.api.backup.BackupStore
 import com.ivy.data.model.ExternalFile
 import javax.inject.Inject
 
-class ExportBackupUseCase @Inject constructor(
+class ExportBackupUseCase @Inject internal constructor(
     private val backupStore: BackupStore
 ) {
     suspend operator fun invoke(outputFile: ExternalFile) {

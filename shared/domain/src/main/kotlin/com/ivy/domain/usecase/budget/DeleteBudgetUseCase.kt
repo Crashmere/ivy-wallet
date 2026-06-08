@@ -4,7 +4,7 @@ import com.ivy.data.api.BudgetStore
 import com.ivy.data.model.Budget
 import javax.inject.Inject
 
-class DeleteBudgetUseCase @Inject constructor(
+class DeleteBudgetUseCase @Inject internal constructor(
     private val budgetStore: BudgetStore,
 ) {
     suspend operator fun invoke(budget: Budget): Boolean {

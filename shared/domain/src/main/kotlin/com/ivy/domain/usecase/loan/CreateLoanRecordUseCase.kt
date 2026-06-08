@@ -6,7 +6,7 @@ import com.ivy.data.model.LoanRecord
 import java.util.UUID
 import javax.inject.Inject
 
-class CreateLoanRecordUseCase @Inject constructor(
+class CreateLoanRecordUseCase @Inject internal constructor(
     private val loanRecordStore: LoanRecordStore,
 ) {
     suspend operator fun invoke(

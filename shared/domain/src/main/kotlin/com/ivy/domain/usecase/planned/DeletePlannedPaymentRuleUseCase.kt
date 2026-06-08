@@ -5,7 +5,7 @@ import com.ivy.data.api.TransactionStore
 import java.util.UUID
 import javax.inject.Inject
 
-class DeletePlannedPaymentRuleUseCase @Inject constructor(
+class DeletePlannedPaymentRuleUseCase @Inject internal constructor(
     private val plannedPaymentRuleStore: PlannedPaymentRuleStore,
     private val transactionStore: TransactionStore,
 ) {

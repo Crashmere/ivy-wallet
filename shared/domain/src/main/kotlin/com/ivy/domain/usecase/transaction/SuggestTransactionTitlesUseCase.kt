@@ -10,7 +10,7 @@ import javax.inject.Inject
 
 private const val SUGGESTIONS_LIMIT = 10
 
-class SuggestTransactionTitlesUseCase @Inject constructor(
+class SuggestTransactionTitlesUseCase @Inject internal constructor(
     private val transactionStore: TransactionStore
 ) {
     suspend operator fun invoke(

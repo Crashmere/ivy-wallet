@@ -4,7 +4,7 @@ import com.ivy.data.api.CategoryStore
 import com.ivy.data.model.Category
 import javax.inject.Inject
 
-class GetCategoriesUseCase @Inject constructor(
+class GetCategoriesUseCase @Inject internal constructor(
     private val categoryStore: CategoryStore
 ) {
     suspend operator fun invoke(): List<Category> {

@@ -12,7 +12,7 @@ import com.ivy.data.api.TagStore
 import com.ivy.data.api.TransactionStore
 import javax.inject.Inject
 
-class ClearWalletDataUseCase @Inject constructor(
+class ClearWalletDataUseCase @Inject internal constructor(
     private val accountStore: AccountStore,
     private val transactionStore: TransactionStore,
     private val categoryStore: CategoryStore,

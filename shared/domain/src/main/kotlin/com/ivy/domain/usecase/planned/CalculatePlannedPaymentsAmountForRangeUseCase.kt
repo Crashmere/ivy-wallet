@@ -12,7 +12,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class CalculatePlannedPaymentsAmountForRangeUseCase @Inject constructor(
+class CalculatePlannedPaymentsAmountForRangeUseCase @Inject internal constructor(
     private val transactionStore: TransactionStore,
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
     private val exchangeRatesUseCase: LegacyExchangeRatesUseCase,

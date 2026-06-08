@@ -15,7 +15,7 @@ import com.ivy.domain.exchange.ExchangeData
 import java.math.BigDecimal
 import javax.inject.Inject
 
-class CalculateWalletBalanceUseCase @Inject constructor(
+class CalculateWalletBalanceUseCase @Inject internal constructor(
     private val getLegacyAccountsUseCase: GetLegacyAccountsUseCase,
     private val calculateAccountBalanceUseCase: CalculateAccountBalanceUseCase,
     private val exchangeAmountUseCase: ExchangeAmountUseCase,

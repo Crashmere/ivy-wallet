@@ -7,7 +7,7 @@ import com.ivy.domain.mapper.legacy.toLegacyTransaction
 import java.util.UUID
 import javax.inject.Inject
 
-class GetLegacyTransactionUseCase @Inject constructor(
+class GetLegacyTransactionUseCase @Inject internal constructor(
     private val transactionStore: TransactionStore,
 ) {
     suspend operator fun invoke(id: UUID): LegacyTransaction? {

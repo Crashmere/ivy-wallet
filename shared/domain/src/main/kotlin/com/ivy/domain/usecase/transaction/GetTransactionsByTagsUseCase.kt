@@ -7,7 +7,7 @@ import com.ivy.data.model.TransactionId
 import com.ivy.data.api.TransactionStore
 import javax.inject.Inject
 
-class GetTransactionsByTagsUseCase @Inject constructor(
+class GetTransactionsByTagsUseCase @Inject internal constructor(
     private val tagStore: TagStore,
     private val transactionStore: TransactionStore
 ) {

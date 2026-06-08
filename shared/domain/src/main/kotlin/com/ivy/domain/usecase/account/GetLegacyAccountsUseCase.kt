@@ -9,7 +9,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class GetLegacyAccountsUseCase @Inject constructor(
+class GetLegacyAccountsUseCase @Inject internal constructor(
     private val accountStore: AccountStore,
 ) {
     suspend operator fun invoke(): ImmutableList<LegacyAccount> {

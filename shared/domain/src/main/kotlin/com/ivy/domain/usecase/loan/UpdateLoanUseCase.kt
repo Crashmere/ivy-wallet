@@ -4,7 +4,7 @@ import com.ivy.data.api.LoanStore
 import com.ivy.data.model.Loan
 import javax.inject.Inject
 
-class UpdateLoanUseCase @Inject constructor(
+class UpdateLoanUseCase @Inject internal constructor(
     private val loanStore: LoanStore,
 ) {
     suspend operator fun invoke(loan: Loan): Boolean {

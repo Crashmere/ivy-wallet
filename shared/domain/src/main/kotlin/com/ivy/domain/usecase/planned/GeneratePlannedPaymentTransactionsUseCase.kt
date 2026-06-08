@@ -9,7 +9,7 @@ import com.ivy.domain.mapper.legacy.toTransaction
 import java.time.Instant
 import javax.inject.Inject
 
-internal class GeneratePlannedPaymentTransactionsUseCase @Inject constructor(
+internal class GeneratePlannedPaymentTransactionsUseCase @Inject internal constructor(
     private val accountStore: AccountStore,
     private val transactionStore: TransactionStore
 ) {

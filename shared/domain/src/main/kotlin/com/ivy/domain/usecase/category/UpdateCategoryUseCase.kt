@@ -5,7 +5,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class UpdateCategoryUseCase @Inject constructor(
+class UpdateCategoryUseCase @Inject internal constructor(
     private val saveCategoryUseCase: SaveCategoryUseCase,
 ) {
     suspend operator fun invoke(category: Category): Boolean {

@@ -4,7 +4,7 @@ import com.ivy.data.api.BudgetStore
 import com.ivy.data.model.Budget
 import javax.inject.Inject
 
-class ReorderBudgetsUseCase @Inject constructor(
+class ReorderBudgetsUseCase @Inject internal constructor(
     private val budgetStore: BudgetStore,
 ) {
     suspend operator fun invoke(budgets: List<Budget>) {

@@ -5,7 +5,7 @@ import com.ivy.data.api.file.TextFileStore
 import java.nio.charset.Charset
 import javax.inject.Inject
 
-class ReadTextFileUseCase @Inject constructor(
+class ReadTextFileUseCase @Inject internal constructor(
     private val textFileStore: TextFileStore
 ) {
     suspend operator fun invoke(

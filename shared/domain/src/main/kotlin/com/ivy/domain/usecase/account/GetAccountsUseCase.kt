@@ -4,7 +4,7 @@ import com.ivy.data.api.AccountStore
 import com.ivy.data.model.Account
 import javax.inject.Inject
 
-class GetAccountsUseCase @Inject constructor(
+class GetAccountsUseCase @Inject internal constructor(
     private val accountStore: AccountStore
 ) {
     suspend operator fun invoke(): List<Account> {

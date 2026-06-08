@@ -5,7 +5,7 @@ import com.ivy.data.model.ExchangeRate
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class ObserveExchangeRatesUseCase @Inject constructor(
+class ObserveExchangeRatesUseCase @Inject internal constructor(
     private val exchangeRateStore: ExchangeRateStore
 ) {
     operator fun invoke(): Flow<List<ExchangeRate>> {

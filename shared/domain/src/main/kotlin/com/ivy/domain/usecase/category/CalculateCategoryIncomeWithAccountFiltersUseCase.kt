@@ -7,7 +7,7 @@ import com.ivy.data.model.IncomeExpenseTransferPair
 import com.ivy.domain.usecase.transaction.CalculateLegacyTransactionsIncomeExpenseUseCase
 import javax.inject.Inject
 
-class CalculateCategoryIncomeWithAccountFiltersUseCase @Inject constructor(
+class CalculateCategoryIncomeWithAccountFiltersUseCase @Inject internal constructor(
     private val calculateLegacyTransactionsIncomeExpenseUseCase: CalculateLegacyTransactionsIncomeExpenseUseCase
 ) {
     suspend operator fun invoke(

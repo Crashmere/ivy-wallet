@@ -9,7 +9,7 @@ import com.ivy.domain.mapper.legacy.toLegacyAccount
 import com.ivy.domain.transaction.legacy.LegacyTransactionDateDividers
 import javax.inject.Inject
 
-class BuildLegacyTransactionHistoryItemsUseCase @Inject constructor(
+class BuildLegacyTransactionHistoryItemsUseCase @Inject internal constructor(
     private val accountStore: AccountStore,
     private val exchangeAmountUseCase: ExchangeAmountUseCase,
 ) {

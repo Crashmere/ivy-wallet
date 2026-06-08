@@ -9,7 +9,7 @@ import com.ivy.domain.transaction.WalletValueFunctions
 import com.ivy.domain.transaction.foldTransactionsSuspend
 import javax.inject.Inject
 
-class CalculateTransactionsIncomeExpenseUseCase @Inject constructor(
+class CalculateTransactionsIncomeExpenseUseCase @Inject internal constructor(
     private val exchangeAmountUseCase: ExchangeAmountUseCase
 ) {
     suspend operator fun invoke(

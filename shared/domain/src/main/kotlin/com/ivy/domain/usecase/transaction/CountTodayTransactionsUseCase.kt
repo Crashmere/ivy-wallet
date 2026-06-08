@@ -11,7 +11,7 @@ import javax.inject.Inject
 private fun LocalDate.atEndOfDay(): LocalDateTime =
     atTime(23, 59, 59)
 
-class CountTodayTransactionsUseCase @Inject constructor(
+class CountTodayTransactionsUseCase @Inject internal constructor(
     private val transactionStore: TransactionStore,
 ) {
     suspend operator fun invoke(): NonNegativeLong {

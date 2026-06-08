@@ -16,7 +16,7 @@ import com.ivy.domain.transaction.legacy.filterUpcomingLegacyTransactions
 import com.ivy.domain.time.nowUtc
 import javax.inject.Inject
 
-class GetUnspecifiedCategoryTransactionsSummaryUseCase @Inject constructor(
+class GetUnspecifiedCategoryTransactionsSummaryUseCase @Inject internal constructor(
     private val accountStore: AccountStore,
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
     private val exchangeRatesUseCase: LegacyExchangeRatesUseCase,

@@ -6,7 +6,7 @@ import com.ivy.data.api.TransactionStore
 import com.ivy.data.model.AccountId
 import javax.inject.Inject
 
-class DeleteAccountUseCase @Inject constructor(
+class DeleteAccountUseCase @Inject internal constructor(
     private val accountStore: AccountStore,
     private val transactionStore: TransactionStore,
     private val plannedPaymentRuleStore: PlannedPaymentRuleStore,

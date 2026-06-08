@@ -4,7 +4,7 @@ import com.ivy.data.api.CategoryStore
 import com.ivy.data.model.CategoryId
 import javax.inject.Inject
 
-class DeleteCategoryUseCase @Inject constructor(
+class DeleteCategoryUseCase @Inject internal constructor(
     private val categoryStore: CategoryStore
 ) {
     suspend operator fun invoke(categoryId: CategoryId) {

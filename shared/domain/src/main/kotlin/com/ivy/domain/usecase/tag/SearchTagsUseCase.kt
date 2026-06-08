@@ -5,7 +5,7 @@ import com.ivy.data.model.Tag
 import com.ivy.data.model.primitive.NotBlankTrimmedString
 import javax.inject.Inject
 
-class SearchTagsUseCase @Inject constructor(
+class SearchTagsUseCase @Inject internal constructor(
     private val tagStore: TagStore
 ) {
     suspend operator fun invoke(query: NotBlankTrimmedString): List<Tag> {

@@ -9,7 +9,7 @@ import com.ivy.data.model.primitive.AssetCode
 import com.ivy.data.model.primitive.PositiveDouble
 import javax.inject.Inject
 
-class SyncExchangeRatesUseCase @Inject constructor(
+class SyncExchangeRatesUseCase @Inject internal constructor(
     private val exchangeRateStore: ExchangeRateStore,
 ) {
     suspend fun sync(baseCurrency: AssetCode): Either<String, Unit> = either {

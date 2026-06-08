@@ -6,7 +6,7 @@ import com.ivy.data.model.primitive.AssociationId
 import java.util.UUID
 import javax.inject.Inject
 
-class AssociateTagToTransactionUseCase @Inject constructor(
+class AssociateTagToTransactionUseCase @Inject internal constructor(
     private val tagStore: TagStore
 ) {
     suspend operator fun invoke(transactionId: UUID, tagId: TagId) {

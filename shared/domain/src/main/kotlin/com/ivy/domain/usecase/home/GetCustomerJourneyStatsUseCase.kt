@@ -4,7 +4,7 @@ import com.ivy.data.api.PlannedPaymentRuleStore
 import com.ivy.data.api.TransactionStore
 import javax.inject.Inject
 
-class GetCustomerJourneyStatsUseCase @Inject constructor(
+class GetCustomerJourneyStatsUseCase @Inject internal constructor(
     private val transactionStore: TransactionStore,
     private val plannedPaymentRuleStore: PlannedPaymentRuleStore
 ) {

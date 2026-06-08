@@ -8,7 +8,7 @@ import com.ivy.domain.exchange.exchange
 import java.math.BigDecimal
 import javax.inject.Inject
 
-class ExchangeAmountUseCase @Inject constructor(
+class ExchangeAmountUseCase @Inject internal constructor(
     private val exchangeRateStore: ExchangeRateStore,
 ) {
     suspend operator fun invoke(

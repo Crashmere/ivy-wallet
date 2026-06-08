@@ -5,7 +5,7 @@ import com.ivy.data.model.ExternalFile
 import com.ivy.data.model.importing.ImportResult
 import javax.inject.Inject
 
-class ImportBackupUseCase @Inject constructor(
+class ImportBackupUseCase @Inject internal constructor(
     private val backupStore: BackupStore
 ) {
     suspend operator fun invoke(

@@ -22,7 +22,7 @@ data class PlannedPaymentsOverview(
     val recurringExpenses: Double
 )
 
-class GetPlannedPaymentsOverviewUseCase @Inject constructor(
+class GetPlannedPaymentsOverviewUseCase @Inject internal constructor(
     private val plannedPaymentRuleStore: PlannedPaymentRuleStore,
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
     private val exchangeRatesUseCase: LegacyExchangeRatesUseCase,

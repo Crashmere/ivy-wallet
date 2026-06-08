@@ -6,7 +6,7 @@ import com.ivy.data.model.Loan
 import com.ivy.domain.util.nextOrderNum
 import javax.inject.Inject
 
-class CreateLoanUseCase @Inject constructor(
+class CreateLoanUseCase @Inject internal constructor(
     private val loanStore: LoanStore,
 ) {
     suspend operator fun invoke(data: CreateLoanData): Loan? {

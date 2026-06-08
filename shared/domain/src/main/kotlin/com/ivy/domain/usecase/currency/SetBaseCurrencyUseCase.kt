@@ -4,7 +4,7 @@ import com.ivy.data.model.primitive.AssetCode
 import com.ivy.data.api.CurrencyStore
 import javax.inject.Inject
 
-class SetBaseCurrencyUseCase @Inject constructor(
+class SetBaseCurrencyUseCase @Inject internal constructor(
     private val currencyStore: CurrencyStore
 ) {
     suspend operator fun invoke(newCurrency: AssetCode) {

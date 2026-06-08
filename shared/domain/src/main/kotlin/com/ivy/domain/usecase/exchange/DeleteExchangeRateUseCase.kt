@@ -4,7 +4,7 @@ import com.ivy.data.api.ExchangeRateStore
 import com.ivy.data.model.primitive.AssetCode
 import javax.inject.Inject
 
-class DeleteExchangeRateUseCase @Inject constructor(
+class DeleteExchangeRateUseCase @Inject internal constructor(
     private val exchangeRateStore: ExchangeRateStore
 ) {
     suspend operator fun invoke(

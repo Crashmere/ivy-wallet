@@ -5,7 +5,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class UpdateAssociatedLoanDataUseCase @Inject constructor(
+class UpdateAssociatedLoanDataUseCase @Inject internal constructor(
     private val loanTransactionSyncUseCase: LoanTransactionSyncUseCase,
     private val loanRecordTransactionSyncUseCase: LoanRecordTransactionSyncUseCase
 ) {

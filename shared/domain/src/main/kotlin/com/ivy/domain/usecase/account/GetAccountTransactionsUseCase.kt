@@ -6,7 +6,7 @@ import com.ivy.data.model.ClosedTimeRange
 import com.ivy.data.api.TransactionStore
 import javax.inject.Inject
 
-class GetAccountTransactionsUseCase @Inject constructor(
+class GetAccountTransactionsUseCase @Inject internal constructor(
     private val transactionStore: TransactionStore
 ) {
     suspend operator fun invoke(
