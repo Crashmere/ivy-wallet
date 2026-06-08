@@ -30,7 +30,7 @@ import java.time.LocalDate
 import java.time.LocalTime
 
 @Stable
-class AndroidDateTimePicker(
+internal class AndroidDateTimePicker(
     private val timeProvider: TimeProvider,
     private val timeConverter: TimeConverter,
 ) : DateTimePicker {

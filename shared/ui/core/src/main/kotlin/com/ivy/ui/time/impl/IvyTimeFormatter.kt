@@ -13,7 +13,7 @@ import java.time.LocalTime
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 
-class IvyTimeFormatter(
+internal class IvyTimeFormatter(
     private val resourceProvider: ResourceProvider,
     private val timeProvider: TimeProvider,
     private val converter: TimeConverter,

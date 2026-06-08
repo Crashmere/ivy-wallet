@@ -11,7 +11,7 @@ import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.ZoneOffset
 
-class StandardTimeConverter(
+internal class StandardTimeConverter(
     private val timeZoneProvider: TimeProvider
 ) : TimeConverter {
 

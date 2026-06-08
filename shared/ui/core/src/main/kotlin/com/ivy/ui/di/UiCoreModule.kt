@@ -1,10 +1,9 @@
-package com.ivy.wallet.di
+package com.ivy.ui.di
 
 import android.content.Context
 import com.ivy.ui.period.PeriodState
 import com.ivy.ui.platform.Toaster
 import com.ivy.ui.resource.ResourceProvider
-import com.ivy.ui.navigation.Navigation
 import com.ivy.ui.theme.ThemeState
 import com.ivy.ui.time.DateTimePicker
 import com.ivy.ui.time.DevicePreferences
@@ -25,14 +24,10 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-internal object UiCoreBindingsModule {
+internal object UiCoreModule {
     @Provides
     @Singleton
     fun themeState(): ThemeState = ThemeState()
-
-    @Provides
-    @Singleton
-    fun navigation(): Navigation = Navigation()
 
     @Provides
     @Singleton

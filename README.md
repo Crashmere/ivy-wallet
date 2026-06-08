@@ -110,6 +110,7 @@
 - 收窄导入 feature 公开面：只保留 `ImportCSVScreen` 与 `CSVScreen` 两个导航入口，备份恢复流程、CSV 状态/事件、解析模型、导入器和内部 flow UI 改为模块内部实现。
 - 收窄旧重排弹窗公开面：feature 层继续使用单类型 `ReorderModalSingleType` 和 `ReorderButton`，底层多类型 `ReorderModal` 收为旧 UI 内部实现。
 - 继续收窄旧主题色板公开面：外层旧主题门面中只被 `shared:ui:legacy` 内部使用的 `Blue`、`IvyLight`、`GreenLight`、`RedLight` 和 `IvyDark` 改为模块内部常量。
+- 下沉 UI 基础服务装配：`ThemeState`、`PeriodState`、时间服务、日期时间弹窗和 `Toaster` 由 `shared:ui:core` 自己声明 Hilt 绑定，`Navigation` 由 `shared:ui:navigation` 自己声明绑定；app 不再持有这些具体实现类的装配代码。
 
 当前仍保留：
 
@@ -1186,6 +1187,12 @@ shared:ui:core
 - `feature -> temp:*`
 - `shared:data:core/src/main -> fake/test helper`
 - `app -> every low-level library because of convenience`
+
+当前进展：
+
+- UI 基础状态和默认实现的 Hilt 装配已下沉到对应 shared 模块：`shared:ui:core` 提供主题、周期、时间、日期时间弹窗和 toast 服务，`shared:ui:navigation` 提供 `Navigation` 单例。
+- `com.ivy.ui.time.impl` 下的默认时间实现已收为 `shared:ui:core` 内部实现；app 继续只注入 `TimeProvider`、`TimeConverter`、`TimeFormatter`、`DateTimePicker` 等接口。
+- app 仍保留文件选择、文件分享、Material 日期选择器、BuildInfo、ResourceProvider、生物识别和窗口安全等真正依赖 Activity 或 Android app 壳层的装配。
 
 ## 高风险区域
 

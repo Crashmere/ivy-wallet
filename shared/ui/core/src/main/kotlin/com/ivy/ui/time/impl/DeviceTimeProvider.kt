@@ -8,7 +8,7 @@ import java.time.LocalTime
 import java.time.ZoneId
 
 @Suppress("UnnecessaryPassThroughClass")
-class DeviceTimeProvider : TimeProvider {
+internal class DeviceTimeProvider : TimeProvider {
 
     override fun getZoneId(): ZoneId = ZoneId.systemDefault()
 
