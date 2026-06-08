@@ -25,7 +25,6 @@ import androidx.compose.ui.unit.dp
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.legacy.ui.theme.style
 import com.ivy.data.model.PlannedPaymentRule
-import com.ivy.legacy.ui.component.transaction.SectionDivider
 import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.Gray
 import com.ivy.legacy.ui.component.IvyIcon
@@ -112,7 +111,7 @@ private fun LazyListScope.plannedPaymentItems(
 ) {
     if (oneTime.isNotEmpty()) {
         item {
-            SectionDivider(
+            PlannedPaymentSectionDivider(
                 expanded = oneTimeExpanded,
                 setExpanded = setOneTimeExpanded,
                 title = stringResource(R.string.one_time_payments),
@@ -140,7 +139,7 @@ private fun LazyListScope.plannedPaymentItems(
 
     if (recurring.isNotEmpty()) {
         item {
-            SectionDivider(
+            PlannedPaymentSectionDivider(
                 expanded = recurringExpanded,
                 setExpanded = setRecurringExpanded,
                 title = stringResource(R.string.recurring_payments),

@@ -1,4 +1,4 @@
-package com.ivy.legacy.ui.component.transaction
+package com.ivy.planned.list
 
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
@@ -28,21 +28,18 @@ import com.ivy.data.model.currency.format
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.legacy.ui.theme.style
 import com.ivy.ui.R
+import com.ivy.ui.animation.springBounce
 import com.ivy.ui.compose.clickableNoIndication
 import com.ivy.ui.compose.rememberInteractionSource
-import com.ivy.ui.animation.springBounce
 
 @Composable
-internal fun SectionDivider(
+internal fun PlannedPaymentSectionDivider(
     expanded: Boolean,
     title: String,
     titleColor: Color,
     baseCurrency: String,
     income: Double,
     expenses: Double,
-
-    showIncomeExpenseRow: Boolean = true,
-
     setExpanded: (Boolean) -> Unit
 ) {
     Spacer(Modifier.height(24.dp))
@@ -64,7 +61,7 @@ internal fun SectionDivider(
 
         Column {
             Text(
-                modifier = Modifier.testTag("upcoming_title"),
+                modifier = Modifier.testTag("planned_payment_section_title"),
                 text = title,
                 style = LegacyTheme.typo.b1.style(
                     fontWeight = FontWeight.ExtraBold,
@@ -72,17 +69,13 @@ internal fun SectionDivider(
                 )
             )
 
-            if (showIncomeExpenseRow) {
-                Spacer(Modifier.height(4.dp))
+            Spacer(Modifier.height(4.dp))
 
-                SectionDividerIncomeExpenseRow(
-                    income = income,
-                    expenses = expenses,
-                    baseCurrency = baseCurrency
-                )
-            } else {
-                Spacer(Modifier.height(8.dp))
-            }
+            PlannedPaymentIncomeExpenseRow(
+                income = income,
+                expenses = expenses,
+                baseCurrency = baseCurrency
+            )
         }
 
         Spacer(Modifier.weight(1f))
@@ -99,7 +92,7 @@ internal fun SectionDivider(
 }
 
 @Composable
-private fun SectionDividerIncomeExpenseRow(
+private fun PlannedPaymentIncomeExpenseRow(
     income: Double,
     expenses: Double,
     baseCurrency: String
@@ -109,7 +102,7 @@ private fun SectionDividerIncomeExpenseRow(
     ) {
         if (expenses > 0) {
             Text(
-                modifier = Modifier.testTag("upcoming_expense"),
+                modifier = Modifier.testTag("planned_payment_section_expense"),
                 text = "${expenses.format(baseCurrency)} $baseCurrency",
                 style = LegacyTheme.typo.nC.style(
                     fontWeight = FontWeight.ExtraBold,
@@ -129,14 +122,14 @@ private fun SectionDividerIncomeExpenseRow(
         if (income > 0 && expenses > 0) {
             Spacer(Modifier.width(8.dp))
 
-            SectionDividerDot()
+            PlannedPaymentSectionDividerDot()
 
             Spacer(Modifier.width(8.dp))
         }
 
         if (income > 0) {
             Text(
-                modifier = Modifier.testTag("upcoming_income"),
+                modifier = Modifier.testTag("planned_payment_section_income"),
                 text = "${income.format(baseCurrency)} $baseCurrency",
                 style = LegacyTheme.typo.nC.style(
                     fontWeight = FontWeight.ExtraBold,
@@ -156,7 +149,7 @@ private fun SectionDividerIncomeExpenseRow(
 }
 
 @Composable
-private fun SectionDividerDot() {
+private fun PlannedPaymentSectionDividerDot() {
     Box(
         modifier = Modifier
             .size(4.dp)
