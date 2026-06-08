@@ -1,11 +1,13 @@
-package com.ivy.legacy.ui.edit.core
+package com.ivy.planned.edit
 
+import androidx.annotation.DrawableRes
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.BoxWithConstraintsScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -18,6 +20,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -28,12 +32,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.layout
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
@@ -62,9 +70,7 @@ import com.ivy.ui.R
 import com.ivy.data.model.currency.IvyCurrency
 import com.ivy.legacy.ui.theme.Gradient
 import com.ivy.legacy.ui.theme.Ivy
-import com.ivy.legacy.ui.component.ActionsRow
 import com.ivy.legacy.ui.component.BalanceRow
-import com.ivy.legacy.ui.component.CircleButton
 import com.ivy.legacy.ui.component.ItemIconSDefaultIcon
 import com.ivy.legacy.ui.component.IvyButton
 import com.ivy.legacy.ui.component.IvyIcon
@@ -76,17 +82,8 @@ import kotlinx.coroutines.launch
 import java.util.Locale
 import java.util.UUID
 import kotlin.math.roundToInt
-import androidx.compose.foundation.layout.BoxWithConstraints
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.graphics.toArgb
-import com.ivy.legacy.ui.theme.Green
-import com.ivy.legacy.ui.theme.GreenDark
-import com.ivy.legacy.ui.theme.GreenLight
-import com.ivy.legacy.ui.theme.IvyDark
-import com.ivy.legacy.ui.modal.ModalSave
-import com.ivy.legacy.ui.modal.ModalSet
 
 private const val SWIPE_UP_EXPANDED_THRESHOLD = 200
 
@@ -365,6 +362,61 @@ private fun BottomBar(
 
         Spacer(Modifier.width(24.dp))
     }
+}
+
+@Composable
+private fun ActionsRow(
+    modifier: Modifier = Modifier,
+    lineColor: Color = LegacyTheme.colors.medium,
+    Content: @Composable RowScope.() -> Unit
+) {
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .drawBehind {
+                val height = this.size.height
+                val width = this.size.width
+
+                drawLine(
+                    color = lineColor,
+                    strokeWidth = 2.dp.toPx(),
+                    start = Offset(
+                        x = 0f,
+                        y = height / 2
+                    ),
+                    end = Offset(
+                        x = width,
+                        y = height / 2
+                    )
+                )
+            },
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Content()
+    }
+}
+
+@Composable
+private fun CircleButton(
+    modifier: Modifier = Modifier,
+    @DrawableRes icon: Int,
+    contentDescription: String = "icon",
+    backgroundColor: Color = LegacyTheme.colors.pure,
+    borderColor: Color = LegacyTheme.colors.medium,
+    tint: Color? = LegacyTheme.colors.pureInverse,
+    onClick: () -> Unit,
+) {
+    Icon(
+        modifier = modifier
+            .clip(CircleShape)
+            .background(backgroundColor, CircleShape)
+            .border(2.dp, borderColor, CircleShape)
+            .clickable(onClick = onClick)
+            .padding(6.dp),
+        painter = painterResource(id = icon),
+        contentDescription = contentDescription,
+        tint = tint ?: Color.Unspecified,
+    )
 }
 
 @Composable

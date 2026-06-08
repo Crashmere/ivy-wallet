@@ -657,7 +657,7 @@
 - 已把遗留误包名 `com.ivy.domain.legacy.ui.*` 清空：`ListItem` 和 `IvyColorPicker` 归入 `com.ivy.legacy.ui.component`，调用方仍使用原组件行为。
 - 已把旧弹窗层从 `com.ivy.wallet.ui.theme.modal` 迁到 `com.ivy.legacy.ui.modal`，`modal.edit` 同步迁到 `com.ivy.legacy.ui.modal.edit`；账户/分类/金额/周期/货币/借贷等旧弹窗仍保留实现，后续再按功能边界下沉。
 - 已把旧 `wallet` UI 子包里的金额/货币展示和周期选择组件并入 `com.ivy.legacy.ui.component`；`com.ivy.wallet.ui.theme.*` 包名已经从源码中清空。
-- 已把编辑交易/计划付款复用的旧底部表单组件从 `com.ivy.wallet.ui.edit.core` 迁到 `com.ivy.legacy.ui.edit.core`；除 app 自身锁屏包名外，旧 shared/feature UI 不再使用 `com.ivy.wallet.ui.*`。
+- 曾把编辑交易/计划付款复用的旧底部表单组件从 `com.ivy.wallet.ui.edit.core` 迁到 `com.ivy.legacy.ui.edit.core`；当前这批编辑页业务 UI 已继续迁回各自 feature 私有边界，旧 shared/feature UI 不再使用 `com.ivy.wallet.ui.*`。
 - 已清理迁移过程中留下的 `com.ivy.legacy.legacy.ui.theme.*` 双重 legacy 包名：预算进度条和日期时间行归入 `com.ivy.legacy.ui.component`，弹窗名称输入归入 `com.ivy.legacy.ui.modal`。
 - 已把 `TransactionHistoryDateDivider` 从旧 `com.ivy.wallet.domain.data` 归位到正式 `com.ivy.data.model`；它仍服务旧交易列表和旧日期分组，并与 `TransactionHistoryItem` 位于同一模型包。`SortOrder/CustomExchangeRateState` 已进一步下沉到对应 feature。
 - 旧创建/编辑参数已从早期的 `com.ivy.wallet.domain.deprecated.logic.model` 迁出；当前 `CreateAccountData`、`CreateBudgetData`、`CreateCategoryData`、`CreateLoanData`、`CreateLoanRecordData`、`EditLoanRecordData` 已归位到正式 `com.ivy.data.model`，旧页面和正式 use case 继续使用同名语义。借贷创建参数仍可引用旧账户模型，但借贷本体和借贷记录模型已经归位。
@@ -1344,6 +1344,7 @@ shared:ui:core
 - 编辑交易和计划付款编辑页的描述展示卡片和添加描述按钮已改为各自 feature 私有实现；`shared:ui:legacy` 删除只服务该展示入口的 `Description`、`PrimaryAttributeColumn` 和 `AddPrimaryAttributeButton`。
 - 编辑交易和计划付款编辑页的分类按钮和顶部工具栏已改为各自 feature 私有实现；`shared:ui:legacy` 删除只服务这两个编辑页的 `edit.core.Category` 和 `edit.core.Toolbar`。
 - 编辑交易和计划付款编辑页的标题输入和标题建议列表已改为各自 feature 私有实现；`shared:ui:legacy` 删除只服务这两个编辑页的 `edit.core.Title`，旧 `IvyTitleTextField` 暂留给 legacy 标签弹窗内部使用。
+- 编辑交易和计划付款编辑页的底部金额/账户面板已改为各自 feature 私有实现；`shared:ui:legacy` 删除最后一个 `edit.core.EditBottomSheet`，`legacy.ui.edit.core` 包不再承载编辑页业务 UI。
 - app 仍保留文件选择、文件分享、Material 日期选择器、BuildInfo、Locale 设置、生物识别和窗口安全等真正依赖 Activity 或 Android app 壳层的装配。
 
 ## 高风险区域
