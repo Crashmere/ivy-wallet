@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.ivy.data.model.legacy.LegacyTransaction
 import com.ivy.data.model.TransactionHistoryItem
 import com.ivy.data.model.TransactionType
+import com.ivy.data.model.Transaction
 import com.ivy.ui.resource.ResourceProvider
 import com.ivy.data.model.Account
 import com.ivy.data.model.AccountId
@@ -47,7 +48,6 @@ import com.ivy.domain.usecase.account.UpdateAccountWithBalanceUseCase
 import com.ivy.domain.usecase.planned.PayOrSkipPlannedTransactionByIdUseCase
 import com.ivy.domain.usecase.planned.PayOrSkipPlannedTransactionsByIdsUseCase
 import com.ivy.domain.usecase.settings.GetTransfersAsIncomeExpensePreferenceUseCase
-import com.ivy.domain.usecase.transaction.BuildLegacyTransactionHistoryItemsUseCase
 import com.ivy.domain.usecase.transaction.BuildTransactionHistoryItemsUseCase
 import com.ivy.domain.usecase.transaction.CalculateLegacyTransactionsIncomeExpenseUseCase
 import com.ivy.domain.usecase.transaction.GetTransactionsByIdsUseCase
@@ -78,7 +78,6 @@ internal class TransactionsViewModel @Inject internal constructor(
     private val getTransfersAsIncomeExpensePreference: GetTransfersAsIncomeExpensePreferenceUseCase,
     private val getAccountsUseCase: GetAccountsUseCase,
     private val getAccountTransactionsUseCase: GetAccountTransactionsUseCase,
-    private val buildLegacyTransactionHistoryItemsUseCase: BuildLegacyTransactionHistoryItemsUseCase,
     private val buildTransactionHistoryItemsUseCase: BuildTransactionHistoryItemsUseCase,
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
     private val getAccountUpcomingTransactionsSummaryUseCase: GetAccountUpcomingTransactionsSummaryUseCase,
@@ -445,7 +444,7 @@ internal class TransactionsViewModel @Inject internal constructor(
 
     private suspend fun initForAccountTransfersCategory(
         accountFilterList: List<UUID>,
-        transactions: List<LegacyTransaction>,
+        transactions: List<Transaction>,
     ) {
         initWithTransactions.value = true
         val accountTransferCategory = Category(
@@ -457,12 +456,13 @@ internal class TransactionsViewModel @Inject internal constructor(
         )
         category.value = accountTransferCategory
         val accountFilterIdSet = accountFilterList.toHashSet()
-        val filteredTransactions = transactions.filter {
+        val legacyTransactions = mapTransactionsToLegacyTransactionsUseCase(transactions)
+        val filteredTransactions = legacyTransactions.filter {
             it.categoryId == null && (
-                    accountFilterIdSet.contains(it.accountId) || accountFilterIdSet.contains(
-                        it.toAccountId
+                    accountFilterIdSet.contains(it.accountId) ||
+                            accountFilterIdSet.contains(it.toAccountId)
                     )
-                    ) && it.type == TransactionType.TRANSFER
+                    && it.type == TransactionType.TRANSFER
         }
 
         val historyIncomeExpense = calculateLegacyTransactionsIncomeExpenseUseCase(
@@ -476,7 +476,7 @@ internal class TransactionsViewModel @Inject internal constructor(
         income.doubleValue = historyIncomeExpense.transferIncome.toDouble()
         expenses.doubleValue = historyIncomeExpense.transferExpense.toDouble()
         balance.doubleValue = income.doubleValue - expenses.doubleValue
-        history.value = buildLegacyTransactionHistoryItemsUseCase(
+        history.value = buildTransactionHistoryItemsUseCase(
             baseCurrency = baseCurrency.value,
             transactions = transactions
         ).toImmutableList()
@@ -631,9 +631,10 @@ internal class TransactionsViewModel @Inject internal constructor(
             initWithTransactions.value = false
             treatTransfersAsIncomeExpense.value =
                 getTransfersAsIncomeExpensePreference()
-            val inputTransactions = mapTransactionsToLegacyTransactionsUseCase(
-                getTransactionsByIdsUseCase(query.transactionIds)
-            )
+            val inputTransactions = getTransactionsByIdsUseCase(query.transactionIds)
+            val legacyInputTransactions by lazy {
+                mapTransactionsToLegacyTransactionsUseCase(inputTransactions)
+            }
 
             when {
                 query.accountId != null -> {
@@ -650,7 +651,7 @@ internal class TransactionsViewModel @Inject internal constructor(
                     initForCategoryWithTransactions(
                         query.categoryId,
                         query.accountIdFilterList,
-                        inputTransactions
+                        legacyInputTransactions
                     )
                 }
 
