@@ -4,6 +4,6 @@ import androidx.compose.runtime.Immutable
 import com.ivy.data.model.Category
 
 @Immutable
-data class SelectedCategory(
+internal data class SelectedCategory(
     val category: Category // null - Unspecified
 )

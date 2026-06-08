@@ -27,7 +27,7 @@ import com.ivy.legacy.ui.component.IvyButton
 import com.ivy.legacy.ui.theme.gradientCutBackgroundTop
 
 @Composable
-fun BoxWithConstraintsScope.PieChartStatisticBottomBar(
+internal fun BoxWithConstraintsScope.PieChartStatisticBottomBar(
     type: TransactionType,
     onClose: () -> Unit,
     onAdd: (TransactionType) -> Unit,

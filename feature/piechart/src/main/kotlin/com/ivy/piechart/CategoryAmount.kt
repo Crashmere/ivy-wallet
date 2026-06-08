@@ -6,7 +6,7 @@ import com.ivy.data.model.TransactionType
 import java.util.UUID
 
 @Immutable
-data class CategoryAmount(
+internal data class CategoryAmount(
     val category: Category?,
     val amount: Double,
     val associatedTransactions: List<AssociatedTransaction> = emptyList(),
@@ -14,7 +14,7 @@ data class CategoryAmount(
 )
 
 @Immutable
-data class AssociatedTransaction(
+internal data class AssociatedTransaction(
     val id: UUID,
     val type: TransactionType,
 )

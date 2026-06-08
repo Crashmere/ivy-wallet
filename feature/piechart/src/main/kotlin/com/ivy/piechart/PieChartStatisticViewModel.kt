@@ -31,7 +31,7 @@ import javax.inject.Inject
 
 @Stable
 @HiltViewModel
-class PieChartStatisticViewModel @Inject constructor(
+internal class PieChartStatisticViewModel @Inject constructor(
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
     private val periodState: PeriodState,
     private val buildPieChartDataUseCase: BuildPieChartDataUseCase,

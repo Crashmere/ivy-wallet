@@ -8,7 +8,7 @@ import kotlinx.collections.immutable.ImmutableList
 import java.util.UUID
 
 @Immutable
-data class PieChartStatisticState(
+internal data class PieChartStatisticState(
     val transactionType: TransactionType,
     val period: TimePeriod,
     val baseCurrency: String,

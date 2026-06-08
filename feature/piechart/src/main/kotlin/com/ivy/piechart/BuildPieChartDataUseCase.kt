@@ -26,7 +26,7 @@ import javax.inject.Inject
 
 private val AccountTransfersCategoryColorArgb = 0xFFFFCCD5.toInt()
 
-class BuildPieChartDataUseCase @Inject constructor(
+internal class BuildPieChartDataUseCase @Inject constructor(
     private val getLegacyAccountsUseCase: GetLegacyAccountsUseCase,
     private val getLegacyTransactionsForAccountsUseCase: GetLegacyTransactionsForAccountsUseCase,
     private val calculateLegacyTransactionsIncomeExpenseUseCase: CalculateLegacyTransactionsIncomeExpenseUseCase,
@@ -225,7 +225,7 @@ private fun LegacyTransaction.toAssociatedTransaction(): AssociatedTransaction {
     )
 }
 
-data class PieChartData(
+internal data class PieChartData(
     val totalAmount: Double,
     val categoryAmounts: ImmutableList<CategoryAmount>
 )

@@ -40,7 +40,7 @@ private const val PIE_CHART_RADIUS_DP = 128
 private const val RADIUS_DP = 112f
 
 @Composable
-fun PieChart(
+internal fun PieChart(
     type: TransactionType,
     categoryAmounts: ImmutableList<CategoryAmount>,
     selectedCategory: SelectedCategory?,
