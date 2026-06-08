@@ -1,4 +1,4 @@
-package com.ivy.data.remote.impl
+package com.ivy.data.remote
 
 import arrow.core.Either
 import arrow.core.left
@@ -9,7 +9,7 @@ import io.ktor.client.call.body
 import io.ktor.client.request.get
 import javax.inject.Inject
 
-class RemoteExchangeRatesDataSourceImpl @Inject constructor(
+class RemoteExchangeRatesDataSource @Inject constructor(
     private val ktorClient: dagger.Lazy<HttpClient>,
 ) {
     private val urls = listOf(

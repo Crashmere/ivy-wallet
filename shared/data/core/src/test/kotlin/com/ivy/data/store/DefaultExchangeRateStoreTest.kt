@@ -5,7 +5,7 @@ import arrow.core.left
 import com.ivy.data.db.dao.read.ExchangeRatesDao
 import com.ivy.data.db.dao.write.WriteExchangeRatesDao
 import com.ivy.data.model.ExchangeRate
-import com.ivy.data.remote.impl.RemoteExchangeRatesDataSourceImpl
+import com.ivy.data.remote.RemoteExchangeRatesDataSource
 import com.ivy.data.remote.responses.ExchangeRatesResponse
 import com.ivy.data.mapper.ExchangeRateMapper
 import io.kotest.assertions.arrow.core.shouldBeLeft
@@ -22,7 +22,7 @@ class DefaultExchangeRateStoreTest {
     private val mapper = mockk<ExchangeRateMapper>()
     private val exchangeRatesDao = mockk<ExchangeRatesDao>()
     private val writeExchangeRatesDao = mockk<WriteExchangeRatesDao>()
-    private val remoteExchangeRatesDataSource = mockk<RemoteExchangeRatesDataSourceImpl>()
+    private val remoteExchangeRatesDataSource = mockk<RemoteExchangeRatesDataSource>()
 
     private lateinit var store: DefaultExchangeRateStore
 

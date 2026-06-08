@@ -7,7 +7,7 @@ import com.ivy.data.db.dao.read.ExchangeRatesDao
 import com.ivy.data.db.dao.write.WriteExchangeRatesDao
 import com.ivy.data.model.ExchangeRate
 import com.ivy.data.model.primitive.AssetCode
-import com.ivy.data.remote.impl.RemoteExchangeRatesDataSourceImpl
+import com.ivy.data.remote.RemoteExchangeRatesDataSource
 import com.ivy.data.mapper.ExchangeRateMapper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -20,7 +20,7 @@ class DefaultExchangeRateStore @Inject constructor(
     private val mapper: ExchangeRateMapper,
     private val exchangeRatesDao: ExchangeRatesDao,
     private val writeExchangeRatesDao: WriteExchangeRatesDao,
-    private val remoteExchangeRatesDataSource: RemoteExchangeRatesDataSourceImpl,
+    private val remoteExchangeRatesDataSource: RemoteExchangeRatesDataSource,
 ) : ExchangeRateStore {
     override suspend fun fetchEurExchangeRates(): Either<String, List<ExchangeRate>> = either {
         withContext(Dispatchers.IO) {
