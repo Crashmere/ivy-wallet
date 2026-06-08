@@ -7,7 +7,10 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -18,6 +21,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
@@ -32,9 +36,9 @@ import com.ivy.ui.compose.selectEndTextFieldValue
 import com.ivy.ui.R
 import com.ivy.data.model.currency.IvyCurrency
 import com.ivy.data.model.CreateAccountData
+import com.ivy.ui.compose.clickableNoIndication
 import com.ivy.legacy.ui.theme.Gray
 import com.ivy.legacy.ui.theme.Ivy
-import com.ivy.legacy.ui.component.IvyCheckboxWithText
 import com.ivy.legacy.ui.modal.ChooseIconModal
 import com.ivy.legacy.ui.modal.CurrencyModal
 import com.ivy.legacy.ui.modal.IvyModal
@@ -45,6 +49,7 @@ import java.util.Locale
 import java.util.UUID
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
+import com.ivy.ui.compose.rememberInteractionSource
 
 @Composable
 fun BoxWithConstraintsScope.AccountModal(
@@ -230,6 +235,59 @@ fun BoxWithConstraintsScope.AccountModal(
     ) {
         icon = it
     }
+}
+
+@Composable
+private fun IvyCheckboxWithText(
+    modifier: Modifier = Modifier,
+    text: String,
+    checked: Boolean,
+    onCheckedChange: (checked: Boolean) -> Unit
+) {
+    Row(
+        modifier = modifier
+            .clickableNoIndication(rememberInteractionSource()) {
+                onCheckedChange(!checked)
+            },
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        IvyCheckbox(
+            checked = checked,
+            onCheckedChange = onCheckedChange
+        )
+
+        Spacer(modifier = Modifier.width(4.dp))
+
+        Text(
+            text = text,
+            style = LegacyTheme.typo.b2.style(
+                color = LegacyTheme.colors.pureInverse,
+                fontWeight = FontWeight.SemiBold
+            )
+        )
+    }
+}
+
+@Composable
+private fun IvyCheckbox(
+    modifier: Modifier = Modifier,
+    checked: Boolean,
+    onCheckedChange: (checked: Boolean) -> Unit
+) {
+    Icon(
+        modifier = modifier
+            .size(48.dp)
+            .clip(CircleShape)
+            .clickable {
+                onCheckedChange(!checked)
+            }
+            .padding(all = 12.dp),
+        painter = painterResource(
+            id = if (checked) R.drawable.ic_checkbox_checked else R.drawable.ic_checkbox_unchecked
+        ),
+        contentDescription = null,
+        tint = if (checked) Color.Unspecified else LegacyTheme.colors.gray
+    )
 }
 
 private fun save(
