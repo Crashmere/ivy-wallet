@@ -62,8 +62,6 @@ import com.ivy.ui.R
 import com.ivy.ui.rememberScrollPositionListState
 import com.ivy.data.model.currency.IvyCurrency
 import com.ivy.data.model.IncomeExpensePair
-import com.ivy.legacy.ui.modal.BufferModal
-import com.ivy.legacy.ui.modal.BufferModalData
 import com.ivy.legacy.ui.modal.ChoosePeriodModal
 import com.ivy.legacy.ui.modal.ChoosePeriodModalData
 import com.ivy.legacy.ui.modal.CurrencyModal
@@ -134,7 +132,7 @@ internal fun BoxWithConstraintsScope.HomeUi(
     val periodState = LocalPeriodState.current
     val datePicker = LocalDatePicker.current
 
-    var bufferModalData: BufferModalData? by remember { mutableStateOf(null) }
+    var bufferModalData: HomeBufferModalData? by remember { mutableStateOf(null) }
     var currencyModalVisible by remember { mutableStateOf(false) }
     var choosePeriodModal: ChoosePeriodModalData? by remember {
         mutableStateOf(null)
@@ -258,7 +256,7 @@ internal fun BoxWithConstraintsScope.HomeUi(
         },
         setExpanded = setMoreMenuExpanded,
         onBufferClick = {
-            bufferModalData = BufferModalData(
+            bufferModalData = HomeBufferModalData(
                 balance = uiState.balance.toDouble(),
                 currency = baseCurrency,
                 buffer = uiState.buffer.amount.toDouble()
@@ -270,7 +268,7 @@ internal fun BoxWithConstraintsScope.HomeUi(
         onDestinationClick = onMoreMenuDestinationClick
     )
 
-    BufferModal(
+    HomeBufferModal(
         modal = bufferModalData,
         dismiss = {
             bufferModalData = null

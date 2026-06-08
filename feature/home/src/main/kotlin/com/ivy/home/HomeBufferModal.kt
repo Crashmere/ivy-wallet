@@ -1,25 +1,37 @@
-package com.ivy.legacy.ui.modal
+package com.ivy.home
 
 import androidx.compose.foundation.layout.BoxWithConstraintsScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.ivy.legacy.ui.modal.IvyModal
+import com.ivy.legacy.ui.modal.ModalAmountSection
+import com.ivy.legacy.ui.modal.ModalSave
+import com.ivy.legacy.ui.modal.edit.AmountModal
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.R
-import com.ivy.legacy.ui.component.BufferBattery
-import com.ivy.legacy.ui.modal.edit.AmountModal
-import java.util.*
+import java.util.UUID
 
-@Suppress("ParameterNaming")
+internal data class HomeBufferModalData(
+    val balance: Double,
+    val buffer: Double,
+    val currency: String,
+    val id: UUID = UUID.randomUUID(),
+)
+
 @Composable
-fun BoxWithConstraintsScope.BufferModal(
-    modal: BufferModalData?,
+internal fun BoxWithConstraintsScope.HomeBufferModal(
+    modal: HomeBufferModalData?,
     dismiss: () -> Unit,
-    onBufferChanged: (Double) -> Unit
+    onBufferChanged: (Double) -> Unit,
 ) {
     var newBufferAmount by remember(modal) {
         mutableStateOf(modal?.buffer ?: 0.0)
@@ -40,7 +52,7 @@ fun BoxWithConstraintsScope.BufferModal(
     ) {
         Spacer(Modifier.height(16.dp))
 
-        BufferBattery(
+        HomeBufferBattery(
             modifier = Modifier.padding(horizontal = 16.dp),
             buffer = newBufferAmount,
             balance = modal?.balance ?: 0.0,
