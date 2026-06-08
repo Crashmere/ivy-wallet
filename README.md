@@ -23,7 +23,7 @@
 - 开始拆分 `RootActivity` 平台能力：文件创建/打开、Material 日期选择器、生物识别弹窗和 CSV/zip 分享已经移入 `app` 的 platform 边界；`RootScreen` 大接口已删除，feature 改为依赖更窄的 UI platform 接口。
 - 继续清理历史包名：旧 Room migration 和 type converter 已从 `com.ivy.domain.db` 归位到 `com.ivy.data.db`，旧 UI 组件中误挂到 domain 包名下的 `ListItem/IvyColorPicker` 已归位到 `com.ivy.legacy.ui.component`。
 - 清理非业务路径上的旧调试输出：预算 ID 解析、币种代码解析、键盘可见性判断、金额输入确认和 CSV 初次解析失败不再打印堆栈，继续按原有空值/无操作策略处理。
-- 收窄 UI core 职责：旧交易列表专用的 `LegacyDueSection` 已从 `shared:ui:core` 迁回 `shared:ui:legacy` 的交易组件包。
+- 收窄 UI core 职责：旧交易列表专用的 `DueSection` 已从 `shared:ui:core` 迁回 `shared:ui:legacy` 的交易组件包。
 - 继续收窄 UI core 职责：旧交易列表基础入参 `AppBaseData` 已改名为 `TransactionListData`，并迁入 `shared:ui:legacy` 的交易组件包。
 - 继续迁移旧 UI 状态：账户、分类、借贷、借贷记录、缓冲金额、循环规则和周期选择弹窗状态已从 `shared:ui:core` 迁入 `shared:ui:legacy`。
 - 精简 Compose 构建约定：删除 Compose compiler metrics/reports 输出配置，减少个人开发构建产物噪音。
@@ -208,7 +208,7 @@
 - 清理报表页内部事件命名：计划付款交易的支付/收取、跳过和批量跳过事件已经只传交易 ID，不再在事件名中暴露 `LegacyTransaction`。
 - 收窄 ui-core 时间格式化内部端口：`DevicePreferences` 只作为 `IvyTimeFormatter` 的本模块适配接口，不再暴露给模块外部。
 - 收窄首页状态边界：`HomeState` 和 `HomeViewModel` 不再直接持有旧交易列表 UI 包装类型，只在首页调用旧列表组件时做适配转换。
-- 收敛交易列表页到期交易状态：upcoming/overdue 的交易、展开状态和收支统计合并为页面本地 section，旧 UI 的 `LegacyDueSection` 只在组件调用处构造。
+- 收敛交易列表页到期交易状态：upcoming/overdue 的交易、展开状态和收支统计合并为页面本地 section，旧 UI 的 `DueSection` 只在组件调用处构造。
 - 收敛报表页到期交易状态：报表页同样把 upcoming/overdue 的交易、展开状态和收支统计合并为页面本地 section，减少状态字段数量。
 - 收窄报表页顶部摘要状态：报表页不再为了收支卡片计数和饼图跳转保存完整旧交易列表，只保留交易 ID 和收入/支出数量摘要。
 - 收窄交易列表页顶部摘要计算：交易列表页顶部收支卡片不再在 Composable 中过滤旧交易对象，收入/支出交易数量由状态层提供。
@@ -654,7 +654,7 @@
 - 已把金额输入弹窗、计算器弹窗和缓冲金额弹窗迁入 `shared:ui:legacy`。金额键盘的“标准键盘布局”偏好已经改为由 app 根部提供 legacy UI 专用偏好入口，不再把 domain 的 `PreferenceToggleCatalog/BoolPreference` 类型暴露给旧 UI；`shared:ui:legacy` 仍因旧账户/借贷弹窗和周期模型暂时依赖 legacy domain 模型，后续按 UI model 边界继续拆。
 - 已把旧 `legacy.datamodel` 整体迁入 `shared:domain`，把旧创建参数模型迁入 `shared:domain`，并把账户/分类/借贷创建参数里的颜色从 Compose `Color` 改为普通 ARGB `Int`，由 UI 弹窗在边界处转换。
 - 已把旧颜色选择器、账户弹窗、分类弹窗、借贷弹窗和借贷记录弹窗迁入 `shared:ui:legacy`。颜色选择器移除了旧付费锁显示分支，不再依赖会员状态。
-- 已把旧 UI 状态模型 `AppBaseData`、`LegacyDueSection`、`BufferInfo`、`EditTransactionDisplayLoan` 迁入 `shared:ui:legacy`，作为迁移期的 UI 兼容数据。
+- 已把旧 UI 状态模型 `AppBaseData`、`DueSection`、`BufferInfo`、`EditTransactionDisplayLoan` 迁入 `shared:ui:legacy`，作为迁移期的 UI 兼容数据。
 - 已把搜索框、收入/支出卡片、详情工具栏、标签弹窗、交易卡片和交易列表组件迁入 `shared:ui:legacy`；交易卡片查找账户/分类时改为只使用调用方传入的数据，去掉了对 `IvyWalletCtx` 缓存的读取。
 - 早期迁入 `shared:domain` 的旧页面状态值对象已继续下沉：`SortOrder` 进入分类 feature，`CustomExchangeRateState` 进入编辑交易 feature，`TransactionHistoryDateDivider` 已进一步归位到正式 `com.ivy.data.model`。
 - 已把编辑交易/计划付款复用的底部表单组件迁入 `shared:ui:legacy`；`EditBottomSheet` 改用 Compose 屏幕高度，不再为了底部操作条位置读取 `IvyWalletCtx`。
@@ -698,7 +698,7 @@
 - CSV 导入器的新账户/分类默认颜色已改用导入功能自己的 ARGB 调色板；导入解析逻辑不再为了颜色值依赖 Compose `Color` 或 legacy theme。
 - 首页客户旅程卡片模型已改为保存普通 ARGB 背景色，卡片 provider 不再依赖 legacy theme；只有实际 Composable 绘制边界继续把颜色转成旧 UI 渐变。
 - 交易、报表和饼图的 ViewModel/UseCase 中用于占位分类的颜色已改成本地 ARGB 常量；非绘制逻辑不再为了 `Color.toArgb()` 依赖 Compose graphics 或 legacy theme。
-- 旧交易列表组件的数据契约 `AppBaseData/LegacyDueSection` 已继续提升到 `shared:ui:core` 的 `com.ivy.ui.transaction`；首页、报表、搜索和交易页状态不再为了列表数据契约引用 legacy 交易组件包。
+- 旧交易列表组件的数据契约 `AppBaseData/DueSection` 已继续提升到 `shared:ui:core` 的 `com.ivy.ui.transaction`；首页、报表、搜索和交易页状态不再为了列表数据契约引用 legacy 交易组件包。
 - `getCustomIconIdS()` 已从 legacy 组件包迁到 `shared:ui:core` 的 `com.ivy.ui.icon`；旧图标查找实现的内部类型和 fallback 逻辑已收窄为文件私有，图标选择器的静态图标清单也不再作为 legacy 公共 API 暴露。
 - 旧弹窗内部实现细节已继续收窄可见性：周期月份项、图标分组、选择分类新增按钮、金额键盘局部展示组件和 modal action row 不再作为模块外 public API 暴露；跨旧弹窗复用的金额键盘按钮和动态 action helper 仅保留 `shared:ui:legacy` 模块内可见。
 - 旧颜色兼容层继续收窄公开面：`dynamicContrast()`、Color 版 `isDarkColor()`、`Gradient.solid()` 和水平渐变转换仍是外部可用入口，但 HSV 拆解、亮暗调整、底层 HSV 转换、Int 版深色判断 helper、垂直渐变转换和旧 `Gradient.from(Int, Int?)` 构造入口已改为内部实现或删除，避免旧主题算法细节继续作为公共 API 扩散。
@@ -1110,7 +1110,7 @@
 - 交易列表、首页和报表使用的新旧交易批量转换 use case 已从 `MapTransactionsToLegacy*` 改名为 `MapTransactionsToLegacyTransactions*`，避免把 legacy 误读成整套旧 domain 边界。
 - 功能开关偏好门面已从 `PreferenceToggleRepository` 改名为 `PreferenceToggleService`：它只负责把 domain 层 `BoolPreference` 映射到底层 `PreferenceToggleStore`，不再用 repository 命名暗示数据仓库职责。
 - 旧 `Logic` 注入变量名曾继续收敛：旧汇率 use case 调用方统一使用 `exchangeRatesUseCase`，首页客户旅程卡片也改用 `customerJourneyCardsProvider` 命名；当前旧汇率 use case 已删除。
-- 旧到期交易 UI 模型 `LegacyDueSection` 的 `trns` 字段已改为 `transactions`，legacy 交易列表内部私有 `trnItems/trnCount` 也改为完整命名；首页、报表和交易页调用方同步更新，展示行为不变。
+- 旧到期交易 UI 模型 `DueSection` 的 `trns` 字段已改为 `transactions`，legacy 交易列表内部私有 `trnItems/trnCount` 也改为完整命名；首页、报表和交易页调用方同步更新，展示行为不变。
 - CSV 导入页面的交易类型元数据已从 `TrnTypeMetadata` 展开为 `TransactionTypeMetadata`，对应事件 `TypeMetaChange/DataMetaChange` 也改为 `TypeMetadataChange/DateMetadataChange`；导入解析规则和 CSV 字段映射行为不变。
 - app 启动、首页到期交易加载、编辑交易删除弹窗、交易类型 lambda、客户旅程计数、账户统计和 CSV 导出中的局部 `trn/trans` 缩写已展开为 `transaction*` 命名；只改局部符号，不改业务计算。
 - 报表筛选模型中的 `trnTypes/trnType/trnAmountBaseCurrency` 已展开为 `transactionTypes/transactionType/transactionAmountBaseCurrency`；筛选规则和 UI 行为不变。
@@ -1375,10 +1375,10 @@ shared:ui:core
 - 旧收支汇总卡片不再接收完整交易历史，只接收页面已经算好的收入/支出交易数量；通用 UI 组件不再依赖 `LegacyTransaction` 或 `TransactionHistoryItem`。
 - 报表页内部支付/收取和跳过计划交易的事件名已去掉 `Legacy`，事件层继续只传交易 ID，旧模型查找限制在 ViewModel 私有实现内。
 - `DevicePreferences` 已收为 `shared:ui:core` 内部接口；模块外继续只注入公开的 `TimeFormatter`。
-- 首页状态层已切换为 feature 本地展示模型；`TransactionListData` 和 `LegacyDueSection` 只在 `HomeTab` 调用旧交易列表组件的适配层出现。
+- 首页状态层已切换为 feature 本地展示模型；`TransactionListData` 和 `DueSection` 只在 `HomeTab` 调用旧交易列表组件的适配层出现。
 - 首页加载链路已用私有命名输入对象替换 `Pair/Triple` 中间数据；偏好、时间范围、账户列表、余额和历史加载参数不再靠位置传递，页面数据加载顺序和结果不变。
 - 交易列表页的到期/逾期交易状态已合并为 feature 本地 section；页面状态不再把交易列表、展开状态和收支统计拆成多组并行字段。
-- 报表页的到期/逾期交易状态也已合并为 feature 本地 section；旧 UI 的 `LegacyDueSection` 继续限制在 `ReportScreen` 组件适配层。
+- 报表页的到期/逾期交易状态也已合并为 feature 本地 section；旧 UI 的 `DueSection` 继续限制在 `ReportScreen` 组件适配层。
 - 报表页顶部收支卡片已改用轻量 `ReportTransactionSummary`；完整旧交易列表不再进入 `ReportScreenState.transactions` 这类页面级状态字段。
 - 报表页的加载结果写入已从十几个散列参数收为私有 `ReportValues`；收入/支出、到期/逾期、账户、筛选和汇总结果作为一次加载结果传递，状态写入行为不变。
 - 交易列表页顶部收支卡片的收入/支出交易数量已从 UI 过滤逻辑移回状态层；`TransactionsScreen` 不再为了计数直接引用 `LegacyTransaction`。
@@ -1490,6 +1490,7 @@ shared:ui:core
 - 首页、交易页和报表页的到期/逾期 section 状态已改为继续携带正式 `Transaction`；旧 `LegacyTransaction` 适配只保留在 `shared:ui:legacy` 的交易卡片渲染边界内。
 - 旧交易列表组件内部也已停止依赖 `LegacyTransaction`：`TransactionCard` 改为接收正式 `Transaction` 和正式 `Tag`，渲染所需字段收敛到文件私有展示模型。
 - 旧账户弹窗契约已从完整 `LegacyAccount` 收窄为轻量 `AccountModalAccount`；交易统计页不再为了打开账户编辑/余额调整弹窗构造旧账户模型。
+- 旧到期交易 section 契约已改名为 `DueSection`；该模型现在只表达正式 `Transaction`、展开状态和收支统计，不再带旧交易模型语义。
 - app 仍保留文件选择、文件分享、Material 日期选择器、BuildInfo、Locale 设置、生物识别和窗口安全等真正依赖 Activity 或 Android app 壳层的装配。
 
 ## 高风险区域

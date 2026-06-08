@@ -49,7 +49,7 @@ import com.ivy.ui.platform.LocalDatePicker
 import com.ivy.ui.theme.LocalThemeState
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.compose.thenIf
-import com.ivy.legacy.ui.transaction.LegacyDueSection
+import com.ivy.legacy.ui.transaction.DueSection
 import com.ivy.legacy.ui.transaction.TransactionListData
 import com.ivy.legacy.ui.transaction.TransactionListAccount
 import com.ivy.ui.period.Month
@@ -454,10 +454,10 @@ private fun BoxWithConstraintsScope.UI(
                     accounts,
                     categories
                 ),
-                upcoming = upcoming.toLegacyDueSection(),
+                upcoming = upcoming.toDueSection(),
                 setUpcomingExpanded = setUpcomingExpanded,
 
-                overdue = overdue.toLegacyDueSection(),
+                overdue = overdue.toDueSection(),
                 setOverdueExpanded = setOverdueExpanded,
 
                 history = history,
@@ -534,8 +534,8 @@ private fun BoxWithConstraintsScope.UI(
     }
 }
 
-private fun TransactionsDueSection.toLegacyDueSection(): LegacyDueSection {
-    return LegacyDueSection(
+private fun TransactionsDueSection.toDueSection(): DueSection {
+    return DueSection(
         transactions = transactions,
         stats = IncomeExpensePair(
             income = income.toBigDecimal(),

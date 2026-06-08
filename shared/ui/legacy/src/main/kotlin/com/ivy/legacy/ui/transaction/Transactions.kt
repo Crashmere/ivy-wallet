@@ -37,8 +37,8 @@ import java.util.UUID
 fun LazyListScope.transactions(
     baseData: TransactionListData,
 
-    upcoming: LegacyDueSection?,
-    overdue: LegacyDueSection?,
+    upcoming: DueSection?,
+    overdue: DueSection?,
     history: List<TransactionHistoryItem>,
 
     emptyStateTitle: String,
@@ -118,7 +118,7 @@ fun LazyListScope.transactions(
 private fun LazyListScope.upcomingSection(
     baseData: TransactionListData,
 
-    upcoming: LegacyDueSection?,
+    upcoming: DueSection?,
     shouldShowAccountSpecificColorInTransactions: Boolean,
     onPayOrGet: (UUID) -> Unit,
     onSkipTransaction: (UUID) -> Unit,
@@ -163,7 +163,7 @@ private fun LazyListScope.upcomingSection(
 private fun LazyListScope.overdueSection(
     baseData: TransactionListData,
 
-    overdue: LegacyDueSection?,
+    overdue: DueSection?,
     shouldShowAccountSpecificColorInTransactions: Boolean,
     onPayOrGet: (UUID) -> Unit,
     onSkipTransaction: (UUID) -> Unit,
@@ -357,8 +357,8 @@ private fun LazyItemScope.NoTransactionsEmptyState(
 
 private fun LazyListScope.scrollHackSpacer(
     history: List<TransactionHistoryItem>,
-    upcoming: LegacyDueSection?,
-    overdue: LegacyDueSection?,
+    upcoming: DueSection?,
+    overdue: DueSection?,
 
     lastItemSpacer: Dp?,
 ) {

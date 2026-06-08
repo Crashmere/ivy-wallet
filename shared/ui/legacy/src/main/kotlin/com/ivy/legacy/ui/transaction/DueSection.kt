@@ -6,7 +6,7 @@ import com.ivy.data.model.Transaction
 import kotlinx.collections.immutable.ImmutableList
 
 @Immutable
-data class LegacyDueSection(
+data class DueSection(
     val transactions: ImmutableList<Transaction>,
     val expanded: Boolean,
     val stats: IncomeExpensePair

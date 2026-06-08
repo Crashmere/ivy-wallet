@@ -36,7 +36,7 @@ import androidx.compose.ui.zIndex
 import com.ivy.ui.navigation.screenScopedViewModel
 import com.ivy.data.model.TransactionType
 import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.legacy.ui.transaction.LegacyDueSection
+import com.ivy.legacy.ui.transaction.DueSection
 import com.ivy.legacy.ui.transaction.TransactionListData
 import com.ivy.legacy.ui.summary.IncomeExpensesCards
 import com.ivy.legacy.ui.transaction.transactions
@@ -231,13 +231,13 @@ private fun BoxWithConstraintsScope.UI(
                     accounts = state.accounts.map { it.toTransactionListAccount() }.toImmutableList(),
                 ),
 
-                upcoming = state.upcoming.toLegacyDueSection(),
+                upcoming = state.upcoming.toDueSection(),
 
                 setUpcomingExpanded = {
                     onEventHandler.invoke(ReportScreenEvent.OnUpcomingExpanded(upcomingExpanded = it))
                 },
 
-                overdue = state.overdue.toLegacyDueSection(),
+                overdue = state.overdue.toDueSection(),
                 setOverdueExpanded = {
                     onEventHandler.invoke(ReportScreenEvent.OnOverdueExpanded(overdueExpanded = it))
                 },
@@ -337,8 +337,8 @@ private fun ReportTransactionsDividerLine(
     )
 }
 
-private fun ReportDueSection.toLegacyDueSection(): LegacyDueSection {
-    return LegacyDueSection(
+private fun ReportDueSection.toDueSection(): DueSection {
+    return DueSection(
         transactions = transactions,
         stats = IncomeExpensePair(
             income = income.toBigDecimal(),

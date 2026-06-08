@@ -31,7 +31,7 @@ import com.ivy.home.Constants.SWIPE_HORIZONTAL_THRESHOLD
 import com.ivy.home.customerjourney.CustomerJourney
 import com.ivy.home.customerjourney.CustomerJourneyAction
 import com.ivy.home.customerjourney.CustomerJourneyCardModel
-import com.ivy.legacy.ui.transaction.LegacyDueSection
+import com.ivy.legacy.ui.transaction.DueSection
 import com.ivy.legacy.ui.transaction.TransactionListData
 import com.ivy.ui.period.Month
 import com.ivy.ui.period.TimePeriod
@@ -475,9 +475,9 @@ internal fun HomeLazyColumn(
 
         transactions(
             baseData = baseData.toTransactionListData(),
-            upcoming = upcoming.toLegacyDueSection(),
+            upcoming = upcoming.toDueSection(),
             setUpcomingExpanded = setUpcomingExpanded,
-            overdue = overdue.toLegacyDueSection(),
+            overdue = overdue.toDueSection(),
             setOverdueExpanded = setOverdueExpanded,
             history = history,
             onPayOrGet = onPayOrGet,
@@ -501,8 +501,8 @@ private fun HomeTransactionListData.toTransactionListData(): TransactionListData
     )
 }
 
-private fun HomeDueSection.toLegacyDueSection(): LegacyDueSection {
-    return LegacyDueSection(
+private fun HomeDueSection.toDueSection(): DueSection {
+    return DueSection(
         transactions = transactions,
         expanded = expanded,
         stats = stats
