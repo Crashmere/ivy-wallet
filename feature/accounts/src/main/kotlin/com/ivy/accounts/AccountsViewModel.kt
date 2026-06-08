@@ -160,7 +160,7 @@ internal class AccountsViewModel @Inject internal constructor(
     }
 
     private suspend fun startInternally() {
-        val range = periodState.rangeOf(periodState.currentMonth()) // this must be monthly
+        val monthlyRange = periodState.rangeOf(periodState.currentMonth())
 
         val baseCurrencyCode = getBaseCurrencyCode()
         val accounts = getAccountsUseCase().toImmutableList()
@@ -169,7 +169,7 @@ internal class AccountsViewModel @Inject internal constructor(
 
         val accountsDataList = buildAccountDataUseCase(
             accounts = accounts,
-            range = range.toCloseTimeRange(),
+            range = monthlyRange.toCloseTimeRange(),
             baseCurrency = baseCurrencyCode,
             includeTransfersInCalc = includeTransfersInCalc
         )

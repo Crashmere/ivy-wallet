@@ -130,13 +130,13 @@ internal class CategoriesViewModel @Inject internal constructor(
 
     private suspend fun initialise(): CategoryLoadInput {
         return withContext(Dispatchers.IO) {
-            val range = periodState.rangeOf(periodState.currentMonth()) // this must be monthly
+            val monthlyRange = periodState.rangeOf(periodState.currentMonth())
 
             val accounts = getLegacyAccountsUseCase()
             baseCurrency.value = getBaseCurrencyCode()
 
             val transactions = getLegacyTransactionsForAccountsUseCase(
-                range = range,
+                range = monthlyRange,
                 accountIdFilterSet = accounts.map { it.id }.toHashSet()
             )
 

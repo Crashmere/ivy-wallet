@@ -151,7 +151,7 @@ internal class EditTransactionViewModel @Inject internal constructor(
     private var accountsChanged = false
 
     private var title: String? = null
-    private lateinit var baseUserCurrency: String
+    private var startedBaseCurrency: String? = null
     private var tagSearchJob: Job? = null
     private val tagSearchDebounceTimeInMillis: Long = 500
     private val _uiEvents = MutableSharedFlow<EditTransactionUiEvent>()
@@ -166,7 +166,7 @@ internal class EditTransactionViewModel @Inject internal constructor(
         viewModelScope.launch {
             editMode = initialTransactionId != null
 
-            baseUserCurrency = baseCurrency()
+            startedBaseCurrency = baseCurrency()
 
             val tagList = async { getAllTags() }
 
@@ -854,8 +854,9 @@ internal class EditTransactionViewModel @Inject internal constructor(
             val toAcc = toAccountValue ?: toAccount
             val fromAcc = fromAccount ?: account
 
-            val toAccCurrencyCode = toAcc?.currency ?: baseUserCurrency
-            val fromAccCurrencyCode = fromAcc?.currency ?: baseUserCurrency
+            val baseCurrencyCode = startedBaseCurrency ?: baseCurrency()
+            val toAccCurrencyCode = toAcc?.currency ?: baseCurrencyCode
+            val fromAccCurrencyCode = fromAcc?.currency ?: baseCurrencyCode
 
             if (toAcc == null || fromAcc == null || (toAccCurrencyCode == fromAccCurrencyCode)) {
                 customExchangeRateState = CustomExchangeRateState()
@@ -871,7 +872,7 @@ internal class EditTransactionViewModel @Inject internal constructor(
                     customExchangeRateState.exchangeRate
                 } else {
                     exchangeRatesUseCase.convertAmount(
-                        baseCurrency = baseUserCurrency,
+                        baseCurrency = baseCurrencyCode,
                         amount = 1.0,
                         fromCurrency = fromAccCurrencyCode,
                         toCurrency = toAccCurrencyCode

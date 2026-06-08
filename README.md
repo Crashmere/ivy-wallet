@@ -1277,6 +1277,7 @@ shared:ui:core
 - 饼图统计 ViewModel 不再接收导航 route；页面入口负责把 `PieChartStatisticScreen` 拆成交易类型、账户筛选、交易 ID 和偏好参数，ViewModel 只处理统计加载。
 - 计划付款编辑 ViewModel 不再接收 `EditPlannedScreen` 导航 route；页面入口负责拆出计划规则 ID、交易类型、金额、账户、分类、标题和描述，编辑/新建行为不变。
 - 编辑交易 ViewModel 不再接收 `EditTransactionScreen` 导航 route；页面入口负责拆出初始交易 ID、交易类型、账户和分类参数，已有交易编辑和新建交易默认账户选择逻辑不变。
+- 编辑交易 ViewModel 的基础币种缓存已从 `lateinit` 改为显式的启动期可空缓存；正常流程仍在页面启动时读取基础币种，换汇计算不再依赖 Kotlin 未初始化属性异常表达生命周期。
 - 交易列表 ViewModel 完全脱离导航 route 类型；`TransactionsScreen` 到本地 `TransactionsQuery` 的转换下沉到页面入口，ViewModel 只复用查询参数执行加载、翻月和刷新。
 - 交易列表内部查询参数继续去 legacy 命名：本地 `TransactionsQuery` 使用 `transactionIds`，加载流程用 `inputTransactions` 表达从 ID 局部读取出的交易；编辑交易和报表的标签搜索 debounce 常量也修正为 `Millis` 命名。
 - 交易列表和饼图导航 route 的交易 ID 参数也已从 `legacyTransactionIds` 改为 `transactionIds`；route 只表达 ID 列表，不再暗示跨页面传递完整旧交易模型。
@@ -1289,6 +1290,7 @@ shared:ui:core
 - 旧弹窗状态包已整体从 `shared:ui:core` 迁回 `shared:ui:legacy`；账户、分类、缓冲金额、周期、借贷、借贷记录和重复规则弹窗继续用同名数据对象传参，但 UI core 不再暴露旧 modal data API。
 - 交易页和饼图页的周期选择弹窗状态已从 ViewModel/State/Event 移回 Screen 本地状态；ViewModel 只处理周期切换和数据加载，不再为了打开旧弹窗依赖 legacy modal data。
 - 分类页和计划付款编辑页的新增/选择类旧弹窗状态也已移回 Screen 本地状态；ViewModel 继续处理创建账户、创建/编辑分类和重复规则保存，不再承担纯 UI 弹窗开关数据。
+- 账户页和分类页的月度统计范围已用 `monthlyRange` 直接表达，不再保留迁移期解释性注释；行为仍是按当前月加载统计。
 - app 仍保留文件选择、文件分享、Material 日期选择器、BuildInfo、Locale 设置、生物识别和窗口安全等真正依赖 Activity 或 Android app 壳层的装配。
 
 ## 高风险区域
