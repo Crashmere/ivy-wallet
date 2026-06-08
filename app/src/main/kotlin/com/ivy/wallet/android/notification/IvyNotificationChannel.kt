@@ -7,7 +7,7 @@ import android.content.Context
 import androidx.core.content.ContextCompat
 import com.ivy.ui.R
 
-enum class IvyNotificationChannel(
+internal enum class IvyNotificationChannel(
     val channelId: String,
     val channelName: String,
     val description: String,
@@ -23,7 +23,7 @@ enum class IvyNotificationChannel(
     );
 
     @SuppressLint("WrongConstant")
-    fun create(context: Context): NotificationChannel {
+    internal fun create(context: Context): NotificationChannel {
         // Create the NotificationChannel, but only on API 26+ because
         // the NotificationChannel class is new and not in the support library
         val colorPurple = ContextCompat.getColor(context, R.color.green)

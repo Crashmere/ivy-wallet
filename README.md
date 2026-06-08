@@ -950,6 +950,7 @@
 - 已删除只有单实现且只被提醒 worker 使用的 `AppStarter` 接口；提醒通知现在直接注入 `RootIntentFactory` 创建 `RootActivity` intent，同时移除未被调用的默认启动/添加交易启动方法和对应 Hilt binding。
 - 旧 UI 组件的公开面继续收窄：`IvyCheckbox` 改为文字版 checkbox 的私有实现，`PrimaryAttributeColumn`、`IconNameRow`、`DateTimeRow`、`CurrencyPicker`、`IvyBorderButton`、`IvyColorPicker`、`IvyTitleTextField` 和 `IvyDescriptionTextField` 都只作为 `shared:ui:legacy` 内部构件保留；feature 层仍可调用实际页面正在使用的旧组件入口。
 - 旧主题的 `theme.system` 进一步收敛为内部实现层：feature 层不再直接导入其中的具体颜色常量，内部色板、系统 Gradient、CompositionLocal 和颜色算法 helper 均改为 `shared:ui:legacy` 内可见；外部继续通过 `LegacyTheme`、`style()` 和外层 `legacy.ui.theme` 色板使用旧样式。
+- 交易提醒通知封装继续收窄：`IvyNotification`、`IvyNotificationChannel` 和 `NotificationService` 的通知构建/展示方法只作为 app 内部实现使用，并删除未被调用的通知 dismiss helper；提醒 worker 的实际通知行为不变。
 - `Features` 和功能开关 DataStore 已通过 `LocalFeatures/LocalFeatureDataStore` 由 app 根部显式提供；旧金额键盘不再用 Hilt `EntryPointAccessors` 从 application 反查依赖。
 - 锁屏页不再通过 `LocalContext.current` 自行检查系统锁屏状态；`RootActivity` 从 app 平台层提供 `hasLockScreen` 检查函数，UI 只负责触发认证或继续进入应用。
 - 根启动 intent 的交易类型解析已改用 `IntentCompat.getSerializableExtra()`，不再直接调用新版 Android 中弃用的 `Intent.getSerializableExtra(String)`。

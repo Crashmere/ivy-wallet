@@ -13,7 +13,7 @@ class NotificationService @Inject constructor(
     private val context: Context
 ) {
 
-    fun defaultIvyNotification(
+    internal fun defaultIvyNotification(
         channel: IvyNotificationChannel,
         autoCancel: Boolean = true,
         priority: Int = NotificationCompat.PRIORITY_HIGH
@@ -29,7 +29,7 @@ class NotificationService @Inject constructor(
         return ivyNotification
     }
 
-    fun showNotification(
+    internal fun showNotification(
         notification: NotificationCompat.Builder,
         notificationId: Int
     ) {
@@ -45,11 +45,5 @@ class NotificationService @Inject constructor(
         } catch (e: Exception) {
             e.printStackTrace()
         }
-    }
-
-    fun dismissNotification(notificationId: Int) {
-        val notificationManager =
-            context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        notificationManager.cancel(notificationId)
     }
 }
