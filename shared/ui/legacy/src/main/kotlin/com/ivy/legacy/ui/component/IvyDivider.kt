@@ -10,7 +10,7 @@ import androidx.compose.ui.unit.dp
 import com.ivy.legacy.ui.theme.LegacyTheme
 
 @Composable
-fun IvyDividerLine(
+internal fun IvyDividerLine(
     modifier: Modifier = Modifier
 ) {
     Spacer(
