@@ -33,6 +33,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.ivy.data.model.Theme
 import com.ivy.data.model.TransactionHistoryItem
 import com.ivy.data.model.TransactionType
@@ -71,7 +72,6 @@ import com.ivy.data.model.IncomeExpensePair
 import com.ivy.legacy.ui.theme.Gray
 import com.ivy.legacy.ui.theme.GreenDark
 import com.ivy.legacy.ui.component.BalanceRow
-import com.ivy.legacy.ui.component.BalanceRowMedium
 import com.ivy.legacy.ui.component.ItemIconMDefaultIcon
 import com.ivy.legacy.ui.theme.dynamicContrast
 import com.ivy.legacy.ui.theme.findContrastTextColor
@@ -692,7 +692,7 @@ private fun Header(
         )
 
         if (currency != baseCurrency && balanceBaseCurrency != null) {
-            BalanceRowMedium(
+            BalanceRow(
                 modifier = Modifier
                     .padding(start = 32.dp)
                     .clickableNoIndication(rememberInteractionSource()) {
@@ -701,6 +701,9 @@ private fun Header(
                 textColor = itemColor.dynamicContrast(),
                 currency = baseCurrency,
                 balance = balanceBaseCurrency,
+                spacerCurrency = 12.dp,
+                currencyFontSize = 24.sp,
+                balanceFontSize = 26.sp,
                 balanceAmountPrefix = if (category != null) {
                     balancePrefix(
                         income = income,

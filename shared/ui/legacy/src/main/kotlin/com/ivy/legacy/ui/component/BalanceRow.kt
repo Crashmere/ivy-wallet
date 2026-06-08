@@ -22,34 +22,6 @@ import com.ivy.data.model.currency.shortenAmount
 import com.ivy.data.model.currency.shouldShortAmount
 
 @Composable
-fun BalanceRowMedium(
-    currency: String,
-    balance: Double,
-    modifier: Modifier = Modifier,
-    textColor: Color = LegacyTheme.colors.pureInverse,
-    balanceAmountPrefix: String? = null,
-    currencyUpfront: Boolean = true,
-    shortenBigNumbers: Boolean = false,
-    hiddenMode: Boolean = false,
-) {
-    BalanceRow(
-        modifier = modifier,
-
-        textColor = textColor,
-        currency = currency,
-        balance = balance,
-        hiddenMode = hiddenMode,
-        spacerCurrency = 12.dp,
-        currencyFontSize = 24.sp,
-        balanceFontSize = 26.sp,
-
-        balanceAmountPrefix = balanceAmountPrefix,
-        currencyUpfront = currencyUpfront,
-        shortenBigNumbers = shortenBigNumbers
-    )
-}
-
-@Composable
 fun BalanceRowMini(
     currency: String,
     balance: Double,
