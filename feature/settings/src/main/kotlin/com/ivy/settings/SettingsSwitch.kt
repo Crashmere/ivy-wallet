@@ -17,7 +17,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
-import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.animation.springBounce
 
 @Composable
@@ -27,15 +26,15 @@ internal fun SettingsSwitch(
     onEnabledChange: (checked: Boolean) -> Unit
 ) {
     val color by animateColorAsState(
-        targetValue = if (enabled) LegacyTheme.colors.green else LegacyTheme.colors.gray,
+        targetValue = if (enabled) SettingsTheme.colors.green else SettingsTheme.colors.gray,
         animationSpec = springBounce()
     )
 
     Row(
         modifier = modifier
             .width(40.dp)
-            .clip(LegacyTheme.shapes.rFull)
-            .border(2.dp, color, LegacyTheme.shapes.rFull)
+            .clip(SettingsTheme.shapes.rFull)
+            .border(2.dp, color, SettingsTheme.shapes.rFull)
             .clickable {
                 onEnabledChange(!enabled)
             }

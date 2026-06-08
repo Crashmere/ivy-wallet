@@ -47,7 +47,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ivy.data.model.Theme
-import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.compose.thenIf
 import com.ivy.ui.compose.drawColoredShadow
 import com.ivy.ui.navigation.ExchangeRatesScreen
@@ -271,8 +270,8 @@ private fun BoxWithConstraintsScope.UI(
                 Text(
                     modifier = Modifier,
                     text = "${buildInfoProvider.buildVersionName} (${buildInfoProvider.buildVersionCode})",
-                    style = LegacyTheme.typo.nC.copy(
-                        color = LegacyTheme.colors.gray,
+                    style = SettingsTheme.typo.nC.copy(
+                        color = SettingsTheme.colors.gray,
                         fontWeight = FontWeight.Bold,
                         textAlign = TextAlign.Start
                     )
@@ -288,8 +287,8 @@ private fun BoxWithConstraintsScope.UI(
             Text(
                 modifier = Modifier.padding(start = 32.dp),
                 text = stringResource(settingsPage.title),
-                style = LegacyTheme.typo.h2.copy(
-                    color = LegacyTheme.colors.pureInverse,
+                style = SettingsTheme.typo.h2.copy(
+                    color = SettingsTheme.colors.pureInverse,
                     fontWeight = FontWeight.Black,
                     textAlign = TextAlign.Start
                 )
@@ -463,7 +462,7 @@ private fun SettingsToolbarFrame(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .background(LegacyTheme.colors.pure)
+            .background(SettingsTheme.colors.pure)
             .padding(top = 16.dp, bottom = 16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -473,13 +472,13 @@ private fun SettingsToolbarFrame(
             modifier = Modifier
                 .testTag("toolbar_back")
                 .clip(CircleShape)
-                .background(LegacyTheme.colors.pure, CircleShape)
-                .border(2.dp, LegacyTheme.colors.medium, CircleShape)
+                .background(SettingsTheme.colors.pure, CircleShape)
+                .border(2.dp, SettingsTheme.colors.medium, CircleShape)
                 .clickable(onClick = onBack)
                 .padding(6.dp),
             painter = painterResource(id = R.drawable.ic_back),
             contentDescription = "back",
-            tint = LegacyTheme.colors.pureInverse,
+            tint = SettingsTheme.colors.pureInverse,
         )
 
         content()
@@ -761,7 +760,7 @@ private fun DangerZoneSection(
 ) {
     SettingsSectionDivider(
         text = stringResource(R.string.danger_zone),
-        color = LegacyTheme.colors.red
+        color = SettingsTheme.colors.red
     )
 
     Spacer(Modifier.height(16.dp))
@@ -769,7 +768,7 @@ private fun DangerZoneSection(
     SettingsPrimaryButton(
         icon = R.drawable.ic_delete,
         text = stringResource(R.string.delete_all_user_data),
-        backgroundGradient = Gradient.solid(LegacyTheme.colors.red)
+        backgroundGradient = Gradient.solid(SettingsTheme.colors.red)
     ) {
         onDeleteAllDataClick()
     }
@@ -787,7 +786,7 @@ private fun StartDateOfMonth(
 
         SettingsIcon(
             icon = R.drawable.ic_custom_calendar_m,
-            tint = LegacyTheme.colors.pureInverse,
+            tint = SettingsTheme.colors.pureInverse,
             padding = 2.dp
         )
 
@@ -796,8 +795,8 @@ private fun StartDateOfMonth(
         Text(
             modifier = Modifier.padding(vertical = 20.dp),
             text = stringResource(R.string.start_date_of_month),
-            style = LegacyTheme.typo.b2.copy(
-                color = LegacyTheme.colors.pureInverse,
+            style = SettingsTheme.typo.b2.copy(
+                color = SettingsTheme.colors.pureInverse,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Start
             )
@@ -807,9 +806,9 @@ private fun StartDateOfMonth(
 
         Text(
             text = startDateOfMonth.toString(),
-            style = LegacyTheme.typo.nB2.copy(
+            style = SettingsTheme.typo.nB2.copy(
                 fontWeight = FontWeight.ExtraBold,
-                color = LegacyTheme.colors.pureInverse,
+                color = SettingsTheme.colors.pureInverse,
                 textAlign = TextAlign.Start
             )
         )
@@ -827,8 +826,8 @@ private fun AppThemeButton(
     SettingsPrimaryButton(
         icon = icon,
         text = label,
-        backgroundGradient = Gradient.solid(LegacyTheme.colors.medium),
-        textColor = LegacyTheme.colors.pureInverse,
+        backgroundGradient = Gradient.solid(SettingsTheme.colors.medium),
+        textColor = SettingsTheme.colors.pureInverse,
         iconPadding = 6.dp,
         description = stringResource(R.string.tap_to_switch_theme),
         onClick = onClick
@@ -852,7 +851,7 @@ private fun AppSwitch(
 
         SettingsIcon(
             icon = icon,
-            tint = LegacyTheme.colors.pureInverse,
+            tint = SettingsTheme.colors.pureInverse,
             padding = 0.dp
         )
 
@@ -865,8 +864,8 @@ private fun AppSwitch(
         ) {
             Text(
                 text = text,
-                style = LegacyTheme.typo.b2.copy(
-                    color = LegacyTheme.colors.pureInverse,
+                style = SettingsTheme.typo.b2.copy(
+                    color = SettingsTheme.colors.pureInverse,
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Start
                 )
@@ -875,8 +874,8 @@ private fun AppSwitch(
                 Text(
                     modifier = Modifier.padding(end = 8.dp),
                     text = description,
-                    style = LegacyTheme.typo.nB2.copy(
-                        color = LegacyTheme.colors.gray,
+                    style = SettingsTheme.typo.nB2.copy(
+                        color = SettingsTheme.colors.gray,
                         fontWeight = FontWeight.Normal,
                         textAlign = TextAlign.Start
                     ).copy(fontSize = 14.sp)
@@ -913,7 +912,7 @@ private fun SettingsPrimaryButton(
     @DrawableRes icon: Int,
     text: String,
     hasShadow: Boolean = false,
-    backgroundGradient: Gradient = Gradient.solid(LegacyTheme.colors.medium),
+    backgroundGradient: Gradient = Gradient.solid(SettingsTheme.colors.medium),
     textColor: Color = White,
     iconPadding: Dp = 0.dp,
     description: String? = null,
@@ -941,7 +940,7 @@ private fun SettingsPrimaryButton(
         ) {
             Text(
                 text = text,
-                style = LegacyTheme.typo.b2.copy(
+                style = SettingsTheme.typo.b2.copy(
                     color = textColor,
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Start
@@ -951,8 +950,8 @@ private fun SettingsPrimaryButton(
                 Text(
                     modifier = Modifier.padding(end = 8.dp),
                     text = description,
-                    style = LegacyTheme.typo.nB2.copy(
-                        color = LegacyTheme.colors.gray,
+                    style = SettingsTheme.typo.nB2.copy(
+                        color = SettingsTheme.colors.gray,
                         fontWeight = FontWeight.Normal,
                         textAlign = TextAlign.Start
                     ).copy(fontSize = 14.sp)
@@ -966,7 +965,7 @@ private fun SettingsPrimaryButton(
 private fun SettingsButtonRow(
     onClick: (() -> Unit)?,
     hasShadow: Boolean = false,
-    backgroundGradient: Gradient = Gradient.solid(LegacyTheme.colors.medium),
+    backgroundGradient: Gradient = Gradient.solid(SettingsTheme.colors.medium),
     content: @Composable RowScope.() -> Unit
 ) {
     Row(
@@ -976,8 +975,8 @@ private fun SettingsButtonRow(
                 drawColoredShadow(color = backgroundGradient.startColor)
             }
             .fillMaxWidth()
-            .clip(LegacyTheme.shapes.r4)
-            .background(backgroundGradient.asHorizontalBrush(), LegacyTheme.shapes.r4)
+            .clip(SettingsTheme.shapes.r4)
+            .background(backgroundGradient.asHorizontalBrush(), SettingsTheme.shapes.r4)
             .thenIf(onClick != null) {
                 clickable {
                     onClick?.invoke()
@@ -998,8 +997,8 @@ private fun CurrencyButton(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp)
-            .clip(LegacyTheme.shapes.r4)
-            .border(2.dp, LegacyTheme.colors.medium, LegacyTheme.shapes.r4)
+            .clip(SettingsTheme.shapes.r4)
+            .border(2.dp, SettingsTheme.colors.medium, SettingsTheme.shapes.r4)
             .clickable {
                 onClick()
             },
@@ -1017,8 +1016,8 @@ private fun CurrencyButton(
         Text(
             modifier = Modifier.padding(vertical = 20.dp),
             text = stringResource(R.string.set_currency),
-            style = LegacyTheme.typo.b2.copy(
-                color = LegacyTheme.colors.pureInverse,
+            style = SettingsTheme.typo.b2.copy(
+                color = SettingsTheme.colors.pureInverse,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Start
             )
@@ -1028,8 +1027,8 @@ private fun CurrencyButton(
 
         Text(
             text = currency,
-            style = LegacyTheme.typo.b1.copy(
-                color = LegacyTheme.colors.pureInverse,
+            style = SettingsTheme.typo.b1.copy(
+                color = SettingsTheme.colors.pureInverse,
                 fontWeight = FontWeight.ExtraBold,
                 textAlign = TextAlign.Start
             )
@@ -1050,7 +1049,7 @@ private fun SettingsSectionDivider(
     text: String,
     color: Color? = null
 ) {
-    val dividerColor = color ?: LegacyTheme.colors.gray
+    val dividerColor = color ?: SettingsTheme.colors.gray
 
     Column {
         Spacer(Modifier.height(32.dp))
@@ -1058,7 +1057,7 @@ private fun SettingsSectionDivider(
         Text(
             modifier = Modifier.padding(start = 32.dp),
             text = text,
-            style = LegacyTheme.typo.b2.copy(
+            style = SettingsTheme.typo.b2.copy(
                 color = dividerColor,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Start
@@ -1074,14 +1073,14 @@ private fun SettingsSubMenuButton(
     onClick: () -> Unit,
 ) {
     SettingsButtonRow(
-        backgroundGradient = Gradient.solid(LegacyTheme.colors.medium),
+        backgroundGradient = Gradient.solid(SettingsTheme.colors.medium),
         onClick = onClick
     ) {
         Spacer(Modifier.width(12.dp))
 
         SettingsIcon(
             icon = icon,
-            tint = LegacyTheme.colors.pureInverse,
+            tint = SettingsTheme.colors.pureInverse,
         )
 
         Spacer(Modifier.width(8.dp))
@@ -1091,8 +1090,8 @@ private fun SettingsSubMenuButton(
                 .weight(1f)
                 .padding(top = 20.dp, bottom = 20.dp, end = 8.dp),
             text = text,
-            style = LegacyTheme.typo.b2.copy(
-                color = LegacyTheme.colors.pureInverse,
+            style = SettingsTheme.typo.b2.copy(
+                color = SettingsTheme.colors.pureInverse,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Start
             )
@@ -1117,8 +1116,8 @@ private fun SettingsDefaultButton(
     SettingsPrimaryButton(
         icon = icon,
         text = text,
-        backgroundGradient = Gradient.solid(LegacyTheme.colors.medium),
-        textColor = LegacyTheme.colors.pureInverse,
+        backgroundGradient = Gradient.solid(SettingsTheme.colors.medium),
+        textColor = SettingsTheme.colors.pureInverse,
         iconPadding = iconPadding,
         description = description
     ) {
@@ -1129,7 +1128,7 @@ private fun SettingsDefaultButton(
 @Composable
 private fun SettingsIcon(
     @DrawableRes icon: Int,
-    tint: Color = LegacyTheme.colors.pureInverse,
+    tint: Color = SettingsTheme.colors.pureInverse,
     padding: Dp = 4.dp,
 ) {
     Image(

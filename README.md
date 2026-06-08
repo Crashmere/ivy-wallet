@@ -1565,6 +1565,7 @@ shared:ui:core
 - 旧主题入口继续收窄：`shared:ui:legacy` 不再直接依赖数据层 `Theme` 枚举，改用自己的 `LegacyUiTheme`；app 壳层负责从当前正式主题状态映射到旧 UI 主题。
 - 旧 UI 货币格式边界继续收窄：金额解析、输入格式化、币种小数位和币种名称查询统一通过 `shared:ui:core` 的 money 门面进入，`shared:ui:legacy` 已移除对 `shared:data:model` 的直接 Gradle 依赖。
 - 余额页样式依赖继续收窄：`feature:balance` 增加本模块私有 `BalanceTheme` 承接原页面需要的颜色和字体 token，并改用 UI core money 门面格式化金额；余额模块已移除对 `shared:ui:legacy` 的直接依赖。
+- 设置页样式依赖继续收窄：`feature:settings` 增加本模块私有 `SettingsTheme` 承接原设置页颜色、字体和圆角 token；设置模块已移除对 `shared:ui:legacy` 的直接依赖。
 - app 仍保留文件选择、文件分享、Material 日期选择器、BuildInfo、Locale 设置、生物识别和窗口安全等真正依赖 Activity 或 Android app 壳层的装配。
 
 ## 高风险区域
