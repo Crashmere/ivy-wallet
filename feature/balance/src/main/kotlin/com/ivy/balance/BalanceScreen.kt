@@ -31,14 +31,13 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import com.ivy.ui.navigation.screenScopedViewModel
 import com.ivy.ui.platform.LocalDatePicker
-import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.data.model.currency.format
 import com.ivy.ui.period.LocalPeriodState
 import com.ivy.ui.navigation.navigation
 import com.ivy.ui.R
 import com.ivy.ui.theme.colors.Gradient
 import com.ivy.ui.theme.colors.IvyFixedColors.White
 import com.ivy.ui.money.BalanceRow
+import com.ivy.ui.money.formatAmount
 import com.ivy.ui.compose.GradientIconButton
 import com.ivy.ui.modal.ChoosePeriodModal
 import com.ivy.ui.period.PeriodSelector
@@ -141,7 +140,7 @@ private fun BalanceDividerLine(
         modifier = modifier
             .fillMaxWidth()
             .height(2.dp)
-            .background(LegacyTheme.colors.medium)
+            .background(BalanceTheme.colors.medium)
     )
 }
 
@@ -153,8 +152,8 @@ private fun ColumnScope.CurrentBalance(
     Text(
         modifier = Modifier.align(Alignment.CenterHorizontally),
         text = stringResource(R.string.current_balance),
-        style = LegacyTheme.typo.b2.copy(
-            color = LegacyTheme.colors.gray,
+        style = BalanceTheme.typo.b2.copy(
+            color = BalanceTheme.colors.gray,
             fontWeight = FontWeight.ExtraBold,
             textAlign = TextAlign.Start
         )
@@ -180,8 +179,8 @@ private fun ColumnScope.BalanceAfterPlannedPayments(
         modifier = Modifier
             .padding(horizontal = 32.dp),
         text = stringResource(R.string.balance_after_payments),
-        style = LegacyTheme.typo.b2.copy(
-            color = LegacyTheme.colors.orange,
+        style = BalanceTheme.typo.b2.copy(
+            color = BalanceTheme.colors.orange,
             fontWeight = FontWeight.ExtraBold,
             textAlign = TextAlign.Start
         )
@@ -214,9 +213,9 @@ private fun ColumnScope.BalanceAfterPlannedPayments(
             Spacer(Modifier.height(4.dp))
 
             Text(
-                text = "${currentBalance.format(2)} $currency",
-                style = LegacyTheme.typo.nC.copy(
-                    color = LegacyTheme.colors.pureInverse,
+                text = "${formatAmount(currentBalance, 2)} $currency",
+                style = BalanceTheme.typo.nC.copy(
+                    color = BalanceTheme.colors.pureInverse,
                     fontWeight = FontWeight.Normal,
                     textAlign = TextAlign.Start
                 )
@@ -226,9 +225,9 @@ private fun ColumnScope.BalanceAfterPlannedPayments(
 
             val plusSign = if (plannedPaymentsAmount >= 0) "+" else ""
             Text(
-                text = "${plusSign}${plannedPaymentsAmount.format(2)} $currency",
-                style = LegacyTheme.typo.nC.copy(
-                    color = LegacyTheme.colors.pureInverse,
+                text = "${plusSign}${formatAmount(plannedPaymentsAmount, 2)} $currency",
+                style = BalanceTheme.typo.nC.copy(
+                    color = BalanceTheme.colors.pureInverse,
                     fontWeight = FontWeight.ExtraBold,
                     textAlign = TextAlign.Start
                 )
@@ -250,7 +249,7 @@ private fun ColumnScope.CloseButton() {
             .zIndex(200f),
         backgroundPadding = 8.dp,
         icon = R.drawable.ic_add,
-        backgroundGradient = Gradient.solid(LegacyTheme.colors.gray),
+        backgroundGradient = Gradient.solid(BalanceTheme.colors.gray),
         hasShadow = false,
         tint = White
     ) {
