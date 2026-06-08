@@ -21,14 +21,3 @@ internal fun IvyDividerLine(
     )
 }
 
-@Composable
-internal fun IvyDividerLineRounded(
-    modifier: Modifier = Modifier
-) {
-    Spacer(
-        modifier = modifier
-            .fillMaxWidth()
-            .height(2.dp)
-            .background(LegacyTheme.colors.medium, LegacyTheme.shapes.rFull)
-    )
-}

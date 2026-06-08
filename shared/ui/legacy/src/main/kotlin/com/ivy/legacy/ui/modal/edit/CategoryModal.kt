@@ -6,6 +6,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraintsScope
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
@@ -49,7 +50,6 @@ import com.ivy.ui.compose.onCompositionStart
 import com.ivy.ui.compose.selectEndTextFieldValue
 import com.ivy.ui.R
 import com.ivy.data.model.CreateCategoryData
-import com.ivy.legacy.ui.component.IvyDividerLineRounded
 import com.ivy.legacy.ui.theme.Ivy
 import com.ivy.legacy.ui.component.ItemIconMDefaultIcon
 import com.ivy.legacy.ui.theme.LegacyTheme
@@ -230,6 +230,18 @@ private fun IvyNameTextField(
             modifier = underlineModifier
         )
     }
+}
+
+@Composable
+private fun IvyDividerLineRounded(
+    modifier: Modifier = Modifier
+) {
+    Spacer(
+        modifier = modifier
+            .fillMaxWidth()
+            .height(2.dp)
+            .background(LegacyTheme.colors.medium, LegacyTheme.shapes.rFull)
+    )
 }
 
 @Composable
