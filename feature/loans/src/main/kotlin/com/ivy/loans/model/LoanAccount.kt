@@ -1,7 +1,6 @@
 package com.ivy.loans.model
 
 import com.ivy.data.model.Account
-import com.ivy.data.model.legacy.LegacyAccount
 import java.util.UUID
 
 internal data class LoanAccount(
@@ -18,12 +17,4 @@ internal fun Account.toLoanAccount() = LoanAccount(
     color = color.value,
     icon = icon?.id,
     currency = asset.code,
-)
-
-internal fun LegacyAccount.toLoanAccount() = LoanAccount(
-    id = id,
-    name = name,
-    color = color,
-    icon = icon,
-    currency = currency,
 )
