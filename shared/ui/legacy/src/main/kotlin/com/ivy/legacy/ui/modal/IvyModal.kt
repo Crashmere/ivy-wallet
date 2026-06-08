@@ -10,6 +10,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -26,6 +28,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.layout
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalConfiguration
@@ -47,7 +52,6 @@ import com.ivy.ui.animation.DURATION_MODAL_ANIM
 import com.ivy.ui.compose.BackPressHandler
 import com.ivy.ui.compose.onCompositionStart
 import com.ivy.ui.compose.thenIf
-import com.ivy.legacy.ui.component.ActionsRow
 import com.ivy.legacy.ui.component.CloseButton
 import com.ivy.legacy.ui.theme.gradientCutBackgroundTop
 import com.ivy.legacy.ui.theme.mediumBlur
@@ -183,6 +187,38 @@ fun BoxScope.IvyModal(
             SecondaryActions = SecondaryActions,
             PrimaryAction = PrimaryAction
         )
+    }
+}
+
+@Composable
+private fun ActionsRow(
+    modifier: Modifier = Modifier,
+    lineColor: Color = LegacyTheme.colors.medium,
+    Content: @Composable RowScope.() -> Unit
+) {
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .drawBehind {
+                val height = this.size.height
+                val width = this.size.width
+
+                drawLine(
+                    color = lineColor,
+                    strokeWidth = 2.dp.toPx(),
+                    start = Offset(
+                        x = 0f,
+                        y = height / 2
+                    ),
+                    end = Offset(
+                        x = width,
+                        y = height / 2
+                    )
+                )
+            },
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Content()
     }
 }
 
