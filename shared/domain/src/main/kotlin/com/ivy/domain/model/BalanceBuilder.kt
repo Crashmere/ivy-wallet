@@ -4,7 +4,7 @@ import com.ivy.data.model.primitive.AssetCode
 import com.ivy.data.model.primitive.NonZeroDouble
 import com.ivy.data.model.primitive.PositiveDouble
 
-class BalanceBuilder {
+internal class BalanceBuilder {
 
     private val balance = mutableMapOf<AssetCode, NonZeroDouble>()
 

@@ -15,7 +15,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(TestParameterInjector::class)
-class BalanceBuilderTest {
+internal class BalanceBuilderTest {
 
     enum class ValuesTestCase(
         val values: AccountStats,

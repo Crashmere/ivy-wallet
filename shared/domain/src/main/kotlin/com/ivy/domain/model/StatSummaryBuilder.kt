@@ -4,7 +4,7 @@ import com.ivy.data.model.PositiveValue
 import com.ivy.data.model.primitive.AssetCode
 import com.ivy.data.model.primitive.NonNegativeInt
 import com.ivy.data.model.primitive.PositiveDouble
-class StatSummaryBuilder {
+internal class StatSummaryBuilder {
     private var count = 0
     private val values = mutableMapOf<AssetCode, PositiveDouble>()
 

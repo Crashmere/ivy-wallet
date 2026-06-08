@@ -1101,6 +1101,7 @@
 - data-core 继续收窄实现边界：Room store、mapper、SharedPrefs/DataStore 适配器、文件系统适配器、远程汇率数据源、备份实现和 store cache 都改为模块内部可见；跨模块仍只暴露 `shared:data:api` 中的 store/backup/file 接口。
 - DataStore 的 `Context.dataStore` 扩展属性也收为 data-core 内部实现细节，只服务本模块的偏好开关适配器。
 - data-core 的 Room 数据库、DAO、entity、migration、serializer 和 type converter 也收为模块内部可见；外部模块不再能直接依赖数据库结构，只能通过 data-api 与 data-model 交互，本模块测试辅助同步收窄。
+- domain 中当前只被本模块统计测试覆盖、尚未作为 feature 入口使用的账户统计用例、统计 summary 和 builder 收为模块内部可见；代码保留，避免把未接入 UI 的统计草稿继续暴露为跨模块 API。
 
 ### 阶段 10：最终依赖方向
 

@@ -11,7 +11,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(TestParameterInjector::class)
-class StatSummaryBuilderTest {
+internal class StatSummaryBuilderTest {
 
     enum class ValuesTestCase(
         val values: List<PositiveValue>,

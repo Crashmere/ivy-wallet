@@ -11,7 +11,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class AccountStatsUseCase @Inject constructor() {
+internal class AccountStatsUseCase @Inject constructor() {
     suspend fun calculate(
         account: AccountId,
         transactions: List<Transaction>
@@ -52,7 +52,7 @@ class AccountStatsUseCase @Inject constructor() {
     }
 }
 
-data class AccountStats(
+internal data class AccountStats(
     val income: StatSummary,
     val expense: StatSummary,
     val transfersIn: StatSummary,
