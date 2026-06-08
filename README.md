@@ -1114,6 +1114,7 @@
 - 首页到期/逾期交易信息的底层 `CalculateDueTransactionsInfoUseCase` 收为 domain 内部实现；`GetUpcomingTransactionsInfoUseCase` 和 `GetOverdueTransactionsInfoUseCase` 仍作为 feature 入口保留，构造函数不再暴露内部计算器。
 - 账户余额调整的 `AdjustAccountBalanceUseCase` 收为 domain 内部协作实现；创建/更新账户用例继续作为 feature 可注入入口，但构造函数不再暴露内部调整器。
 - 到期交易基础查询 `GetDueTransactionsUseCase` 也收为 domain 内部实现；首页仍只通过 upcoming/overdue 两个面向 feature 的入口读取统计结果。
+- 旧交易列表组件的计划付款事件继续收窄：支付/收款、跳过和跳过全部回调现在只向页面层传交易 ID；交易卡片仍用 `LegacyTransaction` 渲染和处理点击编辑，避免把完整旧模型继续用于简单事件分发。
 
 ### 阶段 10：最终依赖方向
 

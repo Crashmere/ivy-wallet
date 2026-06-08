@@ -33,6 +33,7 @@ import com.ivy.legacy.ui.theme.Red
 import com.ivy.legacy.ui.theme.White
 import com.ivy.legacy.ui.component.IvyButton
 import com.ivy.legacy.ui.component.IvyIcon
+import java.util.UUID
 
 fun LazyListScope.transactions(
     baseData: TransactionListData,
@@ -47,14 +48,14 @@ fun LazyListScope.transactions(
     dateDividerMarginTop: Dp? = null,
     lastItemSpacer: Dp? = null,
     shouldShowAccountSpecificColorInTransactions: Boolean,
-    onPayOrGet: (LegacyTransaction) -> Unit,
+    onPayOrGet: (UUID) -> Unit,
     onTransactionClick: (LegacyTransaction) -> Unit,
     onAccountClick: (LegacyAccount) -> Unit,
     onCategoryClick: (Category) -> Unit,
     setUpcomingExpanded: (Boolean) -> Unit,
     setOverdueExpanded: (Boolean) -> Unit,
-    onSkipTransaction: (LegacyTransaction) -> Unit = {},
-    onSkipAllTransactions: (List<LegacyTransaction>) -> Unit = {}
+    onSkipTransaction: (UUID) -> Unit = {},
+    onSkipAllTransactions: (List<UUID>) -> Unit = {}
 ) {
     upcomingSection(
         baseData = baseData,
@@ -120,8 +121,8 @@ private fun LazyListScope.upcomingSection(
 
     upcoming: LegacyDueSection?,
     shouldShowAccountSpecificColorInTransactions: Boolean,
-    onPayOrGet: (LegacyTransaction) -> Unit,
-    onSkipTransaction: (LegacyTransaction) -> Unit,
+    onPayOrGet: (UUID) -> Unit,
+    onSkipTransaction: (UUID) -> Unit,
     onTransactionClick: (LegacyTransaction) -> Unit,
     onAccountClick: (LegacyAccount) -> Unit,
     onCategoryClick: (Category) -> Unit,
@@ -165,9 +166,9 @@ private fun LazyListScope.overdueSection(
 
     overdue: LegacyDueSection?,
     shouldShowAccountSpecificColorInTransactions: Boolean,
-    onPayOrGet: (LegacyTransaction) -> Unit,
-    onSkipTransaction: (LegacyTransaction) -> Unit,
-    onSkipAllTransactions: (List<LegacyTransaction>) -> Unit,
+    onPayOrGet: (UUID) -> Unit,
+    onSkipTransaction: (UUID) -> Unit,
+    onSkipAllTransactions: (List<UUID>) -> Unit,
     onTransactionClick: (LegacyTransaction) -> Unit,
     onAccountClick: (LegacyAccount) -> Unit,
     onCategoryClick: (Category) -> Unit,
@@ -210,7 +211,7 @@ private fun LazyListScope.overdueSection(
                         fontWeight = FontWeight.Bold
                     )
                 ) {
-                    onSkipAllTransactions(overdue.transactions)
+                    onSkipAllTransactions(overdue.transactions.map { it.id })
                 }
             }
 
@@ -234,8 +235,8 @@ private fun LazyListScope.transactionItems(
 
     transactions: List<LegacyTransaction>,
     shouldShowAccountSpecificColorInTransactions: Boolean,
-    onPayOrGet: (LegacyTransaction) -> Unit,
-    onSkipTransaction: (LegacyTransaction) -> Unit,
+    onPayOrGet: (UUID) -> Unit,
+    onSkipTransaction: (UUID) -> Unit,
     onTransactionClick: (LegacyTransaction) -> Unit,
     onAccountClick: (LegacyAccount) -> Unit,
     onCategoryClick: (Category) -> Unit,
@@ -265,7 +266,7 @@ private fun LazyListScope.historySection(
     shouldShowAccountSpecificColorInTransactions: Boolean,
     dateDividerMarginTop: Dp? = null,
 
-    onPayOrGet: (LegacyTransaction) -> Unit,
+    onPayOrGet: (UUID) -> Unit,
     onTransactionClick: (LegacyTransaction) -> Unit,
     onAccountClick: (LegacyAccount) -> Unit,
     onCategoryClick: (Category) -> Unit

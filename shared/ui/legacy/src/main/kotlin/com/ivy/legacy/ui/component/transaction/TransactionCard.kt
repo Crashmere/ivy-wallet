@@ -74,9 +74,9 @@ internal fun TransactionCard(
     baseData: TransactionListData,
     transaction: LegacyTransaction,
     shouldShowAccountSpecificColorInTransactions: Boolean,
-    onPayOrGet: (LegacyTransaction) -> Unit,
+    onPayOrGet: (UUID) -> Unit,
     modifier: Modifier = Modifier,
-    onSkipTransaction: (LegacyTransaction) -> Unit = {},
+    onSkipTransaction: (UUID) -> Unit = {},
     onAccountClick: (LegacyAccount) -> Unit,
     onCategoryClick: (Category) -> Unit,
     onClick: (LegacyTransaction) -> Unit,
@@ -220,7 +220,7 @@ internal fun TransactionCard(
                         fontWeight = FontWeight.Bold
                     )
                 ) {
-                    onSkipTransaction(transaction)
+                    onSkipTransaction(transaction.id)
                 }
 
                 Spacer(Modifier.width(8.dp))
@@ -237,7 +237,7 @@ internal fun TransactionCard(
                         fontWeight = FontWeight.Bold
                     )
                 ) {
-                    onPayOrGet(transaction)
+                    onPayOrGet(transaction.id)
                 }
             }
         }

@@ -382,7 +382,7 @@ fun HomeLazyColumn(
             overdue = overdue,
             setOverdueExpanded = setOverdueExpanded,
             history = history,
-            onPayOrGet = { onPayOrGet(it.id) },
+            onPayOrGet = onPayOrGet,
             onTransactionClick = {
                 nav.navigateTo(
                     EditTransactionScreen(
@@ -410,10 +410,8 @@ fun HomeLazyColumn(
             emptyStateTitle = noTransactionsTitle,
             emptyStateText = noTransactionsText,
             shouldShowAccountSpecificColorInTransactions = shouldShowAccountSpecificColorInTransactions,
-            onSkipTransaction = { onSkipTransaction(it.id) },
-            onSkipAllTransactions = { transactions ->
-                onSkipAllTransactions(transactions.map { it.id })
-            }
+            onSkipTransaction = onSkipTransaction,
+            onSkipAllTransactions = onSkipAllTransactions
         )
     }
 }

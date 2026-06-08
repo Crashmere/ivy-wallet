@@ -423,7 +423,7 @@ private fun BoxWithConstraintsScope.UI(
                 history = history,
                 lastItemSpacer = screenHeight * 0.7f,
 
-                onPayOrGet = { onPayOrGet(it.id) },
+                onPayOrGet = onPayOrGet,
                 onTransactionClick = {
                     nav.navigateTo(
                         EditTransactionScreen(
@@ -448,9 +448,9 @@ private fun BoxWithConstraintsScope.UI(
                         )
                     )
                 },
-                onSkipTransaction = { onSkipTransaction(it.id) },
-                onSkipAllTransactions = { transactions ->
-                    skipAllTransactionIds = transactions.map { it.id }
+                onSkipTransaction = onSkipTransaction,
+                onSkipAllTransactions = { transactionIds ->
+                    skipAllTransactionIds = transactionIds
                     onSkipAllModalVisible(true)
                 },
                 emptyStateTitle = noTransactionsTitle,
