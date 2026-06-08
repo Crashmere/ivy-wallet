@@ -99,7 +99,7 @@
 - CSV 导入结果页的返回按钮已改为 `feature:import-data` 私有实现；`shared:ui:legacy` 的 `BackButton` 收窄为模块内部给旧工具栏使用。
 - 饼图页不再直接调用底层 `ItemIconM`，改用带默认图标的包装入口；`shared:ui:legacy` 的 `ItemIconM` 收窄为模块内部实现。
 - 计划付款列表改用本 feature 私有的分组分隔条；`shared:ui:legacy` 的交易 `SectionDivider` 收窄为交易列表内部实现。
-- 汇率列表项改用本 feature 私有的删除按钮；`shared:ui:legacy` 的 `DeleteButton` 收窄为旧 UI 内部实现。
+- 汇率列表项改用本 feature 私有的删除按钮；标签编辑弹窗的删除按钮也已移回弹窗文件私有实现，`shared:ui:legacy` 删除不再作为通用组件使用的 `DeleteButton` 文件。
 - 汇率新增弹窗改用本 feature 私有的名称输入框；`shared:ui:legacy` 的 `IvyNameTextField` 收窄为旧弹窗内部实现。
 - 报表筛选关键词区域改用本 feature 私有的换行布局；`shared:ui:legacy` 的 `WrapContentRow` 收窄为旧弹窗内部实现。
 - 旧工具栏公开 API 不再暴露 `BackButtonType` 枚举；报表页通过 `showCloseButton = true` 请求关闭按钮，旧工具栏内部自行选择返回/关闭图标。

@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -41,8 +42,10 @@ import androidx.compose.ui.unit.dp
 import com.ivy.data.model.Tag
 import com.ivy.data.model.primitive.NotBlankTrimmedString
 import com.ivy.data.model.TagId
-import com.ivy.legacy.ui.component.DeleteButton
+import com.ivy.legacy.ui.component.IvyCircleButton
+import com.ivy.legacy.ui.theme.GradientRed
 import com.ivy.legacy.ui.theme.LegacyTheme
+import com.ivy.legacy.ui.theme.White
 import com.ivy.legacy.ui.theme.style
 import com.ivy.legacy.ui.modal.IvyModal
 import com.ivy.legacy.ui.modal.ModalPositiveButton
@@ -152,6 +155,26 @@ internal fun BoxWithConstraintsScope.AddOrEditTagModal(
             titleFocus.requestFocus()
         }
     }
+}
+
+@Composable
+private fun DeleteButton(
+    modifier: Modifier = Modifier,
+    hasShadow: Boolean = true,
+    onClick: () -> Unit,
+) {
+    IvyCircleButton(
+        modifier = modifier
+            .size(48.dp)
+            .testTag("delete_button"),
+        backgroundPadding = 6.dp,
+        icon = R.drawable.ic_delete,
+        backgroundGradient = GradientRed,
+        enabled = true,
+        hasShadow = hasShadow,
+        tint = White,
+        onClick = onClick
+    )
 }
 
 @Composable
