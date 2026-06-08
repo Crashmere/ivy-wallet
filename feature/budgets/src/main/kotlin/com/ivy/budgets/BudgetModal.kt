@@ -34,7 +34,7 @@ import com.ivy.data.model.Budget
 import com.ivy.ui.compose.selectEndTextFieldValue
 import com.ivy.ui.R
 import com.ivy.data.model.CreateBudgetData
-import com.ivy.legacy.ui.component.ItemIconSDefaultIcon
+import com.ivy.legacy.ui.icon.ItemIconSDefaultIcon
 import com.ivy.legacy.ui.modal.DeleteModal
 import com.ivy.legacy.ui.modal.IvyModal
 import com.ivy.legacy.ui.modal.ModalAmountSection

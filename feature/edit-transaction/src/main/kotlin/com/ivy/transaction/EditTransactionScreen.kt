@@ -58,8 +58,8 @@ import com.ivy.ui.R
 import com.ivy.data.model.currency.IvyCurrency
 import com.ivy.data.model.CreateAccountData
 import com.ivy.data.model.CreateCategoryData
-import com.ivy.legacy.ui.component.IvyButton
-import com.ivy.legacy.ui.component.IvyIcon
+import com.ivy.legacy.ui.button.IvyButton
+import com.ivy.legacy.ui.icon.IvyIcon
 import com.ivy.legacy.ui.modal.DeleteModal
 import com.ivy.legacy.ui.modal.ModalAdd
 import com.ivy.legacy.ui.modal.ModalSave

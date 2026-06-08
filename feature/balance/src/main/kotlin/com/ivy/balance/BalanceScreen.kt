@@ -41,7 +41,7 @@ import com.ivy.legacy.ui.theme.Gray
 import com.ivy.legacy.ui.theme.Orange
 import com.ivy.legacy.ui.theme.White
 import com.ivy.legacy.ui.money.BalanceRow
-import com.ivy.legacy.ui.component.IvyCircleButton
+import com.ivy.legacy.ui.button.IvyCircleButton
 import com.ivy.legacy.ui.modal.ChoosePeriodModal
 import com.ivy.legacy.ui.modal.ChoosePeriodModalData
 import com.ivy.legacy.ui.period.PeriodSelector

@@ -67,9 +67,9 @@ import com.ivy.legacy.ui.theme.GradientGreen
 import com.ivy.legacy.ui.theme.Gray
 import com.ivy.legacy.ui.theme.White
 import com.ivy.legacy.ui.money.BalanceRow
-import com.ivy.legacy.ui.component.CloseButton
-import com.ivy.legacy.ui.component.ItemIconMDefaultIcon
-import com.ivy.legacy.ui.component.IvyOutlinedButton
+import com.ivy.legacy.ui.button.CloseButton
+import com.ivy.legacy.ui.icon.ItemIconMDefaultIcon
+import com.ivy.legacy.ui.button.IvyOutlinedButton
 import com.ivy.legacy.ui.theme.findContrastTextColor
 import com.ivy.legacy.ui.theme.gradientExpenses
 import com.ivy.legacy.ui.modal.ChoosePeriodModal

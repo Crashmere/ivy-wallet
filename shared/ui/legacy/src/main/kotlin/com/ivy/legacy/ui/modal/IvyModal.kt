@@ -52,7 +52,7 @@ import com.ivy.ui.animation.DURATION_MODAL_ANIM
 import com.ivy.ui.compose.BackPressHandler
 import com.ivy.ui.compose.onCompositionStart
 import com.ivy.ui.compose.thenIf
-import com.ivy.legacy.ui.component.CloseButton
+import com.ivy.legacy.ui.button.CloseButton
 import com.ivy.legacy.ui.theme.gradientCutBackgroundTop
 import com.ivy.legacy.ui.theme.mediumBlur
 import java.util.UUID

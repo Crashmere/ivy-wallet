@@ -20,7 +20,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.currency.format
-import com.ivy.legacy.ui.component.IvyIcon
+import com.ivy.legacy.ui.icon.IvyIcon
 import com.ivy.legacy.ui.theme.Green
 import com.ivy.legacy.ui.theme.Ivy
 import com.ivy.legacy.ui.theme.LegacyTheme

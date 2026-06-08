@@ -44,9 +44,9 @@ import com.ivy.ui.R
 import com.ivy.ui.rememberScrollPositionListState
 import com.ivy.legacy.ui.theme.Gray
 import com.ivy.legacy.ui.money.BalanceRow
-import com.ivy.legacy.ui.component.CircleButtonFilled
-import com.ivy.legacy.ui.component.ItemIconSDefaultIcon
-import com.ivy.legacy.ui.component.IvyIcon
+import com.ivy.legacy.ui.button.CircleButtonFilled
+import com.ivy.legacy.ui.icon.ItemIconSDefaultIcon
+import com.ivy.legacy.ui.icon.IvyIcon
 import com.ivy.legacy.ui.modal.ReorderModalSingleType
 import com.ivy.legacy.ui.theme.dynamicContrast
 import com.ivy.legacy.ui.theme.findContrastTextColor

@@ -24,7 +24,7 @@ import com.ivy.ui.time.forDisplay
 import com.ivy.ui.time.formatDateOnly
 import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.Orange
-import com.ivy.legacy.ui.component.IvyIcon
+import com.ivy.legacy.ui.icon.IvyIcon
 import java.time.LocalDateTime
 import java.util.Locale
 

@@ -20,7 +20,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.currency.IvyCurrency
 import com.ivy.data.model.currency.format
-import com.ivy.legacy.ui.component.IvyIcon
+import com.ivy.legacy.ui.icon.IvyIcon
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.legacy.ui.theme.Orange
 import com.ivy.legacy.ui.theme.style

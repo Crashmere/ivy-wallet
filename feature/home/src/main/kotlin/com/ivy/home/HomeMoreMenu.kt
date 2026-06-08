@@ -60,8 +60,8 @@ import com.ivy.ui.compose.toDensityPx
 import com.ivy.ui.compose.verticalSwipeListener
 import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.Gray
-import com.ivy.legacy.ui.component.CircleButtonFilled
-import com.ivy.legacy.ui.component.IvyIcon
+import com.ivy.legacy.ui.button.CircleButtonFilled
+import com.ivy.legacy.ui.icon.IvyIcon
 import com.ivy.legacy.ui.money.AmountCurrencyB1
 import kotlin.math.roundToInt
 

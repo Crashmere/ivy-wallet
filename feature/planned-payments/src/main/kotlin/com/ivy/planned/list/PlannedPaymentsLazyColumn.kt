@@ -27,7 +27,7 @@ import com.ivy.legacy.ui.theme.style
 import com.ivy.data.model.PlannedPaymentRule
 import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.Gray
-import com.ivy.legacy.ui.component.IvyIcon
+import com.ivy.legacy.ui.icon.IvyIcon
 import kotlinx.collections.immutable.ImmutableList
 import java.util.UUID
 import kotlin.math.absoluteValue

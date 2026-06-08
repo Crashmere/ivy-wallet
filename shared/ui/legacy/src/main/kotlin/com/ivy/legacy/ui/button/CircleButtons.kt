@@ -1,4 +1,4 @@
-package com.ivy.legacy.ui.component
+package com.ivy.legacy.ui.button
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background

@@ -16,9 +16,9 @@ import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.GradientGreen
 import com.ivy.legacy.ui.theme.GradientRed
 import com.ivy.legacy.ui.theme.White
-import com.ivy.legacy.ui.component.IvyButton
-import com.ivy.legacy.ui.component.IvyCircleButton
-import com.ivy.legacy.ui.component.IvyOutlinedButton
+import com.ivy.legacy.ui.button.IvyButton
+import com.ivy.legacy.ui.button.IvyCircleButton
+import com.ivy.legacy.ui.button.IvyOutlinedButton
 
 @Composable
 internal fun ModalDynamicPrimaryAction(

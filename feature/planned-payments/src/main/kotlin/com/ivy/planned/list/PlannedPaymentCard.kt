@@ -42,8 +42,8 @@ import com.ivy.legacy.ui.theme.Green
 import com.ivy.legacy.ui.theme.Ivy
 import com.ivy.legacy.ui.theme.Orange
 import com.ivy.legacy.ui.theme.White
-import com.ivy.legacy.ui.component.IvyButton
-import com.ivy.legacy.ui.component.IvyIcon
+import com.ivy.legacy.ui.button.IvyButton
+import com.ivy.legacy.ui.icon.IvyIcon
 import com.ivy.ui.icon.getCustomIconIdS
 import com.ivy.legacy.ui.theme.findContrastTextColor
 import com.ivy.legacy.ui.theme.toComposeColor

@@ -1,4 +1,4 @@
-package com.ivy.legacy.ui.component
+package com.ivy.legacy.ui.button
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
@@ -12,6 +12,7 @@ import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.ivy.legacy.ui.theme.LegacyTheme
+import com.ivy.legacy.ui.icon.IvyIcon
 import com.ivy.ui.compose.drawColoredShadow
 import com.ivy.ui.compose.thenIf
 import com.ivy.legacy.ui.theme.Gradient

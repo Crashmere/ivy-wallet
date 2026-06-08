@@ -35,7 +35,7 @@ import com.ivy.ui.navigation.navigation
 import com.ivy.ui.navigation.screenScopedViewModel
 import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.Orange
-import com.ivy.legacy.ui.component.IvyButton
+import com.ivy.legacy.ui.button.IvyButton
 import com.ivy.legacy.ui.modal.DeleteModal
 import com.ivy.legacy.ui.modal.AccountModalData
 import com.ivy.legacy.ui.modal.edit.AccountModal

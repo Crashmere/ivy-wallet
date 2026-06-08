@@ -42,7 +42,7 @@ import androidx.compose.ui.unit.dp
 import com.ivy.data.model.Tag
 import com.ivy.data.model.primitive.NotBlankTrimmedString
 import com.ivy.data.model.TagId
-import com.ivy.legacy.ui.component.IvyCircleButton
+import com.ivy.legacy.ui.button.IvyCircleButton
 import com.ivy.legacy.ui.theme.GradientRed
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.legacy.ui.theme.White

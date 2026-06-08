@@ -25,8 +25,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.TransactionType
-import com.ivy.legacy.ui.component.IvyButton
-import com.ivy.legacy.ui.component.IvyIcon
+import com.ivy.legacy.ui.button.IvyButton
+import com.ivy.legacy.ui.icon.IvyIcon
 import com.ivy.legacy.ui.modal.IvyModal
 import com.ivy.legacy.ui.modal.ModalTitle
 import com.ivy.legacy.ui.theme.Gradient

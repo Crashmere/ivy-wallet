@@ -30,8 +30,8 @@ import com.ivy.legacy.ui.theme.Gray
 import com.ivy.legacy.ui.theme.Orange
 import com.ivy.legacy.ui.theme.Red
 import com.ivy.legacy.ui.theme.White
-import com.ivy.legacy.ui.component.IvyButton
-import com.ivy.legacy.ui.component.IvyIcon
+import com.ivy.legacy.ui.button.IvyButton
+import com.ivy.legacy.ui.icon.IvyIcon
 import java.util.UUID
 
 fun LazyListScope.transactions(

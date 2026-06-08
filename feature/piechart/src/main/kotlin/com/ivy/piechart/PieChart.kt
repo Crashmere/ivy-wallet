@@ -29,7 +29,7 @@ import com.ivy.ui.compose.drawColoredShadow
 import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.Gradient
 import com.ivy.legacy.ui.theme.Gray
-import com.ivy.legacy.ui.component.IvyIcon
+import com.ivy.legacy.ui.icon.IvyIcon
 import com.ivy.legacy.ui.theme.toComposeColor
 import kotlinx.collections.immutable.ImmutableList
 import kotlin.math.acos

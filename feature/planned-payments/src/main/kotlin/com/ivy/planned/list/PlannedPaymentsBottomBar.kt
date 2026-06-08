@@ -21,8 +21,8 @@ import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.compose.navigationBarInset
 import com.ivy.ui.compose.toDensityDp
 import com.ivy.ui.R
-import com.ivy.legacy.ui.component.CloseButton
-import com.ivy.legacy.ui.component.IvyOutlinedButton
+import com.ivy.legacy.ui.button.CloseButton
+import com.ivy.legacy.ui.button.IvyOutlinedButton
 import com.ivy.legacy.ui.theme.gradientCutBackgroundTop
 
 @Composable

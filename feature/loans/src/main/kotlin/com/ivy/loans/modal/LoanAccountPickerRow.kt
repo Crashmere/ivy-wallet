@@ -22,8 +22,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.legacy.LegacyAccount
-import com.ivy.legacy.ui.component.ItemIconSDefaultIcon
-import com.ivy.legacy.ui.component.IvyIcon
+import com.ivy.legacy.ui.icon.ItemIconSDefaultIcon
+import com.ivy.legacy.ui.icon.IvyIcon
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.legacy.ui.theme.findContrastTextColor
 import com.ivy.legacy.ui.theme.style

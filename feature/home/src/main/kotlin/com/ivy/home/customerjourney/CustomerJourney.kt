@@ -23,8 +23,8 @@ import com.ivy.legacy.ui.theme.style
 import com.ivy.ui.compose.drawColoredShadow
 import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.Gradient
-import com.ivy.legacy.ui.component.IvyButton
-import com.ivy.legacy.ui.component.IvyIcon
+import com.ivy.legacy.ui.button.IvyButton
+import com.ivy.legacy.ui.icon.IvyIcon
 import com.ivy.legacy.ui.theme.dynamicContrast
 import com.ivy.legacy.ui.theme.findContrastTextColor
 import kotlinx.collections.immutable.ImmutableList

@@ -27,7 +27,7 @@ import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.legacy.ui.theme.style
 import com.ivy.ui.period.TimePeriod
 import com.ivy.ui.R
-import com.ivy.legacy.ui.component.IvyIcon
+import com.ivy.legacy.ui.icon.IvyIcon
 
 @Composable
 fun PeriodSelector(

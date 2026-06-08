@@ -34,7 +34,7 @@ import com.ivy.ui.compose.onCompositionStart
 import com.ivy.ui.compose.thenIf
 import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.Ivy
-import com.ivy.legacy.ui.component.ItemIconS
+import com.ivy.legacy.ui.icon.ItemIconS
 import com.ivy.legacy.ui.theme.dynamicContrast
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList

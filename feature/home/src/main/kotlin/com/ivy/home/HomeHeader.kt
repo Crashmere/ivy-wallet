@@ -50,8 +50,8 @@ import com.ivy.legacy.ui.theme.Gray
 import com.ivy.legacy.ui.theme.Green
 import com.ivy.legacy.ui.theme.White
 import com.ivy.legacy.ui.money.BalanceRow
-import com.ivy.legacy.ui.component.IvyIcon
-import com.ivy.legacy.ui.component.IvyOutlinedButton
+import com.ivy.legacy.ui.icon.IvyIcon
+import com.ivy.legacy.ui.button.IvyOutlinedButton
 import com.ivy.legacy.ui.money.AmountCurrencyB1
 import kotlin.math.absoluteValue
 

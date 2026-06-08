@@ -21,9 +21,9 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.TransactionType
-import com.ivy.legacy.ui.component.CloseButton
-import com.ivy.legacy.ui.component.IvyCircleButton
-import com.ivy.legacy.ui.component.IvyOutlinedButton
+import com.ivy.legacy.ui.button.CloseButton
+import com.ivy.legacy.ui.button.IvyCircleButton
+import com.ivy.legacy.ui.button.IvyOutlinedButton
 import com.ivy.legacy.ui.theme.Gradient
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.legacy.ui.theme.Red

@@ -73,11 +73,11 @@ import com.ivy.legacy.ui.theme.Green
 import com.ivy.legacy.ui.theme.Ivy
 import com.ivy.legacy.ui.money.AmountCurrencyB1
 import com.ivy.legacy.ui.money.BalanceRow
-import com.ivy.legacy.ui.component.ItemIconMDefaultIcon
-import com.ivy.legacy.ui.component.IvyButton
-import com.ivy.legacy.ui.component.IvyCircleButton
-import com.ivy.legacy.ui.component.IvyIcon
-import com.ivy.legacy.ui.component.IvyOutlinedButton
+import com.ivy.legacy.ui.icon.ItemIconMDefaultIcon
+import com.ivy.legacy.ui.button.IvyButton
+import com.ivy.legacy.ui.button.IvyCircleButton
+import com.ivy.legacy.ui.icon.IvyIcon
+import com.ivy.legacy.ui.button.IvyOutlinedButton
 import com.ivy.ui.icon.getCustomIconIdS
 import com.ivy.legacy.ui.theme.Red
 import com.ivy.legacy.ui.theme.White

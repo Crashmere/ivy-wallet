@@ -1,4 +1,4 @@
-package com.ivy.legacy.ui.component
+package com.ivy.legacy.ui.icon
 
 import androidx.annotation.DrawableRes
 import androidx.compose.material3.Icon

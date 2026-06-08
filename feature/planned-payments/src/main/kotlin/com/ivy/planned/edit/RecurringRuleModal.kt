@@ -43,9 +43,9 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.IntervalType
-import com.ivy.legacy.ui.component.IvyButton
-import com.ivy.legacy.ui.component.IvyCircleButton
-import com.ivy.legacy.ui.component.IvyIcon
+import com.ivy.legacy.ui.button.IvyButton
+import com.ivy.legacy.ui.button.IvyCircleButton
+import com.ivy.legacy.ui.icon.IvyIcon
 import com.ivy.legacy.ui.modal.IvyModal
 import com.ivy.legacy.ui.modal.ModalTitle
 import com.ivy.legacy.ui.theme.Gradient
