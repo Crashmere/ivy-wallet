@@ -96,6 +96,7 @@
 - 首页更多菜单改用本 feature 私有的缓冲金额电池；`shared:ui:legacy` 的 `BufferBattery` 收窄为旧缓冲弹窗内部实现。
 - 首页缓冲金额弹窗和弹窗状态已移回 `feature:home` 私有实现；`shared:ui:legacy` 不再导出 `BufferModal`、`BufferModalData` 或缓冲金额电池组件。
 - 报表筛选的关键词添加弹窗已移回 `feature:reports` 私有实现；`shared:ui:legacy` 不再导出只服务报表筛选的 `AddKeywordModal`。
+- 设置页的每月起始日选择弹窗已移回 `feature:settings` 私有实现；`shared:ui:legacy` 不再导出只服务设置页的 `ChooseStartDateOfMonthModal`。
 - 收窄旧主题色板公开面：颜色选择器专用色板、旧 UI 内部红色/橙色渐变、透明色、底部渐变遮罩、旧弹窗背景模糊和 `asBrush()` 扩展改为 `shared:ui:legacy` 内部实现，feature 层仍可使用现有公开颜色和主题门面。
 - 收窄 domain 内部工具公开面：新旧模型 mapper 中只被 domain 使用的转换方向、CSV 导出行模型和 Arrow 数值 helper 改为模块内部实现；CSV 导入仍需要的 `toDomainAccount()` 暂时保留公开入口。
 - 收回旧账户保存转换边界：新增 `SaveLegacyAccountUseCase`，CSV 导入 feature 不再直接调用 legacy 账户 mapper；`toDomainAccount()` 改为 domain 内部实现。

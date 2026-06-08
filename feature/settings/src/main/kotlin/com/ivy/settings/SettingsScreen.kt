@@ -63,7 +63,6 @@ import com.ivy.legacy.ui.theme.Gray
 import com.ivy.legacy.ui.theme.Red
 import com.ivy.legacy.ui.theme.White
 import com.ivy.legacy.ui.component.IvyToolbar
-import com.ivy.legacy.ui.modal.ChooseStartDateOfMonthModal
 import com.ivy.legacy.ui.modal.CurrencyModal
 import com.ivy.legacy.ui.modal.DeleteModal
 import com.ivy.legacy.ui.modal.ProgressModal
@@ -405,7 +404,7 @@ private fun BoxWithConstraintsScope.UI(
         onSetCurrency(it)
     }
 
-    ChooseStartDateOfMonthModal(
+    SettingsStartDateOfMonthModal(
         visible = chooseStartDateOfMonthVisible,
         selectedStartDateOfMonth = startDateOfMonth,
         dismiss = { chooseStartDateOfMonthVisible = false }
