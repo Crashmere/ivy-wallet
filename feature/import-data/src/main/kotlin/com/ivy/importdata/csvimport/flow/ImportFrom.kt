@@ -31,7 +31,7 @@ import com.ivy.legacy.ui.component.GradientCutBottom
 
 @ExperimentalFoundationApi
 @Composable
-fun BoxWithConstraintsScope.ImportFrom(
+internal fun BoxWithConstraintsScope.ImportFrom(
     hasSkip: Boolean,
 
     onSkip: () -> Unit = {},

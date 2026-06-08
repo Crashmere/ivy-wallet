@@ -15,7 +15,7 @@ import java.util.Locale
 import kotlin.math.abs
 
 // region Parse amount
-fun parseAmount(
+internal fun parseAmount(
     value: String,
     metadata: Int // a broken multiplier
 ): Double? = tryParse {
@@ -57,7 +57,7 @@ private fun parsePositiveDouble(string: String): Double? {
 }
 // endregion
 
-fun parseTransactionType(
+internal fun parseTransactionType(
     value: String,
     metadata: TransactionTypeMetadata
 ): TransactionType? {
@@ -85,9 +85,9 @@ fun parseTransactionType(
 }
 
 // region Parse Date
-var lastSuccessfulFormat: String? = null
+private var lastSuccessfulFormat: String? = null
 
-fun parseDate(
+internal fun parseDate(
     value: String,
     metadata: DateMetadata
 ): LocalDateTime? = tryParse {
@@ -186,42 +186,42 @@ private fun possibleDateFormats(metadata: DateMetadata): List<String> {
 }
 // endregion
 
-fun parseAccount(
+internal fun parseAccount(
     value: String,
     metadata: Unit,
 ): String? = notBlankTrimmedString(value)
 
-fun parseAccountCurrency(
+internal fun parseAccountCurrency(
     value: String,
     metadata: Unit,
 ): String? = notBlankTrimmedString(value)
 
-fun parseToAccount(
+internal fun parseToAccount(
     value: String,
     metadata: Unit
 ): String? = notBlankTrimmedString(value)
 
-fun parseToAccountCurrency(
+internal fun parseToAccountCurrency(
     value: String,
     metadata: Unit
 ): String? = notBlankTrimmedString(value)
 
-fun parseCategory(
+internal fun parseCategory(
     value: String,
     metadata: Unit
 ): String? = notBlankTrimmedString(value)
 
-fun parseTitle(
+internal fun parseTitle(
     value: String,
     metadata: Unit
 ): String? = notBlankTrimmedString(value)
 
-fun parseDescription(
+internal fun parseDescription(
     value: String,
     metadata: Unit
 ): String? = notBlankTrimmedString(value)
 
-fun <M> CSVRow.extractValue(
+internal fun <M> CSVRow.extractValue(
     mapping: ColumnMapping<M>
 ): String {
     return try {

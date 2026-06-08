@@ -141,14 +141,14 @@ private fun ImportButton(
     }
 }
 
-fun LazyListScope.spacer8() {
+private fun LazyListScope.spacer8() {
     item {
         Spacer8()
     }
 }
 
 @Composable
-fun Spacer8(horizontal: Boolean = false) {
+internal fun Spacer8(horizontal: Boolean = false) {
     if (horizontal) {
         Spacer(modifier = Modifier.width(8.dp))
     } else {
@@ -280,7 +280,7 @@ private fun <M> LazyListScope.mappingRow(
     }
 }
 
-fun LazyListScope.sectionDivider(text: String) {
+private fun LazyListScope.sectionDivider(text: String) {
     item {
         Spacer(modifier = Modifier.height(24.dp))
         Text(text = text, style = LegacyTheme.typo.b1)
@@ -297,7 +297,7 @@ fun LazyListScope.sectionDivider(text: String) {
 }
 
 // region Important
-fun LazyListScope.importantFields(
+private fun LazyListScope.importantFields(
     columns: CSVRow,
     importantFields: ImportantFields,
     onEvent: (CSVEvent) -> Unit,
@@ -448,7 +448,7 @@ private fun TypeMetadata(
 }
 
 @Composable
-fun LabelContainsField(
+private fun LabelContainsField(
     label: String,
     value: String,
     onValueChange: (String) -> Unit,
@@ -517,7 +517,7 @@ private fun EnabledButton(
 }
 // endregion
 
-fun LazyListScope.transferFields(
+private fun LazyListScope.transferFields(
     columns: CSVRow,
     transferFields: TransferFields,
     onEvent: (CSVEvent) -> Unit,
@@ -572,7 +572,7 @@ fun LazyListScope.transferFields(
     )
 }
 
-fun LazyListScope.optionalFields(
+private fun LazyListScope.optionalFields(
     columns: CSVRow,
     optionalFields: OptionalFields,
     onEvent: (CSVEvent) -> Unit,

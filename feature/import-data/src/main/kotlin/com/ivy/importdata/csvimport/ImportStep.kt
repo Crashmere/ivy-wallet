@@ -1,5 +1,5 @@
 package com.ivy.importdata.csvimport
 
-enum class ImportStep {
+internal enum class ImportStep {
     IMPORT_FROM, LOADING, RESULT
 }

@@ -24,7 +24,7 @@ import com.ivy.legacy.ui.theme.Gray
 import com.ivy.legacy.ui.component.IvyDividerLine
 
 @Composable
-fun ImportProcessing(
+internal fun ImportProcessing(
     progressPercent: Int
 ) {
     Column(

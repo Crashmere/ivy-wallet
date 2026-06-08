@@ -30,7 +30,7 @@ import javax.inject.Inject
 import kotlin.math.absoluteValue
 import com.ivy.importdata.csv.CSVRow
 
-class CsvTransactionImporter @Inject constructor(
+internal class CsvTransactionImporter @Inject constructor(
     private val getLegacyAccountsUseCase: GetLegacyAccountsUseCase,
     private val getCategoriesUseCase: GetCategoriesUseCase,
     private val getBaseCurrency: GetBaseCurrencyUseCase,

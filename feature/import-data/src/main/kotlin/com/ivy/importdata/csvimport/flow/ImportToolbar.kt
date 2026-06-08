@@ -18,7 +18,7 @@ import com.ivy.legacy.ui.theme.Gray
 import com.ivy.legacy.ui.component.IvyToolbar
 
 @Composable
-fun ImportToolbar(
+internal fun ImportToolbar(
     hasSkip: Boolean,
     onBack: () -> Unit,
     onSkip: () -> Unit,

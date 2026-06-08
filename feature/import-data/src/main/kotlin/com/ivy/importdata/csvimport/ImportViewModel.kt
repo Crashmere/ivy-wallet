@@ -15,7 +15,7 @@ import javax.inject.Inject
 import kotlin.math.roundToInt
 
 @HiltViewModel
-class ImportViewModel @Inject constructor(
+internal class ImportViewModel @Inject constructor(
     private val filePicker: FilePicker,
     private val importBackupUseCase: ImportBackupUseCase
 ) : ViewModel() {

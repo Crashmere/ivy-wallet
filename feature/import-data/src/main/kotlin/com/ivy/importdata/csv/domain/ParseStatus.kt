@@ -4,9 +4,9 @@ import com.ivy.importdata.csv.CSVRow
 import com.ivy.importdata.csv.ColumnMapping
 import com.ivy.importdata.csv.MappingStatus
 
-const val SAMPLE_SIZE = 20
+internal const val SAMPLE_SIZE = 20
 
-fun <T, M> List<CSVRow>.parseStatus(
+internal fun <T, M> List<CSVRow>.parseStatus(
     mapping: ColumnMapping<M>,
     parse: (String, M) -> T?
 ): MappingStatus = tryStatus {
@@ -26,4 +26,4 @@ private fun tryStatus(block: () -> MappingStatus): MappingStatus = try {
     MappingStatus(sampleValues = emptyList(), success = false)
 }
 
-fun mappingFailure(): MappingStatus = MappingStatus(sampleValues = emptyList(), success = false)
+internal fun mappingFailure(): MappingStatus = MappingStatus(sampleValues = emptyList(), success = false)

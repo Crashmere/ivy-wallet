@@ -3,7 +3,7 @@ package com.ivy.importdata.csv
 import com.ivy.data.model.importing.ImportResult
 import kotlinx.collections.immutable.ImmutableList
 
-data class CSVState(
+internal data class CSVState(
     val uiState: UIState,
     val columns: CSVRow?,
     val csv: ImmutableList<CSVRow>?,
@@ -13,13 +13,13 @@ data class CSVState(
     val continueEnabled: Boolean,
 )
 
-sealed interface UIState {
+internal sealed interface UIState {
     object Idle : UIState
     data class Processing(val percent: Int) : UIState
     data class Result(val importResult: ImportResult) : UIState
 }
 
-data class ImportantFields(
+internal data class ImportantFields(
     val amount: ColumnMapping<Int>,
     val amountStatus: MappingStatus,
     val type: ColumnMapping<TransactionTypeMetadata>,
@@ -32,17 +32,17 @@ data class ImportantFields(
     val accountCurrencyStatus: MappingStatus,
 )
 
-data class TransactionTypeMetadata(
+internal data class TransactionTypeMetadata(
     val income: String,
     val expense: String,
     val transfer: String?,
 )
 
-enum class DateMetadata {
+internal enum class DateMetadata {
     MonthFirst, DateFirst
 }
 
-data class TransferFields(
+internal data class TransferFields(
     val toAccount: ColumnMapping<Unit>,
     val toAccountStatus: MappingStatus,
     val toAccountCurrency: ColumnMapping<Unit>,
@@ -51,7 +51,7 @@ data class TransferFields(
     val toAmountStatus: MappingStatus,
 )
 
-data class OptionalFields(
+internal data class OptionalFields(
     val category: ColumnMapping<Unit>,
     val categoryStatus: MappingStatus,
     val title: ColumnMapping<Unit>,
@@ -60,7 +60,7 @@ data class OptionalFields(
     val descriptionStatus: MappingStatus,
 )
 
-data class ColumnMapping<M>(
+internal data class ColumnMapping<M>(
     val ivyColumn: String,
     val helpInfo: String,
     val name: String,
@@ -69,11 +69,11 @@ data class ColumnMapping<M>(
     val required: Boolean,
 )
 
-data class MappingStatus(
+internal data class MappingStatus(
     val sampleValues: List<String>,
     val success: Boolean,
 )
 
-data class CSVRow(
+internal data class CSVRow(
     val values: List<String>
 )
