@@ -27,7 +27,6 @@ import com.ivy.domain.usecase.category.UpdateCategoryUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.domain.usecase.exchange.ExchangeAmountUseCase
 import com.ivy.domain.usecase.transaction.MapTransactionsToLegacyTransactionsUseCase
-import com.ivy.domain.usecase.transaction.MapTransactionsToLegacyTransactionsWithTagsUseCase
 import com.ivy.domain.preferences.toggles.PreferenceToggleService
 import com.ivy.domain.preferences.toggles.PreferenceToggleCatalog
 import com.ivy.ui.period.PeriodState
@@ -49,6 +48,7 @@ import com.ivy.domain.usecase.planned.PayOrSkipPlannedTransactionByIdUseCase
 import com.ivy.domain.usecase.planned.PayOrSkipPlannedTransactionsByIdsUseCase
 import com.ivy.domain.usecase.settings.GetTransfersAsIncomeExpensePreferenceUseCase
 import com.ivy.domain.usecase.transaction.BuildLegacyTransactionHistoryItemsUseCase
+import com.ivy.domain.usecase.transaction.BuildTransactionHistoryItemsUseCase
 import com.ivy.domain.usecase.transaction.CalculateLegacyTransactionsIncomeExpenseUseCase
 import com.ivy.domain.usecase.transaction.GetTransactionsByIdsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -79,6 +79,7 @@ internal class TransactionsViewModel @Inject internal constructor(
     private val getAccountsUseCase: GetAccountsUseCase,
     private val getAccountTransactionsUseCase: GetAccountTransactionsUseCase,
     private val buildLegacyTransactionHistoryItemsUseCase: BuildLegacyTransactionHistoryItemsUseCase,
+    private val buildTransactionHistoryItemsUseCase: BuildTransactionHistoryItemsUseCase,
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
     private val getAccountUpcomingTransactionsSummaryUseCase: GetAccountUpcomingTransactionsSummaryUseCase,
     private val getAccountOverdueTransactionsSummaryUseCase: GetAccountOverdueTransactionsSummaryUseCase,
@@ -94,7 +95,6 @@ internal class TransactionsViewModel @Inject internal constructor(
     private val getTransactionsByIdsUseCase: GetTransactionsByIdsUseCase,
     private val exchangeAmountUseCase: ExchangeAmountUseCase,
     private val mapTransactionsToLegacyTransactionsUseCase: MapTransactionsToLegacyTransactionsUseCase,
-    private val mapTransactionsToLegacyTransactionsWithTagsUseCase: MapTransactionsToLegacyTransactionsWithTagsUseCase,
     private val resourceProvider: ResourceProvider,
     private val preferenceToggleService: PreferenceToggleService,
     private val preferenceToggles: PreferenceToggleCatalog
@@ -343,13 +343,11 @@ internal class TransactionsViewModel @Inject internal constructor(
         income.doubleValue = incomeExpensePair.income.toDouble()
         expenses.doubleValue = incomeExpensePair.expense.toDouble()
 
-        history.value = buildLegacyTransactionHistoryItemsUseCase(
+        history.value = buildTransactionHistoryItemsUseCase(
             baseCurrency = baseCurrency.value,
-            transactions = mapTransactionsToLegacyTransactionsWithTagsUseCase(
-                getAccountTransactionsUseCase(
-                    accountId = initialAccount.id,
-                    range = range.toCloseTimeRange()
-                )
+            transactions = getAccountTransactionsUseCase(
+                accountId = initialAccount.id,
+                range = range.toCloseTimeRange()
             )
         ).toImmutableList()
 
