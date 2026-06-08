@@ -41,12 +41,7 @@ data class EditPlannedScreen(
     val categoryId: UUID? = null,
     val title: String? = null,
     val description: String? = null,
-) : Screen {
-    fun mandatoryFilled(): Boolean {
-        return amount != null && amount > 0.0 &&
-                accountId != null
-    }
-}
+) : Screen
 
 data object BalanceScreen : Screen
 

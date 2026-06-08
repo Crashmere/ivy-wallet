@@ -212,7 +212,7 @@ private fun BoxWithConstraintsScope.UI(
     onScreenStart {
         if (screen.plannedPaymentRuleId == null) {
             // Create mode
-            if (screen.mandatoryFilled()) {
+            if (screen.hasMandatoryInitialData()) {
                 // Flow Convert (Amount, LegacyAccount, Category)
                 onEvent(
                     EditPlannedScreenEvent.OnRecurringRuleModalDataChanged(
@@ -422,6 +422,12 @@ private fun shouldFocusCategory(
     category: Category?,
     type: TransactionType,
 ): Boolean = category == null && type != TransactionType.TRANSFER
+
+private fun EditPlannedScreen.hasMandatoryInitialData(): Boolean {
+    val initialAmount = amount
+    return initialAmount != null && initialAmount > 0.0 &&
+            accountId != null
+}
 
 private fun shouldFocusTitle(
     titleTextFieldValue: TextFieldValue,
