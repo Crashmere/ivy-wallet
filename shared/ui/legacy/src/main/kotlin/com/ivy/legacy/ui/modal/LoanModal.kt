@@ -623,7 +623,7 @@ private fun save(
                 amount = amount,
                 color = color.toArgb(),
                 icon = icon,
-                account = selectedAccount,
+                accountId = selectedAccount?.id,
                 createLoanTransaction = createLoanTransaction,
                 dateTime = dateTime,
                 note = NotBlankTrimmedString.from(noteTextFieldValue.text).getOrNull()?.value

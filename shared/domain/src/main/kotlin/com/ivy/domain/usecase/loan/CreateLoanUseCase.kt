@@ -23,7 +23,7 @@ class CreateLoanUseCase @Inject internal constructor(
                 icon = data.icon,
                 note = data.note,
                 orderNum = loanStore.findMaxOrderNum().nextOrderNum(),
-                accountId = data.account?.id,
+                accountId = data.accountId,
                 dateTime = data.dateTime
             )
             loanStore.save(loan)

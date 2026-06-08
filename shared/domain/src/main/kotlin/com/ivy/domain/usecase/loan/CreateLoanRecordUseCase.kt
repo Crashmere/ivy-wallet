@@ -23,7 +23,7 @@ class CreateLoanRecordUseCase @Inject internal constructor(
                 amount = data.amount,
                 dateTime = data.dateTime,
                 interest = data.interest,
-                accountId = data.account?.id,
+                accountId = data.accountId,
                 convertedAmount = data.convertedAmount,
                 loanRecordType = data.loanRecordType
             )

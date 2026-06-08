@@ -26,7 +26,7 @@ class LoanTransactionSyncUseCase @Inject internal constructor(
                 loanId = loanId,
                 amount = data.amount,
                 loanType = data.type,
-                selectedAccountId = data.account?.id,
+                selectedAccountId = data.accountId,
                 title = data.name,
                 isLoanRecord = false,
                 loanRecordType = LoanRecordType.DECREASE

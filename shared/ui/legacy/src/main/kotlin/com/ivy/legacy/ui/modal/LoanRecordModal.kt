@@ -408,7 +408,7 @@ private fun save(
                 amount = amount,
                 dateTime = dateTime,
                 interest = loanRecordInterest,
-                account = selectedAccount,
+                accountId = selectedAccount?.id,
                 createLoanRecordTransaction = createLoanRecordTransaction,
                 loanRecordType = loanRecordType
             )

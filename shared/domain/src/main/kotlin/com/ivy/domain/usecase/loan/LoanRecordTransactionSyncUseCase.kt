@@ -49,7 +49,7 @@ class LoanRecordTransactionSyncUseCase @Inject internal constructor(
                 time = data.dateTime,
                 loanRecordId = loanRecordId,
                 loanId = loan.id,
-                selectedAccountId = data.account?.id,
+                selectedAccountId = data.accountId,
                 isLoanRecord = true,
                 loanRecordType = data.loanRecordType
             )
@@ -122,7 +122,7 @@ class LoanRecordTransactionSyncUseCase @Inject internal constructor(
             oldLoanRecordAccountId = null,
             oldLoanRecordConvertedAmount = null,
             oldLoanRecordAmount = 0.0,
-            newLoanRecordAccountId = data.account?.id,
+            newLoanRecordAccountId = data.accountId,
             newLoanRecordAmount = data.amount,
             loanAccountId = loanAccountId,
             accounts = ltCore.fetchAccounts(),

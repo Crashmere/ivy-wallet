@@ -1284,6 +1284,7 @@ shared:ui:core
 - 报表导出事件不再携带 `FileSharer` 平台分享器；ViewModel 只生成 CSV 并发出 `ShareCsvFile` UI 事件，页面入口负责调用平台分享能力。
 - 设置页导出 CSV 和备份 zip 也不再通过事件传递 `FileSharer`；ViewModel 写入文件后发出分享 UI 事件，Screen 统一调用平台分享能力。
 - 报表页面事件统一为 `sealed interface`，与其他 feature 的事件定义风格保持一致，减少无意义的 `ReportScreenEvent()` 继承样板。
+- 借贷创建和还款记录创建数据已从携带完整 `LegacyAccount` 改为只携带账户 ID；旧弹窗仍用完整账户对象渲染选择项，domain 创建和交易同步只接收 ID，`shared:data:model` 不再因为这两个创建 DTO 依赖 legacy 账户模型。
 - app 仍保留文件选择、文件分享、Material 日期选择器、BuildInfo、Locale 设置、生物识别和窗口安全等真正依赖 Activity 或 Android app 壳层的装配。
 
 ## 高风险区域
