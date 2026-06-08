@@ -88,6 +88,7 @@ import com.ivy.legacy.ui.theme.toComposeColor
 import com.ivy.legacy.ui.component.PeriodSelector
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
+import java.util.UUID
 
 @Composable
 fun BoxWithConstraintsScope.TransactionsScreen(screen: TransactionsScreen) {
@@ -184,14 +185,14 @@ fun BoxWithConstraintsScope.TransactionsScreen(screen: TransactionsScreen) {
         onEditAccount = { acc, newBalance ->
             viewModel.onEvent(TransactionsEvent.EditAccount(screen, acc, newBalance))
         },
-        onPayOrGet = { transaction ->
-            viewModel.onEvent(TransactionsEvent.PayOrGet(screen, transaction))
+        onPayOrGet = { transactionId ->
+            viewModel.onEvent(TransactionsEvent.PayOrGet(screen, transactionId))
         },
-        onSkipTransaction = { transaction ->
-            viewModel.onEvent(TransactionsEvent.SkipTransaction(screen, transaction))
+        onSkipTransaction = { transactionId ->
+            viewModel.onEvent(TransactionsEvent.SkipTransaction(screen, transactionId))
         },
-        onSkipAllTransactions = { transactions ->
-            viewModel.onEvent(TransactionsEvent.SkipTransactions(screen, transactions))
+        onSkipAllTransactions = { transactionIds ->
+            viewModel.onEvent(TransactionsEvent.SkipTransactions(screen, transactionIds))
         },
         updateAccountNameConfirmation = {
             viewModel.onEvent(TransactionsEvent.UpdateAccountDeletionState(it))
@@ -263,9 +264,9 @@ private fun BoxWithConstraintsScope.UI(
     overdueExpenses: Double = 0.0,
     overdue: ImmutableList<LegacyTransaction> = persistentListOf(),
 
-    onPayOrGet: (LegacyTransaction) -> Unit = {},
-    onSkipTransaction: (LegacyTransaction) -> Unit = {},
-    onSkipAllTransactions: (List<LegacyTransaction>) -> Unit = {},
+    onPayOrGet: (UUID) -> Unit = {},
+    onSkipTransaction: (UUID) -> Unit = {},
+    onSkipAllTransactions: (List<UUID>) -> Unit = {},
     onChoosePeriodModal: (ChoosePeriodModalData?) -> Unit,
 ) {
     val nav = navigation()
@@ -276,6 +277,7 @@ private fun BoxWithConstraintsScope.UI(
 
     var categoryModalData: CategoryModalData? by remember { mutableStateOf(null) }
     var accountModalData: AccountModalData? by remember { mutableStateOf(null) }
+    var skipAllTransactionIds by remember { mutableStateOf<List<UUID>>(emptyList()) }
 
     val swipeListenerState = rememberSwipeListenerState()
     Column(
@@ -422,7 +424,7 @@ private fun BoxWithConstraintsScope.UI(
                 history = history,
                 lastItemSpacer = screenHeight * 0.7f,
 
-                onPayOrGet = onPayOrGet,
+                onPayOrGet = { onPayOrGet(it.id) },
                 onTransactionClick = {
                     nav.navigateTo(
                         EditTransactionScreen(
@@ -447,8 +449,9 @@ private fun BoxWithConstraintsScope.UI(
                         )
                     )
                 },
-                onSkipTransaction = onSkipTransaction,
-                onSkipAllTransactions = {
+                onSkipTransaction = { onSkipTransaction(it.id) },
+                onSkipAllTransactions = { transactions ->
+                    skipAllTransactionIds = transactions.map { it.id }
                     onSkipAllModalVisible(true)
                 },
                 emptyStateTitle = noTransactionsTitle,
@@ -469,6 +472,7 @@ private fun BoxWithConstraintsScope.UI(
             onSkipAllModalVisible(it)
         },
         onSkipAllTransactions = onSkipAllTransactions,
+        skipAllTransactionIds = skipAllTransactionIds,
         deleteModal1Visible = deleteModal1Visible,
         setDeleteModal1Visible = onDeleteModal1Visible
     )
@@ -561,8 +565,8 @@ private fun BoxWithConstraintsScope.DeleteModals(
     onDelete: () -> Unit,
     skipAllModalVisible: Boolean,
     onSkipAllModalVisible: (Boolean) -> Unit,
-    onSkipAllTransactions: (List<LegacyTransaction>) -> Unit,
-    overdue: ImmutableList<LegacyTransaction> = persistentListOf(),
+    onSkipAllTransactions: (List<UUID>) -> Unit,
+    skipAllTransactionIds: List<UUID> = emptyList(),
 ) {
     var deleteModal3Visible by remember { mutableStateOf(false) }
 
@@ -614,7 +618,7 @@ private fun BoxWithConstraintsScope.DeleteModals(
             onSkipAllModalVisible(false)
         }
     ) {
-        onSkipAllTransactions(overdue)
+        onSkipAllTransactions(skipAllTransactionIds)
         onSkipAllModalVisible(false)
     }
 }

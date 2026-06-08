@@ -1,11 +1,11 @@
 package com.ivy.transactions
 
-import com.ivy.data.model.legacy.LegacyTransaction
 import com.ivy.data.model.Category
 import com.ivy.ui.period.TimePeriod
 import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.ui.navigation.TransactionsScreen
 import com.ivy.ui.modal.ChoosePeriodModalData
+import java.util.UUID
 
 sealed interface TransactionsEvent {
     data class SetUpcomingExpanded(val expanded: Boolean) : TransactionsEvent
@@ -28,17 +28,17 @@ sealed interface TransactionsEvent {
 
     data class PayOrGet(
         val screen: TransactionsScreen,
-        val transaction: LegacyTransaction
+        val transactionId: UUID
     ) : TransactionsEvent
 
     data class SkipTransaction(
         val screen: TransactionsScreen,
-        val transaction: LegacyTransaction
+        val transactionId: UUID
     ) : TransactionsEvent
 
     data class SkipTransactions(
         val screen: TransactionsScreen,
-        val transactions: List<LegacyTransaction>
+        val transactionIds: List<UUID>
     ) : TransactionsEvent
 
     data class UpdateAccountDeletionState(val confirmationText: String) : TransactionsEvent

@@ -323,13 +323,13 @@ class TransactionsViewModel @Inject constructor(
 
             is TransactionsEvent.EditCategory -> editCategory(event.updatedCategory)
             is TransactionsEvent.NextMonth -> nextMonth(event.screen)
-            is TransactionsEvent.PayOrGet -> payOrGet(event.screen, event.transaction)
+            is TransactionsEvent.PayOrGet -> payOrGet(event.screen, event.transactionId)
             is TransactionsEvent.PreviousMonth -> previousMonth(event.screen)
             is TransactionsEvent.SetPeriod -> setPeriod(event.screen, event.period)
-            is TransactionsEvent.SkipTransaction -> skipTransaction(event.screen, event.transaction)
+            is TransactionsEvent.SkipTransaction -> skipTransaction(event.screen, event.transactionId)
             is TransactionsEvent.SkipTransactions -> skipTransactions(
                 event.screen,
-                event.transactions
+                event.transactionIds
             )
 
             is TransactionsEvent.UpdateAccountDeletionState -> updateAccountDeletionState(
@@ -617,8 +617,9 @@ class TransactionsViewModel @Inject constructor(
         }
     }
 
-    private fun payOrGet(screen: TransactionsScreen, transaction: LegacyTransaction) {
+    private fun payOrGet(screen: TransactionsScreen, transactionId: UUID) {
         viewModelScope.launch {
+            val transaction = findDueTransaction(transactionId) ?: return@launch
             if (payOrSkipLegacyPlannedTransactionUseCase(transaction) != null) {
                 start(
                     screen = screen,
@@ -628,8 +629,9 @@ class TransactionsViewModel @Inject constructor(
         }
     }
 
-    private fun skipTransaction(screen: TransactionsScreen, transaction: LegacyTransaction) {
+    private fun skipTransaction(screen: TransactionsScreen, transactionId: UUID) {
         viewModelScope.launch {
+            val transaction = findDueTransaction(transactionId) ?: return@launch
             val paidTransaction = payOrSkipLegacyPlannedTransactionUseCase(
                 transaction = transaction,
                 skipTransaction = true
@@ -643,8 +645,11 @@ class TransactionsViewModel @Inject constructor(
         }
     }
 
-    private fun skipTransactions(screen: TransactionsScreen, transactions: List<LegacyTransaction>) {
+    private fun skipTransactions(screen: TransactionsScreen, transactionIds: List<UUID>) {
         viewModelScope.launch {
+            val transactions = findDueTransactions(transactionIds)
+            if (transactions.isEmpty()) return@launch
+
             val paidTransactions = payOrSkipLegacyPlannedTransactionsUseCase(
                 transactions = transactions,
                 skipTransaction = true
@@ -656,6 +661,19 @@ class TransactionsViewModel @Inject constructor(
                 )
             }
         }
+    }
+
+    private fun findDueTransaction(transactionId: UUID): LegacyTransaction? {
+        return upcoming.value
+            .plus(overdue.value)
+            .firstOrNull { it.id == transactionId }
+    }
+
+    private fun findDueTransactions(transactionIds: List<UUID>): List<LegacyTransaction> {
+        val transactionIdSet = transactionIds.toSet()
+        return upcoming.value
+            .plus(overdue.value)
+            .filter { it.id in transactionIdSet }
     }
 
     private fun updateAccountDeletionState(confirmationText: String) {
