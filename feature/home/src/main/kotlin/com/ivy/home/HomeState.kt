@@ -5,9 +5,9 @@ import com.ivy.data.model.Category
 import com.ivy.data.model.IncomeExpensePair
 import com.ivy.data.model.Theme
 import com.ivy.data.model.TransactionHistoryItem
-import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.data.model.legacy.LegacyTransaction
 import com.ivy.home.customerjourney.CustomerJourneyCardModel
+import com.ivy.legacy.ui.transaction.TransactionListAccount
 import com.ivy.ui.period.TimePeriod
 import kotlinx.collections.immutable.ImmutableList
 import java.math.BigDecimal
@@ -39,7 +39,7 @@ internal data class HomeState(
 @Immutable
 internal data class HomeTransactionListData(
     val baseCurrency: String,
-    val accounts: ImmutableList<LegacyAccount>,
+    val accounts: ImmutableList<TransactionListAccount>,
     val categories: ImmutableList<Category>
 )
 

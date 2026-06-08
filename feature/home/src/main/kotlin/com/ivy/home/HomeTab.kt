@@ -33,7 +33,6 @@ import com.ivy.home.customerjourney.CustomerJourneyAction
 import com.ivy.home.customerjourney.CustomerJourneyCardModel
 import com.ivy.legacy.ui.transaction.LegacyDueSection
 import com.ivy.legacy.ui.transaction.TransactionListData
-import com.ivy.legacy.ui.transaction.toTransactionListAccount
 import com.ivy.ui.period.Month
 import com.ivy.ui.period.TimePeriod
 import com.ivy.ui.period.displayLong
@@ -67,7 +66,6 @@ import com.ivy.legacy.ui.modal.ChoosePeriodModalData
 import com.ivy.legacy.ui.modal.CurrencyModal
 import com.ivy.legacy.ui.modal.DeleteModal
 import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.toImmutableList
 import java.math.BigDecimal
 import java.util.UUID
 
@@ -497,7 +495,7 @@ internal fun HomeLazyColumn(
 private fun HomeTransactionListData.toTransactionListData(): TransactionListData {
     return TransactionListData(
         baseCurrency = baseCurrency,
-        accounts = accounts.map { it.toTransactionListAccount() }.toImmutableList(),
+        accounts = accounts,
         categories = categories
     )
 }

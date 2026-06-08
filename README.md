@@ -1375,6 +1375,7 @@ shared:ui:core
 - 借贷详情页账户状态也已收窄为 `LoanAccount`，并改从正式 `GetAccountsUseCase` 加载账户；详情页标题账户按钮、还款记录展示币种和弹窗账户选择继续使用原账户 ID/币种语义。
 - 删除 `feature:loans` 中最后一个旧账户到借贷轻量账户的死 mapper；借贷 feature 已不再直接导入 `LegacyAccount` 或 `GetLegacyAccountsUseCase`。
 - 旧交易列表公共入参中的账户已从完整 `LegacyAccount` 收窄为 `TransactionListAccount` 轻量模型；搜索页改从正式 `Account` 加载并映射，首页、交易页和报表页暂时在调用旧交易列表时做局部映射。
+- 首页交易列表状态中的账户也已收窄为 `TransactionListAccount`；旧账户列表只留在首页 ViewModel 内部用于现有钱包收入/支出计算，不再进入首页 UI 状态。
 - 旧弹窗状态包已整体从 `shared:ui:core` 迁回 `shared:ui:legacy`；账户、分类、缓冲金额、周期、借贷、借贷记录和重复规则弹窗继续用同名数据对象传参，但 UI core 不再暴露旧 modal data API。
 - 交易页和饼图页的周期选择弹窗状态已从 ViewModel/State/Event 移回 Screen 本地状态；ViewModel 只处理周期切换和数据加载，不再为了打开旧弹窗依赖 legacy modal data。
 - 分类页和计划付款编辑页的新增/选择类旧弹窗状态也已移回 Screen 本地状态；ViewModel 继续处理创建账户、创建/编辑分类和重复规则保存，不再承担纯 UI 弹窗开关数据。
