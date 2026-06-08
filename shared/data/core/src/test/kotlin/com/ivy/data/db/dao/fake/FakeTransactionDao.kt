@@ -9,7 +9,7 @@ import java.time.Instant
 import java.util.UUID
 
 @VisibleForTesting
-class FakeTransactionDao : TransactionDao, WriteTransactionDao {
+internal class FakeTransactionDao : TransactionDao, WriteTransactionDao {
     private val items = mutableListOf<TransactionEntity>()
 
     override suspend fun findAll(): List<TransactionEntity> {

@@ -6,7 +6,7 @@ import androidx.room.Upsert
 import com.ivy.data.db.entity.ExchangeRateEntity
 
 @Dao
-interface WriteExchangeRatesDao {
+internal interface WriteExchangeRatesDao {
     @Upsert
     suspend fun save(value: ExchangeRateEntity)
 

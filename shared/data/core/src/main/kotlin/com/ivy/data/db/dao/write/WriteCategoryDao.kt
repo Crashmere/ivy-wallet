@@ -7,7 +7,7 @@ import com.ivy.data.db.entity.CategoryEntity
 import java.util.UUID
 
 @Dao
-interface WriteCategoryDao {
+internal interface WriteCategoryDao {
     @Upsert
     suspend fun save(value: CategoryEntity)
 

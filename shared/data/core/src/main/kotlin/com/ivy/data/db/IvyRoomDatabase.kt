@@ -83,7 +83,7 @@ import com.ivy.data.db.migration.Migration125to126_Tags
     exportSchema = true
 )
 @TypeConverters(RoomTypeConverters::class)
-abstract class IvyRoomDatabase : RoomDatabase() {
+internal abstract class IvyRoomDatabase : RoomDatabase() {
     abstract val accountDao: AccountDao
     abstract val transactionDao: TransactionDao
     abstract val categoryDao: CategoryDao

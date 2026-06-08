@@ -8,7 +8,7 @@ import com.ivy.data.db.entity.TagAssociationEntity
 import java.util.*
 
 @Dao
-interface WriteTagAssociationDao {
+internal interface WriteTagAssociationDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun save(value: TagAssociationEntity)
 

@@ -7,7 +7,7 @@ import org.jetbrains.annotations.VisibleForTesting
 import java.util.UUID
 
 @VisibleForTesting
-class FakeTagAssociationDao : TagAssociationDao, WriteTagAssociationDao {
+internal class FakeTagAssociationDao : TagAssociationDao, WriteTagAssociationDao {
     private val items = mutableListOf<TagAssociationEntity>()
     override suspend fun findAll(): List<TagAssociationEntity> {
         return items

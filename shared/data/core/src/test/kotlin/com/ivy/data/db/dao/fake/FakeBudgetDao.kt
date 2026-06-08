@@ -7,7 +7,7 @@ import org.jetbrains.annotations.VisibleForTesting
 import java.util.UUID
 
 @VisibleForTesting
-class FakeBudgetDao : BudgetDao, WriteBudgetDao {
+internal class FakeBudgetDao : BudgetDao, WriteBudgetDao {
     private val items = mutableListOf<BudgetEntity>()
 
     override suspend fun findAll(): List<BudgetEntity> {

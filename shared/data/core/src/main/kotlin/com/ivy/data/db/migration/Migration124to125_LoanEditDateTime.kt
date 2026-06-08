@@ -3,7 +3,7 @@ package com.ivy.data.db.migration
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 
-class Migration124to125_LoanEditDateTime : Migration(124, 125) {
+internal class Migration124to125_LoanEditDateTime : Migration(124, 125) {
     companion object {
         private const val LOANS_TABLE = "loans"
         private const val LOANS_TEMP_TABLE = "loans_temp"

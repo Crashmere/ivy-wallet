@@ -7,7 +7,7 @@ import com.ivy.data.db.entity.BudgetEntity
 import java.util.UUID
 
 @Dao
-interface WriteBudgetDao {
+internal interface WriteBudgetDao {
     @Upsert
     suspend fun save(value: BudgetEntity)
 

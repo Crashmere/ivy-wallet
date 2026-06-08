@@ -23,8 +23,8 @@ import org.junit.Test
 import java.util.UUID
 
 class RoomAccountStoreTest {
-    val accountDao = mockk<AccountDao>()
-    val writeAccountDao = mockk<WriteAccountDao>()
+    private val accountDao = mockk<AccountDao>()
+    private val writeAccountDao = mockk<WriteAccountDao>()
     private lateinit var repository: RoomAccountStore
 
     @Before

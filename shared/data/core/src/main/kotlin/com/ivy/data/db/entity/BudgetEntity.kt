@@ -12,7 +12,7 @@ import java.util.*
 @Keep
 @Serializable
 @Entity(tableName = "budgets")
-data class BudgetEntity(
+internal data class BudgetEntity(
     @SerialName("name")
     val name: String,
     @SerialName("amount")

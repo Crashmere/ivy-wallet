@@ -3,7 +3,7 @@ package com.ivy.data.db.migration
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 
-class Migration119to120_LoanTransactions : Migration(119, 120) {
+internal class Migration119to120_LoanTransactions : Migration(119, 120) {
     override fun migrate(database: SupportSQLiteDatabase) {
         database.execSQL("ALTER TABLE transactions ADD COLUMN loanId TEXT")
         database.execSQL("ALTER TABLE transactions ADD COLUMN loanRecordId TEXT")

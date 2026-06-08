@@ -15,7 +15,7 @@ import java.util.*
 @Keep
 @Serializable
 @Entity(tableName = "loans")
-data class LoanEntity(
+internal data class LoanEntity(
     @SerialName("name")
     val name: String,
     @SerialName("amount")

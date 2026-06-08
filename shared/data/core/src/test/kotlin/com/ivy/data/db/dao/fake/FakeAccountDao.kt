@@ -7,7 +7,7 @@ import org.jetbrains.annotations.VisibleForTesting
 import java.util.UUID
 
 @VisibleForTesting
-class FakeAccountDao : AccountDao, WriteAccountDao {
+internal class FakeAccountDao : AccountDao, WriteAccountDao {
     private val accounts = mutableMapOf<UUID, AccountEntity>()
 
     override suspend fun findAll(deleted: Boolean): List<AccountEntity> {

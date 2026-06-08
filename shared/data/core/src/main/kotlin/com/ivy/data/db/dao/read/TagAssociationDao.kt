@@ -7,7 +7,7 @@ import com.ivy.data.db.entity.TagAssociationEntity
 import java.util.UUID
 
 @Dao
-interface TagAssociationDao {
+internal interface TagAssociationDao {
     @Query("SELECT * FROM tags_association")
     suspend fun findAll(): List<TagAssociationEntity>
 

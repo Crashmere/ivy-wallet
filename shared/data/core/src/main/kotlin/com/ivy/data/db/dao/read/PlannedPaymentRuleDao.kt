@@ -6,7 +6,7 @@ import com.ivy.data.db.entity.PlannedPaymentRuleEntity
 import java.util.*
 
 @Dao
-interface PlannedPaymentRuleDao {
+internal interface PlannedPaymentRuleDao {
     @Query("SELECT * FROM planned_payment_rules WHERE isDeleted = 0 ORDER BY amount DESC, startDate ASC")
     suspend fun findAll(): List<PlannedPaymentRuleEntity>
 

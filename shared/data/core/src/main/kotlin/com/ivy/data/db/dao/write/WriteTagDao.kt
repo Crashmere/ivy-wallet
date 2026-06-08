@@ -9,7 +9,7 @@ import com.ivy.data.db.entity.TagEntity
 import java.util.UUID
 
 @Dao
-interface WriteTagDao {
+internal interface WriteTagDao {
     @Upsert
     suspend fun save(value: TagEntity)
 

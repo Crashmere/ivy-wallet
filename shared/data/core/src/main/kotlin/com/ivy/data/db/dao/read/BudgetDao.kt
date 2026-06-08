@@ -6,7 +6,7 @@ import com.ivy.data.db.entity.BudgetEntity
 import java.util.*
 
 @Dao
-interface BudgetDao {
+internal interface BudgetDao {
     @Query("SELECT * FROM budgets WHERE isDeleted = 0 ORDER BY orderId ASC")
     suspend fun findAll(): List<BudgetEntity>
 

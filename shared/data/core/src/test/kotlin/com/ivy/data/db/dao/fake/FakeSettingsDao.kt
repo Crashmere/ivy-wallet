@@ -7,7 +7,7 @@ import org.jetbrains.annotations.VisibleForTesting
 import java.util.UUID
 
 @VisibleForTesting
-class FakeSettingsDao : SettingsDao, WriteSettingsDao {
+internal class FakeSettingsDao : SettingsDao, WriteSettingsDao {
     private val items = mutableListOf<SettingsEntity>()
 
     override suspend fun findFirst(): SettingsEntity {

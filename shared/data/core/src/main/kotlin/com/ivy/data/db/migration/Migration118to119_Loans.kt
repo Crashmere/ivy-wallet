@@ -3,7 +3,7 @@ package com.ivy.data.db.migration
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 
-class Migration118to119_Loans : Migration(118, 119) {
+internal class Migration118to119_Loans : Migration(118, 119) {
     companion object {
         private const val LOANS_TABLE = "loans"
         private const val LOAN_RECORDS_TABLE = "loan_records"

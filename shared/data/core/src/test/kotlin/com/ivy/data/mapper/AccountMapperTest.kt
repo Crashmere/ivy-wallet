@@ -148,7 +148,7 @@ class AccountMapperTest {
     // endregion
 
     companion object {
-        val ValidEntity = AccountEntity(
+        private val ValidEntity = AccountEntity(
             name = "Test",
             currency = "USD",
             color = 42,

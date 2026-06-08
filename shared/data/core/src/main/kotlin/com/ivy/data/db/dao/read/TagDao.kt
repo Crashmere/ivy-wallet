@@ -8,7 +8,7 @@ import com.ivy.data.db.entity.TagEntity
 import java.util.*
 
 @Dao
-interface TagDao {
+internal interface TagDao {
     @Query("SELECT * FROM tags ORDER BY orderNum ASC")
     suspend fun findAll(): List<TagEntity>
 

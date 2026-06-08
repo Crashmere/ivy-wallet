@@ -19,17 +19,17 @@ import io.kotest.property.arbitrary.string
 import io.kotest.property.arbitrary.uuid
 import java.util.UUID
 
-fun Arb.Companion.invalidTransactionEntity(): Arb<TransactionEntity> = Arb.or(
+internal fun Arb.Companion.invalidTransactionEntity(): Arb<TransactionEntity> = Arb.or(
     a = Arb.invalidIncomeOrExpense(),
     b = Arb.invalidTransfer()
 )
 
-fun Arb.Companion.validTransactionEntity(): Arb<TransactionEntity> = Arb.or(
+internal fun Arb.Companion.validTransactionEntity(): Arb<TransactionEntity> = Arb.or(
     a = Arb.validIncomeOrExpense(),
     b = Arb.validTransfer()
 )
 
-fun Arb.Companion.invalidTransfer(): Arb<TransactionEntity> = arbitrary {
+internal fun Arb.Companion.invalidTransfer(): Arb<TransactionEntity> = arbitrary {
     var entity = validTransfer().bind()
     val invalidReasons = InvalidTransferReason.entries.shuffled().take(
         Arb.int(1 until InvalidTransferReason.entries.size).bind()
@@ -52,7 +52,7 @@ fun Arb.Companion.invalidTransfer(): Arb<TransactionEntity> = arbitrary {
     entity
 }
 
-fun Arb.Companion.validTransfer(): Arb<TransactionEntity> = arbitrary {
+internal fun Arb.Companion.validTransfer(): Arb<TransactionEntity> = arbitrary {
     val isPlannedPayment = Arb.boolean().bind()
 
     val account = Arb.accountId().bind().value
@@ -87,7 +87,7 @@ fun Arb.Companion.validTransfer(): Arb<TransactionEntity> = arbitrary {
     )
 }
 
-fun Arb.Companion.invalidIncomeOrExpense(): Arb<TransactionEntity> = arbitrary {
+internal fun Arb.Companion.invalidIncomeOrExpense(): Arb<TransactionEntity> = arbitrary {
     var entity = validIncomeOrExpense().bind()
     val invalidReasons = InvalidIncomeOrExpenseReason.entries.shuffled().take(
         Arb.int(1 until InvalidIncomeOrExpenseReason.entries.size).bind()
@@ -113,7 +113,7 @@ fun Arb.Companion.invalidIncomeOrExpense(): Arb<TransactionEntity> = arbitrary {
     entity
 }
 
-fun Arb.Companion.validIncomeOrExpense(): Arb<TransactionEntity> = arbitrary {
+internal fun Arb.Companion.validIncomeOrExpense(): Arb<TransactionEntity> = arbitrary {
     val isPlannedPayment = Arb.boolean().bind()
 
     TransactionEntity(
@@ -143,13 +143,13 @@ fun Arb.Companion.validIncomeOrExpense(): Arb<TransactionEntity> = arbitrary {
     )
 }
 
-enum class InvalidIncomeOrExpenseReason {
+internal enum class InvalidIncomeOrExpenseReason {
     MissingTime,
     NonPositiveAmount,
     InfiniteAmount,
 }
 
-enum class InvalidTransferReason {
+internal enum class InvalidTransferReason {
     MissingToAccount,
     SameAccountAndToAccount,
 }

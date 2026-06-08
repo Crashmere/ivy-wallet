@@ -7,7 +7,7 @@ import com.ivy.data.db.entity.TransactionEntity
 import java.util.UUID
 
 @Dao
-interface WriteTransactionDao {
+internal interface WriteTransactionDao {
     @Upsert
     suspend fun save(value: TransactionEntity)
 

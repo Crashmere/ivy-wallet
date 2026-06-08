@@ -110,7 +110,7 @@ class CategoryMapperTest {
     companion object {
         val CategoryId = CategoryId(UUID.randomUUID())
 
-        val ValidEntity = CategoryEntity(
+        private val ValidEntity = CategoryEntity(
             name = "Home",
             color = 42,
             icon = null,

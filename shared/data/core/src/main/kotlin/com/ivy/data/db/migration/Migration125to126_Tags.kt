@@ -6,7 +6,7 @@ import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 
 @Suppress("MagicNumber", "ClassNaming")
-class Migration125to126_Tags : Migration(125, 126) {
+internal class Migration125to126_Tags : Migration(125, 126) {
     companion object {
         private const val TAGS_TABLE = "tags"
         private const val TAGS_ASSOCIATION_TABLE = "tags_association"

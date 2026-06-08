@@ -6,7 +6,7 @@ import com.ivy.data.db.entity.LoanEntity
 import java.util.*
 
 @Dao
-interface LoanDao {
+internal interface LoanDao {
     @Query("SELECT * FROM loans WHERE isDeleted = 0 ORDER BY orderNum ASC")
     suspend fun findAll(): List<LoanEntity>
 

@@ -14,14 +14,14 @@ import io.kotest.property.arbitrary.removeEdgecases
 import io.kotest.property.arbitrary.string
 import io.kotest.property.arbitrary.uuid
 
-fun Arb.Companion.invalidAccountEntity(): Arb<AccountEntity> = arbitrary {
+internal fun Arb.Companion.invalidAccountEntity(): Arb<AccountEntity> = arbitrary {
     val validEntity = validAccountEntity().bind()
     validEntity.copy(
         name = Arb.of("", " ", "  ").bind()
     )
 }
 
-fun Arb.Companion.validAccountEntity(): Arb<AccountEntity> = arbitrary {
+internal fun Arb.Companion.validAccountEntity(): Arb<AccountEntity> = arbitrary {
     AccountEntity(
         name = Arb.notBlankTrimmedString().bind().value,
         currency = Arb.maybe(Arb.string()).bind(),

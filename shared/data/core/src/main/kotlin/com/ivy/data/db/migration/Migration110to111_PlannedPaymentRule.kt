@@ -3,7 +3,7 @@ package com.ivy.data.db.migration
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 
-class Migration110to111_PlannedPaymentRule : Migration(110, 111) {
+internal class Migration110to111_PlannedPaymentRule : Migration(110, 111) {
     override fun migrate(database: SupportSQLiteDatabase) {
         database.execSQL("DROP TABLE transaction_recurring_rules")
 

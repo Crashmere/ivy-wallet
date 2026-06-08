@@ -7,7 +7,7 @@ import com.ivy.data.db.entity.SettingsEntity
 import java.util.UUID
 
 @Dao
-interface WriteSettingsDao {
+internal interface WriteSettingsDao {
     @Upsert
     suspend fun save(value: SettingsEntity)
 

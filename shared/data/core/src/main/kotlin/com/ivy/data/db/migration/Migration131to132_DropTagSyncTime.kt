@@ -3,7 +3,7 @@ package com.ivy.data.db.migration
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 
-class Migration131to132_DropTagSyncTime : Migration(131, 132) {
+internal class Migration131to132_DropTagSyncTime : Migration(131, 132) {
     override fun migrate(db: SupportSQLiteDatabase) {
         db.execSQL(
             """

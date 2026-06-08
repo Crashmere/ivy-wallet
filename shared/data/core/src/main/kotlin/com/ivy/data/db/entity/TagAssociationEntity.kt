@@ -10,7 +10,7 @@ import java.util.UUID
 @Keep
 @Serializable
 @Entity(tableName = "tags_association", primaryKeys = ["tagId", "associatedId"])
-data class TagAssociationEntity(
+internal data class TagAssociationEntity(
     @SerialName("tagId")
     @Serializable(with = KSerializerUUID::class)
     val tagId: UUID,

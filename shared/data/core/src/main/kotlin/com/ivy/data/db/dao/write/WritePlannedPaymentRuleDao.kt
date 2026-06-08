@@ -7,7 +7,7 @@ import com.ivy.data.db.entity.PlannedPaymentRuleEntity
 import java.util.UUID
 
 @Dao
-interface WritePlannedPaymentRuleDao {
+internal interface WritePlannedPaymentRuleDao {
     @Upsert
     suspend fun save(value: PlannedPaymentRuleEntity)
 

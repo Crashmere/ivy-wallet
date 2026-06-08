@@ -15,7 +15,7 @@ import java.util.UUID
 @Keep
 @Serializable
 @Entity(tableName = "transactions")
-data class TransactionEntity(
+internal data class TransactionEntity(
     @SerialName("accountId")
     @Serializable(with = KSerializerUUID::class)
     val accountId: UUID,

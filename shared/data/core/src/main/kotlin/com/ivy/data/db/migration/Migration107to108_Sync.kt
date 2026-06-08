@@ -3,7 +3,7 @@ package com.ivy.data.db.migration
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 
-class Migration107to108_Sync : Migration(107, 108) {
+internal class Migration107to108_Sync : Migration(107, 108) {
     override fun migrate(database: SupportSQLiteDatabase) {
         database.addSyncColumns("accounts")
         database.addSyncColumns("categories")

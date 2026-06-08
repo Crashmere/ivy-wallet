@@ -6,7 +6,7 @@ import com.ivy.data.db.entity.CategoryEntity
 import java.util.*
 
 @Dao
-interface CategoryDao {
+internal interface CategoryDao {
     @Query("SELECT * FROM categories WHERE isDeleted = :deleted ORDER BY orderNum ASC")
     suspend fun findAll(deleted: Boolean = false): List<CategoryEntity>
 

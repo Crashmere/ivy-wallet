@@ -14,7 +14,7 @@ import java.util.*
 @Serializable
 @Entity(tableName = "settings")
 // Legacy table still used for theme, base currency, buffer amount, and backup compatibility.
-data class SettingsEntity(
+internal data class SettingsEntity(
     @SerialName("theme")
     val theme: Theme,
     @SerialName("currency")

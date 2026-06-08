@@ -13,7 +13,7 @@ import java.util.UUID
 @Keep
 @Serializable
 @Entity(tableName = "tags")
-data class TagEntity(
+internal data class TagEntity(
     @PrimaryKey
     @SerialName("id")
     @Serializable(with = KSerializerUUID::class)

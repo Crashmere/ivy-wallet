@@ -6,7 +6,7 @@ import com.ivy.data.db.entity.AccountEntity
 import java.util.*
 
 @Dao
-interface AccountDao {
+internal interface AccountDao {
     @Query("SELECT * FROM accounts WHERE isDeleted = :deleted ORDER BY orderNum ASC")
     suspend fun findAll(deleted: Boolean = false): List<AccountEntity>
 

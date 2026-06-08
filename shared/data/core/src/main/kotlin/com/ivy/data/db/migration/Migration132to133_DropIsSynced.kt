@@ -3,7 +3,7 @@ package com.ivy.data.db.migration
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 
-class Migration132to133_DropIsSynced : Migration(132, 133) {
+internal class Migration132to133_DropIsSynced : Migration(132, 133) {
     override fun migrate(db: SupportSQLiteDatabase) {
         db.dropIsSyncedColumn(
             tableName = "accounts",

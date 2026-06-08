@@ -7,7 +7,7 @@ import com.ivy.data.db.entity.LoanRecordEntity
 import java.util.UUID
 
 @Dao
-interface WriteLoanRecordDao {
+internal interface WriteLoanRecordDao {
     @Upsert
     suspend fun save(value: LoanRecordEntity)
 

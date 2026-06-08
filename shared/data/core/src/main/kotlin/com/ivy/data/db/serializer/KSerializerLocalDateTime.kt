@@ -12,7 +12,7 @@ import java.time.LocalDateTime
 
 // Kept for legacy Room entities and backup JSON that still encode LocalDateTime as UTC epoch millis.
 @Keep
-object KSerializerLocalDateTime : KSerializer<LocalDateTime> {
+internal object KSerializerLocalDateTime : KSerializer<LocalDateTime> {
     override val descriptor = PrimitiveSerialDescriptor(
         "LocalDateTime",
         PrimitiveKind.LONG

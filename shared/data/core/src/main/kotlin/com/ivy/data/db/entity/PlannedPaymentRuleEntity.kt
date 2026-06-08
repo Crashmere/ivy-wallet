@@ -16,7 +16,7 @@ import java.util.UUID
 @Keep
 @Serializable
 @Entity(tableName = "planned_payment_rules")
-data class PlannedPaymentRuleEntity(
+internal data class PlannedPaymentRuleEntity(
     @SerialName("startDate")
     @Serializable(with = KSerializerInstant::class)
     val startDate: Instant?,

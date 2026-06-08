@@ -689,7 +689,7 @@ class TransactionMapperTest {
         val TransactionId = TransactionId(UUID.randomUUID())
         val InstantNow = Instant.now()
 
-        val ValidIncome = TransactionEntity(
+        private val ValidIncome = TransactionEntity(
             accountId = AccountId.value,
             type = TransactionType.INCOME,
             amount = 100.0,
@@ -709,7 +709,7 @@ class TransactionMapperTest {
             id = TransactionId.value
         )
 
-        val ValidExpense = TransactionEntity(
+        private val ValidExpense = TransactionEntity(
             accountId = AccountId.value,
             type = TransactionType.EXPENSE,
             amount = 100.0,
@@ -729,7 +729,7 @@ class TransactionMapperTest {
             id = TransactionId.value
         )
 
-        val ValidTransfer = TransactionEntity(
+        private val ValidTransfer = TransactionEntity(
             accountId = AccountId.value,
             type = TransactionType.TRANSFER,
             amount = 100.0,

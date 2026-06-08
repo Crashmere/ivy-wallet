@@ -3,7 +3,7 @@ package com.ivy.data.db.migration
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 
-class Migration133to134_DropSettingsLegacyFields : Migration(133, 134) {
+internal class Migration133to134_DropSettingsLegacyFields : Migration(133, 134) {
     override fun migrate(db: SupportSQLiteDatabase) {
         db.execSQL(
             """

@@ -7,7 +7,7 @@ import org.jetbrains.annotations.VisibleForTesting
 import java.util.UUID
 
 @VisibleForTesting
-class FakeCategoryDao : CategoryDao, WriteCategoryDao {
+internal class FakeCategoryDao : CategoryDao, WriteCategoryDao {
     private val items = mutableListOf<CategoryEntity>()
 
     override suspend fun findAll(deleted: Boolean): List<CategoryEntity> {

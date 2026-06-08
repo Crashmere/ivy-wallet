@@ -510,4 +510,4 @@ class RoomTransactionStoreTest {
     }
 }
 
-typealias TransactionMappingRow = Pair<TransactionEntity, Either<String, Transaction>>
+internal typealias TransactionMappingRow = Pair<TransactionEntity, Either<String, Transaction>>

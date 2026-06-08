@@ -3,7 +3,7 @@ package com.ivy.data.db.migration
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 
-class Migration117to118_Budgets : Migration(117, 118) {
+internal class Migration117to118_Budgets : Migration(117, 118) {
     override fun migrate(database: SupportSQLiteDatabase) {
         val tableName = "budgets"
         database.execSQL(

@@ -6,7 +6,7 @@ import com.ivy.data.db.entity.ExchangeRateEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface ExchangeRatesDao {
+internal interface ExchangeRatesDao {
     @Query("SELECT * FROM exchange_rates")
     fun findAll(): Flow<List<ExchangeRateEntity>>
 

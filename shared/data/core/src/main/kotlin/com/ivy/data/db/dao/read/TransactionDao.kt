@@ -8,7 +8,7 @@ import java.time.Instant
 import java.util.UUID
 
 @Dao
-interface TransactionDao {
+internal interface TransactionDao {
     @Query("SELECT * FROM transactions WHERE isDeleted = 0 ORDER BY dateTime DESC, dueDate ASC")
     suspend fun findAll(): List<TransactionEntity>
 

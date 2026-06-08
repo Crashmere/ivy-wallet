@@ -8,7 +8,7 @@ import kotlinx.serialization.Serializable
 @Keep
 @Serializable
 @Entity(tableName = "exchange_rates", primaryKeys = ["baseCurrency", "currency"])
-data class ExchangeRateEntity(
+internal data class ExchangeRateEntity(
     @SerialName("baseCurrency")
     val baseCurrency: String,
     @SerialName("currency")

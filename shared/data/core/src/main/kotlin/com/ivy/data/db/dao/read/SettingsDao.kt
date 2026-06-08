@@ -6,7 +6,7 @@ import com.ivy.data.db.entity.SettingsEntity
 import java.util.*
 
 @Dao
-interface SettingsDao {
+internal interface SettingsDao {
     @Query("SELECT * FROM settings LIMIT 1")
     suspend fun findFirst(): SettingsEntity
 

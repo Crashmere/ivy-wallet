@@ -7,7 +7,7 @@ import org.jetbrains.annotations.VisibleForTesting
 import java.util.UUID
 
 @VisibleForTesting
-class FakeLoanDao : LoanDao, WriteLoanDao {
+internal class FakeLoanDao : LoanDao, WriteLoanDao {
     private val items = mutableListOf<LoanEntity>()
 
     override suspend fun findAll(): List<LoanEntity> {

@@ -11,7 +11,7 @@ import java.time.LocalDateTime
 import java.util.*
 
 @SuppressWarnings("unused")
-class RoomTypeConverters {
+internal class RoomTypeConverters {
     @TypeConverter
     fun saveDate(localDateTime: LocalDateTime?): Long? = localDateTime?.toUtcEpochMilli()
 
