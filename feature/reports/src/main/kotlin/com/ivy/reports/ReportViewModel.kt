@@ -127,7 +127,8 @@ internal class ReportViewModel @Inject internal constructor(
             expenses = 0.0,
         )
     )
-    private var accounts by mutableStateOf<ImmutableList<LegacyAccount>>(persistentListOf())
+    private var legacyAccounts: ImmutableList<LegacyAccount> = persistentListOf()
+    private var accounts by mutableStateOf<ImmutableList<ReportAccount>>(persistentListOf())
     private var loading by mutableStateOf(false)
     private var accountIdFilters by mutableStateOf<ImmutableList<UUID>>(persistentListOf())
     private var transactionSummary by mutableStateOf(ReportTransactionSummary())
@@ -233,7 +234,8 @@ internal class ReportViewModel @Inject internal constructor(
     private fun start() {
         viewModelScope.launch(Dispatchers.IO) {
             baseCurrency = getBaseCurrencyCode()
-            accounts = getLegacyAccountsUseCase()
+            legacyAccounts = getLegacyAccountsUseCase()
+            accounts = legacyAccounts.map { it.toReportAccount() }.toImmutableList()
             categories =
                 (listOf(unspecifiedCategory) + getCategoriesUseCase()).toImmutableList()
             allTags = getTagsUseCase().toImmutableList()
@@ -367,7 +369,8 @@ internal class ReportViewModel @Inject internal constructor(
             income = values.overdueIncomeExpense.income.toDouble(),
             expenses = values.overdueIncomeExpense.expense.toDouble(),
         )
-        this.accounts = values.accounts
+        this.legacyAccounts = values.accounts
+        this.accounts = values.accounts.map { it.toReportAccount() }.toImmutableList()
         this.filter = values.reportFilter
         this.accountIdFilters = values.accountIdFilters
         this.transactionSummary = values.transactionSummary
@@ -537,7 +540,7 @@ internal class ReportViewModel @Inject internal constructor(
                     exportScope = {
                         filterTransactions(
                             baseCurrency = baseCurrency,
-                            accounts = accounts,
+                            accounts = legacyAccounts,
                             filter = filter
                         )
                     }

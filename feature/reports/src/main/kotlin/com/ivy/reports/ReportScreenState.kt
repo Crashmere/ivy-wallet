@@ -1,10 +1,9 @@
 package com.ivy.reports
 
 import androidx.compose.runtime.Immutable
-import com.ivy.data.model.TransactionHistoryItem
 import com.ivy.data.model.Category
 import com.ivy.data.model.Tag
-import com.ivy.data.model.legacy.LegacyAccount
+import com.ivy.data.model.TransactionHistoryItem
 import com.ivy.data.model.legacy.LegacyTransaction
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
@@ -30,7 +29,7 @@ internal data class ReportScreenState(
         expenses = 0.0,
     ),
     val categories: ImmutableList<Category> = persistentListOf(),
-    val accounts: ImmutableList<LegacyAccount> = persistentListOf(),
+    val accounts: ImmutableList<ReportAccount> = persistentListOf(),
     val filter: ReportFilter? = null,
     val loading: Boolean = false,
     val accountIdFilters: ImmutableList<UUID> = persistentListOf(),

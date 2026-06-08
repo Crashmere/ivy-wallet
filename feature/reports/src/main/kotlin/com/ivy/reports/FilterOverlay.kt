@@ -49,7 +49,6 @@ import com.ivy.data.model.Tag
 import com.ivy.data.model.TagId
 import com.ivy.ui.platform.LocalDatePicker
 import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.ui.period.displayLong
 import com.ivy.ui.period.LocalPeriodState
 import com.ivy.legacy.ui.tags.AddTagButton
@@ -85,7 +84,7 @@ internal fun BoxWithConstraintsScope.FilterOverlay(
     visible: Boolean,
 
     baseCurrency: String,
-    accounts: List<LegacyAccount>,
+    accounts: List<ReportAccount>,
     categories: List<Category>,
     allTags: ImmutableList<Tag>,
 
@@ -790,7 +789,7 @@ private fun ReportOutlinedButtonFillMaxWidth(
 @SuppressLint("ComposeContentEmitterReturningValues", "ComposeMultipleContentEmitters")
 @Composable
 private fun AccountsFilter(
-    allAccounts: List<LegacyAccount>,
+    allAccounts: List<ReportAccount>,
     filter: ReportFilter?,
     nonNullFilter: (ReportFilter?) -> ReportFilter,
     onSetFilter: (ReportFilter) -> Unit
