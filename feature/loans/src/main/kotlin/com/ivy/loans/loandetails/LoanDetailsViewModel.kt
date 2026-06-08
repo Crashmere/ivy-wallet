@@ -74,6 +74,11 @@ internal class LoanDetailsViewModel @Inject internal constructor(
     private val getLoanUseCase: GetLoanUseCase,
     private val dateTimePicker: DateTimePicker,
 ) : ComposeViewModel<LoanDetailsScreenState, LoanDetailsScreenEvent>() {
+    private data class LoanRecordTotals(
+        val amountPaid: Double,
+        val interestAmountPaid: Double,
+        val totalAmount: Double,
+    )
 
     private val baseCurrency = mutableStateOf("")
     private val loan = mutableStateOf<Loan?>(null)
@@ -290,46 +295,44 @@ internal class LoanDetailsViewModel @Inject internal constructor(
                     }.toImmutableList()
             }
 
-            withContext(Dispatchers.Default) {
-                // Using a local variable to calculate the amount and then reassigning to
-                // the State variable to reduce the amount of compose re-draws
-                var amtPaid = 0.0
-                var loanInterestAmtPaid = 0.0
-                displayLoanRecords.value.forEach {
-                    // We do not want to calculate records that increase loan.
-                    if (it.loanRecord.loanRecordType == LoanRecordType.INCREASE) {
-                        return@forEach
-                    }
-                    val convertedAmount = it.loanRecord.convertedAmount ?: it.loanRecord.amount
-                    if (!it.loanRecord.interest) {
-                        amtPaid += convertedAmount
-                    } else {
-                        loanInterestAmtPaid += convertedAmount
-                    }
-                }
-
-                amountPaid.doubleValue = amtPaid
-                loanInterestAmountPaid.doubleValue = loanInterestAmtPaid
+            val loanRecordTotals = withContext(Dispatchers.Default) {
+                calculateLoanRecordTotals(
+                    initialLoanAmount = loan.value?.amount ?: 0.0,
+                    records = displayLoanRecords.value
+                )
             }
-
-            withContext(Dispatchers.Default) {
-                // Calculate total amount of loan borrowed or lent.
-                // That is initial amount + each record that increased the loan.
-                val totalAmount =
-                    displayLoanRecords.value.fold(loan.value?.amount ?: 0.0) { value, record ->
-                        if (record.loanRecord.loanRecordType == LoanRecordType.INCREASE) {
-                            val convertedAmount =
-                                record.loanRecord.convertedAmount ?: record.loanRecord.amount
-                            value + convertedAmount
-                        } else {
-                            value
-                        }
-                    }
-                loanTotalAmount.doubleValue = totalAmount
-            }
+            amountPaid.doubleValue = loanRecordTotals.amountPaid
+            loanInterestAmountPaid.doubleValue = loanRecordTotals.interestAmountPaid
+            loanTotalAmount.doubleValue = loanRecordTotals.totalAmount
 
             createLoanTransaction.value = getLoanTransactionUseCase(loanId = loan.value!!.id) != null
 
+        }
+    }
+
+    private fun calculateLoanRecordTotals(
+        initialLoanAmount: Double,
+        records: List<DisplayLoanRecord>,
+    ): LoanRecordTotals {
+        return records.fold(
+            LoanRecordTotals(
+                amountPaid = 0.0,
+                interestAmountPaid = 0.0,
+                totalAmount = initialLoanAmount
+            )
+        ) { totals, displayLoanRecord ->
+            val loanRecord = displayLoanRecord.loanRecord
+            val convertedAmount = loanRecord.convertedAmount ?: loanRecord.amount
+            when {
+                loanRecord.loanRecordType == LoanRecordType.INCREASE ->
+                    totals.copy(totalAmount = totals.totalAmount + convertedAmount)
+
+                loanRecord.interest ->
+                    totals.copy(interestAmountPaid = totals.interestAmountPaid + convertedAmount)
+
+                else ->
+                    totals.copy(amountPaid = totals.amountPaid + convertedAmount)
+            }
         }
     }
 
