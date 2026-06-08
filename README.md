@@ -1105,6 +1105,7 @@
 - 借贷交易同步的 `LoanTransactionSyncCore` 收为 domain 内部实现；上层 `LoanTransactionSyncUseCase` 和 `LoanRecordTransactionSyncUseCase` 继续作为 feature 可注入入口，但构造函数不再暴露内部 core 类型。
 - 首页到期/逾期交易信息的底层 `CalculateDueTransactionsInfoUseCase` 收为 domain 内部实现；`GetUpcomingTransactionsInfoUseCase` 和 `GetOverdueTransactionsInfoUseCase` 仍作为 feature 入口保留，构造函数不再暴露内部计算器。
 - 账户余额调整的 `AdjustAccountBalanceUseCase` 收为 domain 内部协作实现；创建/更新账户用例继续作为 feature 可注入入口，但构造函数不再暴露内部调整器。
+- 到期交易基础查询 `GetDueTransactionsUseCase` 也收为 domain 内部实现；首页仍只通过 upcoming/overdue 两个面向 feature 的入口读取统计结果。
 
 ### 阶段 10：最终依赖方向
 
