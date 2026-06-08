@@ -20,6 +20,7 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -81,8 +82,17 @@ import com.ivy.legacy.ui.theme.toComposeColor
 @Composable
 fun BoxWithConstraintsScope.LoanDetailsScreen(screen: LoanDetailsScreen) {
     val viewModel: LoanDetailsViewModel = screenScopedViewModel()
+    val nav = navigation()
     viewModel.screen = screen
     val state = viewModel.uiState()
+
+    LaunchedEffect(viewModel) {
+        viewModel.uiEvents.collect { event ->
+            when (event) {
+                LoanDetailsUiEvent.CloseScreen -> nav.back()
+            }
+        }
+    }
 
     UI(
         state = state,

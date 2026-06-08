@@ -30,7 +30,6 @@ import com.ivy.loans.loandetails.events.LoanDetailsScreenEvent
 import com.ivy.loans.loandetails.events.LoanModalEvent
 import com.ivy.loans.loandetails.events.LoanRecordModalEvent
 import com.ivy.ui.navigation.LoanDetailsScreen
-import com.ivy.ui.navigation.Navigation
 import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.time.DateTimePicker
 import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
@@ -50,6 +49,9 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.time.Instant
@@ -72,7 +74,6 @@ class LoanDetailsViewModel @Inject constructor(
     private val createAccountWithBalanceUseCase: CreateAccountWithBalanceUseCase,
     private val loanTransactionSyncUseCase: LoanTransactionSyncUseCase,
     private val loanRecordTransactionSyncUseCase: LoanRecordTransactionSyncUseCase,
-    private val nav: Navigation,
     private val getLegacyAccountsUseCase: GetLegacyAccountsUseCase,
     private val getLoanUseCase: GetLoanUseCase,
     private val dateTimePicker: DateTimePicker,
@@ -95,6 +96,8 @@ class LoanDetailsViewModel @Inject constructor(
     private val waitModalVisible = mutableStateOf(false)
     private val isDeleteModalVisible = mutableStateOf(false)
     private var dateTime = mutableStateOf<Instant>(nowUtc())
+    private val _uiEvents = MutableSharedFlow<LoanDetailsUiEvent>()
+    val uiEvents: SharedFlow<LoanDetailsUiEvent> = _uiEvents.asSharedFlow()
     lateinit var screen: LoanDetailsScreen
 
     @Composable
@@ -380,8 +383,7 @@ class LoanDetailsViewModel @Inject constructor(
             loanTransactionSyncUseCase.deleteAssociatedLoanTransactions(loan.id)
 
             if (deleteLoanUseCase(loan)) {
-                // close screen
-                nav.back()
+                _uiEvents.emit(LoanDetailsUiEvent.CloseScreen)
             }
 
         }
