@@ -6,7 +6,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContract
 
-fun ComponentActivity.simpleActivityForResultLauncher(
+internal fun ComponentActivity.simpleActivityForResultLauncher(
     intent: Intent,
     onActivityResult: (resultCode: Int, data: Intent?) -> Unit
 ): ActivityResultLauncher<Unit> {
@@ -16,7 +16,7 @@ fun ComponentActivity.simpleActivityForResultLauncher(
     )
 }
 
-fun <I> ComponentActivity.activityForResultLauncher(
+internal fun <I> ComponentActivity.activityForResultLauncher(
     createIntent: (context: Context, input: I) -> Intent,
     onActivityResult: (resultCode: Int, data: Intent?) -> Unit
 ): ActivityResultLauncher<I> {

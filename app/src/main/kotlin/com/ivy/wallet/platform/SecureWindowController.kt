@@ -3,7 +3,7 @@ package com.ivy.wallet.platform
 import android.view.Window
 import android.view.WindowManager
 
-class SecureWindowController(
+internal class SecureWindowController(
     private val window: Window
 ) {
     fun updateForWindowFocus(

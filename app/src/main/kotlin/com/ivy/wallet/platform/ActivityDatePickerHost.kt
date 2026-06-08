@@ -6,7 +6,7 @@ import java.time.LocalDate
 
 private const val MILLISECONDS_IN_DAY = 24 * 60 * 60 * 1000
 
-fun ActivityDatePicker.registerMaterialDatePicker(fragmentManager: FragmentManager) {
+internal fun ActivityDatePicker.registerMaterialDatePicker(fragmentManager: FragmentManager) {
     registerPicker { minDate,
                      maxDate,
                      initialDate,

@@ -6,7 +6,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import com.ivy.ui.R
 
-class BiometricAuthenticator(
+internal class BiometricAuthenticator(
     private val activity: FragmentActivity
 ) {
     fun authenticate(

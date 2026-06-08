@@ -5,7 +5,7 @@ import android.net.Uri
 import androidx.activity.ComponentActivity
 import com.ivy.ui.platform.FileSharer
 
-class ActivityFileSharer(
+internal class ActivityFileSharer(
     private val activity: ComponentActivity
 ) : FileSharer {
     override fun shareCSVFile(fileUri: Uri) {

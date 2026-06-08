@@ -10,13 +10,13 @@ class ActivityResultFilePicker @Inject constructor() : FilePicker {
     private var createFileLauncher: ((String, (Uri) -> Unit) -> Unit)? = null
     private var openFileLauncher: (((Uri) -> Unit) -> Unit)? = null
 
-    fun registerCreateFileLauncher(
+    internal fun registerCreateFileLauncher(
         launcher: (String, (Uri) -> Unit) -> Unit
     ) {
         createFileLauncher = launcher
     }
 
-    fun registerOpenFileLauncher(
+    internal fun registerOpenFileLauncher(
         launcher: ((Uri) -> Unit) -> Unit
     ) {
         openFileLauncher = launcher

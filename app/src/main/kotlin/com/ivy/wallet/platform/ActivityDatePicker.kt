@@ -14,7 +14,7 @@ class ActivityDatePicker @Inject constructor() : DatePicker {
         onDatePicked: (LocalDate) -> Unit
     ) -> Unit)? = null
 
-    fun registerPicker(
+    internal fun registerPicker(
         picker: (
             minDate: LocalDate?,
             maxDate: LocalDate?,

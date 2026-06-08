@@ -7,7 +7,7 @@ import android.provider.DocumentsContract
 import androidx.activity.ComponentActivity
 import androidx.activity.result.ActivityResultLauncher
 
-fun ActivityResultFilePicker.registerActivityResultLaunchers(activity: ComponentActivity) {
+internal fun ActivityResultFilePicker.registerActivityResultLaunchers(activity: ComponentActivity) {
     var onFileCreated: (fileUri: Uri) -> Unit = {}
     val createFileLauncher: ActivityResultLauncher<String> = activity.activityForResultLauncher(
         createIntent = { _, fileName ->

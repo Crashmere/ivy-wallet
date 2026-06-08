@@ -3,7 +3,7 @@ package com.ivy.wallet.platform
 import com.ivy.ui.platform.BuildInfoProvider
 import com.ivy.wallet.BuildConfig
 
-object AppBuildInfoProvider : BuildInfoProvider {
+internal object AppBuildInfoProvider : BuildInfoProvider {
     override val isDebug: Boolean
         get() = BuildConfig.DEBUG
 
