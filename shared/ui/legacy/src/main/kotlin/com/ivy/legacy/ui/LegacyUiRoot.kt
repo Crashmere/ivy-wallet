@@ -8,7 +8,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
-import com.ivy.legacy.ui.theme.system.IvyTheme
+import com.ivy.legacy.ui.theme.system.LegacyThemeProvider
 import com.ivy.ui.platform.DatePicker
 import com.ivy.ui.platform.LocalDatePicker
 import com.ivy.ui.theme.LocalThemeState
@@ -38,7 +38,7 @@ fun LegacyUiRoot(
         LocalTimeFormatter provides timeFormatter,
         LocalDatePicker provides datePicker,
     ) {
-        IvyTheme(
+        LegacyThemeProvider(
             theme = themeState.theme
         ) {
             WrapWithSurface(includeSurface = includeSurface) {

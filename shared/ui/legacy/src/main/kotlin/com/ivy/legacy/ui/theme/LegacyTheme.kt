@@ -7,23 +7,23 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
-import com.ivy.legacy.ui.theme.system.LegacyTheme as SystemLegacyTheme
+import com.ivy.legacy.ui.theme.system.LegacyThemeValues
 
 object LegacyTheme {
     val colors: LegacyColors
         @Composable
         @ReadOnlyComposable
-        get() = SystemLegacyTheme.colors
+        get() = LegacyThemeValues.colors
 
     val typo: LegacyTypography
         @Composable
         @ReadOnlyComposable
-        get() = SystemLegacyTheme.typo
+        get() = LegacyThemeValues.typo
 
     val shapes: LegacyShapes
         @Composable
         @ReadOnlyComposable
-        get() = SystemLegacyTheme.shapes
+        get() = LegacyThemeValues.shapes
 }
 
 interface LegacyColors {

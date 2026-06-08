@@ -601,7 +601,7 @@
 1. 颜色与主题
    - `Colors.kt`
    - `IvyColors.kt`
-   - `IvyTheme.kt`
+   - `LegacyThemeProvider.kt`
    - `LegacyThemeDefaults.kt`（已由旧多实现设计抽象收敛为内部默认配置）
    - 目标：迁入 `shared:ui:core`，逐步合并到 Material3 theme。
 2. 颜色选择器常量
@@ -798,7 +798,7 @@
 - 已删除无外部调用的旧金额展示变体 `AmountCurrencyH1/H2Row/Caption`、大号 `ItemIconL` 包装和 `IvyOutlinedTextField`；当前页面仍使用的金额展示、图标和输入组件保留。
 - 已把旧设计兼容层从 `com.ivy.design.*` 迁到 `com.ivy.legacy.design.*`，包括旧 `LegacyTheme`、颜色常量、Compose helper 和 Material3 theme 包装；功能和视觉保持不变。
 - 已把旧设计包里的通用 Compose helper 迁到 `com.ivy.ui.compose`，并把键盘隐藏 helper 迁到 `com.ivy.ui.platform`；这些工具不再带旧设计系统的过时标记。
-- 已把当前仍在使用的主题状态 `ThemeState/LocalThemeState` 和 Material3 theme 包装迁到 `com.ivy.ui.theme`；旧 `LegacyTheme/IvyTheme` 继续作为兼容层调用它。
+- 已把当前仍在使用的主题状态 `ThemeState/LocalThemeState` 和 Material3 theme 包装迁到 `com.ivy.ui.theme`；旧 `LegacyTheme/LegacyThemeProvider` 继续作为兼容层调用它。
 - 已把 `LocalDatePicker` 迁到 `com.ivy.ui.platform`，把 `LocalTimeConverter/LocalTimeProvider/LocalTimeFormatter` 迁到 `com.ivy.ui.time`；根部 UI 包装器只负责提供这些平台和时间 Local，不再定义它们。
 - 已把旧 `IvyUI` 根包装器迁到 `com.ivy.legacy.ui.LegacyUiRoot` 并改名，`com.ivy.legacy.design.api` 包已经清空。
 - 已把旧颜色选择器常量从 `com.ivy.legacy.design` 根包迁到 `com.ivy.legacy.ui.theme`，CSV 导入和旧颜色选择器继续使用同一组颜色值。
