@@ -38,7 +38,6 @@ import com.ivy.legacy.ui.modal.DeleteModal
 import com.ivy.legacy.ui.modal.AccountModalData
 import com.ivy.legacy.ui.modal.edit.AccountModal
 import com.ivy.legacy.ui.modal.edit.CategoryModal
-import com.ivy.legacy.ui.modal.CategoryModalData
 import com.ivy.legacy.ui.modal.edit.ChooseCategoryModal
 import com.ivy.ui.theme.colors.IvyGradients
 import kotlinx.collections.immutable.persistentListOf
@@ -100,7 +99,8 @@ private fun BoxWithConstraintsScope.UI(
         )
     }
     val titleFocus = FocusRequester()
-    var categoryModalData: CategoryModalData? by remember { mutableStateOf(null) }
+    var categoryModalVisible by remember { mutableStateOf(false) }
+    var categoryModalCategory: Category? by remember { mutableStateOf(null) }
     var accountModalData: AccountModalData? by remember { mutableStateOf(null) }
     var recurringRuleModalData: RecurringRuleModalData? by remember { mutableStateOf(null) }
 
@@ -274,7 +274,8 @@ private fun BoxWithConstraintsScope.UI(
         initialCategory = state.category,
         categories = state.categories,
         showCategoryModal = {
-            categoryModalData = CategoryModalData(it)
+            categoryModalCategory = it
+            categoryModalVisible = true
         },
         onCategoryChanged = {
             onEvent(EditPlannedScreenEvent.OnCategoryChanged(it?.id))
@@ -286,13 +287,14 @@ private fun BoxWithConstraintsScope.UI(
     )
 
     CategoryModal(
-        modal = categoryModalData,
+        visible = categoryModalVisible,
+        category = categoryModalCategory,
         onCreateCategory = { onEvent(EditPlannedScreenEvent.OnCreateCategory(it)) },
         onEditCategory = {
             onEvent(EditPlannedScreenEvent.OnEditCategory(it))
         },
         dismiss = {
-            categoryModalData = null
+            categoryModalVisible = false
         }
     )
 

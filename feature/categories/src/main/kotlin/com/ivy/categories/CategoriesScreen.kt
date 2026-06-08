@@ -64,7 +64,6 @@ import com.ivy.ui.theme.colors.findContrastTextColor
 import com.ivy.legacy.ui.modal.IvyModal
 import com.ivy.legacy.ui.modal.ModalTitle
 import com.ivy.legacy.ui.modal.edit.CategoryModal
-import com.ivy.legacy.ui.modal.CategoryModalData
 import com.ivy.ui.theme.colors.toComposeColor
 import com.ivy.legacy.ui.money.AmountCurrencyB1
 import kotlinx.collections.immutable.ImmutableList
@@ -93,7 +92,7 @@ private fun BoxWithConstraintsScope.UI(
     val listState = rememberScrollPositionListState(
         key = "categories_lazy_column"
     )
-    var categoryModalData: CategoryModalData? by remember { mutableStateOf(null) }
+    var categoryModalVisible by remember { mutableStateOf(false) }
 
     LazyColumn(
         modifier = Modifier
@@ -173,7 +172,7 @@ private fun BoxWithConstraintsScope.UI(
     }
     CategoriesBottomBar(
         onAddCategory = {
-            categoryModalData = CategoryModalData(category = null)
+            categoryModalVisible = true
         },
         onClose = {
             nav.back()
@@ -213,13 +212,14 @@ private fun BoxWithConstraintsScope.UI(
     }
 
     CategoryModal(
-        modal = categoryModalData,
+        visible = categoryModalVisible,
+        category = null,
         onCreateCategory = {
             onEvent(CategoriesScreenEvent.OnCreateCategory(it))
         },
         onEditCategory = { },
         dismiss = {
-            categoryModalData = null
+            categoryModalVisible = false
         }
     )
 

@@ -67,7 +67,6 @@ import com.ivy.legacy.ui.modal.AccountModalData
 import com.ivy.legacy.ui.modal.edit.AccountModal
 import com.ivy.legacy.ui.modal.edit.AmountModal
 import com.ivy.legacy.ui.modal.edit.CategoryModal
-import com.ivy.legacy.ui.modal.CategoryModalData
 import com.ivy.legacy.ui.modal.edit.ChooseCategoryModal
 import com.ivy.ui.theme.colors.IvyGradients
 import kotlinx.collections.immutable.ImmutableList
@@ -264,7 +263,8 @@ private fun BoxWithConstraintsScope.UI(
     ) {
     var chooseCategoryModalVisible by remember { mutableStateOf(false) }
     var tagModelVisible by remember { mutableStateOf(false) }
-    var categoryModalData: CategoryModalData? by remember { mutableStateOf(null) }
+    var categoryModalVisible by remember { mutableStateOf(false) }
+    var categoryModalCategory: Category? by remember { mutableStateOf(null) }
     var accountModalData: AccountModalData? by remember { mutableStateOf(null) }
     var descriptionModalVisible by remember { mutableStateOf(false) }
     var deleteTransactionModalVisible by remember { mutableStateOf(false) }
@@ -536,7 +536,10 @@ private fun BoxWithConstraintsScope.UI(
         visible = chooseCategoryModalVisible,
         initialCategory = category,
         categories = categories,
-        showCategoryModal = { categoryModalData = CategoryModalData(it) },
+        showCategoryModal = {
+            categoryModalCategory = it
+            categoryModalVisible = true
+        },
         onCategoryChanged = {
             onCategoryChange(it)
             if (shouldFocusTitle(titleTextFieldValue, transactionType)) {
@@ -550,12 +553,18 @@ private fun BoxWithConstraintsScope.UI(
         }
     )
 
-    CategoryModal(modal = categoryModalData, onCreateCategory = { createData ->
-        onCreateCategory(createData)
-        chooseCategoryModalVisible = false
-    }, onEditCategory = onEditCategory, dismiss = {
-        categoryModalData = null
-    })
+    CategoryModal(
+        visible = categoryModalVisible,
+        category = categoryModalCategory,
+        onCreateCategory = { createData ->
+            onCreateCategory(createData)
+            chooseCategoryModalVisible = false
+        },
+        onEditCategory = onEditCategory,
+        dismiss = {
+            categoryModalVisible = false
+        }
+    )
 
     AccountModal(
         modal = accountModalData,

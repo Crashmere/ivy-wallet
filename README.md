@@ -694,7 +694,7 @@
 - 首页缓冲金额展示模型 `BufferInfo` 和编辑交易借贷提示模型 `EditTransactionDisplayLoan` 已移回各自 feature；`shared:ui:legacy` 不再保存这两段页面私有状态。
 - 周期选择模型和状态 `TimePeriod/Month/LastNTimeRange/PeriodState` 已从 legacy UI 迁到 `shared:ui:core` 的 `com.ivy.ui.period`；首页、交易、报表、饼图、预算和根部状态继续共用同一周期语义，但不再依赖 legacy 包。
 - 周期模型和弹窗动画时长已分别归入 `shared:ui:core` 的 period/animation 包；周期选择弹窗后续已改为直接接收 `TimePeriod?`，不再公开额外的弹窗 data class。
-- 账户、分类、缓冲金额、借贷、借贷记录和计划付款重复规则弹窗的 `*ModalData` 已归回 `shared:ui:legacy`；这些数据对象本质上仍是旧弹窗入参，不再伪装成 UI core 公共 API。
+- 账户、缓冲金额、借贷、借贷记录和计划付款重复规则弹窗的 `*ModalData` 已归回 `shared:ui:legacy`；这些数据对象本质上仍是旧弹窗入参，不再伪装成 UI core 公共 API。分类弹窗后续已改为显式参数，不再公开 `CategoryModalData`。
 - CSV 导入器的新账户/分类默认颜色已改用导入功能自己的 ARGB 调色板；导入解析逻辑不再为了颜色值依赖 Compose `Color` 或 legacy theme。
 - 首页客户旅程卡片模型已改为保存普通 ARGB 背景色，卡片 provider 不再依赖 legacy theme；只有实际 Composable 绘制边界继续把颜色转成旧 UI 渐变。
 - 交易、报表和饼图的 ViewModel/UseCase 中用于占位分类的颜色已改成本地 ARGB 常量；非绘制逻辑不再为了 `Color.toArgb()` 依赖 Compose graphics 或 legacy theme。
@@ -1426,7 +1426,7 @@ shared:ui:core
 - 首页交易列表状态中的账户也已收窄为 `TransactionListAccount`；旧账户列表只留在首页 ViewModel 内部用于现有钱包收入/支出计算，不再进入首页 UI 状态。
 - 交易列表页传给旧交易列表组件的账户列表已收窄为 `TransactionListAccount`；完整 `LegacyAccount` 只保留为当前账户详情、账户编辑弹窗和 legacy 统计计算的内部输入。
 - `shared:ui:legacy` 的 `TransactionListData` 不再提供 `LegacyAccount` 到轻量账户的共享 mapper；首页和交易列表页改用各自 feature 私有转换，旧账户模型边界不再挂在共享旧交易列表契约上。
-- 旧弹窗状态包已整体从 `shared:ui:core` 迁回 `shared:ui:legacy`；账户、分类、缓冲金额、周期、借贷、借贷记录和重复规则弹窗继续用同名数据对象传参，但 UI core 不再暴露旧 modal data API。
+- 旧弹窗状态包已整体从 `shared:ui:core` 迁回 `shared:ui:legacy`；账户、缓冲金额、借贷、借贷记录和重复规则弹窗继续用同名数据对象传参，但 UI core 不再暴露旧 modal data API。周期和分类弹窗后续已改为显式参数。
 - 交易页和饼图页的周期选择弹窗状态已从 ViewModel/State/Event 移回 Screen 本地状态；ViewModel 只处理周期切换和数据加载，不再为了打开旧弹窗依赖 legacy modal data。
 - 分类页和计划付款编辑页的新增/选择类旧弹窗状态也已移回 Screen 本地状态；ViewModel 继续处理创建账户、创建/编辑分类和重复规则保存，不再承担纯 UI 弹窗开关数据。
 - 账户页和分类页的月度统计范围已用 `monthlyRange` 直接表达，不再保留迁移期解释性注释；行为仍是按当前月加载统计。
@@ -1500,6 +1500,7 @@ shared:ui:core
 - 交易列表页状态和 ViewModel 已改用本 feature 的 `TransactionsListAccount`，旧交易列表账户类型只在 `TransactionsScreen` 调用旧列表组件前临时适配。
 - 报表账户展示模型已脱离旧交易列表账户类型；`ReportAccount` 只保留报表/筛选所需字段，旧列表适配函数移到 `ReportScreen` 本地。
 - 周期选择弹窗不再公开 `ChoosePeriodModalData` 状态对象；调用页面只保存 `TimePeriod?`，旧弹窗内部自行维护弹窗 id。
+- 分类编辑弹窗不再公开 `CategoryModalData` 状态对象；调用页面改用显式的可见性、初始分类和自动聚焦参数，分类创建/编辑行为不变。
 - 旧主题系统新增 `LegacyColors`、`LegacyTypography` 和 `LegacyShapes` 作为外层门面类型；`theme.system` 下的 `IvyColors/IvyTypography/IvyShapes` 已收窄为 `shared:ui:legacy` 内部实现细节。
 - app 仍保留文件选择、文件分享、Material 日期选择器、BuildInfo、Locale 设置、生物识别和窗口安全等真正依赖 Activity 或 Android app 壳层的装配。
 

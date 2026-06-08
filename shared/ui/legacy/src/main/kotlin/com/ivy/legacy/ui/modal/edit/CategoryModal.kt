@@ -43,7 +43,6 @@ import com.ivy.data.model.Category
 import com.ivy.data.model.primitive.ColorInt
 import com.ivy.data.model.primitive.IconAsset
 import com.ivy.data.model.primitive.NotBlankTrimmedString
-import com.ivy.legacy.ui.modal.CategoryModalData
 import com.ivy.ui.platform.hideKeyboard
 import com.ivy.ui.compose.onCompositionStart
 import com.ivy.ui.compose.selectEndTextFieldValue
@@ -59,36 +58,42 @@ import com.ivy.legacy.ui.modal.ModalAddSave
 import com.ivy.legacy.ui.modal.ModalTitle
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
+import java.util.UUID
 
 @Composable
 fun BoxWithConstraintsScope.CategoryModal(
-    modal: CategoryModalData?,
+    visible: Boolean,
+    category: Category?,
+    autoFocusKeyboard: Boolean = true,
     onCreateCategory: (CreateCategoryData) -> Unit,
     onEditCategory: (Category) -> Unit,
     dismiss: () -> Unit,
 ) {
-    val initialCategory = modal?.category
-    var nameTextFieldValue by remember(modal) {
+    val initialCategory = category
+    var nameTextFieldValue by remember(visible, initialCategory) {
         mutableStateOf(selectEndTextFieldValue(initialCategory?.name?.value))
     }
-    var color by remember(modal) {
+    var color by remember(visible, initialCategory) {
         mutableStateOf(initialCategory?.color?.let { Color(it.value) } ?: Ivy)
     }
-    var icon by remember(modal) {
+    var icon by remember(visible, initialCategory) {
         mutableStateOf(initialCategory?.icon)
     }
 
-    var chooseIconModalVisible by remember(modal) {
+    var chooseIconModalVisible by remember(visible, initialCategory) {
         mutableStateOf(false)
+    }
+    val modalId = remember(visible, initialCategory) {
+        if (visible) UUID.randomUUID() else null
     }
 
     IvyModal(
-        id = modal?.id,
-        visible = modal != null,
+        id = modalId,
+        visible = visible,
         dismiss = dismiss,
         PrimaryAction = {
             ModalAddSave(
-                item = modal?.category,
+                item = category,
                 enabled = nameTextFieldValue.text.isNullOrBlank().not()
             ) {
                 if (initialCategory != null) {
@@ -116,7 +121,7 @@ fun BoxWithConstraintsScope.CategoryModal(
         Spacer(Modifier.height(32.dp))
 
         ModalTitle(
-            text = if (modal?.category != null) {
+            text = if (category != null) {
                 stringResource(R.string.edit_category)
             } else {
                 stringResource(
@@ -133,7 +138,7 @@ fun BoxWithConstraintsScope.CategoryModal(
             color = color,
             icon = icon?.id,
 
-            autoFocusKeyboard = modal?.autoFocusKeyboard ?: true,
+            autoFocusKeyboard = autoFocusKeyboard,
 
             nameTextFieldValue = nameTextFieldValue,
             setNameTextFieldValue = { nameTextFieldValue = it },

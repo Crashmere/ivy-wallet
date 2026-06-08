@@ -88,7 +88,6 @@ import com.ivy.legacy.ui.modal.AccountModalData
 import com.ivy.legacy.ui.modal.DeleteModal
 import com.ivy.legacy.ui.modal.edit.AccountModal
 import com.ivy.legacy.ui.modal.edit.CategoryModal
-import com.ivy.legacy.ui.modal.CategoryModalData
 import com.ivy.ui.theme.colors.toComposeColor
 import com.ivy.legacy.ui.period.PeriodSelector
 import kotlinx.collections.immutable.ImmutableList
@@ -323,7 +322,9 @@ private fun BoxWithConstraintsScope.UI(
     val itemColor = (account?.color ?: category?.color?.value)?.toComposeColor()
         ?: LegacyTheme.colors.gray
 
-    var categoryModalData: CategoryModalData? by remember { mutableStateOf(null) }
+    var categoryModalVisible by remember { mutableStateOf(false) }
+    var categoryModalCategory: Category? by remember { mutableStateOf(null) }
+    var categoryModalAutoFocus by remember { mutableStateOf(true) }
     var accountModalData: AccountModalData? by remember { mutableStateOf(null) }
     var choosePeriodModal: TimePeriod? by remember { mutableStateOf(null) }
     var skipAllTransactionIds by remember { mutableStateOf<List<UUID>>(emptyList()) }
@@ -396,10 +397,9 @@ private fun BoxWithConstraintsScope.UI(
                             }
 
                             category != null -> {
-                                categoryModalData = CategoryModalData(
-                                    category = category,
-                                    autoFocusKeyboard = false
-                                )
+                                categoryModalCategory = category
+                                categoryModalAutoFocus = false
+                                categoryModalVisible = true
                             }
                         }
                     },
@@ -418,10 +418,9 @@ private fun BoxWithConstraintsScope.UI(
                         }
                     },
                     showCategoryModal = {
-                        categoryModalData = CategoryModalData(
-                            category = category,
-                            autoFocusKeyboard = false
-                        )
+                        categoryModalCategory = category
+                        categoryModalAutoFocus = false
+                        categoryModalVisible = true
                     },
                     showAccountModal = {
                         accountModalData = AccountModalData(
@@ -498,11 +497,13 @@ private fun BoxWithConstraintsScope.UI(
     )
 
     CategoryModal(
-        modal = categoryModalData,
+        visible = categoryModalVisible,
+        category = categoryModalCategory,
+        autoFocusKeyboard = categoryModalAutoFocus,
         onCreateCategory = { },
         onEditCategory = onEditCategory,
         dismiss = {
-            categoryModalData = null
+            categoryModalVisible = false
         }
     )
 
