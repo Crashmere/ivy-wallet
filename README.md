@@ -1488,6 +1488,7 @@ shared:ui:core
 - `feature:reports` 已停止直接导入旧 `style` 文本样式扩展；报表页、筛选浮层、关键词弹窗和报表复选行文本改用显式 `TextStyle.copy()`，继续保留原视觉行为。
 - `feature:import-data` 已停止直接导入旧 `style` 文本样式扩展；CSV 导入入口、手动映射、处理中、结果页和导入流程按钮文本改用显式 `TextStyle.copy()`，继续保留原视觉行为。
 - `feature:import-data` 已脱离 `shared:ui:legacy` 模块依赖；导入流程改用本 feature 私有的 `ImportDataTheme` 承接原旧主题颜色、字体和圆角 token，CSV 导入与备份恢复 UI 行为不变。
+- `feature:main` 已脱离 `shared:ui:legacy` 模块依赖；主底栏改用本 feature 私有 `MainTheme` 承接原旧主题底栏 token，新增账户弹窗改由 `feature:accounts` 暴露窄入口承接，底栏导航和账户创建行为不变。
 - `feature:loans` 已停止直接导入旧 `style` 文本样式扩展；借贷列表、借贷/还款记录弹窗和借贷详情页文本改用显式 `TextStyle.copy()`，继续保留原视觉行为。
 - `feature:edit-transaction` 已停止直接导入旧 `style` 文本样式扩展；编辑交易页、底部金额/账户面板、标题/描述弹窗、日期时间、到期日和自定义汇率卡片文本改用显式 `TextStyle.copy()`，继续保留原视觉行为。
 - `feature:planned-payments` 已停止直接导入旧 `style` 文本样式扩展；计划付款列表、卡片、分组分隔条、编辑页、重复规则弹窗和底部金额/账户面板文本改用显式 `TextStyle.copy()`，继续保留原视觉行为。

@@ -19,7 +19,7 @@ import com.ivy.ui.navigation.EditTransactionScreen
 import com.ivy.ui.navigation.TransactionRouteType
 import com.ivy.ui.navigation.navigation
 import com.ivy.data.model.CreateAccountData
-import com.ivy.legacy.ui.modal.edit.AccountModal
+import com.ivy.accounts.AccountCreationModal
 
 @ExperimentalAnimationApi
 @ExperimentalFoundationApi
@@ -115,13 +115,10 @@ private fun BoxWithConstraintsScope.UI(
         }
     )
 
-    AccountModal(
+    AccountCreationModal(
         visible = accountModalVisible,
-        account = null,
         baseCurrency = baseCurrency,
-        balance = 0.0,
         onCreateAccount = onCreateAccount,
-        onEditAccount = { _, _ -> },
         dismiss = {
             accountModalVisible = false
         }
