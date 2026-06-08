@@ -91,6 +91,7 @@
 - 借贷新增/编辑弹窗改用本 feature 私有的 `LoanModalAddSave` 包装，避免继续跨模块依赖旧弹窗内部的新增/保存判断 helper。
 - 主底栏、首页更多菜单、报表筛选浮层和旧弹窗内部返回处理已改走 `shared:ui:core` 的 `BackPressHandler`；`shared:ui:legacy` 删除早期遗留的 `AddModalBackHandling` 包装入口。
 - 删除 `shared:ui:legacy` 中已经没有调用方的旧 `ReorderButton`；重排功能继续通过 `ReorderModalSingleType` 自身的确认按钮完成。
+- 删除 `shared:ui:legacy` 中已经没有调用方的旧 `AmountCurrencyB2Row`；当前金额展示继续使用仍被页面调用的 `AmountCurrencyB1` 或 feature 私有金额行。
 - CSV 导入结果页的返回按钮已改为 `feature:import-data` 私有实现；`shared:ui:legacy` 的 `BackButton` 收窄为模块内部给旧工具栏使用。
 - 饼图页不再直接调用底层 `ItemIconM`，改用带默认图标的包装入口；`shared:ui:legacy` 的 `ItemIconM` 收窄为模块内部实现。
 - 计划付款列表改用本 feature 私有的分组分隔条；`shared:ui:legacy` 的交易 `SectionDivider` 收窄为交易列表内部实现。
