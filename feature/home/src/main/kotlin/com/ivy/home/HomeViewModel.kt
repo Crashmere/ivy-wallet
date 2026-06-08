@@ -7,6 +7,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
+import com.ivy.data.model.Account
 import com.ivy.data.model.Theme
 import com.ivy.data.model.legacy.LegacyTransaction
 import com.ivy.data.model.TransactionHistoryItem
@@ -34,10 +35,9 @@ import com.ivy.ui.theme.ThemeState
 import com.ivy.ui.period.PeriodState
 import com.ivy.ui.period.TimePeriod
 import com.ivy.data.model.toUTCCloseTimeRange
-import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.preferences.asEnabledState
-import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
+import com.ivy.domain.usecase.account.GetAccountsUseCase
 import com.ivy.domain.usecase.home.GetOverdueTransactionsInfoUseCase
 import com.ivy.domain.usecase.home.GetUpcomingTransactionsInfoUseCase
 import com.ivy.domain.usecase.planned.PayOrSkipLegacyPlannedTransactionUseCase
@@ -78,7 +78,7 @@ internal class HomeViewModel @Inject internal constructor(
     private val getBufferAmountUseCase: GetBufferAmountUseCase,
     private val setBufferAmountUseCase: SetBufferAmountUseCase,
     private val getStartDayOfMonth: GetStartDayOfMonthUseCase,
-    private val getLegacyAccountsUseCase: GetLegacyAccountsUseCase,
+    private val getAccountsUseCase: GetAccountsUseCase,
     private val getCategoriesUseCase: GetCategoriesUseCase,
     private val getUpcomingTransactionsInfoUseCase: GetUpcomingTransactionsInfoUseCase,
     private val getOverdueTransactionsInfoUseCase: GetOverdueTransactionsInfoUseCase,
@@ -145,7 +145,7 @@ internal class HomeViewModel @Inject internal constructor(
     private data class HomeAccountsInput(
         val preferences: HomePreferences,
         val timeRange: ClosedTimeRange,
-        val accounts: List<LegacyAccount>,
+        val accounts: List<Account>,
     )
 
     private data class HomeBalanceInput(
@@ -328,7 +328,7 @@ internal class HomeViewModel @Inject internal constructor(
         input: HomeRangeInput
     ): HomeAccountsInput {
         val preferences = input.preferences
-        val accounts = getLegacyAccountsUseCase()
+        val accounts = getAccountsUseCase()
         val categories = getCategoriesUseCase()
 
         baseData = HomeTransactionListData(
@@ -565,10 +565,10 @@ internal class HomeViewModel @Inject internal constructor(
     }
 }
 
-private fun LegacyAccount.toTransactionListAccount() = TransactionListAccount(
-    id = id,
-    name = name,
-    color = color,
-    icon = icon,
-    currency = currency,
+private fun Account.toTransactionListAccount() = TransactionListAccount(
+    id = id.value,
+    name = name.value,
+    color = color.value,
+    icon = icon?.id,
+    currency = asset.code,
 )

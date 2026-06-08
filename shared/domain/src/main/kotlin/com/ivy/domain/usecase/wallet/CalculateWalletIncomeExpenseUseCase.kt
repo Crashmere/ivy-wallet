@@ -2,9 +2,7 @@ package com.ivy.domain.usecase.wallet
 
 import arrow.core.nonEmptyListOf
 import arrow.core.toOption
-import com.ivy.data.model.AccountId
-import com.ivy.data.model.legacy.LegacyAccount
-import com.ivy.data.model.legacy.includedLegacyAccounts
+import com.ivy.data.model.Account
 import com.ivy.data.model.ClosedTimeRange
 import com.ivy.data.model.IncomeExpensePair
 import com.ivy.domain.usecase.account.GetAccountTransactionsUseCase
@@ -21,12 +19,12 @@ class CalculateWalletIncomeExpenseUseCase @Inject internal constructor(
 ) {
     suspend operator fun invoke(
         baseCurrency: String,
-        accounts: List<LegacyAccount>,
+        accounts: List<Account>,
         range: ClosedTimeRange,
     ): IncomeExpensePair {
-        val statsList = includedLegacyAccounts(accounts).map { account ->
+        val statsList = accounts.filter { it.includeInBalance }.map { account ->
             val transactions = getAccountTransactionsUseCase(
-                accountId = AccountId(account.id),
+                accountId = account.id,
                 range = range
             )
             val stats = foldTransactions(
@@ -35,14 +33,14 @@ class CalculateWalletIncomeExpenseUseCase @Inject internal constructor(
                     AccountValueFunctions::income,
                     AccountValueFunctions::expense
                 ),
-                arg = account.id
+                arg = account.id.value
             )
 
             stats.map {
                 exchangeAmountUseCase(
                     data = ExchangeData(
                         baseCurrency = baseCurrency,
-                        fromCurrency = (account.currency ?: baseCurrency).toOption()
+                        fromCurrency = account.asset.code.toOption()
                     ),
                     amount = it
                 ).orZero()

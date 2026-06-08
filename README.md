@@ -216,6 +216,7 @@
 - 收回分类页月度统计 legacy 边界：分类页 ViewModel 不再直接获取旧账户或旧交易列表，月度分类收入/支出统计统一由 domain 的 `GetCategoryMonthlyStatsUseCase` 负责。
 - 收回预算页已花金额 legacy 边界：预算页 ViewModel 不再直接获取旧账户或调用旧汇率换算入口，预算支出统计统一由 domain 的 `CalculateBudgetSpentAmountsUseCase` 负责。
 - 收窄编辑交易和计划付款编辑账户加载边界：两个编辑页加载账户下拉列表时改用正式 `GetAccountsUseCase`，不再为了轻量 UI 账户模型直接读取 `LegacyAccount` 列表。
+- 收窄首页和钱包统计账户边界：首页账户列表和钱包收入/支出统计改用正式 `Account` 模型，钱包余额计算也不再经由 `GetLegacyAccountsUseCase` 做二次转换。
 - 收窄饼图页输入缓存：饼图 ViewModel 不再长期保存由 route ID 还原出的旧交易对象，只保存交易 ID，并在重算图表时局部读取。
 - 收窄借贷详情关联交易缓存：借贷详情不再把贷款关联旧交易对象保存在 ViewModel 字段中，加载时只设置开关状态，编辑时局部读取。
 
