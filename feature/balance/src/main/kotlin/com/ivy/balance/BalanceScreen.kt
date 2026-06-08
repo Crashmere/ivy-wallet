@@ -1,5 +1,6 @@
 package com.ivy.balance
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.BoxWithConstraintsScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
@@ -41,7 +42,6 @@ import com.ivy.legacy.ui.theme.Orange
 import com.ivy.legacy.ui.theme.White
 import com.ivy.legacy.ui.component.BalanceRow
 import com.ivy.legacy.ui.component.IvyCircleButton
-import com.ivy.legacy.ui.component.IvyDividerLine
 import com.ivy.legacy.ui.modal.ChoosePeriodModal
 import com.ivy.legacy.ui.modal.ChoosePeriodModalData
 import com.ivy.legacy.ui.component.PeriodSelector
@@ -97,7 +97,7 @@ private fun BoxWithConstraintsScope.UI(
 
         Spacer(Modifier.height(32.dp))
 
-        IvyDividerLine(
+        BalanceDividerLine(
             modifier = Modifier
                 .padding(horizontal = 24.dp)
         )
@@ -135,6 +135,18 @@ private fun BoxWithConstraintsScope.UI(
     ) {
         onEvent(BalanceEvent.OnSetPeriod(it))
     }
+}
+
+@Composable
+private fun BalanceDividerLine(
+    modifier: Modifier = Modifier,
+) {
+    Spacer(
+        modifier = modifier
+            .fillMaxWidth()
+            .height(2.dp)
+            .background(LegacyTheme.colors.medium)
+    )
 }
 
 @Composable
