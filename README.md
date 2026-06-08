@@ -27,6 +27,7 @@
 - 继续迁移旧 UI 状态：账户、分类、借贷、借贷记录、缓冲金额、循环规则和周期选择弹窗状态已从 `shared:ui:core` 迁入 `shared:ui:legacy`。
 - 精简 Compose 构建约定：删除 Compose compiler metrics/reports 输出配置，减少个人开发构建产物噪音。
 - 精简根目录忽略规则：`.gitignore` 已移除 Fastlane、Freeline、Google Services、Android Studio 细项等历史噪音，只保留当前 Android/Gradle/VS Code 本地开发会产生的文件规则。
+- 精简本地构建配置：删除 release 签名 keystore/环境变量接线，release/demo 都使用本地 debug 签名；`gradle.properties` 只保留当前构建需要的设置。
 
 当前仍保留：
 

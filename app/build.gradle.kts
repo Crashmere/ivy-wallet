@@ -34,12 +34,6 @@ android {
             keyPassword = "IVY7834!DEbug"
         }
 
-        create("release") {
-            storeFile = file("../sign.jks")
-            storePassword = System.getenv("SIGNING_STORE_PASSWORD")
-            keyAlias = System.getenv("SIGNING_KEY_ALIAS")
-            keyPassword = System.getenv("SIGNING_KEY_PASSWORD")
-        }
     }
 
     buildTypes {
@@ -54,7 +48,7 @@ android {
             isDebuggable = false
             isDefault = false
 
-            signingConfig = signingConfigs.getByName("release")
+            signingConfig = signingConfigs.getByName("debug")
 
             resValue("string", "app_name", "Ivy Wallet")
         }
