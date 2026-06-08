@@ -175,7 +175,14 @@ fun BoxWithConstraintsScope.SettingsScreen() {
         },
         onSwitchLanguage = {
             viewModel.onEvent(SettingsEvent.SwitchLanguage)
-        }
+        },
+        onBack = nav::back,
+        onOpenImport = {
+            nav.navigateTo(ImportScreen)
+        },
+        onOpenExchangeRates = {
+            nav.navigateTo(ExchangeRatesScreen)
+        },
     )
 }
 
@@ -220,7 +227,10 @@ private fun BoxWithConstraintsScope.UI(
     onSetSortCategoriesAscending: (Boolean) -> Unit = {},
     onSetStartDateOfMonth: (Int) -> Unit = {},
     onDeleteAllUserData: () -> Unit = {},
-    onSwitchLanguage: () -> Unit = {}
+    onSwitchLanguage: () -> Unit = {},
+    onBack: () -> Unit = {},
+    onOpenImport: () -> Unit = {},
+    onOpenExchangeRates: () -> Unit = {},
 ) {
     var currencyModalVisible by remember { mutableStateOf(false) }
     var chooseStartDateOfMonthVisible by remember { mutableStateOf(false) }
@@ -235,7 +245,6 @@ private fun BoxWithConstraintsScope.UI(
         SettingsPage.DisplayPreferences -> displayPreferencesListState
         SettingsPage.InputAndLists -> inputAndListsListState
     }
-    val nav = navigation()
     BackHandler(enabled = settingsPage != SettingsPage.Main) {
         settingsPage = SettingsPage.Main
     }
@@ -252,7 +261,7 @@ private fun BoxWithConstraintsScope.UI(
             SettingsToolbarFrame(
                 onBack = {
                     if (settingsPage == SettingsPage.Main) {
-                        nav.back()
+                        onBack()
                     } else {
                         settingsPage = SettingsPage.Main
                     }
@@ -294,9 +303,8 @@ private fun BoxWithConstraintsScope.UI(
                     DataManagementSection(
                         onExportToCSV = onExportToCSV,
                         onBackupData = onBackupData,
-                    ) {
-                        nav.navigateTo(ImportScreen)
-                    }
+                        onImportData = onOpenImport
+                    )
                 }
 
                 item {
@@ -322,9 +330,8 @@ private fun BoxWithConstraintsScope.UI(
                         onSetLockApp = onSetLockApp,
                         onSetShowNotifications = onSetShowNotifications,
                         onSwitchLanguage = onSwitchLanguage,
-                    ) {
-                        nav.navigateTo(ExchangeRatesScreen)
-                    }
+                        onExchangeRatesClick = onOpenExchangeRates
+                    )
                 }
 
                 item {
