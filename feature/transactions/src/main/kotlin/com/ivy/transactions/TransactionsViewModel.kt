@@ -115,16 +115,24 @@ internal class TransactionsViewModel @Inject internal constructor(
     private val expenses = mutableDoubleStateOf(0.0)
 
     // Upcoming
-    private val upcoming = mutableStateOf<ImmutableList<LegacyTransaction>>(persistentListOf())
-    private val upcomingIncome = mutableDoubleStateOf(0.0)
-    private val upcomingExpenses = mutableDoubleStateOf(0.0)
-    private val upcomingExpanded = mutableStateOf(false)
+    private val upcoming = mutableStateOf(
+        TransactionsDueSection(
+            transactions = persistentListOf(),
+            expanded = false,
+            income = 0.0,
+            expenses = 0.0,
+        )
+    )
 
     // Overdue
-    private val overdue = mutableStateOf<ImmutableList<LegacyTransaction>>(persistentListOf())
-    private val overdueIncome = mutableDoubleStateOf(0.0)
-    private val overdueExpenses = mutableDoubleStateOf(0.0)
-    private val overdueExpanded = mutableStateOf(true)
+    private val overdue = mutableStateOf(
+        TransactionsDueSection(
+            transactions = persistentListOf(),
+            expanded = true,
+            income = 0.0,
+            expenses = 0.0,
+        )
+    )
 
     // History
     private val history =
@@ -161,13 +169,7 @@ internal class TransactionsViewModel @Inject internal constructor(
             treatTransfersAsIncomeExpense = getTreatTransfersAsIncomeExpense(),
             history = getHistory(),
             upcoming = getUpcoming(),
-            upcomingExpanded = getUpcomingExpanded(),
-            upcomingIncome = getUpcomingIncome(),
-            upcomingExpenses = getUpcomingExpenses(),
             overdue = getOverdue(),
-            overdueExpanded = getOverdueExpanded(),
-            overdueIncome = getOverdueIncome(),
-            overdueExpenses = getOverdueExpenses(),
             enableDeletionButton = getEnableDeletionButton(),
             skipAllModalVisible = getSkipAllModalVisible(),
             deleteModal1Visible = getDeleteModal1Visible(),
@@ -249,23 +251,8 @@ internal class TransactionsViewModel @Inject internal constructor(
     }
 
     @Composable
-    private fun getUpcomingExpenses(): Double {
-        return upcomingExpenses.doubleValue
-    }
-
-    @Composable
-    private fun getUpcoming(): ImmutableList<LegacyTransaction> {
+    private fun getUpcoming(): TransactionsDueSection {
         return upcoming.value
-    }
-
-    @Composable
-    private fun getUpcomingExpanded(): Boolean {
-        return upcomingExpanded.value
-    }
-
-    @Composable
-    private fun getUpcomingIncome(): Double {
-        return upcomingIncome.doubleValue
     }
 
     @Composable
@@ -274,23 +261,8 @@ internal class TransactionsViewModel @Inject internal constructor(
     }
 
     @Composable
-    private fun getOverdue(): ImmutableList<LegacyTransaction> {
+    private fun getOverdue(): TransactionsDueSection {
         return overdue.value
-    }
-
-    @Composable
-    private fun getOverdueExpanded(): Boolean {
-        return overdueExpanded.value
-    }
-
-    @Composable
-    private fun getOverdueIncome(): Double {
-        return overdueIncome.doubleValue
-    }
-
-    @Composable
-    private fun getOverdueExpenses(): Double {
-        return overdueExpenses.doubleValue
     }
 
     @Composable
@@ -387,18 +359,22 @@ internal class TransactionsViewModel @Inject internal constructor(
         val upcomingSummary = withContext(Dispatchers.IO) {
             getAccountUpcomingTransactionsSummaryUseCase(AccountId(initialAccount.id), range)
         }
-        upcomingIncome.doubleValue = upcomingSummary.income
-        upcomingExpenses.doubleValue = upcomingSummary.expenses
-        upcoming.value = mapTransactionsToLegacyTransactionsUseCase(upcomingSummary.transactions)
-            .toImmutableList()
+        upcoming.value = upcoming.value.copy(
+            transactions = mapTransactionsToLegacyTransactionsUseCase(upcomingSummary.transactions)
+                .toImmutableList(),
+            income = upcomingSummary.income,
+            expenses = upcomingSummary.expenses,
+        )
 
         val overdueSummary = withContext(Dispatchers.IO) {
             getAccountOverdueTransactionsSummaryUseCase(AccountId(initialAccount.id), range)
         }
-        overdueIncome.doubleValue = overdueSummary.income
-        overdueExpenses.doubleValue = overdueSummary.expenses
-        overdue.value = mapTransactionsToLegacyTransactionsUseCase(overdueSummary.transactions)
-            .toImmutableList()
+        overdue.value = overdue.value.copy(
+            transactions = mapTransactionsToLegacyTransactionsUseCase(overdueSummary.transactions)
+                .toImmutableList(),
+            income = overdueSummary.income,
+            expenses = overdueSummary.expenses,
+        )
     }
 
     private suspend fun initForCategory(categoryId: UUID, accountFilterList: List<UUID>) {
@@ -460,12 +436,16 @@ internal class TransactionsViewModel @Inject internal constructor(
         income.doubleValue = summary.income
         expenses.doubleValue = summary.expenses
         history.value = summary.history.toImmutableList()
-        upcomingIncome.doubleValue = summary.upcoming.income
-        upcomingExpenses.doubleValue = summary.upcoming.expenses
-        upcoming.value = summary.upcoming.transactions.toImmutableList()
-        overdueIncome.doubleValue = summary.overdue.income
-        overdueExpenses.doubleValue = summary.overdue.expenses
-        overdue.value = summary.overdue.transactions.toImmutableList()
+        upcoming.value = upcoming.value.copy(
+            transactions = summary.upcoming.transactions.toImmutableList(),
+            income = summary.upcoming.income,
+            expenses = summary.upcoming.expenses,
+        )
+        overdue.value = overdue.value.copy(
+            transactions = summary.overdue.transactions.toImmutableList(),
+            income = summary.overdue.income,
+            expenses = summary.overdue.expenses,
+        )
     }
 
     private suspend fun initForAccountTransfersCategory(
@@ -511,11 +491,11 @@ internal class TransactionsViewModel @Inject internal constructor(
     }
 
     private fun setUpcomingExpanded(expanded: Boolean) {
-        upcomingExpanded.value = expanded
+        upcoming.value = upcoming.value.copy(expanded = expanded)
     }
 
     private fun setOverdueExpanded(expanded: Boolean) {
-        overdueExpanded.value = expanded
+        overdue.value = overdue.value.copy(expanded = expanded)
     }
 
     private fun setPeriod(period: TimePeriod) {
@@ -636,14 +616,16 @@ internal class TransactionsViewModel @Inject internal constructor(
 
     private fun findDueTransaction(transactionId: UUID): LegacyTransaction? {
         return upcoming.value
-            .plus(overdue.value)
+            .transactions
+            .plus(overdue.value.transactions)
             .firstOrNull { it.id == transactionId }
     }
 
     private fun findDueTransactions(transactionIds: List<UUID>): List<LegacyTransaction> {
         val transactionIdSet = transactionIds.toSet()
         return upcoming.value
-            .plus(overdue.value)
+            .transactions
+            .plus(overdue.value.transactions)
             .filter { it.id in transactionIdSet }
     }
 

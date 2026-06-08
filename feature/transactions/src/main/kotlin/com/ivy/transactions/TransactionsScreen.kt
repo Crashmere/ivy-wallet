@@ -34,10 +34,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.Theme
-import com.ivy.data.model.legacy.LegacyTransaction
 import com.ivy.data.model.TransactionHistoryItem
 import com.ivy.data.model.TransactionType
 import com.ivy.data.model.Category
+import com.ivy.data.model.legacy.LegacyTransaction
 import com.ivy.ui.platform.LocalDatePicker
 import com.ivy.ui.theme.LocalThemeState
 import com.ivy.legacy.ui.theme.LegacyTheme
@@ -144,20 +144,14 @@ fun BoxWithConstraintsScope.TransactionsScreen(screen: TransactionsScreen) {
         shouldShowAccountSpecificColorInTransactions = uiState.showAccountColorsInTransactions,
 
         upcoming = uiState.upcoming,
-        upcomingExpanded = uiState.upcomingExpanded,
         setUpcomingExpanded = {
             viewModel.onEvent(TransactionsEvent.SetUpcomingExpanded(it))
         },
-        upcomingIncome = uiState.upcomingIncome,
-        upcomingExpenses = uiState.upcomingExpenses,
 
         overdue = uiState.overdue,
-        overdueExpanded = uiState.overdueExpanded,
         setOverdueExpanded = {
             viewModel.onEvent(TransactionsEvent.SetOverdueExpanded(it))
         },
-        overdueIncome = uiState.overdueIncome,
-        overdueExpenses = uiState.overdueExpenses,
 
         onSetPeriod = {
             viewModel.onEvent(
@@ -248,17 +242,21 @@ private fun BoxWithConstraintsScope.UI(
 
     initWithTransactions: Boolean = false,
     treatTransfersAsIncomeExpense: Boolean = false,
-    upcomingExpanded: Boolean = true,
     setUpcomingExpanded: (Boolean) -> Unit = {},
-    upcomingIncome: Double = 0.0,
-    upcomingExpenses: Double = 0.0,
-    upcoming: ImmutableList<LegacyTransaction> = persistentListOf(),
+    upcoming: TransactionsDueSection = TransactionsDueSection(
+        transactions = persistentListOf(),
+        expanded = true,
+        income = 0.0,
+        expenses = 0.0,
+    ),
 
-    overdueExpanded: Boolean = true,
     setOverdueExpanded: (Boolean) -> Unit = {},
-    overdueIncome: Double = 0.0,
-    overdueExpenses: Double = 0.0,
-    overdue: ImmutableList<LegacyTransaction> = persistentListOf(),
+    overdue: TransactionsDueSection = TransactionsDueSection(
+        transactions = persistentListOf(),
+        expanded = true,
+        income = 0.0,
+        expenses = 0.0,
+    ),
 
     onPayOrGet: (UUID) -> Unit = {},
     onSkipTransaction: (UUID) -> Unit = {},
@@ -397,24 +395,10 @@ private fun BoxWithConstraintsScope.UI(
                     accounts,
                     categories
                 ),
-                upcoming = LegacyDueSection(
-                    transactions = upcoming,
-                    stats = IncomeExpensePair(
-                        income = upcomingIncome.toBigDecimal(),
-                        expense = upcomingExpenses.toBigDecimal()
-                    ),
-                    expanded = upcomingExpanded
-                ),
+                upcoming = upcoming.toLegacyDueSection(),
                 setUpcomingExpanded = setUpcomingExpanded,
 
-                overdue = LegacyDueSection(
-                    transactions = overdue,
-                    stats = IncomeExpensePair(
-                        income = overdueIncome.toBigDecimal(),
-                        expense = overdueExpenses.toBigDecimal()
-                    ),
-                    expanded = overdueExpanded
-                ),
+                overdue = overdue.toLegacyDueSection(),
                 setOverdueExpanded = setOverdueExpanded,
 
                 history = history,
@@ -508,6 +492,17 @@ private fun BoxWithConstraintsScope.UI(
     ) {
         onSetPeriod(it)
     }
+}
+
+private fun TransactionsDueSection.toLegacyDueSection(): LegacyDueSection {
+    return LegacyDueSection(
+        transactions = transactions,
+        stats = IncomeExpensePair(
+            income = income.toBigDecimal(),
+            expense = expenses.toBigDecimal()
+        ),
+        expanded = expanded
+    )
 }
 
 private fun LazyListScope.choosePeriodModal(

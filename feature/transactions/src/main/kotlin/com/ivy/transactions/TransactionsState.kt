@@ -25,17 +25,19 @@ internal data class TransactionsState(
     val initWithTransactions: Boolean,
     val treatTransfersAsIncomeExpense: Boolean,
     val history: ImmutableList<TransactionHistoryItem>,
-    val upcoming: ImmutableList<LegacyTransaction>,
-    val upcomingExpanded: Boolean,
-    val upcomingIncome: Double,
-    val upcomingExpenses: Double,
-    val overdue: ImmutableList<LegacyTransaction>,
-    val overdueExpanded: Boolean,
-    val overdueIncome: Double,
-    val overdueExpenses: Double,
+    val upcoming: TransactionsDueSection,
+    val overdue: TransactionsDueSection,
     val enableDeletionButton: Boolean,
     val skipAllModalVisible: Boolean,
     val deleteModal1Visible: Boolean,
     val choosePeriodModal: ChoosePeriodModalData?,
     val showAccountColorsInTransactions: Boolean
+)
+
+@Immutable
+internal data class TransactionsDueSection(
+    val transactions: ImmutableList<LegacyTransaction>,
+    val expanded: Boolean,
+    val income: Double,
+    val expenses: Double,
 )
