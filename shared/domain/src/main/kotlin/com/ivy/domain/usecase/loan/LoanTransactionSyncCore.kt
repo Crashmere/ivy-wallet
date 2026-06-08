@@ -1,6 +1,9 @@
 package com.ivy.domain.usecase.loan
 
 import com.ivy.data.model.legacy.LegacyTransaction
+import com.ivy.data.model.AccountId
+import com.ivy.data.model.Expense
+import com.ivy.data.model.Income
 import com.ivy.data.model.LoanRecordType
 import com.ivy.data.model.TransactionType
 import com.ivy.data.api.AccountStore
@@ -11,16 +14,19 @@ import com.ivy.data.api.TransactionStore
 import com.ivy.data.model.Category
 import com.ivy.data.model.CategoryId
 import com.ivy.data.model.LoanType
+import com.ivy.data.model.PositiveValue
+import com.ivy.data.model.Transaction
 import com.ivy.data.model.TransactionId
+import com.ivy.data.model.TransactionMetadata
 import com.ivy.data.model.primitive.ColorInt
 import com.ivy.data.model.primitive.IconAsset
 import com.ivy.data.model.primitive.NotBlankTrimmedString
+import com.ivy.data.model.primitive.PositiveDouble
 import com.ivy.domain.usecase.category.GetCategoriesUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.data.model.Loan
 import com.ivy.data.model.LoanRecord
-import com.ivy.domain.mapper.legacy.toTransaction
 import com.ivy.domain.mapper.legacy.toLegacyTransaction
 import com.ivy.domain.mapper.legacy.toLegacyAccount
 import com.ivy.domain.time.nowUtc
@@ -157,31 +163,86 @@ internal class LoanTransactionSyncCore @Inject internal constructor(
 
         val transactionCategoryId: UUID? = getCategoryId(existingCategoryId = categoryId)
 
-        val modifiedTransaction: LegacyTransaction = transaction?.copy(
-            loanId = loanId,
-            loanRecordId = if (isLoanRecord) loanRecordId else null,
-            amount = amount.toBigDecimal(),
-            type = transactionType,
-            accountId = selectedAccountId,
-            title = title,
-            categoryId = transactionCategoryId,
-            dateTime = time
-        )
-            ?: LegacyTransaction(
+        withContext(Dispatchers.IO) {
+            loanTransaction(
+                transactionId = transaction?.id ?: UUID.randomUUID(),
                 accountId = selectedAccountId,
                 type = transactionType,
-                amount = amount.toBigDecimal(),
-                dateTime = time,
+                amount = amount,
                 categoryId = transactionCategoryId,
                 title = title,
+                description = transaction?.description,
+                time = time,
+                recurringRuleId = transaction?.recurringRuleId,
+                paidFor = transaction?.paidFor,
                 loanId = loanId,
                 loanRecordId = if (isLoanRecord) loanRecordId else null
-            )
-
-        withContext(Dispatchers.IO) {
-            modifiedTransaction.toTransaction(accountStore)?.let {
+            )?.let {
                 transactionRepo.save(it)
             }
+        }
+    }
+
+    private suspend fun loanTransaction(
+        transactionId: UUID,
+        accountId: UUID,
+        type: TransactionType,
+        amount: Double,
+        categoryId: UUID?,
+        title: String?,
+        description: String?,
+        time: Instant,
+        recurringRuleId: UUID?,
+        paidFor: Instant?,
+        loanId: UUID,
+        loanRecordId: UUID?,
+    ): Transaction? {
+        val sourceAccountId = AccountId(accountId)
+        val sourceAccount = accountStore.findById(sourceAccountId) ?: return null
+        val positiveAmount = PositiveDouble.from(amount).getOrNull() ?: return null
+        val value = PositiveValue(
+            amount = positiveAmount,
+            asset = sourceAccount.asset
+        )
+        val notBlankTitle = title?.let(NotBlankTrimmedString::from)?.getOrNull()
+        val notBlankDescription = description?.let(NotBlankTrimmedString::from)?.getOrNull()
+        val category = categoryId?.let(::CategoryId)
+        val metadata = TransactionMetadata(
+            recurringRuleId = recurringRuleId,
+            paidForDateTime = paidFor,
+            loanId = loanId,
+            loanRecordId = loanRecordId
+        )
+        val id = TransactionId(transactionId)
+
+        return when (type) {
+            TransactionType.INCOME -> Income(
+                id = id,
+                title = notBlankTitle,
+                description = notBlankDescription,
+                category = category,
+                time = time,
+                settled = true,
+                metadata = metadata,
+                tags = emptyList(),
+                value = value,
+                account = sourceAccountId,
+            )
+
+            TransactionType.EXPENSE -> Expense(
+                id = id,
+                title = notBlankTitle,
+                description = notBlankDescription,
+                category = category,
+                time = time,
+                settled = true,
+                metadata = metadata,
+                tags = emptyList(),
+                value = value,
+                account = sourceAccountId,
+            )
+
+            TransactionType.TRANSFER -> null
         }
     }
 
