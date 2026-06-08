@@ -5,10 +5,6 @@ import com.ivy.ui.resource.ResourceProvider
 import com.ivy.domain.usecase.home.DismissCustomerJourneyCardUseCase
 import com.ivy.domain.usecase.home.GetCustomerJourneyStatsUseCase
 import com.ivy.domain.usecase.home.IsCustomerJourneyCardDismissedUseCase
-import com.ivy.legacy.ui.theme.system.Gradient
-import com.ivy.legacy.ui.theme.system.Ivy
-import com.ivy.legacy.ui.theme.system.Orange
-import com.ivy.legacy.ui.theme.system.Red
 import com.ivy.ui.navigation.EditPlannedScreen
 import com.ivy.ui.navigation.MainTab
 import com.ivy.ui.navigation.PieChartStatisticScreen
@@ -57,7 +53,7 @@ class CustomerJourneyCardsProvider @Inject constructor(
         description = resourceProvider.getString(R.string.adjust_initial_balance_description),
         cta = resourceProvider.getString(R.string.to_accounts),
         ctaIcon = R.drawable.ic_custom_account_s,
-        background = Gradient.solid(Ivy),
+        backgroundColorArgb = CustomerJourneyIvy,
         hasDismiss = false,
         onAction = { _, mainTabState ->
             mainTabState.select(MainTab.ACCOUNTS)
@@ -73,7 +69,7 @@ class CustomerJourneyCardsProvider @Inject constructor(
         description = resourceProvider.getString(R.string.create_first_planned_payment_description),
         cta = resourceProvider.getString(R.string.add_planned_payment),
         ctaIcon = R.drawable.ic_planned_payments,
-        background = Gradient.solid(Orange),
+        backgroundColorArgb = CustomerJourneyOrange,
         hasDismiss = true,
         onAction = { navigation, _ ->
             navigation.navigateTo(
@@ -94,10 +90,16 @@ class CustomerJourneyCardsProvider @Inject constructor(
         description = resourceProvider.getString(R.string.you_can_see_a_piechart),
         cta = resourceProvider.getString(R.string.expenses_piechart),
         ctaIcon = R.drawable.ic_custom_bills_s,
-        background = Gradient.solid(Red),
+        backgroundColorArgb = CustomerJourneyRed,
         hasDismiss = true,
         onAction = { navigation, _ ->
             navigation.navigateTo(PieChartStatisticScreen(type = TransactionType.EXPENSE))
         }
     )
+
+    private companion object {
+        val CustomerJourneyIvy = 0xFF6B4DFF.toInt()
+        val CustomerJourneyOrange = 0xFFF29F30.toInt()
+        val CustomerJourneyRed = 0xFFFF4060.toInt()
+    }
 }

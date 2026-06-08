@@ -2,7 +2,6 @@ package com.ivy.home.customerjourney
 
 import androidx.annotation.DrawableRes
 import androidx.compose.runtime.Immutable
-import com.ivy.legacy.ui.theme.system.Gradient
 import com.ivy.ui.navigation.MainTabState
 import com.ivy.ui.navigation.Navigation
 
@@ -18,6 +17,6 @@ data class CustomerJourneyCardModel(
 
     val hasDismiss: Boolean = true,
 
-    val background: Gradient,
+    val backgroundColorArgb: Int,
     val onAction: (Navigation, MainTabState) -> Unit
 )

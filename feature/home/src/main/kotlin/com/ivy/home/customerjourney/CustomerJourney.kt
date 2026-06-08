@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -65,12 +66,15 @@ fun CustomerJourneyCard(
     modifier: Modifier = Modifier,
     onCTA: () -> Unit,
 ) {
+    val backgroundColor = Color(cardData.backgroundColorArgb)
+    val backgroundGradient = Gradient.solid(backgroundColor)
+
     Column(
         modifier = modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp)
-            .drawColoredShadow(cardData.background.startColor)
-            .background(cardData.background.asHorizontalBrush(), LegacyTheme.shapes.r3)
+            .drawColoredShadow(backgroundColor)
+            .background(backgroundGradient.asHorizontalBrush(), LegacyTheme.shapes.r3)
             .clip(LegacyTheme.shapes.r3)
             .clickable {
                 onCTA()
@@ -88,7 +92,7 @@ fun CustomerJourneyCard(
                 text = cardData.title,
                 style = LegacyTheme.typo.b1.style(
                     fontWeight = FontWeight.ExtraBold,
-                    color = findContrastTextColor(cardData.background.startColor)
+                    color = findContrastTextColor(backgroundColor)
                 )
             )
 
@@ -100,7 +104,7 @@ fun CustomerJourneyCard(
                         }
                         .padding(8.dp), // enlarge click area
                     icon = R.drawable.ic_dismiss,
-                    tint = cardData.background.startColor.dynamicContrast(),
+                    tint = backgroundColor.dynamicContrast(),
                     contentDescription = "prompt_dismiss",
                 )
 
@@ -117,7 +121,7 @@ fun CustomerJourneyCard(
             text = cardData.description,
             style = LegacyTheme.typo.b2.style(
                 fontWeight = FontWeight.Medium,
-                color = findContrastTextColor(cardData.background.startColor)
+                color = findContrastTextColor(backgroundColor)
             )
         )
 
@@ -132,13 +136,13 @@ fun CustomerJourneyCard(
                 text = cardData.cta,
                 shadowAlpha = 0f,
                 iconStart = cardData.ctaIcon,
-                iconTint = cardData.background.startColor,
+                iconTint = backgroundColor,
                 textStyle = LegacyTheme.typo.b2.style(
-                    color = cardData.background.startColor,
+                    color = backgroundColor,
                     fontWeight = FontWeight.Bold
                 ),
                 padding = 8.dp,
-                backgroundGradient = Gradient.solid(findContrastTextColor(cardData.background.startColor))
+                backgroundGradient = Gradient.solid(findContrastTextColor(backgroundColor))
             ) {
                 onCTA()
             }
