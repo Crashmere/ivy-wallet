@@ -49,10 +49,10 @@ import com.ivy.ui.platform.LocalDatePicker
 import com.ivy.ui.theme.LocalThemeState
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.compose.thenIf
-import com.ivy.legacy.ui.transaction.DueSection
 import com.ivy.legacy.ui.transaction.TransactionListData
 import com.ivy.legacy.ui.transaction.TransactionListAccount
 import com.ivy.legacy.ui.transaction.TransactionListCategory
+import com.ivy.legacy.ui.transaction.TransactionListDueSection
 import com.ivy.ui.period.Month
 import com.ivy.ui.period.TimePeriod
 import com.ivy.ui.period.displayLong
@@ -74,7 +74,6 @@ import com.ivy.ui.navigation.onScreenStart
 import com.ivy.ui.navigation.screenScopedViewModel
 import com.ivy.ui.R
 import com.ivy.ui.rememberScrollPositionListState
-import com.ivy.data.model.IncomeExpensePair
 import com.ivy.ui.money.BalanceRow
 import com.ivy.ui.compose.GradientIconButton
 import com.ivy.ui.compose.OutlinedPillButton
@@ -475,10 +474,10 @@ private fun BoxWithConstraintsScope.UI(
                         .map { it.toTransactionListAccount() },
                     categories.map { it.toTransactionListCategory() }
                 ),
-                upcoming = upcoming.toDueSection(),
+                upcoming = upcoming.toTransactionListDueSection(),
                 setUpcomingExpanded = setUpcomingExpanded,
 
-                overdue = overdue.toDueSection(),
+                overdue = overdue.toTransactionListDueSection(),
                 setOverdueExpanded = setOverdueExpanded,
 
                 history = history,
@@ -562,13 +561,11 @@ private fun BoxWithConstraintsScope.UI(
     }
 }
 
-private fun TransactionsDueSection.toDueSection(): DueSection {
-    return DueSection(
+private fun TransactionsDueSection.toTransactionListDueSection(): TransactionListDueSection {
+    return TransactionListDueSection(
         transactions = transactions,
-        stats = IncomeExpensePair(
-            income = income.toBigDecimal(),
-            expense = expenses.toBigDecimal()
-        ),
+        income = income,
+        expenses = expenses,
         expanded = expanded
     )
 }

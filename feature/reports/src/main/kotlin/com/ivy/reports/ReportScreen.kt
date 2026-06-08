@@ -38,10 +38,10 @@ import com.ivy.ui.navigation.screenScopedViewModel
 import com.ivy.data.model.Category
 import com.ivy.data.model.TransactionType
 import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.legacy.ui.transaction.DueSection
 import com.ivy.legacy.ui.transaction.TransactionListAccount
 import com.ivy.legacy.ui.transaction.TransactionListCategory
 import com.ivy.legacy.ui.transaction.TransactionListData
+import com.ivy.legacy.ui.transaction.TransactionListDueSection
 import com.ivy.ui.summary.IncomeExpensesCards
 import com.ivy.legacy.ui.transaction.transactions
 import com.ivy.ui.compose.clickableNoIndication
@@ -54,7 +54,6 @@ import com.ivy.ui.navigation.navigation
 import com.ivy.ui.R
 import com.ivy.ui.platform.fileSharer
 import com.ivy.ui.rememberScrollPositionListState
-import com.ivy.data.model.IncomeExpensePair
 import com.ivy.ui.money.BalanceRow
 import com.ivy.ui.compose.FilledIconButton
 import com.ivy.ui.compose.GradientButton
@@ -235,13 +234,13 @@ private fun BoxWithConstraintsScope.UI(
                     accounts = state.accounts.map { it.toTransactionListAccount() },
                 ),
 
-                upcoming = state.upcoming.toDueSection(),
+                upcoming = state.upcoming.toTransactionListDueSection(),
 
                 setUpcomingExpanded = {
                     onEventHandler.invoke(ReportScreenEvent.OnUpcomingExpanded(upcomingExpanded = it))
                 },
 
-                overdue = state.overdue.toDueSection(),
+                overdue = state.overdue.toTransactionListDueSection(),
                 setOverdueExpanded = {
                     onEventHandler.invoke(ReportScreenEvent.OnOverdueExpanded(overdueExpanded = it))
                 },
@@ -341,13 +340,11 @@ private fun ReportTransactionsDividerLine(
     )
 }
 
-private fun ReportDueSection.toDueSection(): DueSection {
-    return DueSection(
+private fun ReportDueSection.toTransactionListDueSection(): TransactionListDueSection {
+    return TransactionListDueSection(
         transactions = transactions,
-        stats = IncomeExpensePair(
-            income = income.toBigDecimal(),
-            expense = expenses.toBigDecimal()
-        ),
+        income = income,
+        expenses = expenses,
         expanded = expanded
     )
 }

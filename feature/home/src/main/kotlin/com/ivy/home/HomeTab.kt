@@ -32,10 +32,10 @@ import com.ivy.home.Constants.SWIPE_HORIZONTAL_THRESHOLD
 import com.ivy.home.customerjourney.CustomerJourney
 import com.ivy.home.customerjourney.CustomerJourneyAction
 import com.ivy.home.customerjourney.CustomerJourneyCardModel
-import com.ivy.legacy.ui.transaction.DueSection
 import com.ivy.legacy.ui.transaction.TransactionListAccount
 import com.ivy.legacy.ui.transaction.TransactionListCategory
 import com.ivy.legacy.ui.transaction.TransactionListData
+import com.ivy.legacy.ui.transaction.TransactionListDueSection
 import com.ivy.ui.period.Month
 import com.ivy.ui.period.TimePeriod
 import com.ivy.ui.period.displayLong
@@ -474,9 +474,9 @@ internal fun HomeLazyColumn(
 
         transactions(
             baseData = baseData.toTransactionListData(),
-            upcoming = upcoming.toDueSection(),
+            upcoming = upcoming.toTransactionListDueSection(),
             setUpcomingExpanded = setUpcomingExpanded,
-            overdue = overdue.toDueSection(),
+            overdue = overdue.toTransactionListDueSection(),
             setOverdueExpanded = setOverdueExpanded,
             history = history,
             onPayOrGet = onPayOrGet,
@@ -516,11 +516,12 @@ private fun Category.toTransactionListCategory() = TransactionListCategory(
     icon = icon?.id,
 )
 
-private fun HomeDueSection.toDueSection(): DueSection {
-    return DueSection(
+private fun HomeDueSection.toTransactionListDueSection(): TransactionListDueSection {
+    return TransactionListDueSection(
         transactions = transactions,
         expanded = expanded,
-        stats = stats
+        income = stats.income.toDouble(),
+        expenses = stats.expense.abs().toDouble(),
     )
 }
 

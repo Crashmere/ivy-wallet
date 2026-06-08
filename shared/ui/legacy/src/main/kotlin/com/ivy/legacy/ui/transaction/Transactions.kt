@@ -37,8 +37,8 @@ import java.util.UUID
 fun LazyListScope.transactions(
     baseData: TransactionListData,
 
-    upcoming: DueSection?,
-    overdue: DueSection?,
+    upcoming: TransactionListDueSection?,
+    overdue: TransactionListDueSection?,
     history: List<TransactionHistoryItem>,
 
     emptyStateTitle: String,
@@ -118,7 +118,7 @@ fun LazyListScope.transactions(
 private fun LazyListScope.upcomingSection(
     baseData: TransactionListData,
 
-    upcoming: DueSection?,
+    upcoming: TransactionListDueSection?,
     shouldShowAccountSpecificColorInTransactions: Boolean,
     onPayOrGet: (UUID) -> Unit,
     onSkipTransaction: (UUID) -> Unit,
@@ -139,8 +139,8 @@ private fun LazyListScope.upcomingSection(
                 title = stringResource(R.string.upcoming),
                 titleColor = Orange,
                 baseCurrency = baseData.baseCurrency,
-                income = upcoming.stats.income.toDouble(),
-                expenses = upcoming.stats.expense.abs().toDouble()
+                income = upcoming.income,
+                expenses = upcoming.expenses
             )
         }
 
@@ -163,7 +163,7 @@ private fun LazyListScope.upcomingSection(
 private fun LazyListScope.overdueSection(
     baseData: TransactionListData,
 
-    overdue: DueSection?,
+    overdue: TransactionListDueSection?,
     shouldShowAccountSpecificColorInTransactions: Boolean,
     onPayOrGet: (UUID) -> Unit,
     onSkipTransaction: (UUID) -> Unit,
@@ -185,8 +185,8 @@ private fun LazyListScope.overdueSection(
                 title = stringResource(R.string.overdue),
                 titleColor = Red,
                 baseCurrency = baseData.baseCurrency,
-                income = overdue.stats.income.toDouble(),
-                expenses = overdue.stats.expense.abs().toDouble()
+                income = overdue.income,
+                expenses = overdue.expenses
             )
         }
 
@@ -360,8 +360,8 @@ private fun LazyItemScope.NoTransactionsEmptyState(
 
 private fun LazyListScope.scrollHackSpacer(
     history: List<TransactionHistoryItem>,
-    upcoming: DueSection?,
-    overdue: DueSection?,
+    upcoming: TransactionListDueSection?,
+    overdue: TransactionListDueSection?,
 
     lastItemSpacer: Dp?,
 ) {
