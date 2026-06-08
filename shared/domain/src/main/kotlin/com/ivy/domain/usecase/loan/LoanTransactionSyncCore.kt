@@ -25,9 +25,7 @@ import com.ivy.domain.mapper.legacy.toLegacyTransaction
 import com.ivy.domain.mapper.legacy.toLegacyAccount
 import com.ivy.domain.time.nowUtc
 import com.ivy.domain.usecase.exchange.LegacyExchangeRatesUseCase
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.time.Instant
 import java.util.Locale
@@ -44,16 +42,8 @@ internal class LoanTransactionSyncCore @Inject internal constructor(
     private val exchangeRatesUseCase: LegacyExchangeRatesUseCase,
     private val transactionRepo: TransactionStore,
 ) {
-    private var baseCurrencyCode: String? = null
-
     companion object {
         private val DEFAULT_LOAN_CATEGORY_COLOR = 0xFF45E6E6.toInt()
-    }
-
-    init {
-        CoroutineScope(Dispatchers.IO).launch {
-            baseCurrencyCode = baseCurrency()
-        }
     }
 
     suspend fun deleteAssociatedTransactions(
@@ -91,7 +81,7 @@ internal class LoanTransactionSyncCore @Inject internal constructor(
     }
 
     suspend fun baseCurrency(): String =
-        withContext(Dispatchers.IO) { baseCurrencyCode ?: getBaseCurrencyCode() }
+        withContext(Dispatchers.IO) { getBaseCurrencyCode() }
 
     suspend fun updateAssociatedTransaction(
         createTransaction: Boolean,
