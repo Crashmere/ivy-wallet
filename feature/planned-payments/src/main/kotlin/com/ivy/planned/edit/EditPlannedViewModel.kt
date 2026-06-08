@@ -23,7 +23,6 @@ import com.ivy.ui.navigation.EditPlannedScreen
 import com.ivy.ui.navigation.TransactionRouteType
 import com.ivy.ui.ComposeViewModel
 import com.ivy.domain.usecase.account.CreateAccountWithBalanceUseCase
-import com.ivy.domain.usecase.account.GetLegacyAccountUseCase
 import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
 import com.ivy.domain.usecase.category.CreateCategoryUseCase
 import com.ivy.domain.usecase.category.UpdateCategoryUseCase
@@ -43,6 +42,7 @@ import kotlinx.coroutines.launch
 import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneId
+import java.util.UUID
 import javax.inject.Inject
 
 @Stable
@@ -57,7 +57,6 @@ internal class EditPlannedViewModel @Inject internal constructor(
     private val createCategoryUseCase: CreateCategoryUseCase,
     private val updateCategoryUseCase: UpdateCategoryUseCase,
     private val createAccountWithBalanceUseCase: CreateAccountWithBalanceUseCase,
-    private val getLegacyAccountUseCase: GetLegacyAccountUseCase,
     private val getLegacyAccountsUseCase: GetLegacyAccountsUseCase,
 ) : ComposeViewModel<EditPlannedScreenState, EditPlannedScreenEvent>() {
 
@@ -68,7 +67,7 @@ internal class EditPlannedViewModel @Inject internal constructor(
     private var oneTime by mutableStateOf(false)
     private var initialTitle by mutableStateOf<String?>(null)
     private var description by mutableStateOf<String?>(null)
-    private var account by mutableStateOf<LegacyAccount?>(null)
+    private var accountId by mutableStateOf<UUID?>(null)
     private var category by mutableStateOf<Category?>(null)
     private var amount by mutableDoubleStateOf(0.0)
     private var currency by mutableStateOf("")
@@ -168,7 +167,8 @@ internal class EditPlannedViewModel @Inject internal constructor(
 
     @Composable
     private fun getAccount(): LegacyAccount? {
-        return account
+        val selectedAccountId = accountId ?: return null
+        return accounts.firstOrNull { it.id == selectedAccountId }
     }
 
     @Composable
@@ -316,18 +316,18 @@ private fun TransactionRouteType.toTransactionType(): TransactionType {
         intervalType = rule.intervalType
         initialTitle = rule.title
         description = rule.description
-        val selectedAccount = getLegacyAccountUseCase(rule.accountId) ?: error("account not found")
-        account = selectedAccount
+        if (accounts.none { it.id == rule.accountId }) error("account not found")
+        accountId = rule.accountId
         category = rule.categoryId?.let {
             getCategoryUseCase(CategoryId(it))
         }
         amount = rule.amount
 
-        updateCurrency(account = selectedAccount)
+        updateCurrency(accountId = rule.accountId)
     }
 
-    private suspend fun updateCurrency(account: LegacyAccount) {
-        currency = account.currency ?: baseCurrency()
+    private suspend fun updateCurrency(accountId: UUID?) {
+        currency = accounts.firstOrNull { it.id == accountId }?.currency ?: baseCurrency()
     }
 
     private suspend fun baseCurrency(): String = getBaseCurrencyCode()
@@ -392,10 +392,10 @@ private fun TransactionRouteType.toTransactionType(): TransactionType {
         loadedRule = loadedRule().copy(
             accountId = newAccount.id
         )
-        this@EditPlannedViewModel.account = newAccount
+        this@EditPlannedViewModel.accountId = newAccount.id
 
         viewModelScope.launch {
-            updateCurrency(account = newAccount)
+            updateCurrency(accountId = newAccount.id)
         }
 
         saveIfEditMode()
@@ -430,7 +430,7 @@ private fun TransactionRouteType.toTransactionType(): TransactionType {
                     intervalN = intervalN ?: error("no intervalN"),
                     intervalType = intervalType ?: error("no intervalType"),
                     categoryId = category?.id?.value,
-                    accountId = account?.id ?: error("no accountId"),
+                    accountId = accountId ?: error("no accountId"),
                     title = title?.trim(),
                     description = description?.trim(),
                     amount = amount ?: error("no amount"),
@@ -509,6 +509,7 @@ private fun TransactionRouteType.toTransactionType(): TransactionType {
 
         initialTitle = null
         description = null
+        accountId = null
         category = null
     }
 
