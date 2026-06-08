@@ -13,9 +13,6 @@
     <string name="current_balance">當前餘額</string>
     <string name="balance_after_payments">經常交易後的餘額</string>
     <string name="connect">連接</string>
-    <string name="sync_transactions">同步交易</string>
-    <string name="syncing_transactions">正在同步交易…</string>
-    <string name="bank_sync_enabled">啟用銀行同步: </string>
     <string name="remove_customer">刪除客戶</string>
     <string name="add_budget">新增預算</string>
     <string name="no_budgets">沒有預算</string>
@@ -208,9 +205,6 @@
     <string name="roadmap">路線圖</string>
     <string name="logout">登出</string>
     <string name="login">登入</string>
-    <string name="syncing">正在同步…</string>
-    <string name="tap_to_sync">點選同步</string>
-    <string name="sync_failed">同步失敗。點選同步</string>
     <string name="export_to_csv">匯出為 CSV</string>
     <string name="left_to_spend">剩餘費用</string>
     <string name="budget_exceeded_by">超出預算</string>

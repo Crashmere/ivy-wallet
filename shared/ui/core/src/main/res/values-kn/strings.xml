@@ -13,9 +13,6 @@
     <string name="current_balance">ಪ್ರಸ್ತುತ ಮೊತ್ತ</string>
     <string name="balance_after_payments">ಯೋಜಿತ ಪಾವತಿಗಳ ನಂತರದ ಮೊತ್ತ</string>
     <string name="connect">ಸೇರಿಸು</string>
-    <string name="sync_transactions">ವಹಿವಾಟುಗಳನ್ನು ಸಿಂಕ್ ಮಾಡಿ</string>
-    <string name="syncing_transactions">ವಹಿವಾಟುಗಳನ್ನು ಸಿಂಕ್ ಮಾಡಲಾಗುತ್ತಿದೆ…</string>
-    <string name="bank_sync_enabled">ಬ್ಯಾಂಕ್ ಸಿಂಕ್ ಅನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಲಾಗಿದೆ:</string>
     <string name="remove_customer">ಗ್ರಾಹಕರನ್ನು ತೆಗೆದುಹಾಕಿ</string>
     <string name="add_budget">ಬಜೆಟ್ ಸೇರಿಸಿ</string>
     <string name="no_budgets">ಯಾವುದೇ ಬಜೆಟ್ ಇಲ್ಲ</string>
@@ -201,9 +198,6 @@
     <string name="roadmap">ಮಾರ್ಗ ನಕ್ಷೆ</string>
     <string name="logout">ಲಾಗ್ಔಟ್</string>
     <string name="login">ಲಾಗಿನ್</string>
-    <string name="syncing">ಸಿಂಕ್ ಮಾಡಲಾಗುತ್ತಿದೆ…</string>
-    <string name="tap_to_sync">ಸಿಂಕ್ ಮಾಡಲು ಟ್ಯಾಪ್ ಮಾಡಿ</string>
-    <string name="sync_failed">ಸಿಂಕ್ ವಿಫಲವಾಗಿದೆ. ಸಿಂಕ್ ಮಾಡಲು ಟ್ಯಾಪ್ ಮಾಡಿ</string>
     <string name="export_to_csv">CSV ಗೆ ರಫ್ತು ಮಾಡಿ</string>
     <string name="left_to_spend">ಖರ್ಚು ಮಾಡಲು ಉಳಿದಿರುವ ಮೊತ್ತ</string>
     <string name="budget_exceeded_by">ಬಜೆಟ್ ಈ ಮೊತ್ತವನ್ನು ಮೀರಿದೆ</string>

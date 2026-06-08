@@ -13,9 +13,6 @@
     <string name="current_balance">ТЕКУЩИЙ БАЛАНС</string>
     <string name="balance_after_payments">БАЛАНС ПОСЛЕ ЗАПЛАНИРОВАННЫХ ПЛАТЕЖЕЙ</string>
     <string name="connect">Подключить</string>
-    <string name="sync_transactions">Синхронизировать транзации</string>
-    <string name="syncing_transactions">Синхронизация транзакций…</string>
-    <string name="bank_sync_enabled">Синхронизация с банком включена</string>
     <string name="remove_customer">Удалить клиента</string>
     <string name="add_budget">Добавить бюджет</string>
     <string name="no_budgets">Бюджетов нет</string>
@@ -201,9 +198,6 @@
     <string name="roadmap">Roadmap</string>
     <string name="logout">Выйти</string>
     <string name="login">Войти</string>
-    <string name="syncing">Синхронизация…</string>
-    <string name="tap_to_sync">Нажмите, чтобы синхронизировать</string>
-    <string name="sync_failed">Синхронизация не удалась. Нажмите, чтобы повторить</string>
     <string name="export_to_csv">Экспорт в CSV</string>
     <string name="left_to_spend">Осталось потратить</string>
     <string name="budget_exceeded_by">Бюджет превышен на</string>

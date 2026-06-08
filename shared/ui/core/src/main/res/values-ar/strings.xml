@@ -13,9 +13,6 @@
     <string name="current_balance">الرصيد الحالي</string>
     <string name="balance_after_payments">الرصيد بعد الدفعات المحددة</string>
     <string name="connect">اتصل</string>
-    <string name="sync_transactions">مزامنة المعاملات</string>
-    <string name="syncing_transactions">يتم مزامنة المعاملات…</string>
-    <string name="bank_sync_enabled">مزامنة البنك مفعلة:</string>
     <string name="remove_customer">حذف العميل</string>
     <string name="add_budget">أضف ميزانية</string>
     <string name="no_budgets">لا يوجد ميزانيات</string>
@@ -201,9 +198,6 @@
     <string name="roadmap">الخطة</string>
     <string name="logout">تسجيل الخروج</string>
     <string name="login">تسجيل الدخول</string>
-    <string name="syncing">يتم المزامنة…</string>
-    <string name="tap_to_sync">أضغط للمزامنة</string>
-    <string name="sync_failed">فشلت عملية المزامنة. أضغط للمزامنة</string>
     <string name="export_to_csv">CSV التصدير لملف</string>
     <string name="left_to_spend">المتبقي للإنفاق</string>
     <string name="budget_exceeded_by">تجاوزت عن الميزانية ب</string>

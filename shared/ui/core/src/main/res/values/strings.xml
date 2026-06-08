@@ -13,9 +13,6 @@
     <string name="current_balance">CURRENT BALANCE</string>
     <string name="balance_after_payments">BALANCE AFTER PLANNED PAYMENTS</string>
     <string name="connect">Connect</string>
-    <string name="sync_transactions">Sync transactions</string>
-    <string name="syncing_transactions">Syncing transactions…</string>
-    <string name="bank_sync_enabled">Bank sync enabled:</string>
     <string name="remove_customer">Remove customer</string>
     <string name="add_budget">Add budget</string>
     <string name="no_budgets">No budgets</string>
@@ -229,9 +226,6 @@
     <string name="roadmap">Roadmap</string>
     <string name="logout">Logout</string>
     <string name="login">Login</string>
-    <string name="syncing">Syncing…</string>
-    <string name="tap_to_sync">Tap to sync</string>
-    <string name="sync_failed">Sync failed. Tap to retry</string>
     <string name="export_to_csv">Export to CSV</string>
     <string name="left_to_spend">Left to spend</string>
     <string name="budget_exceeded_by">Budget exceeded by</string>

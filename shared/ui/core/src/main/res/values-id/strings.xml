@@ -13,9 +13,6 @@
     <string name="current_balance">SALDO SAAT INI</string>
     <string name="balance_after_payments">SALDO SETELAH PEMBAYARAN TERENCANA</string>
     <string name="connect">Hubungkan</string>
-    <string name="sync_transactions">Sinkronkan transaksi</string>
-    <string name="syncing_transactions">Menyinkronkan transaksi...</string>
-    <string name="bank_sync_enabled">Sinkronisasi bank diaktifkan:</string>
     <string name="remove_customer">Hapus pelanggan</string>
     <string name="add_budget">Tambahkan anggaran</string>
     <string name="no_budgets">Tidak ada anggaran</string>
@@ -204,9 +201,6 @@
     <string name="roadmap">Rencana</string>
     <string name="logout">Keluar</string>
     <string name="login">Masuk</string>
-    <string name="syncing">Menyinkronkan…</string>
-    <string name="tap_to_sync">Ketuk untuk menyinkronkan</string>
-    <string name="sync_failed">Sinkronisasi gagal. Ketuk untuk menyinkronkan</string>
     <string name="export_to_csv">Ekspor ke CSV</string>
     <string name="left_to_spend">Sisa yang dapat dihabiskan</string>
     <string name="budget_exceeded_by">Anggaran melebihi oleh</string>

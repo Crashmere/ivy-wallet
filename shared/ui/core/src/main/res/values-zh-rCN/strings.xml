@@ -13,9 +13,6 @@
     <string name="current_balance">当前余额</string>
     <string name="balance_after_payments">计划支付后余额</string>
     <string name="connect">连接</string>
-    <string name="sync_transactions">同步交易</string>
-    <string name="syncing_transactions">正在同步交易...</string>
-    <string name="bank_sync_enabled">启用银行同步：</string>
     <string name="remove_customer">移除用户</string>
     <string name="add_budget">添加预算</string>
     <string name="no_budgets">无预算</string>
@@ -227,9 +224,6 @@
     <string name="roadmap">路线图</string>
     <string name="logout">注销</string>
     <string name="login">登录</string>
-    <string name="syncing">同步中……</string>
-    <string name="tap_to_sync">点击同步</string>
-    <string name="sync_failed">同步失败。点击同步</string>
     <string name="export_to_csv">导出为 CSV</string>
     <string name="left_to_spend">剩余可用</string>
     <string name="budget_exceeded_by">超出预算</string>

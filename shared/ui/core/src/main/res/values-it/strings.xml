@@ -13,9 +13,6 @@
     <string name="current_balance">SALDO ATTUALE</string>
     <string name="balance_after_payments">SALDO DOPO I PAGAMENTI PIANIFICATI</string>
     <string name="connect">Connetti</string>
-    <string name="sync_transactions">Sincronizza transazioni</string>
-    <string name="syncing_transactions">Sincronizzazione transazioni…</string>
-    <string name="bank_sync_enabled">Sincronizzazione della banca attiva:</string>
     <string name="remove_customer">Rimuovi client</string>
     <string name="add_budget">Aggiungi budget</string>
     <string name="no_budgets">Nessun budget</string>
@@ -204,9 +201,6 @@
     <string name="roadmap">Roadmap</string>
     <string name="logout">Esci</string>
     <string name="login">Accedi</string>
-    <string name="syncing">Sincronizzazione…</string>
-    <string name="tap_to_sync">Tocca per sincronizzare</string>
-    <string name="sync_failed">Sincronizzazione non riuscita. Tocca per sincronizzare</string>
     <string name="export_to_csv">Esporta in CSV</string>
     <string name="left_to_spend">Rimangono da spendere</string>
     <string name="budget_exceeded_by">Budget superato di</string>

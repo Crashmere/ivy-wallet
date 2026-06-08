@@ -13,9 +13,6 @@
     <string name="current_balance">SỐ DƯ HIỆN TẠI</string>
     <string name="balance_after_payments">SỐ DƯ SAU THANH TOÁN</string>
     <string name="connect">Kết nối</string>
-    <string name="sync_transactions">Đồng bộ hóa giao dịch</string>
-    <string name="syncing_transactions">Đang đồng bộ giao dịch…</string>
-    <string name="bank_sync_enabled">Đã bật đồng bộ ngân hàng:</string>
     <string name="remove_customer">Xóa khách hàng</string>
     <string name="add_budget">Thêm ngân sách</string>
     <string name="no_budgets">Không có ngân sách nào</string>
@@ -204,9 +201,6 @@
     <string name="roadmap">Lộ trình</string>
     <string name="logout">Đăng xuất</string>
     <string name="login">Đăng nhập</string>
-    <string name="syncing">Đang đồng bộ…</string>
-    <string name="tap_to_sync">Nhấn để đồng bộ</string>
-    <string name="sync_failed">Đồng bộ hóa không thành công. Nhấn để thử lại</string>
     <string name="export_to_csv">Xuất ra CSV</string>
     <string name="left_to_spend">Số dư còn lại</string>
     <string name="budget_exceeded_by">Vượt quá ngân sách</string>
