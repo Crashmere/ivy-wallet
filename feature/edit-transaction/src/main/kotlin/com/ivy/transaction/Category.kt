@@ -53,7 +53,8 @@ private fun CategoryButton(
     category: Category,
     onClick: () -> Unit,
 ) {
-    val contrastColor = findContrastTextColor(category.color.value.toComposeColor())
+    val categoryColor = category.color.value.toComposeColor()
+    val contrastColor = findContrastTextColor(categoryColor)
     IvyButton(
         modifier = Modifier.padding(start = 24.dp),
         text = category.name.value,
@@ -61,7 +62,7 @@ private fun CategoryButton(
             iconName = category.icon?.id,
             defaultIcon = R.drawable.ic_custom_category_s
         ),
-        backgroundGradient = Gradient.from(category.color.value, category.color.value),
+        backgroundGradient = Gradient.solid(categoryColor),
         textStyle = LegacyTheme.typo.b2.style(
             color = contrastColor,
             fontWeight = FontWeight.Bold

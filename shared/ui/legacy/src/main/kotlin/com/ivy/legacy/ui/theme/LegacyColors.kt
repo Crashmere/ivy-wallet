@@ -120,18 +120,13 @@ data class Gradient(
     val endColor: Color
 ) {
     companion object {
-                fun from(startColor: Int, endColor: Int?) = Gradient(
-            startColor = startColor.toComposeColor(),
-            endColor = (endColor ?: startColor).toComposeColor()
-        )
+        fun solid(color: Color) = Gradient(color, color)
 
-                fun solid(color: Color) = Gradient(color, color)
-
-                @Composable
+        @Composable
         fun black() = Gradient(LegacyTheme.colors.gray, LegacyTheme.colors.pureInverse)
     }
 
-        fun asHorizontalBrush() = Brush.horizontalGradient(colors = listOf(startColor, endColor))
+    fun asHorizontalBrush() = Brush.horizontalGradient(colors = listOf(startColor, endColor))
 
     fun asVerticalBrush() = Brush.verticalGradient(colors = listOf(startColor, endColor))
 }
