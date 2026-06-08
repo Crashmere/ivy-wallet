@@ -28,6 +28,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.LegacyTag
@@ -39,7 +40,6 @@ import com.ivy.ui.time.LocalTimeFormatter
 import com.ivy.ui.time.LocalTimeProvider
 import com.ivy.legacy.ui.theme.BlueLight
 import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.legacy.ui.theme.style
 import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.data.model.currency.format
 import com.ivy.ui.R
@@ -133,13 +133,14 @@ internal fun TransactionCard(
                         )
                     }
                 ).uppercase(),
-                style = LegacyTheme.typo.nC.style(
+                style = LegacyTheme.typo.nC.copy(
                     color = if (transaction.dueDate!!.isAfter(timeProvider.utcNow())) {
                         Orange
                     } else {
                         LegacyTheme.colors.gray
                     },
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Start
                 )
             )
         }
@@ -153,9 +154,10 @@ internal fun TransactionCard(
             Text(
                 modifier = Modifier.padding(horizontal = 24.dp),
                 text = transaction.title!!,
-                style = LegacyTheme.typo.b1.style(
+                style = LegacyTheme.typo.b1.copy(
                     fontWeight = FontWeight.ExtraBold,
-                    color = LegacyTheme.colors.pureInverse
+                    color = LegacyTheme.colors.pureInverse,
+                    textAlign = TextAlign.Start
                 )
             )
         }
@@ -166,9 +168,10 @@ internal fun TransactionCard(
             Text(
                 text = description,
                 modifier = Modifier.padding(horizontal = 24.dp),
-                style = LegacyTheme.typo.nC.style(
+                style = LegacyTheme.typo.nC.copy(
                     color = LegacyTheme.colors.gray,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Start
                 ),
                 maxLines = 3,
                 overflow = TextOverflow.Ellipsis
@@ -197,9 +200,10 @@ internal fun TransactionCard(
                     transaction.toAmount.toDouble()
                         .format(IvyCurrency.getDecimalPlaces(toAccountCurrency))
                 } $toAccountCurrency",
-                style = LegacyTheme.typo.nB2.style(
+                style = LegacyTheme.typo.nB2.copy(
                     color = Gray,
-                    fontWeight = FontWeight.Normal
+                    fontWeight = FontWeight.Normal,
+                    textAlign = TextAlign.Start
                 )
             )
         }
@@ -216,9 +220,10 @@ internal fun TransactionCard(
                     text = stringResource(R.string.skip),
                     wrapContentMode = false,
                     backgroundGradient = Gradient.solid(LegacyTheme.colors.pure),
-                    textStyle = LegacyTheme.typo.b2.style(
+                    textStyle = LegacyTheme.typo.b2.copy(
                         color = LegacyTheme.colors.pureInverse,
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.Bold,
+                        textAlign = TextAlign.Start
                     )
                 ) {
                     onSkipTransaction(transaction.id)
@@ -233,9 +238,10 @@ internal fun TransactionCard(
                     text = if (isExpense) stringResource(R.string.pay) else stringResource(R.string.get),
                     wrapContentMode = false,
                     backgroundGradient = if (isExpense) gradientExpenses() else GradientGreen,
-                    textStyle = LegacyTheme.typo.b2.style(
+                    textStyle = LegacyTheme.typo.b2.copy(
                         color = if (isExpense) LegacyTheme.colors.pure else White,
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.Bold,
+                        textAlign = TextAlign.Start
                     )
                 ) {
                     onPayOrGet(transaction.id)
@@ -262,9 +268,10 @@ private fun ColumnScope.TransactionTags(tags: ImmutableList<LegacyTag>) {
             // Tag Text
             Text(
                 text = "Tags:",
-                style = LegacyTheme.typo.nC.style(
+                style = LegacyTheme.typo.nC.copy(
                     color = LegacyTheme.colors.gray,
-                    fontWeight = FontWeight.Normal
+                    fontWeight = FontWeight.Normal,
+                    textAlign = TextAlign.Start
                 )
             )
 
@@ -274,9 +281,10 @@ private fun ColumnScope.TransactionTags(tags: ImmutableList<LegacyTag>) {
         items(tags, key = { it.id }) { tag ->
             Text(
                 text = "#${tag.name}",
-                style = LegacyTheme.typo.nC.style(
+                style = LegacyTheme.typo.nC.copy(
                     color = BlueLight,
-                    fontWeight = FontWeight.Normal
+                    fontWeight = FontWeight.Normal,
+                    textAlign = TextAlign.Start
                 )
             )
             Spacer(modifier = Modifier.width(6.dp))
@@ -434,9 +442,10 @@ private fun TransactionBadge(
 
         Text(
             text = text,
-            style = LegacyTheme.typo.c.style(
+            style = LegacyTheme.typo.c.copy(
                 color = contrastColor,
-                fontWeight = FontWeight.ExtraBold
+                fontWeight = FontWeight.ExtraBold,
+                textAlign = TextAlign.Start
             )
         )
 
@@ -501,9 +510,10 @@ private fun TransferHeader(
                 .padding(vertical = 8.dp),
             // used toString() in case of null
             text = account?.name.toString(),
-            style = LegacyTheme.typo.c.style(
+            style = LegacyTheme.typo.c.copy(
                 fontWeight = FontWeight.ExtraBold,
-                color = accountContrastColor
+                color = accountContrastColor,
+                textAlign = TextAlign.Start
             )
         )
 
@@ -533,9 +543,10 @@ private fun TransferHeader(
                 .padding(vertical = 8.dp),
             // used toString() in case of null
             text = toAccount?.name.toString(),
-            style = LegacyTheme.typo.c.style(
+            style = LegacyTheme.typo.c.copy(
                 fontWeight = FontWeight.ExtraBold,
-                color = toAccountContrastColor
+                color = toAccountContrastColor,
+                textAlign = TextAlign.Start
             )
         )
 

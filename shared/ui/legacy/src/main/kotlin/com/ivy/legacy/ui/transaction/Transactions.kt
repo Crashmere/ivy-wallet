@@ -22,7 +22,6 @@ import com.ivy.data.model.legacy.LegacyTransaction
 import com.ivy.data.model.TransactionHistoryDateDivider
 import com.ivy.data.model.TransactionHistoryItem
 import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.legacy.ui.theme.style
 import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.Black
 import com.ivy.legacy.ui.theme.Gradient
@@ -205,9 +204,10 @@ private fun LazyListScope.overdueSection(
                             Black
                         )
                     },
-                    textStyle = LegacyTheme.typo.b2.style(
+                    textStyle = LegacyTheme.typo.b2.copy(
                         color = if (isLightTheme) Black else White,
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.Bold,
+                        textAlign = TextAlign.Start
                     )
                 ) {
                     onSkipAllTransactions(overdue.transactions.map { it.id })
@@ -330,9 +330,10 @@ private fun LazyItemScope.NoTransactionsEmptyState(
 
         Text(
             text = emptyStateTitle,
-            style = LegacyTheme.typo.b1.style(
+            style = LegacyTheme.typo.b1.copy(
                 color = Gray,
-                fontWeight = FontWeight.ExtraBold
+                fontWeight = FontWeight.ExtraBold,
+                textAlign = TextAlign.Start
             )
         )
 
@@ -341,7 +342,7 @@ private fun LazyItemScope.NoTransactionsEmptyState(
         Text(
             modifier = Modifier.padding(horizontal = 32.dp),
             text = emptyStateText,
-            style = LegacyTheme.typo.b2.style(
+            style = LegacyTheme.typo.b2.copy(
                 color = Gray,
                 fontWeight = FontWeight.Medium,
                 textAlign = TextAlign.Center

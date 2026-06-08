@@ -12,13 +12,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.currency.format
 import com.ivy.legacy.ui.theme.Gray
 import com.ivy.legacy.ui.theme.Green
 import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.legacy.ui.theme.style
 import com.ivy.ui.R
 import com.ivy.ui.time.formatLocal
 import com.ivy.ui.time.LocalTimeProvider
@@ -48,8 +48,10 @@ internal fun HistoryDateDivider(
                 text = date.formatLocal(
                     if (today.year == date.year) "MMMM dd." else "MMM dd. yyy"
                 ),
-                style = LegacyTheme.typo.b1.style(
-                    fontWeight = FontWeight.ExtraBold
+                style = LegacyTheme.typo.b1.copy(
+                    color = LegacyTheme.colors.pureInverse,
+                    fontWeight = FontWeight.ExtraBold,
+                    textAlign = TextAlign.Start
                 )
             )
 
@@ -70,8 +72,10 @@ internal fun HistoryDateDivider(
                         date.formatLocal("EEEE")
                     }
                 },
-                style = LegacyTheme.typo.c.style(
-                    fontWeight = FontWeight.Bold
+                style = LegacyTheme.typo.c.copy(
+                    color = LegacyTheme.colors.pureInverse,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Start
                 )
             )
         }
@@ -81,9 +85,10 @@ internal fun HistoryDateDivider(
         val cashflow = income - expenses
         Text(
             text = "${cashflow.format(baseCurrency)} $baseCurrency",
-            style = LegacyTheme.typo.nB2.style(
+            style = LegacyTheme.typo.nB2.copy(
                 fontWeight = FontWeight.Bold,
-                color = if (cashflow > 0) Green else Gray
+                color = if (cashflow > 0) Green else Gray,
+                textAlign = TextAlign.Start
             )
         )
 
