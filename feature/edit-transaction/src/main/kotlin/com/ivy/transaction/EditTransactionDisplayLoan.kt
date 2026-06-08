@@ -1,4 +1,4 @@
-package com.ivy.legacy.ui.model
+package com.ivy.transaction
 
 import androidx.compose.runtime.Immutable
 

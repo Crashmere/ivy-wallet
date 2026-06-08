@@ -1,4 +1,4 @@
-package com.ivy.legacy.ui.model
+package com.ivy.home
 
 import androidx.compose.runtime.Immutable
 import java.math.BigDecimal

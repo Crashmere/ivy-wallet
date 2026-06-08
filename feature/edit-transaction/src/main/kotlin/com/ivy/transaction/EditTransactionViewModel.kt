@@ -42,7 +42,6 @@ import com.ivy.domain.usecase.transaction.DeleteTransactionUseCase
 import com.ivy.domain.usecase.transaction.GetLegacyTransactionUseCase
 import com.ivy.domain.usecase.transaction.SaveLegacyTransactionUseCase
 import com.ivy.domain.usecase.transaction.SuggestTransactionTitlesUseCase
-import com.ivy.legacy.ui.model.EditTransactionDisplayLoan
 import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.ui.navigation.EditTransactionScreen
 import com.ivy.ui.navigation.MainScreen

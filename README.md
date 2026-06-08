@@ -450,6 +450,7 @@
 - 键盘显示监听、隐藏键盘、状态栏深色文字控制和旧日期展示格式化已从 legacy UI 迁到 `shared:ui:core`；搜索、交易、借贷、计划付款和旧弹窗继续使用相同行为，但不再通过 legacy 包拿通用平台/时间 helper。
 - 弹簧动画、插值、颜色插值、滑动手势监听、dp 转 px 和 interval 类型文案已从 legacy UI 根包迁到 `shared:ui:core`；首页、主底栏、饼图、报表和旧弹窗保留原交互，但通用动画/手势工具不再挂在 legacy 根包下。
 - `SearchInput` 已归入 legacy 组件包，金额输入偏好 CompositionLocal 已归入 `shared:ui:core` 的 preferences 包，`LegacyUiRoot` 对外包名改为 `com.ivy.ui`；`com.ivy.legacy.ui` 根包不再承载公共入口。
+- 首页缓冲金额展示模型 `BufferInfo` 和编辑交易借贷提示模型 `EditTransactionDisplayLoan` 已移回各自 feature；`shared:ui:legacy` 不再保存这两段页面私有状态。
 - 旧日期/周期显示链路已停止使用全局 `stringRes()`：月份模型改为只保存 `monthValue`，月份名、interval 单位、Last N 周期和“今天/昨天/明天”文案都在 Composable 显示边界通过 `stringResource()` 获取；无调用方的旧 `stringRes()` 兼容函数已经删除。
 - 已删除 `shared:base` 中最后的全局 `appContext` 入口；`IvyAndroidApp` 不再在启动时写入全局 Context，旧 `SharedPrefs` 和平台类继续通过构造参数或 Hilt 注入获取 Context。
 - 第一批 UI 层当前时间读取已停止使用 deprecated 的全局时间函数：饼图点击计时改用 `SystemClock.elapsedRealtime()`，旧交易卡片、日期分隔、日期格式化和周期选择弹窗改为通过 `LocalTimeProvider` 获取当前日期/时间，并删除无调用方的 `getTrueDate()` 桥接函数。
