@@ -15,20 +15,18 @@ import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.legacy.ui.icon.IvyIcon
 import com.ivy.ui.compose.drawColoredShadow
 import com.ivy.ui.compose.thenIf
-import com.ivy.legacy.ui.theme.Gradient
-import com.ivy.legacy.ui.theme.GradientIvy
-import com.ivy.legacy.ui.theme.White
 import com.ivy.ui.R
-import com.ivy.legacy.ui.theme.GradientRed
+import com.ivy.ui.theme.colors.Gradient
+import com.ivy.ui.theme.colors.IvyGradients
 
 @Composable
 fun IvyCircleButton(
     modifier: Modifier = Modifier,
     backgroundPadding: Dp = 0.dp,
-    backgroundGradient: Gradient = GradientIvy,
+    backgroundGradient: Gradient = IvyGradients.Ivy,
     horizontalGradient: Boolean = true,
     @DrawableRes icon: Int,
-    tint: Color = White,
+    tint: Color = Color(0xFFFAFAFA),
     enabled: Boolean = true,
     hasShadow: Boolean = true,
     onClick: () -> Unit

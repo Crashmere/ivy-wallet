@@ -8,24 +8,24 @@ import com.ivy.ui.theme.colors.dynamicContrast as coreDynamicContrast
 import com.ivy.ui.theme.colors.isDarkColor as coreIsDarkColor
 import com.ivy.ui.theme.colors.toComposeColor as coreToComposeColor
 
-typealias Gradient = com.ivy.ui.theme.colors.Gradient
+internal typealias Gradient = com.ivy.ui.theme.colors.Gradient
 
-val White = Color(0xFFFAFAFA)
+internal val White = Color(0xFFFAFAFA)
 
 internal val Black = Color(0xFF111114)
 
 // Primary
-val Ivy = Color(0xFF6B4DFF)
+internal val Ivy = Color(0xFF6B4DFF)
 
 internal val Blue = Color(0xFF4CC3FF)
 
-val Green = Color(0xFF14CC9E)
+internal val Green = Color(0xFF14CC9E)
 
-val Orange = Color(0xFFF29F30)
+internal val Orange = Color(0xFFF29F30)
 
 internal val Orange3 = Color(0xFFFFC34C)
 
-val Red = Color(0xFFFF4060)
+internal val Red = Color(0xFFFF4060)
 
 internal val Red3 = Color(0xFFFF4CA6)
 
@@ -58,17 +58,17 @@ internal val OrangeDark = Color(0xFF734B17)
 
 internal val MediumBlack = Color(0xFF2B2C2D)
 
-val Gray = Color(0xFF939199)
+internal val Gray = Color(0xFF939199)
 
 internal val MediumWhite = Color(0xFFEFEEF0)
 
 internal val GradientRed = Gradient(Red, Color(0xFFFF99AB))
 
-val GradientGreen = IvyGradients.Green
+internal val GradientGreen = IvyGradients.Green
 
 internal val GradientOrangeRevert = Gradient(Color(0xFFF2CD9E), Orange)
 
-val GradientIvy = IvyGradients.Ivy
+internal val GradientIvy = IvyGradients.Ivy
 
 @Composable
 internal fun mediumBlur() = LegacyTheme.colors.medium.copy(alpha = 0.95f)
@@ -79,16 +79,16 @@ internal fun gradientExpenses() = Gradient(LegacyTheme.colors.pureInverse, Legac
 @Composable
 internal fun gradientBlack() = Gradient(LegacyTheme.colors.gray, LegacyTheme.colors.pureInverse)
 
-fun findContrastTextColor(backgroundColor: Color) =
+internal fun findContrastTextColor(backgroundColor: Color) =
     com.ivy.ui.theme.colors.findContrastTextColor(backgroundColor)
 
-fun isDarkColor(color: Color) = coreIsDarkColor(color)
+internal fun isDarkColor(color: Color) = coreIsDarkColor(color)
 
 internal fun isDarkColor(@ColorInt color: Int) =
     com.ivy.ui.theme.colors.isDarkColor(color)
 
-fun Color.dynamicContrast() =
+internal fun Color.dynamicContrast() =
     coreDynamicContrast()
 
-fun Int.toComposeColor() =
+internal fun Int.toComposeColor() =
     coreToComposeColor()

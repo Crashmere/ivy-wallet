@@ -24,27 +24,25 @@ import androidx.compose.ui.unit.dp
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.compose.drawColoredShadow
 import com.ivy.ui.compose.thenIf
-import com.ivy.legacy.ui.theme.Gradient
-import com.ivy.legacy.ui.theme.GradientIvy
-import com.ivy.legacy.ui.theme.Ivy
-import com.ivy.legacy.ui.theme.White
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.wrapContentSize
 import com.ivy.ui.R
+import com.ivy.ui.theme.colors.Gradient
+import com.ivy.ui.theme.colors.IvyGradients
 
 @Composable
 fun IvyButton(
     modifier: Modifier = Modifier,
     text: String,
-    backgroundGradient: Gradient = GradientIvy,
+    backgroundGradient: Gradient = IvyGradients.Ivy,
     textStyle: TextStyle = LegacyTheme.typo.b2.copy(
-        color = White,
+        color = Color(0xFFFAFAFA),
         fontWeight = FontWeight.Bold,
         textAlign = TextAlign.Start
     ),
     @DrawableRes iconStart: Int? = null,
     @DrawableRes iconEnd: Int? = null,
-    iconTint: Color = White,
+    iconTint: Color = Color(0xFFFAFAFA),
     enabled: Boolean = true,
     shadowAlpha: Float = 0.15f,
     wrapContentMode: Boolean = true,
