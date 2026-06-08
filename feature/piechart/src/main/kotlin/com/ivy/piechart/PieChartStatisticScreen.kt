@@ -67,7 +67,6 @@ import com.ivy.legacy.ui.theme.GradientGreen
 import com.ivy.legacy.ui.theme.Gray
 import com.ivy.legacy.ui.theme.White
 import com.ivy.legacy.ui.component.BalanceRow
-import com.ivy.legacy.ui.component.BalanceRowMini
 import com.ivy.legacy.ui.component.CloseButton
 import com.ivy.legacy.ui.component.ItemIconMDefaultIcon
 import com.ivy.legacy.ui.component.IvyOutlinedButton
@@ -304,11 +303,14 @@ private fun Header(
         if (percentExpanded < 1f) {
             Spacer(Modifier.width(12.dp))
 
-            BalanceRowMini(
+            BalanceRow(
                 modifier = Modifier
                     .alpha(1f - percentExpanded),
                 currency = currency,
                 balance = amount,
+                spacerCurrency = 8.dp,
+                currencyFontSize = 20.sp,
+                balanceFontSize = 22.sp,
             )
         }
 

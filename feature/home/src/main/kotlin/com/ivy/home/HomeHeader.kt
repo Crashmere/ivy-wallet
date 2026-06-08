@@ -28,6 +28,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.legacy.ui.theme.style
 import com.ivy.ui.compose.thenIf
@@ -49,7 +50,6 @@ import com.ivy.legacy.ui.theme.Gray
 import com.ivy.legacy.ui.theme.Green
 import com.ivy.legacy.ui.theme.White
 import com.ivy.legacy.ui.component.BalanceRow
-import com.ivy.legacy.ui.component.BalanceRowMini
 import com.ivy.legacy.ui.component.IvyIcon
 import com.ivy.legacy.ui.component.IvyOutlinedButton
 import com.ivy.legacy.ui.component.AmountCurrencyB1
@@ -133,7 +133,7 @@ private fun HeaderStickyRow(
         ) {
             // Balance mini row
             if (percentExpanded < 1f) {
-                BalanceRowMini(
+                BalanceRow(
                     modifier = Modifier
                         .alpha(alpha = 1f - percentExpanded)
                         .clickableNoIndication(rememberInteractionSource()) {
@@ -145,6 +145,9 @@ private fun HeaderStickyRow(
                         },
                     currency = currency,
                     balance = balance,
+                    spacerCurrency = 8.dp,
+                    currencyFontSize = 20.sp,
+                    balanceFontSize = 22.sp,
                     shortenBigNumbers = true,
                     hiddenMode = hideBalance,
                     doubleRowDisplay = true,

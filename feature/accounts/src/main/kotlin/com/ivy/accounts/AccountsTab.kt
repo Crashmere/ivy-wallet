@@ -39,7 +39,6 @@ import com.ivy.ui.navigation.screenScopedViewModel
 import com.ivy.ui.R
 import com.ivy.ui.rememberScrollPositionListState
 import com.ivy.legacy.ui.component.BalanceRow
-import com.ivy.legacy.ui.component.BalanceRowMini
 import com.ivy.legacy.ui.component.ItemIconSDefaultIcon
 import com.ivy.legacy.ui.component.ReorderButton
 import com.ivy.legacy.ui.component.ReorderModalSingleType
@@ -306,7 +305,7 @@ private fun AccountHeader(
         )
 
         if (currency != baseCurrency && accountData.balanceBaseCurrency != null) {
-            BalanceRowMini(
+            BalanceRow(
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
                     .clickableNoIndication(rememberInteractionSource()) {
@@ -316,6 +315,9 @@ private fun AccountHeader(
                 textColor = account.color.value.toComposeColor().dynamicContrast(),
                 currency = baseCurrency,
                 balance = accountData.balanceBaseCurrency!!,
+                spacerCurrency = 8.dp,
+                currencyFontSize = 20.sp,
+                balanceFontSize = 22.sp,
                 currencyUpfront = false
             )
         }
