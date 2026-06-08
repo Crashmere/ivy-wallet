@@ -29,6 +29,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.IntervalType
+import com.ivy.ui.modal.RecurringRuleModalData
 import com.ivy.ui.time.LocalTimeProvider
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
@@ -53,18 +54,9 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.LocalDateTime
-import java.util.UUID
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
-
-data class RecurringRuleModalData(
-    val initialStartDate: LocalDateTime?,
-    val initialIntervalN: Int?,
-    val initialIntervalType: IntervalType?,
-    val initialOneTime: Boolean = false,
-    val id: UUID = UUID.randomUUID()
-)
 
 @Suppress("ParameterNaming")
 @Composable

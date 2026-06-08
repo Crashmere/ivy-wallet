@@ -35,6 +35,7 @@ import com.ivy.data.model.primitive.ColorInt
 import com.ivy.data.model.primitive.IconAsset
 import com.ivy.data.model.primitive.NotBlankTrimmedString
 import com.ivy.legacy.ui.component.IvyColorPicker
+import com.ivy.ui.modal.CategoryModalData
 import com.ivy.ui.platform.hideKeyboard
 import com.ivy.ui.navigation.onScreenStart
 import com.ivy.ui.compose.selectEndTextFieldValue
@@ -48,15 +49,8 @@ import com.ivy.legacy.ui.modal.ChooseIconModal
 import com.ivy.legacy.ui.modal.IvyModal
 import com.ivy.legacy.ui.modal.ModalAddSave
 import com.ivy.legacy.ui.modal.ModalTitle
-import java.util.UUID
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
-
-data class CategoryModalData(
-    val category: Category?,
-    val id: UUID = UUID.randomUUID(),
-    val autoFocusKeyboard: Boolean = true,
-)
 
 @Composable
 fun BoxWithConstraintsScope.CategoryModal(

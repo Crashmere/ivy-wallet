@@ -26,6 +26,7 @@ import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
 import com.ivy.legacy.ui.component.IvyColorPicker
 import com.ivy.data.model.legacy.LegacyAccount
+import com.ivy.ui.modal.AccountModalData
 import com.ivy.ui.navigation.onScreenStart
 import com.ivy.ui.compose.selectEndTextFieldValue
 import com.ivy.ui.R
@@ -44,16 +45,6 @@ import java.util.Locale
 import java.util.UUID
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
-
-data class AccountModalData(
-    val account: LegacyAccount?,
-    val baseCurrency: String,
-    val balance: Double,
-    val adjustBalanceMode: Boolean = false,
-    val forceNonZeroBalance: Boolean = false,
-    val autoFocusKeyboard: Boolean = true,
-    val id: UUID = UUID.randomUUID()
-)
 
 @Composable
 fun BoxWithConstraintsScope.AccountModal(

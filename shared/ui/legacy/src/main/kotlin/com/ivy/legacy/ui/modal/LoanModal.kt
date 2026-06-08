@@ -49,6 +49,7 @@ import com.ivy.ui.R
 import com.ivy.data.model.currency.IvyCurrency
 import com.ivy.data.model.CreateAccountData
 import com.ivy.data.model.CreateLoanData
+import com.ivy.ui.modal.LoanModalData
 import com.ivy.legacy.ui.theme.GradientIvy
 import com.ivy.legacy.ui.theme.Gray
 import com.ivy.legacy.ui.theme.Ivy
@@ -58,7 +59,7 @@ import com.ivy.legacy.ui.component.IvyCheckboxWithText
 import com.ivy.legacy.ui.component.IvyIcon
 import com.ivy.legacy.ui.theme.findContrastTextColor
 import com.ivy.legacy.ui.modal.edit.AccountModal
-import com.ivy.legacy.ui.modal.edit.AccountModalData
+import com.ivy.ui.modal.AccountModalData
 import com.ivy.legacy.ui.modal.edit.AmountModal
 import com.ivy.legacy.ui.modal.edit.IconNameRow
 import com.ivy.legacy.ui.theme.toComposeColor
@@ -68,16 +69,6 @@ import java.time.LocalDateTime
 import java.util.UUID
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
-
-data class LoanModalData(
-    val loan: Loan?,
-    val baseCurrency: String,
-    val selectedAccount: LegacyAccount? = null,
-    val autoFocusKeyboard: Boolean = true,
-    val autoOpenAmountModal: Boolean = false,
-    val createLoanTransaction: Boolean = false,
-    val id: UUID = UUID.randomUUID()
-)
 
 @Suppress("CyclomaticComplexMethod", "LongMethod")
 @Composable
@@ -149,10 +140,12 @@ fun BoxWithConstraintsScope.LoanModal(
                 // enabled = nameTextFieldValue.text.isNullOrBlank().not() && amount > 0 && ((createLoanTrans && selectedAcc != null) || !createLoanTrans)
                 enabled = nameTextFieldValue.text.isNullOrBlank().not() && amount > 0 && selectedAcc != null
             ) {
+                val modalSelectedAccount = modal?.selectedAccount
+                val modalBaseCurrency = modal?.baseCurrency.orEmpty()
                 accountChangeModal =
-                    loan != null && modal.selectedAccount != null && currencyCode != (
-                        modal.selectedAccount.currency
-                            ?: modal.baseCurrency
+                    loan != null && modalSelectedAccount != null && currencyCode != (
+                        modalSelectedAccount.currency
+                            ?: modalBaseCurrency
                         )
 
                 if (!accountChangeModal) {

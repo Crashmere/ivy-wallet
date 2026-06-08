@@ -79,9 +79,9 @@ import com.ivy.ui.period.ChoosePeriodModalData
 import com.ivy.legacy.ui.modal.DeleteConfirmationModal
 import com.ivy.legacy.ui.modal.DeleteModal
 import com.ivy.legacy.ui.modal.edit.AccountModal
-import com.ivy.legacy.ui.modal.edit.AccountModalData
+import com.ivy.ui.modal.AccountModalData
 import com.ivy.legacy.ui.modal.edit.CategoryModal
-import com.ivy.legacy.ui.modal.edit.CategoryModalData
+import com.ivy.ui.modal.CategoryModalData
 import com.ivy.legacy.ui.theme.toComposeColor
 import com.ivy.legacy.ui.component.PeriodSelector
 import kotlinx.collections.immutable.ImmutableList

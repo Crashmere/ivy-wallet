@@ -1,7 +1,7 @@
 package com.ivy.categories
 
 import com.ivy.data.model.CreateCategoryData
-import com.ivy.legacy.ui.modal.edit.CategoryModalData
+import com.ivy.ui.modal.CategoryModalData
 
 sealed interface CategoriesScreenEvent {
     data class OnReorder(

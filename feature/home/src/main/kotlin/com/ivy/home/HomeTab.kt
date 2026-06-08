@@ -48,7 +48,7 @@ import com.ivy.ui.rememberScrollPositionListState
 import com.ivy.data.model.currency.IvyCurrency
 import com.ivy.data.model.IncomeExpensePair
 import com.ivy.legacy.ui.modal.BufferModal
-import com.ivy.legacy.ui.modal.BufferModalData
+import com.ivy.ui.modal.BufferModalData
 import com.ivy.legacy.ui.modal.ChoosePeriodModal
 import com.ivy.ui.period.ChoosePeriodModalData
 import com.ivy.legacy.ui.modal.CurrencyModal

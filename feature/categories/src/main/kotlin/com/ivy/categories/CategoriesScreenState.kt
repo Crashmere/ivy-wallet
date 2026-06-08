@@ -1,6 +1,6 @@
 package com.ivy.categories
 
-import com.ivy.legacy.ui.modal.edit.CategoryModalData
+import com.ivy.ui.modal.CategoryModalData
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList

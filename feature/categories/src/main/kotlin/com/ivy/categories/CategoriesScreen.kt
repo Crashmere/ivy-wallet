@@ -67,7 +67,7 @@ import com.ivy.legacy.ui.modal.IvyModal
 import com.ivy.legacy.ui.modal.ModalSet
 import com.ivy.legacy.ui.modal.ModalTitle
 import com.ivy.legacy.ui.modal.edit.CategoryModal
-import com.ivy.legacy.ui.modal.edit.CategoryModalData
+import com.ivy.ui.modal.CategoryModalData
 import com.ivy.legacy.ui.theme.toComposeColor
 import com.ivy.legacy.ui.component.AmountCurrencyB1
 import kotlinx.collections.immutable.ImmutableList

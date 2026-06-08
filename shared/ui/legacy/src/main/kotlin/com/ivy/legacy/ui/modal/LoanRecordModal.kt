@@ -45,12 +45,13 @@ import com.ivy.ui.R
 import com.ivy.data.model.CreateAccountData
 import com.ivy.data.model.CreateLoanRecordData
 import com.ivy.data.model.EditLoanRecordData
+import com.ivy.ui.modal.LoanRecordModalData
 import com.ivy.legacy.ui.component.ItemIconSDefaultIcon
 import com.ivy.legacy.ui.component.IvyCheckboxWithText
 import com.ivy.legacy.ui.component.IvyIcon
 import com.ivy.legacy.ui.theme.findContrastTextColor
 import com.ivy.legacy.ui.modal.edit.AccountModal
-import com.ivy.legacy.ui.modal.edit.AccountModalData
+import com.ivy.ui.modal.AccountModalData
 import com.ivy.legacy.ui.modal.edit.AmountModal
 import com.ivy.legacy.ui.theme.toComposeColor
 import kotlinx.coroutines.launch
@@ -58,16 +59,6 @@ import java.time.Instant
 import java.util.UUID
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
-
-data class LoanRecordModalData(
-    val loanRecord: LoanRecord?,
-    val baseCurrency: String,
-    val loanAccountCurrencyCode: String? = null,
-    val selectedAccount: LegacyAccount? = null,
-    val createLoanRecordTransaction: Boolean = false,
-    val isLoanInterest: Boolean = false,
-    val id: UUID = UUID.randomUUID(),
-)
 
 @Suppress("CyclomaticComplexMethod", "LongMethod")
 @SuppressLint("ComposeModifierMissing")
@@ -131,9 +122,12 @@ fun BoxWithConstraintsScope.LoanRecordModal(
                 enabled = amount > 0 && selectedAcc != null
                 // enabled = amount > 0 && ((createLoanRecordTrans && selectedAcc != null) || !createLoanRecordTrans)
             ) {
+                val modalSelectedAccount = modal?.selectedAccount
+                val modalBaseCurrency = modal?.baseCurrency
+                val modalLoanAccountCurrencyCode = modal?.loanAccountCurrencyCode
                 accountChangeConformationModal =
-                    initialRecord != null && modal.selectedAccount != null &&
-                            modal.baseCurrency != currencyCode && currencyCode != modal.loanAccountCurrencyCode
+                    initialRecord != null && modalSelectedAccount != null &&
+                            modalBaseCurrency != currencyCode && currencyCode != modalLoanAccountCurrencyCode
 
                 if (!accountChangeConformationModal) {
                     save(

@@ -23,7 +23,7 @@ import com.ivy.domain.usecase.category.CreateCategoryUseCase
 import com.ivy.domain.usecase.category.GetCategorySortOrderPreferenceUseCase
 import com.ivy.domain.usecase.category.SetCategorySortOrderPreferenceUseCase
 import com.ivy.data.model.CreateCategoryData
-import com.ivy.legacy.ui.modal.edit.CategoryModalData
+import com.ivy.ui.modal.CategoryModalData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf

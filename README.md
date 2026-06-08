@@ -453,6 +453,7 @@
 - 首页缓冲金额展示模型 `BufferInfo` 和编辑交易借贷提示模型 `EditTransactionDisplayLoan` 已移回各自 feature；`shared:ui:legacy` 不再保存这两段页面私有状态。
 - 周期选择模型和状态 `TimePeriod/Month/LastNTimeRange/PeriodState` 已从 legacy UI 迁到 `shared:ui:core` 的 `com.ivy.ui.period`；首页、交易、报表、饼图、预算和根部状态继续共用同一周期语义，但不再依赖 legacy 包。
 - 周期弹窗状态 `ChoosePeriodModalData` 已归入 `shared:ui:core` 的 `com.ivy.ui.period`，弹窗动画时长常量已归入 `com.ivy.ui.animation`；页面状态和搜索页动画不再为了数据对象或常量引用 legacy modal 包。
+- 账户、分类、缓冲金额、借贷、借贷记录和计划付款重复规则弹窗的 `*ModalData` 已归入 `shared:ui:core` 的 `com.ivy.ui.modal`；feature 的 ViewModel/State 不再为了保存弹窗状态直接引用 legacy modal 实现包。
 - 旧交易列表组件的数据契约 `AppBaseData/LegacyDueSection` 已归入 `com.ivy.legacy.ui.component.transaction`；`com.ivy.legacy.ui.model` 包已清空。
 - 旧日期/周期显示链路已停止使用全局 `stringRes()`：月份模型改为只保存 `monthValue`，月份名、interval 单位、Last N 周期和“今天/昨天/明天”文案都在 Composable 显示边界通过 `stringResource()` 获取；无调用方的旧 `stringRes()` 兼容函数已经删除。
 - 已删除 `shared:base` 中最后的全局 `appContext` 入口；`IvyAndroidApp` 不再在启动时写入全局 Context，旧 `SharedPrefs` 和平台类继续通过构造参数或 Hilt 注入获取 Context。
