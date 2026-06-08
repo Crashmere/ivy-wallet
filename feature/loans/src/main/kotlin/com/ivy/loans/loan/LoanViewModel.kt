@@ -63,7 +63,7 @@ internal class LoanViewModel @Inject internal constructor(
     private var completedLoans by mutableStateOf<ImmutableList<DisplayLoan>>(persistentListOf())
     private var pendingLoans by mutableStateOf<ImmutableList<DisplayLoan>>(persistentListOf())
     private var accounts by mutableStateOf<ImmutableList<LegacyAccount>>(persistentListOf())
-    private var selectedAccount by mutableStateOf<LegacyAccount?>(null)
+    private var selectedAccountId by mutableStateOf<UUID?>(null)
     private var loanModalData by mutableStateOf<LoanModalData?>(null)
     private var reorderModalVisible by mutableStateOf(false)
     private var dateTime by mutableStateOf<Instant>(nowUtc())
@@ -87,7 +87,6 @@ internal class LoanViewModel @Inject internal constructor(
         return LoanScreenState(
             baseCurrency = getBaseCurrencyCode(),
             accounts = getAccounts(),
-            selectedAccount = getSelectedAccount(),
             loanModalData = getLoanModalData(),
             reorderModalVisible = getReorderModalVisible(),
             totalOweAmount = getTotalOweAmount(totalOweAmount, defaultCurrencyCode),
@@ -131,9 +130,6 @@ internal class LoanViewModel @Inject internal constructor(
     }
 
     @Composable
-    private fun getSelectedAccount() = selectedAccount
-
-    @Composable
     private fun getAccounts() = accounts
 
     @Composable
@@ -149,7 +145,7 @@ internal class LoanViewModel @Inject internal constructor(
                 loanModalData = LoanModalData(
                     loan = null,
                     baseCurrency = baseCurrencyCode,
-                    selectedAccount = selectedAccount
+                    selectedAccount = selectedAccount()
                 )
             }
 
@@ -261,8 +257,8 @@ internal class LoanViewModel @Inject internal constructor(
     private suspend fun initialiseAccounts() {
         val accountsList = getLegacyAccountsUseCase()
         accounts = accountsList
-        selectedAccount = defaultAccountId(accountsList)
-        selectedAccount?.let {
+        selectedAccountId = defaultAccountId(accountsList)
+        selectedAccount()?.let {
             baseCurrencyCode = it.currency ?: defaultCurrencyCode
         }
     }
@@ -347,14 +343,19 @@ internal class LoanViewModel @Inject internal constructor(
 
     private fun defaultAccountId(
         accounts: List<LegacyAccount>,
-    ): LegacyAccount? {
+    ): UUID? {
         val lastSelectedId = getLastSelectedAccountId()
 
         lastSelectedId?.let { uuid ->
-            return accounts.find { it.id == uuid }
+            return accounts.find { it.id == uuid }?.id
         } ?: run {
-            return if (accounts.isNotEmpty()) accounts[0] else null
+            return accounts.firstOrNull()?.id
         }
+    }
+
+    private fun selectedAccount(): LegacyAccount? {
+        val accountId = selectedAccountId ?: return null
+        return accounts.firstOrNull { it.id == accountId }
     }
 
     private fun findCurrencyCode(accounts: List<LegacyAccount>, accountId: UUID?): String {

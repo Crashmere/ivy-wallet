@@ -11,7 +11,6 @@ internal data class LoanScreenState(
     val completedLoans: ImmutableList<DisplayLoan>,
     val pendingLoans: ImmutableList<DisplayLoan>,
     val accounts: ImmutableList<LegacyAccount>,
-    val selectedAccount: LegacyAccount?,
     val loanModalData: LoanModalData?,
     val reorderModalVisible: Boolean,
     val totalOweAmount: String,
