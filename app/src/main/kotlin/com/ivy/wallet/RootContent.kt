@@ -13,6 +13,7 @@ import com.ivy.data.model.Theme
 import com.ivy.domain.preferences.toggles.PreferenceToggleService
 import com.ivy.domain.preferences.toggles.PreferenceToggleCatalog
 import com.ivy.legacy.ui.LegacyUiRoot
+import com.ivy.legacy.ui.theme.LegacyUiTheme
 import com.ivy.ui.preferences.AmountInputPreferences
 import com.ivy.ui.preferences.LocalAmountInputPreferences
 import com.ivy.ui.preferences.UiBoolPreference
@@ -92,6 +93,7 @@ internal fun RootContent(
         }
 
         val appLocked by viewModel.appLocked.collectAsState()
+        val legacyTheme = themeState.theme.toLegacyUiTheme()
         when (appLocked) {
             null -> {
             }
@@ -103,6 +105,7 @@ internal fun RootContent(
                     timeFormatter = timeFormatter,
                     datePicker = datePicker,
                     themeState = themeState,
+                    legacyTheme = legacyTheme,
                 ) {
                     AppLockedScreen(
                         hasLockScreen = hasLockScreen,
@@ -123,6 +126,7 @@ internal fun RootContent(
                         timeFormatter = timeFormatter,
                         datePicker = datePicker,
                         themeState = themeState,
+                        legacyTheme = legacyTheme,
                     ) {
                         IvyNavGraph(screen)
                     }
@@ -139,6 +143,15 @@ internal fun RootContent(
         ) {
             dateTimePicker.Content()
         }
+    }
+}
+
+private fun Theme.toLegacyUiTheme(): LegacyUiTheme {
+    return when (this) {
+        Theme.LIGHT -> LegacyUiTheme.LIGHT
+        Theme.DARK -> LegacyUiTheme.DARK
+        Theme.AMOLED_DARK -> LegacyUiTheme.AMOLED_DARK
+        Theme.AUTO -> LegacyUiTheme.AUTO
     }
 }
 

@@ -10,7 +10,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
-import com.ivy.data.model.Theme
+import com.ivy.legacy.ui.theme.LegacyUiTheme
 import com.ivy.ui.platform.findActivity
 import com.ivy.ui.theme.IvyMaterial3Theme
 
@@ -39,7 +39,7 @@ internal object LegacyThemeValues {
 
 @Composable
 internal fun LegacyThemeProvider(
-    theme: Theme,
+    theme: LegacyUiTheme,
     isDarkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
@@ -65,7 +65,7 @@ internal fun LegacyThemeProvider(
 
         IvyMaterial3Theme(
             dark = !colors.isLight,
-            isTrueBlack = theme == Theme.AMOLED_DARK,
+            isTrueBlack = theme == LegacyUiTheme.AMOLED_DARK,
             content = content,
         )
     }

@@ -8,6 +8,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
+import com.ivy.legacy.ui.theme.LegacyUiTheme
 import com.ivy.legacy.ui.theme.system.LegacyThemeProvider
 import com.ivy.ui.platform.DatePicker
 import com.ivy.ui.platform.LocalDatePicker
@@ -28,6 +29,7 @@ fun LegacyUiRoot(
     timeFormatter: TimeFormatter,
     datePicker: DatePicker,
     themeState: ThemeState,
+    legacyTheme: LegacyUiTheme,
     includeSurface: Boolean = true,
     content: @Composable BoxWithConstraintsScope.() -> Unit
 ) {
@@ -39,7 +41,7 @@ fun LegacyUiRoot(
         LocalDatePicker provides datePicker,
     ) {
         LegacyThemeProvider(
-            theme = themeState.theme
+            theme = legacyTheme
         ) {
             WrapWithSurface(includeSurface = includeSurface) {
                 BoxWithConstraints(modifier = Modifier.fillMaxSize()) {

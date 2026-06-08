@@ -8,7 +8,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.BaselineShift
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.ivy.data.model.Theme
+import com.ivy.legacy.ui.theme.LegacyUiTheme
 import com.ivy.ui.R
 
 internal object LegacyThemeDefaults {
@@ -106,9 +106,9 @@ internal object LegacyThemeDefaults {
         }
     }
 
-    fun colors(theme: Theme, isDarkModeEnabled: Boolean): IvyColors {
+    fun colors(theme: LegacyUiTheme, isDarkModeEnabled: Boolean): IvyColors {
         return when (theme) {
-            Theme.LIGHT -> object : IvyColors {
+            LegacyUiTheme.LIGHT -> object : IvyColors {
                 override val pure = White
                 override val pureInverse = Black
                 override val gray = Gray
@@ -131,7 +131,7 @@ internal object LegacyThemeDefaults {
                 override val isLight = true
             }
 
-            Theme.DARK -> object : IvyColors {
+            LegacyUiTheme.DARK -> object : IvyColors {
                 override val pure = Black
                 override val pureInverse = White
                 override val gray = Gray
@@ -154,7 +154,7 @@ internal object LegacyThemeDefaults {
                 override val isLight = false
             }
 
-            Theme.AMOLED_DARK -> object : IvyColors {
+            LegacyUiTheme.AMOLED_DARK -> object : IvyColors {
                 override val pure = TrueBlack
                 override val pureInverse = White
                 override val gray = Gray
@@ -177,11 +177,11 @@ internal object LegacyThemeDefaults {
                 override val isLight = false
             }
 
-            Theme.AUTO -> if (isDarkModeEnabled) {
-                colors(Theme.DARK, true)
+            LegacyUiTheme.AUTO -> if (isDarkModeEnabled) {
+                colors(LegacyUiTheme.DARK, true)
             } else {
                 colors(
-                    Theme.LIGHT,
+                    LegacyUiTheme.LIGHT,
                     false
                 )
             }
