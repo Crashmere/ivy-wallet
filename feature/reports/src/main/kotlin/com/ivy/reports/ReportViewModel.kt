@@ -7,7 +7,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableDoubleStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.graphics.toArgb
 import androidx.lifecycle.viewModelScope
 import com.ivy.data.api.file.ExternalFile
 import com.ivy.data.model.legacy.LegacyTransaction
@@ -54,7 +53,6 @@ import com.ivy.domain.transaction.getTransactionType
 import com.ivy.domain.transaction.getValue
 import com.ivy.domain.transaction.transactionCurrency
 import com.ivy.domain.util.orZero
-import com.ivy.legacy.ui.theme.Gray
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
@@ -76,6 +74,7 @@ import java.util.UUID
 import javax.inject.Inject
 
 private val exportTimestampFormatter = DateTimeFormatter.ofPattern("yyyyMMdd-HHmm")
+private val UnspecifiedCategoryColorArgb = 0xFF939199.toInt()
 
 @Stable
 @HiltViewModel
@@ -105,7 +104,7 @@ class ReportViewModel @Inject constructor(
     private val unSpecifiedCategory =
         Category(
             name = NotBlankTrimmedString.unsafe(resourceProvider.getString(R.string.unspecified)),
-            color = ColorInt(Gray.toArgb()),
+            color = ColorInt(UnspecifiedCategoryColorArgb),
             icon = null,
             id = CategoryId(UUID.randomUUID()),
             orderNum = 0.0,

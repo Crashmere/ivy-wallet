@@ -456,6 +456,7 @@
 - 账户、分类、缓冲金额、借贷、借贷记录和计划付款重复规则弹窗的 `*ModalData` 已归入 `shared:ui:core` 的 `com.ivy.ui.modal`；feature 的 ViewModel/State 不再为了保存弹窗状态直接引用 legacy modal 实现包。
 - CSV 导入器的新账户/分类默认颜色已改用导入功能自己的 ARGB 调色板；导入解析逻辑不再为了颜色值依赖 Compose `Color` 或 legacy theme。
 - 首页客户旅程卡片模型已改为保存普通 ARGB 背景色，卡片 provider 不再依赖 legacy theme；只有实际 Composable 绘制边界继续把颜色转成旧 UI 渐变。
+- 交易、报表和饼图的 ViewModel/UseCase 中用于占位分类的颜色已改成本地 ARGB 常量；非绘制逻辑不再为了 `Color.toArgb()` 依赖 Compose graphics 或 legacy theme。
 - 旧交易列表组件的数据契约 `AppBaseData/LegacyDueSection` 已归入 `com.ivy.legacy.ui.component.transaction`；`com.ivy.legacy.ui.model` 包已清空。
 - 旧日期/周期显示链路已停止使用全局 `stringRes()`：月份模型改为只保存 `monthValue`，月份名、interval 单位、Last N 周期和“今天/昨天/明天”文案都在 Composable 显示边界通过 `stringResource()` 获取；无调用方的旧 `stringRes()` 兼容函数已经删除。
 - 已删除 `shared:base` 中最后的全局 `appContext` 入口；`IvyAndroidApp` 不再在启动时写入全局 Context，旧 `SharedPrefs` 和平台类继续通过构造参数或 Hilt 注入获取 Context。

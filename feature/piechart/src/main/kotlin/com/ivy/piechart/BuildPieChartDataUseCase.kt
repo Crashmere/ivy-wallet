@@ -1,6 +1,5 @@
 package com.ivy.piechart
 
-import androidx.compose.ui.graphics.toArgb
 import com.ivy.data.model.TransactionType
 import com.ivy.data.model.legacy.LegacyTransaction
 import com.ivy.ui.resource.ResourceProvider
@@ -18,13 +17,14 @@ import com.ivy.domain.usecase.category.GetCategoriesUseCase
 import com.ivy.domain.usecase.transaction.CalculateLegacyTransactionsIncomeExpenseUseCase
 import com.ivy.domain.usecase.transaction.GetLegacyTransactionsForAccountsUseCase
 import com.ivy.domain.account.legacy.includedLegacyAccounts
-import com.ivy.legacy.ui.theme.system.RedLight
 import com.ivy.ui.R
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 import java.math.BigDecimal
 import java.util.UUID
 import javax.inject.Inject
+
+private val AccountTransfersCategoryColorArgb = 0xFFFFCCD5.toInt()
 
 class BuildPieChartDataUseCase @Inject constructor(
     private val getLegacyAccountsUseCase: GetLegacyAccountsUseCase,
@@ -37,7 +37,7 @@ class BuildPieChartDataUseCase @Inject constructor(
     private val accountTransfersCategory =
         Category(
             name = NotBlankTrimmedString.unsafe(resourceProvider.getString(R.string.account_transfers)),
-            color = ColorInt(RedLight.toArgb()),
+            color = ColorInt(AccountTransfersCategoryColorArgb),
             icon = IconAsset.unsafe("transfer"),
             id = CategoryId(UUID.randomUUID()),
             orderNum = 0.0,

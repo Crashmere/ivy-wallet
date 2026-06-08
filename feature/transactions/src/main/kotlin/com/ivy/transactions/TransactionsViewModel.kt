@@ -4,7 +4,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.mutableDoubleStateOf
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.ui.graphics.toArgb
 import androidx.lifecycle.viewModelScope
 import com.ivy.data.model.legacy.LegacyTransaction
 import com.ivy.data.model.TransactionHistoryItem
@@ -29,7 +28,6 @@ import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.domain.usecase.exchange.ExchangeAmountUseCase
 import com.ivy.domain.usecase.transaction.MapTransactionsToLegacyTransactionsUseCase
 import com.ivy.domain.usecase.transaction.MapTransactionsToLegacyTransactionsWithTagsUseCase
-import com.ivy.legacy.ui.theme.system.RedLight
 import com.ivy.domain.preferences.toggles.PreferenceToggleService
 import com.ivy.domain.preferences.toggles.PreferenceToggles
 import com.ivy.ui.period.PeriodState
@@ -66,6 +64,8 @@ import kotlinx.coroutines.withContext
 import java.util.UUID
 import javax.inject.Inject
 import com.ivy.data.model.legacy.LegacyAccount
+
+private val AccountTransfersCategoryColorArgb = 0xFFFFCCD5.toInt()
 
 @Stable
 @HiltViewModel
@@ -474,7 +474,7 @@ class TransactionsViewModel @Inject constructor(
         initWithTransactions.value = true
         val accountTransferCategory = Category(
             name = NotBlankTrimmedString.unsafe(resourceProvider.getString(R.string.account_transfers)),
-            color = ColorInt(RedLight.toArgb()),
+            color = ColorInt(AccountTransfersCategoryColorArgb),
             icon = IconAsset.unsafe("transfer"),
             id = CategoryId(UUID.randomUUID()),
             orderNum = 0.0,
