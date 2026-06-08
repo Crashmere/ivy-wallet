@@ -1,6 +1,6 @@
 package com.ivy.domain.time
 
-fun Iterable<com.ivy.data.model.Transaction>.filterUpcoming(): List<com.ivy.data.model.Transaction> {
+internal fun Iterable<com.ivy.data.model.Transaction>.filterUpcoming(): List<com.ivy.data.model.Transaction> {
     val todayStartOfDayUTC = todayStartOfUtcDay()
 
     return filter {
@@ -9,7 +9,7 @@ fun Iterable<com.ivy.data.model.Transaction>.filterUpcoming(): List<com.ivy.data
     }
 }
 
-fun Iterable<com.ivy.data.model.Transaction>.filterOverdue(): List<com.ivy.data.model.Transaction> {
+internal fun Iterable<com.ivy.data.model.Transaction>.filterOverdue(): List<com.ivy.data.model.Transaction> {
     val todayStartOfDayUTC = todayStartOfUtcDay()
 
     return filter {
