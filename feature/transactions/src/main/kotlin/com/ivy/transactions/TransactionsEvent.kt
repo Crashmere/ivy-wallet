@@ -6,7 +6,7 @@ import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.ui.modal.ChoosePeriodModalData
 import java.util.UUID
 
-sealed interface TransactionsEvent {
+internal sealed interface TransactionsEvent {
     data class SetUpcomingExpanded(val expanded: Boolean) : TransactionsEvent
     data class SetOverdueExpanded(val expanded: Boolean) : TransactionsEvent
 

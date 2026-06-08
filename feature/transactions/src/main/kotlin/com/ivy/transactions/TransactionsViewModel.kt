@@ -71,7 +71,7 @@ private val AccountTransfersCategoryColorArgb = 0xFFFFCCD5.toInt()
 
 @Stable
 @HiltViewModel
-class TransactionsViewModel @Inject constructor(
+internal class TransactionsViewModel @Inject constructor(
     private val periodState: PeriodState,
     private val updateCategoryUseCase: UpdateCategoryUseCase,
     private val updateAccountWithBalanceUseCase: UpdateAccountWithBalanceUseCase,

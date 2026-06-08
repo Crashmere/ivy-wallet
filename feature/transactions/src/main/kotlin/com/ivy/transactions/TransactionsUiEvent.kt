@@ -1,5 +1,5 @@
 package com.ivy.transactions
 
-sealed interface TransactionsUiEvent {
+internal sealed interface TransactionsUiEvent {
     data object CloseScreen : TransactionsUiEvent
 }

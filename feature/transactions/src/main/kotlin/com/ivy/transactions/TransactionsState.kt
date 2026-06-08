@@ -10,7 +10,7 @@ import com.ivy.ui.modal.ChoosePeriodModalData
 import kotlinx.collections.immutable.ImmutableList
 
 @Immutable
-data class TransactionsState(
+internal data class TransactionsState(
     val period: TimePeriod,
     val baseCurrency: String,
     val currency: String,
