@@ -2,8 +2,6 @@ package com.ivy.wallet.platform
 
 import android.content.Intent
 import android.net.Uri
-import android.os.Environment
-import android.provider.DocumentsContract
 import androidx.activity.ComponentActivity
 import androidx.activity.result.ActivityResultLauncher
 
@@ -15,11 +13,6 @@ internal fun ActivityResultFilePicker.registerActivityResultLaunchers(activity: 
                 addCategory(Intent.CATEGORY_OPENABLE)
                 type = "application/csv"
                 putExtra(Intent.EXTRA_TITLE, fileName)
-                putExtra(
-                    DocumentsContract.EXTRA_INITIAL_URI,
-                    Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-                        .toURI()
-                )
             }
         }
     ) { _, intent ->
