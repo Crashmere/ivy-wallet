@@ -2,7 +2,6 @@ package com.ivy.transactions
 
 import com.ivy.data.model.Category
 import com.ivy.ui.period.TimePeriod
-import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.ui.modal.ChoosePeriodModalData
 import java.util.UUID
 
@@ -19,7 +18,7 @@ internal sealed interface TransactionsEvent {
     data object Delete : TransactionsEvent
     data class EditCategory(val updatedCategory: Category) : TransactionsEvent
     data class EditAccount(
-        val account: LegacyAccount,
+        val accountId: UUID,
         val newBalance: Double
     ) : TransactionsEvent
 

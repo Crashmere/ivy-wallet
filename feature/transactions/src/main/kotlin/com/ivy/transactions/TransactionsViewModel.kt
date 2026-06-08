@@ -298,7 +298,7 @@ internal class TransactionsViewModel @Inject internal constructor(
         when (event) {
             TransactionsEvent.Delete -> delete()
             is TransactionsEvent.EditAccount -> editAccount(
-                event.account,
+                event.accountId,
                 event.newBalance
             )
 
@@ -576,10 +576,9 @@ internal class TransactionsViewModel @Inject internal constructor(
         }
     }
 
-    private fun editAccount(
-        account: LegacyAccount,
-        newBalance: Double,
-    ) {
+    private fun editAccount(accountId: UUID, newBalance: Double) {
+        val account = accounts.value.firstOrNull { it.id == accountId } ?: return
+
         viewModelScope.launch {
             updateAccountWithBalanceUseCase(account, newBalance)
             restartCurrentScreen(timePeriod = period.value)

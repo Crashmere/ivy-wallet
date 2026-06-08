@@ -1177,6 +1177,7 @@
 - 旧交易列表组件的计划付款事件继续收窄：支付/收款、跳过和跳过全部回调现在只向页面层传交易 ID；交易卡片仍用 `LegacyTransaction` 渲染和处理点击编辑，避免把完整旧模型继续用于简单事件分发。
 - 旧交易列表组件的交易点击事件也继续收窄：页面层只接收编辑页导航需要的交易 ID 和交易类型；完整 `LegacyTransaction` 继续限定在交易卡片渲染边界内。
 - 旧交易列表组件的账户和分类点击事件同样收窄为只传 ID；页面层筛选导航不再接收完整 `LegacyAccount/Category` 对象。
+- 交易列表编辑账户事件也已收窄为只传账户 ID 和新余额；ViewModel 从当前账户状态解析旧账户对象，完整 `LegacyAccount` 不再穿过事件层。
 - 旧重排弹窗的底层多类型 `ReorderModal` 已收为 `shared:ui:legacy` 私有实现；feature 层继续只通过 `ReorderModalSingleType`、`ReorderButton` 和 `ReorderableItem` 使用现有排序 UI。
 - 旧主题外层色板继续收窄：`Blue`、`IvyLight`、`GreenLight`、`RedLight` 和 `IvyDark` 没有模块外调用点，已改为 `shared:ui:legacy` 内部常量；feature 层继续通过 `LegacyTheme` 和仍公开的实际使用色板访问旧主题。
 
