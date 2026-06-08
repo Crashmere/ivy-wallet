@@ -1,6 +1,6 @@
 package com.ivy.loans.loan
 
-import com.ivy.loans.loan.data.DisplayLoan
+import com.ivy.loans.data.DisplayLoan
 import com.ivy.data.model.CreateAccountData
 import com.ivy.data.model.CreateLoanData
 

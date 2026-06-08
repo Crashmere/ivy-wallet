@@ -1,4 +1,4 @@
-package com.ivy.loans.loan.data
+package com.ivy.loans.data
 
 import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.data.model.LoanRecord

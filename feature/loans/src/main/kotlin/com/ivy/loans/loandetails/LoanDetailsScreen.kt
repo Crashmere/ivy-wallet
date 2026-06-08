@@ -49,7 +49,7 @@ import com.ivy.data.model.currency.format
 import com.ivy.ui.time.formatNicely
 import com.ivy.ui.compose.rememberInteractionSource
 import com.ivy.ui.platform.setStatusBarDarkTextCompat
-import com.ivy.loans.loan.data.DisplayLoanRecord
+import com.ivy.loans.data.DisplayLoanRecord
 import com.ivy.loans.loandetails.events.DeleteLoanModalEvent
 import com.ivy.loans.loandetails.events.LoanDetailsScreenEvent
 import com.ivy.loans.loandetails.events.LoanModalEvent

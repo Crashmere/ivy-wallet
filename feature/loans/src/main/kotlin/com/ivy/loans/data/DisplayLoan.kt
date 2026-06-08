@@ -1,4 +1,4 @@
-package com.ivy.loans.loan.data
+package com.ivy.loans.data
 
 import com.ivy.data.model.Loan
 import com.ivy.data.model.currency.getDefaultFIATCurrency

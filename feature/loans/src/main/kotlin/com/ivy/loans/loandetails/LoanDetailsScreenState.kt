@@ -2,7 +2,7 @@ package com.ivy.loans.loandetails
 
 import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.data.model.Loan
-import com.ivy.loans.loan.data.DisplayLoanRecord
+import com.ivy.loans.data.DisplayLoanRecord
 import com.ivy.ui.modal.LoanModalData
 import com.ivy.ui.modal.LoanRecordModalData
 import kotlinx.collections.immutable.ImmutableList
