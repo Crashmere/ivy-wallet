@@ -93,7 +93,7 @@ internal fun ModalCheck(
 }
 
 @Composable
-fun <T> ModalAddSave(
+internal fun <T> ModalAddSave(
     item: T,
     enabled: Boolean = true,
     onClick: () -> Unit
