@@ -23,7 +23,7 @@ import com.ivy.ui.compose.toDensityDp
 import com.ivy.ui.R
 import com.ivy.legacy.ui.button.CloseButton
 import com.ivy.legacy.ui.button.IvyOutlinedButton
-import com.ivy.legacy.ui.theme.gradientCutBackgroundTop
+import com.ivy.ui.compose.gradientCutBackgroundTop
 
 @Composable
 internal fun BoxWithConstraintsScope.PlannedPaymentsBottomBar(

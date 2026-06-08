@@ -1,11 +1,14 @@
 package com.ivy.ui.compose
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Paint
 import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
@@ -31,6 +34,24 @@ fun Modifier.thenIf(
     } else {
         this
     }
+}
+
+fun Modifier.gradientCutBackgroundTop(
+    pure: Color,
+    density: Density,
+    endY: Dp = 32.dp
+): Modifier {
+    return background(
+        brush = Brush.verticalGradient(
+            colors = listOf(
+                Color.Transparent,
+                pure,
+            ),
+            endY = with(density) {
+                endY.toPx()
+            }
+        )
+    ).padding(top = 16.dp)
 }
 
 @Composable

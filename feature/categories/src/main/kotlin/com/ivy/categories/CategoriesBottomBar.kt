@@ -26,7 +26,7 @@ import androidx.compose.ui.unit.dp
 import com.ivy.ui.R
 import com.ivy.legacy.ui.button.IvyButton
 import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.legacy.ui.theme.gradientCutBackgroundTop
+import com.ivy.ui.compose.gradientCutBackgroundTop
 import com.ivy.ui.compose.navigationBarInset
 import com.ivy.ui.compose.toDensityDp
 

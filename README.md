@@ -143,6 +143,7 @@
 - 编辑交易页和计划付款编辑页的“添加计划日期”按钮已改为各自 feature 私有实现；`shared:ui:legacy` 的 `AddPrimaryAttributeButton` 收窄为旧描述组件内部实现。
 - 报表金额筛选和饼图分类行直接使用 `AmountCurrencyB1`；`shared:ui:legacy` 删除只剩包装作用的 `AmountCurrencyB1Row`。
 - 收窄旧主题色板公开面：颜色选择器专用色板、旧 UI 内部红色/橙色渐变、透明色、底部渐变遮罩、旧弹窗背景模糊和 `asBrush()` 扩展改为 `shared:ui:legacy` 内部实现，feature 层仍可使用现有公开颜色和主题门面。
+- 旧底部栏渐隐背景 helper 已从 `shared:ui:legacy` 迁到 `shared:ui:core` 的 Compose 工具包；预算、分类、汇率、饼图统计、计划付款和旧弹窗继续保留原渐隐背景行为，但不再通过 legacy theme 导入通用 Modifier。
 - 收窄 domain 内部工具公开面：新旧模型 mapper 中只被 domain 使用的转换方向、CSV 导出行模型和 Arrow 数值 helper 改为模块内部实现；CSV 导入仍需要的 `toDomainAccount()` 暂时保留公开入口。
 - 收回旧账户保存转换边界：新增 `SaveLegacyAccountUseCase`，CSV 导入 feature 不再直接调用 legacy 账户 mapper；`toDomainAccount()` 改为 domain 内部实现。
 - 收回排序号工具边界：CSV 导入用本地私有 helper 计算导入账户/分类排序号，feature 层不再直接引用 `domain.util`；domain 的 `nextOrderNum()` 改为内部工具。

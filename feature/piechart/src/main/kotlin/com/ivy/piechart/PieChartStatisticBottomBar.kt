@@ -29,7 +29,7 @@ import com.ivy.legacy.ui.theme.GradientGreen
 import com.ivy.legacy.ui.theme.White
 import com.ivy.legacy.ui.button.CloseButton
 import com.ivy.legacy.ui.button.IvyButton
-import com.ivy.legacy.ui.theme.gradientCutBackgroundTop
+import com.ivy.ui.compose.gradientCutBackgroundTop
 
 @Composable
 internal fun BoxWithConstraintsScope.PieChartStatisticBottomBar(

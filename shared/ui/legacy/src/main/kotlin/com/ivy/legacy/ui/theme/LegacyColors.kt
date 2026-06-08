@@ -8,9 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
-import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
 import androidx.core.graphics.ColorUtils
 
 val White = Color(0xFFFAFAFA)
@@ -76,24 +74,6 @@ val GradientGreen = Gradient(Green, Color(0xFF49F2C8))
 internal val GradientOrangeRevert = Gradient(Color(0xFFF2CD9E), Orange)
 
 val GradientIvy = Gradient(Ivy, Color(0xFFAA99FF))
-
-fun Modifier.gradientCutBackgroundTop(
-    pure: Color,
-    density: Density,
-    endY: Dp = 32.dp
-): Modifier {
-    return background(
-        brush = Brush.verticalGradient(
-            colors = listOf(
-                Transparent,
-                pure,
-            ),
-            endY = with(density) {
-                endY.toPx()
-            }
-        )
-    ).padding(top = 16.dp)
-}
 
 internal fun Modifier.gradientCutBackgroundBottom(
     pure: Color,
