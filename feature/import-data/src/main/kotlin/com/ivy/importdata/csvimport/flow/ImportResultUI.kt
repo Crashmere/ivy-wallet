@@ -40,6 +40,7 @@ fun ImportResultUI(
     result: ImportResult,
     isManualCsvImport: Boolean = false,
     onTryAgain: (() -> Unit)? = null,
+    onBack: (() -> Unit)? = null,
     onFinish: () -> Unit,
 ) {
     Column(
@@ -53,7 +54,11 @@ fun ImportResultUI(
         BackButton(
             modifier = Modifier.padding(start = 20.dp)
         ) {
-            nav.back()
+            if (onBack != null) {
+                onBack()
+            } else {
+                nav.back()
+            }
         }
 
         Spacer(Modifier.height(24.dp))

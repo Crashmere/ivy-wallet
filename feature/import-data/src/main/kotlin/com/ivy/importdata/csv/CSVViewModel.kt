@@ -24,7 +24,6 @@ import com.ivy.importdata.csv.domain.parseToAccount
 import com.ivy.importdata.csv.domain.parseToAccountCurrency
 import com.ivy.importdata.csv.domain.parseTransactionType
 import com.ivy.domain.usecase.file.ReadTextFileUseCase
-import com.ivy.ui.navigation.Navigation
 import com.ivy.ui.platform.FilePicker
 import com.opencsv.CSVReaderBuilder
 import com.opencsv.validators.LineValidator
@@ -45,7 +44,6 @@ import kotlin.math.roundToInt
 class CSVViewModel @Inject constructor(
     private val readTextFileUseCase: ReadTextFileUseCase,
     private val csvImporter: CsvTransactionImporter,
-    private val nav: Navigation,
     private val filePicker: FilePicker,
 ) : ViewModel() {
 
@@ -435,10 +433,6 @@ class CSVViewModel @Inject constructor(
             CSVEvent.ResetState -> {
                 uiState = UIState.Idle
             }
-
-            CSVEvent.FinishImport -> {
-                handleFinishImport()
-            }
         }
     }
 
@@ -562,8 +556,7 @@ class CSVViewModel @Inject constructor(
         }
     }
 
-    private fun handleFinishImport() {
-        nav.back()
+    fun finishImport() {
         resetState()
     }
 

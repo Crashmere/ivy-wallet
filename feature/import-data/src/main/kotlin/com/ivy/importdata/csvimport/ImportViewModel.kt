@@ -5,7 +5,6 @@ import androidx.lifecycle.viewModelScope
 import com.ivy.data.api.file.ExternalFile
 import com.ivy.data.model.importing.ImportResult
 import com.ivy.domain.usecase.backup.ImportBackupUseCase
-import com.ivy.ui.navigation.Navigation
 import com.ivy.ui.platform.FilePicker
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,7 +17,6 @@ import kotlin.math.roundToInt
 @HiltViewModel
 class ImportViewModel @Inject constructor(
     private val filePicker: FilePicker,
-    private val nav: Navigation,
     private val importBackupUseCase: ImportBackupUseCase
 ) : ViewModel() {
     private val _importStep = MutableStateFlow(ImportStep.IMPORT_FROM)
@@ -63,12 +61,10 @@ class ImportViewModel @Inject constructor(
     }
 
     fun skip() {
-        nav.back()
         resetState()
     }
 
     fun finish() {
-        nav.back()
         resetState()
     }
 

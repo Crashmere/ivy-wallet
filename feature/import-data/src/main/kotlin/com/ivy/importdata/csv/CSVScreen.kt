@@ -35,6 +35,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.ivy.ui.navigation.navigation
 import com.ivy.ui.navigation.screenScopedViewModel
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.colorAs
@@ -48,7 +49,12 @@ import kotlin.math.abs
 @Composable
 fun CSVScreen() {
     val viewModel: CSVViewModel = screenScopedViewModel()
+    val nav = navigation()
     val state = viewModel.uiState()
+    val finishImport: () -> Unit = {
+        viewModel.finishImport()
+        nav.back()
+    }
 
     when (val ui = state.uiState) {
         UIState.Idle -> ImportUI(
@@ -61,9 +67,8 @@ fun CSVScreen() {
             result = ui.importResult,
             isManualCsvImport = true,
             onTryAgain = null,
-            onFinish = {
-                viewModel.onEvent(CSVEvent.FinishImport)
-            }
+            onBack = finishImport,
+            onFinish = finishImport
         )
     }
 }

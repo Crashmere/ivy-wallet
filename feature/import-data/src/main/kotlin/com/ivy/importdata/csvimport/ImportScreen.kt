@@ -38,8 +38,14 @@ fun BoxWithConstraintsScope.ImportCSVScreen() {
         importResult = importResult,
 
         onRestoreBackup = viewModel::restoreBackup,
-        onSkip = viewModel::skip,
-        onFinish = viewModel::finish,
+        onSkip = {
+            viewModel.skip()
+            nav.back()
+        },
+        onFinish = {
+            viewModel.finish()
+            nav.back()
+        },
     )
 }
 
@@ -72,6 +78,7 @@ private fun BoxWithConstraintsScope.UI(
         ImportStep.RESULT -> {
             ImportResultUI(
                 result = importResult!!,
+                onBack = onFinish,
             ) {
                 onFinish()
             }

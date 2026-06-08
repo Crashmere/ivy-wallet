@@ -34,6 +34,4 @@ sealed interface CSVEvent {
 
     data object Continue : CSVEvent
     data object ResetState : CSVEvent
-
-    data object FinishImport : CSVEvent
 }
