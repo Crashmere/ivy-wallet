@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-internal class DefaultExchangeRateStore @Inject constructor(
+internal class DefaultExchangeRateStore @Inject internal constructor(
     private val mapper: ExchangeRateMapper,
     private val exchangeRatesDao: ExchangeRatesDao,
     private val writeExchangeRatesDao: WriteExchangeRatesDao,

@@ -16,7 +16,7 @@ import java.io.InputStreamReader
 import java.nio.charset.Charset
 import javax.inject.Inject
 
-internal class FileSystem @Inject constructor(
+internal class FileSystem @Inject internal constructor(
     @ApplicationContext
     private val appContext: Context
 ) : TextFileStore {

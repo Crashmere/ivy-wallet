@@ -9,7 +9,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-internal class StoreCacheFactory @Inject constructor(
+internal class StoreCacheFactory @Inject internal constructor(
     private val dataChangePublisher: DataChangePublisher,
 ) {
     fun <T : Identifiable<TID>, TID : UniqueId> createCache(

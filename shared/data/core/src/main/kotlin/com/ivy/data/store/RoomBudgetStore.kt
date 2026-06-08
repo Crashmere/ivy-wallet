@@ -10,7 +10,7 @@ import kotlinx.coroutines.withContext
 import java.util.UUID
 import javax.inject.Inject
 
-internal class RoomBudgetStore @Inject constructor(
+internal class RoomBudgetStore @Inject internal constructor(
     private val budgetDao: BudgetDao,
     private val budgetWriter: WriteBudgetDao,
 ) : BudgetStore {

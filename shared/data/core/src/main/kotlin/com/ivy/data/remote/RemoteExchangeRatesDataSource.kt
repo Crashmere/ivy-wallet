@@ -9,7 +9,7 @@ import io.ktor.client.call.body
 import io.ktor.client.request.get
 import javax.inject.Inject
 
-internal class RemoteExchangeRatesDataSource @Inject constructor(
+internal class RemoteExchangeRatesDataSource @Inject internal constructor(
     private val ktorClient: dagger.Lazy<HttpClient>,
 ) {
     private val urls = listOf(

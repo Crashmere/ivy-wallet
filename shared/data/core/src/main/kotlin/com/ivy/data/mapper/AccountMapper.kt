@@ -13,7 +13,7 @@ import com.ivy.data.model.primitive.IconAsset
 import com.ivy.data.model.primitive.NotBlankTrimmedString
 import javax.inject.Inject
 
-internal class AccountMapper @Inject constructor(
+internal class AccountMapper @Inject internal constructor(
     private val currencyStore: CurrencyStore
 ) {
     internal suspend fun AccountEntity.toDomain(): Either<String, Account> = either {

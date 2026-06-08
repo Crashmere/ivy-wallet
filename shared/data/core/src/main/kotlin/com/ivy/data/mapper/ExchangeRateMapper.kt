@@ -10,7 +10,7 @@ import com.ivy.data.model.primitive.PositiveDouble
 import com.ivy.data.remote.responses.ExchangeRatesResponse
 import javax.inject.Inject
 
-internal class ExchangeRateMapper @Inject constructor() {
+internal class ExchangeRateMapper @Inject internal constructor() {
     internal fun ExchangeRateEntity.toDomain(): Either<String, ExchangeRate> = either {
         ExchangeRate(
             baseCurrency = AssetCode.from(baseCurrency).bind(),

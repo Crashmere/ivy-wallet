@@ -12,7 +12,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-internal class RoomCategoryStore @Inject constructor(
+internal class RoomCategoryStore @Inject internal constructor(
     private val mapper: CategoryMapper,
     private val writeCategoryDao: WriteCategoryDao,
     private val categoryDao: CategoryDao,

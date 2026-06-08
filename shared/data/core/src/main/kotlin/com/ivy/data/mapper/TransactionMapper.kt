@@ -24,7 +24,7 @@ import com.ivy.data.api.AccountStore
 import java.time.Instant
 import javax.inject.Inject
 
-internal class TransactionMapper @Inject constructor(
+internal class TransactionMapper @Inject internal constructor(
     private val accountStore: AccountStore,
 ) {
 

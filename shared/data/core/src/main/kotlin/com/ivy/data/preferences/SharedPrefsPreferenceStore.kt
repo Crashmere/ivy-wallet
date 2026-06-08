@@ -15,7 +15,7 @@ import com.ivy.data.api.TransferBehaviorPreferenceStore
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
-internal class SharedPrefsPreferenceStore @Inject constructor(
+internal class SharedPrefsPreferenceStore @Inject internal constructor(
     @ApplicationContext
     context: Context
 ) : AppLockPreferenceStore,
