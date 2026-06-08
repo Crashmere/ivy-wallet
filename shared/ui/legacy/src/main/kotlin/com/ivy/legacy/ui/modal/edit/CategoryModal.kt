@@ -54,7 +54,8 @@ import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.legacy.ui.theme.dynamicContrast
 import com.ivy.ui.modal.ChooseIconModal
 import com.ivy.ui.modal.IvyModal
-import com.ivy.legacy.ui.modal.ModalAddSave
+import com.ivy.ui.modal.ModalAdd
+import com.ivy.ui.modal.ModalSave
 import com.ivy.ui.modal.ModalTitle
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
@@ -92,10 +93,8 @@ fun BoxWithConstraintsScope.CategoryModal(
         visible = visible,
         dismiss = dismiss,
         PrimaryAction = {
-            ModalAddSave(
-                item = category,
-                enabled = nameTextFieldValue.text.isNullOrBlank().not()
-            ) {
+            val enabled = nameTextFieldValue.text.isNullOrBlank().not()
+            val onSave = {
                 if (initialCategory != null) {
                     onEditCategory(
                         initialCategory.copy(
@@ -115,6 +114,17 @@ fun BoxWithConstraintsScope.CategoryModal(
                 }
 
                 dismiss()
+            }
+            if (category != null) {
+                ModalSave(
+                    enabled = enabled,
+                    onClick = onSave
+                )
+            } else {
+                ModalAdd(
+                    enabled = enabled,
+                    onClick = onSave
+                )
             }
         }
     ) {

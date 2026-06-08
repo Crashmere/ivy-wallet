@@ -40,8 +40,9 @@ import com.ivy.legacy.ui.theme.Ivy
 import com.ivy.ui.modal.ChooseIconModal
 import com.ivy.ui.modal.CurrencyModal
 import com.ivy.ui.modal.IvyModal
-import com.ivy.legacy.ui.modal.ModalAddSave
+import com.ivy.ui.modal.ModalAdd
 import com.ivy.ui.modal.ModalAmountSection
+import com.ivy.ui.modal.ModalSave
 import com.ivy.ui.modal.ModalTitle
 import java.util.Locale
 import java.util.UUID
@@ -96,10 +97,9 @@ fun BoxWithConstraintsScope.AccountModal(
         dismiss = dismiss,
         shiftIfKeyboardShown = false,
         PrimaryAction = {
-            ModalAddSave(
-                item = account,
-                enabled = nameTextFieldValue.text.isNullOrBlank().not() && (!forceNonZeroBalance || amount > 0)
-            ) {
+            val enabled = nameTextFieldValue.text.isNullOrBlank().not() &&
+                (!forceNonZeroBalance || amount > 0)
+            val onSave = {
                 save(
                     account = account,
                     nameTextFieldValue = nameTextFieldValue,
@@ -112,6 +112,17 @@ fun BoxWithConstraintsScope.AccountModal(
                     onCreateAccount = onCreateAccount,
                     onEditAccount = onEditAccount,
                     dismiss = dismiss
+                )
+            }
+            if (account != null) {
+                ModalSave(
+                    enabled = enabled,
+                    onClick = onSave
+                )
+            } else {
+                ModalAdd(
+                    enabled = enabled,
+                    onClick = onSave
                 )
             }
         }
