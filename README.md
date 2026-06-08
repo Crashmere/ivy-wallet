@@ -1492,6 +1492,7 @@ shared:ui:core
 - 旧账户弹窗契约已从完整 `LegacyAccount` 收窄为轻量 `AccountModalAccount`；交易统计页不再为了打开账户编辑/余额调整弹窗构造旧账户模型。
 - 旧到期交易 section 契约已改名为 `DueSection`；该模型现在只表达正式 `Transaction`、展开状态和收支统计，不再带旧交易模型语义。
 - 编辑交易页内部的可变工作副本已从共享 `LegacyTransaction` 改为 feature 私有 `EditTransactionDraft`；保存前仍统一转换为正式 `Transaction`，编辑、复制、计划付款支付和贷款同步语义保持不变。
+- `shared:data:model` 中已经没有调用方的 `LegacyTransaction`、`LegacyAccount` 和 `LegacyTag` 定义已删除，数据模型层不再保留 `data.model.legacy` 包。
 - app 仍保留文件选择、文件分享、Material 日期选择器、BuildInfo、Locale 设置、生物识别和窗口安全等真正依赖 Activity 或 Android app 壳层的装配。
 
 ## 高风险区域
