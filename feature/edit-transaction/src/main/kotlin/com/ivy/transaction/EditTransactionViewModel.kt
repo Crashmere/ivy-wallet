@@ -43,8 +43,6 @@ import com.ivy.domain.usecase.transaction.GetLegacyTransactionUseCase
 import com.ivy.domain.usecase.transaction.SaveLegacyTransactionUseCase
 import com.ivy.domain.usecase.transaction.SuggestTransactionTitlesUseCase
 import com.ivy.data.model.legacy.LegacyAccount
-import com.ivy.ui.navigation.EditTransactionScreen
-import com.ivy.ui.navigation.TransactionRouteType
 import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.R
 import com.ivy.ui.time.DateTimePicker
@@ -159,9 +157,14 @@ internal class EditTransactionViewModel @Inject internal constructor(
     private val _uiEvents = MutableSharedFlow<EditTransactionUiEvent>()
     val uiEvents: SharedFlow<EditTransactionUiEvent> = _uiEvents.asSharedFlow()
 
-    fun start(screen: EditTransactionScreen) {
+    fun start(
+        initialTransactionId: UUID?,
+        type: TransactionType,
+        accountId: UUID?,
+        categoryId: UUID?,
+    ) {
         viewModelScope.launch {
-            editMode = screen.initialTransactionId != null
+            editMode = initialTransactionId != null
 
             baseUserCurrency = baseCurrency()
 
@@ -177,17 +180,16 @@ internal class EditTransactionViewModel @Inject internal constructor(
             categories = sortCategories()
 
             reset()
-            val routeTransactionType = screen.type.toTransactionType()
 
-            loadedTransaction = screen.initialTransactionId?.let {
+            loadedTransaction = initialTransactionId?.let {
                 getLegacyTransactionUseCase(it)
             } ?: LegacyTransaction(
                 accountId = defaultAccountId(
-                    screen = screen,
+                    accountId = accountId,
                     accounts = getAccounts
                 ),
-                categoryId = screen.categoryId,
-                type = routeTransactionType,
+                categoryId = categoryId,
+                type = type,
                 amount = BigDecimal.ZERO,
                 toAmount = BigDecimal.ZERO
             )
@@ -370,11 +372,11 @@ internal class EditTransactionViewModel @Inject internal constructor(
     }
 
     private suspend fun defaultAccountId(
-        screen: EditTransactionScreen,
+        accountId: UUID?,
         accounts: List<LegacyAccount>,
     ): UUID {
-        if (screen.accountId != null) {
-            return screen.accountId!!
+        if (accountId != null) {
+            return accountId
         }
 
         val lastSelectedId = getLastSelectedAccountId()
@@ -979,10 +981,6 @@ internal class EditTransactionViewModel @Inject internal constructor(
     private suspend fun shouldSortCategoriesAscending(): Boolean {
         return preferenceToggleService.isEnabled(preferenceToggles.sortCategoriesAscending)
     }
-}
-
-private fun TransactionRouteType.toTransactionType(): TransactionType {
-    return TransactionType.valueOf(name)
 }
 
 private fun LocalDateTime.toUtcInstant(): Instant =

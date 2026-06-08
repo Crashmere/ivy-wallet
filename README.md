@@ -1262,6 +1262,7 @@ shared:ui:core
 - UI core 删除通用 `Modifier.thenWhen` helper；唯一遗留调用点已改为 `ItemIcon` 私有 padding helper，保留仍被页面和 legacy 组件使用的 `thenIf`、点击、阴影和密度转换工具。
 - 饼图统计 ViewModel 不再接收导航 route；页面入口负责把 `PieChartStatisticScreen` 拆成交易类型、账户筛选、交易 ID 和偏好参数，ViewModel 只处理统计加载。
 - 计划付款编辑 ViewModel 不再接收 `EditPlannedScreen` 导航 route；页面入口负责拆出计划规则 ID、交易类型、金额、账户、分类、标题和描述，编辑/新建行为不变。
+- 编辑交易 ViewModel 不再接收 `EditTransactionScreen` 导航 route；页面入口负责拆出初始交易 ID、交易类型、账户和分类参数，已有交易编辑和新建交易默认账户选择逻辑不变。
 - app 仍保留文件选择、文件分享、Material 日期选择器、BuildInfo、Locale 设置、生物识别和窗口安全等真正依赖 Activity 或 Android app 壳层的装配。
 
 ## 高风险区域

@@ -104,7 +104,12 @@ fun BoxWithConstraintsScope.EditTransactionScreen(screen: EditTransactionScreen)
     }
 
     LaunchedEffect(Unit) {
-        viewModel.start(screen)
+        viewModel.start(
+            initialTransactionId = screen.initialTransactionId,
+            type = screen.type.toTransactionType(),
+            accountId = screen.accountId,
+            categoryId = screen.categoryId
+        )
     }
 
     val view = LocalView.current
@@ -663,6 +668,10 @@ private fun shouldFocusAmount(amount: Double) = amount == 0.0
 
 private fun TransactionType.toRouteType(): TransactionRouteType {
     return TransactionRouteType.valueOf(name)
+}
+
+private fun TransactionRouteType.toTransactionType(): TransactionType {
+    return TransactionType.valueOf(name)
 }
 
 private fun Instant.toLocalDateInSystemZone() =
