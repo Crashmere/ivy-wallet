@@ -1,6 +1,7 @@
 package com.ivy.transactions
 
 import androidx.compose.runtime.Immutable
+import com.ivy.data.model.Account
 import com.ivy.data.model.legacy.LegacyAccount
 import java.util.UUID
 
@@ -14,12 +15,12 @@ internal data class TransactionsAccount(
     val includeInBalance: Boolean,
 )
 
-internal fun LegacyAccount.toTransactionsAccount() = TransactionsAccount(
-    id = id,
-    name = name,
-    color = color,
-    currency = currency,
-    icon = icon,
+internal fun Account.toTransactionsAccount() = TransactionsAccount(
+    id = id.value,
+    name = name.value,
+    color = color.value,
+    currency = asset.code,
+    icon = icon?.id,
     includeInBalance = includeInBalance,
 )
 

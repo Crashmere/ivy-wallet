@@ -14,7 +14,6 @@ import kotlinx.coroutines.withContext
 import java.util.UUID
 import javax.inject.Inject
 import com.ivy.data.model.Account as DomainAccount
-import com.ivy.data.model.legacy.LegacyAccount
 
 class CreateAccountWithBalanceUseCase @Inject internal constructor(
     private val adjustAccountBalanceUseCase: AdjustAccountBalanceUseCase,
@@ -37,17 +36,8 @@ class CreateAccountWithBalanceUseCase @Inject internal constructor(
 
             saveAccountUseCase(account)
 
-            val legacyAccount = LegacyAccount(
-                name = data.name,
-                currency = data.currency,
-                color = data.color,
-                icon = data.icon,
-                includeInBalance = data.includeBalance,
-                orderNum = account.orderNum,
-                id = account.id.value
-            )
             adjustAccountBalanceUseCase(
-                account = legacyAccount,
+                account = account,
                 actualBalance = 0.0,
                 newBalance = data.balance
             )

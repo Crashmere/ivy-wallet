@@ -1,28 +1,24 @@
 package com.ivy.domain.usecase.account
 
-import arrow.core.getOrElse
-import com.ivy.data.model.TransactionType
 import com.ivy.data.api.AccountStore
 import com.ivy.data.api.TransactionStore
-import com.ivy.domain.usecase.currency.GetBaseCurrencyUseCase
+import com.ivy.data.model.Account
+import com.ivy.data.model.TransactionType
+import com.ivy.data.model.legacy.LegacyTransaction
 import com.ivy.domain.mapper.legacy.toTransaction
-import com.ivy.domain.mapper.legacy.toDomainAccount
 import com.ivy.domain.time.nowUtc
 import java.math.BigDecimal
 import javax.inject.Inject
 import kotlin.math.abs
 import kotlin.math.absoluteValue
-import com.ivy.data.model.legacy.LegacyTransaction
-import com.ivy.data.model.legacy.LegacyAccount
 
 internal class AdjustAccountBalanceUseCase @Inject internal constructor(
     private val transactionStore: TransactionStore,
     private val accountStore: AccountStore,
     private val calculateAccountBalanceUseCase: CalculateAccountBalanceUseCase,
-    private val getBaseCurrency: GetBaseCurrencyUseCase,
 ) {
     suspend operator fun invoke(
-        account: LegacyAccount,
+        account: Account,
         actualBalance: Double? = null,
         newBalance: Double,
         adjustTransactionTitle: String = "Adjust balance",
@@ -49,16 +45,12 @@ internal class AdjustAccountBalanceUseCase @Inject internal constructor(
         }
     }
 
-    private suspend fun calculateAccountBalance(account: LegacyAccount): Double {
-        val baseCurrency = getBaseCurrency()
-        val domainAccount = account.toDomainAccount(baseCurrency)
-            .getOrElse { return 0.0 }
-
-        return calculateAccountBalanceUseCase(domainAccount).toDouble()
+    private suspend fun calculateAccountBalance(account: Account): Double {
+        return calculateAccountBalanceUseCase(account).toDouble()
     }
 
     private suspend fun saveAdjustmentTransaction(
-        account: LegacyAccount,
+        account: Account,
         type: TransactionType,
         amount: BigDecimal,
         title: String
@@ -69,7 +61,7 @@ internal class AdjustAccountBalanceUseCase @Inject internal constructor(
             amount = amount,
             toAmount = amount,
             dateTime = nowUtc(),
-            accountId = account.id,
+            accountId = account.id.value,
         ).toTransaction(accountStore)?.let {
             transactionStore.save(it)
         }

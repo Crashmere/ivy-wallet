@@ -1,30 +1,25 @@
 package com.ivy.domain.usecase.account
 
-import com.ivy.domain.usecase.currency.GetBaseCurrencyUseCase
+import com.ivy.data.model.Account
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
-import com.ivy.data.model.legacy.LegacyAccount
-import com.ivy.domain.mapper.legacy.toDomainAccount
 
 class UpdateAccountWithBalanceUseCase @Inject internal constructor(
     private val adjustAccountBalanceUseCase: AdjustAccountBalanceUseCase,
     private val calculateAccountBalanceUseCase: CalculateAccountBalanceUseCase,
     private val saveAccountUseCase: SaveAccountUseCase,
-    private val getBaseCurrency: GetBaseCurrencyUseCase,
 ) {
     suspend operator fun invoke(
-        account: LegacyAccount,
+        account: Account,
         newBalance: Double
     ) {
         withContext(Dispatchers.IO) {
-            val domainAccount = account.toDomainAccount(getBaseCurrency()).getOrNull()
-                ?: return@withContext
-            saveAccountUseCase(domainAccount)
+            saveAccountUseCase(account)
 
             adjustAccountBalanceUseCase(
                 account = account,
-                actualBalance = calculateAccountBalanceUseCase(domainAccount).toDouble(),
+                actualBalance = calculateAccountBalanceUseCase(account).toDouble(),
                 newBalance = newBalance
             )
         }

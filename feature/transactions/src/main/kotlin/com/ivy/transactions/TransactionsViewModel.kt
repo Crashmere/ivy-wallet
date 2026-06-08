@@ -9,6 +9,7 @@ import com.ivy.data.model.legacy.LegacyTransaction
 import com.ivy.data.model.TransactionHistoryItem
 import com.ivy.data.model.TransactionType
 import com.ivy.ui.resource.ResourceProvider
+import com.ivy.data.model.Account
 import com.ivy.data.model.AccountId
 import com.ivy.data.model.Category
 import com.ivy.data.model.CategoryId
@@ -16,7 +17,6 @@ import com.ivy.data.model.primitive.ColorInt
 import com.ivy.data.model.primitive.IconAsset
 import com.ivy.data.model.primitive.NotBlankTrimmedString
 import com.ivy.domain.usecase.account.DeleteAccountUseCase
-import com.ivy.domain.usecase.account.GetAccountUseCase
 import com.ivy.domain.usecase.category.DeleteCategoryUseCase
 import com.ivy.domain.usecase.category.CategoryTransactionsSummary
 import com.ivy.domain.usecase.category.GetCategoriesUseCase
@@ -41,7 +41,7 @@ import com.ivy.legacy.ui.transaction.TransactionListAccount
 import com.ivy.domain.usecase.account.CalculateAccountBalanceUseCase
 import com.ivy.domain.usecase.account.CalculateAccountIncomeExpenseUseCase
 import com.ivy.domain.usecase.account.GetAccountTransactionsUseCase
-import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
+import com.ivy.domain.usecase.account.GetAccountsUseCase
 import com.ivy.domain.usecase.account.GetAccountOverdueTransactionsSummaryUseCase
 import com.ivy.domain.usecase.account.GetAccountUpcomingTransactionsSummaryUseCase
 import com.ivy.domain.usecase.account.UpdateAccountWithBalanceUseCase
@@ -76,13 +76,12 @@ internal class TransactionsViewModel @Inject internal constructor(
     private val payOrSkipLegacyPlannedTransactionUseCase: PayOrSkipLegacyPlannedTransactionUseCase,
     private val payOrSkipLegacyPlannedTransactionsUseCase: PayOrSkipLegacyPlannedTransactionsUseCase,
     private val getTransfersAsIncomeExpensePreference: GetTransfersAsIncomeExpensePreferenceUseCase,
-    private val getLegacyAccountsUseCase: GetLegacyAccountsUseCase,
+    private val getAccountsUseCase: GetAccountsUseCase,
     private val getAccountTransactionsUseCase: GetAccountTransactionsUseCase,
     private val buildLegacyTransactionHistoryItemsUseCase: BuildLegacyTransactionHistoryItemsUseCase,
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
     private val getAccountUpcomingTransactionsSummaryUseCase: GetAccountUpcomingTransactionsSummaryUseCase,
     private val getAccountOverdueTransactionsSummaryUseCase: GetAccountOverdueTransactionsSummaryUseCase,
-    private val getAccountUseCase: GetAccountUseCase,
     private val deleteAccountUseCase: DeleteAccountUseCase,
     private val getCategoriesUseCase: GetCategoriesUseCase,
     private val getCategoryUseCase: GetCategoryUseCase,
@@ -103,7 +102,7 @@ internal class TransactionsViewModel @Inject internal constructor(
 
     private val period = mutableStateOf(periodState.selectedPeriod)
     private val categories = mutableStateOf<ImmutableList<Category>>(persistentListOf())
-    private var legacyAccounts: ImmutableList<LegacyAccount> = persistentListOf()
+    private var loadedAccounts: ImmutableList<Account> = persistentListOf()
     private val accounts = mutableStateOf<ImmutableList<TransactionListAccount>>(persistentListOf())
     private val baseCurrency = mutableStateOf("")
     private val currency = mutableStateOf("")
@@ -322,13 +321,9 @@ internal class TransactionsViewModel @Inject internal constructor(
         val initialAccount = selectedAccount() ?: error("account not found")
         val range = periodState.rangeOf(period.value)
 
-        if (initialAccount.currency.isNullOrBlank().not()) {
-            currency.value = initialAccount.currency!!
-        }
+        currency.value = initialAccount.asset.code
 
-        val account = getAccountUseCase(AccountId(accountId)) ?: error("account not found")
-
-        val balanceValue = calculateAccountBalanceUseCase(account).toDouble()
+        val balanceValue = calculateAccountBalanceUseCase(initialAccount).toDouble()
         balance.doubleValue = balanceValue
         if (baseCurrency.value != currency.value) {
             balanceBaseCurrency.value = exchangeAmountUseCase(
@@ -341,7 +336,7 @@ internal class TransactionsViewModel @Inject internal constructor(
         val includeTransfersInCalc = getTransfersAsIncomeExpensePreference()
 
         val incomeExpensePair = calculateAccountIncomeExpenseUseCase(
-            account = account,
+            account = initialAccount,
             range = range.toCloseTimeRange(),
             includeTransfersInCalc = includeTransfersInCalc
         )
@@ -352,14 +347,14 @@ internal class TransactionsViewModel @Inject internal constructor(
             baseCurrency = baseCurrency.value,
             transactions = mapTransactionsToLegacyTransactionsWithTagsUseCase(
                 getAccountTransactionsUseCase(
-                    accountId = AccountId(initialAccount.id),
+                    accountId = initialAccount.id,
                     range = range.toCloseTimeRange()
                 )
             )
         ).toImmutableList()
 
         val upcomingSummary = withContext(Dispatchers.IO) {
-            getAccountUpcomingTransactionsSummaryUseCase(AccountId(initialAccount.id), range)
+            getAccountUpcomingTransactionsSummaryUseCase(initialAccount.id, range)
         }
         upcoming.value = upcoming.value.copy(
             transactions = mapTransactionsToLegacyTransactionsUseCase(upcomingSummary.transactions)
@@ -369,7 +364,7 @@ internal class TransactionsViewModel @Inject internal constructor(
         )
 
         val overdueSummary = withContext(Dispatchers.IO) {
-            getAccountOverdueTransactionsSummaryUseCase(AccountId(initialAccount.id), range)
+            getAccountOverdueTransactionsSummaryUseCase(initialAccount.id, range)
         }
         overdue.value = overdue.value.copy(
             transactions = mapTransactionsToLegacyTransactionsUseCase(overdueSummary.transactions)
@@ -475,7 +470,7 @@ internal class TransactionsViewModel @Inject internal constructor(
         val historyIncomeExpense = calculateLegacyTransactionsIncomeExpenseUseCase(
             transactions = filteredTransactions,
             accounts = accountFilterList.mapNotNull { accountId ->
-                legacyAccounts.find { it.id == accountId }
+                loadedAccounts.find { it.id.value == accountId }?.toLegacyAccount()
             },
             baseCurrency = baseCurrency.value
         )
@@ -568,7 +563,7 @@ internal class TransactionsViewModel @Inject internal constructor(
     }
 
     private fun editAccount(accountId: UUID, newBalance: Double) {
-        val account = legacyAccounts.firstOrNull { it.id == accountId } ?: return
+        val account = loadedAccounts.firstOrNull { it.id.value == accountId } ?: return
 
         viewModelScope.launch {
             updateAccountWithBalanceUseCase(account, newBalance)
@@ -630,7 +625,7 @@ internal class TransactionsViewModel @Inject internal constructor(
 
     private fun updateAccountDeletionState(confirmationText: String) {
         accountNameConfirmation.value = selectEndTextFieldValue(confirmationText)
-        enableDeletionButton.value = selectedAccount()?.name == confirmationText ||
+        enableDeletionButton.value = selectedAccount()?.name?.value == confirmationText ||
                 category.value?.name?.value == confirmationText
     }
 
@@ -653,8 +648,8 @@ internal class TransactionsViewModel @Inject internal constructor(
             currency.value = baseCurrency.value
 
             categories.value = getCategoriesUseCase().toImmutableList()
-            legacyAccounts = getLegacyAccountsUseCase()
-            accounts.value = legacyAccounts.map { it.toTransactionListAccount() }.toImmutableList()
+            loadedAccounts = getAccountsUseCase().toImmutableList()
+            accounts.value = loadedAccounts.map { it.toTransactionListAccount() }.toImmutableList()
             initWithTransactions.value = false
             treatTransfersAsIncomeExpense.value =
                 getTransfersAsIncomeExpensePreference()
@@ -709,9 +704,9 @@ internal class TransactionsViewModel @Inject internal constructor(
         }
     }
 
-    private fun selectedAccount(): LegacyAccount? {
+    private fun selectedAccount(): Account? {
         val id = accountId.value ?: return null
-        return legacyAccounts.firstOrNull { it.id == id }
+        return loadedAccounts.firstOrNull { it.id.value == id }
     }
 }
 
@@ -719,12 +714,22 @@ private fun List<TransactionHistoryItem>.countTransactionType(type: TransactionT
     return filterIsInstance<LegacyTransaction>().count { it.type == type }
 }
 
-private fun LegacyAccount.toTransactionListAccount() = TransactionListAccount(
-    id = id,
-    name = name,
-    color = color,
-    icon = icon,
-    currency = currency,
+private fun Account.toTransactionListAccount() = TransactionListAccount(
+    id = id.value,
+    name = name.value,
+    color = color.value,
+    icon = icon?.id,
+    currency = asset.code,
+)
+
+private fun Account.toLegacyAccount() = LegacyAccount(
+    id = id.value,
+    name = name.value,
+    color = color.value,
+    icon = icon?.id,
+    currency = asset.code,
+    includeInBalance = includeInBalance,
+    orderNum = orderNum,
 )
 
 internal data class TransactionsQuery(
