@@ -19,17 +19,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.TransactionType
 import com.ivy.data.model.Category
-import com.ivy.data.model.CategoryId
 import com.ivy.data.model.IntervalType
-import com.ivy.data.model.primitive.ColorInt
-import com.ivy.data.model.primitive.NotBlankTrimmedString
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
 import com.ivy.data.model.legacy.LegacyAccount
@@ -38,12 +34,8 @@ import com.ivy.ui.time.forDisplay
 import com.ivy.legacy.ui.component.transaction.TypeAmountCurrency
 import com.ivy.ui.time.formatDateOnly
 import com.ivy.ui.time.formatDateOnlyWithYear
-import com.ivy.ui.navigation.TransactionsScreen
-import com.ivy.ui.navigation.navigation
 import com.ivy.ui.R
-import com.ivy.legacy.ui.theme.Blue
 import com.ivy.legacy.ui.theme.Gradient
-import com.ivy.legacy.ui.theme.Green
 import com.ivy.legacy.ui.theme.Orange
 import com.ivy.legacy.ui.component.IvyButton
 import com.ivy.legacy.ui.component.IvyIcon
@@ -51,7 +43,6 @@ import com.ivy.ui.icon.getCustomIconIdS
 import com.ivy.legacy.ui.theme.findContrastTextColor
 import com.ivy.legacy.ui.theme.toComposeColor
 import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.persistentListOf
 import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneId
@@ -66,6 +57,8 @@ fun LazyItemScope.PlannedPaymentCard(
     accounts: ImmutableList<LegacyAccount>,
     plannedPayment: PlannedPaymentRule,
     onClick: (PlannedPaymentRule) -> Unit,
+    onCategoryClick: (UUID) -> Unit,
+    onAccountClick: (UUID) -> Unit,
 ) {
     Spacer(Modifier.height(12.dp))
 
@@ -89,7 +82,9 @@ fun LazyItemScope.PlannedPaymentCard(
         PlannedPaymentHeaderRow(
             plannedPayment = plannedPayment,
             categories = categories,
-            accounts = accounts
+            accounts = accounts,
+            onCategoryClick = onCategoryClick,
+            onAccountClick = onAccountClick
         )
 
         Spacer(Modifier.height(16.dp))
@@ -134,10 +129,10 @@ private fun Instant.toLocalDateTimeInSystemZone() =
 private fun PlannedPaymentHeaderRow(
     plannedPayment: PlannedPaymentRule,
     categories: ImmutableList<Category>,
-    accounts: ImmutableList<LegacyAccount>
+    accounts: ImmutableList<LegacyAccount>,
+    onCategoryClick: (UUID) -> Unit,
+    onAccountClick: (UUID) -> Unit,
 ) {
-    val nav = navigation()
-
     if (plannedPayment.type != TransactionType.TRANSFER) {
         Row(
             verticalAlignment = Alignment.CenterVertically
@@ -171,12 +166,7 @@ private fun PlannedPaymentHeaderRow(
                     padding = 8.dp,
                     iconEdgePadding = 10.dp
                 ) {
-                    nav.navigateTo(
-                        TransactionsScreen(
-                            accountId = null,
-                            categoryId = category.id.value
-                        )
-                    )
+                    onCategoryClick(category.id.value)
                 }
 
                 Spacer(Modifier.width(12.dp))
@@ -196,12 +186,7 @@ private fun PlannedPaymentHeaderRow(
                 iconEdgePadding = 10.dp
             ) {
                 account?.let {
-                    nav.navigateTo(
-                        TransactionsScreen(
-                            accountId = account.id,
-                            categoryId = null
-                        )
-                    )
+                    onAccountClick(account.id)
                 }
             }
         }

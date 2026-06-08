@@ -23,20 +23,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.Category
-import com.ivy.data.model.TransactionType
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
 import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.data.model.PlannedPaymentRule
 import com.ivy.legacy.ui.component.transaction.SectionDivider
-import com.ivy.ui.navigation.EditPlannedScreen
-import com.ivy.ui.navigation.Navigation
-import com.ivy.ui.navigation.TransactionRouteType
-import com.ivy.ui.navigation.navigation
 import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.Gray
 import com.ivy.legacy.ui.component.IvyIcon
 import kotlinx.collections.immutable.ImmutableList
+import java.util.UUID
 import kotlin.math.absoluteValue
 
 @Suppress("LongParameterList")
@@ -56,10 +52,11 @@ fun PlannedPaymentsLazyColumn(
     recurringExpanded: Boolean,
     setOneTimeExpanded: (Boolean) -> Unit,
     setRecurringExpanded: (Boolean) -> Unit,
+    onPlannedPaymentClick: (PlannedPaymentRule) -> Unit,
+    onCategoryClick: (UUID) -> Unit,
+    onAccountClick: (UUID) -> Unit,
     listState: LazyListState = rememberLazyListState(),
 ) {
-    val nav = navigation()
-
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -72,11 +69,12 @@ fun PlannedPaymentsLazyColumn(
         }
 
         plannedPaymentItems(
-            nav = nav,
             currency = currency,
             categories = categories,
             accounts = accounts,
-            listState = listState,
+            onPlannedPaymentClick = onPlannedPaymentClick,
+            onCategoryClick = onCategoryClick,
+            onAccountClick = onAccountClick,
 
             oneTime = oneTime,
             oneTimeIncome = oneTimeIncome,
@@ -95,11 +93,12 @@ fun PlannedPaymentsLazyColumn(
 
 @Suppress("LongParameterList")
 private fun LazyListScope.plannedPaymentItems(
-    nav: Navigation,
     currency: String,
     categories: ImmutableList<Category>,
     accounts: ImmutableList<LegacyAccount>,
-    listState: LazyListState,
+    onPlannedPaymentClick: (PlannedPaymentRule) -> Unit,
+    onCategoryClick: (UUID) -> Unit,
+    onAccountClick: (UUID) -> Unit,
 
     oneTime: ImmutableList<PlannedPaymentRule>,
     oneTimeIncome: Double,
@@ -133,13 +132,10 @@ private fun LazyListScope.plannedPaymentItems(
                     categories = categories,
                     accounts = accounts,
                     plannedPayment = item,
-                ) { plannedPaymentRule ->
-                    onPlannedPaymentClick(
-                        nav = nav,
-                        listState = listState,
-                        rule = plannedPaymentRule
-                    )
-                }
+                    onClick = onPlannedPaymentClick,
+                    onCategoryClick = onCategoryClick,
+                    onAccountClick = onAccountClick
+                )
             }
         }
     }
@@ -164,13 +160,10 @@ private fun LazyListScope.plannedPaymentItems(
                     categories = categories,
                     accounts = accounts,
                     plannedPayment = item,
-                ) { plannedPaymentRule ->
-                    onPlannedPaymentClick(
-                        nav = nav,
-                        listState = listState,
-                        rule = plannedPaymentRule
-                    )
-                }
+                    onClick = onPlannedPaymentClick,
+                    onCategoryClick = onCategoryClick,
+                    onAccountClick = onAccountClick
+                )
             }
         }
     }
@@ -185,23 +178,6 @@ private fun LazyListScope.plannedPaymentItems(
         // last spacer - scroll hack
         Spacer(Modifier.height(150.dp))
     }
-}
-
-private fun onPlannedPaymentClick(
-    nav: Navigation,
-    listState: LazyListState,
-    rule: PlannedPaymentRule,
-) {
-    nav.navigateTo(
-        EditPlannedScreen(
-            plannedPaymentRuleId = rule.id,
-            type = rule.type.toRouteType()
-        )
-    )
-}
-
-private fun TransactionType.toRouteType(): TransactionRouteType {
-    return TransactionRouteType.valueOf(name)
 }
 
 @Composable

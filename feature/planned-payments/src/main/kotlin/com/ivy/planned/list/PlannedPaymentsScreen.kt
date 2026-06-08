@@ -7,15 +7,17 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.ivy.data.model.PlannedPaymentRule
+import com.ivy.data.model.TransactionType
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
 import com.ivy.ui.navigation.EditPlannedScreen
 import com.ivy.ui.navigation.PlannedPaymentsScreen
 import com.ivy.ui.navigation.TransactionRouteType
+import com.ivy.ui.navigation.TransactionsScreen
 import com.ivy.ui.navigation.navigation
 import com.ivy.ui.navigation.screenScopedViewModel
 import com.ivy.ui.R
@@ -37,6 +39,8 @@ private fun BoxWithConstraintsScope.UI(
     state: PlannedPaymentsScreenState,
     onEvent: (PlannedPaymentsScreenEvent) -> Unit = {}
 ) {
+    val nav = navigation()
+
     PlannedPaymentsLazyColumn(
         Header = {
             Spacer(Modifier.height(32.dp))
@@ -69,10 +73,28 @@ private fun BoxWithConstraintsScope.UI(
         setRecurringExpanded = {
             onEvent(PlannedPaymentsScreenEvent.OnRecurringPaymentsExpanded(it))
         },
+        onPlannedPaymentClick = { rule ->
+            nav.navigateTo(rule.toEditPlannedScreen())
+        },
+        onCategoryClick = { categoryId ->
+            nav.navigateTo(
+                TransactionsScreen(
+                    accountId = null,
+                    categoryId = categoryId
+                )
+            )
+        },
+        onAccountClick = { accountId ->
+            nav.navigateTo(
+                TransactionsScreen(
+                    accountId = accountId,
+                    categoryId = null
+                )
+            )
+        },
         listState = rememberScrollPositionListState(key = "plannedPayments")
     )
 
-    val nav = navigation()
     PlannedPaymentsBottomBar(
         onClose = {
             nav.back()
@@ -86,4 +108,15 @@ private fun BoxWithConstraintsScope.UI(
             )
         }
     )
+}
+
+private fun PlannedPaymentRule.toEditPlannedScreen(): EditPlannedScreen {
+    return EditPlannedScreen(
+        plannedPaymentRuleId = id,
+        type = type.toRouteType()
+    )
+}
+
+private fun TransactionType.toRouteType(): TransactionRouteType {
+    return TransactionRouteType.valueOf(name)
 }

@@ -51,6 +51,7 @@
 - 收窄编辑交易导航职责：保存、删除、复制、计划交易支付和空账户退出后的关闭页面动作改为 `CloseScreen` UI 事件；编辑交易 ViewModel 不再注入 `Navigation`，原先无返回栈时回主界面的语义移到 Screen 执行。
 - 收窄重置数据导航职责：`ResetWalletDataUseCaseImpl` 不再注入 `Navigation` 或跳转主界面；设置页在重置完成后通过 `WalletDataReset` UI 事件重置返回栈并回到主界面。
 - 收窄首页客户旅程模型职责：客户旅程卡片不再携带 `(Navigation, MainTabState) -> Unit` 回调，改为声明 `CustomerJourneyAction` 意图；Composable 层负责把意图翻译为导航或 Tab 切换。
+- 收窄计划付款列表导航职责：计划付款列表和卡片不再直接调用 `navigation()` 或构造 route，改为向页面入口暴露点击回调；`PlannedPaymentsScreen` 统一把卡片、分类和账户点击翻译为编辑页或交易筛选页导航。
 - 切断 legacy UI 对导航模块的依赖：legacy 内部初始化副作用改用 `shared:ui:core` 的 `onCompositionStart()`，`shared:ui:legacy` 不再声明 `shared:ui:navigation` 依赖。
 - 继续收窄导航模块依赖：`shared:ui:navigation` 已移除未使用的 `shared:ui:core` 依赖，当前只保留自身导航状态、Compose ViewModel owner 和 route 需要的 immutable collection。
 - 集中 ViewModel 获取入口：剩余直接使用 `viewModel()` 的 feature 页面已改用 `screenScopedViewModel()`，`lifecycle-viewmodel-compose` 依赖只保留在 `shared:ui:navigation`。
