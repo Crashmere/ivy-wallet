@@ -1,6 +1,5 @@
 package com.ivy.data.store
 
-import com.ivy.data.api.DataWriteEvent
 import com.ivy.data.api.CategoryStore
 import com.ivy.data.db.dao.read.CategoryDao
 import com.ivy.data.db.dao.write.WriteCategoryDao
@@ -19,10 +18,7 @@ class RoomCategoryStore @Inject constructor(
     private val categoryDao: CategoryDao,
     cacheFactory: StoreCacheFactory,
 ) : CategoryStore {
-    private val cache = cacheFactory.createCache(
-        getDataWriteSaveEvent = DataWriteEvent::SaveCategories,
-        getDateWriteDeleteEvent = DataWriteEvent::DeleteCategories,
-    )
+    private val cache = cacheFactory.createCache<Category, CategoryId>()
 
     override suspend fun findAll(): List<Category> = cache.findAll(
         findAllOperation = {

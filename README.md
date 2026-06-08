@@ -66,6 +66,7 @@
 - 收窄 domain 时间 helper 边界：`nowUtc()`、日期转换、到期/未来交易过滤等时间工具只作为 domain 内部实现保留，feature 层继续使用各自 UI/页面侧的时间处理入口。
 - 删除正式交易日期分组的无调用方扩展：正式交易历史入口继续由 `BuildTransactionHistoryItemsUseCase` 提供，`TransactionHistoryItems` 不再保留一层未使用的 `withDateDividers(...)` 包装。
 - 收窄 data-api 公开面：SharedPreferences key 常量已从 `shared:data:api` 移入 `shared:data:core` 的偏好实现包，API 模块继续只暴露 Store 端口。
+- 收窄数据写入事件：当前只有账户页订阅账户变更，分类/标签写入事件已从 `DataWriteEvent` 中移除；分类/标签 Store 仍保留本地缓存，但不再发布无人消费的事件。
 
 当前仍保留：
 

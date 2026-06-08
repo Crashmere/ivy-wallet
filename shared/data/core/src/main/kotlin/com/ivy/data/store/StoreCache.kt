@@ -13,19 +13,19 @@ class StoreCacheFactory @Inject constructor(
     private val dataChangePublisher: DataChangePublisher,
 ) {
     fun <T : Identifiable<TID>, TID : UniqueId> createCache(
-        getDataWriteSaveEvent: (List<T>) -> DataWriteEvent,
-        getDateWriteDeleteEvent: (DeleteOperation<TID>) -> DataWriteEvent
+        getDataWriteSaveEvent: ((List<T>) -> DataWriteEvent)? = null,
+        getDataWriteDeleteEvent: ((DeleteOperation<TID>) -> DataWriteEvent)? = null,
     ): StoreCache<T, TID> = StoreCache(
         dataChangePublisher = dataChangePublisher,
         getDataWriteSaveEvent = getDataWriteSaveEvent,
-        getDataWriteDeleteEvent = getDateWriteDeleteEvent,
+        getDataWriteDeleteEvent = getDataWriteDeleteEvent,
     )
 }
 
 class StoreCache<T : Identifiable<TID>, TID : UniqueId> internal constructor(
     private val dataChangePublisher: DataChangePublisher,
-    private val getDataWriteSaveEvent: (List<T>) -> DataWriteEvent,
-    private val getDataWriteDeleteEvent: (DeleteOperation<TID>) -> DataWriteEvent,
+    private val getDataWriteSaveEvent: ((List<T>) -> DataWriteEvent)?,
+    private val getDataWriteDeleteEvent: ((DeleteOperation<TID>) -> DataWriteEvent)?,
 ) {
 
     private val cachedItems = mutableMapOf<TID, T>()
@@ -70,7 +70,7 @@ class StoreCache<T : Identifiable<TID>, TID : UniqueId> internal constructor(
         withContext(Dispatchers.IO) {
             writeOperation(value)
             cache(value)
-            dataChangePublisher.post(getDataWriteSaveEvent(listOf(value)))
+            getDataWriteSaveEvent?.let { dataChangePublisher.post(it(listOf(value))) }
         }
     }
 
@@ -81,7 +81,7 @@ class StoreCache<T : Identifiable<TID>, TID : UniqueId> internal constructor(
         withContext(Dispatchers.IO) {
             writeOperation(values)
             cache(values)
-            dataChangePublisher.post(getDataWriteSaveEvent(values))
+            getDataWriteSaveEvent?.let { dataChangePublisher.post(it(values)) }
         }
     }
 
@@ -92,9 +92,9 @@ class StoreCache<T : Identifiable<TID>, TID : UniqueId> internal constructor(
         withContext(Dispatchers.IO) {
             cachedItems.remove(id)
             deleteByIdOperation(id)
-            dataChangePublisher.post(
-                getDataWriteDeleteEvent(DeleteOperation.Just(listOf(id)))
-            )
+            getDataWriteDeleteEvent?.let {
+                dataChangePublisher.post(it(DeleteOperation.Just(listOf(id))))
+            }
         }
     }
 
@@ -104,7 +104,9 @@ class StoreCache<T : Identifiable<TID>, TID : UniqueId> internal constructor(
         withContext(Dispatchers.IO) {
             cachedItems.clear()
             deleteAllOperation()
-            dataChangePublisher.post(getDataWriteDeleteEvent(DeleteOperation.All))
+            getDataWriteDeleteEvent?.let {
+                dataChangePublisher.post(it(DeleteOperation.All))
+            }
         }
     }
 

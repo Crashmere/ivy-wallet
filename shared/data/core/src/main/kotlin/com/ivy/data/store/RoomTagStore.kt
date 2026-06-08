@@ -1,6 +1,5 @@
 package com.ivy.data.store
 
-import com.ivy.data.api.DataWriteEvent
 import com.ivy.data.api.TagStore
 import com.ivy.data.db.dao.read.TagAssociationDao
 import com.ivy.data.db.dao.read.TagDao
@@ -28,10 +27,7 @@ class RoomTagStore @Inject constructor(
     private val writeTagAssociationDao: WriteTagAssociationDao,
     cacheFactory: StoreCacheFactory,
 ) : TagStore {
-    private val cache = cacheFactory.createCache(
-        getDataWriteSaveEvent = DataWriteEvent::SaveTags,
-        getDateWriteDeleteEvent = DataWriteEvent::DeleteTags,
-    )
+    private val cache = cacheFactory.createCache<Tag, TagId>()
 
     override suspend fun findById(id: TagId): Tag? = cache.findById(
         id = id,

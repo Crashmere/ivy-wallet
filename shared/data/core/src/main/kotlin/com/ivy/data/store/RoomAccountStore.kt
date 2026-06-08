@@ -21,7 +21,7 @@ class RoomAccountStore @Inject constructor(
 ) : AccountStore {
     private val cache = cacheFactory.createCache(
         getDataWriteSaveEvent = DataWriteEvent::SaveAccounts,
-        getDateWriteDeleteEvent = DataWriteEvent::DeleteAccounts
+        getDataWriteDeleteEvent = DataWriteEvent::DeleteAccounts,
     )
 
     override suspend fun findById(id: AccountId): Account? = cache.findById(
