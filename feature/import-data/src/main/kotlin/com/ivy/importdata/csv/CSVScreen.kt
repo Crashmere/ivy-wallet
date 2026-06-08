@@ -33,12 +33,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.ivy.ui.navigation.navigation
 import com.ivy.ui.navigation.screenScopedViewModel
 import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.legacy.ui.theme.style
 import com.ivy.ui.compose.thenIf
 import com.ivy.importdata.csvimport.flow.ImportProcessing
 import com.ivy.importdata.csvimport.flow.ImportResultUI
@@ -97,7 +97,11 @@ private fun ImportUI(
             Spacer8()
             Text(
                 text = stringResource(R.string.warning_import_csv_file).trimIndent(),
-                style = LegacyTheme.typo.c.style(color = LegacyTheme.colors.red),
+                style = LegacyTheme.typo.c.copy(
+                    color = LegacyTheme.colors.red,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Start
+                ),
                 fontWeight = FontWeight.Bold,
             )
         }
@@ -132,9 +136,10 @@ private fun ImportButton(
     ) {
         Text(
             text = stringResource(R.string.import_csv_file),
-            style = LegacyTheme.typo.b2.style(
+            style = LegacyTheme.typo.b2.copy(
                 fontWeight = FontWeight.Bold,
-                color = Color.White
+                color = Color.White,
+                textAlign = TextAlign.Start
             ),
         )
     }
@@ -237,12 +242,20 @@ private fun <M> LazyListScope.mappingRow(
         ) {
             Text(
                 text = mapping.ivyColumn,
-                style = LegacyTheme.typo.b1.style(color = LegacyTheme.colors.primary),
+                style = LegacyTheme.typo.b1.copy(
+                    color = LegacyTheme.colors.primary,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Start
+                ),
             )
             Spacer(modifier = Modifier.height(4.dp))
             Text(
                 text = mapping.helpInfo,
-                style = LegacyTheme.typo.c.style(color = LegacyTheme.colors.gray)
+                style = LegacyTheme.typo.c.copy(
+                    color = LegacyTheme.colors.gray,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Start
+                )
             )
             Spacer8()
             Text(text = "Choose a matching CSV column:", style = LegacyTheme.typo.b2)
@@ -632,9 +645,10 @@ private fun LazyListScope.continueButton(
         ) {
             Text(
                 text = stringResource(R.string.import_csv_continue),
-                style = LegacyTheme.typo.b2.style(
+                style = LegacyTheme.typo.b2.copy(
                     fontWeight = FontWeight.Bold,
-                    color = Color.White
+                    color = Color.White,
+                    textAlign = TextAlign.Start
                 ),
             )
         }

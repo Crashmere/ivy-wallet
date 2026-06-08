@@ -23,10 +23,10 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.legacy.ui.theme.style
 import com.ivy.ui.R
 
 @ExperimentalFoundationApi
@@ -59,8 +59,10 @@ internal fun BoxWithConstraintsScope.ImportFrom(
             Text(
                 modifier = Modifier.padding(start = 32.dp),
                 text = stringResource(R.string.import_data),
-                style = LegacyTheme.typo.h2.style(
-                    fontWeight = FontWeight.Black
+                style = LegacyTheme.typo.h2.copy(
+                    color = LegacyTheme.colors.pureInverse,
+                    fontWeight = FontWeight.Black,
+                    textAlign = TextAlign.Start
                 )
             )
 
@@ -83,9 +85,10 @@ internal fun BoxWithConstraintsScope.ImportFrom(
             ) {
                 Text(
                     text = stringResource(id = R.string.manual_csv_import),
-                    style = LegacyTheme.typo.b2.style(
+                    style = LegacyTheme.typo.b2.copy(
                         fontWeight = FontWeight.Bold,
-                        color = Color.White
+                        color = Color.White,
+                        textAlign = TextAlign.Start
                     )
                 )
             }
@@ -137,9 +140,10 @@ private fun ImportAction(
     ) {
         Text(
             text = title,
-            style = LegacyTheme.typo.b2.style(
+            style = LegacyTheme.typo.b2.copy(
                 fontWeight = FontWeight.Bold,
-                color = LegacyTheme.colors.pureInverse
+                color = LegacyTheme.colors.pureInverse,
+                textAlign = TextAlign.Start
             )
         )
 
@@ -147,8 +151,10 @@ private fun ImportAction(
 
         Text(
             text = description,
-            style = LegacyTheme.typo.c.style(
-                color = LegacyTheme.colors.pureInverse
+            style = LegacyTheme.typo.c.copy(
+                color = LegacyTheme.colors.pureInverse,
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Start
             )
         )
     }

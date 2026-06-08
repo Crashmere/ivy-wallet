@@ -15,9 +15,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.legacy.ui.theme.style
 import com.ivy.importdata.csv.Spacer8
 import com.ivy.data.model.importing.ImportResult
 import com.ivy.data.model.currency.format
@@ -54,9 +54,10 @@ internal fun ImportResultUI(
         Text(
             modifier = Modifier.padding(horizontal = 32.dp),
             text = if (importSuccess) stringResource(R.string.success) else stringResource(R.string.failure),
-            style = LegacyTheme.typo.h2.style(
+            style = LegacyTheme.typo.h2.copy(
                 fontWeight = FontWeight.Black,
-                color = if (importSuccess) LegacyTheme.colors.pureInverse else LegacyTheme.colors.red
+                color = if (importSuccess) LegacyTheme.colors.pureInverse else LegacyTheme.colors.red,
+                textAlign = TextAlign.Start
             )
         )
 
@@ -106,9 +107,10 @@ internal fun ImportResultUI(
             ) {
                 Text(
                     text = stringResource(id = R.string.manual_csv_import),
-                    style = LegacyTheme.typo.b2.style(
+                    style = LegacyTheme.typo.b2.copy(
                         fontWeight = FontWeight.Bold,
-                        color = Color.White
+                        color = Color.White,
+                        textAlign = TextAlign.Start
                     )
                 )
             }
@@ -158,9 +160,10 @@ private fun SuccessSectionUI(
         Text(
             modifier = Modifier.padding(horizontal = 32.dp),
             text = stringResource(R.string.imported),
-            style = LegacyTheme.typo.b1.style(
+            style = LegacyTheme.typo.b1.copy(
                 color = LegacyTheme.colors.green,
-                fontWeight = FontWeight.Black
+                fontWeight = FontWeight.Black,
+                textAlign = TextAlign.Start
             )
         )
 
@@ -169,17 +172,20 @@ private fun SuccessSectionUI(
         Text(
             modifier = Modifier.padding(horizontal = 32.dp),
             text = "${successPercent.format(2)}%",
-            style = LegacyTheme.typo.nH2.style(
-                fontWeight = FontWeight.Normal
+            style = LegacyTheme.typo.nH2.copy(
+                color = LegacyTheme.colors.pureInverse,
+                fontWeight = FontWeight.Normal,
+                textAlign = TextAlign.Start
             )
         )
 
         Text(
             modifier = Modifier.padding(horizontal = 32.dp),
             text = stringResource(R.string.transactions_imported, result.transactionsImported),
-            style = LegacyTheme.typo.nB2.style(
+            style = LegacyTheme.typo.nB2.copy(
                 fontWeight = FontWeight.Bold,
-                color = LegacyTheme.colors.gray
+                color = LegacyTheme.colors.gray,
+                textAlign = TextAlign.Start
             )
         )
 
@@ -188,9 +194,10 @@ private fun SuccessSectionUI(
         Text(
             modifier = Modifier.padding(horizontal = 32.dp),
             text = stringResource(R.string.accounts_imported, result.accountsImported),
-            style = LegacyTheme.typo.nB2.style(
+            style = LegacyTheme.typo.nB2.copy(
                 fontWeight = FontWeight.Bold,
-                color = LegacyTheme.colors.gray
+                color = LegacyTheme.colors.gray,
+                textAlign = TextAlign.Start
             )
         )
 
@@ -199,9 +206,10 @@ private fun SuccessSectionUI(
         Text(
             modifier = Modifier.padding(horizontal = 32.dp),
             text = stringResource(R.string.categories_imported, result.categoriesImported),
-            style = LegacyTheme.typo.nB2.style(
+            style = LegacyTheme.typo.nB2.copy(
                 fontWeight = FontWeight.Bold,
-                color = LegacyTheme.colors.gray
+                color = LegacyTheme.colors.gray,
+                textAlign = TextAlign.Start
             )
         )
 
@@ -220,9 +228,10 @@ private fun FailedSectionUI(
         Text(
             modifier = Modifier.padding(horizontal = 32.dp),
             text = stringResource(R.string.failed),
-            style = LegacyTheme.typo.b1.style(
+            style = LegacyTheme.typo.b1.copy(
                 fontWeight = FontWeight.Black,
-                color = LegacyTheme.colors.red
+                color = LegacyTheme.colors.red,
+                textAlign = TextAlign.Start
             )
         )
 
@@ -231,8 +240,10 @@ private fun FailedSectionUI(
         Text(
             modifier = Modifier.padding(horizontal = 32.dp),
             text = "${(100 - successPercent).format(2)}%",
-            style = LegacyTheme.typo.nH2.style(
-                fontWeight = FontWeight.Normal
+            style = LegacyTheme.typo.nH2.copy(
+                color = LegacyTheme.colors.pureInverse,
+                fontWeight = FontWeight.Normal,
+                textAlign = TextAlign.Start
             )
         )
 
@@ -242,9 +253,10 @@ private fun FailedSectionUI(
                 R.string.rows_from_csv_not_recognized,
                 result.rowsFound - result.transactionsImported
             ),
-            style = LegacyTheme.typo.nB2.style(
+            style = LegacyTheme.typo.nB2.copy(
                 fontWeight = FontWeight.Bold,
-                color = LegacyTheme.colors.gray
+                color = LegacyTheme.colors.gray,
+                textAlign = TextAlign.Start
             )
         )
     }

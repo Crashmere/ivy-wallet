@@ -15,10 +15,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ivy.ui.theme.colors.Gradient
 import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.legacy.ui.theme.style
 import com.ivy.ui.R
 import com.ivy.ui.compose.drawColoredShadow
 import com.ivy.ui.compose.thenIf
@@ -71,9 +71,10 @@ internal fun ImportGradientButton(
         Text(
             modifier = Modifier.padding(vertical = 16.dp),
             text = text,
-            style = LegacyTheme.typo.b2.style(
+            style = LegacyTheme.typo.b2.copy(
                 color = textColor,
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Start
             )
         )
 

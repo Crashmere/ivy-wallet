@@ -15,9 +15,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.legacy.ui.theme.style
 import com.ivy.ui.R
 import com.ivy.ui.theme.colors.IvyGradients
 
@@ -35,8 +35,10 @@ internal fun ImportProcessing(
 
         Text(
             text = stringResource(R.string.please_wait),
-            style = LegacyTheme.typo.h2.style(
-                fontWeight = FontWeight.Black
+            style = LegacyTheme.typo.h2.copy(
+                color = LegacyTheme.colors.pureInverse,
+                fontWeight = FontWeight.Black,
+                textAlign = TextAlign.Start
             )
         )
 
@@ -44,9 +46,10 @@ internal fun ImportProcessing(
 
         Text(
             text = "$progressPercent%",
-            style = LegacyTheme.typo.b2.style(
+            style = LegacyTheme.typo.b2.copy(
                 color = LegacyTheme.colors.gray,
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Start
             )
         )
 
@@ -60,8 +63,10 @@ internal fun ImportProcessing(
 
         Text(
             text = stringResource(R.string.importing_the_csv_file),
-            style = LegacyTheme.typo.b2.style(
-                fontWeight = FontWeight.Bold
+            style = LegacyTheme.typo.b2.copy(
+                color = LegacyTheme.colors.pureInverse,
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Start
             )
         )
 
