@@ -70,7 +70,7 @@ import com.ivy.ui.R
 import com.ivy.data.model.currency.IvyCurrency
 import com.ivy.legacy.ui.theme.Gradient
 import com.ivy.legacy.ui.theme.Ivy
-import com.ivy.legacy.ui.component.BalanceRow
+import com.ivy.legacy.ui.money.BalanceRow
 import com.ivy.legacy.ui.component.ItemIconSDefaultIcon
 import com.ivy.legacy.ui.component.IvyButton
 import com.ivy.legacy.ui.component.IvyIcon

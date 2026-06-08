@@ -75,7 +75,7 @@ import com.ivy.ui.R
 import com.ivy.ui.rememberScrollPositionListState
 import com.ivy.data.model.IncomeExpensePair
 import com.ivy.legacy.ui.theme.Gray
-import com.ivy.legacy.ui.component.BalanceRow
+import com.ivy.legacy.ui.money.BalanceRow
 import com.ivy.legacy.ui.component.IvyCircleButton
 import com.ivy.legacy.ui.component.IvyOutlinedButton
 import com.ivy.legacy.ui.component.ItemIconMDefaultIcon

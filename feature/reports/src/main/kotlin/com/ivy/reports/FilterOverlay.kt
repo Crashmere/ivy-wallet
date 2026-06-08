@@ -69,7 +69,7 @@ import com.ivy.legacy.ui.modal.ChoosePeriodModalData
 import com.ivy.legacy.ui.modal.edit.AmountModal
 import com.ivy.legacy.ui.theme.findContrastTextColor
 import com.ivy.legacy.ui.theme.toComposeColor
-import com.ivy.legacy.ui.component.AmountCurrencyB1
+import com.ivy.legacy.ui.money.AmountCurrencyB1
 import com.ivy.ui.compose.BackPressHandler
 import com.ivy.ui.compose.thenIf
 import kotlinx.collections.immutable.ImmutableList

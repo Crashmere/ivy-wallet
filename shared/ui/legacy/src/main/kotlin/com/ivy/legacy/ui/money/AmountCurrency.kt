@@ -1,4 +1,4 @@
-package com.ivy.legacy.ui.component
+package com.ivy.legacy.ui.money
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Spacer

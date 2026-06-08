@@ -40,7 +40,7 @@ import com.ivy.legacy.ui.theme.Gradient
 import com.ivy.legacy.ui.theme.Gray
 import com.ivy.legacy.ui.theme.Orange
 import com.ivy.legacy.ui.theme.White
-import com.ivy.legacy.ui.component.BalanceRow
+import com.ivy.legacy.ui.money.BalanceRow
 import com.ivy.legacy.ui.component.IvyCircleButton
 import com.ivy.legacy.ui.modal.ChoosePeriodModal
 import com.ivy.legacy.ui.modal.ChoosePeriodModalData

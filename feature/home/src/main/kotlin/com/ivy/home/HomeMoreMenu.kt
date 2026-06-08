@@ -62,7 +62,7 @@ import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.Gray
 import com.ivy.legacy.ui.component.CircleButtonFilled
 import com.ivy.legacy.ui.component.IvyIcon
-import com.ivy.legacy.ui.component.AmountCurrencyB1
+import com.ivy.legacy.ui.money.AmountCurrencyB1
 import kotlin.math.roundToInt
 
 private const val SWIPE_UP_THRESHOLD_CLOSE_MORE_MENU = 300

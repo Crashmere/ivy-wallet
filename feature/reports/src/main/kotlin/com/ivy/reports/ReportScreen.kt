@@ -55,7 +55,7 @@ import com.ivy.data.model.IncomeExpensePair
 import com.ivy.legacy.ui.theme.Gray
 import com.ivy.legacy.ui.theme.Green
 import com.ivy.legacy.ui.theme.Orange
-import com.ivy.legacy.ui.component.BalanceRow
+import com.ivy.legacy.ui.money.BalanceRow
 import com.ivy.legacy.ui.component.CircleButtonFilled
 import com.ivy.legacy.ui.component.IvyButton
 import com.ivy.legacy.ui.component.IvyIcon

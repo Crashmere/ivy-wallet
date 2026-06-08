@@ -34,7 +34,7 @@ import com.ivy.ui.time.forDisplay
 import com.ivy.ui.time.formatDateOnly
 import com.ivy.ui.time.formatDateOnlyWithYear
 import com.ivy.ui.R
-import com.ivy.legacy.ui.component.AmountCurrencyB1
+import com.ivy.legacy.ui.money.AmountCurrencyB1
 import com.ivy.legacy.ui.theme.Gradient
 import com.ivy.legacy.ui.theme.GradientGreen
 import com.ivy.legacy.ui.theme.GradientIvy

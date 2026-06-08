@@ -1,4 +1,4 @@
-package com.ivy.legacy.ui.component
+package com.ivy.legacy.ui.money
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

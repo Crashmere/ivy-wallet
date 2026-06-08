@@ -37,7 +37,7 @@ import com.ivy.legacy.ui.theme.Gray
 import com.ivy.legacy.ui.component.CircleButtonFilled
 import com.ivy.legacy.ui.component.IvyIcon
 import com.ivy.legacy.ui.modal.ReorderModalSingleType
-import com.ivy.legacy.ui.component.AmountCurrencyB1
+import com.ivy.legacy.ui.money.AmountCurrencyB1
 
 @Composable
 fun BoxWithConstraintsScope.BudgetScreen() {

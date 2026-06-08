@@ -55,7 +55,7 @@ import com.ivy.ui.rememberScrollPositionListState
 import com.ivy.legacy.ui.theme.Gradient
 import com.ivy.legacy.ui.theme.GradientGreen
 import com.ivy.legacy.ui.theme.White
-import com.ivy.legacy.ui.component.BalanceRow
+import com.ivy.legacy.ui.money.BalanceRow
 import com.ivy.legacy.ui.component.CircleButtonFilled
 import com.ivy.legacy.ui.component.ItemIconSDefaultIcon
 import com.ivy.legacy.ui.component.IvyButton
@@ -67,7 +67,7 @@ import com.ivy.legacy.ui.modal.ModalTitle
 import com.ivy.legacy.ui.modal.edit.CategoryModal
 import com.ivy.legacy.ui.modal.CategoryModalData
 import com.ivy.legacy.ui.theme.toComposeColor
-import com.ivy.legacy.ui.component.AmountCurrencyB1
+import com.ivy.legacy.ui.money.AmountCurrencyB1
 import kotlinx.collections.immutable.ImmutableList
 import java.util.UUID
 

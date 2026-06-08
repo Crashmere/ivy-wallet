@@ -62,7 +62,7 @@ import com.ivy.legacy.ui.component.IvyIcon
 import com.ivy.legacy.ui.theme.findContrastTextColor
 import com.ivy.legacy.ui.theme.gradientExpenses
 import com.ivy.legacy.ui.theme.toComposeColor
-import com.ivy.legacy.ui.component.AmountCurrencyB1
+import com.ivy.legacy.ui.money.AmountCurrencyB1
 import kotlinx.collections.immutable.ImmutableList
 import java.time.LocalDateTime
 import java.util.Locale
