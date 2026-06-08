@@ -43,6 +43,7 @@
 - 收窄旧弹窗状态职责：账户、分类、缓冲金额、周期、借贷、借贷记录和计划付款重复规则的 `*ModalData` 已从 `shared:ui:legacy` 迁到 `shared:ui:core` 的 `com.ivy.ui.modal` 包；feature 状态层不再为了保存弹窗数据直接引用 legacy 弹窗实现包。
 - 收窄导航返回职责：旧弹窗返回键处理改用 Compose `BackHandler`，`Navigation` 删除 modal back handler 栈，只继续处理页面级返回和根返回栈。
 - 切断 legacy UI 对导航模块的依赖：legacy 内部初始化副作用改用 `shared:ui:core` 的 `onCompositionStart()`，`shared:ui:legacy` 不再声明 `shared:ui:navigation` 依赖。
+- 继续收窄导航模块依赖：`shared:ui:navigation` 已移除未使用的 `shared:ui:core` 依赖，当前只保留自身导航状态、Compose ViewModel owner 和 route 需要的 immutable collection。
 
 当前仍保留：
 
