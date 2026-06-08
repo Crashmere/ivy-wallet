@@ -1,8 +1,15 @@
 package com.ivy.importdata.csv.domain
 
 import com.ivy.data.model.Account
-import com.ivy.data.model.legacy.LegacyTransaction
+import com.ivy.data.model.AccountId
+import com.ivy.data.model.Expense
+import com.ivy.data.model.Income
+import com.ivy.data.model.PositiveValue
+import com.ivy.data.model.Transaction
+import com.ivy.data.model.TransactionId
+import com.ivy.data.model.TransactionMetadata
 import com.ivy.data.model.TransactionType
+import com.ivy.data.model.Transfer
 import com.ivy.data.model.Category
 import com.ivy.data.model.CategoryId
 import com.ivy.data.model.importing.ImportCsvRow
@@ -11,18 +18,19 @@ import com.ivy.data.model.primitive.AssetCode
 import com.ivy.data.model.primitive.ColorInt
 import com.ivy.data.model.primitive.IconAsset
 import com.ivy.data.model.primitive.NotBlankTrimmedString
-import com.ivy.domain.usecase.account.SaveLegacyAccountUseCase
+import com.ivy.data.model.primitive.PositiveDouble
+import com.ivy.domain.usecase.account.SaveAccountUseCase
 import com.ivy.domain.usecase.category.GetCategoriesUseCase
 import com.ivy.domain.usecase.category.SaveCategoryUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyUseCase
-import com.ivy.domain.usecase.transaction.SaveLegacyTransactionUseCase
+import com.ivy.domain.usecase.transaction.SaveTransactionUseCase
 import com.ivy.importdata.csv.ImportantFields
 import com.ivy.importdata.csv.OptionalFields
 import com.ivy.importdata.csv.TransferFields
-import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.data.model.currency.IvyCurrency
 import com.ivy.domain.usecase.account.GetAccountsUseCase
 import kotlinx.collections.immutable.toImmutableList
+import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneId
 import java.util.Locale
@@ -35,9 +43,9 @@ internal class CsvTransactionImporter @Inject internal constructor(
     private val getAccountsUseCase: GetAccountsUseCase,
     private val getCategoriesUseCase: GetCategoriesUseCase,
     private val getBaseCurrency: GetBaseCurrencyUseCase,
-    private val saveLegacyAccountUseCase: SaveLegacyAccountUseCase,
+    private val saveAccountUseCase: SaveAccountUseCase,
     private val saveCategoryUseCase: SaveCategoryUseCase,
-    private val saveLegacyTransactionUseCase: SaveLegacyTransactionUseCase,
+    private val saveTransactionUseCase: SaveTransactionUseCase,
 ) {
     suspend fun import(
         csv: List<CSVRow>,
@@ -50,7 +58,7 @@ internal class CsvTransactionImporter @Inject internal constructor(
         val rowsCount = rows.size
 
         val context = CsvImportContext(
-            accounts = getAccountsUseCase().toLegacyAccounts(),
+            accounts = getAccountsUseCase(),
             categories = getCategoriesUseCase(),
             baseCurrency = getBaseCurrency(),
         )
@@ -93,7 +101,7 @@ internal class CsvTransactionImporter @Inject internal constructor(
                 0.0
             }
             onProgress(0.5 + progressPercent / 2)
-            saveLegacyTransactionUseCase(transaction)
+            saveTransactionUseCase(transaction)
         }
 
         return ImportResult(
@@ -111,7 +119,7 @@ internal class CsvTransactionImporter @Inject internal constructor(
         importantFields: ImportantFields,
         transferFields: TransferFields,
         optionalFields: OptionalFields,
-    ): LegacyTransaction? {
+    ): Transaction? {
         val type = parseTransactionType(
             value = row.extractValue(importantFields.type),
             metadata = importantFields.type.metadata,
@@ -205,18 +213,17 @@ internal class CsvTransactionImporter @Inject internal constructor(
             optionalFields.description.metadata
         )
 
-        return LegacyTransaction(
-            id = UUID.randomUUID(),
+        return buildTransaction(
+            id = TransactionId(UUID.randomUUID()),
             type = type,
-            amount = amount.toBigDecimal(),
-            accountId = account.id,
-            toAccountId = toAccount?.id,
-            toAmount = toAmount?.toBigDecimal() ?: amount.toBigDecimal(),
-            dateTime = dateTime.toInstantInSystemZone(),
-            dueDate = null,
-            categoryId = category?.id?.value,
+            amount = amount,
+            account = account,
+            toAccount = toAccount,
+            toAmount = toAmount ?: amount,
+            time = dateTime.toInstantInSystemZone(),
+            categoryId = category?.id,
             title = title,
-            description = description
+            description = description,
         )
     }
 
@@ -227,11 +234,11 @@ internal class CsvTransactionImporter @Inject internal constructor(
         icon: String?,
         orderNum: Double?,
         currencyRawString: String?,
-    ): LegacyAccount? {
+    ): Account? {
         if (accountNameString == null || accountNameString.isBlank()) return null
 
         val existingAccount = context.accounts.firstOrNull {
-            accountNameString.lowercase(Locale.getDefault()) == it.name.lowercase(Locale.getDefault())
+            accountNameString.lowercase(Locale.getDefault()) == it.name.value.lowercase(Locale.getDefault())
         }
         if (existingAccount != null) {
             return existingAccount
@@ -253,19 +260,22 @@ internal class CsvTransactionImporter @Inject internal constructor(
             }
         }
 
-        val newAccount = LegacyAccount(
-            name = accountNameString,
-            currency = mapCurrency(
+        val accountName = NotBlankTrimmedString.from(accountNameString).getOrNull()
+            ?: return null
+        val newAccount = Account(
+            id = AccountId(UUID.randomUUID()),
+            name = accountName,
+            asset = mapCurrency(
                 baseCurrency = context.baseCurrency.code,
                 currencyCode = currencyRawString
             ),
-            color = colorArgb,
-            icon = icon,
+            color = ColorInt(colorArgb),
+            icon = icon?.let(IconAsset::from)?.getOrNull(),
+            includeInBalance = true,
             orderNum = orderNum ?: context.accounts.maxOfOrNull { it.orderNum }.nextImportOrderNum()
         )
-        val accountSaved = saveLegacyAccountUseCase(newAccount, context.baseCurrency)
-        if (!accountSaved) return null
-        context.accounts = getAccountsUseCase().toLegacyAccounts()
+        saveAccountUseCase(newAccount)
+        context.accounts = getAccountsUseCase()
 
         return newAccount
     }
@@ -273,8 +283,8 @@ internal class CsvTransactionImporter @Inject internal constructor(
     private fun mapCurrency(
         baseCurrency: String,
         currencyCode: String?
-    ): String {
-        return try {
+    ): AssetCode {
+        val code = try {
             if (currencyCode != null && currencyCode.isNotBlank()) {
                 IvyCurrency.fromCode(currencyCode)?.code ?: baseCurrency
             } else {
@@ -283,6 +293,11 @@ internal class CsvTransactionImporter @Inject internal constructor(
         } catch (e: Exception) {
             baseCurrency
         }
+        return AssetCode.from(code).getOrNull() ?: contextBaseCurrency(baseCurrency)
+    }
+
+    private fun contextBaseCurrency(baseCurrency: String): AssetCode {
+        return AssetCode.from(baseCurrency).getOrNull() ?: AssetCode.USD
     }
 
     private suspend fun mapCategory(
@@ -330,24 +345,87 @@ internal class CsvTransactionImporter @Inject internal constructor(
 }
 
 private data class CsvImportContext(
-    var accounts: List<LegacyAccount>,
+    var accounts: List<Account>,
     var categories: List<Category>,
     val baseCurrency: AssetCode,
     var newCategoryColorIndex: Int = 0,
     var newAccountColorIndex: Int = 0,
 )
 
-private fun Iterable<Account>.toLegacyAccounts(): List<LegacyAccount> {
-    return map { it.toLegacyAccount() }
+private fun buildTransaction(
+    id: TransactionId,
+    type: TransactionType,
+    amount: Double,
+    account: Account,
+    toAccount: Account?,
+    toAmount: Double,
+    time: Instant,
+    categoryId: CategoryId?,
+    title: String?,
+    description: String?,
+): Transaction? {
+    val value = account.valueOf(amount) ?: return null
+    val transactionTitle = title?.let(NotBlankTrimmedString::from)?.getOrNull()
+    val transactionDescription = description?.let(NotBlankTrimmedString::from)?.getOrNull()
+    val metadata = TransactionMetadata(
+        recurringRuleId = null,
+        paidForDateTime = null,
+        loanId = null,
+        loanRecordId = null,
+    )
+
+    return when (type) {
+        TransactionType.INCOME -> Income(
+            id = id,
+            title = transactionTitle,
+            description = transactionDescription,
+            category = categoryId,
+            time = time,
+            settled = true,
+            metadata = metadata,
+            tags = emptyList(),
+            value = value,
+            account = account.id,
+        )
+
+        TransactionType.EXPENSE -> Expense(
+            id = id,
+            title = transactionTitle,
+            description = transactionDescription,
+            category = categoryId,
+            time = time,
+            settled = true,
+            metadata = metadata,
+            tags = emptyList(),
+            value = value,
+            account = account.id,
+        )
+
+        TransactionType.TRANSFER -> {
+            val targetAccount = toAccount ?: return null
+            val targetValue = targetAccount.valueOf(toAmount) ?: return null
+            Transfer(
+                id = id,
+                title = transactionTitle,
+                description = transactionDescription,
+                category = categoryId,
+                time = time,
+                settled = true,
+                metadata = metadata,
+                tags = emptyList(),
+                fromAccount = account.id,
+                fromValue = value,
+                toAccount = targetAccount.id,
+                toValue = targetValue,
+            )
+        }
+    }
 }
 
-private fun Account.toLegacyAccount() = LegacyAccount(
-    name = name.value,
-    currency = asset.code,
-    color = color.value,
-    icon = icon?.id,
-    orderNum = orderNum,
-    includeInBalance = includeInBalance,
-    isDeleted = false,
-    id = id.value,
-)
+private fun Account.valueOf(amount: Double): PositiveValue? {
+    val positiveAmount = PositiveDouble.from(amount).getOrNull() ?: return null
+    return PositiveValue(
+        amount = positiveAmount,
+        asset = asset,
+    )
+}

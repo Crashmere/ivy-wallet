@@ -227,6 +227,7 @@
 - 删除按 ID 读取旧交易列表 use case：新增正式 `GetTransactionsByIdsUseCase`，交易列表和饼图页先读取正式 `Transaction`，只在旧 UI/旧统计入口前继续通过现有 mapper 局部转换为 `LegacyTransaction`。
 - 删除单条旧交易读取 use case：新增正式 `GetTransactionUseCase`，编辑交易页先读取正式 `Transaction`，再在旧编辑状态入口前通过现有 mapper 局部转换为 `LegacyTransaction`；保存流程暂时仍沿用现有旧交易保存入口。
 - 删除按账户集合读取旧交易 use case：新增正式 `GetTransactionsForAccountsUseCase`，饼图和分类月度统计先读取正式 `Transaction`，只在旧分类/金额统计算法入口前局部转换为 `LegacyTransaction`。
+- 收窄 CSV 导入保存边界：CSV 导入现在直接构造正式 `Account` 和 `Transaction`，通过 `SaveAccountUseCase`/`SaveTransactionUseCase` 保存；`SaveLegacyAccountUseCase` 已无调用点并删除，旧交易保存入口只剩编辑交易页继续使用。
 - 收窄饼图页输入缓存：饼图 ViewModel 不再长期保存由 route ID 还原出的旧交易对象，只保存交易 ID，并在重算图表时局部读取。
 - 收窄借贷详情关联交易缓存：借贷详情不再把贷款关联旧交易对象保存在 ViewModel 字段中，加载时只设置开关状态，编辑时局部读取。
 
