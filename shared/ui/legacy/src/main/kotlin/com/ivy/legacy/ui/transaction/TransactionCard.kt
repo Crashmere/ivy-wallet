@@ -61,12 +61,12 @@ import com.ivy.legacy.ui.theme.Orange
 import com.ivy.legacy.ui.theme.Red
 import com.ivy.legacy.ui.theme.White
 import com.ivy.ui.icon.ItemIconSDefaultIcon
-import com.ivy.legacy.ui.button.IvyButton
 import com.ivy.legacy.ui.theme.findContrastTextColor
 import com.ivy.legacy.ui.theme.gradientBlack
 import com.ivy.legacy.ui.theme.gradientExpenses
 import com.ivy.legacy.ui.theme.toComposeColor
 import com.ivy.legacy.ui.money.AmountCurrencyB1
+import com.ivy.ui.compose.GradientButton
 import com.ivy.ui.compose.ResourceIcon
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
@@ -224,36 +224,42 @@ internal fun TransactionCard(
             Spacer(Modifier.height(16.dp))
             val isExpense = card.type == TransactionType.EXPENSE
             Row {
-                IvyButton(
+                GradientButton(
                     modifier = Modifier
                         .weight(1f)
                         .padding(start = 24.dp),
                     text = stringResource(R.string.skip),
                     wrapContentMode = false,
                     backgroundGradient = Gradient.solid(LegacyTheme.colors.pure),
+                    disabledBackgroundColor = LegacyTheme.colors.gray,
+                    shape = LegacyTheme.shapes.rFull,
                     textStyle = LegacyTheme.typo.b2.copy(
                         color = LegacyTheme.colors.pureInverse,
                         fontWeight = FontWeight.Bold,
                         textAlign = TextAlign.Start
-                    )
+                    ),
+                    iconTint = White,
                 ) {
                     onSkipTransaction(card.id)
                 }
 
                 Spacer(Modifier.width(8.dp))
 
-                IvyButton(
+                GradientButton(
                     modifier = Modifier
                         .weight(1f)
                         .padding(end = 24.dp),
                     text = if (isExpense) stringResource(R.string.pay) else stringResource(R.string.get),
                     wrapContentMode = false,
                     backgroundGradient = if (isExpense) gradientExpenses() else GradientGreen,
+                    disabledBackgroundColor = LegacyTheme.colors.gray,
+                    shape = LegacyTheme.shapes.rFull,
                     textStyle = LegacyTheme.typo.b2.copy(
                         color = if (isExpense) LegacyTheme.colors.pure else White,
                         fontWeight = FontWeight.Bold,
                         textAlign = TextAlign.Start
-                    )
+                    ),
+                    iconTint = White,
                 ) {
                     onPayOrGet(card.id)
                 }

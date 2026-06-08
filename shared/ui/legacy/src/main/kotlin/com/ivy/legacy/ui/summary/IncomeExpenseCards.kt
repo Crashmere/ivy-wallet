@@ -30,9 +30,9 @@ import com.ivy.legacy.ui.theme.Gradient
 import com.ivy.legacy.ui.theme.Green
 import com.ivy.legacy.ui.theme.MediumBlack
 import com.ivy.legacy.ui.theme.MediumWhite
-import com.ivy.legacy.ui.button.IvyButton
 import com.ivy.legacy.ui.theme.findContrastTextColor
 import com.ivy.legacy.ui.theme.isDarkColor
+import com.ivy.ui.compose.GradientButton
 
 @Suppress("ParameterNaming")
 @Composable
@@ -182,7 +182,7 @@ private fun RowScope.HeaderCard(
 
         if (addButtonText != null) {
             val addButtonBackground = if (isIncome) Green else contrastColor
-            IvyButton(
+            GradientButton(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 8.dp)
@@ -190,12 +190,15 @@ private fun RowScope.HeaderCard(
                 text = addButtonText,
                 shadowAlpha = 0.1f,
                 backgroundGradient = Gradient.solid(addButtonBackground),
+                disabledBackgroundColor = LegacyTheme.colors.gray,
+                shape = LegacyTheme.shapes.rFull,
                 textStyle = LegacyTheme.typo.b2.copy(
                     color = findContrastTextColor(addButtonBackground),
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Start,
                     fontSize = 12.sp
                 ),
+                iconTint = Color(0xFFFAFAFA),
                 wrapContentMode = false
             ) {
                 onAddClick()

@@ -16,9 +16,9 @@ import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.GradientGreen
 import com.ivy.legacy.ui.theme.GradientRed
 import com.ivy.legacy.ui.theme.White
-import com.ivy.legacy.ui.button.IvyButton
-import com.ivy.legacy.ui.button.IvyOutlinedButton
+import com.ivy.ui.compose.GradientButton
 import com.ivy.ui.compose.GradientIconButton
+import com.ivy.ui.compose.OutlinedPillButton
 
 @Composable
 internal fun ModalDynamicPrimaryAction(
@@ -148,10 +148,18 @@ internal fun ModalNegativeButton(
     enabled: Boolean = true,
     onClick: () -> Unit,
 ) {
-    IvyButton(
+    GradientButton(
         text = text,
         backgroundGradient = GradientRed,
+        disabledBackgroundColor = LegacyTheme.colors.gray,
+        shape = LegacyTheme.shapes.rFull,
+        textStyle = LegacyTheme.typo.b2.copy(
+            color = White,
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Start
+        ),
         iconStart = iconStart,
+        iconTint = White,
         onClick = onClick,
         enabled = enabled
     )
@@ -165,11 +173,19 @@ internal fun ModalPositiveButton(
     enabled: Boolean = true,
     onClick: () -> Unit,
 ) {
-    IvyButton(
+    GradientButton(
         modifier = modifier,
         text = text,
         backgroundGradient = GradientGreen,
+        disabledBackgroundColor = LegacyTheme.colors.gray,
+        shape = LegacyTheme.shapes.rFull,
+        textStyle = LegacyTheme.typo.b2.copy(
+            color = White,
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Start
+        ),
         iconStart = iconStart,
+        iconTint = White,
         onClick = onClick,
         enabled = enabled
     )
@@ -214,10 +230,19 @@ internal fun ModalSkip(
     text: String = stringResource(R.string.skip),
     onClick: () -> Unit
 ) {
-    IvyOutlinedButton(
+    OutlinedPillButton(
         text = text,
         iconStart = null,
-        solidBackground = true
+        shape = LegacyTheme.shapes.rFull,
+        solidBackground = true,
+        backgroundColor = LegacyTheme.colors.pure,
+        iconTint = LegacyTheme.colors.pureInverse,
+        borderColor = LegacyTheme.colors.medium,
+        textStyle = LegacyTheme.typo.b2.copy(
+            fontWeight = FontWeight.Bold,
+            color = LegacyTheme.colors.pureInverse,
+            textAlign = TextAlign.Start,
+        ),
     ) {
         onClick()
     }

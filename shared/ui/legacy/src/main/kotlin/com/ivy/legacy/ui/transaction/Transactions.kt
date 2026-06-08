@@ -30,7 +30,7 @@ import com.ivy.legacy.ui.theme.Gray
 import com.ivy.legacy.ui.theme.Orange
 import com.ivy.legacy.ui.theme.Red
 import com.ivy.legacy.ui.theme.White
-import com.ivy.legacy.ui.button.IvyButton
+import com.ivy.ui.compose.GradientButton
 import com.ivy.ui.compose.ResourceIcon
 import java.util.UUID
 
@@ -193,7 +193,7 @@ private fun LazyListScope.overdueSection(
         if (overdue.expanded) {
             item {
                 val isLightTheme = LegacyTheme.colors.pure == White
-                IvyButton(
+                GradientButton(
                     modifier = Modifier.padding(horizontal = 24.dp),
                     text = stringResource(R.string.skip_all),
                     wrapContentMode = false,
@@ -205,11 +205,14 @@ private fun LazyListScope.overdueSection(
                             Black
                         )
                     },
+                    disabledBackgroundColor = LegacyTheme.colors.gray,
+                    shape = LegacyTheme.shapes.rFull,
                     textStyle = LegacyTheme.typo.b2.copy(
                         color = if (isLightTheme) Black else White,
                         fontWeight = FontWeight.Bold,
                         textAlign = TextAlign.Start
-                    )
+                    ),
+                    iconTint = White,
                 ) {
                     onSkipAllTransactions(overdue.transactions.map { it.id.value })
                 }

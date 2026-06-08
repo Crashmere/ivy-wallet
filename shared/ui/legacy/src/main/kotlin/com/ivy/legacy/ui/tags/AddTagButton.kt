@@ -8,13 +8,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.TagId
-import com.ivy.legacy.ui.button.IvyButton
 import com.ivy.legacy.ui.selection.IvyBorderButton
 import com.ivy.legacy.ui.theme.Gradient
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.legacy.ui.theme.Orange3
 import com.ivy.legacy.ui.theme.findContrastTextColor
 import com.ivy.ui.R
+import com.ivy.ui.compose.GradientButton
 import kotlinx.collections.immutable.ImmutableList
 
 @Composable
@@ -35,10 +35,12 @@ private fun ViewTagsButton(
     onClick: () -> Unit,
 ) {
     val contrastColor = findContrastTextColor(Orange3)
-    IvyButton(
+    GradientButton(
         modifier = Modifier.padding(start = 24.dp),
         text = if (transactionTags.size <= 1) "${transactionTags.size}\t Tag" else "${transactionTags.size}\t Tags",
         backgroundGradient = Gradient.solid(Orange3),
+        disabledBackgroundColor = LegacyTheme.colors.gray,
+        shape = LegacyTheme.shapes.rFull,
         textStyle = LegacyTheme.typo.b2.copy(
             color = contrastColor,
             fontWeight = FontWeight.Bold,
