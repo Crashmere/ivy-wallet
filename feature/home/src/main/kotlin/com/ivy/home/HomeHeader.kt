@@ -42,10 +42,7 @@ import com.ivy.ui.compose.horizontalSwipeListener
 import com.ivy.ui.compose.rememberInteractionSource
 import com.ivy.ui.compose.rememberSwipeListenerState
 import com.ivy.ui.animation.springBounce
-import com.ivy.ui.navigation.TransactionRouteType
 import com.ivy.ui.compose.verticalSwipeListener
-import com.ivy.ui.navigation.PieChartStatisticScreen
-import com.ivy.ui.navigation.navigation
 import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.Gradient
 import com.ivy.legacy.ui.theme.GradientGreen
@@ -194,6 +191,8 @@ internal fun CashFlowInfo(
     onBalanceClick: () -> Unit,
     percentExpanded: Float,
     onHiddenBalanceClick: () -> Unit,
+    onOpenIncomePieChart: () -> Unit,
+    onOpenExpensePieChart: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -231,7 +230,9 @@ internal fun CashFlowInfo(
             monthlyIncome = monthlyIncome,
             monthlyExpenses = monthlyExpenses,
             hideIncome = hideIncome,
-            onHiddenIncomeClick = onHiddenIncomeClick
+            onHiddenIncomeClick = onHiddenIncomeClick,
+            onOpenIncomePieChart = onOpenIncomePieChart,
+            onOpenExpensePieChart = onOpenExpensePieChart
         )
 
         val cashflow = monthlyIncome - monthlyExpenses
@@ -268,14 +269,14 @@ private fun IncomeExpenses(
     monthlyExpenses: Double,
     hideIncome: Boolean,
     onHiddenIncomeClick: () -> Unit,
+    onOpenIncomePieChart: () -> Unit,
+    onOpenExpensePieChart: () -> Unit,
 ) {
     Row(
         modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Spacer(Modifier.width(16.dp))
-
-        val nav = navigation()
 
         HeaderCard(
             percentVisible = percentExpanded,
@@ -290,11 +291,7 @@ private fun IncomeExpenses(
             if (hideIncome) {
                 onHiddenIncomeClick()
             } else {
-                nav.navigateTo(
-                    PieChartStatisticScreen(
-                        type = TransactionRouteType.INCOME,
-                    ),
-                )
+                onOpenIncomePieChart()
             }
         }
 
@@ -310,11 +307,7 @@ private fun IncomeExpenses(
             amount = monthlyExpenses.absoluteValue,
             testTag = "home_card_expense",
         ) {
-            nav.navigateTo(
-                PieChartStatisticScreen(
-                    type = TransactionRouteType.EXPENSE,
-                ),
-            )
+            onOpenExpensePieChart()
         }
 
         Spacer(Modifier.width(16.dp))

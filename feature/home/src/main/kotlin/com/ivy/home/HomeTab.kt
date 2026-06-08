@@ -91,6 +91,12 @@ fun BoxWithConstraintsScope.HomeTab(
         uiState = uiState,
         onEvent = viewModel::onEvent,
         onOpenAccountsTab = onOpenAccountsTab,
+        onOpenIncomePieChart = {
+            nav.navigateTo(PieChartStatisticScreen(type = TransactionRouteType.INCOME))
+        },
+        onOpenExpensePieChart = {
+            nav.navigateTo(PieChartStatisticScreen(type = TransactionRouteType.EXPENSE))
+        },
     )
 }
 
@@ -102,6 +108,8 @@ internal fun BoxWithConstraintsScope.HomeUi(
     uiState: HomeState,
     onEvent: (HomeEvent) -> Unit,
     onOpenAccountsTab: () -> Unit,
+    onOpenIncomePieChart: () -> Unit,
+    onOpenExpensePieChart: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val periodState = LocalPeriodState.current
@@ -212,6 +220,8 @@ internal fun BoxWithConstraintsScope.HomeUi(
             setUpcomingExpanded = { onEvent(HomeEvent.SetUpcomingExpanded(it)) },
             setOverdueExpanded = { onEvent(HomeEvent.SetOverdueExpanded(it)) },
             onOpenAccountsTab = onOpenAccountsTab,
+            onOpenIncomePieChart = onOpenIncomePieChart,
+            onOpenExpensePieChart = onOpenExpensePieChart,
             onSkipAllTransactions = {
                 skipAllModalVisible = true
             }
@@ -322,6 +332,8 @@ internal fun HomeLazyColumn(
     onSkipTransaction: (UUID) -> Unit,
     onSkipAllTransactions: (List<UUID>) -> Unit,
     onOpenAccountsTab: () -> Unit,
+    onOpenIncomePieChart: () -> Unit,
+    onOpenExpensePieChart: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val periodState = LocalPeriodState.current
@@ -367,7 +379,9 @@ internal fun HomeLazyColumn(
                 onHiddenBalanceClick = onHiddenBalanceClick,
                 percentExpanded = 1f,
                 hideIncome = hideIncome,
-                onHiddenIncomeClick = onHiddenIncomeClick
+                onHiddenIncomeClick = onHiddenIncomeClick,
+                onOpenIncomePieChart = onOpenIncomePieChart,
+                onOpenExpensePieChart = onOpenExpensePieChart
             )
         }
         item {
