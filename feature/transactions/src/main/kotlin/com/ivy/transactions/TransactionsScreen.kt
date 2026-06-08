@@ -196,11 +196,7 @@ fun BoxWithConstraintsScope.TransactionsScreen(screen: TransactionsScreen) {
         deleteModal1Visible = uiState.deleteModal1Visible,
         onDeleteModal1Visible = {
             viewModel.onEvent(TransactionsEvent.OnDeleteModal1Visible(it))
-        },
-        onChoosePeriodModal = {
-            viewModel.onEvent(TransactionsEvent.OnChoosePeriodModalData(it))
-        },
-        choosePeriodModal = uiState.choosePeriodModal
+        }
     )
 }
 
@@ -229,7 +225,6 @@ private fun BoxWithConstraintsScope.UI(
     expenses: Double,
     incomeTransactionCount: Int,
     expenseTransactionCount: Int,
-    choosePeriodModal: ChoosePeriodModalData?,
 
     history: ImmutableList<TransactionHistoryItem>,
     shouldShowAccountSpecificColorInTransactions: Boolean,
@@ -264,7 +259,6 @@ private fun BoxWithConstraintsScope.UI(
     onPayOrGet: (UUID) -> Unit = {},
     onSkipTransaction: (UUID) -> Unit = {},
     onSkipAllTransactions: (List<UUID>) -> Unit = {},
-    onChoosePeriodModal: (ChoosePeriodModalData?) -> Unit,
 ) {
     val nav = navigation()
     val periodState = LocalPeriodState.current
@@ -274,6 +268,7 @@ private fun BoxWithConstraintsScope.UI(
 
     var categoryModalData: CategoryModalData? by remember { mutableStateOf(null) }
     var accountModalData: AccountModalData? by remember { mutableStateOf(null) }
+    var choosePeriodModal: ChoosePeriodModalData? by remember { mutableStateOf(null) }
     var skipAllTransactionIds by remember { mutableStateOf<List<UUID>>(emptyList()) }
 
     val swipeListenerState = rememberSwipeListenerState()
@@ -390,7 +385,7 @@ private fun BoxWithConstraintsScope.UI(
                 initWithTransactions = initWithTransactions,
                 onPreviousMonth = onPreviousMonth,
                 onNextMonth = onNextMonth,
-                onChoosePeriodModal = onChoosePeriodModal
+                onChoosePeriodModal = { choosePeriodModal = it }
             )
 
             transactions(
@@ -482,7 +477,7 @@ private fun BoxWithConstraintsScope.UI(
     ChoosePeriodModal(
         modal = choosePeriodModal,
         dismiss = {
-            onChoosePeriodModal(null)
+            choosePeriodModal = null
         },
         saveSelectedPeriod = periodState::select,
         pickDate = { minDate, maxDate, initialDate, onDatePicked ->

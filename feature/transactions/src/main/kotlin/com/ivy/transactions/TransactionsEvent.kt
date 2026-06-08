@@ -2,7 +2,6 @@ package com.ivy.transactions
 
 import com.ivy.data.model.Category
 import com.ivy.ui.period.TimePeriod
-import com.ivy.legacy.ui.modal.ChoosePeriodModalData
 import java.util.UUID
 
 internal sealed interface TransactionsEvent {
@@ -37,5 +36,4 @@ internal sealed interface TransactionsEvent {
     data class UpdateAccountDeletionState(val confirmationText: String) : TransactionsEvent
     data class SetSkipAllModalVisible(val visible: Boolean) : TransactionsEvent
     data class OnDeleteModal1Visible(val delete: Boolean) : TransactionsEvent
-    data class OnChoosePeriodModalData(val data: ChoosePeriodModalData?) : TransactionsEvent
 }

@@ -50,7 +50,6 @@ import com.ivy.domain.usecase.settings.GetTransfersAsIncomeExpensePreferenceUseC
 import com.ivy.domain.usecase.transaction.BuildLegacyTransactionHistoryItemsUseCase
 import com.ivy.domain.usecase.transaction.CalculateLegacyTransactionsIncomeExpenseUseCase
 import com.ivy.domain.usecase.transaction.GetLegacyTransactionsByIdsUseCase
-import com.ivy.legacy.ui.modal.ChoosePeriodModalData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
@@ -143,7 +142,6 @@ internal class TransactionsViewModel @Inject internal constructor(
     private val enableDeletionButton = mutableStateOf(false)
     private val skipAllModalVisible = mutableStateOf(false)
     private val deleteModal1Visible = mutableStateOf(false)
-    private val choosePeriodModal = mutableStateOf<ChoosePeriodModalData?>(null)
     private val _uiEvents = MutableSharedFlow<TransactionsUiEvent>()
     val uiEvents: SharedFlow<TransactionsUiEvent> = _uiEvents.asSharedFlow()
     private var currentQuery: TransactionsQuery? = null
@@ -172,7 +170,6 @@ internal class TransactionsViewModel @Inject internal constructor(
             enableDeletionButton = getEnableDeletionButton(),
             skipAllModalVisible = getSkipAllModalVisible(),
             deleteModal1Visible = getDeleteModal1Visible(),
-            choosePeriodModal = getChoosePeriodModal(),
             showAccountColorsInTransactions = getShouldShowAccountSpecificColorInTransactions()
         )
     }
@@ -289,11 +286,6 @@ internal class TransactionsViewModel @Inject internal constructor(
         return deleteModal1Visible.value
     }
 
-    @Composable
-    private fun getChoosePeriodModal(): ChoosePeriodModalData? {
-        return choosePeriodModal.value
-    }
-
     override fun onEvent(event: TransactionsEvent) {
         when (event) {
             TransactionsEvent.Delete -> delete()
@@ -320,7 +312,6 @@ internal class TransactionsViewModel @Inject internal constructor(
             is TransactionsEvent.SetUpcomingExpanded -> setUpcomingExpanded(event.expanded)
             is TransactionsEvent.SetSkipAllModalVisible -> setSkipAllModalVisible(event.visible)
             is TransactionsEvent.OnDeleteModal1Visible -> setDeleteModal1Visible(event.delete)
-            is TransactionsEvent.OnChoosePeriodModalData -> setChoosePeriodModalData(event.data)
         }
     }
 
@@ -562,10 +553,6 @@ internal class TransactionsViewModel @Inject internal constructor(
 
     private fun setDeleteModal1Visible(delete: Boolean) {
         deleteModal1Visible.value = delete
-    }
-
-    private fun setChoosePeriodModalData(data: ChoosePeriodModalData?) {
-        choosePeriodModal.value = data
     }
 
     private fun editCategory(updatedCategory: Category) {

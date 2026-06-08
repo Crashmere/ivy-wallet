@@ -14,7 +14,6 @@ import com.ivy.domain.usecase.transaction.GetLegacyTransactionsByIdsUseCase
 import com.ivy.ui.period.PeriodState
 import com.ivy.ui.period.TimePeriod
 import com.ivy.ui.ComposeViewModel
-import com.ivy.legacy.ui.modal.ChoosePeriodModalData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
@@ -46,7 +45,6 @@ internal class PieChartStatisticViewModel @Inject internal constructor(
     private var showCloseButtonOnly by mutableStateOf(false)
     private var filterExcluded by mutableStateOf(false)
     private var inputTransactionIds by mutableStateOf<ImmutableList<UUID>>(persistentListOf())
-    private var choosePeriodModal by mutableStateOf<ChoosePeriodModalData?>(null)
 
     @Composable
     override fun uiState(): PieChartStatisticState {
@@ -59,8 +57,7 @@ internal class PieChartStatisticViewModel @Inject internal constructor(
             selectedCategory = getSelectedCategory(),
             accountIdFilterList = getAccountIdFilterList(),
             showCloseButtonOnly = getShowCloseButtonOnly(),
-            filterExcluded = getFilterExcluded(),
-            choosePeriodModal = getChoosePeriodModal()
+            filterExcluded = getFilterExcluded()
         )
     }
 
@@ -109,18 +106,12 @@ internal class PieChartStatisticViewModel @Inject internal constructor(
         return filterExcluded
     }
 
-    @Composable
-    private fun getChoosePeriodModal(): ChoosePeriodModalData? {
-        return choosePeriodModal
-    }
-
     override fun onEvent(event: PieChartStatisticEvent) {
         viewModelScope.launch(Dispatchers.Default) {
             when (event) {
                 is PieChartStatisticEvent.OnSelectNextMonth -> nextMonth()
                 is PieChartStatisticEvent.OnSelectPreviousMonth -> previousMonth()
                 is PieChartStatisticEvent.OnSetPeriod -> onSetPeriod(event.timePeriod)
-                is PieChartStatisticEvent.OnShowMonthModal -> configureMonthModal(event.timePeriod)
                 is PieChartStatisticEvent.OnCategoryClicked -> onCategoryClicked(event.categoryId)
             }
         }
@@ -241,16 +232,6 @@ internal class PieChartStatisticViewModel @Inject internal constructor(
                 periodValue = previousPeriod
             )
         }
-    }
-
-    private suspend fun configureMonthModal(timePeriod: TimePeriod?) {
-        val choosePeriodModalData = if (timePeriod != null) {
-            ChoosePeriodModalData(period = timePeriod)
-        } else {
-            null
-        }
-
-        choosePeriodModal = choosePeriodModalData
     }
 
     private suspend fun onCategoryClicked(categoryId: UUID?) {

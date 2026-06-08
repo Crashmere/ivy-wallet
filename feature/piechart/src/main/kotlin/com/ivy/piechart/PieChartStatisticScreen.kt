@@ -23,6 +23,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -68,6 +71,7 @@ import com.ivy.legacy.ui.component.IvyOutlinedButton
 import com.ivy.legacy.ui.theme.findContrastTextColor
 import com.ivy.legacy.ui.theme.gradientExpenses
 import com.ivy.legacy.ui.modal.ChoosePeriodModal
+import com.ivy.legacy.ui.modal.ChoosePeriodModalData
 import com.ivy.legacy.ui.theme.pureBlur
 import com.ivy.legacy.ui.theme.toComposeColor
 import com.ivy.legacy.ui.component.AmountCurrencyB1Row
@@ -115,6 +119,7 @@ private fun BoxWithConstraintsScope.UI(
         animationSpec = com.ivy.ui.animation.springBounce(),
         label = "percent expanded"
     )
+    var choosePeriodModal: ChoosePeriodModalData? by remember { mutableStateOf(null) }
 
     LazyColumn(
         modifier = Modifier
@@ -131,7 +136,7 @@ private fun BoxWithConstraintsScope.UI(
                 currency = state.baseCurrency,
                 amount = state.totalAmount,
                 onShowMonthModal = {
-                    onEvent(PieChartStatisticEvent.OnShowMonthModal(state.period))
+                    choosePeriodModal = ChoosePeriodModalData(period = state.period)
                 },
                 onSelectNextMonth = {
                     onEvent(PieChartStatisticEvent.OnSelectNextMonth)
@@ -234,9 +239,9 @@ private fun BoxWithConstraintsScope.UI(
     }
 
     ChoosePeriodModal(
-        modal = state.choosePeriodModal,
+        modal = choosePeriodModal,
         dismiss = {
-            onEvent(PieChartStatisticEvent.OnShowMonthModal(null))
+            choosePeriodModal = null
         },
         saveSelectedPeriod = periodState::select,
         pickDate = { minDate, maxDate, initialDate, onDatePicked ->
