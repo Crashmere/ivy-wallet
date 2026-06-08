@@ -9,6 +9,9 @@ import com.ivy.data.model.legacy.LegacyTransaction
 import com.ivy.data.model.TransactionHistoryItem
 import com.ivy.data.model.TransactionType
 import com.ivy.data.model.Transaction
+import com.ivy.data.model.getFromAccount
+import com.ivy.data.model.getToAccount
+import com.ivy.data.model.getTransactionType
 import com.ivy.ui.resource.ResourceProvider
 import com.ivy.data.model.Account
 import com.ivy.data.model.AccountId
@@ -49,7 +52,7 @@ import com.ivy.domain.usecase.planned.PayOrSkipPlannedTransactionByIdUseCase
 import com.ivy.domain.usecase.planned.PayOrSkipPlannedTransactionsByIdsUseCase
 import com.ivy.domain.usecase.settings.GetTransfersAsIncomeExpensePreferenceUseCase
 import com.ivy.domain.usecase.transaction.BuildTransactionHistoryItemsUseCase
-import com.ivy.domain.usecase.transaction.CalculateLegacyTransactionsIncomeExpenseUseCase
+import com.ivy.domain.usecase.transaction.CalculateTransactionsIncomeExpenseUseCase
 import com.ivy.domain.usecase.transaction.GetTransactionsByIdsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
@@ -90,7 +93,7 @@ internal class TransactionsViewModel @Inject internal constructor(
     private val getUnspecifiedCategoryTransactionsSummaryUseCase: GetUnspecifiedCategoryTransactionsSummaryUseCase,
     private val calculateAccountBalanceUseCase: CalculateAccountBalanceUseCase,
     private val calculateAccountIncomeExpenseUseCase: CalculateAccountIncomeExpenseUseCase,
-    private val calculateLegacyTransactionsIncomeExpenseUseCase: CalculateLegacyTransactionsIncomeExpenseUseCase,
+    private val calculateTransactionsIncomeExpenseUseCase: CalculateTransactionsIncomeExpenseUseCase,
     private val getTransactionsByIdsUseCase: GetTransactionsByIdsUseCase,
     private val exchangeAmountUseCase: ExchangeAmountUseCase,
     private val mapTransactionsToLegacyTransactionsUseCase: MapTransactionsToLegacyTransactionsUseCase,
@@ -456,16 +459,15 @@ internal class TransactionsViewModel @Inject internal constructor(
         )
         category.value = accountTransferCategory
         val accountFilterIdSet = accountFilterList.toHashSet()
-        val legacyTransactions = mapTransactionsToLegacyTransactionsUseCase(transactions)
-        val filteredTransactions = legacyTransactions.filter {
-            it.categoryId == null && (
-                    accountFilterIdSet.contains(it.accountId) ||
-                            accountFilterIdSet.contains(it.toAccountId)
+        val filteredTransactions = transactions.filter {
+            it.category == null && (
+                    accountFilterIdSet.contains(it.getFromAccount().value) ||
+                            it.getToAccount()?.value in accountFilterIdSet
                     )
-                    && it.type == TransactionType.TRANSFER
+                    && it.getTransactionType() == TransactionType.TRANSFER
         }
 
-        val historyIncomeExpense = calculateLegacyTransactionsIncomeExpenseUseCase(
+        val historyIncomeExpense = calculateTransactionsIncomeExpenseUseCase(
             transactions = filteredTransactions,
             accounts = accountFilterList.mapNotNull { accountId ->
                 loadedAccounts.find { it.id.value == accountId }?.toLegacyAccount()
