@@ -50,6 +50,7 @@
 - 收窄页面级返回职责：主界面、CSV 恢复页和交易统计页的返回回调改为随 `onScreenStart` 注册/注销；ViewModel 只保留返回行为判断，不再负责把回调长期挂到导航对象上。
 - 收窄导入功能导航职责：备份恢复和手动 CSV 导入的 ViewModel 不再注入 `Navigation`，完成/跳过/结果页返回由 Screen 执行，ViewModel 只负责重置导入状态。
 - 收窄借贷详情导航职责：删除借贷成功后由 ViewModel 发出一次性 `CloseScreen` UI 事件，Screen 收集事件后执行返回；借贷详情 ViewModel 不再注入 `Navigation`。
+- 借贷详情页继续收窄内部导航职责：Header 关闭按钮、贷款账户按钮和还款记录账户按钮不再直接调用 `navigation()`，统一通过页面入口传入回调执行返回或进入账户交易筛选。
 - 收窄计划付款编辑导航职责：无账户、保存完成和删除完成后的关闭页面动作改为 `CloseScreen` UI 事件；计划付款编辑 ViewModel 不再注入 `Navigation`。
 - 计划付款编辑页继续收窄内部导航职责：UI 主体不再直接调用 `navigation()`，工具栏关闭动作由 `EditPlannedScreen` 页面入口传入。
 - 收窄交易统计导航职责：删除账户或分类完成后的关闭页面动作改为 `CloseScreen` UI 事件；交易统计 ViewModel 不再注入 `Navigation`。

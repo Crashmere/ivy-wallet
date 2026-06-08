@@ -115,14 +115,25 @@ fun BoxWithConstraintsScope.LoanDetailsScreen(screen: LoanDetailsScreen) {
 
     UI(
         state = state,
-        onEventHandler = viewModel::onEvent
+        onEventHandler = viewModel::onEvent,
+        onClose = nav::back,
+        onAccountClick = { accountId ->
+            nav.navigateTo(
+                TransactionsScreen(
+                    accountId = accountId,
+                    categoryId = null
+                )
+            )
+        }
     )
 }
 
 @Composable
 private fun BoxWithConstraintsScope.UI(
     state: LoanDetailsScreenState,
-    onEventHandler: (LoanDetailsScreenEvent) -> Unit = {}
+    onEventHandler: (LoanDetailsScreenEvent) -> Unit = {},
+    onClose: () -> Unit,
+    onAccountClick: (UUID) -> Unit
 ) {
     val itemColor = state.loan?.color?.toComposeColor() ?: Gray
     val selectedLoanAccount = state.accounts.firstOrNull { account ->
@@ -170,7 +181,9 @@ private fun BoxWithConstraintsScope.UI(
                         },
                         onAddRecord = {
                             onEventHandler.invoke(LoanDetailsScreenEvent.OnAddRecord)
-                        }
+                        },
+                        onClose = onClose,
+                        onAccountClick = onAccountClick
                     )
                 }
             }
@@ -196,7 +209,8 @@ private fun BoxWithConstraintsScope.UI(
                                 loanRecordId
                             )
                         )
-                    }
+                    },
+                    onAccountClick = onAccountClick
                 )
                 item {
                     InitialRecordItem(
@@ -292,10 +306,11 @@ private fun Header(
     onDeleteLoan: () -> Unit,
     loanAmountPaid: Double = 0.0,
     selectedLoanAccount: LegacyAccount? = null,
-    onAddRecord: () -> Unit
+    onAddRecord: () -> Unit,
+    onClose: () -> Unit,
+    onAccountClick: (UUID) -> Unit
 ) {
     val contrastColor = findContrastTextColor(itemColor)
-    val nav = navigation()
 
     val darkColor = isDarkColor(itemColor)
     setStatusBarDarkTextCompat(darkText = !darkColor)
@@ -307,9 +322,7 @@ private fun Header(
 
         LoanStatisticToolbar(
             contrastColor = contrastColor,
-            onClose = {
-                nav.back()
-            },
+            onClose = onClose,
             onEdit = onEditLoan,
             onDelete = onDeleteLoan
         )
@@ -344,7 +357,8 @@ private fun Header(
             loanAmountPaid = loanAmountPaid,
             loanTotalAmount = loanTotalAmount,
             selectedLoanAccount = selectedLoanAccount,
-            onAddRecord = onAddRecord
+            onAddRecord = onAddRecord,
+            onAccountClick = onAccountClick
         )
 
         Spacer(Modifier.height(20.dp))
@@ -503,7 +517,8 @@ private fun LoanInfoCard(
     loanAmountPaid: Double = 0.0,
     selectedLoanAccount: LegacyAccount? = null,
 
-    onAddRecord: () -> Unit
+    onAddRecord: () -> Unit,
+    onAccountClick: (UUID) -> Unit
 ) {
     val backgroundColor = if (isDarkColor(loan.color)) {
         LoanCardDarkBackground.copy(alpha = 0.9f)
@@ -515,7 +530,6 @@ private fun LoanInfoCard(
     val percentPaid = amountPaid / loanTotalAmount
     val loanPercentPaid = loanAmountPaid / loanTotalAmount
     val leftToPay = loanTotalAmount - amountPaid
-    val nav = navigation()
 
     Column(
         modifier = Modifier
@@ -558,12 +572,7 @@ private fun LoanInfoCard(
                     padding = 8.dp,
                     iconEdgePadding = 10.dp
                 ) {
-                    nav.navigateTo(
-                        TransactionsScreen(
-                            accountId = selectedLoanAccount.id,
-                            categoryId = null
-                        )
-                    )
+                    onAccountClick(selectedLoanAccount.id)
                 }
             }
         }
@@ -725,7 +734,8 @@ private fun LoanInfoCard(
 internal fun LazyListScope.loanRecords(
     loan: Loan,
     displayLoanRecords: List<DisplayLoanRecord> = emptyList(),
-    onClick: (UUID) -> Unit
+    onClick: (UUID) -> Unit,
+    onAccountClick: (UUID) -> Unit
 ) {
     items(items = displayLoanRecords) { displayLoanRecord ->
         LoanRecordItem(
@@ -733,7 +743,8 @@ internal fun LazyListScope.loanRecords(
             loanRecord = displayLoanRecord.loanRecord,
             baseCurrency = displayLoanRecord.loanRecordCurrencyCode,
             account = displayLoanRecord.account,
-            loanBaseCurrency = displayLoanRecord.loanCurrencyCode
+            loanBaseCurrency = displayLoanRecord.loanCurrencyCode,
+            onAccountClick = onAccountClick
         ) {
             onClick(displayLoanRecord.loanRecord.id)
         }
@@ -749,9 +760,9 @@ private fun LoanRecordItem(
     baseCurrency: String,
     loanBaseCurrency: String = "",
     account: DisplayLoanAccount? = null,
+    onAccountClick: (UUID) -> Unit,
     onClick: () -> Unit
 ) {
-    val nav = navigation()
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -782,12 +793,7 @@ private fun LoanRecordItem(
                         padding = 8.dp,
                         iconEdgePadding = 10.dp
                     ) {
-                        nav.navigateTo(
-                            TransactionsScreen(
-                                accountId = account.id,
-                                categoryId = null
-                            )
-                        )
+                        onAccountClick(account.id)
                     }
                 }
 
