@@ -249,6 +249,7 @@
 - 收窄借贷详情关联交易缓存：借贷详情不再把贷款关联旧交易对象保存在 ViewModel 字段中，加载时只设置开关状态，编辑时局部读取。
 - 收窄编辑交易汇率边界：编辑交易页的转账目标金额和自定义汇率卡片改用正式 `ExchangeAmountUseCase`，并保留旧入口失败时返回原金额的行为；`LegacyExchangeRatesUseCase` 已收为 `shared:domain` 内部旧算法兼容实现。
 - 收窄计划付款统计汇率边界：计划付款列表汇总和区间金额统计改用正式 `ExchangeAmountUseCase`，不再为了基础币种折算把正式账户/交易转换成 `LegacyAccount` 或 `LegacyTransaction`。
+- 收窄借贷同步汇率边界：借贷记录同步里的跨币种金额转换改用正式 `ExchangeAmountUseCase`，继续保留汇率缺失时返回原金额的旧行为。
 
 当前仍保留：
 
@@ -909,7 +910,7 @@
 - 借贷页数据边界已收敛：新增 `GetLoansUseCase`、`GetLoanUseCase`、`GetLoanRecordsUseCase`、`ReorderLoansUseCase`、`GetLoanTransactionUseCase` 和 `HasLoanRecordTransactionUseCase`，借贷列表和借贷详情不再直接注入 `LoanRecordDao`、`WriteLoanDao`、`TransactionRepository` 或 `TransactionMapper`；旧 `LoansAct/LoanByIdAct` 已删除，`:feature:loans` 已去掉对 `shared:data:core` 的直接依赖。
 - 借贷写入边界已收敛：新增 `CreateLoanUseCase`、`UpdateLoanUseCase`、`DeleteLoanUseCase`、`CreateLoanRecordUseCase`、`UpdateLoanRecordUseCase` 和 `DeleteLoanRecordUseCase`；借贷列表和详情页不再注入旧 `LoanCreator/LoanRecordCreator`，关联交易创建、编辑和删除仍保持原有调用顺序。
 - 借贷关联交易同步已从 `legacy.domain.logic.loantransactions` 迁到 `domain.usecase.loan`：新增 `LoanTransactionSyncUseCase`、`LoanRecordTransactionSyncUseCase`、`UpdateAssociatedLoanDataUseCase` 和内部 `LoanTransactionSyncCore`；借贷页和编辑交易页不再注入旧 `LoanTransactionsLogic` 聚合器。
-- 旧模型仍需使用的汇率换算入口已从 `legacy.domain.logic.currency.ExchangeRatesLogic` 迁到 `domain.usecase.exchange.LegacyExchangeRatesUseCase`；分类详情、借贷同步和旧日期分组不再引用 legacy logic 包。编辑交易页和计划付款统计后来已改用正式 `ExchangeAmountUseCase`。
+- 旧模型仍需使用的汇率换算入口已从 `legacy.domain.logic.currency.ExchangeRatesLogic` 迁到 `domain.usecase.exchange.LegacyExchangeRatesUseCase`；分类详情和旧日期分组不再引用 legacy logic 包。编辑交易页、计划付款统计和借贷同步后来已改用正式 `ExchangeAmountUseCase`。
 - 计划付款编辑页数据边界已收敛：新增 `GetPlannedPaymentRuleUseCase`、`SavePlannedPaymentRuleUseCase`、`DeletePlannedPaymentRuleUseCase` 和 `GetCategoryUseCase`，计划付款保存仍会生成未来交易、删除仍会清理未发生的生成交易，`:feature:planned-payments` 已去掉对 `shared:data:core` 的直接依赖。
 - 计划付款未来交易生成器已从旧 `PlannedPaymentsGenerator` 迁到正式 `GeneratePlannedPaymentTransactionsUseCase`；一次性规则、循环规则、72 条生成上限和跳过已发生交易的规则保持不变。
 - 余额页的计划付款区间金额统计已从 `PlannedPaymentsLogic` 拆到 `CalculatePlannedPaymentsAmountForRangeUseCase`；收入计正、支出计负、转账忽略和基础币种折算规则保持不变。

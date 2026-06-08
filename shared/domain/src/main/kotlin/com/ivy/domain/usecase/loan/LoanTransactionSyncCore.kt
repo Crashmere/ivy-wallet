@@ -30,7 +30,7 @@ import com.ivy.data.model.LoanRecord
 import com.ivy.domain.mapper.legacy.toLegacyTransaction
 import com.ivy.domain.mapper.legacy.toLegacyAccount
 import com.ivy.domain.time.nowUtc
-import com.ivy.domain.usecase.exchange.LegacyExchangeRatesUseCase
+import com.ivy.domain.usecase.exchange.ExchangeAmountUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.time.Instant
@@ -45,7 +45,7 @@ internal class LoanTransactionSyncCore @Inject internal constructor(
     private val loanStore: LoanStore,
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
     private val accountStore: AccountStore,
-    private val exchangeRatesUseCase: LegacyExchangeRatesUseCase,
+    private val exchangeAmountUseCase: ExchangeAmountUseCase,
     private val transactionRepo: TransactionStore,
 ) {
     companion object {
@@ -317,7 +317,7 @@ internal class LoanTransactionSyncCore @Inject internal constructor(
                 reCalculateLoanAmount || loanRecordCurrenciesChanged ||
                         oldLoanRecordConvertedAmount == null -> {
                     withContext(Dispatchers.IO) {
-                        exchangeRatesUseCase.convertAmount(
+                        convertAmount(
                             baseCurrency = baseCurrency(),
                             amount = newLoanRecordAmount,
                             fromCurrency = newLoanRecordCurrency,
@@ -336,6 +336,20 @@ internal class LoanTransactionSyncCore @Inject internal constructor(
             }
             newConverted
         }
+    }
+
+    private suspend fun convertAmount(
+        baseCurrency: String,
+        amount: Double,
+        fromCurrency: String,
+        toCurrency: String,
+    ): Double {
+        return exchangeAmountUseCase(
+            amount = amount.toBigDecimal(),
+            baseCurrency = baseCurrency,
+            fromCurrency = fromCurrency,
+            toCurrency = toCurrency
+        ).getOrNull()?.toDouble() ?: amount
     }
 
     private suspend fun UUID?.fetchAssociatedCurrencyCode(accountsList: List<LegacyAccount>): String {
