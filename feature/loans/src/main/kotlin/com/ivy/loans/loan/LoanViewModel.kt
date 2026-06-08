@@ -145,7 +145,7 @@ internal class LoanViewModel @Inject internal constructor(
                 loanModalData = LoanModalData(
                     loan = null,
                     baseCurrency = baseCurrencyCode,
-                    selectedAccount = selectedAccount()
+                    selectedAccountId = selectedAccountId
                 )
             }
 

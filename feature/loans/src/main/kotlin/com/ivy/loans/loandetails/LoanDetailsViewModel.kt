@@ -130,7 +130,7 @@ internal class LoanDetailsViewModel @Inject internal constructor(
                 loanRecordModalData.value = LoanRecordModalData(
                     loanRecord = displayLoanRecord.loanRecord,
                     baseCurrency = displayLoanRecord.loanRecordCurrencyCode,
-                    selectedAccount = displayLoanRecord.account,
+                    selectedAccountId = displayLoanRecord.account?.id,
                     createLoanRecordTransaction = displayLoanRecord.loanRecordTransaction,
                     isLoanInterest = displayLoanRecord.loanRecord.interest,
                     loanAccountCurrencyCode = displayLoanRecord.loanCurrencyCode
@@ -214,7 +214,7 @@ internal class LoanDetailsViewModel @Inject internal constructor(
                     baseCurrency = baseCurrency.value,
                     autoFocusKeyboard = false,
                     autoOpenAmountModal = true,
-                    selectedAccount = selectedLoanAccount(),
+                    selectedAccountId = selectedLoanAccountId.value,
                     createLoanTransaction = createLoanTransaction.value
                 )
             }
@@ -224,7 +224,7 @@ internal class LoanDetailsViewModel @Inject internal constructor(
                     loan = loan.value,
                     baseCurrency = baseCurrency.value,
                     autoFocusKeyboard = false,
-                    selectedAccount = selectedLoanAccount(),
+                    selectedAccountId = selectedLoanAccountId.value,
                     createLoanTransaction = createLoanTransaction.value
                 )
             }
@@ -233,7 +233,7 @@ internal class LoanDetailsViewModel @Inject internal constructor(
                 loanRecordModalData.value = LoanRecordModalData(
                     loanRecord = null,
                     baseCurrency = baseCurrency.value,
-                    selectedAccount = selectedLoanAccount()
+                    selectedAccountId = selectedLoanAccountId.value
                 )
             }
 

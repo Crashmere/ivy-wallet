@@ -111,8 +111,16 @@ fun BoxWithConstraintsScope.LoanModal(
         mutableStateOf(modal?.baseCurrency ?: "")
     }
 
+    val initialSelectedAccount = modal?.selectedAccountId?.let { accountId ->
+        accounts.firstOrNull { it.id == accountId }
+    }
     var selectedAcc by remember(modal) {
-        mutableStateOf(modal?.selectedAccount)
+        mutableStateOf(initialSelectedAccount)
+    }
+    LaunchedEffect(modal?.id, initialSelectedAccount) {
+        if (selectedAcc == null && initialSelectedAccount != null) {
+            selectedAcc = initialSelectedAccount
+        }
     }
 
     var createLoanTrans by remember(modal) {
@@ -139,11 +147,10 @@ fun BoxWithConstraintsScope.LoanModal(
                 // enabled = nameTextFieldValue.text.isNullOrBlank().not() && amount > 0 && ((createLoanTrans && selectedAcc != null) || !createLoanTrans)
                 enabled = nameTextFieldValue.text.isNullOrBlank().not() && amount > 0 && selectedAcc != null
             ) {
-                val modalSelectedAccount = modal?.selectedAccount
                 val modalBaseCurrency = modal?.baseCurrency.orEmpty()
                 accountChangeModal =
-                    loan != null && modalSelectedAccount != null && currencyCode != (
-                        modalSelectedAccount.currency
+                    loan != null && initialSelectedAccount != null && currencyCode != (
+                        initialSelectedAccount.currency
                             ?: modalBaseCurrency
                         )
 
@@ -343,7 +350,7 @@ fun BoxWithConstraintsScope.LoanModal(
         buttonText = stringResource(R.string.confirm),
         iconStart = R.drawable.ic_agreed,
         dismiss = {
-            selectedAcc = modal?.selectedAccount ?: selectedAcc
+            selectedAcc = initialSelectedAccount ?: selectedAcc
             accountChangeModal = false
         }
     ) {
