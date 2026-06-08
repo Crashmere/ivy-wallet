@@ -4,7 +4,7 @@ import androidx.compose.runtime.Immutable
 import java.math.BigDecimal
 
 @Immutable
-data class BufferInfo(
+internal data class BufferInfo(
     val amount: BigDecimal,
     val bufferDiff: BigDecimal
 )

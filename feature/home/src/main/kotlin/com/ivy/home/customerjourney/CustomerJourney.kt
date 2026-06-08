@@ -34,7 +34,7 @@ import com.ivy.legacy.ui.theme.findContrastTextColor
 import kotlinx.collections.immutable.ImmutableList
 
 @Composable
-fun CustomerJourney(
+internal fun CustomerJourney(
     customerJourneyCards: ImmutableList<CustomerJourneyCardModel>,
     modifier: Modifier = Modifier,
     onDismiss: (CustomerJourneyCardModel) -> Unit,
@@ -79,7 +79,7 @@ fun CustomerJourney(
 }
 
 @Composable
-fun CustomerJourneyCard(
+internal fun CustomerJourneyCard(
     cardData: CustomerJourneyCardModel,
     onDismiss: () -> Unit,
     modifier: Modifier = Modifier,

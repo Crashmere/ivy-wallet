@@ -7,7 +7,7 @@ import com.ivy.domain.usecase.home.IsCustomerJourneyCardDismissedUseCase
 import com.ivy.ui.R
 import javax.inject.Inject
 
-class CustomerJourneyCardsProvider @Inject constructor(
+internal class CustomerJourneyCardsProvider @Inject constructor(
     private val getCustomerJourneyStatsUseCase: GetCustomerJourneyStatsUseCase,
     private val isCustomerJourneyCardDismissed: IsCustomerJourneyCardDismissedUseCase,
     private val dismissCustomerJourneyCard: DismissCustomerJourneyCardUseCase,

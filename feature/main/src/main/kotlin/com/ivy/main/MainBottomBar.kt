@@ -66,11 +66,11 @@ import java.util.UUID
 import kotlin.math.abs
 import kotlin.math.roundToInt
 
-val TRN_BUTTON_CLICK_AREA_HEIGHT = 150.dp
-val FAB_BUTTON_SIZE = 56.dp
+private val TransactionButtonClickAreaHeight = 150.dp
+private val FabButtonSize = 56.dp
 
 @Composable
-fun BoxWithConstraintsScope.BottomBar(
+internal fun BoxWithConstraintsScope.BottomBar(
     tab: MainTab,
     selectTab: (MainTab) -> Unit,
 
@@ -131,7 +131,7 @@ fun BoxWithConstraintsScope.BottomBar(
             selectTab(MainTab.HOME)
         }
 
-        Spacer(Modifier.width(FAB_BUTTON_SIZE))
+        Spacer(Modifier.width(FabButtonSize))
 
         Tab(
             icon = R.drawable.ic_accounts,
@@ -157,9 +157,9 @@ fun BoxWithConstraintsScope.BottomBar(
     }
 
     // ------------------------------------ BUTTONS--------------------------------------------------
-    val fabStartX = screenWidthPx / 2 - FAB_BUTTON_SIZE.toDensityPx() / 2
+    val fabStartX = screenWidthPx / 2 - FabButtonSize.toDensityPx() / 2
     val fabStartY = screenHeightPx - navigationBarInset() -
-            30.dp.toDensityPx() - FAB_BUTTON_SIZE.toDensityPx()
+            30.dp.toDensityPx() - FabButtonSize.toDensityPx()
 
     TransactionButtons(
         buttonsShownPercent = buttonsShownPercent,
@@ -189,7 +189,7 @@ fun BoxWithConstraintsScope.BottomBar(
                     )
                 }
             }
-            .size(FAB_BUTTON_SIZE)
+            .size(FabButtonSize)
             .rotate(fabRotation)
             .zIndex(200f)
             .thenIf(tab == MainTab.HOME) {
@@ -282,10 +282,10 @@ private fun TransactionButtons(
 
     if (buttonsShownPercent > 0.01f) {
         val buttonLeftX = bH.toDensityPx()
-        val buttonRightX = screenWidthPx - bH.toDensityPx() - FAB_BUTTON_SIZE.toDensityPx()
+        val buttonRightX = screenWidthPx - bH.toDensityPx() - FabButtonSize.toDensityPx()
 
-        val sideButtonsY = fabStartY - bV.toDensityPx() - FAB_BUTTON_SIZE.toDensityPx()
-        val buttonCenterY = fabStartY - bCenterV.toDensityPx() - FAB_BUTTON_SIZE.toDensityPx()
+        val sideButtonsY = fabStartY - bV.toDensityPx() - FabButtonSize.toDensityPx()
+        val buttonCenterY = fabStartY - bCenterV.toDensityPx() - FabButtonSize.toDensityPx()
 
         val clickAreaWidth = (screenWidthPx / 3).roundToInt()
 
@@ -296,7 +296,7 @@ private fun TransactionButtons(
                     layout(placealbe.width, placealbe.height) {
                         placealbe.place(
                             x = (screenWidthPx / 2 - placealbe.width / 2).roundToInt(),
-                            y = buttonCenterY.roundToInt() - 48.dp.roundToPx() - placealbe.height - FAB_BUTTON_SIZE.roundToPx()
+                            y = buttonCenterY.roundToInt() - 48.dp.roundToPx() - placealbe.height - FabButtonSize.roundToPx()
                         )
                     }
                 }
@@ -365,7 +365,7 @@ private fun AddIncomeButton(
                 val x = lerp(fabStartX, buttonLeftX, buttonsShownPercent)
                 val y = lerp(
                     fabStartY,
-                    sideButtonsY - FAB_BUTTON_SIZE.roundToPx(),
+                    sideButtonsY - FabButtonSize.roundToPx(),
                     buttonsShownPercent
                 )
 
@@ -376,7 +376,7 @@ private fun AddIncomeButton(
                     )
                 }
             }
-            .size(FAB_BUTTON_SIZE)
+            .size(FabButtonSize)
             .zIndex(200f),
         icon = R.drawable.ic_income,
         backgroundGradient = GradientGreen,
@@ -386,7 +386,7 @@ private fun AddIncomeButton(
 
     Text(
         modifier = Modifier
-            .width(FAB_BUTTON_SIZE + 16.dp)
+            .width(FabButtonSize + 16.dp)
             .layout { measurable, constraints ->
                 val placeable = measurable.measure(constraints)
                 layout(placeable.width, placeable.height) {
@@ -414,7 +414,7 @@ private fun AddIncomeButton(
         modifier = Modifier
             .size(
                 width = clickAreaWidth.toDensityDp(),
-                height = TRN_BUTTON_CLICK_AREA_HEIGHT
+                height = TransactionButtonClickAreaHeight
             )
             .layout { measurable, constraints ->
                 val placeable = measurable.measure(constraints)
@@ -422,7 +422,7 @@ private fun AddIncomeButton(
                 layout(placeable.width, placeable.height) {
                     placeable.place(
                         x = 0,
-                        y = sideButtonsY.roundToInt() - FAB_BUTTON_SIZE.roundToPx() - 16.dp.roundToPx()
+                        y = sideButtonsY.roundToInt() - FabButtonSize.roundToPx() - 16.dp.roundToPx()
                     )
                 }
             }
@@ -450,7 +450,7 @@ private fun AddExpenseButton(
                 val y =
                     lerp(
                         fabStartY,
-                        buttonCenterY - FAB_BUTTON_SIZE.roundToPx(),
+                        buttonCenterY - FabButtonSize.roundToPx(),
                         buttonsShownPercent
                     )
 
@@ -461,7 +461,7 @@ private fun AddExpenseButton(
                     )
                 }
             }
-            .size(FAB_BUTTON_SIZE)
+            .size(FabButtonSize)
             .zIndex(200f),
         icon = R.drawable.ic_expense,
         backgroundGradient = gradientExpenses(),
@@ -472,7 +472,7 @@ private fun AddExpenseButton(
 
     Text(
         modifier = Modifier
-            .width(FAB_BUTTON_SIZE + 16.dp)
+            .width(FabButtonSize + 16.dp)
             .layout { measurable, constraints ->
                 val placeable = measurable.measure(constraints)
                 layout(placeable.width, placeable.height) {
@@ -500,7 +500,7 @@ private fun AddExpenseButton(
         modifier = Modifier
             .size(
                 width = clickAreaWidth.toDensityDp(),
-                height = TRN_BUTTON_CLICK_AREA_HEIGHT
+                height = TransactionButtonClickAreaHeight
             )
             .layout { measurable, constraints ->
                 val placeable = measurable.measure(constraints)
@@ -508,7 +508,7 @@ private fun AddExpenseButton(
                 layout(placeable.width, placeable.height) {
                     placeable.place(
                         x = clickAreaWidth,
-                        y = buttonCenterY.roundToInt() - FAB_BUTTON_SIZE.roundToPx() - 16.dp.roundToPx()
+                        y = buttonCenterY.roundToInt() - FabButtonSize.roundToPx() - 16.dp.roundToPx()
                     )
                 }
             }
@@ -537,7 +537,7 @@ private fun AddTransferButton(
                 val x = lerp(fabStartX, buttonRightX, buttonsShownPercent)
                 val y = lerp(
                     fabStartY,
-                    sideButtonsY - FAB_BUTTON_SIZE.roundToPx(),
+                    sideButtonsY - FabButtonSize.roundToPx(),
                     buttonsShownPercent
                 )
 
@@ -548,7 +548,7 @@ private fun AddTransferButton(
                     )
                 }
             }
-            .size(FAB_BUTTON_SIZE)
+            .size(FabButtonSize)
             .zIndex(200f),
         icon = R.drawable.ic_transfer,
         backgroundGradient = GradientIvy,
@@ -558,7 +558,7 @@ private fun AddTransferButton(
 
     Text(
         modifier = Modifier
-            .width(FAB_BUTTON_SIZE + 16.dp)
+            .width(FabButtonSize + 16.dp)
             .layout { measurable, constraints ->
                 val placeable = measurable.measure(constraints)
                 layout(placeable.width, placeable.height) {
@@ -586,7 +586,7 @@ private fun AddTransferButton(
         modifier = Modifier
             .size(
                 width = clickAreaWidth.toDensityDp(),
-                height = TRN_BUTTON_CLICK_AREA_HEIGHT
+                height = TransactionButtonClickAreaHeight
             )
             .layout { measurable, constraints ->
                 val placeable = measurable.measure(constraints)
@@ -594,7 +594,7 @@ private fun AddTransferButton(
                 layout(placeable.width, placeable.height) {
                     placeable.place(
                         x = 2 * clickAreaWidth,
-                        y = sideButtonsY.roundToInt() - FAB_BUTTON_SIZE.roundToPx() - 16.dp.roundToPx()
+                        y = sideButtonsY.roundToInt() - FabButtonSize.roundToPx() - 16.dp.roundToPx()
                     )
                 }
             }

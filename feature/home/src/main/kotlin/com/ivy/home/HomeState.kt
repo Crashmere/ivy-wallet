@@ -12,7 +12,7 @@ import kotlinx.collections.immutable.ImmutableList
 import java.math.BigDecimal
 
 @Immutable
-data class HomeState(
+internal data class HomeState(
     val theme: Theme,
 
     val period: TimePeriod,

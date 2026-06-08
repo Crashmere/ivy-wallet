@@ -78,7 +78,7 @@ import kotlin.math.roundToInt
 private const val SWIPE_UP_THRESHOLD_CLOSE_MORE_MENU = 300
 
 @Composable
-fun BoxWithConstraintsScope.MoreMenu(
+internal fun BoxWithConstraintsScope.MoreMenu(
     expanded: Boolean,
 
     balance: Double,

@@ -4,7 +4,7 @@ import com.ivy.home.customerjourney.CustomerJourneyCardModel
 import com.ivy.ui.period.TimePeriod
 import java.util.UUID
 
-sealed interface HomeEvent {
+internal sealed interface HomeEvent {
     data class SetUpcomingExpanded(val expanded: Boolean) : HomeEvent
     data class SetOverdueExpanded(val expanded: Boolean) : HomeEvent
 
