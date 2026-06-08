@@ -33,6 +33,7 @@
 - 收窄 feature 内部 Compose helper：分类排序弹窗和报表标签筛选不再保留未使用的 `modifier` 参数，减少无意义 suppress。
 - 补齐 `buildSrc` 根项目名，消除 Gradle type-safe project accessors 针对 buildSrc checkout 路径的缓存警告。
 - 收窄 Gradle 仓库配置：普通依赖解析不再使用 Gradle Plugin Portal，`buildSrc` 普通依赖也不再保留 JitPack；插件解析入口继续保留 Gradle Plugin Portal。
+- 删除根工程 JitPack 仓库：当前剩余第三方依赖均可从 Google/Maven Central 解析，项目不再依赖额外的 JitPack 仓库入口。
 
 当前仍保留：
 
