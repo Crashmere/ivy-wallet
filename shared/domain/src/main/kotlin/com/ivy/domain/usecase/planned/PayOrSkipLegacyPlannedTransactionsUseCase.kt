@@ -6,7 +6,6 @@ import com.ivy.data.api.PlannedPaymentRuleStore
 import com.ivy.data.api.TransactionStore
 import com.ivy.data.model.TransactionId
 import com.ivy.domain.mapper.legacy.toTransaction
-import com.ivy.domain.time.nowUtc
 import javax.inject.Inject
 
 class PayOrSkipLegacyPlannedTransactionsUseCase @Inject constructor(
@@ -18,31 +17,24 @@ class PayOrSkipLegacyPlannedTransactionsUseCase @Inject constructor(
         transactions: List<LegacyTransaction>,
         skipTransaction: Boolean = false
     ): List<LegacyTransaction> {
-        val paidTransactions =
+        val dueTransactions =
             transactions.filter { (it.dueDate == null || it.dateTime != null).not() }
 
-        if (paidTransactions.isEmpty()) return emptyList()
+        if (dueTransactions.isEmpty()) return emptyList()
 
-        paidTransactions.map {
-            it.copy(
-                dueDate = null,
-                dateTime = nowUtc(),
-            )
-        }
-
-        val plannedPaymentRules = paidTransactions.map { transaction ->
+        val plannedPaymentRules = dueTransactions.map { transaction ->
             transaction.recurringRuleId?.let {
                 plannedPaymentRuleStore.findById(it)
             }
         }
 
         if (skipTransaction) {
-            paidTransactions.forEach { paidTransaction ->
-                transactionStore.deleteById(TransactionId(paidTransaction.id))
+            dueTransactions.forEach { dueTransaction ->
+                transactionStore.deleteById(TransactionId(dueTransaction.id))
             }
         } else {
-            paidTransactions.forEach { paidTransaction ->
-                paidTransaction.toTransaction(accountStore)?.let {
+            dueTransactions.forEach { dueTransaction ->
+                dueTransaction.toTransaction(accountStore)?.let {
                     transactionStore.save(it)
                 }
             }
@@ -54,6 +46,6 @@ class PayOrSkipLegacyPlannedTransactionsUseCase @Inject constructor(
             }
         }
 
-        return paidTransactions
+        return dueTransactions
     }
 }
