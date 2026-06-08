@@ -115,6 +115,7 @@
 - 收窄根启动快捷方式参数：桌面 shortcut 的“添加交易类型”直接解析为导航层 `TransactionRouteType`，Root 启动事件不再先携带数据层 `TransactionType` 再转换。
 - 删除无调用的 UI core Material3 `BackButton` helper；当前实际页面继续使用 legacy 旧组件里的返回按钮。
 - 删除无调用的 domain `TimeRange` 模型；当前时间范围功能继续使用实际页面和数据层仍在调用的 `FromToTimeRange`、`ClosedTimeRange` 与 UI period 状态。
+- 收窄设置用例构造边界：设置相关 domain use case 继续作为 feature 可注入的公开入口，但它们的 `@Inject` 构造函数收为模块内部实现，避免外部直接依赖底层 Store 装配细节。
 
 当前仍保留：
 
@@ -1200,6 +1201,7 @@ shared:ui:core
 - 根启动快捷方式参数已改用 `TransactionRouteType`，shortcut XML 的字符串值不变，打开添加收入/支出/转账入口的行为不变。
 - UI core 中未接入任何页面的 Material3 `BackButton` helper 已删除；返回按钮的实际 UI 仍来自当前 legacy 组件。
 - domain 中孤立的 `TimeRange` 草稿模型已删除；没有调用点，实际筛选/周期逻辑仍走现有时间范围模型。
+- 设置相关 domain use case 的构造函数已收为 `internal`；feature 层仍通过公开 use case 类型注入和调用设置能力，底层偏好 Store 依赖不再作为外部可构造细节暴露。
 - app 仍保留文件选择、文件分享、Material 日期选择器、BuildInfo、Locale 设置、生物识别和窗口安全等真正依赖 Activity 或 Android app 壳层的装配。
 
 ## 高风险区域

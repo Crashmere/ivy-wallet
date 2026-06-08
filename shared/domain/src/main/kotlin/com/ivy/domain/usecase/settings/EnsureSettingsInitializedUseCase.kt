@@ -4,7 +4,7 @@ import com.ivy.data.api.SettingsInitializationStore
 import com.ivy.data.model.Theme
 import javax.inject.Inject
 
-class EnsureSettingsInitializedUseCase @Inject constructor(
+class EnsureSettingsInitializedUseCase @Inject internal constructor(
     private val settingsInitializationStore: SettingsInitializationStore
 ) {
     suspend operator fun invoke(

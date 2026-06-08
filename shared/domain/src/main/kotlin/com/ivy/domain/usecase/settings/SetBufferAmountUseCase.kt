@@ -4,7 +4,7 @@ import com.ivy.data.api.BufferAmountStore
 import java.math.BigDecimal
 import javax.inject.Inject
 
-class SetBufferAmountUseCase @Inject constructor(
+class SetBufferAmountUseCase @Inject internal constructor(
     private val bufferAmountStore: BufferAmountStore
 ) {
     suspend operator fun invoke(amount: BigDecimal): BigDecimal {

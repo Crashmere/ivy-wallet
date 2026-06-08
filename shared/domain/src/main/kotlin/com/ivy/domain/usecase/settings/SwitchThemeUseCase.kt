@@ -4,7 +4,7 @@ import com.ivy.data.api.ThemeStore
 import com.ivy.data.model.Theme
 import javax.inject.Inject
 
-class SwitchThemeUseCase @Inject constructor(
+class SwitchThemeUseCase @Inject internal constructor(
     private val themeStore: ThemeStore
 ) {
     suspend operator fun invoke(): Theme {
