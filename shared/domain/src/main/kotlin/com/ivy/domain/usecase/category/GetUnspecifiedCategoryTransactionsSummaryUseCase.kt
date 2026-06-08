@@ -1,7 +1,6 @@
 package com.ivy.domain.usecase.category
 
 import com.ivy.data.model.TransactionType
-import com.ivy.data.model.legacy.LegacyTransaction
 import com.ivy.data.model.TransactionHistoryItem
 import com.ivy.data.api.AccountStore
 import com.ivy.data.model.Account
@@ -13,8 +12,7 @@ import com.ivy.data.model.getFromValue
 import com.ivy.data.model.getTransactionType
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.domain.usecase.exchange.ExchangeAmountUseCase
-import com.ivy.domain.mapper.legacy.toLegacyTransaction
-import com.ivy.domain.transaction.legacy.LegacyTransactionDateDividers
+import com.ivy.domain.usecase.transaction.BuildTransactionHistoryItemsUseCase
 import com.ivy.domain.time.nowUtc
 import com.ivy.domain.time.todayStartOfLocalDayUtc
 import javax.inject.Inject
@@ -23,6 +21,7 @@ class GetUnspecifiedCategoryTransactionsSummaryUseCase @Inject internal construc
     private val accountStore: AccountStore,
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
     private val exchangeAmountUseCase: ExchangeAmountUseCase,
+    private val buildTransactionHistoryItemsUseCase: BuildTransactionHistoryItemsUseCase,
     private val transactionStore: TransactionStore,
 ) {
     suspend operator fun invoke(range: FromToTimeRange): CategoryTransactionsSummary {
@@ -44,7 +43,7 @@ class GetUnspecifiedCategoryTransactionsSummaryUseCase @Inject internal construc
                 type = TransactionType.INCOME,
                 startDate = range.from(),
                 endDate = range.to()
-            ).map { it.toLegacyTransaction() }
+            )
             .sumInBaseCurrency()
     }
 
@@ -54,23 +53,19 @@ class GetUnspecifiedCategoryTransactionsSummaryUseCase @Inject internal construc
                 type = TransactionType.EXPENSE,
                 startDate = range.from(),
                 endDate = range.to()
-            ).map { it.toLegacyTransaction() }
+            )
             .sumInBaseCurrency()
     }
 
     private suspend fun historyUnspecified(range: FromToTimeRange): List<TransactionHistoryItem> {
-        return with(LegacyTransactionDateDividers) {
-            transactionStore
+        return buildTransactionHistoryItemsUseCase(
+            baseCurrency = getBaseCurrencyCode(),
+            transactions = transactionStore
                 .findAllUnspecifiedAndBetween(
                     startDate = range.from(),
                     endDate = range.to()
-                ).map { it.toLegacyTransaction() }
-                .withDateDividers(
-                    exchangeAmountUseCase = exchangeAmountUseCase,
-                    baseCurrencyCode = getBaseCurrencyCode(),
-                    accountStore = accountStore,
                 )
-        }
+        )
     }
 
     private suspend fun upcomingUnspecified(range: FromToTimeRange): CategoryDueTransactionsSummary {
@@ -99,20 +94,10 @@ class GetUnspecifiedCategoryTransactionsSummaryUseCase @Inject internal construc
         )
     }
 
-    private suspend fun List<LegacyTransaction>.sumInBaseCurrency(): Double {
+    private suspend fun List<Transaction>.sumInBaseCurrency(): Double {
         val baseCurrency = getBaseCurrencyCode()
         val accounts = accountStore.findAll()
         return sumOf { it.amountBaseCurrency(baseCurrency, accounts) }
-    }
-
-    private suspend fun List<LegacyTransaction>.incomeInBaseCurrency(): Double {
-        return filter { it.type == TransactionType.INCOME }
-            .sumInBaseCurrency()
-    }
-
-    private suspend fun List<LegacyTransaction>.expensesInBaseCurrency(): Double {
-        return filter { it.type == TransactionType.EXPENSE }
-            .sumInBaseCurrency()
     }
 
     private suspend fun List<Transaction>.transactionIncomeInBaseCurrency(): Double {
@@ -129,19 +114,6 @@ class GetUnspecifiedCategoryTransactionsSummaryUseCase @Inject internal construc
         val baseCurrency = getBaseCurrencyCode()
         val accounts = accountStore.findAll()
         return sumOf { it.amountBaseCurrency(baseCurrency, accounts) }
-    }
-
-    private suspend fun LegacyTransaction.amountBaseCurrency(
-        baseCurrency: String,
-        accounts: List<Account>,
-    ): Double {
-        val amountCurrency = accounts.find { it.id.value == accountId }?.asset?.code
-            ?: return amount.toDouble()
-        return exchangeAmountUseCase(
-            amount = amount,
-            baseCurrency = baseCurrency,
-            fromCurrency = amountCurrency,
-        ).getOrNull()?.toDouble() ?: amount.toDouble()
     }
 
     private suspend fun Transaction.amountBaseCurrency(

@@ -253,6 +253,7 @@
 - 收窄分类统计汇率边界：分类详情和未分类统计的收入、支出、余额、到期与逾期金额汇总改用正式 `ExchangeAmountUseCase`；旧模型基础币种金额重载已删除。
 - 删除旧汇率 use case：旧交易日期分组也改为直接接收正式 `ExchangeAmountUseCase`，`LegacyExchangeRatesUseCase` 已无调用方并删除。
 - 收窄分类到期交易边界：分类和未分类汇总的 upcoming/overdue 交易改为返回正式 `Transaction`，交易列表页只在旧 due 列表 UI 前转换成 `LegacyTransaction`；无调用方的旧交易到期过滤 helper 已删除。
+- 收窄分类历史分组边界：分类和未分类汇总的历史列表改用正式 `BuildTransactionHistoryItemsUseCase` 构建，route 输入交易继续以正式 `Transaction` 传入 domain；无调用方的旧交易日期分组 helper 已删除。
 
 当前仍保留：
 

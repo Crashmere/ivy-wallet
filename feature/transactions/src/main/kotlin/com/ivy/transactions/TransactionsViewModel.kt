@@ -397,7 +397,7 @@ internal class TransactionsViewModel @Inject internal constructor(
     private suspend fun initForCategoryWithTransactions(
         categoryId: UUID,
         accountFilterList: List<UUID>,
-        transactions: List<LegacyTransaction>,
+        transactions: List<Transaction>,
     ) {
         withContext(Dispatchers.Default) {
             initWithTransactions.value = true
@@ -638,9 +638,6 @@ internal class TransactionsViewModel @Inject internal constructor(
             treatTransfersAsIncomeExpense.value =
                 getTransfersAsIncomeExpensePreference()
             val inputTransactions = getTransactionsByIdsUseCase(query.transactionIds)
-            val legacyInputTransactions by lazy {
-                inputTransactions.map { it.toLegacyTransaction() }
-            }
 
             when {
                 query.accountId != null -> {
@@ -657,7 +654,7 @@ internal class TransactionsViewModel @Inject internal constructor(
                     initForCategoryWithTransactions(
                         query.categoryId,
                         query.accountIdFilterList,
-                        legacyInputTransactions
+                        inputTransactions
                     )
                 }
 
