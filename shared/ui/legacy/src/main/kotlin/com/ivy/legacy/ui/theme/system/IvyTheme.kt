@@ -20,7 +20,7 @@ private val LocalIvyTypography = compositionLocalOf<IvyTypography> { error("No I
 
 private val LocalIvyShapes = compositionLocalOf<IvyShapes> { error("No IvyShapes") }
 
-object LegacyTheme {
+internal object LegacyTheme {
     val colors: IvyColors
         @Composable
         @ReadOnlyComposable

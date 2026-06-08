@@ -17,8 +17,8 @@ import androidx.compose.ui.unit.dp
 import com.ivy.data.model.currency.format
 import com.ivy.legacy.ui.theme.system.Gray
 import com.ivy.legacy.ui.theme.system.Green
-import com.ivy.legacy.ui.theme.system.LegacyTheme
-import com.ivy.legacy.ui.theme.system.style
+import com.ivy.legacy.ui.theme.LegacyTheme
+import com.ivy.legacy.ui.theme.style
 import com.ivy.ui.R
 import com.ivy.ui.time.formatLocal
 import com.ivy.ui.time.LocalTimeProvider

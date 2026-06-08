@@ -37,7 +37,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
-import com.ivy.legacy.ui.theme.system.LegacyTheme
+import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.compose.rememberInteractionSource
 import com.ivy.ui.platform.addKeyboardListener
 import com.ivy.ui.compose.consumeClicks

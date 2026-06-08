@@ -30,8 +30,8 @@ import androidx.compose.ui.unit.dp
 import com.ivy.data.model.Tag
 import com.ivy.data.model.TagId
 import com.ivy.legacy.ui.theme.system.Blue2Dark
-import com.ivy.legacy.ui.theme.system.LegacyTheme
-import com.ivy.legacy.ui.theme.system.style
+import com.ivy.legacy.ui.theme.LegacyTheme
+import com.ivy.legacy.ui.theme.style
 import com.ivy.ui.compose.thenIf
 import com.ivy.legacy.ui.component.SearchInput
 import com.ivy.ui.compose.drawColoredShadow

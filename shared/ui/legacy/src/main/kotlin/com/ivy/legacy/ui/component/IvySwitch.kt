@@ -12,7 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
-import com.ivy.legacy.ui.theme.system.LegacyTheme
+import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.animation.springBounce
 import com.ivy.legacy.ui.theme.Gray
 import com.ivy.legacy.ui.theme.Green

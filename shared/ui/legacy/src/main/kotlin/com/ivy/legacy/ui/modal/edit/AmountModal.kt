@@ -35,8 +35,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ivy.ui.preferences.LocalAmountInputPreferences
 import com.ivy.ui.preferences.asEnabledState
-import com.ivy.legacy.ui.theme.system.LegacyTheme
-import com.ivy.legacy.ui.theme.system.style
+import com.ivy.legacy.ui.theme.LegacyTheme
+import com.ivy.legacy.ui.theme.style
 import com.ivy.data.model.currency.amountToDouble
 import com.ivy.data.model.currency.amountToDoubleOrNull
 import com.ivy.data.model.currency.format
