@@ -19,17 +19,18 @@ import com.ivy.domain.usecase.loan.LoanTransactionSyncUseCase
 import com.ivy.domain.usecase.loan.UpdateLoanRecordUseCase
 import com.ivy.domain.usecase.loan.UpdateLoanUseCase
 import com.ivy.domain.usecase.account.CreateAccountWithBalanceUseCase
-import com.ivy.data.model.legacy.LegacyAccount
+import com.ivy.domain.usecase.account.GetAccountsUseCase
 import com.ivy.data.model.Loan
 import com.ivy.loans.model.DisplayLoanAccount
 import com.ivy.loans.model.DisplayLoanRecord
+import com.ivy.loans.model.LoanAccount
+import com.ivy.loans.model.toLoanAccount
 import com.ivy.loans.loandetails.events.DeleteLoanModalEvent
 import com.ivy.loans.loandetails.events.LoanDetailsScreenEvent
 import com.ivy.loans.loandetails.events.LoanModalEvent
 import com.ivy.loans.loandetails.events.LoanRecordModalEvent
 import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.time.DateTimePicker
-import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
 import com.ivy.data.model.CreateAccountData
 import com.ivy.data.model.CreateLoanRecordData
 import com.ivy.data.model.EditLoanRecordData
@@ -71,7 +72,7 @@ internal class LoanDetailsViewModel @Inject internal constructor(
     private val createAccountWithBalanceUseCase: CreateAccountWithBalanceUseCase,
     private val loanTransactionSyncUseCase: LoanTransactionSyncUseCase,
     private val loanRecordTransactionSyncUseCase: LoanRecordTransactionSyncUseCase,
-    private val getLegacyAccountsUseCase: GetLegacyAccountsUseCase,
+    private val getAccountsUseCase: GetAccountsUseCase,
     private val getLoanUseCase: GetLoanUseCase,
     private val dateTimePicker: DateTimePicker,
 ) : ComposeViewModel<LoanDetailsScreenState, LoanDetailsScreenEvent>() {
@@ -87,7 +88,7 @@ internal class LoanDetailsViewModel @Inject internal constructor(
         mutableStateOf<ImmutableList<DisplayLoanRecord>>(persistentListOf())
     private val loanTotalAmount = mutableDoubleStateOf(0.0)
     private val amountPaid = mutableDoubleStateOf(0.0)
-    private val accounts = mutableStateOf<ImmutableList<LegacyAccount>>(persistentListOf())
+    private val accounts = mutableStateOf<ImmutableList<LoanAccount>>(persistentListOf())
     private val loanInterestAmountPaid = mutableDoubleStateOf(0.0)
     private val selectedLoanAccountId = mutableStateOf<UUID?>(null)
     private val createLoanTransaction = mutableStateOf(false)
@@ -264,7 +265,7 @@ internal class LoanDetailsViewModel @Inject internal constructor(
                 baseCurrency.value = it
             }
 
-            accounts.value = getLegacyAccountsUseCase()
+            accounts.value = loadAccounts()
 
             loan.value = getLoanUseCase(loanId)
             selectedLoanAccountId.value = loan.value?.accountId
@@ -546,14 +547,20 @@ internal class LoanDetailsViewModel @Inject internal constructor(
     private fun createAccount(data: CreateAccountData) {
         viewModelScope.launch {
             createAccountWithBalanceUseCase(data)
-            accounts.value = getLegacyAccountsUseCase()
+            accounts.value = loadAccounts()
         }
     }
 
+    private suspend fun loadAccounts(): ImmutableList<LoanAccount> {
+        return getAccountsUseCase()
+            .map { it.toLoanAccount() }
+            .toImmutableList()
+    }
+
     private fun findAccount(
-        accounts: List<LegacyAccount>,
+        accounts: List<LoanAccount>,
         accountId: UUID?,
-    ): LegacyAccount? {
+    ): LoanAccount? {
         return accountId?.let { uuid ->
             accounts.find { acc ->
                 acc.id == uuid

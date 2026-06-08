@@ -42,7 +42,6 @@ import com.ivy.data.model.processByType
 import com.ivy.data.model.LoanType
 import com.ivy.ui.time.LocalTimeFormatter
 import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.data.model.Loan
 import com.ivy.data.model.LoanRecord
 import com.ivy.loans.humanReadableType
@@ -54,7 +53,7 @@ import com.ivy.ui.compose.rememberInteractionSource
 import com.ivy.ui.platform.setStatusBarDarkTextCompat
 import com.ivy.loans.model.DisplayLoanAccount
 import com.ivy.loans.model.DisplayLoanRecord
-import com.ivy.loans.model.toLoanAccount
+import com.ivy.loans.model.LoanAccount
 import com.ivy.loans.loandetails.events.DeleteLoanModalEvent
 import com.ivy.loans.loandetails.events.LoanDetailsScreenEvent
 import com.ivy.loans.loandetails.events.LoanModalEvent
@@ -135,7 +134,6 @@ private fun BoxWithConstraintsScope.UI(
     val selectedLoanAccount = state.accounts.firstOrNull { account ->
         account.id == state.selectedLoanAccountId
     }
-    val loanAccounts = state.accounts.map { it.toLoanAccount() }
 
     Column(
         modifier = Modifier
@@ -241,7 +239,7 @@ private fun BoxWithConstraintsScope.UI(
         onEventHandler.invoke(LoanModalEvent.OnDismissLoanModal)
     }, onCreateAccount = { createAccountData ->
         onEventHandler.invoke(LoanDetailsScreenEvent.OnCreateAccount(createAccountData))
-    }, accounts = loanAccounts, onPerformCalculations = {
+    }, accounts = state.accounts, onPerformCalculations = {
         onEventHandler.invoke(LoanModalEvent.PerformCalculation)
     }, dateTime = state.dateTime,
         onSetDate = {
@@ -259,7 +257,7 @@ private fun BoxWithConstraintsScope.UI(
         onEventHandler.invoke(LoanRecordModalEvent.OnEditLoanRecord(it))
     }, onDelete = { loanRecord ->
         onEventHandler.invoke(LoanRecordModalEvent.OnDeleteLoanRecord(loanRecord.id))
-    }, accounts = loanAccounts, dismiss = {
+    }, accounts = state.accounts, dismiss = {
         onEventHandler.invoke(LoanRecordModalEvent.OnDismissLoanRecord)
     }, onCreateAccount = { createAccountData ->
         onEventHandler.invoke(LoanDetailsScreenEvent.OnCreateAccount(createAccountData))
@@ -302,7 +300,7 @@ private fun Header(
     onEditLoan: () -> Unit,
     onDeleteLoan: () -> Unit,
     loanAmountPaid: Double = 0.0,
-    selectedLoanAccount: LegacyAccount? = null,
+    selectedLoanAccount: LoanAccount? = null,
     onAddRecord: () -> Unit,
     onClose: () -> Unit,
     onAccountClick: (UUID) -> Unit
@@ -517,7 +515,7 @@ private fun LoanInfoCard(
     loanTotalAmount: Double,
     amountPaid: Double,
     loanAmountPaid: Double = 0.0,
-    selectedLoanAccount: LegacyAccount? = null,
+    selectedLoanAccount: LoanAccount? = null,
 
     onAddRecord: () -> Unit,
     onAccountClick: (UUID) -> Unit

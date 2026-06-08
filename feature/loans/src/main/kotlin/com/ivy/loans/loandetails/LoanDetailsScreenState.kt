@@ -1,8 +1,8 @@
 package com.ivy.loans.loandetails
 
-import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.data.model.Loan
 import com.ivy.loans.model.DisplayLoanRecord
+import com.ivy.loans.model.LoanAccount
 import com.ivy.loans.modal.LoanModalData
 import com.ivy.loans.modal.LoanRecordModalData
 import kotlinx.collections.immutable.ImmutableList
@@ -16,7 +16,7 @@ internal data class LoanDetailsScreenState(
     val loanTotalAmount: Double,
     val amountPaid: Double,
     val loanAmountPaid: Double,
-    val accounts: ImmutableList<LegacyAccount>,
+    val accounts: ImmutableList<LoanAccount>,
     val selectedLoanAccountId: UUID?,
     val createLoanTransaction: Boolean,
     val loanModalData: LoanModalData?,

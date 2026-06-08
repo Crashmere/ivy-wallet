@@ -1372,6 +1372,7 @@ shared:ui:core
 - 借贷创建和还款记录创建数据已从携带完整 `LegacyAccount` 改为只携带账户 ID；旧弹窗仍用完整账户对象渲染选择项，domain 创建和交易同步只接收 ID，`shared:data:model` 不再因为这两个创建 DTO 依赖 legacy 账户模型。
 - 借贷弹窗和还款记录弹窗的 modal data 也已从完整选中账户收窄为账户 ID；旧弹窗继续根据当前账户列表解析展示对象，`shared:ui:core` 的借贷弹窗状态不再依赖 legacy 账户模型。
 - 借贷列表页和借贷创建/还款记录弹窗的账户选择数据已收窄为 `feature:loans` 私有的 `LoanAccount` 轻量模型；列表页改从正式 `Account` 模型加载账户，详情页仍在 legacy 状态边界内局部映射给弹窗使用。
+- 借贷详情页账户状态也已收窄为 `LoanAccount`，并改从正式 `GetAccountsUseCase` 加载账户；详情页标题账户按钮、还款记录展示币种和弹窗账户选择继续使用原账户 ID/币种语义。
 - 旧弹窗状态包已整体从 `shared:ui:core` 迁回 `shared:ui:legacy`；账户、分类、缓冲金额、周期、借贷、借贷记录和重复规则弹窗继续用同名数据对象传参，但 UI core 不再暴露旧 modal data API。
 - 交易页和饼图页的周期选择弹窗状态已从 ViewModel/State/Event 移回 Screen 本地状态；ViewModel 只处理周期切换和数据加载，不再为了打开旧弹窗依赖 legacy modal data。
 - 分类页和计划付款编辑页的新增/选择类旧弹窗状态也已移回 Screen 本地状态；ViewModel 继续处理创建账户、创建/编辑分类和重复规则保存，不再承担纯 UI 弹窗开关数据。
