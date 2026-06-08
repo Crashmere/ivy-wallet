@@ -292,7 +292,7 @@ private fun BoxWithConstraintsScope.UI(
                 }
             }
         },
-        onSelectedAccountChanged = { onEvent(EditPlannedScreenEvent.OnAccountChanged(it)) },
+        onSelectedAccountChanged = { onEvent(EditPlannedScreenEvent.OnAccountChanged(it.id)) },
         onToAccountChanged = { },
         onAddNewAccount = {
             onEvent(

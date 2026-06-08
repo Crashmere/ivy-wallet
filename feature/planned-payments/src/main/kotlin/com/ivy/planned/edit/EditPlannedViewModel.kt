@@ -231,7 +231,7 @@ internal class EditPlannedViewModel @Inject internal constructor(
 
             is EditPlannedScreenEvent.OnCreateAccount -> createAccount(event.data)
             is EditPlannedScreenEvent.OnCreateCategory -> createCategory(event.data)
-            is EditPlannedScreenEvent.OnAccountChanged -> updateAccount(event.newAccount)
+            is EditPlannedScreenEvent.OnAccountChanged -> updateAccount(event.accountId)
             is EditPlannedScreenEvent.OnAmountChanged -> updateAmount(event.newAmount)
             is EditPlannedScreenEvent.OnTitleChanged -> updateTitle(event.newTitle)
             is EditPlannedScreenEvent.OnRuleChanged ->
@@ -389,14 +389,14 @@ internal class EditPlannedViewModel @Inject internal constructor(
         saveIfEditMode()
     }
 
-    private fun updateAccount(newAccount: LegacyAccount) {
+    private fun updateAccount(accountId: UUID) {
         loadedRule = loadedRule().copy(
-            accountId = newAccount.id
+            accountId = accountId
         )
-        this@EditPlannedViewModel.accountId = newAccount.id
+        this@EditPlannedViewModel.accountId = accountId
 
         viewModelScope.launch {
-            updateCurrency(accountId = newAccount.id)
+            updateCurrency(accountId = accountId)
         }
 
         saveIfEditMode()
