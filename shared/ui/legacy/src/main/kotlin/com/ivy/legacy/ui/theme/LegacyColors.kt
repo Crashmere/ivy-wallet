@@ -59,8 +59,6 @@ val Gray = Color(0xFF939199)
 
 internal val MediumWhite = Color(0xFFEFEEF0)
 
-internal val Transparent = Color(0x00000000)
-
 internal val GradientRed = Gradient(Red, Color(0xFFFF99AB))
 
 internal val GradientPurple = Gradient(Purple, Color(0xFFED3EF7))
@@ -91,10 +89,6 @@ data class Gradient(
     fun asHorizontalBrush() = Brush.horizontalGradient(colors = listOf(startColor, endColor))
 
     internal fun asVerticalBrush() = Brush.verticalGradient(colors = listOf(startColor, endColor))
-}
-
-internal fun Color.asBrush(): Brush {
-    return Brush.linearGradient(colors = listOf(this, this))
 }
 
 fun findContrastTextColor(backgroundColor: Color): Color {
