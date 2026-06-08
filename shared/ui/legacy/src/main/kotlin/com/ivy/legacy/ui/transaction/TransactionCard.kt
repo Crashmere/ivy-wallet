@@ -40,7 +40,6 @@ import com.ivy.ui.time.LocalTimeFormatter
 import com.ivy.ui.time.LocalTimeProvider
 import com.ivy.legacy.ui.theme.BlueLight
 import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.data.model.currency.format
 import com.ivy.ui.R
 import com.ivy.ui.time.TimeFormatter
@@ -297,7 +296,7 @@ private fun ColumnScope.TransactionTags(tags: ImmutableList<LegacyTag>) {
 private fun TransactionHeaderRow(
     transaction: LegacyTransaction,
     categories: List<Category>,
-    accounts: List<LegacyAccount>,
+    accounts: List<TransactionListAccount>,
     shouldShowAccountSpecificColorInTransactions: Boolean,
     onAccountClick: (UUID) -> Unit,
     onCategoryClick: (UUID) -> Unit,
@@ -366,8 +365,8 @@ private fun findCategory(
 
 private fun findAccount(
     accountId: UUID?,
-    accounts: List<LegacyAccount>
-): LegacyAccount? {
+    accounts: List<TransactionListAccount>
+): TransactionListAccount? {
     val targetId = accountId ?: return null
     return accounts.find { it.id == targetId }
 }
@@ -457,7 +456,7 @@ private const val TransferHeaderGradientThreshold = 0.35f
 
 @Composable
 private fun TransferHeader(
-    accounts: List<LegacyAccount>,
+    accounts: List<TransactionListAccount>,
     transaction: LegacyTransaction,
     shouldShowAccountSpecificColorInTransactions: Boolean
 ) {

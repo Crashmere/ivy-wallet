@@ -38,6 +38,7 @@ import com.ivy.data.model.TransactionType
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.legacy.ui.transaction.LegacyDueSection
 import com.ivy.legacy.ui.transaction.TransactionListData
+import com.ivy.legacy.ui.transaction.toTransactionListAccount
 import com.ivy.legacy.ui.summary.IncomeExpensesCards
 import com.ivy.legacy.ui.transaction.transactions
 import com.ivy.ui.compose.clickableNoIndication
@@ -56,6 +57,7 @@ import com.ivy.legacy.ui.button.CircleButtonFilled
 import com.ivy.legacy.ui.button.IvyButton
 import com.ivy.legacy.ui.icon.IvyIcon
 import com.ivy.legacy.ui.button.IvyOutlinedButton
+import kotlinx.collections.immutable.toImmutableList
 
 @ExperimentalFoundationApi
 @Composable
@@ -227,7 +229,7 @@ private fun BoxWithConstraintsScope.UI(
                 baseData = TransactionListData(
                     baseCurrency = state.baseCurrency,
                     categories = state.categories,
-                    accounts = state.accounts,
+                    accounts = state.accounts.map { it.toTransactionListAccount() }.toImmutableList(),
                 ),
 
                 upcoming = state.upcoming.toLegacyDueSection(),

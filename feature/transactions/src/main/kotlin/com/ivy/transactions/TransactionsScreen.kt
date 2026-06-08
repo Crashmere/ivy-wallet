@@ -51,6 +51,7 @@ import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.compose.thenIf
 import com.ivy.legacy.ui.transaction.LegacyDueSection
 import com.ivy.legacy.ui.transaction.TransactionListData
+import com.ivy.legacy.ui.transaction.toTransactionListAccount
 import com.ivy.ui.period.Month
 import com.ivy.ui.period.TimePeriod
 import com.ivy.ui.period.displayLong
@@ -94,6 +95,7 @@ import com.ivy.ui.theme.colors.toComposeColor
 import com.ivy.legacy.ui.period.PeriodSelector
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toImmutableList
 import java.util.UUID
 
 @Composable
@@ -451,7 +453,7 @@ private fun BoxWithConstraintsScope.UI(
             transactions(
                 baseData = TransactionListData(
                     baseCurrency,
-                    accounts,
+                    accounts.map { it.toTransactionListAccount() }.toImmutableList(),
                     categories
                 ),
                 upcoming = upcoming.toLegacyDueSection(),
