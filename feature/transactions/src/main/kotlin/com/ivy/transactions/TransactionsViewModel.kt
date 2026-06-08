@@ -436,12 +436,14 @@ internal class TransactionsViewModel @Inject internal constructor(
         expenses.doubleValue = summary.expenses
         history.value = summary.history.toImmutableList()
         upcoming.value = upcoming.value.copy(
-            transactions = summary.upcoming.transactions.toImmutableList(),
+            transactions = summary.upcoming.transactions.map { it.toLegacyTransaction() }
+                .toImmutableList(),
             income = summary.upcoming.income,
             expenses = summary.upcoming.expenses,
         )
         overdue.value = overdue.value.copy(
-            transactions = summary.overdue.transactions.toImmutableList(),
+            transactions = summary.overdue.transactions.map { it.toLegacyTransaction() }
+                .toImmutableList(),
             income = summary.overdue.income,
             expenses = summary.overdue.expenses,
         )

@@ -8,14 +8,17 @@ import com.ivy.data.model.Account
 import com.ivy.data.model.Category
 import com.ivy.data.model.CategoryId
 import com.ivy.data.model.FromToTimeRange
+import com.ivy.data.model.Transaction
 import com.ivy.data.api.TransactionStore
+import com.ivy.data.model.getFromAccount
+import com.ivy.data.model.getFromValue
+import com.ivy.data.model.getTransactionType
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.domain.usecase.exchange.ExchangeAmountUseCase
 import com.ivy.domain.mapper.legacy.toLegacyTransaction
 import com.ivy.domain.transaction.legacy.LegacyTransactionDateDividers
-import com.ivy.domain.transaction.legacy.filterOverdueLegacyTransactions
-import com.ivy.domain.transaction.legacy.filterUpcomingLegacyTransactions
 import com.ivy.domain.time.nowUtc
+import com.ivy.domain.time.todayStartOfLocalDayUtc
 import java.util.UUID
 import javax.inject.Inject
 
@@ -179,13 +182,11 @@ class GetCategoryTransactionsSummaryUseCase @Inject internal constructor(
             categoryId = CategoryId(category.id.value),
             startDate = range.upcomingFrom(nowUtc()),
             endDate = range.to()
-        ).map {
-            it.toLegacyTransaction()
-        }.filterUpcomingLegacyTransactions()
+        ).filterUpcomingDueTransactions()
 
         return CategoryDueTransactionsSummary(
-            income = transactions.incomeInBaseCurrency(),
-            expenses = transactions.expensesInBaseCurrency(),
+            income = transactions.transactionIncomeInBaseCurrency(),
+            expenses = transactions.transactionExpensesInBaseCurrency(),
             transactions = transactions
         )
     }
@@ -198,13 +199,11 @@ class GetCategoryTransactionsSummaryUseCase @Inject internal constructor(
             categoryId = CategoryId(category.id.value),
             startDate = range.from(),
             endDate = range.overdueTo(nowUtc())
-        ).map {
-            it.toLegacyTransaction()
-        }.filterOverdueLegacyTransactions()
+        ).filterOverdueDueTransactions()
 
         return CategoryDueTransactionsSummary(
-            income = transactions.incomeInBaseCurrency(),
-            expenses = transactions.expensesInBaseCurrency(),
+            income = transactions.transactionIncomeInBaseCurrency(),
+            expenses = transactions.transactionExpensesInBaseCurrency(),
             transactions = transactions
         )
     }
@@ -227,6 +226,22 @@ class GetCategoryTransactionsSummaryUseCase @Inject internal constructor(
             .sumInBaseCurrency(emptySet())
     }
 
+    private suspend fun List<Transaction>.transactionIncomeInBaseCurrency(): Double {
+        return filter { it.getTransactionType() == TransactionType.INCOME }
+            .sumTransactionsInBaseCurrency()
+    }
+
+    private suspend fun List<Transaction>.transactionExpensesInBaseCurrency(): Double {
+        return filter { it.getTransactionType() == TransactionType.EXPENSE }
+            .sumTransactionsInBaseCurrency()
+    }
+
+    private suspend fun List<Transaction>.sumTransactionsInBaseCurrency(): Double {
+        val baseCurrency = getBaseCurrencyCode()
+        val accounts = accountStore.findAll()
+        return sumOf { it.amountBaseCurrency(baseCurrency, accounts) }
+    }
+
     private suspend fun LegacyTransaction.amountBaseCurrency(
         baseCurrency: String,
         accounts: List<Account>,
@@ -238,5 +253,29 @@ class GetCategoryTransactionsSummaryUseCase @Inject internal constructor(
             baseCurrency = baseCurrency,
             fromCurrency = amountCurrency,
         ).getOrNull()?.toDouble() ?: amount.toDouble()
+    }
+
+    private suspend fun Transaction.amountBaseCurrency(
+        baseCurrency: String,
+        accounts: List<Account>,
+    ): Double {
+        val amount = getFromValue().amount.value
+        val amountCurrency = accounts.find { it.id == getFromAccount() }?.asset?.code
+            ?: return amount
+        return exchangeAmountUseCase(
+            amount = amount.toBigDecimal(),
+            baseCurrency = baseCurrency,
+            fromCurrency = amountCurrency,
+        ).getOrNull()?.toDouble() ?: amount
+    }
+
+    private fun Iterable<Transaction>.filterUpcomingDueTransactions(): List<Transaction> {
+        val todayStartOfDayUtc = todayStartOfLocalDayUtc()
+        return filter { !it.settled && it.time.isAfter(todayStartOfDayUtc) }
+    }
+
+    private fun Iterable<Transaction>.filterOverdueDueTransactions(): List<Transaction> {
+        val todayStartOfDayUtc = todayStartOfLocalDayUtc()
+        return filter { !it.settled && it.time.isBefore(todayStartOfDayUtc) }
     }
 }
