@@ -21,13 +21,13 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.TransactionType
-import com.ivy.legacy.ui.button.CloseButton
 import com.ivy.legacy.ui.button.IvyCircleButton
 import com.ivy.legacy.ui.button.IvyOutlinedButton
 import com.ivy.ui.theme.colors.Gradient
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.theme.colors.IvyFixedColors.White
 import com.ivy.ui.R
+import com.ivy.ui.compose.CloseIconButton
 import java.util.UUID
 
 @Composable
@@ -119,5 +119,19 @@ private fun DeleteToolbarButton(onClick: () -> Unit) {
         hasShadow = false,
         tint = White,
         onClick = onClick
+    )
+}
+
+@Composable
+private fun CloseButton(
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit,
+) {
+    CloseIconButton(
+        modifier = modifier,
+        backgroundColor = LegacyTheme.colors.pure,
+        borderColor = LegacyTheme.colors.medium,
+        tint = LegacyTheme.colors.pureInverse,
+        onClick = onClick,
     )
 }

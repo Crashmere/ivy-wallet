@@ -18,7 +18,7 @@ import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.R
 
 @Composable
-fun CloseButton(
+internal fun CloseButton(
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
 ) {

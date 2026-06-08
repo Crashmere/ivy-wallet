@@ -21,7 +21,7 @@ import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.compose.navigationBarInset
 import com.ivy.ui.compose.toDensityDp
 import com.ivy.ui.R
-import com.ivy.legacy.ui.button.CloseButton
+import com.ivy.ui.compose.CloseIconButton
 import com.ivy.legacy.ui.button.IvyOutlinedButton
 import com.ivy.ui.compose.gradientCutBackgroundTop
 
@@ -85,4 +85,18 @@ private fun PlannedPaymentsActionsRow(
     ) {
         content()
     }
+}
+
+@Composable
+private fun CloseButton(
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit,
+) {
+    CloseIconButton(
+        modifier = modifier,
+        backgroundColor = LegacyTheme.colors.pure,
+        borderColor = LegacyTheme.colors.medium,
+        tint = LegacyTheme.colors.pureInverse,
+        onClick = onClick,
+    )
 }

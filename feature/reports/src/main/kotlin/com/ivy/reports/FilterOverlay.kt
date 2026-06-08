@@ -56,7 +56,6 @@ import com.ivy.legacy.ui.tags.ShowTagModal
 import com.ivy.ui.animation.springBounce
 import com.ivy.ui.R
 import com.ivy.ui.theme.colors.IvyGradients
-import com.ivy.legacy.ui.button.CloseButton
 import com.ivy.legacy.ui.icon.ItemIconSDefaultIcon
 import com.ivy.legacy.ui.button.IvyButton
 import com.ivy.legacy.ui.icon.IvyIcon
@@ -68,6 +67,7 @@ import com.ivy.ui.theme.colors.findContrastTextColor
 import com.ivy.ui.theme.colors.toComposeColor
 import com.ivy.legacy.ui.money.AmountCurrencyB1
 import com.ivy.ui.compose.BackPressHandler
+import com.ivy.ui.compose.CloseIconButton
 import com.ivy.ui.compose.thenIf
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
@@ -1268,4 +1268,18 @@ private fun String.capitalizeLocal(): String = replaceFirstChar {
     } else {
         it.toString()
     }
+}
+
+@Composable
+private fun CloseButton(
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit,
+) {
+    CloseIconButton(
+        modifier = modifier,
+        backgroundColor = LegacyTheme.colors.pure,
+        borderColor = LegacyTheme.colors.medium,
+        tint = LegacyTheme.colors.pureInverse,
+        onClick = onClick,
+    )
 }

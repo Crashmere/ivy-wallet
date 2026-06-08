@@ -49,6 +49,7 @@ import com.ivy.ui.compose.thenIf
 import com.ivy.ui.period.LocalPeriodState
 import com.ivy.ui.period.TimePeriod
 import com.ivy.ui.period.displayShort
+import com.ivy.ui.compose.CloseIconButton
 import com.ivy.ui.compose.drawColoredShadow
 import com.ivy.data.model.currency.format
 import com.ivy.ui.compose.horizontalSwipeListener
@@ -65,7 +66,6 @@ import com.ivy.ui.theme.colors.Gradient
 import com.ivy.ui.theme.colors.IvyGradients
 import com.ivy.ui.theme.colors.IvyFixedColors.White
 import com.ivy.legacy.ui.money.BalanceRow
-import com.ivy.legacy.ui.button.CloseButton
 import com.ivy.legacy.ui.icon.ItemIconMDefaultIcon
 import com.ivy.legacy.ui.button.IvyOutlinedButton
 import com.ivy.ui.theme.colors.findContrastTextColor
@@ -383,6 +383,20 @@ private fun PieChartCircleButtonFilledGradient(
         painter = painterResource(id = icon),
         contentDescription = contentDescription,
         tint = tint ?: Color.Unspecified,
+    )
+}
+
+@Composable
+private fun CloseButton(
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit,
+) {
+    CloseIconButton(
+        modifier = modifier,
+        backgroundColor = LegacyTheme.colors.pure,
+        borderColor = LegacyTheme.colors.medium,
+        tint = LegacyTheme.colors.pureInverse,
+        onClick = onClick,
     )
 }
 
