@@ -34,7 +34,6 @@ import com.ivy.ui.period.PeriodState
 import com.ivy.ui.period.TimePeriod
 import com.ivy.data.model.toCloseTimeRange
 import com.ivy.ui.compose.selectEndTextFieldValue
-import com.ivy.ui.navigation.Navigation
 import com.ivy.ui.navigation.TransactionsScreen
 import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.R
@@ -60,6 +59,9 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.UUID
@@ -72,7 +74,6 @@ private val AccountTransfersCategoryColorArgb = 0xFFFFCCD5.toInt()
 @HiltViewModel
 class TransactionsViewModel @Inject constructor(
     private val periodState: PeriodState,
-    private val nav: Navigation,
     private val updateCategoryUseCase: UpdateCategoryUseCase,
     private val updateAccountWithBalanceUseCase: UpdateAccountWithBalanceUseCase,
     private val payOrSkipLegacyPlannedTransactionUseCase: PayOrSkipLegacyPlannedTransactionUseCase,
@@ -139,6 +140,8 @@ class TransactionsViewModel @Inject constructor(
     private val skipAllModalVisible = mutableStateOf(false)
     private val deleteModal1Visible = mutableStateOf(false)
     private val choosePeriodModal = mutableStateOf<ChoosePeriodModalData?>(null)
+    private val _uiEvents = MutableSharedFlow<TransactionsUiEvent>()
+    val uiEvents: SharedFlow<TransactionsUiEvent> = _uiEvents.asSharedFlow()
 
     @Composable
     override fun uiState(): TransactionsState {
@@ -575,15 +578,15 @@ class TransactionsViewModel @Inject constructor(
     private suspend fun deleteAccount(accountId: UUID) {
         withContext(Dispatchers.IO) {
             deleteAccountUseCase(AccountId(accountId))
-            nav.back()
         }
+        _uiEvents.emit(TransactionsUiEvent.CloseScreen)
     }
 
     private suspend fun deleteCategory(categoryId: UUID) {
         withContext(Dispatchers.IO) {
             deleteCategoryUseCase(CategoryId(categoryId))
-            nav.back()
         }
+        _uiEvents.emit(TransactionsUiEvent.CloseScreen)
     }
 
     private fun setDeleteModal1Visible(delete: Boolean) {

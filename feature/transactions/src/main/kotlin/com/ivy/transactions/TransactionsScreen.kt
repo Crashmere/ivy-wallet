@@ -17,6 +17,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -95,6 +96,14 @@ fun BoxWithConstraintsScope.TransactionsScreen(screen: TransactionsScreen) {
     val themeState = LocalThemeState.current
     val nav = navigation()
     val uiState = viewModel.uiState()
+
+    LaunchedEffect(viewModel) {
+        viewModel.uiEvents.collect { event ->
+            when (event) {
+                TransactionsUiEvent.CloseScreen -> nav.back()
+            }
+        }
+    }
 
     val view = LocalView.current
     onScreenStart(
