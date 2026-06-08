@@ -64,13 +64,13 @@ import com.ivy.legacy.ui.component.ItemIconSDefaultIcon
 import com.ivy.legacy.ui.component.IvyButton
 import com.ivy.legacy.ui.component.IvyIcon
 import com.ivy.legacy.ui.component.IvyOutlinedButton
-import com.ivy.legacy.ui.modal.AddModalBackHandling
 import com.ivy.legacy.ui.modal.ChoosePeriodModal
 import com.ivy.legacy.ui.modal.ChoosePeriodModalData
 import com.ivy.legacy.ui.modal.edit.AmountModal
 import com.ivy.legacy.ui.theme.findContrastTextColor
 import com.ivy.legacy.ui.theme.toComposeColor
 import com.ivy.legacy.ui.component.AmountCurrencyB1
+import com.ivy.ui.compose.BackPressHandler
 import com.ivy.ui.compose.thenIf
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
@@ -158,14 +158,7 @@ internal fun BoxWithConstraintsScope.FilterOverlay(
                 .systemBarsPadding()
                 .verticalScroll(rememberScrollState()),
         ) {
-            val modalId = remember {
-                UUID.randomUUID()
-            }
-
-            AddModalBackHandling(
-                modalId = modalId,
-                visible = visible
-            ) {
+            BackPressHandler(enabled = visible) {
                 onClose()
             }
 

@@ -11,6 +11,7 @@ dependencies {
     implementation(projects.shared.data.model)
 
     implementation(libs.androidx.core.ktx)
+    implementation(libs.compose.activity)
     implementation(libs.androidx.lifecycle.viewmodel)
 
     testImplementation(libs.bundles.testing)

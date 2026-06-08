@@ -1,6 +1,5 @@
 package com.ivy.legacy.ui.modal
 
-import androidx.activity.compose.BackHandler
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
@@ -24,7 +23,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -46,6 +44,7 @@ import com.ivy.ui.platform.hideKeyboard
 import com.ivy.ui.compose.keyboardOnlyWindowInsets
 import com.ivy.ui.compose.navigationBarInsets
 import com.ivy.ui.animation.DURATION_MODAL_ANIM
+import com.ivy.ui.compose.BackPressHandler
 import com.ivy.ui.compose.onCompositionStart
 import com.ivy.ui.compose.thenIf
 import com.ivy.legacy.ui.component.ActionsRow
@@ -193,24 +192,8 @@ private fun ModalBackHandling(
     visible: Boolean,
     dismiss: () -> Unit
 ) {
-    AddModalBackHandling(
-        modalId = modalId,
-        visible = visible,
-        action = {
-            dismiss()
-        }
-    )
-}
-
-@Composable
-fun AddModalBackHandling(
-    modalId: UUID?,
-    visible: Boolean,
-    action: () -> Unit
-) {
-    val latestAction by rememberUpdatedState(action)
-    BackHandler(enabled = visible && modalId != null) {
-        latestAction()
+    BackPressHandler(enabled = visible && modalId != null) {
+        dismiss()
     }
 }
 

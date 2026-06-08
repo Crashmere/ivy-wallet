@@ -41,6 +41,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.legacy.ui.theme.style
+import com.ivy.ui.compose.BackPressHandler
 import com.ivy.ui.compose.thenIf
 import com.ivy.ui.compose.clickableNoIndication
 import com.ivy.ui.animation.lerp
@@ -60,9 +61,7 @@ import com.ivy.legacy.ui.component.IvyCircleButton
 import com.ivy.legacy.ui.component.IvyIcon
 import com.ivy.legacy.ui.component.IvyOutlinedButton
 import com.ivy.legacy.ui.theme.gradientExpenses
-import com.ivy.legacy.ui.modal.AddModalBackHandling
 import com.ivy.legacy.ui.theme.pureBlur
-import java.util.UUID
 import kotlin.math.abs
 import kotlin.math.roundToInt
 
@@ -83,12 +82,7 @@ internal fun BoxWithConstraintsScope.BottomBar(
 ) {
     var expanded by remember { mutableStateOf(false) }
 
-    val modalId = remember { UUID.randomUUID() }
-
-    AddModalBackHandling(
-        modalId = modalId,
-        visible = expanded
-    ) {
+    BackPressHandler(enabled = expanded) {
         expanded = false
     }
 

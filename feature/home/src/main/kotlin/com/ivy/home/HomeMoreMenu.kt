@@ -46,6 +46,7 @@ import androidx.compose.ui.zIndex
 import com.ivy.data.model.Theme
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.legacy.ui.theme.style
+import com.ivy.ui.compose.BackPressHandler
 import com.ivy.ui.compose.thenIf
 import com.ivy.ui.compose.clickableNoIndication
 import com.ivy.ui.animation.colorLerp
@@ -61,9 +62,7 @@ import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.Gray
 import com.ivy.legacy.ui.component.CircleButtonFilled
 import com.ivy.legacy.ui.component.IvyIcon
-import com.ivy.legacy.ui.modal.AddModalBackHandling
 import com.ivy.legacy.ui.component.AmountCurrencyB1
-import java.util.UUID
 import kotlin.math.roundToInt
 
 private const val SWIPE_UP_THRESHOLD_CLOSE_MORE_MENU = 300
@@ -168,14 +167,7 @@ internal fun BoxWithConstraintsScope.MoreMenu(
                     }
                 )
         ) {
-            val modalId = remember {
-                UUID.randomUUID()
-            }
-
-            AddModalBackHandling(
-                modalId = modalId,
-                visible = expanded
-            ) {
+            BackPressHandler(enabled = expanded) {
                 setExpanded(false)
             }
 
