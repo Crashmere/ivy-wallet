@@ -141,6 +141,7 @@ class TransactionsViewModel @Inject constructor(
     private val choosePeriodModal = mutableStateOf<ChoosePeriodModalData?>(null)
     private val _uiEvents = MutableSharedFlow<TransactionsUiEvent>()
     val uiEvents: SharedFlow<TransactionsUiEvent> = _uiEvents.asSharedFlow()
+    private var currentScreen: TransactionsScreen? = null
 
     @Composable
     override fun uiState(): TransactionsState {
@@ -314,21 +315,19 @@ class TransactionsViewModel @Inject constructor(
 
     override fun onEvent(event: TransactionsEvent) {
         when (event) {
-            is TransactionsEvent.Delete -> delete(event.screen)
+            TransactionsEvent.Delete -> delete()
             is TransactionsEvent.EditAccount -> editAccount(
-                event.screen,
                 event.account,
                 event.newBalance
             )
 
             is TransactionsEvent.EditCategory -> editCategory(event.updatedCategory)
-            is TransactionsEvent.NextMonth -> nextMonth(event.screen)
-            is TransactionsEvent.PayOrGet -> payOrGet(event.screen, event.transactionId)
-            is TransactionsEvent.PreviousMonth -> previousMonth(event.screen)
-            is TransactionsEvent.SetPeriod -> setPeriod(event.screen, event.period)
-            is TransactionsEvent.SkipTransaction -> skipTransaction(event.screen, event.transactionId)
+            TransactionsEvent.NextMonth -> nextMonth()
+            is TransactionsEvent.PayOrGet -> payOrGet(event.transactionId)
+            TransactionsEvent.PreviousMonth -> previousMonth()
+            is TransactionsEvent.SetPeriod -> setPeriod(event.period)
+            is TransactionsEvent.SkipTransaction -> skipTransaction(event.transactionId)
             is TransactionsEvent.SkipTransactions -> skipTransactions(
-                event.screen,
                 event.transactionIds
             )
 
@@ -519,47 +518,33 @@ class TransactionsViewModel @Inject constructor(
         overdueExpanded.value = expanded
     }
 
-    private fun setPeriod(
-        screen: TransactionsScreen,
-        period: TimePeriod,
-    ) {
-        start(
-            screen = screen,
-            timePeriod = period,
-            reset = false
-        )
+    private fun setPeriod(period: TimePeriod) {
+        restartCurrentScreen(timePeriod = period)
     }
 
     private fun setSkipAllModalVisible(visible: Boolean) {
         skipAllModalVisible.value = visible
     }
 
-    private fun nextMonth(screen: TransactionsScreen) {
+    private fun nextMonth() {
         val nextPeriod = periodState.shiftMonth(period.value, increment = 1L)
         if (nextPeriod != null) {
             periodState.select(nextPeriod)
-            start(
-                screen = screen,
-                timePeriod = nextPeriod,
-                reset = false
-            )
+            restartCurrentScreen(timePeriod = nextPeriod)
         }
     }
 
-    private fun previousMonth(screen: TransactionsScreen) {
+    private fun previousMonth() {
         val previousPeriod = periodState.shiftMonth(period.value, increment = -1L)
         if (previousPeriod != null) {
             periodState.select(previousPeriod)
-            start(
-                screen = screen,
-                timePeriod = previousPeriod,
-                reset = false
-            )
+            restartCurrentScreen(timePeriod = previousPeriod)
         }
     }
 
-    private fun delete(screen: TransactionsScreen) {
+    private fun delete() {
         viewModelScope.launch {
+            val screen = currentScreen ?: return@launch
             when {
                 screen.accountId != null -> {
                     deleteAccount(screen.accountId!!)
@@ -603,33 +588,25 @@ class TransactionsViewModel @Inject constructor(
     }
 
     private fun editAccount(
-        screen: TransactionsScreen,
         account: LegacyAccount,
         newBalance: Double,
     ) {
         viewModelScope.launch {
             updateAccountWithBalanceUseCase(account, newBalance)
-            start(
-                screen = screen,
-                timePeriod = period.value,
-                reset = false
-            )
+            restartCurrentScreen(timePeriod = period.value)
         }
     }
 
-    private fun payOrGet(screen: TransactionsScreen, transactionId: UUID) {
+    private fun payOrGet(transactionId: UUID) {
         viewModelScope.launch {
             val transaction = findDueTransaction(transactionId) ?: return@launch
             if (payOrSkipLegacyPlannedTransactionUseCase(transaction) != null) {
-                start(
-                    screen = screen,
-                    reset = false
-                )
+                restartCurrentScreen()
             }
         }
     }
 
-    private fun skipTransaction(screen: TransactionsScreen, transactionId: UUID) {
+    private fun skipTransaction(transactionId: UUID) {
         viewModelScope.launch {
             val transaction = findDueTransaction(transactionId) ?: return@launch
             val paidTransaction = payOrSkipLegacyPlannedTransactionUseCase(
@@ -637,15 +614,12 @@ class TransactionsViewModel @Inject constructor(
                 skipTransaction = true
             )
             if (paidTransaction != null) {
-                start(
-                    screen = screen,
-                    reset = false
-                )
+                restartCurrentScreen()
             }
         }
     }
 
-    private fun skipTransactions(screen: TransactionsScreen, transactionIds: List<UUID>) {
+    private fun skipTransactions(transactionIds: List<UUID>) {
         viewModelScope.launch {
             val transactions = findDueTransactions(transactionIds)
             if (transactions.isEmpty()) return@launch
@@ -655,10 +629,7 @@ class TransactionsViewModel @Inject constructor(
                 skipTransaction = true
             )
             if (paidTransactions.isNotEmpty()) {
-                start(
-                    screen = screen,
-                    reset = false
-                )
+                restartCurrentScreen()
             }
         }
     }
@@ -687,6 +658,8 @@ class TransactionsViewModel @Inject constructor(
         timePeriod: TimePeriod? = periodState.selectedPeriod,
         reset: Boolean = true,
     ) {
+        currentScreen = screen
+
         if (reset) {
             reset()
         }
@@ -738,6 +711,19 @@ class TransactionsViewModel @Inject constructor(
 
                 else -> error("no id provided")
             }
+        }
+    }
+
+    private fun restartCurrentScreen(
+        timePeriod: TimePeriod? = period.value,
+        reset: Boolean = false,
+    ) {
+        currentScreen?.let {
+            start(
+                screen = it,
+                timePeriod = timePeriod,
+                reset = reset
+            )
         }
     }
 }

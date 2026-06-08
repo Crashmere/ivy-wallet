@@ -165,34 +165,33 @@ fun BoxWithConstraintsScope.TransactionsScreen(screen: TransactionsScreen) {
         onSetPeriod = {
             viewModel.onEvent(
                 TransactionsEvent.SetPeriod(
-                    screen = screen,
                     period = it
                 )
             )
         },
         onNextMonth = {
-            viewModel.onEvent(TransactionsEvent.NextMonth(screen))
+            viewModel.onEvent(TransactionsEvent.NextMonth)
         },
         onPreviousMonth = {
-            viewModel.onEvent(TransactionsEvent.PreviousMonth(screen))
+            viewModel.onEvent(TransactionsEvent.PreviousMonth)
         },
         onDelete = {
-            viewModel.onEvent(TransactionsEvent.Delete(screen))
+            viewModel.onEvent(TransactionsEvent.Delete)
         },
         onEditCategory = {
             viewModel.onEvent(TransactionsEvent.EditCategory(it))
         },
         onEditAccount = { acc, newBalance ->
-            viewModel.onEvent(TransactionsEvent.EditAccount(screen, acc, newBalance))
+            viewModel.onEvent(TransactionsEvent.EditAccount(acc, newBalance))
         },
         onPayOrGet = { transactionId ->
-            viewModel.onEvent(TransactionsEvent.PayOrGet(screen, transactionId))
+            viewModel.onEvent(TransactionsEvent.PayOrGet(transactionId))
         },
         onSkipTransaction = { transactionId ->
-            viewModel.onEvent(TransactionsEvent.SkipTransaction(screen, transactionId))
+            viewModel.onEvent(TransactionsEvent.SkipTransaction(transactionId))
         },
         onSkipAllTransactions = { transactionIds ->
-            viewModel.onEvent(TransactionsEvent.SkipTransactions(screen, transactionIds))
+            viewModel.onEvent(TransactionsEvent.SkipTransactions(transactionIds))
         },
         updateAccountNameConfirmation = {
             viewModel.onEvent(TransactionsEvent.UpdateAccountDeletionState(it))
