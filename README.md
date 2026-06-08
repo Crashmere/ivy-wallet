@@ -26,6 +26,7 @@
 - 继续收窄 UI core 职责：旧交易列表基础入参 `AppBaseData` 已改名为 `TransactionListData`，并迁入 `shared:ui:legacy` 的交易组件包。
 - 继续迁移旧 UI 状态：账户、分类、借贷、借贷记录、缓冲金额、循环规则和周期选择弹窗状态已从 `shared:ui:core` 迁入 `shared:ui:legacy`。
 - 精简 Compose 构建约定：删除 Compose compiler metrics/reports 输出配置，减少个人开发构建产物噪音。
+- 精简根目录忽略规则：`.gitignore` 已移除 Fastlane、Freeline、Google Services、Android Studio 细项等历史噪音，只保留当前 Android/Gradle/VS Code 本地开发会产生的文件规则。
 
 当前仍保留：
 
