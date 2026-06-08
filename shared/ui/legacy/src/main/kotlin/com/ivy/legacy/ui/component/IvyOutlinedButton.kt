@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.defaultMinSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
@@ -23,8 +22,6 @@ import androidx.compose.ui.unit.dp
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.legacy.ui.theme.style
 import com.ivy.ui.compose.thenIf
-import com.ivy.ui.R
-import com.ivy.legacy.ui.theme.Green
 
 @Composable
 fun IvyOutlinedButton(
@@ -78,65 +75,5 @@ fun IvyOutlinedButton(
         )
 
         Spacer(Modifier.width(24.dp))
-    }
-}
-
-@Composable
-fun IvyOutlinedButtonFillMaxWidth(
-    modifier: Modifier = Modifier,
-    text: String,
-    @DrawableRes iconStart: Int?,
-    solidBackground: Boolean = false,
-    iconTint: Color = LegacyTheme.colors.pureInverse,
-    borderColor: Color = LegacyTheme.colors.medium,
-    textColor: Color = LegacyTheme.colors.pureInverse,
-    padding: Dp = 16.dp,
-    onClick: () -> Unit,
-) {
-    val pure = LegacyTheme.colors.pure
-    val rFull = LegacyTheme.shapes.rFull
-    Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .clip(LegacyTheme.shapes.rFull)
-            .clickable(
-                onClick = onClick,
-            )
-            .border(2.dp, borderColor, LegacyTheme.shapes.rFull)
-            .thenIf(solidBackground) {
-                background(pure, rFull)
-            },
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        if (iconStart != null) {
-            Spacer(Modifier.width(12.dp))
-
-            IvyIcon(
-                icon = iconStart,
-                tint = iconTint,
-            )
-        }
-
-        Spacer(Modifier.weight(1f))
-
-        Text(
-            modifier = Modifier.padding(vertical = padding),
-            text = text,
-            style = LegacyTheme.typo.b2.style(
-                fontWeight = FontWeight.Bold,
-                color = textColor,
-            ),
-        )
-
-        Spacer(Modifier.weight(1f))
-
-        if (iconStart != null) {
-            Spacer(Modifier.width(12.dp))
-
-            IvyIcon(
-                icon = iconStart,
-                tint = Color.Transparent,
-            )
-        }
     }
 }

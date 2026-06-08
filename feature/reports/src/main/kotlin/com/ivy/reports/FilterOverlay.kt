@@ -1,9 +1,11 @@
 package com.ivy.reports
 
 import android.annotation.SuppressLint
+import androidx.annotation.DrawableRes
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.BoxWithConstraintsScope
 import androidx.compose.foundation.layout.Column
@@ -30,10 +32,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.layout
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import com.ivy.data.model.TransactionType
@@ -59,8 +63,8 @@ import com.ivy.legacy.ui.component.GradientCutBottom
 import com.ivy.legacy.ui.component.IvyButton
 import com.ivy.legacy.ui.component.IvyCheckboxWithText
 import com.ivy.legacy.ui.component.IvyDividerLine
+import com.ivy.legacy.ui.component.IvyIcon
 import com.ivy.legacy.ui.component.IvyOutlinedButton
-import com.ivy.legacy.ui.component.IvyOutlinedButtonFillMaxWidth
 import com.ivy.legacy.ui.component.WrapContentRow
 import com.ivy.legacy.ui.modal.AddKeywordModal
 import com.ivy.legacy.ui.modal.AddModalBackHandling
@@ -69,6 +73,7 @@ import com.ivy.legacy.ui.modal.ChoosePeriodModalData
 import com.ivy.legacy.ui.modal.edit.AmountModal
 import com.ivy.legacy.ui.theme.toComposeColor
 import com.ivy.legacy.ui.component.AmountCurrencyB1Row
+import com.ivy.ui.compose.thenIf
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
@@ -633,7 +638,7 @@ private fun PeriodFilter(
 
     Spacer(Modifier.height(16.dp))
 
-    IvyOutlinedButtonFillMaxWidth(
+    ReportOutlinedButtonFillMaxWidth(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 24.dp),
@@ -644,6 +649,64 @@ private fun PeriodFilter(
         padding = 12.dp,
     ) {
         onShowPeriodChooserModal()
+    }
+}
+
+@Composable
+private fun ReportOutlinedButtonFillMaxWidth(
+    modifier: Modifier = Modifier,
+    text: String,
+    @DrawableRes iconStart: Int?,
+    solidBackground: Boolean = false,
+    iconTint: Color = LegacyTheme.colors.pureInverse,
+    borderColor: Color = LegacyTheme.colors.medium,
+    textColor: Color = LegacyTheme.colors.pureInverse,
+    padding: Dp = 16.dp,
+    onClick: () -> Unit,
+) {
+    val pure = LegacyTheme.colors.pure
+    val rFull = LegacyTheme.shapes.rFull
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .clip(rFull)
+            .clickable(onClick = onClick)
+            .border(2.dp, borderColor, rFull)
+            .thenIf(solidBackground) {
+                background(pure, rFull)
+            },
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        if (iconStart != null) {
+            Spacer(Modifier.width(12.dp))
+
+            IvyIcon(
+                icon = iconStart,
+                tint = iconTint,
+            )
+        }
+
+        Spacer(Modifier.weight(1f))
+
+        Text(
+            modifier = Modifier.padding(vertical = padding),
+            text = text,
+            style = LegacyTheme.typo.b2.style(
+                fontWeight = FontWeight.Bold,
+                color = textColor,
+            ),
+        )
+
+        Spacer(Modifier.weight(1f))
+
+        if (iconStart != null) {
+            Spacer(Modifier.width(12.dp))
+
+            IvyIcon(
+                icon = iconStart,
+                tint = Color.Transparent,
+            )
+        }
     }
 }
 
