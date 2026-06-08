@@ -58,9 +58,9 @@ import com.ivy.ui.compose.statusBarInset
 import com.ivy.ui.compose.toDensityPx
 import com.ivy.ui.compose.verticalSwipeListener
 import com.ivy.ui.R
-import com.ivy.legacy.ui.icon.IvyIcon
 import com.ivy.legacy.ui.money.AmountCurrencyB1
 import com.ivy.ui.compose.FilledIconButton
+import com.ivy.ui.compose.ResourceIcon
 import kotlin.math.roundToInt
 
 private const val SWIPE_UP_THRESHOLD_CLOSE_MORE_MENU = 300
@@ -265,7 +265,10 @@ private fun SearchButton(
     ) {
         Spacer(Modifier.width(12.dp))
 
-        IvyIcon(icon = R.drawable.ic_search)
+        ResourceIcon(
+            icon = R.drawable.ic_search,
+            tint = LegacyTheme.colors.pureInverse
+        )
 
         Spacer(Modifier.width(12.dp))
 

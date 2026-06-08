@@ -21,9 +21,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.currency.format
-import com.ivy.legacy.ui.icon.IvyIcon
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.R
+import com.ivy.ui.compose.ResourceIcon
 import com.ivy.ui.compose.thenIf
 import com.ivy.ui.theme.colors.IvyFixedColors.Ivy
 import com.ivy.ui.theme.colors.IvyFixedColors.White
@@ -85,7 +85,7 @@ internal fun HomeBufferBattery(
     ) {
         Spacer(Modifier.width(16.dp))
 
-        IvyIcon(
+        ResourceIcon(
             icon = if (bufferExceeded) R.drawable.ic_buffer_exceeded else R.drawable.ic_buffer_ok,
             tint = textColor
         )

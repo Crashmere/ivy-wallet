@@ -24,7 +24,7 @@ import com.ivy.ui.compose.drawColoredShadow
 import com.ivy.ui.R
 import com.ivy.ui.theme.colors.Gradient
 import com.ivy.legacy.ui.button.IvyButton
-import com.ivy.legacy.ui.icon.IvyIcon
+import com.ivy.ui.compose.ResourceIcon
 import com.ivy.ui.theme.colors.dynamicContrast
 import com.ivy.ui.theme.colors.findContrastTextColor
 import kotlinx.collections.immutable.ImmutableList
@@ -94,7 +94,7 @@ internal fun CustomerJourneyCard(
             )
 
             if (cardData.hasDismiss) {
-                IvyIcon(
+                ResourceIcon(
                     modifier = Modifier
                         .clickable {
                             onDismiss()

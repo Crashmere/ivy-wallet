@@ -48,9 +48,9 @@ import com.ivy.ui.theme.colors.Gradient
 import com.ivy.ui.theme.colors.IvyGradients
 import com.ivy.ui.theme.colors.IvyFixedColors.White
 import com.ivy.legacy.ui.money.BalanceRow
-import com.ivy.legacy.ui.icon.IvyIcon
 import com.ivy.legacy.ui.button.IvyOutlinedButton
 import com.ivy.legacy.ui.money.AmountCurrencyB1
+import com.ivy.ui.compose.ResourceIcon
 import kotlin.math.absoluteValue
 
 @ExperimentalAnimationApi
@@ -348,7 +348,7 @@ private fun RowScope.HeaderCard(
         ) {
             Spacer(Modifier.width(16.dp))
 
-            IvyIcon(
+            ResourceIcon(
                 icon = icon,
                 tint = textColor,
             )
