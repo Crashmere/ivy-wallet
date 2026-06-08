@@ -9,7 +9,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import com.ivy.IvyNavGraph
 import com.ivy.data.model.Theme
 import com.ivy.data.model.TransactionType
 import com.ivy.domain.preferences.toggles.PreferenceToggleService
@@ -37,6 +36,7 @@ import com.ivy.ui.time.TimeFormatter
 import com.ivy.ui.time.TimeProvider
 import com.ivy.ui.time.DateTimePicker
 import com.ivy.wallet.ui.applocked.AppLockedScreen
+import com.ivy.wallet.navigation.IvyNavGraph
 
 @OptIn(ExperimentalFoundationApi::class, ExperimentalAnimationApi::class)
 @Composable

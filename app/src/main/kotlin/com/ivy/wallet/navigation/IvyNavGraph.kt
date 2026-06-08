@@ -1,4 +1,4 @@
-package com.ivy
+package com.ivy.wallet.navigation
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -44,7 +44,7 @@ import com.ivy.transactions.TransactionsScreen
 @ExperimentalAnimationApi
 @Composable
 @Suppress("CyclomaticComplexMethod", "FunctionNaming")
-fun BoxWithConstraintsScope.IvyNavGraph(screen: Screen?) {
+internal fun BoxWithConstraintsScope.IvyNavGraph(screen: Screen?) {
     when (screen) {
         null -> {
             // show nothing
