@@ -46,25 +46,6 @@ internal fun AmountCurrencyB2Row(
         )
     }
 }
-@SuppressLint("ComposeModifierMissing")
-@Composable
-fun AmountCurrencyB1Row(
-    amount: Double,
-    currency: String,
-    amountFontWeight: FontWeight = FontWeight.Bold,
-    textColor: Color = LegacyTheme.colors.pureInverse
-) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        AmountCurrencyB1(
-            amount = amount,
-            currency = currency,
-            amountFontWeight = amountFontWeight,
-            textColor = textColor
-        )
-    }
-}
 @SuppressLint(
     "ComposeContentEmitterReturningValues",
     "ComposeMultipleContentEmitters",

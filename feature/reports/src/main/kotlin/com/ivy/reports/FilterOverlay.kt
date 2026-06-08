@@ -72,7 +72,7 @@ import com.ivy.legacy.ui.modal.ChoosePeriodModalData
 import com.ivy.legacy.ui.modal.edit.AmountModal
 import com.ivy.legacy.ui.theme.findContrastTextColor
 import com.ivy.legacy.ui.theme.toComposeColor
-import com.ivy.legacy.ui.component.AmountCurrencyB1Row
+import com.ivy.legacy.ui.component.AmountCurrencyB1
 import com.ivy.ui.compose.thenIf
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
@@ -1013,10 +1013,12 @@ private fun AmountFilter(
                 )
             )
 
-            AmountCurrencyB1Row(
-                amount = filter?.minAmount ?: 0.0,
-                currency = baseCurrency
-            )
+            Row {
+                AmountCurrencyB1(
+                    amount = filter?.minAmount ?: 0.0,
+                    currency = baseCurrency
+                )
+            }
         }
 
         Spacer(modifier = Modifier.weight(1f))
@@ -1034,10 +1036,12 @@ private fun AmountFilter(
                 )
             )
 
-            AmountCurrencyB1Row(
-                amount = filter?.maxAmount ?: 0.0,
-                currency = baseCurrency
-            )
+            Row {
+                AmountCurrencyB1(
+                    amount = filter?.maxAmount ?: 0.0,
+                    currency = baseCurrency
+                )
+            }
         }
         Spacer(modifier = Modifier.width(32.dp))
     }

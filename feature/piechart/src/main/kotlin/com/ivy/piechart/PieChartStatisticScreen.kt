@@ -77,7 +77,7 @@ import com.ivy.legacy.ui.modal.ChoosePeriodModal
 import com.ivy.legacy.ui.modal.ChoosePeriodModalData
 import com.ivy.legacy.ui.theme.pureBlur
 import com.ivy.legacy.ui.theme.toComposeColor
-import com.ivy.legacy.ui.component.AmountCurrencyB1Row
+import com.ivy.legacy.ui.component.AmountCurrencyB1
 import kotlinx.collections.immutable.toImmutableList
 
 @ExperimentalFoundationApi
@@ -479,12 +479,14 @@ private fun CategoryAmountCard(
 
             Spacer(Modifier.height(4.dp))
 
-            AmountCurrencyB1Row(
-                amount = amount,
-                currency = currency,
-                textColor = textColor,
-                amountFontWeight = FontWeight.ExtraBold
-            )
+            Row {
+                AmountCurrencyB1(
+                    amount = amount,
+                    currency = currency,
+                    textColor = textColor,
+                    amountFontWeight = FontWeight.ExtraBold
+                )
+            }
         }
     }
 }
