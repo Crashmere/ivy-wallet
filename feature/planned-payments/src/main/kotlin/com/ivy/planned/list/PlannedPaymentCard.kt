@@ -42,8 +42,8 @@ import com.ivy.ui.theme.colors.IvyFixedColors.White
 import com.ivy.legacy.ui.button.IvyButton
 import com.ivy.legacy.ui.icon.IvyIcon
 import com.ivy.ui.icon.getCustomIconIdS
-import com.ivy.legacy.ui.theme.findContrastTextColor
-import com.ivy.legacy.ui.theme.toComposeColor
+import com.ivy.ui.theme.colors.findContrastTextColor
+import com.ivy.ui.theme.colors.toComposeColor
 import kotlinx.collections.immutable.ImmutableList
 import java.time.Instant
 import java.time.LocalDateTime

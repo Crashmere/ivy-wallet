@@ -80,9 +80,9 @@ import com.ivy.legacy.ui.button.IvyOutlinedButton
 import com.ivy.legacy.ui.icon.ItemIconMDefaultIcon
 import com.ivy.ui.theme.colors.Gradient
 import com.ivy.ui.theme.colors.IvyFixedColors.White
-import com.ivy.legacy.ui.theme.dynamicContrast
-import com.ivy.legacy.ui.theme.findContrastTextColor
-import com.ivy.legacy.ui.theme.isDarkColor
+import com.ivy.ui.theme.colors.dynamicContrast
+import com.ivy.ui.theme.colors.findContrastTextColor
+import com.ivy.ui.theme.colors.isDarkColor
 import com.ivy.legacy.ui.modal.ChoosePeriodModal
 import com.ivy.legacy.ui.modal.ChoosePeriodModalData
 import com.ivy.legacy.ui.modal.AccountModalData
@@ -90,7 +90,7 @@ import com.ivy.legacy.ui.modal.DeleteModal
 import com.ivy.legacy.ui.modal.edit.AccountModal
 import com.ivy.legacy.ui.modal.edit.CategoryModal
 import com.ivy.legacy.ui.modal.CategoryModalData
-import com.ivy.legacy.ui.theme.toComposeColor
+import com.ivy.ui.theme.colors.toComposeColor
 import com.ivy.legacy.ui.period.PeriodSelector
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf

@@ -42,9 +42,9 @@ import com.ivy.legacy.ui.money.BalanceRow
 import com.ivy.legacy.ui.button.CircleButtonFilled
 import com.ivy.legacy.ui.icon.ItemIconSDefaultIcon
 import com.ivy.legacy.ui.modal.ReorderModalSingleType
-import com.ivy.legacy.ui.theme.dynamicContrast
-import com.ivy.legacy.ui.theme.findContrastTextColor
-import com.ivy.legacy.ui.theme.toComposeColor
+import com.ivy.ui.theme.colors.dynamicContrast
+import com.ivy.ui.theme.colors.findContrastTextColor
+import com.ivy.ui.theme.colors.toComposeColor
 
 @Composable
 fun BoxWithConstraintsScope.AccountsTab(

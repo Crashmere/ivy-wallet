@@ -1409,6 +1409,7 @@ shared:ui:core
 - feature 层已停止直接导入旧 `White` 静态常量；彩色按钮、渐变按钮和选中态文本使用 `shared:ui:core` 的 `IvyFixedColors.White`，保留原固定近白色视觉值，不和浅/深色主题 token 混用。
 - feature 层已停止直接导入旧 `Green`、`Orange` 和 `Ivy` 静态常量；绿色/橙色状态用当前 `LegacyTheme.colors.green/orange`，固定品牌紫用 `shared:ui:core` 的 `IvyFixedColors.Ivy`，默认数据种子里的本地分类颜色常量暂时保留。
 - feature 层已停止直接导入旧 `Gradient`、`GradientGreen` 和 `GradientIvy`；通用渐变数据结构和固定绿色/紫色渐变迁入 `shared:ui:core` 的 `Gradient`/`IvyGradients`，`shared:ui:legacy` 暂时保留同名兼容别名给旧组件内部使用。
+- feature 层已停止直接导入旧颜色工具 `toComposeColor`、`findContrastTextColor`、`dynamicContrast` 和 `isDarkColor`；这些纯颜色转换/对比度算法迁入 `shared:ui:core`，`shared:ui:legacy` 暂时保留同名转发入口给旧组件内部使用。
 - app 仍保留文件选择、文件分享、Material 日期选择器、BuildInfo、Locale 设置、生物识别和窗口安全等真正依赖 Activity 或 Android app 壳层的装配。
 
 ## 高风险区域

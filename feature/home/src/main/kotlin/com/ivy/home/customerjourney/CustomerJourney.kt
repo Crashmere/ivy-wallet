@@ -25,8 +25,8 @@ import com.ivy.ui.R
 import com.ivy.ui.theme.colors.Gradient
 import com.ivy.legacy.ui.button.IvyButton
 import com.ivy.legacy.ui.icon.IvyIcon
-import com.ivy.legacy.ui.theme.dynamicContrast
-import com.ivy.legacy.ui.theme.findContrastTextColor
+import com.ivy.ui.theme.colors.dynamicContrast
+import com.ivy.ui.theme.colors.findContrastTextColor
 import kotlinx.collections.immutable.ImmutableList
 
 @Composable

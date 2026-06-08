@@ -74,10 +74,10 @@ import com.ivy.legacy.ui.money.BalanceRow
 import com.ivy.legacy.ui.icon.ItemIconSDefaultIcon
 import com.ivy.legacy.ui.button.IvyButton
 import com.ivy.legacy.ui.icon.IvyIcon
-import com.ivy.legacy.ui.theme.findContrastTextColor
+import com.ivy.ui.theme.colors.findContrastTextColor
 import com.ivy.ui.animation.DURATION_MODAL_ANIM
 import com.ivy.legacy.ui.modal.edit.AmountModal
-import com.ivy.legacy.ui.theme.toComposeColor
+import com.ivy.ui.theme.colors.toComposeColor
 import kotlinx.coroutines.launch
 import java.util.Locale
 import java.util.UUID

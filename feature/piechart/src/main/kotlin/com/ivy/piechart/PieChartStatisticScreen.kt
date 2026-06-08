@@ -69,10 +69,10 @@ import com.ivy.legacy.ui.money.BalanceRow
 import com.ivy.legacy.ui.button.CloseButton
 import com.ivy.legacy.ui.icon.ItemIconMDefaultIcon
 import com.ivy.legacy.ui.button.IvyOutlinedButton
-import com.ivy.legacy.ui.theme.findContrastTextColor
+import com.ivy.ui.theme.colors.findContrastTextColor
 import com.ivy.legacy.ui.modal.ChoosePeriodModal
 import com.ivy.legacy.ui.modal.ChoosePeriodModalData
-import com.ivy.legacy.ui.theme.toComposeColor
+import com.ivy.ui.theme.colors.toComposeColor
 import com.ivy.legacy.ui.money.AmountCurrencyB1
 import kotlinx.collections.immutable.toImmutableList
 

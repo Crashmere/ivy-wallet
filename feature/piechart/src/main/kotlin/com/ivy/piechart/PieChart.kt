@@ -29,7 +29,7 @@ import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.compose.drawColoredShadow
 import com.ivy.ui.R
 import com.ivy.legacy.ui.icon.IvyIcon
-import com.ivy.legacy.ui.theme.toComposeColor
+import com.ivy.ui.theme.colors.toComposeColor
 import kotlinx.collections.immutable.ImmutableList
 import kotlin.math.acos
 import kotlin.math.sqrt

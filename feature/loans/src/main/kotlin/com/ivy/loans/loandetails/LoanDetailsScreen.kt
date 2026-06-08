@@ -77,14 +77,14 @@ import com.ivy.legacy.ui.icon.IvyIcon
 import com.ivy.legacy.ui.button.IvyOutlinedButton
 import com.ivy.ui.icon.getCustomIconIdS
 import com.ivy.ui.theme.colors.IvyFixedColors.White
-import com.ivy.legacy.ui.theme.dynamicContrast
-import com.ivy.legacy.ui.theme.findContrastTextColor
-import com.ivy.legacy.ui.theme.isDarkColor
+import com.ivy.ui.theme.colors.dynamicContrast
+import com.ivy.ui.theme.colors.findContrastTextColor
+import com.ivy.ui.theme.colors.isDarkColor
 import com.ivy.legacy.ui.modal.DeleteModal
 import com.ivy.loans.modal.LoanModal
 import com.ivy.loans.modal.LoanRecordModal
 import com.ivy.legacy.ui.modal.ProgressModal
-import com.ivy.legacy.ui.theme.toComposeColor
+import com.ivy.ui.theme.colors.toComposeColor
 import com.ivy.loans.LoanProgressBar
 import java.util.UUID
 

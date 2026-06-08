@@ -42,7 +42,7 @@ import com.ivy.legacy.ui.modal.ModalSave
 import com.ivy.ui.theme.colors.Gradient
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.theme.colors.IvyFixedColors.White
-import com.ivy.legacy.ui.theme.dynamicContrast
+import com.ivy.ui.theme.colors.dynamicContrast
 import com.ivy.legacy.ui.theme.style
 import com.ivy.ui.R
 import com.ivy.ui.compose.onCompositionStart

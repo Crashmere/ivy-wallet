@@ -61,7 +61,7 @@ import com.ivy.legacy.ui.modal.ModalTitle
 import com.ivy.legacy.ui.modal.edit.AccountModal
 import com.ivy.legacy.ui.modal.edit.AmountModal
 import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.legacy.ui.theme.dynamicContrast
+import com.ivy.ui.theme.colors.dynamicContrast
 import com.ivy.legacy.ui.theme.style
 import java.time.Instant
 import java.time.LocalDateTime
