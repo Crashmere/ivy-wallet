@@ -1342,6 +1342,7 @@ shared:ui:core
 - 编辑交易和计划付款编辑页的交易类型切换弹窗已改为各自 feature 私有实现；`shared:ui:legacy` 不再导出只服务编辑流程的 `ChangeTransactionTypeModal`。
 - 编辑交易和计划付款编辑页的描述编辑弹窗已改为各自 feature 私有实现；`shared:ui:legacy` 不再导出只服务编辑流程的 `DescriptionModal` 或描述输入框内部细节。
 - 编辑交易和计划付款编辑页的描述展示卡片和添加描述按钮已改为各自 feature 私有实现；`shared:ui:legacy` 删除只服务该展示入口的 `Description`、`PrimaryAttributeColumn` 和 `AddPrimaryAttributeButton`。
+- 编辑交易和计划付款编辑页的分类按钮和顶部工具栏已改为各自 feature 私有实现；`shared:ui:legacy` 删除只服务这两个编辑页的 `edit.core.Category` 和 `edit.core.Toolbar`。
 - app 仍保留文件选择、文件分享、Material 日期选择器、BuildInfo、Locale 设置、生物识别和窗口安全等真正依赖 Activity 或 Android app 壳层的装配。
 
 ## 高风险区域
