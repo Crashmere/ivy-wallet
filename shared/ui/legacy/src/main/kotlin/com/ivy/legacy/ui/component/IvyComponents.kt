@@ -13,7 +13,7 @@ import androidx.compose.ui.unit.dp
 import com.ivy.legacy.ui.theme.LegacyTheme
 
 @Composable
-fun ActionsRow(
+internal fun ActionsRow(
     modifier: Modifier = Modifier,
     lineColor: Color = LegacyTheme.colors.medium,
     Content: @Composable RowScope.() -> Unit

@@ -1,12 +1,18 @@
 package com.ivy.planned.list
 
 import androidx.compose.foundation.layout.BoxWithConstraintsScope
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
@@ -15,7 +21,6 @@ import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.compose.navigationBarInset
 import com.ivy.ui.compose.toDensityDp
 import com.ivy.ui.R
-import com.ivy.legacy.ui.component.ActionsRow
 import com.ivy.legacy.ui.component.CloseButton
 import com.ivy.legacy.ui.component.IvyOutlinedButton
 import com.ivy.legacy.ui.theme.gradientCutBackgroundTop
@@ -26,7 +31,7 @@ internal fun BoxWithConstraintsScope.PlannedPaymentsBottomBar(
     onClose: () -> Unit,
     onAdd: () -> Unit
 ) {
-    ActionsRow(
+    PlannedPaymentsActionsRow(
         modifier = Modifier
             .align(Alignment.BottomCenter)
             .gradientCutBackgroundTop(LegacyTheme.colors.pure, LocalDensity.current)
@@ -50,5 +55,34 @@ internal fun BoxWithConstraintsScope.PlannedPaymentsBottomBar(
         }
 
         Spacer(Modifier.width(20.dp))
+    }
+}
+
+@Composable
+private fun PlannedPaymentsActionsRow(
+    modifier: Modifier = Modifier,
+    lineColor: Color = LegacyTheme.colors.medium,
+    content: @Composable RowScope.() -> Unit
+) {
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .drawBehind {
+                drawLine(
+                    color = lineColor,
+                    strokeWidth = 2.dp.toPx(),
+                    start = Offset(
+                        x = 0f,
+                        y = size.height / 2
+                    ),
+                    end = Offset(
+                        x = size.width,
+                        y = size.height / 2
+                    )
+                )
+            },
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        content()
     }
 }
