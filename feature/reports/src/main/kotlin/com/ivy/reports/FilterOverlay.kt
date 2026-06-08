@@ -39,6 +39,7 @@ import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.layout.layout
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
@@ -48,7 +49,6 @@ import com.ivy.data.model.Tag
 import com.ivy.data.model.TagId
 import com.ivy.ui.platform.LocalDatePicker
 import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.legacy.ui.theme.style
 import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.ui.period.displayLong
 import com.ivy.ui.period.LocalPeriodState
@@ -170,8 +170,10 @@ internal fun BoxWithConstraintsScope.FilterOverlay(
                         start = 32.dp
                     ),
                     text = stringResource(R.string.filter),
-                    style = LegacyTheme.typo.h2.style(
-                        fontWeight = FontWeight.ExtraBold
+                    style = LegacyTheme.typo.h2.copy(
+                        color = LegacyTheme.colors.pureInverse,
+                        fontWeight = FontWeight.ExtraBold,
+                        textAlign = TextAlign.Start
                     )
                 )
 
@@ -185,9 +187,10 @@ internal fun BoxWithConstraintsScope.FilterOverlay(
                         }
                         .padding(all = 4.dp), // expand click area
                     text = stringResource(R.string.clean_filter),
-                    style = LegacyTheme.typo.b2.style(
+                    style = LegacyTheme.typo.b2.copy(
                         fontWeight = FontWeight.Bold,
-                        color = Color.Gray
+                        color = Color.Gray,
+                        textAlign = TextAlign.Start
                     )
                 )
 
@@ -532,9 +535,10 @@ private fun ReportListItem(
         Text(
             modifier = Modifier.padding(vertical = 10.dp),
             text = text,
-            style = LegacyTheme.typo.b2.style(
+            style = LegacyTheme.typo.b2.copy(
                 color = textColor,
-                fontWeight = FontWeight.ExtraBold
+                fontWeight = FontWeight.ExtraBold,
+                textAlign = TextAlign.Start
             )
         )
 
@@ -560,8 +564,10 @@ internal fun ColumnScope.TagsFilter(
     Text(
         modifier = Modifier.padding(start = 32.dp),
         text = stringResource(R.string.includes_uppercase),
-        style = LegacyTheme.typo.b2.style(
-            fontWeight = FontWeight.ExtraBold
+        style = LegacyTheme.typo.b2.copy(
+            color = LegacyTheme.colors.pureInverse,
+            fontWeight = FontWeight.ExtraBold,
+            textAlign = TextAlign.Start
         )
     )
 
@@ -575,8 +581,10 @@ internal fun ColumnScope.TagsFilter(
     Text(
         modifier = Modifier.padding(start = 32.dp),
         text = stringResource(R.string.excludes_uppercase),
-        style = LegacyTheme.typo.b2.style(
-            fontWeight = FontWeight.ExtraBold
+        style = LegacyTheme.typo.b2.copy(
+            color = LegacyTheme.colors.pureInverse,
+            fontWeight = FontWeight.ExtraBold,
+            textAlign = TextAlign.Start
         )
     )
 
@@ -759,9 +767,10 @@ private fun ReportOutlinedButtonFillMaxWidth(
         Text(
             modifier = Modifier.padding(vertical = padding),
             text = text,
-            style = LegacyTheme.typo.b2.style(
+            style = LegacyTheme.typo.b2.copy(
                 fontWeight = FontWeight.Bold,
                 color = textColor,
+                textAlign = TextAlign.Start
             ),
         )
 
@@ -958,9 +967,10 @@ private fun ListFilterTitle(
                 }
                 .padding(all = 4.dp), // expand click area
             text = if (itemsSelected > 0) stringResource(R.string.clear_all) else stringResource(R.string.select_all),
-            style = LegacyTheme.typo.b2.style(
+            style = LegacyTheme.typo.b2.copy(
                 fontWeight = FontWeight.Bold,
-                color = Color.Gray
+                color = Color.Gray,
+                textAlign = TextAlign.Start
             )
         )
 
@@ -997,8 +1007,10 @@ private fun AmountFilter(
         ) {
             Text(
                 text = stringResource(R.string.from),
-                style = LegacyTheme.typo.b2.style(
-                    fontWeight = FontWeight.ExtraBold
+                style = LegacyTheme.typo.b2.copy(
+                    color = LegacyTheme.colors.pureInverse,
+                    fontWeight = FontWeight.ExtraBold,
+                    textAlign = TextAlign.Start
                 )
             )
 
@@ -1020,8 +1032,10 @@ private fun AmountFilter(
         ) {
             Text(
                 text = stringResource(R.string.to),
-                style = LegacyTheme.typo.b2.style(
-                    fontWeight = FontWeight.ExtraBold
+                style = LegacyTheme.typo.b2.copy(
+                    color = LegacyTheme.colors.pureInverse,
+                    fontWeight = FontWeight.ExtraBold,
+                    textAlign = TextAlign.Start
                 )
             )
 
@@ -1057,8 +1071,10 @@ private fun KeywordsFilter(
     Text(
         modifier = Modifier.padding(start = 32.dp),
         text = stringResource(R.string.includes_uppercase),
-        style = LegacyTheme.typo.b2.style(
-            fontWeight = FontWeight.ExtraBold
+        style = LegacyTheme.typo.b2.copy(
+            color = LegacyTheme.colors.pureInverse,
+            fontWeight = FontWeight.ExtraBold,
+            textAlign = TextAlign.Start
         )
     )
 
@@ -1098,8 +1114,10 @@ private fun KeywordsFilter(
     Text(
         modifier = Modifier.padding(start = 32.dp),
         text = stringResource(R.string.excludes_uppercase),
-        style = LegacyTheme.typo.b2.style(
-            fontWeight = FontWeight.ExtraBold
+        style = LegacyTheme.typo.b2.copy(
+            color = LegacyTheme.colors.pureInverse,
+            fontWeight = FontWeight.ExtraBold,
+            textAlign = TextAlign.Start
         )
     )
 
@@ -1239,9 +1257,10 @@ private fun FilterTitleText(
     Text(
         modifier = Modifier.padding(start = 32.dp),
         text = text,
-        style = LegacyTheme.typo.b1.style(
+        style = LegacyTheme.typo.b1.copy(
             fontWeight = FontWeight.Medium,
-            color = if (active) LegacyTheme.colors.pureInverse else inactiveColor
+            color = if (active) LegacyTheme.colors.pureInverse else inactiveColor,
+            textAlign = TextAlign.Start
         )
     )
 }

@@ -35,7 +35,6 @@ import androidx.compose.ui.Alignment
 import com.ivy.legacy.ui.modal.IvyModal
 import com.ivy.legacy.ui.modal.ModalAdd
 import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.legacy.ui.theme.style
 import com.ivy.ui.R
 import com.ivy.ui.compose.onCompositionStart
 import com.ivy.ui.compose.selectEndTextFieldValue
@@ -68,9 +67,10 @@ internal fun BoxWithConstraintsScope.ReportAddKeywordModal(
         Text(
             modifier = Modifier.padding(start = 32.dp),
             text = stringResource(R.string.add_keyword),
-            style = LegacyTheme.typo.b1.style(
+            style = LegacyTheme.typo.b1.copy(
                 fontWeight = FontWeight.ExtraBold,
-                color = LegacyTheme.colors.pureInverse
+                color = LegacyTheme.colors.pureInverse,
+                textAlign = TextAlign.Start
             )
         )
 
@@ -114,7 +114,7 @@ private fun ColumnScope.ReportKeywordTextField(
         if (isEmpty && hint.isNullOrBlank().not()) {
             Text(
                 text = hint.orEmpty(),
-                style = LegacyTheme.typo.h2.style(
+                style = LegacyTheme.typo.h2.copy(
                     color = LegacyTheme.colors.gray,
                     fontWeight = FontWeight.Black,
                     textAlign = TextAlign.Start
@@ -129,7 +129,7 @@ private fun ColumnScope.ReportKeywordTextField(
                 .testTag("input_field"),
             value = value,
             onValueChange = onValueChanged,
-            textStyle = LegacyTheme.typo.h2.style(
+            textStyle = LegacyTheme.typo.h2.copy(
                 color = LegacyTheme.colors.pureInverse,
                 fontWeight = FontWeight.Black,
                 textAlign = TextAlign.Start

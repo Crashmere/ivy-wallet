@@ -36,7 +36,6 @@ import androidx.compose.ui.zIndex
 import com.ivy.ui.navigation.screenScopedViewModel
 import com.ivy.data.model.TransactionType
 import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.legacy.ui.theme.style
 import com.ivy.legacy.ui.transaction.LegacyDueSection
 import com.ivy.legacy.ui.transaction.TransactionListData
 import com.ivy.legacy.ui.summary.IncomeExpensesCards
@@ -105,9 +104,10 @@ private fun BoxWithConstraintsScope.UI(
         ) {
             Text(
                 text = stringResource(R.string.generating_report),
-                style = LegacyTheme.typo.b1.style(
+                style = LegacyTheme.typo.b1.copy(
                     fontWeight = FontWeight.ExtraBold,
-                    color = LegacyTheme.colors.orange
+                    color = LegacyTheme.colors.orange,
+                    textAlign = TextAlign.Start
                 )
             )
         }
@@ -141,8 +141,10 @@ private fun BoxWithConstraintsScope.UI(
                     start = 32.dp
                 ),
                 text = stringResource(R.string.reports),
-                style = LegacyTheme.typo.h2.style(
-                    fontWeight = FontWeight.ExtraBold
+                style = LegacyTheme.typo.h2.copy(
+                    color = LegacyTheme.colors.pureInverse,
+                    fontWeight = FontWeight.ExtraBold,
+                    textAlign = TextAlign.Start
                 )
             )
 
@@ -364,9 +366,10 @@ private fun NoFilterEmptyState(
 
         Text(
             text = stringResource(R.string.no_filter),
-            style = LegacyTheme.typo.b1.style(
+            style = LegacyTheme.typo.b1.copy(
                 color = LegacyTheme.colors.gray,
-                fontWeight = FontWeight.ExtraBold
+                fontWeight = FontWeight.ExtraBold,
+                textAlign = TextAlign.Start
             )
         )
 
@@ -375,7 +378,7 @@ private fun NoFilterEmptyState(
         Text(
             modifier = Modifier.padding(horizontal = 32.dp),
             text = stringResource(R.string.invalid_filter_warning),
-            style = LegacyTheme.typo.b2.style(
+            style = LegacyTheme.typo.b2.copy(
                 color = LegacyTheme.colors.gray,
                 fontWeight = FontWeight.Medium,
                 textAlign = TextAlign.Center
