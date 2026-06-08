@@ -22,6 +22,8 @@ import com.ivy.data.model.Transaction
 import com.ivy.data.model.TransactionId
 import com.ivy.data.model.TransactionMetadata
 import com.ivy.data.model.Transfer
+import com.ivy.data.model.getFromAccount
+import com.ivy.data.model.getFromValue
 import com.ivy.data.model.primitive.AssetCode
 import com.ivy.data.model.primitive.NotBlankTrimmedString
 import com.ivy.data.model.primitive.PositiveDouble
@@ -49,7 +51,6 @@ import com.ivy.domain.usecase.account.CreateAccountWithBalanceUseCase
 import com.ivy.domain.usecase.account.GetLastSelectedAccountIdUseCase
 import com.ivy.domain.usecase.transaction.DeleteTransactionUseCase
 import com.ivy.domain.usecase.transaction.GetTransactionUseCase
-import com.ivy.domain.usecase.transaction.MapTransactionsToLegacyTransactionsUseCase
 import com.ivy.domain.usecase.transaction.SaveTransactionUseCase
 import com.ivy.domain.usecase.transaction.SuggestTransactionTitlesUseCase
 import com.ivy.ui.ComposeViewModel
@@ -109,7 +110,6 @@ internal class EditTransactionViewModel @Inject internal constructor(
     private val getAccountsUseCase: GetAccountsUseCase,
     private val getCategoriesUseCase: GetCategoriesUseCase,
     private val getTransactionUseCase: GetTransactionUseCase,
-    private val mapTransactionsToLegacyTransactionsUseCase: MapTransactionsToLegacyTransactionsUseCase,
     private val saveTransactionUseCase: SaveTransactionUseCase,
     private val deleteTransactionUseCase: DeleteTransactionUseCase,
     private val getTransactionTagIdsUseCase: GetTransactionTagIdsUseCase,
@@ -191,7 +191,7 @@ internal class EditTransactionViewModel @Inject internal constructor(
 
             loadedTransaction = initialTransactionId?.let {
                 getTransactionUseCase(it)?.let { transaction ->
-                    mapTransactionsToLegacyTransactionsUseCase(listOf(transaction)).singleOrNull()
+                    transaction.toLegacyTransaction()
                 }
             } ?: LegacyTransaction(
                 accountId = defaultAccountId(
@@ -623,7 +623,7 @@ internal class EditTransactionViewModel @Inject internal constructor(
             val transaction = loadedTransaction()
             if (payOrSkipPlannedTransactionByIdUseCase(transaction.id)) {
                 val paidTransaction = getTransactionUseCase(transaction.id)?.let {
-                    mapTransactionsToLegacyTransactionsUseCase(listOf(it)).singleOrNull()
+                    it.toLegacyTransaction()
                 } ?: transaction.copy(
                     paidFor = transaction.dueDate,
                     dueDate = null,
@@ -1102,6 +1102,33 @@ internal class EditTransactionViewModel @Inject internal constructor(
 
 private fun LocalDateTime.toUtcInstant(): Instant =
     atZone(ZoneId.systemDefault()).toInstant()
+
+private fun Transaction.toLegacyTransaction(): LegacyTransaction {
+    val amount = getFromValue().amount.value.toBigDecimal()
+    return LegacyTransaction(
+        accountId = getFromAccount().value,
+        type = when (this) {
+            is Expense -> TransactionType.EXPENSE
+            is Income -> TransactionType.INCOME
+            is Transfer -> TransactionType.TRANSFER
+        },
+        amount = amount,
+        toAccountId = if (this is Transfer) toAccount.value else null,
+        toAmount = if (this is Transfer) toValue.amount.value.toBigDecimal() else amount,
+        title = title?.value,
+        description = description?.value,
+        dateTime = time.takeIf { settled },
+        categoryId = category?.value,
+        dueDate = time.takeIf { !settled },
+        recurringRuleId = metadata.recurringRuleId,
+        paidFor = metadata.paidForDateTime,
+        attachmentUrl = null,
+        loanId = metadata.loanId,
+        loanRecordId = metadata.loanRecordId,
+        id = id.value,
+        tags = persistentListOf(),
+    )
+}
 
 private fun Instant.toLocalDateInSystemZone(): LocalDate =
     atZone(ZoneId.systemDefault()).toLocalDate()
