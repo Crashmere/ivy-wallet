@@ -145,6 +145,5 @@ dependencies {
     implementation(libs.material)
     ksp(libs.hilt.compiler)
 
-    implementation(libs.timber)
     implementation(libs.androidx.work)
 }
