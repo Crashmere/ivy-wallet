@@ -23,7 +23,6 @@ import com.ivy.data.model.importing.ImportResult
 import com.ivy.data.model.currency.format
 import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.GradientIvy
-import com.ivy.legacy.ui.theme.Green
 import com.ivy.ui.theme.colors.IvyFixedColors.White
 import kotlinx.collections.immutable.persistentListOf
 
@@ -160,7 +159,7 @@ private fun SuccessSectionUI(
             modifier = Modifier.padding(horizontal = 32.dp),
             text = stringResource(R.string.imported),
             style = LegacyTheme.typo.b1.style(
-                color = Green,
+                color = LegacyTheme.colors.green,
                 fontWeight = FontWeight.Black
             )
         )

@@ -68,8 +68,7 @@ import com.ivy.data.model.currency.IvyCurrency
 import com.ivy.legacy.ui.theme.Gradient
 import com.ivy.legacy.ui.theme.GradientGreen
 import com.ivy.legacy.ui.theme.GradientIvy
-import com.ivy.legacy.ui.theme.Green
-import com.ivy.legacy.ui.theme.Ivy
+import com.ivy.ui.theme.colors.IvyFixedColors.Ivy
 import com.ivy.legacy.ui.money.AmountCurrencyB1
 import com.ivy.legacy.ui.money.BalanceRow
 import com.ivy.legacy.ui.icon.ItemIconMDefaultIcon
@@ -982,7 +981,7 @@ private fun LoanRecordAmountRow(
                 icon = R.drawable.ic_income,
                 gradient = GradientGreen,
                 iconTint = White,
-                textColor = Green
+                textColor = LegacyTheme.colors.green
             )
 
             TransactionType.EXPENSE -> LoanRecordAmountTypeStyle(

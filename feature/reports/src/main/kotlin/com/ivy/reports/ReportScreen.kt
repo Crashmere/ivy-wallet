@@ -52,8 +52,6 @@ import com.ivy.ui.R
 import com.ivy.ui.platform.fileSharer
 import com.ivy.ui.rememberScrollPositionListState
 import com.ivy.data.model.IncomeExpensePair
-import com.ivy.legacy.ui.theme.Green
-import com.ivy.legacy.ui.theme.Orange
 import com.ivy.legacy.ui.money.BalanceRow
 import com.ivy.legacy.ui.button.CircleButtonFilled
 import com.ivy.legacy.ui.button.IvyButton
@@ -109,7 +107,7 @@ private fun BoxWithConstraintsScope.UI(
                 text = stringResource(R.string.generating_report),
                 style = LegacyTheme.typo.b1.style(
                     fontWeight = FontWeight.ExtraBold,
-                    color = Orange
+                    color = LegacyTheme.colors.orange
                 )
             )
         }
@@ -434,8 +432,8 @@ private fun Toolbar(
         // Export CSV
         IvyOutlinedButton(
             text = stringResource(R.string.export),
-            iconTint = Green,
-            textColor = Green,
+            iconTint = LegacyTheme.colors.green,
+            textColor = LegacyTheme.colors.green,
             solidBackground = true,
             padding = 8.dp,
             iconStart = R.drawable.ic_export_csv

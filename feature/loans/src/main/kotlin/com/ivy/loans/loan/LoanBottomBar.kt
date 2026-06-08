@@ -30,7 +30,6 @@ import com.ivy.ui.compose.navigationBarInset
 import com.ivy.ui.compose.toDensityPx
 import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.Gradient
-import com.ivy.legacy.ui.theme.Green
 import com.ivy.ui.theme.colors.IvyFixedColors.White
 import com.ivy.legacy.ui.button.IvyCircleButton
 import com.ivy.legacy.ui.icon.IvyIcon
@@ -70,7 +69,7 @@ internal fun BoxWithConstraintsScope.LoanBottomBar(
             icon = R.drawable.ic_custom_loan_s,
             name = "Completed",
             selected = tab == LoanTab.COMPLETED,
-            selectedColor = Green
+            selectedColor = LegacyTheme.colors.green
         ) {
             selectTab(LoanTab.COMPLETED)
         }

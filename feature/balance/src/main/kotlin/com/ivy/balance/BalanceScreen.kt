@@ -37,7 +37,6 @@ import com.ivy.ui.period.LocalPeriodState
 import com.ivy.ui.navigation.navigation
 import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.Gradient
-import com.ivy.legacy.ui.theme.Orange
 import com.ivy.ui.theme.colors.IvyFixedColors.White
 import com.ivy.legacy.ui.money.BalanceRow
 import com.ivy.legacy.ui.button.IvyCircleButton
@@ -183,7 +182,7 @@ private fun ColumnScope.BalanceAfterPlannedPayments(
             .padding(horizontal = 32.dp),
         text = stringResource(R.string.balance_after_payments),
         style = LegacyTheme.typo.b2.style(
-            color = Orange,
+            color = LegacyTheme.colors.orange,
             fontWeight = FontWeight.ExtraBold
         )
     )

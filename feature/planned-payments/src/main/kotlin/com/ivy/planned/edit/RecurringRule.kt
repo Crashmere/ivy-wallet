@@ -23,7 +23,6 @@ import com.ivy.legacy.ui.theme.style
 import com.ivy.ui.time.forDisplay
 import com.ivy.ui.time.formatDateOnly
 import com.ivy.ui.R
-import com.ivy.legacy.ui.theme.Orange
 import com.ivy.legacy.ui.icon.IvyIcon
 import java.time.LocalDateTime
 import java.util.Locale
@@ -137,7 +136,7 @@ private fun RecurringRuleCard(
                     text = stringResource(R.string.repeats_every, intervalN, intervalTypeLabel),
                     style = LegacyTheme.typo.c.style(
                         fontWeight = FontWeight.ExtraBold,
-                        color = Orange
+                        color = LegacyTheme.colors.orange
                     )
                 )
             }

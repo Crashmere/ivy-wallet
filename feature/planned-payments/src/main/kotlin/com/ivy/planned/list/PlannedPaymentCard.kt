@@ -38,9 +38,7 @@ import com.ivy.legacy.ui.money.AmountCurrencyB1
 import com.ivy.legacy.ui.theme.Gradient
 import com.ivy.legacy.ui.theme.GradientGreen
 import com.ivy.legacy.ui.theme.GradientIvy
-import com.ivy.legacy.ui.theme.Green
-import com.ivy.legacy.ui.theme.Ivy
-import com.ivy.legacy.ui.theme.Orange
+import com.ivy.ui.theme.colors.IvyFixedColors.Ivy
 import com.ivy.ui.theme.colors.IvyFixedColors.White
 import com.ivy.legacy.ui.button.IvyButton
 import com.ivy.legacy.ui.icon.IvyIcon
@@ -144,7 +142,7 @@ private fun PlannedPaymentAmountRow(
                 icon = R.drawable.ic_income,
                 gradient = GradientGreen,
                 iconTint = White,
-                textColor = Green
+                textColor = LegacyTheme.colors.green
             )
 
             TransactionType.EXPENSE -> PlannedAmountTypeStyle(
@@ -276,7 +274,7 @@ private fun RuleTextRow(
             Text(
                 text = stringResource(R.string.planned_for_uppercase),
                 style = LegacyTheme.typo.nC.style(
-                    color = Orange,
+                    color = LegacyTheme.colors.orange,
                     fontWeight = FontWeight.SemiBold
                 )
             )
@@ -285,7 +283,7 @@ private fun RuleTextRow(
                 text = startDate?.toLocalDate()?.formatDateOnlyWithYear()?.uppercase(Locale.getDefault())
                     ?: stringResource(R.string.null_text),
                 style = LegacyTheme.typo.nC.style(
-                    color = Orange,
+                    color = LegacyTheme.colors.orange,
                     fontWeight = FontWeight.ExtraBold
                 )
             )
@@ -294,7 +292,7 @@ private fun RuleTextRow(
             Text(
                 text = stringResource(R.string.starts_date, startDateFormatted ?: ""),
                 style = LegacyTheme.typo.nC.style(
-                    color = Orange,
+                    color = LegacyTheme.colors.orange,
                     fontWeight = FontWeight.SemiBold
                 )
             )
@@ -307,7 +305,7 @@ private fun RuleTextRow(
                     intervalTypeFormatted ?: ""
                 ),
                 style = LegacyTheme.typo.nC.style(
-                    color = Orange,
+                    color = LegacyTheme.colors.orange,
                     fontWeight = FontWeight.ExtraBold
                 )
             )

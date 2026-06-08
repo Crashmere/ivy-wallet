@@ -69,7 +69,7 @@ import com.ivy.ui.compose.rememberSwipeListenerState
 import com.ivy.ui.R
 import com.ivy.data.model.currency.IvyCurrency
 import com.ivy.legacy.ui.theme.Gradient
-import com.ivy.legacy.ui.theme.Ivy
+import com.ivy.ui.theme.colors.IvyFixedColors.Ivy
 import com.ivy.legacy.ui.money.BalanceRow
 import com.ivy.legacy.ui.icon.ItemIconSDefaultIcon
 import com.ivy.legacy.ui.button.IvyButton

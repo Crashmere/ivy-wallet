@@ -7,10 +7,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
-import com.ivy.legacy.ui.theme.Green
-import com.ivy.legacy.ui.theme.Ivy
+import com.ivy.ui.theme.colors.IvyFixedColors.Ivy
 import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.legacy.ui.theme.Orange
 
 @Composable
 internal fun LoanProgressBar(
@@ -19,6 +17,8 @@ internal fun LoanProgressBar(
     positiveProgress: Boolean = true,
     percent: Double
 ) {
+    val green = LegacyTheme.colors.green
+    val orange = LegacyTheme.colors.orange
     val red = LegacyTheme.colors.red
 
     Spacer(
@@ -28,10 +28,10 @@ internal fun LoanProgressBar(
             .drawBehind {
                 drawRect(
                     color = when {
-                        percent <= 0.25 -> if (positiveProgress) red else Green
-                        percent <= 0.50 -> if (positiveProgress) Orange else Ivy
-                        percent <= 0.75 -> if (positiveProgress) Ivy else Orange
-                        else -> if (positiveProgress) Green else red
+                        percent <= 0.25 -> if (positiveProgress) red else green
+                        percent <= 0.50 -> if (positiveProgress) orange else Ivy
+                        percent <= 0.75 -> if (positiveProgress) Ivy else orange
+                        else -> if (positiveProgress) green else red
                     },
                     size = size.copy(
                         width = (size.width * percent).toFloat()

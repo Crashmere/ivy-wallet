@@ -21,10 +21,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.currency.format
 import com.ivy.legacy.ui.icon.IvyIcon
-import com.ivy.legacy.ui.theme.Green
-import com.ivy.legacy.ui.theme.Ivy
+import com.ivy.ui.theme.colors.IvyFixedColors.Ivy
 import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.legacy.ui.theme.Orange
 import com.ivy.ui.theme.colors.IvyFixedColors.White
 import com.ivy.legacy.ui.theme.style
 import com.ivy.ui.R
@@ -42,6 +40,8 @@ internal fun BudgetBattery(
 ) {
     if (budget == 0.0) return
     val percentSpent = expenses / budget
+    val green = LegacyTheme.colors.green
+    val orange = LegacyTheme.colors.orange
     val red = LegacyTheme.colors.red
 
     val textColor = when {
@@ -66,9 +66,9 @@ internal fun BudgetBattery(
             .drawBehind {
                 drawRect(
                     color = when {
-                        percentSpent <= 0.25 -> Green
+                        percentSpent <= 0.25 -> green
                         percentSpent <= 0.50 -> Ivy
-                        percentSpent <= 0.75 -> Orange
+                        percentSpent <= 0.75 -> orange
                         else -> red
                     },
                     size = size.copy(

@@ -57,7 +57,6 @@ import com.ivy.legacy.ui.tags.ShowTagModal
 import com.ivy.ui.animation.springBounce
 import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.GradientGreen
-import com.ivy.legacy.ui.theme.Green
 import com.ivy.legacy.ui.button.CloseButton
 import com.ivy.legacy.ui.icon.ItemIconSDefaultIcon
 import com.ivy.legacy.ui.button.IvyButton

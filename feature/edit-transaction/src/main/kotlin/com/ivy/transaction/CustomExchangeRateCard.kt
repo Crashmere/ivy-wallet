@@ -22,7 +22,6 @@ import com.ivy.data.model.currency.IvyCurrency
 import com.ivy.data.model.currency.format
 import com.ivy.legacy.ui.icon.IvyIcon
 import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.legacy.ui.theme.Orange
 import com.ivy.legacy.ui.theme.style
 import com.ivy.ui.R
 
@@ -74,15 +73,15 @@ internal fun CustomExchangeRateCard(
                     text = fromCurrencyCode,
                     style = LegacyTheme.typo.b2.style(
                         fontWeight = FontWeight.ExtraBold,
-                        color = Orange
+                        color = LegacyTheme.colors.orange
                     )
                 )
-                IvyIcon(icon = R.drawable.ic_arrow_right, tint = Orange)
+                IvyIcon(icon = R.drawable.ic_arrow_right, tint = LegacyTheme.colors.orange)
                 Text(
                     text = toCurrencyCode,
                     style = LegacyTheme.typo.nB2.style(
                         fontWeight = FontWeight.ExtraBold,
-                        color = Orange
+                        color = LegacyTheme.colors.orange
                     )
                 )
             }
@@ -96,15 +95,15 @@ internal fun CustomExchangeRateCard(
                     text = "1",
                     style = LegacyTheme.typo.nB2.style(
                         fontWeight = FontWeight.ExtraBold,
-                        color = Orange
+                        color = LegacyTheme.colors.orange
                     )
                 )
-                IvyIcon(icon = R.drawable.ic_arrow_right, tint = Orange)
+                IvyIcon(icon = R.drawable.ic_arrow_right, tint = LegacyTheme.colors.orange)
                 Text(
                     text = exchangeRate.format(IvyCurrency.getDecimalPlaces(toCurrencyCode)),
                     style = LegacyTheme.typo.nB2.style(
                         fontWeight = FontWeight.ExtraBold,
-                        color = Orange
+                        color = LegacyTheme.colors.orange
                     )
                 )
             }

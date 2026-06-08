@@ -21,10 +21,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.currency.format
 import com.ivy.legacy.ui.icon.IvyIcon
-import com.ivy.legacy.ui.theme.Green
-import com.ivy.legacy.ui.theme.Ivy
+import com.ivy.ui.theme.colors.IvyFixedColors.Ivy
 import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.legacy.ui.theme.Orange
 import com.ivy.ui.theme.colors.IvyFixedColors.White
 import com.ivy.legacy.ui.theme.style
 import com.ivy.ui.R
@@ -55,6 +53,8 @@ internal fun HomeBufferBattery(
         bufferExceededPercent <= 0.75 -> White
         else -> White
     }
+    val green = LegacyTheme.colors.green
+    val orange = LegacyTheme.colors.orange
     val red = LegacyTheme.colors.red
 
     Row(
@@ -65,9 +65,9 @@ internal fun HomeBufferBattery(
             .drawBehind {
                 drawRect(
                     color = when {
-                        bufferExceededPercent <= 0.25 -> Green
+                        bufferExceededPercent <= 0.25 -> green
                         bufferExceededPercent <= 0.50 -> Ivy
-                        bufferExceededPercent <= 0.75 -> Orange
+                        bufferExceededPercent <= 0.75 -> orange
                         else -> red
                     },
                     size = size.copy(

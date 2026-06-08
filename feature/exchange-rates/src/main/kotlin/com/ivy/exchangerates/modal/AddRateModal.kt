@@ -22,7 +22,6 @@ import com.ivy.legacy.ui.modal.IvyModal
 import com.ivy.legacy.ui.modal.ModalAdd
 import com.ivy.legacy.ui.modal.ModalTitle
 import com.ivy.legacy.ui.modal.edit.AmountModal
-import com.ivy.legacy.ui.theme.Orange
 import com.ivy.ui.compose.selectEndTextFieldValue
 import java.util.UUID
 
@@ -79,7 +78,7 @@ internal fun BoxWithConstraintsScope.AddRateModal(
                 .padding(horizontal = 16.dp, vertical = 12.dp),
             text = "$baseCurrency-${toCurrency.text} = ${rate ?: "???"}",
             style = LegacyTheme.typo.nH2.style(
-                color = Orange,
+                color = LegacyTheme.colors.orange,
                 textAlign = TextAlign.Center,
             )
         )
