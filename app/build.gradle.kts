@@ -98,13 +98,8 @@ android {
 
     lint {
         disable += "ComposeViewModelInjection"
-        checkDependencies = true
         abortOnError = false
         checkReleaseBuilds = false
-        htmlReport = true
-        htmlOutput = file("${project.rootDir}/build/reports/lint/lint.html")
-        xmlReport = true
-        xmlOutput = file("${project.rootDir}/build/reports/lint/lint.xml")
     }
 }
 

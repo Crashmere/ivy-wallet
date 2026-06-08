@@ -28,6 +28,7 @@
 - 精简 Compose 构建约定：删除 Compose compiler metrics/reports 输出配置，减少个人开发构建产物噪音。
 - 精简根目录忽略规则：`.gitignore` 已移除 Fastlane、Freeline、Google Services、Android Studio 细项等历史噪音，只保留当前 Android/Gradle/VS Code 本地开发会产生的文件规则。
 - 精简本地构建配置：删除 release 签名 keystore/环境变量接线，release/demo 都使用本地 debug 签名；`gradle.properties` 只保留当前构建需要的设置。
+- 精简 app lint 配置：删除强制生成根目录 lint HTML/XML 报告和跨依赖 lint 扫描的配置，只保留当前项目仍需要的 lint 抑制与 release 检查策略。
 
 当前仍保留：
 
