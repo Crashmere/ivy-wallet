@@ -13,12 +13,12 @@ internal sealed class ReportScreenEvent {
     data class OnTreatTransfersAsIncomeExpense(val transfersAsIncomeExpense: Boolean) :
         ReportScreenEvent()
 
-    data class SkipLegacyTransactions(val transactionIds: List<UUID>) :
+    data class SkipTransactions(val transactionIds: List<UUID>) :
         ReportScreenEvent()
 
-    data class SkipLegacyTransaction(val transactionId: UUID) :
+    data class SkipTransaction(val transactionId: UUID) :
         ReportScreenEvent()
 
-    data class OnPayOrGetLegacyTransaction(val transactionId: UUID) :
+    data class OnPayOrGetTransaction(val transactionId: UUID) :
         ReportScreenEvent()
 }

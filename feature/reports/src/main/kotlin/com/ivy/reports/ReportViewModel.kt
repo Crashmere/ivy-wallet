@@ -177,9 +177,9 @@ internal class ReportViewModel @Inject internal constructor(
             when (event) {
                 is ReportScreenEvent.OnFilter -> setFilter(event.filter)
                 is ReportScreenEvent.OnExport -> export(event.fileSharer)
-                is ReportScreenEvent.OnPayOrGetLegacyTransaction -> payOrGetLegacyTransaction(event.transactionId)
-                is ReportScreenEvent.SkipLegacyTransaction -> skipLegacyTransaction(event.transactionId)
-                is ReportScreenEvent.SkipLegacyTransactions -> skipLegacyTransactions(event.transactionIds)
+                is ReportScreenEvent.OnPayOrGetTransaction -> payOrGetTransaction(event.transactionId)
+                is ReportScreenEvent.SkipTransaction -> skipTransaction(event.transactionId)
+                is ReportScreenEvent.SkipTransactions -> skipTransactions(event.transactionIds)
                 is ReportScreenEvent.OnOverdueExpanded -> setOverdueExpandedValue(event.overdueExpanded)
                 is ReportScreenEvent.OnUpcomingExpanded -> setUpcomingExpandedValue(event.upcomingExpanded)
                 is ReportScreenEvent.OnFilterOverlayVisible -> setFilterOverlayVisibleValue(event.filterOverlayVisible)
@@ -542,7 +542,7 @@ internal class ReportViewModel @Inject internal constructor(
         overdueExpanded = expanded
     }
 
-    private suspend fun payOrGetLegacyTransaction(transactionId: UUID) {
+    private suspend fun payOrGetTransaction(transactionId: UUID) {
         withContext(Dispatchers.Main) {
             val transaction = findDueTransaction(transactionId) ?: return@withContext
             if (payOrSkipLegacyPlannedTransactionUseCase(transaction) != null) {
@@ -564,7 +564,7 @@ internal class ReportViewModel @Inject internal constructor(
         treatTransfersAsIncExp = transfersAsIncExp
     }
 
-    private suspend fun skipLegacyTransaction(transactionId: UUID) {
+    private suspend fun skipTransaction(transactionId: UUID) {
         withContext(Dispatchers.Main) {
             val transaction = findDueTransaction(transactionId) ?: return@withContext
             val paidTransaction = payOrSkipLegacyPlannedTransactionUseCase(
@@ -578,7 +578,7 @@ internal class ReportViewModel @Inject internal constructor(
         }
     }
 
-    private suspend fun skipLegacyTransactions(transactionIds: List<UUID>) {
+    private suspend fun skipTransactions(transactionIds: List<UUID>) {
         withContext(Dispatchers.Main) {
             val transactions = findDueTransactions(transactionIds)
             if (transactions.isEmpty()) return@withContext

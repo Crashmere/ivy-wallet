@@ -129,6 +129,7 @@
 - 收窄交易列表 route 数据：`unspecifiedCategory` 不再使用没有语义的可空布尔值，改为明确的 true/false 分支。
 - 统一交易列表 route 集合语义：账户筛选列表和旧交易 ID 列表改为 `ImmutableList`，避免 route 持有可变集合接口。
 - 收窄旧收支汇总卡片输入：卡片只接收收入/支出交易数量，不再自己解析完整旧交易历史。
+- 清理报表页内部事件命名：计划付款交易的支付/收取、跳过和批量跳过事件已经只传交易 ID，不再在事件名中暴露 `LegacyTransaction`。
 
 当前仍保留：
 
@@ -1228,6 +1229,7 @@ shared:ui:core
 - `TransactionsScreen.unspecifiedCategory` 已从 `Boolean?` 收为 `Boolean`，交易列表初始化分支不再携带不存在的 null 状态。
 - `TransactionsScreen.accountIdFilterList` 和 `legacyTransactionIds` 已收为 `ImmutableList<UUID>`，与饼图 route 的集合语义保持一致。
 - 旧收支汇总卡片不再接收完整交易历史，只接收页面已经算好的收入/支出交易数量；通用 UI 组件不再依赖 `LegacyTransaction` 或 `TransactionHistoryItem`。
+- 报表页内部支付/收取和跳过计划交易的事件名已去掉 `Legacy`，事件层继续只传交易 ID，旧模型查找限制在 ViewModel 私有实现内。
 - app 仍保留文件选择、文件分享、Material 日期选择器、BuildInfo、Locale 设置、生物识别和窗口安全等真正依赖 Activity 或 Android app 壳层的装配。
 
 ## 高风险区域
