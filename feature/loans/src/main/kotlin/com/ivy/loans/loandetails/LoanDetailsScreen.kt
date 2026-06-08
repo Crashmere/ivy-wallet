@@ -1,6 +1,7 @@
 package com.ivy.loans.loandetails
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.BoxWithConstraintsScope
@@ -11,13 +12,16 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -26,6 +30,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -41,7 +46,6 @@ import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.data.model.Loan
 import com.ivy.data.model.LoanRecord
 import com.ivy.loans.humanReadableType
-import com.ivy.legacy.ui.component.ItemStatisticToolbar
 import com.ivy.legacy.ui.component.transaction.TypeAmountCurrency
 import com.ivy.ui.compose.clickableNoIndication
 import com.ivy.ui.compose.drawColoredShadow
@@ -66,8 +70,12 @@ import com.ivy.legacy.ui.theme.Gray
 import com.ivy.legacy.ui.component.BalanceRow
 import com.ivy.legacy.ui.component.ItemIconMDefaultIcon
 import com.ivy.legacy.ui.component.IvyButton
+import com.ivy.legacy.ui.component.IvyCircleButton
 import com.ivy.legacy.ui.component.IvyIcon
+import com.ivy.legacy.ui.component.IvyOutlinedButton
 import com.ivy.ui.icon.getCustomIconIdS
+import com.ivy.legacy.ui.theme.Red
+import com.ivy.legacy.ui.theme.White
 import com.ivy.legacy.ui.theme.dynamicContrast
 import com.ivy.legacy.ui.theme.findContrastTextColor
 import com.ivy.legacy.ui.theme.isDarkColor
@@ -289,7 +297,7 @@ private fun Header(
     ) {
         Spacer(Modifier.height(20.dp))
 
-        ItemStatisticToolbar(
+        LoanStatisticToolbar(
             contrastColor = contrastColor,
             onClose = {
                 nav.back()
@@ -333,6 +341,88 @@ private fun Header(
 
         Spacer(Modifier.height(20.dp))
     }
+}
+
+@Composable
+private fun LoanStatisticToolbar(
+    contrastColor: Color,
+    onClose: () -> Unit,
+    onEdit: () -> Unit,
+    showEditButton: Boolean = true,
+    showDeleteButton: Boolean = true,
+    onDelete: () -> Unit,
+) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Spacer(Modifier.width(24.dp))
+
+        LoanStatisticToolbarCloseButton(
+            contrastColor = contrastColor,
+            onClose = onClose
+        )
+
+        Spacer(Modifier.weight(1f))
+
+        if (showEditButton) {
+            IvyOutlinedButton(
+                iconStart = R.drawable.ic_edit,
+                text = stringResource(R.string.edit),
+                borderColor = contrastColor,
+                iconTint = contrastColor,
+                textColor = contrastColor,
+                solidBackground = false
+            ) {
+                onEdit()
+            }
+        }
+
+        Spacer(Modifier.width(16.dp))
+
+        if (showDeleteButton) {
+            LoanStatisticToolbarDeleteButton {
+                onDelete()
+            }
+        }
+
+        Spacer(Modifier.width(24.dp))
+    }
+}
+
+@Composable
+private fun LoanStatisticToolbarCloseButton(
+    contrastColor: Color,
+    onClose: () -> Unit
+) {
+    Icon(
+        modifier = Modifier
+            .testTag("toolbar_close")
+            .clip(CircleShape)
+            .background(Color.Transparent, CircleShape)
+            .border(2.dp, contrastColor, CircleShape)
+            .clickable(onClick = onClose)
+            .padding(6.dp),
+        painter = painterResource(id = R.drawable.ic_dismiss),
+        contentDescription = "close",
+        tint = contrastColor,
+    )
+}
+
+@Composable
+private fun LoanStatisticToolbarDeleteButton(
+    onDelete: () -> Unit
+) {
+    IvyCircleButton(
+        modifier = Modifier
+            .size(48.dp)
+            .testTag("delete_button"),
+        backgroundPadding = 6.dp,
+        icon = R.drawable.ic_delete,
+        backgroundGradient = Gradient.solid(Red),
+        enabled = true,
+        tint = White,
+        onClick = onDelete
+    )
 }
 
 @Composable
