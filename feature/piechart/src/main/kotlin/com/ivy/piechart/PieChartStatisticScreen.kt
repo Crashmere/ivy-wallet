@@ -44,7 +44,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ivy.data.model.TransactionType
 import com.ivy.ui.platform.LocalDatePicker
-import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.compose.thenIf
 import com.ivy.ui.period.LocalPeriodState
 import com.ivy.ui.period.TimePeriod
@@ -168,8 +167,8 @@ private fun BoxWithConstraintsScope.UI(
                 } else {
                     stringResource(R.string.income)
                 },
-                style = LegacyTheme.typo.b1.copy(
-                    color = LegacyTheme.colors.pureInverse,
+                style = PieChartTheme.typo.b1.copy(
+                    color = PieChartTheme.colors.pureInverse,
                     fontWeight = FontWeight.ExtraBold,
                     textAlign = TextAlign.Start
                 )
@@ -285,7 +284,7 @@ private fun Header(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .background(LegacyTheme.colors.pure.copy(alpha = 0.95f))
+            .background(PieChartTheme.colors.pure.copy(alpha = 0.95f))
             .statusBarsPadding()
             .padding(top = 16.dp),
         verticalAlignment = Alignment.CenterVertically
@@ -327,13 +326,13 @@ private fun Header(
                 ),
                 iconStart = R.drawable.ic_calendar,
                 text = period.displayShort(startDateOfMonth),
-                shape = LegacyTheme.shapes.rFull,
-                backgroundColor = LegacyTheme.colors.pure,
-                iconTint = LegacyTheme.colors.pureInverse,
-                borderColor = LegacyTheme.colors.medium,
-                textStyle = LegacyTheme.typo.b2.copy(
+                shape = PieChartTheme.shapes.rFull,
+                backgroundColor = PieChartTheme.colors.pure,
+                iconTint = PieChartTheme.colors.pureInverse,
+                borderColor = PieChartTheme.colors.medium,
+                textStyle = PieChartTheme.typo.b2.copy(
                     fontWeight = FontWeight.Bold,
-                    color = LegacyTheme.colors.pureInverse,
+                    color = PieChartTheme.colors.pureInverse,
                     textAlign = TextAlign.Start,
                 ),
             ) {
@@ -344,7 +343,7 @@ private fun Header(
                 Spacer(Modifier.width(12.dp))
 
                 val backgroundGradient = if (transactionType == TransactionType.EXPENSE) {
-                    Gradient(LegacyTheme.colors.pureInverse, LegacyTheme.colors.gray)
+                    Gradient(PieChartTheme.colors.pureInverse, PieChartTheme.colors.gray)
                 } else {
                     IvyGradients.Green
                 }
@@ -359,7 +358,7 @@ private fun Header(
                     icon = R.drawable.ic_plus,
                     backgroundGradient = backgroundGradient,
                     tint = if (transactionType == TransactionType.EXPENSE) {
-                        LegacyTheme.colors.pure
+                        PieChartTheme.colors.pure
                     } else {
                         White
                     }
@@ -379,8 +378,8 @@ private fun PieChartCircleButtonFilledGradient(
     @DrawableRes icon: Int,
     contentDescription: String = "icon",
     iconPadding: Dp = 8.dp,
-    backgroundGradient: Gradient = Gradient.solid(LegacyTheme.colors.medium),
-    tint: Color? = LegacyTheme.colors.pureInverse,
+    backgroundGradient: Gradient = Gradient.solid(PieChartTheme.colors.medium),
+    tint: Color? = PieChartTheme.colors.pureInverse,
     onClick: () -> Unit,
 ) {
     Icon(
@@ -402,9 +401,9 @@ private fun CloseButton(
 ) {
     CloseIconButton(
         modifier = modifier,
-        backgroundColor = LegacyTheme.colors.pure,
-        borderColor = LegacyTheme.colors.medium,
-        tint = LegacyTheme.colors.pureInverse,
+        backgroundColor = PieChartTheme.colors.pure,
+        borderColor = PieChartTheme.colors.medium,
+        tint = PieChartTheme.colors.pureInverse,
         onClick = onClick,
     )
 }
@@ -423,7 +422,7 @@ private fun CategoryAmountCard(
     val amount = categoryAmount.amount
 
     val categoryColor = category?.color?.value?.toComposeColor()
-        ?: LegacyTheme.colors.gray
+        ?: PieChartTheme.colors.gray
     val selectedState = when {
         selectedCategory == null -> {
             // no selectedCategory
@@ -437,7 +436,7 @@ private fun CategoryAmountCard(
 
         else -> false
     }
-    val backgroundColor = if (selectedState) categoryColor else LegacyTheme.colors.medium
+    val backgroundColor = if (selectedState) categoryColor else PieChartTheme.colors.medium
 
     val textColor = findContrastTextColor(
         backgroundColor = backgroundColor
@@ -450,8 +449,8 @@ private fun CategoryAmountCard(
             .thenIf(selectedState) {
                 drawColoredShadow(backgroundColor)
             }
-            .clip(LegacyTheme.shapes.r3)
-            .background(backgroundColor, LegacyTheme.shapes.r3)
+            .clip(PieChartTheme.shapes.r3)
+            .background(backgroundColor, PieChartTheme.shapes.r3)
             .clickable {
                 onClick()
             }
@@ -482,7 +481,7 @@ private fun CategoryAmountCard(
                         .weight(1f)
                         .padding(end = 16.dp),
                     text = category?.name?.value ?: stringResource(R.string.unspecified),
-                    style = LegacyTheme.typo.b2.copy(
+                    style = PieChartTheme.typo.b2.copy(
                         color = textColor,
                         fontWeight = FontWeight.Bold,
                         textAlign = TextAlign.Start
@@ -526,8 +525,8 @@ private fun PercentText(
         } else {
             stringResource(R.string.percent, "0")
         },
-        style = LegacyTheme.typo.nB2.copy(
-            color = if (selectedState) contrastColor else LegacyTheme.colors.pureInverse,
+        style = PieChartTheme.typo.nB2.copy(
+            color = if (selectedState) contrastColor else PieChartTheme.colors.pureInverse,
             fontWeight = FontWeight.Normal,
             textAlign = TextAlign.Start
         )

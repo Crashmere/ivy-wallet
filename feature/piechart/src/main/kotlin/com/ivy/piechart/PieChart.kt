@@ -25,7 +25,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.ivy.data.model.TransactionType
 import com.ivy.data.model.Category
-import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.compose.drawColoredShadow
 import com.ivy.ui.R
 import com.ivy.ui.compose.ResourceIcon
@@ -46,7 +45,7 @@ internal fun PieChart(
     modifier: Modifier = Modifier,
     onCategoryClick: (Category?) -> Unit = {}
 ) {
-    val unspecifiedCategoryColor = LegacyTheme.colors.gray
+    val unspecifiedCategoryColor = PieChartTheme.colors.gray
 
     Box(
         modifier = modifier.fillMaxWidth(),
@@ -57,7 +56,7 @@ internal fun PieChart(
                 .size((PIE_CHART_RADIUS_DP * 2).dp)
                 .drawColoredShadow(
                     color = PieChartShadowColor,
-                    alpha = if (LegacyTheme.colors.isLight) 0.05f else 0.5f,
+                    alpha = if (PieChartTheme.colors.isLight) 0.05f else 0.5f,
                     offsetY = 32.dp,
                     shadowRadius = 48.dp
                 )
@@ -65,8 +64,8 @@ internal fun PieChart(
                 .background(
                     brush = Brush.verticalGradient(
                         colors = listOf(
-                            LegacyTheme.colors.medium,
-                            LegacyTheme.colors.pure
+                            PieChartTheme.colors.medium,
+                            PieChartTheme.colors.pure
                         )
                     ),
                     shape = CircleShape
@@ -89,7 +88,7 @@ internal fun PieChart(
             modifier = Modifier
                 .size(100.dp)
                 .clip(CircleShape)
-                .background(LegacyTheme.colors.medium)
+                .background(PieChartTheme.colors.medium)
                 .padding(all = 20.dp),
             icon = if (type == TransactionType.INCOME) R.drawable.ic_income else R.drawable.ic_expense,
             tint = unspecifiedCategoryColor

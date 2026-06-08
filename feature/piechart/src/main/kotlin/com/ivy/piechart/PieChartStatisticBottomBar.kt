@@ -20,7 +20,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.TransactionType
-import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.compose.navigationBarInset
 import com.ivy.ui.compose.toDensityDp
 import com.ivy.ui.R
@@ -42,7 +41,7 @@ internal fun BoxWithConstraintsScope.PieChartStatisticBottomBar(
     PieChartStatisticActionsRow(
         modifier = modifier
             .align(Alignment.BottomCenter)
-            .gradientCutBackgroundTop(LegacyTheme.colors.pure, LocalDensity.current)
+            .gradientCutBackgroundTop(PieChartTheme.colors.pure, LocalDensity.current)
             .padding(bottom = bottomInset)
             .padding(bottom = 16.dp)
     ) {
@@ -64,15 +63,15 @@ internal fun BoxWithConstraintsScope.PieChartStatisticBottomBar(
             } else {
                 stringResource(id = R.string.add_expense)
             },
-            backgroundGradient = if (isIncome) IvyGradients.Green else Gradient.solid(LegacyTheme.colors.pureInverse),
-            disabledBackgroundColor = LegacyTheme.colors.gray,
-            shape = LegacyTheme.shapes.rFull,
-            textStyle = LegacyTheme.typo.b2.copy(
-                color = if (isIncome) White else LegacyTheme.colors.pure,
+            backgroundGradient = if (isIncome) IvyGradients.Green else Gradient.solid(PieChartTheme.colors.pureInverse),
+            disabledBackgroundColor = PieChartTheme.colors.gray,
+            shape = PieChartTheme.shapes.rFull,
+            textStyle = PieChartTheme.typo.b2.copy(
+                color = if (isIncome) White else PieChartTheme.colors.pure,
                 fontWeight = FontWeight.ExtraBold,
                 textAlign = TextAlign.Start
             ),
-            iconTint = if (isIncome) White else LegacyTheme.colors.pure
+            iconTint = if (isIncome) White else PieChartTheme.colors.pure
         ) {
             onAdd(type)
         }
@@ -84,7 +83,7 @@ internal fun BoxWithConstraintsScope.PieChartStatisticBottomBar(
 @Composable
 private fun PieChartStatisticActionsRow(
     modifier: Modifier = Modifier,
-    lineColor: Color = LegacyTheme.colors.medium,
+    lineColor: Color = PieChartTheme.colors.medium,
     content: @Composable RowScope.() -> Unit
 ) {
     Row(
@@ -117,9 +116,9 @@ private fun CloseButton(
 ) {
     CloseIconButton(
         modifier = modifier,
-        backgroundColor = LegacyTheme.colors.pure,
-        borderColor = LegacyTheme.colors.medium,
-        tint = LegacyTheme.colors.pureInverse,
+        backgroundColor = PieChartTheme.colors.pure,
+        borderColor = PieChartTheme.colors.medium,
+        tint = PieChartTheme.colors.pureInverse,
         onClick = onClick,
     )
 }
