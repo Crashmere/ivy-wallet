@@ -832,6 +832,7 @@
 - `shared:ui:legacy`、`shared:ui:navigation` 和借贷创建参数里的旧账户/旧交易类型也已显式成 `LegacyAccount/LegacyTransaction`；旧交易卡片、旧交易列表、旧到期分组和导航 route 参数继续保持原行为，但调用方不再借助 `Account/Transaction` 兼容别名隐藏 legacy 边界。
 - feature 页面层的旧账户/旧交易类型已完成显式化：首页、交易列表、编辑交易、分类、预算、借贷、计划付款、饼图、报表、搜索和 CSV 导入页面不再引用 `com.ivy.data.model.legacy.Account/Transaction` 兼容别名，全部直接使用 `LegacyAccount/LegacyTransaction`。
 - `LegacyAccount.kt` 和 `LegacyTransaction.kt` 中暂留的 `typealias Account/Transaction` 已删除；旧模型现在只能通过真实类名访问，避免新代码继续无意写回旧兼容命名。
+- `LegacyAccount.toDomainAccount()` 已从 data model 类成员迁到 `com.ivy.domain.mapper.legacy` 扩展函数；旧账户模型本体现在只保留旧字段，正式账户转换由 domain mapper 负责。
 - 功能开关偏好门面已从 `PreferenceToggleRepository` 改名为 `PreferenceToggleService`：它只负责把 domain 层 `BoolPreference` 映射到底层 `PreferenceToggleStore`，不再用 repository 命名暗示数据仓库职责。
 - 旧 `Logic` 注入变量名已继续收敛：`LegacyExchangeRatesUseCase` 的调用方统一使用 `exchangeRatesUseCase`，首页客户旅程卡片也改用 `customerJourneyCardsProvider` 命名，避免把 provider/use case 误读成旧 logic 层。
 - 旧到期交易 UI 模型 `LegacyDueSection` 的 `trns` 字段已改为 `transactions`，legacy 交易列表内部私有 `trnItems/trnCount` 也改为完整命名；首页、报表和交易页调用方同步更新，展示行为不变。
@@ -1069,7 +1070,7 @@ shared:ui:core
 下一步建议执行：
 
 1. shared 模块依赖审计暂时没有发现可直接删除的低风险依赖；后续在改动具体调用方时继续顺手收缩 Gradle 依赖。
-2. 旧账户/旧交易兼容别名已经删除；下一步继续审计 `LegacyAccount/LegacyTransaction` 本体与正式 `Account/Transaction` 的差异，优先寻找只做展示或参数传递的路径，把它们逐步切到正式模型，保留真正依赖旧字段/旧语义的兼容层。
+2. 继续审计 `LegacyTransaction` 与正式 `Transaction` 的转换边界，优先把转换函数和旧历史列表桥接集中到 domain mapper/legacy helper 中，再评估哪些只做展示或参数传递的路径可以切到正式模型。
 3. 偏好设置代码边界已基本收窄，短期不再为清理而迁移存储格式；若后续要处理 `SettingsEntity`、SharedPrefs 或 DataStore 归并，必须单独规划 schema/备份兼容迁移。
 4. 继续数据库只读审计：`isDeleted` 目前先保留为本地软删除语义；不再把业务表里的 `isDeleted` 当作纯云同步字段批量删除。
 5. feature 模块合并属于较大结构调整，短期只在实际修改某个功能时收敛依赖；真正合并模块前需要先确认导航、资源和 Hilt 边界。

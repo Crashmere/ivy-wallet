@@ -6,6 +6,7 @@ import com.ivy.data.api.AccountStore
 import com.ivy.data.api.TransactionStore
 import com.ivy.domain.usecase.currency.GetBaseCurrencyUseCase
 import com.ivy.domain.mapper.legacy.toDomain
+import com.ivy.domain.mapper.legacy.toDomainAccount
 import com.ivy.domain.time.nowUtc
 import java.math.BigDecimal
 import javax.inject.Inject

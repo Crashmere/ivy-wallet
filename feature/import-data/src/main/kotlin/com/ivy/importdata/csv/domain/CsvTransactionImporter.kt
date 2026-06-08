@@ -22,6 +22,7 @@ import com.ivy.importdata.csv.OptionalFields
 import com.ivy.importdata.csv.TransferFields
 import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.data.model.currency.IvyCurrency
+import com.ivy.domain.mapper.legacy.toDomainAccount
 import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
 import com.ivy.domain.util.nextOrderNum
 import com.ivy.legacy.ui.theme.Green

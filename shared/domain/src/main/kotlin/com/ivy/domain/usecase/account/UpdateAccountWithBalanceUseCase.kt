@@ -5,6 +5,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import com.ivy.data.model.legacy.LegacyAccount
+import com.ivy.domain.mapper.legacy.toDomainAccount
 
 class UpdateAccountWithBalanceUseCase @Inject constructor(
     private val adjustAccountBalanceUseCase: AdjustAccountBalanceUseCase,
