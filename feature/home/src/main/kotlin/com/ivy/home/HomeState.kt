@@ -7,10 +7,10 @@ import com.ivy.data.model.Theme
 import com.ivy.data.model.Transaction
 import com.ivy.data.model.TransactionHistoryItem
 import com.ivy.home.customerjourney.CustomerJourneyCardModel
-import com.ivy.legacy.ui.transaction.TransactionListAccount
 import com.ivy.ui.period.TimePeriod
 import kotlinx.collections.immutable.ImmutableList
 import java.math.BigDecimal
+import java.util.UUID
 
 @Immutable
 internal data class HomeState(
@@ -39,8 +39,17 @@ internal data class HomeState(
 @Immutable
 internal data class HomeTransactionListData(
     val baseCurrency: String,
-    val accounts: ImmutableList<TransactionListAccount>,
+    val accounts: ImmutableList<HomeTransactionListAccount>,
     val categories: ImmutableList<Category>
+)
+
+@Immutable
+internal data class HomeTransactionListAccount(
+    val id: UUID,
+    val name: String,
+    val color: Int,
+    val icon: String?,
+    val currency: String?,
 )
 
 @Immutable

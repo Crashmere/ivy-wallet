@@ -43,7 +43,6 @@ import com.ivy.domain.usecase.planned.PayOrSkipPlannedTransactionsByIdsUseCase
 import com.ivy.domain.usecase.transaction.GetTransactionHistoryItemsUseCase
 import com.ivy.data.model.ClosedTimeRange
 import com.ivy.data.model.IncomeExpensePair
-import com.ivy.legacy.ui.transaction.TransactionListAccount
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
@@ -332,7 +331,7 @@ internal class HomeViewModel @Inject internal constructor(
             baseCurrency = preferences.baseCurrency,
             categories = categories.toImmutableList(),
             accounts = accounts
-                .map { it.toTransactionListAccount() }
+                .map { it.toHomeTransactionListAccount() }
                 .toImmutableList()
         )
 
@@ -544,7 +543,7 @@ internal class HomeViewModel @Inject internal constructor(
     }
 }
 
-private fun Account.toTransactionListAccount() = TransactionListAccount(
+private fun Account.toHomeTransactionListAccount() = HomeTransactionListAccount(
     id = id.value,
     name = name.value,
     color = color.value,

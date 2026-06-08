@@ -1496,6 +1496,7 @@ shared:ui:core
 - data-core 中计划付款规则、借贷和借贷记录 Store 的私有实体映射函数已从 `toLegacyModel()` 改名为 `toDomainModel()`，避免在当前领域模型路径上继续保留误导性 legacy 命名。
 - 搜索页已改用本页面私有的账户列表适配函数；`shared:ui:legacy` 不再公开 `Account.toTransactionListAccount()` 这种把数据模型直接绑定到旧交易列表 UI 的扩展入口。
 - 搜索页状态和 ViewModel 已改用本 feature 的 `SearchAccount`，旧交易列表需要的 `TransactionListAccount` 只在 `SearchScreen` 调用旧列表组件前临时适配。
+- 首页状态和 ViewModel 已改用本 feature 的 `HomeTransactionListAccount`，旧交易列表账户类型同样只在 `HomeTab` 进入旧交易列表 UI 前临时适配。
 - 旧主题系统新增 `LegacyColors`、`LegacyTypography` 和 `LegacyShapes` 作为外层门面类型；`theme.system` 下的 `IvyColors/IvyTypography/IvyShapes` 已收窄为 `shared:ui:legacy` 内部实现细节。
 - app 仍保留文件选择、文件分享、Material 日期选择器、BuildInfo、Locale 设置、生物识别和窗口安全等真正依赖 Activity 或 Android app 壳层的装配。
 

@@ -32,6 +32,7 @@ import com.ivy.home.customerjourney.CustomerJourney
 import com.ivy.home.customerjourney.CustomerJourneyAction
 import com.ivy.home.customerjourney.CustomerJourneyCardModel
 import com.ivy.legacy.ui.transaction.DueSection
+import com.ivy.legacy.ui.transaction.TransactionListAccount
 import com.ivy.legacy.ui.transaction.TransactionListData
 import com.ivy.ui.period.Month
 import com.ivy.ui.period.TimePeriod
@@ -496,10 +497,20 @@ internal fun HomeLazyColumn(
 private fun HomeTransactionListData.toTransactionListData(): TransactionListData {
     return TransactionListData(
         baseCurrency = baseCurrency,
-        accounts = accounts,
+        accounts = accounts
+            .map { it.toTransactionListAccount() }
+            .toImmutableList(),
         categories = categories
     )
 }
+
+private fun HomeTransactionListAccount.toTransactionListAccount() = TransactionListAccount(
+    id = id,
+    name = name,
+    color = color,
+    icon = icon,
+    currency = currency,
+)
 
 private fun HomeDueSection.toDueSection(): DueSection {
     return DueSection(
