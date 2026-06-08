@@ -1,6 +1,5 @@
 package com.ivy.ui.platform
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -54,12 +53,6 @@ private fun isKeyboardOpen(rootView: View): Boolean {
     } catch (_: Exception) {
         false
     }
-}
-
-@SuppressLint("ComposableNaming")
-@Composable
-fun hideKeyboard() {
-    LocalView.current.hideKeyboard()
 }
 
 fun View.hideKeyboard() {
