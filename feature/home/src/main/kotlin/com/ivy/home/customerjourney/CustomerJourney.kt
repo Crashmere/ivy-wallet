@@ -21,10 +21,6 @@ import androidx.compose.ui.unit.dp
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.legacy.ui.theme.style
 import com.ivy.ui.compose.drawColoredShadow
-import com.ivy.ui.navigation.EditPlannedScreen
-import com.ivy.ui.navigation.PieChartStatisticScreen
-import com.ivy.ui.navigation.TransactionRouteType
-import com.ivy.ui.navigation.navigation
 import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.Gradient
 import com.ivy.legacy.ui.component.IvyButton
@@ -38,10 +34,8 @@ internal fun CustomerJourney(
     customerJourneyCards: ImmutableList<CustomerJourneyCardModel>,
     modifier: Modifier = Modifier,
     onDismiss: (CustomerJourneyCardModel) -> Unit,
-    onOpenAccountsTab: () -> Unit,
+    onAction: (CustomerJourneyAction) -> Unit,
 ) {
-    val nav = navigation()
-
     if (customerJourneyCards.isNotEmpty()) {
         Spacer(Modifier.height(12.dp))
     }
@@ -56,24 +50,7 @@ internal fun CustomerJourney(
                 onDismiss(card)
             }
         ) {
-            when (card.action) {
-                CustomerJourneyAction.OpenAccountsTab -> {
-                    onOpenAccountsTab()
-                }
-
-                CustomerJourneyAction.AddPlannedPayment -> {
-                    nav.navigateTo(
-                        EditPlannedScreen(
-                            type = TransactionRouteType.EXPENSE,
-                            plannedPaymentRuleId = null
-                        )
-                    )
-                }
-
-                CustomerJourneyAction.OpenExpensePieChart -> {
-                    nav.navigateTo(PieChartStatisticScreen(type = TransactionRouteType.EXPENSE))
-                }
-            }
+            onAction(card.action)
         }
     }
 }

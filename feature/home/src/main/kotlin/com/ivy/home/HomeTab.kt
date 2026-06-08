@@ -29,6 +29,7 @@ import com.ivy.data.model.TransactionHistoryItem
 import com.ivy.ui.platform.LocalDatePicker
 import com.ivy.home.Constants.SWIPE_HORIZONTAL_THRESHOLD
 import com.ivy.home.customerjourney.CustomerJourney
+import com.ivy.home.customerjourney.CustomerJourneyAction
 import com.ivy.home.customerjourney.CustomerJourneyCardModel
 import com.ivy.legacy.ui.component.transaction.LegacyDueSection
 import com.ivy.legacy.ui.component.transaction.TransactionListData
@@ -42,8 +43,10 @@ import com.ivy.ui.compose.horizontalSwipeListener
 import com.ivy.ui.compose.rememberSwipeListenerState
 import com.ivy.ui.compose.verticalSwipeListener
 import com.ivy.ui.navigation.BalanceScreen
+import com.ivy.ui.navigation.EditPlannedScreen
 import com.ivy.ui.navigation.EditTransactionScreen
 import com.ivy.ui.navigation.MainScreen
+import com.ivy.ui.navigation.PieChartStatisticScreen
 import com.ivy.ui.navigation.TransactionRouteType
 import com.ivy.ui.navigation.TransactionsScreen
 import com.ivy.ui.navigation.navigation
@@ -377,7 +380,28 @@ internal fun HomeLazyColumn(
             CustomerJourney(
                 customerJourneyCards = customerJourneyCards,
                 onDismiss = onDismiss,
-                onOpenAccountsTab = onOpenAccountsTab,
+                onAction = { action ->
+                    when (action) {
+                        CustomerJourneyAction.OpenAccountsTab -> {
+                            onOpenAccountsTab()
+                        }
+
+                        CustomerJourneyAction.AddPlannedPayment -> {
+                            nav.navigateTo(
+                                EditPlannedScreen(
+                                    type = TransactionRouteType.EXPENSE,
+                                    plannedPaymentRuleId = null
+                                )
+                            )
+                        }
+
+                        CustomerJourneyAction.OpenExpensePieChart -> {
+                            nav.navigateTo(
+                                PieChartStatisticScreen(type = TransactionRouteType.EXPENSE)
+                            )
+                        }
+                    }
+                },
             )
         }
 
