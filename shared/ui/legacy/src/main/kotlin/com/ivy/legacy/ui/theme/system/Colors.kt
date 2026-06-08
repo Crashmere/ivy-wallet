@@ -8,132 +8,132 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.core.graphics.ColorUtils
 
-val White = Color(0xFFFAFAFA)
+internal val White = Color(0xFFFAFAFA)
 
-val Black = Color(0xFF111114)
+internal val Black = Color(0xFF111114)
 
 // Primary
-val Ivy = Color(0xFF6B4DFF)
+internal val Ivy = Color(0xFF6B4DFF)
 
-val Purple = Color(0xFF6B4DFF)
+internal val Purple = Color(0xFF6B4DFF)
 
-val Purple1 = Color(0xFFC34CFF)
+internal val Purple1 = Color(0xFFC34CFF)
 
-val Purple2 = Color(0xFFFF4CFF)
+internal val Purple2 = Color(0xFFFF4CFF)
 
-val Blue = Color(0xFF4CC3FF)
+internal val Blue = Color(0xFF4CC3FF)
 
-val Blue2 = Color(0xFF45E6E6)
+internal val Blue2 = Color(0xFF45E6E6)
 
-val Blue3 = Color(0xFF457BE6)
+internal val Blue3 = Color(0xFF457BE6)
 
-val Green = Color(0xFF14CC9E)
+internal val Green = Color(0xFF14CC9E)
 
-val Green2 = Color(0xFF45E67B)
+internal val Green2 = Color(0xFF45E67B)
 
-val Green3 = Color(0xFF96E645)
+internal val Green3 = Color(0xFF96E645)
 
-val Green4 = Color(0xFFC7E62E)
+internal val Green4 = Color(0xFFC7E62E)
 
-val Yellow = Color(0xFFFFEE33)
+internal val Yellow = Color(0xFFFFEE33)
 
-val Orange = Color(0xFFF29F30)
+internal val Orange = Color(0xFFF29F30)
 
-val Orange2 = Color(0xFFE67B45)
+internal val Orange2 = Color(0xFFE67B45)
 
-val Orange3 = Color(0xFFFFC34C)
+internal val Orange3 = Color(0xFFFFC34C)
 
-val Red = Color(0xFFFF4060)
+internal val Red = Color(0xFFFF4060)
 
-val Red2 = Color(0xFFE62E2E)
+internal val Red2 = Color(0xFFE62E2E)
 
-val Red3 = Color(0xFFFF4CA6)
+internal val Red3 = Color(0xFFFF4CA6)
 
 // Light
-val IvyLight = Color(0xFFD5CCFF)
+internal val IvyLight = Color(0xFFD5CCFF)
 
-val Purple1Light = Color(0xFFEECCFF)
+internal val Purple1Light = Color(0xFFEECCFF)
 
-val Purple2Light = Color(0xFFFFBFFF)
+internal val Purple2Light = Color(0xFFFFBFFF)
 
-val BlueLight = Color(0xFFB3E6FF)
+internal val BlueLight = Color(0xFFB3E6FF)
 
-val Blue2Light = Color(0xFFB3FFFF)
+internal val Blue2Light = Color(0xFFB3FFFF)
 
-val Blue3Light = Color(0xFFCCDDFF)
+internal val Blue3Light = Color(0xFFCCDDFF)
 
-val GreenLight = Color(0xFFAAF2E0)
+internal val GreenLight = Color(0xFFAAF2E0)
 
-val Green2Light = Color(0xFF99FFBB)
+internal val Green2Light = Color(0xFF99FFBB)
 
-val Green3Light = Color(0xFFCCFF99)
+internal val Green3Light = Color(0xFFCCFF99)
 
-val Green4Light = Color(0xFFEEFF99)
+internal val Green4Light = Color(0xFFEEFF99)
 
-val YellowLight = Color(0xFFFFF799)
+internal val YellowLight = Color(0xFFFFF799)
 
-val OrangeLight = Color(0xFFFFDEB3)
+internal val OrangeLight = Color(0xFFFFDEB3)
 
-val Orange2Light = Color(0xFFFFCCB3)
+internal val Orange2Light = Color(0xFFFFCCB3)
 
-val Orange3Light = Color(0xFFFFDC99)
+internal val Orange3Light = Color(0xFFFFDC99)
 
-val RedLight = Color(0xFFFFCCD5)
+internal val RedLight = Color(0xFFFFCCD5)
 
-val Red2Light = Color(0xFFFFB3B3)
+internal val Red2Light = Color(0xFFFFB3B3)
 
-val Red3Light = Color(0xFFFFCCE6)
+internal val Red3Light = Color(0xFFFFCCE6)
 
 // Dark
-val IvyDark = Color(0xFF352680)
+internal val IvyDark = Color(0xFF352680)
 
-val Purple1Dark = Color(0xFF622680)
+internal val Purple1Dark = Color(0xFF622680)
 
-val Purple2Dark = Color(0xFF802680)
+internal val Purple2Dark = Color(0xFF802680)
 
-val BlueDark = Color(0xFF266280)
+internal val BlueDark = Color(0xFF266280)
 
-val Blue2Dark = Color(0xFF227373)
+internal val Blue2Dark = Color(0xFF227373)
 
-val Blue3Dark = Color(0xFF223D73)
+internal val Blue3Dark = Color(0xFF223D73)
 
-val GreenDark = Color(0xFF0A664F)
+internal val GreenDark = Color(0xFF0A664F)
 
-val Green2Dark = Color(0xFF22733D)
+internal val Green2Dark = Color(0xFF22733D)
 
-val Green3Dark = Color(0xFF66804D)
+internal val Green3Dark = Color(0xFF66804D)
 
-val Green4Dark = Color(0xFF637317)
+internal val Green4Dark = Color(0xFF637317)
 
-val YellowDark = Color(0xFF807719)
+internal val YellowDark = Color(0xFF807719)
 
-val OrangeDark = Color(0xFF734B17)
+internal val OrangeDark = Color(0xFF734B17)
 
-val Orange2Dark = Color(0xFF66371F)
+internal val Orange2Dark = Color(0xFF66371F)
 
-val Orange3Dark = Color(0xFF806226)
+internal val Orange3Dark = Color(0xFF806226)
 
-val RedDark = Color(0xFF801919)
+internal val RedDark = Color(0xFF801919)
 
-val Red2Dark = Color(0xFF802030)
+internal val Red2Dark = Color(0xFF802030)
 
-val Red3Dark = Color(0xFF802653)
+internal val Red3Dark = Color(0xFF802653)
 // --------------------------------------------------------------------------------------------------
 
-val TrueBlack = Color(0xFF000000)
+internal val TrueBlack = Color(0xFF000000)
 
-val MediumBlack = Color(0xFF2B2C2D)
+internal val MediumBlack = Color(0xFF2B2C2D)
 
-val Gray = Color(0xFF939199)
+internal val Gray = Color(0xFF939199)
 
-val MediumWhite = Color(0xFFEFEEF0)
+internal val MediumWhite = Color(0xFFEFEEF0)
 
-val Transparent = Color(0x00000000)
+internal val Transparent = Color(0x00000000)
 
-val GradientGreen = Gradient(Green, Color(0xFF49F2C8))
+internal val GradientGreen = Gradient(Green, Color(0xFF49F2C8))
 
 @Immutable
-data class Gradient(
+internal data class Gradient(
     val startColor: Color,
     val endColor: Color
 ) {
@@ -152,23 +152,23 @@ data class Gradient(
         fun asHorizontalBrush() = Brush.horizontalGradient(colors = listOf(startColor, endColor))
 }
 
-fun findContrastTextColor(backgroundColor: Color): Color {
+internal fun findContrastTextColor(backgroundColor: Color): Color {
     return if (isDarkColor(backgroundColor.toArgb())) White else Black
 }
 
-fun isDarkColor(color: Color): Boolean {
+internal fun isDarkColor(color: Color): Boolean {
     return isDarkColor(color.toArgb())
 }
 
-fun isDarkColor(@ColorInt color: Int): Boolean {
+internal fun isDarkColor(@ColorInt color: Int): Boolean {
     return ColorUtils.calculateLuminance(color) <= 0.5
 }
 
-fun Color.asBrush(): Brush {
+internal fun Color.asBrush(): Brush {
     return Brush.horizontalGradient(listOf(this, this))
 }
 
-fun Color.dynamicContrast(): Color {
+internal fun Color.dynamicContrast(): Color {
     val pickedColor = this.toHSVSpec()
 
     return when {
@@ -244,4 +244,4 @@ private fun Color.hsv(
     return Color(android.graphics.Color.HSVToColor(hsv))
 }
 
-fun Int.toComposeColor() = Color(this)
+internal fun Int.toComposeColor() = Color(this)

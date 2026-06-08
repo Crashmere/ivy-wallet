@@ -16,8 +16,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ivy.legacy.ui.theme.system.LegacyTheme
-import com.ivy.legacy.ui.theme.system.Orange
 import com.ivy.legacy.ui.theme.system.style
+import com.ivy.legacy.ui.theme.Orange
 import com.ivy.exchangerates.RatesEvent
 import com.ivy.exchangerates.data.RateUi
 import com.ivy.ui.compose.selectEndTextFieldValue

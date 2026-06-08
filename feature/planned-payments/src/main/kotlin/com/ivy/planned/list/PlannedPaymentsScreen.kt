@@ -12,26 +12,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.TransactionType
-import com.ivy.data.model.Category
-import com.ivy.data.model.CategoryId
-import com.ivy.data.model.IntervalType
-import com.ivy.data.model.primitive.ColorInt
-import com.ivy.data.model.primitive.NotBlankTrimmedString
-import com.ivy.legacy.ui.theme.system.Purple
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
-import com.ivy.data.model.legacy.LegacyAccount
-import com.ivy.data.model.PlannedPaymentRule
 import com.ivy.ui.navigation.EditPlannedScreen
 import com.ivy.ui.navigation.PlannedPaymentsScreen
 import com.ivy.ui.navigation.navigation
 import com.ivy.ui.navigation.screenScopedViewModel
 import com.ivy.ui.R
 import com.ivy.ui.rememberScrollPositionListState
-import com.ivy.legacy.ui.theme.Green
-import com.ivy.legacy.ui.theme.Orange
-import kotlinx.collections.immutable.persistentListOf
-import java.util.UUID
 
 @Composable
 fun BoxWithConstraintsScope.PlannedPaymentsScreen(screen: PlannedPaymentsScreen) {

@@ -118,9 +118,6 @@ data class Gradient(
     val endColor: Color
 ) {
     companion object {
-                fun from(gradient: com.ivy.legacy.ui.theme.system.Gradient) =
-            Gradient(gradient.startColor, gradient.endColor)
-
                 fun from(startColor: Int, endColor: Int?) = Gradient(
             startColor = startColor.toComposeColor(),
             endColor = (endColor ?: startColor).toComposeColor()

@@ -14,11 +14,11 @@ import androidx.core.view.WindowCompat
 import com.ivy.data.model.Theme
 import com.ivy.ui.theme.IvyMaterial3Theme
 
-val LocalIvyColors = compositionLocalOf<IvyColors> { error("No IvyColors") }
+private val LocalIvyColors = compositionLocalOf<IvyColors> { error("No IvyColors") }
 
-val LocalIvyTypography = compositionLocalOf<IvyTypography> { error("No IvyTypography") }
+private val LocalIvyTypography = compositionLocalOf<IvyTypography> { error("No IvyTypography") }
 
-val LocalIvyShapes = compositionLocalOf<IvyShapes> { error("No IvyShapes") }
+private val LocalIvyShapes = compositionLocalOf<IvyShapes> { error("No IvyShapes") }
 
 object LegacyTheme {
     val colors: IvyColors
@@ -38,7 +38,7 @@ object LegacyTheme {
 }
 
 @Composable
-fun IvyTheme(
+internal fun IvyTheme(
     theme: Theme,
     isDarkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
