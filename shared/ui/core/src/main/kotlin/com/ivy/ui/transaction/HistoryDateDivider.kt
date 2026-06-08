@@ -1,4 +1,4 @@
-package com.ivy.legacy.ui.transaction
+package com.ivy.ui.transaction
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -15,7 +15,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.R
 import com.ivy.ui.money.formatAmount
 import com.ivy.ui.time.formatLocal
@@ -48,8 +47,8 @@ internal fun HistoryDateDivider(
                 text = date.formatLocal(
                     if (today.year == date.year) "MMMM dd." else "MMM dd. yyy"
                 ),
-                style = LegacyTheme.typo.b1.copy(
-                    color = LegacyTheme.colors.pureInverse,
+                style = TransactionListTheme.typo.b1.copy(
+                    color = TransactionListTheme.colors.pureInverse,
                     fontWeight = FontWeight.ExtraBold,
                     textAlign = TextAlign.Start
                 )
@@ -72,8 +71,8 @@ internal fun HistoryDateDivider(
                         date.formatLocal("EEEE")
                     }
                 },
-                style = LegacyTheme.typo.c.copy(
-                    color = LegacyTheme.colors.pureInverse,
+                style = TransactionListTheme.typo.c.copy(
+                    color = TransactionListTheme.colors.pureInverse,
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Start
                 )
@@ -85,7 +84,7 @@ internal fun HistoryDateDivider(
         val cashflow = income - expenses
         Text(
             text = "${formatAmount(cashflow, baseCurrency)} $baseCurrency",
-            style = LegacyTheme.typo.nB2.copy(
+            style = TransactionListTheme.typo.nB2.copy(
                 fontWeight = FontWeight.Bold,
                 color = if (cashflow > 0) Green else Gray,
                 textAlign = TextAlign.Start

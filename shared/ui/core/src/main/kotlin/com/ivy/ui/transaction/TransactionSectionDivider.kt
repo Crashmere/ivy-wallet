@@ -1,4 +1,4 @@
-package com.ivy.legacy.ui.transaction
+package com.ivy.ui.transaction
 
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
@@ -25,7 +25,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.R
 import com.ivy.ui.compose.clickableNoIndication
 import com.ivy.ui.compose.rememberInteractionSource
@@ -66,7 +65,7 @@ internal fun SectionDivider(
             Text(
                 modifier = Modifier.testTag("upcoming_title"),
                 text = title,
-                style = LegacyTheme.typo.b1.copy(
+                style = TransactionListTheme.typo.b1.copy(
                     fontWeight = FontWeight.ExtraBold,
                     color = titleColor,
                     textAlign = TextAlign.Start
@@ -92,7 +91,7 @@ internal fun SectionDivider(
             modifier = Modifier.rotate(expandIconRotation),
             painter = painterResource(id = R.drawable.ic_expandarrow),
             contentDescription = "icon",
-            tint = LegacyTheme.colors.pureInverse
+            tint = TransactionListTheme.colors.pureInverse
         )
 
         Spacer(Modifier.width(32.dp))
@@ -112,18 +111,18 @@ private fun SectionDividerIncomeExpenseRow(
             Text(
                 modifier = Modifier.testTag("upcoming_expense"),
                 text = "${formatAmount(expenses, baseCurrency)} $baseCurrency",
-                style = LegacyTheme.typo.nC.copy(
+                style = TransactionListTheme.typo.nC.copy(
                     fontWeight = FontWeight.ExtraBold,
-                    color = LegacyTheme.colors.pureInverse,
+                    color = TransactionListTheme.colors.pureInverse,
                     textAlign = TextAlign.Start
                 )
             )
             Spacer(modifier = Modifier.width(4.dp))
             Text(
                 text = stringResource(R.string.expenses_lowercase),
-                style = LegacyTheme.typo.c.copy(
+                style = TransactionListTheme.typo.c.copy(
                     fontWeight = FontWeight.Normal,
-                    color = LegacyTheme.colors.pureInverse,
+                    color = TransactionListTheme.colors.pureInverse,
                     textAlign = TextAlign.Start
                 )
             )
@@ -141,18 +140,18 @@ private fun SectionDividerIncomeExpenseRow(
             Text(
                 modifier = Modifier.testTag("upcoming_income"),
                 text = "${formatAmount(income, baseCurrency)} $baseCurrency",
-                style = LegacyTheme.typo.nC.copy(
+                style = TransactionListTheme.typo.nC.copy(
                     fontWeight = FontWeight.ExtraBold,
-                    color = LegacyTheme.colors.green,
+                    color = TransactionListTheme.colors.green,
                     textAlign = TextAlign.Start
                 )
             )
             Spacer(modifier = Modifier.width(4.dp))
             Text(
                 text = stringResource(R.string.income_lowercase),
-                style = LegacyTheme.typo.c.copy(
+                style = TransactionListTheme.typo.c.copy(
                     fontWeight = FontWeight.Normal,
-                    color = LegacyTheme.colors.pureInverse,
+                    color = TransactionListTheme.colors.pureInverse,
                     textAlign = TextAlign.Start
                 )
             )
@@ -165,6 +164,6 @@ private fun SectionDividerDot() {
     Box(
         modifier = Modifier
             .size(4.dp)
-            .background(LegacyTheme.colors.mediumInverse, CircleShape)
+            .background(TransactionListTheme.colors.mediumInverse, CircleShape)
     )
 }

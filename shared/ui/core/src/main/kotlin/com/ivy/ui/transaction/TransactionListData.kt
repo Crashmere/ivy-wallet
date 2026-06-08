@@ -1,4 +1,4 @@
-package com.ivy.legacy.ui.transaction
+package com.ivy.ui.transaction
 
 import androidx.compose.runtime.Immutable
 import java.math.BigDecimal

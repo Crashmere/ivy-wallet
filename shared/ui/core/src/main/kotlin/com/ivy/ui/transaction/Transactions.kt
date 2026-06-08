@@ -1,4 +1,4 @@
-package com.ivy.legacy.ui.transaction
+package com.ivy.ui.transaction
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -17,7 +17,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.R
 import com.ivy.ui.compose.GradientButton
 import com.ivy.ui.compose.ResourceIcon
@@ -187,7 +186,7 @@ private fun LazyListScope.overdueSection(
 
         if (overdue.expanded) {
             item {
-                val isLightTheme = LegacyTheme.colors.pure == White
+                val isLightTheme = TransactionListTheme.colors.pure == White
                 GradientButton(
                     modifier = Modifier.padding(horizontal = 24.dp),
                     text = stringResource(R.string.skip_all),
@@ -200,9 +199,9 @@ private fun LazyListScope.overdueSection(
                             Black
                         )
                     },
-                    disabledBackgroundColor = LegacyTheme.colors.gray,
-                    shape = LegacyTheme.shapes.rFull,
-                    textStyle = LegacyTheme.typo.b2.copy(
+                    disabledBackgroundColor = TransactionListTheme.colors.gray,
+                    shape = TransactionListTheme.shapes.rFull,
+                    textStyle = TransactionListTheme.typo.b2.copy(
                         color = if (isLightTheme) Black else White,
                         fontWeight = FontWeight.Bold,
                         textAlign = TextAlign.Start
@@ -330,7 +329,7 @@ private fun LazyItemScope.NoTransactionsEmptyState(
 
         Text(
             text = emptyStateTitle,
-            style = LegacyTheme.typo.b1.copy(
+            style = TransactionListTheme.typo.b1.copy(
                 color = Gray,
                 fontWeight = FontWeight.ExtraBold,
                 textAlign = TextAlign.Start
@@ -342,7 +341,7 @@ private fun LazyItemScope.NoTransactionsEmptyState(
         Text(
             modifier = Modifier.padding(horizontal = 32.dp),
             text = emptyStateText,
-            style = LegacyTheme.typo.b2.copy(
+            style = TransactionListTheme.typo.b2.copy(
                 color = Gray,
                 fontWeight = FontWeight.Medium,
                 textAlign = TextAlign.Center
