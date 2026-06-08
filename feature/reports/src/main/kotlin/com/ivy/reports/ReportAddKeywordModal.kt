@@ -33,7 +33,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.Alignment
 import com.ivy.legacy.ui.modal.IvyModal
-import com.ivy.legacy.ui.modal.ModalAdd
+import com.ivy.ui.modal.ModalAdd
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.R
 import com.ivy.ui.compose.onCompositionStart

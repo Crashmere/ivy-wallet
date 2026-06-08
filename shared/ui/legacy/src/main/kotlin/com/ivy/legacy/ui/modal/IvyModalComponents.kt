@@ -17,6 +17,8 @@ import com.ivy.legacy.ui.theme.White
 import com.ivy.ui.compose.GradientButton
 import com.ivy.ui.compose.GradientIconButton
 import com.ivy.ui.compose.OutlinedPillButton
+import com.ivy.ui.modal.ModalAdd
+import com.ivy.ui.modal.ModalSave
 
 @Composable
 internal fun ModalDynamicPrimaryAction(
@@ -107,36 +109,6 @@ internal fun <T> ModalAddSave(
             onClick = onClick
         )
     }
-}
-
-@Composable
-fun ModalSave(
-    modifier: Modifier = Modifier,
-    enabled: Boolean = true,
-    onClick: () -> Unit
-) {
-    ModalPositiveButton(
-        modifier = modifier,
-        text = stringResource(R.string.save),
-        iconStart = R.drawable.ic_save,
-        enabled = enabled,
-        onClick = onClick
-    )
-}
-
-@Composable
-fun ModalAdd(
-    enabled: Boolean = true,
-    testTag: String = "modal_add",
-    onClick: () -> Unit
-) {
-    ModalPositiveButton(
-        modifier = Modifier.testTag(testTag),
-        text = stringResource(R.string.add),
-        iconStart = R.drawable.ic_plus,
-        enabled = enabled,
-        onClick = onClick
-    )
 }
 
 @Composable

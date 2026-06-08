@@ -37,8 +37,8 @@ import androidx.compose.ui.unit.dp
 import com.ivy.ui.compose.GradientIconButton
 import com.ivy.ui.compose.OutlinedPillButton
 import com.ivy.ui.icon.ItemIconMDefaultIcon
-import com.ivy.legacy.ui.modal.ModalAdd
-import com.ivy.legacy.ui.modal.ModalSave
+import com.ivy.ui.modal.ModalAdd
+import com.ivy.ui.modal.ModalSave
 import com.ivy.ui.theme.colors.Gradient
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.theme.colors.IvyFixedColors.White
