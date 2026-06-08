@@ -191,7 +191,7 @@ private fun BoxWithConstraintsScope.UI(
                 categoryAmounts = state.categoryAmounts,
                 selectedCategory = state.selectedCategory,
                 onCategoryClick = { clickedCategory ->
-                    onEvent(PieChartStatisticEvent.OnCategoryClicked(clickedCategory))
+                    onEvent(PieChartStatisticEvent.OnCategoryClicked(clickedCategory?.id?.value))
                 }
             )
 

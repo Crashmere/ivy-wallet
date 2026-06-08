@@ -8,7 +8,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
 import com.ivy.data.model.TransactionType
-import com.ivy.data.model.Category
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.domain.usecase.settings.GetTransfersAsIncomeExpensePreferenceUseCase
 import com.ivy.domain.usecase.transaction.GetLegacyTransactionsByIdsUseCase
@@ -122,7 +121,7 @@ internal class PieChartStatisticViewModel @Inject internal constructor(
                 is PieChartStatisticEvent.OnSelectPreviousMonth -> previousMonth()
                 is PieChartStatisticEvent.OnSetPeriod -> onSetPeriod(event.timePeriod)
                 is PieChartStatisticEvent.OnShowMonthModal -> configureMonthModal(event.timePeriod)
-                is PieChartStatisticEvent.OnCategoryClicked -> onCategoryClicked(event.category)
+                is PieChartStatisticEvent.OnCategoryClicked -> onCategoryClicked(event.categoryId)
             }
         }
     }
@@ -254,8 +253,11 @@ internal class PieChartStatisticViewModel @Inject internal constructor(
         choosePeriodModal = choosePeriodModalData
     }
 
-    private suspend fun onCategoryClicked(clickedCategory: Category?) {
-        val selectedCategoryValue = if (clickedCategory == selectedCategory?.category) {
+    private suspend fun onCategoryClicked(categoryId: UUID?) {
+        val clickedCategory = categoryAmounts
+            .firstOrNull { it.category?.id?.value == categoryId }
+            ?.category
+        val selectedCategoryValue = if (categoryId == selectedCategory?.category?.id?.value) {
             null
         } else {
             clickedCategory?.let { SelectedCategory(category = it) }
