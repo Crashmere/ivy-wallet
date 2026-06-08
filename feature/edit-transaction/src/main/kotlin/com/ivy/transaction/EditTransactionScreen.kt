@@ -75,7 +75,6 @@ import com.ivy.legacy.ui.modal.edit.AmountModal
 import com.ivy.legacy.ui.modal.edit.CategoryModal
 import com.ivy.legacy.ui.modal.CategoryModalData
 import com.ivy.legacy.ui.modal.edit.ChooseCategoryModal
-import com.ivy.legacy.ui.modal.edit.DescriptionModal
 import com.ivy.legacy.ui.theme.GradientGreen
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.ImmutableSet

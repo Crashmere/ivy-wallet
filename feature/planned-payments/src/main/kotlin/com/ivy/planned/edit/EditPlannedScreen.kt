@@ -47,7 +47,6 @@ import com.ivy.legacy.ui.modal.edit.AccountModal
 import com.ivy.legacy.ui.modal.edit.CategoryModal
 import com.ivy.legacy.ui.modal.CategoryModalData
 import com.ivy.legacy.ui.modal.edit.ChooseCategoryModal
-import com.ivy.legacy.ui.modal.edit.DescriptionModal
 import com.ivy.legacy.ui.theme.GradientGreen
 import kotlinx.collections.immutable.persistentListOf
 import java.time.LocalDateTime
