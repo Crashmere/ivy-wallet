@@ -84,6 +84,7 @@
 - 去除汇率远程数据源的旧抽象命名残留：接口已删除后，`RemoteExchangeRatesDataSourceImpl` 重命名为正式的 `RemoteExchangeRatesDataSource`，并移出 `impl` 包；汇率同步行为不变。
 - 收窄 data-core mapper 公开面：Room/远程 DTO 与 domain 模型之间的转换函数改为模块内部可见，远程汇率响应 DTO 和抓取函数也不再暴露为跨模块 API；同时删除 `TagMapper` 中无调用方的新建标签 helper。
 - 继续拆分 app 壳层职责：新增 `RootAppLockHost` 承接 Activity 生命周期里的应用锁、窗口安全和系统生物识别桥接，`RootActivity` 只保留生命周期转发和根内容装配。
+- 精简 Ktor 客户端配置：移除汇率同步 HTTP body 调试日志和 `ktor-client-logging` 依赖，数据层继续保留 JSON 内容协商和现有错误返回。
 
 当前仍保留：
 
