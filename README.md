@@ -461,6 +461,7 @@
 - `getCustomIconIdS()` 已从 legacy 组件包迁到 `shared:ui:core` 的 `com.ivy.ui.icon`；旧图标查找实现的内部类型和 fallback 逻辑已收窄为文件私有，图标选择器的静态图标清单也不再作为 legacy 公共 API 暴露。
 - 旧弹窗内部实现细节已继续收窄可见性：周期月份项、图标分组、选择分类新增按钮、金额键盘局部展示组件和 modal action row 不再作为模块外 public API 暴露；跨旧弹窗复用的金额键盘按钮和动态 action helper 仅保留 `shared:ui:legacy` 模块内可见。
 - 旧颜色兼容层继续收窄公开面：`dynamicContrast()` 仍是外部可用入口，但 HSV 拆解、亮暗调整和底层 HSV 转换 helper 已改为文件私有实现，避免旧主题算法细节继续作为公共 API 扩散。
+- 旧交易卡片的账户/分类查找 helper 已内聚回 `TransactionCard.kt` 并改成私有实现，删除不再提供公共 API 的 `component.transaction.Utils.kt`。
 - 旧日期/周期显示链路已停止使用全局 `stringRes()`：月份模型改为只保存 `monthValue`，月份名、interval 单位、Last N 周期和“今天/昨天/明天”文案都在 Composable 显示边界通过 `stringResource()` 获取；无调用方的旧 `stringRes()` 兼容函数已经删除。
 - 已删除 `shared:base` 中最后的全局 `appContext` 入口；`IvyAndroidApp` 不再在启动时写入全局 Context，旧 `SharedPrefs` 和平台类继续通过构造参数或 Hilt 注入获取 Context。
 - 第一批 UI 层当前时间读取已停止使用 deprecated 的全局时间函数：饼图点击计时改用 `SystemClock.elapsedRealtime()`，旧交易卡片、日期分隔、日期格式化和周期选择弹窗改为通过 `LocalTimeProvider` 获取当前日期/时间，并删除无调用方的 `getTrueDate()` 桥接函数。

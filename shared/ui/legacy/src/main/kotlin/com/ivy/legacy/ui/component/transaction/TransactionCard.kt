@@ -34,7 +34,6 @@ import com.ivy.data.model.LegacyTag
 import com.ivy.data.model.legacy.LegacyTransaction
 import com.ivy.data.model.TransactionType
 import com.ivy.data.model.Category
-import com.ivy.data.model.CategoryId
 import com.ivy.ui.time.LocalTimeConverter
 import com.ivy.ui.time.LocalTimeFormatter
 import com.ivy.ui.time.LocalTimeProvider
@@ -71,17 +70,6 @@ import com.ivy.legacy.ui.component.AmountCurrencyB1
 import kotlinx.collections.immutable.ImmutableList
 import java.time.LocalDateTime
 import java.util.Locale
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.ui.graphics.toArgb
-import com.ivy.data.model.primitive.ColorInt
-import com.ivy.data.model.primitive.IconAsset
-import com.ivy.data.model.primitive.NotBlankTrimmedString
-import com.ivy.legacy.ui.theme.Blue
-import com.ivy.legacy.ui.theme.GreenDark
-import com.ivy.legacy.ui.theme.IvyDark
-import kotlinx.collections.immutable.persistentListOf
-import java.time.ZoneOffset
 import java.util.UUID
 
 @Suppress("CyclomaticComplexMethod", "LongMethod")
@@ -305,7 +293,7 @@ private fun TransactionHeaderRow(
 ) {
     val nav = navigation()
 
-    val category = category(
+    val category = findCategory(
         categoryId = transaction.categoryId,
         categories = categories
     )
@@ -334,7 +322,7 @@ private fun TransactionHeaderRow(
                 CategoryBadgeDisplay(category, nav)
             }
 
-            val account = account(
+            val account = findAccount(
                 accountId = transaction.accountId,
                 accounts = accounts
             )
@@ -362,6 +350,22 @@ private fun TransactionHeaderRow(
             }
         }
     }
+}
+
+private fun findCategory(
+    categoryId: UUID?,
+    categories: List<Category>
+): Category? {
+    val targetId = categoryId ?: return null
+    return categories.find { it.id.value == targetId }
+}
+
+private fun findAccount(
+    accountId: UUID?,
+    accounts: List<LegacyAccount>
+): LegacyAccount? {
+    val targetId = accountId ?: return null
+    return accounts.find { it.id == targetId }
 }
 
 @Composable
