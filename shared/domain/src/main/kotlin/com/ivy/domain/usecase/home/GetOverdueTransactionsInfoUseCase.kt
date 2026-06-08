@@ -6,7 +6,7 @@ import com.ivy.domain.transaction.isOverdue
 import java.time.Instant
 import javax.inject.Inject
 
-class GetOverdueTransactionsInfoUseCase @Inject constructor(
+class GetOverdueTransactionsInfoUseCase @Inject internal constructor(
     private val calculateDueTransactionsInfoUseCase: CalculateDueTransactionsInfoUseCase
 ) {
     suspend operator fun invoke(

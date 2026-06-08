@@ -4,7 +4,7 @@ import com.ivy.data.model.ClosedTimeRange
 import com.ivy.domain.transaction.isUpcoming
 import javax.inject.Inject
 
-class GetUpcomingTransactionsInfoUseCase @Inject constructor(
+class GetUpcomingTransactionsInfoUseCase @Inject internal constructor(
     private val calculateDueTransactionsInfoUseCase: CalculateDueTransactionsInfoUseCase
 ) {
     suspend operator fun invoke(
