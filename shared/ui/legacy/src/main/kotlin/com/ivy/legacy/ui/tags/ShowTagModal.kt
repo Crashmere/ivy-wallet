@@ -34,7 +34,7 @@ import com.ivy.legacy.ui.modal.DeleteModal
 import com.ivy.legacy.ui.modal.IvyModal
 import com.ivy.legacy.ui.modal.ModalPositiveButton
 import com.ivy.legacy.ui.modal.ModalTitle
-import com.ivy.legacy.ui.search.SearchInput
+import com.ivy.ui.search.SearchInput
 import com.ivy.legacy.ui.theme.Blue2Dark
 import com.ivy.legacy.ui.theme.Gradient
 import com.ivy.legacy.ui.theme.LegacyTheme

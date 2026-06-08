@@ -19,7 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.TransactionType
-import com.ivy.legacy.ui.search.SearchInput
+import com.ivy.ui.search.SearchInput
 import com.ivy.legacy.ui.transaction.TransactionListAccount
 import com.ivy.legacy.ui.transaction.TransactionListData
 import com.ivy.legacy.ui.transaction.transactions

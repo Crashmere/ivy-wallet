@@ -1,4 +1,4 @@
-package com.ivy.legacy.ui.search
+package com.ivy.ui.search
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -31,8 +31,6 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.ivy.legacy.ui.theme.Gray
-import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.R
 import com.ivy.ui.compose.onCompositionStart
 import com.ivy.ui.compose.selectEndTextFieldValue
@@ -47,13 +45,14 @@ fun SearchInput(
     showClearIcon: Boolean = true,
     onSetSearchQueryTextField: (TextFieldValue) -> Unit
 ) {
+    val searchTheme = SearchInputTheme
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp)
-            .clip(LegacyTheme.shapes.rFull)
-            .background(LegacyTheme.colors.pure)
-            .border(1.dp, Gray, LegacyTheme.shapes.rFull),
+            .clip(searchTheme.shapes.rFull)
+            .background(searchTheme.colors.pure)
+            .border(1.dp, searchTheme.colors.gray, searchTheme.shapes.rFull),
         verticalAlignment = Alignment.CenterVertically
     ) {
         SearchIcon(icon = R.drawable.ic_search, modifier = Modifier.weight(1f))
@@ -99,7 +98,7 @@ private fun SearchIcon(
         modifier = modifier,
         painter = painterResource(id = icon),
         contentDescription = "icon",
-        tint = LegacyTheme.colors.pureInverse
+        tint = SearchInputTheme.colors.pureInverse
     )
 }
 
@@ -107,7 +106,7 @@ private fun SearchIcon(
 private fun IvyBasicTextField(
     modifier: Modifier = Modifier,
     value: TextFieldValue,
-    textColor: Color = LegacyTheme.colors.pureInverse,
+    textColor: Color = SearchInputTheme.colors.pureInverse,
     hint: String?,
     visualTransformation: VisualTransformation = VisualTransformation.None,
     keyboardOptions: KeyboardOptions = KeyboardOptions(
@@ -119,6 +118,7 @@ private fun IvyBasicTextField(
     keyboardActions: KeyboardActions? = null,
     onValueChanged: (TextFieldValue) -> Unit
 ) {
+    val searchTheme = SearchInputTheme
     val isEmpty = value.text.isBlank()
 
     Box(
@@ -128,8 +128,8 @@ private fun IvyBasicTextField(
         if (isEmpty && hint.isNullOrBlank().not()) {
             Text(
                 text = hint!!,
-                style = LegacyTheme.typo.b2.copy(
-                    color = LegacyTheme.colors.gray,
+                style = searchTheme.typo.b2.copy(
+                    color = searchTheme.colors.gray,
                     fontWeight = FontWeight.SemiBold,
                     textAlign = TextAlign.Start
                 ),
@@ -142,13 +142,13 @@ private fun IvyBasicTextField(
                 .testTag("base_input"),
             value = value,
             onValueChange = onValueChanged,
-            textStyle = LegacyTheme.typo.b2.copy(
+            textStyle = searchTheme.typo.b2.copy(
                 fontWeight = FontWeight.SemiBold,
                 color = textColor,
                 textAlign = TextAlign.Start
             ),
             singleLine = false,
-            cursorBrush = SolidColor(LegacyTheme.colors.pureInverse),
+            cursorBrush = SolidColor(searchTheme.colors.pureInverse),
             visualTransformation = visualTransformation,
             keyboardOptions = keyboardOptions,
             keyboardActions = keyboardActions ?: KeyboardActions(
