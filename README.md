@@ -120,6 +120,7 @@
 - 收窄 data-core 实现构造边界：Room Store、偏好 Store、mapper、文件系统和远程汇率源等实现类继续留在 `shared:data:core` 内部，注入构造函数也统一收为内部细节。
 - 收窄 app/feature 内部注入构造边界：ViewModel、页面内部 helper 和平台适配器仍由 Hilt 创建，但手动构造入口不再作为跨模块可见细节暴露。
 - 归位 legacy 根 UI 包名：`LegacyUiRoot` 仍作为 app 装配旧 UI 的入口保留，但包名已从 `com.ivy.ui` 调整到 `com.ivy.legacy.ui`，与所在 `shared:ui:legacy` 模块一致。
+- 删除 Android 系统自动备份规则：manifest 已保持 `allowBackup=false`，不再保留无实际作用的 `dataExtractionRules/fullBackupContent` 资源；应用内 zip 备份、恢复和 CSV 导入导出不受影响。
 
 当前仍保留：
 
@@ -164,7 +165,7 @@
 
 - `feature:*` 和 `app` 对 `:temp:legacy-code` 的直接依赖已经迁走，Gradle 中不再 include 旧 `temp` 模块。
 - `:temp:legacy-code` 模块已经删除；旧全局上下文入口暂时迁入 `shared:ui:legacy`，后续继续拆内部职责。
-- 旧设计系统源码已经迁入 `shared:ui:core` 作为兼容层，并已从 `com.ivy.legacy.design.*` 进一步归位到 `com.ivy.legacy.ui.theme.system`；旧根包装器已迁到 `com.ivy.ui.LegacyUiRoot`，旧 `LegacyTheme` 等概念仍存在，但不再伪装成正式设计系统。
+- 旧设计系统源码已经迁入 `shared:ui:core` 作为兼容层，并已从 `com.ivy.legacy.design.*` 进一步归位到 `com.ivy.legacy.ui.theme.system`；旧根包装器已归到 `com.ivy.legacy.ui.LegacyUiRoot`，旧 `LegacyTheme` 等概念仍存在，但不再伪装成正式设计系统。
 
 问题：
 
@@ -550,7 +551,7 @@
 - 页面级 `onScreenStart()` 保留在 `shared:ui:navigation`，跟导航状态保持同一模块；legacy 组件内部不再使用它，改用 `shared:ui:core` 的 `onCompositionStart()` 表达普通组合生命周期副作用。
 - 键盘显示监听、隐藏键盘、状态栏深色文字控制和旧日期展示格式化已从 legacy UI 迁到 `shared:ui:core`；搜索、交易、借贷、计划付款和旧弹窗继续使用相同行为，但不再通过 legacy 包拿通用平台/时间 helper。
 - 弹簧动画、插值、颜色插值、滑动手势监听、dp 转 px 和 interval 类型文案已从 legacy UI 根包迁到 `shared:ui:core`；首页、主底栏、饼图、报表和旧弹窗保留原交互，但通用动画/手势工具不再挂在 legacy 根包下。
-- `SearchInput` 已归入 legacy 组件包，金额输入偏好 CompositionLocal 已归入 `shared:ui:core` 的 preferences 包，`LegacyUiRoot` 对外包名改为 `com.ivy.ui`；`com.ivy.legacy.ui` 根包不再承载公共入口。
+- `SearchInput` 已归入 legacy 组件包，金额输入偏好 CompositionLocal 已归入 `shared:ui:core` 的 preferences 包，`LegacyUiRoot` 对外包名已改为 `com.ivy.legacy.ui`，与 `shared:ui:legacy` 模块保持一致。
 - 首页缓冲金额展示模型 `BufferInfo` 和编辑交易借贷提示模型 `EditTransactionDisplayLoan` 已移回各自 feature；`shared:ui:legacy` 不再保存这两段页面私有状态。
 - 周期选择模型和状态 `TimePeriod/Month/LastNTimeRange/PeriodState` 已从 legacy UI 迁到 `shared:ui:core` 的 `com.ivy.ui.period`；首页、交易、报表、饼图、预算和根部状态继续共用同一周期语义，但不再依赖 legacy 包。
 - 周期弹窗状态 `ChoosePeriodModalData` 已归入 `shared:ui:core` 的 `com.ivy.ui.period`，弹窗动画时长常量已归入 `com.ivy.ui.animation`；页面状态和搜索页动画不再为了数据对象或常量引用 legacy modal 包。
@@ -646,7 +647,7 @@
 - 已把旧设计包里的通用 Compose helper 迁到 `com.ivy.ui.compose`，并把键盘隐藏 helper 迁到 `com.ivy.ui.platform`；这些工具不再带旧设计系统的过时标记。
 - 已把当前仍在使用的主题状态 `ThemeState/LocalThemeState` 和 Material3 theme 包装迁到 `com.ivy.ui.theme`；旧 `LegacyTheme/IvyTheme` 继续作为兼容层调用它。
 - 已把 `LocalDatePicker` 迁到 `com.ivy.ui.platform`，把 `LocalTimeConverter/LocalTimeProvider/LocalTimeFormatter` 迁到 `com.ivy.ui.time`；根部 UI 包装器只负责提供这些平台和时间 Local，不再定义它们。
-- 已把旧 `IvyUI` 根包装器迁到 `com.ivy.ui.LegacyUiRoot` 并改名，`com.ivy.legacy.design.api` 包已经清空。
+- 已把旧 `IvyUI` 根包装器迁到 `com.ivy.legacy.ui.LegacyUiRoot` 并改名，`com.ivy.legacy.design.api` 包已经清空。
 - 已把旧颜色选择器常量从 `com.ivy.legacy.design` 根包迁到 `com.ivy.legacy.ui.theme`，CSV 导入和旧颜色选择器继续使用同一组颜色值。
 - 已把旧主题兼容层从 `com.ivy.legacy.design.l0_system` 迁到 `com.ivy.legacy.ui.theme.system`，旧设计包目录已经清空；功能和视觉保持不变。
 - 已删除旧设计接口和默认设计外部传参，旧主题兼容层直接使用内部默认配置，去掉了无实际扩展点的设计系统抽象。
@@ -1210,6 +1211,7 @@ shared:ui:core
 - data-core 内部实现类的 `@Inject` 构造函数已统一收为 `internal`；模块外继续只依赖 `shared:data:api` 暴露的 Store 端口。
 - app 和 feature 中已是 `internal` 的注入类也统一收窄构造函数；导航入口和 Composable 页面 API 不变。
 - `LegacyUiRoot` 已归入 `com.ivy.legacy.ui` 包；app 仍保留对 `shared:ui:legacy` 的真实依赖，但不再把 legacy 根入口伪装成 ui-core 包名。
+- Android manifest 已删除系统自动备份规则引用和对应 XML；当前分支继续通过 Ivy 自己的数据管理入口处理 zip 备份、恢复和 CSV 导入导出。
 - app 仍保留文件选择、文件分享、Material 日期选择器、BuildInfo、Locale 设置、生物识别和窗口安全等真正依赖 Activity 或 Android app 壳层的装配。
 
 ## 高风险区域
