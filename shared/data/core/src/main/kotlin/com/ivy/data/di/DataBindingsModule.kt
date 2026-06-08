@@ -34,8 +34,6 @@ import com.ivy.data.backup.DefaultBackupStore
 import com.ivy.data.datastore.DataStorePreferenceToggleStore
 import com.ivy.data.file.FileSystem
 import com.ivy.data.preferences.SharedPrefsPreferenceStore
-import com.ivy.data.remote.RemoteExchangeRatesDataSource
-import com.ivy.data.remote.impl.RemoteExchangeRatesDataSourceImpl
 import com.ivy.data.store.DefaultExchangeRateStore
 import com.ivy.data.store.RoomAccountStore
 import com.ivy.data.store.RoomBudgetStore
@@ -125,11 +123,6 @@ abstract class DataBindingsModule {
 
     @Binds
     abstract fun bindCurrencyStore(store: RoomCurrencyStore): CurrencyStore
-
-    @Binds
-    abstract fun bindExchangeRatesDataSource(
-        dataSource: RemoteExchangeRatesDataSourceImpl
-    ): RemoteExchangeRatesDataSource
 
     @Binds
     abstract fun bindTextFileStore(fileSystem: FileSystem): TextFileStore
