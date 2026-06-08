@@ -91,6 +91,9 @@ fun BoxWithConstraintsScope.SettingsScreen() {
                     nav.resetBackStack()
                     nav.navigateTo(MainScreen)
                 }
+
+                is SettingsUiEvent.ShareCsvFile -> fileSharer.shareCSVFile(event.fileUri)
+                is SettingsUiEvent.ShareZipFile -> fileSharer.shareZipFile(event.fileUri)
             }
         }
     }
@@ -121,10 +124,10 @@ fun BoxWithConstraintsScope.SettingsScreen() {
             viewModel.onEvent(SettingsEvent.SetCurrency(it))
         },
         onBackupData = {
-            viewModel.onEvent(SettingsEvent.BackupData(fileSharer))
+            viewModel.onEvent(SettingsEvent.BackupData)
         },
         onExportToCSV = {
-            viewModel.onEvent(SettingsEvent.ExportToCsv(fileSharer))
+            viewModel.onEvent(SettingsEvent.ExportToCsv)
         },
         onSetLockApp = {
             viewModel.onEvent(SettingsEvent.SetLockApp(it))

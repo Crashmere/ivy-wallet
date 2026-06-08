@@ -36,7 +36,6 @@ import com.ivy.ui.theme.ThemeState
 import com.ivy.ui.period.PeriodState
 import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.platform.FilePicker
-import com.ivy.ui.platform.FileSharer
 import com.ivy.ui.platform.LocaleSettingsLauncher
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -281,8 +280,8 @@ internal class SettingsViewModel @Inject internal constructor(
     override fun onEvent(event: SettingsEvent) {
         when (event) {
             is SettingsEvent.SetCurrency -> setCurrency(event.newCurrency)
-            is SettingsEvent.ExportToCsv -> exportToCSV(event.fileSharer)
-            is SettingsEvent.BackupData -> exportToZip(event.fileSharer)
+            SettingsEvent.ExportToCsv -> exportToCSV()
+            SettingsEvent.BackupData -> exportToZip()
             SettingsEvent.SwitchTheme -> switchTheme()
             is SettingsEvent.SetLockApp -> setLockApp(event.lockApp)
             is SettingsEvent.SetShowNotifications -> setShowNotifications(event.showNotifications)
@@ -363,7 +362,7 @@ internal class SettingsViewModel @Inject internal constructor(
         }
     }
 
-    private fun exportToCSV(fileSharer: FileSharer) {
+    private fun exportToCSV() {
         filePicker.createFile(
             "IvyWalletExport_${utcTimestamp()}.csv"
         ) { fileUri ->
@@ -372,14 +371,12 @@ internal class SettingsViewModel @Inject internal constructor(
                     outputFile = ExternalFile(fileUri.toString())
                 )
 
-                fileSharer.shareCSVFile(
-                    fileUri = fileUri
-                )
+                _uiEvents.emit(SettingsUiEvent.ShareCsvFile(fileUri))
             }
         }
     }
 
-    private fun exportToZip(fileSharer: FileSharer) {
+    private fun exportToZip() {
         filePicker.createFile(
             "IvyWalletBackup_${utcTimestamp()}.zip"
         ) { fileUri ->
@@ -389,9 +386,7 @@ internal class SettingsViewModel @Inject internal constructor(
                 progressState.value = false
 
                 withContext(Dispatchers.Main) {
-                    fileSharer.shareZipFile(
-                        fileUri = fileUri
-                    )
+                    _uiEvents.emit(SettingsUiEvent.ShareZipFile(fileUri))
                 }
             }
         }

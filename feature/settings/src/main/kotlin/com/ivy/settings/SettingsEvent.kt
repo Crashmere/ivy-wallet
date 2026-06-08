@@ -1,11 +1,9 @@
 package com.ivy.settings
 
-import com.ivy.ui.platform.FileSharer
-
 internal sealed interface SettingsEvent {
     data class SetCurrency(val newCurrency: String) : SettingsEvent
-    data class ExportToCsv(val fileSharer: FileSharer) : SettingsEvent
-    data class BackupData(val fileSharer: FileSharer) : SettingsEvent
+    data object ExportToCsv : SettingsEvent
+    data object BackupData : SettingsEvent
     data object SwitchTheme : SettingsEvent
     data class SetLockApp(val lockApp: Boolean) : SettingsEvent
     data class SetShowNotifications(val showNotifications: Boolean) : SettingsEvent
