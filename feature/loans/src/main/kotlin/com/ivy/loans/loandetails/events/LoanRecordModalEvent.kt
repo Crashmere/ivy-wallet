@@ -5,7 +5,7 @@ import com.ivy.loans.loan.data.DisplayLoanRecord
 import com.ivy.data.model.CreateLoanRecordData
 import com.ivy.data.model.EditLoanRecordData
 
-sealed interface LoanRecordModalEvent : LoanDetailsScreenEvent {
+internal sealed interface LoanRecordModalEvent : LoanDetailsScreenEvent {
     data class OnClickLoanRecord(val displayLoanRecord: DisplayLoanRecord) : LoanRecordModalEvent
     data class OnCreateLoanRecord(val loanRecordData: CreateLoanRecordData) :
         LoanRecordModalEvent

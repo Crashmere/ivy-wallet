@@ -1,5 +1,5 @@
 package com.ivy.loans.loandetails
 
-sealed interface LoanDetailsUiEvent {
+internal sealed interface LoanDetailsUiEvent {
     data object CloseScreen : LoanDetailsUiEvent
 }

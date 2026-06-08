@@ -618,7 +618,7 @@ private fun LoanInfoCard(
     }
 }
 
-fun LazyListScope.loanRecords(
+internal fun LazyListScope.loanRecords(
     loan: Loan,
     displayLoanRecords: List<DisplayLoanRecord> = emptyList(),
     onClick: (DisplayLoanRecord) -> Unit

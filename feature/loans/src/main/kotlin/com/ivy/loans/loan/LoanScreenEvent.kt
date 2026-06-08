@@ -4,7 +4,7 @@ import com.ivy.loans.loan.data.DisplayLoan
 import com.ivy.data.model.CreateAccountData
 import com.ivy.data.model.CreateLoanData
 
-sealed interface LoanScreenEvent {
+internal sealed interface LoanScreenEvent {
     data class OnLoanCreate(val createLoanData: CreateLoanData) : LoanScreenEvent
     data class OnReordered(val reorderedList: List<DisplayLoan>) : LoanScreenEvent
     data class OnCreateAccount(val accountData: CreateAccountData) : LoanScreenEvent

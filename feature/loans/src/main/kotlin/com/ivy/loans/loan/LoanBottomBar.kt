@@ -38,8 +38,8 @@ import com.ivy.legacy.ui.component.IvyIcon
 import com.ivy.legacy.ui.theme.pureBlur
 import kotlin.math.roundToInt
 
-val FAB_BUTTON_SIZE = 56.dp
-const val ZINDEX = 200f
+private val FabButtonSize = 56.dp
+private const val ZIndex = 200f
 
 @Composable
 internal fun BoxWithConstraintsScope.LoanBottomBar(
@@ -64,7 +64,7 @@ internal fun BoxWithConstraintsScope.LoanBottomBar(
             selectTab(LoanTab.PENDING)
         }
 
-        Spacer(Modifier.width(FAB_BUTTON_SIZE))
+        Spacer(Modifier.width(FabButtonSize))
 
         Tab(
             icon = R.drawable.ic_custom_loan_s,
@@ -78,9 +78,9 @@ internal fun BoxWithConstraintsScope.LoanBottomBar(
 
     val screenWidthPx = maxWidth.toDensityPx()
     val screenHeightPx = maxHeight.toDensityPx()
-    val fabStartX = screenWidthPx / 2 - FAB_BUTTON_SIZE.toDensityPx() / 2
+    val fabStartX = screenWidthPx / 2 - FabButtonSize.toDensityPx() / 2
     val fabStartY = screenHeightPx - navigationBarInset() -
-            30.dp.toDensityPx() - FAB_BUTTON_SIZE.toDensityPx()
+            30.dp.toDensityPx() - FabButtonSize.toDensityPx()
 
     IvyCircleButton(
         modifier = Modifier
@@ -93,8 +93,8 @@ internal fun BoxWithConstraintsScope.LoanBottomBar(
                     )
                 }
             }
-            .size(FAB_BUTTON_SIZE)
-            .zIndex(ZINDEX),
+            .size(FabButtonSize)
+            .zIndex(ZIndex),
         backgroundPadding = 8.dp,
         icon = R.drawable.ic_add,
         backgroundGradient = GradientPurple,

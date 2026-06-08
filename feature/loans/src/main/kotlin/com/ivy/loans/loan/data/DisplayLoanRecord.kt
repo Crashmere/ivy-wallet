@@ -3,7 +3,7 @@ package com.ivy.loans.loan.data
 import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.data.model.LoanRecord
 
-data class DisplayLoanRecord(
+internal data class DisplayLoanRecord(
     val loanRecord: LoanRecord,
     val account: LegacyAccount? = null,
     val loanRecordCurrencyCode: String = "",

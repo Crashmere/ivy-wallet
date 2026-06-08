@@ -2,7 +2,7 @@ package com.ivy.loans.loandetails.events
 
 import com.ivy.data.model.Loan
 
-sealed interface LoanModalEvent : LoanDetailsScreenEvent {
+internal sealed interface LoanModalEvent : LoanDetailsScreenEvent {
     data object OnDismissLoanModal : LoanModalEvent
     data class OnEditLoanModal(val loan: Loan, val createLoanTransaction: Boolean) :
         LoanModalEvent

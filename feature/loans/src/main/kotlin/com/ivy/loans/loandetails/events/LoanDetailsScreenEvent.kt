@@ -2,7 +2,7 @@ package com.ivy.loans.loandetails.events
 
 import com.ivy.data.model.CreateAccountData
 
-sealed interface LoanDetailsScreenEvent {
+internal sealed interface LoanDetailsScreenEvent {
     data object OnEditLoanClick : LoanDetailsScreenEvent
     data object OnAmountClick : LoanDetailsScreenEvent
     data object OnAddRecord : LoanDetailsScreenEvent

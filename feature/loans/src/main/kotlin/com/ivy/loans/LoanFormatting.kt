@@ -7,7 +7,7 @@ import com.ivy.data.model.Loan
 import com.ivy.ui.R
 
 @Composable
-fun Loan.humanReadableType(): String {
+internal fun Loan.humanReadableType(): String {
     return if (type == LoanType.BORROW) {
         stringResource(R.string.borrowed_uppercase)
     } else {

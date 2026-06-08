@@ -4,7 +4,7 @@ import com.ivy.data.model.Loan
 import com.ivy.data.model.currency.getDefaultFIATCurrency
 import com.ivy.legacy.ui.component.ReorderableItem
 
-data class DisplayLoan(
+internal data class DisplayLoan(
     val loan: Loan,
     val loanTotalAmount: Double,
     val amountPaid: Double,

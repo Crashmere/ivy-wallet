@@ -6,7 +6,7 @@ import com.ivy.ui.modal.LoanModalData
 import kotlinx.collections.immutable.ImmutableList
 import java.time.Instant
 
-data class LoanScreenState(
+internal data class LoanScreenState(
     val baseCurrency: String,
     val completedLoans: ImmutableList<DisplayLoan>,
     val pendingLoans: ImmutableList<DisplayLoan>,

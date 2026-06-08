@@ -61,7 +61,7 @@ import javax.inject.Inject
 
 @Stable
 @HiltViewModel
-class LoanDetailsViewModel @Inject constructor(
+internal class LoanDetailsViewModel @Inject constructor(
     private val updateLoanUseCase: UpdateLoanUseCase,
     private val deleteLoanUseCase: DeleteLoanUseCase,
     private val createLoanRecordUseCase: CreateLoanRecordUseCase,

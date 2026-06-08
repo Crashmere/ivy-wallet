@@ -46,7 +46,7 @@ import javax.inject.Inject
 
 @Stable
 @HiltViewModel
-class LoanViewModel @Inject constructor(
+internal class LoanViewModel @Inject constructor(
     private val getBaseCurrencyCodeUseCase: GetBaseCurrencyCodeUseCase,
     private val getLoanRecordsUseCase: GetLoanRecordsUseCase,
     private val reorderLoansUseCase: ReorderLoansUseCase,
@@ -100,7 +100,7 @@ class LoanViewModel @Inject constructor(
         )
     }
 
-    fun setTab(tab: LoanTab) {
+    private fun setTab(tab: LoanTab) {
         selectedTab = tab
     }
 
