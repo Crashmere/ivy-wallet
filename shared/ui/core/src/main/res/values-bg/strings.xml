@@ -272,8 +272,6 @@
     <string name="yesterday_date">Вчера, %1$s</string>
     <string name="tomorrow_date">Утре, %1$s</string>
     <string name="expired">Изтекъл</string>
-    <string name="authentication_succeeded">Успешен вход!</string>
-    <string name="authentication_failed">Неуспешен вход.</string>
     <string name="notification_1">Въведохте ли разходите си днес? 🏁</string>
     <string name="notification_2">Въведохте ли разходите си днес? 💸</string>
     <string name="notification_3">Въведохте ли разходите си днес? 🏁</string>

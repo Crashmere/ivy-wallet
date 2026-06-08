@@ -202,8 +202,6 @@
     <string name="notification_3">क्या आपने आज अपना लेन-देन रिकॉर्ड किया है? 🏁</string>
     <string name="notification_2">क्या आपने आज अपने खर्चों को ट्रैक किया? 💸</string>
     <string name="notification_1">क्या आपने आज कोई लेन-देन किया है? 🏁</string>
-    <string name="authentication_failed">प्रमाणीकरण विफल हुआ।</string>
-    <string name="authentication_succeeded">प्रमाणीकरण सफल रहा!</string>
     <string name="expired">एक्स्पायर्ड</string>
     <string name="tomorrow_date">कल, %1$s</string>
     <string name="yesterday_date">कल, %1$s</string>

@@ -275,8 +275,6 @@
     <string name="yesterday_date">Ieri, %1$s</string>
     <string name="tomorrow_date">Domani, %1$s</string>
     <string name="expired">Scaduto</string>
-    <string name="authentication_succeeded">Autenticazione riuscita!</string>
-    <string name="authentication_failed">Autenticazione non riuscita.</string>
     <string name="notification_1">Hai effettuato delle transazioni oggi? 🏁</string>
     <string name="notification_2">Hai tenuto traccia delle tue spese oggi? 💸</string>
     <string name="notification_3">Hai registrato le tue transazioni oggi? 🏁</string>

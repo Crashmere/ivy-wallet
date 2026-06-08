@@ -275,8 +275,6 @@
     <string name="yesterday_date">Wczoraj, %1$s</string>
     <string name="tomorrow_date">Jutro, %1$s</string>
     <string name="expired">Wygasłe</string>
-    <string name="authentication_succeeded">Uwierzytelnienie powiodło się!</string>
-    <string name="authentication_failed">Uwierzytelnienie nie powiodło się.</string>
     <string name="notification_1">Dokonałeś dziś jakiejś transakcji? 🏁</string>
     <string name="notification_2">Śledziłeś dziś swoje wydatki? 💸</string>
     <string name="notification_3">Nie zapomij zapisywać swoich transakcji! 🏁</string>

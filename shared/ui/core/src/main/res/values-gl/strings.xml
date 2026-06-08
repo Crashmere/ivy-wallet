@@ -277,8 +277,6 @@
     <string name="yesterday_date">Onte, %1$s</string>
     <string name="tomorrow_date">Mañá, %1$s</string>
     <string name="expired">Caducado</string>
-    <string name="authentication_succeeded">Autenticación exitosa!</string>
-    <string name="authentication_failed">Autenticación fallida.</string>
     <string name="notification_1">Fixeches algunha transacción hoxe? 🏁</string>
     <string name="notification_2">Rexistraches os teus gastos hoxe? 💸</string>
     <string name="notification_3">Rexistraches as túas transaccións hoxe? 🏁</string>

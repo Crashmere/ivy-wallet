@@ -272,8 +272,6 @@
     <string name="yesterday_date">ನಿನ್ನೆ, %1$s</string>
     <string name="tomorrow_date">ನಾಳೆ, %1$s</string>
     <string name="expired">ಅವಧಿ ಮೀರಿದೆ</string>
-    <string name="authentication_succeeded">ದೃಢೀಕರಣ ಯಶಸ್ವಿಯಾಗಿದೆ!</string>
-    <string name="authentication_failed">ಪ್ರಮಾಣೀಕರಣ ವಿಫಲವಾಗಿದೆ.</string>
     <string name="notification_1">ನೀವು ಇಂದು ಯಾವುದಾದರೂ ವಹಿವಾಟು ನಡೆಸಿದ್ದೀರಾ? 🏁</string>
     <string name="notification_2">ಇಂದು ನಿಮ್ಮ ಖರ್ಚುಗಳನ್ನು ನೀವು ಟ್ರ್ಯಾಕ್ ಮಾಡಿದ್ದೀರಾ? 💸</string>
     <string name="notification_3">ನೀವು ಇಂದು ನಿಮ್ಮ ವಹಿವಾಟುಗಳನ್ನು ದಾಖಲಿಸಿದ್ದೀರಾ? 🏁</string>

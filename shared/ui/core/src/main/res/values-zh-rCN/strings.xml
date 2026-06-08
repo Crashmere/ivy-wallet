@@ -298,8 +298,6 @@
     <string name="yesterday_date">昨天，%1$s</string>
     <string name="tomorrow_date">明天，%1$s</string>
     <string name="expired">已过期</string>
-    <string name="authentication_succeeded">认证成功！</string>
-    <string name="authentication_failed">认证失败。</string>
     <string name="notification_1">您今天有任何交易吗？ 🏁</string>
     <string name="notification_2">您今天跟踪了您的开支吗？ 💸</string>
     <string name="notification_3">您今天记录了您的交易吗？ 🏁</string>

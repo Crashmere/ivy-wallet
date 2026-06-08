@@ -85,6 +85,7 @@
 - 收窄 data-core mapper 公开面：Room/远程 DTO 与 domain 模型之间的转换函数改为模块内部可见，远程汇率响应 DTO 和抓取函数也不再暴露为跨模块 API；同时删除 `TagMapper` 中无调用方的新建标签 helper。
 - 继续拆分 app 壳层职责：新增 `RootAppLockHost` 承接 Activity 生命周期里的应用锁、窗口安全和系统生物识别桥接，`RootActivity` 只保留生命周期转发和根内容装配。
 - 精简 Ktor 客户端配置：移除汇率同步 HTTP body 调试日志和 `ktor-client-logging` 依赖，数据层继续保留 JSON 内容协商和现有错误返回。
+- 精简应用锁调试路径：删除生物识别成功/失败的 debug 日志、只为日志存在的文案读取依赖，以及无运行时引用的认证结果多语言文案。
 
 当前仍保留：
 

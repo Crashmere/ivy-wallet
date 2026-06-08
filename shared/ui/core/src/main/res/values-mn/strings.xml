@@ -272,8 +272,6 @@
     <string name="yesterday_date">Өчигдөр, %1$s</string>
     <string name="tomorrow_date">Маргааш, %1$s</string>
     <string name="expired">Өнгөрсөн</string>
-    <string name="authentication_succeeded">Амжилттай нэвтэрлээ!</string>
-    <string name="authentication_failed">Нэвтрэлт амжилтгүй.</string>
     <string name="notification_1">Та өнөөдөр гүйлгээ хийсэн үү? 🏁</string>
     <string name="notification_2">Өнөөдрийн зардлуудаа бүртгэсэн үү? 💸</string>
     <string name="notification_3">Та өнөөдрийн гүйлгээнүүдээ бүртгэсэн үү? 🏁</string>

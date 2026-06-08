@@ -272,8 +272,6 @@
     <string name="yesterday_date">أمس, %1$s</string>
     <string name="tomorrow_date">غدًا, %1$s</string>
     <string name="expired">منتهي الصلاحية</string>
-    <string name="authentication_succeeded">تم تأكيدالهوية.</string>
-    <string name="authentication_failed">فشل تأكيدالهوية.</string>
     <string name="notification_1">هل قمت بأي معاملات اليوم؟ 🏁</string>
     <string name="notification_2">هل قمت بمتابعة إنفاقك اليوم؟ 💸</string>
     <string name="notification_3">هل قمت بتسجيل معاملاتك اليوم؟ 🏁</string>

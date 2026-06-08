@@ -1,8 +1,6 @@
 package com.ivy.wallet.security
 
-import com.ivy.ui.resource.ResourceProvider
 import com.ivy.domain.usecase.settings.GetAppLockEnabledPreferenceUseCase
-import com.ivy.ui.R
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -11,13 +9,11 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import java.util.concurrent.atomic.AtomicLong
 import javax.inject.Inject
 
 class AppLockController @Inject constructor(
     private val getAppLockEnabledPreference: GetAppLockEnabledPreferenceUseCase,
-    private val resourceProvider: ResourceProvider,
 ) {
     private companion object {
         private const val USER_INACTIVITY_TIME_LIMIT = 60
@@ -54,13 +50,10 @@ class AppLockController @Inject constructor(
     }
 
     fun handleBiometricAuthenticationSucceeded() {
-        Timber.d(resourceProvider.getString(R.string.authentication_succeeded))
         unlockApp()
     }
 
-    fun handleBiometricAuthenticationFailed() {
-        Timber.d(resourceProvider.getString(R.string.authentication_failed))
-    }
+    fun handleBiometricAuthenticationFailed() = Unit
 
     fun startUserInactiveTimeCounter(scope: CoroutineScope) {
         if (userInactiveJob != null && userInactiveJob!!.isActive) return

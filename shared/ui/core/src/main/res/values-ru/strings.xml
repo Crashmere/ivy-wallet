@@ -272,8 +272,6 @@
     <string name="yesterday_date">Вчера, %1$s</string>
     <string name="tomorrow_date">Завтра, %1$s</string>
     <string name="expired">Просрочено</string>
-    <string name="authentication_succeeded">Аутентификация успешна!</string>
-    <string name="authentication_failed">Аутентификация не удалась.</string>
     <string name="notification_1">Вы сегодня совершали какие-либо транзакции? 🏁</string>
     <string name="notification_2">Вы сегодня отслеживали свои расходы? 💸</string>
     <string name="notification_3">Вы записали свои транзакции за сегодня? 🏁</string>

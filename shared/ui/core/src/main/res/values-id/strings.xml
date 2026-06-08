@@ -275,8 +275,6 @@
     <string name="yesterday_date">Kemarin, %1$s</string>
     <string name="tomorrow_date">Besok, %1$s</string>
     <string name="expired">Kedaluwarsa</string>
-    <string name="authentication_succeeded">Autentikasi berhasil!</string>
-    <string name="authentication_failed">Autentikasi gagal.</string>
     <string name="notification_1">Sudahkah Anda melakukan transaksi hari ini? 🏁</string>
     <string name="notification_2">Sudahkah Anda melacak pengeluaran hari ini? 💸</string>
     <string name="notification_3">Sudahkah Anda mencatat transaksi hari ini? 🏁</string>
