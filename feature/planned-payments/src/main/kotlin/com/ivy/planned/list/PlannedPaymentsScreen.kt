@@ -11,11 +11,11 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.ivy.data.model.TransactionType
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
 import com.ivy.ui.navigation.EditPlannedScreen
 import com.ivy.ui.navigation.PlannedPaymentsScreen
+import com.ivy.ui.navigation.TransactionRouteType
 import com.ivy.ui.navigation.navigation
 import com.ivy.ui.navigation.screenScopedViewModel
 import com.ivy.ui.R
@@ -80,7 +80,7 @@ private fun BoxWithConstraintsScope.UI(
         onAdd = {
             nav.navigateTo(
                 EditPlannedScreen(
-                    type = TransactionType.EXPENSE,
+                    type = TransactionRouteType.EXPENSE,
                     plannedPaymentRuleId = null
                 )
             )

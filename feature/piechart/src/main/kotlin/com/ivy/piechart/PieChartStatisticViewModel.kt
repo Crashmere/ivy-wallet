@@ -16,6 +16,7 @@ import com.ivy.domain.usecase.transaction.GetLegacyTransactionsByIdsUseCase
 import com.ivy.ui.period.PeriodState
 import com.ivy.ui.period.TimePeriod
 import com.ivy.ui.navigation.PieChartStatisticScreen
+import com.ivy.ui.navigation.TransactionRouteType
 import com.ivy.ui.ComposeViewModel
 import com.ivy.legacy.ui.modal.ChoosePeriodModalData
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -142,7 +143,7 @@ class PieChartStatisticViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.Default) {
             startInternally(
                 period = periodState.selectedPeriod,
-                type = screen.type,
+                type = screen.type.toTransactionType(),
                 accountIdFilterList = screen.accountList,
                 filterExclude = screen.filterExcluded,
                 transactions = getLegacyTransactionsByIdsUseCase(screen.legacyTransactionIds)
@@ -278,4 +279,8 @@ class PieChartStatisticViewModel @Inject constructor(
         selectedCategory = selectedCategoryValue
         categoryAmounts = newCategoryAmounts
     }
+}
+
+private fun TransactionRouteType.toTransactionType(): TransactionType {
+    return TransactionType.valueOf(name)
 }

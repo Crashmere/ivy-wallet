@@ -44,6 +44,7 @@ import com.ivy.domain.usecase.transaction.SaveLegacyTransactionUseCase
 import com.ivy.domain.usecase.transaction.SuggestTransactionTitlesUseCase
 import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.ui.navigation.EditTransactionScreen
+import com.ivy.ui.navigation.TransactionRouteType
 import com.ivy.ui.navigation.MainScreen
 import com.ivy.ui.navigation.Navigation
 import com.ivy.ui.ComposeViewModel
@@ -174,6 +175,7 @@ class EditTransactionViewModel @Inject constructor(
             categories = sortCategories()
 
             reset()
+            val routeTransactionType = screen.type.toTransactionType()
 
             loadedTransaction = screen.initialTransactionId?.let {
                 getLegacyTransactionUseCase(it)
@@ -183,7 +185,7 @@ class EditTransactionViewModel @Inject constructor(
                     accounts = getAccounts
                 ),
                 categoryId = screen.categoryId,
-                type = screen.type,
+                type = routeTransactionType,
                 amount = BigDecimal.ZERO,
                 toAmount = BigDecimal.ZERO
             )
@@ -980,6 +982,10 @@ class EditTransactionViewModel @Inject constructor(
     private suspend fun shouldSortCategoriesAscending(): Boolean {
         return preferenceToggleService.isEnabled(preferenceToggles.sortCategoriesAscending)
     }
+}
+
+private fun TransactionRouteType.toTransactionType(): TransactionType {
+    return TransactionType.valueOf(name)
 }
 
 private fun LocalDateTime.toUtcInstant(): Instant =

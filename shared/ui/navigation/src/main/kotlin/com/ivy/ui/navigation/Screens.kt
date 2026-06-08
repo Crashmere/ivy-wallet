@@ -1,6 +1,5 @@
 package com.ivy.ui.navigation
 
-import com.ivy.data.model.TransactionType
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import java.util.UUID
@@ -17,7 +16,7 @@ data object CSVScreen : Screen {
 
 data class EditTransactionScreen(
     val initialTransactionId: UUID?,
-    val type: TransactionType,
+    val type: TransactionRouteType,
     // extras
     val accountId: UUID? = null,
     val categoryId: UUID? = null
@@ -30,7 +29,6 @@ data class TransactionsScreen(
     val accountId: UUID? = null,
     val categoryId: UUID? = null,
     val unspecifiedCategory: Boolean? = false,
-    val transactionType: TransactionType? = null,
     val accountIdFilterList: List<UUID> = persistentListOf(),
     val legacyTransactionIds: List<UUID> = persistentListOf(),
     val containsTransferTransactions: Boolean = false
@@ -40,7 +38,7 @@ data class TransactionsScreen(
 }
 
 data class PieChartStatisticScreen(
-    val type: TransactionType,
+    val type: TransactionRouteType,
     val filterExcluded: Boolean = true,
     val accountList: ImmutableList<UUID> = persistentListOf(),
     val legacyTransactionIds: ImmutableList<UUID> = persistentListOf(),
@@ -52,7 +50,7 @@ data class PieChartStatisticScreen(
 
 data class EditPlannedScreen(
     val plannedPaymentRuleId: UUID?,
-    val type: TransactionType,
+    val type: TransactionRouteType,
     val amount: Double? = null,
     val accountId: UUID? = null,
     val categoryId: UUID? = null,

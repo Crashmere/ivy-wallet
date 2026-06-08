@@ -35,6 +35,7 @@
 - 收窄 Gradle 仓库配置：普通依赖解析不再使用 Gradle Plugin Portal，`buildSrc` 普通依赖也不再保留 JitPack；插件解析入口继续保留 Gradle Plugin Portal。
 - 删除根工程 JitPack 仓库：当前剩余第三方依赖均可从 Google/Maven Central 解析，项目不再依赖额外的 JitPack 仓库入口。
 - 收窄导航旧交易参数：`TransactionsScreen` 与 `PieChartStatisticScreen` 不再通过导航携带完整 `LegacyTransaction`，改为传递交易 ID，并由目标 ViewModel 按需读取展示模型。
+- 收窄导航交易类型参数：`shared:ui:navigation` 不再依赖 `shared:data:model` 的 `TransactionType`，route 改用轻量 `TransactionRouteType`，并删除无读取点的 `TransactionsScreen.transactionType` 参数。
 
 当前仍保留：
 
@@ -1122,8 +1123,8 @@ shared:ui:core
 
 下一步建议执行：
 
-1. shared 模块依赖审计暂时没有发现可直接删除的低风险依赖；后续在改动具体调用方时继续顺手收缩 Gradle 依赖。
-2. 继续审计 `LegacyTransaction` 在 UI/统计路径中的真实必要性；优先从只做展示或参数传递的页面状态开始，评估是否能接收正式 `Transaction` 或更小的展示模型。
+1. 继续审计 `LegacyTransaction` 在 UI/统计路径中的真实必要性；优先从只做展示或参数传递的页面状态开始，评估是否能接收正式 `Transaction`、交易 ID 或更小的展示模型。
+2. 继续检查 shared/feature 模块依赖，优先处理公共模块中“只因历史写法而依赖更底层数据模型”的情况。
 3. 偏好设置代码边界已基本收窄，短期不再为清理而迁移存储格式；若后续要处理 `SettingsEntity`、SharedPrefs 或 DataStore 归并，必须单独规划 schema/备份兼容迁移。
 4. 继续数据库只读审计：`isDeleted` 目前先保留为本地软删除语义；不再把业务表里的 `isDeleted` 当作纯云同步字段批量删除。
 5. feature 模块合并属于较大结构调整，短期只在实际修改某个功能时收敛依赖；真正合并模块前需要先确认导航、资源和 Hilt 边界。

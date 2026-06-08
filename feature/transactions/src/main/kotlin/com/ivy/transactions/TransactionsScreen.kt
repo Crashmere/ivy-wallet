@@ -60,6 +60,7 @@ import com.ivy.ui.compose.rememberSwipeListenerState
 import com.ivy.ui.platform.setStatusBarDarkTextCompat
 import com.ivy.ui.navigation.EditTransactionScreen
 import com.ivy.ui.navigation.PieChartStatisticScreen
+import com.ivy.ui.navigation.TransactionRouteType
 import com.ivy.ui.navigation.TransactionsScreen
 import com.ivy.ui.navigation.navigation
 import com.ivy.ui.navigation.screenScopedViewModel
@@ -690,7 +691,7 @@ private fun Header(
                 if (account != null) {
                     nav.navigateTo(
                         PieChartStatisticScreen(
-                            type = TransactionType.INCOME,
+                            type = TransactionRouteType.INCOME,
                             accountList = persistentListOf(account.id),
                             filterExcluded = false,
                             treatTransfersAsIncomeExpense = treatTransfersAsIncomeExpense
@@ -702,7 +703,7 @@ private fun Header(
                 if (account != null) {
                     nav.navigateTo(
                         PieChartStatisticScreen(
-                            type = TransactionType.EXPENSE,
+                            type = TransactionRouteType.EXPENSE,
                             accountList = persistentListOf(account.id),
                             filterExcluded = false,
                             treatTransfersAsIncomeExpense = treatTransfersAsIncomeExpense
@@ -714,7 +715,7 @@ private fun Header(
             nav.navigateTo(
                 EditTransactionScreen(
                     initialTransactionId = null,
-                    type = transactionType,
+                    type = transactionType.toRouteType(),
                     accountId = account?.id,
                     categoryId = category?.id?.value
                 )
@@ -818,4 +819,8 @@ private fun Item(
             }
         }
     }
+}
+
+private fun TransactionType.toRouteType(): TransactionRouteType {
+    return TransactionRouteType.valueOf(name)
 }

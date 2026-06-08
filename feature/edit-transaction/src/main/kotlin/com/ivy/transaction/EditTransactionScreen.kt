@@ -45,6 +45,7 @@ import com.ivy.legacy.ui.component.tags.ShowTagModal
 import com.ivy.ui.navigation.onScreenStart
 import com.ivy.ui.navigation.EditPlannedScreen
 import com.ivy.ui.navigation.EditTransactionScreen
+import com.ivy.ui.navigation.TransactionRouteType
 import com.ivy.ui.navigation.navigation
 import com.ivy.ui.navigation.screenScopedViewModel
 import com.ivy.ui.R
@@ -401,7 +402,7 @@ private fun BoxWithConstraintsScope.UI(
                     nav.navigateTo(
                         EditPlannedScreen(
                             plannedPaymentRuleId = null,
-                            type = transactionType,
+                            type = transactionType.toRouteType(),
                             amount = amount,
                             accountId = account?.id,
                             categoryId = category?.id?.value,
@@ -639,6 +640,10 @@ private fun shouldFocusTitle(
 ): Boolean = titleTextFieldValue.text.isBlank() && type != TransactionType.TRANSFER
 
 private fun shouldFocusAmount(amount: Double) = amount == 0.0
+
+private fun TransactionType.toRouteType(): TransactionRouteType {
+    return TransactionRouteType.valueOf(name)
+}
 
 private fun Instant.toLocalDateInSystemZone() =
     atZone(ZoneId.systemDefault()).toLocalDate()

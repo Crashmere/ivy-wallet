@@ -49,6 +49,7 @@ import com.ivy.ui.compose.horizontalSwipeListener
 import com.ivy.ui.compose.rememberSwipeListenerState
 import com.ivy.ui.navigation.EditTransactionScreen
 import com.ivy.ui.navigation.PieChartStatisticScreen
+import com.ivy.ui.navigation.TransactionRouteType
 import com.ivy.ui.navigation.TransactionsScreen
 import com.ivy.ui.navigation.navigation
 import com.ivy.ui.navigation.screenScopedViewModel
@@ -139,7 +140,7 @@ private fun BoxWithConstraintsScope.UI(
                     nav.navigateTo(
                         EditTransactionScreen(
                             initialTransactionId = null,
-                            type = transactionType
+                            type = transactionType.toRouteType()
                         )
                     )
                 }
@@ -241,6 +242,10 @@ private fun BoxWithConstraintsScope.UI(
     ) {
         onEvent(PieChartStatisticEvent.OnSetPeriod(it))
     }
+}
+
+private fun TransactionType.toRouteType(): TransactionRouteType {
+    return TransactionRouteType.valueOf(name)
 }
 
 @Composable

@@ -1,6 +1,5 @@
 package com.ivy.home.customerjourney
 
-import com.ivy.data.model.TransactionType
 import com.ivy.ui.resource.ResourceProvider
 import com.ivy.domain.usecase.home.DismissCustomerJourneyCardUseCase
 import com.ivy.domain.usecase.home.GetCustomerJourneyStatsUseCase
@@ -8,6 +7,7 @@ import com.ivy.domain.usecase.home.IsCustomerJourneyCardDismissedUseCase
 import com.ivy.ui.navigation.EditPlannedScreen
 import com.ivy.ui.navigation.MainTab
 import com.ivy.ui.navigation.PieChartStatisticScreen
+import com.ivy.ui.navigation.TransactionRouteType
 import com.ivy.ui.R
 import javax.inject.Inject
 
@@ -74,7 +74,7 @@ class CustomerJourneyCardsProvider @Inject constructor(
         onAction = { navigation, _ ->
             navigation.navigateTo(
                 EditPlannedScreen(
-                    type = TransactionType.EXPENSE,
+                    type = TransactionRouteType.EXPENSE,
                     plannedPaymentRuleId = null
                 )
             )
@@ -93,7 +93,7 @@ class CustomerJourneyCardsProvider @Inject constructor(
         backgroundColorArgb = CustomerJourneyRed,
         hasDismiss = true,
         onAction = { navigation, _ ->
-            navigation.navigateTo(PieChartStatisticScreen(type = TransactionType.EXPENSE))
+            navigation.navigateTo(PieChartStatisticScreen(type = TransactionRouteType.EXPENSE))
         }
     )
 

@@ -13,6 +13,7 @@ import com.ivy.ui.period.PeriodState
 import com.ivy.ui.navigation.EditTransactionScreen
 import com.ivy.ui.navigation.MainScreen
 import com.ivy.ui.navigation.Navigation
+import com.ivy.ui.navigation.TransactionRouteType
 import com.ivy.wallet.notification.reminder.TransactionReminderScheduler
 import com.ivy.wallet.startup.InitialDataSetup
 import com.ivy.wallet.security.AppLockController
@@ -81,7 +82,7 @@ class RootViewModel @Inject constructor(
             nav.navigateTo(
                 EditTransactionScreen(
                     initialTransactionId = null,
-                    type = addTransactionType
+                    type = TransactionRouteType.valueOf(addTransactionType.name)
                 )
             )
 

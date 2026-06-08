@@ -28,7 +28,6 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.ivy.data.model.TransactionType
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
 import com.ivy.ui.compose.thenIf
@@ -43,6 +42,7 @@ import com.ivy.ui.compose.horizontalSwipeListener
 import com.ivy.ui.compose.rememberInteractionSource
 import com.ivy.ui.compose.rememberSwipeListenerState
 import com.ivy.ui.animation.springBounce
+import com.ivy.ui.navigation.TransactionRouteType
 import com.ivy.ui.compose.verticalSwipeListener
 import com.ivy.ui.navigation.PieChartStatisticScreen
 import com.ivy.ui.navigation.navigation
@@ -292,7 +292,7 @@ private fun IncomeExpenses(
             } else {
                 nav.navigateTo(
                     PieChartStatisticScreen(
-                        type = TransactionType.INCOME,
+                        type = TransactionRouteType.INCOME,
                     ),
                 )
             }
@@ -312,7 +312,7 @@ private fun IncomeExpenses(
         ) {
             nav.navigateTo(
                 PieChartStatisticScreen(
-                    type = TransactionType.EXPENSE,
+                    type = TransactionRouteType.EXPENSE,
                 ),
             )
         }

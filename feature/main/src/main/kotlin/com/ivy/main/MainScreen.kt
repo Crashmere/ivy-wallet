@@ -12,7 +12,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.ivy.accounts.AccountsTab
-import com.ivy.data.model.TransactionType
 import com.ivy.home.HomeTab
 import com.ivy.ui.navigation.onScreenStart
 import com.ivy.ui.navigation.EditPlannedScreen
@@ -20,6 +19,7 @@ import com.ivy.ui.navigation.EditTransactionScreen
 import com.ivy.ui.navigation.LocalMainTabState
 import com.ivy.ui.navigation.MainTab
 import com.ivy.ui.navigation.MainScreen
+import com.ivy.ui.navigation.TransactionRouteType
 import com.ivy.ui.navigation.navigation
 import com.ivy.data.model.CreateAccountData
 import com.ivy.legacy.ui.modal.edit.AccountModal
@@ -76,7 +76,7 @@ private fun BoxWithConstraintsScope.UI(
             nav.navigateTo(
                 EditTransactionScreen(
                     initialTransactionId = null,
-                    type = TransactionType.INCOME
+                    type = TransactionRouteType.INCOME
                 )
             )
         },
@@ -84,7 +84,7 @@ private fun BoxWithConstraintsScope.UI(
             nav.navigateTo(
                 EditTransactionScreen(
                     initialTransactionId = null,
-                    type = TransactionType.EXPENSE
+                    type = TransactionRouteType.EXPENSE
                 )
             )
         },
@@ -92,14 +92,14 @@ private fun BoxWithConstraintsScope.UI(
             nav.navigateTo(
                 EditTransactionScreen(
                     initialTransactionId = null,
-                    type = TransactionType.TRANSFER
+                    type = TransactionRouteType.TRANSFER
                 )
             )
         },
         onAddPlannedPayment = {
             nav.navigateTo(
                 EditPlannedScreen(
-                    type = TransactionType.EXPENSE,
+                    type = TransactionRouteType.EXPENSE,
                     plannedPaymentRuleId = null
                 )
             )

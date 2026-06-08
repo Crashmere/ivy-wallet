@@ -23,6 +23,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.Category
+import com.ivy.data.model.TransactionType
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
 import com.ivy.data.model.legacy.LegacyAccount
@@ -30,6 +31,7 @@ import com.ivy.data.model.PlannedPaymentRule
 import com.ivy.legacy.ui.component.transaction.SectionDivider
 import com.ivy.ui.navigation.EditPlannedScreen
 import com.ivy.ui.navigation.Navigation
+import com.ivy.ui.navigation.TransactionRouteType
 import com.ivy.ui.navigation.navigation
 import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.Gray
@@ -193,9 +195,13 @@ private fun onPlannedPaymentClick(
     nav.navigateTo(
         EditPlannedScreen(
             plannedPaymentRuleId = rule.id,
-            type = rule.type
+            type = rule.type.toRouteType()
         )
     )
+}
+
+private fun TransactionType.toRouteType(): TransactionRouteType {
+    return TransactionRouteType.valueOf(name)
 }
 
 @Composable

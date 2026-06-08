@@ -35,6 +35,7 @@ import com.ivy.ui.compose.clickableNoIndication
 import com.ivy.ui.compose.rememberInteractionSource
 import com.ivy.ui.navigation.PieChartStatisticScreen
 import com.ivy.ui.navigation.ReportScreen
+import com.ivy.ui.navigation.TransactionRouteType
 import com.ivy.ui.navigation.navigation
 import com.ivy.ui.R
 import com.ivy.ui.platform.fileSharer
@@ -164,7 +165,7 @@ private fun BoxWithConstraintsScope.UI(
                     if (state.transactions.isNotEmpty()) {
                         nav.navigateTo(
                             PieChartStatisticScreen(
-                                type = TransactionType.INCOME,
+                                type = TransactionRouteType.INCOME,
                                 legacyTransactionIds = legacyTransactions
                                     .map { it.id }
                                     .toImmutableList(),
@@ -178,7 +179,7 @@ private fun BoxWithConstraintsScope.UI(
                     if (state.transactions.isNotEmpty()) {
                         nav.navigateTo(
                             PieChartStatisticScreen(
-                                type = TransactionType.EXPENSE,
+                                type = TransactionRouteType.EXPENSE,
                                 legacyTransactionIds = legacyTransactions
                                     .map { it.id }
                                     .toImmutableList(),

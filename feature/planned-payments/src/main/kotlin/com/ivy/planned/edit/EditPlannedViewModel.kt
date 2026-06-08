@@ -21,6 +21,7 @@ import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.data.model.PlannedPaymentRule
 import com.ivy.ui.navigation.EditPlannedScreen
 import com.ivy.ui.navigation.Navigation
+import com.ivy.ui.navigation.TransactionRouteType
 import com.ivy.ui.ComposeViewModel
 import com.ivy.domain.usecase.account.CreateAccountWithBalanceUseCase
 import com.ivy.domain.usecase.account.GetLegacyAccountUseCase
@@ -265,7 +266,8 @@ class EditPlannedViewModel @Inject constructor(
 
     fun start(screen: EditPlannedScreen) {
         viewModelScope.launch {
-            transactionType = screen.type
+            val routeTransactionType = screen.type.toTransactionType()
+            transactionType = routeTransactionType
             editMode = screen.plannedPaymentRuleId != null
 
             val accounts = getLegacyAccountsUseCase()
@@ -285,7 +287,7 @@ class EditPlannedViewModel @Inject constructor(
                 intervalN = null,
                 intervalType = null,
                 oneTime = false,
-                type = screen.type,
+                type = routeTransactionType,
                 amount = screen.amount ?: 0.0,
                 accountId = screen.accountId ?: accounts.first().id,
                 categoryId = screen.categoryId,
@@ -294,8 +296,12 @@ class EditPlannedViewModel @Inject constructor(
             )
 
             display(loadedRule!!)
-        }
     }
+}
+
+private fun TransactionRouteType.toTransactionType(): TransactionType {
+    return TransactionType.valueOf(name)
+}
 
     private suspend fun display(rule: PlannedPaymentRule) {
         this.title = rule.title
