@@ -24,11 +24,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.TransactionType
 import com.ivy.data.model.IntervalType
 import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.legacy.ui.theme.style
 import com.ivy.data.model.PlannedPaymentRule
 import com.ivy.ui.time.forDisplay
 import com.ivy.ui.time.formatDateOnly
@@ -104,9 +104,10 @@ internal fun LazyItemScope.PlannedPaymentCard(
             Text(
                 modifier = Modifier.padding(horizontal = 24.dp),
                 text = plannedPayment.title!!,
-                style = LegacyTheme.typo.b1.style(
+                style = LegacyTheme.typo.b1.copy(
                     fontWeight = FontWeight.ExtraBold,
-                    color = LegacyTheme.colors.pureInverse
+                    color = LegacyTheme.colors.pureInverse,
+                    textAlign = TextAlign.Start
                 )
             )
         }
@@ -222,9 +223,10 @@ private fun PlannedPaymentHeaderRow(
                     ),
                     text = category.name,
                     backgroundGradient = Gradient.solid(category.color.toComposeColor()),
-                    textStyle = LegacyTheme.typo.c.style(
+                    textStyle = LegacyTheme.typo.c.copy(
                         color = findContrastTextColor(category.color.toComposeColor()),
-                        fontWeight = FontWeight.ExtraBold
+                        fontWeight = FontWeight.ExtraBold,
+                        textAlign = TextAlign.Start
                     ),
                     padding = 8.dp,
                     iconEdgePadding = 10.dp
@@ -241,9 +243,10 @@ private fun PlannedPaymentHeaderRow(
                 text = account?.name ?: stringResource(R.string.deleted),
                 iconTint = LegacyTheme.colors.pureInverse,
                 iconStart = getCustomIconIdS(account?.icon, R.drawable.ic_custom_account_s),
-                textStyle = LegacyTheme.typo.c.style(
+                textStyle = LegacyTheme.typo.c.copy(
                     color = LegacyTheme.colors.pureInverse,
-                    fontWeight = FontWeight.ExtraBold
+                    fontWeight = FontWeight.ExtraBold,
+                    textAlign = TextAlign.Start
                 ),
                 padding = 8.dp,
                 iconEdgePadding = 10.dp
@@ -272,27 +275,30 @@ private fun RuleTextRow(
         if (oneTime) {
             Text(
                 text = stringResource(R.string.planned_for_uppercase),
-                style = LegacyTheme.typo.nC.style(
+                style = LegacyTheme.typo.nC.copy(
                     color = LegacyTheme.colors.orange,
-                    fontWeight = FontWeight.SemiBold
+                    fontWeight = FontWeight.SemiBold,
+                    textAlign = TextAlign.Start
                 )
             )
             Text(
                 modifier = Modifier.padding(bottom = 1.dp),
                 text = startDate?.toLocalDate()?.formatDateOnlyWithYear()?.uppercase(Locale.getDefault())
                     ?: stringResource(R.string.null_text),
-                style = LegacyTheme.typo.nC.style(
+                style = LegacyTheme.typo.nC.copy(
                     color = LegacyTheme.colors.orange,
-                    fontWeight = FontWeight.ExtraBold
+                    fontWeight = FontWeight.ExtraBold,
+                    textAlign = TextAlign.Start
                 )
             )
         } else {
             val startDateFormatted = startDate?.toLocalDate()?.formatDateOnly()?.uppercase(Locale.getDefault())
             Text(
                 text = stringResource(R.string.starts_date, startDateFormatted ?: ""),
-                style = LegacyTheme.typo.nC.style(
+                style = LegacyTheme.typo.nC.copy(
                     color = LegacyTheme.colors.orange,
-                    fontWeight = FontWeight.SemiBold
+                    fontWeight = FontWeight.SemiBold,
+                    textAlign = TextAlign.Start
                 )
             )
             val intervalTypeFormatted = intervalType?.forDisplay(intervalN ?: 0)?.uppercase(Locale.getDefault())
@@ -303,9 +309,10 @@ private fun RuleTextRow(
                     intervalN ?: 0,
                     intervalTypeFormatted ?: ""
                 ),
-                style = LegacyTheme.typo.nC.style(
+                style = LegacyTheme.typo.nC.copy(
                     color = LegacyTheme.colors.orange,
-                    fontWeight = FontWeight.ExtraBold
+                    fontWeight = FontWeight.ExtraBold,
+                    textAlign = TextAlign.Start
                 )
             )
         }

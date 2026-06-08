@@ -16,10 +16,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.IntervalType
 import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.legacy.ui.theme.style
 import com.ivy.ui.time.forDisplay
 import com.ivy.ui.time.formatDateOnly
 import com.ivy.ui.R
@@ -87,9 +87,10 @@ private fun AddRecurringRuleButton(onClick: () -> Unit) {
 
         Text(
             text = stringResource(R.string.add_planned_date_payment),
-            style = LegacyTheme.typo.b2.style(
+            style = LegacyTheme.typo.b2.copy(
                 color = LegacyTheme.colors.pureInverse,
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Start
             )
         )
     }
@@ -122,9 +123,10 @@ private fun RecurringRuleCard(
         Column {
             Text(
                 text = if (oneTime) stringResource(R.string.planned_for) else stringResource(R.string.planned_start_at),
-                style = LegacyTheme.typo.b2.style(
+                style = LegacyTheme.typo.b2.copy(
                     fontWeight = FontWeight.ExtraBold,
-                    color = LegacyTheme.colors.pureInverse
+                    color = LegacyTheme.colors.pureInverse,
+                    textAlign = TextAlign.Start
                 )
             )
 
@@ -134,9 +136,10 @@ private fun RecurringRuleCard(
                 val intervalTypeLabel = intervalType.forDisplay(intervalN).uppercase(Locale.getDefault())
                 Text(
                     text = stringResource(R.string.repeats_every, intervalN, intervalTypeLabel),
-                    style = LegacyTheme.typo.c.style(
+                    style = LegacyTheme.typo.c.copy(
                         fontWeight = FontWeight.ExtraBold,
-                        color = LegacyTheme.colors.orange
+                        color = LegacyTheme.colors.orange,
+                        textAlign = TextAlign.Start
                     )
                 )
             }
@@ -146,8 +149,10 @@ private fun RecurringRuleCard(
 
         Text(
             text = startDate.toLocalDate().formatDateOnly(),
-            style = LegacyTheme.typo.nB2.style(
-                fontWeight = FontWeight.ExtraBold
+            style = LegacyTheme.typo.nB2.copy(
+                color = LegacyTheme.colors.pureInverse,
+                fontWeight = FontWeight.ExtraBold,
+                textAlign = TextAlign.Start
             )
         )
 

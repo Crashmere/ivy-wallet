@@ -1421,6 +1421,8 @@ shared:ui:core
 - `feature:import-data` 已停止直接导入旧 `style` 文本样式扩展；CSV 导入入口、手动映射、处理中、结果页和导入流程按钮文本改用显式 `TextStyle.copy()`，继续保留原视觉行为。
 - `feature:loans` 已停止直接导入旧 `style` 文本样式扩展；借贷列表、借贷/还款记录弹窗和借贷详情页文本改用显式 `TextStyle.copy()`，继续保留原视觉行为。
 - `feature:edit-transaction` 已停止直接导入旧 `style` 文本样式扩展；编辑交易页、底部金额/账户面板、标题/描述弹窗、日期时间、到期日和自定义汇率卡片文本改用显式 `TextStyle.copy()`，继续保留原视觉行为。
+- `feature:planned-payments` 已停止直接导入旧 `style` 文本样式扩展；计划付款列表、卡片、分组分隔条、编辑页、重复规则弹窗和底部金额/账户面板文本改用显式 `TextStyle.copy()`，继续保留原视觉行为。
+- feature 层已整体停止直接导入旧 `style` 文本样式扩展；剩余调用集中在 `shared:ui:legacy` 内部旧基础控件、旧弹窗、旧金额展示和旧交易列表组件中。
 - app 仍保留文件选择、文件分享、Material 日期选择器、BuildInfo、Locale 设置、生物识别和窗口安全等真正依赖 Activity 或 Android app 壳层的装配。
 
 ## 高风险区域

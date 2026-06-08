@@ -52,7 +52,6 @@ import com.ivy.ui.theme.colors.Gradient
 import com.ivy.ui.theme.colors.IvyGradients
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.theme.colors.IvyFixedColors.White
-import com.ivy.legacy.ui.theme.style
 import com.ivy.ui.R
 import com.ivy.ui.compose.clickableNoIndication
 import com.ivy.ui.compose.onCompositionStart
@@ -250,7 +249,7 @@ private fun RowScope.TimesSelectorButton(
             }
             .padding(vertical = 8.dp),
         text = label,
-        style = LegacyTheme.typo.b2.style(
+        style = LegacyTheme.typo.b2.copy(
             color = if (selected) White else LegacyTheme.colors.gray,
             fontWeight = FontWeight.ExtraBold,
             textAlign = TextAlign.Center
@@ -293,9 +292,10 @@ private fun MultipleTimes(
     Text(
         modifier = Modifier.padding(start = 32.dp),
         text = stringResource(R.string.starts_on),
-        style = LegacyTheme.typo.b2.style(
+        style = LegacyTheme.typo.b2.copy(
             color = LegacyTheme.colors.pureInverse,
-            fontWeight = FontWeight.ExtraBold
+            fontWeight = FontWeight.ExtraBold,
+            textAlign = TextAlign.Start
         )
     )
 
@@ -319,9 +319,10 @@ private fun MultipleTimes(
     Text(
         modifier = Modifier.padding(start = 32.dp),
         text = stringResource(R.string.repeats_every_text),
-        style = LegacyTheme.typo.b2.style(
+        style = LegacyTheme.typo.b2.copy(
             fontWeight = FontWeight.ExtraBold,
-            color = LegacyTheme.colors.pureInverse
+            color = LegacyTheme.colors.pureInverse,
+            textAlign = TextAlign.Start
         )
     )
 
@@ -388,9 +389,10 @@ private fun DateRow(
                 text = closeDay ?: date.formatNicely(
                     pattern = "EEEE, dd MMM"
                 ),
-                style = LegacyTheme.typo.h2.style(
+                style = LegacyTheme.typo.h2.copy(
                     fontWeight = FontWeight.Normal,
-                    color = LegacyTheme.colors.pureInverse
+                    color = LegacyTheme.colors.pureInverse,
+                    textAlign = TextAlign.Start
                 )
             )
 
@@ -399,9 +401,10 @@ private fun DateRow(
 
                 Text(
                     text = date.formatDateWeekDayLong(),
-                    style = LegacyTheme.typo.b2.style(
+                    style = LegacyTheme.typo.b2.copy(
                         fontWeight = FontWeight.SemiBold,
-                        color = LegacyTheme.colors.gray
+                        color = LegacyTheme.colors.gray,
+                        textAlign = TextAlign.Start
                     )
                 )
             }
@@ -497,7 +500,7 @@ private fun RepeatIntervalNumberInput(
             Text(
                 text = hint,
                 textAlign = TextAlign.Start,
-                style = LegacyTheme.typo.nB2.style(
+                style = LegacyTheme.typo.nB2.copy(
                     color = androidx.compose.ui.graphics.Color.Gray,
                     fontWeight = FontWeight.ExtraBold,
                     textAlign = TextAlign.Center
@@ -510,7 +513,7 @@ private fun RepeatIntervalNumberInput(
             modifier = Modifier.testTag("base_number_input"),
             value = value,
             onValueChange = onValueChanged,
-            textStyle = LegacyTheme.typo.nB2.style(
+            textStyle = LegacyTheme.typo.nB2.copy(
                 color = textColor,
                 fontWeight = FontWeight.ExtraBold,
                 textAlign = TextAlign.Center
@@ -578,9 +581,10 @@ private fun RowScope.IntervalTypeSelector(
 
         Text(
             text = intervalType.forDisplay(intervalN).capitalizeLocal(),
-            style = LegacyTheme.typo.b2.style(
+            style = LegacyTheme.typo.b2.copy(
                 color = LegacyTheme.colors.pureInverse,
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Start
             )
         )
 

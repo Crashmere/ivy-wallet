@@ -23,10 +23,10 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.currency.format
 import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.legacy.ui.theme.style
 import com.ivy.ui.R
 import com.ivy.ui.animation.springBounce
 import com.ivy.ui.compose.clickableNoIndication
@@ -63,9 +63,10 @@ internal fun PlannedPaymentSectionDivider(
             Text(
                 modifier = Modifier.testTag("planned_payment_section_title"),
                 text = title,
-                style = LegacyTheme.typo.b1.style(
+                style = LegacyTheme.typo.b1.copy(
                     fontWeight = FontWeight.ExtraBold,
-                    color = titleColor
+                    color = titleColor,
+                    textAlign = TextAlign.Start
                 )
             )
 
@@ -104,17 +105,19 @@ private fun PlannedPaymentIncomeExpenseRow(
             Text(
                 modifier = Modifier.testTag("planned_payment_section_expense"),
                 text = "${expenses.format(baseCurrency)} $baseCurrency",
-                style = LegacyTheme.typo.nC.style(
+                style = LegacyTheme.typo.nC.copy(
                     fontWeight = FontWeight.ExtraBold,
-                    color = LegacyTheme.colors.pureInverse
+                    color = LegacyTheme.colors.pureInverse,
+                    textAlign = TextAlign.Start
                 )
             )
             Spacer(modifier = Modifier.width(4.dp))
             Text(
                 text = stringResource(R.string.expenses_lowercase),
-                style = LegacyTheme.typo.c.style(
+                style = LegacyTheme.typo.c.copy(
                     fontWeight = FontWeight.Normal,
-                    color = LegacyTheme.colors.pureInverse
+                    color = LegacyTheme.colors.pureInverse,
+                    textAlign = TextAlign.Start
                 )
             )
         }
@@ -131,17 +134,19 @@ private fun PlannedPaymentIncomeExpenseRow(
             Text(
                 modifier = Modifier.testTag("planned_payment_section_income"),
                 text = "${income.format(baseCurrency)} $baseCurrency",
-                style = LegacyTheme.typo.nC.style(
+                style = LegacyTheme.typo.nC.copy(
                     fontWeight = FontWeight.ExtraBold,
-                    color = LegacyTheme.colors.green
+                    color = LegacyTheme.colors.green,
+                    textAlign = TextAlign.Start
                 )
             )
             Spacer(modifier = Modifier.width(4.dp))
             Text(
                 text = stringResource(R.string.income_lowercase),
-                style = LegacyTheme.typo.c.style(
+                style = LegacyTheme.typo.c.copy(
                     fontWeight = FontWeight.Normal,
-                    color = LegacyTheme.colors.pureInverse
+                    color = LegacyTheme.colors.pureInverse,
+                    textAlign = TextAlign.Start
                 )
             )
         }

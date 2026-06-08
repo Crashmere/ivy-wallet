@@ -23,7 +23,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.legacy.ui.theme.style
 import com.ivy.data.model.PlannedPaymentRule
 import com.ivy.ui.R
 import com.ivy.legacy.ui.icon.IvyIcon
@@ -195,9 +194,10 @@ private fun LazyItemScope.NoPlannedPaymentsEmptyState() {
 
         Text(
             text = stringResource(R.string.no_planned_payments),
-            style = LegacyTheme.typo.b1.style(
+            style = LegacyTheme.typo.b1.copy(
                 color = LegacyTheme.colors.gray,
-                fontWeight = FontWeight.ExtraBold
+                fontWeight = FontWeight.ExtraBold,
+                textAlign = TextAlign.Start
             ),
             textAlign = TextAlign.Center
         )
@@ -206,7 +206,7 @@ private fun LazyItemScope.NoPlannedPaymentsEmptyState() {
 
         Text(
             text = stringResource(R.string.no_planned_payments_description),
-            style = LegacyTheme.typo.b2.style(
+            style = LegacyTheme.typo.b2.copy(
                 color = LegacyTheme.colors.gray,
                 fontWeight = FontWeight.Medium,
                 textAlign = TextAlign.Center

@@ -44,12 +44,12 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.legacy.ui.theme.style
 import com.ivy.ui.platform.addKeyboardListener
 import com.ivy.ui.compose.clickableNoIndication
 import com.ivy.ui.compose.consumeClicks
@@ -279,9 +279,10 @@ internal fun BoxWithConstraintsScope.EditBottomSheet(
             Text(
                 modifier = Modifier.padding(start = 32.dp),
                 text = stringResource(R.string.account),
-                style = LegacyTheme.typo.b1.style(
+                style = LegacyTheme.typo.b1.copy(
                     color = LegacyTheme.colors.pureInverse,
-                    fontWeight = FontWeight.ExtraBold
+                    fontWeight = FontWeight.ExtraBold,
+                    textAlign = TextAlign.Start
                 )
             )
 
@@ -456,9 +457,10 @@ private fun TransferRowMini(
             iconStart = R.drawable.ic_accounts,
             backgroundGradient = Gradient.solid(fromColor),
             iconTint = fromContrastColor,
-            textStyle = LegacyTheme.typo.b2.style(
+            textStyle = LegacyTheme.typo.b2.copy(
                 color = fromContrastColor,
-                fontWeight = FontWeight.ExtraBold
+                fontWeight = FontWeight.ExtraBold,
+                textAlign = TextAlign.Start
             ),
             padding = 10.dp,
         ) {
@@ -477,9 +479,10 @@ private fun TransferRowMini(
             iconStart = R.drawable.ic_accounts,
             backgroundGradient = Gradient.solid(toColor),
             iconTint = toContrastColor,
-            textStyle = LegacyTheme.typo.b2.style(
+            textStyle = LegacyTheme.typo.b2.copy(
                 color = toContrastColor,
-                fontWeight = FontWeight.ExtraBold
+                fontWeight = FontWeight.ExtraBold,
+                textAlign = TextAlign.Start
             ),
             padding = 10.dp,
         ) {
@@ -528,9 +531,10 @@ private fun SheetHeader(
             Text(
                 modifier = Modifier.padding(start = 32.dp),
                 text = label,
-                style = LegacyTheme.typo.b1.style(
+                style = LegacyTheme.typo.b1.copy(
                     color = LegacyTheme.colors.pureInverse,
-                    fontWeight = FontWeight.ExtraBold
+                    fontWeight = FontWeight.ExtraBold,
+                    textAlign = TextAlign.Start
                 )
             )
 
@@ -550,9 +554,10 @@ private fun SheetHeader(
                 Text(
                     modifier = Modifier.padding(start = 32.dp),
                     text = stringResource(R.string.to),
-                    style = LegacyTheme.typo.b1.style(
+                    style = LegacyTheme.typo.b1.copy(
                         color = LegacyTheme.colors.pureInverse,
-                        fontWeight = FontWeight.ExtraBold
+                        fontWeight = FontWeight.ExtraBold,
+                        textAlign = TextAlign.Start
                     )
                 )
 
@@ -668,9 +673,10 @@ private fun LegacyAccount(
         Text(
             modifier = Modifier.padding(vertical = 10.dp),
             text = account.name,
-            style = LegacyTheme.typo.b2.style(
+            style = LegacyTheme.typo.b2.copy(
                 color = textColor,
-                fontWeight = FontWeight.ExtraBold
+                fontWeight = FontWeight.ExtraBold,
+                textAlign = TextAlign.Start
             )
         )
 
@@ -702,9 +708,10 @@ private fun AddAccount(
         Text(
             modifier = Modifier.padding(vertical = 10.dp),
             text = stringResource(R.string.add_account),
-            style = LegacyTheme.typo.b2.style(
+            style = LegacyTheme.typo.b2.copy(
                 color = LegacyTheme.colors.pureInverse,
-                fontWeight = FontWeight.ExtraBold
+                fontWeight = FontWeight.ExtraBold,
+                textAlign = TextAlign.Start
             )
         )
 
@@ -763,9 +770,10 @@ private fun Amount(
             if (showConvertedAmountText != null) {
                 Text(
                     text = showConvertedAmountText,
-                    style = LegacyTheme.typo.nB2.style(
+                    style = LegacyTheme.typo.nB2.copy(
                         color = LegacyTheme.colors.pureInverse,
-                        fontWeight = FontWeight.SemiBold
+                        fontWeight = FontWeight.SemiBold,
+                        textAlign = TextAlign.Start
                     )
                 )
             }
@@ -816,9 +824,10 @@ private fun LabelAccountMini(
     ) {
         Text(
             text = label,
-            style = LegacyTheme.typo.nC.style(
+            style = LegacyTheme.typo.nC.copy(
                 color = LegacyTheme.colors.mediumInverse,
-                fontWeight = FontWeight.Medium
+                fontWeight = FontWeight.Medium,
+                textAlign = TextAlign.Start
             )
         )
 
@@ -826,9 +835,10 @@ private fun LabelAccountMini(
 
         Text(
             text = account?.name?.uppercase(Locale.getDefault()) ?: "",
-            style = LegacyTheme.typo.nB2.style(
+            style = LegacyTheme.typo.nB2.copy(
                 color = LegacyTheme.colors.pureInverse,
-                fontWeight = FontWeight.ExtraBold
+                fontWeight = FontWeight.ExtraBold,
+                textAlign = TextAlign.Start
             )
         )
     }
