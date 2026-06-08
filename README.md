@@ -1291,6 +1291,7 @@ shared:ui:core
 - 饼图导航 route 的账户筛选参数已从含糊的 `accountList` 改为 `accountIdFilterList`，与交易列表 route 和 ViewModel 内部查询命名保持一致。
 - 饼图数据构建和借贷列表金额汇总中的内部 `Pair` 已改成私有命名结果对象；账户过滤集合、已还金额和贷款总额不再靠 `first/second` 或解构位置表达。
 - 报表导出事件不再携带 `FileSharer` 平台分享器；ViewModel 只生成 CSV 并发出 `ShareCsvFile` UI 事件，页面入口负责调用平台分享能力。
+- 报表页 Toolbar 不再直接调用 `navigation()` 执行关闭；返回动作由报表页面入口传入，Toolbar 保持为普通 UI 组件。
 - 设置页导出 CSV 和备份 zip 也不再通过事件传递 `FileSharer`；ViewModel 写入文件后发出分享 UI 事件，Screen 统一调用平台分享能力。
 - 报表页面事件统一为 `sealed interface`，与其他 feature 的事件定义风格保持一致，减少无意义的 `ReportScreenEvent()` 继承样板。
 - 借贷创建和还款记录创建数据已从携带完整 `LegacyAccount` 改为只携带账户 ID；旧弹窗仍用完整账户对象渲染选择项，domain 创建和交易同步只接收 ID，`shared:data:model` 不再因为这两个创建 DTO 依赖 legacy 账户模型。

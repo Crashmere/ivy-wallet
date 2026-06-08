@@ -119,6 +119,7 @@ private fun BoxWithConstraintsScope.UI(
     ) {
         stickyHeader {
             Toolbar(
+                onBack = { nav.back() },
                 onExport = {
                     onEventHandler.invoke(ReportScreenEvent.OnExport)
                 },
@@ -385,15 +386,13 @@ private fun TransactionType.toRouteType(): TransactionRouteType {
 
 @Composable
 private fun Toolbar(
+    onBack: () -> Unit,
     onExport: () -> Unit,
     onFilter: () -> Unit
 ) {
-    val nav = navigation()
     IvyToolbar(
         backButtonType = BackButtonType.CLOSE,
-        onBack = {
-            nav.back()
-        }
+        onBack = onBack
     ) {
         Spacer(Modifier.weight(1f))
 
