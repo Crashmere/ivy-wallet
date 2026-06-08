@@ -76,7 +76,7 @@ fun CircleButtonFilled(
 }
 
 @Composable
-fun BackButton(
+internal fun BackButton(
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
 ) {

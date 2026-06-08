@@ -27,7 +27,6 @@ import com.ivy.legacy.ui.theme.Gray
 import com.ivy.legacy.ui.theme.Green
 import com.ivy.legacy.ui.theme.Red
 import com.ivy.legacy.ui.theme.White
-import com.ivy.legacy.ui.component.BackButton
 import com.ivy.legacy.ui.component.IvyDividerLine
 import kotlinx.collections.immutable.persistentListOf
 
@@ -48,7 +47,7 @@ internal fun ImportResultUI(
     ) {
         Spacer(Modifier.height(16.dp))
 
-        BackButton(
+        ImportBackButton(
             modifier = Modifier.padding(start = 20.dp)
         ) { onBack() }
 
