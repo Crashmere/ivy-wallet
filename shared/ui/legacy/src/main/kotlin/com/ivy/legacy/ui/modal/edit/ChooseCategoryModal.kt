@@ -33,7 +33,6 @@ import com.ivy.ui.platform.hideKeyboard
 import com.ivy.ui.compose.onCompositionStart
 import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.Gradient
-import com.ivy.legacy.ui.theme.Ivy
 import com.ivy.ui.icon.ItemIconSDefaultIcon
 import com.ivy.legacy.ui.theme.findContrastTextColor
 import com.ivy.ui.modal.IvyModal
@@ -50,8 +49,6 @@ import androidx.compose.ui.graphics.toArgb
 import com.ivy.data.model.CategoryId
 import com.ivy.data.model.primitive.ColorInt
 import com.ivy.data.model.primitive.NotBlankTrimmedString
-import com.ivy.legacy.ui.theme.Orange
-import com.ivy.legacy.ui.theme.Red
 
 @Suppress("ParameterNaming")
 @ExperimentalFoundationApi
