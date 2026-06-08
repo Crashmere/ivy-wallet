@@ -38,7 +38,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.ivy.ui.navigation.navigation
 import com.ivy.ui.navigation.screenScopedViewModel
-import com.ivy.legacy.ui.theme.LegacyTheme
+import com.ivy.importdata.ImportDataTheme
 import com.ivy.ui.compose.thenIf
 import com.ivy.importdata.csvimport.flow.ImportProcessing
 import com.ivy.importdata.csvimport.flow.ImportResultUI
@@ -97,8 +97,8 @@ private fun ImportUI(
             Spacer8()
             Text(
                 text = stringResource(R.string.warning_import_csv_file).trimIndent(),
-                style = LegacyTheme.typo.c.copy(
-                    color = LegacyTheme.colors.red,
+                style = ImportDataTheme.typo.c.copy(
+                    color = ImportDataTheme.colors.red,
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Start
                 ),
@@ -136,7 +136,7 @@ private fun ImportButton(
     ) {
         Text(
             text = stringResource(R.string.import_csv_file),
-            style = LegacyTheme.typo.b2.copy(
+            style = ImportDataTheme.typo.b2.copy(
                 fontWeight = FontWeight.Bold,
                 color = Color.White,
                 textAlign = TextAlign.Start
@@ -200,17 +200,17 @@ private fun CSVCell(
     header: Boolean,
     even: Boolean,
 ) {
-    val medium = LegacyTheme.colors.medium
+    val medium = ImportDataTheme.colors.medium
     Text(
         modifier = Modifier
             .width(140.dp)
-            .border(1.dp, LegacyTheme.colors.pureInverse)
+            .border(1.dp, ImportDataTheme.colors.pureInverse)
             .thenIf(even) {
                 this.background(medium)
             }
             .padding(all = 4.dp),
         text = text.ifEmpty { " " },
-        style = LegacyTheme.typo.nB1,
+        style = ImportDataTheme.typo.nB1,
         fontWeight = if (header) FontWeight.Bold else FontWeight.Normal,
         overflow = TextOverflow.Ellipsis,
         maxLines = 1,
@@ -232,9 +232,9 @@ private fun <M> LazyListScope.mappingRow(
                 .border(
                     width = 2.dp,
                     color = when {
-                        mapping.required && !status.success -> LegacyTheme.colors.red
-                        status.success -> LegacyTheme.colors.green
-                        else -> LegacyTheme.colors.medium
+                        mapping.required && !status.success -> ImportDataTheme.colors.red
+                        status.success -> ImportDataTheme.colors.green
+                        else -> ImportDataTheme.colors.medium
                     },
                     shape = RoundedCornerShape(4.dp),
                 )
@@ -242,8 +242,8 @@ private fun <M> LazyListScope.mappingRow(
         ) {
             Text(
                 text = mapping.ivyColumn,
-                style = LegacyTheme.typo.b1.copy(
-                    color = LegacyTheme.colors.primary,
+                style = ImportDataTheme.typo.b1.copy(
+                    color = ImportDataTheme.colors.primary,
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Start
                 ),
@@ -251,14 +251,14 @@ private fun <M> LazyListScope.mappingRow(
             Spacer(modifier = Modifier.height(4.dp))
             Text(
                 text = mapping.helpInfo,
-                style = LegacyTheme.typo.c.copy(
-                    color = LegacyTheme.colors.gray,
+                style = ImportDataTheme.typo.c.copy(
+                    color = ImportDataTheme.colors.gray,
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Start
                 )
             )
             Spacer8()
-            Text(text = "Choose a matching CSV column:", style = LegacyTheme.typo.b2)
+            Text(text = "Choose a matching CSV column:", style = ImportDataTheme.typo.b2)
             Spacer(modifier = Modifier.height(4.dp))
             Row(
                 modifier = Modifier
@@ -298,14 +298,14 @@ private fun <M> LazyListScope.mappingRow(
 private fun LazyListScope.sectionDivider(text: String) {
     item {
         Spacer(modifier = Modifier.height(24.dp))
-        Text(text = text, style = LegacyTheme.typo.b1)
+        Text(text = text, style = ImportDataTheme.typo.b1)
         Text(
             text = """
                 Match the CSV column with the appropriate Ivy type.
                 If the parsing is successful the border will turn green.
             """.trimIndent(),
-            style = LegacyTheme.typo.nB2,
-            color = LegacyTheme.colors.gray
+            style = ImportDataTheme.typo.nB2,
+            color = ImportDataTheme.colors.gray
         )
         Spacer8()
     }
@@ -387,7 +387,7 @@ private fun AmountMetadata(
     multiplier: Int,
     onMetaChange: (Int) -> Unit,
 ) {
-    Text(text = "Multiplier", style = LegacyTheme.typo.nB2)
+    Text(text = "Multiplier", style = ImportDataTheme.typo.nB2)
     Row(verticalAlignment = Alignment.CenterVertically) {
         Button(onClick = {
             onMetaChange(
@@ -407,8 +407,8 @@ private fun AmountMetadata(
                 multiplier > 1 -> "*${abs(multiplier)}"
                 else -> "None"
             },
-            style = LegacyTheme.typo.nB2,
-            color = LegacyTheme.colors.primary,
+            style = ImportDataTheme.typo.nB2,
+            color = ImportDataTheme.colors.primary,
         )
         Spacer8(horizontal = true)
         Button(onClick = {
@@ -452,7 +452,7 @@ private fun TypeMetadata(
         }
     )
     Spacer8()
-    Text(text = "(optional)", style = LegacyTheme.typo.c)
+    Text(text = "(optional)", style = ImportDataTheme.typo.c)
     LabelContainsField(
         label = "Transfer",
         value = metadata.transfer ?: "",
@@ -469,8 +469,8 @@ private fun LabelContainsField(
     onValueChange: (String) -> Unit,
 ) {
     Row(verticalAlignment = Alignment.CenterVertically) {
-        Text(text = label, color = LegacyTheme.colors.primary, style = LegacyTheme.typo.nB1)
-        Text(text = " contains ", style = LegacyTheme.typo.c)
+        Text(text = label, color = ImportDataTheme.colors.primary, style = ImportDataTheme.typo.nB1)
+        Text(text = " contains ", style = ImportDataTheme.typo.c)
         Spacer8(horizontal = true)
         var textField by remember {
             // move the cursor at the end of the text
@@ -645,7 +645,7 @@ private fun LazyListScope.continueButton(
         ) {
             Text(
                 text = stringResource(R.string.import_csv_continue),
-                style = LegacyTheme.typo.b2.copy(
+                style = ImportDataTheme.typo.b2.copy(
                     fontWeight = FontWeight.Bold,
                     color = Color.White,
                     textAlign = TextAlign.Start

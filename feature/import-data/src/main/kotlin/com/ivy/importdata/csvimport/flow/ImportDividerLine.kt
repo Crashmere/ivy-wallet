@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.ivy.legacy.ui.theme.LegacyTheme
+import com.ivy.importdata.ImportDataTheme
 
 @Composable
 internal fun ImportDividerLine(
@@ -17,6 +17,6 @@ internal fun ImportDividerLine(
         modifier = modifier
             .fillMaxWidth()
             .height(2.dp)
-            .background(LegacyTheme.colors.medium)
+            .background(ImportDataTheme.colors.medium)
     )
 }

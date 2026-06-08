@@ -17,7 +17,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.ivy.legacy.ui.theme.LegacyTheme
+import com.ivy.importdata.ImportDataTheme
 import com.ivy.ui.R
 import com.ivy.ui.theme.colors.IvyGradients
 
@@ -35,8 +35,8 @@ internal fun ImportProcessing(
 
         Text(
             text = stringResource(R.string.please_wait),
-            style = LegacyTheme.typo.h2.copy(
-                color = LegacyTheme.colors.pureInverse,
+            style = ImportDataTheme.typo.h2.copy(
+                color = ImportDataTheme.colors.pureInverse,
                 fontWeight = FontWeight.Black,
                 textAlign = TextAlign.Start
             )
@@ -46,8 +46,8 @@ internal fun ImportProcessing(
 
         Text(
             text = "$progressPercent%",
-            style = LegacyTheme.typo.b2.copy(
-                color = LegacyTheme.colors.gray,
+            style = ImportDataTheme.typo.b2.copy(
+                color = ImportDataTheme.colors.gray,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Start
             )
@@ -63,8 +63,8 @@ internal fun ImportProcessing(
 
         Text(
             text = stringResource(R.string.importing_the_csv_file),
-            style = LegacyTheme.typo.b2.copy(
-                color = LegacyTheme.colors.pureInverse,
+            style = ImportDataTheme.typo.b2.copy(
+                color = ImportDataTheme.colors.pureInverse,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Start
             )
@@ -89,7 +89,7 @@ private fun ProgressBar(
             .fillMaxWidth()
             .height(32.dp)
             .padding(horizontal = 24.dp)
-            .background(LegacyTheme.colors.medium, LegacyTheme.shapes.rFull),
+            .background(ImportDataTheme.colors.medium, ImportDataTheme.shapes.rFull),
         verticalAlignment = Alignment.CenterVertically
     ) {
         if (progressPercent > 0) {
@@ -97,7 +97,7 @@ private fun ProgressBar(
                 modifier = Modifier
                     .weight(progressPercent.toFloat())
                     .height(32.dp)
-                    .background(IvyGradients.Green.asHorizontalBrush(), LegacyTheme.shapes.rFull),
+                    .background(IvyGradients.Green.asHorizontalBrush(), ImportDataTheme.shapes.rFull),
             )
         }
 

@@ -21,7 +21,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.ivy.legacy.ui.theme.LegacyTheme
+import com.ivy.importdata.ImportDataTheme
 import com.ivy.ui.R
 
 @Composable
@@ -36,12 +36,12 @@ internal fun ImportToolbar(
 
             Text(
                 modifier = Modifier
-                    .clip(LegacyTheme.shapes.rFull)
+                    .clip(ImportDataTheme.shapes.rFull)
                     .clickable { onSkip() }
                     .padding(all = 16.dp),
                 text = stringResource(R.string.skip),
-                style = LegacyTheme.typo.b2.copy(
-                    color = LegacyTheme.colors.gray,
+                style = ImportDataTheme.typo.b2.copy(
+                    color = ImportDataTheme.colors.gray,
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Start
                 )
@@ -60,7 +60,7 @@ private fun ImportToolbarFrame(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .background(LegacyTheme.colors.pure)
+            .background(ImportDataTheme.colors.pure)
             .padding(top = 16.dp, bottom = 16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -69,13 +69,13 @@ private fun ImportToolbarFrame(
         Icon(
             modifier = Modifier
                 .clip(CircleShape)
-                .background(LegacyTheme.colors.pure, CircleShape)
-                .border(2.dp, LegacyTheme.colors.medium, CircleShape)
+                .background(ImportDataTheme.colors.pure, CircleShape)
+                .border(2.dp, ImportDataTheme.colors.medium, CircleShape)
                 .clickable(onClick = onBack)
                 .padding(6.dp),
             painter = painterResource(id = R.drawable.ic_back),
             contentDescription = "back",
-            tint = LegacyTheme.colors.pureInverse,
+            tint = ImportDataTheme.colors.pureInverse,
         )
 
         content()

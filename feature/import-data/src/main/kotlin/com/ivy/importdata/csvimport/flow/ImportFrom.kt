@@ -26,7 +26,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.ivy.legacy.ui.theme.LegacyTheme
+import com.ivy.importdata.ImportDataTheme
 import com.ivy.ui.R
 
 @ExperimentalFoundationApi
@@ -59,8 +59,8 @@ internal fun BoxWithConstraintsScope.ImportFrom(
             Text(
                 modifier = Modifier.padding(start = 32.dp),
                 text = stringResource(R.string.import_data),
-                style = LegacyTheme.typo.h2.copy(
-                    color = LegacyTheme.colors.pureInverse,
+                style = ImportDataTheme.typo.h2.copy(
+                    color = ImportDataTheme.colors.pureInverse,
                     fontWeight = FontWeight.Black,
                     textAlign = TextAlign.Start
                 )
@@ -85,7 +85,7 @@ internal fun BoxWithConstraintsScope.ImportFrom(
             ) {
                 Text(
                     text = stringResource(id = R.string.manual_csv_import),
-                    style = LegacyTheme.typo.b2.copy(
+                    style = ImportDataTheme.typo.b2.copy(
                         fontWeight = FontWeight.Bold,
                         color = Color.White,
                         textAlign = TextAlign.Start
@@ -114,7 +114,7 @@ private fun BoxWithConstraintsScope.ImportGradientCutBottom(height: Dp = 96.dp) 
             .height(height)
             .background(
                 Brush.verticalGradient(
-                    colors = listOf(Color.Transparent, LegacyTheme.colors.pure)
+                    colors = listOf(Color.Transparent, ImportDataTheme.colors.pure)
                 )
             )
             .align(Alignment.BottomCenter)
@@ -131,8 +131,8 @@ private fun ImportAction(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp)
-            .clip(LegacyTheme.shapes.r3)
-            .background(LegacyTheme.colors.medium, LegacyTheme.shapes.r3)
+            .clip(ImportDataTheme.shapes.r3)
+            .background(ImportDataTheme.colors.medium, ImportDataTheme.shapes.r3)
             .clickable {
                 onClick()
             }
@@ -140,9 +140,9 @@ private fun ImportAction(
     ) {
         Text(
             text = title,
-            style = LegacyTheme.typo.b2.copy(
+            style = ImportDataTheme.typo.b2.copy(
                 fontWeight = FontWeight.Bold,
-                color = LegacyTheme.colors.pureInverse,
+                color = ImportDataTheme.colors.pureInverse,
                 textAlign = TextAlign.Start
             )
         )
@@ -151,8 +151,8 @@ private fun ImportAction(
 
         Text(
             text = description,
-            style = LegacyTheme.typo.c.copy(
-                color = LegacyTheme.colors.pureInverse,
+            style = ImportDataTheme.typo.c.copy(
+                color = ImportDataTheme.colors.pureInverse,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Start
             )

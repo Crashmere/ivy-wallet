@@ -18,7 +18,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ivy.ui.theme.colors.Gradient
-import com.ivy.legacy.ui.theme.LegacyTheme
+import com.ivy.importdata.ImportDataTheme
 import com.ivy.ui.R
 import com.ivy.ui.compose.drawColoredShadow
 import com.ivy.ui.compose.thenIf
@@ -45,14 +45,14 @@ internal fun ImportGradientButton(
                     offsetY = 8.dp
                 )
             }
-            .clip(LegacyTheme.shapes.rFull)
+            .clip(ImportDataTheme.shapes.rFull)
             .background(
                 brush = if (enabled) {
                     backgroundGradient.asHorizontalBrush()
                 } else {
-                    SolidColor(LegacyTheme.colors.gray)
+                    SolidColor(ImportDataTheme.colors.gray)
                 },
-                shape = LegacyTheme.shapes.rFull
+                shape = ImportDataTheme.shapes.rFull
             )
             .clickable(onClick = onClick, enabled = enabled),
         contentAlignment = Alignment.Center
@@ -71,7 +71,7 @@ internal fun ImportGradientButton(
         Text(
             modifier = Modifier.padding(vertical = 16.dp),
             text = text,
-            style = LegacyTheme.typo.b2.copy(
+            style = ImportDataTheme.typo.b2.copy(
                 color = textColor,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Start
