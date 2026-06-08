@@ -36,6 +36,7 @@
 - 删除根工程 JitPack 仓库：当前剩余第三方依赖均可从 Google/Maven Central 解析，项目不再依赖额外的 JitPack 仓库入口。
 - 收窄导航旧交易参数：`TransactionsScreen` 与 `PieChartStatisticScreen` 不再通过导航携带完整 `LegacyTransaction`，改为传递交易 ID，并由目标 ViewModel 按需读取展示模型。
 - 收窄导航交易类型参数：`shared:ui:navigation` 不再依赖 `shared:data:model` 的 `TransactionType`，route 改用轻量 `TransactionRouteType`，并删除无读取点的 `TransactionsScreen.transactionType` 参数。
+- 收窄旧交易列表组件职责：`shared:ui:legacy` 的交易列表/交易卡片不再直接构造编辑页或筛选页 route，改由首页、搜索、报表和交易页传入点击回调。
 
 当前仍保留：
 

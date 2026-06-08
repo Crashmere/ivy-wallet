@@ -255,6 +255,7 @@ private fun BoxWithConstraintsScope.UI(
     onSkipAllTransactions: (List<LegacyTransaction>) -> Unit = {},
     onChoosePeriodModal: (ChoosePeriodModalData?) -> Unit,
 ) {
+    val nav = navigation()
     val periodState = LocalPeriodState.current
     val datePicker = LocalDatePicker.current
     val screenHeight = maxHeight
@@ -409,6 +410,30 @@ private fun BoxWithConstraintsScope.UI(
                 lastItemSpacer = screenHeight * 0.7f,
 
                 onPayOrGet = onPayOrGet,
+                onTransactionClick = {
+                    nav.navigateTo(
+                        EditTransactionScreen(
+                            initialTransactionId = it.id,
+                            type = it.type.toRouteType()
+                        )
+                    )
+                },
+                onAccountClick = {
+                    nav.navigateTo(
+                        TransactionsScreen(
+                            accountId = it.id,
+                            categoryId = null
+                        )
+                    )
+                },
+                onCategoryClick = {
+                    nav.navigateTo(
+                        TransactionsScreen(
+                            accountId = null,
+                            categoryId = it.id.value
+                        )
+                    )
+                },
                 onSkipTransaction = onSkipTransaction,
                 onSkipAllTransactions = {
                     onSkipAllModalVisible(true)

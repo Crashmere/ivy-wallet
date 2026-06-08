@@ -23,6 +23,7 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.ivy.data.model.TransactionType
 import com.ivy.data.model.legacy.LegacyTransaction
 import com.ivy.data.model.TransactionHistoryItem
 import com.ivy.ui.platform.LocalDatePicker
@@ -40,9 +41,13 @@ import com.ivy.legacy.ui.component.transaction.transactions
 import com.ivy.ui.compose.horizontalSwipeListener
 import com.ivy.ui.compose.rememberSwipeListenerState
 import com.ivy.ui.compose.verticalSwipeListener
-import com.ivy.ui.navigation.screenScopedViewModel
+import com.ivy.ui.navigation.EditTransactionScreen
 import com.ivy.ui.navigation.LocalMainTabState
 import com.ivy.ui.navigation.MainTab
+import com.ivy.ui.navigation.TransactionRouteType
+import com.ivy.ui.navigation.TransactionsScreen
+import com.ivy.ui.navigation.navigation
+import com.ivy.ui.navigation.screenScopedViewModel
 import com.ivy.ui.R
 import com.ivy.ui.rememberScrollPositionListState
 import com.ivy.data.model.currency.IvyCurrency
@@ -295,6 +300,7 @@ fun HomeLazyColumn(
     modifier: Modifier = Modifier
 ) {
     val periodState = LocalPeriodState.current
+    val nav = navigation()
 
     val nestedScrollConnection = remember {
         object : NestedScrollConnection {
@@ -360,6 +366,30 @@ fun HomeLazyColumn(
             setOverdueExpanded = setOverdueExpanded,
             history = history,
             onPayOrGet = onPayOrGet,
+            onTransactionClick = {
+                nav.navigateTo(
+                    EditTransactionScreen(
+                        initialTransactionId = it.id,
+                        type = it.type.toRouteType()
+                    )
+                )
+            },
+            onAccountClick = {
+                nav.navigateTo(
+                    TransactionsScreen(
+                        accountId = it.id,
+                        categoryId = null
+                    )
+                )
+            },
+            onCategoryClick = {
+                nav.navigateTo(
+                    TransactionsScreen(
+                        accountId = null,
+                        categoryId = it.id.value
+                    )
+                )
+            },
             emptyStateTitle = noTransactionsTitle,
             emptyStateText = noTransactionsText,
             shouldShowAccountSpecificColorInTransactions = shouldShowAccountSpecificColorInTransactions,
@@ -367,4 +397,8 @@ fun HomeLazyColumn(
             onSkipAllTransactions = onSkipAllTransactions
         )
     }
+}
+
+private fun TransactionType.toRouteType(): TransactionRouteType {
+    return TransactionRouteType.valueOf(name)
 }

@@ -17,16 +17,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.ivy.data.model.TransactionType
+import com.ivy.data.model.Category
+import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.data.model.legacy.LegacyTransaction
 import com.ivy.data.model.TransactionHistoryDateDivider
 import com.ivy.data.model.TransactionHistoryItem
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
-import com.ivy.ui.navigation.EditTransactionScreen
-import com.ivy.ui.navigation.Navigation
-import com.ivy.ui.navigation.TransactionRouteType
-import com.ivy.ui.navigation.navigation
 import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.Black
 import com.ivy.legacy.ui.theme.Gradient
@@ -51,6 +48,9 @@ fun LazyListScope.transactions(
     lastItemSpacer: Dp? = null,
     shouldShowAccountSpecificColorInTransactions: Boolean,
     onPayOrGet: (LegacyTransaction) -> Unit,
+    onTransactionClick: (LegacyTransaction) -> Unit,
+    onAccountClick: (LegacyAccount) -> Unit,
+    onCategoryClick: (Category) -> Unit,
     setUpcomingExpanded: (Boolean) -> Unit,
     setOverdueExpanded: (Boolean) -> Unit,
     onSkipTransaction: (LegacyTransaction) -> Unit = {},
@@ -62,6 +62,9 @@ fun LazyListScope.transactions(
         shouldShowAccountSpecificColorInTransactions = shouldShowAccountSpecificColorInTransactions,
         onPayOrGet = onPayOrGet,
         onSkipTransaction = onSkipTransaction,
+        onTransactionClick = onTransactionClick,
+        onAccountClick = onAccountClick,
+        onCategoryClick = onCategoryClick,
         setExpanded = setUpcomingExpanded
     )
 
@@ -73,6 +76,9 @@ fun LazyListScope.transactions(
         onSkipTransaction = onSkipTransaction,
         onSkipAllTransactions = onSkipAllTransactions,
         shouldShowAccountSpecificColorInTransactions = shouldShowAccountSpecificColorInTransactions,
+        onTransactionClick = onTransactionClick,
+        onAccountClick = onAccountClick,
+        onCategoryClick = onCategoryClick,
         setExpanded = setOverdueExpanded
     )
 
@@ -82,7 +88,10 @@ fun LazyListScope.transactions(
         history = history,
         shouldShowAccountSpecificColorInTransactions = shouldShowAccountSpecificColorInTransactions,
         dateDividerMarginTop = dateDividerMarginTop,
-        onPayOrGet = onPayOrGet
+        onPayOrGet = onPayOrGet,
+        onTransactionClick = onTransactionClick,
+        onAccountClick = onAccountClick,
+        onCategoryClick = onCategoryClick
     )
 
     if (
@@ -113,6 +122,9 @@ private fun LazyListScope.upcomingSection(
     shouldShowAccountSpecificColorInTransactions: Boolean,
     onPayOrGet: (LegacyTransaction) -> Unit,
     onSkipTransaction: (LegacyTransaction) -> Unit,
+    onTransactionClick: (LegacyTransaction) -> Unit,
+    onAccountClick: (LegacyAccount) -> Unit,
+    onCategoryClick: (Category) -> Unit,
     setExpanded: (Boolean) -> Unit
 ) {
     if (upcoming == null) return // guard
@@ -139,7 +151,10 @@ private fun LazyListScope.upcomingSection(
                 transactions = upcoming.transactions,
                 shouldShowAccountSpecificColorInTransactions = shouldShowAccountSpecificColorInTransactions,
                 onPayOrGet = onPayOrGet,
-                onSkipTransaction = onSkipTransaction
+                onSkipTransaction = onSkipTransaction,
+                onTransactionClick = onTransactionClick,
+                onAccountClick = onAccountClick,
+                onCategoryClick = onCategoryClick
             )
         }
     }
@@ -153,6 +168,9 @@ private fun LazyListScope.overdueSection(
     onPayOrGet: (LegacyTransaction) -> Unit,
     onSkipTransaction: (LegacyTransaction) -> Unit,
     onSkipAllTransactions: (List<LegacyTransaction>) -> Unit,
+    onTransactionClick: (LegacyTransaction) -> Unit,
+    onAccountClick: (LegacyAccount) -> Unit,
+    onCategoryClick: (Category) -> Unit,
     setExpanded: (Boolean) -> Unit
 ) {
     if (overdue == null) return
@@ -202,7 +220,10 @@ private fun LazyListScope.overdueSection(
                 transactions = overdue.transactions,
                 shouldShowAccountSpecificColorInTransactions = shouldShowAccountSpecificColorInTransactions,
                 onPayOrGet = onPayOrGet,
-                onSkipTransaction = onSkipTransaction
+                onSkipTransaction = onSkipTransaction,
+                onTransactionClick = onTransactionClick,
+                onAccountClick = onAccountClick,
+                onCategoryClick = onCategoryClick
             )
         }
     }
@@ -215,25 +236,25 @@ private fun LazyListScope.transactionItems(
     shouldShowAccountSpecificColorInTransactions: Boolean,
     onPayOrGet: (LegacyTransaction) -> Unit,
     onSkipTransaction: (LegacyTransaction) -> Unit,
+    onTransactionClick: (LegacyTransaction) -> Unit,
+    onAccountClick: (LegacyAccount) -> Unit,
+    onCategoryClick: (Category) -> Unit,
 ) {
     items(
         items = transactions,
         key = { it.id }
     ) {
-        val nav = navigation()
         TransactionCard(
             baseData = baseData,
 
             transaction = it,
             shouldShowAccountSpecificColorInTransactions = shouldShowAccountSpecificColorInTransactions,
             onPayOrGet = onPayOrGet,
-            onSkipTransaction = onSkipTransaction
-        ) { transaction ->
-            onTransactionClick(
-                nav = nav,
-                transaction = transaction
-            )
-        }
+            onSkipTransaction = onSkipTransaction,
+            onAccountClick = onAccountClick,
+            onCategoryClick = onCategoryClick,
+            onClick = onTransactionClick
+        )
     }
 }
 
@@ -244,7 +265,10 @@ private fun LazyListScope.historySection(
     shouldShowAccountSpecificColorInTransactions: Boolean,
     dateDividerMarginTop: Dp? = null,
 
-    onPayOrGet: (LegacyTransaction) -> Unit
+    onPayOrGet: (LegacyTransaction) -> Unit,
+    onTransactionClick: (LegacyTransaction) -> Unit,
+    onAccountClick: (LegacyAccount) -> Unit,
+    onCategoryClick: (Category) -> Unit
 ) {
     if (history.isNotEmpty()) {
         items(
@@ -259,20 +283,16 @@ private fun LazyListScope.historySection(
         ) {
             when (it) {
                 is LegacyTransaction -> {
-                    val nav = navigation()
-
                     TransactionCard(
                         baseData = baseData,
 
                         transaction = it,
                         shouldShowAccountSpecificColorInTransactions = shouldShowAccountSpecificColorInTransactions,
-                        onPayOrGet = onPayOrGet
-                    ) { transaction ->
-                        onTransactionClick(
-                            nav = nav,
-                            transaction = transaction
-                        )
-                    }
+                        onPayOrGet = onPayOrGet,
+                        onAccountClick = onAccountClick,
+                        onCategoryClick = onCategoryClick,
+                        onClick = onTransactionClick
+                    )
                 }
 
                 is TransactionHistoryDateDivider -> {
@@ -288,22 +308,6 @@ private fun LazyListScope.historySection(
             }
         }
     }
-}
-
-private fun onTransactionClick(
-    nav: Navigation,
-    transaction: LegacyTransaction
-) {
-    nav.navigateTo(
-        EditTransactionScreen(
-            initialTransactionId = transaction.id,
-            type = transaction.type.toRouteType()
-        )
-    )
-}
-
-private fun TransactionType.toRouteType(): TransactionRouteType {
-    return TransactionRouteType.valueOf(name)
 }
 
 @Composable

@@ -42,9 +42,6 @@ import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
 import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.data.model.currency.format
-import com.ivy.ui.navigation.Navigation
-import com.ivy.ui.navigation.TransactionsScreen
-import com.ivy.ui.navigation.navigation
 import com.ivy.ui.R
 import com.ivy.ui.time.TimeFormatter
 import com.ivy.data.model.currency.IvyCurrency
@@ -80,6 +77,8 @@ internal fun TransactionCard(
     onPayOrGet: (LegacyTransaction) -> Unit,
     modifier: Modifier = Modifier,
     onSkipTransaction: (LegacyTransaction) -> Unit = {},
+    onAccountClick: (LegacyAccount) -> Unit,
+    onCategoryClick: (Category) -> Unit,
     onClick: (LegacyTransaction) -> Unit,
 ) {
     val sourceAccount = remember(baseData.accounts, transaction.accountId) {
@@ -112,7 +111,9 @@ internal fun TransactionCard(
             transaction = transaction,
             categories = baseData.categories,
             accounts = baseData.accounts,
-            shouldShowAccountSpecificColorInTransactions = shouldShowAccountSpecificColorInTransactions
+            shouldShowAccountSpecificColorInTransactions = shouldShowAccountSpecificColorInTransactions,
+            onAccountClick = onAccountClick,
+            onCategoryClick = onCategoryClick
         )
 
         if (transaction.dueDate != null) {
@@ -289,9 +290,9 @@ private fun TransactionHeaderRow(
     categories: List<Category>,
     accounts: List<LegacyAccount>,
     shouldShowAccountSpecificColorInTransactions: Boolean,
+    onAccountClick: (LegacyAccount) -> Unit,
+    onCategoryClick: (Category) -> Unit,
 ) {
-    val nav = navigation()
-
     val category = findCategory(
         categoryId = transaction.categoryId,
         categories = categories
@@ -302,7 +303,7 @@ private fun TransactionHeaderRow(
             modifier = Modifier.padding(horizontal = 20.dp),
         ) {
             if (category != null) {
-                CategoryBadgeDisplay(category, nav)
+                CategoryBadgeDisplay(category, onCategoryClick)
                 Spacer(modifier = Modifier.height(8.dp))
             }
             TransferHeader(
@@ -318,7 +319,7 @@ private fun TransactionHeaderRow(
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             if (category != null) {
-                CategoryBadgeDisplay(category, nav)
+                CategoryBadgeDisplay(category, onCategoryClick)
             }
 
             val account = findAccount(
@@ -339,12 +340,7 @@ private fun TransactionHeaderRow(
                 defaultIcon = R.drawable.ic_custom_account_s
             ) {
                 account?.let {
-                    nav.navigateTo(
-                        TransactionsScreen(
-                            accountId = account.id,
-                            categoryId = null
-                        )
-                    )
+                    onAccountClick(account)
                 }
             }
         }
@@ -370,7 +366,7 @@ private fun findAccount(
 @Composable
 private fun CategoryBadgeDisplay(
     category: Category,
-    nav: Navigation,
+    onCategoryClick: (Category) -> Unit,
 ) {
     TransactionBadge(
         text = category.name.value,
@@ -378,13 +374,7 @@ private fun CategoryBadgeDisplay(
         icon = category.icon?.id,
         defaultIcon = R.drawable.ic_custom_category_s
     ) {
-        // Navigation logic
-        nav.navigateTo(
-            TransactionsScreen(
-                accountId = null,
-                categoryId = category.id.value
-            )
-        )
+        onCategoryClick(category)
     }
 }
 

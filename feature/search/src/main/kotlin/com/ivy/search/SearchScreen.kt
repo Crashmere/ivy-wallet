@@ -18,6 +18,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.ivy.data.model.TransactionType
 import com.ivy.legacy.ui.component.SearchInput
 import com.ivy.legacy.ui.component.transaction.TransactionListData
 import com.ivy.legacy.ui.component.transaction.transactions
@@ -25,7 +26,11 @@ import com.ivy.ui.compose.densityScope
 import com.ivy.ui.compose.keyboardOnlyWindowInsets
 import com.ivy.ui.platform.keyboardVisibleState
 import com.ivy.ui.compose.selectEndTextFieldValue
+import com.ivy.ui.navigation.EditTransactionScreen
 import com.ivy.ui.navigation.SearchScreen
+import com.ivy.ui.navigation.TransactionRouteType
+import com.ivy.ui.navigation.TransactionsScreen
+import com.ivy.ui.navigation.navigation
 import com.ivy.ui.navigation.screenScopedViewModel
 import com.ivy.ui.R
 import com.ivy.ui.animation.DURATION_MODAL_ANIM
@@ -46,6 +51,8 @@ private fun SearchUi(
     uiState: SearchState,
     onEvent: (SearchEvent) -> Unit
 ) {
+    val nav = navigation()
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -97,6 +104,30 @@ private fun SearchUi(
                 setOverdueExpanded = { },
                 history = uiState.transactions,
                 onPayOrGet = { },
+                onTransactionClick = {
+                    nav.navigateTo(
+                        EditTransactionScreen(
+                            initialTransactionId = it.id,
+                            type = it.type.toRouteType()
+                        )
+                    )
+                },
+                onAccountClick = {
+                    nav.navigateTo(
+                        TransactionsScreen(
+                            accountId = it.id,
+                            categoryId = null
+                        )
+                    )
+                },
+                onCategoryClick = {
+                    nav.navigateTo(
+                        TransactionsScreen(
+                            accountId = null,
+                            categoryId = it.id.value
+                        )
+                    )
+                },
                 emptyStateTitle = emptyStateTitle,
                 emptyStateText = emptyStateText,
                 dateDividerMarginTop = 16.dp,
@@ -117,4 +148,8 @@ private fun SearchUi(
             }
         }
     }
+}
+
+private fun TransactionType.toRouteType(): TransactionRouteType {
+    return TransactionRouteType.valueOf(name)
 }

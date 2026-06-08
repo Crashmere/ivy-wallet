@@ -33,9 +33,11 @@ import com.ivy.legacy.ui.component.transaction.TransactionsDividerLine
 import com.ivy.legacy.ui.component.transaction.transactions
 import com.ivy.ui.compose.clickableNoIndication
 import com.ivy.ui.compose.rememberInteractionSource
+import com.ivy.ui.navigation.EditTransactionScreen
 import com.ivy.ui.navigation.PieChartStatisticScreen
 import com.ivy.ui.navigation.ReportScreen
 import com.ivy.ui.navigation.TransactionRouteType
+import com.ivy.ui.navigation.TransactionsScreen
 import com.ivy.ui.navigation.navigation
 import com.ivy.ui.R
 import com.ivy.ui.platform.fileSharer
@@ -254,6 +256,30 @@ private fun BoxWithConstraintsScope.UI(
                 onPayOrGet = {
                     onEventHandler.invoke(ReportScreenEvent.OnPayOrGetLegacyTransaction(transaction = it))
                 },
+                onTransactionClick = {
+                    nav.navigateTo(
+                        EditTransactionScreen(
+                            initialTransactionId = it.id,
+                            type = it.type.toRouteType()
+                        )
+                    )
+                },
+                onAccountClick = {
+                    nav.navigateTo(
+                        TransactionsScreen(
+                            accountId = it.id,
+                            categoryId = null
+                        )
+                    )
+                },
+                onCategoryClick = {
+                    nav.navigateTo(
+                        TransactionsScreen(
+                            accountId = null,
+                            categoryId = it.id.value
+                        )
+                    )
+                },
                 emptyStateTitle = noTransactionsTitle,
                 emptyStateText = noTransactionsForFilter,
                 shouldShowAccountSpecificColorInTransactions = state.showAccountColorsInTransactions,
@@ -350,6 +376,10 @@ private fun NoFilterEmptyState(
 
         Spacer(Modifier.height(96.dp))
     }
+}
+
+private fun TransactionType.toRouteType(): TransactionRouteType {
+    return TransactionRouteType.valueOf(name)
 }
 
 @Composable
