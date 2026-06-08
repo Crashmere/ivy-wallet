@@ -29,7 +29,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.Category
-import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.data.model.Budget
 import com.ivy.ui.compose.selectEndTextFieldValue
 import com.ivy.ui.R
@@ -211,9 +210,9 @@ private fun CategoriesRow(
     Text(
         modifier = Modifier.padding(start = 32.dp),
         text = determineBudgetType(budgetCategoryIds.size),
-        style = LegacyTheme.typo.b1.copy(
+        style = BudgetsTheme.typo.b1.copy(
             fontWeight = FontWeight.Medium,
-            color = LegacyTheme.colors.pureInverse,
+            color = BudgetsTheme.colors.pureInverse,
             textAlign = TextAlign.Start
         )
     )
@@ -263,15 +262,15 @@ private fun BudgetCategoryListItem(
     val textColor = if (selectedColor != null) {
         findContrastTextColor(selectedColor)
     } else {
-        LegacyTheme.colors.pureInverse
+        BudgetsTheme.colors.pureInverse
     }
 
-    val medium = LegacyTheme.colors.medium
-    val rFull = LegacyTheme.shapes.rFull
+    val medium = BudgetsTheme.colors.medium
+    val rFull = BudgetsTheme.shapes.rFull
 
     Row(
         modifier = Modifier
-            .clip(LegacyTheme.shapes.rFull)
+            .clip(BudgetsTheme.shapes.rFull)
             .thenIf(selectedColor == null) {
                 border(2.dp, medium, rFull)
             }
@@ -296,7 +295,7 @@ private fun BudgetCategoryListItem(
         Text(
             modifier = Modifier.padding(vertical = 10.dp),
             text = text,
-            style = LegacyTheme.typo.b2.copy(
+            style = BudgetsTheme.typo.b2.copy(
                 color = textColor,
                 fontWeight = FontWeight.ExtraBold,
                 textAlign = TextAlign.Start

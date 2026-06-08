@@ -21,7 +21,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.currency.format
-import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.R
 import com.ivy.ui.compose.ResourceIcon
 import com.ivy.ui.compose.thenIf
@@ -35,24 +34,24 @@ internal fun BudgetBattery(
     currency: String,
     expenses: Double,
     budget: Double,
-    backgroundNotFilled: Color = LegacyTheme.colors.pure,
+    backgroundNotFilled: Color = BudgetsTheme.colors.pure,
     onClick: (() -> Unit)? = null,
 ) {
     if (budget == 0.0) return
     val percentSpent = expenses / budget
-    val green = LegacyTheme.colors.green
-    val orange = LegacyTheme.colors.orange
-    val red = LegacyTheme.colors.red
+    val green = BudgetsTheme.colors.green
+    val orange = BudgetsTheme.colors.orange
+    val red = BudgetsTheme.colors.red
 
     val textColor = when {
-        percentSpent <= 0.30 -> LegacyTheme.colors.pureInverse
+        percentSpent <= 0.30 -> BudgetsTheme.colors.pureInverse
         percentSpent <= 0.50 -> White
         percentSpent <= 0.75 -> White
         else -> White
     }
 
     val captionTextColor = when {
-        percentSpent <= 0.30 -> LegacyTheme.colors.mediumInverse
+        percentSpent <= 0.30 -> BudgetsTheme.colors.mediumInverse
         percentSpent <= 0.50 -> White
         percentSpent <= 0.75 -> White
         else -> White
@@ -61,7 +60,7 @@ internal fun BudgetBattery(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .clip(LegacyTheme.shapes.r4)
+            .clip(BudgetsTheme.shapes.r4)
             .background(backgroundNotFilled)
             .drawBehind {
                 drawRect(
@@ -99,7 +98,7 @@ internal fun BudgetBattery(
                     percentSpent <= 1 -> stringResource(R.string.left_to_spend)
                     else -> stringResource(R.string.budget_exceeded_by)
                 },
-                style = LegacyTheme.typo.c.copy(
+                style = BudgetsTheme.typo.c.copy(
                     color = textColor,
                     fontWeight = FontWeight.ExtraBold,
                     textAlign = TextAlign.Start
@@ -118,7 +117,7 @@ internal fun BudgetBattery(
 
             Text(
                 text = "${expenses.format(currency)}/${budget.format(currency)} $currency",
-                style = LegacyTheme.typo.nC.copy(
+                style = BudgetsTheme.typo.nC.copy(
                     fontWeight = FontWeight.ExtraBold,
                     color = captionTextColor,
                     textAlign = TextAlign.Start
@@ -132,14 +131,14 @@ internal fun BudgetBattery(
 private fun BudgetAmountCurrencyRow(
     amount: Double,
     currency: String,
-    textColor: Color = LegacyTheme.colors.pureInverse
+    textColor: Color = BudgetsTheme.colors.pureInverse
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
             text = amount.format(currency),
-            style = LegacyTheme.typo.nB2.copy(
+            style = BudgetsTheme.typo.nB2.copy(
                 fontWeight = FontWeight.ExtraBold,
                 color = textColor,
                 textAlign = TextAlign.Start
@@ -148,7 +147,7 @@ private fun BudgetAmountCurrencyRow(
         Spacer(modifier = Modifier.width(4.dp))
         Text(
             text = currency,
-            style = LegacyTheme.typo.nB2.copy(
+            style = BudgetsTheme.typo.nB2.copy(
                 fontWeight = FontWeight.Normal,
                 color = textColor,
                 textAlign = TextAlign.Start

@@ -27,7 +27,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.ivy.ui.R
-import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.compose.GradientButton
 import com.ivy.ui.compose.gradientCutBackgroundTop
 import com.ivy.ui.compose.navigationBarInset
@@ -43,9 +42,9 @@ internal fun BoxWithConstraintsScope.BudgetBottomBar(
         GradientButton(
             text = stringResource(R.string.add_budget),
             backgroundGradient = IvyGradients.Ivy,
-            disabledBackgroundColor = LegacyTheme.colors.gray,
-            shape = LegacyTheme.shapes.rFull,
-            textStyle = LegacyTheme.typo.b2.copy(
+            disabledBackgroundColor = BudgetsTheme.colors.gray,
+            shape = BudgetsTheme.shapes.rFull,
+            textStyle = BudgetsTheme.typo.b2.copy(
                 color = Color(0xFFFAFAFA),
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Start
@@ -64,8 +63,8 @@ private fun BoxWithConstraintsScope.BudgetBackBottomBar(
     onBack: () -> Unit,
     primaryAction: @Composable () -> Unit,
 ) {
-    val pure = LegacyTheme.colors.pure
-    val medium = LegacyTheme.colors.medium
+    val pure = BudgetsTheme.colors.pure
+    val medium = BudgetsTheme.colors.medium
 
     Row(
         modifier = Modifier
@@ -110,12 +109,12 @@ private fun BottomBarBackButton(
         modifier = Modifier
             .rotate(180f)
             .clip(CircleShape)
-            .background(LegacyTheme.colors.pure, CircleShape)
-            .border(2.dp, LegacyTheme.colors.medium, CircleShape)
+            .background(BudgetsTheme.colors.pure, CircleShape)
+            .border(2.dp, BudgetsTheme.colors.medium, CircleShape)
             .clickable(onClick = onBack)
             .padding(6.dp),
         painter = painterResource(id = R.drawable.ic_arrow_right),
         contentDescription = "back",
-        tint = LegacyTheme.colors.pureInverse,
+        tint = BudgetsTheme.colors.pureInverse,
     )
 }

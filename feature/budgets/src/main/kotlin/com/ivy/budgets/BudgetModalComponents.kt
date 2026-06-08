@@ -29,7 +29,6 @@ import androidx.compose.ui.unit.dp
 import com.ivy.ui.compose.GradientIconButton
 import com.ivy.ui.modal.ModalAdd
 import com.ivy.ui.modal.ModalSave
-import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.R
 import com.ivy.ui.compose.onCompositionStart
 import com.ivy.ui.platform.hideKeyboard
@@ -64,7 +63,7 @@ internal fun BudgetModalDelete(
             .size(40.dp)
             .testTag("modal_delete"),
         icon = R.drawable.ic_delete,
-        backgroundGradient = Gradient.solid(LegacyTheme.colors.red),
+        backgroundGradient = Gradient.solid(BudgetsTheme.colors.red),
         tint = White,
         onClick = onClick
     )
@@ -99,8 +98,8 @@ internal fun BudgetNameInput(
             if (isEmpty && hint.isBlank().not()) {
                 androidx.compose.material3.Text(
                     text = hint,
-                    style = LegacyTheme.typo.b2.copy(
-                        color = LegacyTheme.colors.gray,
+                    style = BudgetsTheme.typo.b2.copy(
+                        color = BudgetsTheme.colors.gray,
                         fontWeight = FontWeight.SemiBold,
                         textAlign = TextAlign.Start
                     ),
@@ -113,13 +112,13 @@ internal fun BudgetNameInput(
                     .focusRequester(nameFocus),
                 value = textFieldValue,
                 onValueChange = setTextFieldValue,
-                textStyle = LegacyTheme.typo.b1.copy(
-                    color = LegacyTheme.colors.pureInverse,
+                textStyle = BudgetsTheme.typo.b1.copy(
+                    color = BudgetsTheme.colors.pureInverse,
                     fontWeight = FontWeight.ExtraBold,
                     textAlign = TextAlign.Start
                 ),
                 singleLine = false,
-                cursorBrush = SolidColor(LegacyTheme.colors.pureInverse),
+                cursorBrush = SolidColor(BudgetsTheme.colors.pureInverse),
                 keyboardOptions = KeyboardOptions(
                     capitalization = KeyboardCapitalization.Words,
                     imeAction = ImeAction.Done,
@@ -141,7 +140,7 @@ internal fun BudgetNameInput(
                 .padding(start = 32.dp, end = 32.dp)
                 .fillMaxWidth()
                 .height(2.dp)
-                .background(LegacyTheme.colors.medium, LegacyTheme.shapes.rFull),
+                .background(BudgetsTheme.colors.medium, BudgetsTheme.shapes.rFull),
         )
     }
 }
