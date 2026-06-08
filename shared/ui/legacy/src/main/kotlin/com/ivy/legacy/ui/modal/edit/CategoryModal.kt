@@ -155,7 +155,7 @@ fun BoxWithConstraintsScope.CategoryModal(
 }
 
 @Composable
-fun IconNameRow(
+internal fun IconNameRow(
     hint: String,
     @DrawableRes defaultIcon: Int,
     color: Color,

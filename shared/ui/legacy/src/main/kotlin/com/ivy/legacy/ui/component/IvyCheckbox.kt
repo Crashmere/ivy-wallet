@@ -24,7 +24,7 @@ import com.ivy.ui.compose.rememberInteractionSource
 import com.ivy.ui.R
 
 @Composable
-fun IvyCheckbox(
+private fun IvyCheckbox(
     modifier: Modifier = Modifier,
     checked: Boolean,
     onCheckedChange: (checked: Boolean) -> Unit

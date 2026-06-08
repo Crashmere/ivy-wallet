@@ -26,7 +26,7 @@ import com.ivy.legacy.ui.theme.Gradient
 import com.ivy.ui.R
 
 @Composable
-fun IvyBorderButton(
+internal fun IvyBorderButton(
     modifier: Modifier = Modifier,
     text: String,
     textStyle: TextStyle = LegacyTheme.typo.b2.style(

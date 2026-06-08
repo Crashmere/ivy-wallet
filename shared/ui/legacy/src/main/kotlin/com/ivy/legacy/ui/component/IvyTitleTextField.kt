@@ -34,7 +34,7 @@ import androidx.compose.foundation.layout.padding
 
 @Suppress("ParameterNaming")
 @Composable
-fun ColumnScope.IvyTitleTextField(
+internal fun ColumnScope.IvyTitleTextField(
     modifier: Modifier = Modifier,
     dividerModifier: Modifier = Modifier,
     value: TextFieldValue,

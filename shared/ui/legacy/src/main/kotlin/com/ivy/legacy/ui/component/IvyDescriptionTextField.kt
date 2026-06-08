@@ -28,7 +28,7 @@ import androidx.compose.ui.unit.dp
 
 @Suppress("ParameterNaming")
 @Composable
-fun IvyDescriptionTextField(
+internal fun IvyDescriptionTextField(
     modifier: Modifier = Modifier,
     textModifier: Modifier = Modifier,
     testTag: String = "desc_input",

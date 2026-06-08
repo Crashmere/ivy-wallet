@@ -60,7 +60,7 @@ import androidx.compose.runtime.setValue
 
 @Suppress("ParameterNaming")
 @Composable
-fun CurrencyPicker(
+internal fun CurrencyPicker(
     modifier: Modifier = Modifier,
     initialSelectedCurrency: IvyCurrency?,
     preselectedCurrency: IvyCurrency = IvyCurrency.getDefault(),

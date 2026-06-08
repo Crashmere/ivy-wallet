@@ -23,11 +23,9 @@ import com.ivy.legacy.ui.theme.system.style
 import com.ivy.ui.compose.clickableNoIndication
 import com.ivy.ui.compose.rememberInteractionSource
 import com.ivy.legacy.ui.component.IvyIcon
-import androidx.compose.ui.res.stringResource
-import com.ivy.ui.R
 
 @Composable
-fun PrimaryAttributeColumn(
+internal fun PrimaryAttributeColumn(
     @DrawableRes icon: Int,
     title: String,
     TitleRowExtra: (@Composable RowScope.() -> Unit)? = null,

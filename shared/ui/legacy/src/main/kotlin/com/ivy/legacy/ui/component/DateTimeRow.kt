@@ -11,11 +11,10 @@ import androidx.compose.ui.unit.dp
 import com.ivy.ui.time.LocalTimeFormatter
 import com.ivy.ui.time.formatNicely
 import com.ivy.ui.R
-import com.ivy.legacy.ui.component.IvyOutlinedButton
 import java.time.LocalDateTime
 
 @Composable
-fun DateTimeRow(
+internal fun DateTimeRow(
     dateTime: LocalDateTime,
     onEditDate: () -> Unit,
     onEditTime: () -> Unit,

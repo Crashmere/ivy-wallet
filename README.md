@@ -948,6 +948,7 @@
 - app 平台实现的公开面已收窄：Activity result launcher helper、文件选择/日期选择注册入口、文件分享器、构建信息 provider、生物识别封装、Secure Window 控制器和设备锁屏检查都改为 app 模块内可见；Hilt 绑定类和 `shared:ui:core` 暴露的窄接口保持不变。
 - app 根部公开面继续收窄：`RootContent` 只作为 `RootActivity` 的内部 Compose 内容函数，`RootIntentExtras` 只作为 app 内部启动参数常量；Hilt ViewModel 和绑定实现暂时保持 public 以避免影响生成代码。
 - 已删除只有单实现且只被提醒 worker 使用的 `AppStarter` 接口；提醒通知现在直接注入 `RootIntentFactory` 创建 `RootActivity` intent，同时移除未被调用的默认启动/添加交易启动方法和对应 Hilt binding。
+- 旧 UI 组件的公开面继续收窄：`IvyCheckbox` 改为文字版 checkbox 的私有实现，`PrimaryAttributeColumn`、`IconNameRow`、`DateTimeRow`、`CurrencyPicker`、`IvyBorderButton`、`IvyColorPicker`、`IvyTitleTextField` 和 `IvyDescriptionTextField` 都只作为 `shared:ui:legacy` 内部构件保留；feature 层仍可调用实际页面正在使用的旧组件入口。
 - `Features` 和功能开关 DataStore 已通过 `LocalFeatures/LocalFeatureDataStore` 由 app 根部显式提供；旧金额键盘不再用 Hilt `EntryPointAccessors` 从 application 反查依赖。
 - 锁屏页不再通过 `LocalContext.current` 自行检查系统锁屏状态；`RootActivity` 从 app 平台层提供 `hasLockScreen` 检查函数，UI 只负责触发认证或继续进入应用。
 - 根启动 intent 的交易类型解析已改用 `IntentCompat.getSerializableExtra()`，不再直接调用新版 Android 中弃用的 `Intent.getSerializableExtra(String)`。
