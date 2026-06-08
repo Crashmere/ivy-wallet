@@ -143,7 +143,7 @@ private fun SearchUi(
                 )
 
                 Spacer(Modifier.height(keyboardShownInsetDp))
-                // add keyboard height margin at bototm so the list can scroll to bottom
+                // add keyboard height margin at bottom so the list can scroll to bottom
             }
         }
     }

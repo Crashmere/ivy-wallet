@@ -1018,14 +1018,14 @@ private fun Keyword(
 }
 
 @Composable
-private fun AddKeywordButton(text: String, modifier: Modifier = Modifier, onCLick: () -> Unit) {
+private fun AddKeywordButton(text: String, modifier: Modifier = Modifier, onClick: () -> Unit) {
     IvyOutlinedButton(
         modifier = modifier,
         text = text,
         iconStart = R.drawable.ic_plus,
         padding = 10.dp,
     ) {
-        onCLick()
+        onClick()
     }
 }
 
