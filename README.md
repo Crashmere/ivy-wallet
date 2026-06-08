@@ -74,6 +74,7 @@
 - 收窄 data-core 内部远程源：删除只有单实现且只被 `DefaultExchangeRateStore` 使用的 `RemoteExchangeRatesDataSource` 接口；domain 仍只依赖 `ExchangeRateStore`，汇率同步行为不变。
 - 清理旧 UI 无效参数：删除 `ShowTagModal` 和 `ModalAmountSection` 中未使用的 `modifier` 参数及对应 suppress，调用方和展示行为不变。
 - 继续清理旧 UI 无效参数：删除编辑交易/计划付款共用的 `EditBottomSheet` 中未使用的 `modifier` 参数，编辑入口调用和底部表单展示行为不变。
+- 收窄旧 UI 内部构件公开面：`IntervalPickerRow`、小号内部图标、图标选择弹窗、计算器弹窗和弹窗绿色主按钮改为 `shared:ui:legacy` 内部实现，feature 层继续只使用现有页面级弹窗入口。
 
 当前仍保留：
 

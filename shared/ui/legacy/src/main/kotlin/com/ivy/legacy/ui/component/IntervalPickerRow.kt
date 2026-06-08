@@ -36,7 +36,7 @@ import java.util.Locale
 private const val RepeatIntervalCharLimit = 5
 
 @Composable
-fun IntervalPickerRow(
+internal fun IntervalPickerRow(
     intervalN: Int,
     intervalType: IntervalType,
 

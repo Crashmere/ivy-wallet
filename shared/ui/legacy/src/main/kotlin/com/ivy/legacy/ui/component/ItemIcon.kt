@@ -82,7 +82,7 @@ fun ItemIconSDefaultIcon(
 }
 
 @Composable
-fun ItemIconS(
+internal fun ItemIconS(
     modifier: Modifier = Modifier,
     iconName: String?,
     tint: Color = LegacyTheme.colors.pureInverse,

@@ -88,7 +88,7 @@ import com.ivy.legacy.ui.theme.IvyDark
 import com.ivy.legacy.ui.modal.ModalSave
 import com.ivy.legacy.ui.modal.ModalSet
 
-const val SWIPE_UP_EXPANDED_THRESHOLD = 200
+private const val SWIPE_UP_EXPANDED_THRESHOLD = 200
 
 @Suppress("LongMethod", "LongParameterList", "ParameterNaming")
 @Composable

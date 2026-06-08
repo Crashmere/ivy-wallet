@@ -36,7 +36,7 @@ import androidx.compose.runtime.setValue
 
 @SuppressLint("ComposeModifierMissing")
 @Composable
-fun BoxWithConstraintsScope.CalculatorModal(
+internal fun BoxWithConstraintsScope.CalculatorModal(
       initialAmount: Double?,
       visible: Boolean,
       currency: String,

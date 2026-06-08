@@ -158,7 +158,7 @@ internal fun ModalNegativeButton(
 }
 
 @Composable
-fun ModalPositiveButton(
+internal fun ModalPositiveButton(
     modifier: Modifier = Modifier,
     text: String,
     @DrawableRes iconStart: Int,
