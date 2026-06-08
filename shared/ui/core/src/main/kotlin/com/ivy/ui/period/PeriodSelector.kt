@@ -1,4 +1,4 @@
-package com.ivy.legacy.ui.period
+package com.ivy.ui.period
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -21,13 +21,11 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.ivy.ui.R
+import com.ivy.ui.compose.ResourceIcon
 import com.ivy.ui.time.LocalTimeConverter
 import com.ivy.ui.time.LocalTimeFormatter
 import com.ivy.ui.time.LocalTimeProvider
-import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.ui.period.TimePeriod
-import com.ivy.ui.R
-import com.ivy.ui.compose.ResourceIcon
 
 @Composable
 fun PeriodSelector(
@@ -42,8 +40,8 @@ fun PeriodSelector(
         modifier = modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp)
-            .border(2.dp, LegacyTheme.colors.medium, LegacyTheme.shapes.rFull),
-        verticalAlignment = Alignment.CenterVertically
+            .border(2.dp, PeriodSelectorTheme.colors.medium, PeriodSelectorTheme.shapes.rFull),
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Spacer(Modifier.width(20.dp))
 
@@ -58,7 +56,7 @@ fun PeriodSelector(
                     .padding(all = 8.dp)
                     .rotate(-180f),
                 icon = R.drawable.ic_arrow_right,
-                tint = LegacyTheme.colors.pureInverse
+                tint = PeriodSelectorTheme.colors.pureInverse,
             )
         }
 
@@ -68,16 +66,16 @@ fun PeriodSelector(
             modifier = Modifier
                 .height(48.dp)
                 .defaultMinSize(minWidth = 48.dp)
-                .clip(LegacyTheme.shapes.rFull)
+                .clip(PeriodSelectorTheme.shapes.rFull)
                 .clickable {
                     onShowChoosePeriodModal()
                 },
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center
+            horizontalArrangement = Arrangement.Center,
         ) {
             ResourceIcon(
                 icon = R.drawable.ic_calendar,
-                tint = LegacyTheme.colors.pureInverse
+                tint = PeriodSelectorTheme.colors.pureInverse,
             )
 
             Spacer(Modifier.width(4.dp))
@@ -89,11 +87,11 @@ fun PeriodSelector(
                     timeProvider = LocalTimeProvider.current,
                     timeFormatter = LocalTimeFormatter.current,
                 ),
-                style = LegacyTheme.typo.b2.copy(
-                    color = LegacyTheme.colors.pureInverse,
+                style = PeriodSelectorTheme.typo.b2.copy(
+                    color = PeriodSelectorTheme.colors.pureInverse,
                     fontWeight = FontWeight.Bold,
-                    textAlign = TextAlign.Start
-                )
+                    textAlign = TextAlign.Start,
+                ),
             )
         }
 
@@ -109,7 +107,7 @@ fun PeriodSelector(
                     }
                     .padding(all = 8.dp),
                 icon = R.drawable.ic_arrow_right,
-                tint = LegacyTheme.colors.pureInverse
+                tint = PeriodSelectorTheme.colors.pureInverse,
             )
         }
 

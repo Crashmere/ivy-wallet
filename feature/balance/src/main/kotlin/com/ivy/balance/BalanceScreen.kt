@@ -41,7 +41,7 @@ import com.ivy.ui.theme.colors.IvyFixedColors.White
 import com.ivy.ui.money.BalanceRow
 import com.ivy.ui.compose.GradientIconButton
 import com.ivy.legacy.ui.modal.ChoosePeriodModal
-import com.ivy.legacy.ui.period.PeriodSelector
+import com.ivy.ui.period.PeriodSelector
 import com.ivy.ui.period.TimePeriod
 
 private val FabButtonSize = 56.dp

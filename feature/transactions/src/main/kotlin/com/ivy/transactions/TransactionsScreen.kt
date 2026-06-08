@@ -89,7 +89,7 @@ import com.ivy.legacy.ui.modal.DeleteModal
 import com.ivy.legacy.ui.modal.edit.AccountModal
 import com.ivy.legacy.ui.modal.edit.CategoryModal
 import com.ivy.ui.theme.colors.toComposeColor
-import com.ivy.legacy.ui.period.PeriodSelector
+import com.ivy.ui.period.PeriodSelector
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
