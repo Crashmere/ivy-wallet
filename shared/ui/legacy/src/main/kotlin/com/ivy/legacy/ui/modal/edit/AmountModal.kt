@@ -36,18 +36,18 @@ import androidx.compose.ui.unit.sp
 import com.ivy.ui.preferences.LocalAmountInputPreferences
 import com.ivy.ui.preferences.asEnabledState
 import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.data.model.currency.amountToDouble
-import com.ivy.data.model.currency.amountToDoubleOrNull
-import com.ivy.data.model.currency.format
-import com.ivy.data.model.currency.formatInputAmount
-import com.ivy.data.model.currency.formatInt
 import com.ivy.ui.platform.hideKeyboard
-import com.ivy.data.model.currency.localDecimalSeparator
 import com.ivy.ui.compose.onCompositionStart
 import com.ivy.ui.R
 import com.ivy.ui.modal.IvyModal
 import com.ivy.ui.modal.ModalPositiveButton
 import com.ivy.ui.compose.ResourceIcon
+import com.ivy.ui.money.formatAmount
+import com.ivy.ui.money.formatAmountInput
+import com.ivy.ui.money.formatIntegerAmount
+import com.ivy.ui.money.localMoneyDecimalSeparator
+import com.ivy.ui.money.parseAmount
+import com.ivy.ui.money.parseAmountOrNull
 import com.ivy.ui.theme.colors.IvyFixedColors
 import java.util.UUID
 import kotlin.math.truncate
@@ -73,10 +73,10 @@ fun BoxWithConstraintsScope.AmountModal(
     var amount by remember(id) {
         mutableStateOf(
             if (currency.isNotEmpty()) {
-                initialAmount?.takeIf { it != 0.0 }?.format(currency)
+                initialAmount?.takeIf { it != 0.0 }?.let { formatAmount(it, currency) }
                     ?: ""
             } else {
-                initialAmount?.takeIf { it != 0.0 }?.format(decimalCountMax)
+                initialAmount?.takeIf { it != 0.0 }?.let { formatAmount(it, decimalCountMax) }
                     ?: ""
             }
         )
@@ -111,7 +111,7 @@ fun BoxWithConstraintsScope.AmountModal(
                 iconStart = R.drawable.ic_check
             ) {
                 try {
-                    onAmountChanged(amount.amountToDouble())
+                    onAmountChanged(parseAmount(amount))
                     dismiss()
                 } catch (_: Exception) {
                 }
@@ -169,15 +169,19 @@ fun BoxWithConstraintsScope.AmountModal(
         Spacer(Modifier.height(24.dp))
     }
 
-    CalculatorModal(
+        CalculatorModal(
         visible = calculatorModalVisible,
-        initialAmount = amount.amountToDoubleOrNull(),
+        initialAmount = parseAmountOrNull(amount),
         currency = currency,
         dismiss = {
             calculatorModalVisible = false
         },
         onCalculation = {
-            amount = if (currency.isNotEmpty()) it.format(currency) else it.format(decimalCountMax)
+            amount = if (currency.isNotEmpty()) {
+                formatAmount(it, currency)
+            } else {
+                formatAmount(it, decimalCountMax)
+            }
         }
     )
 }
@@ -233,8 +237,8 @@ private fun AmountInput(
                 setAmount(it)
                 firstInput = false
             } else {
-                val formattedAmount = formatInputAmount(
-                    currency = currency,
+                val formattedAmount = formatAmountInput(
+                    currencyCode = currency,
                     amount = amount,
                     newSymbol = it,
                     decimalCountMax = decimalCountMax
@@ -246,15 +250,15 @@ private fun AmountInput(
         },
         onDecimalPoint = {
             if (firstInput) {
-                setAmount("0${localDecimalSeparator()}")
+                setAmount("0${localMoneyDecimalSeparator()}")
                 firstInput = false
             } else {
                 val newlyEnteredString = if (amount.isEmpty()) {
-                    "0${localDecimalSeparator()}"
+                    "0${localMoneyDecimalSeparator()}"
                 } else {
-                    "$amount${localDecimalSeparator()}"
+                    "$amount${localMoneyDecimalSeparator()}"
                 }
-                if (newlyEnteredString.amountToDoubleOrNull() != null) {
+                if (parseAmountOrNull(newlyEnteredString) != null) {
                     setAmount(newlyEnteredString)
                 }
             }
@@ -275,21 +279,21 @@ private fun AmountInput(
 
 private fun formatNumber(number: String): String? {
     val decimalPartString = number
-        .split(localDecimalSeparator())
+        .split(localMoneyDecimalSeparator())
         .getOrNull(1)
     val newDecimalCount = decimalPartString?.length ?: 0
 
-    val amountDouble = number.amountToDoubleOrNull()
+    val amountDouble = parseAmountOrNull(number)
 
     if (newDecimalCount <= 2 && amountDouble != null) {
         val intPart = truncate(amountDouble).toInt()
         val decimalFormatted = if (decimalPartString != null) {
-            "${localDecimalSeparator()}$decimalPartString"
+            "${localMoneyDecimalSeparator()}$decimalPartString"
         } else {
             ""
         }
 
-        return formatInt(intPart) + decimalFormatted
+        return formatIntegerAmount(intPart) + decimalFormatted
     }
 
     return null
@@ -381,7 +385,7 @@ internal fun AmountKeyboard(
         horizontalArrangement = Arrangement.SpaceEvenly
     ) {
         KeypadCircleButton(
-            text = localDecimalSeparator(),
+            text = localMoneyDecimalSeparator(),
             testTag = if (forCalculator) {
                 "calc_key_decimal_separator"
             } else {

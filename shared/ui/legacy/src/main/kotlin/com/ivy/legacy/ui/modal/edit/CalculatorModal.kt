@@ -17,15 +17,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.data.model.currency.amountToDoubleOrNull
-import com.ivy.data.model.currency.format
-import com.ivy.data.model.currency.formatInputAmount
-import com.ivy.data.model.currency.localDecimalSeparator
-import com.ivy.data.model.currency.normalizeExpression
 import com.ivy.ui.R
 import com.ivy.ui.modal.IvyModal
 import com.ivy.ui.modal.ModalSet
 import com.ivy.ui.modal.ModalTitle
+import com.ivy.ui.money.formatAmount
+import com.ivy.ui.money.formatAmountInput
+import com.ivy.ui.money.localMoneyDecimalSeparator
+import com.ivy.ui.money.normalizeMoneyExpression
+import com.ivy.ui.money.parseAmountOrNull
 import com.ivy.ui.theme.colors.IvyFixedColors
 import com.notkamui.keval.Keval
 import java.util.UUID
@@ -43,7 +43,7 @@ internal fun BoxWithConstraintsScope.CalculatorModal(
       onCalculation: (Double) -> Unit
 ) {
     var expression by remember(id, initialAmount) {
-        mutableStateOf(initialAmount?.format(currency) ?: "")
+        mutableStateOf(initialAmount?.let { formatAmount(it, currency) } ?: "")
     }
 
     IvyModal(
@@ -146,7 +146,7 @@ internal fun BoxWithConstraintsScope.CalculatorModal(
                 ) {
                     val result = calculate(expression)
                     if (result != null) {
-                        expression = result.format(currency)
+                        expression = formatAmount(result, currency)
                     }
                 }
             },
@@ -159,7 +159,7 @@ internal fun BoxWithConstraintsScope.CalculatorModal(
             },
             onDecimalPoint = {
                 expression = formatExpression(
-                    expression = expression + localDecimalSeparator(),
+                    expression = expression + localMoneyDecimalSeparator(),
                     currency = currency
                 )
             },
@@ -197,10 +197,10 @@ private fun formatExpression(expression: String, currency: String): String {
             listOf(expression)
         }
         .forEach { part ->
-            val numberPart = part.amountToDoubleOrNull()
+            val numberPart = parseAmountOrNull(part)
             if (numberPart != null) {
-                val formattedPart = formatInputAmount(
-                    currency = currency,
+                val formattedPart = formatAmountInput(
+                    currencyCode = currency,
                     amount = part,
                     newSymbol = ""
                 )
@@ -228,7 +228,7 @@ private fun calculate(expression: String): Double? {
             }
         }
         val modifiedExpression = if (expression.startsWith("-")) "0$expression" else expression
-        Keval.eval(modifiedExpression.normalizeExpression())
+        Keval.eval(normalizeMoneyExpression(modifiedExpression))
     } catch (e: Exception) {
         null
     }

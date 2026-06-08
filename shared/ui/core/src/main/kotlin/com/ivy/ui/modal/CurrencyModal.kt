@@ -25,6 +25,26 @@ import java.util.UUID
 @Composable
 fun BoxWithConstraintsScope.CurrencyModal(
     title: String,
+    initialCurrencyCode: String?,
+    visible: Boolean,
+    dismiss: () -> Unit,
+    id: UUID = UUID.randomUUID(),
+
+    onSetCurrency: (String) -> Unit
+) {
+    CurrencyModal(
+        title = title,
+        initialCurrency = initialCurrencyCode?.let(IvyCurrency::fromCode),
+        visible = visible,
+        dismiss = dismiss,
+        id = id,
+        onSetCurrency = onSetCurrency
+    )
+}
+
+@Composable
+fun BoxWithConstraintsScope.CurrencyModal(
+    title: String,
     initialCurrency: IvyCurrency?,
     visible: Boolean,
     dismiss: () -> Unit,

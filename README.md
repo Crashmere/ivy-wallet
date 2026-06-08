@@ -1563,6 +1563,7 @@ shared:ui:core
 - 旧分类选择弹窗继续收窄：`ChooseCategoryModal` 不再接收或回传完整 `Category`，改用 `CategoryModalCategory` 列表和分类 UUID；编辑交易与计划付款编辑页负责把 UUID 映射回自身业务事件。
 - 旧账户编辑弹窗继续收窄：`AccountModal` 不再构造 `CreateAccountData` 或回传编辑后的账户对象，改用 `AccountModalSaveData`；新增账户和调余额/编辑账户路径由各 feature 在业务边界转换。
 - 旧主题入口继续收窄：`shared:ui:legacy` 不再直接依赖数据层 `Theme` 枚举，改用自己的 `LegacyUiTheme`；app 壳层负责从当前正式主题状态映射到旧 UI 主题。
+- 旧 UI 货币格式边界继续收窄：金额解析、输入格式化、币种小数位和币种名称查询统一通过 `shared:ui:core` 的 money 门面进入，`shared:ui:legacy` 已移除对 `shared:data:model` 的直接 Gradle 依赖。
 - app 仍保留文件选择、文件分享、Material 日期选择器、BuildInfo、Locale 设置、生物识别和窗口安全等真正依赖 Activity 或 Android app 壳层的装配。
 
 ## 高风险区域

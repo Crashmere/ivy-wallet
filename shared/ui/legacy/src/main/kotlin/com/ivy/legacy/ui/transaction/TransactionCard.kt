@@ -35,14 +35,14 @@ import com.ivy.ui.time.LocalTimeConverter
 import com.ivy.ui.time.LocalTimeFormatter
 import com.ivy.ui.time.LocalTimeProvider
 import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.data.model.currency.format
 import com.ivy.ui.R
 import com.ivy.ui.time.TimeFormatter
-import com.ivy.data.model.currency.IvyCurrency
 import com.ivy.ui.icon.ItemIconSDefaultIcon
 import com.ivy.ui.money.AmountCurrencyB1
 import com.ivy.ui.compose.GradientButton
 import com.ivy.ui.compose.ResourceIcon
+import com.ivy.ui.money.decimalPlacesForCurrency
+import com.ivy.ui.money.formatAmount
 import com.ivy.ui.theme.colors.Gradient
 import com.ivy.ui.theme.colors.findContrastTextColor
 import com.ivy.ui.theme.colors.toComposeColor
@@ -191,8 +191,10 @@ internal fun TransactionCard(
             Text(
                 modifier = Modifier.padding(start = 68.dp),
                 text = "${
-                    card.toAmount.toDouble()
-                        .format(IvyCurrency.getDecimalPlaces(toAccountCurrency))
+                    formatAmount(
+                        amount = card.toAmount.toDouble(),
+                        decimalPlaces = decimalPlacesForCurrency(toAccountCurrency)
+                    )
                 } $toAccountCurrency",
                 style = LegacyTheme.typo.nB2.copy(
                     color = Gray,

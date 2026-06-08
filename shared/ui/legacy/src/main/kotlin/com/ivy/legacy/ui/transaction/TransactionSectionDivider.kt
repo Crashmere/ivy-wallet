@@ -25,12 +25,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.ivy.data.model.currency.format
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.R
 import com.ivy.ui.compose.clickableNoIndication
 import com.ivy.ui.compose.rememberInteractionSource
 import com.ivy.ui.animation.springBounce
+import com.ivy.ui.money.formatAmount
 
 @Composable
 internal fun SectionDivider(
@@ -111,7 +111,7 @@ private fun SectionDividerIncomeExpenseRow(
         if (expenses > 0) {
             Text(
                 modifier = Modifier.testTag("upcoming_expense"),
-                text = "${expenses.format(baseCurrency)} $baseCurrency",
+                text = "${formatAmount(expenses, baseCurrency)} $baseCurrency",
                 style = LegacyTheme.typo.nC.copy(
                     fontWeight = FontWeight.ExtraBold,
                     color = LegacyTheme.colors.pureInverse,
@@ -140,7 +140,7 @@ private fun SectionDividerIncomeExpenseRow(
         if (income > 0) {
             Text(
                 modifier = Modifier.testTag("upcoming_income"),
-                text = "${income.format(baseCurrency)} $baseCurrency",
+                text = "${formatAmount(income, baseCurrency)} $baseCurrency",
                 style = LegacyTheme.typo.nC.copy(
                     fontWeight = FontWeight.ExtraBold,
                     color = LegacyTheme.colors.green,

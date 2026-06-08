@@ -32,7 +32,6 @@ import com.ivy.ui.modal.AccountModalAccount
 import com.ivy.ui.compose.onCompositionStart
 import com.ivy.ui.compose.selectEndTextFieldValue
 import com.ivy.ui.R
-import com.ivy.data.model.currency.IvyCurrency
 import com.ivy.ui.compose.clickableNoIndication
 import com.ivy.ui.modal.ChooseIconModal
 import com.ivy.ui.modal.CurrencyModal
@@ -46,6 +45,7 @@ import java.util.UUID
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import com.ivy.ui.compose.rememberInteractionSource
+import com.ivy.ui.money.currencyName
 import com.ivy.ui.theme.colors.IvyFixedColors
 
 data class AccountModalSaveData(
@@ -242,7 +242,7 @@ fun BoxWithConstraintsScope.AccountModal(
 
     CurrencyModal(
         title = stringResource(R.string.choose_currency),
-        initialCurrency = IvyCurrency.fromCode(currencyCode),
+        initialCurrencyCode = currencyCode,
         visible = currencyModalVisible,
         dismiss = { currencyModalVisible = false }
     ) {
@@ -374,9 +374,8 @@ private fun AccountCurrency(
 
         Spacer(Modifier.weight(1f))
 
-        val currencyName = IvyCurrency.fromCode(currencyCode)?.name ?: ""
         Text(
-            text = "-$currencyName".lowercase(Locale.getDefault()),
+            text = "-${currencyName(currencyCode)}".lowercase(Locale.getDefault()),
             style = LegacyTheme.typo.b2.copy(
                 fontWeight = FontWeight.SemiBold,
                 color = IvyFixedColors.Gray,
