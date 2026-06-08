@@ -1,4 +1,4 @@
-package com.ivy.legacy.ui.component
+package com.ivy.home
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -19,22 +19,21 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.legacy.ui.theme.style
-import com.ivy.ui.compose.thenIf
-import com.ivy.ui.R
+import com.ivy.data.model.currency.format
+import com.ivy.legacy.ui.component.IvyIcon
 import com.ivy.legacy.ui.theme.Green
 import com.ivy.legacy.ui.theme.Ivy
+import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.legacy.ui.theme.Orange
 import com.ivy.legacy.ui.theme.Red
 import com.ivy.legacy.ui.theme.White
-import com.ivy.legacy.ui.component.AmountCurrencyB2Row
+import com.ivy.legacy.ui.theme.style
+import com.ivy.ui.R
+import com.ivy.ui.compose.thenIf
 import kotlin.math.abs
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
 
 @Composable
-internal fun BufferBattery(
+internal fun HomeBufferBattery(
     modifier: Modifier = Modifier,
     buffer: Double,
     balance: Double,
@@ -52,15 +51,9 @@ internal fun BufferBattery(
     }
 
     val textColor = when {
-        bufferExceededPercent <= 0.25 -> {
-            LegacyTheme.colors.pureInverse
-        }
-        bufferExceededPercent <= 0.50 -> {
-            White
-        }
-        bufferExceededPercent <= 0.75 -> {
-            White
-        }
+        bufferExceededPercent <= 0.25 -> LegacyTheme.colors.pureInverse
+        bufferExceededPercent <= 0.50 -> White
+        bufferExceededPercent <= 0.75 -> White
         else -> White
     }
 
@@ -72,18 +65,9 @@ internal fun BufferBattery(
             .drawBehind {
                 drawRect(
                     color = when {
-                        bufferExceededPercent <= 0.25 -> {
-                            Green
-                        }
-
-                        bufferExceededPercent <= 0.50 -> {
-                            Ivy
-                        }
-
-                        bufferExceededPercent <= 0.75 -> {
-                            Orange
-                        }
-
+                        bufferExceededPercent <= 0.25 -> Green
+                        bufferExceededPercent <= 0.50 -> Ivy
+                        bufferExceededPercent <= 0.75 -> Orange
                         else -> Red
                     },
                     size = size.copy(
@@ -113,9 +97,7 @@ internal fun BufferBattery(
                 text = if (bufferExceeded) {
                     stringResource(R.string.buffer_exceeded_by)
                 } else {
-                    stringResource(
-                        R.string.left_to_spend
-                    )
+                    stringResource(R.string.left_to_spend)
                 },
                 style = LegacyTheme.typo.c.style(
                     color = textColor,
@@ -125,11 +107,38 @@ internal fun BufferBattery(
 
             Spacer(Modifier.height(4.dp))
 
-            AmountCurrencyB2Row(
+            HomeBufferAmountCurrencyRow(
                 amount = abs(leftToSpend),
                 currency = currency,
                 textColor = textColor
             )
         }
+    }
+}
+
+@Composable
+private fun HomeBufferAmountCurrencyRow(
+    amount: Double,
+    currency: String,
+    textColor: Color = LegacyTheme.colors.pureInverse
+) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            text = amount.format(currency),
+            style = LegacyTheme.typo.nB2.style(
+                fontWeight = FontWeight.ExtraBold,
+                color = textColor
+            )
+        )
+        Spacer(modifier = Modifier.width(4.dp))
+        Text(
+            text = currency,
+            style = LegacyTheme.typo.nB2.style(
+                fontWeight = FontWeight.Normal,
+                color = textColor
+            )
+        )
     }
 }

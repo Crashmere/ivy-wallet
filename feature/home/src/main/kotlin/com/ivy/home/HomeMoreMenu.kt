@@ -59,7 +59,6 @@ import com.ivy.ui.compose.toDensityPx
 import com.ivy.ui.compose.verticalSwipeListener
 import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.Gray
-import com.ivy.legacy.ui.component.BufferBattery
 import com.ivy.legacy.ui.component.CircleButtonFilled
 import com.ivy.legacy.ui.component.IvyIcon
 import com.ivy.legacy.ui.modal.AddModalBackHandling
@@ -333,7 +332,7 @@ private fun ColumnScope.Buffer(
 
     Spacer(Modifier.height(12.dp))
 
-    BufferBattery(
+    HomeBufferBattery(
         modifier = Modifier.padding(horizontal = 16.dp),
         buffer = buffer,
         currency = currency,
