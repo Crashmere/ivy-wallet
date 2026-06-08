@@ -42,12 +42,12 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ivy.data.model.Theme
 import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.legacy.ui.theme.style
 import com.ivy.ui.compose.thenIf
 import com.ivy.ui.compose.drawColoredShadow
 import com.ivy.ui.navigation.ExchangeRatesScreen
@@ -271,9 +271,10 @@ private fun BoxWithConstraintsScope.UI(
                 Text(
                     modifier = Modifier,
                     text = "${buildInfoProvider.buildVersionName} (${buildInfoProvider.buildVersionCode})",
-                    style = LegacyTheme.typo.nC.style(
+                    style = LegacyTheme.typo.nC.copy(
                         color = LegacyTheme.colors.gray,
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.Bold,
+                        textAlign = TextAlign.Start
                     )
                 )
 
@@ -287,8 +288,10 @@ private fun BoxWithConstraintsScope.UI(
             Text(
                 modifier = Modifier.padding(start = 32.dp),
                 text = stringResource(settingsPage.title),
-                style = LegacyTheme.typo.h2.style(
-                    fontWeight = FontWeight.Black
+                style = LegacyTheme.typo.h2.copy(
+                    color = LegacyTheme.colors.pureInverse,
+                    fontWeight = FontWeight.Black,
+                    textAlign = TextAlign.Start
                 )
             )
 
@@ -793,9 +796,10 @@ private fun StartDateOfMonth(
         Text(
             modifier = Modifier.padding(vertical = 20.dp),
             text = stringResource(R.string.start_date_of_month),
-            style = LegacyTheme.typo.b2.style(
+            style = LegacyTheme.typo.b2.copy(
                 color = LegacyTheme.colors.pureInverse,
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Start
             )
         )
 
@@ -803,9 +807,10 @@ private fun StartDateOfMonth(
 
         Text(
             text = startDateOfMonth.toString(),
-            style = LegacyTheme.typo.nB2.style(
+            style = LegacyTheme.typo.nB2.copy(
                 fontWeight = FontWeight.ExtraBold,
-                color = LegacyTheme.colors.pureInverse
+                color = LegacyTheme.colors.pureInverse,
+                textAlign = TextAlign.Start
             )
         )
 
@@ -860,18 +865,20 @@ private fun AppSwitch(
         ) {
             Text(
                 text = text,
-                style = LegacyTheme.typo.b2.style(
+                style = LegacyTheme.typo.b2.copy(
                     color = LegacyTheme.colors.pureInverse,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Start
                 )
             )
             if (description.isNotEmpty()) {
                 Text(
                     modifier = Modifier.padding(end = 8.dp),
                     text = description,
-                    style = LegacyTheme.typo.nB2.style(
+                    style = LegacyTheme.typo.nB2.copy(
                         color = LegacyTheme.colors.gray,
-                        fontWeight = FontWeight.Normal
+                        fontWeight = FontWeight.Normal,
+                        textAlign = TextAlign.Start
                     ).copy(fontSize = 14.sp)
                 )
             }
@@ -934,18 +941,20 @@ private fun SettingsPrimaryButton(
         ) {
             Text(
                 text = text,
-                style = LegacyTheme.typo.b2.style(
+                style = LegacyTheme.typo.b2.copy(
                     color = textColor,
                     fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Start
                 )
             )
             if (!description.isNullOrEmpty()) {
                 Text(
                     modifier = Modifier.padding(end = 8.dp),
                     text = description,
-                    style = LegacyTheme.typo.nB2.style(
+                    style = LegacyTheme.typo.nB2.copy(
                         color = LegacyTheme.colors.gray,
-                        fontWeight = FontWeight.Normal
+                        fontWeight = FontWeight.Normal,
+                        textAlign = TextAlign.Start
                     ).copy(fontSize = 14.sp)
                 )
             }
@@ -1008,9 +1017,10 @@ private fun CurrencyButton(
         Text(
             modifier = Modifier.padding(vertical = 20.dp),
             text = stringResource(R.string.set_currency),
-            style = LegacyTheme.typo.b2.style(
+            style = LegacyTheme.typo.b2.copy(
                 color = LegacyTheme.colors.pureInverse,
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Start
             )
         )
 
@@ -1018,9 +1028,10 @@ private fun CurrencyButton(
 
         Text(
             text = currency,
-            style = LegacyTheme.typo.b1.style(
+            style = LegacyTheme.typo.b1.copy(
                 color = LegacyTheme.colors.pureInverse,
-                fontWeight = FontWeight.ExtraBold
+                fontWeight = FontWeight.ExtraBold,
+                textAlign = TextAlign.Start
             )
         )
 
@@ -1047,9 +1058,10 @@ private fun SettingsSectionDivider(
         Text(
             modifier = Modifier.padding(start = 32.dp),
             text = text,
-            style = LegacyTheme.typo.b2.style(
+            style = LegacyTheme.typo.b2.copy(
                 color = dividerColor,
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Start
             )
         )
     }
@@ -1079,9 +1091,10 @@ private fun SettingsSubMenuButton(
                 .weight(1f)
                 .padding(top = 20.dp, bottom = 20.dp, end = 8.dp),
             text = text,
-            style = LegacyTheme.typo.b2.style(
+            style = LegacyTheme.typo.b2.copy(
                 color = LegacyTheme.colors.pureInverse,
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Start
             )
         )
 

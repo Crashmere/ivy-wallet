@@ -23,12 +23,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ivy.legacy.ui.modal.IvyModal
 import com.ivy.legacy.ui.modal.ModalTitle
-import com.ivy.ui.theme.colors.IvyFixedColors.Ivy
 import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.ui.theme.colors.IvyFixedColors.White
-import com.ivy.legacy.ui.theme.style
 import com.ivy.ui.R
 import com.ivy.ui.compose.thenIf
+import com.ivy.ui.theme.colors.IvyFixedColors.Ivy
+import com.ivy.ui.theme.colors.IvyFixedColors.White
 import java.util.UUID
 
 @Composable
@@ -131,7 +130,7 @@ private fun NumberView(
     ) {
         Text(
             text = number.toString(),
-            style = LegacyTheme.typo.nB2.style(
+            style = LegacyTheme.typo.nB2.copy(
                 fontWeight = FontWeight.ExtraBold,
                 color = if (selected) White else LegacyTheme.colors.pureInverse,
                 textAlign = TextAlign.Center
