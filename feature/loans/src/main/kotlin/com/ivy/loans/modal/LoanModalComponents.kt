@@ -35,7 +35,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ivy.ui.compose.GradientIconButton
-import com.ivy.legacy.ui.button.IvyOutlinedButton
+import com.ivy.ui.compose.OutlinedPillButton
 import com.ivy.ui.icon.ItemIconMDefaultIcon
 import com.ivy.legacy.ui.modal.ModalAdd
 import com.ivy.legacy.ui.modal.ModalSave
@@ -84,19 +84,37 @@ internal fun LoanDateTimeRow(
     ) {
         Spacer(Modifier.width(24.dp))
 
-        IvyOutlinedButton(
+        OutlinedPillButton(
             text = dateTime.formatNicely(),
             iconStart = R.drawable.ic_date,
+            shape = LegacyTheme.shapes.rFull,
+            backgroundColor = LegacyTheme.colors.pure,
+            iconTint = LegacyTheme.colors.pureInverse,
+            borderColor = LegacyTheme.colors.medium,
+            textStyle = LegacyTheme.typo.b2.copy(
+                fontWeight = FontWeight.Bold,
+                color = LegacyTheme.colors.pureInverse,
+                textAlign = TextAlign.Start,
+            ),
             onClick = onEditDate
         )
 
         Spacer(Modifier.weight(1f))
 
-        IvyOutlinedButton(
+        OutlinedPillButton(
             text = with(timeFormatter) {
                 dateTime.toLocalTime().format()
             },
             iconStart = R.drawable.ic_date,
+            shape = LegacyTheme.shapes.rFull,
+            backgroundColor = LegacyTheme.colors.pure,
+            iconTint = LegacyTheme.colors.pureInverse,
+            borderColor = LegacyTheme.colors.medium,
+            textStyle = LegacyTheme.typo.b2.copy(
+                fontWeight = FontWeight.Bold,
+                color = LegacyTheme.colors.pureInverse,
+                textAlign = TextAlign.Start,
+            ),
             onClick = onEditTime
         )
 

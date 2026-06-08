@@ -70,10 +70,10 @@ import com.ivy.ui.theme.colors.IvyFixedColors.Ivy
 import com.ivy.legacy.ui.money.AmountCurrencyB1
 import com.ivy.legacy.ui.money.BalanceRow
 import com.ivy.ui.icon.ItemIconMDefaultIcon
-import com.ivy.legacy.ui.button.IvyButton
+import com.ivy.ui.compose.GradientButton
 import com.ivy.ui.compose.GradientIconButton
+import com.ivy.ui.compose.OutlinedPillButton
 import com.ivy.ui.compose.ResourceIcon
-import com.ivy.legacy.ui.button.IvyOutlinedButton
 import com.ivy.ui.icon.getCustomIconIdS
 import com.ivy.ui.theme.colors.IvyFixedColors.White
 import com.ivy.ui.theme.colors.dynamicContrast
@@ -396,13 +396,19 @@ private fun LoanStatisticToolbar(
         Spacer(Modifier.weight(1f))
 
         if (showEditButton) {
-            IvyOutlinedButton(
+            OutlinedPillButton(
                 iconStart = R.drawable.ic_edit,
                 text = stringResource(R.string.edit),
+                shape = LegacyTheme.shapes.rFull,
+                solidBackground = false,
+                backgroundColor = LegacyTheme.colors.pure,
                 borderColor = contrastColor,
                 iconTint = contrastColor,
-                textColor = contrastColor,
-                solidBackground = false
+                textStyle = LegacyTheme.typo.b2.copy(
+                    fontWeight = FontWeight.Bold,
+                    color = contrastColor,
+                    textAlign = TextAlign.Start,
+                ),
             ) {
                 onEdit()
             }
@@ -570,9 +576,11 @@ private fun LoanInfoCard(
                 )
             )
             if (selectedLoanAccount != null) {
-                IvyButton(
+                GradientButton(
                     modifier = Modifier.padding(end = 16.dp, top = 12.dp),
                     backgroundGradient = Gradient.solid(loan.color.toComposeColor()),
+                    disabledBackgroundColor = LegacyTheme.colors.gray,
+                    shape = LegacyTheme.shapes.rFull,
                     hasGlow = false,
                     iconTint = contrastColor,
                     text = selectedLoanAccount.name,
@@ -733,7 +741,7 @@ private fun LoanInfoCard(
 
         Spacer(Modifier.height(24.dp))
 
-        IvyButton(
+        GradientButton(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp)
@@ -741,11 +749,14 @@ private fun LoanInfoCard(
             text = stringResource(R.string.add_record),
             shadowAlpha = 0.1f,
             backgroundGradient = Gradient.solid(contrastColor),
+            disabledBackgroundColor = LegacyTheme.colors.gray,
+            shape = LegacyTheme.shapes.rFull,
             textStyle = LegacyTheme.typo.b2.copy(
                 color = findContrastTextColor(contrastColor),
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Start
             ),
+            iconTint = Color(0xFFFAFAFA),
             wrapContentMode = false
         ) {
             onAddRecord()
@@ -801,8 +812,10 @@ private fun LoanRecordItem(
         if (account != null || loanRecord.interest) {
             Row(Modifier.padding(16.dp)) {
                 if (account != null) {
-                    IvyButton(
+                    GradientButton(
                         backgroundGradient = Gradient.solid(LegacyTheme.colors.pure),
+                        disabledBackgroundColor = LegacyTheme.colors.gray,
+                        shape = LegacyTheme.shapes.rFull,
                         hasGlow = false,
                         iconTint = LegacyTheme.colors.pureInverse,
                         text = account.name,
@@ -831,9 +844,11 @@ private fun LoanRecordItem(
                         LoanCardDarkBackground
                     }
 
-                    IvyButton(
+                    GradientButton(
                         modifier = Modifier.padding(start = 8.dp),
                         backgroundGradient = Gradient.solid(loan.color.toComposeColor()),
+                        disabledBackgroundColor = LegacyTheme.colors.gray,
+                        shape = LegacyTheme.shapes.rFull,
                         hasGlow = false,
                         iconTint = textIconColor,
                         text = stringResource(R.string.interest),
@@ -938,9 +953,11 @@ private fun InitialRecordItem(
             .background(LegacyTheme.colors.medium, LegacyTheme.shapes.r4)
             .testTag("loan_record_item")
     ) {
-        IvyButton(
+        GradientButton(
             modifier = Modifier.padding(16.dp),
             backgroundGradient = Gradient.solid(LegacyTheme.colors.pure),
+            disabledBackgroundColor = LegacyTheme.colors.gray,
+            shape = LegacyTheme.shapes.rFull,
             text = stringResource(id = R.string.initial_loan_record),
             iconTint = LegacyTheme.colors.pureInverse,
             iconStart = getCustomIconIdS(

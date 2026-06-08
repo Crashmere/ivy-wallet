@@ -1519,6 +1519,7 @@ shared:ui:core
 - 计划付款列表卡片和交易列表页的分类/账户胶囊按钮、编辑按钮与删除确认主按钮已改用 `shared:ui:core` 按钮入口；`feature:planned-payments` 列表路径和 `feature:transactions` 不再直接依赖 legacy 按钮包装。
 - 首页月份按钮、首页客户旅程 CTA、主底栏添加计划付款按钮和饼图月份按钮已改用 `shared:ui:core` 按钮入口；`feature:home`、`feature:main` 和 `feature:piechart` 不再直接依赖 legacy 按钮包装。
 - 报表页空状态、导出按钮、筛选应用按钮和关键词筛选胶囊已改用 `shared:ui:core` 按钮入口；`feature:reports` 不再直接依赖 legacy 按钮包装。
+- 借贷详情页和借贷弹窗的日期/时间按钮、编辑按钮、账户标签、利息标签、初始记录标签和新增记录按钮已改用 `shared:ui:core` 按钮入口；当前 feature 层不再直接依赖 legacy 按钮包装，剩余旧按钮包装只服务 `shared:ui:legacy` 内部旧弹窗、标签和交易列表组件。
 - app 仍保留文件选择、文件分享、Material 日期选择器、BuildInfo、Locale 设置、生物识别和窗口安全等真正依赖 Activity 或 Android app 壳层的装配。
 
 ## 高风险区域
