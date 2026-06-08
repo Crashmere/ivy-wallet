@@ -1488,6 +1488,7 @@ shared:ui:core
 - `shared:ui:legacy` 的账户/分类/金额编辑弹窗、计算器、分类选择和颜色选择器已停止直接调用旧 `style` 扩展，继续用显式 `TextStyle.copy()` 保留原文本视觉行为。
 - `shared:ui:legacy` 的旧交易列表、交易卡片、到期分组和历史日期分隔条已停止直接调用旧 `style` 扩展；项目中没有剩余调用方后，旧 `LegacyTheme.style()` 扩展入口已删除。
 - 首页、交易页和报表页的到期/逾期 section 状态已改为继续携带正式 `Transaction`；旧 `LegacyTransaction` 适配只保留在 `shared:ui:legacy` 的交易卡片渲染边界内。
+- 旧交易列表组件内部也已停止依赖 `LegacyTransaction`：`TransactionCard` 改为接收正式 `Transaction` 和正式 `Tag`，渲染所需字段收敛到文件私有展示模型。
 - app 仍保留文件选择、文件分享、Material 日期选择器、BuildInfo、Locale 设置、生物识别和窗口安全等真正依赖 Activity 或 Android app 壳层的装配。
 
 ## 高风险区域

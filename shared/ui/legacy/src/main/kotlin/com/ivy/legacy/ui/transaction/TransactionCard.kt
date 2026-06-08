@@ -31,10 +31,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.ivy.data.model.LegacyTag
-import com.ivy.data.model.legacy.LegacyTransaction
-import com.ivy.data.model.TransactionType
 import com.ivy.data.model.Category
+import com.ivy.data.model.Expense
+import com.ivy.data.model.Income
+import com.ivy.data.model.Tag
+import com.ivy.data.model.Transaction
+import com.ivy.data.model.TransactionType
+import com.ivy.data.model.Transfer
+import com.ivy.data.model.getFromAccount
+import com.ivy.data.model.getFromValue
 import com.ivy.ui.time.LocalTimeConverter
 import com.ivy.ui.time.LocalTimeFormatter
 import com.ivy.ui.time.LocalTimeProvider
@@ -64,6 +69,9 @@ import com.ivy.legacy.ui.theme.gradientExpenses
 import com.ivy.legacy.ui.theme.toComposeColor
 import com.ivy.legacy.ui.money.AmountCurrencyB1
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
+import java.math.BigDecimal
+import java.time.Instant
 import java.time.LocalDateTime
 import java.util.Locale
 import java.util.UUID
@@ -72,7 +80,8 @@ import java.util.UUID
 @Composable
 internal fun TransactionCard(
     baseData: TransactionListData,
-    transaction: LegacyTransaction,
+    transaction: Transaction,
+    tags: ImmutableList<Tag> = persistentListOf(),
     shouldShowAccountSpecificColorInTransactions: Boolean,
     onPayOrGet: (UUID) -> Unit,
     modifier: Modifier = Modifier,
@@ -81,11 +90,14 @@ internal fun TransactionCard(
     onCategoryClick: (UUID) -> Unit,
     onClick: (UUID, TransactionType) -> Unit,
 ) {
-    val sourceAccount = remember(baseData.accounts, transaction.accountId) {
-        baseData.accounts.find { it.id == transaction.accountId }
+    val card = remember(transaction, tags) {
+        transaction.toTransactionCardData(tags)
     }
-    val targetAccount = remember(baseData.accounts, transaction.toAccountId) {
-        baseData.accounts.find { it.id == transaction.toAccountId }
+    val sourceAccount = remember(baseData.accounts, card.accountId) {
+        baseData.accounts.find { it.id == card.accountId }
+    }
+    val targetAccount = remember(baseData.accounts, card.toAccountId) {
+        baseData.accounts.find { it.id == card.toAccountId }
     }
 
     Column(
@@ -96,7 +108,7 @@ internal fun TransactionCard(
             .clip(LegacyTheme.shapes.r4)
             .clickable {
                 if (sourceAccount != null) {
-                    onClick(transaction.id, transaction.type)
+                    onClick(card.id, card.type)
                 }
             }
             .background(LegacyTheme.colors.medium, LegacyTheme.shapes.r4)
@@ -108,7 +120,7 @@ internal fun TransactionCard(
         Spacer(Modifier.height(20.dp))
 
         TransactionHeaderRow(
-            transaction = transaction,
+            transaction = card,
             categories = baseData.categories,
             accounts = baseData.accounts,
             shouldShowAccountSpecificColorInTransactions = shouldShowAccountSpecificColorInTransactions,
@@ -116,7 +128,7 @@ internal fun TransactionCard(
             onCategoryClick = onCategoryClick
         )
 
-        if (transaction.dueDate != null) {
+        if (card.dueDate != null) {
             Spacer(Modifier.height(12.dp))
             val timeFormatter = LocalTimeFormatter.current
             val timeProvider = LocalTimeProvider.current
@@ -125,7 +137,7 @@ internal fun TransactionCard(
                 text = stringResource(
                     R.string.due_on,
                     with(timeFormatter) {
-                        transaction.dueDate!!.formatLocal(
+                        card.dueDate!!.formatLocal(
                             TimeFormatter.Style.DateOnly(
                                 includeWeekDay = true
                             )
@@ -133,7 +145,7 @@ internal fun TransactionCard(
                     }
                 ).uppercase(),
                 style = LegacyTheme.typo.nC.copy(
-                    color = if (transaction.dueDate!!.isAfter(timeProvider.utcNow())) {
+                    color = if (card.dueDate!!.isAfter(timeProvider.utcNow())) {
                         Orange
                     } else {
                         LegacyTheme.colors.gray
@@ -144,15 +156,15 @@ internal fun TransactionCard(
             )
         }
 
-        if (transaction.title.isNullOrBlank().not()) {
+        if (card.title.isNullOrBlank().not()) {
             Spacer(
                 Modifier.height(
-                    if (transaction.dueDate != null) 8.dp else 12.dp
+                    if (card.dueDate != null) 8.dp else 12.dp
                 )
             )
             Text(
                 modifier = Modifier.padding(horizontal = 24.dp),
-                text = transaction.title!!,
+                text = card.title!!,
                 style = LegacyTheme.typo.b1.copy(
                     fontWeight = FontWeight.ExtraBold,
                     color = LegacyTheme.colors.pureInverse,
@@ -161,9 +173,9 @@ internal fun TransactionCard(
             )
         }
 
-        val description = getTransactionDescription(transaction)
+        val description = getTransactionDescription(card)
         if (!description.isNullOrBlank()) {
-            Spacer(Modifier.height(if (transaction.title.isNullOrBlank().not()) 4.dp else 8.dp))
+            Spacer(Modifier.height(if (card.title.isNullOrBlank().not()) 4.dp else 8.dp))
             Text(
                 text = description,
                 modifier = Modifier.padding(horizontal = 24.dp),
@@ -177,26 +189,26 @@ internal fun TransactionCard(
             )
         }
 
-        if (transaction.dueDate != null) {
+        if (card.dueDate != null) {
             Spacer(Modifier.height(12.dp))
         } else {
             Spacer(Modifier.height(16.dp))
         }
 
         TypeAmountCurrency(
-            transactionType = transaction.type,
+            transactionType = card.type,
             dueDate = with(LocalTimeConverter.current) {
-                transaction.dueDate?.toLocalDateTime()
+                card.dueDate?.toLocalDateTime()
             },
             currency = transactionCurrency,
-            amount = transaction.amount.toDouble()
+            amount = card.amount.toDouble()
         )
 
-        if (transaction.type == TransactionType.TRANSFER && toAccountCurrency != transactionCurrency) {
+        if (card.type == TransactionType.TRANSFER && toAccountCurrency != transactionCurrency) {
             Text(
                 modifier = Modifier.padding(start = 68.dp),
                 text = "${
-                    transaction.toAmount.toDouble()
+                    card.toAmount.toDouble()
                         .format(IvyCurrency.getDecimalPlaces(toAccountCurrency))
                 } $toAccountCurrency",
                 style = LegacyTheme.typo.nB2.copy(
@@ -207,10 +219,10 @@ internal fun TransactionCard(
             )
         }
 
-        if (transaction.dueDate != null && transaction.dateTime == null) {
+        if (card.dueDate != null && card.dateTime == null) {
             // Pay/Get button
             Spacer(Modifier.height(16.dp))
-            val isExpense = transaction.type == TransactionType.EXPENSE
+            val isExpense = card.type == TransactionType.EXPENSE
             Row {
                 IvyButton(
                     modifier = Modifier
@@ -225,7 +237,7 @@ internal fun TransactionCard(
                         textAlign = TextAlign.Start
                     )
                 ) {
-                    onSkipTransaction(transaction.id)
+                    onSkipTransaction(card.id)
                 }
 
                 Spacer(Modifier.width(8.dp))
@@ -243,21 +255,62 @@ internal fun TransactionCard(
                         textAlign = TextAlign.Start
                     )
                 ) {
-                    onPayOrGet(transaction.id)
+                    onPayOrGet(card.id)
                 }
             }
         }
 
-        if (transaction.tags.isNotEmpty()) {
-            TransactionTags(transaction.tags)
+        if (card.tags.isNotEmpty()) {
+            TransactionTags(card.tags)
         }
 
         Spacer(Modifier.height(20.dp))
     }
 }
 
+private data class TransactionCardData(
+    val accountId: UUID,
+    val type: TransactionType,
+    val amount: BigDecimal,
+    val toAccountId: UUID?,
+    val toAmount: BigDecimal,
+    val title: String?,
+    val description: String?,
+    val dateTime: Instant?,
+    val categoryId: UUID?,
+    val dueDate: Instant?,
+    val recurringRuleId: UUID?,
+    val paidFor: Instant?,
+    val id: UUID,
+    val tags: ImmutableList<Tag>,
+)
+
+private fun Transaction.toTransactionCardData(tags: ImmutableList<Tag>): TransactionCardData {
+    val amount = getFromValue().amount.value.toBigDecimal()
+    return TransactionCardData(
+        accountId = getFromAccount().value,
+        type = when (this) {
+            is Expense -> TransactionType.EXPENSE
+            is Income -> TransactionType.INCOME
+            is Transfer -> TransactionType.TRANSFER
+        },
+        amount = amount,
+        toAccountId = if (this is Transfer) toAccount.value else null,
+        toAmount = if (this is Transfer) toValue.amount.value.toBigDecimal() else amount,
+        title = title?.value,
+        description = description?.value,
+        dateTime = time.takeIf { settled },
+        categoryId = category?.value,
+        dueDate = time.takeIf { !settled },
+        recurringRuleId = metadata.recurringRuleId,
+        paidFor = metadata.paidForDateTime,
+        id = id.value,
+        tags = tags,
+    )
+}
+
 @Composable
-private fun ColumnScope.TransactionTags(tags: ImmutableList<LegacyTag>) {
+private fun ColumnScope.TransactionTags(tags: ImmutableList<Tag>) {
     Spacer(Modifier.height(12.dp))
 
     LazyRow(
@@ -277,9 +330,9 @@ private fun ColumnScope.TransactionTags(tags: ImmutableList<LegacyTag>) {
             Spacer(modifier = Modifier.width(8.dp))
         }
 
-        items(tags, key = { it.id }) { tag ->
+        items(tags, key = { it.id.value }) { tag ->
             Text(
-                text = "#${tag.name}",
+                text = "#${tag.name.value}",
                 style = LegacyTheme.typo.nC.copy(
                     color = BlueLight,
                     fontWeight = FontWeight.Normal,
@@ -294,7 +347,7 @@ private fun ColumnScope.TransactionTags(tags: ImmutableList<LegacyTag>) {
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun TransactionHeaderRow(
-    transaction: LegacyTransaction,
+    transaction: TransactionCardData,
     categories: List<Category>,
     accounts: List<TransactionListAccount>,
     shouldShowAccountSpecificColorInTransactions: Boolean,
@@ -387,7 +440,7 @@ private fun CategoryBadgeDisplay(
 }
 
 @Composable
-private fun getTransactionDescription(transaction: LegacyTransaction): String? {
+private fun getTransactionDescription(transaction: TransactionCardData): String? {
     val paidFor = with(LocalTimeConverter.current) {
         transaction.paidFor?.toLocalDateTime()
     }
@@ -457,7 +510,7 @@ private const val TransferHeaderGradientThreshold = 0.35f
 @Composable
 private fun TransferHeader(
     accounts: List<TransactionListAccount>,
-    transaction: LegacyTransaction,
+    transaction: TransactionCardData,
     shouldShowAccountSpecificColorInTransactions: Boolean
 ) {
     val account = remember(accounts, transaction) {
