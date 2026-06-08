@@ -27,9 +27,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.TransactionType
 import com.ivy.legacy.ui.button.IvyButton
-import com.ivy.legacy.ui.icon.IvyIcon
 import com.ivy.legacy.ui.modal.IvyModal
 import com.ivy.legacy.ui.modal.ModalTitle
+import com.ivy.ui.compose.ResourceIcon
 import com.ivy.ui.theme.colors.Gradient
 import com.ivy.ui.theme.colors.IvyGradients
 import com.ivy.legacy.ui.theme.LegacyTheme
@@ -159,7 +159,7 @@ private fun TransactionTypeButton(
 
         val textColor = if (selected) textSelectedColor else LegacyTheme.colors.pureInverse
 
-        IvyIcon(
+        ResourceIcon(
             icon = when (transactionType) {
                 TransactionType.INCOME -> R.drawable.ic_income
                 TransactionType.EXPENSE -> R.drawable.ic_expense
@@ -186,7 +186,7 @@ private fun TransactionTypeButton(
         if (selected) {
             Spacer(Modifier.weight(1f))
 
-            IvyIcon(
+            ResourceIcon(
                 icon = R.drawable.ic_check,
                 tint = textSelectedColor
             )

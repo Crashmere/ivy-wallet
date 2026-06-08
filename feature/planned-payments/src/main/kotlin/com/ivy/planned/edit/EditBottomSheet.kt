@@ -72,7 +72,7 @@ import com.ivy.ui.theme.colors.IvyFixedColors.Ivy
 import com.ivy.legacy.ui.money.BalanceRow
 import com.ivy.legacy.ui.icon.ItemIconSDefaultIcon
 import com.ivy.legacy.ui.button.IvyButton
-import com.ivy.legacy.ui.icon.IvyIcon
+import com.ivy.ui.compose.ResourceIcon
 import com.ivy.ui.theme.colors.findContrastTextColor
 import com.ivy.ui.animation.DURATION_MODAL_ANIM
 import com.ivy.legacy.ui.modal.edit.AmountModal
@@ -466,7 +466,7 @@ private fun TransferRowMini(
             onSetExpanded()
         }
 
-        IvyIcon(
+        ResourceIcon(
             icon = R.drawable.ic_arrow_right,
             tint = LegacyTheme.colors.pureInverse
         )
@@ -697,7 +697,7 @@ private fun AddAccount(
     ) {
         Spacer(Modifier.width(12.dp))
 
-        IvyIcon(
+        ResourceIcon(
             icon = R.drawable.ic_plus,
             tint = LegacyTheme.colors.pureInverse
         )
