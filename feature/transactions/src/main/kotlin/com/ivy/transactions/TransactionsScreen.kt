@@ -94,6 +94,7 @@ import com.ivy.ui.theme.colors.toComposeColor
 import com.ivy.legacy.ui.period.PeriodSelector
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toImmutableList
 import java.util.UUID
 
 @Composable
@@ -268,7 +269,7 @@ private fun BoxWithConstraintsScope.UI(
     enableDeletionButton: Boolean,
 
     categories: ImmutableList<Category>,
-    accounts: ImmutableList<TransactionListAccount>,
+    accounts: ImmutableList<TransactionsListAccount>,
 
     balance: Double,
     balanceBaseCurrency: Double?,
@@ -451,7 +452,9 @@ private fun BoxWithConstraintsScope.UI(
             transactions(
                 baseData = TransactionListData(
                     baseCurrency,
-                    accounts,
+                    accounts
+                        .map { it.toTransactionListAccount() }
+                        .toImmutableList(),
                     categories
                 ),
                 upcoming = upcoming.toDueSection(),
@@ -544,6 +547,14 @@ private fun TransactionsDueSection.toDueSection(): DueSection {
         expanded = expanded
     )
 }
+
+private fun TransactionsListAccount.toTransactionListAccount() = TransactionListAccount(
+    id = id,
+    name = name,
+    color = color,
+    icon = icon,
+    currency = currency,
+)
 
 private fun LazyListScope.choosePeriodModal(
     period: TimePeriod,

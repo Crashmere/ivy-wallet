@@ -5,8 +5,8 @@ import com.ivy.data.model.Transaction
 import com.ivy.data.model.TransactionHistoryItem
 import com.ivy.data.model.Category
 import com.ivy.ui.period.TimePeriod
-import com.ivy.legacy.ui.transaction.TransactionListAccount
 import kotlinx.collections.immutable.ImmutableList
+import java.util.UUID
 
 @Immutable
 internal data class TransactionsState(
@@ -14,7 +14,7 @@ internal data class TransactionsState(
     val baseCurrency: String,
     val currency: String,
     val categories: ImmutableList<Category>,
-    val accounts: ImmutableList<TransactionListAccount>,
+    val accounts: ImmutableList<TransactionsListAccount>,
     val account: TransactionsAccount?,
     val category: Category?,
     val balance: Double,
@@ -32,6 +32,15 @@ internal data class TransactionsState(
     val skipAllModalVisible: Boolean,
     val deleteModal1Visible: Boolean,
     val showAccountColorsInTransactions: Boolean
+)
+
+@Immutable
+internal data class TransactionsListAccount(
+    val id: UUID,
+    val name: String,
+    val color: Int,
+    val icon: String?,
+    val currency: String?,
 )
 
 @Immutable

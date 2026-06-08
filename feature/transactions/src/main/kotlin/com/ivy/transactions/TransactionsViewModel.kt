@@ -39,7 +39,6 @@ import com.ivy.ui.compose.selectEndTextFieldValue
 import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.R
 import com.ivy.ui.preferences.asEnabledState
-import com.ivy.legacy.ui.transaction.TransactionListAccount
 import com.ivy.domain.usecase.account.CalculateAccountBalanceUseCase
 import com.ivy.domain.usecase.account.CalculateAccountIncomeExpenseUseCase
 import com.ivy.domain.usecase.account.GetAccountTransactionsUseCase
@@ -102,7 +101,7 @@ internal class TransactionsViewModel @Inject internal constructor(
     private val period = mutableStateOf(periodState.selectedPeriod)
     private val categories = mutableStateOf<ImmutableList<Category>>(persistentListOf())
     private var loadedAccounts: ImmutableList<Account> = persistentListOf()
-    private val accounts = mutableStateOf<ImmutableList<TransactionListAccount>>(persistentListOf())
+    private val accounts = mutableStateOf<ImmutableList<TransactionsListAccount>>(persistentListOf())
     private val baseCurrency = mutableStateOf("")
     private val currency = mutableStateOf("")
     private val balance = mutableDoubleStateOf(0.0)
@@ -207,7 +206,7 @@ internal class TransactionsViewModel @Inject internal constructor(
     }
 
     @Composable
-    private fun getAccounts(): ImmutableList<TransactionListAccount> {
+    private fun getAccounts(): ImmutableList<TransactionsListAccount> {
         return accounts.value
     }
 
@@ -624,7 +623,7 @@ internal class TransactionsViewModel @Inject internal constructor(
 
             categories.value = getCategoriesUseCase().toImmutableList()
             loadedAccounts = getAccountsUseCase().toImmutableList()
-            accounts.value = loadedAccounts.map { it.toTransactionListAccount() }.toImmutableList()
+            accounts.value = loadedAccounts.map { it.toTransactionsListAccount() }.toImmutableList()
             initWithTransactions.value = false
             treatTransfersAsIncomeExpense.value =
                 getTransfersAsIncomeExpensePreference()
@@ -689,7 +688,7 @@ private fun List<TransactionHistoryItem>.countTransactionType(type: TransactionT
         .count { it.transaction.getTransactionType() == type }
 }
 
-private fun Account.toTransactionListAccount() = TransactionListAccount(
+private fun Account.toTransactionsListAccount() = TransactionsListAccount(
     id = id.value,
     name = name.value,
     color = color.value,
