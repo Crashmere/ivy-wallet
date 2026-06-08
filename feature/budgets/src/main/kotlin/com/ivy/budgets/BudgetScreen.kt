@@ -31,7 +31,6 @@ import com.ivy.legacy.ui.component.BudgetBattery
 import com.ivy.ui.compose.clickableNoIndication
 import com.ivy.data.model.currency.format
 import com.ivy.ui.compose.rememberInteractionSource
-import com.ivy.ui.navigation.BudgetScreen
 import com.ivy.ui.navigation.navigation
 import com.ivy.ui.navigation.screenScopedViewModel
 import com.ivy.ui.R
@@ -42,7 +41,7 @@ import com.ivy.legacy.ui.component.ReorderModalSingleType
 import com.ivy.legacy.ui.component.AmountCurrencyB1
 
 @Composable
-fun BoxWithConstraintsScope.BudgetScreen(screen: BudgetScreen) {
+fun BoxWithConstraintsScope.BudgetScreen() {
     val viewModel: BudgetViewModel = screenScopedViewModel()
     val uiState = viewModel.uiState()
 

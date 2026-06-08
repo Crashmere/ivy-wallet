@@ -39,7 +39,6 @@ import com.ivy.ui.compose.rememberSwipeListenerState
 import com.ivy.loans.loan.Constants.SWIPE_HORIZONTAL_THRESHOLD
 import com.ivy.loans.loan.data.DisplayLoan
 import com.ivy.ui.navigation.LoanDetailsScreen
-import com.ivy.ui.navigation.LoansScreen
 import com.ivy.ui.navigation.navigation
 import com.ivy.ui.R
 import com.ivy.ui.rememberScrollPositionListState
@@ -57,7 +56,7 @@ import com.ivy.legacy.ui.modal.LoanModal
 import com.ivy.legacy.ui.theme.toComposeColor
 
 @Composable
-fun BoxWithConstraintsScope.LoansScreen(screen: LoansScreen) {
+fun BoxWithConstraintsScope.LoansScreen() {
     val viewModel: LoanViewModel = screenScopedViewModel()
     val state = viewModel.uiState()
     UI(

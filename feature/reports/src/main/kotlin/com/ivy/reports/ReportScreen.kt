@@ -35,7 +35,6 @@ import com.ivy.ui.compose.clickableNoIndication
 import com.ivy.ui.compose.rememberInteractionSource
 import com.ivy.ui.navigation.EditTransactionScreen
 import com.ivy.ui.navigation.PieChartStatisticScreen
-import com.ivy.ui.navigation.ReportScreen
 import com.ivy.ui.navigation.TransactionRouteType
 import com.ivy.ui.navigation.TransactionsScreen
 import com.ivy.ui.navigation.navigation
@@ -59,9 +58,7 @@ import kotlinx.collections.immutable.toImmutableList
 
 @ExperimentalFoundationApi
 @Composable
-fun BoxWithConstraintsScope.ReportScreen(
-    screen: ReportScreen
-) {
+fun BoxWithConstraintsScope.ReportScreen() {
     val viewModel: ReportViewModel = screenScopedViewModel()
     val state = viewModel.uiState()
 

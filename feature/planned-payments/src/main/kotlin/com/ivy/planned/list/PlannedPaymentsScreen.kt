@@ -15,7 +15,6 @@ import com.ivy.data.model.TransactionType
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.legacy.ui.theme.style
 import com.ivy.ui.navigation.EditPlannedScreen
-import com.ivy.ui.navigation.PlannedPaymentsScreen
 import com.ivy.ui.navigation.TransactionRouteType
 import com.ivy.ui.navigation.TransactionsScreen
 import com.ivy.ui.navigation.navigation
@@ -24,7 +23,7 @@ import com.ivy.ui.R
 import com.ivy.ui.rememberScrollPositionListState
 
 @Composable
-fun BoxWithConstraintsScope.PlannedPaymentsScreen(screen: PlannedPaymentsScreen) {
+fun BoxWithConstraintsScope.PlannedPaymentsScreen() {
     val viewModel: PlannedPaymentsViewModel = screenScopedViewModel()
     val uiState = viewModel.uiState()
 

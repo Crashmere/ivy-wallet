@@ -16,7 +16,6 @@ import com.ivy.home.HomeTab
 import com.ivy.ui.navigation.onScreenStart
 import com.ivy.ui.navigation.EditPlannedScreen
 import com.ivy.ui.navigation.EditTransactionScreen
-import com.ivy.ui.navigation.MainScreen
 import com.ivy.ui.navigation.TransactionRouteType
 import com.ivy.ui.navigation.navigation
 import com.ivy.data.model.CreateAccountData
@@ -26,7 +25,7 @@ import com.ivy.ui.modal.AccountModalData
 @ExperimentalAnimationApi
 @ExperimentalFoundationApi
 @Composable
-fun BoxWithConstraintsScope.MainScreen(screen: MainScreen) {
+fun BoxWithConstraintsScope.MainScreen() {
     val viewModel: MainViewModel = screenScopedViewModel()
 
     val currency by viewModel.currency.collectAsState()
@@ -40,7 +39,6 @@ fun BoxWithConstraintsScope.MainScreen(screen: MainScreen) {
     }
 
     UI(
-        screen = screen,
         tab = viewModel.selectedTab,
         baseCurrency = currency,
         selectTab = viewModel::selectTab,
@@ -52,7 +50,6 @@ fun BoxWithConstraintsScope.MainScreen(screen: MainScreen) {
 @ExperimentalFoundationApi
 @Composable
 private fun BoxWithConstraintsScope.UI(
-    screen: MainScreen,
     tab: MainTab,
 
     baseCurrency: String,

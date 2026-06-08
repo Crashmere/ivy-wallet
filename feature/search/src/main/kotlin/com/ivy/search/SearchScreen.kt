@@ -27,7 +27,6 @@ import com.ivy.ui.compose.keyboardOnlyWindowInsets
 import com.ivy.ui.platform.keyboardVisibleState
 import com.ivy.ui.compose.selectEndTextFieldValue
 import com.ivy.ui.navigation.EditTransactionScreen
-import com.ivy.ui.navigation.SearchScreen
 import com.ivy.ui.navigation.TransactionRouteType
 import com.ivy.ui.navigation.TransactionsScreen
 import com.ivy.ui.navigation.navigation
@@ -36,7 +35,7 @@ import com.ivy.ui.R
 import com.ivy.ui.animation.DURATION_MODAL_ANIM
 
 @Composable
-fun SearchScreen(screen: SearchScreen) {
+fun SearchScreen() {
     val viewModel: SearchViewModel = screenScopedViewModel()
     val uiState = viewModel.uiState()
 

@@ -47,7 +47,6 @@ import com.ivy.ui.money.balancePrefix
 import com.ivy.ui.money.compactBalancePrefix
 import com.ivy.data.model.currency.format
 import com.ivy.ui.compose.selectEndTextFieldValue
-import com.ivy.ui.navigation.CategoriesScreen
 import com.ivy.ui.navigation.TransactionsScreen
 import com.ivy.ui.navigation.navigation
 import com.ivy.ui.navigation.screenScopedViewModel
@@ -74,7 +73,7 @@ import kotlinx.collections.immutable.ImmutableList
 import java.util.UUID
 
 @Composable
-fun BoxWithConstraintsScope.CategoriesScreen(screen: CategoriesScreen) {
+fun BoxWithConstraintsScope.CategoriesScreen() {
     val viewModel: CategoriesViewModel = screenScopedViewModel()
     val state = viewModel.uiState()
 

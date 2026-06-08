@@ -33,7 +33,6 @@ import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.legacy.ui.theme.style
 import com.ivy.data.model.currency.format
 import com.ivy.ui.period.LocalPeriodState
-import com.ivy.ui.navigation.BalanceScreen
 import com.ivy.ui.navigation.navigation
 import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.Gradient
@@ -50,7 +49,7 @@ import com.ivy.legacy.ui.component.PeriodSelector
 private val FabButtonSize = 56.dp
 
 @Composable
-fun BoxWithConstraintsScope.BalanceScreen(screen: BalanceScreen) {
+fun BoxWithConstraintsScope.BalanceScreen() {
     val viewModel: BalanceViewModel = screenScopedViewModel()
     val uiState = viewModel.uiState()
 
