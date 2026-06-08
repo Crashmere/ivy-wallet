@@ -35,7 +35,6 @@ import com.ivy.ui.navigation.screenScopedViewModel
 import com.ivy.ui.R
 import com.ivy.legacy.ui.button.IvyButton
 import com.ivy.legacy.ui.modal.DeleteModal
-import com.ivy.legacy.ui.modal.AccountModalData
 import com.ivy.legacy.ui.modal.edit.AccountModal
 import com.ivy.legacy.ui.modal.edit.CategoryModal
 import com.ivy.legacy.ui.modal.edit.ChooseCategoryModal
@@ -101,7 +100,7 @@ private fun BoxWithConstraintsScope.UI(
     val titleFocus = FocusRequester()
     var categoryModalVisible by remember { mutableStateOf(false) }
     var categoryModalCategory: Category? by remember { mutableStateOf(null) }
-    var accountModalData: AccountModalData? by remember { mutableStateOf(null) }
+    var accountModalVisible by remember { mutableStateOf(false) }
     var recurringRuleModalData: RecurringRuleModalData? by remember { mutableStateOf(null) }
 
     fun showRecurringRuleModal() {
@@ -260,11 +259,7 @@ private fun BoxWithConstraintsScope.UI(
         onSelectedAccountChanged = { onEvent(EditPlannedScreenEvent.OnAccountChanged(it.id)) },
         onToAccountChanged = { },
         onAddNewAccount = {
-            accountModalData = AccountModalData(
-                account = null,
-                baseCurrency = state.currency,
-                balance = 0.0
-            )
+            accountModalVisible = true
         }
     )
 
@@ -299,11 +294,14 @@ private fun BoxWithConstraintsScope.UI(
     )
 
     AccountModal(
-        modal = accountModalData,
+        visible = accountModalVisible,
+        account = null,
+        baseCurrency = state.currency,
+        balance = 0.0,
         onCreateAccount = { onEvent(EditPlannedScreenEvent.OnCreateAccount(it)) },
         onEditAccount = { _, _ -> },
         dismiss = {
-            accountModalData = null
+            accountModalVisible = false
         }
     )
 

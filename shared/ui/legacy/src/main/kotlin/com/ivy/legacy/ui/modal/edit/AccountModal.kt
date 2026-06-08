@@ -29,7 +29,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.legacy.ui.modal.AccountModalAccount
-import com.ivy.legacy.ui.modal.AccountModalData
 import com.ivy.ui.compose.onCompositionStart
 import com.ivy.ui.compose.selectEndTextFieldValue
 import com.ivy.ui.R
@@ -52,47 +51,53 @@ import com.ivy.ui.compose.rememberInteractionSource
 
 @Composable
 fun BoxWithConstraintsScope.AccountModal(
-    modal: AccountModalData?,
+    visible: Boolean,
+    account: AccountModalAccount?,
+    baseCurrency: String,
+    balance: Double,
+    adjustBalanceMode: Boolean = false,
+    forceNonZeroBalance: Boolean = false,
+    autoFocusKeyboard: Boolean = true,
     onCreateAccount: (CreateAccountData) -> Unit,
     onEditAccount: (AccountModalAccount, balance: Double) -> Unit,
     dismiss: () -> Unit,
 ) {
-    val account = modal?.account
-    var nameTextFieldValue by remember(modal) {
+    var nameTextFieldValue by remember(visible, account) {
         mutableStateOf(selectEndTextFieldValue(account?.name))
     }
-    var color by remember(modal) {
+    var color by remember(visible, account) {
         mutableStateOf(account?.color?.let { Color(it) } ?: Ivy)
     }
-    var amount by remember(modal) {
-        mutableStateOf(modal?.balance ?: 0.0)
+    var amount by remember(visible, balance) {
+        mutableStateOf(balance)
     }
-    var currencyCode by remember(modal) {
-        mutableStateOf(account?.currency ?: modal?.baseCurrency ?: "")
+    var currencyCode by remember(visible, account, baseCurrency) {
+        mutableStateOf(account?.currency ?: baseCurrency)
     }
-    var icon by remember(modal) {
+    var icon by remember(visible, account) {
         mutableStateOf(account?.icon)
     }
-    var includeInBalance by remember(modal) {
+    var includeInBalance by remember(visible, account) {
         mutableStateOf(account?.includeInBalance ?: true)
     }
 
     var amountModalVisible by remember { mutableStateOf(false) }
     var currencyModalVisible by remember { mutableStateOf(false) }
-    var chooseIconModalVisible by remember(modal) {
+    var chooseIconModalVisible by remember(visible, account) {
         mutableStateOf(false)
     }
-
-    val forceNonZeroBalance = modal?.forceNonZeroBalance ?: false
+    val modalId = remember(visible, account, adjustBalanceMode) {
+        if (visible) UUID.randomUUID() else null
+    }
 
     IvyModal(
-        id = modal?.id,
-        visible = modal != null,
+        id = modalId,
+        visible = visible,
         dismiss = dismiss,
         shiftIfKeyboardShown = false,
         PrimaryAction = {
             ModalAddSave(
-                item = modal?.account,
+                item = account,
                 enabled = nameTextFieldValue.text.isNullOrBlank().not() && (!forceNonZeroBalance || amount > 0)
             ) {
                 save(
@@ -112,7 +117,7 @@ fun BoxWithConstraintsScope.AccountModal(
         }
     ) {
         onCompositionStart {
-            if (modal?.adjustBalanceMode == true) {
+            if (adjustBalanceMode) {
                 amountModalVisible = true
             }
         }
@@ -120,7 +125,7 @@ fun BoxWithConstraintsScope.AccountModal(
         Spacer(Modifier.height(32.dp))
 
         ModalTitle(
-            text = if (modal?.account != null) {
+            text = if (account != null) {
                 stringResource(
                     R.string.edit_account
                 )
@@ -137,7 +142,7 @@ fun BoxWithConstraintsScope.AccountModal(
             color = color,
             icon = icon,
 
-            autoFocusKeyboard = modal?.autoFocusKeyboard ?: true,
+            autoFocusKeyboard = autoFocusKeyboard,
 
             nameTextFieldValue = nameTextFieldValue,
             setNameTextFieldValue = { nameTextFieldValue = it },
@@ -187,7 +192,7 @@ fun BoxWithConstraintsScope.AccountModal(
         }
     }
 
-    val amountModalId = remember(modal, amount) {
+    val amountModalId = remember(visible, amount) {
         UUID.randomUUID()
     }
     AmountModal(
@@ -200,7 +205,7 @@ fun BoxWithConstraintsScope.AccountModal(
     ) { newAmount ->
         amount = newAmount
 
-        if (modal?.adjustBalanceMode == true) {
+        if (adjustBalanceMode) {
             save(
                 account = account,
                 nameTextFieldValue = nameTextFieldValue,

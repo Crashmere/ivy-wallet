@@ -19,7 +19,6 @@ import com.ivy.ui.navigation.EditTransactionScreen
 import com.ivy.ui.navigation.TransactionRouteType
 import com.ivy.ui.navigation.navigation
 import com.ivy.data.model.CreateAccountData
-import com.ivy.legacy.ui.modal.AccountModalData
 import com.ivy.legacy.ui.modal.edit.AccountModal
 
 @ExperimentalAnimationApi
@@ -71,7 +70,7 @@ private fun BoxWithConstraintsScope.UI(
         )
     }
 
-    var accountModalData: AccountModalData? by remember { mutableStateOf(null) }
+    var accountModalVisible by remember { mutableStateOf(false) }
 
     val nav = navigation()
     BottomBar(
@@ -112,20 +111,19 @@ private fun BoxWithConstraintsScope.UI(
         },
 
         showAddAccountModal = {
-            accountModalData = AccountModalData(
-                account = null,
-                balance = 0.0,
-                baseCurrency = baseCurrency
-            )
+            accountModalVisible = true
         }
     )
 
     AccountModal(
-        modal = accountModalData,
+        visible = accountModalVisible,
+        account = null,
+        baseCurrency = baseCurrency,
+        balance = 0.0,
         onCreateAccount = onCreateAccount,
         onEditAccount = { _, _ -> },
         dismiss = {
-            accountModalData = null
+            accountModalVisible = false
         }
     )
 }

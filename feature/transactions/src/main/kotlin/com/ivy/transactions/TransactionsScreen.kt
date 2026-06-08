@@ -84,7 +84,7 @@ import com.ivy.ui.theme.colors.dynamicContrast
 import com.ivy.ui.theme.colors.findContrastTextColor
 import com.ivy.ui.theme.colors.isDarkColor
 import com.ivy.legacy.ui.modal.ChoosePeriodModal
-import com.ivy.legacy.ui.modal.AccountModalData
+import com.ivy.legacy.ui.modal.AccountModalAccount
 import com.ivy.legacy.ui.modal.DeleteModal
 import com.ivy.legacy.ui.modal.edit.AccountModal
 import com.ivy.legacy.ui.modal.edit.CategoryModal
@@ -325,9 +325,28 @@ private fun BoxWithConstraintsScope.UI(
     var categoryModalVisible by remember { mutableStateOf(false) }
     var categoryModalCategory: Category? by remember { mutableStateOf(null) }
     var categoryModalAutoFocus by remember { mutableStateOf(true) }
-    var accountModalData: AccountModalData? by remember { mutableStateOf(null) }
+    var accountModalVisible by remember { mutableStateOf(false) }
+    var accountModalAccount: AccountModalAccount? by remember { mutableStateOf(null) }
+    var accountModalBaseCurrency by remember { mutableStateOf("") }
+    var accountModalBalance by remember { mutableStateOf(0.0) }
+    var accountModalAdjustBalanceMode by remember { mutableStateOf(false) }
+    var accountModalAutoFocus by remember { mutableStateOf(true) }
     var choosePeriodModal: TimePeriod? by remember { mutableStateOf(null) }
     var skipAllTransactionIds by remember { mutableStateOf<List<UUID>>(emptyList()) }
+    fun showAccountModal(
+        modalAccount: AccountModalAccount?,
+        modalBaseCurrency: String,
+        modalBalance: Double,
+        adjustBalanceMode: Boolean,
+        autoFocusKeyboard: Boolean,
+    ) {
+        accountModalAccount = modalAccount
+        accountModalBaseCurrency = modalBaseCurrency
+        accountModalBalance = modalBalance
+        accountModalAdjustBalanceMode = adjustBalanceMode
+        accountModalAutoFocus = autoFocusKeyboard
+        accountModalVisible = true
+    }
 
     val swipeListenerState = rememberSwipeListenerState()
     Column(
@@ -388,10 +407,11 @@ private fun BoxWithConstraintsScope.UI(
                     onEdit = {
                         when {
                             account != null -> {
-                                accountModalData = AccountModalData(
-                                    account = account.toAccountModalAccount(),
-                                    baseCurrency = currency,
-                                    balance = balance,
+                                showAccountModal(
+                                    modalAccount = account.toAccountModalAccount(),
+                                    modalBaseCurrency = currency,
+                                    modalBalance = balance,
+                                    adjustBalanceMode = false,
                                     autoFocusKeyboard = false
                                 )
                             }
@@ -407,10 +427,10 @@ private fun BoxWithConstraintsScope.UI(
                     onBalanceClick = {
                         when {
                             account != null -> {
-                                accountModalData = AccountModalData(
-                                    account = account.toAccountModalAccount(),
-                                    baseCurrency = currency,
-                                    balance = balance,
+                                showAccountModal(
+                                    modalAccount = account.toAccountModalAccount(),
+                                    modalBaseCurrency = currency,
+                                    modalBalance = balance,
                                     adjustBalanceMode = true,
                                     autoFocusKeyboard = false
                                 )
@@ -423,10 +443,10 @@ private fun BoxWithConstraintsScope.UI(
                         categoryModalVisible = true
                     },
                     showAccountModal = {
-                        accountModalData = AccountModalData(
-                            account = account?.toAccountModalAccount(),
-                            baseCurrency = currency,
-                            balance = balance,
+                        showAccountModal(
+                            modalAccount = account?.toAccountModalAccount(),
+                            modalBaseCurrency = currency,
+                            modalBalance = balance,
                             adjustBalanceMode = false,
                             autoFocusKeyboard = false
                         )
@@ -508,13 +528,18 @@ private fun BoxWithConstraintsScope.UI(
     )
 
     AccountModal(
-        modal = accountModalData,
+        visible = accountModalVisible,
+        account = accountModalAccount,
+        baseCurrency = accountModalBaseCurrency,
+        balance = accountModalBalance,
+        adjustBalanceMode = accountModalAdjustBalanceMode,
+        autoFocusKeyboard = accountModalAutoFocus,
         onCreateAccount = { },
         onEditAccount = { account, newBalance ->
             onEditAccount(account.id, newBalance)
         },
         dismiss = {
-            accountModalData = null
+            accountModalVisible = false
         }
     )
 

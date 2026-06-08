@@ -63,7 +63,6 @@ import com.ivy.legacy.ui.modal.DeleteModal
 import com.ivy.legacy.ui.modal.ModalAdd
 import com.ivy.legacy.ui.modal.ModalSave
 import com.ivy.legacy.ui.modal.ProgressModal
-import com.ivy.legacy.ui.modal.AccountModalData
 import com.ivy.legacy.ui.modal.edit.AccountModal
 import com.ivy.legacy.ui.modal.edit.AmountModal
 import com.ivy.legacy.ui.modal.edit.CategoryModal
@@ -265,7 +264,7 @@ private fun BoxWithConstraintsScope.UI(
     var tagModelVisible by remember { mutableStateOf(false) }
     var categoryModalVisible by remember { mutableStateOf(false) }
     var categoryModalCategory: Category? by remember { mutableStateOf(null) }
-    var accountModalData: AccountModalData? by remember { mutableStateOf(null) }
+    var accountModalVisible by remember { mutableStateOf(false) }
     var descriptionModalVisible by remember { mutableStateOf(false) }
     var deleteTransactionModalVisible by remember { mutableStateOf(false) }
     var changeTransactionTypeModalVisible by remember { mutableStateOf(false) }
@@ -525,9 +524,7 @@ private fun BoxWithConstraintsScope.UI(
         },
         onToAccountChanged = onToAccountChange,
         onAddNewAccount = {
-            accountModalData = AccountModalData(
-                account = null, baseCurrency = baseCurrency, balance = 0.0
-            )
+            accountModalVisible = true
         }
     )
 
@@ -567,11 +564,14 @@ private fun BoxWithConstraintsScope.UI(
     )
 
     AccountModal(
-        modal = accountModalData,
+        visible = accountModalVisible,
+        account = null,
+        baseCurrency = baseCurrency,
+        balance = 0.0,
         onCreateAccount = onCreateAccount,
         onEditAccount = { _, _ -> },
         dismiss = {
-            accountModalData = null
+            accountModalVisible = false
         }
     )
 

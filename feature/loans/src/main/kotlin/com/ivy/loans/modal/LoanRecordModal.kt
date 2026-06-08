@@ -41,7 +41,6 @@ import com.ivy.data.model.CreateAccountData
 import com.ivy.data.model.CreateLoanRecordData
 import com.ivy.data.model.EditLoanRecordData
 import com.ivy.legacy.ui.icon.ItemIconSDefaultIcon
-import com.ivy.legacy.ui.modal.AccountModalData
 import com.ivy.legacy.ui.modal.DeleteModal
 import com.ivy.legacy.ui.modal.IvyModal
 import com.ivy.legacy.ui.modal.ModalAmountSection
@@ -108,7 +107,8 @@ internal fun BoxWithConstraintsScope.LoanRecordModal(
     var dateTime = modal?.loanRecord?.dateTime ?: dateTime
     var amountModalVisible by remember { mutableStateOf(false) }
     var deleteModalVisible by remember(modal) { mutableStateOf(false) }
-    var accountModalData: AccountModalData? by remember { mutableStateOf(null) }
+    var accountModalVisible by remember { mutableStateOf(false) }
+    var accountModalBaseCurrency by remember { mutableStateOf("USD") }
     var accountChangeConformationModal by remember { mutableStateOf(false) }
 
     IvyModal(
@@ -228,11 +228,8 @@ internal fun BoxWithConstraintsScope.LoanRecordModal(
                 selectedAcc = it
             },
             onAddNewAccount = {
-                accountModalData = AccountModalData(
-                    account = null,
-                    baseCurrency = selectedAcc?.currency ?: "USD",
-                    balance = 0.0
-                )
+                accountModalBaseCurrency = selectedAcc?.currency ?: "USD"
+                accountModalVisible = true
             },
             childrenTestTag = "amount_modal_account"
         )
@@ -332,11 +329,14 @@ internal fun BoxWithConstraintsScope.LoanRecordModal(
     }
 
     AccountModal(
-        modal = accountModalData,
+        visible = accountModalVisible,
+        account = null,
+        baseCurrency = accountModalBaseCurrency,
+        balance = 0.0,
         onCreateAccount = onCreateAccount,
         onEditAccount = { _, _ -> },
         dismiss = {
-            accountModalData = null
+            accountModalVisible = false
         }
     )
 

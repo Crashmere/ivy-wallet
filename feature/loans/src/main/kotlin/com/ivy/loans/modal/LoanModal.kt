@@ -51,7 +51,6 @@ import com.ivy.loans.model.LoanAccount
 import com.ivy.ui.theme.colors.IvyGradients
 import com.ivy.ui.theme.colors.IvyFixedColors.Ivy
 import com.ivy.ui.theme.colors.IvyFixedColors.White
-import com.ivy.legacy.ui.modal.AccountModalData
 import com.ivy.legacy.ui.modal.ChooseIconModal
 import com.ivy.legacy.ui.modal.CurrencyModal
 import com.ivy.legacy.ui.modal.DeleteModal
@@ -131,7 +130,8 @@ internal fun BoxWithConstraintsScope.LoanModal(
         mutableStateOf(false)
     }
 
-    var accountModalData: AccountModalData? by remember { mutableStateOf(null) }
+    var accountModalVisible by remember { mutableStateOf(false) }
+    var accountModalBaseCurrency by remember { mutableStateOf("USD") }
 
     IvyModal(
         id = modal?.id,
@@ -268,11 +268,8 @@ internal fun BoxWithConstraintsScope.LoanModal(
                 currencyCode = it.currency ?: getDefaultFIATCurrency().currencyCode
             },
             onAddNewAccount = {
-                accountModalData = AccountModalData(
-                    account = null,
-                    baseCurrency = selectedAcc?.currency ?: "USD",
-                    balance = 0.0
-                )
+                accountModalBaseCurrency = selectedAcc?.currency ?: "USD"
+                accountModalVisible = true
             },
             childrenTestTag = "amount_modal_account"
         )
@@ -325,11 +322,14 @@ internal fun BoxWithConstraintsScope.LoanModal(
     }
 
     AccountModal(
-        modal = accountModalData,
+        visible = accountModalVisible,
+        account = null,
+        baseCurrency = accountModalBaseCurrency,
+        balance = 0.0,
         onCreateAccount = onCreateAccount,
         onEditAccount = { _, _ -> },
         dismiss = {
-            accountModalData = null
+            accountModalVisible = false
         }
     )
 
