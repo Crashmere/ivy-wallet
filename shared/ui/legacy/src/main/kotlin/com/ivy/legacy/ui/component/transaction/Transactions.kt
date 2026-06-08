@@ -18,6 +18,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.Category
+import com.ivy.data.model.TransactionType
 import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.data.model.legacy.LegacyTransaction
 import com.ivy.data.model.TransactionHistoryDateDivider
@@ -49,7 +50,7 @@ fun LazyListScope.transactions(
     lastItemSpacer: Dp? = null,
     shouldShowAccountSpecificColorInTransactions: Boolean,
     onPayOrGet: (UUID) -> Unit,
-    onTransactionClick: (LegacyTransaction) -> Unit,
+    onTransactionClick: (UUID, TransactionType) -> Unit,
     onAccountClick: (LegacyAccount) -> Unit,
     onCategoryClick: (Category) -> Unit,
     setUpcomingExpanded: (Boolean) -> Unit,
@@ -123,7 +124,7 @@ private fun LazyListScope.upcomingSection(
     shouldShowAccountSpecificColorInTransactions: Boolean,
     onPayOrGet: (UUID) -> Unit,
     onSkipTransaction: (UUID) -> Unit,
-    onTransactionClick: (LegacyTransaction) -> Unit,
+    onTransactionClick: (UUID, TransactionType) -> Unit,
     onAccountClick: (LegacyAccount) -> Unit,
     onCategoryClick: (Category) -> Unit,
     setExpanded: (Boolean) -> Unit
@@ -169,7 +170,7 @@ private fun LazyListScope.overdueSection(
     onPayOrGet: (UUID) -> Unit,
     onSkipTransaction: (UUID) -> Unit,
     onSkipAllTransactions: (List<UUID>) -> Unit,
-    onTransactionClick: (LegacyTransaction) -> Unit,
+    onTransactionClick: (UUID, TransactionType) -> Unit,
     onAccountClick: (LegacyAccount) -> Unit,
     onCategoryClick: (Category) -> Unit,
     setExpanded: (Boolean) -> Unit
@@ -237,7 +238,7 @@ private fun LazyListScope.transactionItems(
     shouldShowAccountSpecificColorInTransactions: Boolean,
     onPayOrGet: (UUID) -> Unit,
     onSkipTransaction: (UUID) -> Unit,
-    onTransactionClick: (LegacyTransaction) -> Unit,
+    onTransactionClick: (UUID, TransactionType) -> Unit,
     onAccountClick: (LegacyAccount) -> Unit,
     onCategoryClick: (Category) -> Unit,
 ) {
@@ -267,7 +268,7 @@ private fun LazyListScope.historySection(
     dateDividerMarginTop: Dp? = null,
 
     onPayOrGet: (UUID) -> Unit,
-    onTransactionClick: (LegacyTransaction) -> Unit,
+    onTransactionClick: (UUID, TransactionType) -> Unit,
     onAccountClick: (LegacyAccount) -> Unit,
     onCategoryClick: (Category) -> Unit
 ) {

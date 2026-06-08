@@ -79,7 +79,7 @@ internal fun TransactionCard(
     onSkipTransaction: (UUID) -> Unit = {},
     onAccountClick: (LegacyAccount) -> Unit,
     onCategoryClick: (Category) -> Unit,
-    onClick: (LegacyTransaction) -> Unit,
+    onClick: (UUID, TransactionType) -> Unit,
 ) {
     val sourceAccount = remember(baseData.accounts, transaction.accountId) {
         baseData.accounts.find { it.id == transaction.accountId }
@@ -96,7 +96,7 @@ internal fun TransactionCard(
             .clip(LegacyTheme.shapes.r4)
             .clickable {
                 if (sourceAccount != null) {
-                    onClick(transaction)
+                    onClick(transaction.id, transaction.type)
                 }
             }
             .background(LegacyTheme.colors.medium, LegacyTheme.shapes.r4)

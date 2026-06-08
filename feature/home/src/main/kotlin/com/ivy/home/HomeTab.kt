@@ -383,11 +383,11 @@ fun HomeLazyColumn(
             setOverdueExpanded = setOverdueExpanded,
             history = history,
             onPayOrGet = onPayOrGet,
-            onTransactionClick = {
+            onTransactionClick = { transactionId, transactionType ->
                 nav.navigateTo(
                     EditTransactionScreen(
-                        initialTransactionId = it.id,
-                        type = it.type.toRouteType()
+                        initialTransactionId = transactionId,
+                        type = transactionType.toRouteType()
                     )
                 )
             },

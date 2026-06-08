@@ -104,11 +104,11 @@ private fun SearchUi(
                 setOverdueExpanded = { },
                 history = uiState.transactions,
                 onPayOrGet = { },
-                onTransactionClick = {
+                onTransactionClick = { transactionId, transactionType ->
                     nav.navigateTo(
                         EditTransactionScreen(
-                            initialTransactionId = it.id,
-                            type = it.type.toRouteType()
+                            initialTransactionId = transactionId,
+                            type = transactionType.toRouteType()
                         )
                     )
                 },

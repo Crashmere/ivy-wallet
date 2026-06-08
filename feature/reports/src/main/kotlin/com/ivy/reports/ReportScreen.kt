@@ -256,11 +256,11 @@ private fun BoxWithConstraintsScope.UI(
                 onPayOrGet = {
                     onEventHandler.invoke(ReportScreenEvent.OnPayOrGetLegacyTransaction(transactionId = it))
                 },
-                onTransactionClick = {
+                onTransactionClick = { transactionId, transactionType ->
                     nav.navigateTo(
                         EditTransactionScreen(
-                            initialTransactionId = it.id,
-                            type = it.type.toRouteType()
+                            initialTransactionId = transactionId,
+                            type = transactionType.toRouteType()
                         )
                     )
                 },
