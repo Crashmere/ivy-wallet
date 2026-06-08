@@ -3,11 +3,10 @@ package com.ivy.legacy.ui.theme
 import androidx.annotation.ColorInt
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
+import com.ivy.ui.theme.colors.Gradient
 import com.ivy.ui.theme.colors.dynamicContrast as coreDynamicContrast
 import com.ivy.ui.theme.colors.isDarkColor as coreIsDarkColor
 import com.ivy.ui.theme.colors.toComposeColor as coreToComposeColor
-
-internal typealias Gradient = com.ivy.ui.theme.colors.Gradient
 
 @Composable
 internal fun mediumBlur() = LegacyTheme.colors.medium.copy(alpha = 0.95f)
