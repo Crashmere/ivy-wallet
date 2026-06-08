@@ -29,7 +29,7 @@ import com.ivy.domain.usecase.exchange.ExchangeAmountUseCase
 import com.ivy.domain.usecase.transaction.MapTransactionsToLegacyTransactionsUseCase
 import com.ivy.domain.usecase.transaction.MapTransactionsToLegacyTransactionsWithTagsUseCase
 import com.ivy.domain.preferences.toggles.PreferenceToggleService
-import com.ivy.domain.preferences.toggles.PreferenceToggles
+import com.ivy.domain.preferences.toggles.PreferenceToggleCatalog
 import com.ivy.ui.period.PeriodState
 import com.ivy.ui.period.TimePeriod
 import com.ivy.data.model.toCloseTimeRange
@@ -101,7 +101,7 @@ class TransactionsViewModel @Inject constructor(
     private val mapTransactionsToLegacyTransactionsWithTagsUseCase: MapTransactionsToLegacyTransactionsWithTagsUseCase,
     private val resourceProvider: ResourceProvider,
     private val preferenceToggleService: PreferenceToggleService,
-    private val preferenceToggles: PreferenceToggles
+    private val preferenceToggles: PreferenceToggleCatalog
 ) : ComposeViewModel<TransactionsState, TransactionsEvent>() {
 
     private val period = mutableStateOf(periodState.selectedPeriod)

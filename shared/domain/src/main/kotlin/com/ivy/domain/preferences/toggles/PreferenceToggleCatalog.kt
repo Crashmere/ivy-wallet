@@ -4,9 +4,9 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class IvyPreferenceToggles @Inject constructor() : PreferenceToggles {
+class PreferenceToggleCatalog @Inject constructor() {
 
-    override val sortCategoriesAscending = BoolPreference(
+    val sortCategoriesAscending = BoolPreference(
         key = "sort_categories_ascending",
         group = PreferenceGroup.Category,
         name = "Sort categories list",
@@ -14,7 +14,7 @@ class IvyPreferenceToggles @Inject constructor() : PreferenceToggles {
         defaultValue = false
     )
 
-    override val compactAccountsMode = BoolPreference(
+    val compactAccountsMode = BoolPreference(
         key = "compact_account_ui",
         group = PreferenceGroup.Account,
         name = "Compact account cards",
@@ -22,7 +22,7 @@ class IvyPreferenceToggles @Inject constructor() : PreferenceToggles {
         defaultValue = false
     )
 
-    override val compactCategoriesMode = BoolPreference(
+    val compactCategoriesMode = BoolPreference(
         key = "compact_category_ui",
         group = PreferenceGroup.Category,
         name = "Compact category cards",
@@ -30,7 +30,7 @@ class IvyPreferenceToggles @Inject constructor() : PreferenceToggles {
         defaultValue = false
     )
 
-    override val showTitleSuggestions = BoolPreference(
+    val showTitleSuggestions = BoolPreference(
         key = "show_title_suggestions",
         group = PreferenceGroup.Other,
         name = "Show previous title suggestions",
@@ -38,7 +38,7 @@ class IvyPreferenceToggles @Inject constructor() : PreferenceToggles {
         defaultValue = true
     )
 
-    override val showCategorySearchBar = BoolPreference(
+    val showCategorySearchBar = BoolPreference(
         key = "search_categories",
         group = PreferenceGroup.Category,
         name = "Search within categories",
@@ -46,7 +46,7 @@ class IvyPreferenceToggles @Inject constructor() : PreferenceToggles {
         defaultValue = true
     )
 
-    override val hideTotalBalance = BoolPreference(
+    val hideTotalBalance = BoolPreference(
         key = "hide_total_balance",
         group = PreferenceGroup.Account,
         name = "Hide account total balance",
@@ -54,7 +54,7 @@ class IvyPreferenceToggles @Inject constructor() : PreferenceToggles {
         defaultValue = false
     )
 
-    override val showDecimalNumber = BoolPreference(
+    val showDecimalNumber = BoolPreference(
         key = "show_decimal_number",
         group = PreferenceGroup.Other,
         name = "Show values with decimals",
@@ -62,7 +62,7 @@ class IvyPreferenceToggles @Inject constructor() : PreferenceToggles {
         defaultValue = true
     )
 
-    override val standardKeypadLayout = BoolPreference(
+    val standardKeypadLayout = BoolPreference(
         key = "enable_standard_keypad_layout",
         group = PreferenceGroup.Other,
         name = "Standard keypad layout",
@@ -70,7 +70,7 @@ class IvyPreferenceToggles @Inject constructor() : PreferenceToggles {
         defaultValue = false
     )
 
-    override val showAccountColorsInTransactions = BoolPreference(
+    val showAccountColorsInTransactions = BoolPreference(
         key = "show_account_color",
         group = PreferenceGroup.Other,
         name = "Colorful account labels",
@@ -78,7 +78,7 @@ class IvyPreferenceToggles @Inject constructor() : PreferenceToggles {
         defaultValue = false
     )
 
-    override val allPreferences: List<BoolPreference>
+    val allPreferences: List<BoolPreference>
         get() = listOf(
             sortCategoriesAscending,
             compactAccountsMode,

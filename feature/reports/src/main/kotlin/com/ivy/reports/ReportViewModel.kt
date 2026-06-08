@@ -24,7 +24,7 @@ import com.ivy.data.model.getTransactionType
 import com.ivy.data.model.primitive.ColorInt
 import com.ivy.data.model.primitive.NotBlankTrimmedString
 import com.ivy.domain.preferences.toggles.PreferenceToggleService
-import com.ivy.domain.preferences.toggles.PreferenceToggles
+import com.ivy.domain.preferences.toggles.PreferenceToggleCatalog
 import com.ivy.domain.usecase.category.GetCategoriesUseCase
 import com.ivy.domain.usecase.csv.ExportCsvUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
@@ -93,7 +93,7 @@ class ReportViewModel @Inject constructor(
     private val searchTagsUseCase: SearchTagsUseCase,
     private val exportCsvUseCase: ExportCsvUseCase,
     private val resourceProvider: ResourceProvider,
-    private val preferenceToggles: PreferenceToggles,
+    private val preferenceToggles: PreferenceToggleCatalog,
     private val preferenceToggleService: PreferenceToggleService,
     private val filePicker: FilePicker
 ) : ComposeViewModel<ReportScreenState, ReportScreenEvent>() {

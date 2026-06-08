@@ -8,7 +8,7 @@ import androidx.compose.runtime.remember
 import androidx.lifecycle.viewModelScope
 import com.ivy.data.model.legacy.LegacyTransaction
 import com.ivy.domain.preferences.toggles.PreferenceToggleService
-import com.ivy.domain.preferences.toggles.PreferenceToggles
+import com.ivy.domain.preferences.toggles.PreferenceToggleCatalog
 import com.ivy.domain.usecase.category.GetCategoriesUseCase
 import com.ivy.domain.usecase.category.SaveCategoryUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
@@ -49,7 +49,7 @@ class CategoriesViewModel @Inject constructor(
     private val getLegacyAccountsUseCase: GetLegacyAccountsUseCase,
     private val getLegacyTransactionsForAccountsUseCase: GetLegacyTransactionsForAccountsUseCase,
     private val calculateCategoryIncomeWithAccountFiltersUseCase: CalculateCategoryIncomeWithAccountFiltersUseCase,
-    private val preferenceToggles: PreferenceToggles,
+    private val preferenceToggles: PreferenceToggleCatalog,
     private val preferenceToggleService: PreferenceToggleService,
 ) : ComposeViewModel<CategoriesScreenState, CategoriesScreenEvent>() {
 

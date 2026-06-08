@@ -1,7 +1,5 @@
 package com.ivy.wallet.di
 
-import com.ivy.domain.preferences.toggles.IvyPreferenceToggles
-import com.ivy.domain.preferences.toggles.PreferenceToggles
 import com.ivy.ui.resource.ResourceProvider
 import com.ivy.domain.usecase.reset.ResetWalletDataUseCase
 import com.ivy.ui.platform.DatePicker
@@ -44,9 +42,4 @@ abstract class AppBindingsModule {
     abstract fun resourceProvider(
         resourceProvider: AndroidResourceProvider
     ): ResourceProvider
-
-    @Binds
-    abstract fun preferenceToggles(
-        preferenceToggles: IvyPreferenceToggles
-    ): PreferenceToggles
 }

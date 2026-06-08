@@ -11,7 +11,7 @@ import com.ivy.data.model.ExternalFile
 import com.ivy.data.model.primitive.AssetCode
 import com.ivy.domain.preferences.toggles.BoolPreference
 import com.ivy.domain.preferences.toggles.PreferenceToggleService
-import com.ivy.domain.preferences.toggles.PreferenceToggles
+import com.ivy.domain.preferences.toggles.PreferenceToggleCatalog
 import com.ivy.domain.usecase.reset.ResetWalletDataUseCase
 import com.ivy.domain.usecase.backup.ExportBackupUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
@@ -76,7 +76,7 @@ class SettingsViewModel @Inject constructor(
     private val getTransfersAsIncomeExpensePreference: GetTransfersAsIncomeExpensePreferenceUseCase,
     private val setTransfersAsIncomeExpensePreference: SetTransfersAsIncomeExpensePreferenceUseCase,
     private val syncExchangeRatesUseCase: SyncExchangeRatesUseCase,
-    private val preferenceToggles: PreferenceToggles,
+    private val preferenceToggles: PreferenceToggleCatalog,
     private val preferenceToggleService: PreferenceToggleService,
     private val filePicker: FilePicker,
     private val exportCsvUseCase: ExportCsvUseCase,

@@ -8,7 +8,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import com.ivy.domain.preferences.toggles.PreferenceToggleService
-import com.ivy.domain.preferences.toggles.PreferenceToggles
+import com.ivy.domain.preferences.toggles.PreferenceToggleCatalog
 import com.ivy.ui.period.PeriodState
 import com.ivy.ui.navigation.Navigation
 import com.ivy.ui.theme.ThemeState
@@ -59,7 +59,7 @@ class RootActivity : AppCompatActivity() {
     lateinit var filePicker: ActivityResultFilePicker
 
     @Inject
-    lateinit var preferenceToggles: PreferenceToggles
+    lateinit var preferenceToggles: PreferenceToggleCatalog
 
     @Inject
     lateinit var preferenceToggleService: PreferenceToggleService

@@ -9,7 +9,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
 import com.ivy.ui.resource.ResourceProvider
 import com.ivy.domain.preferences.toggles.PreferenceToggleService
-import com.ivy.domain.preferences.toggles.PreferenceToggles
+import com.ivy.domain.preferences.toggles.PreferenceToggleCatalog
 import com.ivy.domain.usecase.account.GetAccountsUseCase
 import com.ivy.domain.usecase.account.ObserveAccountChangesUseCase
 import com.ivy.domain.usecase.account.SaveAccountUseCase
@@ -43,7 +43,7 @@ class AccountsViewModel @Inject constructor(
     private val saveAccountUseCase: SaveAccountUseCase,
     private val buildAccountDataUseCase: BuildAccountDataUseCase,
     private val observeAccountChangesUseCase: ObserveAccountChangesUseCase,
-    private val preferenceToggles: PreferenceToggles,
+    private val preferenceToggles: PreferenceToggleCatalog,
     private val preferenceToggleService: PreferenceToggleService,
 ) : ComposeViewModel<AccountsState, AccountsEvent>() {
     private var baseCurrency by mutableStateOf("")

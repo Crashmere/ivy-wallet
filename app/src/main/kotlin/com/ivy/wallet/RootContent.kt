@@ -13,7 +13,7 @@ import com.ivy.IvyNavGraph
 import com.ivy.data.model.Theme
 import com.ivy.data.model.TransactionType
 import com.ivy.domain.preferences.toggles.PreferenceToggleService
-import com.ivy.domain.preferences.toggles.PreferenceToggles
+import com.ivy.domain.preferences.toggles.PreferenceToggleCatalog
 import com.ivy.ui.LegacyUiRoot
 import com.ivy.ui.preferences.AmountInputPreferences
 import com.ivy.ui.preferences.LocalAmountInputPreferences
@@ -49,7 +49,7 @@ internal fun RootContent(
     timeFormatter: TimeFormatter,
     dateTimePicker: DateTimePicker,
     datePicker: DatePicker,
-    preferenceToggles: PreferenceToggles,
+    preferenceToggles: PreferenceToggleCatalog,
     preferenceToggleService: PreferenceToggleService,
     buildInfoProvider: BuildInfoProvider,
     fileSharer: FileSharer,

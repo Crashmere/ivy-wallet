@@ -10,7 +10,7 @@ import com.ivy.data.model.primitive.NotBlankTrimmedString
 import com.ivy.ui.ComposeViewModel
 import com.ivy.data.model.Category
 import com.ivy.domain.preferences.toggles.PreferenceToggleService
-import com.ivy.domain.preferences.toggles.PreferenceToggles
+import com.ivy.domain.preferences.toggles.PreferenceToggleCatalog
 import com.ivy.domain.usecase.category.GetCategoriesUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.data.model.legacy.LegacyAccount
@@ -37,7 +37,7 @@ class SearchViewModel @Inject constructor(
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
     private val getTransactionsUseCase: GetTransactionsUseCase,
     private val preferenceToggleService: PreferenceToggleService,
-    private val preferenceToggles: PreferenceToggles
+    private val preferenceToggles: PreferenceToggleCatalog
 ) : ComposeViewModel<SearchState, SearchEvent>() {
 
     private val transactions =

@@ -17,7 +17,7 @@ import com.ivy.data.model.TagId
 import com.ivy.data.model.TransactionId
 import com.ivy.data.model.primitive.NotBlankTrimmedString
 import com.ivy.domain.preferences.toggles.PreferenceToggleService
-import com.ivy.domain.preferences.toggles.PreferenceToggles
+import com.ivy.domain.preferences.toggles.PreferenceToggleCatalog
 import com.ivy.domain.usecase.category.GetCategoriesUseCase
 import com.ivy.domain.usecase.category.GetCategoryUseCase
 import com.ivy.domain.usecase.category.CreateCategoryUseCase
@@ -115,7 +115,7 @@ class EditTransactionViewModel @Inject constructor(
     private val copyTagsToTransactionUseCase: CopyTagsToTransactionUseCase,
     private val getTagsUseCase: GetTagsUseCase,
     private val searchTagsUseCase: SearchTagsUseCase,
-    private val preferenceToggles: PreferenceToggles,
+    private val preferenceToggles: PreferenceToggleCatalog,
     private val preferenceToggleService: PreferenceToggleService,
     private val dateTimePicker: DateTimePicker,
 ) : ComposeViewModel<EditTransactionViewState, EditTransactionViewEvent>() {
