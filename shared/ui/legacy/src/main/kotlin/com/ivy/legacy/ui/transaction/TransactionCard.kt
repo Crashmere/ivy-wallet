@@ -31,12 +31,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.ivy.data.model.Expense
-import com.ivy.data.model.Income
-import com.ivy.data.model.Transaction
-import com.ivy.data.model.Transfer
-import com.ivy.data.model.getFromAccount
-import com.ivy.data.model.getFromValue
 import com.ivy.ui.time.LocalTimeConverter
 import com.ivy.ui.time.LocalTimeFormatter
 import com.ivy.ui.time.LocalTimeProvider
@@ -63,8 +57,6 @@ import com.ivy.ui.theme.colors.IvyGradients.Green as GradientGreen
 import com.ivy.ui.theme.colors.IvyGradients.Ivy as GradientIvy
 import com.ivy.ui.theme.colors.IvyGradients.OrangeRevert as GradientOrangeRevert
 import com.ivy.ui.theme.colors.IvyGradients.Red as GradientRed
-import java.math.BigDecimal
-import java.time.Instant
 import java.time.LocalDateTime
 import java.util.Locale
 import java.util.UUID
@@ -73,7 +65,7 @@ import java.util.UUID
 @Composable
 internal fun TransactionCard(
     baseData: TransactionListData,
-    transaction: Transaction,
+    transaction: TransactionListTransaction,
     tags: List<TransactionListTag> = emptyList(),
     shouldShowAccountSpecificColorInTransactions: Boolean,
     onPayOrGet: (UUID) -> Unit,
@@ -83,9 +75,7 @@ internal fun TransactionCard(
     onCategoryClick: (UUID) -> Unit,
     onClick: (UUID, TransactionListTransactionType) -> Unit,
 ) {
-    val card = remember(transaction, tags) {
-        transaction.toTransactionCardData(tags)
-    }
+    val card = transaction
     val sourceAccount = remember(baseData.accounts, card.accountId) {
         baseData.accounts.find { it.id == card.accountId }
     }
@@ -263,53 +253,12 @@ internal fun TransactionCard(
             }
         }
 
-        if (card.tags.isNotEmpty()) {
-            TransactionTags(card.tags)
+        if (tags.isNotEmpty()) {
+            TransactionTags(tags)
         }
 
         Spacer(Modifier.height(20.dp))
     }
-}
-
-private data class TransactionCardData(
-    val accountId: UUID,
-    val type: TransactionListTransactionType,
-    val amount: BigDecimal,
-    val toAccountId: UUID?,
-    val toAmount: BigDecimal,
-    val title: String?,
-    val description: String?,
-    val dateTime: Instant?,
-    val categoryId: UUID?,
-    val dueDate: Instant?,
-    val recurringRuleId: UUID?,
-    val paidFor: Instant?,
-    val id: UUID,
-    val tags: List<TransactionListTag>,
-)
-
-private fun Transaction.toTransactionCardData(tags: List<TransactionListTag>): TransactionCardData {
-    val amount = getFromValue().amount.value.toBigDecimal()
-    return TransactionCardData(
-        accountId = getFromAccount().value,
-        type = when (this) {
-            is Expense -> TransactionListTransactionType.EXPENSE
-            is Income -> TransactionListTransactionType.INCOME
-            is Transfer -> TransactionListTransactionType.TRANSFER
-        },
-        amount = amount,
-        toAccountId = if (this is Transfer) toAccount.value else null,
-        toAmount = if (this is Transfer) toValue.amount.value.toBigDecimal() else amount,
-        title = title?.value,
-        description = description?.value,
-        dateTime = time.takeIf { settled },
-        categoryId = category?.value,
-        dueDate = time.takeIf { !settled },
-        recurringRuleId = metadata.recurringRuleId,
-        paidFor = metadata.paidForDateTime,
-        id = id.value,
-        tags = tags,
-    )
 }
 
 @Composable
@@ -350,7 +299,7 @@ private fun ColumnScope.TransactionTags(tags: List<TransactionListTag>) {
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun TransactionHeaderRow(
-    transaction: TransactionCardData,
+    transaction: TransactionListTransaction,
     categories: List<TransactionListCategory>,
     accounts: List<TransactionListAccount>,
     shouldShowAccountSpecificColorInTransactions: Boolean,
@@ -443,7 +392,7 @@ private fun CategoryBadgeDisplay(
 }
 
 @Composable
-private fun getTransactionDescription(transaction: TransactionCardData): String? {
+private fun getTransactionDescription(transaction: TransactionListTransaction): String? {
     val paidFor = with(LocalTimeConverter.current) {
         transaction.paidFor?.toLocalDateTime()
     }
@@ -513,7 +462,7 @@ private const val TransferHeaderGradientThreshold = 0.35f
 @Composable
 private fun TransferHeader(
     accounts: List<TransactionListAccount>,
-    transaction: TransactionCardData,
+    transaction: TransactionListTransaction,
     shouldShowAccountSpecificColorInTransactions: Boolean
 ) {
     val account = remember(accounts, transaction) {

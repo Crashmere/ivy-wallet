@@ -17,7 +17,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.ivy.data.model.Transaction
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.R
 import com.ivy.ui.compose.GradientButton
@@ -210,7 +209,7 @@ private fun LazyListScope.overdueSection(
                     ),
                     iconTint = White,
                 ) {
-                    onSkipAllTransactions(overdue.transactions.map { it.id.value })
+                    onSkipAllTransactions(overdue.transactions.map { it.id })
                 }
             }
 
@@ -232,7 +231,7 @@ private fun LazyListScope.overdueSection(
 private fun LazyListScope.transactionItems(
     baseData: TransactionListData,
 
-    transactions: List<Transaction>,
+    transactions: List<TransactionListTransaction>,
     shouldShowAccountSpecificColorInTransactions: Boolean,
     onPayOrGet: (UUID) -> Unit,
     onSkipTransaction: (UUID) -> Unit,
@@ -242,7 +241,7 @@ private fun LazyListScope.transactionItems(
 ) {
     items(
         items = transactions,
-        key = { it.id.value }
+        key = { it.id }
     ) {
         TransactionCard(
             baseData = baseData,
@@ -275,7 +274,7 @@ private fun LazyListScope.historySection(
             items = history,
             key = {
                 when (it) {
-                    is TransactionListHistoryTransaction -> it.transaction.id.value.toString()
+                    is TransactionListHistoryTransaction -> it.transaction.id.toString()
                     is TransactionListHistoryDateDivider -> it.date.toString()
                     else -> "unknown"
                 }

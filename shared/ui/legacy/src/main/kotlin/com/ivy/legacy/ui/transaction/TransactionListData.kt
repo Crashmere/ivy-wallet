@@ -1,7 +1,8 @@
 package com.ivy.legacy.ui.transaction
 
 import androidx.compose.runtime.Immutable
-import com.ivy.data.model.Transaction
+import java.math.BigDecimal
+import java.time.Instant
 import java.time.LocalDate
 import java.util.UUID
 
@@ -35,6 +36,23 @@ data class TransactionListTag(
     val name: String,
 )
 
+@Immutable
+data class TransactionListTransaction(
+    val id: UUID,
+    val accountId: UUID,
+    val type: TransactionListTransactionType,
+    val amount: BigDecimal,
+    val toAccountId: UUID?,
+    val toAmount: BigDecimal,
+    val title: String?,
+    val description: String?,
+    val dateTime: Instant?,
+    val categoryId: UUID?,
+    val dueDate: Instant?,
+    val recurringRuleId: UUID?,
+    val paidFor: Instant?,
+)
+
 enum class TransactionListTransactionType {
     INCOME,
     EXPENSE,
@@ -43,7 +61,7 @@ enum class TransactionListTransactionType {
 
 @Immutable
 data class TransactionListDueSection(
-    val transactions: List<Transaction>,
+    val transactions: List<TransactionListTransaction>,
     val expanded: Boolean,
     val income: Double,
     val expenses: Double,
@@ -54,7 +72,7 @@ sealed interface TransactionListHistoryItem
 
 @Immutable
 data class TransactionListHistoryTransaction(
-    val transaction: Transaction,
+    val transaction: TransactionListTransaction,
     val tags: List<TransactionListTag>,
 ) : TransactionListHistoryItem
 

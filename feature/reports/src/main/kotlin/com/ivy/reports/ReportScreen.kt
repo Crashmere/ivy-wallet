@@ -36,10 +36,16 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import com.ivy.ui.navigation.screenScopedViewModel
 import com.ivy.data.model.Category
+import com.ivy.data.model.Expense
+import com.ivy.data.model.Income
 import com.ivy.data.model.Tag
+import com.ivy.data.model.Transaction
 import com.ivy.data.model.TransactionHistoryDateDivider
 import com.ivy.data.model.TransactionHistoryItem
 import com.ivy.data.model.TransactionHistoryTransaction
+import com.ivy.data.model.Transfer
+import com.ivy.data.model.getFromAccount
+import com.ivy.data.model.getFromValue
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.legacy.ui.transaction.TransactionListAccount
 import com.ivy.legacy.ui.transaction.TransactionListCategory
@@ -49,6 +55,7 @@ import com.ivy.legacy.ui.transaction.TransactionListHistoryDateDivider
 import com.ivy.legacy.ui.transaction.TransactionListHistoryItem
 import com.ivy.legacy.ui.transaction.TransactionListHistoryTransaction
 import com.ivy.legacy.ui.transaction.TransactionListTag
+import com.ivy.legacy.ui.transaction.TransactionListTransaction
 import com.ivy.legacy.ui.transaction.TransactionListTransactionType
 import com.ivy.ui.summary.IncomeExpensesCards
 import com.ivy.legacy.ui.transaction.transactions
@@ -350,7 +357,7 @@ private fun ReportTransactionsDividerLine(
 
 private fun ReportDueSection.toTransactionListDueSection(): TransactionListDueSection {
     return TransactionListDueSection(
-        transactions = transactions,
+        transactions = transactions.map { it.toTransactionListTransaction() },
         income = income,
         expenses = expenses,
         expanded = expanded
@@ -360,7 +367,7 @@ private fun ReportDueSection.toTransactionListDueSection(): TransactionListDueSe
 private fun TransactionHistoryItem.toTransactionListHistoryItem(): TransactionListHistoryItem {
     return when (this) {
         is TransactionHistoryTransaction -> TransactionListHistoryTransaction(
-            transaction = transaction,
+            transaction = transaction.toTransactionListTransaction(),
             tags = tags.map { it.toTransactionListTag() },
         )
 
@@ -378,6 +385,29 @@ private fun Tag.toTransactionListTag() = TransactionListTag(
     id = id.value,
     name = name.value,
 )
+
+private fun Transaction.toTransactionListTransaction(): TransactionListTransaction {
+    val amount = getFromValue().amount.value.toBigDecimal()
+    return TransactionListTransaction(
+        id = id.value,
+        accountId = getFromAccount().value,
+        type = when (this) {
+            is Expense -> TransactionListTransactionType.EXPENSE
+            is Income -> TransactionListTransactionType.INCOME
+            is Transfer -> TransactionListTransactionType.TRANSFER
+        },
+        amount = amount,
+        toAccountId = if (this is Transfer) toAccount.value else null,
+        toAmount = if (this is Transfer) toValue.amount.value.toBigDecimal() else amount,
+        title = title?.value,
+        description = description?.value,
+        dateTime = time.takeIf { settled },
+        categoryId = category?.value,
+        dueDate = time.takeIf { !settled },
+        recurringRuleId = metadata.recurringRuleId,
+        paidFor = metadata.paidForDateTime,
+    )
+}
 
 private fun ReportAccount.toTransactionListAccount() = TransactionListAccount(
     id = id,

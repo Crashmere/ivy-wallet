@@ -126,6 +126,7 @@
 - 旧交易列表历史行输入继续收窄：`transactions()` 不再直接接收数据层 `TransactionHistoryItem`，改用交易列表自己的 `TransactionListHistoryItem`；首页、搜索、报表和交易页在调用旧列表前做本地展示模型映射。
 - 旧交易列表标签输入继续收窄：历史交易行中的标签从完整 `Tag` 改为只含 id 和名称的 `TransactionListTag`；旧交易卡片只保留标签显示所需字段。
 - 旧交易列表点击事件继续收窄：`transactions()` 不再通过数据层 `TransactionType` 回传交易类型，改用交易列表自己的 `TransactionListTransactionType`；调用页面在导航或业务回调边界自行映射。
+- 旧交易列表交易输入继续收窄：到期/逾期分组和历史交易行不再直接传完整 `Transaction`，改用只含卡片渲染字段的 `TransactionListTransaction`；正式交易模型只在首页、搜索、报表和交易页适配层使用。
 - 旧交易卡片的金额行 `TypeAmountCurrency` 已收窄为 `TransactionCard` 文件私有实现；`legacy.ui.transaction` 对外继续只暴露交易列表入口和必要的列表输入模型。
 - 旧弹窗标题 `ModalTitle` 已迁入 `shared:ui:core` 的 `com.ivy.ui.modal.ModalTitle`；feature 和 legacy 弹窗继续保留原标题字号、字重、颜色和左右间距，`legacy.ui.modal` 少暴露一个纯展示标题入口。
 - 旧弹窗保存/新增主按钮 `ModalSave`、`ModalAdd` 已迁入 `shared:ui:core` 的 `com.ivy.ui.modal`；feature 和 legacy 弹窗继续保留原绿色渐变、禁用灰色、近白文字和圆角展示。

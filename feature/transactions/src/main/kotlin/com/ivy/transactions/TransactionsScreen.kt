@@ -41,13 +41,19 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.ivy.data.model.Category
+import com.ivy.data.model.Expense
+import com.ivy.data.model.Income
 import com.ivy.data.model.Theme
 import com.ivy.data.model.Tag
+import com.ivy.data.model.Transaction
 import com.ivy.data.model.TransactionHistoryDateDivider
 import com.ivy.data.model.TransactionHistoryItem
 import com.ivy.data.model.TransactionHistoryTransaction
 import com.ivy.data.model.TransactionType
-import com.ivy.data.model.Category
+import com.ivy.data.model.Transfer
+import com.ivy.data.model.getFromAccount
+import com.ivy.data.model.getFromValue
 import com.ivy.ui.platform.LocalDatePicker
 import com.ivy.ui.theme.LocalThemeState
 import com.ivy.legacy.ui.theme.LegacyTheme
@@ -60,6 +66,7 @@ import com.ivy.legacy.ui.transaction.TransactionListHistoryDateDivider
 import com.ivy.legacy.ui.transaction.TransactionListHistoryItem
 import com.ivy.legacy.ui.transaction.TransactionListHistoryTransaction
 import com.ivy.legacy.ui.transaction.TransactionListTag
+import com.ivy.legacy.ui.transaction.TransactionListTransaction
 import com.ivy.legacy.ui.transaction.TransactionListTransactionType
 import com.ivy.ui.period.Month
 import com.ivy.ui.period.TimePeriod
@@ -573,7 +580,7 @@ private fun BoxWithConstraintsScope.UI(
 
 private fun TransactionsDueSection.toTransactionListDueSection(): TransactionListDueSection {
     return TransactionListDueSection(
-        transactions = transactions,
+        transactions = transactions.map { it.toTransactionListTransaction() },
         income = income,
         expenses = expenses,
         expanded = expanded
@@ -583,7 +590,7 @@ private fun TransactionsDueSection.toTransactionListDueSection(): TransactionLis
 private fun TransactionHistoryItem.toTransactionListHistoryItem(): TransactionListHistoryItem {
     return when (this) {
         is TransactionHistoryTransaction -> TransactionListHistoryTransaction(
-            transaction = transaction,
+            transaction = transaction.toTransactionListTransaction(),
             tags = tags.map { it.toTransactionListTag() },
         )
 
@@ -619,6 +626,29 @@ private fun Category.toTransactionListCategory() = TransactionListCategory(
 
 private fun TransactionListTransactionType.toTransactionType(): TransactionType {
     return TransactionType.valueOf(name)
+}
+
+private fun Transaction.toTransactionListTransaction(): TransactionListTransaction {
+    val amount = getFromValue().amount.value.toBigDecimal()
+    return TransactionListTransaction(
+        id = id.value,
+        accountId = getFromAccount().value,
+        type = when (this) {
+            is Expense -> TransactionListTransactionType.EXPENSE
+            is Income -> TransactionListTransactionType.INCOME
+            is Transfer -> TransactionListTransactionType.TRANSFER
+        },
+        amount = amount,
+        toAccountId = if (this is Transfer) toAccount.value else null,
+        toAmount = if (this is Transfer) toValue.amount.value.toBigDecimal() else amount,
+        title = title?.value,
+        description = description?.value,
+        dateTime = time.takeIf { settled },
+        categoryId = category?.value,
+        dueDate = time.takeIf { !settled },
+        recurringRuleId = metadata.recurringRuleId,
+        paidFor = metadata.paidForDateTime,
+    )
 }
 
 private fun LazyListScope.choosePeriodModal(
