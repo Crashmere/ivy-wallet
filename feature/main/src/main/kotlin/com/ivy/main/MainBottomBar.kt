@@ -55,8 +55,8 @@ import com.ivy.ui.theme.colors.IvyGradients
 import com.ivy.ui.theme.colors.IvyFixedColors.Ivy
 import com.ivy.ui.theme.colors.IvyFixedColors.White
 import com.ivy.ui.compose.GradientIconButton
+import com.ivy.ui.compose.OutlinedPillButton
 import com.ivy.ui.compose.ResourceIcon
-import com.ivy.legacy.ui.button.IvyOutlinedButton
 import kotlin.math.abs
 import kotlin.math.roundToInt
 
@@ -278,7 +278,7 @@ private fun TransactionButtons(
 
         val clickAreaWidth = (screenWidthPx / 3).roundToInt()
 
-        IvyOutlinedButton(
+        OutlinedPillButton(
             modifier = Modifier
                 .layout { measurable, constraints ->
                     val placealbe = measurable.measure(constraints)
@@ -294,7 +294,16 @@ private fun TransactionButtons(
                 .zIndex(200f),
             iconStart = R.drawable.ic_planned_payments,
             text = stringResource(R.string.add_planned_payment),
-            solidBackground = true
+            shape = LegacyTheme.shapes.rFull,
+            solidBackground = true,
+            backgroundColor = LegacyTheme.colors.pure,
+            iconTint = LegacyTheme.colors.pureInverse,
+            borderColor = LegacyTheme.colors.medium,
+            textStyle = LegacyTheme.typo.b2.copy(
+                fontWeight = FontWeight.Bold,
+                color = LegacyTheme.colors.pureInverse,
+                textAlign = TextAlign.Start,
+            ),
         ) {
             onAddPlannedPayment()
         }

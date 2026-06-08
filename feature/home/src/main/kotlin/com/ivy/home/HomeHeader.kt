@@ -48,8 +48,8 @@ import com.ivy.ui.theme.colors.Gradient
 import com.ivy.ui.theme.colors.IvyGradients
 import com.ivy.ui.theme.colors.IvyFixedColors.White
 import com.ivy.legacy.ui.money.BalanceRow
-import com.ivy.legacy.ui.button.IvyOutlinedButton
 import com.ivy.legacy.ui.money.AmountCurrencyB1
+import com.ivy.ui.compose.OutlinedPillButton
 import com.ivy.ui.compose.ResourceIcon
 import kotlin.math.absoluteValue
 
@@ -153,7 +153,7 @@ private fun HeaderStickyRow(
             }
         }
 
-        IvyOutlinedButton(
+        OutlinedPillButton(
             modifier = Modifier.horizontalSwipeListener(
                 sensitivity = 75,
                 state = rememberSwipeListenerState(),
@@ -166,7 +166,16 @@ private fun HeaderStickyRow(
             ),
             iconStart = R.drawable.ic_calendar,
             text = period.displayShort(periodState.startDayOfMonth),
+            shape = LegacyTheme.shapes.rFull,
+            backgroundColor = LegacyTheme.colors.pure,
             minWidth = 130.dp,
+            iconTint = LegacyTheme.colors.pureInverse,
+            borderColor = LegacyTheme.colors.medium,
+            textStyle = LegacyTheme.typo.b2.copy(
+                fontWeight = FontWeight.Bold,
+                color = LegacyTheme.colors.pureInverse,
+                textAlign = TextAlign.Start,
+            ),
         ) {
             onShowMonthModal()
         }

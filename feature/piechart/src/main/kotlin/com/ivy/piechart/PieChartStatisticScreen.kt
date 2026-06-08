@@ -67,7 +67,7 @@ import com.ivy.ui.theme.colors.IvyGradients
 import com.ivy.ui.theme.colors.IvyFixedColors.White
 import com.ivy.legacy.ui.money.BalanceRow
 import com.ivy.ui.icon.ItemIconMDefaultIcon
-import com.ivy.legacy.ui.button.IvyOutlinedButton
+import com.ivy.ui.compose.OutlinedPillButton
 import com.ivy.ui.theme.colors.findContrastTextColor
 import com.ivy.legacy.ui.modal.ChoosePeriodModal
 import com.ivy.ui.theme.colors.toComposeColor
@@ -314,7 +314,7 @@ private fun Header(
         if (!showCloseButtonOnly) {
             Spacer(Modifier.weight(1f))
 
-            IvyOutlinedButton(
+            OutlinedPillButton(
                 modifier = Modifier.horizontalSwipeListener(
                     sensitivity = 75,
                     state = rememberSwipeListenerState(),
@@ -327,6 +327,15 @@ private fun Header(
                 ),
                 iconStart = R.drawable.ic_calendar,
                 text = period.displayShort(startDateOfMonth),
+                shape = LegacyTheme.shapes.rFull,
+                backgroundColor = LegacyTheme.colors.pure,
+                iconTint = LegacyTheme.colors.pureInverse,
+                borderColor = LegacyTheme.colors.medium,
+                textStyle = LegacyTheme.typo.b2.copy(
+                    fontWeight = FontWeight.Bold,
+                    color = LegacyTheme.colors.pureInverse,
+                    textAlign = TextAlign.Start,
+                ),
             ) {
                 onShowMonthModal()
             }

@@ -23,7 +23,7 @@ import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.compose.drawColoredShadow
 import com.ivy.ui.R
 import com.ivy.ui.theme.colors.Gradient
-import com.ivy.legacy.ui.button.IvyButton
+import com.ivy.ui.compose.GradientButton
 import com.ivy.ui.compose.ResourceIcon
 import com.ivy.ui.theme.colors.dynamicContrast
 import com.ivy.ui.theme.colors.findContrastTextColor
@@ -126,7 +126,7 @@ internal fun CustomerJourneyCard(
         Spacer(Modifier.height(32.dp))
 
         if (cardData.cta != null) {
-            IvyButton(
+            GradientButton(
                 modifier = Modifier
                     .align(Alignment.End)
                     .padding(horizontal = 20.dp)
@@ -135,6 +135,8 @@ internal fun CustomerJourneyCard(
                 shadowAlpha = 0f,
                 iconStart = cardData.ctaIcon,
                 iconTint = backgroundColor,
+                disabledBackgroundColor = LegacyTheme.colors.gray,
+                shape = LegacyTheme.shapes.rFull,
                 textStyle = LegacyTheme.typo.b2.copy(
                     color = backgroundColor,
                     fontWeight = FontWeight.Bold,
