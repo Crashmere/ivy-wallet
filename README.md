@@ -1255,6 +1255,7 @@ shared:ui:core
 - 报表页内部支付/收取和跳过计划交易的事件名已去掉 `Legacy`，事件层继续只传交易 ID，旧模型查找限制在 ViewModel 私有实现内。
 - `DevicePreferences` 已收为 `shared:ui:core` 内部接口；模块外继续只注入公开的 `TimeFormatter`。
 - 首页状态层已切换为 feature 本地展示模型；`TransactionListData` 和 `LegacyDueSection` 只在 `HomeTab` 调用旧交易列表组件的适配层出现。
+- 首页加载链路已用私有命名输入对象替换 `Pair/Triple` 中间数据；偏好、时间范围、账户列表、余额和历史加载参数不再靠位置传递，页面数据加载顺序和结果不变。
 - 交易列表页的到期/逾期交易状态已合并为 feature 本地 section；页面状态不再把交易列表、展开状态和收支统计拆成多组并行字段。
 - 报表页的到期/逾期交易状态也已合并为 feature 本地 section；旧 UI 的 `LegacyDueSection` 继续限制在 `ReportScreen` 组件适配层。
 - 报表页顶部收支卡片已改用轻量 `ReportTransactionSummary`；完整旧交易列表不再进入 `ReportScreenState.transactions` 这类页面级状态字段。

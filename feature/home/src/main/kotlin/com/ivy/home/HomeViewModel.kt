@@ -136,6 +136,28 @@ internal class HomeViewModel @Inject internal constructor(
         val bufferAmount: BigDecimal,
     )
 
+    private data class HomeRangeInput(
+        val preferences: HomePreferences,
+        val timeRange: ClosedTimeRange,
+    )
+
+    private data class HomeAccountsInput(
+        val preferences: HomePreferences,
+        val timeRange: ClosedTimeRange,
+        val accounts: List<LegacyAccount>,
+    )
+
+    private data class HomeBalanceInput(
+        val preferences: HomePreferences,
+        val timeRange: ClosedTimeRange,
+        val balance: BigDecimal,
+    )
+
+    private data class HomeHistoryInput(
+        val baseCurrency: String,
+        val timeRange: ClosedTimeRange,
+    )
+
     @Composable
     override fun uiState(): HomeState {
         LaunchedEffect(Unit) {
@@ -280,12 +302,17 @@ internal class HomeViewModel @Inject internal constructor(
 
         val timeRange = periodState.rangeOf(period).toUTCCloseTimeRange()
 
-        val transactionListInput = loadTransactionListData(preferences to timeRange)
+        val transactionListInput = loadTransactionListData(
+            HomeRangeInput(
+                preferences = preferences,
+                timeRange = timeRange
+            )
+        )
         val balanceInput = loadIncomeExpenseBalance(transactionListInput)
         val historyInput = loadBuffer(balanceInput)
         val dueInput = loadTransactionHistory(historyInput)
         loadDueTransactions(dueInput)
-        loadCustomerJourney(Unit)
+        loadCustomerJourney()
     }
 
     private suspend fun loadHomePreferences(): HomePreferences {
@@ -297,9 +324,9 @@ internal class HomeViewModel @Inject internal constructor(
     }
 
     private suspend fun loadTransactionListData(
-        input: Pair<HomePreferences, ClosedTimeRange>
-    ): Triple<HomePreferences, ClosedTimeRange, List<LegacyAccount>> {
-        val (preferences, timeRange) = input
+        input: HomeRangeInput
+    ): HomeAccountsInput {
+        val preferences = input.preferences
         val accounts = getLegacyAccountsUseCase()
         val categories = getCategoriesUseCase()
 
@@ -309,18 +336,22 @@ internal class HomeViewModel @Inject internal constructor(
             accounts = accounts.toImmutableList()
         )
 
-        return Triple(preferences, timeRange, accounts)
+        return HomeAccountsInput(
+            preferences = preferences,
+            timeRange = input.timeRange,
+            accounts = accounts
+        )
     }
 
     private suspend fun loadIncomeExpenseBalance(
-        input: Triple<HomePreferences, ClosedTimeRange, List<LegacyAccount>>
-    ): Triple<HomePreferences, ClosedTimeRange, BigDecimal> {
-        val (preferences, timeRange, accounts) = input
+        input: HomeAccountsInput
+    ): HomeBalanceInput {
+        val preferences = input.preferences
 
         val incomeExpense = calculateWalletIncomeExpenseUseCase(
             baseCurrency = preferences.baseCurrency,
-            accounts = accounts,
-            range = timeRange
+            accounts = input.accounts,
+            range = input.timeRange
         )
 
         val balanceAmount = calculateWalletBalanceUseCase(
@@ -330,42 +361,46 @@ internal class HomeViewModel @Inject internal constructor(
         balance = balanceAmount
         stats = incomeExpense
 
-        return Triple(preferences, timeRange, balanceAmount)
+        return HomeBalanceInput(
+            preferences = preferences,
+            timeRange = input.timeRange,
+            balance = balanceAmount
+        )
     }
 
     private suspend fun loadBuffer(
-        input: Triple<HomePreferences, ClosedTimeRange, BigDecimal>
-    ): Pair<String, ClosedTimeRange> {
-        val (preferences, timeRange, balance) = input
+        input: HomeBalanceInput
+    ): HomeHistoryInput {
+        val preferences = input.preferences
 
         buffer = BufferInfo(
             amount = preferences.bufferAmount,
-            bufferDiff = balance - preferences.bufferAmount
+            bufferDiff = input.balance - preferences.bufferAmount
         )
 
-        return preferences.baseCurrency to timeRange
+        return HomeHistoryInput(
+            baseCurrency = preferences.baseCurrency,
+            timeRange = input.timeRange
+        )
     }
 
     private suspend fun loadTransactionHistory(
-        input: Pair<String, ClosedTimeRange>
-    ): Pair<String, ClosedTimeRange> {
-        val (baseCurrency, timeRange) = input
-
+        input: HomeHistoryInput
+    ): HomeHistoryInput {
         history = getTransactionHistoryItemsUseCase(
-            range = timeRange,
-            baseCurrency = baseCurrency
+            range = input.timeRange,
+            baseCurrency = input.baseCurrency
         )
 
-        return baseCurrency to timeRange
+        return input
     }
 
     private suspend fun loadDueTransactions(
-        input: Pair<String, ClosedTimeRange>
+        input: HomeHistoryInput
     ) {
-        val (baseCurrency, timeRange) = input
         val upcomingResult = getUpcomingTransactionsInfoUseCase(
-            baseCurrency = baseCurrency,
-            range = timeRange
+            baseCurrency = input.baseCurrency,
+            range = input.timeRange
         )
         upcoming = HomeDueSection(
             transactions = mapTransactionsToLegacyTransactionsUseCase(upcomingResult.transactions).toImmutableList(),
@@ -374,8 +409,8 @@ internal class HomeViewModel @Inject internal constructor(
         )
 
         val overdueResult = getOverdueTransactionsInfoUseCase(
-            baseCurrency = baseCurrency,
-            toRange = timeRange.to
+            baseCurrency = input.baseCurrency,
+            toRange = input.timeRange.to
         )
         overdue = HomeDueSection(
             transactions = mapTransactionsToLegacyTransactionsUseCase(overdueResult.transactions).toImmutableList(),
@@ -384,7 +419,7 @@ internal class HomeViewModel @Inject internal constructor(
         )
     }
 
-    private suspend fun loadCustomerJourney(unit: Unit) {
+    private suspend fun loadCustomerJourney() {
         customerJourneyCards = withContext(Dispatchers.IO) {
             customerJourneyCardsProvider.loadCards().toImmutableList()
         }
