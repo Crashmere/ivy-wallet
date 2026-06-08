@@ -162,6 +162,14 @@ private fun BoxWithConstraintsScope.UI(
     ReorderModalSingleType(
         visible = state.reorderVisible,
         initialItems = state.accountsData,
+        itemOrderNum = { it.account.orderNum },
+        withNewOrderNum = { item, newOrderNum ->
+            item.copy(
+                account = item.account.copy(
+                    orderNum = newOrderNum
+                )
+            )
+        },
         dismiss = {
             onEvent(AccountsEvent.OnReorderModalVisible(reorderVisible = false))
         },

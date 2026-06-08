@@ -32,17 +32,9 @@ import java.util.Collections
 import java.util.Random
 import java.util.UUID
 
-interface ReorderableItem {
-    val orderNum: Double
-
-    fun withNewOrderNum(newOrderNum: Double): ReorderableItem {
-        error("Reordering is unsupported for ${this::class.simpleName}")
-    }
-}
-
-@Suppress("UNCHECKED_CAST", "ParameterNaming")
+@Suppress("ParameterNaming")
 @Composable
-fun <T : ReorderableItem> BoxScope.ReorderModalSingleType(
+fun <T> BoxScope.ReorderModalSingleType(
     visible: Boolean,
     id: UUID = UUID.randomUUID(),
     TitleContent: @Composable ColumnScope.() -> Unit = {
@@ -56,6 +48,8 @@ fun <T : ReorderableItem> BoxScope.ReorderModalSingleType(
         )
     },
     initialItems: List<T>,
+    itemOrderNum: (T) -> Double,
+    withNewOrderNum: (item: T, newOrderNum: Double) -> T,
     dismiss: () -> Unit,
     onUpdateItemOrderNum: (item: T, newOrderNum: Double) -> Unit = { _, _ -> },
     onReordered: ((List<T>) -> Unit)? = null,
@@ -65,25 +59,23 @@ fun <T : ReorderableItem> BoxScope.ReorderModalSingleType(
         visible = visible,
         id = id,
         initialItems = initialItems,
+        itemOrderNum = itemOrderNum,
+        withNewOrderNum = withNewOrderNum,
         TitleContent = TitleContent,
         dismiss = dismiss,
         onUpdateItemOrderNum = { _, item, newOrderNum ->
             onUpdateItemOrderNum(item, newOrderNum)
         },
-        onReordered = { listAny ->
-            onReordered?.invoke(
-                listAny as? List<T> ?: error("List<T> cast exception.")
-            )
+        onReordered = onReordered,
+        ItemContent = { index, item ->
+            ItemContent(index, item)
         },
-        ItemContent = { index, itemAny ->
-            ItemContent(index, itemAny as T)
-        }
     )
 }
 
 @Suppress("ParameterNaming")
 @Composable
-private fun <T : ReorderableItem> BoxScope.ReorderModal(
+private fun <T> BoxScope.ReorderModal(
     visible: Boolean,
     id: UUID = UUID.randomUUID(),
     TitleContent: @Composable ColumnScope.() -> Unit = {
@@ -96,18 +88,20 @@ private fun <T : ReorderableItem> BoxScope.ReorderModal(
             )
         )
     },
-    initialItems: List<Any>,
+    initialItems: List<T>,
+    itemOrderNum: (T) -> Double,
+    withNewOrderNum: (item: T, newOrderNum: Double) -> T,
     dismiss: () -> Unit,
     onUpdateItemOrderNum: (
-        itemsInNewOrder: List<Any>,
+        itemsInNewOrder: List<T>,
         item: T,
         newOrderNum: Double
     ) -> Unit = { _, _, _ -> },
-    onReordered: ((List<Any>) -> Unit)? = null,
-    ItemContent: @Composable RowScope.(Int, Any) -> Unit
+    onReordered: ((List<T>) -> Unit)? = null,
+    ItemContent: @Composable RowScope.(Int, T) -> Unit
 ) {
     var items by remember(id, initialItems) { mutableStateOf(initialItems) }
-    var reOrderedList: List<Any>? by remember {
+    var reOrderedList: List<T>? by remember {
         mutableStateOf(null)
     }
     var orderNumUpdates by remember {
@@ -157,6 +151,8 @@ private fun <T : ReorderableItem> BoxScope.ReorderModal(
                     )
                     adapter = Adapter<T>(
                         itemTouchHelper = itemTouchHelper,
+                        itemOrderNum = itemOrderNum,
+                        withNewOrderNum = withNewOrderNum,
                         ItemContent = ItemContent,
                         addItemOrderNumUpdate = { item, newOrderNum ->
                             orderNumUpdates = orderNumUpdates
@@ -182,17 +178,18 @@ private fun <T : ReorderableItem> BoxScope.ReorderModal(
     }
 }
 
-@Suppress("UNCHECKED_CAST")
-private class Adapter<T : ReorderableItem>(
+private class Adapter<T>(
     private val itemTouchHelper: ItemTouchHelper,
-    private val ItemContent: @Composable RowScope.(Int, Any) -> Unit,
+    private val itemOrderNum: (T) -> Double,
+    private val withNewOrderNum: (item: T, newOrderNum: Double) -> T,
+    private val ItemContent: @Composable RowScope.(Int, T) -> Unit,
     private val addItemOrderNumUpdate: (item: T, orderNum: Double) -> Unit,
-    private val onReorderInternalList: (List<Any>) -> Unit
+    private val onReorderInternalList: (List<T>) -> Unit
 ) : RecyclerView.Adapter<Adapter<T>.ItemViewHolder>() {
-    val data = mutableListOf<Any>()
+    val data = mutableListOf<T>()
 
     @SuppressLint("NotifyDataSetChanged")
-    fun display(items: List<Any>) {
+    fun display(items: List<T>) {
         data.clear()
         data.addAll(items)
         notifyDataSetChanged()
@@ -206,11 +203,11 @@ private class Adapter<T : ReorderableItem>(
     fun onItemMoved(item: T, to: Int) {
         val newOrderNum = calculateOrderNum<T>(
             itemsInNewOrder = data,
-            to = to
+            to = to,
+            itemOrderNum = itemOrderNum
         )
 
-        data[to] = item.withNewOrderNum(newOrderNum) as? T
-            ?: error("Incorrect ReorderableItem implementation for $item")
+        data[to] = withNewOrderNum(item, newOrderNum)
         addItemOrderNumUpdate(item, newOrderNum)
     }
 
@@ -237,8 +234,8 @@ private class Adapter<T : ReorderableItem>(
     ) : RecyclerView.ViewHolder(itemView) {
 
         fun display(
-            item: Any,
-            ItemContent: @Composable RowScope.(Int, Any) -> Unit,
+            item: T,
+            ItemContent: @Composable RowScope.(Int, T) -> Unit,
             position: Int
         ) {
             (itemView as ComposeView).setContent {
@@ -246,26 +243,24 @@ private class Adapter<T : ReorderableItem>(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    if (item as? T != null) {
-                        Spacer(Modifier.width(24.dp))
+                    Spacer(Modifier.width(24.dp))
 
-                        IvyIcon(
-                            modifier = Modifier
-                                .pointerInput(Unit) {
-                                    detectTapGestures(
-                                        onPress = {
-                                            itemTouchHelper.startDrag(this@ItemViewHolder)
-                                        }
-                                    )
-                                }
-                                .testTag("reorder_drag_handle"),
-                            icon = R.drawable.ic_drag_handle,
-                            tint = LegacyTheme.colors.gray,
-                            contentDescription = "reorder_$position"
-                        )
+                    IvyIcon(
+                        modifier = Modifier
+                            .pointerInput(Unit) {
+                                detectTapGestures(
+                                    onPress = {
+                                        itemTouchHelper.startDrag(this@ItemViewHolder)
+                                    }
+                                )
+                            }
+                            .testTag("reorder_drag_handle"),
+                        icon = R.drawable.ic_drag_handle,
+                        tint = LegacyTheme.colors.gray,
+                        contentDescription = "reorder_$position"
+                    )
 
-                        Spacer(Modifier.width(4.dp))
-                    }
+                    Spacer(Modifier.width(4.dp))
 
                     val currentPosition = bindingAdapterPosition
                         .takeIf { it != RecyclerView.NO_POSITION }
@@ -277,8 +272,7 @@ private class Adapter<T : ReorderableItem>(
     }
 }
 
-@Suppress("UNCHECKED_CAST")
-private fun <T : ReorderableItem> itemTouchHelper(
+private fun <T> itemTouchHelper(
     colorMedium: Color,
 ): ItemTouchHelper {
     // 1. Note that I am specifying all 4 directions.
@@ -301,7 +295,7 @@ private fun <T : ReorderableItem> itemTouchHelper(
                 return false
             }
 
-            val targetItem = adapter.data[from] as? T ?: return false
+            val targetItem = adapter.data[from]
 
             if (movedItem == null) {
                 movedItem = targetItem
@@ -355,7 +349,7 @@ private fun <T : ReorderableItem> itemTouchHelper(
 }
 
 @Suppress("UNCHECKED_CAST")
-private fun <T : ReorderableItem> RecyclerView.adapter() = adapter as? Adapter<T>
+private fun <T> RecyclerView.adapter() = adapter as? Adapter<T>
     ?: error("Adapter not set or wrong adapter set to recyclerview.")
 
 @Composable
@@ -371,30 +365,30 @@ fun ReorderButton(
     )
 }
 
-@Suppress("UNCHECKED_CAST")
-private fun <T : ReorderableItem> calculateOrderNum(
-    itemsInNewOrder: List<*>,
-    to: Int
+private fun <T> calculateOrderNum(
+    itemsInNewOrder: List<T>,
+    to: Int,
+    itemOrderNum: (T) -> Double
 ): Double {
-    val itemBefore = itemsInNewOrder.getOrNull(to - 1) as? T
-    val itemAfter = itemsInNewOrder.getOrNull(to + 1) as? T
+    val itemBefore = itemsInNewOrder.getOrNull(to - 1)
+    val itemAfter = itemsInNewOrder.getOrNull(to + 1)
 
     return when {
         itemBefore != null && itemAfter != null -> {
             numberBetween(
-                itemBefore.orderNum,
-                itemAfter.orderNum
+                itemOrderNum(itemBefore),
+                itemOrderNum(itemAfter)
             )
         }
 
         itemBefore != null && itemAfter == null -> {
             // It's last in it's priority
-            itemBefore.orderNum + 1
+            itemOrderNum(itemBefore) + 1
         }
 
         itemBefore == null && itemAfter != null -> {
             // It's first in it's priority
-            itemAfter.orderNum - 1
+            itemOrderNum(itemAfter) - 1
         }
 
         else -> 0.0

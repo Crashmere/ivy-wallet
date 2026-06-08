@@ -152,6 +152,14 @@ private fun BoxWithConstraintsScope.UI(
     ReorderModalSingleType(
         visible = state.reorderModalVisible,
         initialItems = if (state.selectedTab == LoanTab.PENDING) state.pendingLoans else state.completedLoans,
+        itemOrderNum = { it.loan.orderNum },
+        withNewOrderNum = { item, newOrderNum ->
+            item.copy(
+                loan = item.loan.copy(
+                    orderNum = newOrderNum
+                )
+            )
+        },
         dismiss = {
             onEventHandler.invoke(LoanScreenEvent.OnReOrderModalShow(show = false))
         },

@@ -131,6 +131,14 @@ private fun BoxWithConstraintsScope.UI(
     ReorderModalSingleType(
         visible = state.reorderModalVisible,
         initialItems = state.budgets,
+        itemOrderNum = { it.budget.orderId },
+        withNewOrderNum = { item, newOrderNum ->
+            item.copy(
+                budget = item.budget.copy(
+                    orderId = newOrderNum
+                )
+            )
+        },
         dismiss = {
             onEvent(BudgetScreenEvent.OnReorderModalVisible(false))
         },
