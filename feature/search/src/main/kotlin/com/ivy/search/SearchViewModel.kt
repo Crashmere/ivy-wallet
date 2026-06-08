@@ -18,7 +18,6 @@ import com.ivy.data.model.currency.getDefaultFIATCurrency
 import com.ivy.domain.usecase.account.GetAccountsUseCase
 import com.ivy.domain.usecase.transaction.BuildTransactionHistoryItemsUseCase
 import com.ivy.domain.usecase.transaction.GetTransactionsUseCase
-import com.ivy.legacy.ui.transaction.TransactionListAccount
 import com.ivy.ui.preferences.asEnabledState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
@@ -44,7 +43,7 @@ internal class SearchViewModel @Inject internal constructor(
     private val transactions =
         mutableStateOf<ImmutableList<TransactionHistoryItem>>(persistentListOf())
     private val baseCurrency = mutableStateOf<String>(getDefaultFIATCurrency().currencyCode)
-    private val accounts = mutableStateOf<ImmutableList<TransactionListAccount>>(persistentListOf())
+    private val accounts = mutableStateOf<ImmutableList<SearchAccount>>(persistentListOf())
     private val categories = mutableStateOf<ImmutableList<Category>>(persistentListOf())
     private val searchQuery = mutableStateOf("")
 
@@ -97,7 +96,7 @@ internal class SearchViewModel @Inject internal constructor(
             transactions.value = queryResult
             baseCurrency.value = getBaseCurrencyCode()
             accounts.value = getAccountsUseCase()
-                .map { it.toTransactionListAccount() }
+                .map { it.toSearchAccount() }
                 .toImmutableList()
             categories.value = getCategoriesUseCase().toImmutableList()
         }
@@ -108,7 +107,7 @@ internal class SearchViewModel @Inject internal constructor(
     }
 }
 
-private fun Account.toTransactionListAccount() = TransactionListAccount(
+private fun Account.toSearchAccount() = SearchAccount(
     id = id.value,
     name = name.value,
     color = color.value,

@@ -20,6 +20,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.TransactionType
 import com.ivy.legacy.ui.search.SearchInput
+import com.ivy.legacy.ui.transaction.TransactionListAccount
 import com.ivy.legacy.ui.transaction.TransactionListData
 import com.ivy.legacy.ui.transaction.transactions
 import com.ivy.ui.compose.densityScope
@@ -33,6 +34,7 @@ import com.ivy.ui.navigation.navigation
 import com.ivy.ui.navigation.screenScopedViewModel
 import com.ivy.ui.R
 import com.ivy.ui.animation.DURATION_MODAL_ANIM
+import kotlinx.collections.immutable.toImmutableList
 
 @Composable
 fun SearchScreen() {
@@ -94,7 +96,9 @@ private fun SearchUi(
             transactions(
                 baseData = TransactionListData(
                     baseCurrency = uiState.baseCurrency,
-                    accounts = uiState.accounts,
+                    accounts = uiState.accounts
+                        .map { it.toTransactionListAccount() }
+                        .toImmutableList(),
                     categories = uiState.categories
                 ),
                 upcoming = null,
@@ -152,3 +156,11 @@ private fun SearchUi(
 private fun TransactionType.toRouteType(): TransactionRouteType {
     return TransactionRouteType.valueOf(name)
 }
+
+private fun SearchAccount.toTransactionListAccount() = TransactionListAccount(
+    id = id,
+    name = name,
+    color = color,
+    icon = icon,
+    currency = currency,
+)
