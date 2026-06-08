@@ -1,8 +1,10 @@
-package com.ivy.legacy.ui.component
+package com.ivy.exchangerates.modal
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
@@ -29,12 +31,9 @@ import androidx.compose.ui.unit.dp
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.legacy.ui.theme.style
 import com.ivy.ui.platform.hideKeyboard
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.padding
 
-@Suppress("ParameterNaming")
 @Composable
-internal fun IvyNameTextField(
+internal fun ExchangeRateNameTextField(
     modifier: Modifier = Modifier,
     underlineModifier: Modifier = Modifier,
     value: TextFieldValue,
@@ -60,7 +59,6 @@ internal fun IvyNameTextField(
         ) {
             if (isEmpty && hint.isNullOrBlank().not()) {
                 Text(
-                    modifier = Modifier,
                     text = hint!!,
                     style = LegacyTheme.typo.b2.style(
                         color = LegacyTheme.colors.gray,
@@ -73,7 +71,7 @@ internal fun IvyNameTextField(
             val view = LocalView.current
             BasicTextField(
                 modifier = Modifier
-                    .testTag("base_input")
+                    .testTag("exchange_rate_name_input")
                     .focusRequester(focusRequester),
                 value = value,
                 onValueChange = onValueChanged,
@@ -96,8 +94,11 @@ internal fun IvyNameTextField(
 
         Spacer(Modifier.height(8.dp))
 
-        IvyDividerLineRounded(
+        Spacer(
             modifier = underlineModifier
+                .fillMaxWidth()
+                .height(2.dp)
+                .background(LegacyTheme.colors.medium, LegacyTheme.shapes.rFull)
         )
     }
 }

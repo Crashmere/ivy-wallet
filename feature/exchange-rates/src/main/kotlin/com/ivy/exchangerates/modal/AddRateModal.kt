@@ -18,7 +18,6 @@ import androidx.compose.ui.unit.dp
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.legacy.ui.theme.style
 import com.ivy.exchangerates.model.RateUi
-import com.ivy.legacy.ui.component.IvyNameTextField
 import com.ivy.legacy.ui.modal.IvyModal
 import com.ivy.legacy.ui.modal.ModalAdd
 import com.ivy.legacy.ui.modal.ModalTitle
@@ -61,7 +60,7 @@ internal fun BoxWithConstraintsScope.AddRateModal(
         ModalTitle(text = "Add rate")
         Spacer(Modifier.height(24.dp))
 
-        IvyNameTextField(
+        ExchangeRateNameTextField(
             modifier = Modifier.padding(horizontal = 32.dp),
             underlineModifier = Modifier.padding(horizontal = 24.dp),
             value = toCurrency,
