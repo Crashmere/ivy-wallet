@@ -56,7 +56,7 @@ import com.ivy.ui.period.Month
 import com.ivy.ui.period.TimePeriod
 import com.ivy.ui.period.displayLong
 import com.ivy.ui.period.LocalPeriodState
-import com.ivy.legacy.ui.summary.IncomeExpensesCards
+import com.ivy.ui.summary.IncomeExpensesCards
 import com.ivy.legacy.ui.transaction.transactions
 import com.ivy.ui.money.balancePrefix
 import com.ivy.ui.compose.clickableNoIndication

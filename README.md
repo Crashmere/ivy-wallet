@@ -113,7 +113,8 @@
 - 旧分类/标签选择用描边按钮后续已直接改用 `shared:ui:core` 的 `OutlinedPillButton`；`legacy.ui.selection.IvyBorderButton` 包装和空目录已删除。
 - 重排弹窗已从旧通用组件包移入 `legacy.ui.modal`；账户、分类、预算和借贷页面继续使用同一个 `ReorderModalSingleType`，但依赖的是弹窗边界而不是根组件目录。
 - 账户、分类、预算和借贷页面的重排入口按钮已改为页面侧直接使用 `CircleButtonFilled` 和拖拽手柄图标，不再依赖已删除的旧 `ReorderButton` 包装。
-- 周期选择条已迁入 `shared:ui:core` 的 `com.ivy.ui.period.PeriodSelector`；交易页和余额页继续复用原切月、打开周期弹窗和周期短文案行为，`shared:ui:legacy` 不再保留 `legacy.ui.period` 包。收入/支出汇总卡片暂时仍保留在 `legacy.ui.summary`。
+- 周期选择条已迁入 `shared:ui:core` 的 `com.ivy.ui.period.PeriodSelector`；交易页和余额页继续复用原切月、打开周期弹窗和周期短文案行为，`shared:ui:legacy` 不再保留 `legacy.ui.period` 包。
+- 收入/支出汇总卡片已迁入 `shared:ui:core` 的 `com.ivy.ui.summary.IncomeExpensesCards`；交易页和报表页继续复用原金额、交易数量、添加收入/支出按钮和点击入口行为，`shared:ui:legacy` 不再保留 `legacy.ui.summary` 包。
 - 旧搜索输入框已从根组件目录移入 `legacy.ui.search`；分类、标签、汇率和搜索页继续复用原搜索输入行为。
 - 金额展示组件已从 `shared:ui:legacy` 迁入 `shared:ui:core` 的 `com.ivy.ui.money`；`BalanceRow` 和 `AmountCurrencyB1` 继续保留原金额格式化、隐藏金额和大数字缩写行为，feature 层不再为了金额文本依赖 legacy money 包。
 - 旧按钮基础控件已从根组件目录移入 `legacy.ui.button`；图标基础控件后续已继续迁入 `shared:ui:core`，`component` 根目录不再承载通用基础控件文件。
