@@ -3,6 +3,7 @@ package com.ivy.loans.modal
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraintsScope
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
@@ -11,10 +12,12 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -36,7 +39,6 @@ import androidx.compose.ui.unit.dp
 import com.ivy.data.model.LoanType
 import com.ivy.data.model.primitive.NotBlankTrimmedString
 import com.ivy.ui.time.LocalTimeConverter
-import com.ivy.legacy.ui.component.IvyColorPicker
 import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.data.model.Loan
 import com.ivy.data.model.currency.getDefaultFIATCurrency
@@ -65,6 +67,7 @@ import com.ivy.legacy.ui.modal.ModalTitle
 import com.ivy.legacy.ui.modal.edit.AccountModal
 import com.ivy.legacy.ui.modal.edit.AmountModal
 import com.ivy.legacy.ui.theme.LegacyTheme
+import com.ivy.legacy.ui.theme.dynamicContrast
 import com.ivy.legacy.ui.theme.toComposeColor
 import com.ivy.legacy.ui.theme.style
 import kotlinx.coroutines.launch
@@ -224,7 +227,7 @@ internal fun BoxWithConstraintsScope.LoanModal(
 
         Spacer(Modifier.height(24.dp))
 
-        IvyColorPicker(
+        LoanColorPicker(
             selectedColor = color,
             onColorSelected = { color = it }
         )
@@ -565,6 +568,99 @@ private fun ColumnScope.LoanTypePicker(
 
         Spacer(Modifier.width(8.dp))
     }
+}
+
+@Suppress("MagicNumber")
+private val loanColorPickerColors = listOf(
+    Color(0xFF6B4DFF), Color(0xFFC34CFF), Color(0xFFFF4CFF),
+    Color(0xFF4CC3FF), Color(0xFF45E6E6), Color(0xFF457BE6),
+    Color(0xFF14CC9E), Color(0xFF45E67B), Color(0xFF96E645),
+    Color(0xFFC7E62E), Color(0xFFFFEE33), Color(0xFFF29F30),
+    Color(0xFFE67B45), Color(0xFFFFC34C), Color(0xFFFF4060),
+    Color(0xFFE62E2E), Color(0xFFFF4CA6),
+
+    Color(0xFFD5CCFF), Color(0xFFEECCFF), Color(0xFFFFBFFF),
+    Color(0xFFB3E6FF), Color(0xFFB3FFFF), Color(0xFFCCDDFF),
+    Color(0xFFAAF2E0), Color(0xFF99FFBB), Color(0xFFCCFF99),
+    Color(0xFFEEFF99), Color(0xFFFFF799), Color(0xFFFFDEB3),
+    Color(0xFFFFCCB3), Color(0xFFFFDC99), Color(0xFFFFCCD5),
+    Color(0xFFFFB3B3), Color(0xFFFFCCE6),
+
+    Color(0xFF352680), Color(0xFF622680), Color(0xFF802680),
+    Color(0xFF266280), Color(0xFF227373), Color(0xFF223D73),
+    Color(0xFF0A664F), Color(0xFF22733D), Color(0xFF66804D),
+    Color(0xFF637317), Color(0xFF807719), Color(0xFF734B17),
+    Color(0xFF66371F), Color(0xFF806226), Color(0xFF801919),
+    Color(0xFF802030), Color(0xFF802653),
+)
+
+@Composable
+private fun ColumnScope.LoanColorPicker(
+    selectedColor: Color,
+    onColorSelected: (Color) -> Unit
+) {
+    Text(
+        modifier = Modifier.padding(horizontal = 32.dp),
+        text = stringResource(R.string.choose_color),
+        style = LegacyTheme.typo.b2.style(
+            color = LegacyTheme.colors.pureInverse,
+            fontWeight = FontWeight.ExtraBold
+        )
+    )
+
+    Spacer(Modifier.height(16.dp))
+
+    val listState = rememberLazyListState()
+    LaunchedEffect(selectedColor) {
+        val selectedColorIndex = loanColorPickerColors.indexOf(selectedColor)
+        if (selectedColorIndex != -1) {
+            listState.scrollToItem(selectedColorIndex)
+        }
+    }
+
+    LazyRow(
+        modifier = Modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically,
+        state = listState
+    ) {
+        item {
+            Spacer(Modifier.width(24.dp))
+        }
+
+        items(loanColorPickerColors.size) { index ->
+            LoanColorItem(
+                color = loanColorPickerColors[index],
+                selectedColor = selectedColor,
+                onSelected = onColorSelected
+            )
+        }
+    }
+}
+
+@Composable
+private fun LoanColorItem(
+    color: Color,
+    selectedColor: Color,
+    onSelected: (Color) -> Unit
+) {
+    val selected = color == selectedColor
+    Box(
+        modifier = Modifier
+            .clip(CircleShape)
+            .size(48.dp)
+            .background(color, CircleShape)
+            .thenIf(selected) {
+                border(width = 4.dp, color = color.dynamicContrast(), CircleShape)
+            }
+            .clickable {
+                onSelected(color)
+            }
+            .testTag("color_item_${color.value}"),
+        contentAlignment = Alignment.Center
+    ) {
+    }
+
+    Spacer(Modifier.width(if (selected) 16.dp else 24.dp))
 }
 
 @Composable
