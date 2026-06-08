@@ -37,7 +37,6 @@ import com.ivy.ui.compose.thenIf
 import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.data.model.LoanRecord
 import com.ivy.legacy.ui.component.DateTimeRow
-import com.ivy.legacy.ui.modal.ModalNameInput
 import com.ivy.data.model.currency.getDefaultFIATCurrency
 import com.ivy.ui.navigation.onScreenStart
 import com.ivy.ui.compose.selectEndTextFieldValue
@@ -45,13 +44,11 @@ import com.ivy.ui.R
 import com.ivy.data.model.CreateAccountData
 import com.ivy.data.model.CreateLoanRecordData
 import com.ivy.data.model.EditLoanRecordData
-import com.ivy.ui.modal.LoanRecordModalData
 import com.ivy.legacy.ui.component.ItemIconSDefaultIcon
 import com.ivy.legacy.ui.component.IvyCheckboxWithText
 import com.ivy.legacy.ui.component.IvyIcon
 import com.ivy.legacy.ui.theme.findContrastTextColor
 import com.ivy.legacy.ui.modal.edit.AccountModal
-import com.ivy.ui.modal.AccountModalData
 import com.ivy.legacy.ui.modal.edit.AmountModal
 import com.ivy.legacy.ui.theme.toComposeColor
 import kotlinx.coroutines.launch

@@ -44,12 +44,10 @@ import com.ivy.data.model.currency.getDefaultFIATCurrency
 import com.ivy.ui.navigation.onScreenStart
 import com.ivy.ui.compose.selectEndTextFieldValue
 import com.ivy.ui.compose.thenIf
-import com.ivy.legacy.ui.modal.ModalNameInput
 import com.ivy.ui.R
 import com.ivy.data.model.currency.IvyCurrency
 import com.ivy.data.model.CreateAccountData
 import com.ivy.data.model.CreateLoanData
-import com.ivy.ui.modal.LoanModalData
 import com.ivy.legacy.ui.theme.GradientIvy
 import com.ivy.legacy.ui.theme.Gray
 import com.ivy.legacy.ui.theme.Ivy
@@ -59,7 +57,6 @@ import com.ivy.legacy.ui.component.IvyCheckboxWithText
 import com.ivy.legacy.ui.component.IvyIcon
 import com.ivy.legacy.ui.theme.findContrastTextColor
 import com.ivy.legacy.ui.modal.edit.AccountModal
-import com.ivy.ui.modal.AccountModalData
 import com.ivy.legacy.ui.modal.edit.AmountModal
 import com.ivy.legacy.ui.modal.edit.IconNameRow
 import com.ivy.legacy.ui.theme.toComposeColor
