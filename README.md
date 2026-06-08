@@ -108,6 +108,7 @@
 - 收窄交易列表 feature 公开面：只保留 `TransactionsScreen` 作为 app 导航入口，交易列表状态、事件、UI 事件和 ViewModel 改为模块内部实现。
 - 收窄编辑交易 feature 公开面：只保留 `EditTransactionScreen` 作为 app 导航入口，编辑状态、事件、UI 事件、ViewModel 和页面展示模型改为模块内部实现。
 - 收窄导入 feature 公开面：只保留 `ImportCSVScreen` 与 `CSVScreen` 两个导航入口，备份恢复流程、CSV 状态/事件、解析模型、导入器和内部 flow UI 改为模块内部实现。
+- 收窄旧重排弹窗公开面：feature 层继续使用单类型 `ReorderModalSingleType` 和 `ReorderButton`，底层多类型 `ReorderModal` 收为旧 UI 内部实现。
 
 当前仍保留：
 
@@ -1145,6 +1146,7 @@
 - 旧交易列表组件的计划付款事件继续收窄：支付/收款、跳过和跳过全部回调现在只向页面层传交易 ID；交易卡片仍用 `LegacyTransaction` 渲染和处理点击编辑，避免把完整旧模型继续用于简单事件分发。
 - 旧交易列表组件的交易点击事件也继续收窄：页面层只接收编辑页导航需要的交易 ID 和交易类型；完整 `LegacyTransaction` 继续限定在交易卡片渲染边界内。
 - 旧交易列表组件的账户和分类点击事件同样收窄为只传 ID；页面层筛选导航不再接收完整 `LegacyAccount/Category` 对象。
+- 旧重排弹窗的底层多类型 `ReorderModal` 已收为 `shared:ui:legacy` 私有实现；feature 层继续只通过 `ReorderModalSingleType`、`ReorderButton` 和 `ReorderableItem` 使用现有排序 UI。
 
 ### 阶段 10：最终依赖方向
 

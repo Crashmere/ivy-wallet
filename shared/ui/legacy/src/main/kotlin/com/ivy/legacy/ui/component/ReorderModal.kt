@@ -83,7 +83,7 @@ fun <T : ReorderableItem> BoxScope.ReorderModalSingleType(
 
 @Suppress("ParameterNaming")
 @Composable
-fun <T : ReorderableItem> BoxScope.ReorderModal(
+private fun <T : ReorderableItem> BoxScope.ReorderModal(
     visible: Boolean,
     id: UUID = UUID.randomUUID(),
     TitleContent: @Composable ColumnScope.() -> Unit = {
