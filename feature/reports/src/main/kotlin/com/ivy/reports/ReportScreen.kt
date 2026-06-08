@@ -22,7 +22,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
-import androidx.lifecycle.viewmodel.compose.viewModel
+import com.ivy.ui.navigation.screenScopedViewModel
 import com.ivy.data.model.TransactionType
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
@@ -62,7 +62,7 @@ import kotlinx.collections.immutable.toImmutableList
 fun BoxWithConstraintsScope.ReportScreen(
     screen: ReportScreen
 ) {
-    val viewModel: ReportViewModel = viewModel()
+    val viewModel: ReportViewModel = screenScopedViewModel()
     val state = viewModel.uiState()
 
     UI(

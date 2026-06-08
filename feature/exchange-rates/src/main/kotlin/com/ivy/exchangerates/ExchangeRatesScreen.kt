@@ -26,7 +26,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import com.ivy.ui.navigation.screenScopedViewModel
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
 import com.ivy.exchangerates.component.RateItem
@@ -40,7 +40,7 @@ import java.util.UUID
 
 @Composable
 fun BoxWithConstraintsScope.ExchangeRatesScreen() {
-    val viewModel: ExchangeRatesViewModel = viewModel()
+    val viewModel: ExchangeRatesViewModel = screenScopedViewModel()
     val state = viewModel.uiState()
 
     UI(

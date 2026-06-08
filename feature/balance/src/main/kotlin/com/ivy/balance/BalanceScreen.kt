@@ -27,7 +27,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
-import androidx.lifecycle.viewmodel.compose.viewModel
+import com.ivy.ui.navigation.screenScopedViewModel
 import com.ivy.ui.platform.LocalDatePicker
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
@@ -51,7 +51,7 @@ val FAB_BUTTON_SIZE = 56.dp
 
 @Composable
 fun BoxWithConstraintsScope.BalanceScreen(screen: BalanceScreen) {
-    val viewModel: BalanceViewModel = viewModel()
+    val viewModel: BalanceViewModel = screenScopedViewModel()
     val uiState = viewModel.uiState()
 
     UI(

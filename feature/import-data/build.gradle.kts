@@ -14,7 +14,5 @@ dependencies {
     implementation(projects.shared.ui.core)
     implementation(projects.shared.ui.legacy)
     implementation(projects.shared.ui.navigation)
-
-    implementation(libs.compose.viewmodel)
     implementation(libs.bundles.opencsv)
 }

@@ -29,7 +29,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import com.ivy.ui.navigation.screenScopedViewModel
 import com.ivy.data.model.TransactionType
 import com.ivy.data.model.processByType
 import com.ivy.data.model.LoanType
@@ -80,7 +80,7 @@ import com.ivy.legacy.ui.theme.toComposeColor
 
 @Composable
 fun BoxWithConstraintsScope.LoanDetailsScreen(screen: LoanDetailsScreen) {
-    val viewModel: LoanDetailsViewModel = viewModel()
+    val viewModel: LoanDetailsViewModel = screenScopedViewModel()
     viewModel.screen = screen
     val state = viewModel.uiState()
 

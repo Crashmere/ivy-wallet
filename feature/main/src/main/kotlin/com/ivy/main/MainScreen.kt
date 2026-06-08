@@ -10,7 +10,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.viewmodel.compose.viewModel
+import com.ivy.ui.navigation.screenScopedViewModel
 import com.ivy.accounts.AccountsTab
 import com.ivy.home.HomeTab
 import com.ivy.ui.navigation.onScreenStart
@@ -29,7 +29,7 @@ import com.ivy.ui.modal.AccountModalData
 @ExperimentalFoundationApi
 @Composable
 fun BoxWithConstraintsScope.MainScreen(screen: MainScreen) {
-    val viewModel: MainViewModel = viewModel()
+    val viewModel: MainViewModel = screenScopedViewModel()
 
     val currency by viewModel.currency.collectAsState()
 

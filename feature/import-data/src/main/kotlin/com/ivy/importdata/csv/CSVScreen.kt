@@ -35,7 +35,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import com.ivy.ui.navigation.screenScopedViewModel
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.colorAs
 import com.ivy.legacy.ui.theme.system.style
@@ -47,7 +47,7 @@ import kotlin.math.abs
 
 @Composable
 fun CSVScreen() {
-    val viewModel: CSVViewModel = viewModel()
+    val viewModel: CSVViewModel = screenScopedViewModel()
     val state = viewModel.uiState()
 
     when (val ui = state.uiState) {
