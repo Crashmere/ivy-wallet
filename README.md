@@ -148,6 +148,7 @@
 - 删除旧主题外层门面中已经没有调用方的透明色常量和 `asBrush()` 扩展；旧主题继续只保留仍被页面或 legacy 组件实际使用的颜色、渐变和对比度工具。
 - 收窄旧主题便捷渐变入口：借贷详情和计划付款卡片不再直接调用 `Gradient.black()`，黑色渐变 helper 只保留给 legacy 交易卡片内部使用。
 - 删除旧主题中已经没有调用方的紫色渐变常量；旧色板继续只保留实际 UI 路径仍在使用的渐变。
+- 收窄导入流程旧色板依赖：导入 toolbar、处理进度和结果页不再直接导入旧 `Gray` 常量，灰色文字统一改用当前 `LegacyTheme.colors.gray`。
 - 收窄 domain 内部工具公开面：新旧模型 mapper 中只被 domain 使用的转换方向、CSV 导出行模型和 Arrow 数值 helper 改为模块内部实现；CSV 导入仍需要的 `toDomainAccount()` 暂时保留公开入口。
 - 收回旧账户保存转换边界：新增 `SaveLegacyAccountUseCase`，CSV 导入 feature 不再直接调用 legacy 账户 mapper；`toDomainAccount()` 改为 domain 内部实现。
 - 收回排序号工具边界：CSV 导入用本地私有 helper 计算导入账户/分类排序号，feature 层不再直接引用 `domain.util`；domain 的 `nextOrderNum()` 改为内部工具。

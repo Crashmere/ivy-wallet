@@ -23,7 +23,6 @@ import com.ivy.data.model.importing.ImportResult
 import com.ivy.data.model.currency.format
 import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.GradientIvy
-import com.ivy.legacy.ui.theme.Gray
 import com.ivy.legacy.ui.theme.Green
 import com.ivy.legacy.ui.theme.Red
 import com.ivy.legacy.ui.theme.White
@@ -182,7 +181,7 @@ private fun SuccessSectionUI(
             text = stringResource(R.string.transactions_imported, result.transactionsImported),
             style = LegacyTheme.typo.nB2.style(
                 fontWeight = FontWeight.Bold,
-                color = Gray
+                color = LegacyTheme.colors.gray
             )
         )
 
@@ -193,7 +192,7 @@ private fun SuccessSectionUI(
             text = stringResource(R.string.accounts_imported, result.accountsImported),
             style = LegacyTheme.typo.nB2.style(
                 fontWeight = FontWeight.Bold,
-                color = Gray
+                color = LegacyTheme.colors.gray
             )
         )
 
@@ -204,7 +203,7 @@ private fun SuccessSectionUI(
             text = stringResource(R.string.categories_imported, result.categoriesImported),
             style = LegacyTheme.typo.nB2.style(
                 fontWeight = FontWeight.Bold,
-                color = Gray
+                color = LegacyTheme.colors.gray
             )
         )
 
@@ -247,7 +246,7 @@ private fun FailedSectionUI(
             ),
             style = LegacyTheme.typo.nB2.style(
                 fontWeight = FontWeight.Bold,
-                color = Gray
+                color = LegacyTheme.colors.gray
             )
         )
     }

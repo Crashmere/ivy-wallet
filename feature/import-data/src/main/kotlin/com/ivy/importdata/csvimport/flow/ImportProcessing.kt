@@ -20,7 +20,6 @@ import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.legacy.ui.theme.style
 import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.GradientGreen
-import com.ivy.legacy.ui.theme.Gray
 
 @Composable
 internal fun ImportProcessing(
@@ -46,7 +45,7 @@ internal fun ImportProcessing(
         Text(
             text = "$progressPercent%",
             style = LegacyTheme.typo.b2.style(
-                color = Gray,
+                color = LegacyTheme.colors.gray,
                 fontWeight = FontWeight.Bold
             )
         )

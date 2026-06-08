@@ -23,7 +23,6 @@ import androidx.compose.ui.unit.dp
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.legacy.ui.theme.style
 import com.ivy.ui.R
-import com.ivy.legacy.ui.theme.Gray
 
 @Composable
 internal fun ImportToolbar(
@@ -42,7 +41,7 @@ internal fun ImportToolbar(
                     .padding(all = 16.dp),
                 text = stringResource(R.string.skip),
                 style = LegacyTheme.typo.b2.style(
-                    color = Gray,
+                    color = LegacyTheme.colors.gray,
                     fontWeight = FontWeight.Bold
                 )
             )
