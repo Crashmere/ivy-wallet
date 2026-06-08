@@ -17,12 +17,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.currency.IvyCurrency
 import com.ivy.data.model.currency.format
 import com.ivy.legacy.ui.icon.IvyIcon
 import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.legacy.ui.theme.style
 import com.ivy.ui.R
 
 @Composable
@@ -58,9 +58,10 @@ internal fun CustomExchangeRateCard(
         ) {
             Text(
                 text = title,
-                style = LegacyTheme.typo.b2.style(
+                style = LegacyTheme.typo.b2.copy(
                     fontWeight = FontWeight.ExtraBold,
-                    color = LegacyTheme.colors.pureInverse
+                    color = LegacyTheme.colors.pureInverse,
+                    textAlign = TextAlign.Start
                 )
             )
 
@@ -71,17 +72,19 @@ internal fun CustomExchangeRateCard(
             ) {
                 Text(
                     text = fromCurrencyCode,
-                    style = LegacyTheme.typo.b2.style(
+                    style = LegacyTheme.typo.b2.copy(
                         fontWeight = FontWeight.ExtraBold,
-                        color = LegacyTheme.colors.orange
+                        color = LegacyTheme.colors.orange,
+                        textAlign = TextAlign.Start
                     )
                 )
                 IvyIcon(icon = R.drawable.ic_arrow_right, tint = LegacyTheme.colors.orange)
                 Text(
                     text = toCurrencyCode,
-                    style = LegacyTheme.typo.nB2.style(
+                    style = LegacyTheme.typo.nB2.copy(
                         fontWeight = FontWeight.ExtraBold,
-                        color = LegacyTheme.colors.orange
+                        color = LegacyTheme.colors.orange,
+                        textAlign = TextAlign.Start
                     )
                 )
             }
@@ -93,17 +96,19 @@ internal fun CustomExchangeRateCard(
             ) {
                 Text(
                     text = "1",
-                    style = LegacyTheme.typo.nB2.style(
+                    style = LegacyTheme.typo.nB2.copy(
                         fontWeight = FontWeight.ExtraBold,
-                        color = LegacyTheme.colors.orange
+                        color = LegacyTheme.colors.orange,
+                        textAlign = TextAlign.Start
                     )
                 )
                 IvyIcon(icon = R.drawable.ic_arrow_right, tint = LegacyTheme.colors.orange)
                 Text(
                     text = exchangeRate.format(IvyCurrency.getDecimalPlaces(toCurrencyCode)),
-                    style = LegacyTheme.typo.nB2.style(
+                    style = LegacyTheme.typo.nB2.copy(
                         fontWeight = FontWeight.ExtraBold,
-                        color = LegacyTheme.colors.orange
+                        color = LegacyTheme.colors.orange,
+                        textAlign = TextAlign.Start
                     )
                 )
             }

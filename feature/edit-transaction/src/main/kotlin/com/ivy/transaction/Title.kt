@@ -35,7 +35,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.TransactionType
 import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.legacy.ui.theme.style
 import com.ivy.ui.R
 import com.ivy.ui.compose.selectEndTextFieldValue
 import com.ivy.ui.platform.hideKeyboard
@@ -116,7 +115,7 @@ private fun ColumnScope.TitleTextField(
         if (value.text.isBlank() && !hint.isNullOrBlank()) {
             Text(
                 text = hint,
-                style = LegacyTheme.typo.h2.style(
+                style = LegacyTheme.typo.h2.copy(
                     color = LegacyTheme.colors.gray,
                     fontWeight = FontWeight.Black,
                     textAlign = TextAlign.Start
@@ -131,7 +130,7 @@ private fun ColumnScope.TitleTextField(
                 .testTag("input_field"),
             value = value,
             onValueChange = onValueChanged,
-            textStyle = LegacyTheme.typo.h2.style(
+            textStyle = LegacyTheme.typo.h2.copy(
                 color = textColor,
                 fontWeight = FontWeight.Black,
                 textAlign = TextAlign.Start
@@ -185,8 +184,10 @@ private fun Suggestion(
             .padding(horizontal = 24.dp)
             .padding(vertical = 12.dp),
         text = suggestion,
-        style = LegacyTheme.typo.b2.style(
-            fontWeight = FontWeight.Medium
+        style = LegacyTheme.typo.b2.copy(
+            color = LegacyTheme.colors.pureInverse,
+            fontWeight = FontWeight.Medium,
+            textAlign = TextAlign.Start
         )
     )
 }

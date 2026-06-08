@@ -23,6 +23,7 @@ import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.TransactionType
 import com.ivy.legacy.ui.button.IvyButton
@@ -33,7 +34,6 @@ import com.ivy.ui.theme.colors.Gradient
 import com.ivy.ui.theme.colors.IvyGradients
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.theme.colors.IvyFixedColors.White
-import com.ivy.legacy.ui.theme.style
 import com.ivy.ui.R
 import java.util.UUID
 
@@ -176,8 +176,10 @@ private fun TransactionTypeButton(
                 TransactionType.EXPENSE -> stringResource(R.string.expense)
                 TransactionType.TRANSFER -> stringResource(R.string.transfer)
             },
-            style = LegacyTheme.typo.b1.style(
-                color = textColor
+            style = LegacyTheme.typo.b1.copy(
+                color = textColor,
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Start
             )
         )
 
@@ -191,9 +193,10 @@ private fun TransactionTypeButton(
 
             Text(
                 text = stringResource(R.string.selected_text),
-                style = LegacyTheme.typo.b2.style(
+                style = LegacyTheme.typo.b2.copy(
                     fontWeight = FontWeight.SemiBold,
-                    color = textSelectedColor
+                    color = textSelectedColor,
+                    textAlign = TextAlign.Start
                 )
             )
 

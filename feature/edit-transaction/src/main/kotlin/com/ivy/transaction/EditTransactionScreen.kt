@@ -35,6 +35,7 @@ import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.TransactionType
 import com.ivy.data.model.Category
@@ -42,7 +43,6 @@ import com.ivy.data.model.Tag
 import com.ivy.data.model.TagId
 import com.ivy.ui.platform.LocalDatePicker
 import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.legacy.ui.theme.style
 import com.ivy.ui.platform.hideKeyboard
 import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.legacy.ui.tags.AddTagButton
@@ -362,9 +362,10 @@ private fun BoxWithConstraintsScope.UI(
             Text(
                 modifier = Modifier.padding(horizontal = 24.dp),
                 text = loanData.loanCaption!!,
-                style = LegacyTheme.typo.nB2.style(
+                style = LegacyTheme.typo.nB2.copy(
                     color = LegacyTheme.colors.mediumInverse,
-                    fontWeight = FontWeight.Normal
+                    fontWeight = FontWeight.Normal,
+                    textAlign = TextAlign.Start
                 )
             )
         }
@@ -701,9 +702,10 @@ private fun EditTransactionAddPlannedDateButton(onClick: () -> Unit) {
 
         Text(
             text = stringResource(R.string.add_planned_date_payment),
-            style = LegacyTheme.typo.b2.style(
+            style = LegacyTheme.typo.b2.copy(
                 color = LegacyTheme.colors.pureInverse,
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Start
             )
         )
     }

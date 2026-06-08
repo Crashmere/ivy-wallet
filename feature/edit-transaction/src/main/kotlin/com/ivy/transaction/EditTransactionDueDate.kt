@@ -14,10 +14,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ivy.legacy.ui.icon.IvyIcon
 import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.legacy.ui.theme.style
 import com.ivy.ui.R
 import com.ivy.ui.time.LocalTimeFormatter
 import com.ivy.ui.time.TimeFormatter
@@ -46,9 +46,10 @@ internal fun EditTransactionDueDate(
 
         Text(
             text = stringResource(R.string.planned_for),
-            style = LegacyTheme.typo.b2.style(
+            style = LegacyTheme.typo.b2.copy(
                 fontWeight = FontWeight.ExtraBold,
-                color = LegacyTheme.colors.pureInverse
+                color = LegacyTheme.colors.pureInverse,
+                textAlign = TextAlign.Start
             )
         )
 
@@ -58,8 +59,10 @@ internal fun EditTransactionDueDate(
             text = with(LocalTimeFormatter.current) {
                 dueDate.formatLocal(TimeFormatter.Style.DateOnly(includeWeekDay = false))
             },
-            style = LegacyTheme.typo.nB2.style(
-                fontWeight = FontWeight.ExtraBold
+            style = LegacyTheme.typo.nB2.copy(
+                color = LegacyTheme.colors.pureInverse,
+                fontWeight = FontWeight.ExtraBold,
+                textAlign = TextAlign.Start
             )
         )
 

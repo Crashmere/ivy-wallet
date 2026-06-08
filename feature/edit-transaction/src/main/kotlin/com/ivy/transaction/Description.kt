@@ -25,7 +25,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ivy.legacy.ui.icon.IvyIcon
 import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.legacy.ui.theme.style
 import com.ivy.ui.R
 import com.ivy.ui.compose.clickableNoIndication
 import com.ivy.ui.compose.rememberInteractionSource
@@ -69,7 +68,9 @@ private fun DescriptionText(
                 .padding(horizontal = 24.dp)
                 .testTag("trn_description"),
             text = description,
-            style = LegacyTheme.typo.nB2.style(
+            style = LegacyTheme.typo.nB2.copy(
+                color = LegacyTheme.colors.pureInverse,
+                fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Left
             ),
         )
@@ -102,9 +103,10 @@ private fun AddPrimaryAttributeButton(
 
         Text(
             text = text,
-            style = LegacyTheme.typo.b2.style(
+            style = LegacyTheme.typo.b2.copy(
                 color = LegacyTheme.colors.pureInverse,
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Start
             )
         )
     }
@@ -138,9 +140,10 @@ private fun PrimaryAttributeColumn(
 
             Text(
                 text = title,
-                style = LegacyTheme.typo.b2.style(
+                style = LegacyTheme.typo.b2.copy(
                     color = LegacyTheme.colors.pureInverse,
-                    fontWeight = FontWeight.ExtraBold
+                    fontWeight = FontWeight.ExtraBold,
+                    textAlign = TextAlign.Start
                 )
             )
 

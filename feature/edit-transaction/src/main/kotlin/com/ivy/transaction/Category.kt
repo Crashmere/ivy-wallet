@@ -18,6 +18,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.Category
@@ -25,7 +26,6 @@ import com.ivy.legacy.ui.button.IvyButton
 import com.ivy.ui.theme.colors.Gradient
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.theme.colors.findContrastTextColor
-import com.ivy.legacy.ui.theme.style
 import com.ivy.ui.theme.colors.toComposeColor
 import com.ivy.ui.R
 import com.ivy.ui.icon.getCustomIconIdS
@@ -63,9 +63,10 @@ private fun CategoryButton(
             defaultIcon = R.drawable.ic_custom_category_s
         ),
         backgroundGradient = Gradient.solid(categoryColor),
-        textStyle = LegacyTheme.typo.b2.style(
+        textStyle = LegacyTheme.typo.b2.copy(
             color = contrastColor,
-            fontWeight = FontWeight.Bold
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Start
         ),
         iconTint = contrastColor,
         hasGlow = false,
@@ -79,9 +80,10 @@ private fun CategoryButton(
 private fun AddCategoryButton(
     modifier: Modifier = Modifier,
     text: String,
-    textStyle: TextStyle = LegacyTheme.typo.b2.style(
+    textStyle: TextStyle = LegacyTheme.typo.b2.copy(
         color = LegacyTheme.colors.pureInverse,
-        fontWeight = FontWeight.Bold
+        fontWeight = FontWeight.Bold,
+        textAlign = TextAlign.Start
     ),
     @DrawableRes iconStart: Int,
     iconTint: Color,

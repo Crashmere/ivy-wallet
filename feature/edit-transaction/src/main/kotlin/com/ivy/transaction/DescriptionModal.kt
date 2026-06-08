@@ -41,7 +41,6 @@ import com.ivy.ui.theme.colors.Gradient
 import com.ivy.ui.theme.colors.IvyGradients
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.theme.colors.IvyFixedColors.White
-import com.ivy.legacy.ui.theme.style
 import com.ivy.ui.R
 import com.ivy.ui.compose.clickableNoIndication
 import com.ivy.ui.compose.onCompositionStart
@@ -89,9 +88,10 @@ internal fun BoxWithConstraintsScope.DescriptionModal(
         Text(
             modifier = Modifier.padding(start = 32.dp),
             text = stringResource(R.string.description),
-            style = LegacyTheme.typo.b1.style(
+            style = LegacyTheme.typo.b1.copy(
                 color = LegacyTheme.colors.pureInverse,
-                fontWeight = FontWeight.ExtraBold
+                fontWeight = FontWeight.ExtraBold,
+                textAlign = TextAlign.Start
             )
         )
 
@@ -228,7 +228,7 @@ private fun DescriptionTextField(
             Text(
                 text = hint,
                 textAlign = TextAlign.Start,
-                style = LegacyTheme.typo.b2.style(
+                style = LegacyTheme.typo.b2.copy(
                     color = LegacyTheme.colors.mediumInverse,
                     fontWeight = FontWeight.Medium,
                     textAlign = TextAlign.Start
@@ -240,7 +240,7 @@ private fun DescriptionTextField(
             modifier = Modifier.testTag(testTag),
             value = value,
             onValueChange = onValueChanged,
-            textStyle = LegacyTheme.typo.nB2.style(
+            textStyle = LegacyTheme.typo.nB2.copy(
                 color = LegacyTheme.colors.pureInverse,
                 fontWeight = FontWeight.Medium,
                 textAlign = TextAlign.Start
