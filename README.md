@@ -426,6 +426,7 @@
 - app 当前没有 `src/test` 或 `src/androidTest` 源码，已移除 app 模块中无消费方的通用测试 bundle 和 WorkManager 测试依赖；运行时 WorkManager 依赖保留。
 - 版本目录中无引用的 `androidx-work-testing` 依赖别名已删除；交易提醒仍使用运行时 `androidx-work`。
 - 根目录 `temp/` 已加入 `.gitignore`；旧 `temp:*` 模块不再被 Gradle include，后续本地残留构建目录不会被误加回版本库。
+- 新增 `ivy.feature` 组合约定插件，集中 feature 模块共有的 Compose、Hilt 和 shared 依赖；16 个 `feature:*` 模块改为只声明 `ivy.feature`、namespace 和少量自身额外依赖，页面模块源码与运行行为不变。
 
 ### 阶段 3：测试支持代码归位
 
