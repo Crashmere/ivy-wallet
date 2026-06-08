@@ -49,7 +49,6 @@ import com.ivy.data.model.TagId
 import com.ivy.ui.platform.LocalDatePicker
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.legacy.ui.theme.style
-import com.ivy.legacy.ui.component.ListItem
 import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.ui.period.displayLong
 import com.ivy.ui.period.LocalPeriodState
@@ -61,6 +60,7 @@ import com.ivy.legacy.ui.theme.GradientGreen
 import com.ivy.legacy.ui.theme.Green
 import com.ivy.legacy.ui.theme.Red
 import com.ivy.legacy.ui.component.CloseButton
+import com.ivy.legacy.ui.component.ItemIconSDefaultIcon
 import com.ivy.legacy.ui.component.IvyButton
 import com.ivy.legacy.ui.component.IvyCheckboxWithText
 import com.ivy.legacy.ui.component.IvyDividerLine
@@ -70,6 +70,7 @@ import com.ivy.legacy.ui.modal.AddModalBackHandling
 import com.ivy.legacy.ui.modal.ChoosePeriodModal
 import com.ivy.legacy.ui.modal.ChoosePeriodModalData
 import com.ivy.legacy.ui.modal.edit.AmountModal
+import com.ivy.legacy.ui.theme.findContrastTextColor
 import com.ivy.legacy.ui.theme.toComposeColor
 import com.ivy.legacy.ui.component.AmountCurrencyB1Row
 import com.ivy.ui.compose.thenIf
@@ -499,6 +500,62 @@ private fun BoxWithConstraintsScope.ReportGradientCutBottom(
 }
 
 @Composable
+private fun ReportListItem(
+    icon: String?,
+    @DrawableRes defaultIcon: Int,
+    text: String,
+    selectedColor: Color?,
+    onClick: (selected: Boolean) -> Unit
+) {
+    val textColor = if (selectedColor != null) {
+        findContrastTextColor(selectedColor)
+    } else {
+        LegacyTheme.colors.pureInverse
+    }
+
+    val medium = LegacyTheme.colors.medium
+    val rFull = LegacyTheme.shapes.rFull
+
+    Row(
+        modifier = Modifier
+            .clip(LegacyTheme.shapes.rFull)
+            .thenIf(selectedColor == null) {
+                border(2.dp, medium, rFull)
+            }
+            .thenIf(selectedColor != null) {
+                background(selectedColor!!, rFull)
+            }
+            .clickable {
+                onClick(selectedColor != null)
+            },
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Spacer(Modifier.width(12.dp))
+
+        ItemIconSDefaultIcon(
+            iconName = icon,
+            defaultIcon = defaultIcon,
+            tint = textColor
+        )
+
+        Spacer(Modifier.width(4.dp))
+
+        Text(
+            modifier = Modifier.padding(vertical = 10.dp),
+            text = text,
+            style = LegacyTheme.typo.b2.style(
+                color = textColor,
+                fontWeight = FontWeight.ExtraBold
+            )
+        )
+
+        Spacer(Modifier.width(24.dp))
+    }
+
+    Spacer(Modifier.width(12.dp))
+}
+
+@Composable
 internal fun ColumnScope.TagsFilter(
     filter: ReportFilter?,
     onIncludesTagButtonClick: () -> Unit,
@@ -769,7 +826,7 @@ private fun AccountsFilter(
         }
 
         items(items = allAccounts) { account ->
-            ListItem(
+            ReportListItem(
                 icon = account.icon,
                 defaultIcon = R.drawable.ic_custom_account_s,
                 text = account.name,
@@ -845,7 +902,7 @@ private fun CategoriesFilter(
 
         items(items = allCategories) { category ->
             val categoryId = category.toReportFilterCategoryId()
-            ListItem(
+            ReportListItem(
                 icon = category.icon?.id,
                 defaultIcon = R.drawable.ic_custom_category_s,
                 text = category.name.value,
