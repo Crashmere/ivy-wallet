@@ -39,6 +39,7 @@
 - 收窄旧交易列表组件职责：`shared:ui:legacy` 的交易列表/交易卡片不再直接构造编辑页或筛选页 route，改由首页、搜索、报表和交易页传入点击回调。
 - 收窄旧 toolbar 组件职责：交易统计 toolbar 和编辑页 toolbar 不再直接调用 `nav.back()`，关闭行为由对应 feature 页面传入。
 - 收窄导航模块职责：主界面 tab 状态 `MainTab/MainTabState/LocalMainTabState` 已从 `shared:ui:navigation` 迁到 `shared:ui:core` 的 `com.ivy.ui.main` 包，navigation 模块继续聚焦 route、栈和返回处理。
+- 收窄主界面 Tab 状态职责：`MainTabState` 不再作为 app Hilt 单例提供，改由 `MainViewModel` 作为主页面状态持有，再通过 `LocalMainTabState` 提供给首页和账户页。
 - 删除无效 legacy screen 标记：当前所有页面统一走 `LegacyUiRoot` surface，`Screen` 不再暴露 `isLegacy`，`NavigationRoot` 删除只服务非 legacy 分支的 ViewModelStore 清理逻辑。
 - 收窄旧弹窗状态职责：账户、分类、缓冲金额、周期、借贷、借贷记录和计划付款重复规则的 `*ModalData` 已从 `shared:ui:legacy` 迁到 `shared:ui:core` 的 `com.ivy.ui.modal` 包；feature 状态层不再为了保存弹窗数据直接引用 legacy 弹窗实现包。
 - 收窄导航返回职责：旧弹窗返回键处理改用 Compose `BackHandler`，`Navigation` 删除 modal back handler 栈，只继续处理页面级返回和根返回栈。
@@ -522,7 +523,7 @@
 - `shared:data:model` 已删除剩余数据类上的 Compose `@Immutable` 注解，并移除 `compose.runtime` 依赖；纯数据模型不再依赖 UI runtime。
 - `shared:base` 已删除基础枚举和旧交易兼容模型上的 Compose `@Immutable` 注解，并移除 `compose.runtime` 依赖；基础层不再依赖 UI runtime。
 - `shared:base` 已移除只为旧 LiveData helper 保留的 `androidx.lifecycle:lifecycle-livedata-core` 依赖；基础层目前不再依赖 Lifecycle。
-- `shared:ui:navigation` 和 `shared:ui:legacy` 已移除 `ivy.hilt` 插件；它们只保留轻量 `javax.inject` 注解依赖，继续通过 app 的 Hilt 图提供 `Navigation`、`MainTabState` 和 `PeriodState` 单例。
+- `shared:ui:navigation` 和 `shared:ui:legacy` 已移除 `ivy.hilt` 插件；它们只保留轻量 `javax.inject` 注解依赖，继续通过 app 的 Hilt 图提供 `Navigation` 和 `PeriodState` 单例；`MainTabState` 后续已收敛为主页面 ViewModel 状态。
 - `shared:ui:legacy` 已移除对 `shared:domain` 的 Gradle 依赖；旧 UI 兼容层只依赖基础模型、数据模型、UI core 和导航，不再反向接触 domain use case。
 - `shared:ui:legacy` 已移除显式 Arrow 依赖；分类和标签编辑弹窗不再用 `either/bind` 组装 UI 表单结果，改回直接构造已校验的值对象。
 - `shared:ui:navigation` 已从顶层 `com.ivy.navigation` 归入 `com.ivy.ui.navigation`，模块 namespace 与 UI 分层保持一致；路由对象和导航状态行为不变。
@@ -866,7 +867,7 @@
 - 生产源码中最后残留的 `Preview` 命名 spacer/helper 已删除；当前没有 Compose 预览专用函数继续留在主源码。
 - app 和 `shared:data:core` 已显式声明 `androidx.core:core-ktx`，不再靠 Activity/AppCompat/DataStore 等传递依赖获得 AndroidX Core API。
 - `shared:ui:core` 已移除 Hilt 插件和内部 Hilt Module，并显式声明基础 `lifecycle-viewmodel`；主题状态、时间服务、日期时间选择器和 Toaster 的应用级绑定集中到 app 的 DI 模块。
-- `shared:ui:navigation` 和 `shared:ui:legacy` 已移除最后的 `javax.inject` 依赖；`Navigation/MainTabState/PeriodState` 作为普通状态类由 app 统一提供单例。
+- `shared:ui:navigation` 和 `shared:ui:legacy` 已移除最后的 `javax.inject` 依赖；`Navigation/PeriodState` 作为普通状态类由 app 统一提供单例，`MainTabState` 作为主页面状态由 `MainViewModel` 持有。
 - 设置表的 Room 实现已从泛化的 `SettingsRepository` 改名为 `RoomSettingsStore`；先把设置存储边界表达清楚，再逐步拆出更窄的数据端口。
 - data-core 的 Store 实现已整体归位到 `com.ivy.data.store`：账户、分类、币种、标签、交易、预算、借贷、计划付款和设置的 Room 实现统一命名为 `Room*Store`，汇率实现命名为 `DefaultExchangeRateStore`。
 - data-core 的实体/模型转换器已从历史 `repository.mapper` 包迁到 `com.ivy.data.mapper`；主源码中不再使用 `com.ivy.data.repository` 包。

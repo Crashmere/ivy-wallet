@@ -19,11 +19,12 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    val mainTabState: MainTabState,
     private val syncExchangeRatesUseCase: SyncExchangeRatesUseCase,
     private val createAccountWithBalanceUseCase: CreateAccountWithBalanceUseCase,
     private val getBaseCurrency: GetBaseCurrencyUseCase,
 ) : ViewModel() {
+
+    val mainTabState = MainTabState()
 
     private val _currency = MutableStateFlow("")
     val currency: StateFlow<String> = _currency.asStateFlow()
