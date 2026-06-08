@@ -4,7 +4,7 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.ui.graphics.Color
 
 @Immutable
-object IvyColors {
+internal object IvyColors {
     val White = Color(0xFFFAFAFC)
     val ExtraLightGray = Color(0xFFEBEBF0)
     val LightGray = Color(0xFFCBCBD6)

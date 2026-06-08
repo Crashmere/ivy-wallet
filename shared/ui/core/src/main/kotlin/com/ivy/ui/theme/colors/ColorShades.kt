@@ -2,7 +2,7 @@ package com.ivy.ui.theme.colors
 
 import androidx.compose.ui.graphics.Color
 
-data class ColorShades(
+internal data class ColorShades(
     val extraLight: Color,
     val light: Color,
     val kindaLight: Color,

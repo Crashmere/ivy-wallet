@@ -1094,6 +1094,7 @@
 - 饼图页删除仅用于启动转发的 `OnStart` 事件；页面直接调用 ViewModel 启动方法，其余用户交互事件保持不变。
 - legacy 汇率求和扩展继续收窄：交易求和扩展改为 domain 内部可见，未使用的计划付款求和扩展已删除。
 - domain 内部链路继续收窄：账户 upcoming/overdue 基础查询和计划付款生成用例只服务同模块上层 use case，已改为 `internal`；对应上层公共 use case 只保留公共类型，注入构造函数收为模块内部细节。
+- UI core 的 Material3 色板实现继续收窄：`IvyColors` 与 `ColorShades` 只服务本模块主题实现，已改为 `internal`。
 
 ### 阶段 10：最终依赖方向
 
