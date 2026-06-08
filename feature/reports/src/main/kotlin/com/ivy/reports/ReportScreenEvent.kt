@@ -1,11 +1,10 @@
 package com.ivy.reports
 
-import com.ivy.ui.platform.FileSharer
 import java.util.UUID
 
 internal sealed class ReportScreenEvent {
     data class OnFilter(val filter: ReportFilter?) : ReportScreenEvent()
-    data class OnExport(val fileSharer: FileSharer) : ReportScreenEvent()
+    data object OnExport : ReportScreenEvent()
     data class OnUpcomingExpanded(val upcomingExpanded: Boolean) : ReportScreenEvent()
     data class OnOverdueExpanded(val overdueExpanded: Boolean) : ReportScreenEvent()
     data class OnFilterOverlayVisible(val filterOverlayVisible: Boolean) : ReportScreenEvent()

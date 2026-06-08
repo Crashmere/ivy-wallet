@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -60,6 +61,15 @@ import com.ivy.legacy.ui.theme.pureBlur
 fun BoxWithConstraintsScope.ReportScreen() {
     val viewModel: ReportViewModel = screenScopedViewModel()
     val state = viewModel.uiState()
+    val platformFileSharer = fileSharer()
+
+    LaunchedEffect(viewModel, platformFileSharer) {
+        viewModel.uiEvents.collect { event ->
+            when (event) {
+                is ReportUiEvent.ShareCsvFile -> platformFileSharer.shareCSVFile(event.fileUri)
+            }
+        }
+    }
 
     UI(
         state = state,
@@ -75,7 +85,6 @@ private fun BoxWithConstraintsScope.UI(
 ) {
     val transactionSummary = state.transactionSummary
     val nav = navigation()
-    val platformFileSharer = fileSharer()
 
     val listState = rememberScrollPositionListState(key = "reports")
     val noTransactionsTitle = stringResource(R.string.no_transactions)
@@ -111,9 +120,7 @@ private fun BoxWithConstraintsScope.UI(
         stickyHeader {
             Toolbar(
                 onExport = {
-                    onEventHandler.invoke(
-                        ReportScreenEvent.OnExport(fileSharer = platformFileSharer)
-                    )
+                    onEventHandler.invoke(ReportScreenEvent.OnExport)
                 },
                 onFilter = {
                     onEventHandler.invoke(

@@ -41,7 +41,6 @@ import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.R
 import com.ivy.ui.platform.FilePicker
-import com.ivy.ui.platform.FileSharer
 import com.ivy.ui.preferences.asEnabledState
 import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
 import com.ivy.domain.usecase.transaction.BuildTransactionHistoryItemsUseCase
@@ -56,6 +55,9 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
 import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.math.BigDecimal
@@ -136,6 +138,8 @@ internal class ReportViewModel @Inject internal constructor(
 
     private var tagSearchJob: Job? = null
     private val tagSearchDebounceTimeInMillis: Long = 500
+    private val _uiEvents = MutableSharedFlow<ReportUiEvent>()
+    val uiEvents: SharedFlow<ReportUiEvent> = _uiEvents.asSharedFlow()
 
     @Composable
     fun getShouldShowAccountSpecificColorInTransactions(): Boolean {
@@ -176,7 +180,7 @@ internal class ReportViewModel @Inject internal constructor(
         viewModelScope.launch(Dispatchers.Default) {
             when (event) {
                 is ReportScreenEvent.OnFilter -> setFilter(event.filter)
-                is ReportScreenEvent.OnExport -> export(event.fileSharer)
+                ReportScreenEvent.OnExport -> export()
                 is ReportScreenEvent.OnPayOrGetTransaction -> payOrGetTransaction(event.transactionId)
                 is ReportScreenEvent.SkipTransaction -> skipTransaction(event.transactionId)
                 is ReportScreenEvent.SkipTransactions -> skipTransactions(event.transactionIds)
@@ -511,7 +515,7 @@ internal class ReportViewModel @Inject internal constructor(
         return incomeExpenseTransferPair.income + incomeExpenseTransferPair.transferIncome - incomeExpenseTransferPair.expense - incomeExpenseTransferPair.transferExpense
     }
 
-    private suspend fun export(fileSharer: FileSharer) {
+    private suspend fun export() {
         val filter = filter ?: return
         if (!filter.validate()) return
 
@@ -532,9 +536,7 @@ internal class ReportViewModel @Inject internal constructor(
                     }
                 )
 
-                fileSharer.shareCSVFile(
-                    fileUri = fileUri
-                )
+                _uiEvents.emit(ReportUiEvent.ShareCsvFile(fileUri))
 
                 loading = false
             }
