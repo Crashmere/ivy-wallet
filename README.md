@@ -119,6 +119,7 @@
 - 收窄全部 domain use case 构造边界：外部模块继续注入公开 use case 类型，具体构造函数统一收为 domain 模块内部细节。
 - 收窄 data-core 实现构造边界：Room Store、偏好 Store、mapper、文件系统和远程汇率源等实现类继续留在 `shared:data:core` 内部，注入构造函数也统一收为内部细节。
 - 收窄 app/feature 内部注入构造边界：ViewModel、页面内部 helper 和平台适配器仍由 Hilt 创建，但手动构造入口不再作为跨模块可见细节暴露。
+- 归位 legacy 根 UI 包名：`LegacyUiRoot` 仍作为 app 装配旧 UI 的入口保留，但包名已从 `com.ivy.ui` 调整到 `com.ivy.legacy.ui`，与所在 `shared:ui:legacy` 模块一致。
 
 当前仍保留：
 
@@ -1208,6 +1209,7 @@ shared:ui:core
 - domain 下剩余 use case 的 `@Inject` 构造函数也已统一收为 `internal`；模块外只依赖 use case 能力本身，不再依赖构造细节。
 - data-core 内部实现类的 `@Inject` 构造函数已统一收为 `internal`；模块外继续只依赖 `shared:data:api` 暴露的 Store 端口。
 - app 和 feature 中已是 `internal` 的注入类也统一收窄构造函数；导航入口和 Composable 页面 API 不变。
+- `LegacyUiRoot` 已归入 `com.ivy.legacy.ui` 包；app 仍保留对 `shared:ui:legacy` 的真实依赖，但不再把 legacy 根入口伪装成 ui-core 包名。
 - app 仍保留文件选择、文件分享、Material 日期选择器、BuildInfo、Locale 设置、生物识别和窗口安全等真正依赖 Activity 或 Android app 壳层的装配。
 
 ## 高风险区域

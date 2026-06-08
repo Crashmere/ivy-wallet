@@ -1,4 +1,4 @@
-package com.ivy.ui
+package com.ivy.legacy.ui
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.BoxWithConstraints

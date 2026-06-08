@@ -12,7 +12,7 @@ import androidx.compose.runtime.remember
 import com.ivy.data.model.Theme
 import com.ivy.domain.preferences.toggles.PreferenceToggleService
 import com.ivy.domain.preferences.toggles.PreferenceToggleCatalog
-import com.ivy.ui.LegacyUiRoot
+import com.ivy.legacy.ui.LegacyUiRoot
 import com.ivy.ui.preferences.AmountInputPreferences
 import com.ivy.ui.preferences.LocalAmountInputPreferences
 import com.ivy.ui.preferences.UiBoolPreference
