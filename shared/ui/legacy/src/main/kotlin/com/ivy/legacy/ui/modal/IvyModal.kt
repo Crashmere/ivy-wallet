@@ -1,5 +1,6 @@
 package com.ivy.legacy.ui.modal
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
@@ -20,7 +21,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -48,7 +48,6 @@ import com.ivy.ui.compose.navigationBarInsets
 import com.ivy.ui.animation.DURATION_MODAL_ANIM
 import com.ivy.ui.navigation.onScreenStart
 import com.ivy.ui.compose.thenIf
-import com.ivy.ui.navigation.navigation
 import com.ivy.legacy.ui.component.ActionsRow
 import com.ivy.legacy.ui.component.CloseButton
 import com.ivy.legacy.ui.theme.gradientCutBackgroundTop
@@ -210,27 +209,8 @@ fun AddModalBackHandling(
     action: () -> Unit
 ) {
     val latestAction by rememberUpdatedState(action)
-    val nav = navigation()
-    DisposableEffect(visible) {
-        if (visible && modalId != null) {
-            nav.addModalBackHandler(
-                id = modalId,
-                onBackPressed = {
-                    if (visible) {
-                        latestAction()
-                        true
-                    } else {
-                        false
-                    }
-                }
-            )
-        }
-
-        onDispose {
-            if (modalId != null) {
-                nav.removeModalBackHandler(modalId)
-            }
-        }
+    BackHandler(enabled = visible && modalId != null) {
+        latestAction()
     }
 }
 

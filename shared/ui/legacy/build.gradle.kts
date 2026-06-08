@@ -12,6 +12,7 @@ dependencies {
     implementation(projects.shared.ui.navigation)
 
     implementation(libs.androidx.core.ktx)
+    implementation(libs.compose.activity)
     implementation(libs.androidx.recyclerview)
     implementation(libs.keval)
 }
