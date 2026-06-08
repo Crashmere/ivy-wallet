@@ -320,7 +320,7 @@ private fun BoxWithConstraintsScope.UI(
             )
         },
         onCategoryChanged = {
-            onEvent(EditPlannedScreenEvent.OnCategoryChanged(it))
+            onEvent(EditPlannedScreenEvent.OnCategoryChanged(it?.id))
             onEvent(
                 EditPlannedScreenEvent.OnRecurringRuleModalDataChanged(
                     RecurringRuleModalData(

@@ -3,6 +3,7 @@ package com.ivy.transaction
 import androidx.compose.runtime.Immutable
 import com.ivy.data.model.TransactionType
 import com.ivy.data.model.Category
+import com.ivy.data.model.CategoryId
 import com.ivy.data.model.Tag
 import com.ivy.data.model.TagId
 import com.ivy.data.model.legacy.LegacyAccount
@@ -41,7 +42,7 @@ internal sealed interface EditTransactionViewEvent {
     data class OnAmountChanged(val newAmount: Double) : EditTransactionViewEvent
     data class OnTitleChanged(val newTitle: String?) : EditTransactionViewEvent
     data class OnDescriptionChanged(val newDescription: String?) : EditTransactionViewEvent
-    data class OnCategoryChanged(val newCategory: Category?) : EditTransactionViewEvent
+    data class OnCategoryChanged(val categoryId: CategoryId?) : EditTransactionViewEvent
     data class OnAccountChanged(val accountId: UUID) : EditTransactionViewEvent
     data class OnToAccountChanged(val accountId: UUID) : EditTransactionViewEvent
     data class OnDueDateChanged(val newDueDate: LocalDateTime?) : EditTransactionViewEvent

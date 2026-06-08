@@ -152,7 +152,7 @@ fun BoxWithConstraintsScope.EditTransactionScreen(screen: EditTransactionScreen)
             viewModel.onEvent(EditTransactionViewEvent.OnAmountChanged(it))
         },
         onCategoryChange = {
-            viewModel.onEvent(EditTransactionViewEvent.OnCategoryChanged(it))
+            viewModel.onEvent(EditTransactionViewEvent.OnCategoryChanged(it?.id))
         },
         onAccountChange = {
             viewModel.onEvent(EditTransactionViewEvent.OnAccountChanged(it.id))

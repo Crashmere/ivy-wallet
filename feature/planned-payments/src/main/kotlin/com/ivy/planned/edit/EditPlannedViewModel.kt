@@ -237,7 +237,7 @@ internal class EditPlannedViewModel @Inject internal constructor(
             is EditPlannedScreenEvent.OnRuleChanged ->
                 updateRule(event.startDate, event.oneTime, event.intervalN, event.intervalType)
 
-            is EditPlannedScreenEvent.OnCategoryChanged -> updateCategory(event.newCategory)
+            is EditPlannedScreenEvent.OnCategoryChanged -> updateCategory(event.categoryId)
             is EditPlannedScreenEvent.OnEditCategory -> editCategory(event.updatedCategory)
             is EditPlannedScreenEvent.OnCategoryModalVisible ->
                 categoryModalVisible = event.visible
@@ -380,9 +380,10 @@ internal class EditPlannedViewModel @Inject internal constructor(
         saveIfEditMode()
     }
 
-    private fun updateCategory(newCategory: Category?) {
+    private fun updateCategory(categoryId: CategoryId?) {
+        val newCategory = categories.firstOrNull { it.id == categoryId }
         loadedRule = loadedRule().copy(
-            categoryId = newCategory?.id?.value
+            categoryId = categoryId?.value
         )
         this@EditPlannedViewModel.category = newCategory
 
@@ -485,7 +486,7 @@ internal class EditPlannedViewModel @Inject internal constructor(
             createCategoryUseCase(data)?.let {
                 categories = getCategoriesUseCase().toImmutableList()
 
-                updateCategory(it)
+                updateCategory(it.id)
             }
         }
     }

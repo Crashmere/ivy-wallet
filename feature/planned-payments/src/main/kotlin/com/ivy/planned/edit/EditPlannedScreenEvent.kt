@@ -2,6 +2,7 @@ package com.ivy.planned.edit
 
 import com.ivy.data.model.TransactionType
 import com.ivy.data.model.Category
+import com.ivy.data.model.CategoryId
 import com.ivy.data.model.IntervalType
 import com.ivy.data.model.CreateAccountData
 import com.ivy.data.model.CreateCategoryData
@@ -22,7 +23,7 @@ internal sealed interface EditPlannedScreenEvent {
     data class OnAmountChanged(val newAmount: Double) : EditPlannedScreenEvent
     data class OnTitleChanged(val newTitle: String?) : EditPlannedScreenEvent
     data class OnDescriptionChanged(val newDescription: String?) : EditPlannedScreenEvent
-    data class OnCategoryChanged(val newCategory: Category?) : EditPlannedScreenEvent
+    data class OnCategoryChanged(val categoryId: CategoryId?) : EditPlannedScreenEvent
     data class OnAccountChanged(val accountId: UUID) : EditPlannedScreenEvent
     data class OnSetTransactionType(val newTransactionType: TransactionType) :
         EditPlannedScreenEvent

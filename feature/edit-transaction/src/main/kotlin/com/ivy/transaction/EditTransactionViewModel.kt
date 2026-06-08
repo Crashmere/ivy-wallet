@@ -340,7 +340,7 @@ internal class EditTransactionViewModel @Inject internal constructor(
             is EditTransactionViewEvent.EditCategory -> editCategory(event.updatedCategory)
             is EditTransactionViewEvent.OnAccountChanged -> onAccountChanged(event.accountId)
             is EditTransactionViewEvent.OnAmountChanged -> onAmountChanged(event.newAmount)
-            is EditTransactionViewEvent.OnCategoryChanged -> onCategoryChanged(event.newCategory)
+            is EditTransactionViewEvent.OnCategoryChanged -> onCategoryChanged(event.categoryId)
             is EditTransactionViewEvent.OnDescriptionChanged ->
                 onDescriptionChanged(event.newDescription)
 
@@ -661,14 +661,15 @@ internal class EditTransactionViewModel @Inject internal constructor(
                 categories = sortCategories()
 
                 // Select the newly created category
-                onCategoryChanged(it)
+                onCategoryChanged(it.id)
             }
         }
     }
 
-    private fun onCategoryChanged(newCategory: Category?) {
+    private fun onCategoryChanged(categoryId: CategoryId?) {
+        val newCategory = categories.firstOrNull { it.id == categoryId }
         loadedTransaction = loadedTransaction().copy(
-            categoryId = newCategory?.id?.value
+            categoryId = categoryId?.value
         )
         category = newCategory
 
