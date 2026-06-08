@@ -115,7 +115,7 @@ private fun SearchUi(
                 onAccountClick = {
                     nav.navigateTo(
                         TransactionsScreen(
-                            accountId = it.id,
+                            accountId = it,
                             categoryId = null
                         )
                     )
@@ -124,7 +124,7 @@ private fun SearchUi(
                     nav.navigateTo(
                         TransactionsScreen(
                             accountId = null,
-                            categoryId = it.id.value
+                            categoryId = it
                         )
                     )
                 },

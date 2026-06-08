@@ -394,7 +394,7 @@ fun HomeLazyColumn(
             onAccountClick = {
                 nav.navigateTo(
                     TransactionsScreen(
-                        accountId = it.id,
+                        accountId = it,
                         categoryId = null
                     )
                 )
@@ -403,7 +403,7 @@ fun HomeLazyColumn(
                 nav.navigateTo(
                     TransactionsScreen(
                         accountId = null,
-                        categoryId = it.id.value
+                        categoryId = it
                     )
                 )
             },

@@ -435,7 +435,7 @@ private fun BoxWithConstraintsScope.UI(
                 onAccountClick = {
                     nav.navigateTo(
                         TransactionsScreen(
-                            accountId = it.id,
+                            accountId = it,
                             categoryId = null
                         )
                     )
@@ -444,7 +444,7 @@ private fun BoxWithConstraintsScope.UI(
                     nav.navigateTo(
                         TransactionsScreen(
                             accountId = null,
-                            categoryId = it.id.value
+                            categoryId = it
                         )
                     )
                 },

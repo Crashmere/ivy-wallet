@@ -77,8 +77,8 @@ internal fun TransactionCard(
     onPayOrGet: (UUID) -> Unit,
     modifier: Modifier = Modifier,
     onSkipTransaction: (UUID) -> Unit = {},
-    onAccountClick: (LegacyAccount) -> Unit,
-    onCategoryClick: (Category) -> Unit,
+    onAccountClick: (UUID) -> Unit,
+    onCategoryClick: (UUID) -> Unit,
     onClick: (UUID, TransactionType) -> Unit,
 ) {
     val sourceAccount = remember(baseData.accounts, transaction.accountId) {
@@ -290,8 +290,8 @@ private fun TransactionHeaderRow(
     categories: List<Category>,
     accounts: List<LegacyAccount>,
     shouldShowAccountSpecificColorInTransactions: Boolean,
-    onAccountClick: (LegacyAccount) -> Unit,
-    onCategoryClick: (Category) -> Unit,
+    onAccountClick: (UUID) -> Unit,
+    onCategoryClick: (UUID) -> Unit,
 ) {
     val category = findCategory(
         categoryId = transaction.categoryId,
@@ -340,7 +340,7 @@ private fun TransactionHeaderRow(
                 defaultIcon = R.drawable.ic_custom_account_s
             ) {
                 account?.let {
-                    onAccountClick(account)
+                    onAccountClick(account.id)
                 }
             }
         }
@@ -366,7 +366,7 @@ private fun findAccount(
 @Composable
 private fun CategoryBadgeDisplay(
     category: Category,
-    onCategoryClick: (Category) -> Unit,
+    onCategoryClick: (UUID) -> Unit,
 ) {
     TransactionBadge(
         text = category.name.value,
@@ -374,7 +374,7 @@ private fun CategoryBadgeDisplay(
         icon = category.icon?.id,
         defaultIcon = R.drawable.ic_custom_category_s
     ) {
-        onCategoryClick(category)
+        onCategoryClick(category.id.value)
     }
 }
 

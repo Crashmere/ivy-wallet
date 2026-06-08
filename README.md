@@ -1118,6 +1118,7 @@
 - 到期交易基础查询 `GetDueTransactionsUseCase` 也收为 domain 内部实现；首页仍只通过 upcoming/overdue 两个面向 feature 的入口读取统计结果。
 - 旧交易列表组件的计划付款事件继续收窄：支付/收款、跳过和跳过全部回调现在只向页面层传交易 ID；交易卡片仍用 `LegacyTransaction` 渲染和处理点击编辑，避免把完整旧模型继续用于简单事件分发。
 - 旧交易列表组件的交易点击事件也继续收窄：页面层只接收编辑页导航需要的交易 ID 和交易类型；完整 `LegacyTransaction` 继续限定在交易卡片渲染边界内。
+- 旧交易列表组件的账户和分类点击事件同样收窄为只传 ID；页面层筛选导航不再接收完整 `LegacyAccount/Category` 对象。
 
 ### 阶段 10：最终依赖方向
 
