@@ -1252,6 +1252,7 @@ shared:ui:core
 - 计划付款编辑页不再长期保存选中 `LegacyAccount` 对象；ViewModel 保存账户 ID，UI 所需的账户对象从当前账户列表推导，计划付款规则保存行为不变。
 - 借贷列表页的新建借贷默认账户也已从长期 `LegacyAccount` 状态收为账户 ID；打开旧借贷弹窗时再按当前账户列表解析对象，页面状态不再暴露未使用的选中账户字段。
 - 借贷详情页的贷款账户也已收为账户 ID 状态；详情展示、编辑贷款弹窗和新增还款记录弹窗继续按当前账户列表推导所需 `LegacyAccount` 对象。
+- 交易列表页的账户详情状态也已收为账户 ID；页面状态继续向旧 UI 暴露推导后的 `LegacyAccount`，但 ViewModel 不再注入单账户 legacy 查询 use case。
 - app 仍保留文件选择、文件分享、Material 日期选择器、BuildInfo、Locale 设置、生物识别和窗口安全等真正依赖 Activity 或 Android app 壳层的装配。
 
 ## 高风险区域

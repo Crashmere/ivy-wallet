@@ -41,7 +41,6 @@ import com.ivy.ui.preferences.asEnabledState
 import com.ivy.domain.usecase.account.CalculateAccountBalanceUseCase
 import com.ivy.domain.usecase.account.CalculateAccountIncomeExpenseUseCase
 import com.ivy.domain.usecase.account.GetAccountTransactionsUseCase
-import com.ivy.domain.usecase.account.GetLegacyAccountUseCase
 import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
 import com.ivy.domain.usecase.account.GetAccountOverdueTransactionsSummaryUseCase
 import com.ivy.domain.usecase.account.GetAccountUpcomingTransactionsSummaryUseCase
@@ -79,7 +78,6 @@ internal class TransactionsViewModel @Inject internal constructor(
     private val payOrSkipLegacyPlannedTransactionsUseCase: PayOrSkipLegacyPlannedTransactionsUseCase,
     private val getTransfersAsIncomeExpensePreference: GetTransfersAsIncomeExpensePreferenceUseCase,
     private val getLegacyAccountsUseCase: GetLegacyAccountsUseCase,
-    private val getLegacyAccountUseCase: GetLegacyAccountUseCase,
     private val getAccountTransactionsUseCase: GetAccountTransactionsUseCase,
     private val buildLegacyTransactionHistoryItemsUseCase: BuildLegacyTransactionHistoryItemsUseCase,
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
@@ -138,7 +136,7 @@ internal class TransactionsViewModel @Inject internal constructor(
     private val history =
         mutableStateOf<ImmutableList<TransactionHistoryItem>>(persistentListOf())
 
-    private val account = mutableStateOf<LegacyAccount?>(null)
+    private val accountId = mutableStateOf<UUID?>(null)
     private val category = mutableStateOf<Category?>(null)
     private val initWithTransactions = mutableStateOf(false)
     private val treatTransfersAsIncomeExpense = mutableStateOf(false)
@@ -199,7 +197,7 @@ internal class TransactionsViewModel @Inject internal constructor(
 
     @Composable
     private fun getAccount(): LegacyAccount? {
-        return account.value
+        return selectedAccount()
     }
 
     @Composable
@@ -328,8 +326,8 @@ internal class TransactionsViewModel @Inject internal constructor(
     }
 
     private suspend fun initForAccount(accountId: UUID) {
-        val initialAccount = getLegacyAccountUseCase(accountId) ?: error("account not found")
-        account.value = initialAccount
+        this.accountId.value = accountId
+        val initialAccount = selectedAccount() ?: error("account not found")
         val range = periodState.rangeOf(period.value)
 
         if (initialAccount.currency.isNullOrBlank().not()) {
@@ -498,7 +496,7 @@ internal class TransactionsViewModel @Inject internal constructor(
     }
 
     private fun reset() {
-        account.value = null
+        accountId.value = null
         category.value = null
     }
 
@@ -643,7 +641,7 @@ internal class TransactionsViewModel @Inject internal constructor(
 
     private fun updateAccountDeletionState(confirmationText: String) {
         accountNameConfirmation.value = selectEndTextFieldValue(confirmationText)
-        enableDeletionButton.value = account.value?.name == confirmationText ||
+        enableDeletionButton.value = selectedAccount()?.name == confirmationText ||
                 category.value?.name?.value == confirmationText
     }
 
@@ -719,6 +717,11 @@ internal class TransactionsViewModel @Inject internal constructor(
                 reset = reset
             )
         }
+    }
+
+    private fun selectedAccount(): LegacyAccount? {
+        val id = accountId.value ?: return null
+        return accounts.value.firstOrNull { it.id == id }
     }
 }
 
