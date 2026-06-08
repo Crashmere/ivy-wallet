@@ -27,7 +27,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.legacy.ui.theme.dynamicContrast
 import com.ivy.legacy.ui.theme.system.Blue
 import com.ivy.legacy.ui.theme.system.Blue2
 import com.ivy.legacy.ui.theme.system.Blue2Dark
@@ -83,6 +82,7 @@ import com.ivy.ui.compose.densityScope
 import com.ivy.ui.compose.thenIf
 import com.ivy.ui.compose.onCompositionStart
 import com.ivy.ui.R
+import com.ivy.ui.theme.colors.dynamicContrast
 import kotlinx.coroutines.launch
 
 private data class IvyColor(

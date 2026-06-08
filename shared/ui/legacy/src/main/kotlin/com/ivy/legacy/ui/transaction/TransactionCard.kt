@@ -49,14 +49,14 @@ import com.ivy.ui.R
 import com.ivy.ui.time.TimeFormatter
 import com.ivy.data.model.currency.IvyCurrency
 import com.ivy.ui.icon.ItemIconSDefaultIcon
-import com.ivy.legacy.ui.theme.findContrastTextColor
 import com.ivy.legacy.ui.theme.gradientBlack
 import com.ivy.legacy.ui.theme.gradientExpenses
-import com.ivy.legacy.ui.theme.toComposeColor
 import com.ivy.ui.money.AmountCurrencyB1
 import com.ivy.ui.compose.GradientButton
 import com.ivy.ui.compose.ResourceIcon
 import com.ivy.ui.theme.colors.Gradient
+import com.ivy.ui.theme.colors.findContrastTextColor
+import com.ivy.ui.theme.colors.toComposeColor
 import com.ivy.ui.theme.colors.IvyFixedColors.BlueLight
 import com.ivy.ui.theme.colors.IvyFixedColors.Gray
 import com.ivy.ui.theme.colors.IvyFixedColors.Green

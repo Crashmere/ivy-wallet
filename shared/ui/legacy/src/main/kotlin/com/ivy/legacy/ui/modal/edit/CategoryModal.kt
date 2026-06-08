@@ -50,7 +50,6 @@ import com.ivy.ui.R
 import com.ivy.data.model.CreateCategoryData
 import com.ivy.ui.icon.ItemIconMDefaultIcon
 import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.legacy.ui.theme.dynamicContrast
 import com.ivy.ui.modal.ChooseIconModal
 import com.ivy.ui.modal.IvyModal
 import com.ivy.ui.modal.ModalAdd
@@ -58,6 +57,7 @@ import com.ivy.ui.modal.ModalSave
 import com.ivy.ui.modal.ModalTitle
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
+import com.ivy.ui.theme.colors.dynamicContrast
 import com.ivy.ui.theme.colors.IvyFixedColors
 import java.util.UUID
 

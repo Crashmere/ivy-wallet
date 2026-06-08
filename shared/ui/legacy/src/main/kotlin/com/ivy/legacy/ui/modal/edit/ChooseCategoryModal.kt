@@ -34,14 +34,14 @@ import com.ivy.ui.compose.onCompositionStart
 import com.ivy.ui.R
 import com.ivy.ui.theme.colors.Gradient
 import com.ivy.ui.icon.ItemIconSDefaultIcon
-import com.ivy.legacy.ui.theme.findContrastTextColor
 import com.ivy.ui.modal.IvyModal
 import com.ivy.ui.modal.ModalSkip
 import com.ivy.ui.modal.ModalTitle
-import com.ivy.legacy.ui.theme.toComposeColor
 import com.ivy.ui.compose.GradientIconButton
 import com.ivy.ui.compose.OutlinedPillButton
 import com.ivy.ui.compose.WrapContentRow
+import com.ivy.ui.theme.colors.findContrastTextColor
+import com.ivy.ui.theme.colors.toComposeColor
 import java.util.UUID
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue

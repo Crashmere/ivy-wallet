@@ -37,7 +37,6 @@ import com.ivy.ui.modal.ModalTitle
 import com.ivy.ui.search.SearchInput
 import com.ivy.ui.theme.colors.Gradient
 import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.legacy.ui.theme.findContrastTextColor
 import com.ivy.ui.compose.GradientIconButton
 import com.ivy.ui.compose.OutlinedPillButton
 import com.ivy.ui.compose.WrapContentRow
@@ -48,6 +47,7 @@ import com.ivy.ui.compose.selectEndTextFieldValue
 import com.ivy.ui.R
 import com.ivy.ui.platform.hideKeyboard
 import com.ivy.ui.theme.colors.IvyFixedColors
+import com.ivy.ui.theme.colors.findContrastTextColor
 import kotlinx.collections.immutable.ImmutableList
 import java.util.UUID
 
