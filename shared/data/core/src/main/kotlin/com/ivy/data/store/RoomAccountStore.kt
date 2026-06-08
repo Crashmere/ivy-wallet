@@ -13,7 +13,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class RoomAccountStore @Inject constructor(
+internal class RoomAccountStore @Inject constructor(
     private val mapper: AccountMapper,
     private val accountDao: AccountDao,
     private val writeAccountDao: WriteAccountDao,

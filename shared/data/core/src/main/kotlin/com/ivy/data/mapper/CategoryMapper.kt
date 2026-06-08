@@ -10,7 +10,7 @@ import com.ivy.data.model.primitive.IconAsset
 import com.ivy.data.model.primitive.NotBlankTrimmedString
 import javax.inject.Inject
 
-class CategoryMapper @Inject constructor() {
+internal class CategoryMapper @Inject constructor() {
     internal fun CategoryEntity.toDomain(): Either<String, Category> = either {
         ensure(!isDeleted) { "Category is deleted" }
 

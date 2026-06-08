@@ -19,7 +19,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class RoomTagStore @Inject constructor(
+internal class RoomTagStore @Inject constructor(
     private val mapper: TagMapper,
     private val tagDao: TagDao,
     private val tagAssociationDao: TagAssociationDao,

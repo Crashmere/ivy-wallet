@@ -5,6 +5,6 @@ import com.ivy.data.store.StoreCacheFactory
 import org.jetbrains.annotations.VisibleForTesting
 
 @VisibleForTesting
-fun fakeStoreCacheFactory(): StoreCacheFactory = StoreCacheFactory(
+internal fun fakeStoreCacheFactory(): StoreCacheFactory = StoreCacheFactory(
     dataChangePublisher = DataWriteEventBus(),
 )

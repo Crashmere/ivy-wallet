@@ -17,7 +17,7 @@ import kotlinx.serialization.Serializable
 @Keep
 @Serializable
 @Suppress("DataClassDefaultValues")
-data class IvyWalletCompleteData(
+internal data class IvyWalletCompleteData(
     @SerialName("accounts")
     val accounts: List<AccountEntity> = emptyList(),
     @SerialName("budgets")

@@ -8,7 +8,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class RoomCurrencyStore @Inject constructor(
+internal class RoomCurrencyStore @Inject constructor(
     private val settingsTable: SettingsTable,
 ) : CurrencyStore {
     override suspend fun getBaseCurrency(): AssetCode {

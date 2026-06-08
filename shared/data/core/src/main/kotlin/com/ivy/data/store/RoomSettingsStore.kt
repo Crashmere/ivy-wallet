@@ -10,7 +10,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class RoomSettingsStore @Inject constructor(
+internal class RoomSettingsStore @Inject constructor(
     private val settingsTable: SettingsTable,
 ) : SettingsInitializationStore, SettingsResetStore, ThemeStore, BufferAmountStore {
     override suspend fun getTheme(fallback: Theme): Theme =

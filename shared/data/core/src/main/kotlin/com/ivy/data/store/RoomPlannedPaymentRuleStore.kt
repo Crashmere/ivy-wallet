@@ -10,7 +10,7 @@ import kotlinx.coroutines.withContext
 import java.util.UUID
 import javax.inject.Inject
 
-class RoomPlannedPaymentRuleStore @Inject constructor(
+internal class RoomPlannedPaymentRuleStore @Inject constructor(
     private val plannedPaymentRuleDao: PlannedPaymentRuleDao,
     private val plannedPaymentRuleWriter: WritePlannedPaymentRuleDao,
 ) : PlannedPaymentRuleStore {

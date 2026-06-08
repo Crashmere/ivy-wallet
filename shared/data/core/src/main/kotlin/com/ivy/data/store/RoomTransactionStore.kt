@@ -25,7 +25,7 @@ import java.time.Instant
 import java.util.UUID
 import javax.inject.Inject
 
-class RoomTransactionStore @Inject constructor(
+internal class RoomTransactionStore @Inject constructor(
     private val mapper: TransactionMapper,
     private val transactionDao: TransactionDao,
     private val writeTransactionDao: WriteTransactionDao,

@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-class DataStorePreferenceToggleStore @Inject constructor(
+internal class DataStorePreferenceToggleStore @Inject constructor(
     @ApplicationContext context: Context
 ) : PreferenceToggleStore {
     private val dataStore = context.dataStore

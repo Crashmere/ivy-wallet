@@ -13,7 +13,7 @@ import com.ivy.data.model.primitive.NotBlankTrimmedString
 import com.ivy.data.model.TagId
 import javax.inject.Inject
 
-class TagMapper @Inject constructor() {
+internal class TagMapper @Inject constructor() {
     internal fun TagEntity.toDomain(): Either<String, Tag> = either {
         Tag(
             id = TagId(id),

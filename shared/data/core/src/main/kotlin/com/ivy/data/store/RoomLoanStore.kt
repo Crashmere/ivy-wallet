@@ -10,7 +10,7 @@ import kotlinx.coroutines.withContext
 import java.util.UUID
 import javax.inject.Inject
 
-class RoomLoanStore @Inject constructor(
+internal class RoomLoanStore @Inject constructor(
     private val loanDao: LoanDao,
     private val loanWriter: WriteLoanDao,
 ) : LoanStore {
