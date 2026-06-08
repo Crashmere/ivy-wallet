@@ -34,7 +34,6 @@ import com.ivy.legacy.ui.theme.Green
 import com.ivy.legacy.ui.theme.White
 import com.ivy.legacy.ui.button.IvyCircleButton
 import com.ivy.legacy.ui.icon.IvyIcon
-import com.ivy.legacy.ui.theme.pureBlur
 import kotlin.math.roundToInt
 
 private val FabButtonSize = 56.dp
@@ -52,7 +51,7 @@ internal fun BoxWithConstraintsScope.LoanBottomBar(
         modifier = Modifier
             .fillMaxWidth()
             .align(Alignment.BottomCenter)
-            .background(pureBlur())
+            .background(LegacyTheme.colors.pure.copy(alpha = 0.95f))
             .navigationBarsPadding(),
         verticalAlignment = Alignment.CenterVertically
     ) {

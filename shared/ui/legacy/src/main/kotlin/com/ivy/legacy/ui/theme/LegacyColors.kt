@@ -110,13 +110,10 @@ internal fun Modifier.gradientCutBackgroundBottom(
 }
 
 @Composable
-fun pureBlur() = LegacyTheme.colors.pure.copy(alpha = 0.95f)
-
-@Composable
 internal fun mediumBlur() = LegacyTheme.colors.medium.copy(alpha = 0.95f)
 
 @Composable
-fun gradientExpenses() = Gradient(LegacyTheme.colors.pureInverse, LegacyTheme.colors.gray)
+internal fun gradientExpenses() = Gradient(LegacyTheme.colors.pureInverse, LegacyTheme.colors.gray)
 
 data class Gradient(
     val startColor: Color,

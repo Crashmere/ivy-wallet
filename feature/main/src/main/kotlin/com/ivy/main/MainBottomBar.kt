@@ -60,8 +60,6 @@ import com.ivy.legacy.ui.theme.White
 import com.ivy.legacy.ui.button.IvyCircleButton
 import com.ivy.legacy.ui.icon.IvyIcon
 import com.ivy.legacy.ui.button.IvyOutlinedButton
-import com.ivy.legacy.ui.theme.gradientExpenses
-import com.ivy.legacy.ui.theme.pureBlur
 import kotlin.math.abs
 import kotlin.math.roundToInt
 
@@ -108,7 +106,7 @@ internal fun BoxWithConstraintsScope.BottomBar(
         modifier = Modifier
             .fillMaxWidth()
             .align(Alignment.BottomCenter)
-            .background(pureBlur())
+            .background(LegacyTheme.colors.pure.copy(alpha = 0.95f))
             .alpha(1f - buttonsShownPercent)
             .navigationBarsPadding()
             .clickableNoIndication(rememberInteractionSource()) {
@@ -458,7 +456,7 @@ private fun AddExpenseButton(
             .size(FabButtonSize)
             .zIndex(200f),
         icon = R.drawable.ic_expense,
-        backgroundGradient = gradientExpenses(),
+        backgroundGradient = Gradient(LegacyTheme.colors.pureInverse, LegacyTheme.colors.gray),
         horizontalGradient = false,
         tint = White,
         onClick = onAddExpense

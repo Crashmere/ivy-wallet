@@ -60,7 +60,6 @@ import com.ivy.legacy.ui.button.CircleButtonFilled
 import com.ivy.legacy.ui.button.IvyButton
 import com.ivy.legacy.ui.icon.IvyIcon
 import com.ivy.legacy.ui.button.IvyOutlinedButton
-import com.ivy.legacy.ui.theme.pureBlur
 
 @ExperimentalFoundationApi
 @Composable
@@ -101,7 +100,7 @@ private fun BoxWithConstraintsScope.UI(
             modifier = Modifier
                 .fillMaxSize()
                 .zIndex(1000f)
-                .background(pureBlur())
+                .background(LegacyTheme.colors.pure.copy(alpha = 0.95f))
                 .clickableNoIndication(rememberInteractionSource()) {
                     // consume clicks
                 },

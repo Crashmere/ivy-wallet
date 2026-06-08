@@ -71,10 +71,8 @@ import com.ivy.legacy.ui.button.CloseButton
 import com.ivy.legacy.ui.icon.ItemIconMDefaultIcon
 import com.ivy.legacy.ui.button.IvyOutlinedButton
 import com.ivy.legacy.ui.theme.findContrastTextColor
-import com.ivy.legacy.ui.theme.gradientExpenses
 import com.ivy.legacy.ui.modal.ChoosePeriodModal
 import com.ivy.legacy.ui.modal.ChoosePeriodModalData
-import com.ivy.legacy.ui.theme.pureBlur
 import com.ivy.legacy.ui.theme.toComposeColor
 import com.ivy.legacy.ui.money.AmountCurrencyB1
 import kotlinx.collections.immutable.toImmutableList
@@ -288,7 +286,7 @@ private fun Header(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .background(pureBlur())
+            .background(LegacyTheme.colors.pure.copy(alpha = 0.95f))
             .statusBarsPadding()
             .padding(top = 16.dp),
         verticalAlignment = Alignment.CenterVertically
@@ -338,7 +336,7 @@ private fun Header(
                 Spacer(Modifier.width(12.dp))
 
                 val backgroundGradient = if (transactionType == TransactionType.EXPENSE) {
-                    gradientExpenses()
+                    Gradient(LegacyTheme.colors.pureInverse, LegacyTheme.colors.gray)
                 } else {
                     GradientGreen
                 }

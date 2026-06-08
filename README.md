@@ -175,6 +175,7 @@
 - 收窄导入 feature 公开面：只保留 `ImportCSVScreen` 与 `CSVScreen` 两个导航入口，备份恢复流程、CSV 状态/事件、解析模型、导入器和内部 flow UI 改为模块内部实现。
 - 收窄旧重排弹窗公开面：feature 层继续使用单类型 `ReorderModalSingleType` 和 `ReorderButton`，底层多类型 `ReorderModal` 收为旧 UI 内部实现。
 - 继续收窄旧主题色板公开面：外层旧主题门面中只被 `shared:ui:legacy` 内部使用的 `Blue`、`IvyLight`、`GreenLight`、`RedLight` 和 `IvyDark` 改为模块内部常量。
+- 继续收窄旧主题便捷 helper：feature 层不再直接调用 `pureBlur()` 或 `gradientExpenses()`；透明背景和支出渐变改由页面用 `LegacyTheme`/`Gradient` 显式表达，`gradientExpenses()` 只保留给 legacy 交易卡片内部使用。
 - 下沉 UI 基础服务装配：`ThemeState`、`PeriodState`、时间服务、日期时间弹窗和 `Toaster` 由 `shared:ui:core` 自己声明 Hilt 绑定，`Navigation` 由 `shared:ui:navigation` 自己声明绑定；app 不再持有这些具体实现类的装配代码。
 - 下沉 Android 字符串资源适配器：`AndroidResourceProvider` 从 app 迁入 `shared:ui:core`，app 不再为通用 `ResourceProvider` 保留绑定。
 - 收窄根启动快捷方式参数：桌面 shortcut 的“添加交易类型”直接解析为导航层 `TransactionRouteType`，Root 启动事件不再先携带数据层 `TransactionType` 再转换。
