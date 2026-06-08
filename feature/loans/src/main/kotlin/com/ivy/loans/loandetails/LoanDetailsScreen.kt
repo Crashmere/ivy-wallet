@@ -1,5 +1,6 @@
 package com.ivy.loans.loandetails
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -46,7 +47,6 @@ import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.data.model.Loan
 import com.ivy.data.model.LoanRecord
 import com.ivy.loans.humanReadableType
-import com.ivy.legacy.ui.component.transaction.TypeAmountCurrency
 import com.ivy.ui.compose.clickableNoIndication
 import com.ivy.ui.compose.drawColoredShadow
 import com.ivy.data.model.currency.format
@@ -66,7 +66,12 @@ import com.ivy.ui.R
 import com.ivy.ui.time.TimeFormatter
 import com.ivy.data.model.currency.IvyCurrency
 import com.ivy.legacy.ui.theme.Gradient
+import com.ivy.legacy.ui.theme.GradientGreen
+import com.ivy.legacy.ui.theme.GradientIvy
 import com.ivy.legacy.ui.theme.Gray
+import com.ivy.legacy.ui.theme.Green
+import com.ivy.legacy.ui.theme.Ivy
+import com.ivy.legacy.ui.component.AmountCurrencyB1
 import com.ivy.legacy.ui.component.BalanceRow
 import com.ivy.legacy.ui.component.ItemIconMDefaultIcon
 import com.ivy.legacy.ui.component.IvyButton
@@ -860,9 +865,8 @@ private fun LoanRecordItem(
                 )
             }
         }
-        TypeAmountCurrency(
+        LoanRecordAmountRow(
             transactionType = transactionType,
-            dueDate = null,
             currency = baseCurrency,
             amount = loanRecord.amount
         )
@@ -944,15 +948,76 @@ private fun InitialRecordItem(
             Spacer(Modifier.height(16.dp))
         }
 
-        TypeAmountCurrency(
+        LoanRecordAmountRow(
             transactionType = if (loan.type == LoanType.LEND) TransactionType.EXPENSE else TransactionType.INCOME,
-            dueDate = null,
             currency = baseCurrency,
             amount = amount
         )
         Spacer(Modifier.height(16.dp))
     }
 }
+
+@Composable
+private fun LoanRecordAmountRow(
+    transactionType: TransactionType,
+    currency: String,
+    amount: Double,
+    modifier: Modifier = Modifier
+) {
+    Row(
+        modifier = modifier.testTag("type_amount_currency"),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Spacer(Modifier.width(24.dp))
+
+        val style = when (transactionType) {
+            TransactionType.INCOME -> LoanRecordAmountTypeStyle(
+                icon = R.drawable.ic_income,
+                gradient = GradientGreen,
+                iconTint = White,
+                textColor = Green
+            )
+
+            TransactionType.EXPENSE -> LoanRecordAmountTypeStyle(
+                icon = R.drawable.ic_expense,
+                gradient = Gradient.black(),
+                iconTint = White,
+                textColor = LegacyTheme.colors.pureInverse
+            )
+
+            TransactionType.TRANSFER -> LoanRecordAmountTypeStyle(
+                icon = R.drawable.ic_transfer,
+                gradient = GradientIvy,
+                iconTint = White,
+                textColor = Ivy
+            )
+        }
+
+        IvyIcon(
+            modifier = Modifier
+                .background(style.gradient.asHorizontalBrush(), CircleShape),
+            icon = style.icon,
+            tint = style.iconTint
+        )
+
+        Spacer(Modifier.width(12.dp))
+
+        AmountCurrencyB1(
+            amount = amount,
+            currency = currency,
+            textColor = style.textColor
+        )
+
+        Spacer(Modifier.width(24.dp))
+    }
+}
+
+private data class LoanRecordAmountTypeStyle(
+    @DrawableRes val icon: Int,
+    val gradient: Gradient,
+    val iconTint: Color,
+    val textColor: Color
+)
 
 @Composable
 private fun NoLoanRecordsEmptyState() {

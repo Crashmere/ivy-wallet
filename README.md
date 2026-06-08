@@ -1337,6 +1337,7 @@ shared:ui:core
 - 分类、预算和汇率页底部返回栏改用各自模块私有实现；`shared:ui:legacy` 删除不再被复用的 `BackBottomBar`。
 - data-core 的 UTC 毫秒和 `LocalDateTime` 转换扩展收窄为模块内部实现；外部继续通过 Room converter、serializer 和 Store API 间接使用对应数据格式。
 - 交易筛选页和借贷详情页顶部统计工具栏改用各自模块私有实现；`shared:ui:legacy` 删除不再被复用的 `ItemStatisticToolbar`。
+- 计划付款卡片和借贷记录改用各自模块私有金额行；`shared:ui:legacy` 的 `TypeAmountCurrency` 收窄为旧交易卡片内部实现，保留到期/逾期交易样式逻辑。
 - app 仍保留文件选择、文件分享、Material 日期选择器、BuildInfo、Locale 设置、生物识别和窗口安全等真正依赖 Activity 或 Android app 壳层的装配。
 
 ## 高风险区域

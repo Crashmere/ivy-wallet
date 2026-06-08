@@ -1,6 +1,7 @@
 package com.ivy.planned.list
 
 import android.annotation.SuppressLint
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -19,6 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -29,12 +31,17 @@ import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.legacy.ui.theme.style
 import com.ivy.data.model.PlannedPaymentRule
 import com.ivy.ui.time.forDisplay
-import com.ivy.legacy.ui.component.transaction.TypeAmountCurrency
 import com.ivy.ui.time.formatDateOnly
 import com.ivy.ui.time.formatDateOnlyWithYear
 import com.ivy.ui.R
+import com.ivy.legacy.ui.component.AmountCurrencyB1
 import com.ivy.legacy.ui.theme.Gradient
+import com.ivy.legacy.ui.theme.GradientGreen
+import com.ivy.legacy.ui.theme.GradientIvy
+import com.ivy.legacy.ui.theme.Green
+import com.ivy.legacy.ui.theme.Ivy
 import com.ivy.legacy.ui.theme.Orange
+import com.ivy.legacy.ui.theme.White
 import com.ivy.legacy.ui.component.IvyButton
 import com.ivy.legacy.ui.component.IvyIcon
 import com.ivy.ui.icon.getCustomIconIdS
@@ -109,9 +116,8 @@ internal fun LazyItemScope.PlannedPaymentCard(
 
         Spacer(Modifier.height(20.dp))
 
-        TypeAmountCurrency(
+        PlannedPaymentAmountRow(
             transactionType = plannedPayment.type,
-            dueDate = null,
             currency = currency,
             amount = plannedPayment.amount
         )
@@ -119,6 +125,68 @@ internal fun LazyItemScope.PlannedPaymentCard(
         Spacer(Modifier.height(24.dp))
     }
 }
+
+@Composable
+private fun PlannedPaymentAmountRow(
+    transactionType: TransactionType,
+    currency: String,
+    amount: Double,
+    modifier: Modifier = Modifier
+) {
+    Row(
+        modifier = modifier.testTag("type_amount_currency"),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Spacer(Modifier.width(24.dp))
+
+        val style = when (transactionType) {
+            TransactionType.INCOME -> PlannedAmountTypeStyle(
+                icon = R.drawable.ic_income,
+                gradient = GradientGreen,
+                iconTint = White,
+                textColor = Green
+            )
+
+            TransactionType.EXPENSE -> PlannedAmountTypeStyle(
+                icon = R.drawable.ic_expense,
+                gradient = Gradient.black(),
+                iconTint = White,
+                textColor = LegacyTheme.colors.pureInverse
+            )
+
+            TransactionType.TRANSFER -> PlannedAmountTypeStyle(
+                icon = R.drawable.ic_transfer,
+                gradient = GradientIvy,
+                iconTint = White,
+                textColor = Ivy
+            )
+        }
+
+        IvyIcon(
+            modifier = Modifier
+                .background(style.gradient.asHorizontalBrush(), CircleShape),
+            icon = style.icon,
+            tint = style.iconTint
+        )
+
+        Spacer(Modifier.width(12.dp))
+
+        AmountCurrencyB1(
+            amount = amount,
+            currency = currency,
+            textColor = style.textColor
+        )
+
+        Spacer(Modifier.width(24.dp))
+    }
+}
+
+private data class PlannedAmountTypeStyle(
+    @DrawableRes val icon: Int,
+    val gradient: Gradient,
+    val iconTint: Color,
+    val textColor: Color
+)
 
 private fun Instant.toLocalDateTimeInSystemZone() =
     atZone(ZoneId.systemDefault()).toLocalDateTime()

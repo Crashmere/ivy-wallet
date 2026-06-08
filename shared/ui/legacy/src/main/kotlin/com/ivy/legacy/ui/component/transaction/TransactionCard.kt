@@ -543,7 +543,7 @@ private fun TransferHeader(
 }
 
 @Composable
-fun TypeAmountCurrency(
+internal fun TypeAmountCurrency(
     transactionType: TransactionType,
     dueDate: LocalDateTime?,
     currency: String,
