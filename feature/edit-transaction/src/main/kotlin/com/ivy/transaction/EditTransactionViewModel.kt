@@ -39,7 +39,8 @@ import com.ivy.domain.usecase.tag.SearchTagsUseCase
 import com.ivy.domain.usecase.account.CreateAccountWithBalanceUseCase
 import com.ivy.domain.usecase.account.GetLastSelectedAccountIdUseCase
 import com.ivy.domain.usecase.transaction.DeleteTransactionUseCase
-import com.ivy.domain.usecase.transaction.GetLegacyTransactionUseCase
+import com.ivy.domain.usecase.transaction.GetTransactionUseCase
+import com.ivy.domain.usecase.transaction.MapTransactionsToLegacyTransactionsUseCase
 import com.ivy.domain.usecase.transaction.SaveLegacyTransactionUseCase
 import com.ivy.domain.usecase.transaction.SuggestTransactionTitlesUseCase
 import com.ivy.ui.ComposeViewModel
@@ -98,7 +99,8 @@ internal class EditTransactionViewModel @Inject internal constructor(
     private val updateAssociatedLoanDataUseCase: UpdateAssociatedLoanDataUseCase,
     private val getAccountsUseCase: GetAccountsUseCase,
     private val getCategoriesUseCase: GetCategoriesUseCase,
-    private val getLegacyTransactionUseCase: GetLegacyTransactionUseCase,
+    private val getTransactionUseCase: GetTransactionUseCase,
+    private val mapTransactionsToLegacyTransactionsUseCase: MapTransactionsToLegacyTransactionsUseCase,
     private val saveLegacyTransactionUseCase: SaveLegacyTransactionUseCase,
     private val deleteTransactionUseCase: DeleteTransactionUseCase,
     private val getTransactionTagIdsUseCase: GetTransactionTagIdsUseCase,
@@ -179,7 +181,9 @@ internal class EditTransactionViewModel @Inject internal constructor(
             reset()
 
             loadedTransaction = initialTransactionId?.let {
-                getLegacyTransactionUseCase(it)
+                getTransactionUseCase(it)?.let { transaction ->
+                    mapTransactionsToLegacyTransactionsUseCase(listOf(transaction)).singleOrNull()
+                }
             } ?: LegacyTransaction(
                 accountId = defaultAccountId(
                     accountId = accountId,
