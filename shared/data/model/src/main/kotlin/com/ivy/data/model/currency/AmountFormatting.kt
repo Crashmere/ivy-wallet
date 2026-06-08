@@ -6,9 +6,9 @@ import kotlin.math.abs
 import kotlin.math.log10
 import kotlin.math.truncate
 
-const val MILLION = 1000000
-const val N_100K = 100000
-const val THOUSAND = 1000
+private const val MILLION = 1000000
+private const val N_100K = 100000
+private const val THOUSAND = 1000
 
 fun String.amountToDoubleOrNull(): Double? {
     return this.normalizeAmount().toDoubleOrNull()
@@ -18,7 +18,7 @@ fun String.amountToDouble(): Double {
     return this.normalizeAmount().toDouble()
 }
 
-fun String.normalizeAmount(): String {
+private fun String.normalizeAmount(): String {
     return this.removeGroupingSeparator()
         .normalizeDecimalSeparator()
 }
@@ -28,11 +28,11 @@ fun String.normalizeExpression(): String {
         .normalizeDecimalSeparator()
 }
 
-fun String.removeGroupingSeparator(): String {
+private fun String.removeGroupingSeparator(): String {
     return replace(localGroupingSeparator(), "")
 }
 
-fun String.normalizeDecimalSeparator(): String {
+private fun String.normalizeDecimalSeparator(): String {
     return replace(localDecimalSeparator(), ".")
 }
 
@@ -40,7 +40,7 @@ fun localDecimalSeparator(): String {
     return DecimalFormatSymbols.getInstance().decimalSeparator.toString()
 }
 
-fun localGroupingSeparator(): String {
+private fun localGroupingSeparator(): String {
     return DecimalFormatSymbols.getInstance().groupingSeparator.toString()
 }
 
@@ -71,7 +71,7 @@ fun Double.format(currency: IvyCurrency?): String {
     }
 }
 
-fun Double.formatCrypto(): String {
+private fun Double.formatCrypto(): String {
     val pattern = "###,###,##0.${"0".repeat(9)}"
     val format = DecimalFormat(pattern)
     val numberStringWithZeros = format.format(this)
@@ -119,7 +119,7 @@ private fun formatShortenedNumber(
     }
 }
 
-fun hasSignificantDecimalPart(number: Double): Boolean {
+private fun hasSignificantDecimalPart(number: Double): Boolean {
     // This threshold is tuned for fiat display; crypto precision needs a separate formatter.
     val intPart = number.toInt()
     return abs(number - intPart) >= 0.009

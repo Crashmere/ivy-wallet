@@ -29,13 +29,6 @@ data class FromToTimeRange(
         dateTime.isAfter(from()) && dateTime.isBefore(to())
 }
 
-fun FromToTimeRange.toCloseTimeRangeUnsafe(): ClosedTimeRange {
-    return ClosedTimeRange(
-        from = from(),
-        to = to()
-    )
-}
-
 fun FromToTimeRange.toCloseTimeRange(): ClosedTimeRange {
     return ClosedTimeRange(
         from = from ?: safeMinTime(),

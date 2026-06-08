@@ -10,6 +10,6 @@ fun PositiveValue.round(decimalPlaces: Int): PositiveValue = PositiveValue(
     asset = asset,
 )
 
-fun Double.roundTo(decimalPlaces: Int): Double {
+private fun Double.roundTo(decimalPlaces: Int): Double {
     return BigDecimal(this).setScale(decimalPlaces, RoundingMode.HALF_EVEN).toDouble()
 }
