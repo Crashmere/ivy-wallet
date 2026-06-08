@@ -51,7 +51,6 @@ import com.ivy.legacy.ui.modal.ModalTitle
 import com.ivy.legacy.ui.theme.Gradient
 import com.ivy.legacy.ui.theme.GradientGreen
 import com.ivy.legacy.ui.theme.GradientIvy
-import com.ivy.legacy.ui.theme.Gray
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.legacy.ui.theme.White
 import com.ivy.legacy.ui.theme.style
@@ -253,7 +252,7 @@ private fun RowScope.TimesSelectorButton(
             .padding(vertical = 8.dp),
         text = label,
         style = LegacyTheme.typo.b2.style(
-            color = if (selected) White else Gray,
+            color = if (selected) White else LegacyTheme.colors.gray,
             fontWeight = FontWeight.ExtraBold,
             textAlign = TextAlign.Center
         )
@@ -403,7 +402,7 @@ private fun DateRow(
                     text = date.formatDateWeekDayLong(),
                     style = LegacyTheme.typo.b2.style(
                         fontWeight = FontWeight.SemiBold,
-                        color = Gray
+                        color = LegacyTheme.colors.gray
                     )
                 )
             }
