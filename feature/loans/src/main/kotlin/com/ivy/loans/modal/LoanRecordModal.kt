@@ -12,9 +12,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -25,7 +22,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
@@ -46,8 +42,6 @@ import com.ivy.data.model.CreateAccountData
 import com.ivy.data.model.CreateLoanRecordData
 import com.ivy.data.model.EditLoanRecordData
 import com.ivy.legacy.ui.component.ItemIconSDefaultIcon
-import com.ivy.legacy.ui.component.IvyIcon
-import com.ivy.legacy.ui.theme.findContrastTextColor
 import com.ivy.legacy.ui.modal.AccountModalData
 import com.ivy.legacy.ui.modal.DeleteModal
 import com.ivy.legacy.ui.modal.IvyModal
@@ -56,8 +50,6 @@ import com.ivy.legacy.ui.modal.ModalAmountSection
 import com.ivy.legacy.ui.modal.ModalTitle
 import com.ivy.legacy.ui.modal.edit.AccountModal
 import com.ivy.legacy.ui.modal.edit.AmountModal
-import com.ivy.legacy.ui.theme.toComposeColor
-import kotlinx.coroutines.launch
 import java.time.Instant
 import java.util.UUID
 
@@ -222,7 +214,7 @@ internal fun BoxWithConstraintsScope.LoanRecordModal(
 
         Spacer(Modifier.height(16.dp))
 
-        AccountsRow(
+        LoanAccountPickerRow(
             accounts = accounts,
             selectedAccount = selectedAcc,
             onSelectedAccountChanged = {
@@ -508,147 +500,3 @@ private fun LoanRecordType(
     }
 }
 
-@Composable
-@Suppress("ParameterNaming")
-private fun AccountsRow(
-    accounts: List<LegacyAccount>,
-    selectedAccount: LegacyAccount?,
-    onSelectedAccountChanged: (LegacyAccount) -> Unit,
-    onAddNewAccount: () -> Unit,
-    modifier: Modifier = Modifier,
-    childrenTestTag: String? = null,
-) {
-    val lazyState = rememberLazyListState()
-
-    LaunchedEffect(accounts, selectedAccount) {
-        if (selectedAccount != null) {
-            val selectedIndex = accounts.indexOf(selectedAccount)
-            if (selectedIndex != -1) {
-                launch {
-                    lazyState.scrollToItem(
-                        index = selectedIndex, // +1 because Spacer width 24.dp
-                    )
-                }
-            }
-        }
-    }
-
-    LazyRow(
-        modifier = modifier.fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically,
-        state = lazyState
-    ) {
-        item {
-            Spacer(Modifier.width(24.dp))
-        }
-
-        itemsIndexed(accounts) { _, account ->
-            LegacyAccount(
-                account = account,
-                selected = selectedAccount == account,
-                testTag = childrenTestTag ?: "account"
-            ) {
-                onSelectedAccountChanged(account)
-            }
-        }
-
-        item {
-            AddAccount {
-                onAddNewAccount()
-            }
-        }
-
-        item {
-            Spacer(Modifier.width(24.dp))
-        }
-    }
-}
-
-@SuppressLint("ComposeContentEmitterReturningValues", "ComposeMultipleContentEmitters")
-@Composable
-private fun LegacyAccount(
-    account: LegacyAccount,
-    selected: Boolean,
-    testTag: String,
-    onClick: () -> Unit
-) {
-    val accountColor = account.color.toComposeColor()
-    val textColor =
-        if (selected) findContrastTextColor(accountColor) else LegacyTheme.colors.pureInverse
-
-    val medium = LegacyTheme.colors.medium
-    val rFull = LegacyTheme.shapes.rFull
-
-    Row(
-        modifier = Modifier
-            .clip(LegacyTheme.shapes.rFull)
-            .thenIf(!selected) {
-                border(2.dp, medium, rFull)
-            }
-            .thenIf(selected) {
-                background(accountColor, rFull)
-            }
-            .clickable(onClick = onClick)
-            .testTag(testTag),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Spacer(Modifier.width(12.dp))
-
-        ItemIconSDefaultIcon(
-            iconName = account.icon,
-            defaultIcon = R.drawable.ic_custom_account_s,
-            tint = textColor
-        )
-
-        Spacer(Modifier.width(4.dp))
-
-        Text(
-            modifier = Modifier.padding(vertical = 10.dp),
-            text = account.name,
-            style = LegacyTheme.typo.b2.style(
-                color = textColor,
-                fontWeight = FontWeight.ExtraBold
-            )
-        )
-
-        Spacer(Modifier.width(24.dp))
-    }
-
-    Spacer(Modifier.width(8.dp))
-}
-
-@SuppressLint("ComposeContentEmitterReturningValues", "ComposeMultipleContentEmitters")
-@Composable
-private fun AddAccount(
-    onClick: () -> Unit
-) {
-    Row(
-        modifier = Modifier
-            .clip(LegacyTheme.shapes.rFull)
-            .border(2.dp, LegacyTheme.colors.medium, LegacyTheme.shapes.rFull)
-            .clickable(onClick = onClick),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Spacer(Modifier.width(12.dp))
-
-        IvyIcon(
-            icon = R.drawable.ic_plus,
-            tint = LegacyTheme.colors.pureInverse
-        )
-
-        Spacer(Modifier.width(4.dp))
-
-        Text(
-            modifier = Modifier.padding(vertical = 10.dp),
-            text = stringResource(R.string.add_account),
-            style = LegacyTheme.typo.b2.style(
-                color = LegacyTheme.colors.pureInverse,
-                fontWeight = FontWeight.ExtraBold
-            )
-        )
-
-        Spacer(Modifier.width(24.dp))
-    }
-
-    Spacer(Modifier.width(8.dp))
-}
