@@ -124,7 +124,7 @@ private class PieChartView(context: Context) : View(context) {
                 val color = if (selectedCategory == null) {
                     categoryColor
                 } else {
-                    if (selectedCategory.category == category) {
+                    if (selectedCategory.categoryId == category?.id?.value) {
                         categoryColor
                     } else {
                         categoryColor.copy(

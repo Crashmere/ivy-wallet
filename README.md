@@ -1291,6 +1291,7 @@ shared:ui:core
 - 交易页和饼图页的周期选择弹窗状态已从 ViewModel/State/Event 移回 Screen 本地状态；ViewModel 只处理周期切换和数据加载，不再为了打开旧弹窗依赖 legacy modal data。
 - 分类页和计划付款编辑页的新增/选择类旧弹窗状态也已移回 Screen 本地状态；ViewModel 继续处理创建账户、创建/编辑分类和重复规则保存，不再承担纯 UI 弹窗开关数据。
 - 账户页和分类页的月度统计范围已用 `monthlyRange` 直接表达，不再保留迁移期解释性注释；行为仍是按当前月加载统计。
+- 饼图页的选中分类状态已从完整 `Category` 收为分类 ID；图表和列表仍通过 `CategoryAmount` 渲染分类名称、图标和颜色，选中高亮只比较 ID。
 - app 仍保留文件选择、文件分享、Material 日期选择器、BuildInfo、Locale 设置、生物识别和窗口安全等真正依赖 Activity 或 Android app 壳层的装配。
 
 ## 高风险区域

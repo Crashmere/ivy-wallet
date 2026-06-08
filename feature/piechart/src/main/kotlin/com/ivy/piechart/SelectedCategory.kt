@@ -1,9 +1,9 @@
 package com.ivy.piechart
 
 import androidx.compose.runtime.Immutable
-import com.ivy.data.model.Category
+import java.util.UUID
 
 @Immutable
 internal data class SelectedCategory(
-    val category: Category // null - Unspecified
+    val categoryId: UUID
 )

@@ -383,7 +383,7 @@ private fun CategoryAmountCard(
             false
         }
 
-        categoryAmount.category == selectedCategory.category -> {
+        categoryAmount.category?.id?.value == selectedCategory.categoryId -> {
             // selectedCategory && we're selected
             true
         }

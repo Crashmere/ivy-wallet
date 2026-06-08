@@ -235,13 +235,15 @@ internal class PieChartStatisticViewModel @Inject internal constructor(
     }
 
     private suspend fun onCategoryClicked(categoryId: UUID?) {
-        val clickedCategory = categoryAmounts
+        val clickedCategoryId = categoryAmounts
             .firstOrNull { it.category?.id?.value == categoryId }
             ?.category
-        val selectedCategoryValue = if (categoryId == selectedCategory?.category?.id?.value) {
+            ?.id
+            ?.value
+        val selectedCategoryValue = if (categoryId == selectedCategory?.categoryId) {
             null
         } else {
-            clickedCategory?.let { SelectedCategory(category = it) }
+            clickedCategoryId?.let { SelectedCategory(categoryId = it) }
         }
 
         val existingCategoryAmounts = categoryAmounts
@@ -249,7 +251,7 @@ internal class PieChartStatisticViewModel @Inject internal constructor(
             existingCategoryAmounts
                 .sortedByDescending { it.amount }
                 .sortedByDescending {
-                    selectedCategoryValue.category == it.category
+                    selectedCategoryValue.categoryId == it.category?.id?.value
                 }
         } else {
             existingCategoryAmounts.sortedByDescending {
