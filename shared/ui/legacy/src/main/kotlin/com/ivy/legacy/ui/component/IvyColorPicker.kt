@@ -25,8 +25,8 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.ivy.legacy.ui.theme.IVY_COLOR_PICKER_COLORS_FREE
-import com.ivy.legacy.ui.theme.IVY_COLOR_PICKER_COLORS_PREMIUM
+import com.ivy.legacy.ui.theme.IVY_COLOR_PICKER_BASE_COLORS
+import com.ivy.legacy.ui.theme.IVY_COLOR_PICKER_VARIANT_COLORS
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.legacy.ui.theme.dynamicContrast
 import com.ivy.legacy.ui.theme.style
@@ -57,21 +57,21 @@ internal fun ColumnScope.IvyColorPicker(
 
     Spacer(Modifier.height(16.dp))
 
-    val freeIvyColors = IVY_COLOR_PICKER_COLORS_FREE
+    val baseIvyColors = IVY_COLOR_PICKER_BASE_COLORS
         .map {
             IvyColor(
                 color = it,
             )
         }
 
-    val premiumIvyColors = IVY_COLOR_PICKER_COLORS_PREMIUM
+    val variantIvyColors = IVY_COLOR_PICKER_VARIANT_COLORS
         .map {
             IvyColor(
                 color = it,
             )
         }
 
-    val ivyColors = freeIvyColors + premiumIvyColors
+    val ivyColors = baseIvyColors + variantIvyColors
 
     val listState = rememberLazyListState()
     val coroutineScope = rememberCoroutineScope()

@@ -1022,6 +1022,7 @@
 - app 根部公开面继续收窄：`RootContent` 只作为 `RootActivity` 的内部 Compose 内容函数，`RootIntentExtras` 只作为 app 内部启动参数常量；Hilt ViewModel 和绑定实现暂时保持 public 以避免影响生成代码。
 - 已删除只有单实现且只被提醒 worker 使用的 `AppStarter` 接口；随后继续删除只包装 `RootActivity` intent 的 `RootIntentFactory`，提醒通知和快捷磁贴现在共用 app 内部 `Context.createRootIntent()` helper。
 - 旧 UI 组件的公开面继续收窄：`IvyCheckbox` 改为文字版 checkbox 的私有实现，`PrimaryAttributeColumn`、`IconNameRow`、`DateTimeRow`、`CurrencyPicker`、`IvyBorderButton`、`IvyColorPicker`、`IvyTitleTextField` 和 `IvyDescriptionTextField` 都只作为 `shared:ui:legacy` 内部构件保留；feature 层仍可调用实际页面正在使用的旧组件入口。
+- 旧颜色选择器内部色板不再用 `FREE/PREMIUM` 命名；基础色和浅/深变体全部作为普通可选颜色保留，展示顺序不变。
 - 旧主题的 `theme.system` 进一步收敛为内部实现层：feature 层不再直接导入其中的具体颜色常量，内部色板、系统 Gradient、CompositionLocal 和颜色算法 helper 均改为 `shared:ui:legacy` 内可见；外部继续通过 `LegacyTheme`、`style()` 和外层 `legacy.ui.theme` 色板使用旧样式。
 - 交易提醒通知封装继续收窄：`IvyNotification`、`IvyNotificationChannel` 和 `NotificationService` 的通知构建/展示方法只作为 app 内部实现使用，并删除未被调用的通知 dismiss helper；提醒 worker 的实际通知行为不变。
 - 锁屏生物识别链路已删除空错误回调转发和未使用的成功回调 lambda 参数；现在根 Activity 只传递真正有行为的成功/失败事件，错误事件保持原有的无额外处理行为。
