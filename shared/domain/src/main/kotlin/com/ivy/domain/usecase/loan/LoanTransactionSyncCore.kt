@@ -231,7 +231,7 @@ internal class LoanTransactionSyncCore @Inject internal constructor(
         oldLoanRecordAccountId: UUID?,
         oldLoanRecordConvertedAmount: Double?,
         oldLoanRecordAmount: Double,
-        newLoanRecordAccountID: UUID?,
+        newLoanRecordAccountId: UUID?,
         newLoanRecordAmount: Double,
         loanAccountId: UUID?,
         accounts: List<LegacyAccount>,
@@ -239,7 +239,7 @@ internal class LoanTransactionSyncCore @Inject internal constructor(
     ): Double? {
         return withContext(Dispatchers.Default) {
             val newLoanRecordCurrency =
-                newLoanRecordAccountID.fetchAssociatedCurrencyCode(accountsList = accounts)
+                newLoanRecordAccountId.fetchAssociatedCurrencyCode(accountsList = accounts)
 
             val oldLoanRecordCurrency =
                 oldLoanRecordAccountId.fetchAssociatedCurrencyCode(accountsList = accounts)
