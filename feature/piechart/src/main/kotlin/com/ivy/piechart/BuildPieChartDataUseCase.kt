@@ -6,7 +6,6 @@ import com.ivy.data.model.TransactionType
 import com.ivy.data.model.getFromAccount
 import com.ivy.data.model.getToAccount
 import com.ivy.data.model.getTransactionType
-import com.ivy.data.model.legacy.LegacyTransaction
 import com.ivy.ui.resource.ResourceProvider
 import com.ivy.data.model.Category
 import com.ivy.data.model.CategoryId
@@ -21,7 +20,6 @@ import com.ivy.domain.usecase.category.CalculateCategoryIncomeWithAccountFilters
 import com.ivy.domain.usecase.category.GetCategoriesUseCase
 import com.ivy.domain.usecase.transaction.CalculateTransactionsIncomeExpenseUseCase
 import com.ivy.domain.usecase.transaction.GetTransactionsForAccountsUseCase
-import com.ivy.domain.usecase.transaction.MapTransactionsToLegacyTransactionsUseCase
 import com.ivy.ui.R
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
@@ -34,7 +32,6 @@ private val AccountTransfersCategoryColorArgb = 0xFFFFCCD5.toInt()
 internal class BuildPieChartDataUseCase @Inject internal constructor(
     private val getAccountsUseCase: GetAccountsUseCase,
     private val getTransactionsForAccountsUseCase: GetTransactionsForAccountsUseCase,
-    private val mapTransactionsToLegacyTransactionsUseCase: MapTransactionsToLegacyTransactionsUseCase,
     private val calculateTransactionsIncomeExpenseUseCase: CalculateTransactionsIncomeExpenseUseCase,
     private val getCategoriesUseCase: GetCategoriesUseCase,
     private val calculateCategoryIncomeWithAccountFiltersUseCase: CalculateCategoryIncomeWithAccountFiltersUseCase,
@@ -70,7 +67,6 @@ internal class BuildPieChartDataUseCase @Inject internal constructor(
                 accountIdFilterSet = usableAccounts.accountIdFilterSet
             )
         }
-        val legacyTransactions = mapTransactionsToLegacyTransactionsUseCase(transactions)
         val incomeExpenseTransfer = calculateTransactionsIncomeExpenseUseCase(
             transactions = transactions,
             accounts = usableAccounts.accounts,
@@ -80,7 +76,7 @@ internal class BuildPieChartDataUseCase @Inject internal constructor(
             type = type,
             baseCurrency = baseCurrency,
             allCategories = getCategoriesUseCase().plus(null),
-            transactions = legacyTransactions,
+            transactions = transactions,
             accountsUsed = usableAccounts.accounts,
             addAssociatedTransToCategoryAmt = existingTransactions.isNotEmpty()
         )
@@ -126,13 +122,13 @@ internal class BuildPieChartDataUseCase @Inject internal constructor(
         baseCurrency: String,
         addAssociatedTransToCategoryAmt: Boolean = false,
         allCategories: List<Category?>,
-        transactions: List<LegacyTransaction>,
+        transactions: List<Transaction>,
         accountsUsed: List<LegacyAccount>,
     ): List<CategoryAmount> {
         return allCategories.map { category ->
             val categoryTransactions = if (addAssociatedTransToCategoryAmt) {
                 transactions.filter {
-                    it.type == type && it.categoryId == category?.id?.value
+                    it.getTransactionType() == type && it.category == category?.id
                 }.map { it.toAssociatedTransaction() }
             } else {
                 emptyList()
@@ -232,13 +228,6 @@ internal class BuildPieChartDataUseCase @Inject internal constructor(
             }
         }
     }
-}
-
-private fun LegacyTransaction.toAssociatedTransaction(): AssociatedTransaction {
-    return AssociatedTransaction(
-        id = id,
-        type = type,
-    )
 }
 
 private fun Transaction.toAssociatedTransaction(): AssociatedTransaction {
