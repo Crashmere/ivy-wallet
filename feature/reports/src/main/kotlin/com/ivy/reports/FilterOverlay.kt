@@ -80,7 +80,7 @@ import kotlin.math.roundToInt
 @Suppress("LongMethod")
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun BoxWithConstraintsScope.FilterOverlay(
+internal fun BoxWithConstraintsScope.FilterOverlay(
     visible: Boolean,
 
     baseCurrency: String,
@@ -472,7 +472,7 @@ fun BoxWithConstraintsScope.FilterOverlay(
 }
 
 @Composable
-fun ColumnScope.TagsFilter(
+internal fun ColumnScope.TagsFilter(
     filter: ReportFilter?,
     onIncludesTagButtonClick: () -> Unit,
     onExcludesTagButtonClick: () -> Unit
@@ -514,7 +514,7 @@ fun ColumnScope.TagsFilter(
 }
 
 @Composable
-fun ColumnScope.TagFilter(
+internal fun ColumnScope.TagFilter(
     selectedTags: ImmutableList<TagId>,
     onTagButtonClick: () -> Unit
 ) {

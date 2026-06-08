@@ -3,7 +3,7 @@ package com.ivy.reports
 import com.ivy.ui.platform.FileSharer
 import java.util.UUID
 
-sealed class ReportScreenEvent {
+internal sealed class ReportScreenEvent {
     data class OnFilter(val filter: ReportFilter?) : ReportScreenEvent()
     data class OnExport(val fileSharer: FileSharer) : ReportScreenEvent()
     data class OnUpcomingExpanded(val upcomingExpanded: Boolean) : ReportScreenEvent()

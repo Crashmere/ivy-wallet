@@ -7,7 +7,7 @@ import com.ivy.ui.period.TimePeriod
 import com.ivy.data.model.legacy.LegacyAccount
 import java.util.UUID
 
-data class ReportFilter(
+internal data class ReportFilter(
     val id: UUID = UUID.randomUUID(),
     val transactionTypes: List<TransactionType>,
     val period: TimePeriod?,
