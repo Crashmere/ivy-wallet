@@ -94,6 +94,7 @@
 - 删除 `shared:ui:legacy` 中已经没有调用方的旧 `AmountCurrencyB2Row`；当前金额展示继续使用仍被页面调用的 `AmountCurrencyB1` 或 feature 私有金额行。
 - 标签编辑弹窗的标题输入框已移回 `AddOrEditTagModal` 文件私有实现；`shared:ui:legacy` 删除不再作为通用组件使用的 `IvyTitleTextField` 文件。
 - 分类编辑弹窗的名称输入框已移回 `CategoryModal` 文件私有实现；`shared:ui:legacy` 删除不再作为通用组件使用的 `IvyNameTextField` 文件。
+- 周期间隔行的数字输入框已移回 `IntervalPickerRow` 文件私有实现；`shared:ui:legacy` 删除不再作为通用组件使用的 `IvyNumberTextField` 文件。
 - CSV 导入结果页的返回按钮已改为 `feature:import-data` 私有实现；`shared:ui:legacy` 的 `BackButton` 收窄为模块内部给旧工具栏使用。
 - 饼图页不再直接调用底层 `ItemIconM`，改用带默认图标的包装入口；`shared:ui:legacy` 的 `ItemIconM` 收窄为模块内部实现。
 - 计划付款列表改用本 feature 私有的分组分隔条；`shared:ui:legacy` 的交易 `SectionDivider` 收窄为交易列表内部实现。
