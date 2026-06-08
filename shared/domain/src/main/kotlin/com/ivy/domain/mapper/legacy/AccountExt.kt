@@ -21,7 +21,7 @@ internal fun Account.toLegacyAccount(): LegacyAccount = LegacyAccount(
     id = id.value
 )
 
-fun LegacyAccount.toDomainAccount(
+internal fun LegacyAccount.toDomainAccount(
     baseCurrency: AssetCode
 ): Either<String, Account> = either {
     Account(

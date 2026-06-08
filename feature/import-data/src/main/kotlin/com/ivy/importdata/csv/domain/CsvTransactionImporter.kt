@@ -10,7 +10,7 @@ import com.ivy.data.model.primitive.AssetCode
 import com.ivy.data.model.primitive.ColorInt
 import com.ivy.data.model.primitive.IconAsset
 import com.ivy.data.model.primitive.NotBlankTrimmedString
-import com.ivy.domain.usecase.account.SaveAccountUseCase
+import com.ivy.domain.usecase.account.SaveLegacyAccountUseCase
 import com.ivy.domain.usecase.category.GetCategoriesUseCase
 import com.ivy.domain.usecase.category.SaveCategoryUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyUseCase
@@ -20,7 +20,6 @@ import com.ivy.importdata.csv.OptionalFields
 import com.ivy.importdata.csv.TransferFields
 import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.data.model.currency.IvyCurrency
-import com.ivy.domain.mapper.legacy.toDomainAccount
 import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
 import com.ivy.domain.util.nextOrderNum
 import kotlinx.collections.immutable.toImmutableList
@@ -36,7 +35,7 @@ class CsvTransactionImporter @Inject constructor(
     private val getLegacyAccountsUseCase: GetLegacyAccountsUseCase,
     private val getCategoriesUseCase: GetCategoriesUseCase,
     private val getBaseCurrency: GetBaseCurrencyUseCase,
-    private val saveAccountUseCase: SaveAccountUseCase,
+    private val saveLegacyAccountUseCase: SaveLegacyAccountUseCase,
     private val saveCategoryUseCase: SaveCategoryUseCase,
     private val saveLegacyTransactionUseCase: SaveLegacyTransactionUseCase,
 ) {
@@ -273,9 +272,8 @@ class CsvTransactionImporter @Inject constructor(
             icon = icon,
             orderNum = orderNum ?: accounts.maxOfOrNull { it.orderNum }.nextOrderNum()
         )
-        val domainAccount = newAccount.toDomainAccount(baseCurrency).getOrNull()
-            ?: return null
-        saveAccountUseCase(domainAccount)
+        val accountSaved = saveLegacyAccountUseCase(newAccount, baseCurrency)
+        if (!accountSaved) return null
         accounts = getLegacyAccountsUseCase()
 
         return newAccount

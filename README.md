@@ -77,6 +77,7 @@
 - 收窄旧 UI 内部构件公开面：`IntervalPickerRow`、小号内部图标、图标选择弹窗、计算器弹窗和弹窗绿色主按钮改为 `shared:ui:legacy` 内部实现，feature 层继续只使用现有页面级弹窗入口。
 - 收窄旧主题色板公开面：颜色选择器专用色板、旧 UI 内部红色/橙色渐变、透明色、底部渐变遮罩、旧弹窗背景模糊和 `asBrush()` 扩展改为 `shared:ui:legacy` 内部实现，feature 层仍可使用现有公开颜色和主题门面。
 - 收窄 domain 内部工具公开面：新旧模型 mapper 中只被 domain 使用的转换方向、CSV 导出行模型和 Arrow 数值 helper 改为模块内部实现；CSV 导入仍需要的 `toDomainAccount()` 暂时保留公开入口。
+- 收回旧账户保存转换边界：新增 `SaveLegacyAccountUseCase`，CSV 导入 feature 不再直接调用 legacy 账户 mapper；`toDomainAccount()` 改为 domain 内部实现。
 
 当前仍保留：
 
