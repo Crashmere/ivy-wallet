@@ -117,6 +117,7 @@
 - 收入/支出汇总卡片已迁入 `shared:ui:core` 的 `com.ivy.ui.summary.IncomeExpensesCards`；交易页和报表页继续复用原金额、交易数量、添加收入/支出按钮和点击入口行为，`shared:ui:legacy` 不再保留 `legacy.ui.summary` 包。
 - 搜索输入框已迁入 `shared:ui:core` 的 `com.ivy.ui.search.SearchInput`；分类、汇率、搜索页和标签弹窗继续复用原搜索、清空、自动聚焦和键盘隐藏行为，`shared:ui:legacy` 不再保留 `legacy.ui.search` 包。
 - 标签入口按钮已迁入 `shared:ui:core` 的 `com.ivy.ui.tags.AddTagButton`；编辑交易页和报表筛选页继续保留原新增/查看标签按钮展示，`shared:ui:legacy` 的 `legacy.ui.tags` 对外只剩标签弹窗入口。
+- 标签入口按钮 API 继续收窄：`AddTagButton` 不再接收 `TagId` 列表，只接收已选标签数量；业务标签 ID 继续留在编辑交易和报表筛选状态层。
 - 旧颜色选择器调色板已从旧主题 system 色板移回 `IvyColorPicker` 文件私有常量；主题包继续只保留旧主题门面和主题默认值实际需要的色板 token。
 - 旧交易列表公开模型的集合入参已从 `ImmutableList` 收窄为普通 `List`；首页、搜索、报表和交易页不再为了调用旧交易列表额外转换账户集合，交易列表展示、到期/逾期 section 和标签展示行为不变。
 - 旧交易卡片的金额行 `TypeAmountCurrency` 已收窄为 `TransactionCard` 文件私有实现；`legacy.ui.transaction` 对外继续只暴露交易列表入口和必要的列表输入模型。

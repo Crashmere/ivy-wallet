@@ -7,7 +7,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.ivy.data.model.TagId
 import com.ivy.ui.R
 import com.ivy.ui.compose.GradientButton
 import com.ivy.ui.compose.OutlinedPillButton
@@ -16,11 +15,11 @@ import com.ivy.ui.theme.colors.findContrastTextColor
 
 @Composable
 fun AddTagButton(
-    transactionAssociatedTags: List<TagId>,
+    tagCount: Int,
     onClick: () -> Unit
 ) {
-    if (transactionAssociatedTags.isNotEmpty()) {
-        ViewTagsButton(transactionTags = transactionAssociatedTags, onClick = onClick)
+    if (tagCount > 0) {
+        ViewTagsButton(tagCount = tagCount, onClick = onClick)
     } else {
         AddTagsButton(onClick = onClick)
     }
@@ -28,7 +27,7 @@ fun AddTagButton(
 
 @Composable
 private fun ViewTagsButton(
-    transactionTags: List<TagId>,
+    tagCount: Int,
     onClick: () -> Unit,
 ) {
     val tagTheme = TagButtonTheme
@@ -36,7 +35,7 @@ private fun ViewTagsButton(
     val contrastColor = findContrastTextColor(selectedTagColor)
     GradientButton(
         modifier = Modifier.padding(start = 24.dp),
-        text = if (transactionTags.size <= 1) "${transactionTags.size}\t Tag" else "${transactionTags.size}\t Tags",
+        text = if (tagCount <= 1) "$tagCount\t Tag" else "$tagCount\t Tags",
         backgroundGradient = Gradient.solid(selectedTagColor),
         disabledBackgroundColor = tagTheme.colors.gray,
         shape = tagTheme.shapes.rFull,

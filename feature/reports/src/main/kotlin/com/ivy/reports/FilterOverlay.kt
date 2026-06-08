@@ -614,7 +614,7 @@ internal fun ColumnScope.TagFilter(
             onTagButtonClick()
         }
     } else {
-        AddTagButton(transactionAssociatedTags = selectedTags) {
+        AddTagButton(tagCount = selectedTags.size) {
             onTagButtonClick()
         }
     }

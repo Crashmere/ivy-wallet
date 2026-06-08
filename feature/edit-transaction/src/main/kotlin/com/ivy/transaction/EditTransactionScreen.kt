@@ -377,7 +377,7 @@ private fun BoxWithConstraintsScope.UI(
 
         Spacer(Modifier.height(16.dp))
 
-        AddTagButton(transactionAssociatedTags = transactionAssociatedTags, onClick = {
+        AddTagButton(tagCount = transactionAssociatedTags.size, onClick = {
             tagModelVisible = true
         })
 
