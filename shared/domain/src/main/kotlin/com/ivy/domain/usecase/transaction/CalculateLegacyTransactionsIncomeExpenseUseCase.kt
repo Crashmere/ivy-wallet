@@ -6,7 +6,7 @@ import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.data.model.IncomeExpenseTransferPair
 import com.ivy.domain.usecase.exchange.ExchangeAmountUseCase
 import com.ivy.domain.transaction.legacy.LegacyFoldTransactions
-import com.ivy.domain.transaction.legacy.WalletValueFunctionsLegacy
+import com.ivy.domain.transaction.legacy.LegacyWalletValueFunctions
 import javax.inject.Inject
 
 class CalculateLegacyTransactionsIncomeExpenseUseCase @Inject constructor(
@@ -20,12 +20,12 @@ class CalculateLegacyTransactionsIncomeExpenseUseCase @Inject constructor(
         val values = LegacyFoldTransactions.foldTransactionsSuspend(
             transactions = transactions,
             valueFunctions = nonEmptyListOf(
-                WalletValueFunctionsLegacy::income,
-                WalletValueFunctionsLegacy::expense,
-                WalletValueFunctionsLegacy::transferIncome,
-                WalletValueFunctionsLegacy::transferExpenses
+                LegacyWalletValueFunctions::income,
+                LegacyWalletValueFunctions::expense,
+                LegacyWalletValueFunctions::transferIncome,
+                LegacyWalletValueFunctions::transferExpenses
             ),
-            arg = WalletValueFunctionsLegacy.Argument(
+            arg = LegacyWalletValueFunctions.Argument(
                 accounts = accounts,
                 baseCurrency = baseCurrency,
                 exchange = exchangeAmountUseCase::invoke

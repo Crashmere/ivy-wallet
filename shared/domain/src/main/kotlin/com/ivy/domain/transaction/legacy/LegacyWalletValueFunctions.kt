@@ -6,7 +6,7 @@ import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.domain.exchange.ExchangeEffect
 import java.math.BigDecimal
 
-object WalletValueFunctionsLegacy {
+object LegacyWalletValueFunctions {
     data class Argument(
         val accounts: List<LegacyAccount>,
         val baseCurrency: String,

@@ -823,6 +823,7 @@
 - 新版交易币种 helper 已从旧 `trnCurrency` 改为正式 `transactionCurrency`，并从 legacy 文件迁到 `com.ivy.domain.transaction.TransactionCurrency`；legacy 包中的 `LegacyTransactionFunctions` 现在只处理旧交易模型。
 - 新版交易到旧历史列表 UI item 的桥接函数已从 `legacy/TrnDateDividers.kt` 拆到正式 `com.ivy.domain.transaction.TransactionHistoryItems`；legacy 日期分组入口只保留旧交易模型适配逻辑，列表项模型已归位到正式 data model。
 - 旧交易兼容目录中的文件名已和对象名对齐：`LegacyTransactionFunctions`、`LegacyFoldTransactions`、`LegacyWalletValueFunctions`、`LegacyTransactionDateDividers` 均保留在 `com.ivy.domain.transaction.legacy`，目录中不再混用新版语义文件名；交易求和 helper 也从 `sumTrns` 改为 `sumTransactions`。
+- 旧钱包收入/支出统计对象已从 `WalletValueFunctionsLegacy` 改为 `LegacyWalletValueFunctions`，和文件名及其他 legacy helper 命名保持一致。
 - 交易汇率换算相关旧缩写继续收敛：`ExchangeTrns.kt` 已改为 `ExchangeTransactions.kt`，`ExchangeTrnArgument`/`LegacyExchangeTrns`/`trnCurrency` 改为完整的 `ExchangeTransactionArgument`/`LegacyExchangeTransactions`/`transactionCurrency` 命名；行为不变。
 - 旧账户模型 helper 已从泛化 `com.ivy.domain.account.AccountFunctions` 迁到 `com.ivy.domain.account.legacy.LegacyAccountFunctions`，并改名为 `includedLegacyAccounts`/`legacyAccountCurrency`；调用方现在能明确看出这些函数仍依赖 legacy 账户模型。
 - 旧交易 due date 筛选已从 `com.ivy.domain.time.TransactionDateFilters` 拆到 `com.ivy.domain.transaction.legacy.LegacyTransactionDateFilters`；`domain.time` 只保留新版交易日期筛选和通用时间转换。
