@@ -18,7 +18,6 @@ import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.domain.usecase.currency.SetBaseCurrencyUseCase
 import com.ivy.domain.usecase.exchange.SyncExchangeRatesUseCase
 import com.ivy.domain.usecase.transaction.HasTransactionsUseCase
-import com.ivy.domain.usecase.transaction.MapTransactionsToLegacyTransactionsUseCase
 import com.ivy.domain.usecase.settings.GetBufferAmountUseCase
 import com.ivy.domain.usecase.settings.GetHideCurrentBalancePreferenceUseCase
 import com.ivy.domain.usecase.settings.GetHideIncomePreferenceUseCase
@@ -85,7 +84,6 @@ internal class HomeViewModel @Inject internal constructor(
     private val getHideIncomePreference: GetHideIncomePreferenceUseCase,
     private val syncExchangeRatesUseCase: SyncExchangeRatesUseCase,
     private val hasTransactionsUseCase: HasTransactionsUseCase,
-    private val mapTransactionsToLegacyTransactionsUseCase: MapTransactionsToLegacyTransactionsUseCase,
     private val preferenceToggles: PreferenceToggleCatalog,
     private val preferenceToggleService: PreferenceToggleService,
     private val periodState: PeriodState
@@ -405,7 +403,7 @@ internal class HomeViewModel @Inject internal constructor(
             range = input.timeRange
         )
         upcoming = HomeDueSection(
-            transactions = mapTransactionsToLegacyTransactionsUseCase(upcomingResult.transactions).toImmutableList(),
+            transactions = upcomingResult.transactions.toImmutableList(),
             stats = upcomingResult.incomeExpense,
             expanded = upcoming.expanded
         )
@@ -415,7 +413,7 @@ internal class HomeViewModel @Inject internal constructor(
             toRange = input.timeRange.to
         )
         overdue = HomeDueSection(
-            transactions = mapTransactionsToLegacyTransactionsUseCase(overdueResult.transactions).toImmutableList(),
+            transactions = overdueResult.transactions.toImmutableList(),
             stats = overdueResult.incomeExpense,
             expanded = overdue.expanded
         )

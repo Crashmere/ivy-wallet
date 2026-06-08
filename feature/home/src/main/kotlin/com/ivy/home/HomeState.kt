@@ -4,8 +4,8 @@ import androidx.compose.runtime.Immutable
 import com.ivy.data.model.Category
 import com.ivy.data.model.IncomeExpensePair
 import com.ivy.data.model.Theme
+import com.ivy.data.model.Transaction
 import com.ivy.data.model.TransactionHistoryItem
-import com.ivy.data.model.legacy.LegacyTransaction
 import com.ivy.home.customerjourney.CustomerJourneyCardModel
 import com.ivy.legacy.ui.transaction.TransactionListAccount
 import com.ivy.ui.period.TimePeriod
@@ -45,7 +45,7 @@ internal data class HomeTransactionListData(
 
 @Immutable
 internal data class HomeDueSection(
-    val transactions: ImmutableList<LegacyTransaction>,
+    val transactions: ImmutableList<Transaction>,
     val expanded: Boolean,
     val stats: IncomeExpensePair
 )
