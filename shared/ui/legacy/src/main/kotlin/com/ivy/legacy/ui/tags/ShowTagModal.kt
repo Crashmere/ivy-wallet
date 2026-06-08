@@ -25,29 +25,29 @@ import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.Tag
 import com.ivy.data.model.TagId
-import com.ivy.legacy.ui.theme.Blue2Dark
-import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.legacy.ui.theme.style
-import com.ivy.ui.compose.thenIf
-import com.ivy.legacy.ui.search.SearchInput
-import com.ivy.ui.compose.drawColoredShadow
-import com.ivy.ui.platform.hideKeyboard
-import com.ivy.ui.compose.onCompositionStart
-import com.ivy.ui.compose.selectEndTextFieldValue
-import com.ivy.legacy.ui.theme.Gradient
 import com.ivy.legacy.ui.button.IvyCircleButton
-import com.ivy.legacy.ui.selection.IvyBorderButton
-import com.ivy.legacy.ui.theme.findContrastTextColor
+import com.ivy.legacy.ui.layout.WrapContentRow
 import com.ivy.legacy.ui.modal.DeleteModal
 import com.ivy.legacy.ui.modal.IvyModal
 import com.ivy.legacy.ui.modal.ModalPositiveButton
 import com.ivy.legacy.ui.modal.ModalTitle
+import com.ivy.legacy.ui.search.SearchInput
+import com.ivy.legacy.ui.selection.IvyBorderButton
+import com.ivy.legacy.ui.theme.Blue2Dark
+import com.ivy.legacy.ui.theme.Gradient
+import com.ivy.legacy.ui.theme.LegacyTheme
+import com.ivy.legacy.ui.theme.findContrastTextColor
+import com.ivy.ui.compose.thenIf
+import com.ivy.ui.compose.drawColoredShadow
+import com.ivy.ui.compose.onCompositionStart
+import com.ivy.ui.compose.selectEndTextFieldValue
 import com.ivy.ui.R
-import com.ivy.legacy.ui.layout.WrapContentRow
+import com.ivy.ui.platform.hideKeyboard
 import kotlinx.collections.immutable.ImmutableList
 import java.util.UUID
 
@@ -280,9 +280,10 @@ private fun ExistingTag(
                 )
                 .weight(1f, fill = false),
             text = "#${tag.name.value}",
-            style = LegacyTheme.typo.b2.style(
+            style = LegacyTheme.typo.b2.copy(
                 color = if (selected) findContrastTextColor(tagColor) else LegacyTheme.colors.pureInverse,
-                fontWeight = FontWeight.SemiBold
+                fontWeight = FontWeight.SemiBold,
+                textAlign = TextAlign.Start
             ),
             maxLines = 1,
             overflow = TextOverflow.Ellipsis
@@ -320,9 +321,10 @@ private fun AddNewTagButton(
         text = stringResource(R.string.add_new),
         backgroundGradient = Gradient.solid(LegacyTheme.colors.mediumInverse),
         iconStart = R.drawable.ic_plus,
-        textStyle = LegacyTheme.typo.b2.style(
+        textStyle = LegacyTheme.typo.b2.copy(
             color = LegacyTheme.colors.pureInverse,
-            fontWeight = FontWeight.Bold
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Start
         ),
         iconTint = LegacyTheme.colors.pureInverse,
         padding = 10.dp,

@@ -1426,6 +1426,7 @@ shared:ui:core
 - `shared:ui:legacy` 内部开始清理旧 `style` 文本样式扩展；旧按钮、描边选择按钮、搜索输入框、金额行和余额行已改用显式 `TextStyle.copy()`，继续保留旧默认颜色、字重、对齐和字号覆盖行为。
 - `shared:ui:legacy` 的通用弹窗标题、金额区标签、删除/进度弹窗、重排弹窗、周期间隔选择行和图标选择分区标题已停止直接调用旧 `style` 扩展，文本样式改用显式 `TextStyle.copy()`。
 - `shared:ui:legacy` 的周期选择条、周期选择弹窗、币种选择弹窗/列表和收入支出汇总卡片已停止直接调用旧 `style` 扩展，继续用显式 `TextStyle.copy()` 保留原文本视觉行为。
+- `shared:ui:legacy` 的标签添加按钮、标签列表和标签编辑弹窗已停止直接调用旧 `style` 扩展，继续用显式 `TextStyle.copy()` 保留原文本视觉行为。
 - app 仍保留文件选择、文件分享、Material 日期选择器、BuildInfo、Locale 设置、生物识别和窗口安全等真正依赖 Activity 或 Android app 壳层的装配。
 
 ## 高风险区域

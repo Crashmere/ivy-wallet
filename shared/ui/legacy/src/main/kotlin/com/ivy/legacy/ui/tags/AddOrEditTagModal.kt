@@ -46,7 +46,6 @@ import com.ivy.legacy.ui.button.IvyCircleButton
 import com.ivy.legacy.ui.theme.GradientRed
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.legacy.ui.theme.White
-import com.ivy.legacy.ui.theme.style
 import com.ivy.legacy.ui.modal.IvyModal
 import com.ivy.legacy.ui.modal.ModalPositiveButton
 import com.ivy.legacy.ui.modal.ModalTitle
@@ -203,7 +202,7 @@ private fun IvyTitleTextField(
         if (isEmpty && hint.isNullOrBlank().not()) {
             Text(
                 text = hint!!,
-                style = LegacyTheme.typo.h2.style(
+                style = LegacyTheme.typo.h2.copy(
                     color = LegacyTheme.colors.gray,
                     fontWeight = FontWeight.Black,
                     textAlign = TextAlign.Start
@@ -218,7 +217,7 @@ private fun IvyTitleTextField(
                 .testTag("input_field"),
             value = value,
             onValueChange = onValueChanged,
-            textStyle = LegacyTheme.typo.h2.style(
+            textStyle = LegacyTheme.typo.h2.copy(
                 color = textColor,
                 fontWeight = FontWeight.Black,
                 textAlign = TextAlign.Start

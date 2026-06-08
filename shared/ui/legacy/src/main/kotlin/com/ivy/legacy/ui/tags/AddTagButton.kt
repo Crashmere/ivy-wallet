@@ -5,17 +5,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.TagId
-import com.ivy.legacy.ui.theme.Orange3
-import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.legacy.ui.theme.style
-import com.ivy.legacy.ui.theme.Gradient
 import com.ivy.legacy.ui.button.IvyButton
 import com.ivy.legacy.ui.selection.IvyBorderButton
+import com.ivy.legacy.ui.theme.Gradient
+import com.ivy.legacy.ui.theme.LegacyTheme
+import com.ivy.legacy.ui.theme.Orange3
 import com.ivy.legacy.ui.theme.findContrastTextColor
-import kotlinx.collections.immutable.ImmutableList
 import com.ivy.ui.R
+import kotlinx.collections.immutable.ImmutableList
 
 @Composable
 fun AddTagButton(
@@ -39,9 +39,10 @@ private fun ViewTagsButton(
         modifier = Modifier.padding(start = 24.dp),
         text = if (transactionTags.size <= 1) "${transactionTags.size}\t Tag" else "${transactionTags.size}\t Tags",
         backgroundGradient = Gradient.solid(Orange3),
-        textStyle = LegacyTheme.typo.b2.style(
+        textStyle = LegacyTheme.typo.b2.copy(
             color = contrastColor,
-            fontWeight = FontWeight.Bold
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Start
         ),
         iconTint = contrastColor,
         hasGlow = false,
