@@ -48,8 +48,8 @@ import com.ivy.legacy.ui.lerp
 import com.ivy.legacy.ui.navigationBarInset
 import com.ivy.ui.compose.rememberInteractionSource
 import com.ivy.legacy.ui.springBounceFast
-import com.ivy.legacy.ui.toDensityDp
-import com.ivy.legacy.ui.toDensityPx
+import com.ivy.ui.compose.toDensityDp
+import com.ivy.ui.compose.toDensityPx
 import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.Gradient
 import com.ivy.legacy.ui.theme.GradientGreen

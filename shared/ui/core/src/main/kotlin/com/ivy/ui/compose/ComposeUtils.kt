@@ -95,3 +95,12 @@ fun Modifier.drawColoredShadow(
         )
     }
 }
+
+@Composable
+fun Dp.toDensityPx() = densityScope { toPx() }
+
+@Composable
+fun Int.toDensityDp() = densityScope { toDp() }
+
+@Composable
+fun Float.toDensityDp() = densityScope { toDp() }

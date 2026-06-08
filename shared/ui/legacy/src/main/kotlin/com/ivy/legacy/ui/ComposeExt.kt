@@ -4,11 +4,8 @@ import android.annotation.SuppressLint
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalView
-import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
 import androidx.core.graphics.Insets
 import androidx.core.view.WindowInsetsCompat
-import com.ivy.ui.compose.densityScope
 import com.ivy.ui.navigation.navigation
 
 @Composable
@@ -55,12 +52,3 @@ fun onScreenStart(
         onDispose { latestCleanup() }
     }
 }
-
-@Composable
-fun Dp.toDensityPx() = densityScope { toPx() }
-
-@Composable
-fun Int.toDensityDp() = densityScope { toDp() }
-
-@Composable
-fun Float.toDensityDp() = densityScope { toDp() }

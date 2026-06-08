@@ -55,7 +55,7 @@ import com.ivy.ui.compose.rememberInteractionSource
 import com.ivy.legacy.ui.rememberSwipeListenerState
 import com.ivy.legacy.ui.springBounce
 import com.ivy.legacy.ui.statusBarInset
-import com.ivy.legacy.ui.toDensityPx
+import com.ivy.ui.compose.toDensityPx
 import com.ivy.legacy.ui.verticalSwipeListener
 import com.ivy.ui.navigation.BudgetScreen
 import com.ivy.ui.navigation.CategoriesScreen
