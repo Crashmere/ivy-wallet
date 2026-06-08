@@ -1569,6 +1569,7 @@ shared:ui:core
 - 设置页样式依赖继续收窄：`feature:settings` 增加本模块私有 `SettingsTheme` 承接原设置页颜色、字体和圆角 token；设置模块已移除对 `shared:ui:legacy` 的直接依赖。
 - 汇率页样式依赖继续收窄：`feature:exchange-rates` 增加本模块私有 `ExchangeRatesTheme` 承接原汇率列表、底栏、新增弹窗和名称输入框所需 token；汇率模块已移除对 `shared:ui:legacy` 的直接依赖。
 - 预算页样式依赖继续收窄：`feature:budgets` 增加本模块私有 `BudgetsTheme` 承接原预算列表、底栏、预算电池、预算弹窗和输入组件所需 token；预算模块已移除对 `shared:ui:legacy` 的直接依赖。
+- 分类页样式和新增弹窗依赖继续收窄：`feature:categories` 增加本模块私有 `CategoriesTheme` 与 `CreateCategoryModal`，承接原分类列表、底栏、排序弹窗和新增分类弹窗所需 token/颜色选择逻辑；分类模块已移除对 `shared:ui:legacy` 的直接依赖。
 - app 仍保留文件选择、文件分享、Material 日期选择器、BuildInfo、Locale 设置、生物识别和窗口安全等真正依赖 Activity 或 Android app 壳层的装配。
 
 ## 高风险区域

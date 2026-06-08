@@ -40,8 +40,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.ivy.data.model.CreateCategoryData
-import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.search.SearchInput
 import com.ivy.ui.money.balancePrefix
 import com.ivy.ui.money.compactBalancePrefix
@@ -64,8 +62,6 @@ import com.ivy.ui.compose.ResourceIcon
 import com.ivy.ui.theme.colors.findContrastTextColor
 import com.ivy.ui.modal.IvyModal
 import com.ivy.ui.modal.ModalTitle
-import com.ivy.legacy.ui.modal.edit.CategoryModal
-import com.ivy.legacy.ui.modal.edit.CategoryModalSaveData
 import com.ivy.ui.theme.colors.toComposeColor
 import com.ivy.ui.money.AmountCurrencyB1
 import kotlinx.collections.immutable.ImmutableList
@@ -114,8 +110,8 @@ private fun BoxWithConstraintsScope.UI(
 
                 Text(
                     text = stringResource(R.string.categories),
-                    style = LegacyTheme.typo.h2.copy(
-                        color = LegacyTheme.colors.pureInverse,
+                    style = CategoriesTheme.typo.h2.copy(
+                        color = CategoriesTheme.colors.pureInverse,
                         fontWeight = FontWeight.ExtraBold,
                         textAlign = TextAlign.Start
                     )
@@ -125,8 +121,8 @@ private fun BoxWithConstraintsScope.UI(
 
                 FilledIconButton(
                     icon = R.drawable.ic_sort_by_alpha_24,
-                    backgroundColor = LegacyTheme.colors.medium,
-                    tint = LegacyTheme.colors.pureInverse,
+                    backgroundColor = CategoriesTheme.colors.medium,
+                    tint = CategoriesTheme.colors.pureInverse,
                     onClick = {
                         onEvent(CategoriesScreenEvent.OnSortOrderModalVisible(visible = true))
                     },
@@ -138,8 +134,8 @@ private fun BoxWithConstraintsScope.UI(
                 FilledIconButton(
                     icon = R.drawable.ic_drag_handle,
                     contentDescription = "reorder",
-                    backgroundColor = LegacyTheme.colors.medium,
-                    tint = LegacyTheme.colors.pureInverse,
+                    backgroundColor = CategoriesTheme.colors.medium,
+                    tint = CategoriesTheme.colors.pureInverse,
                 ) {
                     onEvent(CategoriesScreenEvent.OnReorderModalVisible(true))
                 }
@@ -209,7 +205,7 @@ private fun BoxWithConstraintsScope.UI(
                 .padding(end = 24.dp)
                 .padding(vertical = 8.dp),
             text = item.category.name.value,
-            style = LegacyTheme.typo.b1.copy(
+            style = CategoriesTheme.typo.b1.copy(
                 color = item.category.color.value.toComposeColor(),
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Start
@@ -217,13 +213,11 @@ private fun BoxWithConstraintsScope.UI(
         )
     }
 
-    CategoryModal(
+    CreateCategoryModal(
         visible = categoryModalVisible,
-        category = null,
         onCreateCategory = {
-            onEvent(CategoriesScreenEvent.OnCreateCategory(it.toCreateCategoryData()))
+            onEvent(CategoriesScreenEvent.OnCreateCategory(it))
         },
-        onEditCategory = { _, _ -> },
         dismiss = {
             categoryModalVisible = false
         }
@@ -276,8 +270,8 @@ private fun DefaultCategoryCard(
         modifier = Modifier
             .padding(horizontal = 16.dp)
             .fillMaxWidth()
-            .clip(LegacyTheme.shapes.r4)
-            .border(2.dp, LegacyTheme.colors.medium, LegacyTheme.shapes.r4)
+            .clip(CategoriesTheme.shapes.r4)
+            .border(2.dp, CategoriesTheme.colors.medium, CategoriesTheme.shapes.r4)
             .clickable(
                 onClick = onClick
             )
@@ -317,7 +311,7 @@ private fun CompactCategoryCard(
     Box(
         modifier = Modifier
             .padding(horizontal = 16.dp)
-            .border(2.dp, LegacyTheme.colors.medium, LegacyTheme.shapes.r4)
+            .border(2.dp, CategoriesTheme.colors.medium, CategoriesTheme.shapes.r4)
             .clickable(
                 onClick = onClick
             ),
@@ -352,8 +346,8 @@ private fun CompactCategoryCard(
             ) {
                 Text(
                     text = category.name.value,
-                    style = LegacyTheme.typo.b2.copy(
-                        color = LegacyTheme.colors.pureInverse,
+                    style = CategoriesTheme.typo.b2.copy(
+                        color = CategoriesTheme.colors.pureInverse,
                         fontWeight = FontWeight.Bold,
                         textAlign = TextAlign.Start
                     )
@@ -370,8 +364,8 @@ private fun CompactCategoryCard(
 
                     Text(
                         text = "$balancePrefixValue$currencyFormatted",
-                        style = LegacyTheme.typo.nB1.copy(
-                            color = LegacyTheme.colors.pureInverse,
+                        style = CategoriesTheme.typo.nB1.copy(
+                            color = CategoriesTheme.colors.pureInverse,
                             fontWeight = FontWeight.Bold,
                             textAlign = TextAlign.Start
                         )
@@ -379,8 +373,8 @@ private fun CompactCategoryCard(
                     Spacer(modifier = Modifier.width(4.dp))
                     Text(
                         text = currency,
-                        style = LegacyTheme.typo.nB2.copy(
-                            color = LegacyTheme.colors.pureInverse,
+                        style = CategoriesTheme.typo.nB2.copy(
+                            color = CategoriesTheme.colors.pureInverse,
                             fontWeight = FontWeight.Medium,
                             textAlign = TextAlign.Start
                         )
@@ -397,8 +391,8 @@ internal fun AddedSpent(
     monthlyExpenses: Double,
     currency: String,
     modifier: Modifier = Modifier,
-    textColor: Color = LegacyTheme.colors.pureInverse,
-    dividerColor: Color = LegacyTheme.colors.medium,
+    textColor: Color = CategoriesTheme.colors.pureInverse,
+    dividerColor: Color = CategoriesTheme.colors.medium,
     center: Boolean = true,
     dividerSpacer: Dp? = null,
 
@@ -432,7 +426,7 @@ internal fun AddedSpent(
             modifier = Modifier
                 .width(2.dp)
                 .height(48.dp)
-                .background(dividerColor, LegacyTheme.shapes.rFull)
+                .background(dividerColor, CategoriesTheme.shapes.rFull)
         )
 
         if (center) {
@@ -470,7 +464,7 @@ private fun LabelAmount(
     ) {
         Text(
             text = label,
-            style = LegacyTheme.typo.c.copy(
+            style = CategoriesTheme.typo.c.copy(
                 color = textColor,
                 fontWeight = FontWeight.ExtraBold,
                 textAlign = TextAlign.Start
@@ -506,7 +500,7 @@ private fun CategoryHeader(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .background(category.color.value.toComposeColor(), LegacyTheme.shapes.r4Top)
+            .background(category.color.value.toComposeColor(), CategoriesTheme.shapes.r4Top)
     ) {
         Spacer(Modifier.height(16.dp))
 
@@ -525,7 +519,7 @@ private fun CategoryHeader(
 
             Text(
                 text = category.name.value,
-                style = LegacyTheme.typo.b1.copy(
+                style = CategoriesTheme.typo.b1.copy(
                     color = contrastColor,
                     fontWeight = FontWeight.ExtraBold,
                     textAlign = TextAlign.Start
@@ -612,9 +606,9 @@ private fun SortModalSetButton(onClick: () -> Unit) {
     GradientButton(
         text = stringResource(R.string.set),
         backgroundGradient = IvyGradients.Green,
-        disabledBackgroundColor = LegacyTheme.colors.gray,
-        shape = LegacyTheme.shapes.rFull,
-        textStyle = LegacyTheme.typo.b2.copy(
+        disabledBackgroundColor = CategoriesTheme.colors.gray,
+        shape = CategoriesTheme.shapes.rFull,
+        textStyle = CategoriesTheme.typo.b2.copy(
             color = Color(0xFFFAFAFA),
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Start
@@ -639,10 +633,10 @@ private fun SelectTypeButton(
             .padding(horizontal = 16.dp)
             .fillMaxWidth()
             .height(64.dp)
-            .clip(LegacyTheme.shapes.r4)
+            .clip(CategoriesTheme.shapes.r4)
             .background(
-                brush = if (selected) selectedGradient.asHorizontalBrush() else SolidColor(LegacyTheme.colors.medium),
-                shape = LegacyTheme.shapes.r4
+                brush = if (selected) selectedGradient.asHorizontalBrush() else SolidColor(CategoriesTheme.colors.medium),
+                shape = CategoriesTheme.shapes.r4
             )
             .clickable {
                 onClick()
@@ -652,7 +646,7 @@ private fun SelectTypeButton(
     ) {
         Spacer(Modifier.width(16.dp))
 
-        val textColor = if (selected) textSelectedColor else LegacyTheme.colors.pureInverse
+        val textColor = if (selected) textSelectedColor else CategoriesTheme.colors.pureInverse
 
         ResourceIcon(
             icon = icon,
@@ -665,7 +659,7 @@ private fun SelectTypeButton(
         Text(
             modifier = Modifier.wrapContentHeight(),
             text = text,
-            style = LegacyTheme.typo.b1.copy(
+            style = CategoriesTheme.typo.b1.copy(
                 color = textColor,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Start
@@ -683,7 +677,7 @@ private fun SelectTypeButton(
 
             Text(
                 text = stringResource(R.string.selected_text),
-                style = LegacyTheme.typo.b2.copy(
+                style = CategoriesTheme.typo.b2.copy(
                     fontWeight = FontWeight.SemiBold,
                     color = textSelectedColor,
                     textAlign = TextAlign.Start
@@ -714,9 +708,3 @@ private fun SearchField(
         }
     )
 }
-
-private fun CategoryModalSaveData.toCreateCategoryData() = CreateCategoryData(
-    name = name,
-    color = color,
-    icon = icon,
-)

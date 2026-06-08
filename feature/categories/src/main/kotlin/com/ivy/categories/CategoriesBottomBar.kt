@@ -27,7 +27,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.ivy.ui.R
-import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.compose.GradientButton
 import com.ivy.ui.compose.gradientCutBackgroundTop
 import com.ivy.ui.compose.navigationBarInset
@@ -43,9 +42,9 @@ internal fun BoxWithConstraintsScope.CategoriesBottomBar(
         GradientButton(
             text = stringResource(R.string.add_category),
             backgroundGradient = IvyGradients.Ivy,
-            disabledBackgroundColor = LegacyTheme.colors.gray,
-            shape = LegacyTheme.shapes.rFull,
-            textStyle = LegacyTheme.typo.b2.copy(
+            disabledBackgroundColor = CategoriesTheme.colors.gray,
+            shape = CategoriesTheme.shapes.rFull,
+            textStyle = CategoriesTheme.typo.b2.copy(
                 color = Color(0xFFFAFAFA),
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Start
@@ -64,8 +63,8 @@ private fun BoxWithConstraintsScope.CategoriesBackBottomBar(
     onBack: () -> Unit,
     primaryAction: @Composable () -> Unit,
 ) {
-    val pure = LegacyTheme.colors.pure
-    val medium = LegacyTheme.colors.medium
+    val pure = CategoriesTheme.colors.pure
+    val medium = CategoriesTheme.colors.medium
 
     Row(
         modifier = Modifier
@@ -110,12 +109,12 @@ private fun BottomBarBackButton(
         modifier = Modifier
             .rotate(180f)
             .clip(CircleShape)
-            .background(LegacyTheme.colors.pure, CircleShape)
-            .border(2.dp, LegacyTheme.colors.medium, CircleShape)
+            .background(CategoriesTheme.colors.pure, CircleShape)
+            .border(2.dp, CategoriesTheme.colors.medium, CircleShape)
             .clickable(onClick = onBack)
             .padding(6.dp),
         painter = painterResource(id = R.drawable.ic_arrow_right),
         contentDescription = "back",
-        tint = LegacyTheme.colors.pureInverse,
+        tint = CategoriesTheme.colors.pureInverse,
     )
 }
