@@ -50,8 +50,8 @@ import com.ivy.ui.platform.LocalDatePicker
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.period.displayLong
 import com.ivy.ui.period.LocalPeriodState
-import com.ivy.legacy.ui.tags.AddTagButton
 import com.ivy.legacy.ui.tags.ShowTagModal
+import com.ivy.ui.tags.AddTagButton
 import com.ivy.ui.animation.springBounce
 import com.ivy.ui.R
 import com.ivy.ui.theme.colors.IvyGradients

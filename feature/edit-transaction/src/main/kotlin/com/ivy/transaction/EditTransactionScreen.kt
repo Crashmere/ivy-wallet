@@ -45,8 +45,8 @@ import com.ivy.data.model.TagId
 import com.ivy.ui.platform.LocalDatePicker
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.platform.hideKeyboard
-import com.ivy.legacy.ui.tags.AddTagButton
 import com.ivy.legacy.ui.tags.ShowTagModal
+import com.ivy.ui.tags.AddTagButton
 import com.ivy.ui.navigation.onScreenStart
 import com.ivy.ui.navigation.EditPlannedScreen
 import com.ivy.ui.navigation.EditTransactionScreen

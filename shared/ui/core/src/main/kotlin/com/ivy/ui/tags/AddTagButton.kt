@@ -1,4 +1,4 @@
-package com.ivy.legacy.ui.tags
+package com.ivy.ui.tags
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
@@ -8,18 +8,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.TagId
-import com.ivy.legacy.ui.theme.Gradient
-import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.legacy.ui.theme.Orange3
-import com.ivy.legacy.ui.theme.findContrastTextColor
 import com.ivy.ui.R
 import com.ivy.ui.compose.GradientButton
 import com.ivy.ui.compose.OutlinedPillButton
-import kotlinx.collections.immutable.ImmutableList
+import com.ivy.ui.theme.colors.Gradient
+import com.ivy.ui.theme.colors.findContrastTextColor
 
 @Composable
 fun AddTagButton(
-    transactionAssociatedTags: ImmutableList<TagId>,
+    transactionAssociatedTags: List<TagId>,
     onClick: () -> Unit
 ) {
     if (transactionAssociatedTags.isNotEmpty()) {
@@ -31,17 +28,19 @@ fun AddTagButton(
 
 @Composable
 private fun ViewTagsButton(
-    transactionTags: ImmutableList<TagId>,
+    transactionTags: List<TagId>,
     onClick: () -> Unit,
 ) {
-    val contrastColor = findContrastTextColor(Orange3)
+    val tagTheme = TagButtonTheme
+    val selectedTagColor = tagTheme.colors.selectedTag
+    val contrastColor = findContrastTextColor(selectedTagColor)
     GradientButton(
         modifier = Modifier.padding(start = 24.dp),
         text = if (transactionTags.size <= 1) "${transactionTags.size}\t Tag" else "${transactionTags.size}\t Tags",
-        backgroundGradient = Gradient.solid(Orange3),
-        disabledBackgroundColor = LegacyTheme.colors.gray,
-        shape = LegacyTheme.shapes.rFull,
-        textStyle = LegacyTheme.typo.b2.copy(
+        backgroundGradient = Gradient.solid(selectedTagColor),
+        disabledBackgroundColor = tagTheme.colors.gray,
+        shape = tagTheme.shapes.rFull,
+        textStyle = tagTheme.typo.b2.copy(
             color = contrastColor,
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Start
@@ -58,16 +57,17 @@ private fun ViewTagsButton(
 private fun AddTagsButton(
     onClick: () -> Unit,
 ) {
+    val tagTheme = TagButtonTheme
     OutlinedPillButton(
         modifier = Modifier.padding(start = 24.dp),
         iconStart = R.drawable.ic_plus,
-        shape = LegacyTheme.shapes.rFull,
-        backgroundColor = LegacyTheme.colors.pure,
-        iconTint = LegacyTheme.colors.pureInverse,
-        borderColor = LegacyTheme.colors.mediumInverse,
+        shape = tagTheme.shapes.rFull,
+        backgroundColor = tagTheme.colors.pure,
+        iconTint = tagTheme.colors.pureInverse,
+        borderColor = tagTheme.colors.mediumInverse,
         text = stringResource(R.string.add_tags),
-        textStyle = LegacyTheme.typo.b2.copy(
-            color = LegacyTheme.colors.pureInverse,
+        textStyle = tagTheme.typo.b2.copy(
+            color = tagTheme.colors.pureInverse,
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Start
         ),
