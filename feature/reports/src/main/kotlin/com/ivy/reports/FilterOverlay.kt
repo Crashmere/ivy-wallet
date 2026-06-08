@@ -475,8 +475,7 @@ fun BoxWithConstraintsScope.FilterOverlay(
 fun ColumnScope.TagsFilter(
     filter: ReportFilter?,
     onIncludesTagButtonClick: () -> Unit,
-    onExcludesTagButtonClick: () -> Unit,
-    @Suppress("UnusedParameter") modifier: Modifier = Modifier
+    onExcludesTagButtonClick: () -> Unit
 ) {
     FilterTitleText(
         text = stringResource(R.string.tags_optional),
@@ -517,8 +516,7 @@ fun ColumnScope.TagsFilter(
 @Composable
 fun ColumnScope.TagFilter(
     selectedTags: ImmutableList<TagId>,
-    onTagButtonClick: () -> Unit,
-    @Suppress("UnusedParameter") modifier: Modifier = Modifier
+    onTagButtonClick: () -> Unit
 ) {
     Spacer(Modifier.height(12.dp))
 

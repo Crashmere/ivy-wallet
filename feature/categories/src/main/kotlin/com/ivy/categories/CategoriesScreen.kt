@@ -533,7 +533,6 @@ private fun CategoryHeader(
     }
 }
 
-@Suppress("UnusedParameter")
 @Composable
 fun BoxWithConstraintsScope.SortModal(
     items: ImmutableList<SortOrder>,
@@ -541,7 +540,6 @@ fun BoxWithConstraintsScope.SortModal(
     initialType: SortOrder,
     dismiss: () -> Unit,
     onSortOrderChange: (SortOrder) -> Unit,
-    modifier: Modifier = Modifier,
     title: String = stringResource(R.string.sort_by),
     id: UUID = UUID.randomUUID()
 ) {
