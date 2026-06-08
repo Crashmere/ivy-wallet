@@ -37,10 +37,10 @@ import com.ivy.ui.compose.rememberInteractionSource
 import com.ivy.ui.navigation.navigation
 import com.ivy.ui.navigation.screenScopedViewModel
 import com.ivy.ui.R
-import com.ivy.legacy.ui.icon.IvyIcon
 import com.ivy.legacy.ui.modal.ReorderModalSingleType
 import com.ivy.legacy.ui.money.AmountCurrencyB1
 import com.ivy.ui.compose.FilledIconButton
+import com.ivy.ui.compose.ResourceIcon
 
 @Composable
 fun BoxWithConstraintsScope.BudgetScreen() {
@@ -351,7 +351,7 @@ private fun NoBudgetsEmptyState(
     ) {
         Spacer(Modifier.height(32.dp))
 
-        IvyIcon(
+        ResourceIcon(
             icon = R.drawable.ic_budget_xl,
             tint = LegacyTheme.colors.gray
         )

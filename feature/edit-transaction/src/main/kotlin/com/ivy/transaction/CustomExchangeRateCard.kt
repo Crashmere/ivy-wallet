@@ -21,9 +21,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.currency.IvyCurrency
 import com.ivy.data.model.currency.format
-import com.ivy.legacy.ui.icon.IvyIcon
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.R
+import com.ivy.ui.compose.ResourceIcon
 
 @Composable
 internal fun CustomExchangeRateCard(
@@ -48,7 +48,10 @@ internal fun CustomExchangeRateCard(
     ) {
         Spacer(Modifier.width(16.dp))
 
-        IvyIcon(icon = R.drawable.ic_currency)
+        ResourceIcon(
+            icon = R.drawable.ic_currency,
+            tint = LegacyTheme.colors.pureInverse
+        )
 
         Spacer(Modifier.width(8.dp))
         Column(
@@ -78,7 +81,10 @@ internal fun CustomExchangeRateCard(
                         textAlign = TextAlign.Start
                     )
                 )
-                IvyIcon(icon = R.drawable.ic_arrow_right, tint = LegacyTheme.colors.orange)
+                ResourceIcon(
+                    icon = R.drawable.ic_arrow_right,
+                    tint = LegacyTheme.colors.orange
+                )
                 Text(
                     text = toCurrencyCode,
                     style = LegacyTheme.typo.nB2.copy(
@@ -102,7 +108,10 @@ internal fun CustomExchangeRateCard(
                         textAlign = TextAlign.Start
                     )
                 )
-                IvyIcon(icon = R.drawable.ic_arrow_right, tint = LegacyTheme.colors.orange)
+                ResourceIcon(
+                    icon = R.drawable.ic_arrow_right,
+                    tint = LegacyTheme.colors.orange
+                )
                 Text(
                     text = exchangeRate.format(IvyCurrency.getDecimalPlaces(toCurrencyCode)),
                     style = LegacyTheme.typo.nB2.copy(
@@ -113,8 +122,9 @@ internal fun CustomExchangeRateCard(
                 )
             }
         }
-        IvyIcon(
+        ResourceIcon(
             icon = R.drawable.ic_refresh,
+            tint = LegacyTheme.colors.pureInverse,
             modifier = Modifier
                 .padding(end = 16.dp)
                 .clickable {
