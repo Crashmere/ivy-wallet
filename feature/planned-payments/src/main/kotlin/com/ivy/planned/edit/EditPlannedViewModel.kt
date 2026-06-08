@@ -26,8 +26,8 @@ import com.ivy.domain.usecase.category.CreateCategoryUseCase
 import com.ivy.domain.usecase.category.UpdateCategoryUseCase
 import com.ivy.data.model.CreateAccountData
 import com.ivy.data.model.CreateCategoryData
+import com.ivy.legacy.ui.modal.AccountModalData
 import com.ivy.ui.modal.RecurringRuleModalData
-import com.ivy.ui.modal.AccountModalData
 import com.ivy.ui.modal.CategoryModalData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList

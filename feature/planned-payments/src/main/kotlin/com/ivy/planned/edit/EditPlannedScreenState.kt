@@ -4,8 +4,8 @@ import com.ivy.data.model.TransactionType
 import com.ivy.data.model.Category
 import com.ivy.data.model.IntervalType
 import com.ivy.data.model.legacy.LegacyAccount
+import com.ivy.legacy.ui.modal.AccountModalData
 import com.ivy.ui.modal.RecurringRuleModalData
-import com.ivy.ui.modal.AccountModalData
 import com.ivy.ui.modal.CategoryModalData
 import kotlinx.collections.immutable.ImmutableList
 import java.time.LocalDateTime

@@ -78,10 +78,10 @@ import com.ivy.legacy.ui.theme.findContrastTextColor
 import com.ivy.legacy.ui.theme.isDarkColor
 import com.ivy.legacy.ui.modal.ChoosePeriodModal
 import com.ivy.ui.modal.ChoosePeriodModalData
+import com.ivy.legacy.ui.modal.AccountModalData
 import com.ivy.legacy.ui.modal.DeleteConfirmationModal
 import com.ivy.legacy.ui.modal.DeleteModal
 import com.ivy.legacy.ui.modal.edit.AccountModal
-import com.ivy.ui.modal.AccountModalData
 import com.ivy.legacy.ui.modal.edit.CategoryModal
 import com.ivy.ui.modal.CategoryModalData
 import com.ivy.legacy.ui.theme.toComposeColor

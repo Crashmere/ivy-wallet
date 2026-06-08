@@ -48,7 +48,6 @@ import com.ivy.ui.R
 import com.ivy.data.model.currency.IvyCurrency
 import com.ivy.data.model.CreateAccountData
 import com.ivy.data.model.CreateLoanData
-import com.ivy.ui.modal.AccountModalData
 import com.ivy.ui.modal.LoanModalData
 import com.ivy.legacy.ui.theme.GradientIvy
 import com.ivy.legacy.ui.theme.Gray

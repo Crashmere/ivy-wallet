@@ -66,8 +66,8 @@ import com.ivy.legacy.ui.modal.ModalAdd
 import com.ivy.legacy.ui.modal.ModalCheck
 import com.ivy.legacy.ui.modal.ModalSave
 import com.ivy.legacy.ui.modal.ProgressModal
+import com.ivy.legacy.ui.modal.AccountModalData
 import com.ivy.legacy.ui.modal.edit.AccountModal
-import com.ivy.ui.modal.AccountModalData
 import com.ivy.legacy.ui.modal.edit.AmountModal
 import com.ivy.legacy.ui.modal.edit.CategoryModal
 import com.ivy.ui.modal.CategoryModalData

@@ -26,7 +26,7 @@ import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.legacy.ui.theme.style
 import com.ivy.legacy.ui.component.IvyColorPicker
 import com.ivy.data.model.legacy.LegacyAccount
-import com.ivy.ui.modal.AccountModalData
+import com.ivy.legacy.ui.modal.AccountModalData
 import com.ivy.ui.compose.onCompositionStart
 import com.ivy.ui.compose.selectEndTextFieldValue
 import com.ivy.ui.R

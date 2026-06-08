@@ -1286,6 +1286,7 @@ shared:ui:core
 - 报表页面事件统一为 `sealed interface`，与其他 feature 的事件定义风格保持一致，减少无意义的 `ReportScreenEvent()` 继承样板。
 - 借贷创建和还款记录创建数据已从携带完整 `LegacyAccount` 改为只携带账户 ID；旧弹窗仍用完整账户对象渲染选择项，domain 创建和交易同步只接收 ID，`shared:data:model` 不再因为这两个创建 DTO 依赖 legacy 账户模型。
 - 借贷弹窗和还款记录弹窗的 modal data 也已从完整选中账户收窄为账户 ID；旧弹窗继续根据当前账户列表解析展示对象，`shared:ui:core` 的借贷弹窗状态不再依赖 legacy 账户模型。
+- 账户编辑弹窗状态 `AccountModalData` 已从 `shared:ui:core` 迁回 `shared:ui:legacy`；它本质上仍是旧账户弹窗的入参，UI core 不再直接引用 `LegacyAccount`。
 - app 仍保留文件选择、文件分享、Material 日期选择器、BuildInfo、Locale 设置、生物识别和窗口安全等真正依赖 Activity 或 Android app 壳层的装配。
 
 ## 高风险区域
