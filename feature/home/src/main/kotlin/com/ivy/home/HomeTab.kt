@@ -43,10 +43,17 @@ import com.ivy.ui.compose.horizontalSwipeListener
 import com.ivy.ui.compose.rememberSwipeListenerState
 import com.ivy.ui.compose.verticalSwipeListener
 import com.ivy.ui.navigation.BalanceScreen
+import com.ivy.ui.navigation.BudgetScreen
+import com.ivy.ui.navigation.CategoriesScreen
 import com.ivy.ui.navigation.EditPlannedScreen
 import com.ivy.ui.navigation.EditTransactionScreen
+import com.ivy.ui.navigation.LoansScreen
 import com.ivy.ui.navigation.MainScreen
 import com.ivy.ui.navigation.PieChartStatisticScreen
+import com.ivy.ui.navigation.PlannedPaymentsScreen
+import com.ivy.ui.navigation.ReportScreen
+import com.ivy.ui.navigation.SearchScreen
+import com.ivy.ui.navigation.SettingsScreen
 import com.ivy.ui.navigation.TransactionRouteType
 import com.ivy.ui.navigation.TransactionsScreen
 import com.ivy.ui.navigation.navigation
@@ -97,6 +104,17 @@ fun BoxWithConstraintsScope.HomeTab(
         onOpenExpensePieChart = {
             nav.navigateTo(PieChartStatisticScreen(type = TransactionRouteType.EXPENSE))
         },
+        onMoreMenuDestinationClick = { destination ->
+            when (destination) {
+                MoreMenuDestination.Search -> nav.navigateTo(SearchScreen)
+                MoreMenuDestination.Settings -> nav.navigateTo(SettingsScreen)
+                MoreMenuDestination.Categories -> nav.navigateTo(CategoriesScreen)
+                MoreMenuDestination.PlannedPayments -> nav.navigateTo(PlannedPaymentsScreen)
+                MoreMenuDestination.Reports -> nav.navigateTo(ReportScreen)
+                MoreMenuDestination.Budgets -> nav.navigateTo(BudgetScreen)
+                MoreMenuDestination.Loans -> nav.navigateTo(LoansScreen)
+            }
+        },
     )
 }
 
@@ -110,6 +128,7 @@ internal fun BoxWithConstraintsScope.HomeUi(
     onOpenAccountsTab: () -> Unit,
     onOpenIncomePieChart: () -> Unit,
     onOpenExpensePieChart: () -> Unit,
+    onMoreMenuDestinationClick: (MoreMenuDestination) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val periodState = LocalPeriodState.current
@@ -247,7 +266,8 @@ internal fun BoxWithConstraintsScope.HomeUi(
         },
         onCurrencyClick = {
             currencyModalVisible = true
-        }
+        },
+        onDestinationClick = onMoreMenuDestinationClick
     )
 
     BufferModal(

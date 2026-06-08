@@ -57,14 +57,6 @@ import com.ivy.ui.animation.springBounce
 import com.ivy.ui.compose.statusBarInset
 import com.ivy.ui.compose.toDensityPx
 import com.ivy.ui.compose.verticalSwipeListener
-import com.ivy.ui.navigation.BudgetScreen
-import com.ivy.ui.navigation.CategoriesScreen
-import com.ivy.ui.navigation.LoansScreen
-import com.ivy.ui.navigation.PlannedPaymentsScreen
-import com.ivy.ui.navigation.ReportScreen
-import com.ivy.ui.navigation.SearchScreen
-import com.ivy.ui.navigation.SettingsScreen
-import com.ivy.ui.navigation.navigation
 import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.Gray
 import com.ivy.legacy.ui.component.BufferBattery
@@ -76,6 +68,16 @@ import java.util.UUID
 import kotlin.math.roundToInt
 
 private const val SWIPE_UP_THRESHOLD_CLOSE_MORE_MENU = 300
+
+internal enum class MoreMenuDestination {
+    Search,
+    Settings,
+    Categories,
+    PlannedPayments,
+    Reports,
+    Budgets,
+    Loans
+}
 
 @Composable
 internal fun BoxWithConstraintsScope.MoreMenu(
@@ -90,6 +92,7 @@ internal fun BoxWithConstraintsScope.MoreMenu(
     onSwitchTheme: () -> Unit,
     onBufferClick: () -> Unit,
     onCurrencyClick: () -> Unit,
+    onDestinationClick: (MoreMenuDestination) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val percentExpanded by animateFloatAsState(
@@ -184,7 +187,8 @@ internal fun BoxWithConstraintsScope.MoreMenu(
                 buffer = buffer,
                 currency = currency,
                 onBufferClick = onBufferClick,
-                onCurrencyClick = onCurrencyClick
+                onCurrencyClick = onCurrencyClick,
+                onDestinationClick = onDestinationClick
             )
         }
     }
@@ -223,21 +227,20 @@ private fun ColumnScope.Content(
     onSwitchTheme: () -> Unit,
     onBufferClick: () -> Unit,
     onCurrencyClick: () -> Unit,
+    onDestinationClick: (MoreMenuDestination) -> Unit,
 ) {
     Spacer(Modifier.height(24.dp))
 
-    val nav = navigation()
     SearchButton {
-        nav.navigateTo(
-            screen = SearchScreen
-        )
+        onDestinationClick(MoreMenuDestination.Search)
     }
 
     Spacer(Modifier.height(16.dp))
 
     QuickAccess(
         theme = theme,
-        onSwitchTheme = onSwitchTheme
+        onSwitchTheme = onSwitchTheme,
+        onDestinationClick = onDestinationClick
     )
 
     Spacer(Modifier.height(40.dp))
@@ -343,11 +346,10 @@ private fun ColumnScope.Buffer(
 @Composable
 private fun QuickAccess(
     theme: Theme,
-    onSwitchTheme: () -> Unit
+    onSwitchTheme: () -> Unit,
+    onDestinationClick: (MoreMenuDestination) -> Unit
 ) {
     Column {
-        val nav = navigation()
-
         Text(
             modifier = Modifier.padding(start = 24.dp),
             text = stringResource(R.string.quick_access),
@@ -367,7 +369,7 @@ private fun QuickAccess(
                 icon = R.drawable.home_more_menu_settings,
                 label = stringResource(R.string.settings)
             ) {
-                nav.navigateTo(SettingsScreen)
+                onDestinationClick(MoreMenuDestination.Settings)
             }
 
             Spacer(Modifier.weight(1f))
@@ -376,7 +378,7 @@ private fun QuickAccess(
                 icon = R.drawable.home_more_menu_categories,
                 label = stringResource(R.string.categories)
             ) {
-                nav.navigateTo(CategoriesScreen)
+                onDestinationClick(MoreMenuDestination.Categories)
             }
 
             Spacer(Modifier.weight(1f))
@@ -416,7 +418,7 @@ private fun QuickAccess(
                 icon = R.drawable.home_more_menu_planned_payments,
                 label = stringResource(R.string.planned_payments)
             ) {
-                nav.navigateTo(PlannedPaymentsScreen)
+                onDestinationClick(MoreMenuDestination.PlannedPayments)
             }
 
             Spacer(Modifier.weight(1f))
@@ -436,7 +438,7 @@ private fun QuickAccess(
                 icon = R.drawable.home_more_menu_reports,
                 label = stringResource(R.string.reports),
             ) {
-                nav.navigateTo(ReportScreen)
+                onDestinationClick(MoreMenuDestination.Reports)
             }
 
             Spacer(Modifier.weight(1f))
@@ -445,7 +447,7 @@ private fun QuickAccess(
                 icon = R.drawable.home_more_menu_budgets,
                 label = stringResource(R.string.budgets),
             ) {
-                nav.navigateTo(BudgetScreen)
+                onDestinationClick(MoreMenuDestination.Budgets)
             }
 
             Spacer(Modifier.weight(1f))
@@ -454,7 +456,7 @@ private fun QuickAccess(
                 icon = R.drawable.home_more_menu_loans,
                 label = stringResource(R.string.loans),
             ) {
-                nav.navigateTo(LoansScreen)
+                onDestinationClick(MoreMenuDestination.Loans)
             }
 
             Spacer(Modifier.weight(1f))

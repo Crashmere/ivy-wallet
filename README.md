@@ -56,6 +56,7 @@
 - 收窄首页客户旅程模型职责：客户旅程卡片不再携带 `(Navigation, MainTabState) -> Unit` 回调，改为声明 `CustomerJourneyAction` 意图；Composable 层负责把意图翻译为导航或 Tab 切换。
 - 首页客户旅程 UI 组件也已停止直接调用 `navigation()` 或构造 route；`HomeLazyColumn` 负责把 `CustomerJourneyAction` 翻译为打开账户 tab、计划付款编辑或支出饼图。
 - 首页 Header 的收入/支出卡片不再直接构造饼图 route；点击动作改为普通回调，由 `HomeTab` 顶层统一执行导航。
+- 首页更多菜单不再直接引用各功能 route；菜单按钮改为上报 `MoreMenuDestination`，由 `HomeTab` 统一映射到搜索、设置、分类、计划付款、报表、预算和借贷页面。
 - 收窄计划付款列表导航职责：计划付款列表和卡片不再直接调用 `navigation()` 或构造 route，改为向页面入口暴露点击回调；`PlannedPaymentsScreen` 统一把卡片、分类和账户点击翻译为编辑页或交易筛选页导航。
 - 切断 legacy UI 对导航模块的依赖：legacy 内部初始化副作用改用 `shared:ui:core` 的 `onCompositionStart()`，`shared:ui:legacy` 不再声明 `shared:ui:navigation` 依赖。
 - 继续收窄导航模块依赖：`shared:ui:navigation` 已移除未使用的 `shared:ui:core` 依赖，当前只保留自身导航状态、Compose ViewModel owner 和 route 需要的 immutable collection。
