@@ -31,7 +31,7 @@ fun CloseButton(
 }
 
 @Composable
-internal fun CircleButton(
+private fun CircleButton(
     modifier: Modifier = Modifier,
     @DrawableRes icon: Int,
     contentDescription: String = "icon",

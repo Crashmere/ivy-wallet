@@ -96,6 +96,7 @@
 - 分类编辑弹窗的名称输入框已移回 `CategoryModal` 文件私有实现；`shared:ui:legacy` 删除不再作为通用组件使用的 `IvyNameTextField` 文件。
 - 周期间隔行的数字输入框已移回 `IntervalPickerRow` 文件私有实现；`shared:ui:legacy` 删除不再作为通用组件使用的 `IvyNumberTextField` 文件。
 - 搜索框的基础文本输入已移回 `SearchInput` 文件私有实现；`shared:ui:legacy` 删除不再作为通用组件使用的 `IvyBasicTextField` 文件。
+- 旧圆形描边按钮底层 `CircleButton` 只剩 `CloseButton` 同文件调用，已从模块内部 API 继续收窄为文件私有实现。
 - CSV 导入结果页的返回按钮已改为 `feature:import-data` 私有实现；`shared:ui:legacy` 的 `BackButton` 收窄为模块内部给旧工具栏使用。
 - 饼图页不再直接调用底层 `ItemIconM`，改用带默认图标的包装入口；`shared:ui:legacy` 的 `ItemIconM` 收窄为模块内部实现。
 - 计划付款列表改用本 feature 私有的分组分隔条；`shared:ui:legacy` 的交易 `SectionDivider` 收窄为交易列表内部实现。
