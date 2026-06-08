@@ -5,6 +5,8 @@ pluginManagement {
     }
 }
 
+rootProject.name = "IvyWalletBuildSrc"
+
 dependencyResolutionManagement {
     repositories {
         google()

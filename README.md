@@ -31,6 +31,7 @@
 - 精简 app lint 配置：删除强制生成根目录 lint HTML/XML 报告和跨依赖 lint 扫描的配置，只保留当前项目仍需要的 lint 抑制与 release 检查策略。
 - 清理生产代码中的裸异常堆栈输出：编辑交易、计划付款以及预算/分类/借贷保存用例不再调用 `printStackTrace()`，继续按原有失败返回值处理。
 - 收窄 feature 内部 Compose helper：分类排序弹窗和报表标签筛选不再保留未使用的 `modifier` 参数，减少无意义 suppress。
+- 补齐 `buildSrc` 根项目名，消除 Gradle type-safe project accessors 针对 buildSrc checkout 路径的缓存警告。
 
 当前仍保留：
 
