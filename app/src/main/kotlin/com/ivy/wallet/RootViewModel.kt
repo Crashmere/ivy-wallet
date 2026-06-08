@@ -1,7 +1,5 @@
 package com.ivy.wallet
 
-import android.content.Intent
-import androidx.core.content.IntentCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ivy.data.model.TransactionType
@@ -10,14 +8,12 @@ import com.ivy.domain.usecase.settings.GetThemeUseCase
 import com.ivy.domain.usecase.settings.IsInitialSetupCompletedUseCase
 import com.ivy.ui.theme.ThemeState
 import com.ivy.ui.period.PeriodState
-import com.ivy.ui.navigation.EditTransactionScreen
-import com.ivy.ui.navigation.MainScreen
-import com.ivy.ui.navigation.Navigation
-import com.ivy.ui.navigation.TransactionRouteType
 import com.ivy.wallet.notification.reminder.TransactionReminderScheduler
 import com.ivy.wallet.startup.InitialDataSetup
 import com.ivy.wallet.security.AppLockController
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -26,7 +22,6 @@ import javax.inject.Inject
 class RootViewModel @Inject constructor(
     private val themeState: ThemeState,
     private val periodState: PeriodState,
-    private val nav: Navigation,
     private val getTheme: GetThemeUseCase,
     private val getStartDayOfMonth: GetStartDayOfMonthUseCase,
     private val isInitialSetupCompletedUseCase: IsInitialSetupCompletedUseCase,
@@ -35,9 +30,12 @@ class RootViewModel @Inject constructor(
     private val initialDataSetup: InitialDataSetup,
 ) : ViewModel() {
 
+    private val _events = Channel<RootUiEvent>(Channel.BUFFERED)
+    val events = _events.receiveAsFlow()
+
     val appLocked = appLockController.appLocked
 
-    fun start(systemDarkMode: Boolean, intent: Intent) {
+    fun start(systemDarkMode: Boolean, addTransactionType: TransactionType?) {
         viewModelScope.launch {
             val theme = getTheme.withSystemFallback(systemDarkMode)
             themeState.update(theme)
@@ -52,44 +50,18 @@ class RootViewModel @Inject constructor(
                 initialDataSetup.setupDefaults(systemDarkMode)
             }
 
-            navigateOnboardedUser(intent)
+            openStartDestination(addTransactionType)
         }
     }
 
-    private fun navigateOnboardedUser(intent: Intent) {
-        if (!handleSpecialStart(intent)) {
-            nav.navigateTo(MainScreen)
-            transactionReminderScheduler.scheduleReminder()
-        }
-    }
-
-    @Suppress("SwallowedException")
-    private fun handleSpecialStart(intent: Intent): Boolean {
-        val addTransactionType: TransactionType? = try {
-            IntentCompat.getSerializableExtra(
-                intent,
-                RootIntentExtras.EXTRA_ADD_TRANSACTION_TYPE,
-                TransactionType::class.java
-            )
-                ?: TransactionType.valueOf(
-                    intent.getStringExtra(RootIntentExtras.EXTRA_ADD_TRANSACTION_TYPE) ?: ""
-                )
-        } catch (e: IllegalArgumentException) {
-            null
-        }
-
+    private suspend fun openStartDestination(addTransactionType: TransactionType?) {
         if (addTransactionType != null) {
-            nav.navigateTo(
-                EditTransactionScreen(
-                    initialTransactionId = null,
-                    type = TransactionRouteType.valueOf(addTransactionType.name)
-                )
-            )
-
-            return true
+            _events.send(RootUiEvent.OpenAddTransaction(addTransactionType))
+            return
         }
 
-        return false
+        transactionReminderScheduler.scheduleReminder()
+        _events.send(RootUiEvent.OpenMain)
     }
 
     fun handleBiometricAuthenticationSucceeded() {
@@ -120,4 +92,9 @@ class RootViewModel @Inject constructor(
     fun checkUserInactiveTimeStatus() {
         appLockController.checkUserInactiveTimeStatus()
     }
+}
+
+sealed interface RootUiEvent {
+    data object OpenMain : RootUiEvent
+    data class OpenAddTransaction(val type: TransactionType) : RootUiEvent
 }

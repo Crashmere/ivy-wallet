@@ -1,6 +1,5 @@
 package com.ivy.wallet
 
-import android.content.Intent
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -12,6 +11,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import com.ivy.IvyNavGraph
 import com.ivy.data.model.Theme
+import com.ivy.data.model.TransactionType
 import com.ivy.domain.preferences.toggles.PreferenceToggleService
 import com.ivy.domain.preferences.toggles.PreferenceToggles
 import com.ivy.ui.LegacyUiRoot
@@ -20,8 +20,11 @@ import com.ivy.ui.preferences.LocalAmountInputPreferences
 import com.ivy.ui.preferences.UiBoolPreference
 import com.ivy.ui.period.LocalPeriodState
 import com.ivy.ui.period.PeriodState
+import com.ivy.ui.navigation.EditTransactionScreen
+import com.ivy.ui.navigation.MainScreen
 import com.ivy.ui.navigation.Navigation
 import com.ivy.ui.navigation.NavigationRoot
+import com.ivy.ui.navigation.TransactionRouteType
 import com.ivy.ui.platform.BuildInfoProvider
 import com.ivy.ui.platform.DatePicker
 import com.ivy.ui.platform.FileSharer
@@ -51,7 +54,7 @@ internal fun RootContent(
     buildInfoProvider: BuildInfoProvider,
     fileSharer: FileSharer,
     viewModel: RootViewModel,
-    intent: Intent,
+    addTransactionType: TransactionType?,
     hasLockScreen: () -> Boolean,
     onShowOSBiometricsModal: () -> Unit,
 ) {
@@ -74,8 +77,19 @@ internal fun RootContent(
     ) {
         val isSystemInDarkTheme = isSystemInDarkTheme()
 
+        LaunchedEffect(viewModel, navigation) {
+            viewModel.events.collect { event ->
+                when (event) {
+                    RootUiEvent.OpenMain -> navigation.navigateTo(MainScreen)
+                    is RootUiEvent.OpenAddTransaction -> {
+                        navigation.navigateTo(event.toEditTransactionScreen())
+                    }
+                }
+            }
+        }
+
         LaunchedEffect(isSystemInDarkTheme) {
-            viewModel.start(isSystemInDarkTheme, intent)
+            viewModel.start(isSystemInDarkTheme, addTransactionType)
         }
 
         val appLocked by viewModel.appLocked.collectAsState()
@@ -136,4 +150,11 @@ private fun isDarkThemeEnabled(theme: Theme, systemDarkTheme: Boolean): Boolean 
         Theme.AMOLED_DARK -> true
         else -> systemDarkTheme
     }
+}
+
+private fun RootUiEvent.OpenAddTransaction.toEditTransactionScreen(): EditTransactionScreen {
+    return EditTransactionScreen(
+        initialTransactionId = null,
+        type = TransactionRouteType.valueOf(type.name)
+    )
 }

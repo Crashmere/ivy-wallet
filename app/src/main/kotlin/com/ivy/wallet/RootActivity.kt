@@ -92,7 +92,7 @@ class RootActivity : AppCompatActivity() {
                 buildInfoProvider = AppBuildInfoProvider,
                 fileSharer = activityFileSharer,
                 viewModel = viewModel,
-                intent = intent,
+                addTransactionType = intent.readAddTransactionTypeExtra(),
                 hasLockScreen = { deviceHasLockScreen(this) },
                 onShowOSBiometricsModal = {
                     biometricAuthenticator.authenticate(
