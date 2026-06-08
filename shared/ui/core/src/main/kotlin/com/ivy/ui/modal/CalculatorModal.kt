@@ -1,4 +1,4 @@
-package com.ivy.legacy.ui.modal.edit
+package com.ivy.ui.modal
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.BoxWithConstraintsScope
@@ -16,11 +16,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.R
-import com.ivy.ui.modal.IvyModal
-import com.ivy.ui.modal.ModalSet
-import com.ivy.ui.modal.ModalTitle
 import com.ivy.ui.money.formatAmount
 import com.ivy.ui.money.formatAmountInput
 import com.ivy.ui.money.localMoneyDecimalSeparator
@@ -74,10 +70,10 @@ internal fun BoxWithConstraintsScope.CalculatorModal(
                 .fillMaxWidth()
                 .padding(horizontal = 24.dp),
             text = if (isEmpty) stringResource(R.string.calculator_empty_expression) else expression,
-            style = LegacyTheme.typo.nH2.copy(
+            style = AmountModalTheme.typo.nH2.copy(
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center,
-                color = if (isEmpty) IvyFixedColors.Gray else LegacyTheme.colors.pureInverse
+                color = if (isEmpty) IvyFixedColors.Gray else AmountModalTheme.colors.pureInverse
             )
         )
 

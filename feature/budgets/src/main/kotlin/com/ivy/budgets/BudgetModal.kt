@@ -39,7 +39,7 @@ import com.ivy.ui.modal.DeleteModal
 import com.ivy.ui.modal.IvyModal
 import com.ivy.ui.modal.ModalAmountSection
 import com.ivy.ui.modal.ModalTitle
-import com.ivy.legacy.ui.modal.edit.AmountModal
+import com.ivy.ui.modal.AmountModal
 import com.ivy.ui.theme.colors.findContrastTextColor
 import com.ivy.ui.theme.colors.toComposeColor
 import com.ivy.ui.compose.thenIf

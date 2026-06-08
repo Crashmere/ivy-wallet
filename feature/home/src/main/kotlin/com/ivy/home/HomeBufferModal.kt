@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import com.ivy.ui.modal.IvyModal
 import com.ivy.ui.modal.ModalAmountSection
 import com.ivy.ui.modal.ModalSave
-import com.ivy.legacy.ui.modal.edit.AmountModal
+import com.ivy.ui.modal.AmountModal
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.R
 import java.util.UUID

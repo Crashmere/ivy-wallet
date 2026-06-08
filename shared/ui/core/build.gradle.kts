@@ -14,6 +14,7 @@ dependencies {
     implementation(libs.compose.activity)
     implementation(libs.androidx.lifecycle.viewmodel)
     implementation(libs.androidx.recyclerview)
+    implementation(libs.keval)
 
     testImplementation(libs.bundles.testing)
 }

@@ -59,7 +59,7 @@ import com.ivy.ui.modal.ModalAmountSection
 import com.ivy.ui.modal.ModalTitle
 import com.ivy.legacy.ui.modal.edit.AccountModal
 import com.ivy.legacy.ui.modal.edit.AccountModalSaveData
-import com.ivy.legacy.ui.modal.edit.AmountModal
+import com.ivy.ui.modal.AmountModal
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.theme.colors.dynamicContrast
 import java.time.Instant

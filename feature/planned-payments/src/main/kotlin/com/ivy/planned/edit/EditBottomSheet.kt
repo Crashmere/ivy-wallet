@@ -75,7 +75,7 @@ import com.ivy.ui.compose.ResourceIcon
 import com.ivy.ui.compose.GradientButton
 import com.ivy.ui.theme.colors.findContrastTextColor
 import com.ivy.ui.animation.DURATION_MODAL_ANIM
-import com.ivy.legacy.ui.modal.edit.AmountModal
+import com.ivy.ui.modal.AmountModal
 import com.ivy.ui.theme.colors.toComposeColor
 import kotlinx.coroutines.launch
 import java.util.Locale

@@ -1,4 +1,4 @@
-package com.ivy.legacy.ui.modal.edit
+package com.ivy.ui.modal
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
@@ -35,12 +35,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ivy.ui.preferences.LocalAmountInputPreferences
 import com.ivy.ui.preferences.asEnabledState
-import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.platform.hideKeyboard
 import com.ivy.ui.compose.onCompositionStart
 import com.ivy.ui.R
-import com.ivy.ui.modal.IvyModal
-import com.ivy.ui.modal.ModalPositiveButton
 import com.ivy.ui.compose.ResourceIcon
 import com.ivy.ui.money.formatAmount
 import com.ivy.ui.money.formatAmountInput
@@ -101,7 +98,7 @@ fun BoxWithConstraintsScope.AmountModal(
                     .testTag("btn_calculator")
                     .padding(all = 4.dp),
                 icon = R.drawable.ic_custom_calculator_m,
-                tint = LegacyTheme.colors.pureInverse
+                tint = AmountModalTheme.colors.pureInverse
             )
 
             Spacer(Modifier.width(16.dp))
@@ -169,7 +166,7 @@ fun BoxWithConstraintsScope.AmountModal(
         Spacer(Modifier.height(24.dp))
     }
 
-        CalculatorModal(
+    CalculatorModal(
         visible = calculatorModalVisible,
         initialAmount = parseAmountOrNull(amount),
         currency = currency,
@@ -200,18 +197,18 @@ private fun AmountCurrency(
 
         Text(
             text = amount.ifBlank { "0" },
-            style = LegacyTheme.typo.nH2.copy(
+            style = AmountModalTheme.typo.nH2.copy(
                 fontWeight = FontWeight.Bold,
-                color = LegacyTheme.colors.pureInverse,
+                color = AmountModalTheme.colors.pureInverse,
                 textAlign = TextAlign.Start
             )
         )
         Spacer(Modifier.width(4.dp))
         Text(
             text = currency,
-            style = LegacyTheme.typo.nH2.copy(
+            style = AmountModalTheme.typo.nH2.copy(
                 fontWeight = FontWeight.Normal,
-                color = LegacyTheme.colors.pureInverse,
+                color = AmountModalTheme.colors.pureInverse,
                 textAlign = TextAlign.Start
             )
         )
@@ -438,7 +435,7 @@ internal fun CircleNumberButton(
 internal fun KeypadCircleButton(
     text: String,
     testTag: String,
-    textColor: Color = LegacyTheme.colors.pureInverse,
+    textColor: Color = AmountModalTheme.colors.pureInverse,
     fontSize: TextUnit = 32.sp,
     btnSize: Dp = 80.dp,
     onClick: () -> Unit,
@@ -448,7 +445,7 @@ internal fun KeypadCircleButton(
             .testTag(testTag),
         text = text,
         fontSize = fontSize,
-        style = LegacyTheme.typo.nH2.copy(
+        style = AmountModalTheme.typo.nH2.copy(
             color = textColor,
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center
@@ -468,7 +465,7 @@ private fun circleButtonModifier(
         .clickable(
             onClick = onClick
         )
-        .background(LegacyTheme.colors.pure, LegacyTheme.shapes.rFull)
-        .border(2.dp, LegacyTheme.colors.medium, LegacyTheme.shapes.rFull)
+        .background(AmountModalTheme.colors.pure, AmountModalTheme.shapes.rFull)
+        .border(2.dp, AmountModalTheme.colors.medium, AmountModalTheme.shapes.rFull)
         .wrapContentHeight()
 }

@@ -21,7 +21,7 @@ import com.ivy.exchangerates.model.RateUi
 import com.ivy.ui.modal.IvyModal
 import com.ivy.ui.modal.ModalAdd
 import com.ivy.ui.modal.ModalTitle
-import com.ivy.legacy.ui.modal.edit.AmountModal
+import com.ivy.ui.modal.AmountModal
 import com.ivy.ui.compose.selectEndTextFieldValue
 import java.util.UUID
 

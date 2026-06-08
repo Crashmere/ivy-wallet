@@ -29,6 +29,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.modal.AccountModalAccount
+import com.ivy.ui.modal.AmountModal
 import com.ivy.ui.compose.onCompositionStart
 import com.ivy.ui.compose.selectEndTextFieldValue
 import com.ivy.ui.R
