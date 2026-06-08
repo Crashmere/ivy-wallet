@@ -17,9 +17,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.ivy.legacy.ui.icon.IvyIcon
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.R
+import com.ivy.ui.compose.ResourceIcon
 import com.ivy.ui.time.LocalTimeConverter
 import com.ivy.ui.time.LocalTimeFormatter
 import com.ivy.ui.time.LocalTimeProvider
@@ -48,7 +48,10 @@ internal fun EditTransactionDateTime(
         ) {
             Spacer(Modifier.width(16.dp))
 
-            IvyIcon(icon = R.drawable.ic_calendar)
+            ResourceIcon(
+                icon = R.drawable.ic_calendar,
+                tint = LegacyTheme.colors.pureInverse
+            )
 
             Spacer(Modifier.width(8.dp))
 

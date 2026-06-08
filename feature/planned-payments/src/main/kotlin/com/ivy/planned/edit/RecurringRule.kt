@@ -23,7 +23,7 @@ import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.time.forDisplay
 import com.ivy.ui.time.formatDateOnly
 import com.ivy.ui.R
-import com.ivy.legacy.ui.icon.IvyIcon
+import com.ivy.ui.compose.ResourceIcon
 import java.time.LocalDateTime
 import java.util.Locale
 
@@ -81,7 +81,10 @@ private fun AddRecurringRuleButton(onClick: () -> Unit) {
     ) {
         Spacer(Modifier.width(16.dp))
 
-        IvyIcon(icon = R.drawable.ic_planned_payments)
+        ResourceIcon(
+            icon = R.drawable.ic_planned_payments,
+            tint = LegacyTheme.colors.pureInverse
+        )
 
         Spacer(Modifier.width(8.dp))
 
@@ -116,7 +119,10 @@ private fun RecurringRuleCard(
     ) {
         Spacer(Modifier.width(16.dp))
 
-        IvyIcon(icon = R.drawable.ic_planned_payments)
+        ResourceIcon(
+            icon = R.drawable.ic_planned_payments,
+            tint = LegacyTheme.colors.pureInverse
+        )
 
         Spacer(Modifier.width(8.dp))
 

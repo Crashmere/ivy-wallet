@@ -23,9 +23,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.ivy.legacy.ui.icon.IvyIcon
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.R
+import com.ivy.ui.compose.ResourceIcon
 import com.ivy.ui.compose.clickableNoIndication
 import com.ivy.ui.compose.rememberInteractionSource
 
@@ -97,7 +97,10 @@ private fun AddPrimaryAttributeButton(
     ) {
         Spacer(Modifier.width(16.dp))
 
-        IvyIcon(icon = icon)
+        ResourceIcon(
+            icon = icon,
+            tint = LegacyTheme.colors.pureInverse
+        )
 
         Spacer(Modifier.width(8.dp))
 
@@ -134,7 +137,10 @@ private fun PrimaryAttributeColumn(
             modifier = Modifier.padding(horizontal = 16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            IvyIcon(icon = icon)
+            ResourceIcon(
+                icon = icon,
+                tint = LegacyTheme.colors.pureInverse
+            )
 
             Spacer(Modifier.width(8.dp))
 

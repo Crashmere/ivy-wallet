@@ -143,6 +143,7 @@
 - 关闭按钮基础绘制迁入 `shared:ui:core` 的 `CloseIconButton`；feature 层和旧弹窗内部都不再导入 legacy 的 `CloseButton` 包装，`shared:ui:legacy` 已删除该包装入口。
 - 圆形填充图标按钮基础绘制迁入 `shared:ui:core` 的 `FilledIconButton`；feature 层和旧周期弹窗都不再导入 legacy 的 `CircleButtonFilled` 包装，`shared:ui:legacy` 已删除该包装入口。
 - 渐变圆形图标按钮基础绘制迁入 `shared:ui:core` 的 `GradientIconButton`；feature 层和旧弹窗内部都不再导入 legacy 的 `IvyCircleButton`，`shared:ui:legacy` 已删除该包装入口。
+- 基础资源图标绘制开始迁入 `shared:ui:core` 的 `ResourceIcon`；编辑交易和计划付款中的描述、日期和重复规则属性图标已脱离 legacy `IvyIcon`，并在调用处显式传入原主题文字色。
 - 导入流程和报表筛选浮层的底部渐隐遮罩已改为各自页面私有实现；`shared:ui:legacy` 删除不再复用的 `GradientCutBottom`。
 - 预算分类选择和报表筛选列表项已改为各自 feature 私有实现；`shared:ui:legacy` 删除不再复用的通用 `ListItem`。
 - 编辑交易页和计划付款编辑页的“添加计划日期”按钮已改为各自 feature 私有实现；`shared:ui:legacy` 的 `AddPrimaryAttributeButton` 收窄为旧描述组件内部实现。

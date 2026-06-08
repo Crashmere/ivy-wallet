@@ -16,9 +16,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.ivy.legacy.ui.icon.IvyIcon
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.R
+import com.ivy.ui.compose.ResourceIcon
 import com.ivy.ui.time.LocalTimeFormatter
 import com.ivy.ui.time.TimeFormatter
 import java.time.Instant
@@ -40,7 +40,10 @@ internal fun EditTransactionDueDate(
     ) {
         Spacer(Modifier.width(16.dp))
 
-        IvyIcon(icon = R.drawable.ic_planned_payments)
+        ResourceIcon(
+            icon = R.drawable.ic_planned_payments,
+            tint = LegacyTheme.colors.pureInverse
+        )
 
         Spacer(Modifier.width(8.dp))
 

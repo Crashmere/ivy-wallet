@@ -58,7 +58,6 @@ import com.ivy.data.model.currency.IvyCurrency
 import com.ivy.data.model.CreateAccountData
 import com.ivy.data.model.CreateCategoryData
 import com.ivy.legacy.ui.button.IvyButton
-import com.ivy.legacy.ui.icon.IvyIcon
 import com.ivy.legacy.ui.modal.DeleteModal
 import com.ivy.legacy.ui.modal.ModalAdd
 import com.ivy.legacy.ui.modal.ModalSave
@@ -67,6 +66,7 @@ import com.ivy.legacy.ui.modal.edit.AccountModal
 import com.ivy.legacy.ui.modal.edit.AmountModal
 import com.ivy.legacy.ui.modal.edit.CategoryModal
 import com.ivy.legacy.ui.modal.edit.ChooseCategoryModal
+import com.ivy.ui.compose.ResourceIcon
 import com.ivy.ui.theme.colors.IvyGradients
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.ImmutableSet
@@ -704,7 +704,10 @@ private fun EditTransactionAddPlannedDateButton(onClick: () -> Unit) {
     ) {
         Spacer(Modifier.width(16.dp))
 
-        IvyIcon(icon = R.drawable.ic_planned_payments)
+        ResourceIcon(
+            icon = R.drawable.ic_planned_payments,
+            tint = LegacyTheme.colors.pureInverse
+        )
 
         Spacer(Modifier.width(8.dp))
 
