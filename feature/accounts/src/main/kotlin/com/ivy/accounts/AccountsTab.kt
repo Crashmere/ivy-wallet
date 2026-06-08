@@ -33,8 +33,8 @@ import com.ivy.ui.compose.clickableNoIndication
 import com.ivy.ui.compose.horizontalSwipeListener
 import com.ivy.ui.compose.rememberInteractionSource
 import com.ivy.ui.compose.rememberSwipeListenerState
-import com.ivy.ui.navigation.LocalMainTabState
-import com.ivy.ui.navigation.MainTab
+import com.ivy.ui.main.LocalMainTabState
+import com.ivy.ui.main.MainTab
 import com.ivy.ui.navigation.TransactionsScreen
 import com.ivy.ui.navigation.navigation
 import com.ivy.ui.navigation.screenScopedViewModel

@@ -38,9 +38,9 @@ import com.ivy.ui.period.TimePeriod
 import com.ivy.data.model.toUTCCloseTimeRange
 import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.ui.navigation.BalanceScreen
-import com.ivy.ui.navigation.MainTab
+import com.ivy.ui.main.MainTab
 import com.ivy.ui.navigation.MainScreen
-import com.ivy.ui.navigation.MainTabState
+import com.ivy.ui.main.MainTabState
 import com.ivy.ui.navigation.Navigation
 import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.preferences.asEnabledState

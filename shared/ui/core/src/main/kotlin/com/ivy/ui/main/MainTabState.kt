@@ -1,4 +1,4 @@
-package com.ivy.ui.navigation
+package com.ivy.ui.main
 
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.getValue

@@ -2,7 +2,7 @@ package com.ivy.home.customerjourney
 
 import androidx.annotation.DrawableRes
 import androidx.compose.runtime.Immutable
-import com.ivy.ui.navigation.MainTabState
+import com.ivy.ui.main.MainTabState
 import com.ivy.ui.navigation.Navigation
 
 @Immutable

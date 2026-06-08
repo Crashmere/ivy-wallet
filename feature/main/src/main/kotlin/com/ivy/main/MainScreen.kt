@@ -16,8 +16,8 @@ import com.ivy.home.HomeTab
 import com.ivy.ui.navigation.onScreenStart
 import com.ivy.ui.navigation.EditPlannedScreen
 import com.ivy.ui.navigation.EditTransactionScreen
-import com.ivy.ui.navigation.LocalMainTabState
-import com.ivy.ui.navigation.MainTab
+import com.ivy.ui.main.LocalMainTabState
+import com.ivy.ui.main.MainTab
 import com.ivy.ui.navigation.MainScreen
 import com.ivy.ui.navigation.TransactionRouteType
 import com.ivy.ui.navigation.navigation

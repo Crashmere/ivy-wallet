@@ -5,9 +5,9 @@ import androidx.lifecycle.viewModelScope
 import com.ivy.domain.usecase.account.CreateAccountWithBalanceUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyUseCase
 import com.ivy.domain.usecase.exchange.SyncExchangeRatesUseCase
-import com.ivy.ui.navigation.MainTab
+import com.ivy.ui.main.MainTab
 import com.ivy.ui.navigation.MainScreen
-import com.ivy.ui.navigation.MainTabState
+import com.ivy.ui.main.MainTabState
 import com.ivy.ui.navigation.Navigation
 import com.ivy.data.model.CreateAccountData
 import dagger.hilt.android.lifecycle.HiltViewModel

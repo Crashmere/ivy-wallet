@@ -42,7 +42,7 @@ import androidx.compose.ui.zIndex
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
 import com.ivy.ui.compose.thenIf
-import com.ivy.ui.navigation.MainTab
+import com.ivy.ui.main.MainTab
 import com.ivy.ui.compose.clickableNoIndication
 import com.ivy.ui.animation.lerp
 import com.ivy.ui.compose.navigationBarInset

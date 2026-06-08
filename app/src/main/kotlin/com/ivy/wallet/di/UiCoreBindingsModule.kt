@@ -4,7 +4,7 @@ import android.content.Context
 import com.ivy.ui.period.PeriodState
 import com.ivy.ui.platform.Toaster
 import com.ivy.ui.resource.ResourceProvider
-import com.ivy.ui.navigation.MainTabState
+import com.ivy.ui.main.MainTabState
 import com.ivy.ui.navigation.Navigation
 import com.ivy.ui.theme.ThemeState
 import com.ivy.ui.time.DateTimePicker
