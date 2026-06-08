@@ -358,7 +358,7 @@
 - app 模块已移除自身不再直接使用的 Ktor、Room、OpenCSV、Keval、RecyclerView、AndroidX Security 和 Arrow 依赖；源码层已经不再直接引用 data core DAO/repository，Gradle 层保留对 data-core 的实现依赖以纳入 Hilt 绑定。
 - app 模块重新显式依赖 `shared:data:core` 作为运行时数据实现模块；feature/domain 仍只依赖 data 端口，data-core 的 Hilt Module 负责把 Room、DataStore、备份、文件和远程汇率实现绑定进应用图。
 - `ivy.android-library` 不再给所有 Android library 默认添加 Arrow；`shared:data:model` 因公开 `Either/Raise` API 显式用 `api` 暴露 Arrow，其他实际直接使用 Arrow 的模块改为各自声明 `implementation(libs.bundles.arrow)`；旧 FRP helper 移出后，`shared:base` 不再需要 Arrow。
-- `ivy.android-library` 不再给所有 Android library 默认添加 Timber；domain 汇率同步和饼图点击逻辑中的调试日志已删除，当前只保留 app 日志初始化/锁屏认证日志以及 data core 的网络/导入错误日志。
+- `ivy.android-library` 不再给所有 Android library 默认添加 Timber；后续 app、data-core 和版本目录中的 Timber 依赖也已删除，项目当前不再依赖 Timber。
 - `ivy.android-library` 不再给所有 Android library 默认添加整套单元测试依赖；当前有 `src/test` 的 `shared:data:model`、`shared:data:model-testing`、`shared:data:core`、`shared:domain` 和 `shared:ui:core` 改为在各自模块里显式声明测试 bundle。
 - 新增 `ivy.kotlin-library` 作为纯 JVM/Kotlin 模块约定；`shared:data:model`、`shared:data:model-testing`、`shared:data:api` 和 `shared:domain` 已从 Android library 改成 JVM 模块，不再需要 namespace、Android manifest、min/compile SDK 或 Android Kotlin runtime。
 - `shared:data:core` 的 DataStore 依赖已从 `api` 收窄为 `implementation`；DataStore 绑定仍由 data core 提供，但不再通过 data core 传递暴露给其他模块。
@@ -1022,7 +1022,7 @@
 - 旧主题的 `theme.system` 进一步收敛为内部实现层：feature 层不再直接导入其中的具体颜色常量，内部色板、系统 Gradient、CompositionLocal 和颜色算法 helper 均改为 `shared:ui:legacy` 内可见；外部继续通过 `LegacyTheme`、`style()` 和外层 `legacy.ui.theme` 色板使用旧样式。
 - 交易提醒通知封装继续收窄：`IvyNotification`、`IvyNotificationChannel` 和 `NotificationService` 的通知构建/展示方法只作为 app 内部实现使用，并删除未被调用的通知 dismiss helper；提醒 worker 的实际通知行为不变。
 - 锁屏生物识别链路已删除空错误回调转发和未使用的成功回调 lambda 参数；现在根 Activity 只传递真正有行为的成功/失败事件，错误事件保持原有的无额外处理行为。
-- app 通知服务里的异常输出已从裸 `printStackTrace()` 改为既有 Timber 日志；不引入新依赖，也不改变通知创建和展示流程。
+- app 通知服务里的异常输出已从裸 `printStackTrace()` 逐步清掉；当前通知展示失败继续按原策略吞异常，项目已不再依赖 Timber。
 - `Features` 和功能开关 DataStore 已通过 `LocalFeatures/LocalFeatureDataStore` 由 app 根部显式提供；旧金额键盘不再用 Hilt `EntryPointAccessors` 从 application 反查依赖。
 - 锁屏页不再通过 `LocalContext.current` 自行检查系统锁屏状态；`RootActivity` 从 app 平台层提供 `hasLockScreen` 检查函数，UI 只负责触发认证或继续进入应用。
 - 根启动 intent 的交易类型解析已改用 `IntentCompat.getSerializableExtra()`，不再直接调用新版 Android 中弃用的 `Intent.getSerializableExtra(String)`。

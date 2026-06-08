@@ -76,11 +76,7 @@ class ExportCsvUseCasePropertyTest {
             rows.size shouldBe transactions.size + 1 // +1 for the header
             rows.forEach { row ->
                 // Matches the expected # of columns
-                val hasExpectedNumOfColumns = row.size == IvyCsvRow.Columns.size
-                if (!hasExpectedNumOfColumns) {
-                    println("(${row.size} cols) $row")
-                }
-                hasExpectedNumOfColumns shouldBe true
+                row.size shouldBe IvyCsvRow.Columns.size
             }
         }
     }
