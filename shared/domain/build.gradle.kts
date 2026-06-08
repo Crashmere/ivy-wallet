@@ -3,7 +3,7 @@ plugins {
 }
 
 dependencies {
-    api(projects.shared.data.api)
+    implementation(projects.shared.data.api)
 
     implementation(libs.bundles.arrow)
     implementation(libs.javax.inject)
