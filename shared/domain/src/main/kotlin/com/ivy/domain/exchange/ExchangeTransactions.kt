@@ -4,7 +4,7 @@ import arrow.core.Option
 import arrow.core.toOption
 import com.ivy.data.model.Transaction
 import com.ivy.data.model.legacy.LegacyAccount
-import com.ivy.domain.account.legacy.legacyAccountCurrency
+import com.ivy.data.model.legacy.legacyAccountCurrency
 import com.ivy.domain.transaction.getAccountId
 import com.ivy.domain.transaction.getValue
 import com.ivy.domain.transaction.transactionCurrency

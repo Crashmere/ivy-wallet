@@ -5,7 +5,7 @@ import arrow.core.Option
 import arrow.core.toOption
 import com.ivy.data.model.TransactionType
 import com.ivy.data.model.legacy.LegacyAccount
-import com.ivy.domain.account.legacy.legacyAccountCurrency
+import com.ivy.data.model.legacy.legacyAccountCurrency
 
 internal object LegacyTransactionFunctions {
     fun expenses(transactions: List<LegacyTransaction>): List<LegacyTransaction> {

@@ -4,7 +4,7 @@ import arrow.core.Option
 import arrow.core.toOption
 import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.data.model.legacy.LegacyTransaction
-import com.ivy.domain.account.legacy.legacyAccountCurrency
+import com.ivy.data.model.legacy.legacyAccountCurrency
 import com.ivy.domain.exchange.ExchangeData
 import com.ivy.domain.exchange.ExchangeEffect
 import com.ivy.domain.exchange.ExchangeTransactionArgument

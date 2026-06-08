@@ -6,6 +6,7 @@ import com.ivy.ui.resource.ResourceProvider
 import com.ivy.data.model.Category
 import com.ivy.data.model.CategoryId
 import com.ivy.data.model.legacy.LegacyAccount
+import com.ivy.data.model.legacy.includedLegacyAccounts
 import com.ivy.data.model.FromToTimeRange
 import com.ivy.data.model.IncomeExpenseTransferPair
 import com.ivy.data.model.primitive.ColorInt
@@ -16,7 +17,6 @@ import com.ivy.domain.usecase.category.CalculateCategoryIncomeWithAccountFilters
 import com.ivy.domain.usecase.category.GetCategoriesUseCase
 import com.ivy.domain.usecase.transaction.CalculateLegacyTransactionsIncomeExpenseUseCase
 import com.ivy.domain.usecase.transaction.GetLegacyTransactionsForAccountsUseCase
-import com.ivy.domain.account.legacy.includedLegacyAccounts
 import com.ivy.ui.R
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList

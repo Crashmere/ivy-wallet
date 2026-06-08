@@ -61,6 +61,7 @@
 - 收窄 domain legacy 交易计算公开面：旧交易折叠、汇率换算、日期分组和到期过滤 helper 改为 domain 模块内可见，外部继续通过 use case 使用这些能力。
 - 收窄 domain 正式交易计算公开面：交易折叠、钱包/账户统计函数、交易类型过滤和交易汇率换算 helper 改为 domain 模块内可见；当前仍被 feature 使用的交易值扩展暂时保留 public。
 - 下沉纯交易类型判断：`getTransactionType()` 归入 `shared:data:model`，预算和报表 feature 不再为了读取交易类型/基础金额直接依赖 `domain.transaction` 的内部扩展。
+- 下沉 legacy 账户纯模型 helper：`includedLegacyAccounts()` 和 `legacyAccountCurrency()` 归入 `shared:data:model` 的 `LegacyAccount` 边界，删除 `domain.account.legacy` 小包。
 
 当前仍保留：
 

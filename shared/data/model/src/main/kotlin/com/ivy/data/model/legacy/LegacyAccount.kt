@@ -14,3 +14,9 @@ data class LegacyAccount(
 
     val id: UUID = UUID.randomUUID()
 )
+
+fun includedLegacyAccounts(accounts: List<LegacyAccount>): List<LegacyAccount> =
+    accounts.filter { it.includeInBalance }
+
+fun legacyAccountCurrency(account: LegacyAccount, baseCurrency: String): String =
+    account.currency ?: baseCurrency
