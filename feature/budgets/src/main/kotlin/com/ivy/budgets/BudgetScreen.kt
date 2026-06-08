@@ -33,7 +33,6 @@ import com.ivy.ui.compose.rememberInteractionSource
 import com.ivy.ui.navigation.navigation
 import com.ivy.ui.navigation.screenScopedViewModel
 import com.ivy.ui.R
-import com.ivy.legacy.ui.theme.Gray
 import com.ivy.legacy.ui.button.CircleButtonFilled
 import com.ivy.legacy.ui.icon.IvyIcon
 import com.ivy.legacy.ui.modal.ReorderModalSingleType
@@ -243,7 +242,7 @@ private fun Toolbar(
                         stringResource(R.string.budget_info, categoryBudgetText, appBudgetMaxText)
                     },
                     style = LegacyTheme.typo.nC.style(
-                        color = Gray,
+                        color = LegacyTheme.colors.gray,
                         fontWeight = FontWeight.ExtraBold
                     )
                 )
@@ -252,7 +251,7 @@ private fun Toolbar(
                     Text(
                         text = totalRemainingBudgetText,
                         style = LegacyTheme.typo.nC.style(
-                            color = Gray,
+                            color = LegacyTheme.colors.gray,
                             fontWeight = FontWeight.ExtraBold
                         )
                     )
@@ -304,7 +303,7 @@ private fun BudgetItem(
             Text(
                 text = determineBudgetType(displayBudget.budget.parseCategoryIds().size),
                 style = LegacyTheme.typo.c.style(
-                    color = Gray
+                    color = LegacyTheme.colors.gray
                 )
             )
         }
@@ -345,7 +344,7 @@ private fun NoBudgetsEmptyState(
 
         IvyIcon(
             icon = R.drawable.ic_budget_xl,
-            tint = Gray
+            tint = LegacyTheme.colors.gray
         )
 
         Spacer(Modifier.height(24.dp))
@@ -353,7 +352,7 @@ private fun NoBudgetsEmptyState(
         Text(
             text = emptyStateTitle,
             style = LegacyTheme.typo.b1.style(
-                color = Gray,
+                color = LegacyTheme.colors.gray,
                 fontWeight = FontWeight.ExtraBold
             )
         )
@@ -364,7 +363,7 @@ private fun NoBudgetsEmptyState(
             modifier = Modifier.padding(horizontal = 32.dp),
             text = emptyStateText,
             style = LegacyTheme.typo.b2.style(
-                color = Gray,
+                color = LegacyTheme.colors.gray,
                 fontWeight = FontWeight.Medium,
                 textAlign = TextAlign.Center
             )

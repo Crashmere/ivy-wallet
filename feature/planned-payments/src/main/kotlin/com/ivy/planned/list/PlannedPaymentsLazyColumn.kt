@@ -26,7 +26,6 @@ import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.legacy.ui.theme.style
 import com.ivy.data.model.PlannedPaymentRule
 import com.ivy.ui.R
-import com.ivy.legacy.ui.theme.Gray
 import com.ivy.legacy.ui.icon.IvyIcon
 import kotlinx.collections.immutable.ImmutableList
 import java.util.UUID
@@ -189,7 +188,7 @@ private fun LazyItemScope.NoPlannedPaymentsEmptyState() {
 
         IvyIcon(
             icon = R.drawable.ic_planned_payments,
-            tint = Gray
+            tint = LegacyTheme.colors.gray
         )
 
         Spacer(Modifier.height(24.dp))
@@ -197,7 +196,7 @@ private fun LazyItemScope.NoPlannedPaymentsEmptyState() {
         Text(
             text = stringResource(R.string.no_planned_payments),
             style = LegacyTheme.typo.b1.style(
-                color = Gray,
+                color = LegacyTheme.colors.gray,
                 fontWeight = FontWeight.ExtraBold
             ),
             textAlign = TextAlign.Center
@@ -208,7 +207,7 @@ private fun LazyItemScope.NoPlannedPaymentsEmptyState() {
         Text(
             text = stringResource(R.string.no_planned_payments_description),
             style = LegacyTheme.typo.b2.style(
-                color = Gray,
+                color = LegacyTheme.colors.gray,
                 fontWeight = FontWeight.Medium,
                 textAlign = TextAlign.Center
             )

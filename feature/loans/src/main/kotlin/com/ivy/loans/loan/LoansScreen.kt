@@ -42,7 +42,6 @@ import com.ivy.ui.navigation.LoanDetailsScreen
 import com.ivy.ui.navigation.navigation
 import com.ivy.ui.R
 import com.ivy.ui.rememberScrollPositionListState
-import com.ivy.legacy.ui.theme.Gray
 import com.ivy.legacy.ui.money.BalanceRow
 import com.ivy.legacy.ui.button.CircleButtonFilled
 import com.ivy.legacy.ui.icon.ItemIconSDefaultIcon
@@ -403,7 +402,7 @@ private fun NoLoansEmptyState(
 
         IvyIcon(
             icon = R.drawable.ic_custom_loan_l,
-            tint = Gray
+            tint = LegacyTheme.colors.gray
         )
 
         Spacer(Modifier.height(24.dp))
@@ -411,7 +410,7 @@ private fun NoLoansEmptyState(
         Text(
             text = emptyStateTitle,
             style = LegacyTheme.typo.b1.style(
-                color = Gray,
+                color = LegacyTheme.colors.gray,
                 fontWeight = FontWeight.ExtraBold
             )
         )
@@ -422,7 +421,7 @@ private fun NoLoansEmptyState(
             modifier = Modifier.padding(horizontal = 32.dp),
             text = emptyStateText,
             style = LegacyTheme.typo.b2.style(
-                color = Gray,
+                color = LegacyTheme.colors.gray,
                 fontWeight = FontWeight.Medium,
                 textAlign = TextAlign.Center
             )

@@ -52,7 +52,6 @@ import com.ivy.ui.R
 import com.ivy.ui.platform.fileSharer
 import com.ivy.ui.rememberScrollPositionListState
 import com.ivy.data.model.IncomeExpensePair
-import com.ivy.legacy.ui.theme.Gray
 import com.ivy.legacy.ui.theme.Green
 import com.ivy.legacy.ui.theme.Orange
 import com.ivy.legacy.ui.money.BalanceRow
@@ -360,7 +359,7 @@ private fun NoFilterEmptyState(
 
         IvyIcon(
             icon = R.drawable.ic_filter_l,
-            tint = Gray
+            tint = LegacyTheme.colors.gray
         )
 
         Spacer(Modifier.height(8.dp))
@@ -368,7 +367,7 @@ private fun NoFilterEmptyState(
         Text(
             text = stringResource(R.string.no_filter),
             style = LegacyTheme.typo.b1.style(
-                color = Gray,
+                color = LegacyTheme.colors.gray,
                 fontWeight = FontWeight.ExtraBold
             )
         )
@@ -379,7 +378,7 @@ private fun NoFilterEmptyState(
             modifier = Modifier.padding(horizontal = 32.dp),
             text = stringResource(R.string.invalid_filter_warning),
             style = LegacyTheme.typo.b2.style(
-                color = Gray,
+                color = LegacyTheme.colors.gray,
                 fontWeight = FontWeight.Medium,
                 textAlign = TextAlign.Center
             )
