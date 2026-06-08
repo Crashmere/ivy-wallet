@@ -99,7 +99,7 @@
 - 设置页的每月起始日选择弹窗已移回 `feature:settings` 私有实现；`shared:ui:legacy` 不再导出只服务设置页的 `ChooseStartDateOfMonthModal`。
 - 交易列表的删除二次确认弹窗已移回 `feature:transactions` 私有实现；`shared:ui:legacy` 只继续保留多页面复用的普通 `DeleteModal`。
 - 编辑交易页的交易时间展示和到期日卡片已移回 `feature:edit-transaction` 私有实现；`shared:ui:legacy` 不再导出只服务该页面的 `TransactionDateTime` 和 `DueDate`。
-- 预算弹窗改用本 feature 私有的名称输入、新增/保存和删除按钮；`shared:ui:legacy` 的 `ModalNameInput`、`ModalAddSave`、`ModalDelete` 收窄为旧弹窗内部实现。
+- 预算弹窗改用本 feature 私有的名称输入、新增/保存和删除按钮；`shared:ui:legacy` 后续删除了无调用方的 `ModalNameInput`，`ModalAddSave` 等仍保留给实际旧弹窗入口使用。
 - 编辑交易页的计划交易支付/收取确认按钮已改为本页面私有实现；`shared:ui:legacy` 的 `ModalCheck` 收窄为旧弹窗内部实现。
 - feature 层不再直接导入 legacy 内部黑色、紫色、深绿和中性色板，也不再使用 `colorAs` 扩展；这些旧主题常量继续只在 `shared:ui:legacy` 内部使用。
 - 分类排序弹窗和计划付款编辑页底部操作改用本 feature 私有的 Set 按钮；`shared:ui:legacy` 的 `ModalSet` 收窄为旧弹窗内部实现。
@@ -1346,6 +1346,7 @@ shared:ui:core
 - 编辑交易和计划付款编辑页的标题输入和标题建议列表已改为各自 feature 私有实现；`shared:ui:legacy` 删除只服务这两个编辑页的 `edit.core.Title`，旧 `IvyTitleTextField` 暂留给 legacy 标签弹窗内部使用。
 - 编辑交易和计划付款编辑页的底部金额/账户面板已改为各自 feature 私有实现；`shared:ui:legacy` 删除最后一个 `edit.core.EditBottomSheet`，`legacy.ui.edit.core` 包不再承载编辑页业务 UI。
 - 删除 `shared:ui:legacy` 中已经没有调用方的旧描述输入框和旧日期时间行；描述输入和日期时间展示现在由对应 feature 私有实现承担。
+- 删除 `shared:ui:legacy` 中已经没有调用方的旧 `ModalNameInput`；旧名称输入框底层实现仍作为分类弹窗内部细节保留。
 - app 仍保留文件选择、文件分享、Material 日期选择器、BuildInfo、Locale 设置、生物识别和窗口安全等真正依赖 Activity 或 Android app 壳层的装配。
 
 ## 高风险区域
