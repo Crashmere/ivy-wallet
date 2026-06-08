@@ -32,12 +32,12 @@ import com.ivy.data.model.IntervalType
 import com.ivy.ui.time.LocalTimeProvider
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
-import com.ivy.legacy.ui.addKeyboardListener
+import com.ivy.ui.platform.addKeyboardListener
 import com.ivy.ui.compose.clickableNoIndication
-import com.ivy.legacy.ui.closeDay
-import com.ivy.legacy.ui.formatDateWeekDayLong
-import com.ivy.legacy.ui.formatNicely
-import com.ivy.legacy.ui.hideKeyboard
+import com.ivy.ui.time.closeDay
+import com.ivy.ui.time.formatDateWeekDayLong
+import com.ivy.ui.time.formatNicely
+import com.ivy.ui.platform.hideKeyboard
 import com.ivy.ui.navigation.onScreenStart
 import com.ivy.ui.compose.thenIf
 import com.ivy.ui.compose.rememberInteractionSource
@@ -115,7 +115,7 @@ fun BoxWithConstraintsScope.RecurringRuleModal(
 
         val rootView = LocalView.current
         onScreenStart {
-            hideKeyboard(rootView)
+            rootView.hideKeyboard()
         }
 
         ModalTitle(text = stringResource(R.string.plan_for))

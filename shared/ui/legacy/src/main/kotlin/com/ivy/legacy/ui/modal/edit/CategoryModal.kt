@@ -35,7 +35,7 @@ import com.ivy.data.model.primitive.ColorInt
 import com.ivy.data.model.primitive.IconAsset
 import com.ivy.data.model.primitive.NotBlankTrimmedString
 import com.ivy.legacy.ui.component.IvyColorPicker
-import com.ivy.legacy.ui.hideKeyboard
+import com.ivy.ui.platform.hideKeyboard
 import com.ivy.ui.navigation.onScreenStart
 import com.ivy.ui.compose.selectEndTextFieldValue
 import com.ivy.ui.R
@@ -216,7 +216,7 @@ fun IconNameRow(
             ),
             keyboardActions = KeyboardActions(
                 onDone = {
-                    hideKeyboard(view)
+                    view.hideKeyboard()
                 }
             ),
         ) { newValue ->

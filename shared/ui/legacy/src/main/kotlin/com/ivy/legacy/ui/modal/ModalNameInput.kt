@@ -13,7 +13,7 @@ import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
-import com.ivy.legacy.ui.hideKeyboard
+import com.ivy.ui.platform.hideKeyboard
 import com.ivy.ui.navigation.onScreenStart
 import com.ivy.legacy.ui.component.IvyNameTextField
 
@@ -49,7 +49,7 @@ fun ModalNameInput(
         ),
         keyboardActions = KeyboardActions(
             onDone = {
-                hideKeyboard(view)
+                view.hideKeyboard()
             }
         ),
     ) { newValue ->

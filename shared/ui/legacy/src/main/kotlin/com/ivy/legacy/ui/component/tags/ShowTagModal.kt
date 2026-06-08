@@ -35,7 +35,7 @@ import com.ivy.legacy.ui.theme.system.style
 import com.ivy.ui.compose.thenIf
 import com.ivy.legacy.ui.SearchInput
 import com.ivy.ui.compose.drawColoredShadow
-import com.ivy.legacy.ui.hideKeyboard
+import com.ivy.ui.platform.hideKeyboard
 import com.ivy.ui.navigation.onScreenStart
 import com.ivy.ui.compose.selectEndTextFieldValue
 import com.ivy.legacy.ui.theme.Gradient
@@ -160,7 +160,7 @@ fun BoxWithConstraintsScope.ShowTagModal(
         },
         onTagDelete = {
             deleteTagModalVisible = true
-            hideKeyboard(view)
+            view.hideKeyboard()
         },
         onTagEdit = { oldTag, newTag ->
             onTagEdit(oldTag, newTag)
@@ -308,7 +308,7 @@ private fun ExistingTag(
 @Composable
 private fun HideKeyboard() {
     val view = LocalView.current
-    onScreenStart { hideKeyboard(view) }
+    onScreenStart { view.hideKeyboard() }
 }
 
 @Composable

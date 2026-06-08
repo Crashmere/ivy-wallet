@@ -1,9 +1,8 @@
-package com.ivy.legacy.ui
+package com.ivy.ui.time
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.ivy.ui.R
-import com.ivy.ui.time.LocalTimeProvider
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.ZoneId

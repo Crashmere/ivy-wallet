@@ -20,7 +20,7 @@ import com.ivy.legacy.ui.theme.system.Green
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
 import com.ivy.ui.R
-import com.ivy.legacy.ui.formatLocal
+import com.ivy.ui.time.formatLocal
 import com.ivy.ui.time.LocalTimeProvider
 import java.time.LocalDate
 

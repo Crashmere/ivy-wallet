@@ -23,7 +23,7 @@ import com.ivy.legacy.ui.SearchInput
 import com.ivy.legacy.ui.component.transaction.transactions
 import com.ivy.ui.compose.densityScope
 import com.ivy.ui.compose.keyboardOnlyWindowInsets
-import com.ivy.legacy.ui.keyboardVisibleState
+import com.ivy.ui.platform.keyboardVisibleState
 import com.ivy.ui.compose.selectEndTextFieldValue
 import com.ivy.ui.navigation.SearchScreen
 import com.ivy.ui.navigation.screenScopedViewModel

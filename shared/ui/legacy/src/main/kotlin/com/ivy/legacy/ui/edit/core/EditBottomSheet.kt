@@ -42,12 +42,12 @@ import androidx.compose.ui.unit.sp
 import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
-import com.ivy.legacy.ui.addKeyboardListener
+import com.ivy.ui.platform.addKeyboardListener
 import com.ivy.ui.compose.clickableNoIndication
 import com.ivy.ui.compose.consumeClicks
 import com.ivy.ui.compose.densityScope
 import com.ivy.data.model.currency.format
-import com.ivy.legacy.ui.hideKeyboard
+import com.ivy.ui.platform.hideKeyboard
 import com.ivy.ui.compose.keyboardOnlyWindowInsets
 import com.ivy.legacy.ui.lerp
 import com.ivy.ui.compose.navigationBarInsets
@@ -183,7 +183,7 @@ fun BoxWithConstraintsScope.EditBottomSheet(
                 sensitivity = SWIPE_UP_EXPANDED_THRESHOLD,
                 state = rememberSwipeListenerState(),
                 onSwipeUp = {
-                    hideKeyboard(rootView)
+                    rootView.hideKeyboard()
                     internalExpanded = true
                 },
                 onSwipeDown = {
@@ -237,7 +237,7 @@ fun BoxWithConstraintsScope.EditBottomSheet(
                 setAmountModalShown(true)
             },
             onAccountMiniClick = {
-                hideKeyboard(rootView)
+                rootView.hideKeyboard()
                 internalExpanded = true
             },
         )
@@ -358,7 +358,7 @@ private fun BottomBar(
             icon = R.drawable.ic_expand_more,
         ) {
             setInternalExpanded(!internalExpanded || keyboardShown)
-            hideKeyboard(rootView)
+            rootView.hideKeyboard()
         }
 
         Spacer(Modifier.weight(1f))

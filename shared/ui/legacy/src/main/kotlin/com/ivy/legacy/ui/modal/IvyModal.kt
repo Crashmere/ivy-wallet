@@ -39,10 +39,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.ui.compose.rememberInteractionSource
-import com.ivy.legacy.ui.addKeyboardListener
+import com.ivy.ui.platform.addKeyboardListener
 import com.ivy.ui.compose.consumeClicks
 import com.ivy.ui.compose.densityScope
-import com.ivy.legacy.ui.hideKeyboard
+import com.ivy.ui.platform.hideKeyboard
 import com.ivy.ui.compose.keyboardOnlyWindowInsets
 import com.ivy.ui.compose.navigationBarInsets
 import com.ivy.ui.navigation.onScreenStart
@@ -115,7 +115,7 @@ fun BoxScope.IvyModal(
                 .testTag("modal_outside_blur")
                 .clickable(
                     onClick = {
-                        hideKeyboard(rootView)
+                        rootView.hideKeyboard()
                         dismiss()
                     },
                     enabled = visible
@@ -180,7 +180,7 @@ fun BoxScope.IvyModal(
                 actionsRowHeight = it
             },
             onClose = {
-                hideKeyboard(rootView)
+                rootView.hideKeyboard()
                 dismiss()
             },
             SecondaryActions = SecondaryActions,

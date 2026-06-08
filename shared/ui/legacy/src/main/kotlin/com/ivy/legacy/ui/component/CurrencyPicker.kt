@@ -42,9 +42,9 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
-import com.ivy.legacy.ui.addKeyboardListener
+import com.ivy.ui.platform.addKeyboardListener
 import com.ivy.ui.compose.densityScope
-import com.ivy.legacy.ui.hideKeyboard
+import com.ivy.ui.platform.hideKeyboard
 import com.ivy.ui.compose.keyboardOnlyWindowInsets
 import com.ivy.ui.navigation.onScreenStart
 import com.ivy.ui.R
@@ -191,7 +191,7 @@ private fun SearchInput(
                 cursorBrush = SolidColor(LegacyTheme.colors.pureInverse),
                 keyboardActions = KeyboardActions(
                     onDone = {
-                        hideKeyboard(view)
+                        view.hideKeyboard()
                     }
                 ),
                 keyboardOptions = KeyboardOptions(

@@ -45,9 +45,9 @@ import com.ivy.legacy.ui.component.transaction.TypeAmountCurrency
 import com.ivy.ui.compose.clickableNoIndication
 import com.ivy.ui.compose.drawColoredShadow
 import com.ivy.data.model.currency.format
-import com.ivy.legacy.ui.formatNicely
+import com.ivy.ui.time.formatNicely
 import com.ivy.ui.compose.rememberInteractionSource
-import com.ivy.legacy.ui.setStatusBarDarkTextCompat
+import com.ivy.ui.platform.setStatusBarDarkTextCompat
 import com.ivy.loans.loan.data.DisplayLoanRecord
 import com.ivy.loans.loandetails.events.DeleteLoanModalEvent
 import com.ivy.loans.loandetails.events.LoanDetailsScreenEvent

@@ -42,7 +42,7 @@ import com.ivy.data.model.currency.amountToDoubleOrNull
 import com.ivy.data.model.currency.format
 import com.ivy.data.model.currency.formatInputAmount
 import com.ivy.data.model.currency.formatInt
-import com.ivy.legacy.ui.hideKeyboard
+import com.ivy.ui.platform.hideKeyboard
 import com.ivy.data.model.currency.localDecimalSeparator
 import com.ivy.ui.navigation.onScreenStart
 import com.ivy.ui.R
@@ -150,7 +150,7 @@ fun BoxWithConstraintsScope.AmountModal(
 
         val rootView = LocalView.current
         onScreenStart {
-            hideKeyboard(rootView)
+            rootView.hideKeyboard()
         }
 
         AmountCurrency(

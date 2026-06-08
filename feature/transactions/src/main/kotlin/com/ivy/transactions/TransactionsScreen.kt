@@ -57,7 +57,7 @@ import com.ivy.ui.compose.clickableNoIndication
 import com.ivy.legacy.ui.horizontalSwipeListener
 import com.ivy.ui.compose.rememberInteractionSource
 import com.ivy.legacy.ui.rememberSwipeListenerState
-import com.ivy.legacy.ui.setStatusBarDarkTextCompat
+import com.ivy.ui.platform.setStatusBarDarkTextCompat
 import com.ivy.ui.navigation.EditTransactionScreen
 import com.ivy.ui.navigation.PieChartStatisticScreen
 import com.ivy.ui.navigation.TransactionsScreen

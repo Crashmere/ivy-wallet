@@ -24,7 +24,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
-import com.ivy.legacy.ui.hideKeyboard
+import com.ivy.ui.platform.hideKeyboard
 import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.Red
 import com.ivy.legacy.ui.component.IvyNameTextField
@@ -153,7 +153,7 @@ fun BoxWithConstraintsScope.DeleteConfirmationModal(
             ),
             keyboardActions = KeyboardActions(
                 onDone = {
-                    hideKeyboard(view)
+                    view.hideKeyboard()
                 }
             ),
         ) { newValue ->

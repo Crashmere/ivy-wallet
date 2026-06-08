@@ -29,7 +29,7 @@ import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
 import com.ivy.ui.compose.thenIf
 import com.ivy.ui.compose.drawColoredShadow
-import com.ivy.legacy.ui.hideKeyboard
+import com.ivy.ui.platform.hideKeyboard
 import com.ivy.ui.navigation.onScreenStart
 import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.Gradient
@@ -86,7 +86,7 @@ fun BoxWithConstraintsScope.ChooseCategoryModal(
     ) {
         val view = LocalView.current
         onScreenStart {
-            hideKeyboard(view)
+            view.hideKeyboard()
         }
 
         Spacer(Modifier.height(32.dp))
