@@ -62,7 +62,7 @@ internal fun ModalDynamicPrimaryAction(
 }
 
 @Composable
-fun ModalSet(
+internal fun ModalSet(
     modifier: Modifier = Modifier,
     label: String = stringResource(R.string.set),
     enabled: Boolean = true,

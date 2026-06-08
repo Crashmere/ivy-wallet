@@ -41,8 +41,8 @@ import com.ivy.legacy.ui.edit.core.Title
 import com.ivy.legacy.ui.edit.core.Toolbar
 import com.ivy.legacy.ui.theme.Orange
 import com.ivy.legacy.ui.component.ChangeTransactionTypeModal
+import com.ivy.legacy.ui.component.IvyButton
 import com.ivy.legacy.ui.modal.DeleteModal
-import com.ivy.legacy.ui.modal.ModalSet
 import com.ivy.legacy.ui.modal.RecurringRuleModal
 import com.ivy.legacy.ui.modal.AccountModalData
 import com.ivy.legacy.ui.modal.RecurringRuleModalData
@@ -51,6 +51,7 @@ import com.ivy.legacy.ui.modal.edit.CategoryModal
 import com.ivy.legacy.ui.modal.CategoryModalData
 import com.ivy.legacy.ui.modal.edit.ChooseCategoryModal
 import com.ivy.legacy.ui.modal.edit.DescriptionModal
+import com.ivy.legacy.ui.theme.GradientGreen
 import kotlinx.collections.immutable.persistentListOf
 import java.time.LocalDateTime
 
@@ -235,7 +236,7 @@ private fun BoxWithConstraintsScope.UI(
         currency = state.currency,
 
         ActionButton = {
-            ModalSet(
+            EditPlannedSetButton(
                 modifier = Modifier.testTag("editPlannedScreen_set")
             ) {
                 onEvent(EditPlannedScreenEvent.OnSave())
@@ -383,6 +384,20 @@ private fun BoxWithConstraintsScope.UI(
         dismiss = {
             recurringRuleModalData = null
         }
+    )
+}
+
+@Composable
+private fun EditPlannedSetButton(
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit
+) {
+    IvyButton(
+        modifier = modifier,
+        text = stringResource(R.string.set),
+        backgroundGradient = GradientGreen,
+        iconStart = R.drawable.ic_check,
+        onClick = onClick
     )
 }
 

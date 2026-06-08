@@ -102,6 +102,7 @@
 - 预算弹窗改用本 feature 私有的名称输入、新增/保存和删除按钮；`shared:ui:legacy` 的 `ModalNameInput`、`ModalAddSave`、`ModalDelete` 收窄为旧弹窗内部实现。
 - 编辑交易页的计划交易支付/收取确认按钮已改为本页面私有实现；`shared:ui:legacy` 的 `ModalCheck` 收窄为旧弹窗内部实现。
 - feature 层不再直接导入 legacy 内部黑色、紫色、深绿和中性色板，也不再使用 `colorAs` 扩展；这些旧主题常量继续只在 `shared:ui:legacy` 内部使用。
+- 分类排序弹窗和计划付款编辑页底部操作改用本 feature 私有的 Set 按钮；`shared:ui:legacy` 的 `ModalSet` 收窄为旧弹窗内部实现。
 - 收窄旧主题色板公开面：颜色选择器专用色板、旧 UI 内部红色/橙色渐变、透明色、底部渐变遮罩、旧弹窗背景模糊和 `asBrush()` 扩展改为 `shared:ui:legacy` 内部实现，feature 层仍可使用现有公开颜色和主题门面。
 - 收窄 domain 内部工具公开面：新旧模型 mapper 中只被 domain 使用的转换方向、CSV 导出行模型和 Arrow 数值 helper 改为模块内部实现；CSV 导入仍需要的 `toDomainAccount()` 暂时保留公开入口。
 - 收回旧账户保存转换边界：新增 `SaveLegacyAccountUseCase`，CSV 导入 feature 不再直接调用 legacy 账户 mapper；`toDomainAccount()` 改为 domain 内部实现。

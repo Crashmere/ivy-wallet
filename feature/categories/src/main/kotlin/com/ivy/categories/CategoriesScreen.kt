@@ -58,12 +58,12 @@ import com.ivy.legacy.ui.theme.White
 import com.ivy.legacy.ui.component.BalanceRow
 import com.ivy.legacy.ui.component.CircleButtonFilled
 import com.ivy.legacy.ui.component.ItemIconSDefaultIcon
+import com.ivy.legacy.ui.component.IvyButton
 import com.ivy.legacy.ui.component.IvyIcon
 import com.ivy.legacy.ui.component.ReorderButton
 import com.ivy.legacy.ui.component.ReorderModalSingleType
 import com.ivy.legacy.ui.theme.findContrastTextColor
 import com.ivy.legacy.ui.modal.IvyModal
-import com.ivy.legacy.ui.modal.ModalSet
 import com.ivy.legacy.ui.modal.ModalTitle
 import com.ivy.legacy.ui.modal.edit.CategoryModal
 import com.ivy.legacy.ui.modal.CategoryModalData
@@ -554,7 +554,7 @@ internal fun BoxWithConstraintsScope.SortModal(
         visible = visible,
         dismiss = dismiss,
         PrimaryAction = {
-            ModalSet {
+            SortModalSetButton {
                 applyChange()
             }
         },
@@ -582,6 +582,16 @@ internal fun BoxWithConstraintsScope.SortModal(
             Spacer(Modifier.height(12.dp))
         }
     }
+}
+
+@Composable
+private fun SortModalSetButton(onClick: () -> Unit) {
+    IvyButton(
+        text = stringResource(R.string.set),
+        backgroundGradient = GradientGreen,
+        iconStart = R.drawable.ic_check,
+        onClick = onClick
+    )
 }
 
 @Composable
