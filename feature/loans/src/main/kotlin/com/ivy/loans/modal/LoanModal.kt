@@ -50,7 +50,7 @@ import com.ivy.data.model.CreateAccountData
 import com.ivy.data.model.CreateLoanData
 import com.ivy.legacy.ui.theme.GradientIvy
 import com.ivy.legacy.ui.theme.Ivy
-import com.ivy.legacy.ui.theme.White
+import com.ivy.ui.theme.colors.IvyFixedColors.White
 import com.ivy.legacy.ui.modal.AccountModalData
 import com.ivy.legacy.ui.modal.ChooseIconModal
 import com.ivy.legacy.ui.modal.CurrencyModal

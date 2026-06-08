@@ -8,7 +8,7 @@ import androidx.compose.ui.unit.dp
 import com.ivy.legacy.ui.button.IvyCircleButton
 import com.ivy.legacy.ui.theme.Gradient
 import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.legacy.ui.theme.White
+import com.ivy.ui.theme.colors.IvyFixedColors.White
 import com.ivy.ui.R
 
 @Composable

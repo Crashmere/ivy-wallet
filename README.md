@@ -1406,6 +1406,7 @@ shared:ui:core
 - `shared:ui:legacy` 的 `IvyDividerLine` 已改为模块内部实现，外部 feature 不再能直接引用这条旧分隔线。
 - 交易筛选、饼图统计、饼图自定义 View 和借贷详情页已停止直接导入旧 `Gray` 静态常量；未指定对象和辅助文字的灰色统一改用当前 `LegacyTheme.colors.gray`。
 - feature 层已停止直接导入旧 `Red` 静态常量；删除/危险操作、失败提示、筛选未激活状态和红色进度分支改用当前 `LegacyTheme.colors.red`，默认数据种子里的本地分类颜色常量暂时保留。
+- feature 层已停止直接导入旧 `White` 静态常量；彩色按钮、渐变按钮和选中态文本使用 `shared:ui:core` 的 `IvyFixedColors.White`，保留原固定近白色视觉值，不和浅/深色主题 token 混用。
 - app 仍保留文件选择、文件分享、Material 日期选择器、BuildInfo、Locale 设置、生物识别和窗口安全等真正依赖 Activity 或 Android app 壳层的装配。
 
 ## 高风险区域
