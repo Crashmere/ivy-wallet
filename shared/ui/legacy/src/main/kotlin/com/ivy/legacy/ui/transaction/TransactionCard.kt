@@ -34,7 +34,6 @@ import androidx.compose.ui.unit.dp
 import com.ivy.data.model.Expense
 import com.ivy.data.model.Income
 import com.ivy.data.model.Transaction
-import com.ivy.data.model.TransactionType
 import com.ivy.data.model.Transfer
 import com.ivy.data.model.getFromAccount
 import com.ivy.data.model.getFromValue
@@ -82,7 +81,7 @@ internal fun TransactionCard(
     onSkipTransaction: (UUID) -> Unit = {},
     onAccountClick: (UUID) -> Unit,
     onCategoryClick: (UUID) -> Unit,
-    onClick: (UUID, TransactionType) -> Unit,
+    onClick: (UUID, TransactionListTransactionType) -> Unit,
 ) {
     val card = remember(transaction, tags) {
         transaction.toTransactionCardData(tags)
@@ -198,7 +197,7 @@ internal fun TransactionCard(
             amount = card.amount.toDouble()
         )
 
-        if (card.type == TransactionType.TRANSFER && toAccountCurrency != transactionCurrency) {
+        if (card.type == TransactionListTransactionType.TRANSFER && toAccountCurrency != transactionCurrency) {
             Text(
                 modifier = Modifier.padding(start = 68.dp),
                 text = "${
@@ -216,7 +215,7 @@ internal fun TransactionCard(
         if (card.dueDate != null && card.dateTime == null) {
             // Pay/Get button
             Spacer(Modifier.height(16.dp))
-            val isExpense = card.type == TransactionType.EXPENSE
+            val isExpense = card.type == TransactionListTransactionType.EXPENSE
             Row {
                 GradientButton(
                     modifier = Modifier
@@ -274,7 +273,7 @@ internal fun TransactionCard(
 
 private data class TransactionCardData(
     val accountId: UUID,
-    val type: TransactionType,
+    val type: TransactionListTransactionType,
     val amount: BigDecimal,
     val toAccountId: UUID?,
     val toAmount: BigDecimal,
@@ -294,9 +293,9 @@ private fun Transaction.toTransactionCardData(tags: List<TransactionListTag>): T
     return TransactionCardData(
         accountId = getFromAccount().value,
         type = when (this) {
-            is Expense -> TransactionType.EXPENSE
-            is Income -> TransactionType.INCOME
-            is Transfer -> TransactionType.TRANSFER
+            is Expense -> TransactionListTransactionType.EXPENSE
+            is Income -> TransactionListTransactionType.INCOME
+            is Transfer -> TransactionListTransactionType.TRANSFER
         },
         amount = amount,
         toAccountId = if (this is Transfer) toAccount.value else null,
@@ -363,7 +362,7 @@ private fun TransactionHeaderRow(
         categories = categories
     )
 
-    if (transaction.type == TransactionType.TRANSFER) {
+    if (transaction.type == TransactionListTransactionType.TRANSFER) {
         Column(
             modifier = Modifier.padding(horizontal = 20.dp),
         ) {
@@ -612,7 +611,7 @@ private fun TransferHeader(
 
 @Composable
 private fun TypeAmountCurrency(
-    transactionType: TransactionType,
+    transactionType: TransactionListTransactionType,
     dueDate: LocalDateTime?,
     currency: String,
     amount: Double,
@@ -629,7 +628,7 @@ private fun TypeAmountCurrency(
         Spacer(Modifier.width(24.dp))
 
         val style = when (transactionType) {
-            TransactionType.INCOME -> {
+            TransactionListTransactionType.INCOME -> {
                 AmountTypeStyle(
                     icon = R.drawable.ic_income,
                     gradient = GradientGreen,
@@ -638,7 +637,7 @@ private fun TypeAmountCurrency(
                 )
             }
 
-            TransactionType.EXPENSE -> {
+            TransactionListTransactionType.EXPENSE -> {
                 when {
                     dueDate != null && dueDate.isAfter(now) -> {
                         // Upcoming Expense
@@ -675,7 +674,7 @@ private fun TypeAmountCurrency(
                 }
             }
 
-            TransactionType.TRANSFER -> {
+            TransactionListTransactionType.TRANSFER -> {
                 // Transfer
                 AmountTypeStyle(
                     icon = R.drawable.ic_transfer,

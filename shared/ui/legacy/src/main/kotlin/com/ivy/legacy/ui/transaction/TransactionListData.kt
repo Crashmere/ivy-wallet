@@ -35,6 +35,12 @@ data class TransactionListTag(
     val name: String,
 )
 
+enum class TransactionListTransactionType {
+    INCOME,
+    EXPENSE,
+    TRANSFER,
+}
+
 @Immutable
 data class TransactionListDueSection(
     val transactions: List<Transaction>,

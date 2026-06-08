@@ -40,7 +40,6 @@ import com.ivy.data.model.Tag
 import com.ivy.data.model.TransactionHistoryDateDivider
 import com.ivy.data.model.TransactionHistoryItem
 import com.ivy.data.model.TransactionHistoryTransaction
-import com.ivy.data.model.TransactionType
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.legacy.ui.transaction.TransactionListAccount
 import com.ivy.legacy.ui.transaction.TransactionListCategory
@@ -50,6 +49,7 @@ import com.ivy.legacy.ui.transaction.TransactionListHistoryDateDivider
 import com.ivy.legacy.ui.transaction.TransactionListHistoryItem
 import com.ivy.legacy.ui.transaction.TransactionListHistoryTransaction
 import com.ivy.legacy.ui.transaction.TransactionListTag
+import com.ivy.legacy.ui.transaction.TransactionListTransactionType
 import com.ivy.ui.summary.IncomeExpensesCards
 import com.ivy.legacy.ui.transaction.transactions
 import com.ivy.ui.compose.clickableNoIndication
@@ -454,7 +454,7 @@ private fun NoFilterEmptyState(
     }
 }
 
-private fun TransactionType.toRouteType(): TransactionRouteType {
+private fun TransactionListTransactionType.toRouteType(): TransactionRouteType {
     return TransactionRouteType.valueOf(name)
 }
 

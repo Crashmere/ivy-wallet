@@ -60,6 +60,7 @@ import com.ivy.legacy.ui.transaction.TransactionListHistoryDateDivider
 import com.ivy.legacy.ui.transaction.TransactionListHistoryItem
 import com.ivy.legacy.ui.transaction.TransactionListHistoryTransaction
 import com.ivy.legacy.ui.transaction.TransactionListTag
+import com.ivy.legacy.ui.transaction.TransactionListTransactionType
 import com.ivy.ui.period.Month
 import com.ivy.ui.period.TimePeriod
 import com.ivy.ui.period.displayLong
@@ -491,7 +492,9 @@ private fun BoxWithConstraintsScope.UI(
                 lastItemSpacer = screenHeight * 0.7f,
 
                 onPayOrGet = onPayOrGet,
-                onTransactionClick = onTransactionClick,
+                onTransactionClick = { transactionId, transactionType ->
+                    onTransactionClick(transactionId, transactionType.toTransactionType())
+                },
                 onAccountClick = onAccountClick,
                 onCategoryClick = onCategoryClick,
                 onSkipTransaction = onSkipTransaction,
@@ -613,6 +616,10 @@ private fun Category.toTransactionListCategory() = TransactionListCategory(
     color = color.value,
     icon = icon?.id,
 )
+
+private fun TransactionListTransactionType.toTransactionType(): TransactionType {
+    return TransactionType.valueOf(name)
+}
 
 private fun LazyListScope.choosePeriodModal(
     period: TimePeriod,

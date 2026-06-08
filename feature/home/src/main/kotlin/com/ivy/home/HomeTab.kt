@@ -43,6 +43,7 @@ import com.ivy.legacy.ui.transaction.TransactionListHistoryDateDivider
 import com.ivy.legacy.ui.transaction.TransactionListHistoryItem
 import com.ivy.legacy.ui.transaction.TransactionListHistoryTransaction
 import com.ivy.legacy.ui.transaction.TransactionListTag
+import com.ivy.legacy.ui.transaction.TransactionListTransactionType
 import com.ivy.ui.period.Month
 import com.ivy.ui.period.TimePeriod
 import com.ivy.ui.period.displayLong
@@ -487,7 +488,9 @@ internal fun HomeLazyColumn(
             setOverdueExpanded = setOverdueExpanded,
             history = history.map { it.toTransactionListHistoryItem() },
             onPayOrGet = onPayOrGet,
-            onTransactionClick = onTransactionClick,
+            onTransactionClick = { transactionId, transactionType ->
+                onTransactionClick(transactionId, transactionType.toTransactionType())
+            },
             onAccountClick = onAccountClick,
             onCategoryClick = onCategoryClick,
             emptyStateTitle = noTransactionsTitle,
@@ -553,6 +556,10 @@ private fun Tag.toTransactionListTag() = TransactionListTag(
     id = id.value,
     name = name.value,
 )
+
+private fun TransactionListTransactionType.toTransactionType(): TransactionType {
+    return TransactionType.valueOf(name)
+}
 
 private fun TransactionType.toRouteType(): TransactionRouteType {
     return TransactionRouteType.valueOf(name)
