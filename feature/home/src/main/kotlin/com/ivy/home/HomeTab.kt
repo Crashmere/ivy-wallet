@@ -25,6 +25,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.Category
+import com.ivy.data.model.Tag
 import com.ivy.data.model.TransactionHistoryDateDivider
 import com.ivy.data.model.TransactionType
 import com.ivy.data.model.TransactionHistoryItem
@@ -41,6 +42,7 @@ import com.ivy.legacy.ui.transaction.TransactionListDueSection
 import com.ivy.legacy.ui.transaction.TransactionListHistoryDateDivider
 import com.ivy.legacy.ui.transaction.TransactionListHistoryItem
 import com.ivy.legacy.ui.transaction.TransactionListHistoryTransaction
+import com.ivy.legacy.ui.transaction.TransactionListTag
 import com.ivy.ui.period.Month
 import com.ivy.ui.period.TimePeriod
 import com.ivy.ui.period.displayLong
@@ -534,7 +536,7 @@ private fun TransactionHistoryItem.toTransactionListHistoryItem(): TransactionLi
     return when (this) {
         is TransactionHistoryTransaction -> TransactionListHistoryTransaction(
             transaction = transaction,
-            tags = tags,
+            tags = tags.map { it.toTransactionListTag() },
         )
 
         is TransactionHistoryDateDivider -> TransactionListHistoryDateDivider(
@@ -546,6 +548,11 @@ private fun TransactionHistoryItem.toTransactionListHistoryItem(): TransactionLi
         else -> error("Unsupported transaction history item: ${this::class.simpleName}")
     }
 }
+
+private fun Tag.toTransactionListTag() = TransactionListTag(
+    id = id.value,
+    name = name.value,
+)
 
 private fun TransactionType.toRouteType(): TransactionRouteType {
     return TransactionRouteType.valueOf(name)

@@ -33,7 +33,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.Expense
 import com.ivy.data.model.Income
-import com.ivy.data.model.Tag
 import com.ivy.data.model.Transaction
 import com.ivy.data.model.TransactionType
 import com.ivy.data.model.Transfer
@@ -76,7 +75,7 @@ import java.util.UUID
 internal fun TransactionCard(
     baseData: TransactionListData,
     transaction: Transaction,
-    tags: List<Tag> = emptyList(),
+    tags: List<TransactionListTag> = emptyList(),
     shouldShowAccountSpecificColorInTransactions: Boolean,
     onPayOrGet: (UUID) -> Unit,
     modifier: Modifier = Modifier,
@@ -287,10 +286,10 @@ private data class TransactionCardData(
     val recurringRuleId: UUID?,
     val paidFor: Instant?,
     val id: UUID,
-    val tags: List<Tag>,
+    val tags: List<TransactionListTag>,
 )
 
-private fun Transaction.toTransactionCardData(tags: List<Tag>): TransactionCardData {
+private fun Transaction.toTransactionCardData(tags: List<TransactionListTag>): TransactionCardData {
     val amount = getFromValue().amount.value.toBigDecimal()
     return TransactionCardData(
         accountId = getFromAccount().value,
@@ -315,7 +314,7 @@ private fun Transaction.toTransactionCardData(tags: List<Tag>): TransactionCardD
 }
 
 @Composable
-private fun ColumnScope.TransactionTags(tags: List<Tag>) {
+private fun ColumnScope.TransactionTags(tags: List<TransactionListTag>) {
     Spacer(Modifier.height(12.dp))
 
     LazyRow(
@@ -335,9 +334,9 @@ private fun ColumnScope.TransactionTags(tags: List<Tag>) {
             Spacer(modifier = Modifier.width(8.dp))
         }
 
-        items(tags, key = { it.id.value }) { tag ->
+        items(tags, key = { it.id }) { tag ->
             Text(
-                text = "#${tag.name.value}",
+                text = "#${tag.name}",
                 style = LegacyTheme.typo.nC.copy(
                     color = BlueLight,
                     fontWeight = FontWeight.Normal,

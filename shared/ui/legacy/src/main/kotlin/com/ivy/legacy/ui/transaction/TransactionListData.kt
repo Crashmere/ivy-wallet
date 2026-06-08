@@ -1,7 +1,6 @@
 package com.ivy.legacy.ui.transaction
 
 import androidx.compose.runtime.Immutable
-import com.ivy.data.model.Tag
 import com.ivy.data.model.Transaction
 import java.time.LocalDate
 import java.util.UUID
@@ -31,6 +30,12 @@ data class TransactionListCategory(
 )
 
 @Immutable
+data class TransactionListTag(
+    val id: UUID,
+    val name: String,
+)
+
+@Immutable
 data class TransactionListDueSection(
     val transactions: List<Transaction>,
     val expanded: Boolean,
@@ -44,7 +49,7 @@ sealed interface TransactionListHistoryItem
 @Immutable
 data class TransactionListHistoryTransaction(
     val transaction: Transaction,
-    val tags: List<Tag>,
+    val tags: List<TransactionListTag>,
 ) : TransactionListHistoryItem
 
 @Immutable
