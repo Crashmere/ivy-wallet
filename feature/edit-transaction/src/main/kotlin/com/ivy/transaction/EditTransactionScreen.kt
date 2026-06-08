@@ -539,14 +539,14 @@ private fun BoxWithConstraintsScope.UI(
     // Modals
     ChooseCategoryModal(
         visible = chooseCategoryModalVisible,
-        initialCategory = category,
-        categories = categories,
-        showCategoryModal = {
-            categoryModalCategory = it
+        initialCategoryId = category?.id?.value,
+        categories = categories.map { it.toCategoryModalCategory() },
+        showCategoryModal = { categoryId ->
+            categoryModalCategory = categories.firstOrNull { it.id.value == categoryId }
             categoryModalVisible = true
         },
-        onCategoryChanged = {
-            onCategoryChange(it)
+        onCategoryChanged = { categoryId ->
+            onCategoryChange(categories.firstOrNull { it.id.value == categoryId })
             if (shouldFocusTitle(titleTextFieldValue, transactionType)) {
                 titleFocus.requestFocus()
             } else if (shouldFocusAmount(amount = amount)) {

@@ -25,7 +25,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.ivy.data.model.Category
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.compose.thenIf
 import com.ivy.ui.compose.drawColoredShadow
@@ -45,10 +44,6 @@ import com.ivy.ui.theme.colors.toComposeColor
 import java.util.UUID
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.graphics.toArgb
-import com.ivy.data.model.CategoryId
-import com.ivy.data.model.primitive.ColorInt
-import com.ivy.data.model.primitive.NotBlankTrimmedString
 
 @Suppress("ParameterNaming")
 @ExperimentalFoundationApi
@@ -56,15 +51,15 @@ import com.ivy.data.model.primitive.NotBlankTrimmedString
 fun BoxWithConstraintsScope.ChooseCategoryModal(
     id: UUID = UUID.randomUUID(),
     visible: Boolean,
-    initialCategory: Category?,
-    categories: List<Category>,
+    initialCategoryId: UUID?,
+    categories: List<CategoryModalCategory>,
 
-    showCategoryModal: (Category?) -> Unit,
-    onCategoryChanged: (Category?) -> Unit,
+    showCategoryModal: (UUID?) -> Unit,
+    onCategoryChanged: (UUID?) -> Unit,
     dismiss: () -> Unit
 ) {
-    var selectedCategory by remember(initialCategory) {
-        mutableStateOf(initialCategory)
+    var selectedCategoryId by remember(initialCategoryId) {
+        mutableStateOf(initialCategoryId)
     }
 
     IvyModal(
@@ -74,7 +69,7 @@ fun BoxWithConstraintsScope.ChooseCategoryModal(
         PrimaryAction = {
             ModalSkip {
                 save(
-                    category = selectedCategory,
+                    categoryId = selectedCategoryId,
                     onCategoryChanged = onCategoryChanged,
                     dismiss = dismiss
                 )
@@ -96,16 +91,16 @@ fun BoxWithConstraintsScope.ChooseCategoryModal(
 
         CategoryPicker(
             categories = categories,
-            selectedCategory = selectedCategory,
+            selectedCategoryId = selectedCategoryId,
             showCategoryModal = showCategoryModal,
             onEditCategory = {
-                showCategoryModal(it)
+                showCategoryModal(it.id)
             }
         ) {
-            selectedCategory = it
+            selectedCategoryId = it?.id
             save(
                 shouldDismissModal = it != null,
-                category = it,
+                categoryId = it?.id,
                 onCategoryChanged = onCategoryChanged,
                 dismiss = dismiss
             )
@@ -118,11 +113,11 @@ fun BoxWithConstraintsScope.ChooseCategoryModal(
 private fun save(
     shouldDismissModal: Boolean = true,
 
-    category: Category?,
-    onCategoryChanged: (Category?) -> Unit,
+    categoryId: UUID?,
+    onCategoryChanged: (UUID?) -> Unit,
     dismiss: () -> Unit
 ) {
-    onCategoryChanged(category)
+    onCategoryChanged(categoryId)
     if (shouldDismissModal) {
         dismiss()
     }
@@ -132,11 +127,11 @@ private fun save(
 @Suppress("ParameterNaming")
 @Composable
 private fun CategoryPicker(
-    categories: List<Category>,
-    selectedCategory: Category?,
-    showCategoryModal: (Category?) -> Unit,
-    onEditCategory: (Category) -> Unit,
-    onSelected: (Category?) -> Unit,
+    categories: List<CategoryModalCategory>,
+    selectedCategoryId: UUID?,
+    showCategoryModal: (UUID?) -> Unit,
+    onEditCategory: (CategoryModalCategory) -> Unit,
+    onSelected: (CategoryModalCategory?) -> Unit,
 ) {
     val data = mutableListOf<Any>()
     data.addAll(categories)
@@ -150,10 +145,10 @@ private fun CategoryPicker(
         items = data
     ) {
         when (it) {
-            is Category -> {
+            is CategoryModalCategory -> {
                 CategoryButton(
                     category = it,
-                    selected = it == selectedCategory,
+                    selected = it.id == selectedCategoryId,
                     onClick = {
                         onSelected(it)
                     },
@@ -178,13 +173,13 @@ private fun CategoryPicker(
 @ExperimentalFoundationApi
 @Composable
 private fun CategoryButton(
-    category: Category,
+    category: CategoryModalCategory,
     selected: Boolean,
     onClick: () -> Unit,
     onLongClick: () -> Unit,
     onDeselect: () -> Unit,
 ) {
-    val categoryColor = category.color.value.toComposeColor()
+    val categoryColor = category.color.toComposeColor()
 
     val rFull = LegacyTheme.shapes.rFull
 
@@ -214,7 +209,7 @@ private fun CategoryButton(
         ItemIconSDefaultIcon(
             modifier = Modifier
                 .background(categoryColor, CircleShape),
-            iconName = category.icon?.id,
+            iconName = category.icon,
             defaultIcon = R.drawable.ic_custom_category_s,
             tint = findContrastTextColor(categoryColor)
         )
@@ -226,7 +221,7 @@ private fun CategoryButton(
                     start = if (selected) 12.dp else 12.dp,
                     end = if (selected) 20.dp else 24.dp
                 ),
-            text = category.name.value,
+            text = category.name,
             style = LegacyTheme.typo.b2.copy(
                 color = if (selected) {
                     findContrastTextColor(categoryColor)

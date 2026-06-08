@@ -28,6 +28,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.TransactionType
 import com.ivy.data.model.Category
+import com.ivy.data.model.CategoryId
 import com.ivy.data.model.CreateCategoryData
 import com.ivy.data.model.IntervalType
 import com.ivy.data.model.primitive.ColorInt
@@ -271,14 +272,14 @@ private fun BoxWithConstraintsScope.UI(
     // Modals
     ChooseCategoryModal(
         visible = state.categoryModalVisible,
-        initialCategory = state.category,
-        categories = state.categories,
-        showCategoryModal = {
-            categoryModalCategory = it
+        initialCategoryId = state.category?.id?.value,
+        categories = state.categories.map { it.toCategoryModalCategory() },
+        showCategoryModal = { categoryId ->
+            categoryModalCategory = state.categories.firstOrNull { it.id.value == categoryId }
             categoryModalVisible = true
         },
-        onCategoryChanged = {
-            onEvent(EditPlannedScreenEvent.OnCategoryChanged(it?.id))
+        onCategoryChanged = { categoryId ->
+            onEvent(EditPlannedScreenEvent.OnCategoryChanged(categoryId?.let(::CategoryId)))
             showRecurringRuleModal()
         },
         dismiss = {
