@@ -655,21 +655,22 @@ private fun AccountsFilter(
     nonNullFilter: (ReportFilter?) -> ReportFilter,
     onSetFilter: (ReportFilter) -> Unit
 ) {
+    val selectedAccountIds = filter?.accountIds.orEmpty()
     ListFilterTitle(
-        text = stringResource(R.string.accounts_number, filter?.accounts?.size ?: 0),
-        active = filter != null && filter.accounts.isNotEmpty(),
-        itemsSelected = filter?.accounts?.size ?: 0,
+        text = stringResource(R.string.accounts_number, selectedAccountIds.size),
+        active = filter != null && selectedAccountIds.isNotEmpty(),
+        itemsSelected = selectedAccountIds.size,
         onClearAll = {
             onSetFilter(
                 nonNullFilter(filter).copy(
-                    accounts = emptyList()
+                    accountIds = emptyList()
                 )
             )
         },
         onSelectAll = {
             onSetFilter(
                 nonNullFilter(filter).copy(
-                    accounts = allAccounts
+                    accountIds = allAccounts.map { it.id }
                 )
             )
         }
@@ -688,22 +689,25 @@ private fun AccountsFilter(
                 defaultIcon = R.drawable.ic_custom_account_s,
                 text = account.name,
                 selectedColor = account.color.toComposeColor().takeIf {
-                    filter?.accounts?.contains(account) == true
+                    account.id in selectedAccountIds
                 }
             ) { selected ->
                 if (selected) {
                     // remove account
                     onSetFilter(
                         nonNullFilter(filter).copy(
-                            accounts = nonNullFilter(filter).accounts.filter { it != account }
+                            accountIds = nonNullFilter(filter).accountIds.filter { it != account.id }
                         )
                     )
                 } else {
                     // add account
+                    val newAccountIds = nonNullFilter(filter).accountIds.plus(account.id).toSet()
                     onSetFilter(
                         nonNullFilter(filter).copy(
-                            accounts = nonNullFilter(filter).accounts
-                                .plus(account).sortedBy { it.orderNum }
+                            accountIds = allAccounts
+                                .filter { it.id in newAccountIds }
+                                .sortedBy { it.orderNum }
+                                .map { it.id }
                         )
                     )
                 }

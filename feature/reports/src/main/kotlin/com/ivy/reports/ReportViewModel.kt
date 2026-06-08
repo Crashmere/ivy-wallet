@@ -243,13 +243,15 @@ internal class ReportViewModel @Inject internal constructor(
             }
 
             if (!reportFilter.validate()) return@withContext
-            val selectedAccounts = reportFilter.accounts
+            val allAccounts = getLegacyAccountsUseCase()
+            val selectedAccounts = allAccounts.filter { it.id in reportFilter.accountIds }
+            if (selectedAccounts.isEmpty()) return@withContext
             val baseCurrency = baseCurrency
             loading = true
 
             val transactionsList = filterTransactions(
                 baseCurrency = baseCurrency,
-                accounts = selectedAccounts,
+                accounts = allAccounts,
                 filter = reportFilter
             )
 
@@ -265,7 +267,7 @@ internal class ReportViewModel @Inject internal constructor(
 
             historyIncomeExpense = calculateTransactionsIncomeExpenseUseCase(
                 transactions = historyTransactions,
-                accounts = selectedAccounts,
+                accounts = allAccounts,
                 baseCurrency = baseCurrency
             )
 
@@ -292,7 +294,7 @@ internal class ReportViewModel @Inject internal constructor(
 
             val upcomingIncomeExpense = calculateTransactionsIncomeExpenseUseCase(
                 transactions = upcomingTransactionsList,
-                accounts = selectedAccounts,
+                accounts = allAccounts,
                 baseCurrency = baseCurrency
             )
             // Overdue
@@ -304,7 +306,7 @@ internal class ReportViewModel @Inject internal constructor(
             }.toImmutableList()
             val overdueIncomeExpense = calculateTransactionsIncomeExpenseUseCase(
                 transactions = overdue,
-                accounts = selectedAccounts,
+                accounts = allAccounts,
                 baseCurrency = baseCurrency
             )
 
@@ -317,7 +319,7 @@ internal class ReportViewModel @Inject internal constructor(
                 upcomingTransactions = mapTransactionsToLegacyTransactionsUseCase(upcomingTransactionsList)
                     .toImmutableList(),
                 overdueTransactions = mapTransactionsToLegacyTransactionsUseCase(overdue).toImmutableList(),
-                accounts = selectedAccounts.toImmutableList(),
+                accounts = allAccounts,
                 reportFilter = reportFilter,
                 accountIdFilters = accountFilterIdList.await().toImmutableList(),
                 transactionSummary = transactionsList.toReportTransactionSummary(),
@@ -369,7 +371,7 @@ internal class ReportViewModel @Inject internal constructor(
         accounts: List<LegacyAccount>,
         filter: ReportFilter,
     ): ImmutableList<Transaction> {
-        val filterAccountIds = filter.accounts.map { it.id }
+        val filterAccountIds = filter.accountIds.toSet()
         val filterCategoryIds =
             filter.categories.map { if (it.id.value == unSpecifiedCategory.id.value) null else it.id }
         val filterRange =

@@ -4,14 +4,13 @@ import com.ivy.data.model.TransactionType
 import com.ivy.data.model.Category
 import com.ivy.data.model.TagId
 import com.ivy.ui.period.TimePeriod
-import com.ivy.data.model.legacy.LegacyAccount
 import java.util.UUID
 
 internal data class ReportFilter(
     val id: UUID = UUID.randomUUID(),
     val transactionTypes: List<TransactionType>,
     val period: TimePeriod?,
-    val accounts: List<LegacyAccount>,
+    val accountIds: List<UUID>,
     val categories: List<Category>,
     val currency: String,
     val minAmount: Double?,
@@ -28,7 +27,7 @@ internal data class ReportFilter(
         ) = ReportFilter(
             transactionTypes = emptyList(),
             period = null,
-            accounts = emptyList(),
+            accountIds = emptyList(),
             categories = emptyList(),
             currency = baseCurrency,
             includeKeywords = emptyList(),
@@ -45,7 +44,7 @@ internal data class ReportFilter(
 
         if (period == null) return false
 
-        if (accounts.isEmpty()) return false
+        if (accountIds.isEmpty()) return false
 
         if (categories.isEmpty()) return false
 

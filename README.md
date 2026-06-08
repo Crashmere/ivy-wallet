@@ -1248,6 +1248,7 @@ shared:ui:core
 - 分类页月度统计所需的账户和旧交易列表已收敛为一次加载流程的局部输入，避免把旧交易列表挂在 ViewModel 长期可变字段上。
 - 饼图页从报表/交易列表进入时只在 ViewModel 中保留输入交易 ID；`LegacyTransaction` 列表只在 `BuildPieChartDataUseCase` 调用前局部加载。
 - 借贷详情页的贷款关联交易对象也已改为按需读取；ViewModel 长期状态只保留是否创建关联交易的布尔开关。
+- 报表筛选条件中的账户选择已从完整 `LegacyAccount` 列表收为账户 ID 列表；报表页继续保留全部账户列表用于交易卡片展示和币种换算，筛选条件只表达“选中了哪些账户”。
 - app 仍保留文件选择、文件分享、Material 日期选择器、BuildInfo、Locale 设置、生物识别和窗口安全等真正依赖 Activity 或 Android app 壳层的装配。
 
 ## 高风险区域
@@ -1318,7 +1319,7 @@ shared:ui:core
 
 下一步建议执行：
 
-1. 继续审计 `LegacyTransaction` 在 UI/统计路径中的真实必要性；优先从只做展示或参数传递的页面状态开始，评估是否能接收正式 `Transaction`、交易 ID 或更小的展示模型。
+1. 继续审计 `LegacyTransaction` / `LegacyAccount` 在 UI/统计路径中的真实必要性；优先从只做展示、筛选或参数传递的页面状态开始，评估是否能接收正式模型 ID 或更小的展示模型。
 2. 继续检查 shared/feature 模块依赖，优先处理 feature 仍直接引用 domain 内部算法模型、legacy 兼容模型或过宽 use case 的位置。
 3. 偏好设置代码边界已基本收窄，短期不再为清理而迁移存储格式；若后续要处理 `SettingsEntity`、SharedPrefs 或 DataStore 归并，必须单独规划 schema/备份兼容迁移。
 4. 继续数据库只读审计：`isDeleted` 目前先保留为本地软删除语义；不再把业务表里的 `isDeleted` 当作纯云同步字段批量删除。
