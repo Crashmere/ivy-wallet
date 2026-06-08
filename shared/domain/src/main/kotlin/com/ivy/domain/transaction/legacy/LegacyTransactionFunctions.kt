@@ -7,7 +7,7 @@ import com.ivy.data.model.TransactionType
 import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.domain.account.legacy.legacyAccountCurrency
 
-object LegacyTransactionFunctions {
+internal object LegacyTransactionFunctions {
     fun expenses(transactions: List<LegacyTransaction>): List<LegacyTransaction> {
         return transactions.filter { it.type == TransactionType.EXPENSE }
     }

@@ -20,7 +20,7 @@ import java.util.UUID
 
 private fun LocalDateTime.toEpochSeconds() = toEpochSecond(ZoneOffset.UTC)
 
-object LegacyTransactionDateDividers {
+internal object LegacyTransactionDateDividers {
     suspend fun List<LegacyTransaction>.withDateDividers(
         exchangeRatesUseCase: LegacyExchangeRatesUseCase,
         baseCurrencyCode: String,

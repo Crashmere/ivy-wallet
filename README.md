@@ -58,6 +58,7 @@
 - 集中 ViewModel 获取入口：剩余直接使用 `viewModel()` 的 feature 页面已改用 `screenScopedViewModel()`，`lifecycle-viewmodel-compose` 依赖只保留在 `shared:ui:navigation`。
 - 简化导航栈实现：`Navigation` 内部页面返回栈已从 Java `Stack` 换成 Kotlin `ArrayDeque`，保留原有后进先出返回语义。
 - 收窄汇率页内部 UI 边界：新增汇率弹窗不再直接回传 ViewModel 事件类型，模块内列表项和弹窗组件也不再作为 public API 暴露。
+- 收窄 domain legacy 交易计算公开面：旧交易折叠、汇率换算、日期分组和到期过滤 helper 改为 domain 模块内可见，外部继续通过 use case 使用这些能力。
 
 当前仍保留：
 

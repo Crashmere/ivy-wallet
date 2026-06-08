@@ -3,7 +3,7 @@ package com.ivy.domain.transaction.legacy
 import com.ivy.data.model.legacy.LegacyTransaction
 import com.ivy.domain.time.todayStartOfLocalDayUtc
 
-fun Iterable<LegacyTransaction>.filterUpcomingLegacyTransactions(): List<LegacyTransaction> {
+internal fun Iterable<LegacyTransaction>.filterUpcomingLegacyTransactions(): List<LegacyTransaction> {
     val todayStartOfDayUtc = todayStartOfLocalDayUtc()
     return filter {
         // make sure that it's in the future
@@ -11,7 +11,7 @@ fun Iterable<LegacyTransaction>.filterUpcomingLegacyTransactions(): List<LegacyT
     }
 }
 
-fun Iterable<LegacyTransaction>.filterOverdueLegacyTransactions(): List<LegacyTransaction> {
+internal fun Iterable<LegacyTransaction>.filterOverdueLegacyTransactions(): List<LegacyTransaction> {
     val todayStartOfDayUtc = todayStartOfLocalDayUtc()
     return filter {
         // make sure that it's in the past

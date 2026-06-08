@@ -10,7 +10,7 @@ import com.ivy.domain.exchange.ExchangeEffect
 import com.ivy.domain.exchange.ExchangeTransactionArgument
 import java.math.BigDecimal
 
-suspend fun exchangeInBaseCurrency(
+internal suspend fun exchangeInBaseCurrency(
     transaction: LegacyTransaction,
     arg: ExchangeTransactionArgument
 ): BigDecimal {
@@ -27,7 +27,7 @@ suspend fun exchangeInBaseCurrency(
     )
 }
 
-suspend fun exchangeInCurrency(
+internal suspend fun exchangeInCurrency(
     transaction: LegacyTransaction,
     baseCurrency: String,
     transactionCurrency: Option<String>,
@@ -44,7 +44,7 @@ suspend fun exchangeInCurrency(
     ).getOrNull() ?: BigDecimal.ZERO
 }
 
-object LegacyExchangeTransactions {
+internal object LegacyExchangeTransactions {
     suspend fun exchangeInBaseCurrency(
         transaction: LegacyTransaction,
         baseCurrency: String,

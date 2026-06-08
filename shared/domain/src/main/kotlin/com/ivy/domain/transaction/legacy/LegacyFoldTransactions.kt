@@ -7,7 +7,7 @@ import com.ivy.domain.util.mapIndexedNelSuspend
 import com.ivy.domain.util.nonEmptyListOfZeros
 import java.math.BigDecimal
 
-object LegacyFoldTransactions {
+internal object LegacyFoldTransactions {
     suspend fun <Arg> foldTransactionsSuspend(
         transactions: List<LegacyTransaction>,
         valueFunctions: NonEmptyList<suspend (LegacyTransaction, Arg) -> BigDecimal>,
