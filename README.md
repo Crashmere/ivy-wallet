@@ -1332,6 +1332,7 @@ shared:ui:core
 - 饼图页的选中分类状态已从完整 `Category` 收为分类 ID；图表和列表仍通过 `CategoryAmount` 渲染分类名称、图标和颜色，选中高亮只比较 ID。
 - 导入恢复 flow 子组件不再直接调用 `navigation()` 或引用手动 CSV route；`ImportCSVScreen` 和 `CSVScreen` 入口负责把返回、完成和进入手动 CSV 导入翻译为导航行为。
 - 报表页和报表筛选浮层改用报表模块私有复选行；`shared:ui:legacy` 的 `IvyCheckboxWithText` 收窄为旧账户/借贷弹窗内部实现。
+- 借贷列表和借贷详情页改用借贷模块私有进度条；`shared:ui:legacy` 删除不再被复用的 `ProgressBar`。
 - app 仍保留文件选择、文件分享、Material 日期选择器、BuildInfo、Locale 设置、生物识别和窗口安全等真正依赖 Activity 或 Android app 壳层的装配。
 
 ## 高风险区域

@@ -67,7 +67,6 @@ import com.ivy.legacy.ui.component.BalanceRow
 import com.ivy.legacy.ui.component.ItemIconMDefaultIcon
 import com.ivy.legacy.ui.component.IvyButton
 import com.ivy.legacy.ui.component.IvyIcon
-import com.ivy.legacy.ui.component.ProgressBar
 import com.ivy.ui.icon.getCustomIconIdS
 import com.ivy.legacy.ui.theme.dynamicContrast
 import com.ivy.legacy.ui.theme.findContrastTextColor
@@ -77,6 +76,7 @@ import com.ivy.legacy.ui.modal.LoanModal
 import com.ivy.legacy.ui.modal.LoanRecordModal
 import com.ivy.legacy.ui.modal.ProgressModal
 import com.ivy.legacy.ui.theme.toComposeColor
+import com.ivy.loans.LoanProgressBar
 import java.util.UUID
 
 private val LoanCardDarkBackground = Color(0xFF2B2C2D)
@@ -529,7 +529,7 @@ private fun LoanInfoCard(
 
         Spacer(Modifier.height(8.dp))
 
-        ProgressBar(
+        LoanProgressBar(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(24.dp)
@@ -591,7 +591,7 @@ private fun LoanInfoCard(
 
             Spacer(Modifier.height(12.dp))
 
-            ProgressBar(
+            LoanProgressBar(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(24.dp)

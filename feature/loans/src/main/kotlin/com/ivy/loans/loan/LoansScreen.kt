@@ -47,13 +47,13 @@ import com.ivy.legacy.ui.component.BalanceRow
 import com.ivy.legacy.ui.component.CircleButtonFilled
 import com.ivy.legacy.ui.component.ItemIconSDefaultIcon
 import com.ivy.legacy.ui.component.IvyIcon
-import com.ivy.legacy.ui.component.ProgressBar
 import com.ivy.legacy.ui.component.ReorderButton
 import com.ivy.legacy.ui.component.ReorderModalSingleType
 import com.ivy.legacy.ui.theme.dynamicContrast
 import com.ivy.legacy.ui.theme.findContrastTextColor
 import com.ivy.legacy.ui.modal.LoanModal
 import com.ivy.legacy.ui.theme.toComposeColor
+import com.ivy.loans.LoanProgressBar
 
 @Composable
 fun BoxWithConstraintsScope.LoansScreen() {
@@ -369,7 +369,7 @@ private fun ColumnScope.LoanInfo(
 
     Spacer(Modifier.height(12.dp))
 
-    ProgressBar(
+    LoanProgressBar(
         modifier = Modifier
             .fillMaxWidth()
             .height(24.dp)
