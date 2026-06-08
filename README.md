@@ -463,6 +463,7 @@
 - 旧颜色兼容层继续收窄公开面：`dynamicContrast()` 仍是外部可用入口，但 HSV 拆解、亮暗调整和底层 HSV 转换 helper 已改为文件私有实现，避免旧主题算法细节继续作为公共 API 扩散。
 - 旧交易卡片的账户/分类查找 helper 已内聚回 `TransactionCard.kt` 并改成私有实现，删除不再提供公共 API 的 `component.transaction.Utils.kt`。
 - 旧交易列表的公开边界继续压缩：单卡片 `TransactionCard` 和历史日期分隔 `HistoryDateDivider` 仅保留 legacy 模块内可见，分类 badge 也改为卡片内部私有实现；feature 仍通过列表级 `transactions(...)` 或明确复用的展示组件接入。
+- 旧通用组件的底层积木继续降级为模块内 API：`IvyBasicTextField`、`IvyNumberTextField`、`IvyDividerLineRounded`、`AmountCurrencyB2Row` 和无语义的 `CircleButton` 不再直接暴露给 feature，外部继续使用更明确的搜索框、周期输入、底部栏、金额展示和填充圆按钮等入口。
 - 旧日期/周期显示链路已停止使用全局 `stringRes()`：月份模型改为只保存 `monthValue`，月份名、interval 单位、Last N 周期和“今天/昨天/明天”文案都在 Composable 显示边界通过 `stringResource()` 获取；无调用方的旧 `stringRes()` 兼容函数已经删除。
 - 已删除 `shared:base` 中最后的全局 `appContext` 入口；`IvyAndroidApp` 不再在启动时写入全局 Context，旧 `SharedPrefs` 和平台类继续通过构造参数或 Hilt 注入获取 Context。
 - 第一批 UI 层当前时间读取已停止使用 deprecated 的全局时间函数：饼图点击计时改用 `SystemClock.elapsedRealtime()`，旧交易卡片、日期分隔、日期格式化和周期选择弹窗改为通过 `LocalTimeProvider` 获取当前日期/时间，并删除无调用方的 `getTrueDate()` 桥接函数。

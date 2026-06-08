@@ -26,7 +26,7 @@ import com.ivy.ui.compose.selectEndTextFieldValue
 
 @Suppress("ParameterNaming")
 @Composable
-fun IvyBasicTextField(
+internal fun IvyBasicTextField(
     modifier: Modifier = Modifier,
     value: TextFieldValue,
     textColor: Color = LegacyTheme.colors.pureInverse,

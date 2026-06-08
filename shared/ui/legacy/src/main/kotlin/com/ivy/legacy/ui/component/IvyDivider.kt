@@ -22,7 +22,7 @@ fun IvyDividerLine(
 }
 
 @Composable
-fun IvyDividerLineRounded(
+internal fun IvyDividerLineRounded(
     modifier: Modifier = Modifier
 ) {
     Spacer(

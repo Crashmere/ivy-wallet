@@ -20,7 +20,7 @@ import com.ivy.data.model.currency.shouldShortAmount
 
 @SuppressLint("ComposeModifierMissing")
 @Composable
-fun AmountCurrencyB2Row(
+internal fun AmountCurrencyB2Row(
     amount: Double,
     currency: String,
     amountFontWeight: FontWeight = FontWeight.ExtraBold,

@@ -25,7 +25,7 @@ import com.ivy.ui.platform.hideKeyboard
 
 @Suppress("ParameterNaming")
 @Composable
-fun IvyNumberTextField(
+internal fun IvyNumberTextField(
     modifier: Modifier = Modifier,
     textModifier: Modifier = Modifier,
     value: TextFieldValue,
