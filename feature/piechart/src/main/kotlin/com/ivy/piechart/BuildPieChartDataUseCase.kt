@@ -1,7 +1,11 @@
 package com.ivy.piechart
 
 import com.ivy.data.model.Account
+import com.ivy.data.model.Transaction
 import com.ivy.data.model.TransactionType
+import com.ivy.data.model.getFromAccount
+import com.ivy.data.model.getToAccount
+import com.ivy.data.model.getTransactionType
 import com.ivy.data.model.legacy.LegacyTransaction
 import com.ivy.ui.resource.ResourceProvider
 import com.ivy.data.model.Category
@@ -15,7 +19,7 @@ import com.ivy.data.model.primitive.NotBlankTrimmedString
 import com.ivy.domain.usecase.account.GetAccountsUseCase
 import com.ivy.domain.usecase.category.CalculateCategoryIncomeWithAccountFiltersUseCase
 import com.ivy.domain.usecase.category.GetCategoriesUseCase
-import com.ivy.domain.usecase.transaction.CalculateLegacyTransactionsIncomeExpenseUseCase
+import com.ivy.domain.usecase.transaction.CalculateTransactionsIncomeExpenseUseCase
 import com.ivy.domain.usecase.transaction.GetTransactionsForAccountsUseCase
 import com.ivy.domain.usecase.transaction.MapTransactionsToLegacyTransactionsUseCase
 import com.ivy.ui.R
@@ -31,7 +35,7 @@ internal class BuildPieChartDataUseCase @Inject internal constructor(
     private val getAccountsUseCase: GetAccountsUseCase,
     private val getTransactionsForAccountsUseCase: GetTransactionsForAccountsUseCase,
     private val mapTransactionsToLegacyTransactionsUseCase: MapTransactionsToLegacyTransactionsUseCase,
-    private val calculateLegacyTransactionsIncomeExpenseUseCase: CalculateLegacyTransactionsIncomeExpenseUseCase,
+    private val calculateTransactionsIncomeExpenseUseCase: CalculateTransactionsIncomeExpenseUseCase,
     private val getCategoriesUseCase: GetCategoriesUseCase,
     private val calculateCategoryIncomeWithAccountFiltersUseCase: CalculateCategoryIncomeWithAccountFiltersUseCase,
     private val resourceProvider: ResourceProvider,
@@ -57,18 +61,17 @@ internal class BuildPieChartDataUseCase @Inject internal constructor(
         accountIdFilterList: List<UUID>,
         treatTransferAsIncExp: Boolean = false,
         showAccountTransfersCategory: Boolean = treatTransferAsIncExp,
-        existingTransactions: List<LegacyTransaction> = emptyList(),
+        existingTransactions: List<Transaction> = emptyList(),
     ): PieChartData {
         val usableAccounts = getUsableAccounts(accountIdFilterList)
         val transactions = existingTransactions.ifEmpty {
-            mapTransactionsToLegacyTransactionsUseCase(
-                getTransactionsForAccountsUseCase(
-                    range = range,
-                    accountIdFilterSet = usableAccounts.accountIdFilterSet
-                )
+            getTransactionsForAccountsUseCase(
+                range = range,
+                accountIdFilterSet = usableAccounts.accountIdFilterSet
             )
         }
-        val incomeExpenseTransfer = calculateLegacyTransactionsIncomeExpenseUseCase(
+        val legacyTransactions = mapTransactionsToLegacyTransactionsUseCase(transactions)
+        val incomeExpenseTransfer = calculateTransactionsIncomeExpenseUseCase(
             transactions = transactions,
             accounts = usableAccounts.accounts,
             baseCurrency = baseCurrency
@@ -77,7 +80,7 @@ internal class BuildPieChartDataUseCase @Inject internal constructor(
             type = type,
             baseCurrency = baseCurrency,
             allCategories = getCategoriesUseCase().plus(null),
-            transactions = transactions,
+            transactions = legacyTransactions,
             accountsUsed = usableAccounts.accounts,
             addAssociatedTransToCategoryAmt = existingTransactions.isNotEmpty()
         )
@@ -191,7 +194,7 @@ internal class BuildPieChartDataUseCase @Inject internal constructor(
         type: TransactionType,
         accountTransfersCategory: Category,
         accountIdFilterSet: Set<UUID>,
-        transactions: List<LegacyTransaction>,
+        transactions: List<Transaction>,
         incomeExpenseTransfer: IncomeExpenseTransferPair,
         categoryAmounts: List<CategoryAmount>,
     ): List<CategoryAmount> {
@@ -208,12 +211,12 @@ internal class BuildPieChartDataUseCase @Inject internal constructor(
                 incomeExpenseTransfer.transferExpense.toDouble()
             }
             val categoryTransactions = transactions
-                .filter { it.type == TransactionType.TRANSFER }
+                .filter { it.getTransactionType() == TransactionType.TRANSFER }
                 .filter {
                     if (type == TransactionType.EXPENSE) {
-                        accountIdFilterSet.contains(it.accountId)
+                        accountIdFilterSet.contains(it.getFromAccount().value)
                     } else {
-                        accountIdFilterSet.contains(it.toAccountId)
+                        it.getToAccount()?.value in accountIdFilterSet
                     }
                 }.map { it.toAssociatedTransaction() }
 
@@ -235,6 +238,13 @@ private fun LegacyTransaction.toAssociatedTransaction(): AssociatedTransaction {
     return AssociatedTransaction(
         id = id,
         type = type,
+    )
+}
+
+private fun Transaction.toAssociatedTransaction(): AssociatedTransaction {
+    return AssociatedTransaction(
+        id = id.value,
+        type = getTransactionType(),
     )
 }
 
