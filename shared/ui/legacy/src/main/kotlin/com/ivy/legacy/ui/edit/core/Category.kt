@@ -13,7 +13,7 @@ import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.Gradient
 import com.ivy.legacy.ui.component.IvyBorderButton
 import com.ivy.legacy.ui.component.IvyButton
-import com.ivy.legacy.ui.component.getCustomIconIdS
+import com.ivy.ui.icon.getCustomIconIdS
 import com.ivy.legacy.ui.theme.findContrastTextColor
 import com.ivy.legacy.ui.theme.toComposeColor
 

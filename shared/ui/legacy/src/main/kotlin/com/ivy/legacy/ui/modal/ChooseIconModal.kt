@@ -334,7 +334,7 @@ private fun RowScope.SectionDivider() {
 
 data class IconPickerSection(val title: String)
 
-fun ivyIcons(): List<Any> = listOf(
+private fun ivyIcons(): List<Any> = listOf(
     IconPickerSection("Ivy"),
     "account",
     "category",

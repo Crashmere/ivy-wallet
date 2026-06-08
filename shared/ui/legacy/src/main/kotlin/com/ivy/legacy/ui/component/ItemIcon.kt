@@ -154,21 +154,7 @@ private fun ItemIcon(
     }
 }
 
-@DrawableRes
-@Composable
-fun getCustomIconIdS(
-    iconName: String?,
-    @DrawableRes defaultIcon: Int
-): Int {
-    val context = LocalContext.current
-    return getCustomIconId(
-        context = context,
-        iconName = iconName,
-        size = "s"
-    )?.iconId ?: defaultIcon
-}
-
-fun getCustomIconId(
+private fun getCustomIconId(
     context: Context,
     iconName: String?,
     size: String,
@@ -214,18 +200,18 @@ fun getCustomIconId(
     }
 }
 
-data class IconInfo(
+private data class IconInfo(
     @DrawableRes
     val iconId: Int,
     val style: IconStyle,
     val newFormat: Boolean
 )
 
-enum class IconStyle {
+private enum class IconStyle {
     L, M, S, UNKNOWN
 }
 
-fun fallbackToNewIconFormat(
+private fun fallbackToNewIconFormat(
     iconStyle: IconStyle,
     context: Context,
     iconName: String?,

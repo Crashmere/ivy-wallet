@@ -47,7 +47,7 @@ import com.ivy.legacy.ui.theme.Green
 import com.ivy.legacy.ui.theme.Orange
 import com.ivy.legacy.ui.component.IvyButton
 import com.ivy.legacy.ui.component.IvyIcon
-import com.ivy.legacy.ui.component.getCustomIconIdS
+import com.ivy.ui.icon.getCustomIconIdS
 import com.ivy.legacy.ui.theme.findContrastTextColor
 import com.ivy.legacy.ui.theme.toComposeColor
 import kotlinx.collections.immutable.ImmutableList
