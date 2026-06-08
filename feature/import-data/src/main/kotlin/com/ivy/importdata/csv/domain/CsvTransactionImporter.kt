@@ -1,5 +1,6 @@
 package com.ivy.importdata.csv.domain
 
+import com.ivy.data.model.Account
 import com.ivy.data.model.legacy.LegacyTransaction
 import com.ivy.data.model.TransactionType
 import com.ivy.data.model.Category
@@ -20,7 +21,7 @@ import com.ivy.importdata.csv.OptionalFields
 import com.ivy.importdata.csv.TransferFields
 import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.data.model.currency.IvyCurrency
-import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
+import com.ivy.domain.usecase.account.GetAccountsUseCase
 import kotlinx.collections.immutable.toImmutableList
 import java.time.LocalDateTime
 import java.time.ZoneId
@@ -31,7 +32,7 @@ import kotlin.math.absoluteValue
 import com.ivy.importdata.csv.CSVRow
 
 internal class CsvTransactionImporter @Inject internal constructor(
-    private val getLegacyAccountsUseCase: GetLegacyAccountsUseCase,
+    private val getAccountsUseCase: GetAccountsUseCase,
     private val getCategoriesUseCase: GetCategoriesUseCase,
     private val getBaseCurrency: GetBaseCurrencyUseCase,
     private val saveLegacyAccountUseCase: SaveLegacyAccountUseCase,
@@ -49,7 +50,7 @@ internal class CsvTransactionImporter @Inject internal constructor(
         val rowsCount = rows.size
 
         val context = CsvImportContext(
-            accounts = getLegacyAccountsUseCase(),
+            accounts = getAccountsUseCase().toLegacyAccounts(),
             categories = getCategoriesUseCase(),
             baseCurrency = getBaseCurrency(),
         )
@@ -264,7 +265,7 @@ internal class CsvTransactionImporter @Inject internal constructor(
         )
         val accountSaved = saveLegacyAccountUseCase(newAccount, context.baseCurrency)
         if (!accountSaved) return null
-        context.accounts = getLegacyAccountsUseCase()
+        context.accounts = getAccountsUseCase().toLegacyAccounts()
 
         return newAccount
     }
@@ -334,4 +335,19 @@ private data class CsvImportContext(
     val baseCurrency: AssetCode,
     var newCategoryColorIndex: Int = 0,
     var newAccountColorIndex: Int = 0,
+)
+
+private fun Iterable<Account>.toLegacyAccounts(): List<LegacyAccount> {
+    return map { it.toLegacyAccount() }
+}
+
+private fun Account.toLegacyAccount() = LegacyAccount(
+    name = name.value,
+    currency = asset.code,
+    color = color.value,
+    icon = icon?.id,
+    orderNum = orderNum,
+    includeInBalance = includeInBalance,
+    isDeleted = false,
+    id = id.value,
 )
