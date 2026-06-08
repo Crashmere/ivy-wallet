@@ -1574,6 +1574,7 @@ shared:ui:core
 - 账户页样式和新增弹窗依赖继续收窄：`feature:accounts` 增加本模块私有 `AccountsTheme` 与 `CreateAccountModal`，承接原账户列表、收入支出汇总、重排弹窗和新增账户弹窗所需 token/颜色选择、币种、余额与计入总余额开关逻辑；账户模块已移除对 `shared:ui:legacy` 的直接依赖。
 - 交易列表组件迁出 legacy：`TransactionListData`、交易历史行、到期/逾期分组、交易卡片和 `transactions()` 列表入口已迁入 `shared:ui:core` 的 `com.ivy.ui.transaction` 包，并用 core 内部 `TransactionListTheme` 承接原主题 token；首页、搜索、报表和交易页改用正式交易列表包名。
 - 搜索页已脱离 `shared:ui:legacy` 模块依赖；搜索结果继续复用迁入 UI core 的交易列表组件，搜索输入、交易点击、账户/分类筛选和标签展示行为不变。
+- 账户编辑弹窗迁出 legacy：`AccountModal`、`AccountModalSaveData` 和账户弹窗主题 token 已迁入 `shared:ui:core` 的 `com.ivy.ui.modal` 包；编辑交易、计划付款、借贷和交易列表页继续保留原新增账户、编辑账户和调整余额行为，但不再从 legacy modal 包导入账户弹窗。
 - app 仍保留文件选择、文件分享、Material 日期选择器、BuildInfo、Locale 设置、生物识别和窗口安全等真正依赖 Activity 或 Android app 壳层的装配。
 
 ## 高风险区域

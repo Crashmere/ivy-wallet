@@ -45,8 +45,8 @@ import com.ivy.ui.modal.DeleteModal
 import com.ivy.ui.modal.IvyModal
 import com.ivy.ui.modal.ModalAmountSection
 import com.ivy.ui.modal.ModalTitle
-import com.ivy.legacy.ui.modal.edit.AccountModal
-import com.ivy.legacy.ui.modal.edit.AccountModalSaveData
+import com.ivy.ui.modal.AccountModal
+import com.ivy.ui.modal.AccountModalSaveData
 import com.ivy.ui.modal.AmountModal
 import com.ivy.loans.model.LoanAccount
 import java.time.Instant

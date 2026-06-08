@@ -43,8 +43,8 @@ import com.ivy.ui.navigation.navigation
 import com.ivy.ui.navigation.screenScopedViewModel
 import com.ivy.ui.R
 import com.ivy.ui.modal.DeleteModal
-import com.ivy.legacy.ui.modal.edit.AccountModal
-import com.ivy.legacy.ui.modal.edit.AccountModalSaveData
+import com.ivy.ui.modal.AccountModal
+import com.ivy.ui.modal.AccountModalSaveData
 import com.ivy.legacy.ui.modal.edit.CategoryModal
 import com.ivy.legacy.ui.modal.edit.CategoryModalCategory
 import com.ivy.legacy.ui.modal.edit.CategoryModalSaveData
