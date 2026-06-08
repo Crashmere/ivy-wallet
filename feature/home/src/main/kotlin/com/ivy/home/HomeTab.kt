@@ -26,13 +26,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.TransactionType
 import com.ivy.data.model.TransactionHistoryItem
-import com.ivy.data.model.Expense
-import com.ivy.data.model.Income
-import com.ivy.data.model.Transaction
-import com.ivy.data.model.Transfer
-import com.ivy.data.model.getFromAccount
-import com.ivy.data.model.getFromValue
-import com.ivy.data.model.legacy.LegacyTransaction
 import com.ivy.ui.platform.LocalDatePicker
 import com.ivy.home.Constants.SWIPE_HORIZONTAL_THRESHOLD
 import com.ivy.home.customerjourney.CustomerJourney
@@ -73,7 +66,6 @@ import com.ivy.legacy.ui.modal.ChoosePeriodModalData
 import com.ivy.legacy.ui.modal.CurrencyModal
 import com.ivy.legacy.ui.modal.DeleteModal
 import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import java.math.BigDecimal
 import java.util.UUID
@@ -511,36 +503,9 @@ private fun HomeTransactionListData.toTransactionListData(): TransactionListData
 
 private fun HomeDueSection.toLegacyDueSection(): LegacyDueSection {
     return LegacyDueSection(
-        transactions = transactions.map { it.toLegacyTransaction() }.toImmutableList(),
+        transactions = transactions,
         expanded = expanded,
         stats = stats
-    )
-}
-
-private fun Transaction.toLegacyTransaction(): LegacyTransaction {
-    val amount = getFromValue().amount.value.toBigDecimal()
-    return LegacyTransaction(
-        accountId = getFromAccount().value,
-        type = when (this) {
-            is Expense -> TransactionType.EXPENSE
-            is Income -> TransactionType.INCOME
-            is Transfer -> TransactionType.TRANSFER
-        },
-        amount = amount,
-        toAccountId = if (this is Transfer) toAccount.value else null,
-        toAmount = if (this is Transfer) toValue.amount.value.toBigDecimal() else amount,
-        title = title?.value,
-        description = description?.value,
-        dateTime = time.takeIf { settled },
-        categoryId = category?.value,
-        dueDate = time.takeIf { !settled },
-        recurringRuleId = metadata.recurringRuleId,
-        paidFor = metadata.paidForDateTime,
-        attachmentUrl = null,
-        loanId = metadata.loanId,
-        loanRecordId = metadata.loanRecordId,
-        id = id.value,
-        tags = persistentListOf(),
     )
 }
 

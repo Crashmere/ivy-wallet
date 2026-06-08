@@ -3,8 +3,8 @@ package com.ivy.reports
 import androidx.compose.runtime.Immutable
 import com.ivy.data.model.Category
 import com.ivy.data.model.Tag
+import com.ivy.data.model.Transaction
 import com.ivy.data.model.TransactionHistoryItem
-import com.ivy.data.model.legacy.LegacyTransaction
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import java.util.UUID
@@ -43,7 +43,7 @@ internal data class ReportScreenState(
 
 @Immutable
 internal data class ReportDueSection(
-    val transactions: ImmutableList<LegacyTransaction>,
+    val transactions: ImmutableList<Transaction>,
     val expanded: Boolean,
     val income: Double,
     val expenses: Double,

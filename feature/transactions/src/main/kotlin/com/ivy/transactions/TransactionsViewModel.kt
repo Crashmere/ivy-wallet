@@ -5,16 +5,11 @@ import androidx.compose.runtime.Stable
 import androidx.compose.runtime.mutableDoubleStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.viewModelScope
-import com.ivy.data.model.legacy.LegacyTransaction
 import com.ivy.data.model.TransactionHistoryItem
 import com.ivy.data.model.TransactionHistoryTransaction
 import com.ivy.data.model.TransactionType
 import com.ivy.data.model.Transaction
-import com.ivy.data.model.Expense
-import com.ivy.data.model.Income
-import com.ivy.data.model.Transfer
 import com.ivy.data.model.getFromAccount
-import com.ivy.data.model.getFromValue
 import com.ivy.data.model.getToAccount
 import com.ivy.data.model.getTransactionType
 import com.ivy.ui.resource.ResourceProvider
@@ -360,8 +355,7 @@ internal class TransactionsViewModel @Inject internal constructor(
             getAccountUpcomingTransactionsSummaryUseCase(initialAccount.id, range)
         }
         upcoming.value = upcoming.value.copy(
-            transactions = upcomingSummary.transactions.map { it.toLegacyTransaction() }
-                .toImmutableList(),
+            transactions = upcomingSummary.transactions.toImmutableList(),
             income = upcomingSummary.income,
             expenses = upcomingSummary.expenses,
         )
@@ -370,8 +364,7 @@ internal class TransactionsViewModel @Inject internal constructor(
             getAccountOverdueTransactionsSummaryUseCase(initialAccount.id, range)
         }
         overdue.value = overdue.value.copy(
-            transactions = overdueSummary.transactions.map { it.toLegacyTransaction() }
-                .toImmutableList(),
+            transactions = overdueSummary.transactions.toImmutableList(),
             income = overdueSummary.income,
             expenses = overdueSummary.expenses,
         )
@@ -437,14 +430,12 @@ internal class TransactionsViewModel @Inject internal constructor(
         expenses.doubleValue = summary.expenses
         history.value = summary.history.toImmutableList()
         upcoming.value = upcoming.value.copy(
-            transactions = summary.upcoming.transactions.map { it.toLegacyTransaction() }
-                .toImmutableList(),
+            transactions = summary.upcoming.transactions.toImmutableList(),
             income = summary.upcoming.income,
             expenses = summary.upcoming.expenses,
         )
         overdue.value = overdue.value.copy(
-            transactions = summary.overdue.transactions.map { it.toLegacyTransaction() }
-                .toImmutableList(),
+            transactions = summary.overdue.transactions.toImmutableList(),
             income = summary.overdue.income,
             expenses = summary.overdue.expenses,
         )
@@ -716,33 +707,6 @@ private fun Account.toLegacyAccount() = LegacyAccount(
     includeInBalance = includeInBalance,
     orderNum = orderNum,
 )
-
-private fun Transaction.toLegacyTransaction(): LegacyTransaction {
-    val amount = getFromValue().amount.value.toBigDecimal()
-    return LegacyTransaction(
-        accountId = getFromAccount().value,
-        type = when (this) {
-            is Expense -> TransactionType.EXPENSE
-            is Income -> TransactionType.INCOME
-            is Transfer -> TransactionType.TRANSFER
-        },
-        amount = amount,
-        toAccountId = if (this is Transfer) toAccount.value else null,
-        toAmount = if (this is Transfer) toValue.amount.value.toBigDecimal() else amount,
-        title = title?.value,
-        description = description?.value,
-        dateTime = time.takeIf { settled },
-        categoryId = category?.value,
-        dueDate = time.takeIf { !settled },
-        recurringRuleId = metadata.recurringRuleId,
-        paidFor = metadata.paidForDateTime,
-        attachmentUrl = null,
-        loanId = metadata.loanId,
-        loanRecordId = metadata.loanRecordId,
-        id = id.value,
-        tags = persistentListOf(),
-    )
-}
 
 internal data class TransactionsQuery(
     val accountId: UUID?,

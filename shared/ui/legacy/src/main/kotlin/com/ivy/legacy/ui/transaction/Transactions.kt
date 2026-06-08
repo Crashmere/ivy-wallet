@@ -222,7 +222,7 @@ private fun LazyListScope.overdueSection(
                         textAlign = TextAlign.Start
                     )
                 ) {
-                    onSkipAllTransactions(overdue.transactions.map { it.id })
+                    onSkipAllTransactions(overdue.transactions.map { it.id.value })
                 }
             }
 
@@ -244,7 +244,7 @@ private fun LazyListScope.overdueSection(
 private fun LazyListScope.transactionItems(
     baseData: TransactionListData,
 
-    transactions: List<LegacyTransaction>,
+    transactions: List<Transaction>,
     shouldShowAccountSpecificColorInTransactions: Boolean,
     onPayOrGet: (UUID) -> Unit,
     onSkipTransaction: (UUID) -> Unit,
@@ -254,12 +254,12 @@ private fun LazyListScope.transactionItems(
 ) {
     items(
         items = transactions,
-        key = { it.id }
+        key = { it.id.value }
     ) {
         TransactionCard(
             baseData = baseData,
 
-            transaction = it,
+            transaction = it.toLegacyTransaction(),
             shouldShowAccountSpecificColorInTransactions = shouldShowAccountSpecificColorInTransactions,
             onPayOrGet = onPayOrGet,
             onSkipTransaction = onSkipTransaction,

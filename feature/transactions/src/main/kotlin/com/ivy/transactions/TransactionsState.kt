@@ -1,7 +1,7 @@
 package com.ivy.transactions
 
 import androidx.compose.runtime.Immutable
-import com.ivy.data.model.legacy.LegacyTransaction
+import com.ivy.data.model.Transaction
 import com.ivy.data.model.TransactionHistoryItem
 import com.ivy.data.model.Category
 import com.ivy.ui.period.TimePeriod
@@ -36,7 +36,7 @@ internal data class TransactionsState(
 
 @Immutable
 internal data class TransactionsDueSection(
-    val transactions: ImmutableList<LegacyTransaction>,
+    val transactions: ImmutableList<Transaction>,
     val expanded: Boolean,
     val income: Double,
     val expenses: Double,
