@@ -989,7 +989,7 @@ private fun LoanRecordAmountRow(
 
             TransactionType.EXPENSE -> LoanRecordAmountTypeStyle(
                 icon = R.drawable.ic_expense,
-                gradient = Gradient.black(),
+                gradient = Gradient(LegacyTheme.colors.gray, LegacyTheme.colors.pureInverse),
                 iconTint = White,
                 textColor = LegacyTheme.colors.pureInverse
             )

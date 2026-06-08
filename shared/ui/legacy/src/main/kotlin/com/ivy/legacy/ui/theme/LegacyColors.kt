@@ -83,7 +83,7 @@ data class Gradient(
         fun solid(color: Color) = Gradient(color, color)
 
         @Composable
-        fun black() = Gradient(LegacyTheme.colors.gray, LegacyTheme.colors.pureInverse)
+        internal fun black() = Gradient(LegacyTheme.colors.gray, LegacyTheme.colors.pureInverse)
     }
 
     fun asHorizontalBrush() = Brush.horizontalGradient(colors = listOf(startColor, endColor))
