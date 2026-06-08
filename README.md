@@ -138,6 +138,7 @@
 - 分类排序弹窗和计划付款编辑页底部操作改用本 feature 私有的 Set 按钮；`shared:ui:legacy` 的 `ModalSet` 收窄为旧弹窗内部实现。
 - 计划付款重复规则弹窗和对应弹窗状态已移回 `feature:planned-payments` 私有实现，并已改为显式参数；`shared:ui:legacy` 不再导出 `RecurringRuleModal` 或 `RecurringRuleModalData`。
 - 借贷还款记录展示模型中的账户已从完整 `LegacyAccount` 收窄为本 feature 的轻量 `DisplayLoanAccount`，记录卡片只保留跳转和展示所需的账户 ID、名称与图标。
+- 借贷主弹窗已改为显式参数入口；借贷列表页不再创建 `LoanModalData`，借贷详情页暂时仍从旧 ViewModel 弹窗状态适配到新入口。
 - 导入流程和报表筛选浮层的底部渐隐遮罩已改为各自页面私有实现；`shared:ui:legacy` 删除不再复用的 `GradientCutBottom`。
 - 预算分类选择和报表筛选列表项已改为各自 feature 私有实现；`shared:ui:legacy` 删除不再复用的通用 `ListItem`。
 - 编辑交易页和计划付款编辑页的“添加计划日期”按钮已改为各自 feature 私有实现；`shared:ui:legacy` 的 `AddPrimaryAttributeButton` 收窄为旧描述组件内部实现。

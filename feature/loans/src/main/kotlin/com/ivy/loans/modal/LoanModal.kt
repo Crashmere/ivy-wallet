@@ -68,7 +68,13 @@ import java.util.UUID
 @Suppress("CyclomaticComplexMethod", "LongMethod")
 @Composable
 internal fun BoxWithConstraintsScope.LoanModal(
-    modal: LoanModalData?,
+    visible: Boolean,
+    loan: Loan?,
+    baseCurrency: String,
+    selectedAccountId: UUID? = null,
+    autoFocusKeyboard: Boolean = true,
+    autoOpenAmountModal: Boolean = false,
+    createLoanTransaction: Boolean = false,
     dateTime: Instant,
     onSetDate: () -> Unit,
     onSetTime: () -> Unit,
@@ -79,54 +85,56 @@ internal fun BoxWithConstraintsScope.LoanModal(
     onPerformCalculations: () -> Unit = {},
     dismiss: () -> Unit,
 ) {
-    val loan = modal?.loan
     val timeConverter = LocalTimeConverter.current
+    val modalId = remember(visible) {
+        UUID.randomUUID()
+    }
 
-    var nameTextFieldValue by remember(modal) {
+    var nameTextFieldValue by remember(visible, loan) {
         mutableStateOf(selectEndTextFieldValue(loan?.name))
     }
-    var dateTime = modal?.loan?.dateTime ?: with(timeConverter) {
+    var dateTime = loan?.dateTime ?: with(timeConverter) {
         dateTime.toLocalDateTime()
     }
-    var type by remember(modal) {
-        mutableStateOf(modal?.loan?.type ?: LoanType.BORROW)
+    var type by remember(visible, loan) {
+        mutableStateOf(loan?.type ?: LoanType.BORROW)
     }
-    var amount by remember(modal) {
-        mutableStateOf(modal?.loan?.amount ?: 0.0)
+    var amount by remember(visible, loan) {
+        mutableStateOf(loan?.amount ?: 0.0)
     }
-    var color by remember(modal) {
+    var color by remember(visible, loan) {
         mutableStateOf(loan?.color?.let { Color(it) } ?: Ivy)
     }
-    var icon by remember(modal) {
+    var icon by remember(visible, loan) {
         mutableStateOf(loan?.icon)
     }
-    var noteTextFieldValue by remember(modal) {
+    var noteTextFieldValue by remember(visible, loan) {
         mutableStateOf(selectEndTextFieldValue(loan?.note))
     }
-    var currencyCode by remember(modal) {
-        mutableStateOf(modal?.baseCurrency ?: "")
+    var currencyCode by remember(visible, baseCurrency) {
+        mutableStateOf(baseCurrency)
     }
 
-    val initialSelectedAccount = modal?.selectedAccountId?.let { accountId ->
+    val initialSelectedAccount = selectedAccountId?.let { accountId ->
         accounts.firstOrNull { it.id == accountId }
     }
-    var selectedAcc by remember(modal) {
+    var selectedAcc by remember(visible, selectedAccountId) {
         mutableStateOf(initialSelectedAccount)
     }
-    LaunchedEffect(modal?.id, initialSelectedAccount) {
+    LaunchedEffect(modalId, initialSelectedAccount) {
         if (selectedAcc == null && initialSelectedAccount != null) {
             selectedAcc = initialSelectedAccount
         }
     }
 
-    var createLoanTrans by remember(modal) {
-        mutableStateOf(modal?.createLoanTransaction ?: false)
+    var createLoanTrans by remember(visible, createLoanTransaction) {
+        mutableStateOf(createLoanTransaction)
     }
 
     var accountChangeModal by remember { mutableStateOf(false) }
     var amountModalVisible by remember { mutableStateOf(false) }
     var currencyModalVisible by remember { mutableStateOf(false) }
-    var chooseIconModalVisible by remember(modal) {
+    var chooseIconModalVisible by remember(visible) {
         mutableStateOf(false)
     }
 
@@ -134,21 +142,20 @@ internal fun BoxWithConstraintsScope.LoanModal(
     var accountModalBaseCurrency by remember { mutableStateOf("USD") }
 
     IvyModal(
-        id = modal?.id,
-        visible = modal != null,
+        id = modalId,
+        visible = visible,
         dismiss = dismiss,
         shiftIfKeyboardShown = false,
         PrimaryAction = {
             LoanModalAddSave(
-                isEdit = modal?.loan != null,
+                isEdit = loan != null,
                 // enabled = nameTextFieldValue.text.isNullOrBlank().not() && amount > 0 && ((createLoanTrans && selectedAcc != null) || !createLoanTrans)
                 enabled = nameTextFieldValue.text.isNullOrBlank().not() && amount > 0 && selectedAcc != null
             ) {
-                val modalBaseCurrency = modal?.baseCurrency.orEmpty()
                 accountChangeModal =
                     loan != null && initialSelectedAccount != null && currencyCode != (
                         initialSelectedAccount.currency
-                            ?: modalBaseCurrency
+                            ?: baseCurrency
                         )
 
                 if (!accountChangeModal) {
@@ -173,7 +180,7 @@ internal fun BoxWithConstraintsScope.LoanModal(
         }
     ) {
         onCompositionStart {
-            if (modal?.autoOpenAmountModal == true) {
+            if (autoOpenAmountModal) {
                 amountModalVisible = true
             }
         }
@@ -181,7 +188,7 @@ internal fun BoxWithConstraintsScope.LoanModal(
         Spacer(Modifier.height(32.dp))
 
         ModalTitle(
-            text = if (modal?.loan != null) stringResource(R.string.edit_loan) else stringResource(R.string.new_loan),
+            text = if (loan != null) stringResource(R.string.edit_loan) else stringResource(R.string.new_loan),
         )
 
         Spacer(Modifier.height(24.dp))
@@ -192,7 +199,7 @@ internal fun BoxWithConstraintsScope.LoanModal(
             color = color,
             icon = icon,
 
-            autoFocusKeyboard = modal?.autoFocusKeyboard ?: true,
+            autoFocusKeyboard = autoFocusKeyboard,
 
             nameTextFieldValue = nameTextFieldValue,
             setNameTextFieldValue = { nameTextFieldValue = it },
@@ -299,7 +306,7 @@ internal fun BoxWithConstraintsScope.LoanModal(
         }
     }
 
-    val amountModalId = remember(modal, amount) {
+    val amountModalId = remember(visible, amount) {
         UUID.randomUUID()
     }
     AmountModal(

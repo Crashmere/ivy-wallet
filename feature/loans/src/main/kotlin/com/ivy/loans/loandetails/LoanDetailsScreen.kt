@@ -230,8 +230,16 @@ private fun BoxWithConstraintsScope.UI(
         }
     }
 
+    val loanModalData = state.loanModalData
     LoanModal(
-        modal = state.loanModalData, onCreateLoan = {
+        visible = loanModalData != null,
+        loan = loanModalData?.loan,
+        baseCurrency = loanModalData?.baseCurrency ?: state.baseCurrency,
+        selectedAccountId = loanModalData?.selectedAccountId,
+        autoFocusKeyboard = loanModalData?.autoFocusKeyboard ?: true,
+        autoOpenAmountModal = loanModalData?.autoOpenAmountModal ?: false,
+        createLoanTransaction = loanModalData?.createLoanTransaction ?: false,
+        onCreateLoan = {
         // do nothing
     }, onEditLoan = { loan, createLoanTransaction ->
         onEventHandler.invoke(LoanModalEvent.OnEditLoanModal(loan, createLoanTransaction))

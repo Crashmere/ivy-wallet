@@ -53,7 +53,6 @@ import com.ivy.legacy.ui.modal.ReorderModalSingleType
 import com.ivy.ui.theme.colors.dynamicContrast
 import com.ivy.ui.theme.colors.findContrastTextColor
 import com.ivy.loans.modal.LoanModal
-import com.ivy.loans.modal.LoanModalData
 import com.ivy.ui.theme.colors.toComposeColor
 import com.ivy.loans.LoanProgressBar
 
@@ -73,7 +72,7 @@ private fun BoxWithConstraintsScope.UI(
     onEventHandler: (LoanScreenEvent) -> Unit = {}
 ) {
     val nav = navigation()
-    var loanModalData: LoanModalData? by remember { mutableStateOf(null) }
+    var loanModalVisible by remember { mutableStateOf(false) }
 
     Column(
         modifier = Modifier
@@ -149,11 +148,7 @@ private fun BoxWithConstraintsScope.UI(
         tab = state.selectedTab,
         selectTab = { onEventHandler.invoke(LoanScreenEvent.OnTabChanged(it)) },
         onAdd = {
-            loanModalData = LoanModalData(
-                loan = null,
-                baseCurrency = state.baseCurrency,
-                selectedAccountId = state.selectedAccountId
-            )
+            loanModalVisible = true
         }
     )
 
@@ -189,30 +184,31 @@ private fun BoxWithConstraintsScope.UI(
         )
     }
 
-    if (loanModalData != null) {
-        LoanModal(
-            accounts = state.accounts,
-            onCreateAccount = {
-                onEventHandler.invoke(LoanScreenEvent.OnCreateAccount(accountData = it))
-            },
-            modal = loanModalData,
-            onCreateLoan = {
-                onEventHandler.invoke(LoanScreenEvent.OnLoanCreate(createLoanData = it))
-            },
-            onEditLoan = { _, _ -> },
-            dismiss = {
-                loanModalData = null
-                onEventHandler.invoke(LoanScreenEvent.OnLoanModalDismiss)
-            },
-            dateTime = state.dateTime,
-            onSetDate = {
-                onEventHandler.invoke(LoanScreenEvent.OnChangeDate)
-            },
-            onSetTime = {
-                onEventHandler.invoke(LoanScreenEvent.OnChangeTime)
-            }
-        )
-    }
+    LoanModal(
+        visible = loanModalVisible,
+        loan = null,
+        baseCurrency = state.baseCurrency,
+        selectedAccountId = state.selectedAccountId,
+        accounts = state.accounts,
+        onCreateAccount = {
+            onEventHandler.invoke(LoanScreenEvent.OnCreateAccount(accountData = it))
+        },
+        onCreateLoan = {
+            onEventHandler.invoke(LoanScreenEvent.OnLoanCreate(createLoanData = it))
+        },
+        onEditLoan = { _, _ -> },
+        dismiss = {
+            loanModalVisible = false
+            onEventHandler.invoke(LoanScreenEvent.OnLoanModalDismiss)
+        },
+        dateTime = state.dateTime,
+        onSetDate = {
+            onEventHandler.invoke(LoanScreenEvent.OnChangeDate)
+        },
+        onSetTime = {
+            onEventHandler.invoke(LoanScreenEvent.OnChangeTime)
+        }
+    )
 }
 
 @Composable
