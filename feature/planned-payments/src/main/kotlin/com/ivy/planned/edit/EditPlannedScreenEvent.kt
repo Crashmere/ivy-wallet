@@ -11,7 +11,7 @@ import com.ivy.ui.modal.AccountModalData
 import com.ivy.ui.modal.CategoryModalData
 import java.time.LocalDateTime
 
-sealed interface EditPlannedScreenEvent {
+internal sealed interface EditPlannedScreenEvent {
     data class OnRuleChanged(
         val startDate: LocalDateTime,
         val oneTime: Boolean,

@@ -37,7 +37,7 @@ import kotlin.math.absoluteValue
 
 @Suppress("LongParameterList")
 @Composable
-fun PlannedPaymentsLazyColumn(
+internal fun PlannedPaymentsLazyColumn(
     Header: @Composable () -> Unit,
     currency: String,
     categories: ImmutableList<Category>,

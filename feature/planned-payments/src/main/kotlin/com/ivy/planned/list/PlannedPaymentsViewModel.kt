@@ -25,7 +25,7 @@ import javax.inject.Inject
 
 @Stable
 @HiltViewModel
-class PlannedPaymentsViewModel @Inject constructor(
+internal class PlannedPaymentsViewModel @Inject constructor(
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
     private val getPlannedPaymentsOverviewUseCase: GetPlannedPaymentsOverviewUseCase,
     private val getCategoriesUseCase: GetCategoriesUseCase,

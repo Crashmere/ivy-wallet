@@ -21,7 +21,7 @@ import com.ivy.legacy.ui.component.IvyOutlinedButton
 import com.ivy.legacy.ui.theme.gradientCutBackgroundTop
 
 @Composable
-fun BoxWithConstraintsScope.PlannedPaymentsBottomBar(
+internal fun BoxWithConstraintsScope.PlannedPaymentsBottomBar(
     bottomInset: Dp = navigationBarInset().toDensityDp(),
     onClose: () -> Unit,
     onAdd: () -> Unit

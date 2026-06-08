@@ -47,7 +47,7 @@ import javax.inject.Inject
 
 @Stable
 @HiltViewModel
-class EditPlannedViewModel @Inject constructor(
+internal class EditPlannedViewModel @Inject constructor(
     private val getCategoriesUseCase: GetCategoriesUseCase,
     private val getCategoryUseCase: GetCategoryUseCase,
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,

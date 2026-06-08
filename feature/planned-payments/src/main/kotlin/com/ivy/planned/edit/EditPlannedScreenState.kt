@@ -12,7 +12,7 @@ import java.time.LocalDateTime
 import javax.annotation.concurrent.Immutable
 
 @Immutable
-data class EditPlannedScreenState(
+internal data class EditPlannedScreenState(
     val currency: String,
     val transactionType: TransactionType,
     val startDate: LocalDateTime?,

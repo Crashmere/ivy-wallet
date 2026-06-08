@@ -30,7 +30,7 @@ import java.time.LocalDateTime
 import java.util.Locale
 
 @Composable
-fun RecurringRule(
+internal fun RecurringRule(
     startDate: LocalDateTime?,
     intervalN: Int?,
     intervalType: IntervalType?,
@@ -63,7 +63,7 @@ fun RecurringRule(
     }
 }
 
-fun hasRecurringRule(
+internal fun hasRecurringRule(
     startDate: LocalDateTime?,
     intervalN: Int?,
     intervalType: IntervalType?,
