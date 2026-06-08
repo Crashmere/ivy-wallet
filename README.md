@@ -103,6 +103,7 @@
 - 收窄计划付款 feature 公开面：只保留计划付款列表页和编辑页两个外部入口，列表卡片、底栏、重复规则组件、状态、事件和 ViewModel 都改为模块内部实现。
 - 收窄借贷 feature 公开面：只保留借贷列表页和详情页两个外部入口，借贷状态、事件、UI 事件、展示模型、底栏常量、记录列表 helper 和格式化扩展改为模块内部实现。
 - 收窄主界面和首页 feature 公开面：只保留 `MainScreen` 与 `HomeTab` 作为外部入口，主 tab 状态、底栏、首页状态/事件、客户旅程模型和内部 UI helper 改为模块内部实现。
+- 收窄设置 feature 公开面：只保留 `SettingsScreen` 作为 app 导航入口，设置状态、事件、UI 事件和 ViewModel 改为模块内部实现。
 
 当前仍保留：
 
@@ -1112,6 +1113,7 @@
 - 计划付款 feature 的公开面已收窄：`PlannedPaymentsScreen` 和 `EditPlannedScreen` 继续作为外部入口，其余列表/编辑页状态、事件、UI 事件、ViewModel、列表卡片、底栏、重复规则组件和重复规则判断 helper 都改为模块内部可见。
 - 借贷 feature 的公开面已收窄：`LoansScreen` 和 `LoanDetailsScreen` 继续作为外部入口，其余列表/详情页状态、事件、UI 事件、ViewModel、展示模型、tab 枚举、底栏尺寸常量、记录列表 helper 和 `humanReadableType()` 格式化扩展都改为模块内部可见。
 - 主界面和首页 feature 的公开面已收窄：`MainScreen` 与 `HomeTab` 继续作为外部入口，其余 `MainTab/MainViewModel/BottomBar`、首页状态/事件/ViewModel、客户旅程模型、更多菜单、现金流信息和首页列表内部构件都改为模块内部可见；底栏尺寸常量改为文件私有实现细节。
+- 设置 feature 的公开面已收窄：`SettingsScreen` 继续作为 app 导航入口，`SettingsState/SettingsEvent/SettingsUiEvent/SettingsViewModel` 都改为模块内部可见；设置页内部菜单和 section 组件本来已保持私有。
 - 首页计划付款付/跳过事件已从传递完整 `LegacyTransaction` 收窄为传递交易 ID；旧交易对象仍只保留在列表展示状态和 ViewModel 内部执行边界。
 - 交易列表页计划付款付/跳过事件也已收窄为传递交易 ID；跳过全部弹窗只保存待确认的交易 ID 列表，ViewModel 在执行前从当前 due 状态解析旧交易对象。
 - 报表页计划付款付/跳过事件同样收窄为传递交易 ID，并删除未被 UI 触发的新模型计划交易事件分支及对应 use case 注入。

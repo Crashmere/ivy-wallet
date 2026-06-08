@@ -2,7 +2,7 @@ package com.ivy.settings
 
 import com.ivy.data.model.Theme
 
-data class SettingsState(
+internal data class SettingsState(
     val currencyCode: String,
     val currentTheme: Theme,
     val lockApp: Boolean,

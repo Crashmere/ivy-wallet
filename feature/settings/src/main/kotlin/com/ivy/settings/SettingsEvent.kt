@@ -2,7 +2,7 @@ package com.ivy.settings
 
 import com.ivy.ui.platform.FileSharer
 
-sealed interface SettingsEvent {
+internal sealed interface SettingsEvent {
     data class SetCurrency(val newCurrency: String) : SettingsEvent
     data class ExportToCsv(val fileSharer: FileSharer) : SettingsEvent
     data class BackupData(val fileSharer: FileSharer) : SettingsEvent
