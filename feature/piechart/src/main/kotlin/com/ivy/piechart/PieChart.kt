@@ -18,6 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.unit.dp
@@ -27,7 +28,6 @@ import com.ivy.data.model.Category
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.compose.drawColoredShadow
 import com.ivy.ui.R
-import com.ivy.legacy.ui.theme.Gradient
 import com.ivy.legacy.ui.theme.Gray
 import com.ivy.legacy.ui.icon.IvyIcon
 import com.ivy.legacy.ui.theme.toComposeColor
@@ -62,10 +62,12 @@ internal fun PieChart(
                 )
                 .clip(CircleShape)
                 .background(
-                    brush = Gradient(
-                        LegacyTheme.colors.medium,
-                        LegacyTheme.colors.pure
-                    ).asVerticalBrush(),
+                    brush = Brush.verticalGradient(
+                        colors = listOf(
+                            LegacyTheme.colors.medium,
+                            LegacyTheme.colors.pure
+                        )
+                    ),
                     shape = CircleShape
                 )
                 .padding(all = 16.dp),

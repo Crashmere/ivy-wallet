@@ -647,7 +647,7 @@
 - 旧交易列表组件的数据契约 `AppBaseData/LegacyDueSection` 已继续提升到 `shared:ui:core` 的 `com.ivy.ui.transaction`；首页、报表、搜索和交易页状态不再为了列表数据契约引用 legacy 交易组件包。
 - `getCustomIconIdS()` 已从 legacy 组件包迁到 `shared:ui:core` 的 `com.ivy.ui.icon`；旧图标查找实现的内部类型和 fallback 逻辑已收窄为文件私有，图标选择器的静态图标清单也不再作为 legacy 公共 API 暴露。
 - 旧弹窗内部实现细节已继续收窄可见性：周期月份项、图标分组、选择分类新增按钮、金额键盘局部展示组件和 modal action row 不再作为模块外 public API 暴露；跨旧弹窗复用的金额键盘按钮和动态 action helper 仅保留 `shared:ui:legacy` 模块内可见。
-- 旧颜色兼容层继续收窄公开面：`dynamicContrast()`、Color 版 `isDarkColor()` 和 `Gradient.solid()` 仍是外部可用入口，但 HSV 拆解、亮暗调整、底层 HSV 转换、Int 版深色判断 helper 和旧 `Gradient.from(Int, Int?)` 构造入口已改为内部实现或删除，避免旧主题算法细节继续作为公共 API 扩散。
+- 旧颜色兼容层继续收窄公开面：`dynamicContrast()`、Color 版 `isDarkColor()`、`Gradient.solid()` 和水平渐变转换仍是外部可用入口，但 HSV 拆解、亮暗调整、底层 HSV 转换、Int 版深色判断 helper、垂直渐变转换和旧 `Gradient.from(Int, Int?)` 构造入口已改为内部实现或删除，避免旧主题算法细节继续作为公共 API 扩散。
 - 旧交易卡片的账户/分类查找 helper 已内聚回 `TransactionCard.kt` 并改成私有实现，删除不再提供公共 API 的 `component.transaction.Utils.kt`。
 - 旧交易列表的公开边界继续压缩：单卡片 `TransactionCard` 和历史日期分隔 `HistoryDateDivider` 仅保留 legacy 模块内可见，分类 badge 也改为卡片内部私有实现；feature 仍通过列表级 `transactions(...)` 或明确复用的展示组件接入。
 - 旧通用组件的底层积木继续降级为模块内 API：`IvyBasicTextField`、`IvyNumberTextField`、`IvyDividerLineRounded`、`AmountCurrencyB2Row` 和无语义的 `CircleButton` 不再直接暴露给 feature，外部继续使用更明确的搜索框、周期输入、底部栏、金额展示和填充圆按钮等入口。
