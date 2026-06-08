@@ -14,8 +14,7 @@ class UpdateLoanUseCase @Inject constructor(
         return try {
             loanStore.save(loan)
             true
-        } catch (e: Exception) {
-            e.printStackTrace()
+        } catch (_: Exception) {
             false
         }
     }

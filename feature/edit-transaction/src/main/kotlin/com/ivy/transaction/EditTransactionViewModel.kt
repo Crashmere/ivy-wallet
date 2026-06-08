@@ -754,8 +754,7 @@ class EditTransactionViewModel @Inject constructor(
             if (closeScreen) {
                 closeScreen()
             }
-        } catch (e: Exception) {
-            e.printStackTrace()
+        } catch (_: Exception) {
         }
     }
 

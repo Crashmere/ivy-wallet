@@ -432,8 +432,7 @@ class EditPlannedViewModel @Inject constructor(
                 if (closeScreen) {
                     nav.back()
                 }
-            } catch (e: Exception) {
-                e.printStackTrace()
+            } catch (_: Exception) {
             }
         }
     }

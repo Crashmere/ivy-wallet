@@ -16,8 +16,7 @@ class UpdateCategoryUseCase @Inject constructor(
                 saveCategoryUseCase(category)
             }
             true
-        } catch (e: Exception) {
-            e.printStackTrace()
+        } catch (_: Exception) {
             false
         }
     }

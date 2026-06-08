@@ -28,8 +28,7 @@ class CreateLoanUseCase @Inject constructor(
             )
             loanStore.save(loan)
             loan
-        } catch (e: Exception) {
-            e.printStackTrace()
+        } catch (_: Exception) {
             null
         }
     }

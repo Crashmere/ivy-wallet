@@ -11,8 +11,7 @@ class DeleteBudgetUseCase @Inject constructor(
         return try {
             budgetStore.deleteById(budget.id)
             true
-        } catch (e: Exception) {
-            e.printStackTrace()
+        } catch (_: Exception) {
             false
         }
     }

@@ -11,8 +11,7 @@ class DeleteLoanRecordUseCase @Inject constructor(
         return try {
             loanRecordStore.deleteById(loanRecord.id)
             true
-        } catch (e: Exception) {
-            e.printStackTrace()
+        } catch (_: Exception) {
             false
         }
     }

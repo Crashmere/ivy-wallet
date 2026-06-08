@@ -30,8 +30,7 @@ class CreateLoanRecordUseCase @Inject constructor(
 
             loanRecordStore.save(loanRecord)
             loanRecord
-        } catch (e: Exception) {
-            e.printStackTrace()
+        } catch (_: Exception) {
             null
         }
     }

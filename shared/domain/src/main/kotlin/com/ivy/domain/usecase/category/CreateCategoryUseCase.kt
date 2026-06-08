@@ -39,8 +39,7 @@ class CreateCategoryUseCase @Inject constructor(
                 }
                 newCategory
             }
-        } catch (e: Exception) {
-            e.printStackTrace()
+        } catch (_: Exception) {
             null
         }
     }

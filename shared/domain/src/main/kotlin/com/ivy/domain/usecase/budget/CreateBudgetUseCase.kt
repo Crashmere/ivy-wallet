@@ -25,8 +25,7 @@ class CreateBudgetUseCase @Inject constructor(
 
             budgetStore.save(budget)
             budget
-        } catch (e: Exception) {
-            e.printStackTrace()
+        } catch (_: Exception) {
             null
         }
     }

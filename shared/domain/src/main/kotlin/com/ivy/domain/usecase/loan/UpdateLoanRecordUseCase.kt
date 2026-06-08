@@ -13,8 +13,7 @@ class UpdateLoanRecordUseCase @Inject constructor(
         return try {
             loanRecordStore.save(loanRecord)
             true
-        } catch (e: Exception) {
-            e.printStackTrace()
+        } catch (_: Exception) {
             false
         }
     }
