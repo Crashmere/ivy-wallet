@@ -49,7 +49,7 @@ class PieChartStatisticViewModel @Inject constructor(
     private var accountIdFilterList by mutableStateOf<ImmutableList<UUID>>(persistentListOf())
     private var showCloseButtonOnly by mutableStateOf(false)
     private var filterExcluded by mutableStateOf(false)
-    private var transactions by mutableStateOf<ImmutableList<LegacyTransaction>>(persistentListOf())
+    private var inputTransactions: List<LegacyTransaction> = emptyList()
     private var choosePeriodModal by mutableStateOf<ChoosePeriodModalData?>(null)
 
     @Composable
@@ -140,8 +140,7 @@ class PieChartStatisticViewModel @Inject constructor(
                 type = screen.type.toTransactionType(),
                 accountIdFilterList = screen.accountList,
                 filterExclude = screen.filterExcluded,
-                transactions = getLegacyTransactionsByIdsUseCase(screen.legacyTransactionIds)
-                    .toImmutableList(),
+                inputTransactions = getLegacyTransactionsByIdsUseCase(screen.legacyTransactionIds),
                 transfersAsIncomeExpenseValue = screen.treatTransfersAsIncomeExpense
             )
         }
@@ -152,10 +151,10 @@ class PieChartStatisticViewModel @Inject constructor(
         type: TransactionType,
         accountIdFilterList: ImmutableList<UUID>,
         filterExclude: Boolean,
-        transactions: ImmutableList<LegacyTransaction>,
+        inputTransactions: List<LegacyTransaction>,
         transfersAsIncomeExpenseValue: Boolean
     ) {
-        initialise(period, type, accountIdFilterList, filterExclude, transactions)
+        initialise(period, type, accountIdFilterList, filterExclude, inputTransactions)
         treatTransfersAsIncomeExpense = transfersAsIncomeExpenseValue
         load(periodValue = period)
     }
@@ -165,7 +164,7 @@ class PieChartStatisticViewModel @Inject constructor(
         type: TransactionType,
         accountIdFilterListValue: ImmutableList<UUID>,
         filterExcludedValue: Boolean,
-        transactionsValue: ImmutableList<LegacyTransaction>
+        inputTransactionsValue: List<LegacyTransaction>
     ) {
         val baseCurrencyValue = getBaseCurrencyCode()
 
@@ -173,8 +172,8 @@ class PieChartStatisticViewModel @Inject constructor(
         transactionType = type
         accountIdFilterList = accountIdFilterListValue
         filterExcluded = filterExcludedValue
-        transactions = transactionsValue
-        showCloseButtonOnly = transactionsValue.isNotEmpty()
+        inputTransactions = inputTransactionsValue
+        showCloseButtonOnly = inputTransactionsValue.isNotEmpty()
         baseCurrency = baseCurrencyValue
     }
 
@@ -183,7 +182,7 @@ class PieChartStatisticViewModel @Inject constructor(
     ) {
         val type = transactionType
         val accountIdFilterList = accountIdFilterList
-        val transactions = transactions
+        val inputTransactions = inputTransactions
         val baseCurrency = baseCurrency
         val range = periodState.rangeOf(periodValue)
 
@@ -199,7 +198,7 @@ class PieChartStatisticViewModel @Inject constructor(
                 type = type,
                 accountIdFilterList = accountIdFilterList,
                 treatTransferAsIncExp = treatTransferAsIncExp,
-                existingTransactions = transactions,
+                existingTransactions = inputTransactions,
                 showAccountTransfersCategory = accountIdFilterList.isNotEmpty()
             )
         }
