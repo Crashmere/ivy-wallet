@@ -28,7 +28,7 @@ import com.ivy.ui.compose.CloseIconButton
 import com.ivy.ui.theme.colors.Gradient
 import com.ivy.ui.theme.colors.IvyGradients
 import com.ivy.ui.theme.colors.IvyFixedColors.White
-import com.ivy.legacy.ui.button.IvyButton
+import com.ivy.ui.compose.GradientButton
 import com.ivy.ui.compose.gradientCutBackgroundTop
 
 @Composable
@@ -55,7 +55,7 @@ internal fun BoxWithConstraintsScope.PieChartStatisticBottomBar(
         Spacer(Modifier.weight(1f))
 
         val isIncome = type == TransactionType.INCOME
-        IvyButton(
+        GradientButton(
             iconStart = R.drawable.ic_plus,
             text = if (isIncome) {
                 stringResource(
@@ -65,6 +65,8 @@ internal fun BoxWithConstraintsScope.PieChartStatisticBottomBar(
                 stringResource(id = R.string.add_expense)
             },
             backgroundGradient = if (isIncome) IvyGradients.Green else Gradient.solid(LegacyTheme.colors.pureInverse),
+            disabledBackgroundColor = LegacyTheme.colors.gray,
+            shape = LegacyTheme.shapes.rFull,
             textStyle = LegacyTheme.typo.b2.copy(
                 color = if (isIncome) White else LegacyTheme.colors.pure,
                 fontWeight = FontWeight.ExtraBold,

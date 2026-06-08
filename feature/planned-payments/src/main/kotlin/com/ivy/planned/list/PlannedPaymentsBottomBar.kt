@@ -15,6 +15,8 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.ivy.legacy.ui.theme.LegacyTheme
@@ -22,8 +24,8 @@ import com.ivy.ui.compose.navigationBarInset
 import com.ivy.ui.compose.toDensityDp
 import com.ivy.ui.R
 import com.ivy.ui.compose.CloseIconButton
-import com.ivy.legacy.ui.button.IvyOutlinedButton
 import com.ivy.ui.compose.gradientCutBackgroundTop
+import com.ivy.ui.compose.OutlinedPillButton
 
 @Composable
 internal fun BoxWithConstraintsScope.PlannedPaymentsBottomBar(
@@ -46,10 +48,19 @@ internal fun BoxWithConstraintsScope.PlannedPaymentsBottomBar(
 
         Spacer(Modifier.weight(1f))
 
-        IvyOutlinedButton(
+        OutlinedPillButton(
             iconStart = R.drawable.ic_planned_payments,
             text = stringResource(R.string.add_payment),
-            solidBackground = true
+            shape = LegacyTheme.shapes.rFull,
+            solidBackground = true,
+            backgroundColor = LegacyTheme.colors.pure,
+            iconTint = LegacyTheme.colors.pureInverse,
+            borderColor = LegacyTheme.colors.medium,
+            textStyle = LegacyTheme.typo.b2.copy(
+                fontWeight = FontWeight.Bold,
+                color = LegacyTheme.colors.pureInverse,
+                textAlign = TextAlign.Start,
+            ),
         ) {
             onAdd()
         }
