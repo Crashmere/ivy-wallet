@@ -129,26 +129,23 @@ internal class CategoriesViewModel @Inject internal constructor(
         return sortModalVisible.value
     }
 
-    private var allAccounts = emptyList<LegacyAccount>()
-    private var transactions = emptyList<LegacyTransaction>()
-
     private fun start() {
         viewModelScope.launch(Dispatchers.IO) {
-            initialise()
-            loadCategories()
+            val input = initialise()
+            loadCategories(input)
         }
     }
 
-    private suspend fun initialise() {
-        withContext(Dispatchers.IO) {
+    private suspend fun initialise(): CategoryLoadInput {
+        return withContext(Dispatchers.IO) {
             val range = periodState.rangeOf(periodState.currentMonth()) // this must be monthly
 
-            allAccounts = getLegacyAccountsUseCase()
+            val accounts = getLegacyAccountsUseCase()
             baseCurrency.value = getBaseCurrencyCode()
 
-            transactions = getLegacyTransactionsForAccountsUseCase(
+            val transactions = getLegacyTransactionsForAccountsUseCase(
                 range = range,
-                accountIdFilterSet = allAccounts.map { it.id }.toHashSet()
+                accountIdFilterSet = accounts.map { it.id }.toHashSet()
             )
 
             val sortOrder = SortOrder.from(
@@ -156,16 +153,21 @@ internal class CategoriesViewModel @Inject internal constructor(
             )
 
             this@CategoriesViewModel.sortOrder.value = sortOrder
+
+            CategoryLoadInput(
+                accounts = accounts,
+                transactions = transactions
+            )
         }
     }
 
-    private suspend fun loadCategories() {
+    private suspend fun loadCategories(input: CategoryLoadInput) {
         withContext(Dispatchers.IO) {
             val scope = this
             val categories = getCategoriesUseCase().mapAsync(scope) {
                 val catIncomeExpense = calculateCategoryIncomeWithAccountFiltersUseCase(
-                    transactions = transactions,
-                    accountFilterList = allAccounts,
+                    transactions = input.transactions,
+                    accountFilterList = input.accounts,
                     category = it,
                     baseCurrency = baseCurrency.value
                 )
@@ -235,7 +237,8 @@ internal class CategoriesViewModel @Inject internal constructor(
 
     private suspend fun createCategory(data: CreateCategoryData) {
         if (createCategoryUseCase(data) != null) {
-            loadCategories()
+            val input = initialise()
+            loadCategories(input)
         }
     }
 
@@ -261,6 +264,11 @@ internal class CategoriesViewModel @Inject internal constructor(
         }
     }
 }
+
+private data class CategoryLoadInput(
+    val accounts: List<LegacyAccount>,
+    val transactions: List<LegacyTransaction>,
+)
 
 suspend inline fun <T, R> Iterable<T>.mapAsync(
     scope: CoroutineScope,
