@@ -28,7 +28,7 @@ import com.ivy.legacy.ui.component.ListItem
 import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.data.model.Budget
 import com.ivy.legacy.ui.modal.ModalNameInput
-import com.ivy.legacy.ui.selectEndTextFieldValue
+import com.ivy.ui.compose.selectEndTextFieldValue
 import com.ivy.ui.R
 import com.ivy.data.model.CreateBudgetData
 import com.ivy.legacy.ui.modal.DeleteModal

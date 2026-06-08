@@ -37,7 +37,7 @@ import com.ivy.legacy.ui.SearchInput
 import com.ivy.legacy.ui.drawColoredShadow
 import com.ivy.legacy.ui.hideKeyboard
 import com.ivy.legacy.ui.onScreenStart
-import com.ivy.legacy.ui.selectEndTextFieldValue
+import com.ivy.ui.compose.selectEndTextFieldValue
 import com.ivy.legacy.ui.theme.Gradient
 import com.ivy.legacy.ui.component.IvyBorderButton
 import com.ivy.legacy.ui.component.IvyCircleButton

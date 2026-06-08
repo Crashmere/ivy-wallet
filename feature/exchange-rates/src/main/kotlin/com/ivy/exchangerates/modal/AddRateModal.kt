@@ -20,7 +20,7 @@ import com.ivy.legacy.ui.theme.system.Orange
 import com.ivy.legacy.ui.theme.system.style
 import com.ivy.exchangerates.RatesEvent
 import com.ivy.exchangerates.data.RateUi
-import com.ivy.legacy.ui.selectEndTextFieldValue
+import com.ivy.ui.compose.selectEndTextFieldValue
 import com.ivy.legacy.ui.component.IvyNameTextField
 import com.ivy.legacy.ui.modal.IvyModal
 import com.ivy.legacy.ui.modal.ModalAdd

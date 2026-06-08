@@ -33,7 +33,7 @@ import com.ivy.exchangerates.component.RateItem
 import com.ivy.exchangerates.data.RateUi
 import com.ivy.exchangerates.modal.AddRateModal
 import com.ivy.legacy.ui.SearchInput
-import com.ivy.legacy.ui.selectEndTextFieldValue
+import com.ivy.ui.compose.selectEndTextFieldValue
 import com.ivy.ui.navigation.navigation
 import com.ivy.legacy.ui.modal.edit.AmountModal
 import java.util.UUID

@@ -22,7 +22,7 @@ import androidx.compose.ui.text.style.TextAlign
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
 import com.ivy.legacy.ui.hideKeyboard
-import com.ivy.legacy.ui.selectEndTextFieldValue
+import com.ivy.ui.compose.selectEndTextFieldValue
 
 @Suppress("ParameterNaming")
 @Composable

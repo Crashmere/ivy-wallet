@@ -35,7 +35,7 @@ import com.ivy.domain.preferences.toggles.PreferenceToggles
 import com.ivy.legacy.ui.state.PeriodState
 import com.ivy.legacy.ui.model.period.TimePeriod
 import com.ivy.data.model.toCloseTimeRange
-import com.ivy.legacy.ui.selectEndTextFieldValue
+import com.ivy.ui.compose.selectEndTextFieldValue
 import com.ivy.ui.navigation.Navigation
 import com.ivy.ui.navigation.TransactionsScreen
 import com.ivy.ui.ComposeViewModel

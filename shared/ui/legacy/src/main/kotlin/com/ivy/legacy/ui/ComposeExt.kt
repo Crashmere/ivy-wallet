@@ -8,8 +8,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Paint
 import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
 import androidx.compose.ui.platform.LocalView
-import androidx.compose.ui.text.TextRange
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.Insets
@@ -93,11 +91,6 @@ fun Modifier.drawColoredShadow(
         )
     }
 }
-
-fun selectEndTextFieldValue(text: String?) = TextFieldValue(
-    text = text ?: "",
-    selection = TextRange(text?.length ?: 0)
-)
 
 @Composable
 fun Dp.toDensityPx() = densityScope { toPx() }

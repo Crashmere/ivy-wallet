@@ -24,7 +24,7 @@ import com.ivy.legacy.ui.component.transaction.transactions
 import com.ivy.ui.compose.densityScope
 import com.ivy.legacy.ui.keyboardOnlyWindowInsets
 import com.ivy.legacy.ui.keyboardVisibleState
-import com.ivy.legacy.ui.selectEndTextFieldValue
+import com.ivy.ui.compose.selectEndTextFieldValue
 import com.ivy.ui.navigation.SearchScreen
 import com.ivy.ui.navigation.screenScopedViewModel
 import com.ivy.ui.R

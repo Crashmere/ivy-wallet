@@ -6,6 +6,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.text.TextRange
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.Density
 
 @Composable
@@ -50,3 +52,8 @@ fun Modifier.clickableNoIndication(
         indication = null
     )
 }
+
+fun selectEndTextFieldValue(text: String?) = TextFieldValue(
+    text = text ?: "",
+    selection = TextRange(text?.length ?: 0)
+)

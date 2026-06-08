@@ -28,7 +28,7 @@ import com.ivy.ui.platform.hideKeyboard
 import com.ivy.ui.compose.clickableNoIndication
 import com.ivy.legacy.ui.onScreenStart
 import com.ivy.ui.compose.rememberInteractionSource
-import com.ivy.legacy.ui.selectEndTextFieldValue
+import com.ivy.ui.compose.selectEndTextFieldValue
 import com.ivy.ui.R
 import com.ivy.legacy.ui.component.IvyDescriptionTextField
 import com.ivy.legacy.ui.modal.IvyModal
