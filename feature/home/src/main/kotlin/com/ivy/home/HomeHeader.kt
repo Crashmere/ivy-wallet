@@ -34,7 +34,6 @@ import com.ivy.ui.compose.thenIf
 import com.ivy.ui.period.LocalPeriodState
 import com.ivy.ui.period.TimePeriod
 import com.ivy.ui.period.displayShort
-import com.ivy.legacy.ui.component.transaction.TransactionsDividerLine
 import com.ivy.ui.compose.clickableNoIndication
 import com.ivy.ui.compose.drawColoredShadow
 import com.ivy.data.model.currency.format
@@ -98,7 +97,7 @@ internal fun HomeHeader(
         Spacer(Modifier.height(16.dp))
 
         if (percentExpanded < 0.5f) {
-            TransactionsDividerLine(
+            HomeTransactionsDividerLine(
                 modifier = Modifier.alpha(1f - percentExpanded),
                 paddingHorizontal = 0.dp
             )

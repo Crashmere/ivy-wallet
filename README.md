@@ -1353,6 +1353,7 @@ shared:ui:core
 - 借贷详情页状态中的选中账户已从完整 `LegacyAccount` 收窄为账户 ID；页面用当前账户列表推导展示对象，ViewModel 不再额外向 UI state 暴露一份旧账户对象。
 - 借贷列表 ViewModel 内部选中账户 helper 已从返回完整 `LegacyAccount` 收窄为只解析币种字符串；新建借贷弹窗仍通过账户 ID 传递初始选择。
 - 借贷详情 ViewModel 内部选中账户 helper 同样收窄为只解析币种字符串；完整旧账户对象仅保留在账户列表和记录展示模型构建边界。
+- 首页和报表页的交易分隔线已改为各自 feature 私有实现；`shared:ui:legacy` 删除不再需要公开的 `TransactionsDividerLine`。
 - app 仍保留文件选择、文件分享、Material 日期选择器、BuildInfo、Locale 设置、生物识别和窗口安全等真正依赖 Activity 或 Android app 壳层的装配。
 
 ## 高风险区域

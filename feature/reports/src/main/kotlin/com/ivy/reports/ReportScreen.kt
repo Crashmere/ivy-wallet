@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -21,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import com.ivy.ui.navigation.screenScopedViewModel
@@ -30,7 +32,6 @@ import com.ivy.legacy.ui.theme.style
 import com.ivy.legacy.ui.component.transaction.LegacyDueSection
 import com.ivy.legacy.ui.component.transaction.TransactionListData
 import com.ivy.legacy.ui.component.IncomeExpensesCards
-import com.ivy.legacy.ui.component.transaction.TransactionsDividerLine
 import com.ivy.legacy.ui.component.transaction.transactions
 import com.ivy.ui.compose.clickableNoIndication
 import com.ivy.ui.compose.rememberInteractionSource
@@ -209,7 +210,7 @@ private fun BoxWithConstraintsScope.UI(
                 Spacer(Modifier.height(32.dp))
             }
 
-            TransactionsDividerLine(
+            ReportTransactionsDividerLine(
                 paddingHorizontal = 0.dp
             )
 
@@ -314,6 +315,19 @@ private fun BoxWithConstraintsScope.UI(
         onTagSearch = {
             onEventHandler.invoke(ReportScreenEvent.OnTagSearch(data = it))
         }
+    )
+}
+
+@Composable
+private fun ReportTransactionsDividerLine(
+    paddingHorizontal: Dp = 24.dp,
+) {
+    HorizontalDivider(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = paddingHorizontal),
+        color = LegacyTheme.colors.medium,
+        thickness = 2.dp
     )
 }
 

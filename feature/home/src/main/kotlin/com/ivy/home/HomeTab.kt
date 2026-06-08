@@ -37,7 +37,6 @@ import com.ivy.ui.period.Month
 import com.ivy.ui.period.TimePeriod
 import com.ivy.ui.period.displayLong
 import com.ivy.ui.period.LocalPeriodState
-import com.ivy.legacy.ui.component.transaction.TransactionsDividerLine
 import com.ivy.legacy.ui.component.transaction.transactions
 import com.ivy.ui.compose.horizontalSwipeListener
 import com.ivy.ui.compose.rememberSwipeListenerState
@@ -405,7 +404,7 @@ internal fun HomeLazyColumn(
         item {
             Spacer(Modifier.height(16.dp))
 
-            TransactionsDividerLine()
+            HomeTransactionsDividerLine()
         }
 
         item {

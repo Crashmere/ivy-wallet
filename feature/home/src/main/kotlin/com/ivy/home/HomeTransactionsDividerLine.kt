@@ -1,4 +1,4 @@
-package com.ivy.legacy.ui.component.transaction
+package com.ivy.home
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -10,9 +10,9 @@ import androidx.compose.ui.unit.dp
 import com.ivy.legacy.ui.theme.LegacyTheme
 
 @Composable
-fun TransactionsDividerLine(
+internal fun HomeTransactionsDividerLine(
     modifier: Modifier = Modifier,
-    paddingHorizontal: Dp = 24.dp
+    paddingHorizontal: Dp = 24.dp,
 ) {
     HorizontalDivider(
         modifier = modifier
