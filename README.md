@@ -121,6 +121,7 @@
 - 收窄 app/feature 内部注入构造边界：ViewModel、页面内部 helper 和平台适配器仍由 Hilt 创建，但手动构造入口不再作为跨模块可见细节暴露。
 - 归位 legacy 根 UI 包名：`LegacyUiRoot` 仍作为 app 装配旧 UI 的入口保留，但包名已从 `com.ivy.ui` 调整到 `com.ivy.legacy.ui`，与所在 `shared:ui:legacy` 模块一致。
 - 删除 Android 系统自动备份规则：manifest 已保持 `allowBackup=false`，不再保留无实际作用的 `dataExtractionRules/fullBackupContent` 资源；应用内 zip 备份、恢复和 CSV 导入导出不受影响。
+- 收窄 Android manifest 平台配置：远程汇率接口全部使用 HTTPS，app 不再允许明文流量；`INTERNET` 权限只由 app 壳层声明，data-core 不再通过库 manifest 暗中合并权限。
 
 当前仍保留：
 
@@ -1212,6 +1213,7 @@ shared:ui:core
 - app 和 feature 中已是 `internal` 的注入类也统一收窄构造函数；导航入口和 Composable 页面 API 不变。
 - `LegacyUiRoot` 已归入 `com.ivy.legacy.ui` 包；app 仍保留对 `shared:ui:legacy` 的真实依赖，但不再把 legacy 根入口伪装成 ui-core 包名。
 - Android manifest 已删除系统自动备份规则引用和对应 XML；当前分支继续通过 Ivy 自己的数据管理入口处理 zip 备份、恢复和 CSV 导入导出。
+- Android manifest 已删除明文流量开关，汇率同步继续使用现有 HTTPS 接口；`INTERNET` 权限保留在 app 壳层，`shared:data:core` 不再携带库 manifest 权限声明。
 - app 仍保留文件选择、文件分享、Material 日期选择器、BuildInfo、Locale 设置、生物识别和窗口安全等真正依赖 Activity 或 Android app 壳层的装配。
 
 ## 高风险区域
