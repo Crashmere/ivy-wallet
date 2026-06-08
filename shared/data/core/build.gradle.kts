@@ -2,11 +2,15 @@ plugins {
     id("ivy.android-library")
     id("ivy.hilt")
     id("ivy.kotlinx-serialization")
-    id("ivy.room")
+    alias(libs.plugins.room)
 }
 
 android {
     namespace = "com.ivy.data"
+
+    sourceSets {
+        getByName("androidTest").assets.srcDirs(files("$projectDir/schemas"))
+    }
 
     defaultConfig {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -30,9 +34,17 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.datastore)
     implementation(libs.bundles.ktor)
+    implementation(libs.bundles.room)
 
     testImplementation(projects.shared.testSupport)
     testImplementation(libs.bundles.testing)
 
     androidTestImplementation(libs.bundles.integration.testing)
+    androidTestImplementation(libs.room.testing)
+
+    ksp(libs.room.compiler)
+}
+
+room {
+    schemaDirectory("$projectDir/schemas")
 }

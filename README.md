@@ -166,7 +166,7 @@
 
 目标：
 
-- 保持 `ivy.android-library`、`ivy.kotlin-library`、`ivy.compose`、`ivy.hilt`、`ivy.room` 这类仍被多个模块复用的窄约定；只服务单个模块的配置优先内联。
+- 保持 `ivy.android-library`、`ivy.kotlin-library`、`ivy.compose`、`ivy.hilt` 这类仍被多个模块复用的窄约定；只服务单个模块的配置优先内联。
 - 每个模块显式声明自己需要的能力，不再恢复 `ivy.feature` 这类组合入口。
 
 ### 3. 测试 helper 已基本移出生产源码
@@ -316,12 +316,11 @@
 
 建议步骤：
 
-1. 新增或重命名约定插件：
+1. 收敛约定插件：
    - `ivy.android-library`：Android library 基础配置、Kotlin、min/compile SDK。
-   - `ivy.compose-library`：仅给 Compose UI 模块使用。
-   - `ivy.hilt-library`：仅给需要 DI 的模块使用。
-   - `ivy.room-library`：仅给 Room 模块使用。
-   - `ivy.tested-library`：测试依赖和测试 JVM 配置。
+   - `ivy.compose`：仅给 Compose UI 模块使用。
+   - `ivy.hilt`：仅给需要 DI 的模块使用。
+   - 单模块专用配置不再做成 buildSrc 约定，直接放回对应模块。
 2. 先迁移低风险模块：
    - `shared:base`
    - `shared:data:model`
@@ -349,7 +348,7 @@
 - `shared:domain` 已移除空 androidTest 源集；domain 当前只保留 JVM 单元测试，Room migration 和备份恢复这类设备测试继续留在 `shared:data:core`。
 - `shared:domain` 已移除 `ivy.room` 和 `ivy.hilt` 插件；主源码只保留 `javax.inject` 构造注入注解供 app 侧 Hilt 图消费，domain 自身不再参与 Hilt 聚合，测试也不再为了 domain 行为验证创建内存 Room 数据库。
 - `shared:domain` 已移除 Ktor 依赖；汇率同步测试改用 `ExchangeRateStore` fake 验证业务转换与保存行为，真实网络 client 继续留在 data core 实现边界。
-- `ivy.room` 已从旧 `ivy.module` 迁出并收敛为 Room/KSP/schema 配置，不再隐式带入 Hilt、kotlinx serialization 或 Android library 基础配置；Room 模块必须先显式声明 Android library 能力。
+- 只被 data-core 使用的 Room/schema 配置已从 `ivy.room` 插件内联到 `shared:data:core`；KSP 仍由现有 Hilt 约定提供，data-core 自己声明 Room compiler 依赖，buildSrc 不再保留单模块专用 Room 约定。
 - `shared:ui:core`、`shared:ui:legacy`、`shared:ui:navigation` 已从 `ivy.feature` 迁到 `ivy.compose`；shared UI 模块不再伪装成 feature。
 - `shared:ui:core`、`shared:ui:legacy`、`shared:ui:navigation` 的 Kotlin 源码已从 `src/main/java` 迁到 `src/main/kotlin`，`shared:ui:core` 测试源码同步迁到 `src/test/kotlin`；包名和运行行为不变，只收敛源集结构。
 - 所有 `feature:*` 模块的 Kotlin 源码已从 `src/main/java` 迁到 `src/main/kotlin`；页面模块继续保持原包名和行为，只让目录结构匹配 Kotlin-only 代码事实。
