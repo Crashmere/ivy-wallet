@@ -41,7 +41,7 @@ import com.ivy.ui.time.LocalTimeProvider
 import com.ivy.legacy.ui.theme.system.BlueLight
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
-import com.ivy.legacy.ui.component.transaction.AppBaseData
+import com.ivy.ui.transaction.AppBaseData
 import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.data.model.currency.format
 import com.ivy.ui.navigation.Navigation

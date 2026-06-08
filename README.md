@@ -457,7 +457,7 @@
 - CSV 导入器的新账户/分类默认颜色已改用导入功能自己的 ARGB 调色板；导入解析逻辑不再为了颜色值依赖 Compose `Color` 或 legacy theme。
 - 首页客户旅程卡片模型已改为保存普通 ARGB 背景色，卡片 provider 不再依赖 legacy theme；只有实际 Composable 绘制边界继续把颜色转成旧 UI 渐变。
 - 交易、报表和饼图的 ViewModel/UseCase 中用于占位分类的颜色已改成本地 ARGB 常量；非绘制逻辑不再为了 `Color.toArgb()` 依赖 Compose graphics 或 legacy theme。
-- 旧交易列表组件的数据契约 `AppBaseData/LegacyDueSection` 已归入 `com.ivy.legacy.ui.component.transaction`；`com.ivy.legacy.ui.model` 包已清空。
+- 旧交易列表组件的数据契约 `AppBaseData/LegacyDueSection` 已继续提升到 `shared:ui:core` 的 `com.ivy.ui.transaction`；首页、报表、搜索和交易页状态不再为了列表数据契约引用 legacy 交易组件包。
 - 旧日期/周期显示链路已停止使用全局 `stringRes()`：月份模型改为只保存 `monthValue`，月份名、interval 单位、Last N 周期和“今天/昨天/明天”文案都在 Composable 显示边界通过 `stringResource()` 获取；无调用方的旧 `stringRes()` 兼容函数已经删除。
 - 已删除 `shared:base` 中最后的全局 `appContext` 入口；`IvyAndroidApp` 不再在启动时写入全局 Context，旧 `SharedPrefs` 和平台类继续通过构造参数或 Hilt 注入获取 Context。
 - 第一批 UI 层当前时间读取已停止使用 deprecated 的全局时间函数：饼图点击计时改用 `SystemClock.elapsedRealtime()`，旧交易卡片、日期分隔、日期格式化和周期选择弹窗改为通过 `LocalTimeProvider` 获取当前日期/时间，并删除无调用方的 `getTrueDate()` 桥接函数。
