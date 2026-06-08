@@ -6,31 +6,23 @@ import androidx.compose.runtime.Stable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.lifecycle.viewModelScope
-import com.ivy.data.model.legacy.LegacyTransaction
 import com.ivy.domain.preferences.toggles.PreferenceToggleService
 import com.ivy.domain.preferences.toggles.PreferenceToggleCatalog
-import com.ivy.domain.usecase.category.GetCategoriesUseCase
 import com.ivy.domain.usecase.category.SaveCategoryUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
-import com.ivy.domain.usecase.transaction.GetLegacyTransactionsForAccountsUseCase
 import com.ivy.ui.period.PeriodState
-import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.preferences.asEnabledState
-import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
-import com.ivy.domain.usecase.category.CalculateCategoryIncomeWithAccountFiltersUseCase
 import com.ivy.domain.usecase.category.CreateCategoryUseCase
 import com.ivy.domain.usecase.category.GetCategorySortOrderPreferenceUseCase
+import com.ivy.domain.usecase.category.GetCategoryMonthlyStatsUseCase
 import com.ivy.domain.usecase.category.SetCategorySortOrderPreferenceUseCase
 import com.ivy.data.model.CreateCategoryData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -39,15 +31,12 @@ import javax.inject.Inject
 @HiltViewModel
 internal class CategoriesViewModel @Inject internal constructor(
     private val createCategoryUseCase: CreateCategoryUseCase,
-    private val getCategoriesUseCase: GetCategoriesUseCase,
     private val saveCategoryUseCase: SaveCategoryUseCase,
     private val periodState: PeriodState,
     private val getCategorySortOrderPreference: GetCategorySortOrderPreferenceUseCase,
     private val setCategorySortOrderPreference: SetCategorySortOrderPreferenceUseCase,
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
-    private val getLegacyAccountsUseCase: GetLegacyAccountsUseCase,
-    private val getLegacyTransactionsForAccountsUseCase: GetLegacyTransactionsForAccountsUseCase,
-    private val calculateCategoryIncomeWithAccountFiltersUseCase: CalculateCategoryIncomeWithAccountFiltersUseCase,
+    private val getCategoryMonthlyStatsUseCase: GetCategoryMonthlyStatsUseCase,
     private val preferenceToggles: PreferenceToggleCatalog,
     private val preferenceToggleService: PreferenceToggleService,
 ) : ComposeViewModel<CategoriesScreenState, CategoriesScreenEvent>() {
@@ -123,52 +112,35 @@ internal class CategoriesViewModel @Inject internal constructor(
 
     private fun start() {
         viewModelScope.launch(Dispatchers.IO) {
-            val input = initialise()
-            loadCategories(input)
+            initialise()
+            loadCategories()
         }
     }
 
-    private suspend fun initialise(): CategoryLoadInput {
-        return withContext(Dispatchers.IO) {
-            val monthlyRange = periodState.rangeOf(periodState.currentMonth())
-
-            val accounts = getLegacyAccountsUseCase()
+    private suspend fun initialise() {
+        withContext(Dispatchers.IO) {
             baseCurrency.value = getBaseCurrencyCode()
-
-            val transactions = getLegacyTransactionsForAccountsUseCase(
-                range = monthlyRange,
-                accountIdFilterSet = accounts.map { it.id }.toHashSet()
-            )
 
             val sortOrder = SortOrder.from(
                 getCategorySortOrderPreference()
             )
 
             this@CategoriesViewModel.sortOrder.value = sortOrder
-
-            CategoryLoadInput(
-                accounts = accounts,
-                transactions = transactions
-            )
         }
     }
 
-    private suspend fun loadCategories(input: CategoryLoadInput) {
+    private suspend fun loadCategories() {
         withContext(Dispatchers.IO) {
-            val scope = this
-            val categories = getCategoriesUseCase().mapAsync(scope) {
-                val catIncomeExpense = calculateCategoryIncomeWithAccountFiltersUseCase(
-                    transactions = input.transactions,
-                    accountFilterList = input.accounts,
-                    category = it,
-                    baseCurrency = baseCurrency.value
-                )
-
+            val monthlyRange = periodState.rangeOf(periodState.currentMonth())
+            val categories = getCategoryMonthlyStatsUseCase(
+                range = monthlyRange,
+                baseCurrency = baseCurrency.value
+            ).map {
                 CategoryData(
-                    category = it,
-                    monthlyBalance = (catIncomeExpense.income - catIncomeExpense.expense).toDouble(),
-                    monthlyIncome = catIncomeExpense.income.toDouble(),
-                    monthlyExpenses = catIncomeExpense.expense.toDouble()
+                    category = it.category,
+                    monthlyBalance = it.balance,
+                    monthlyIncome = it.income,
+                    monthlyExpenses = it.expenses
                 )
             }
 
@@ -229,8 +201,8 @@ internal class CategoriesViewModel @Inject internal constructor(
 
     private suspend fun createCategory(data: CreateCategoryData) {
         if (createCategoryUseCase(data) != null) {
-            val input = initialise()
-            loadCategories(input)
+            initialise()
+            loadCategories()
         }
     }
 
@@ -251,20 +223,4 @@ internal class CategoriesViewModel @Inject internal constructor(
             }
         }
     }
-}
-
-private data class CategoryLoadInput(
-    val accounts: List<LegacyAccount>,
-    val transactions: List<LegacyTransaction>,
-)
-
-suspend inline fun <T, R> Iterable<T>.mapAsync(
-    scope: CoroutineScope,
-    crossinline transform: suspend (T) -> R
-): List<R> {
-    return this.map {
-        scope.async {
-            transform(it)
-        }
-    }.awaitAll()
 }
