@@ -317,7 +317,6 @@
     <string name="share_with_friends">Bagikan dengan teman</string>
     <string name="make_a_report_description">Anda dapat membuat laporan untuk mendapatkan wawasan mendalam tentang pendapatan dan pengeluaran Anda. Saring transaksi Anda berdasarkan jenis, periode waktu, kategori, akun, jumlah, kata kunci, dan lainnya untuk mendapatkan pandangan yang lebih baik tentang keuangan Anda.</string>
     <string name="make_a_report">Buat laporan</string>
-    <string name="contribute">Berkontribusi</string>
     <string name="adjust_balance">Atur saldo</string>
     <string name="authentication_required">Autentikasi diperlukan</string>
     <string name="authentication_required_description">Buktikan bahwa Anda memiliki akses ke perangkat ini untuk membuka kunci aplikasi.</string>

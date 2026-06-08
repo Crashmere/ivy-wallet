@@ -317,7 +317,6 @@
     <string name="share_with_friends">Condividi con gli amici</string>
     <string name="make_a_report_description">Puoi generare dei resoconti per ottenere un\'analisi approfondita delle tue entrate e delle tue uscite. Filtra le tue transazioni per tipo, periodo di tempo, categoria, conto, parole chiave e non solo per ottenere una vista migliore sulle tue finanze.</string>
     <string name="make_a_report">Crea un report</string>
-    <string name="contribute">Contribuisci</string>
     <string name="adjust_balance">Sistema il saldo</string>
     <string name="authentication_required">Autenticazione richiesta</string>
     <string name="authentication_required_description">Dimostra di avere accesso a questo dispositivo per sbloccare l\'app.</string>
@@ -387,7 +386,6 @@
     <string name="one_contribution">1 contributo</string>
     <string name="contributions_number">%1$s contributi</string>
     <string name="you_can_see_a_piechart">Puoi visualizzare un grafico a torta delle tue spese! Fai clic sulla scheda Uscite nella parte superiore della dashboard.</string>
-    <string name="ivy_community">Ivy Community</string>
     <string name="join_now">Unisciti ora</string>
     <string name="please_type_category_name">Digita \"%1$s\" per eliminare la categoria</string>
     <string name="your_data_will_be_saved_only_locally">I tuoi dati saranno salvati localmente sul tuo dispositivo. Rischi di perdere i tuoi dati se disinstalli l\'app o se cambi dispositivo. Per prevenire perdite di dati, raccomandiamo di esportare regolarmente un backup dalle impostazioni.</string>

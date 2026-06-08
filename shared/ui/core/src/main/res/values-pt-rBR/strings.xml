@@ -317,7 +317,6 @@
     <string name="share_with_friends">Compartilhar com amigos</string>
     <string name="make_a_report_description">Você pode gerar relatórios para obter informações detalhadas sobre suas receitas e despesas. Filtre suas transações por tipo, período, categoria, contas, valor, palavras-chave e muito mais para controlar melhor suas finanças.</string>
     <string name="make_a_report">Faça um relatório</string>
-    <string name="contribute">Contribuir</string>
     <string name="adjust_balance">Ajustar saldo</string>
     <string name="authentication_required">Autenticação necessária</string>
     <string name="authentication_required_description">Autenticar para acessar o aplicativo</string>
@@ -388,7 +387,6 @@
     <string name="one_contribution">1 contribuição</string>
     <string name="contributions_number">%1$s contribuições</string>
     <string name="you_can_see_a_piechart">Veja um gráfico de pizza com suas receitas e despesas tocando no cartão apropriado acima!</string>
-    <string name="ivy_community">Comunidade Ivy</string>
     <string name="join_now">Inscreva-se agora</string>
     <string name="please_type_category_name">Por favor digite \"%1$s\" para excluir sua categoria.</string>
     <string name="your_data_will_be_saved_only_locally">Seus dados serão salvos apenas localmente no seu telefone. Você corre o risco de perder seus dados se desinstalar o aplicativo ou trocar de dispositivo. Para evitar a perda de dados, recomendamos exportar regularmente o backup das configurações.</string>

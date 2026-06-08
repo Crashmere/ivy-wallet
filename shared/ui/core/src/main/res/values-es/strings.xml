@@ -318,7 +318,6 @@
     <string name="share_with_friends">Compartir con amigos</string>
     <string name="make_a_report_description">Puede generar informes para obtener información detallada sobre sus ingresos y gastos. Filtre sus transacciones por tipo, período de tiempo, categoría, cuentas, cantidad, palabras clave y más para obtener una mejor visión de sus finanzas.</string>
     <string name="make_a_report">Hacer un reporte</string>
-    <string name="contribute">Contribuir</string>
     <string name="adjust_balance">Ajustar el saldo</string>
     <string name="authentication_required">Autenticación requerida</string>
     <string name="authentication_required_description">Demuestra que tienes acceso a este dispositivo para desbloquear la aplicación.</string>

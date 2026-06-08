@@ -340,7 +340,6 @@
     <string name="share_with_friends">与朋友分享</string>
     <string name="make_a_report_description">您可以生成报告，深入了解您的收入和支出情况。通过按类型、时间段、类别、账户、金额、关键词等筛选交易，更好地掌握您的财务状况。</string>
     <string name="make_a_report">生成报告</string>
-    <string name="contribute">贡献</string>
     <string name="adjust_balance">调整余额</string>
     <string name="authentication_required">需要身份验证</string>
     <string name="authentication_required_description">请进行身份验证以访问应用程序</string>
@@ -411,7 +410,6 @@
     <string name="one_contribution">1 个贡献</string>
     <string name="contributions_number">%1$s 个贡献</string>
     <string name="you_can_see_a_piechart">通过点击上方适当的卡片，您可以查看收入和支出的饼图！</string>
-    <string name="ivy_community">Ivy 社区</string>
     <string name="join_now">立即加入</string>
     <string name="please_type_category_name">请键入“%1$s”以删除您的类别。</string>
     <string name="your_data_will_be_saved_only_locally">您的数据将仅在手机本地保存。如果您卸载应用程序或更换设备，您将面临数据丢失的风险。为了防止数据丢失，我们建议定期从设置中导出备份。</string>

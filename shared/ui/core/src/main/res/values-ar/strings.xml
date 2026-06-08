@@ -314,7 +314,6 @@
     <string name="share_with_friends">شارك مع الاصدقاء</string>
     <string name="make_a_report_description">يمكنك إنشاء تقارير للحصول على رؤى عميقة حول دخلك وإنفاقك. قم بتصفية معاملاتك حسب النوع والفترة الزمنية والفئة والحسابات والمبلغ والكلمات المفتاحية والمزيد للحصول على عرض أفضل لأموالك.</string>
     <string name="make_a_report">إنشاء سجل</string>
-    <string name="contribute">ساهم</string>
     <string name="adjust_balance">أضبط الرصيد</string>
     <string name="authentication_required">تأكيد الهوية مطلوب</string>
     <string name="authentication_required_description">أثبت أن لديك حق الوصول إلى هذا الجهاز لإلغاء قفل التطبيق.</string>

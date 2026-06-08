@@ -314,7 +314,6 @@
     <string name="share_with_friends">Поделитесь с друзьями</string>
     <string name="make_a_report_description">Вы можете генерировать отчёты, чтобы получить глубокое понимание ваших доходов и трат. Фильтруйте ваши транзакции по типу, периоду времени, категории, учётным записям, количеству, ключевым словам и многому другому, чтобы получить более репрезентативную картину ваших финансов.</string>
     <string name="make_a_report">Сделайте отчёт</string>
-    <string name="contribute">Внести свой вклад</string>
     <string name="adjust_balance">Скорректировать баланс</string>
     <string name="authentication_required">Аутентификация не удалась</string>
     <string name="authentication_required_description">Подтвердите, что у вас есть доступ к этому устройсту, чтобы разблокировать приложение.</string>

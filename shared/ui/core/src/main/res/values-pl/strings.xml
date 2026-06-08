@@ -317,7 +317,6 @@
     <string name="share_with_friends">Podziel się ze znajomymi</string>
     <string name="make_a_report_description">Możesz generować raporty, aby uzyskać szczegółowe informacje na temat swoich dochodów i wydatków. Filtruj transakcje według typu, okresu, kategorii, kont, kwoty, słów kluczowych i innych, aby uzyskać lepszy wgląd w swoje finanse.</string>
     <string name="make_a_report">Stwórz raport</string>
-    <string name="contribute">Weź w tym udział</string>
     <string name="adjust_balance">Dostosuj saldo</string>
     <string name="authentication_required">Uwierzytelnianie wymagane</string>
     <string name="authentication_required_description">Udowodnij, że masz dostęp do tego urządzenia, aby odblokować aplikację.</string>

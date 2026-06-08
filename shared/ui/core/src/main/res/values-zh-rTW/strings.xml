@@ -321,7 +321,6 @@
     <string name="share_with_friends">與朋友分享</string>
     <string name="make_a_report_description">您可以產生報告以深入了解您的收入和支出。按類型、時間段、類別、帳戶、金額、關鍵字等過濾您的交易，以便更好地管理您的財務狀況。</string>
     <string name="make_a_report">製作報表</string>
-    <string name="contribute">貢獻</string>
     <string name="adjust_balance">調整平衡</string>
     <string name="authentication_required">需要身份驗證</string>
     <string name="authentication_required_description">驗證存取應用程式</string>
@@ -392,7 +391,6 @@
     <string name="one_contribution">1 貢獻</string>
     <string name="contributions_number">%1$s 貢獻</string>
     <string name="you_can_see_a_piechart">點擊上面對應的卡片即可查看您的收入和支出的圓餅圖!</string>
-    <string name="ivy_community">Ivy Wallet 社群</string>
     <string name="join_now">立即加入</string>
     <string name="please_type_category_name">請輸入 \"%1$s\" 以刪除您的類別。</string>
     <string name="your_data_will_be_saved_only_locally">您的資料將僅保存在您的手機本地。如果您卸載應用程式或更換設備，您可能會面臨遺失資料的風險。為了防止資料遺失，我們建議定期從設定中匯出備份。</string>

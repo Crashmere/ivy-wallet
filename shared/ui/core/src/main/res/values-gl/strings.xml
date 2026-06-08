@@ -319,7 +319,6 @@
     <string name="share_with_friends">Compartir con amigos</string>
     <string name="make_a_report_description">Podes xerar informes para obter unha visión profunda dos teus ingresos e gastos. Filtra as túas transaccións por tipo, período de tempo, categoría, contas, importe, palabras chave e máis para xestionar mellor as túas finanzas.</string>
     <string name="make_a_report">Fai un informe</string>
-    <string name="contribute">Contribúe</string>
     <string name="adjust_balance">Axustar saldo</string>
     <string name="authentication_required">Requírese autenticación</string>
     <string name="authentication_required_description">Autentícate para acceder á aplicación</string>
@@ -390,7 +389,6 @@
     <string name="one_contribution">1 contribución</string>
     <string name="contributions_number">%1$s contribucións</string>
     <string name="you_can_see_a_piechart">Ver un gráfico de sectores dos teus ingresos e gastos tocando a tarxeta correspondente máis arriba!</string>
-    <string name="ivy_community">Comunidade Ivy</string>
     <string name="join_now">Únete agora</string>
     <string name="please_type_category_name">Por favor, escribe \"%1$s\" para eliminar a túa categoría.</string>
     <string name="your_data_will_be_saved_only_locally">Os teus datos gardaranse só localmente no teu teléfono. Riscas perder os teus datos se desinstalas a aplicación ou cambias de dispositivo. Para evitar a perda de datos, recomendamos exportar copias de seguridade regularmente desde os axustes.</string>
