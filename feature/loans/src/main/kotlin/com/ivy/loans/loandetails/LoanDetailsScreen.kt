@@ -49,6 +49,7 @@ import com.ivy.data.model.currency.format
 import com.ivy.ui.time.formatNicely
 import com.ivy.ui.compose.rememberInteractionSource
 import com.ivy.ui.platform.setStatusBarDarkTextCompat
+import com.ivy.loans.model.DisplayLoanAccount
 import com.ivy.loans.model.DisplayLoanRecord
 import com.ivy.loans.loandetails.events.DeleteLoanModalEvent
 import com.ivy.loans.loandetails.events.LoanDetailsScreenEvent
@@ -649,7 +650,7 @@ private fun LoanRecordItem(
     loanRecord: LoanRecord,
     baseCurrency: String,
     loanBaseCurrency: String = "",
-    account: LegacyAccount? = null,
+    account: DisplayLoanAccount? = null,
     onClick: () -> Unit
 ) {
     val nav = navigation()

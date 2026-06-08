@@ -21,6 +21,7 @@ import com.ivy.domain.usecase.loan.UpdateLoanUseCase
 import com.ivy.domain.usecase.account.CreateAccountWithBalanceUseCase
 import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.data.model.Loan
+import com.ivy.loans.model.DisplayLoanAccount
 import com.ivy.loans.model.DisplayLoanRecord
 import com.ivy.loans.loandetails.events.DeleteLoanModalEvent
 import com.ivy.loans.loandetails.events.LoanDetailsScreenEvent
@@ -286,7 +287,13 @@ internal class LoanDetailsViewModel @Inject internal constructor(
 
                         DisplayLoanRecord(
                             it,
-                            account = account,
+                            account = account?.let { legacyAccount ->
+                                DisplayLoanAccount(
+                                    id = legacyAccount.id,
+                                    name = legacyAccount.name,
+                                    icon = legacyAccount.icon
+                                )
+                            },
                             loanRecordTransaction = hasTransaction,
                             loanRecordCurrencyCode = account?.currency ?: defaultCurrencyCode,
                             loanCurrencyCode = selectedLoanAccount()?.currency
