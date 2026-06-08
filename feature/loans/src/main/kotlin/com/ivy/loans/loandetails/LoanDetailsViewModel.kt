@@ -6,7 +6,6 @@ import androidx.compose.runtime.Stable
 import androidx.compose.runtime.mutableDoubleStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.viewModelScope
-import com.ivy.data.model.legacy.LegacyTransaction
 import com.ivy.data.model.LoanRecordType
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.domain.usecase.loan.CreateLoanRecordUseCase
@@ -88,7 +87,6 @@ internal class LoanDetailsViewModel @Inject internal constructor(
     private val accounts = mutableStateOf<ImmutableList<LegacyAccount>>(persistentListOf())
     private val loanInterestAmountPaid = mutableDoubleStateOf(0.0)
     private val selectedLoanAccount = mutableStateOf<LegacyAccount?>(null)
-    private var associatedTransaction: LegacyTransaction? = null
     private val createLoanTransaction = mutableStateOf(false)
     private var defaultCurrencyCode = ""
     private val loanModalData = mutableStateOf<LoanModalData?>(null)
@@ -340,13 +338,7 @@ internal class LoanDetailsViewModel @Inject internal constructor(
                 loanTotalAmount.doubleValue = totalAmount
             }
 
-            associatedTransaction = getLoanTransactionUseCase(loanId = loan.value!!.id)
-
-            associatedTransaction?.let {
-                createLoanTransaction.value = true
-            } ?: run {
-                createLoanTransaction.value = false
-            }
+            createLoanTransaction.value = getLoanTransactionUseCase(loanId = loan.value!!.id) != null
 
         }
     }
@@ -365,7 +357,7 @@ internal class LoanDetailsViewModel @Inject internal constructor(
             loanTransactionSyncUseCase.editAssociatedLoanTransaction(
                 loan = loan,
                 createLoanTransaction = createLoanTransaction,
-                transaction = associatedTransaction
+                transaction = getLoanTransactionUseCase(loan.id)
             )
 
             if (updateLoanUseCase(loan)) {
