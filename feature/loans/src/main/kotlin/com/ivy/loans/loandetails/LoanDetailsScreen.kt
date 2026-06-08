@@ -258,7 +258,14 @@ private fun BoxWithConstraintsScope.UI(
     )
 
     LoanRecordModal(
-        modal = state.loanRecordModalData, onCreate = {
+        visible = state.loanRecordModalVisible,
+        loanRecord = state.loanRecordModalLoanRecord,
+        baseCurrency = state.loanRecordModalBaseCurrency,
+        loanAccountCurrencyCode = state.loanRecordModalLoanAccountCurrencyCode,
+        selectedAccountId = state.loanRecordModalSelectedAccountId,
+        createLoanRecordTransaction = state.loanRecordModalCreateTransaction,
+        isLoanInterest = state.loanRecordModalIsLoanInterest,
+        onCreate = {
         onEventHandler.invoke(LoanRecordModalEvent.OnCreateLoanRecord(it))
     }, onEdit = {
         onEventHandler.invoke(LoanRecordModalEvent.OnEditLoanRecord(it))

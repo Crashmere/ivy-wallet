@@ -21,6 +21,7 @@ import com.ivy.domain.usecase.loan.UpdateLoanUseCase
 import com.ivy.domain.usecase.account.CreateAccountWithBalanceUseCase
 import com.ivy.domain.usecase.account.GetAccountsUseCase
 import com.ivy.data.model.Loan
+import com.ivy.data.model.LoanRecord
 import com.ivy.loans.model.DisplayLoanAccount
 import com.ivy.loans.model.DisplayLoanRecord
 import com.ivy.loans.model.LoanAccount
@@ -34,7 +35,6 @@ import com.ivy.ui.time.DateTimePicker
 import com.ivy.data.model.CreateAccountData
 import com.ivy.data.model.CreateLoanRecordData
 import com.ivy.data.model.EditLoanRecordData
-import com.ivy.loans.modal.LoanRecordModalData
 import com.ivy.loans.nowLocalDate
 import com.ivy.loans.nowLocalTime
 import com.ivy.loans.nowUtc
@@ -96,7 +96,13 @@ internal class LoanDetailsViewModel @Inject internal constructor(
     private val loanModalLoan = mutableStateOf<Loan?>(null)
     private val loanModalAutoFocusKeyboard = mutableStateOf(true)
     private val loanModalAutoOpenAmountModal = mutableStateOf(false)
-    private val loanRecordModalData = mutableStateOf<LoanRecordModalData?>(null)
+    private val loanRecordModalVisible = mutableStateOf(false)
+    private val loanRecordModalLoanRecord = mutableStateOf<LoanRecord?>(null)
+    private val loanRecordModalBaseCurrency = mutableStateOf("")
+    private val loanRecordModalLoanAccountCurrencyCode = mutableStateOf<String?>(null)
+    private val loanRecordModalSelectedAccountId = mutableStateOf<UUID?>(null)
+    private val loanRecordModalCreateTransaction = mutableStateOf(false)
+    private val loanRecordModalIsLoanInterest = mutableStateOf(false)
     private val waitModalVisible = mutableStateOf(false)
     private val isDeleteModalVisible = mutableStateOf(false)
     private val dateTime = mutableStateOf<Instant>(nowUtc())
@@ -119,7 +125,13 @@ internal class LoanDetailsViewModel @Inject internal constructor(
             loanModalLoan = loanModalLoan.value,
             loanModalAutoFocusKeyboard = loanModalAutoFocusKeyboard.value,
             loanModalAutoOpenAmountModal = loanModalAutoOpenAmountModal.value,
-            loanRecordModalData = loanRecordModalData.value,
+            loanRecordModalVisible = loanRecordModalVisible.value,
+            loanRecordModalLoanRecord = loanRecordModalLoanRecord.value,
+            loanRecordModalBaseCurrency = loanRecordModalBaseCurrency.value,
+            loanRecordModalLoanAccountCurrencyCode = loanRecordModalLoanAccountCurrencyCode.value,
+            loanRecordModalSelectedAccountId = loanRecordModalSelectedAccountId.value,
+            loanRecordModalCreateTransaction = loanRecordModalCreateTransaction.value,
+            loanRecordModalIsLoanInterest = loanRecordModalIsLoanInterest.value,
             waitModalVisible = waitModalVisible.value,
             isDeleteModalVisible = isDeleteModalVisible.value,
             dateTime = dateTime.value
@@ -139,7 +151,7 @@ internal class LoanDetailsViewModel @Inject internal constructor(
         when (event) {
             is LoanRecordModalEvent.OnClickLoanRecord -> {
                 val displayLoanRecord = displayLoanRecordById(event.loanRecordId) ?: return
-                loanRecordModalData.value = LoanRecordModalData(
+                showLoanRecordModal(
                     loanRecord = displayLoanRecord.loanRecord,
                     baseCurrency = displayLoanRecord.loanRecordCurrencyCode,
                     selectedAccountId = displayLoanRecord.account?.id,
@@ -158,7 +170,7 @@ internal class LoanDetailsViewModel @Inject internal constructor(
             }
 
             LoanRecordModalEvent.OnDismissLoanRecord -> {
-                loanRecordModalData.value = null
+                resetLoanRecordModal()
                 dateTime.value = nowUtc()
             }
 
@@ -238,7 +250,7 @@ internal class LoanDetailsViewModel @Inject internal constructor(
             }
 
             LoanDetailsScreenEvent.OnAddRecord -> {
-                loanRecordModalData.value = LoanRecordModalData(
+                showLoanRecordModal(
                     loanRecord = null,
                     baseCurrency = baseCurrency.value,
                     selectedAccountId = selectedLoanAccountId.value
@@ -251,6 +263,33 @@ internal class LoanDetailsViewModel @Inject internal constructor(
 
             else -> {}
         }
+    }
+
+    private fun showLoanRecordModal(
+        loanRecord: LoanRecord?,
+        baseCurrency: String,
+        loanAccountCurrencyCode: String? = null,
+        selectedAccountId: UUID? = null,
+        createLoanRecordTransaction: Boolean = false,
+        isLoanInterest: Boolean = false,
+    ) {
+        loanRecordModalLoanRecord.value = loanRecord
+        loanRecordModalBaseCurrency.value = baseCurrency
+        loanRecordModalLoanAccountCurrencyCode.value = loanAccountCurrencyCode
+        loanRecordModalSelectedAccountId.value = selectedAccountId
+        loanRecordModalCreateTransaction.value = createLoanRecordTransaction
+        loanRecordModalIsLoanInterest.value = isLoanInterest
+        loanRecordModalVisible.value = true
+    }
+
+    private fun resetLoanRecordModal() {
+        loanRecordModalVisible.value = false
+        loanRecordModalLoanRecord.value = null
+        loanRecordModalBaseCurrency.value = ""
+        loanRecordModalLoanAccountCurrencyCode.value = null
+        loanRecordModalSelectedAccountId.value = null
+        loanRecordModalCreateTransaction.value = false
+        loanRecordModalIsLoanInterest.value = false
     }
 
     private fun showLoanModal(
@@ -473,12 +512,12 @@ internal class LoanDetailsViewModel @Inject internal constructor(
 
     private fun handleChangeDate() {
         dateTimePicker.pickDate(
-            initialDate = loanRecordModalData.value?.loanRecord?.dateTime ?: nowUtc()
+            initialDate = currentLoanRecordDateTime()
         ) { localDate ->
 
-            val localTime = loanRecordModalData.value?.loanRecord?.dateTime?.let {
+            val localTime = currentLoanRecordDateTime().let {
                 it.toLocalTimeInSystemZone()
-            } ?: nowLocalTime()
+            }
 
             updateDateTime(localDate.atTime(localTime))
         }
@@ -486,25 +525,27 @@ internal class LoanDetailsViewModel @Inject internal constructor(
 
     private fun handleChangeTime() {
         dateTimePicker.pickTime(
-            initialTime = loanRecordModalData.value?.loanRecord?.dateTime?.let {
+            initialTime = currentLoanRecordDateTime().let {
                 it.toLocalTimeInSystemZone()
-            } ?: nowLocalTime()
+            }
         ) { localTime ->
-            val localDate = loanRecordModalData.value?.loanRecord?.dateTime?.let {
+            val localDate = currentLoanRecordDateTime().let {
                 it.toLocalDateInSystemZone()
-            } ?: nowLocalDate()
+            }
 
             updateDateTime(localDate.atTime(localTime))
         }
     }
 
+    private fun currentLoanRecordDateTime(): Instant {
+        return loanRecordModalLoanRecord.value?.dateTime ?: dateTime.value
+    }
+
     private fun updateDateTime(newDateTime: LocalDateTime) {
         val newDateTimeUtc = newDateTime.toUtcInstant()
-        loanRecordModalData.value?.let { currentData ->
-            loanRecordModalData.value = currentData.copy(
-                loanRecord = currentData.loanRecord?.copy(
-                    dateTime = newDateTimeUtc
-                )
+        if (loanRecordModalVisible.value) {
+            loanRecordModalLoanRecord.value = loanRecordModalLoanRecord.value?.copy(
+                dateTime = newDateTimeUtc
             )
             dateTime.value = newDateTimeUtc
         }
