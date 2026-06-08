@@ -947,6 +947,7 @@
 - `fileSharer()` 和 `buildInfoProvider()` 薄 helper 已从 `shared:ui:legacy` 移到 `shared:ui:core`；设置页和报表页不再为了平台服务 helper 依赖 legacy 桥接包，旧 UI 模块只保留真正的旧组件和旧主题兼容层。
 - app 平台实现的公开面已收窄：Activity result launcher helper、文件选择/日期选择注册入口、文件分享器、构建信息 provider、生物识别封装、Secure Window 控制器和设备锁屏检查都改为 app 模块内可见；Hilt 绑定类和 `shared:ui:core` 暴露的窄接口保持不变。
 - app 根部公开面继续收窄：`RootContent` 只作为 `RootActivity` 的内部 Compose 内容函数，`RootIntentExtras` 只作为 app 内部启动参数常量；Hilt ViewModel 和绑定实现暂时保持 public 以避免影响生成代码。
+- 已删除只有单实现且只被提醒 worker 使用的 `AppStarter` 接口；提醒通知现在直接注入 `RootIntentFactory` 创建 `RootActivity` intent，同时移除未被调用的默认启动/添加交易启动方法和对应 Hilt binding。
 - `Features` 和功能开关 DataStore 已通过 `LocalFeatures/LocalFeatureDataStore` 由 app 根部显式提供；旧金额键盘不再用 Hilt `EntryPointAccessors` 从 application 反查依赖。
 - 锁屏页不再通过 `LocalContext.current` 自行检查系统锁屏状态；`RootActivity` 从 app 平台层提供 `hasLockScreen` 检查函数，UI 只负责触发认证或继续进入应用。
 - 根启动 intent 的交易类型解析已改用 `IntentCompat.getSerializableExtra()`，不再直接调用新版 Android 中弃用的 `Intent.getSerializableExtra(String)`。

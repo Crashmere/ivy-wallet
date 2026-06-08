@@ -7,8 +7,6 @@ import com.ivy.domain.usecase.reset.ResetWalletDataUseCase
 import com.ivy.ui.platform.DatePicker
 import com.ivy.ui.platform.FilePicker
 import com.ivy.ui.platform.LocaleSettingsLauncher
-import com.ivy.wallet.AppStarter
-import com.ivy.wallet.IvyAppStarter
 import com.ivy.wallet.platform.AndroidLocaleSettingsLauncher
 import com.ivy.wallet.platform.AndroidResourceProvider
 import com.ivy.wallet.reset.ResetWalletDataUseCaseImpl
@@ -22,9 +20,6 @@ import dagger.hilt.components.SingletonComponent
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class AppBindingsModule {
-    @Binds
-    abstract fun appStarter(appStarter: IvyAppStarter): AppStarter
-
     @Binds
     abstract fun resetWalletDataUseCase(
         resetWalletDataUseCase: ResetWalletDataUseCaseImpl
