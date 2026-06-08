@@ -1,4 +1,4 @@
-package com.ivy.legacy.ui.component
+package com.ivy.legacy.ui.period
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable

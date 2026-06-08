@@ -107,6 +107,7 @@
 - 旧分类/标签选择用描边按钮已从通用组件包移入 `legacy.ui.selection`；`IvyBorderButton` 不再作为根组件目录的全局按钮入口。
 - 重排弹窗已从旧通用组件包移入 `legacy.ui.modal`；账户、分类、预算和借贷页面继续使用同一个 `ReorderModalSingleType`，但依赖的是弹窗边界而不是根组件目录。
 - 账户、分类、预算和借贷页面的重排入口按钮已改为页面侧直接使用 `CircleButtonFilled` 和拖拽手柄图标，不再依赖已删除的旧 `ReorderButton` 包装。
+- 周期选择条和收入/支出汇总卡片已从旧通用组件包分别移入 `legacy.ui.period` 与 `legacy.ui.summary`；它们继续被现有页面复用，但不再挤在根组件目录中。
 - CSV 导入结果页的返回按钮已改为 `feature:import-data` 私有实现；`shared:ui:legacy` 的 `BackButton` 收窄为模块内部给旧工具栏使用。
 - 饼图页不再直接调用底层 `ItemIconM`，改用带默认图标的包装入口；`shared:ui:legacy` 的 `ItemIconM` 收窄为模块内部实现。
 - 计划付款列表改用本 feature 私有的分组分隔条；`shared:ui:legacy` 的交易 `SectionDivider` 收窄为交易列表内部实现。

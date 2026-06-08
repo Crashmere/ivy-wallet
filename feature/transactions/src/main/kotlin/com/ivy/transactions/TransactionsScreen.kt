@@ -56,7 +56,7 @@ import com.ivy.ui.period.TimePeriod
 import com.ivy.ui.period.displayLong
 import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.ui.period.LocalPeriodState
-import com.ivy.legacy.ui.component.IncomeExpensesCards
+import com.ivy.legacy.ui.summary.IncomeExpensesCards
 import com.ivy.legacy.ui.component.transaction.transactions
 import com.ivy.ui.money.balancePrefix
 import com.ivy.ui.compose.clickableNoIndication
@@ -93,7 +93,7 @@ import com.ivy.legacy.ui.modal.edit.AccountModal
 import com.ivy.legacy.ui.modal.edit.CategoryModal
 import com.ivy.legacy.ui.modal.CategoryModalData
 import com.ivy.legacy.ui.theme.toComposeColor
-import com.ivy.legacy.ui.component.PeriodSelector
+import com.ivy.legacy.ui.period.PeriodSelector
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import java.util.UUID
