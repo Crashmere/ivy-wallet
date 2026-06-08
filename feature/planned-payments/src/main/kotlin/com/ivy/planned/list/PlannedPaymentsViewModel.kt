@@ -9,12 +9,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
 import com.ivy.ui.ComposeViewModel
+import com.ivy.data.model.Account
 import com.ivy.data.model.Category
 import com.ivy.domain.usecase.category.GetCategoriesUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
-import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.data.model.PlannedPaymentRule
-import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
+import com.ivy.domain.usecase.account.GetAccountsUseCase
 import com.ivy.domain.usecase.planned.GetPlannedPaymentsOverviewUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
@@ -29,7 +29,7 @@ internal class PlannedPaymentsViewModel @Inject internal constructor(
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
     private val getPlannedPaymentsOverviewUseCase: GetPlannedPaymentsOverviewUseCase,
     private val getCategoriesUseCase: GetCategoriesUseCase,
-    private val getLegacyAccountsUseCase: GetLegacyAccountsUseCase
+    private val getAccountsUseCase: GetAccountsUseCase
 ) : ComposeViewModel<PlannedPaymentsScreenState, PlannedPaymentsScreenEvent>() {
 
     private var currency by mutableStateOf("")
@@ -140,8 +140,8 @@ internal class PlannedPaymentsViewModel @Inject internal constructor(
             categories = getCategoriesUseCase()
                 .map(Category::toPlannedPaymentCategory)
                 .toImmutableList()
-            accounts = getLegacyAccountsUseCase()
-                .map(LegacyAccount::toPlannedPaymentAccount)
+            accounts = getAccountsUseCase()
+                .map(Account::toPlannedPaymentAccount)
                 .toImmutableList()
 
             val overview = getPlannedPaymentsOverviewUseCase()
@@ -162,9 +162,9 @@ private fun Category.toPlannedPaymentCategory() = PlannedPaymentCategory(
     icon = icon?.id,
 )
 
-private fun LegacyAccount.toPlannedPaymentAccount() = PlannedPaymentAccount(
-    id = id,
-    name = name,
-    icon = icon,
-    currency = currency,
+private fun Account.toPlannedPaymentAccount() = PlannedPaymentAccount(
+    id = id.value,
+    name = name.value,
+    icon = icon?.id,
+    currency = asset.code,
 )
