@@ -229,7 +229,7 @@ internal class LoanTransactionSyncCore @Inject internal constructor(
 
     suspend fun computeConvertedAmount(
         oldLoanRecordAccountId: UUID?,
-        oldLonRecordConvertedAmount: Double?,
+        oldLoanRecordConvertedAmount: Double?,
         oldLoanRecordAmount: Double,
         newLoanRecordAccountID: UUID?,
         newLoanRecordAmount: Double,
@@ -254,7 +254,7 @@ internal class LoanTransactionSyncCore @Inject internal constructor(
                 }
 
                 reCalculateLoanAmount || loanRecordCurrenciesChanged ||
-                        oldLonRecordConvertedAmount == null -> {
+                        oldLoanRecordConvertedAmount == null -> {
                     withContext(Dispatchers.IO) {
                         exchangeRatesUseCase.convertAmount(
                             baseCurrency = baseCurrency(),
@@ -266,11 +266,11 @@ internal class LoanTransactionSyncCore @Inject internal constructor(
                 }
 
                 oldLoanRecordAmount != newLoanRecordAmount -> {
-                    newLoanRecordAmount * (oldLonRecordConvertedAmount / oldLoanRecordAmount)
+                    newLoanRecordAmount * (oldLoanRecordConvertedAmount / oldLoanRecordAmount)
                 }
 
                 else -> {
-                    oldLonRecordConvertedAmount
+                    oldLoanRecordConvertedAmount
                 }
             }
             newConverted

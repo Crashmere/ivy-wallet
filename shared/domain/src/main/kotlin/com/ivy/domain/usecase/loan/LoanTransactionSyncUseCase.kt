@@ -127,7 +127,7 @@ class LoanTransactionSyncUseCase @Inject internal constructor(
                             val convertedAmount: Double? =
                                 ltCore.computeConvertedAmount(
                                     oldLoanRecordAccountId = loanRecord.accountId,
-                                    oldLonRecordConvertedAmount = loanRecord.convertedAmount,
+                                    oldLoanRecordConvertedAmount = loanRecord.convertedAmount,
                                     oldLoanRecordAmount = loanRecord.amount,
                                     newLoanRecordAccountID = loanRecord.accountId,
                                     newLoanRecordAmount = loanRecord.amount,

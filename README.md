@@ -1186,6 +1186,7 @@
 - 预算页删除事件已收窄为只传预算 ID；ViewModel 从当前预算列表解析实体后调用删除用例，编辑预算仍保留弹窗返回的更新后预算对象。
 - 借贷详情页的还款记录点击和删除事件已收窄为只传记录 ID；ViewModel 从当前记录列表解析弹窗展示数据或删除实体，创建/编辑记录继续保留弹窗返回的数据。
 - 账户、预算和借贷列表的重排事件已收窄为只传排序后的 ID 列表；拖拽弹窗继续使用展示模型渲染，ViewModel 负责从当前状态解析实体并调用保存/重排用例。
+- 借贷交易同步内部参数拼写已从 `oldLonRecordConvertedAmount` 修正为 `oldLoanRecordConvertedAmount`；只收敛命名，不改变换算逻辑。
 - 旧重排弹窗的底层多类型 `ReorderModal` 已收为 `shared:ui:legacy` 私有实现；feature 层继续只通过 `ReorderModalSingleType`、`ReorderButton` 和 `ReorderableItem` 使用现有排序 UI。
 - 旧主题外层色板继续收窄：`Blue`、`IvyLight`、`GreenLight`、`RedLight` 和 `IvyDark` 没有模块外调用点，已改为 `shared:ui:legacy` 内部常量；feature 层继续通过 `LegacyTheme` 和仍公开的实际使用色板访问旧主题。
 
