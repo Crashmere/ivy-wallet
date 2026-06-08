@@ -28,7 +28,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.data.model.legacy.LegacyAccount
+import com.ivy.legacy.ui.modal.AccountModalAccount
 import com.ivy.legacy.ui.modal.AccountModalData
 import com.ivy.ui.compose.onCompositionStart
 import com.ivy.ui.compose.selectEndTextFieldValue
@@ -54,7 +54,7 @@ import com.ivy.ui.compose.rememberInteractionSource
 fun BoxWithConstraintsScope.AccountModal(
     modal: AccountModalData?,
     onCreateAccount: (CreateAccountData) -> Unit,
-    onEditAccount: (LegacyAccount, balance: Double) -> Unit,
+    onEditAccount: (AccountModalAccount, balance: Double) -> Unit,
     dismiss: () -> Unit,
 ) {
     val account = modal?.account
@@ -291,7 +291,7 @@ private fun IvyCheckbox(
 }
 
 private fun save(
-    account: LegacyAccount?,
+    account: AccountModalAccount?,
     nameTextFieldValue: TextFieldValue,
     currency: String,
     color: Color,
@@ -300,7 +300,7 @@ private fun save(
     includeInBalance: Boolean,
 
     onCreateAccount: (CreateAccountData) -> Unit,
-    onEditAccount: (LegacyAccount, balance: Double) -> Unit,
+    onEditAccount: (AccountModalAccount, balance: Double) -> Unit,
     dismiss: () -> Unit
 ) {
     if (account != null) {

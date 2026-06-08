@@ -388,7 +388,7 @@ private fun BoxWithConstraintsScope.UI(
                         when {
                             account != null -> {
                                 accountModalData = AccountModalData(
-                                    account = account.toLegacyAccount(),
+                                    account = account.toAccountModalAccount(),
                                     baseCurrency = currency,
                                     balance = balance,
                                     autoFocusKeyboard = false
@@ -408,7 +408,7 @@ private fun BoxWithConstraintsScope.UI(
                         when {
                             account != null -> {
                                 accountModalData = AccountModalData(
-                                    account = account.toLegacyAccount(),
+                                    account = account.toAccountModalAccount(),
                                     baseCurrency = currency,
                                     balance = balance,
                                     adjustBalanceMode = true,
@@ -425,7 +425,7 @@ private fun BoxWithConstraintsScope.UI(
                     },
                     showAccountModal = {
                         accountModalData = AccountModalData(
-                            account = account?.toLegacyAccount(),
+                            account = account?.toAccountModalAccount(),
                             baseCurrency = currency,
                             balance = balance,
                             adjustBalanceMode = false,

@@ -2,7 +2,7 @@ package com.ivy.transactions
 
 import androidx.compose.runtime.Immutable
 import com.ivy.data.model.Account
-import com.ivy.data.model.legacy.LegacyAccount
+import com.ivy.legacy.ui.modal.AccountModalAccount
 import java.util.UUID
 
 @Immutable
@@ -24,7 +24,7 @@ internal fun Account.toTransactionsAccount() = TransactionsAccount(
     includeInBalance = includeInBalance,
 )
 
-internal fun TransactionsAccount.toLegacyAccount() = LegacyAccount(
+internal fun TransactionsAccount.toAccountModalAccount() = AccountModalAccount(
     id = id,
     name = name,
     color = color,

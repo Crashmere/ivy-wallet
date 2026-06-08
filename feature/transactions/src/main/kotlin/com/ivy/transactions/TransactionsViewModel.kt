@@ -65,7 +65,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.UUID
 import javax.inject.Inject
-import com.ivy.data.model.legacy.LegacyAccount
 
 private val AccountTransfersCategoryColorArgb = 0xFFFFCCD5.toInt()
 
@@ -696,16 +695,6 @@ private fun Account.toTransactionListAccount() = TransactionListAccount(
     color = color.value,
     icon = icon?.id,
     currency = asset.code,
-)
-
-private fun Account.toLegacyAccount() = LegacyAccount(
-    id = id.value,
-    name = name.value,
-    color = color.value,
-    icon = icon?.id,
-    currency = asset.code,
-    includeInBalance = includeInBalance,
-    orderNum = orderNum,
 )
 
 internal data class TransactionsQuery(
