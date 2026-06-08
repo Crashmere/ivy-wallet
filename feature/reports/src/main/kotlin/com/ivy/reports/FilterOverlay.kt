@@ -66,7 +66,6 @@ import com.ivy.legacy.ui.component.IvyCheckboxWithText
 import com.ivy.legacy.ui.component.IvyDividerLine
 import com.ivy.legacy.ui.component.IvyIcon
 import com.ivy.legacy.ui.component.IvyOutlinedButton
-import com.ivy.legacy.ui.modal.AddKeywordModal
 import com.ivy.legacy.ui.modal.AddModalBackHandling
 import com.ivy.legacy.ui.modal.ChoosePeriodModal
 import com.ivy.legacy.ui.modal.ChoosePeriodModalData
@@ -383,7 +382,7 @@ internal fun BoxWithConstraintsScope.FilterOverlay(
         )
     }
 
-    AddKeywordModal(
+    ReportAddKeywordModal(
         keyword = "",
         visible = includeKeywordModalShown,
         dismiss = { includeKeywordModalShown = false }
@@ -395,7 +394,7 @@ internal fun BoxWithConstraintsScope.FilterOverlay(
         )
     }
 
-    AddKeywordModal(
+    ReportAddKeywordModal(
         keyword = "",
         visible = excludeKeywordModalShown,
         dismiss = { excludeKeywordModalShown = false }
