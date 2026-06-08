@@ -88,6 +88,7 @@
 - 交易页已直接使用 `BalanceRow` 参数表达中号余额样式；`shared:ui:legacy` 删除只剩单次调用的 `BalanceRowMedium` 包装函数。
 - 首页、账户页和饼图页已直接使用 `BalanceRow` 参数表达小号余额样式；`shared:ui:legacy` 删除只剩包装作用的 `BalanceRowMini`。
 - 旧弹窗的 `ModalAddSave` 只剩模块内部包装用途，已收窄为 `shared:ui:legacy` 内部 API；外部仍可使用实际调用的 `ModalSave`、`ModalAdd` 和 `ModalTitle`。
+- 借贷新增/编辑弹窗改用本 feature 私有的 `LoanModalAddSave` 包装，避免继续跨模块依赖旧弹窗内部的新增/保存判断 helper。
 - CSV 导入结果页的返回按钮已改为 `feature:import-data` 私有实现；`shared:ui:legacy` 的 `BackButton` 收窄为模块内部给旧工具栏使用。
 - 饼图页不再直接调用底层 `ItemIconM`，改用带默认图标的包装入口；`shared:ui:legacy` 的 `ItemIconM` 收窄为模块内部实现。
 - 计划付款列表改用本 feature 私有的分组分隔条；`shared:ui:legacy` 的交易 `SectionDivider` 收窄为交易列表内部实现。

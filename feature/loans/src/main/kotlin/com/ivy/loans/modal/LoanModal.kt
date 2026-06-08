@@ -57,7 +57,6 @@ import com.ivy.legacy.ui.modal.ChooseIconModal
 import com.ivy.legacy.ui.modal.CurrencyModal
 import com.ivy.legacy.ui.modal.DeleteModal
 import com.ivy.legacy.ui.modal.IvyModal
-import com.ivy.legacy.ui.modal.ModalAddSave
 import com.ivy.legacy.ui.modal.ModalAmountSection
 import com.ivy.legacy.ui.modal.ModalTitle
 import com.ivy.legacy.ui.modal.edit.AccountModal
@@ -142,8 +141,8 @@ internal fun BoxWithConstraintsScope.LoanModal(
         dismiss = dismiss,
         shiftIfKeyboardShown = false,
         PrimaryAction = {
-            ModalAddSave(
-                item = modal?.loan,
+            LoanModalAddSave(
+                isEdit = modal?.loan != null,
                 // enabled = nameTextFieldValue.text.isNullOrBlank().not() && amount > 0 && ((createLoanTrans && selectedAcc != null) || !createLoanTrans)
                 enabled = nameTextFieldValue.text.isNullOrBlank().not() && amount > 0 && selectedAcc != null
             ) {

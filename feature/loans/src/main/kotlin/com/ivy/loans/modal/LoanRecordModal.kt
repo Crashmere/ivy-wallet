@@ -45,7 +45,6 @@ import com.ivy.legacy.ui.component.ItemIconSDefaultIcon
 import com.ivy.legacy.ui.modal.AccountModalData
 import com.ivy.legacy.ui.modal.DeleteModal
 import com.ivy.legacy.ui.modal.IvyModal
-import com.ivy.legacy.ui.modal.ModalAddSave
 import com.ivy.legacy.ui.modal.ModalAmountSection
 import com.ivy.legacy.ui.modal.ModalTitle
 import com.ivy.legacy.ui.modal.edit.AccountModal
@@ -118,8 +117,8 @@ internal fun BoxWithConstraintsScope.LoanRecordModal(
         dismiss = dismiss,
         shiftIfKeyboardShown = true,
         PrimaryAction = {
-            ModalAddSave(
-                item = initialRecord,
+            LoanModalAddSave(
+                isEdit = initialRecord != null,
                 enabled = amount > 0 && selectedAcc != null
                 // enabled = amount > 0 && ((createLoanRecordTrans && selectedAcc != null) || !createLoanRecordTrans)
             ) {

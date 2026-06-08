@@ -37,6 +37,8 @@ import androidx.compose.ui.unit.dp
 import com.ivy.legacy.ui.component.IvyCircleButton
 import com.ivy.legacy.ui.component.IvyOutlinedButton
 import com.ivy.legacy.ui.component.ItemIconMDefaultIcon
+import com.ivy.legacy.ui.modal.ModalAdd
+import com.ivy.legacy.ui.modal.ModalSave
 import com.ivy.legacy.ui.theme.Gradient
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.legacy.ui.theme.Red
@@ -49,6 +51,25 @@ import com.ivy.ui.platform.hideKeyboard
 import com.ivy.ui.time.LocalTimeFormatter
 import com.ivy.ui.time.formatNicely
 import java.time.LocalDateTime
+
+@Composable
+internal fun LoanModalAddSave(
+    isEdit: Boolean,
+    enabled: Boolean,
+    onClick: () -> Unit,
+) {
+    if (isEdit) {
+        ModalSave(
+            enabled = enabled,
+            onClick = onClick
+        )
+    } else {
+        ModalAdd(
+            enabled = enabled,
+            onClick = onClick
+        )
+    }
+}
 
 @Composable
 internal fun LoanDateTimeRow(
