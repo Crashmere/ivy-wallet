@@ -1259,6 +1259,7 @@ shared:ui:core
 - 交易列表页的到期/逾期交易状态已合并为 feature 本地 section；页面状态不再把交易列表、展开状态和收支统计拆成多组并行字段。
 - 报表页的到期/逾期交易状态也已合并为 feature 本地 section；旧 UI 的 `LegacyDueSection` 继续限制在 `ReportScreen` 组件适配层。
 - 报表页顶部收支卡片已改用轻量 `ReportTransactionSummary`；完整旧交易列表不再进入 `ReportScreenState.transactions` 这类页面级状态字段。
+- 报表页的加载结果写入已从十几个散列参数收为私有 `ReportValues`；收入/支出、到期/逾期、账户、筛选和汇总结果作为一次加载结果传递，状态写入行为不变。
 - 交易列表页顶部收支卡片的收入/支出交易数量已从 UI 过滤逻辑移回状态层；`TransactionsScreen` 不再为了计数直接引用 `LegacyTransaction`。
 - 分类页月度统计所需的账户和旧交易列表已收敛为一次加载流程的局部输入，避免把旧交易列表挂在 ViewModel 长期可变字段上。
 - 饼图页从报表/交易列表进入时只在 ViewModel 中保留输入交易 ID；`LegacyTransaction` 列表只在 `BuildPieChartDataUseCase` 调用前局部加载。

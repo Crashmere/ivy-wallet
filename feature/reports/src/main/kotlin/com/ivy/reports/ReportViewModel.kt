@@ -141,6 +141,21 @@ internal class ReportViewModel @Inject internal constructor(
     private val _uiEvents = MutableSharedFlow<ReportUiEvent>()
     val uiEvents: SharedFlow<ReportUiEvent> = _uiEvents.asSharedFlow()
 
+    private data class ReportValues(
+        val income: Double,
+        val expense: Double,
+        val upcomingIncomeExpense: IncomeExpenseTransferPair,
+        val overdueIncomeExpense: IncomeExpenseTransferPair,
+        val history: ImmutableList<TransactionHistoryItem>,
+        val upcomingTransactions: ImmutableList<LegacyTransaction>,
+        val overdueTransactions: ImmutableList<LegacyTransaction>,
+        val accounts: ImmutableList<LegacyAccount>,
+        val reportFilter: ReportFilter?,
+        val accountIdFilters: ImmutableList<UUID>,
+        val transactionSummary: ReportTransactionSummary,
+        val balance: Double,
+    )
+
     @Composable
     fun getShouldShowAccountSpecificColorInTransactions(): Boolean {
         val preference = preferenceToggles.showAccountColorsInTransactions
@@ -230,18 +245,20 @@ internal class ReportViewModel @Inject internal constructor(
             val scope = this
             if (reportFilter == null) {
                 setReportValues(
-                    income = 0.00,
-                    expense = 0.00,
-                    upcomingIncomeExpenseTransferPair = IncomeExpenseTransferPair.zero(),
-                    overDueIncomeExpenseTransferPair = IncomeExpenseTransferPair.zero(),
-                    history = persistentListOf(),
-                    upcomingTransactions = persistentListOf(),
-                    overdueTransactions = persistentListOf(),
-                    accounts = getLegacyAccountsUseCase(),
-                    reportFilter = filter,
-                    accountIdFilters = persistentListOf(),
-                    transactionSummary = ReportTransactionSummary(),
-                    balanceValue = 0.00
+                    ReportValues(
+                        income = 0.00,
+                        expense = 0.00,
+                        upcomingIncomeExpense = IncomeExpenseTransferPair.zero(),
+                        overdueIncomeExpense = IncomeExpenseTransferPair.zero(),
+                        history = persistentListOf(),
+                        upcomingTransactions = persistentListOf(),
+                        overdueTransactions = persistentListOf(),
+                        accounts = getLegacyAccountsUseCase(),
+                        reportFilter = filter,
+                        accountIdFilters = persistentListOf(),
+                        transactionSummary = ReportTransactionSummary(),
+                        balance = 0.00
+                    )
                 )
                 return@withContext
             }
@@ -315,59 +332,48 @@ internal class ReportViewModel @Inject internal constructor(
             )
 
             setReportValues(
-                income = displayIncome,
-                expense = displayExpenses,
-                upcomingIncomeExpenseTransferPair = upcomingIncomeExpense,
-                overDueIncomeExpenseTransferPair = overdueIncomeExpense,
-                history = historyWithDateDividers.await().toImmutableList(),
-                upcomingTransactions = mapTransactionsToLegacyTransactionsUseCase(upcomingTransactionsList)
-                    .toImmutableList(),
-                overdueTransactions = mapTransactionsToLegacyTransactionsUseCase(overdue).toImmutableList(),
-                accounts = allAccounts,
-                reportFilter = reportFilter,
-                accountIdFilters = accountFilterIdList.await().toImmutableList(),
-                transactionSummary = transactionsList.toReportTransactionSummary(),
-                balanceValue = displayBalance
+                ReportValues(
+                    income = displayIncome,
+                    expense = displayExpenses,
+                    upcomingIncomeExpense = upcomingIncomeExpense,
+                    overdueIncomeExpense = overdueIncomeExpense,
+                    history = historyWithDateDividers.await().toImmutableList(),
+                    upcomingTransactions = mapTransactionsToLegacyTransactionsUseCase(upcomingTransactionsList)
+                        .toImmutableList(),
+                    overdueTransactions = mapTransactionsToLegacyTransactionsUseCase(overdue).toImmutableList(),
+                    accounts = allAccounts,
+                    reportFilter = reportFilter,
+                    accountIdFilters = accountFilterIdList.await().toImmutableList(),
+                    transactionSummary = transactionsList.toReportTransactionSummary(),
+                    balance = displayBalance
+                )
             )
 
             loading = false
         }
     }
 
-    private fun setReportValues(
-        income: Double,
-        expense: Double,
-        upcomingIncomeExpenseTransferPair: IncomeExpenseTransferPair,
-        overDueIncomeExpenseTransferPair: IncomeExpenseTransferPair,
-        history: ImmutableList<TransactionHistoryItem>,
-        upcomingTransactions: ImmutableList<LegacyTransaction>,
-        overdueTransactions: ImmutableList<LegacyTransaction>,
-        accounts: ImmutableList<LegacyAccount>,
-        reportFilter: ReportFilter? = null,
-        accountIdFilters: ImmutableList<UUID>,
-        transactionSummary: ReportTransactionSummary,
-        balanceValue: Double
-    ) {
-        this.income = income
-        this.expenses = expense
-        this.history = history
+    private fun setReportValues(values: ReportValues) {
+        this.income = values.income
+        this.expenses = values.expense
+        this.history = values.history
         this.upcoming = upcoming.copy(
-            transactions = upcomingTransactions,
-            income = upcomingIncomeExpenseTransferPair.income.toDouble(),
-            expenses = upcomingIncomeExpenseTransferPair.expense.toDouble(),
+            transactions = values.upcomingTransactions,
+            income = values.upcomingIncomeExpense.income.toDouble(),
+            expenses = values.upcomingIncomeExpense.expense.toDouble(),
         )
         this.overdue = overdue.copy(
-            transactions = overdueTransactions,
-            income = overDueIncomeExpenseTransferPair.income.toDouble(),
-            expenses = overDueIncomeExpenseTransferPair.expense.toDouble(),
+            transactions = values.overdueTransactions,
+            income = values.overdueIncomeExpense.income.toDouble(),
+            expenses = values.overdueIncomeExpense.expense.toDouble(),
         )
-        this.accounts = accounts
-        this.filter = reportFilter
-        this.accountIdFilters = accountIdFilters
-        this.transactionSummary = transactionSummary
-        this.balance = balanceValue
+        this.accounts = values.accounts
+        this.filter = values.reportFilter
+        this.accountIdFilters = values.accountIdFilters
+        this.transactionSummary = values.transactionSummary
+        this.balance = values.balance
         this.showTransfersAsIncExpCheckbox =
-            reportFilter?.transactionTypes?.contains(TransactionType.TRANSFER) ?: false
+            values.reportFilter?.transactionTypes?.contains(TransactionType.TRANSFER) ?: false
     }
 
     private suspend fun filterTransactions(
