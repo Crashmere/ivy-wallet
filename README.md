@@ -73,6 +73,7 @@
 - 收窄标签弹窗公开面：`AddOrEditTagModal` 改为 `shared:ui:legacy` 内部实现，feature 层继续只通过 `ShowTagModal` 和 `AddTagButton` 访问标签 UI。
 - 收窄 data-core 内部远程源：删除只有单实现且只被 `DefaultExchangeRateStore` 使用的 `RemoteExchangeRatesDataSource` 接口；domain 仍只依赖 `ExchangeRateStore`，汇率同步行为不变。
 - 清理旧 UI 无效参数：删除 `ShowTagModal` 和 `ModalAmountSection` 中未使用的 `modifier` 参数及对应 suppress，调用方和展示行为不变。
+- 继续清理旧 UI 无效参数：删除编辑交易/计划付款共用的 `EditBottomSheet` 中未使用的 `modifier` 参数，编辑入口调用和底部表单展示行为不变。
 
 当前仍保留：
 

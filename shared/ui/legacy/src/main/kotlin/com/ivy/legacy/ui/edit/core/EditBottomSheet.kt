@@ -90,7 +90,7 @@ import com.ivy.legacy.ui.modal.ModalSet
 
 const val SWIPE_UP_EXPANDED_THRESHOLD = 200
 
-@Suppress("LongMethod", "LongParameterList", "UnusedParameter", "ParameterNaming")
+@Suppress("LongMethod", "LongParameterList", "ParameterNaming")
 @Composable
 fun BoxWithConstraintsScope.EditBottomSheet(
     initialTransactionId: UUID?,
@@ -107,7 +107,6 @@ fun BoxWithConstraintsScope.EditBottomSheet(
     onSelectedAccountChanged: (LegacyAccount) -> Unit,
     onToAccountChanged: (LegacyAccount) -> Unit,
     onAddNewAccount: () -> Unit,
-    modifier: Modifier = Modifier, // Modifier comes after other parameters
     convertedAmount: Double? = null,
     convertedAmountCurrencyCode: String? = null,
 ) {
