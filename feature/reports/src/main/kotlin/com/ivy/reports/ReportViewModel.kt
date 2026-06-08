@@ -33,8 +33,6 @@ import com.ivy.domain.usecase.tag.GetTagsUseCase
 import com.ivy.domain.usecase.tag.SearchTagsUseCase
 import com.ivy.domain.usecase.planned.PayOrSkipLegacyPlannedTransactionUseCase
 import com.ivy.domain.usecase.planned.PayOrSkipLegacyPlannedTransactionsUseCase
-import com.ivy.domain.usecase.planned.PayOrSkipPlannedTransactionUseCase
-import com.ivy.domain.usecase.planned.PayOrSkipPlannedTransactionsUseCase
 import com.ivy.domain.usecase.transaction.GetTransactionsByTagsUseCase
 import com.ivy.domain.usecase.transaction.GetTransactionsUseCase
 import com.ivy.domain.usecase.transaction.MapTransactionsToLegacyTransactionsUseCase
@@ -75,8 +73,6 @@ private val UnspecifiedCategoryColorArgb = 0xFF939199.toInt()
 @Stable
 @HiltViewModel
 class ReportViewModel @Inject constructor(
-    private val payOrSkipPlannedTransactionUseCase: PayOrSkipPlannedTransactionUseCase,
-    private val payOrSkipPlannedTransactionsUseCase: PayOrSkipPlannedTransactionsUseCase,
     private val payOrSkipLegacyPlannedTransactionUseCase: PayOrSkipLegacyPlannedTransactionUseCase,
     private val payOrSkipLegacyPlannedTransactionsUseCase: PayOrSkipLegacyPlannedTransactionsUseCase,
     private val periodState: PeriodState,
@@ -181,12 +177,9 @@ class ReportViewModel @Inject constructor(
             when (event) {
                 is ReportScreenEvent.OnFilter -> setFilter(event.filter)
                 is ReportScreenEvent.OnExport -> export(event.fileSharer)
-                is ReportScreenEvent.OnPayOrGet -> payOrGet(event.transaction)
-                is ReportScreenEvent.SkipTransaction -> skipTransaction(event.transaction)
-                is ReportScreenEvent.SkipTransactions -> skipTransactions(event.transactions)
-                is ReportScreenEvent.OnPayOrGetLegacyTransaction -> payOrGetLegacyTransaction(event.transaction)
-                is ReportScreenEvent.SkipLegacyTransaction -> skipLegacyTransaction(event.transaction)
-                is ReportScreenEvent.SkipLegacyTransactions -> skipLegacyTransactions(event.transactions)
+                is ReportScreenEvent.OnPayOrGetLegacyTransaction -> payOrGetLegacyTransaction(event.transactionId)
+                is ReportScreenEvent.SkipLegacyTransaction -> skipLegacyTransaction(event.transactionId)
+                is ReportScreenEvent.SkipLegacyTransactions -> skipLegacyTransactions(event.transactionIds)
                 is ReportScreenEvent.OnOverdueExpanded -> setOverdueExpandedValue(event.overdueExpanded)
                 is ReportScreenEvent.OnUpcomingExpanded -> setUpcomingExpandedValue(event.upcomingExpanded)
                 is ReportScreenEvent.OnFilterOverlayVisible -> setFilterOverlayVisibleValue(event.filterOverlayVisible)
@@ -549,17 +542,9 @@ class ReportViewModel @Inject constructor(
         overdueExpanded = expanded
     }
 
-    private suspend fun payOrGet(transaction: Transaction) {
+    private suspend fun payOrGetLegacyTransaction(transactionId: UUID) {
         withContext(Dispatchers.Main) {
-            if (payOrSkipPlannedTransactionUseCase(transaction) != null) {
-                start()
-                setFilter(filter)
-            }
-        }
-    }
-
-    private suspend fun payOrGetLegacyTransaction(transaction: LegacyTransaction) {
-        withContext(Dispatchers.Main) {
+            val transaction = findDueTransaction(transactionId) ?: return@withContext
             if (payOrSkipLegacyPlannedTransactionUseCase(transaction) != null) {
                 start()
                 setFilter(filter)
@@ -579,21 +564,9 @@ class ReportViewModel @Inject constructor(
         treatTransfersAsIncExp = transfersAsIncExp
     }
 
-    private suspend fun skipTransaction(transaction: Transaction) {
+    private suspend fun skipLegacyTransaction(transactionId: UUID) {
         withContext(Dispatchers.Main) {
-            val paidTransaction = payOrSkipPlannedTransactionUseCase(
-                transaction = transaction,
-                skipTransaction = true
-            )
-            if (paidTransaction != null) {
-                start()
-                setFilter(filter)
-            }
-        }
-    }
-
-    private suspend fun skipLegacyTransaction(transaction: LegacyTransaction) {
-        withContext(Dispatchers.Main) {
+            val transaction = findDueTransaction(transactionId) ?: return@withContext
             val paidTransaction = payOrSkipLegacyPlannedTransactionUseCase(
                 transaction = transaction,
                 skipTransaction = true
@@ -605,9 +578,12 @@ class ReportViewModel @Inject constructor(
         }
     }
 
-    private suspend fun skipTransactions(transactions: List<Transaction>) {
+    private suspend fun skipLegacyTransactions(transactionIds: List<UUID>) {
         withContext(Dispatchers.Main) {
-            val paidTransactions = payOrSkipPlannedTransactionsUseCase(
+            val transactions = findDueTransactions(transactionIds)
+            if (transactions.isEmpty()) return@withContext
+
+            val paidTransactions = payOrSkipLegacyPlannedTransactionsUseCase(
                 transactions = transactions,
                 skipTransaction = true
             )
@@ -618,16 +594,16 @@ class ReportViewModel @Inject constructor(
         }
     }
 
-    private suspend fun skipLegacyTransactions(transactions: List<LegacyTransaction>) {
-        withContext(Dispatchers.Main) {
-            val paidTransactions = payOrSkipLegacyPlannedTransactionsUseCase(
-                transactions = transactions,
-                skipTransaction = true
-            )
-            if (paidTransactions.isNotEmpty()) {
-                start()
-                setFilter(filter)
-            }
-        }
+    private fun findDueTransaction(transactionId: UUID): LegacyTransaction? {
+        return upcomingTransactions
+            .plus(overdueTransactions)
+            .firstOrNull { it.id == transactionId }
+    }
+
+    private fun findDueTransactions(transactionIds: List<UUID>): List<LegacyTransaction> {
+        val transactionIdSet = transactionIds.toSet()
+        return upcomingTransactions
+            .plus(overdueTransactions)
+            .filter { it.id in transactionIdSet }
     }
 }

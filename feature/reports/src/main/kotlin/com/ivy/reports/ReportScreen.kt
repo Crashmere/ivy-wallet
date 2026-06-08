@@ -254,7 +254,7 @@ private fun BoxWithConstraintsScope.UI(
                 lastItemSpacer = 48.dp,
 
                 onPayOrGet = {
-                    onEventHandler.invoke(ReportScreenEvent.OnPayOrGetLegacyTransaction(transaction = it))
+                    onEventHandler.invoke(ReportScreenEvent.OnPayOrGetLegacyTransaction(transactionId = it.id))
                 },
                 onTransactionClick = {
                     nav.navigateTo(
@@ -284,10 +284,14 @@ private fun BoxWithConstraintsScope.UI(
                 emptyStateText = noTransactionsForFilter,
                 shouldShowAccountSpecificColorInTransactions = state.showAccountColorsInTransactions,
                 onSkipTransaction = {
-                    onEventHandler.invoke(ReportScreenEvent.SkipLegacyTransaction(transaction = it))
+                    onEventHandler.invoke(ReportScreenEvent.SkipLegacyTransaction(transactionId = it.id))
                 },
                 onSkipAllTransactions = {
-                    onEventHandler.invoke(ReportScreenEvent.SkipLegacyTransactions(transactions = it))
+                    onEventHandler.invoke(
+                        ReportScreenEvent.SkipLegacyTransactions(
+                            transactionIds = it.map { transaction -> transaction.id }
+                        )
+                    )
                 }
             )
         } else {

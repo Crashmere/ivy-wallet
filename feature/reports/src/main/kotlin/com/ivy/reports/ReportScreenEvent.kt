@@ -1,15 +1,11 @@
 package com.ivy.reports
 
-import com.ivy.data.model.Transaction
-import com.ivy.data.model.legacy.LegacyTransaction
 import com.ivy.ui.platform.FileSharer
+import java.util.UUID
 
 sealed class ReportScreenEvent {
     data class OnFilter(val filter: ReportFilter?) : ReportScreenEvent()
     data class OnExport(val fileSharer: FileSharer) : ReportScreenEvent()
-    data class OnPayOrGet(val transaction: Transaction) : ReportScreenEvent()
-    data class SkipTransaction(val transaction: Transaction) : ReportScreenEvent()
-    data class SkipTransactions(val transactions: List<Transaction>) : ReportScreenEvent()
     data class OnUpcomingExpanded(val upcomingExpanded: Boolean) : ReportScreenEvent()
     data class OnOverdueExpanded(val overdueExpanded: Boolean) : ReportScreenEvent()
     data class OnFilterOverlayVisible(val filterOverlayVisible: Boolean) : ReportScreenEvent()
@@ -17,12 +13,12 @@ sealed class ReportScreenEvent {
     data class OnTreatTransfersAsIncomeExpense(val transfersAsIncomeExpense: Boolean) :
         ReportScreenEvent()
 
-    data class SkipLegacyTransactions(val transactions: List<LegacyTransaction>) :
+    data class SkipLegacyTransactions(val transactionIds: List<UUID>) :
         ReportScreenEvent()
 
-    data class SkipLegacyTransaction(val transaction: LegacyTransaction) :
+    data class SkipLegacyTransaction(val transactionId: UUID) :
         ReportScreenEvent()
 
-    data class OnPayOrGetLegacyTransaction(val transaction: LegacyTransaction) :
+    data class OnPayOrGetLegacyTransaction(val transactionId: UUID) :
         ReportScreenEvent()
 }
