@@ -45,7 +45,7 @@ import com.ivy.domain.usecase.planned.PayOrSkipLegacyPlannedTransactionsUseCase
 import com.ivy.domain.usecase.transaction.GetTransactionHistoryItemsUseCase
 import com.ivy.data.model.ClosedTimeRange
 import com.ivy.data.model.IncomeExpensePair
-import com.ivy.legacy.ui.transaction.toTransactionListAccount
+import com.ivy.legacy.ui.transaction.TransactionListAccount
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
@@ -564,3 +564,11 @@ internal class HomeViewModel @Inject internal constructor(
         this.expanded = expanded
     }
 }
+
+private fun LegacyAccount.toTransactionListAccount() = TransactionListAccount(
+    id = id,
+    name = name,
+    color = color,
+    icon = icon,
+    currency = currency,
+)

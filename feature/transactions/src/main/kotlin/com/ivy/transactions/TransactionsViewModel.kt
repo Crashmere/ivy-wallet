@@ -38,7 +38,6 @@ import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.R
 import com.ivy.ui.preferences.asEnabledState
 import com.ivy.legacy.ui.transaction.TransactionListAccount
-import com.ivy.legacy.ui.transaction.toTransactionListAccount
 import com.ivy.domain.usecase.account.CalculateAccountBalanceUseCase
 import com.ivy.domain.usecase.account.CalculateAccountIncomeExpenseUseCase
 import com.ivy.domain.usecase.account.GetAccountTransactionsUseCase
@@ -719,6 +718,14 @@ internal class TransactionsViewModel @Inject internal constructor(
 private fun List<TransactionHistoryItem>.countTransactionType(type: TransactionType): Int {
     return filterIsInstance<LegacyTransaction>().count { it.type == type }
 }
+
+private fun LegacyAccount.toTransactionListAccount() = TransactionListAccount(
+    id = id,
+    name = name,
+    color = color,
+    icon = icon,
+    currency = currency,
+)
 
 internal data class TransactionsQuery(
     val accountId: UUID?,

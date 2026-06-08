@@ -1377,6 +1377,7 @@ shared:ui:core
 - 旧交易列表公共入参中的账户已从完整 `LegacyAccount` 收窄为 `TransactionListAccount` 轻量模型；搜索页改从正式 `Account` 加载并映射，首页、交易页和报表页暂时在调用旧交易列表时做局部映射。
 - 首页交易列表状态中的账户也已收窄为 `TransactionListAccount`；旧账户列表只留在首页 ViewModel 内部用于现有钱包收入/支出计算，不再进入首页 UI 状态。
 - 交易列表页传给旧交易列表组件的账户列表已收窄为 `TransactionListAccount`；完整 `LegacyAccount` 只保留为当前账户详情、账户编辑弹窗和 legacy 统计计算的内部输入。
+- `shared:ui:legacy` 的 `TransactionListData` 不再提供 `LegacyAccount` 到轻量账户的共享 mapper；首页和交易列表页改用各自 feature 私有转换，旧账户模型边界不再挂在共享旧交易列表契约上。
 - 旧弹窗状态包已整体从 `shared:ui:core` 迁回 `shared:ui:legacy`；账户、分类、缓冲金额、周期、借贷、借贷记录和重复规则弹窗继续用同名数据对象传参，但 UI core 不再暴露旧 modal data API。
 - 交易页和饼图页的周期选择弹窗状态已从 ViewModel/State/Event 移回 Screen 本地状态；ViewModel 只处理周期切换和数据加载，不再为了打开旧弹窗依赖 legacy modal data。
 - 分类页和计划付款编辑页的新增/选择类旧弹窗状态也已移回 Screen 本地状态；ViewModel 继续处理创建账户、创建/编辑分类和重复规则保存，不再承担纯 UI 弹窗开关数据。
