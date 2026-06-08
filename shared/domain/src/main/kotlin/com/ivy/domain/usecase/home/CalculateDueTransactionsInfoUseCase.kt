@@ -1,13 +1,15 @@
 package com.ivy.domain.usecase.home
 
 import com.ivy.data.model.Transaction
+import com.ivy.data.api.AccountStore
+import com.ivy.data.model.AccountId
 import com.ivy.data.model.ClosedTimeRange
 import com.ivy.data.model.IncomeExpensePair
-import com.ivy.domain.usecase.account.GetLegacyAccountUseCase
 import com.ivy.domain.usecase.exchange.ExchangeAmountUseCase
 import com.ivy.domain.usecase.transaction.GetDueTransactionsUseCase
 import com.ivy.domain.exchange.ExchangeTransactionArgument
 import com.ivy.domain.exchange.exchangeInBaseCurrency
+import com.ivy.domain.mapper.legacy.toLegacyAccount
 import com.ivy.domain.transaction.expenses
 import com.ivy.domain.transaction.incomes
 import com.ivy.domain.transaction.sumTransactions
@@ -17,7 +19,7 @@ import javax.inject.Inject
 
 internal class CalculateDueTransactionsInfoUseCase @Inject internal constructor(
     private val getDueTransactionsUseCase: GetDueTransactionsUseCase,
-    private val getLegacyAccountUseCase: GetLegacyAccountUseCase,
+    private val accountStore: AccountStore,
     private val exchangeAmountUseCase: ExchangeAmountUseCase,
 ) {
     suspend operator fun invoke(
@@ -31,7 +33,9 @@ internal class CalculateDueTransactionsInfoUseCase @Inject internal constructor(
         val exchangeArg = ExchangeTransactionArgument(
             baseCurrency = baseCurrency,
             exchange = exchangeAmountUseCase::invoke,
-            getAccount = { getLegacyAccountUseCase(it) }
+            getAccount = { accountId ->
+                accountStore.findById(AccountId(accountId))?.toLegacyAccount()
+            }
         )
 
         return DueTransactionsInfo(
