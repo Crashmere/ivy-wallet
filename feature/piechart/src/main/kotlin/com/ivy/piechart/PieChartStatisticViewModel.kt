@@ -14,7 +14,7 @@ import com.ivy.domain.usecase.transaction.GetLegacyTransactionsByIdsUseCase
 import com.ivy.ui.period.PeriodState
 import com.ivy.ui.period.TimePeriod
 import com.ivy.ui.ComposeViewModel
-import com.ivy.ui.modal.ChoosePeriodModalData
+import com.ivy.legacy.ui.modal.ChoosePeriodModalData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf

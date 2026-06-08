@@ -65,7 +65,7 @@ import com.ivy.legacy.ui.component.WrapContentRow
 import com.ivy.legacy.ui.modal.AddKeywordModal
 import com.ivy.legacy.ui.modal.AddModalBackHandling
 import com.ivy.legacy.ui.modal.ChoosePeriodModal
-import com.ivy.ui.modal.ChoosePeriodModalData
+import com.ivy.legacy.ui.modal.ChoosePeriodModalData
 import com.ivy.legacy.ui.modal.edit.AmountModal
 import com.ivy.legacy.ui.theme.toComposeColor
 import com.ivy.legacy.ui.component.AmountCurrencyB1Row

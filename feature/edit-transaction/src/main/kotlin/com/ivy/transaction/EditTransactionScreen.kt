@@ -70,7 +70,7 @@ import com.ivy.legacy.ui.modal.AccountModalData
 import com.ivy.legacy.ui.modal.edit.AccountModal
 import com.ivy.legacy.ui.modal.edit.AmountModal
 import com.ivy.legacy.ui.modal.edit.CategoryModal
-import com.ivy.ui.modal.CategoryModalData
+import com.ivy.legacy.ui.modal.CategoryModalData
 import com.ivy.legacy.ui.modal.edit.ChooseCategoryModal
 import com.ivy.legacy.ui.modal.edit.DescriptionModal
 import kotlinx.collections.immutable.ImmutableList

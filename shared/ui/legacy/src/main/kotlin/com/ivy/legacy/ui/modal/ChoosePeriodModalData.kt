@@ -1,4 +1,4 @@
-package com.ivy.ui.modal
+package com.ivy.legacy.ui.modal
 
 import com.ivy.ui.period.TimePeriod
 import java.util.UUID

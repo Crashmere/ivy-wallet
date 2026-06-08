@@ -43,7 +43,7 @@
 - 收窄主界面 Tab 状态职责：`MainTabState` 不再作为 app Hilt 单例提供，改由 `MainViewModel` 作为主页面状态持有，再通过 `LocalMainTabState` 提供给首页和账户页。
 - 收回主界面 Tab 状态边界：`MainTab` 和选中状态已归入 `feature:main`，首页/账户页通过普通回调请求切换 tab，`shared:ui:core` 不再提供 `LocalMainTabState` 全局入口。
 - 删除无效 legacy screen 标记：当前所有页面统一走 `LegacyUiRoot` surface，`Screen` 不再暴露 `isLegacy`，`NavigationRoot` 删除只服务非 legacy 分支的 ViewModelStore 清理逻辑。
-- 收窄旧弹窗状态职责：账户、分类、缓冲金额、周期、借贷、借贷记录和计划付款重复规则的 `*ModalData` 已从 `shared:ui:legacy` 迁到 `shared:ui:core` 的 `com.ivy.ui.modal` 包；feature 状态层不再为了保存弹窗数据直接引用 legacy 弹窗实现包。
+- 收回旧弹窗状态职责：账户、分类、缓冲金额、周期、借贷、借贷记录和计划付款重复规则的 `*ModalData` 已归回 `shared:ui:legacy` 的 modal 包；`shared:ui:core` 不再保留旧弹窗状态包。
 - 收窄导航返回职责：旧弹窗返回键处理改用 Compose `BackHandler`，`Navigation` 删除 modal back handler 栈，只继续处理页面级返回和根返回栈。
 - 收窄页面级返回职责：主界面、CSV 恢复页和交易统计页的返回回调改为随 `onScreenStart` 注册/注销；ViewModel 只保留返回行为判断，不再负责把回调长期挂到导航对象上。
 - 收窄导入功能导航职责：备份恢复和手动 CSV 导入的 ViewModel 不再注入 `Navigation`，完成/跳过/结果页返回由 Screen 执行，ViewModel 只负责重置导入状态。
@@ -573,8 +573,8 @@
 - `SearchInput` 已归入 legacy 组件包，金额输入偏好 CompositionLocal 已归入 `shared:ui:core` 的 preferences 包，`LegacyUiRoot` 对外包名已改为 `com.ivy.legacy.ui`，与 `shared:ui:legacy` 模块保持一致。
 - 首页缓冲金额展示模型 `BufferInfo` 和编辑交易借贷提示模型 `EditTransactionDisplayLoan` 已移回各自 feature；`shared:ui:legacy` 不再保存这两段页面私有状态。
 - 周期选择模型和状态 `TimePeriod/Month/LastNTimeRange/PeriodState` 已从 legacy UI 迁到 `shared:ui:core` 的 `com.ivy.ui.period`；首页、交易、报表、饼图、预算和根部状态继续共用同一周期语义，但不再依赖 legacy 包。
-- 周期弹窗状态 `ChoosePeriodModalData` 已归入 `shared:ui:core` 的 `com.ivy.ui.period`，弹窗动画时长常量已归入 `com.ivy.ui.animation`；页面状态和搜索页动画不再为了数据对象或常量引用 legacy modal 包。
-- 账户、分类、缓冲金额、借贷、借贷记录和计划付款重复规则弹窗的 `*ModalData` 已归入 `shared:ui:core` 的 `com.ivy.ui.modal`；feature 的 ViewModel/State 不再为了保存弹窗状态直接引用 legacy modal 实现包。
+- 周期模型和弹窗动画时长已分别归入 `shared:ui:core` 的 period/animation 包；周期选择弹窗的 `ChoosePeriodModalData` 作为旧弹窗入参保留在 `shared:ui:legacy`。
+- 账户、分类、缓冲金额、借贷、借贷记录、周期选择和计划付款重复规则弹窗的 `*ModalData` 已归回 `shared:ui:legacy`；这些数据对象本质上仍是旧弹窗入参，不再伪装成 UI core 公共 API。
 - CSV 导入器的新账户/分类默认颜色已改用导入功能自己的 ARGB 调色板；导入解析逻辑不再为了颜色值依赖 Compose `Color` 或 legacy theme。
 - 首页客户旅程卡片模型已改为保存普通 ARGB 背景色，卡片 provider 不再依赖 legacy theme；只有实际 Composable 绘制边界继续把颜色转成旧 UI 渐变。
 - 交易、报表和饼图的 ViewModel/UseCase 中用于占位分类的颜色已改成本地 ARGB 常量；非绘制逻辑不再为了 `Color.toArgb()` 依赖 Compose graphics 或 legacy theme。
@@ -1286,7 +1286,7 @@ shared:ui:core
 - 报表页面事件统一为 `sealed interface`，与其他 feature 的事件定义风格保持一致，减少无意义的 `ReportScreenEvent()` 继承样板。
 - 借贷创建和还款记录创建数据已从携带完整 `LegacyAccount` 改为只携带账户 ID；旧弹窗仍用完整账户对象渲染选择项，domain 创建和交易同步只接收 ID，`shared:data:model` 不再因为这两个创建 DTO 依赖 legacy 账户模型。
 - 借贷弹窗和还款记录弹窗的 modal data 也已从完整选中账户收窄为账户 ID；旧弹窗继续根据当前账户列表解析展示对象，`shared:ui:core` 的借贷弹窗状态不再依赖 legacy 账户模型。
-- 账户编辑弹窗状态 `AccountModalData` 已从 `shared:ui:core` 迁回 `shared:ui:legacy`；它本质上仍是旧账户弹窗的入参，UI core 不再直接引用 `LegacyAccount`。
+- 旧弹窗状态包已整体从 `shared:ui:core` 迁回 `shared:ui:legacy`；账户、分类、缓冲金额、周期、借贷、借贷记录和重复规则弹窗继续用同名数据对象传参，但 UI core 不再暴露旧 modal data API。
 - app 仍保留文件选择、文件分享、Material 日期选择器、BuildInfo、Locale 设置、生物识别和窗口安全等真正依赖 Activity 或 Android app 壳层的装配。
 
 ## 高风险区域

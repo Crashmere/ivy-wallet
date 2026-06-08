@@ -2,7 +2,7 @@ package com.ivy.transactions
 
 import com.ivy.data.model.Category
 import com.ivy.ui.period.TimePeriod
-import com.ivy.ui.modal.ChoosePeriodModalData
+import com.ivy.legacy.ui.modal.ChoosePeriodModalData
 import java.util.UUID
 
 internal sealed interface TransactionsEvent {

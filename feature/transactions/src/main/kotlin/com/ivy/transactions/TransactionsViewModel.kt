@@ -50,7 +50,7 @@ import com.ivy.domain.usecase.settings.GetTransfersAsIncomeExpensePreferenceUseC
 import com.ivy.domain.usecase.transaction.BuildLegacyTransactionHistoryItemsUseCase
 import com.ivy.domain.usecase.transaction.CalculateLegacyTransactionsIncomeExpenseUseCase
 import com.ivy.domain.usecase.transaction.GetLegacyTransactionsByIdsUseCase
-import com.ivy.ui.modal.ChoosePeriodModalData
+import com.ivy.legacy.ui.modal.ChoosePeriodModalData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf

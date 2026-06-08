@@ -45,10 +45,10 @@ import com.ivy.legacy.ui.modal.DeleteModal
 import com.ivy.legacy.ui.modal.ModalSet
 import com.ivy.legacy.ui.modal.RecurringRuleModal
 import com.ivy.legacy.ui.modal.AccountModalData
-import com.ivy.ui.modal.RecurringRuleModalData
+import com.ivy.legacy.ui.modal.RecurringRuleModalData
 import com.ivy.legacy.ui.modal.edit.AccountModal
 import com.ivy.legacy.ui.modal.edit.CategoryModal
-import com.ivy.ui.modal.CategoryModalData
+import com.ivy.legacy.ui.modal.CategoryModalData
 import com.ivy.legacy.ui.modal.edit.ChooseCategoryModal
 import com.ivy.legacy.ui.modal.edit.DescriptionModal
 import kotlinx.collections.immutable.persistentListOf

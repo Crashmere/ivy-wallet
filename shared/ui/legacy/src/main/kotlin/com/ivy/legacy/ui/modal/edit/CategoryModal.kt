@@ -35,7 +35,7 @@ import com.ivy.data.model.primitive.ColorInt
 import com.ivy.data.model.primitive.IconAsset
 import com.ivy.data.model.primitive.NotBlankTrimmedString
 import com.ivy.legacy.ui.component.IvyColorPicker
-import com.ivy.ui.modal.CategoryModalData
+import com.ivy.legacy.ui.modal.CategoryModalData
 import com.ivy.ui.platform.hideKeyboard
 import com.ivy.ui.compose.onCompositionStart
 import com.ivy.ui.compose.selectEndTextFieldValue
