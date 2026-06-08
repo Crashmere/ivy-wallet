@@ -69,7 +69,7 @@ import com.ivy.ui.money.BalanceRow
 import com.ivy.ui.icon.ItemIconMDefaultIcon
 import com.ivy.ui.compose.OutlinedPillButton
 import com.ivy.ui.theme.colors.findContrastTextColor
-import com.ivy.legacy.ui.modal.ChoosePeriodModal
+import com.ivy.ui.modal.ChoosePeriodModal
 import com.ivy.ui.theme.colors.toComposeColor
 import com.ivy.ui.money.AmountCurrencyB1
 import kotlinx.collections.immutable.toImmutableList

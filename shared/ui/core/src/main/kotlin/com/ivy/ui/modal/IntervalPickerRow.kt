@@ -1,4 +1,4 @@
-package com.ivy.legacy.ui.modal
+package com.ivy.ui.modal
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -35,14 +35,11 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.IntervalType
-import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.time.forDisplay
 import com.ivy.ui.compose.ResourceIcon
 import com.ivy.ui.compose.selectEndTextFieldValue
 import com.ivy.ui.R
-import com.ivy.legacy.ui.theme.Gradient
-import com.ivy.legacy.ui.theme.GradientIvy
-import com.ivy.legacy.ui.theme.White
+import com.ivy.ui.theme.colors.Gradient
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import com.ivy.ui.platform.hideKeyboard
@@ -73,17 +70,17 @@ internal fun IntervalPickerRow(
             modifier = Modifier
                 .background(
                     brush = if (validInput) {
-                        GradientIvy.asHorizontalBrush()
+                        PeriodGradientIvy.asHorizontalBrush()
                     } else {
                         Gradient
-                            .solid(LegacyTheme.colors.medium)
+                            .solid(ChoosePeriodModalTheme.colors.medium)
                             .asHorizontalBrush()
                     },
-                    shape = LegacyTheme.shapes.rFull
+                    shape = ChoosePeriodModalTheme.shapes.rFull
                 )
                 .padding(vertical = 12.dp),
             value = interNTextFieldValue,
-            textColor = if (validInput) White else LegacyTheme.colors.pureInverse,
+            textColor = if (validInput) ChoosePeriodModalTheme.colors.white else ChoosePeriodModalTheme.colors.pureInverse,
             hint = "0"
         ) {
             val filteredText = it.text.take(RepeatIntervalCharLimit)
@@ -116,8 +113,8 @@ private fun IvyNumberTextField(
     value: TextFieldValue,
     hint: String?,
     fontWeight: FontWeight = FontWeight.ExtraBold,
-    textColor: Color = LegacyTheme.colors.pureInverse,
-    hintColor: Color = Color.Gray,
+    textColor: Color = ChoosePeriodModalTheme.colors.pureInverse,
+    hintColor: Color = ChoosePeriodModalTheme.colors.gray,
     visualTransformation: VisualTransformation = VisualTransformation.None,
     keyboardOptions: KeyboardOptions? = null,
     keyboardActions: KeyboardActions? = null,
@@ -134,7 +131,7 @@ private fun IvyNumberTextField(
                 modifier = textModifier,
                 text = hint!!,
                 textAlign = TextAlign.Start,
-                style = LegacyTheme.typo.nB2.copy(
+                style = ChoosePeriodModalTheme.typo.nB2.copy(
                     color = hintColor,
                     fontWeight = fontWeight,
                     textAlign = TextAlign.Center
@@ -148,13 +145,13 @@ private fun IvyNumberTextField(
                 .testTag("base_number_input"),
             value = value,
             onValueChange = onValueChanged,
-            textStyle = LegacyTheme.typo.nB2.copy(
+            textStyle = ChoosePeriodModalTheme.typo.nB2.copy(
                 color = textColor,
                 fontWeight = fontWeight,
                 textAlign = TextAlign.Center
             ),
             singleLine = true,
-            cursorBrush = SolidColor(LegacyTheme.colors.pureInverse),
+            cursorBrush = SolidColor(ChoosePeriodModalTheme.colors.pureInverse),
             visualTransformation = visualTransformation,
             keyboardOptions = keyboardOptions ?: KeyboardOptions(
                 capitalization = KeyboardCapitalization.Characters,
@@ -189,7 +186,7 @@ private fun RowScope.IntervalTypeSelector(
     Row(
         modifier = Modifier
             .weight(1f)
-            .border(2.dp, LegacyTheme.colors.medium, LegacyTheme.shapes.rFull),
+            .border(2.dp, ChoosePeriodModalTheme.colors.medium, ChoosePeriodModalTheme.shapes.rFull),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Spacer(Modifier.width(20.dp))
@@ -211,7 +208,7 @@ private fun RowScope.IntervalTypeSelector(
                 .padding(all = 8.dp)
                 .rotate(-180f),
             icon = R.drawable.ic_arrow_right,
-            tint = LegacyTheme.colors.pureInverse,
+            tint = ChoosePeriodModalTheme.colors.pureInverse,
             contentDescription = "interval_type_arrow_left"
         )
 
@@ -219,8 +216,8 @@ private fun RowScope.IntervalTypeSelector(
 
         Text(
             text = intervalType.forDisplay(intervalN).capitalizeLocal(),
-            style = LegacyTheme.typo.b2.copy(
-                color = LegacyTheme.colors.pureInverse,
+            style = ChoosePeriodModalTheme.typo.b2.copy(
+                color = ChoosePeriodModalTheme.colors.pureInverse,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Start
             )
@@ -244,7 +241,7 @@ private fun RowScope.IntervalTypeSelector(
                 }
                 .padding(all = 8.dp),
             icon = R.drawable.ic_arrow_right,
-            tint = LegacyTheme.colors.pureInverse,
+            tint = ChoosePeriodModalTheme.colors.pureInverse,
             contentDescription = "interval_type_arrow_right"
         )
 

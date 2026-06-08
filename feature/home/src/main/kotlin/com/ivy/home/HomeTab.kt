@@ -62,7 +62,7 @@ import com.ivy.ui.R
 import com.ivy.ui.rememberScrollPositionListState
 import com.ivy.data.model.currency.IvyCurrency
 import com.ivy.data.model.IncomeExpensePair
-import com.ivy.legacy.ui.modal.ChoosePeriodModal
+import com.ivy.ui.modal.ChoosePeriodModal
 import com.ivy.ui.modal.CurrencyModal
 import com.ivy.ui.modal.DeleteModal
 import kotlinx.collections.immutable.ImmutableList

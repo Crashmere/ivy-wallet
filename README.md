@@ -1538,6 +1538,7 @@ shared:ui:core
 - 通用删除确认弹窗和进度弹窗已迁入 `shared:ui:core`，`DeleteModal` / `ProgressModal` 继续保留原红色标题、正文、删除按钮、进度条颜色和底部弹窗行为；`shared:ui:legacy` 不再导出这两个通用状态弹窗。
 - 币种选择弹窗和内部币种选择器已迁入 `shared:ui:core`，`CurrencyModal` / `CurrencyPicker` 继续保留原搜索、加密货币分组、预选/选中卡片、键盘避让和保存行为；设置、首页、借贷和账户弹窗改用 core 入口。
 - 图标选择弹窗已迁入 `shared:ui:core`，`ChooseIconModal` 继续保留原图标清单、分区、选中边框、动态对比色和保存行为；借贷、账户和分类编辑弹窗改用 core 入口。
+- 周期选择弹窗和内部间隔选择行已迁入 `shared:ui:core`，`ChoosePeriodModal` / `IntervalPickerRow` 继续保留原月份横向列表、自定义起止日期、最近 N 天/周/月/年、全时间范围、键盘避让和保存行为；首页、余额、交易、报表和饼图统计页改用 core 入口。
 - app 仍保留文件选择、文件分享、Material 日期选择器、BuildInfo、Locale 设置、生物识别和窗口安全等真正依赖 Activity 或 Android app 壳层的装配。
 
 ## 高风险区域

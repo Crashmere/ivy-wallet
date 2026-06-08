@@ -42,6 +42,22 @@ fun ModalAdd(
 }
 
 @Composable
+fun ModalSet(
+    modifier: Modifier = Modifier,
+    label: String = stringResource(R.string.set),
+    enabled: Boolean = true,
+    onClick: () -> Unit
+) {
+    ModalPrimaryButton(
+        modifier = modifier,
+        text = label,
+        iconStart = R.drawable.ic_check,
+        enabled = enabled,
+        onClick = onClick
+    )
+}
+
+@Composable
 private fun ModalPrimaryButton(
     modifier: Modifier = Modifier,
     text: String,

@@ -1,4 +1,4 @@
-package com.ivy.legacy.ui.modal
+package com.ivy.ui.modal
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.ScrollState
@@ -33,7 +33,6 @@ import androidx.compose.ui.unit.dp
 import com.ivy.data.model.IntervalType
 import com.ivy.ui.time.LocalTimeConverter
 import com.ivy.ui.time.LocalTimeProvider
-import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.data.model.FromToTimeRange
 import com.ivy.ui.period.LastNTimeRange
 import com.ivy.ui.period.Month.Companion.fromMonthValue
@@ -44,13 +43,8 @@ import com.ivy.ui.platform.addKeyboardListener
 import com.ivy.ui.time.formatDateOnlyWithYear
 import com.ivy.ui.compose.onCompositionStart
 import com.ivy.ui.R
-import com.ivy.legacy.ui.theme.Gradient
-import com.ivy.legacy.ui.theme.GradientIvy
-import com.ivy.legacy.ui.theme.Gray
-import com.ivy.legacy.ui.theme.Green
-import com.ivy.legacy.ui.theme.White
+import com.ivy.ui.theme.colors.Gradient
 import com.ivy.ui.compose.FilledIconButton
-import com.ivy.ui.modal.IvyModal
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
@@ -170,8 +164,8 @@ private fun ColumnScope.ChooseMonth(
         modifier = Modifier
             .padding(start = 32.dp),
         text = stringResource(R.string.choose_month),
-        style = LegacyTheme.typo.b1.copy(
-            color = if (selectedMonthYear != null) LegacyTheme.colors.pureInverse else Gray,
+        style = ChoosePeriodModalTheme.typo.b1.copy(
+            color = if (selectedMonthYear != null) ChoosePeriodModalTheme.colors.pureInverse else ChoosePeriodModalTheme.colors.gray,
             fontWeight = FontWeight.ExtraBold,
             textAlign = TextAlign.Start
         )
@@ -266,13 +260,13 @@ private fun MonthButton(
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
 ) {
-    val background = if (selected) GradientIvy else Gradient.solid(LegacyTheme.colors.medium)
+    val background = if (selected) PeriodGradientIvy else Gradient.solid(ChoosePeriodModalTheme.colors.medium)
     Text(
         modifier = modifier
-            .clip(LegacyTheme.shapes.rFull)
+            .clip(ChoosePeriodModalTheme.shapes.rFull)
             .background(
                 brush = background.asHorizontalBrush(),
-                shape = LegacyTheme.shapes.rFull
+                shape = ChoosePeriodModalTheme.shapes.rFull
             )
             .clickable {
                 onClick()
@@ -282,9 +276,9 @@ private fun MonthButton(
                 vertical = 12.dp,
             ),
         text = text,
-        style = LegacyTheme.typo.b2.copy(
+        style = ChoosePeriodModalTheme.typo.b2.copy(
             fontWeight = FontWeight.Bold,
-            color = if (selected) White else Gray,
+            color = if (selected) ChoosePeriodModalTheme.colors.white else ChoosePeriodModalTheme.colors.gray,
             textAlign = TextAlign.Start
         )
     )
@@ -306,8 +300,8 @@ private fun ColumnScope.FromToRange(
         modifier = Modifier
             .padding(start = 32.dp),
         text = stringResource(R.string.or_custom_range),
-        style = LegacyTheme.typo.b1.copy(
-            color = if (timeRange != null) LegacyTheme.colors.pureInverse else Gray,
+        style = ChoosePeriodModalTheme.typo.b1.copy(
+            color = if (timeRange != null) ChoosePeriodModalTheme.colors.pureInverse else ChoosePeriodModalTheme.colors.gray,
             fontWeight = FontWeight.ExtraBold,
             textAlign = TextAlign.Start
         )
@@ -377,8 +371,8 @@ private fun IntervalFromToDate(
         modifier = Modifier
             .padding(horizontal = 24.dp)
             .fillMaxWidth()
-            .clip(LegacyTheme.shapes.rFull)
-            .border(2.dp, LegacyTheme.colors.medium, LegacyTheme.shapes.rFull)
+            .clip(ChoosePeriodModalTheme.shapes.rFull)
+            .border(2.dp, ChoosePeriodModalTheme.colors.medium, ChoosePeriodModalTheme.shapes.rFull)
             .clickable {
                 pickDate(
                     if (border == IntervalBorder.TO) {
@@ -416,9 +410,9 @@ private fun IntervalFromToDate(
                     R.string.to
                 )
             },
-            style = LegacyTheme.typo.b2.copy(
+            style = ChoosePeriodModalTheme.typo.b2.copy(
                 fontWeight = FontWeight.ExtraBold,
-                color = if (dateTime != null) Green else LegacyTheme.colors.pureInverse,
+                color = if (dateTime != null) ChoosePeriodModalTheme.colors.green else ChoosePeriodModalTheme.colors.pureInverse,
                 textAlign = TextAlign.Start
             )
         )
@@ -432,9 +426,9 @@ private fun IntervalFromToDate(
         Text(
             text = dateTime?.toLocalDate()?.formatDateOnlyWithYear()
                 ?: stringResource(R.string.add_date),
-            style = LegacyTheme.typo.nB2.copy(
+            style = ChoosePeriodModalTheme.typo.nB2.copy(
                 fontWeight = FontWeight.Bold,
-                color = if (dateTime != null) LegacyTheme.colors.pureInverse else Gray,
+                color = if (dateTime != null) ChoosePeriodModalTheme.colors.pureInverse else ChoosePeriodModalTheme.colors.gray,
                 textAlign = TextAlign.Start
             )
         )
@@ -444,8 +438,8 @@ private fun IntervalFromToDate(
 
             FilledIconButton(
                 icon = R.drawable.ic_dismiss,
-                backgroundColor = LegacyTheme.colors.medium,
-                tint = LegacyTheme.colors.pureInverse,
+                backgroundColor = ChoosePeriodModalTheme.colors.medium,
+                tint = ChoosePeriodModalTheme.colors.pureInverse,
             ) {
                 onSelected(null)
             }
@@ -469,7 +463,7 @@ private fun PeriodDividerLine(
         modifier = modifier
             .fillMaxWidth()
             .height(2.dp)
-            .background(LegacyTheme.colors.medium)
+            .background(ChoosePeriodModalTheme.colors.medium)
     )
 }
 
@@ -499,8 +493,8 @@ private fun ColumnScope.LastNPeriod(
         modifier = Modifier
             .padding(start = 32.dp),
         text = stringResource(R.string.or_in_the_last),
-        style = LegacyTheme.typo.b1.copy(
-            color = if (lastNTimeRange != null) LegacyTheme.colors.pureInverse else Gray,
+        style = ChoosePeriodModalTheme.typo.b1.copy(
+            color = if (lastNTimeRange != null) ChoosePeriodModalTheme.colors.pureInverse else ChoosePeriodModalTheme.colors.gray,
             fontWeight = FontWeight.ExtraBold,
             textAlign = TextAlign.Start
         )
@@ -548,8 +542,8 @@ private fun ColumnScope.AllTime(
         modifier = Modifier
             .padding(start = 32.dp),
         text = stringResource(R.string.or_all_time),
-        style = LegacyTheme.typo.b1.copy(
-            color = if (active) LegacyTheme.colors.pureInverse else Gray,
+        style = ChoosePeriodModalTheme.typo.b1.copy(
+            color = if (active) ChoosePeriodModalTheme.colors.pureInverse else ChoosePeriodModalTheme.colors.gray,
             fontWeight = FontWeight.ExtraBold,
             textAlign = TextAlign.Start
         )

@@ -56,7 +56,7 @@ import com.ivy.ui.animation.springBounce
 import com.ivy.ui.R
 import com.ivy.ui.theme.colors.IvyGradients
 import com.ivy.ui.icon.ItemIconSDefaultIcon
-import com.ivy.legacy.ui.modal.ChoosePeriodModal
+import com.ivy.ui.modal.ChoosePeriodModal
 import com.ivy.legacy.ui.modal.edit.AmountModal
 import com.ivy.ui.period.TimePeriod
 import com.ivy.ui.theme.colors.findContrastTextColor
