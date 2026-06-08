@@ -89,7 +89,7 @@ private const val SWIPE_UP_EXPANDED_THRESHOLD = 200
 
 @Suppress("LongMethod", "LongParameterList", "ParameterNaming")
 @Composable
-fun BoxWithConstraintsScope.EditBottomSheet(
+internal fun BoxWithConstraintsScope.EditBottomSheet(
     initialTransactionId: UUID?,
     type: TransactionType,
     accounts: List<LegacyAccount>,

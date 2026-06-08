@@ -1219,6 +1219,7 @@
 - 报表 feature 的公开面已收窄：`ReportScreen` 继续作为 app 导航入口，`ReportFilter/ReportScreenState/ReportScreenEvent/ReportViewModel` 和筛选浮层相关 Composable 都改为模块内部可见。
 - 交易列表 feature 的公开面已收窄：`TransactionsScreen` 继续作为 app 导航入口，`TransactionsState/TransactionsEvent/TransactionsUiEvent/TransactionsViewModel` 都改为模块内部可见。
 - 编辑交易 feature 的公开面已收窄：`EditTransactionScreen` 继续作为 app 导航入口，`EditTransactionViewState/EditTransactionViewEvent/EditTransactionUiEvent/EditTransactionViewModel`、自定义汇率状态和借贷提示展示模型都改为模块内部可见。
+- 编辑交易和计划付款编辑页的底部金额/账户面板已继续收窄为模块内部入口；外部仍只通过 `EditTransactionScreen` 和 `EditPlannedScreen` 两个页面入口进入对应编辑流程。
 - 导入 feature 的公开面已收窄：`ImportCSVScreen` 和 `CSVScreen` 继续作为 app 导航入口，`ImportViewModel/ImportStep`、CSV 状态/事件/映射模型、CSV 解析函数、导入器和内部 flow Composable 都改为模块内部可见；CSV 页面内部列表 helper 改为私有，只保留结果页复用的 `Spacer8` 为模块内部 helper。
 - 首页计划付款付/跳过事件已从传递完整 `LegacyTransaction` 收窄为传递交易 ID；旧交易对象仍只保留在列表展示状态和 ViewModel 内部执行边界。
 - 交易列表页计划付款付/跳过事件也已收窄为传递交易 ID；跳过全部弹窗只保存待确认的交易 ID 列表，ViewModel 在执行前从当前 due 状态解析旧交易对象。
