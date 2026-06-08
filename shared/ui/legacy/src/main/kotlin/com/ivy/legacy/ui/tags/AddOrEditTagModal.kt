@@ -1,4 +1,4 @@
-package com.ivy.legacy.ui.component.tags
+package com.ivy.legacy.ui.tags
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.ExperimentalFoundationApi

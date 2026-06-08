@@ -111,6 +111,7 @@
 - 旧搜索输入框已从根组件目录移入 `legacy.ui.search`；分类、标签、汇率和搜索页继续复用原搜索输入行为。
 - 旧金额展示组件已从根组件目录移入 `legacy.ui.money`；`BalanceRow` 和 `AmountCurrencyB1` 继续保留原金额格式化、隐藏金额和大数字缩写行为。
 - 旧按钮和图标基础控件已从根组件目录移入 `legacy.ui.button` 与 `legacy.ui.icon`；`component` 根目录不再承载通用基础控件文件。
+- 旧标签 UI 已从 `component.tags` 迁入 `legacy.ui.tags`；编辑交易和报表筛选继续复用原添加标签按钮与标签弹窗。
 - CSV 导入结果页的返回按钮已改为 `feature:import-data` 私有实现；`shared:ui:legacy` 的 `BackButton` 收窄为模块内部给旧工具栏使用。
 - 饼图页不再直接调用底层 `ItemIconM`，改用带默认图标的包装入口；`shared:ui:legacy` 的 `ItemIconM` 收窄为模块内部实现。
 - 计划付款列表改用本 feature 私有的分组分隔条；`shared:ui:legacy` 的交易 `SectionDivider` 收窄为交易列表内部实现。

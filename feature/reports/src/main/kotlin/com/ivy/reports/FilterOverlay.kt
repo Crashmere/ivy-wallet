@@ -52,8 +52,8 @@ import com.ivy.legacy.ui.theme.style
 import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.ui.period.displayLong
 import com.ivy.ui.period.LocalPeriodState
-import com.ivy.legacy.ui.component.tags.AddTagButton
-import com.ivy.legacy.ui.component.tags.ShowTagModal
+import com.ivy.legacy.ui.tags.AddTagButton
+import com.ivy.legacy.ui.tags.ShowTagModal
 import com.ivy.ui.animation.springBounce
 import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.GradientGreen

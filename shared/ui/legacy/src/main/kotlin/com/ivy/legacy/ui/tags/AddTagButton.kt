@@ -1,4 +1,4 @@
-package com.ivy.legacy.ui.component.tags
+package com.ivy.legacy.ui.tags
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable

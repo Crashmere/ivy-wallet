@@ -1,4 +1,4 @@
-package com.ivy.legacy.ui.component.tags
+package com.ivy.legacy.ui.tags
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
