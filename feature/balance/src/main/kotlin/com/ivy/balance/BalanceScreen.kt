@@ -25,13 +25,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import com.ivy.ui.navigation.screenScopedViewModel
 import com.ivy.ui.platform.LocalDatePicker
 import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.legacy.ui.theme.style
 import com.ivy.data.model.currency.format
 import com.ivy.ui.period.LocalPeriodState
 import com.ivy.ui.navigation.navigation
@@ -155,9 +155,10 @@ private fun ColumnScope.CurrentBalance(
     Text(
         modifier = Modifier.align(Alignment.CenterHorizontally),
         text = stringResource(R.string.current_balance),
-        style = LegacyTheme.typo.b2.style(
+        style = LegacyTheme.typo.b2.copy(
             color = LegacyTheme.colors.gray,
-            fontWeight = FontWeight.ExtraBold
+            fontWeight = FontWeight.ExtraBold,
+            textAlign = TextAlign.Start
         )
     )
 
@@ -181,9 +182,10 @@ private fun ColumnScope.BalanceAfterPlannedPayments(
         modifier = Modifier
             .padding(horizontal = 32.dp),
         text = stringResource(R.string.balance_after_payments),
-        style = LegacyTheme.typo.b2.style(
+        style = LegacyTheme.typo.b2.copy(
             color = LegacyTheme.colors.orange,
-            fontWeight = FontWeight.ExtraBold
+            fontWeight = FontWeight.ExtraBold,
+            textAlign = TextAlign.Start
         )
     )
 
@@ -215,9 +217,10 @@ private fun ColumnScope.BalanceAfterPlannedPayments(
 
             Text(
                 text = "${currentBalance.format(2)} $currency",
-                style = LegacyTheme.typo.nC.style(
+                style = LegacyTheme.typo.nC.copy(
                     color = LegacyTheme.colors.pureInverse,
-                    fontWeight = FontWeight.Normal
+                    fontWeight = FontWeight.Normal,
+                    textAlign = TextAlign.Start
                 )
             )
 
@@ -226,9 +229,10 @@ private fun ColumnScope.BalanceAfterPlannedPayments(
             val plusSign = if (plannedPaymentsAmount >= 0) "+" else ""
             Text(
                 text = "${plusSign}${plannedPaymentsAmount.format(2)} $currency",
-                style = LegacyTheme.typo.nC.style(
+                style = LegacyTheme.typo.nC.copy(
                     color = LegacyTheme.colors.pureInverse,
-                    fontWeight = FontWeight.ExtraBold
+                    fontWeight = FontWeight.ExtraBold,
+                    textAlign = TextAlign.Start
                 )
             )
         }

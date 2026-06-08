@@ -40,7 +40,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.legacy.ui.theme.style
 import com.ivy.ui.compose.BackPressHandler
 import com.ivy.ui.compose.thenIf
 import com.ivy.ui.compose.clickableNoIndication
@@ -392,7 +391,7 @@ private fun AddIncomeButton(
             }
             .zIndex(200f),
         text = stringResource(R.string.add_income_uppercase),
-        style = LegacyTheme.typo.c.style(
+        style = LegacyTheme.typo.c.copy(
             color = LegacyTheme.colors.pureInverse,
             fontWeight = FontWeight.ExtraBold,
             textAlign = TextAlign.Center
@@ -478,7 +477,7 @@ private fun AddExpenseButton(
             }
             .zIndex(200f),
         text = stringResource(R.string.add_expense_uppercase),
-        style = LegacyTheme.typo.c.style(
+        style = LegacyTheme.typo.c.copy(
             color = LegacyTheme.colors.pureInverse,
             fontWeight = FontWeight.ExtraBold,
             textAlign = TextAlign.Center
@@ -564,7 +563,7 @@ private fun AddTransferButton(
             }
             .zIndex(200f),
         text = stringResource(R.string.account_transfer),
-        style = LegacyTheme.typo.c.style(
+        style = LegacyTheme.typo.c.copy(
             color = LegacyTheme.colors.pureInverse,
             fontWeight = FontWeight.ExtraBold,
             textAlign = TextAlign.Center
@@ -623,9 +622,10 @@ private fun RowScope.Tab(
 
             Text(
                 text = name,
-                style = LegacyTheme.typo.c.style(
+                style = LegacyTheme.typo.c.copy(
                     fontWeight = FontWeight.Bold,
-                    color = selectedColor
+                    color = selectedColor,
+                    textAlign = TextAlign.Start
                 )
             )
         }

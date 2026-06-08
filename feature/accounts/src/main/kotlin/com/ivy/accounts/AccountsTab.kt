@@ -25,10 +25,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.legacy.ui.theme.style
 import com.ivy.ui.compose.clickableNoIndication
 import com.ivy.ui.compose.horizontalSwipeListener
 import com.ivy.ui.compose.rememberInteractionSource
@@ -98,9 +98,10 @@ private fun BoxWithConstraintsScope.UI(
                 Column {
                     Text(
                         text = stringResource(R.string.accounts),
-                        style = LegacyTheme.typo.b1.style(
+                        style = LegacyTheme.typo.b1.copy(
                             color = LegacyTheme.colors.pureInverse,
-                            fontWeight = FontWeight.ExtraBold
+                            fontWeight = FontWeight.ExtraBold,
+                            textAlign = TextAlign.Start
                         )
                     )
                 }
@@ -185,9 +186,10 @@ private fun BoxWithConstraintsScope.UI(
                 .padding(end = 24.dp)
                 .padding(vertical = 8.dp),
             text = item.account.name.value,
-            style = LegacyTheme.typo.b1.style(
+            style = LegacyTheme.typo.b1.copy(
                 color = item.account.color.value.toComposeColor(),
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Start
             )
         )
     }
@@ -271,9 +273,10 @@ private fun AccountHeader(
 
             Text(
                 text = account.name.value,
-                style = LegacyTheme.typo.b1.style(
+                style = LegacyTheme.typo.b1.copy(
                     color = contrastColor,
-                    fontWeight = FontWeight.ExtraBold
+                    fontWeight = FontWeight.ExtraBold,
+                    textAlign = TextAlign.Start
                 )
             )
 
@@ -282,8 +285,10 @@ private fun AccountHeader(
 
                 Text(
                     text = stringResource(R.string.excluded),
-                    style = LegacyTheme.typo.c.style(
-                        color = account.color.value.toComposeColor().dynamicContrast()
+                    style = LegacyTheme.typo.c.copy(
+                        color = account.color.value.toComposeColor().dynamicContrast(),
+                        fontWeight = FontWeight.Bold,
+                        textAlign = TextAlign.Start
                     )
                 )
             }

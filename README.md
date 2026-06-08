@@ -1411,6 +1411,7 @@ shared:ui:core
 - feature 层已停止直接导入旧 `Gradient`、`GradientGreen` 和 `GradientIvy`；通用渐变数据结构和固定绿色/紫色渐变迁入 `shared:ui:core` 的 `Gradient`/`IvyGradients`，`shared:ui:legacy` 暂时保留同名兼容别名给旧组件内部使用。
 - feature 层已停止直接导入旧颜色工具 `toComposeColor`、`findContrastTextColor`、`dynamicContrast` 和 `isDarkColor`；这些纯颜色转换/对比度算法迁入 `shared:ui:core`，`shared:ui:legacy` 暂时保留同名转发入口给旧组件内部使用。
 - `feature:exchange-rates` 已停止直接导入旧 `style` 文本样式扩展；文本样式改用显式 `TextStyle.copy()`，保留旧扩展原本默认的颜色、字重和对齐行为。
+- `feature:balance`、`feature:main` 和 `feature:accounts` 已停止直接导入旧 `style` 文本样式扩展；文本样式改用显式 `TextStyle.copy()`，继续保留旧扩展原本默认的颜色、字重和对齐行为。
 - app 仍保留文件选择、文件分享、Material 日期选择器、BuildInfo、Locale 设置、生物识别和窗口安全等真正依赖 Activity 或 Android app 壳层的装配。
 
 ## 高风险区域
