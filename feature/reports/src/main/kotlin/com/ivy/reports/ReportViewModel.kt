@@ -21,6 +21,8 @@ import com.ivy.data.model.Income
 import com.ivy.data.model.Tag
 import com.ivy.data.model.Transaction
 import com.ivy.data.model.Transfer
+import com.ivy.data.model.getFromAccount
+import com.ivy.data.model.getFromValue
 import com.ivy.data.model.getTransactionType
 import com.ivy.data.model.primitive.ColorInt
 import com.ivy.data.model.primitive.NotBlankTrimmedString
@@ -36,7 +38,6 @@ import com.ivy.domain.usecase.planned.PayOrSkipPlannedTransactionByIdUseCase
 import com.ivy.domain.usecase.planned.PayOrSkipPlannedTransactionsByIdsUseCase
 import com.ivy.domain.usecase.transaction.GetTransactionsByTagsUseCase
 import com.ivy.domain.usecase.transaction.GetTransactionsUseCase
-import com.ivy.domain.usecase.transaction.MapTransactionsToLegacyTransactionsUseCase
 import com.ivy.ui.period.PeriodState
 import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.ui.ComposeViewModel
@@ -87,7 +88,6 @@ internal class ReportViewModel @Inject internal constructor(
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
     private val getTransactionsUseCase: GetTransactionsUseCase,
     private val getTransactionsByTagsUseCase: GetTransactionsByTagsUseCase,
-    private val mapTransactionsToLegacyTransactionsUseCase: MapTransactionsToLegacyTransactionsUseCase,
     private val getTagsUseCase: GetTagsUseCase,
     private val searchTagsUseCase: SearchTagsUseCase,
     private val exportCsvUseCase: ExportCsvUseCase,
@@ -342,9 +342,8 @@ internal class ReportViewModel @Inject internal constructor(
                     upcomingIncomeExpense = upcomingIncomeExpense,
                     overdueIncomeExpense = overdueIncomeExpense,
                     history = historyWithDateDividers.await().toImmutableList(),
-                    upcomingTransactions = mapTransactionsToLegacyTransactionsUseCase(upcomingTransactionsList)
-                        .toImmutableList(),
-                    overdueTransactions = mapTransactionsToLegacyTransactionsUseCase(overdue).toImmutableList(),
+                    upcomingTransactions = upcomingTransactionsList.toLegacyTransactions(),
+                    overdueTransactions = overdue.toLegacyTransactions(),
                     accounts = allAccounts,
                     reportFilter = reportFilter,
                     accountIdFilters = accountFilterIdList.await().toImmutableList(),
@@ -620,6 +619,37 @@ internal class ReportViewModel @Inject internal constructor(
 
 private fun Iterable<Account>.toLegacyAccounts(): ImmutableList<LegacyAccount> {
     return map { it.toLegacyAccount() }.toImmutableList()
+}
+
+private fun Iterable<Transaction>.toLegacyTransactions(): ImmutableList<LegacyTransaction> {
+    return map { it.toLegacyTransaction() }.toImmutableList()
+}
+
+private fun Transaction.toLegacyTransaction(): LegacyTransaction {
+    val amount = getFromValue().amount.value.toBigDecimal()
+    return LegacyTransaction(
+        accountId = getFromAccount().value,
+        type = when (this) {
+            is Expense -> TransactionType.EXPENSE
+            is Income -> TransactionType.INCOME
+            is Transfer -> TransactionType.TRANSFER
+        },
+        amount = amount,
+        toAccountId = if (this is Transfer) toAccount.value else null,
+        toAmount = if (this is Transfer) toValue.amount.value.toBigDecimal() else amount,
+        title = title?.value,
+        description = description?.value,
+        dateTime = time.takeIf { settled },
+        categoryId = category?.value,
+        dueDate = time.takeIf { !settled },
+        recurringRuleId = metadata.recurringRuleId,
+        paidFor = metadata.paidForDateTime,
+        attachmentUrl = null,
+        loanId = metadata.loanId,
+        loanRecordId = metadata.loanRecordId,
+        id = id.value,
+        tags = persistentListOf(),
+    )
 }
 
 private fun Account.toLegacyAccount() = LegacyAccount(

@@ -244,6 +244,7 @@
 - 收窄首页到期交易展示边界：首页 ViewModel 和状态不再保存旧交易展示模型，到期交易数据保留正式 `Transaction`；仅在 `HomeTab` 调用旧交易列表组件前做页面私有适配，首页不再依赖 `MapTransactionsToLegacyTransactionsUseCase`。
 - 收窄编辑交易旧状态入口：编辑交易页读取正式交易后不再通过 domain 旧映射 use case 转换，而是在页面内部用文件私有适配函数生成当前旧编辑 UI 仍需要的 `LegacyTransaction` 状态。
 - 收窄交易列表旧映射入口：交易列表页不再依赖 `MapTransactionsToLegacyTransactionsUseCase`；账户到期交易和 route 输入交易的正式模型到旧展示模型转换下沉为页面 ViewModel 文件私有适配，分类汇总路径返回的旧模型暂时保留。
+- 收窄报表页旧映射入口：报表页不再依赖 `MapTransactionsToLegacyTransactionsUseCase`；到期交易展示所需的正式模型到旧展示模型转换下沉为报表 ViewModel 文件私有适配，该 use case 已无调用方并删除。
 - 收窄饼图页输入缓存：饼图 ViewModel 不再长期保存由 route ID 还原出的旧交易对象，只保存交易 ID，并在重算图表时局部读取。
 - 收窄借贷详情关联交易缓存：借贷详情不再把贷款关联旧交易对象保存在 ViewModel 字段中，加载时只设置开关状态，编辑时局部读取。
 
@@ -900,7 +901,7 @@
 - 预算创建、编辑和删除已从旧 `BudgetCreator` 拆成 `CreateBudgetUseCase`、`UpdateBudgetUseCase` 和 `DeleteBudgetUseCase`；预算页只依赖正式 use case，旧 `BudgetCreator` 已删除。
 - 账户创建和编辑已从旧 `AccountCreator` 拆成 `CreateAccountWithBalanceUseCase` 和 `UpdateAccountWithBalanceUseCase`；主页面、编辑交易、计划付款、借贷和交易详情页不再注入旧 creator，账户保存后自动生成余额调平交易的行为保持不变。
 - 分类创建和编辑已从旧 `CategoryCreator` 拆成 `CreateCategoryUseCase` 和 `UpdateCategoryUseCase`；分类页、编辑交易、计划付款和交易详情页不再注入旧 creator，分类排序号、图标、颜色和空名称校验保持不变。
-- 首页数据边界已收敛：新增 `GetCustomerJourneyStatsUseCase` 封装首页引导卡片需要的交易/计划付款计数，新增 `MapTransactionsToLegacyTransactionsUseCase` 封装新旧交易模型转换，`:feature:home` 不再直接依赖 `TransactionRepository`、`PlannedPaymentRuleDao` 或 `TransactionMapper`，并已去掉对 `shared:data:core` 的直接依赖。
+- 首页数据边界已收敛：新增 `GetCustomerJourneyStatsUseCase` 封装首页引导卡片需要的交易/计划付款计数；新旧交易模型转换后来已下沉到页面边界，`:feature:home` 不再直接依赖 `TransactionRepository`、`PlannedPaymentRuleDao` 或 `TransactionMapper`，并已去掉对 `shared:data:core` 的直接依赖。
 - 首页的偏好和交易存在性读取继续收窄：新增 `HasTransactionsUseCase` 替代旧 `HasTrnsAct`，隐藏余额/收入状态直接读取 `AppPreferences`，旧 `HasTrnsAct`、`ShouldHideBalanceAct` 和 `ShouldHideIncomeAct` 已删除。
 - 首页缓冲金额差值已直接内联为 `balance - bufferAmount`，无业务增量的旧 `CalcBufferDiffAct` 已删除。
 - 借贷页数据边界已收敛：新增 `GetLoansUseCase`、`GetLoanUseCase`、`GetLoanRecordsUseCase`、`ReorderLoansUseCase`、`GetLoanTransactionUseCase` 和 `HasLoanRecordTransactionUseCase`，借贷列表和借贷详情不再直接注入 `LoanRecordDao`、`WriteLoanDao`、`TransactionRepository` 或 `TransactionMapper`；旧 `LoansAct/LoanByIdAct` 已删除，`:feature:loans` 已去掉对 `shared:data:core` 的直接依赖。
@@ -915,7 +916,7 @@
 - 新交易模型的计划付款支付/跳过处理曾从 `PlannedPaymentsLogic` 拆出，但后续 UI 路径已全部回到 legacy 计划付款处理边界；无调用方的 `PayOrSkipPlannedTransactionUseCase` 和 `PayOrSkipPlannedTransactionsUseCase` 已删除，`PlannedPaymentsLogic` 也已删除。
 - 编辑交易页数据边界已收敛：新增 `SaveLegacyTransactionUseCase`、`DeleteTransactionUseCase`、`GetLoanUseCase` 和一组标签读写/关联用例，交易保存、删除、复制、标签创建、标签编辑、标签删除和标签关联不再直接调用数据层 repository/mapper，`:feature:edit-transaction` 已去掉对 `shared:data:core` 的直接依赖。
 - 交易详情页数据边界已收敛：新增 `GetAccountUseCase`、`DeleteAccountUseCase`、`DeleteCategoryUseCase` 和 `MapTransactionsToLegacyTransactionsWithTagsUseCase`，账户详情、分类详情、账户删除、分类删除和带标签历史列表不再直接注入数据层 repository/DAO/mapper，`:feature:transactions` 已去掉对 `shared:data:core` 的直接依赖。
-- 报表页数据边界已收敛：新增 `GetTransactionsUseCase` 和 `GetTransactionsByTagsUseCase`，报表筛选不再直接读取 `TransactionRepository/TagRepository`，新旧交易模型转换改走 `MapTransactionsToLegacyTransactionsUseCase`；`ExportCsvUseCase` 的自定义导出回调不再暴露 `TransactionRepository` receiver，默认全量导出也改走 `GetTransactionsUseCase`，`:feature:reports` 已去掉对 `shared:data:core` 的直接依赖。
+- 报表页数据边界已收敛：新增 `GetTransactionsUseCase` 和 `GetTransactionsByTagsUseCase`，报表筛选不再直接读取 `TransactionRepository/TagRepository`；新旧交易模型转换后来已下沉到报表页边界，`ExportCsvUseCase` 的自定义导出回调不再暴露 `TransactionRepository` receiver，默认全量导出也改走 `GetTransactionsUseCase`，`:feature:reports` 已去掉对 `shared:data:core` 的直接依赖。
 - 导入页数据边界已收敛：`ImportResult/ImportCsvRow` 已迁到 `shared:data:model`，备份恢复改走 `ImportBackupUseCase`，手动 CSV 文件读取改走 `ReadTextFileUseCase`，CSV 导入读取/保存改走 `GetLegacyAccountsUseCase/SaveAccountUseCase/SaveCategoryUseCase/SaveLegacyTransactionUseCase`；`:feature:import-data` 已去掉对 `shared:data:core` 的直接依赖。
 - 交易读取 action 已进一步收敛：搜索改走 `GetTransactionsUseCase`，预算和历史分组改走 `GetTransactionsBetweenUseCase`，首页到期交易改走 `GetDueTransactionsUseCase`，编辑交易按 ID 读取改走 `GetLegacyTransactionUseCase`，分类/饼图的账户过滤读取改走 `GetLegacyTransactionsForAccountsUseCase`；旧 `AllTrnsAct`、`HistoryTrnsAct`、`DueTrnsAct`、`TrnByIdAct` 和 `TrnsWithRangeAndAccFiltersAct` 已删除。
 - 账户交易读取已收敛到 `GetAccountTransactionsUseCase`；账户余额、账户收支、首页钱包收支和交易详情账户历史不再依赖旧 `AccTrnsAct`，金额折算和统计口径保持不变。
