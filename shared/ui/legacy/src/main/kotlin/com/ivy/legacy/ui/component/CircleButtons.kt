@@ -16,7 +16,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.R
-import com.ivy.legacy.ui.theme.Gradient
 
 @Composable
 fun CloseButton(
@@ -70,28 +69,6 @@ fun CircleButtonFilled(
             .background(backgroundColor, CircleShape)
             .clickable(onClick = onClick) // enlarge click area
             .padding(clickAreaPadding),
-        painter = painterResource(id = icon),
-        contentDescription = contentDescription,
-        tint = tint ?: Color.Unspecified,
-    )
-}
-
-@Composable
-fun CircleButtonFilledGradient(
-    modifier: Modifier = Modifier,
-    @DrawableRes icon: Int,
-    contentDescription: String = "icon",
-    iconPadding: Dp = 8.dp,
-    backgroundGradient: Gradient = Gradient.solid(LegacyTheme.colors.medium),
-    tint: Color? = LegacyTheme.colors.pureInverse,
-    onClick: () -> Unit,
-) {
-    Icon(
-        modifier = modifier
-            .clip(CircleShape)
-            .background(backgroundGradient.asHorizontalBrush(), CircleShape)
-            .clickable(onClick = onClick) // enlarge click area
-            .padding(iconPadding),
         painter = painterResource(id = icon),
         contentDescription = contentDescription,
         tint = tint ?: Color.Unspecified,
