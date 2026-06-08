@@ -24,8 +24,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.legacy.ui.theme.style
-import com.ivy.ui.navigation.CSVScreen
-import com.ivy.ui.navigation.navigation
 import com.ivy.ui.R
 import com.ivy.legacy.ui.component.GradientCutBottom
 
@@ -34,8 +32,10 @@ import com.ivy.legacy.ui.component.GradientCutBottom
 internal fun BoxWithConstraintsScope.ImportFrom(
     hasSkip: Boolean,
 
+    onBack: () -> Unit,
     onSkip: () -> Unit = {},
     onRestoreBackup: () -> Unit = {},
+    onManualCsvImport: () -> Unit,
 ) {
     LazyColumn(
         modifier = Modifier
@@ -44,10 +44,9 @@ internal fun BoxWithConstraintsScope.ImportFrom(
             .navigationBarsPadding()
     ) {
         stickyHeader {
-            val nav = navigation()
             ImportToolbar(
                 hasSkip = hasSkip,
-                onBack = { nav.back() },
+                onBack = onBack,
                 onSkip = onSkip
             )
         }
@@ -73,15 +72,12 @@ internal fun BoxWithConstraintsScope.ImportFrom(
 
             Spacer(Modifier.height(12.dp))
 
-            val nav = navigation()
             Button(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(64.dp)
                     .padding(horizontal = 16.dp),
-                onClick = {
-                    nav.navigateTo(CSVScreen)
-                }
+                onClick = onManualCsvImport
             ) {
                 Text(
                     text = stringResource(id = R.string.manual_csv_import),

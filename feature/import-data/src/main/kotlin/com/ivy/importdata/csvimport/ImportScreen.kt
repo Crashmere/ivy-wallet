@@ -8,6 +8,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import com.ivy.ui.navigation.screenScopedViewModel
 import com.ivy.data.model.importing.ImportResult
+import com.ivy.ui.navigation.CSVScreen
 import com.ivy.importdata.csvimport.flow.ImportFrom
 import com.ivy.importdata.csvimport.flow.ImportProcessing
 import com.ivy.importdata.csvimport.flow.ImportResultUI
@@ -41,6 +42,8 @@ fun BoxWithConstraintsScope.ImportCSVScreen() {
             viewModel.finish()
             nav.back()
         },
+        onBack = { nav.back() },
+        onManualCsvImport = { nav.navigateTo(CSVScreen) },
     )
 }
 
@@ -54,13 +57,17 @@ private fun BoxWithConstraintsScope.UI(
     onRestoreBackup: () -> Unit = {},
     onSkip: () -> Unit = {},
     onFinish: () -> Unit = {},
+    onBack: () -> Unit = {},
+    onManualCsvImport: () -> Unit = {},
 ) {
     when (importStep) {
         ImportStep.IMPORT_FROM -> {
             ImportFrom(
                 hasSkip = false,
+                onBack = onBack,
                 onSkip = onSkip,
-                onRestoreBackup = onRestoreBackup
+                onRestoreBackup = onRestoreBackup,
+                onManualCsvImport = onManualCsvImport
             )
         }
 
@@ -74,6 +81,7 @@ private fun BoxWithConstraintsScope.UI(
             ImportResultUI(
                 result = importResult!!,
                 onBack = onFinish,
+                onManualCsvImport = onManualCsvImport,
             ) {
                 onFinish()
             }

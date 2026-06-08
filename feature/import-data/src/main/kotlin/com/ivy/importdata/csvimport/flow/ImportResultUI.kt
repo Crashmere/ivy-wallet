@@ -21,8 +21,6 @@ import com.ivy.legacy.ui.theme.style
 import com.ivy.importdata.csv.Spacer8
 import com.ivy.data.model.importing.ImportResult
 import com.ivy.data.model.currency.format
-import com.ivy.ui.navigation.CSVScreen
-import com.ivy.ui.navigation.navigation
 import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.GradientIvy
 import com.ivy.legacy.ui.theme.Gray
@@ -40,7 +38,8 @@ internal fun ImportResultUI(
     result: ImportResult,
     isManualCsvImport: Boolean = false,
     onTryAgain: (() -> Unit)? = null,
-    onBack: (() -> Unit)? = null,
+    onBack: () -> Unit,
+    onManualCsvImport: (() -> Unit)? = null,
     onFinish: () -> Unit,
 ) {
     Column(
@@ -50,16 +49,9 @@ internal fun ImportResultUI(
     ) {
         Spacer(Modifier.height(16.dp))
 
-        val nav = navigation()
         BackButton(
             modifier = Modifier.padding(start = 20.dp)
-        ) {
-            if (onBack != null) {
-                onBack()
-            } else {
-                nav.back()
-            }
-        }
+        ) { onBack() }
 
         Spacer(Modifier.height(24.dp))
 
@@ -116,9 +108,7 @@ internal fun ImportResultUI(
                     .fillMaxWidth()
                     .height(52.dp)
                     .padding(horizontal = 16.dp),
-                onClick = {
-                    nav.navigateTo(CSVScreen)
-                }
+                onClick = { onManualCsvImport?.invoke() }
             ) {
                 Text(
                     text = stringResource(id = R.string.manual_csv_import),
