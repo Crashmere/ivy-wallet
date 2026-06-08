@@ -2,10 +2,10 @@ package com.ivy.data
 
 import com.ivy.data.model.TransactionType
 import com.ivy.data.db.entity.TransactionEntity
-import com.ivy.data.model.testing.accountId
-import com.ivy.data.model.testing.maybe
-import com.ivy.data.model.testing.or
-import com.ivy.data.model.testing.positiveDoubleExact
+import com.ivy.testing.accountId
+import com.ivy.testing.maybe
+import com.ivy.testing.or
+import com.ivy.testing.positiveDoubleExact
 import io.kotest.property.Arb
 import io.kotest.property.arbitrary.arbitrary
 import io.kotest.property.arbitrary.boolean

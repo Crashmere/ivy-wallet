@@ -1,6 +1,6 @@
 package com.ivy.domain.model
 
-import com.ivy.data.model.testing.shouldBeApprox
+import com.ivy.testing.shouldBeApprox
 import io.kotest.matchers.shouldBe
 
 internal infix fun StatSummary.shouldBeApprox(other: StatSummary) {

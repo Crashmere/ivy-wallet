@@ -1,4 +1,4 @@
-package com.ivy.data.model.testing
+package com.ivy.testing
 
 import io.kotest.matchers.doubles.plusOrMinus
 import io.kotest.matchers.shouldBe

@@ -1,4 +1,4 @@
-package com.ivy.data.model.testing
+package com.ivy.testing
 
 import arrow.core.None
 import arrow.core.Option

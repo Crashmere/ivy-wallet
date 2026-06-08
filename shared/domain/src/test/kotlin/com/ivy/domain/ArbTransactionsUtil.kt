@@ -7,9 +7,9 @@ import com.ivy.data.model.Expense
 import com.ivy.data.model.Income
 import com.ivy.data.model.Transfer
 import com.ivy.data.model.primitive.AssetCode
-import com.ivy.data.model.testing.expense
-import com.ivy.data.model.testing.income
-import com.ivy.data.model.testing.transfer
+import com.ivy.testing.expense
+import com.ivy.testing.income
+import com.ivy.testing.transfer
 import io.kotest.property.Arb
 import io.kotest.property.arbitrary.list
 import io.kotest.property.arbitrary.map

@@ -1,4 +1,4 @@
-package com.ivy.data.model.testing
+package com.ivy.testing
 
 import arrow.core.Some
 import com.ivy.data.model.primitive.AssetCode

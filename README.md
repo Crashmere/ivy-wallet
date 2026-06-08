@@ -325,7 +325,7 @@
 2. 先迁移低风险模块：
    - `shared:base`
    - `shared:data:model`
-   - `shared:data:model-testing`
+   - `shared:test-support`
 3. 再迁移数据和 domain：
    - `shared:data:core`
    - `shared:domain`
@@ -340,7 +340,7 @@
 当前进展：
 
 - 新增 `ivy.android-library` 作为更清晰的 Android library 基础约定；旧 `ivy.kotlin-android` 兼容别名已经删除，当前没有模块使用它。
-- `shared:data:model`、`shared:data:model-testing` 已从 `ivy.feature` 迁出，不再默认启用完整 Compose UI 配置。
+- `shared:data:model`、`shared:test-support` 已从 `ivy.feature` 迁出，不再默认启用完整 Compose UI 配置。
 - `shared:base` 已删除；最后剩余的 `TimeProvider/TimeConverter`、设备时间实现和安全时间边界已归入 `shared:ui:core` 的 `com.ivy.ui.time` 包，原测试也迁到 `shared:ui:core/src/test`。
 - `shared:data:model` 已移除轻量 `compose-runtime`，纯数据模型不再依赖 UI runtime。
 - 过渡用的 `ivy.compose-runtime` 插件已经删除；当前非页面模块不再需要轻量 Compose 编译配置。
@@ -363,8 +363,8 @@
 - app 模块重新显式依赖 `shared:data:core` 作为运行时数据实现模块；feature/domain 仍只依赖 data 端口，data-core 的 Hilt Module 负责把 Room、DataStore、备份、文件和远程汇率实现绑定进应用图。
 - `ivy.android-library` 不再给所有 Android library 默认添加 Arrow；`shared:data:model` 因公开 `Either/Raise` API 显式用 `api` 暴露 Arrow，其他实际直接使用 Arrow 的模块改为各自声明 `implementation(libs.bundles.arrow)`；旧 FRP helper 移出后，`shared:base` 不再需要 Arrow。
 - `ivy.android-library` 不再给所有 Android library 默认添加 Timber；后续 app、data-core 和版本目录中的 Timber 依赖也已删除，项目当前不再依赖 Timber。
-- `ivy.android-library` 不再给所有 Android library 默认添加整套单元测试依赖；当前有 `src/test` 的 `shared:data:model`、`shared:data:model-testing`、`shared:data:core`、`shared:domain` 和 `shared:ui:core` 改为在各自模块里显式声明测试 bundle。
-- 新增 `ivy.kotlin-library` 作为纯 JVM/Kotlin 模块约定；`shared:data:model`、`shared:data:model-testing`、`shared:data:api` 和 `shared:domain` 已从 Android library 改成 JVM 模块，不再需要 namespace、Android manifest、min/compile SDK 或 Android Kotlin runtime。
+- `ivy.android-library` 不再给所有 Android library 默认添加整套单元测试依赖；当前有 `src/test` 的 `shared:data:model`、`shared:test-support`、`shared:data:core`、`shared:domain` 和 `shared:ui:core` 改为在各自模块里显式声明测试 bundle。
+- 新增 `ivy.kotlin-library` 作为纯 JVM/Kotlin 模块约定；`shared:data:model`、`shared:test-support`、`shared:data:api` 和 `shared:domain` 已从 Android library 改成 JVM 模块，不再需要 namespace、Android manifest、min/compile SDK 或 Android Kotlin runtime。
 - `shared:data:core` 的 DataStore 依赖已从 `api` 收窄为 `implementation`；DataStore 绑定仍由 data core 提供，但不再通过 data core 传递暴露给其他模块。
 - `shared:domain` 已移除 AndroidX DataStore 依赖；偏好开关的存储能力抽成 `PreferenceToggleStore` 端口，DataStore 读写和清空由 `shared:data:core` 实现，domain 只保留业务级 `PreferenceToggleRepository` 和开关元数据。
 - `shared:data:api` 已显式暴露 Arrow 依赖；`ExchangeRateStore` 的公开签名直接使用 `Either`，不再依赖 `shared:data:model` 间接传递 Arrow。
@@ -405,7 +405,8 @@
 
 当前进展：
 
-- `:shared:base-testing` 已删除；剩余测试 helper 已回到具体模块测试源集，当前没有跨模块复用的基础测试 helper 模块。
+- `:shared:base-testing` 已删除；跨模块复用的数据模型测试生成器、fixture 和近似数值断言已归位到 `:shared:test-support`，不再挂在 `shared:data:model-testing` 名下。
+- `:shared:test-support` 只作为测试依赖提供给 data-core 和 domain，包名统一为 `com.ivy.testing`，不进入 app 运行时依赖图。
 - `Fake*Dao`、`FakeRepositoryMemo` 已归位到测试源集；生产源码不再包含这些 fake。
 - 测试源集中的 `FakeSettingsDao`、`FakePlannedPaymentDao`、`FakeLoanRecordDao` 已补齐基础内存行为，不再保留 `TODO("Not yet implemented")` 作为潜在测试崩溃点。
 - 已删除生产源码中的空 `TestIdlingResource` 以及 Root/Main/Import/Loans ViewModel 中的空调用。

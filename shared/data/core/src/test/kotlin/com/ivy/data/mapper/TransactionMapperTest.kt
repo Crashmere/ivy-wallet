@@ -18,7 +18,7 @@ import com.ivy.data.model.primitive.AssetCode.Companion.EUR
 import com.ivy.data.model.primitive.AssetCode.Companion.USD
 import com.ivy.data.model.primitive.NotBlankTrimmedString
 import com.ivy.data.model.primitive.PositiveDouble
-import com.ivy.data.model.testing.account
+import com.ivy.testing.account
 import com.ivy.data.api.AccountStore
 import io.kotest.assertions.arrow.core.shouldBeLeft
 import io.kotest.assertions.arrow.core.shouldBeRight

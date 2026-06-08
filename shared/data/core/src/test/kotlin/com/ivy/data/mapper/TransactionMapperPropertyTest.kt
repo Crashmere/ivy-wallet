@@ -8,8 +8,8 @@ import com.ivy.data.model.AccountId
 import com.ivy.data.model.Transfer
 import com.ivy.data.model.getFromAccount
 import com.ivy.data.model.getFromValue
-import com.ivy.data.model.testing.account
-import com.ivy.data.model.testing.transaction
+import com.ivy.testing.account
+import com.ivy.testing.transaction
 import com.ivy.data.api.AccountStore
 import com.ivy.data.validIncomeOrExpense
 import com.ivy.data.validTransfer

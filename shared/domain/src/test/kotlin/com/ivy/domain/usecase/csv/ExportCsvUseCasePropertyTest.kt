@@ -8,9 +8,9 @@ import com.ivy.data.api.file.TextFileStore
 import com.ivy.data.model.Transaction
 import com.ivy.data.model.getFromAccount
 import com.ivy.data.model.getToAccount
-import com.ivy.data.model.testing.account
-import com.ivy.data.model.testing.category
-import com.ivy.data.model.testing.transaction
+import com.ivy.testing.account
+import com.ivy.testing.category
+import com.ivy.testing.transaction
 import com.ivy.domain.usecase.account.GetAccountsUseCase
 import com.ivy.domain.usecase.category.GetCategoriesUseCase
 import com.ivy.domain.usecase.transaction.GetTransactionsUseCase

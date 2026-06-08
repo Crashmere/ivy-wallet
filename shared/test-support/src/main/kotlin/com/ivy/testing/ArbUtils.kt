@@ -1,4 +1,4 @@
-package com.ivy.data.model.testing
+package com.ivy.testing
 
 import com.ivy.data.model.primitive.ColorInt
 import com.ivy.data.model.primitive.IconAsset

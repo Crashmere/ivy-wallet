@@ -14,10 +14,10 @@ import com.ivy.data.model.Income
 import com.ivy.data.model.Transaction
 import com.ivy.data.model.TransactionType
 import com.ivy.data.model.Transfer
-import com.ivy.data.model.testing.ModelFixtures
-import com.ivy.data.model.testing.accountId
-import com.ivy.data.model.testing.transaction
-import com.ivy.data.model.testing.transactionId
+import com.ivy.testing.ModelFixtures
+import com.ivy.testing.accountId
+import com.ivy.testing.transaction
+import com.ivy.testing.transactionId
 import com.ivy.data.api.TagStore
 import com.ivy.data.mapper.TransactionMapper
 import com.ivy.data.validTransactionEntity

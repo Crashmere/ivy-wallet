@@ -11,8 +11,8 @@ import com.ivy.data.model.getFromAccount
 import com.ivy.data.model.getToAccount
 import com.ivy.data.model.primitive.AssetCode
 import com.ivy.data.model.primitive.NonNegativeInt
-import com.ivy.data.model.testing.ModelFixtures
-import com.ivy.data.model.testing.transaction
+import com.ivy.testing.ModelFixtures
+import com.ivy.testing.transaction
 import com.ivy.domain.model.StatSummary
 import com.ivy.domain.model.shouldBeApprox
 import com.ivy.domain.nonEmptyExpenses

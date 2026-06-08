@@ -3,7 +3,7 @@ package com.ivy.data.mapper
 import com.ivy.data.invalidAccountEntity
 import com.ivy.data.api.CurrencyStore
 import com.ivy.data.model.primitive.AssetCode
-import com.ivy.data.model.testing.account
+import com.ivy.testing.account
 import com.ivy.data.validAccountEntity
 import io.kotest.assertions.arrow.core.shouldBeLeft
 import io.kotest.assertions.arrow.core.shouldBeRight

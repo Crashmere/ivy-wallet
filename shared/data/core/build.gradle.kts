@@ -19,6 +19,6 @@ dependencies {
     implementation(libs.datastore)
     implementation(libs.bundles.ktor)
 
-    testImplementation(projects.shared.data.modelTesting)
+    testImplementation(projects.shared.testSupport)
     testImplementation(libs.bundles.testing)
 }

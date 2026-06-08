@@ -1,10 +1,10 @@
 package com.ivy.data
 
 import com.ivy.data.db.entity.AccountEntity
-import com.ivy.data.model.testing.colorInt
-import com.ivy.data.model.testing.iconAsset
-import com.ivy.data.model.testing.maybe
-import com.ivy.data.model.testing.notBlankTrimmedString
+import com.ivy.testing.colorInt
+import com.ivy.testing.iconAsset
+import com.ivy.testing.maybe
+import com.ivy.testing.notBlankTrimmedString
 import io.kotest.property.Arb
 import io.kotest.property.arbitrary.arbitrary
 import io.kotest.property.arbitrary.boolean
