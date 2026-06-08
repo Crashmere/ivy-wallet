@@ -101,9 +101,6 @@ class RootActivity : AppCompatActivity() {
                         },
                         onAuthenticationFailed = {
                             viewModel.handleBiometricAuthenticationFailed()
-                        },
-                        onAuthenticationError = { errorCode, errString ->
-                            viewModel.handleBiometricAuthenticationError(errorCode, errString)
                         }
                     )
                 }

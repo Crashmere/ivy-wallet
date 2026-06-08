@@ -53,17 +53,13 @@ class AppLockController @Inject constructor(
         _appLocked.value = false
     }
 
-    fun handleBiometricAuthenticationSucceeded(onAuthSuccess: () -> Unit = {}) {
+    fun handleBiometricAuthenticationSucceeded() {
         Timber.d(resourceProvider.getString(R.string.authentication_succeeded))
         unlockApp()
-        onAuthSuccess()
     }
 
     fun handleBiometricAuthenticationFailed() {
         Timber.d(resourceProvider.getString(R.string.authentication_failed))
-    }
-
-    fun handleBiometricAuthenticationError(errorCode: Int, errString: CharSequence) {
     }
 
     fun startUserInactiveTimeCounter(scope: CoroutineScope) {

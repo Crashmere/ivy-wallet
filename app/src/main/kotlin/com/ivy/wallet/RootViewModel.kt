@@ -91,18 +91,12 @@ class RootViewModel @Inject constructor(
         return false
     }
 
-    fun handleBiometricAuthenticationSucceeded(
-        onAuthSuccess: () -> Unit = {}
-    ) {
-        appLockController.handleBiometricAuthenticationSucceeded(onAuthSuccess)
+    fun handleBiometricAuthenticationSucceeded() {
+        appLockController.handleBiometricAuthenticationSucceeded()
     }
 
     fun handleBiometricAuthenticationFailed() {
         appLockController.handleBiometricAuthenticationFailed()
-    }
-
-    fun handleBiometricAuthenticationError(errorCode: Int, errString: CharSequence) {
-        appLockController.handleBiometricAuthenticationError(errorCode, errString)
     }
 
     // App Lock & UserInactivity --------------------------------------------------------------------

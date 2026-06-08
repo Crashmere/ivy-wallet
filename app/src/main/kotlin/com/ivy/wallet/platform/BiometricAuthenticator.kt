@@ -12,7 +12,7 @@ internal class BiometricAuthenticator(
     fun authenticate(
         onAuthenticationSucceeded: () -> Unit,
         onAuthenticationFailed: () -> Unit,
-        onAuthenticationError: (errorCode: Int, errString: CharSequence) -> Unit,
+        onAuthenticationError: (errorCode: Int, errString: CharSequence) -> Unit = { _, _ -> },
     ) {
         val executor = ContextCompat.getMainExecutor(activity)
         val biometricPrompt = BiometricPrompt(
