@@ -15,7 +15,7 @@ import com.ivy.ui.resource.ResourceProvider
 import java.util.UUID
 import javax.inject.Inject
 
-class DefaultWalletDataSeeder @Inject constructor(
+internal class DefaultWalletDataSeeder @Inject constructor(
     private val saveCategoryUseCase: SaveCategoryUseCase,
     private val saveAccountUseCase: SaveAccountUseCase,
     private val getBaseCurrency: GetBaseCurrencyUseCase,

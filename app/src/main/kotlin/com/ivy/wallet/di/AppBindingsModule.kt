@@ -17,7 +17,7 @@ import dagger.hilt.components.SingletonComponent
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class AppBindingsModule {
+internal abstract class AppBindingsModule {
     @Binds
     abstract fun resetWalletDataUseCase(
         resetWalletDataUseCase: AppResetWalletDataUseCase

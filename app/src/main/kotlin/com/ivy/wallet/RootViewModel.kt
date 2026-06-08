@@ -19,7 +19,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 @Suppress("LongParameterList", "TooManyFunctions")
-class RootViewModel @Inject constructor(
+class RootViewModel @Inject internal constructor(
     private val themeState: ThemeState,
     private val periodState: PeriodState,
     private val getTheme: GetThemeUseCase,
@@ -31,7 +31,7 @@ class RootViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _events = Channel<RootUiEvent>(Channel.BUFFERED)
-    val events = _events.receiveAsFlow()
+    internal val events = _events.receiveAsFlow()
 
     val appLocked = appLockController.appLocked
 
@@ -94,7 +94,7 @@ class RootViewModel @Inject constructor(
     }
 }
 
-sealed interface RootUiEvent {
+internal sealed interface RootUiEvent {
     data object OpenMain : RootUiEvent
     data class OpenAddTransaction(val type: TransactionType) : RootUiEvent
 }

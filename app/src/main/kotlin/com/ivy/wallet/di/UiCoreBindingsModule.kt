@@ -25,7 +25,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object UiCoreBindingsModule {
+internal object UiCoreBindingsModule {
     @Provides
     @Singleton
     fun themeState(): ThemeState = ThemeState()

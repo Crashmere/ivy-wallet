@@ -53,10 +53,10 @@ class RootActivity : AppCompatActivity() {
     lateinit var dateTimePicker: DateTimePicker
 
     @Inject
-    lateinit var datePicker: ActivityDatePicker
+    internal lateinit var datePicker: ActivityDatePicker
 
     @Inject
-    lateinit var filePicker: ActivityResultFilePicker
+    internal lateinit var filePicker: ActivityResultFilePicker
 
     @Inject
     lateinit var preferenceToggles: PreferenceToggleCatalog

@@ -9,7 +9,7 @@ import com.ivy.ui.platform.LocaleSettingsLauncher
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
-class AndroidLocaleSettingsLauncher @Inject constructor(
+internal class AndroidLocaleSettingsLauncher @Inject constructor(
     @ApplicationContext private val context: Context
 ) : LocaleSettingsLauncher {
     override val appLocaleSettingsAvailable: Boolean
