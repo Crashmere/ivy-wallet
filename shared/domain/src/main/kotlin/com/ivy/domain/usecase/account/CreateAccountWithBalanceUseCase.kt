@@ -16,7 +16,7 @@ import javax.inject.Inject
 import com.ivy.data.model.Account as DomainAccount
 import com.ivy.data.model.legacy.LegacyAccount
 
-class CreateAccountWithBalanceUseCase @Inject constructor(
+class CreateAccountWithBalanceUseCase @Inject internal constructor(
     private val adjustAccountBalanceUseCase: AdjustAccountBalanceUseCase,
     private val accountStore: AccountStore,
     private val saveAccountUseCase: SaveAccountUseCase,

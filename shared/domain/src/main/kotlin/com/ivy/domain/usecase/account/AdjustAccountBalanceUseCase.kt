@@ -15,7 +15,7 @@ import kotlin.math.absoluteValue
 import com.ivy.data.model.legacy.LegacyTransaction
 import com.ivy.data.model.legacy.LegacyAccount
 
-class AdjustAccountBalanceUseCase @Inject constructor(
+internal class AdjustAccountBalanceUseCase @Inject constructor(
     private val transactionStore: TransactionStore,
     private val accountStore: AccountStore,
     private val calculateAccountBalanceUseCase: CalculateAccountBalanceUseCase,
