@@ -71,6 +71,7 @@ import com.ivy.legacy.ui.modal.ChoosePeriodModal
 import com.ivy.legacy.ui.theme.pureBlur
 import com.ivy.legacy.ui.theme.toComposeColor
 import com.ivy.legacy.ui.component.AmountCurrencyB1Row
+import kotlinx.collections.immutable.toImmutableList
 
 @ExperimentalFoundationApi
 @Composable
@@ -210,7 +211,8 @@ private fun BoxWithConstraintsScope.UI(
                             categoryId = item.category?.id?.value,
                             unspecifiedCategory = item.isCategoryUnspecified,
                             accountIdFilterList = state.accountIdFilterList,
-                            legacyTransactionIds = item.associatedTransactions.map { it.id },
+                            legacyTransactionIds = item.associatedTransactions.map { it.id }
+                                .toImmutableList(),
                             containsTransferTransactions = item.associatedTransactions.any {
                                 it.type == TransactionType.TRANSFER
                             }

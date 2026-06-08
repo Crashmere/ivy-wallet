@@ -20,8 +20,8 @@ data class TransactionsScreen(
     val accountId: UUID? = null,
     val categoryId: UUID? = null,
     val unspecifiedCategory: Boolean = false,
-    val accountIdFilterList: List<UUID> = persistentListOf(),
-    val legacyTransactionIds: List<UUID> = persistentListOf(),
+    val accountIdFilterList: ImmutableList<UUID> = persistentListOf(),
+    val legacyTransactionIds: ImmutableList<UUID> = persistentListOf(),
     val containsTransferTransactions: Boolean = false
 ) : Screen
 
