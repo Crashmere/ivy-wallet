@@ -38,7 +38,6 @@ import com.ivy.data.model.FromToTimeRange
 import com.ivy.ui.period.LastNTimeRange
 import com.ivy.ui.period.Month.Companion.fromMonthValue
 import com.ivy.ui.period.Month.Companion.monthsList
-import com.ivy.ui.period.ChoosePeriodModalData
 import com.ivy.ui.period.TimePeriod
 import com.ivy.ui.period.displayName
 import com.ivy.ui.platform.addKeyboardListener

@@ -75,7 +75,7 @@ import com.ivy.legacy.ui.theme.dynamicContrast
 import com.ivy.legacy.ui.theme.findContrastTextColor
 import com.ivy.legacy.ui.theme.isDarkColor
 import com.ivy.legacy.ui.modal.ChoosePeriodModal
-import com.ivy.ui.period.ChoosePeriodModalData
+import com.ivy.legacy.ui.modal.ChoosePeriodModalData
 import com.ivy.legacy.ui.modal.DeleteConfirmationModal
 import com.ivy.legacy.ui.modal.DeleteModal
 import com.ivy.legacy.ui.modal.edit.AccountModal

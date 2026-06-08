@@ -6,7 +6,7 @@ import com.ivy.data.model.TransactionHistoryItem
 import com.ivy.data.model.Category
 import com.ivy.ui.period.TimePeriod
 import com.ivy.data.model.legacy.LegacyAccount
-import com.ivy.ui.period.ChoosePeriodModalData
+import com.ivy.legacy.ui.modal.ChoosePeriodModalData
 import kotlinx.collections.immutable.ImmutableList
 
 @Immutable
