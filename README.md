@@ -57,6 +57,7 @@
 - 继续收窄导航模块依赖：`shared:ui:navigation` 已移除未使用的 `shared:ui:core` 依赖，当前只保留自身导航状态、Compose ViewModel owner 和 route 需要的 immutable collection。
 - 集中 ViewModel 获取入口：剩余直接使用 `viewModel()` 的 feature 页面已改用 `screenScopedViewModel()`，`lifecycle-viewmodel-compose` 依赖只保留在 `shared:ui:navigation`。
 - 简化导航栈实现：`Navigation` 内部页面返回栈已从 Java `Stack` 换成 Kotlin `ArrayDeque`，保留原有后进先出返回语义。
+- 收窄汇率页内部 UI 边界：新增汇率弹窗不再直接回传 ViewModel 事件类型，模块内列表项和弹窗组件也不再作为 public API 暴露。
 
 当前仍保留：
 

@@ -24,7 +24,7 @@ import com.ivy.exchangerates.data.RateUi
 import com.ivy.legacy.ui.component.DeleteButton
 
 @Composable
-fun RateItem(
+internal fun RateItem(
     rate: RateUi,
     onDelete: (() -> Unit)?,
     onClick: () -> Unit,

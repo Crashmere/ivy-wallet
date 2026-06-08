@@ -17,23 +17,22 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
-import com.ivy.legacy.ui.theme.Orange
-import com.ivy.exchangerates.RatesEvent
 import com.ivy.exchangerates.data.RateUi
-import com.ivy.ui.compose.selectEndTextFieldValue
 import com.ivy.legacy.ui.component.IvyNameTextField
 import com.ivy.legacy.ui.modal.IvyModal
 import com.ivy.legacy.ui.modal.ModalAdd
 import com.ivy.legacy.ui.modal.ModalTitle
 import com.ivy.legacy.ui.modal.edit.AmountModal
+import com.ivy.legacy.ui.theme.Orange
+import com.ivy.ui.compose.selectEndTextFieldValue
 import java.util.UUID
 
 @Composable
-fun BoxWithConstraintsScope.AddRateModal(
+internal fun BoxWithConstraintsScope.AddRateModal(
     visible: Boolean,
     baseCurrency: String,
     dismiss: () -> Unit,
-    onAdd: (RatesEvent.AddRate) -> Unit,
+    onAdd: (RateUi) -> Unit,
 ) {
     var toCurrency by remember { mutableStateOf(selectEndTextFieldValue("")) }
     var amountModalVisible by remember { mutableStateOf(false) }
@@ -48,12 +47,10 @@ fun BoxWithConstraintsScope.AddRateModal(
                 val to = toCurrency
                 val finalRate = rate
                 onAdd(
-                    RatesEvent.AddRate(
-                        RateUi(
-                            from = baseCurrency,
-                            to = to.text,
-                            rate = finalRate ?: 0.0,
-                        )
+                    RateUi(
+                        from = baseCurrency,
+                        to = to.text,
+                        rate = finalRate ?: 0.0,
                     )
                 )
                 dismiss()

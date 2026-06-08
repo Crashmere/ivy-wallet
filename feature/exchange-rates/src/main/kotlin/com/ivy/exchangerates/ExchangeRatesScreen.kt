@@ -119,7 +119,7 @@ private fun BoxWithConstraintsScope.UI(
         dismiss = {
             addRateModalVisible = false
         },
-        onAdd = onEvent
+        onAdd = { onEvent(RatesEvent.AddRate(it)) }
     )
 
     AmountModal(
