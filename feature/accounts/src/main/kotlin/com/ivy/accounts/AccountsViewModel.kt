@@ -8,6 +8,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
 import com.ivy.ui.resource.ResourceProvider
+import com.ivy.data.model.AccountId
 import com.ivy.domain.preferences.toggles.PreferenceToggleService
 import com.ivy.domain.preferences.toggles.PreferenceToggleCatalog
 import com.ivy.domain.usecase.account.GetAccountsUseCase
@@ -133,16 +134,19 @@ internal class AccountsViewModel @Inject internal constructor(
     override fun onEvent(event: AccountsEvent) {
         viewModelScope.launch(Dispatchers.Default) {
             when (event) {
-                is AccountsEvent.OnReorder -> reorder(event.reorderedList)
+                is AccountsEvent.OnReorder -> reorder(event.accountIds)
                 is AccountsEvent.OnReorderModalVisible -> reorderModalVisible(event.reorderVisible)
             }
         }
     }
 
-    private suspend fun reorder(newOrder: List<AccountData>) {
+    private suspend fun reorder(accountIds: List<AccountId>) {
+        val reorderedAccounts = accountIds.mapNotNull { accountId ->
+            accountsData.firstOrNull { it.account.id == accountId }?.account
+        }
         withContext(Dispatchers.IO) {
-            newOrder.mapIndexed { index, accountData ->
-                saveAccountUseCase(accountData.account.copy(orderNum = index.toDouble()))
+            reorderedAccounts.mapIndexed { index, account ->
+                saveAccountUseCase(account.copy(orderNum = index.toDouble()))
             }
         }
 

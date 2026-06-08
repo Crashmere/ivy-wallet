@@ -166,7 +166,7 @@ private fun BoxWithConstraintsScope.UI(
             onEvent(AccountsEvent.OnReorderModalVisible(reorderVisible = false))
         },
         onReordered = {
-            onEvent(AccountsEvent.OnReorder(reorderedList = it))
+            onEvent(AccountsEvent.OnReorder(accountIds = it.map { item -> item.account.id }))
         }
     ) { _, item ->
         Text(

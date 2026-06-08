@@ -165,7 +165,7 @@ internal class BudgetViewModel @Inject internal constructor(
             }
 
             is BudgetScreenEvent.OnReorder -> {
-                reorder(event.newOrder)
+                reorder(event.budgetIds)
             }
 
             is BudgetScreenEvent.OnReorderModalVisible -> {
@@ -278,9 +278,12 @@ internal class BudgetViewModel @Inject internal constructor(
         }
     }
 
-    private fun reorder(newOrder: List<DisplayBudget>) {
+    private fun reorder(budgetIds: List<UUID>) {
+        val reorderedBudgets = budgetIds.mapNotNull { budgetId ->
+            budgets.value.firstOrNull { it.budget.id == budgetId }?.budget
+        }
         viewModelScope.launch {
-            reorderBudgetsUseCase(newOrder.map(DisplayBudget::budget))
+            reorderBudgetsUseCase(reorderedBudgets)
             start()
         }
     }

@@ -1,12 +1,12 @@
 package com.ivy.loans.loan
 
-import com.ivy.loans.model.DisplayLoan
 import com.ivy.data.model.CreateAccountData
 import com.ivy.data.model.CreateLoanData
+import java.util.UUID
 
 internal sealed interface LoanScreenEvent {
     data class OnLoanCreate(val createLoanData: CreateLoanData) : LoanScreenEvent
-    data class OnReordered(val reorderedList: List<DisplayLoan>) : LoanScreenEvent
+    data class OnReordered(val loanIds: List<UUID>) : LoanScreenEvent
     data class OnCreateAccount(val accountData: CreateAccountData) : LoanScreenEvent
     data class OnReOrderModalShow(val show: Boolean) : LoanScreenEvent
     data class OnTabChanged(val tab: LoanTab) : LoanScreenEvent

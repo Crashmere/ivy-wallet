@@ -156,7 +156,7 @@ private fun BoxWithConstraintsScope.UI(
             onEventHandler.invoke(LoanScreenEvent.OnReOrderModalShow(show = false))
         },
         onReordered = {
-            onEventHandler.invoke(LoanScreenEvent.OnReordered(reorderedList = it))
+            onEventHandler.invoke(LoanScreenEvent.OnReordered(loanIds = it.map { item -> item.loan.id }))
         }
     ) { _, item ->
         Text(

@@ -159,7 +159,7 @@ internal class LoanViewModel @Inject internal constructor(
             }
 
             is LoanScreenEvent.OnReordered -> {
-                reorder(event.reorderedList)
+                reorder(event.loanIds)
             }
 
             is LoanScreenEvent.OnCreateAccount -> {
@@ -319,9 +319,12 @@ internal class LoanViewModel @Inject internal constructor(
         }
     }
 
-    private fun reorder(newOrder: List<DisplayLoan>) {
+    private fun reorder(loanIds: List<UUID>) {
+        val reorderedLoans = loanIds.mapNotNull { loanId ->
+            allLoans.firstOrNull { it.loan.id == loanId }?.loan
+        }
         viewModelScope.launch {
-            reorderLoansUseCase(newOrder.map(DisplayLoan::loan))
+            reorderLoansUseCase(reorderedLoans)
             start()
         }
     }

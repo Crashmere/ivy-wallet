@@ -137,7 +137,7 @@ private fun BoxWithConstraintsScope.UI(
         dismiss = {
             onEvent(BudgetScreenEvent.OnReorderModalVisible(false))
         },
-        onReordered = { onEvent(BudgetScreenEvent.OnReorder(it)) }
+        onReordered = { onEvent(BudgetScreenEvent.OnReorder(it.map { item -> item.budget.id })) }
     ) { _, item ->
         Text(
             modifier = Modifier
