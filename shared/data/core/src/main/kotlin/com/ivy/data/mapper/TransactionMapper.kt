@@ -28,7 +28,7 @@ class TransactionMapper @Inject constructor(
     private val accountStore: AccountStore,
 ) {
 
-    suspend fun TransactionEntity.toDomain(
+    internal suspend fun TransactionEntity.toDomain(
         tags: List<TagId> = emptyList()
     ): Either<String, Transaction> = either {
         ensure(!isDeleted) { "Transaction is deleted" }
@@ -132,7 +132,7 @@ class TransactionMapper @Inject constructor(
         time
     }
 
-    fun Transaction.toEntity(): TransactionEntity {
+    internal fun Transaction.toEntity(): TransactionEntity {
         return TransactionEntity(
             accountId = getFromAccount().value,
             type = when (this) {

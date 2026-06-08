@@ -11,7 +11,7 @@ import com.ivy.data.remote.responses.ExchangeRatesResponse
 import javax.inject.Inject
 
 class ExchangeRateMapper @Inject constructor() {
-    fun ExchangeRateEntity.toDomain(): Either<String, ExchangeRate> = either {
+    internal fun ExchangeRateEntity.toDomain(): Either<String, ExchangeRate> = either {
         ExchangeRate(
             baseCurrency = AssetCode.from(baseCurrency).bind(),
             currency = AssetCode.from(currency).bind(),
@@ -20,7 +20,7 @@ class ExchangeRateMapper @Inject constructor() {
         )
     }
 
-    fun ExchangeRate.toEntity(): ExchangeRateEntity {
+    internal fun ExchangeRate.toEntity(): ExchangeRateEntity {
         return ExchangeRateEntity(
             baseCurrency = baseCurrency.code,
             currency = currency.code,
@@ -29,7 +29,7 @@ class ExchangeRateMapper @Inject constructor() {
         )
     }
 
-    fun ExchangeRatesResponse.toDomain(): Either<String, List<ExchangeRate>> = either {
+    internal fun ExchangeRatesResponse.toDomain(): Either<String, List<ExchangeRate>> = either {
         val domainRates = rates.mapNotNull { (currency, rate) ->
             either {
                 ExchangeRate(

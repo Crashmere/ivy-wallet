@@ -1,6 +1,5 @@
 package com.ivy.data.mapper
 
-import android.graphics.Color
 import arrow.core.Either
 import arrow.core.raise.either
 import com.ivy.data.db.entity.TagAssociationEntity
@@ -12,16 +11,10 @@ import com.ivy.data.model.primitive.ColorInt
 import com.ivy.data.model.primitive.IconAsset
 import com.ivy.data.model.primitive.NotBlankTrimmedString
 import com.ivy.data.model.TagId
-import java.time.Instant
-import java.util.UUID
 import javax.inject.Inject
 
 class TagMapper @Inject constructor() {
-    companion object {
-        fun createNewTagId(): TagId = TagId(UUID.randomUUID())
-    }
-
-    fun TagEntity.toDomain(): Either<String, Tag> = either {
+    internal fun TagEntity.toDomain(): Either<String, Tag> = either {
         Tag(
             id = TagId(id),
             name = NotBlankTrimmedString.from(name).bind(),
@@ -33,7 +26,7 @@ class TagMapper @Inject constructor() {
         )
     }
 
-    fun Tag.toEntity(): TagEntity {
+    internal fun Tag.toEntity(): TagEntity {
         return TagEntity(
             id = id.value,
             name = name.value,
@@ -46,7 +39,7 @@ class TagMapper @Inject constructor() {
         )
     }
 
-    fun TagAssociation.toEntity(): TagAssociationEntity {
+    internal fun TagAssociation.toEntity(): TagAssociationEntity {
         return TagAssociationEntity(
             tagId = id.value,
             associatedId = associatedId.value,
@@ -54,26 +47,14 @@ class TagMapper @Inject constructor() {
         )
     }
 
-    fun TagAssociationEntity.toDomain(): TagAssociation {
+    internal fun TagAssociationEntity.toDomain(): TagAssociation {
         return TagAssociation(
             id = TagId(tagId),
             associatedId = AssociationId(associatedId),
         )
     }
 
-    fun createNewTag(tagId: TagId = createNewTagId(), name: NotBlankTrimmedString): Tag {
-        return Tag(
-            id = tagId,
-            name = name,
-            description = null,
-            color = ColorInt(Color.TRANSPARENT),
-            icon = null,
-            orderNum = 0.0,
-            creationTimestamp = Instant.now(),
-        )
-    }
-
-    fun createNewTagAssociation(tagId: TagId, associationId: AssociationId): TagAssociation {
+    internal fun createNewTagAssociation(tagId: TagId, associationId: AssociationId): TagAssociation {
         return TagAssociation(
             id = tagId,
             associatedId = associationId,

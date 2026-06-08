@@ -19,7 +19,7 @@ class RemoteExchangeRatesDataSource @Inject constructor(
         "https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/eur.json",
     )
 
-    suspend fun fetchEurExchangeRates(): Either<String, ExchangeRatesResponse> {
+    internal suspend fun fetchEurExchangeRates(): Either<String, ExchangeRatesResponse> {
         var latestResult: Either<String, ExchangeRatesResponse> = "Impossible".left()
         for (url in urls) {
             latestResult = fetchEurExchangeRates(url)

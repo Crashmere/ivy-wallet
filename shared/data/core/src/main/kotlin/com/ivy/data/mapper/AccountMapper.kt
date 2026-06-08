@@ -16,7 +16,7 @@ import javax.inject.Inject
 class AccountMapper @Inject constructor(
     private val currencyStore: CurrencyStore
 ) {
-    suspend fun AccountEntity.toDomain(): Either<String, Account> = either {
+    internal suspend fun AccountEntity.toDomain(): Either<String, Account> = either {
         ensure(!isDeleted) { "Account is deleted" }
 
         Account(
@@ -31,7 +31,7 @@ class AccountMapper @Inject constructor(
         )
     }
 
-    fun Account.toEntity(): AccountEntity {
+    internal fun Account.toEntity(): AccountEntity {
         return AccountEntity(
             name = name.value,
             currency = asset.code,

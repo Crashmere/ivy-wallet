@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 @Keep
-data class ExchangeRatesResponse(
+internal data class ExchangeRatesResponse(
     val date: String,
     @SerialName("eur")
     val rates: Map<String, Double>

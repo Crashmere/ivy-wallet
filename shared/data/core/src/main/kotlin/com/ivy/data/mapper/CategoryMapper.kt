@@ -11,7 +11,7 @@ import com.ivy.data.model.primitive.NotBlankTrimmedString
 import javax.inject.Inject
 
 class CategoryMapper @Inject constructor() {
-    fun CategoryEntity.toDomain(): Either<String, Category> = either {
+    internal fun CategoryEntity.toDomain(): Either<String, Category> = either {
         ensure(!isDeleted) { "Category is deleted" }
 
         Category(
@@ -23,7 +23,7 @@ class CategoryMapper @Inject constructor() {
         )
     }
 
-    fun Category.toEntity(): CategoryEntity {
+    internal fun Category.toEntity(): CategoryEntity {
         return CategoryEntity(
             name = name.value,
             color = color.value,
