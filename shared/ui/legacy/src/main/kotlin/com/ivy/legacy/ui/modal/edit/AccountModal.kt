@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.dp
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
 import com.ivy.legacy.ui.component.IvyColorPicker
-import com.ivy.data.model.legacy.Account
+import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.legacy.ui.onScreenStart
 import com.ivy.legacy.ui.selectEndTextFieldValue
 import com.ivy.ui.R
@@ -46,7 +46,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 
 data class AccountModalData(
-    val account: Account?,
+    val account: LegacyAccount?,
     val baseCurrency: String,
     val balance: Double,
     val adjustBalanceMode: Boolean = false,
@@ -59,7 +59,7 @@ data class AccountModalData(
 fun BoxWithConstraintsScope.AccountModal(
     modal: AccountModalData?,
     onCreateAccount: (CreateAccountData) -> Unit,
-    onEditAccount: (Account, balance: Double) -> Unit,
+    onEditAccount: (LegacyAccount, balance: Double) -> Unit,
     dismiss: () -> Unit,
 ) {
     val account = modal?.account
@@ -242,7 +242,7 @@ fun BoxWithConstraintsScope.AccountModal(
 }
 
 private fun save(
-    account: Account?,
+    account: LegacyAccount?,
     nameTextFieldValue: TextFieldValue,
     currency: String,
     color: Color,
@@ -251,7 +251,7 @@ private fun save(
     includeInBalance: Boolean,
 
     onCreateAccount: (CreateAccountData) -> Unit,
-    onEditAccount: (Account, balance: Double) -> Unit,
+    onEditAccount: (LegacyAccount, balance: Double) -> Unit,
     dismiss: () -> Unit
 ) {
     if (account != null) {

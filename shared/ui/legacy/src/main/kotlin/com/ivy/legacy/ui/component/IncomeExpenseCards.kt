@@ -19,7 +19,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.ivy.data.model.legacy.Transaction
+import com.ivy.data.model.legacy.LegacyTransaction
 import com.ivy.data.model.TransactionHistoryItem
 import com.ivy.data.model.TransactionType
 import com.ivy.legacy.ui.theme.system.LegacyTheme
@@ -62,7 +62,7 @@ fun IncomeExpensesCards(
             currencyCode = currency,
             amount = income,
             transactionCount = history
-                .filterIsInstance(Transaction::class.java)
+                .filterIsInstance(LegacyTransaction::class.java)
                 .count { it.type == TransactionType.INCOME },
             addButtonText = if (hasAddButtons) stringResource(R.string.add_income) else null,
             isIncome = true,
@@ -80,7 +80,7 @@ fun IncomeExpensesCards(
             currencyCode = currency,
             amount = expenses,
             transactionCount = history
-                .filterIsInstance(Transaction::class.java)
+                .filterIsInstance(LegacyTransaction::class.java)
                 .count { it.type == TransactionType.EXPENSE },
             addButtonText = if (hasAddButtons) stringResource(R.string.add_expense) else null,
             isIncome = false,

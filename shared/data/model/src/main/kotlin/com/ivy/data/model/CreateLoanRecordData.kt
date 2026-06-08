@@ -1,6 +1,6 @@
 package com.ivy.data.model
 
-import com.ivy.data.model.legacy.Account
+import com.ivy.data.model.legacy.LegacyAccount
 import java.time.Instant
 
 data class CreateLoanRecordData(
@@ -8,7 +8,7 @@ data class CreateLoanRecordData(
     val amount: Double,
     val dateTime: Instant,
     val interest: Boolean = false,
-    val account: Account? = null,
+    val account: LegacyAccount? = null,
     val createLoanRecordTransaction: Boolean = false,
     val convertedAmount: Double? = null,
     val loanRecordType: LoanRecordType

@@ -1,6 +1,6 @@
 package com.ivy.data.model
 
-import com.ivy.data.model.legacy.Account
+import com.ivy.data.model.legacy.LegacyAccount
 import java.time.LocalDateTime
 
 data class CreateLoanData(
@@ -9,7 +9,7 @@ data class CreateLoanData(
     val type: LoanType,
     val color: Int,
     val icon: String?,
-    val account: Account? = null,
+    val account: LegacyAccount? = null,
     val note: String?,
     val createLoanTransaction: Boolean = false,
     val dateTime: LocalDateTime

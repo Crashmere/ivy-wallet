@@ -37,7 +37,7 @@ import com.ivy.ui.time.LocalTimeConverter
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
 import com.ivy.legacy.ui.component.IvyColorPicker
-import com.ivy.data.model.legacy.Account
+import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.data.model.Loan
 import com.ivy.legacy.ui.component.DateTimeRow
 import com.ivy.data.model.currency.getDefaultFIATCurrency
@@ -73,7 +73,7 @@ import androidx.compose.runtime.setValue
 data class LoanModalData(
     val loan: Loan?,
     val baseCurrency: String,
-    val selectedAccount: Account? = null,
+    val selectedAccount: LegacyAccount? = null,
     val autoFocusKeyboard: Boolean = true,
     val autoOpenAmountModal: Boolean = false,
     val createLoanTransaction: Boolean = false,
@@ -89,7 +89,7 @@ fun BoxWithConstraintsScope.LoanModal(
     onSetTime: () -> Unit,
     onCreateLoan: (CreateLoanData) -> Unit,
     onEditLoan: (Loan, Boolean) -> Unit,
-    accounts: List<Account> = emptyList(),
+    accounts: List<LegacyAccount> = emptyList(),
     onCreateAccount: (CreateAccountData) -> Unit = {},
     onPerformCalculations: () -> Unit = {},
     dismiss: () -> Unit,
@@ -381,10 +381,10 @@ fun BoxWithConstraintsScope.LoanModal(
 @Suppress("ParameterNaming")
 private fun AccountsRow(
     modifier: Modifier = Modifier,
-    accounts: List<Account>,
-    selectedAccount: Account?,
+    accounts: List<LegacyAccount>,
+    selectedAccount: LegacyAccount?,
     childrenTestTag: String? = null,
-    onSelectedAccountChanged: (Account) -> Unit,
+    onSelectedAccountChanged: (LegacyAccount) -> Unit,
     onAddNewAccount: () -> Unit
 ) {
     val lazyState = rememberLazyListState()
@@ -414,7 +414,7 @@ private fun AccountsRow(
         }
 
         itemsIndexed(accounts) { _, account ->
-            Account(
+            LegacyAccount(
                 account = account,
                 selected = selectedAccount == account,
                 testTag = childrenTestTag ?: "account"
@@ -436,8 +436,8 @@ private fun AccountsRow(
 }
 
 @Composable
-private fun Account(
-    account: Account,
+private fun LegacyAccount(
+    account: LegacyAccount,
     selected: Boolean,
     testTag: String,
     onClick: () -> Unit
@@ -605,7 +605,7 @@ private fun save(
     color: Color,
     icon: String?,
     amount: Double,
-    selectedAccount: Account? = null,
+    selectedAccount: LegacyAccount? = null,
     createLoanTransaction: Boolean = false,
 
     onCreateLoan: (CreateLoanData) -> Unit,

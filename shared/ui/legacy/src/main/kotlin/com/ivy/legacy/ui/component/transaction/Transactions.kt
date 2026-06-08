@@ -17,7 +17,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.ivy.data.model.legacy.Transaction
+import com.ivy.data.model.legacy.LegacyTransaction
 import com.ivy.data.model.TransactionHistoryDateDivider
 import com.ivy.data.model.TransactionHistoryItem
 import com.ivy.legacy.ui.theme.system.LegacyTheme
@@ -50,11 +50,11 @@ fun LazyListScope.transactions(
     dateDividerMarginTop: Dp? = null,
     lastItemSpacer: Dp? = null,
     shouldShowAccountSpecificColorInTransactions: Boolean,
-    onPayOrGet: (Transaction) -> Unit,
+    onPayOrGet: (LegacyTransaction) -> Unit,
     setUpcomingExpanded: (Boolean) -> Unit,
     setOverdueExpanded: (Boolean) -> Unit,
-    onSkipTransaction: (Transaction) -> Unit = {},
-    onSkipAllTransactions: (List<Transaction>) -> Unit = {}
+    onSkipTransaction: (LegacyTransaction) -> Unit = {},
+    onSkipAllTransactions: (List<LegacyTransaction>) -> Unit = {}
 ) {
     upcomingSection(
         baseData = baseData,
@@ -111,8 +111,8 @@ private fun LazyListScope.upcomingSection(
 
     upcoming: LegacyDueSection?,
     shouldShowAccountSpecificColorInTransactions: Boolean,
-    onPayOrGet: (Transaction) -> Unit,
-    onSkipTransaction: (Transaction) -> Unit,
+    onPayOrGet: (LegacyTransaction) -> Unit,
+    onSkipTransaction: (LegacyTransaction) -> Unit,
     setExpanded: (Boolean) -> Unit
 ) {
     if (upcoming == null) return // guard
@@ -150,9 +150,9 @@ private fun LazyListScope.overdueSection(
 
     overdue: LegacyDueSection?,
     shouldShowAccountSpecificColorInTransactions: Boolean,
-    onPayOrGet: (Transaction) -> Unit,
-    onSkipTransaction: (Transaction) -> Unit,
-    onSkipAllTransactions: (List<Transaction>) -> Unit,
+    onPayOrGet: (LegacyTransaction) -> Unit,
+    onSkipTransaction: (LegacyTransaction) -> Unit,
+    onSkipAllTransactions: (List<LegacyTransaction>) -> Unit,
     setExpanded: (Boolean) -> Unit
 ) {
     if (overdue == null) return
@@ -211,10 +211,10 @@ private fun LazyListScope.overdueSection(
 private fun LazyListScope.transactionItems(
     baseData: AppBaseData,
 
-    transactions: List<Transaction>,
+    transactions: List<LegacyTransaction>,
     shouldShowAccountSpecificColorInTransactions: Boolean,
-    onPayOrGet: (Transaction) -> Unit,
-    onSkipTransaction: (Transaction) -> Unit,
+    onPayOrGet: (LegacyTransaction) -> Unit,
+    onSkipTransaction: (LegacyTransaction) -> Unit,
 ) {
     items(
         items = transactions,
@@ -244,21 +244,21 @@ private fun LazyListScope.historySection(
     shouldShowAccountSpecificColorInTransactions: Boolean,
     dateDividerMarginTop: Dp? = null,
 
-    onPayOrGet: (Transaction) -> Unit
+    onPayOrGet: (LegacyTransaction) -> Unit
 ) {
     if (history.isNotEmpty()) {
         items(
             items = history,
             key = {
                 when (it) {
-                    is Transaction -> it.id.toString()
+                    is LegacyTransaction -> it.id.toString()
                     is TransactionHistoryDateDivider -> it.date.toString()
                     else -> "unknown"
                 }
             }
         ) {
             when (it) {
-                is Transaction -> {
+                is LegacyTransaction -> {
                     val nav = navigation()
 
                     TransactionCard(
@@ -292,7 +292,7 @@ private fun LazyListScope.historySection(
 
 private fun onTransactionClick(
     nav: Navigation,
-    transaction: Transaction
+    transaction: LegacyTransaction
 ) {
     nav.navigateTo(
         EditTransactionScreen(

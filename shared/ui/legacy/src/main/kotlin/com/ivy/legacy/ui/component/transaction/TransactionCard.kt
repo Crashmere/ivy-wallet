@@ -31,7 +31,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.LegacyTag
-import com.ivy.data.model.legacy.Transaction
+import com.ivy.data.model.legacy.LegacyTransaction
 import com.ivy.data.model.TransactionType
 import com.ivy.data.model.Category
 import com.ivy.data.model.CategoryId
@@ -42,7 +42,7 @@ import com.ivy.legacy.ui.theme.system.BlueLight
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
 import com.ivy.legacy.ui.model.AppBaseData
-import com.ivy.data.model.legacy.Account
+import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.data.model.currency.format
 import com.ivy.ui.navigation.Navigation
 import com.ivy.ui.navigation.TransactionsScreen
@@ -88,12 +88,12 @@ import java.util.UUID
 @Composable
 fun TransactionCard(
     baseData: AppBaseData,
-    transaction: Transaction,
+    transaction: LegacyTransaction,
     shouldShowAccountSpecificColorInTransactions: Boolean,
-    onPayOrGet: (Transaction) -> Unit,
+    onPayOrGet: (LegacyTransaction) -> Unit,
     modifier: Modifier = Modifier,
-    onSkipTransaction: (Transaction) -> Unit = {},
-    onClick: (Transaction) -> Unit,
+    onSkipTransaction: (LegacyTransaction) -> Unit = {},
+    onClick: (LegacyTransaction) -> Unit,
 ) {
     val sourceAccount = remember(baseData.accounts, transaction.accountId) {
         baseData.accounts.find { it.id == transaction.accountId }
@@ -298,9 +298,9 @@ private fun ColumnScope.TransactionTags(tags: ImmutableList<LegacyTag>) {
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun TransactionHeaderRow(
-    transaction: Transaction,
+    transaction: LegacyTransaction,
     categories: List<Category>,
-    accounts: List<Account>,
+    accounts: List<LegacyAccount>,
     shouldShowAccountSpecificColorInTransactions: Boolean,
 ) {
     val nav = navigation()
@@ -386,7 +386,7 @@ fun CategoryBadgeDisplay(
 }
 
 @Composable
-private fun getTransactionDescription(transaction: Transaction): String? {
+private fun getTransactionDescription(transaction: LegacyTransaction): String? {
     val paidFor = with(LocalTimeConverter.current) {
         transaction.paidFor?.toLocalDateTime()
     }
@@ -454,8 +454,8 @@ private const val TransferHeaderGradientThreshold = 0.35f
 
 @Composable
 private fun TransferHeader(
-    accounts: List<Account>,
-    transaction: Transaction,
+    accounts: List<LegacyAccount>,
+    transaction: LegacyTransaction,
     shouldShowAccountSpecificColorInTransactions: Boolean
 ) {
     val account = remember(accounts, transaction) {

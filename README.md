@@ -829,6 +829,7 @@
 - 核心汇率换算函数已从 legacy `ExchangeRate` 对象依赖改成只接收 `BigDecimal` 汇率值，`ExchangeRateExt.toLegacyDomain()` 随之删除；汇率数据模型到算法的边界更窄。
 - 旧交易汇率换算重载和 `LegacyExchangeTransactions` 已从正式 `domain.exchange.ExchangeTransactions` 迁到 `domain.transaction.legacy.LegacyExchangeTransactions`；exchange 包继续保留通用换算与新版交易入口。
 - `shared:domain` 内部旧账户/旧交易兼容别名已显式化：domain helper、use case、汇率换算和旧历史列表桥接代码不再从 `com.ivy.data.model.legacy.Account/Transaction` 兼容别名导入，而是直接使用 `LegacyAccount/LegacyTransaction`；这一步只改变类型命名，不改业务计算和数据结构。
+- `shared:ui:legacy`、`shared:ui:navigation` 和借贷创建参数里的旧账户/旧交易类型也已显式成 `LegacyAccount/LegacyTransaction`；旧交易卡片、旧交易列表、旧到期分组和导航 route 参数继续保持原行为，但调用方不再借助 `Account/Transaction` 兼容别名隐藏 legacy 边界。
 - 功能开关偏好门面已从 `PreferenceToggleRepository` 改名为 `PreferenceToggleService`：它只负责把 domain 层 `BoolPreference` 映射到底层 `PreferenceToggleStore`，不再用 repository 命名暗示数据仓库职责。
 - 旧 `Logic` 注入变量名已继续收敛：`LegacyExchangeRatesUseCase` 的调用方统一使用 `exchangeRatesUseCase`，首页客户旅程卡片也改用 `customerJourneyCardsProvider` 命名，避免把 provider/use case 误读成旧 logic 层。
 - 旧到期交易 UI 模型 `LegacyDueSection` 的 `trns` 字段已改为 `transactions`，legacy 交易列表内部私有 `trnItems/trnCount` 也改为完整命名；首页、报表和交易页调用方同步更新，展示行为不变。
@@ -1066,7 +1067,7 @@ shared:ui:core
 下一步建议执行：
 
 1. shared 模块依赖审计暂时没有发现可直接删除的低风险依赖；后续在改动具体调用方时继续顺手收缩 Gradle 依赖。
-2. 继续收敛仍在 feature/shared UI/navigation 中流动的旧账户/旧交易兼容别名；`shared:domain` 已先完成显式 `LegacyAccount/LegacyTransaction` 迁移，下一批优先处理 `shared:ui:legacy` 和少量页面状态模型，避免一次性重写交易统计等高风险功能。
+2. 继续收敛 feature 页面层中流动的旧账户/旧交易兼容别名；shared 层已经完成显式 `LegacyAccount/LegacyTransaction` 迁移，下一批按功能域分组处理首页、交易列表、报表、借贷、计划付款等页面，避免一次性重写交易统计等高风险功能。
 3. 偏好设置代码边界已基本收窄，短期不再为清理而迁移存储格式；若后续要处理 `SettingsEntity`、SharedPrefs 或 DataStore 归并，必须单独规划 schema/备份兼容迁移。
 4. 继续数据库只读审计：`isDeleted` 目前先保留为本地软删除语义；不再把业务表里的 `isDeleted` 当作纯云同步字段批量删除。
 5. feature 模块合并属于较大结构调整，短期只在实际修改某个功能时收敛依赖；真正合并模块前需要先确认导航、资源和 Hilt 边界。

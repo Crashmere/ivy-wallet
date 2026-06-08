@@ -34,7 +34,7 @@ import com.ivy.ui.time.LocalTimeConverter
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
 import com.ivy.ui.compose.thenIf
-import com.ivy.data.model.legacy.Account
+import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.data.model.LoanRecord
 import com.ivy.legacy.ui.component.DateTimeRow
 import com.ivy.legacy.ui.modal.ModalNameInput
@@ -64,7 +64,7 @@ data class LoanRecordModalData(
     val loanRecord: LoanRecord?,
     val baseCurrency: String,
     val loanAccountCurrencyCode: String? = null,
-    val selectedAccount: Account? = null,
+    val selectedAccount: LegacyAccount? = null,
     val createLoanRecordTransaction: Boolean = false,
     val isLoanInterest: Boolean = false,
     val id: UUID = UUID.randomUUID(),
@@ -82,7 +82,7 @@ fun BoxWithConstraintsScope.LoanRecordModal(
     onEdit: (EditLoanRecordData) -> Unit,
     onDelete: (LoanRecord) -> Unit,
     dismiss: () -> Unit,
-    accounts: List<Account> = emptyList(),
+    accounts: List<LegacyAccount> = emptyList(),
     onCreateAccount: (CreateAccountData) -> Unit = {},
 ) {
     val initialRecord = modal?.loanRecord
@@ -384,7 +384,7 @@ private fun save(
     dateTime: Instant,
     loanRecordInterest: Boolean = false,
     createLoanRecordTransaction: Boolean = false,
-    selectedAccount: Account? = null,
+    selectedAccount: LegacyAccount? = null,
     reCalculateAmount: Boolean = false,
     loanRecordType: LoanRecordType,
 
@@ -510,9 +510,9 @@ private fun LoanRecordType(
 @Composable
 @Suppress("ParameterNaming")
 private fun AccountsRow(
-    accounts: List<Account>,
-    selectedAccount: Account?,
-    onSelectedAccountChanged: (Account) -> Unit,
+    accounts: List<LegacyAccount>,
+    selectedAccount: LegacyAccount?,
+    onSelectedAccountChanged: (LegacyAccount) -> Unit,
     onAddNewAccount: () -> Unit,
     modifier: Modifier = Modifier,
     childrenTestTag: String? = null,
@@ -546,7 +546,7 @@ private fun AccountsRow(
         }
 
         itemsIndexed(accounts) { _, account ->
-            Account(
+            LegacyAccount(
                 account = account,
                 selected = selectedAccount == account,
                 testTag = childrenTestTag ?: "account"
@@ -569,8 +569,8 @@ private fun AccountsRow(
 
 @SuppressLint("ComposeContentEmitterReturningValues", "ComposeMultipleContentEmitters")
 @Composable
-private fun Account(
-    account: Account,
+private fun LegacyAccount(
+    account: LegacyAccount,
     selected: Boolean,
     testTag: String,
     onClick: () -> Unit

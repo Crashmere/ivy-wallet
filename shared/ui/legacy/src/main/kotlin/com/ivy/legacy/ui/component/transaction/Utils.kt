@@ -2,7 +2,7 @@ package com.ivy.legacy.ui.component.transaction
 
 import androidx.compose.runtime.Composable
 import com.ivy.data.model.Category
-import com.ivy.data.model.legacy.Account
+import com.ivy.data.model.legacy.LegacyAccount
 import java.util.UUID
 
 @Composable
@@ -17,8 +17,8 @@ fun category(
 @Composable
 fun account(
     accountId: UUID?,
-    accounts: List<Account>
-): Account? {
+    accounts: List<LegacyAccount>
+): LegacyAccount? {
     val targetId = accountId ?: return null
     return accounts.find { it.id == targetId }
 }
