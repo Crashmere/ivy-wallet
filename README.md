@@ -134,6 +134,7 @@
 - 收窄首页状态边界：`HomeState` 和 `HomeViewModel` 不再直接持有旧交易列表 UI 包装类型，只在首页调用旧列表组件时做适配转换。
 - 收敛交易列表页到期交易状态：upcoming/overdue 的交易、展开状态和收支统计合并为页面本地 section，旧 UI 的 `LegacyDueSection` 只在组件调用处构造。
 - 收敛报表页到期交易状态：报表页同样把 upcoming/overdue 的交易、展开状态和收支统计合并为页面本地 section，减少状态字段数量。
+- 收窄报表页顶部摘要状态：报表页不再为了收支卡片计数和饼图跳转保存完整旧交易列表，只保留交易 ID 和收入/支出数量摘要。
 
 当前仍保留：
 
@@ -1238,6 +1239,7 @@ shared:ui:core
 - 首页状态层已切换为 feature 本地展示模型；`TransactionListData` 和 `LegacyDueSection` 只在 `HomeTab` 调用旧交易列表组件的适配层出现。
 - 交易列表页的到期/逾期交易状态已合并为 feature 本地 section；页面状态不再把交易列表、展开状态和收支统计拆成多组并行字段。
 - 报表页的到期/逾期交易状态也已合并为 feature 本地 section；旧 UI 的 `LegacyDueSection` 继续限制在 `ReportScreen` 组件适配层。
+- 报表页顶部收支卡片已改用轻量 `ReportTransactionSummary`；完整旧交易列表不再进入 `ReportScreenState.transactions` 这类页面级状态字段。
 - app 仍保留文件选择、文件分享、Material 日期选择器、BuildInfo、Locale 设置、生物识别和窗口安全等真正依赖 Activity 或 Android app 壳层的装配。
 
 ## 高风险区域

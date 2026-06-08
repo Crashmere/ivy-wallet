@@ -8,7 +8,7 @@ import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.data.model.legacy.LegacyTransaction
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
-import java.util.*
+import java.util.UUID
 
 @Suppress("DataClassDefaultValues")
 internal data class ReportScreenState(
@@ -34,7 +34,7 @@ internal data class ReportScreenState(
     val filter: ReportFilter? = null,
     val loading: Boolean = false,
     val accountIdFilters: ImmutableList<UUID> = persistentListOf(),
-    val transactions: ImmutableList<LegacyTransaction> = persistentListOf(),
+    val transactionSummary: ReportTransactionSummary = ReportTransactionSummary(),
     val filterOverlayVisible: Boolean = false,
     val showTransfersAsIncExpCheckbox: Boolean = false,
     val treatTransfersAsIncExp: Boolean = false,
@@ -49,3 +49,13 @@ internal data class ReportDueSection(
     val income: Double,
     val expenses: Double,
 )
+
+@Immutable
+internal data class ReportTransactionSummary(
+    val transactionIds: ImmutableList<UUID> = persistentListOf(),
+    val incomeTransactionCount: Int = 0,
+    val expenseTransactionCount: Int = 0,
+) {
+    val hasTransactions: Boolean
+        get() = transactionIds.isNotEmpty()
+}

@@ -128,7 +128,7 @@ internal class ReportViewModel @Inject internal constructor(
     private var accounts by mutableStateOf<ImmutableList<LegacyAccount>>(persistentListOf())
     private var loading by mutableStateOf(false)
     private var accountIdFilters by mutableStateOf<ImmutableList<UUID>>(persistentListOf())
-    private var transactions by mutableStateOf<ImmutableList<LegacyTransaction>>(persistentListOf())
+    private var transactionSummary by mutableStateOf(ReportTransactionSummary())
     private var filterOverlayVisible by mutableStateOf(false)
     private var showTransfersAsIncExpCheckbox by mutableStateOf(false)
     private var treatTransfersAsIncExp by mutableStateOf(false)
@@ -164,7 +164,7 @@ internal class ReportViewModel @Inject internal constructor(
             loading = loading,
             overdue = overdue,
             showTransfersAsIncExpCheckbox = showTransfersAsIncExpCheckbox,
-            transactions = transactions,
+            transactionSummary = transactionSummary,
             treatTransfersAsIncExp = treatTransfersAsIncExp,
             upcoming = upcoming,
             allTags = allTags,
@@ -236,7 +236,7 @@ internal class ReportViewModel @Inject internal constructor(
                     accounts = getLegacyAccountsUseCase(),
                     reportFilter = filter,
                     accountIdFilters = persistentListOf(),
-                    transactions = persistentListOf(),
+                    transactionSummary = ReportTransactionSummary(),
                     balanceValue = 0.00
                 )
                 return@withContext
@@ -320,7 +320,7 @@ internal class ReportViewModel @Inject internal constructor(
                 accounts = selectedAccounts.toImmutableList(),
                 reportFilter = reportFilter,
                 accountIdFilters = accountFilterIdList.await().toImmutableList(),
-                transactions = mapTransactionsToLegacyTransactionsUseCase(transactionsList).toImmutableList(),
+                transactionSummary = transactionsList.toReportTransactionSummary(),
                 balanceValue = displayBalance
             )
 
@@ -339,7 +339,7 @@ internal class ReportViewModel @Inject internal constructor(
         accounts: ImmutableList<LegacyAccount>,
         reportFilter: ReportFilter? = null,
         accountIdFilters: ImmutableList<UUID>,
-        transactions: ImmutableList<LegacyTransaction>,
+        transactionSummary: ReportTransactionSummary,
         balanceValue: Double
     ) {
         this.income = income
@@ -358,7 +358,7 @@ internal class ReportViewModel @Inject internal constructor(
         this.accounts = accounts
         this.filter = reportFilter
         this.accountIdFilters = accountIdFilters
-        this.transactions = transactions
+        this.transactionSummary = transactionSummary
         this.balance = balanceValue
         this.showTransfersAsIncExpCheckbox =
             reportFilter?.transactionTypes?.contains(TransactionType.TRANSFER) ?: false
@@ -491,6 +491,14 @@ internal class ReportViewModel @Inject internal constructor(
             }
         }
         return amountFilteredTransactions
+    }
+
+    private fun List<Transaction>.toReportTransactionSummary(): ReportTransactionSummary {
+        return ReportTransactionSummary(
+            transactionIds = map { it.id.value }.toImmutableList(),
+            incomeTransactionCount = count { it.getTransactionType() == TransactionType.INCOME },
+            expenseTransactionCount = count { it.getTransactionType() == TransactionType.EXPENSE },
+        )
     }
 
     private fun String.containsLowercase(anotherString: String): Boolean {

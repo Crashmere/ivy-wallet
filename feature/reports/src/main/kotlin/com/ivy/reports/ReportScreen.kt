@@ -54,7 +54,6 @@ import com.ivy.legacy.ui.component.IvyIcon
 import com.ivy.legacy.ui.component.IvyOutlinedButton
 import com.ivy.legacy.ui.component.IvyToolbar
 import com.ivy.legacy.ui.theme.pureBlur
-import kotlinx.collections.immutable.toImmutableList
 
 @ExperimentalFoundationApi
 @Composable
@@ -74,7 +73,7 @@ private fun BoxWithConstraintsScope.UI(
     state: ReportScreenState = ReportScreenState(),
     onEventHandler: (ReportScreenEvent) -> Unit = {}
 ) {
-    val legacyTransactions = state.transactions
+    val transactionSummary = state.transactionSummary
     val nav = navigation()
     val platformFileSharer = fileSharer()
 
@@ -157,18 +156,16 @@ private fun BoxWithConstraintsScope.UI(
                 currency = state.baseCurrency,
                 income = state.income,
                 expenses = state.expenses,
-                incomeTransactionCount = state.transactions.count { it.type == TransactionType.INCOME },
-                expenseTransactionCount = state.transactions.count { it.type == TransactionType.EXPENSE },
+                incomeTransactionCount = transactionSummary.incomeTransactionCount,
+                expenseTransactionCount = transactionSummary.expenseTransactionCount,
                 hasAddButtons = false,
                 itemColor = LegacyTheme.colors.pure,
                 incomeHeaderCardClicked = {
-                    if (state.transactions.isNotEmpty()) {
+                    if (transactionSummary.hasTransactions) {
                         nav.navigateTo(
                             PieChartStatisticScreen(
                                 type = TransactionRouteType.INCOME,
-                                legacyTransactionIds = legacyTransactions
-                                    .map { it.id }
-                                    .toImmutableList(),
+                                legacyTransactionIds = transactionSummary.transactionIds,
                                 accountList = state.accountIdFilters,
                                 treatTransfersAsIncomeExpense = state.treatTransfersAsIncExp
                             )
@@ -176,13 +173,11 @@ private fun BoxWithConstraintsScope.UI(
                     }
                 },
                 expenseHeaderCardClicked = {
-                    if (state.transactions.isNotEmpty()) {
+                    if (transactionSummary.hasTransactions) {
                         nav.navigateTo(
                             PieChartStatisticScreen(
                                 type = TransactionRouteType.EXPENSE,
-                                legacyTransactionIds = legacyTransactions
-                                    .map { it.id }
-                                    .toImmutableList(),
+                                legacyTransactionIds = transactionSummary.transactionIds,
                                 accountList = state.accountIdFilters,
                                 treatTransfersAsIncomeExpense = state.treatTransfersAsIncExp
                             )
