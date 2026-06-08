@@ -10,19 +10,9 @@ class Navigation {
   var currentScreen: Screen? by mutableStateOf(null)
     private set
 
-  private val screenBackHandlers: MutableMap<Screen, () -> Boolean> = mutableMapOf()
-
   private val backStack = ArrayDeque<Screen>()
   var lastScreen: Screen? = null
     private set
-
-  fun registerScreenBackHandler(screen: Screen, handler: () -> Boolean) {
-    screenBackHandlers[screen] = handler
-  }
-
-  fun unregisterScreenBackHandler(screen: Screen) {
-    screenBackHandlers.remove(screen)
-  }
 
   fun navigateTo(screen: Screen) {
     val previousScreen = lastScreen
@@ -39,8 +29,7 @@ class Navigation {
   }
 
   fun handleRootBack(): Boolean {
-    val specialHandling = screenBackHandlers.getOrDefault(currentScreen) { false }.invoke()
-    return specialHandling || back()
+    return back()
   }
 
   fun back(): Boolean {

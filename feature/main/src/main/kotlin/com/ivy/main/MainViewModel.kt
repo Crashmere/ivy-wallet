@@ -45,16 +45,6 @@ internal class MainViewModel @Inject internal constructor(
         }
     }
 
-    fun handleBack(): Boolean {
-        return if (selectedTab == MainTab.ACCOUNTS) {
-            selectTab(MainTab.HOME)
-            true
-        } else {
-            // Exiting (the backstack will close the app)
-            false
-        }
-    }
-
     fun selectTab(tab: MainTab) {
         selectedTab = tab
     }

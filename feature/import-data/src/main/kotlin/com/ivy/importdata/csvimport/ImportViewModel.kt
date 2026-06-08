@@ -28,17 +28,12 @@ internal class ImportViewModel @Inject internal constructor(
     private val _importResult = MutableStateFlow<ImportResult?>(null)
     val importResult: StateFlow<ImportResult?> = _importResult.asStateFlow()
 
-    fun handleBack(): Boolean {
-        return when (importStep.value) {
-            ImportStep.IMPORT_FROM -> false
-            ImportStep.LOADING -> {
-                // do nothing, disable back
-                true
-            }
-
+    fun handleInternalBack() {
+        when (importStep.value) {
+            ImportStep.IMPORT_FROM,
+            ImportStep.LOADING -> Unit
             ImportStep.RESULT -> {
                 _importStep.value = ImportStep.IMPORT_FROM
-                true
             }
         }
     }

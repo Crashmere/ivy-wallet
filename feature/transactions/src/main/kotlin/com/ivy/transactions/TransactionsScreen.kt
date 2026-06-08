@@ -1,5 +1,6 @@
 package com.ivy.transactions
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -107,20 +108,16 @@ fun BoxWithConstraintsScope.TransactionsScreen(screen: TransactionsScreen) {
     }
 
     val view = LocalView.current
-    onScreenStart(
-        cleanUp = {
-            nav.unregisterScreenBackHandler(screen)
-        }
-    ) {
-        viewModel.start(screen)
+    BackHandler(enabled = !nav.backStackEmpty()) {
+        setStatusBarDarkTextCompat(
+            view = view,
+            darkText = themeState.theme == Theme.LIGHT
+        )
+        nav.back()
+    }
 
-        nav.registerScreenBackHandler(screen) {
-            setStatusBarDarkTextCompat(
-                view = view,
-                darkText = themeState.theme == Theme.LIGHT
-            )
-            false
-        }
+    onScreenStart {
+        viewModel.start(screen)
     }
 
     UI(

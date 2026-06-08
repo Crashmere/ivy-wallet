@@ -1,5 +1,6 @@
 package com.ivy.main
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.BoxWithConstraintsScope
@@ -27,17 +28,15 @@ import com.ivy.ui.modal.AccountModalData
 @Composable
 fun BoxWithConstraintsScope.MainScreen(screen: MainScreen) {
     val viewModel: MainViewModel = screenScopedViewModel()
-    val nav = navigation()
 
     val currency by viewModel.currency.collectAsState()
 
-    onScreenStart(
-        cleanUp = {
-            nav.unregisterScreenBackHandler(screen)
-        }
-    ) {
+    onScreenStart {
         viewModel.start()
-        nav.registerScreenBackHandler(screen, viewModel::handleBack)
+    }
+
+    BackHandler(enabled = viewModel.selectedTab == MainTab.ACCOUNTS) {
+        viewModel.selectTab(MainTab.HOME)
     }
 
     UI(
