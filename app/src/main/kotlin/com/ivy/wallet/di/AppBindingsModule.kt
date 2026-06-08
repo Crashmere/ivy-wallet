@@ -9,7 +9,7 @@ import com.ivy.ui.platform.FilePicker
 import com.ivy.ui.platform.LocaleSettingsLauncher
 import com.ivy.wallet.platform.AndroidLocaleSettingsLauncher
 import com.ivy.wallet.platform.AndroidResourceProvider
-import com.ivy.wallet.reset.ResetWalletDataUseCaseImpl
+import com.ivy.wallet.reset.AppResetWalletDataUseCase
 import com.ivy.wallet.platform.ActivityDatePicker
 import com.ivy.wallet.platform.ActivityResultFilePicker
 import dagger.Binds
@@ -22,7 +22,7 @@ import dagger.hilt.components.SingletonComponent
 abstract class AppBindingsModule {
     @Binds
     abstract fun resetWalletDataUseCase(
-        resetWalletDataUseCase: ResetWalletDataUseCaseImpl
+        resetWalletDataUseCase: AppResetWalletDataUseCase
     ): ResetWalletDataUseCase
 
     @Binds

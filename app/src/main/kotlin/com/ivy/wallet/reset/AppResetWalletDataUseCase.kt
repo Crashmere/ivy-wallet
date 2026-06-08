@@ -10,7 +10,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class ResetWalletDataUseCaseImpl @Inject constructor(
+class AppResetWalletDataUseCase @Inject constructor(
     private val clearWalletDataUseCase: ClearWalletDataUseCase,
     private val clearLocalPreferences: ClearLocalPreferencesUseCase,
     private val notifyAllDataChangedUseCase: NotifyAllDataChangedUseCase,

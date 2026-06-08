@@ -1038,6 +1038,7 @@
 - app 层剩余的泛化 `*Logic` 命名已继续收敛：首次默认账户/分类预置从 `PreloadDataLogic` 改为 `DefaultWalletDataSeeder`，交易提醒调度从 `TransactionReminderLogic` 改为 `TransactionReminderScheduler`；行为不变，只让启动编排中的职责更直接。
 - Android Toast 封装 `Toaster` 已从 `shared:base` 迁到 `shared:ui:core` 的 `com.ivy.ui.platform`，编辑交易和汇率页继续通过同一注入类型显示提示；基础层不再承载这段 UI 平台能力。
 - UI 平台层新增安全的 `Context.findActivity()` helper；状态栏旧版兼容逻辑不再直接强转 Activity，旧主题设置状态栏时也复用同一 Activity 查找入口。
+- 清空钱包的 app 层实现从泛化 `ResetWalletDataUseCaseImpl` 改名为 `AppResetWalletDataUseCase`；接口继续作为设置 feature 到 app 编排层的边界，行为不变。
 
 ### 阶段 9：feature 模块收敛
 
