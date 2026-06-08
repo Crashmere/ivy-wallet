@@ -2,13 +2,11 @@ package com.ivy.legacy.ui.theme
 
 import com.ivy.legacy.ui.theme.system.Blue
 import com.ivy.legacy.ui.theme.system.Blue2
-import com.ivy.legacy.ui.theme.system.Blue2Dark
 import com.ivy.legacy.ui.theme.system.Blue2Light
 import com.ivy.legacy.ui.theme.system.Blue3
 import com.ivy.legacy.ui.theme.system.Blue3Dark
 import com.ivy.legacy.ui.theme.system.Blue3Light
 import com.ivy.legacy.ui.theme.system.BlueDark
-import com.ivy.legacy.ui.theme.system.BlueLight
 import com.ivy.legacy.ui.theme.system.Green
 import com.ivy.legacy.ui.theme.system.Green2
 import com.ivy.legacy.ui.theme.system.Green2Dark
@@ -28,7 +26,6 @@ import com.ivy.legacy.ui.theme.system.Orange
 import com.ivy.legacy.ui.theme.system.Orange2
 import com.ivy.legacy.ui.theme.system.Orange2Dark
 import com.ivy.legacy.ui.theme.system.Orange2Light
-import com.ivy.legacy.ui.theme.system.Orange3
 import com.ivy.legacy.ui.theme.system.Orange3Dark
 import com.ivy.legacy.ui.theme.system.Orange3Light
 import com.ivy.legacy.ui.theme.system.OrangeDark

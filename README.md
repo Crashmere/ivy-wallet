@@ -69,6 +69,8 @@
 - 收窄数据写入事件：当前只有账户页订阅账户变更，分类/标签写入事件已从 `DataWriteEvent` 中移除；分类/标签 Store 仍保留本地缓存，但不再发布无人消费的事件。
 - 收窄旧主题外部入口：feature 层不再直接导入 `legacy.ui.theme.system` 的 `LegacyTheme/style/colorAs`，改走 `legacy.ui.theme` 门面；`system` 包继续作为 `shared:ui:legacy` 内部实现。
 - 收窄旧主题内部调用面：旧 UI 组件和弹窗也已改走 `legacy.ui.theme` 门面，`system.LegacyTheme` 收窄为模块内部实现，并删除重复的 `system` typography 扩展。
+- 继续收窄旧主题 system 包：旧 UI 组件不再直接导入 `theme.system` 颜色/工具，外层旧色板补齐仍需公开的颜色和 `asBrush()`；底层 `Colors.kt` 删除重复的 gradient/对比度工具，只保留主题默认值需要的颜色常量。
+- 收窄标签弹窗公开面：`AddOrEditTagModal` 改为 `shared:ui:legacy` 内部实现，feature 层继续只通过 `ShowTagModal` 和 `AddTagButton` 访问标签 UI。
 
 当前仍保留：
 

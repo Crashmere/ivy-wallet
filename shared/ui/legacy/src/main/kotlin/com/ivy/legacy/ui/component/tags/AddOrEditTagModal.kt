@@ -40,9 +40,8 @@ import com.ivy.ui.R
 @SuppressLint("ComposeModifierMissing")
 @ExperimentalFoundationApi
 @Composable
-fun BoxWithConstraintsScope.AddOrEditTagModal(
+internal fun BoxWithConstraintsScope.AddOrEditTagModal(
     id: TagId,
-    @Suppress("UNUSED_PARAMETER") modifier: Modifier = Modifier,
     visible: Boolean = false,
     initialTag: Tag? = null,
     onTagAdd: (String) -> Unit = {},

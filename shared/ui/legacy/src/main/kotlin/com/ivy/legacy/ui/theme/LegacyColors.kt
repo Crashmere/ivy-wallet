@@ -26,12 +26,16 @@ val Green = Color(0xFF14CC9E)
 
 val Orange = Color(0xFFF29F30)
 
+val Orange3 = Color(0xFFFFC34C)
+
 val Red = Color(0xFFFF4060)
 
 val Red3 = Color(0xFFFF4CA6)
 
 // Light
 val IvyLight = Color(0xFFD5CCFF)
+
+val BlueLight = Color(0xFFB3E6FF)
 
 val GreenLight = Color(0xFFAAF2E0)
 
@@ -47,6 +51,8 @@ val IvyDark = Color(0xFF352680)
 val Purple1Dark = Color(0xFF622680)
 
 val Purple = Color(0xFFA020F0)
+
+val Blue2Dark = Color(0xFF227373)
 
 val GreenDark = Color(0xFF0A664F)
 
@@ -130,7 +136,11 @@ data class Gradient(
 
         fun asHorizontalBrush() = Brush.horizontalGradient(colors = listOf(startColor, endColor))
 
-        fun asVerticalBrush() = Brush.verticalGradient(colors = listOf(startColor, endColor))
+    fun asVerticalBrush() = Brush.verticalGradient(colors = listOf(startColor, endColor))
+}
+
+fun Color.asBrush(): Brush {
+    return Brush.linearGradient(colors = listOf(this, this))
 }
 
 fun findContrastTextColor(backgroundColor: Color): Color {
