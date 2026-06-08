@@ -49,8 +49,6 @@ import com.ivy.ui.R
 import com.ivy.ui.time.TimeFormatter
 import com.ivy.data.model.currency.IvyCurrency
 import com.ivy.ui.icon.ItemIconSDefaultIcon
-import com.ivy.legacy.ui.theme.gradientBlack
-import com.ivy.legacy.ui.theme.gradientExpenses
 import com.ivy.ui.money.AmountCurrencyB1
 import com.ivy.ui.compose.GradientButton
 import com.ivy.ui.compose.ResourceIcon
@@ -249,7 +247,11 @@ internal fun TransactionCard(
                         .padding(end = 24.dp),
                     text = if (isExpense) stringResource(R.string.pay) else stringResource(R.string.get),
                     wrapContentMode = false,
-                    backgroundGradient = if (isExpense) gradientExpenses() else GradientGreen,
+                    backgroundGradient = if (isExpense) {
+                        Gradient(LegacyTheme.colors.pureInverse, LegacyTheme.colors.gray)
+                    } else {
+                        GradientGreen
+                    },
                     disabledBackgroundColor = LegacyTheme.colors.gray,
                     shape = LegacyTheme.shapes.rFull,
                     textStyle = LegacyTheme.typo.b2.copy(
@@ -664,7 +666,10 @@ private fun TypeAmountCurrency(
                         // Normal Expense
                         AmountTypeStyle(
                             icon = R.drawable.ic_expense,
-                            gradient = gradientBlack(),
+                            gradient = Gradient(
+                                LegacyTheme.colors.gray,
+                                LegacyTheme.colors.pureInverse
+                            ),
                             iconTint = White,
                             textColor = LegacyTheme.colors.pureInverse
                         )

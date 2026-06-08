@@ -199,7 +199,7 @@
 - 收窄导入 feature 公开面：只保留 `ImportCSVScreen` 与 `CSVScreen` 两个导航入口，备份恢复流程、CSV 状态/事件、解析模型、导入器和内部 flow UI 改为模块内部实现。
 - 收窄旧重排弹窗公开面：feature 层继续使用单类型 `ReorderModalSingleType` 和 `ReorderButton`，底层多类型 `ReorderModal` 收为旧 UI 内部实现。
 - 继续收窄旧主题色板公开面：外层旧主题门面中只被 `shared:ui:legacy` 内部使用的 `Blue`、`IvyLight`、`GreenLight`、`RedLight` 和 `IvyDark` 改为模块内部常量。
-- 继续收窄旧主题便捷 helper：feature 层不再直接调用 `pureBlur()` 或 `gradientExpenses()`；透明背景和支出渐变改由页面用 `LegacyTheme`/`Gradient` 显式表达，`gradientExpenses()` 只保留给 legacy 交易卡片内部使用。
+- 继续收窄旧主题便捷 helper：feature 层不再直接调用 `pureBlur()` 或 `gradientExpenses()`；透明背景和支出渐变改由页面用 `LegacyTheme`/`Gradient` 显式表达，后续 legacy 交易卡片也已内联剩余动态渐变。
 - 下沉 UI 基础服务装配：`ThemeState`、`PeriodState`、时间服务、日期时间弹窗和 `Toaster` 由 `shared:ui:core` 自己声明 Hilt 绑定，`Navigation` 由 `shared:ui:navigation` 自己声明绑定；app 不再持有这些具体实现类的装配代码。
 - 下沉 Android 字符串资源适配器：`AndroidResourceProvider` 从 app 迁入 `shared:ui:core`，app 不再为通用 `ResourceProvider` 保留绑定。
 - 收窄根启动快捷方式参数：桌面 shortcut 的“添加交易类型”直接解析为导航层 `TransactionRouteType`，Root 启动事件不再先携带数据层 `TransactionType` 再转换。
@@ -1541,8 +1541,8 @@ shared:ui:core
 - 固定红色和红色渐变开始迁入 `shared:ui:core` 的 `IvyFixedColors` / `IvyGradients`；标签编辑弹窗的删除按钮和金额键盘退格图标不再依赖 legacy 主题色板。
 - 旧编辑弹窗固定色继续迁出：账户/分类默认紫色和计算器灰/红色改用 `shared:ui:core` 的 `IvyFixedColors`；`legacy.ui.modal.edit` 不再直接导入 legacy 固定色板。
 - 旧交易列表固定色继续迁出：空状态、到期/逾期标题、交易类型金额行和历史日期分隔条改用 `shared:ui:core` 的固定色与固定渐变；`legacy.ui.transaction` 不再直接导入 legacy 主题固定色板。
-- 旧主题门面继续收窄：剩余 `Gradient` typealias 调用已改到 `shared:ui:core`，`legacy.ui.theme.LegacyColors` 不再保留 `Gradient` 别名、固定色或固定渐变别名，只保留动态主题 helper 与颜色转换/对比工具。
-- 旧主题颜色工具继续收窄：旧组件直接使用 `shared:ui:core` 的颜色对比、动态对比和 ARGB 转 Compose 颜色工具；`legacy.ui.theme.LegacyColors` 只保留仍依赖当前旧主题色板的动态 helper。
+- 旧主题门面继续收窄：剩余 `Gradient` typealias 调用已改到 `shared:ui:core`，旧主题 helper 文件不再保留 `Gradient` 别名、固定色或固定渐变别名。
+- 旧主题颜色工具继续收窄：旧组件直接使用 `shared:ui:core` 的颜色对比、动态对比和 ARGB 转 Compose 颜色工具；legacy 交易卡片内联最后两个动态渐变后，旧主题 helper 文件已删除，`LegacyColors` 仅继续作为旧主题色板接口存在。
 - 币种选择弹窗和内部币种选择器已迁入 `shared:ui:core`，`CurrencyModal` / `CurrencyPicker` 继续保留原搜索、加密货币分组、预选/选中卡片、键盘避让和保存行为；设置、首页、借贷和账户弹窗改用 core 入口。
 - 图标选择弹窗已迁入 `shared:ui:core`，`ChooseIconModal` 继续保留原图标清单、分区、选中边框、动态对比色和保存行为；借贷、账户和分类编辑弹窗改用 core 入口。
 - 周期选择弹窗和内部间隔选择行已迁入 `shared:ui:core`，`ChoosePeriodModal` / `IntervalPickerRow` 继续保留原月份横向列表、自定义起止日期、最近 N 天/周/月/年、全时间范围、键盘避让和保存行为；首页、余额、交易、报表和饼图统计页改用 core 入口。
