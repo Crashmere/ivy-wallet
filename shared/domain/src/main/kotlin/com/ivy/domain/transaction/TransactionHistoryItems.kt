@@ -1,10 +1,6 @@
 package com.ivy.domain.transaction
 
 import arrow.core.Option
-import arrow.core.toOption
-import com.ivy.data.api.AccountStore
-import com.ivy.data.api.TagStore
-import com.ivy.data.model.AccountId
 import com.ivy.data.model.Tag
 import com.ivy.data.model.TagId
 import com.ivy.data.model.Transaction
@@ -16,37 +12,13 @@ import com.ivy.domain.exchange.ExchangeTransactionArgument
 import com.ivy.domain.exchange.exchangeInBaseCurrency
 import com.ivy.domain.mapper.legacy.toImmutableLegacyTags
 import com.ivy.domain.mapper.legacy.toLegacyTransaction
-import com.ivy.domain.mapper.legacy.toLegacyAccount
 import com.ivy.domain.time.convertToLocal
-import com.ivy.domain.usecase.exchange.LegacyExchangeRatesUseCase
 import java.math.BigDecimal
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.util.UUID
 
 private fun LocalDateTime.toEpochSeconds() = toEpochSecond(ZoneOffset.UTC)
-
-internal suspend fun List<Transaction>.withDateDividers(
-    exchangeRatesUseCase: LegacyExchangeRatesUseCase,
-    baseCurrencyCode: String,
-    tagStore: TagStore,
-    accountStore: AccountStore,
-): List<TransactionHistoryItem> {
-    return transactionsWithDateDividers(
-        transactions = this,
-        baseCurrencyCode = baseCurrencyCode,
-        getAccount = { accountId -> accountStore.findById(AccountId(accountId))?.toLegacyAccount() },
-        getTags = { tagsIds -> tagStore.findByIds(tagsIds) },
-        exchange = { data, amount ->
-            exchangeRatesUseCase.convertAmount(
-                baseCurrency = data.baseCurrency,
-                fromCurrency = data.fromCurrency.getOrNull() ?: "",
-                toCurrency = data.toCurrency,
-                amount = amount.toDouble()
-            ).toBigDecimal().toOption()
-        }
-    )
-}
 
 internal suspend fun transactionsWithDateDividers(
     transactions: List<Transaction>,
