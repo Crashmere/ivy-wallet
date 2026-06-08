@@ -7,7 +7,6 @@ import androidx.compose.runtime.mutableDoubleStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
-import com.ivy.data.model.legacy.LegacyTransaction
 import com.ivy.data.model.AccountId
 import com.ivy.data.model.TransactionType
 import com.ivy.ui.resource.ResourceProvider
@@ -152,7 +151,7 @@ internal class EditTransactionViewModel @Inject internal constructor(
 
     private var customExchangeRateState by mutableStateOf(CustomExchangeRateState())
 
-    private var loadedTransaction: LegacyTransaction? = null
+    private var loadedTransaction: EditTransactionDraft? = null
     private var editMode = false
 
     // Used for optimising in updating all loan/loanRecords
@@ -191,9 +190,9 @@ internal class EditTransactionViewModel @Inject internal constructor(
 
             loadedTransaction = initialTransactionId?.let {
                 getTransactionUseCase(it)?.let { transaction ->
-                    transaction.toLegacyTransaction()
+                    transaction.toEditTransactionDraft()
                 }
-            } ?: LegacyTransaction(
+            } ?: EditTransactionDraft(
                 accountId = defaultAccountId(
                     accountId = accountId,
                     accounts = loadedAccounts
@@ -403,7 +402,7 @@ internal class EditTransactionViewModel @Inject internal constructor(
         return accounts.first().id
     }
 
-    private suspend fun display(transaction: LegacyTransaction) {
+    private suspend fun display(transaction: EditTransactionDraft) {
         this.title = transaction.title
 
         transactionType = transaction.type
@@ -442,7 +441,7 @@ internal class EditTransactionViewModel @Inject internal constructor(
         displayLoanHelper = getDisplayLoanHelper(transaction = transaction)
     }
 
-    private suspend fun getDisplayLoanHelper(transaction: LegacyTransaction): EditTransactionDisplayLoan {
+    private suspend fun getDisplayLoanHelper(transaction: EditTransactionDraft): EditTransactionDisplayLoan {
         if (transaction.loanId == null) {
             return EditTransactionDisplayLoan()
         }
@@ -577,9 +576,6 @@ internal class EditTransactionViewModel @Inject internal constructor(
             val localTime = loadedTransaction().dateTime?.let {
                 it.toLocalTimeInSystemZone()
             } ?: LocalTime.now()
-            loadedTransaction = loadedTransaction().copy(
-                date = localDate,
-            )
             updateDateTime(localDate.atTime(localTime))
         }
     }
@@ -593,9 +589,6 @@ internal class EditTransactionViewModel @Inject internal constructor(
             val localDate = loadedTransaction().dateTime?.let {
                 it.toLocalDateInSystemZone()
             } ?: LocalDate.now()
-            loadedTransaction = loadedTransaction().copy(
-                time = localTime,
-            )
             updateDateTime(localDate.atTime(localTime))
         }
     }
@@ -623,7 +616,7 @@ internal class EditTransactionViewModel @Inject internal constructor(
             val transaction = loadedTransaction()
             if (payOrSkipPlannedTransactionByIdUseCase(transaction.id)) {
                 val paidTransaction = getTransactionUseCase(transaction.id)?.let {
-                    it.toLegacyTransaction()
+                    it.toEditTransactionDraft()
                 } ?: transaction.copy(
                     paidFor = transaction.dueDate,
                     dueDate = null,
@@ -820,7 +813,7 @@ internal class EditTransactionViewModel @Inject internal constructor(
         _uiEvents.emit(EditTransactionUiEvent.CloseScreen)
     }
 
-    private suspend fun LegacyTransaction.toTransaction(): Transaction? {
+    private suspend fun EditTransactionDraft.toTransaction(): Transaction? {
         val selectedAccount = account ?: accountById(accountId) ?: return null
         val value = selectedAccount.valueOf(amount.toDouble()) ?: return null
         val transactionTime = dateTime ?: dueDate ?: return null
@@ -1119,9 +1112,9 @@ internal class EditTransactionViewModel @Inject internal constructor(
 private fun LocalDateTime.toUtcInstant(): Instant =
     atZone(ZoneId.systemDefault()).toInstant()
 
-private fun Transaction.toLegacyTransaction(): LegacyTransaction {
+private fun Transaction.toEditTransactionDraft(): EditTransactionDraft {
     val amount = getFromValue().amount.value.toBigDecimal()
-    return LegacyTransaction(
+    return EditTransactionDraft(
         accountId = getFromAccount().value,
         type = when (this) {
             is Expense -> TransactionType.EXPENSE
@@ -1138,11 +1131,9 @@ private fun Transaction.toLegacyTransaction(): LegacyTransaction {
         dueDate = time.takeIf { !settled },
         recurringRuleId = metadata.recurringRuleId,
         paidFor = metadata.paidForDateTime,
-        attachmentUrl = null,
         loanId = metadata.loanId,
         loanRecordId = metadata.loanRecordId,
         id = id.value,
-        tags = persistentListOf(),
     )
 }
 
