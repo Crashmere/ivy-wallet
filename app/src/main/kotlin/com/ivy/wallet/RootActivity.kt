@@ -25,6 +25,7 @@ import com.ivy.wallet.platform.SecureWindowController
 import com.ivy.wallet.platform.hasLockScreen as deviceHasLockScreen
 import com.ivy.wallet.platform.registerActivityResultLaunchers
 import com.ivy.wallet.platform.registerMaterialDatePicker
+import com.ivy.wallet.security.RootAppLockHost
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -65,8 +66,13 @@ class RootActivity : AppCompatActivity() {
 
     private val viewModel: RootViewModel by viewModels()
     private val activityFileSharer by lazy { ActivityFileSharer(this) }
-    private val biometricAuthenticator by lazy { BiometricAuthenticator(this) }
-    private val secureWindowController by lazy { SecureWindowController(window) }
+    private val appLockHost by lazy {
+        RootAppLockHost(
+            viewModel = viewModel,
+            secureWindowController = SecureWindowController(window),
+            biometricAuthenticator = BiometricAuthenticator(this),
+        )
+    }
     private val backPressedCallback = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
             handleRootBackPressed()
@@ -94,16 +100,7 @@ class RootActivity : AppCompatActivity() {
                 viewModel = viewModel,
                 addTransactionType = intent.readAddTransactionTypeExtra(),
                 hasLockScreen = { deviceHasLockScreen(this) },
-                onShowOSBiometricsModal = {
-                    biometricAuthenticator.authenticate(
-                        onAuthenticationSucceeded = {
-                            viewModel.handleBiometricAuthenticationSucceeded()
-                        },
-                        onAuthenticationFailed = {
-                            viewModel.handleBiometricAuthenticationFailed()
-                        }
-                    )
-                }
+                onShowOSBiometricsModal = appLockHost::showOSBiometricsModal
             )
         }
     }
@@ -117,24 +114,17 @@ class RootActivity : AppCompatActivity() {
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
-        secureWindowController.updateForWindowFocus(
-            appLockEnabled = viewModel.isAppLockEnabled(),
-            hasFocus = hasFocus
-        )
+        appLockHost.onWindowFocusChanged(hasFocus)
     }
 
     override fun onResume() {
         super.onResume()
-        if (viewModel.isAppLockEnabled()) {
-            viewModel.checkUserInactiveTimeStatus()
-        }
+        appLockHost.onResume()
     }
 
     override fun onPause() {
         super.onPause()
-        if (viewModel.isAppLockEnabled()) {
-            viewModel.startUserInactiveTimeCounter()
-        }
+        appLockHost.onPause()
     }
 
     private fun handleRootBackPressed() {

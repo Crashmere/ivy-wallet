@@ -83,6 +83,7 @@
 - 收窄 UI core 平台工具公开面：WindowInsets、键盘状态、状态栏兼容和安全时间边界中只服务内部实现的 helper 改为私有或模块内部可见；饼图内部尺寸常量改为私有，并删除未使用的 dp 转 px Int 重载。
 - 去除汇率远程数据源的旧抽象命名残留：接口已删除后，`RemoteExchangeRatesDataSourceImpl` 重命名为正式的 `RemoteExchangeRatesDataSource`，并移出 `impl` 包；汇率同步行为不变。
 - 收窄 data-core mapper 公开面：Room/远程 DTO 与 domain 模型之间的转换函数改为模块内部可见，远程汇率响应 DTO 和抓取函数也不再暴露为跨模块 API；同时删除 `TagMapper` 中无调用方的新建标签 helper。
+- 继续拆分 app 壳层职责：新增 `RootAppLockHost` 承接 Activity 生命周期里的应用锁、窗口安全和系统生物识别桥接，`RootActivity` 只保留生命周期转发和根内容装配。
 
 当前仍保留：
 
