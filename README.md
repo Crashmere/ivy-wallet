@@ -151,6 +151,7 @@
 - 收窄导入流程旧色板依赖：导入 toolbar、处理进度和结果页不再直接导入旧 `Gray` 常量，灰色文字统一改用当前 `LegacyTheme.colors.gray`。
 - 收窄列表空状态旧色板依赖：预算、报表、计划付款和借贷列表页的空状态/说明文字不再直接导入旧 `Gray` 常量，改用当前主题灰色。
 - 收窄设置开关旧色板依赖：设置页私有开关控件不再直接导入旧 `Green/Gray` 常量，启用和禁用颜色改用当前 `LegacyTheme` 色板。
+- 继续收窄旧灰色常量依赖：设置说明文案、首页搜索边框、首页负现金流提示和余额页灰色按钮不再直接导入旧 `Gray` 常量，改用当前主题灰色。
 - 收窄 domain 内部工具公开面：新旧模型 mapper 中只被 domain 使用的转换方向、CSV 导出行模型和 Arrow 数值 helper 改为模块内部实现；CSV 导入仍需要的 `toDomainAccount()` 暂时保留公开入口。
 - 收回旧账户保存转换边界：新增 `SaveLegacyAccountUseCase`，CSV 导入 feature 不再直接调用 legacy 账户 mapper；`toDomainAccount()` 改为 domain 内部实现。
 - 收回排序号工具边界：CSV 导入用本地私有 helper 计算导入账户/分类排序号，feature 层不再直接引用 `domain.util`；domain 的 `nextOrderNum()` 改为内部工具。

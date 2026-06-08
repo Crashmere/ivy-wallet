@@ -37,7 +37,6 @@ import com.ivy.ui.period.LocalPeriodState
 import com.ivy.ui.navigation.navigation
 import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.Gradient
-import com.ivy.legacy.ui.theme.Gray
 import com.ivy.legacy.ui.theme.Orange
 import com.ivy.legacy.ui.theme.White
 import com.ivy.legacy.ui.money.BalanceRow
@@ -158,7 +157,7 @@ private fun ColumnScope.CurrentBalance(
         modifier = Modifier.align(Alignment.CenterHorizontally),
         text = stringResource(R.string.current_balance),
         style = LegacyTheme.typo.b2.style(
-            color = Gray,
+            color = LegacyTheme.colors.gray,
             fontWeight = FontWeight.ExtraBold
         )
     )
@@ -250,7 +249,7 @@ private fun ColumnScope.CloseButton() {
             .zIndex(200f),
         backgroundPadding = 8.dp,
         icon = R.drawable.ic_add,
-        backgroundGradient = Gradient.solid(Gray),
+        backgroundGradient = Gradient.solid(LegacyTheme.colors.gray),
         hasShadow = false,
         tint = White
     ) {

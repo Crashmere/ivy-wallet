@@ -61,7 +61,6 @@ import com.ivy.ui.R
 import com.ivy.data.model.currency.IvyCurrency
 import com.ivy.legacy.ui.theme.Gradient
 import com.ivy.legacy.ui.theme.GradientGreen
-import com.ivy.legacy.ui.theme.Gray
 import com.ivy.legacy.ui.theme.Red
 import com.ivy.legacy.ui.theme.White
 import com.ivy.legacy.ui.modal.CurrencyModal
@@ -872,7 +871,7 @@ private fun AppSwitch(
                     modifier = Modifier.padding(end = 8.dp),
                     text = description,
                     style = LegacyTheme.typo.nB2.style(
-                        color = Gray,
+                        color = LegacyTheme.colors.gray,
                         fontWeight = FontWeight.Normal
                     ).copy(fontSize = 14.sp)
                 )
@@ -946,7 +945,7 @@ private fun SettingsPrimaryButton(
                     modifier = Modifier.padding(end = 8.dp),
                     text = description,
                     style = LegacyTheme.typo.nB2.style(
-                        color = Gray,
+                        color = LegacyTheme.colors.gray,
                         fontWeight = FontWeight.Normal
                     ).copy(fontSize = 14.sp)
                 )
@@ -1039,8 +1038,10 @@ private fun CurrencyButton(
 @Composable
 private fun SettingsSectionDivider(
     text: String,
-    color: Color = Gray
+    color: Color? = null
 ) {
+    val dividerColor = color ?: LegacyTheme.colors.gray
+
     Column {
         Spacer(Modifier.height(32.dp))
 
@@ -1048,7 +1049,7 @@ private fun SettingsSectionDivider(
             modifier = Modifier.padding(start = 32.dp),
             text = text,
             style = LegacyTheme.typo.b2.style(
-                color = color,
+                color = dividerColor,
                 fontWeight = FontWeight.Bold
             )
         )

@@ -59,7 +59,6 @@ import com.ivy.ui.compose.statusBarInset
 import com.ivy.ui.compose.toDensityPx
 import com.ivy.ui.compose.verticalSwipeListener
 import com.ivy.ui.R
-import com.ivy.legacy.ui.theme.Gray
 import com.ivy.legacy.ui.button.CircleButtonFilled
 import com.ivy.legacy.ui.icon.IvyIcon
 import com.ivy.legacy.ui.money.AmountCurrencyB1
@@ -258,7 +257,7 @@ private fun SearchButton(
             .padding(horizontal = 16.dp)
             .clip(LegacyTheme.shapes.rFull)
             .background(LegacyTheme.colors.pure)
-            .border(1.dp, Gray, LegacyTheme.shapes.rFull)
+            .border(1.dp, LegacyTheme.colors.gray, LegacyTheme.shapes.rFull)
             .clickable {
                 onClick()
             },

@@ -46,7 +46,6 @@ import com.ivy.ui.compose.verticalSwipeListener
 import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.Gradient
 import com.ivy.legacy.ui.theme.GradientGreen
-import com.ivy.legacy.ui.theme.Gray
 import com.ivy.legacy.ui.theme.Green
 import com.ivy.legacy.ui.theme.White
 import com.ivy.legacy.ui.money.BalanceRow
@@ -252,7 +251,7 @@ internal fun CashFlowInfo(
                     currency,
                 ),
                 style = LegacyTheme.typo.nB2.style(
-                    color = if (cashflow < 0) Gray else Green,
+                    color = if (cashflow < 0) LegacyTheme.colors.gray else Green,
                 ),
             )
 
