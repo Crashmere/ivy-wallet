@@ -45,7 +45,7 @@ import androidx.compose.ui.unit.dp
 import com.ivy.data.model.IntervalType
 import com.ivy.legacy.ui.button.IvyButton
 import com.ivy.ui.compose.GradientIconButton
-import com.ivy.legacy.ui.icon.IvyIcon
+import com.ivy.ui.compose.ResourceIcon
 import com.ivy.legacy.ui.modal.IvyModal
 import com.ivy.legacy.ui.modal.ModalTitle
 import com.ivy.ui.theme.colors.Gradient
@@ -556,7 +556,7 @@ private fun RowScope.IntervalTypeSelector(
     ) {
         Spacer(Modifier.width(20.dp))
 
-        IvyIcon(
+        ResourceIcon(
             modifier = Modifier
                 .size(48.dp)
                 .clip(CircleShape)
@@ -573,6 +573,7 @@ private fun RowScope.IntervalTypeSelector(
                 .padding(all = 8.dp)
                 .rotate(-180f),
             icon = R.drawable.ic_arrow_right,
+            tint = LegacyTheme.colors.pureInverse,
             contentDescription = "interval_type_arrow_left"
         )
 
@@ -589,7 +590,7 @@ private fun RowScope.IntervalTypeSelector(
 
         Spacer(Modifier.weight(1f))
 
-        IvyIcon(
+        ResourceIcon(
             modifier = Modifier
                 .size(48.dp)
                 .clip(CircleShape)
@@ -605,6 +606,7 @@ private fun RowScope.IntervalTypeSelector(
                 }
                 .padding(all = 8.dp),
             icon = R.drawable.ic_arrow_right,
+            tint = LegacyTheme.colors.pureInverse,
             contentDescription = "interval_type_arrow_right"
         )
 

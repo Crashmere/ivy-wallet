@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.dp
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.data.model.PlannedPaymentRule
 import com.ivy.ui.R
-import com.ivy.legacy.ui.icon.IvyIcon
+import com.ivy.ui.compose.ResourceIcon
 import kotlinx.collections.immutable.ImmutableList
 import java.util.UUID
 import kotlin.math.absoluteValue
@@ -185,7 +185,7 @@ private fun LazyItemScope.NoPlannedPaymentsEmptyState() {
     ) {
         Spacer(Modifier.height(64.dp))
 
-        IvyIcon(
+        ResourceIcon(
             icon = R.drawable.ic_planned_payments,
             tint = LegacyTheme.colors.gray
         )

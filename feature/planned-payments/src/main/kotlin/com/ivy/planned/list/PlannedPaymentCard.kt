@@ -40,7 +40,7 @@ import com.ivy.ui.theme.colors.IvyGradients
 import com.ivy.ui.theme.colors.IvyFixedColors.Ivy
 import com.ivy.ui.theme.colors.IvyFixedColors.White
 import com.ivy.legacy.ui.button.IvyButton
-import com.ivy.legacy.ui.icon.IvyIcon
+import com.ivy.ui.compose.ResourceIcon
 import com.ivy.ui.icon.getCustomIconIdS
 import com.ivy.ui.theme.colors.findContrastTextColor
 import com.ivy.ui.theme.colors.toComposeColor
@@ -160,7 +160,7 @@ private fun PlannedPaymentAmountRow(
             )
         }
 
-        IvyIcon(
+        ResourceIcon(
             modifier = Modifier
                 .background(style.gradient.asHorizontalBrush(), CircleShape),
             icon = style.icon,
@@ -203,7 +203,7 @@ private fun PlannedPaymentHeaderRow(
         ) {
             Spacer(Modifier.width(20.dp))
 
-            IvyIcon(
+            ResourceIcon(
                 modifier = Modifier
                     .background(LegacyTheme.colors.pure, CircleShape),
                 icon = R.drawable.ic_planned_payments,
