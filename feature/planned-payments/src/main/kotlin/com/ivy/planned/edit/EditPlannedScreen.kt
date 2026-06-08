@@ -35,7 +35,6 @@ import com.ivy.ui.navigation.navigation
 import com.ivy.ui.navigation.screenScopedViewModel
 import com.ivy.ui.R
 import com.ivy.legacy.ui.edit.core.EditBottomSheet
-import com.ivy.legacy.ui.edit.core.Title
 import com.ivy.legacy.ui.theme.Orange
 import com.ivy.legacy.ui.component.IvyButton
 import com.ivy.legacy.ui.modal.DeleteModal

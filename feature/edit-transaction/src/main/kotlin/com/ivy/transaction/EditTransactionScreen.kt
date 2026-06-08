@@ -59,7 +59,6 @@ import com.ivy.data.model.currency.IvyCurrency
 import com.ivy.data.model.CreateAccountData
 import com.ivy.data.model.CreateCategoryData
 import com.ivy.legacy.ui.edit.core.EditBottomSheet
-import com.ivy.legacy.ui.edit.core.Title
 import com.ivy.legacy.ui.component.IvyButton
 import com.ivy.legacy.ui.component.IvyIcon
 import com.ivy.legacy.ui.modal.DeleteModal
