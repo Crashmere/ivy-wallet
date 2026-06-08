@@ -19,7 +19,7 @@ data class EditTransactionScreen(
 data class TransactionsScreen(
     val accountId: UUID? = null,
     val categoryId: UUID? = null,
-    val unspecifiedCategory: Boolean? = false,
+    val unspecifiedCategory: Boolean = false,
     val accountIdFilterList: List<UUID> = persistentListOf(),
     val legacyTransactionIds: List<UUID> = persistentListOf(),
     val containsTransferTransactions: Boolean = false

@@ -690,7 +690,7 @@ internal class TransactionsViewModel @Inject internal constructor(
                 // Reports use a synthetic account-transfers category; keep it separate from
                 // the real unspecified-category branch.
                 screen.categoryId != null && legacyTransactionsFromNavigation.isNotEmpty() &&
-                        screen.unspecifiedCategory == false -> {
+                        !screen.unspecifiedCategory -> {
                     initForCategoryWithTransactions(
                         screen.categoryId!!,
                         screen.accountIdFilterList,
@@ -698,14 +698,14 @@ internal class TransactionsViewModel @Inject internal constructor(
                     )
                 }
 
-                screen.unspecifiedCategory == true && legacyTransactionsFromNavigation.isNotEmpty() -> {
+                screen.unspecifiedCategory && legacyTransactionsFromNavigation.isNotEmpty() -> {
                     initForAccountTransfersCategory(
                         screen.accountIdFilterList,
                         legacyTransactionsFromNavigation
                     )
                 }
 
-                screen.unspecifiedCategory == true -> {
+                screen.unspecifiedCategory -> {
                     initForUnspecifiedCategory()
                 }
 
