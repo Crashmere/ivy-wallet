@@ -40,6 +40,9 @@ import com.ivy.ui.platform.FileSharer
 import com.ivy.ui.platform.LocaleSettingsLauncher
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.time.Instant
@@ -97,6 +100,8 @@ class SettingsViewModel @Inject constructor(
     private val sortCategoriesAscending = mutableStateOf(false)
     private val startDateOfMonth = mutableIntStateOf(1)
     private val progressState = mutableStateOf(false)
+    private val _uiEvents = MutableSharedFlow<SettingsUiEvent>()
+    val uiEvents: SharedFlow<SettingsUiEvent> = _uiEvents.asSharedFlow()
 
     @Composable
     override fun uiState(): SettingsState {
@@ -472,13 +477,8 @@ class SettingsViewModel @Inject constructor(
 
     private fun deleteAllUserData() {
         viewModelScope.launch {
-            logout()
-        }
-    }
-
-    private fun logout() {
-        viewModelScope.launch {
             resetWalletDataUseCase.resetAllData()
+            _uiEvents.emit(SettingsUiEvent.WalletDataReset)
         }
     }
 

@@ -25,6 +25,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -49,6 +50,7 @@ import com.ivy.ui.compose.thenIf
 import com.ivy.ui.compose.drawColoredShadow
 import com.ivy.ui.navigation.ExchangeRatesScreen
 import com.ivy.ui.navigation.ImportScreen
+import com.ivy.ui.navigation.MainScreen
 import com.ivy.ui.navigation.navigation
 import com.ivy.ui.navigation.screenScopedViewModel
 import com.ivy.ui.platform.buildInfoProvider
@@ -80,6 +82,18 @@ fun BoxWithConstraintsScope.SettingsScreen() {
     val viewModel: SettingsViewModel = screenScopedViewModel()
     val uiState = viewModel.uiState()
     val fileSharer = fileSharer()
+    val nav = navigation()
+
+    LaunchedEffect(viewModel) {
+        viewModel.uiEvents.collect { event ->
+            when (event) {
+                SettingsUiEvent.WalletDataReset -> {
+                    nav.resetBackStack()
+                    nav.navigateTo(MainScreen)
+                }
+            }
+        }
+    }
 
     UI(
         currencyCode = uiState.currencyCode,
