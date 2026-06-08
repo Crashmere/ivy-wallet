@@ -29,9 +29,8 @@ import com.ivy.legacy.ui.theme.style
 import com.ivy.ui.compose.navigationBarInset
 import com.ivy.ui.compose.toDensityPx
 import com.ivy.ui.R
-import com.ivy.legacy.ui.theme.GradientPurple
+import com.ivy.legacy.ui.theme.Gradient
 import com.ivy.legacy.ui.theme.Green
-import com.ivy.legacy.ui.theme.Purple
 import com.ivy.legacy.ui.theme.White
 import com.ivy.legacy.ui.component.IvyCircleButton
 import com.ivy.legacy.ui.component.IvyIcon
@@ -40,6 +39,8 @@ import kotlin.math.roundToInt
 
 private val FabButtonSize = 56.dp
 private const val ZIndex = 200f
+private val PendingLoanColor = Color(0xFFA020F0)
+private val AddLoanGradient = Gradient(PendingLoanColor, Color(0xFFED3EF7))
 
 @Composable
 internal fun BoxWithConstraintsScope.LoanBottomBar(
@@ -59,7 +60,7 @@ internal fun BoxWithConstraintsScope.LoanBottomBar(
             icon = R.drawable.ic_custom_loan_s,
             name = "Pending",
             selected = tab == LoanTab.PENDING,
-            selectedColor = Purple
+            selectedColor = PendingLoanColor
         ) {
             selectTab(LoanTab.PENDING)
         }
@@ -97,7 +98,7 @@ internal fun BoxWithConstraintsScope.LoanBottomBar(
             .zIndex(ZIndex),
         backgroundPadding = 8.dp,
         icon = R.drawable.ic_add,
-        backgroundGradient = GradientPurple,
+        backgroundGradient = AddLoanGradient,
         hasShadow = true,
         tint = White
     ) {

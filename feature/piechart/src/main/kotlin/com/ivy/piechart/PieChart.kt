@@ -27,7 +27,6 @@ import com.ivy.data.model.Category
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.compose.drawColoredShadow
 import com.ivy.ui.R
-import com.ivy.legacy.ui.theme.Black
 import com.ivy.legacy.ui.theme.Gradient
 import com.ivy.legacy.ui.theme.Gray
 import com.ivy.legacy.ui.component.IvyIcon
@@ -38,6 +37,7 @@ import kotlin.math.sqrt
 
 private const val PIE_CHART_RADIUS_DP = 128
 private const val RADIUS_DP = 112f
+private val PieChartShadowColor = Color(0xFF111114)
 
 @Composable
 internal fun PieChart(
@@ -55,7 +55,7 @@ internal fun PieChart(
             modifier = Modifier
                 .size((PIE_CHART_RADIUS_DP * 2).dp)
                 .drawColoredShadow(
-                    color = Black,
+                    color = PieChartShadowColor,
                     alpha = if (LegacyTheme.colors.isLight) 0.05f else 0.5f,
                     offsetY = 32.dp,
                     shadowRadius = 48.dp

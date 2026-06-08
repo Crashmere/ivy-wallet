@@ -62,8 +62,6 @@ import com.ivy.ui.time.TimeFormatter
 import com.ivy.data.model.currency.IvyCurrency
 import com.ivy.legacy.ui.theme.Gradient
 import com.ivy.legacy.ui.theme.Gray
-import com.ivy.legacy.ui.theme.MediumBlack
-import com.ivy.legacy.ui.theme.MediumWhite
 import com.ivy.legacy.ui.component.BalanceRow
 import com.ivy.legacy.ui.component.ItemIconMDefaultIcon
 import com.ivy.legacy.ui.component.IvyButton
@@ -79,6 +77,9 @@ import com.ivy.legacy.ui.modal.LoanRecordModal
 import com.ivy.legacy.ui.modal.ProgressModal
 import com.ivy.legacy.ui.theme.toComposeColor
 import java.util.UUID
+
+private val LoanCardDarkBackground = Color(0xFF2B2C2D)
+private val LoanCardLightBackground = Color(0xFFEFEEF0)
 
 @Composable
 fun BoxWithConstraintsScope.LoanDetailsScreen(screen: LoanDetailsScreen) {
@@ -406,9 +407,9 @@ private fun LoanInfoCard(
     onAddRecord: () -> Unit
 ) {
     val backgroundColor = if (isDarkColor(loan.color)) {
-        MediumBlack.copy(alpha = 0.9f)
+        LoanCardDarkBackground.copy(alpha = 0.9f)
     } else {
-        MediumWhite.copy(alpha = 0.9f)
+        LoanCardLightBackground.copy(alpha = 0.9f)
     }
 
     val contrastColor = findContrastTextColor(backgroundColor)
@@ -694,7 +695,11 @@ private fun LoanRecordItem(
                 if (loanRecord.interest) {
                     // Spacer(modifier = Modifier.width(8.dp))
 
-                    val textIconColor = if (isDarkColor(loan.color)) MediumWhite else MediumBlack
+                    val textIconColor = if (isDarkColor(loan.color)) {
+                        LoanCardLightBackground
+                    } else {
+                        LoanCardDarkBackground
+                    }
 
                     IvyButton(
                         modifier = Modifier.padding(start = 8.dp),

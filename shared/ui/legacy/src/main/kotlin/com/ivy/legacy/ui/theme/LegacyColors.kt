@@ -15,7 +15,7 @@ import androidx.core.graphics.ColorUtils
 
 val White = Color(0xFFFAFAFA)
 
-val Black = Color(0xFF111114)
+internal val Black = Color(0xFF111114)
 
 // Primary
 val Ivy = Color(0xFF6B4DFF)
@@ -50,26 +50,26 @@ internal val IvyDark = Color(0xFF352680)
 
 internal val Purple1Dark = Color(0xFF622680)
 
-val Purple = Color(0xFFA020F0)
+internal val Purple = Color(0xFFA020F0)
 
 internal val Blue2Dark = Color(0xFF227373)
 
-val GreenDark = Color(0xFF0A664F)
+internal val GreenDark = Color(0xFF0A664F)
 
 internal val OrangeDark = Color(0xFF734B17)
 // --------------------------------------------------------------------------------------------------
 
-val MediumBlack = Color(0xFF2B2C2D)
+internal val MediumBlack = Color(0xFF2B2C2D)
 
 val Gray = Color(0xFF939199)
 
-val MediumWhite = Color(0xFFEFEEF0)
+internal val MediumWhite = Color(0xFFEFEEF0)
 
 internal val Transparent = Color(0x00000000)
 
 internal val GradientRed = Gradient(Red, Color(0xFFFF99AB))
 
-val GradientPurple = Gradient(Purple, Color(0xFFED3EF7))
+internal val GradientPurple = Gradient(Purple, Color(0xFFED3EF7))
 
 val GradientGreen = Gradient(Green, Color(0xFF49F2C8))
 

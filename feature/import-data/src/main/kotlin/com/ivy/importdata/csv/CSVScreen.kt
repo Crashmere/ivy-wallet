@@ -38,7 +38,6 @@ import androidx.compose.ui.unit.dp
 import com.ivy.ui.navigation.navigation
 import com.ivy.ui.navigation.screenScopedViewModel
 import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.legacy.ui.theme.colorAs
 import com.ivy.legacy.ui.theme.style
 import com.ivy.ui.compose.thenIf
 import com.ivy.importdata.csvimport.flow.ImportProcessing
@@ -98,7 +97,7 @@ private fun ImportUI(
             Spacer8()
             Text(
                 text = stringResource(R.string.warning_import_csv_file).trimIndent(),
-                style = LegacyTheme.typo.c.colorAs(LegacyTheme.colors.red),
+                style = LegacyTheme.typo.c.style(color = LegacyTheme.colors.red),
                 fontWeight = FontWeight.Bold,
             )
         }
@@ -238,10 +237,13 @@ private fun <M> LazyListScope.mappingRow(
         ) {
             Text(
                 text = mapping.ivyColumn,
-                style = LegacyTheme.typo.b1.colorAs(LegacyTheme.colors.primary),
+                style = LegacyTheme.typo.b1.style(color = LegacyTheme.colors.primary),
             )
             Spacer(modifier = Modifier.height(4.dp))
-            Text(text = mapping.helpInfo, style = LegacyTheme.typo.c.colorAs(LegacyTheme.colors.gray))
+            Text(
+                text = mapping.helpInfo,
+                style = LegacyTheme.typo.c.style(color = LegacyTheme.colors.gray)
+            )
             Spacer8()
             Text(text = "Choose a matching CSV column:", style = LegacyTheme.typo.b2)
             Spacer(modifier = Modifier.height(4.dp))

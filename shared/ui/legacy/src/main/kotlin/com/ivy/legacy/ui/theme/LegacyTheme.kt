@@ -3,9 +3,9 @@ package com.ivy.legacy.ui.theme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.TextStyle
 import com.ivy.legacy.ui.theme.system.LegacyTheme as SystemLegacyTheme
 
 object LegacyTheme {
@@ -24,8 +24,6 @@ object LegacyTheme {
         @ReadOnlyComposable
         get() = SystemLegacyTheme.shapes
 }
-
-fun TextStyle.colorAs(color: Color) = this.copy(color = color)
 
 @Composable
 fun TextStyle.style(
