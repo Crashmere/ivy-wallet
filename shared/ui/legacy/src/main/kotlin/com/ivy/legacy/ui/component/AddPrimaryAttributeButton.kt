@@ -20,7 +20,7 @@ import com.ivy.legacy.ui.theme.style
 import com.ivy.ui.R
 
 @Composable
-fun AddPrimaryAttributeButton(
+internal fun AddPrimaryAttributeButton(
     @DrawableRes icon: Int,
     text: String,
     onClick: () -> Unit

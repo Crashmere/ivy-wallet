@@ -24,7 +24,6 @@ import com.ivy.ui.time.forDisplay
 import com.ivy.ui.time.formatDateOnly
 import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.Orange
-import com.ivy.legacy.ui.component.AddPrimaryAttributeButton
 import com.ivy.legacy.ui.component.IvyIcon
 import java.time.LocalDateTime
 import java.util.Locale
@@ -55,11 +54,7 @@ internal fun RecurringRule(
             }
         )
     } else {
-        AddPrimaryAttributeButton(
-            icon = R.drawable.ic_planned_payments,
-            text = stringResource(R.string.add_planned_date_payment),
-            onClick = onShowRecurringRuleModal
-        )
+        AddRecurringRuleButton(onClick = onShowRecurringRuleModal)
     }
 }
 
@@ -71,6 +66,34 @@ internal fun hasRecurringRule(
 ): Boolean {
     return startDate != null &&
         ((intervalN != null && intervalType != null) || oneTime)
+}
+
+@Composable
+private fun AddRecurringRuleButton(onClick: () -> Unit) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp)
+            .clip(LegacyTheme.shapes.r4)
+            .background(LegacyTheme.colors.medium, LegacyTheme.shapes.r4)
+            .clickable(onClick = onClick)
+            .padding(vertical = 20.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Spacer(Modifier.width(16.dp))
+
+        IvyIcon(icon = R.drawable.ic_planned_payments)
+
+        Spacer(Modifier.width(8.dp))
+
+        Text(
+            text = stringResource(R.string.add_planned_date_payment),
+            style = LegacyTheme.typo.b2.style(
+                color = LegacyTheme.colors.pureInverse,
+                fontWeight = FontWeight.Bold
+            )
+        )
+    }
 }
 
 @Composable

@@ -1,14 +1,19 @@
 package com.ivy.transaction
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.BoxWithConstraintsScope
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
@@ -19,7 +24,9 @@ import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.layout.onGloballyPositioned
@@ -56,9 +63,9 @@ import com.ivy.legacy.ui.edit.core.Category
 import com.ivy.legacy.ui.edit.core.EditBottomSheet
 import com.ivy.legacy.ui.edit.core.Title
 import com.ivy.legacy.ui.edit.core.Toolbar
-import com.ivy.legacy.ui.component.AddPrimaryAttributeButton
 import com.ivy.legacy.ui.component.ChangeTransactionTypeModal
 import com.ivy.legacy.ui.component.IvyButton
+import com.ivy.legacy.ui.component.IvyIcon
 import com.ivy.legacy.ui.modal.DeleteModal
 import com.ivy.legacy.ui.modal.ModalAdd
 import com.ivy.legacy.ui.modal.ModalSave
@@ -417,24 +424,20 @@ private fun BoxWithConstraintsScope.UI(
         if (dueDate == null && transactionType != TransactionType.TRANSFER && dateTime == null) {
             Spacer(Modifier.height(12.dp))
 
-            AddPrimaryAttributeButton(
-                icon = R.drawable.ic_planned_payments,
-                text = stringResource(R.string.add_planned_date_payment),
-                onClick = {
-                    nav.back()
-                    nav.navigateTo(
-                        EditPlannedScreen(
-                            plannedPaymentRuleId = null,
-                            type = transactionType.toRouteType(),
-                            amount = amount,
-                            accountId = account?.id,
-                            categoryId = category?.id?.value,
-                            title = titleTextFieldValue.text,
-                            description = description,
-                        )
+            EditTransactionAddPlannedDateButton {
+                nav.back()
+                nav.navigateTo(
+                    EditPlannedScreen(
+                        plannedPaymentRuleId = null,
+                        type = transactionType.toRouteType(),
+                        amount = amount,
+                        accountId = account?.id,
+                        categoryId = category?.id?.value,
+                        title = titleTextFieldValue.text,
+                        description = description,
                     )
-                }
-            )
+                )
+            }
         }
 
         Spacer(Modifier.height(600.dp)) // scroll hack
@@ -674,6 +677,34 @@ private fun TransactionRouteType.toTransactionType(): TransactionType {
 
 private fun Instant.toLocalDateInSystemZone() =
     atZone(ZoneId.systemDefault()).toLocalDate()
+
+@Composable
+private fun EditTransactionAddPlannedDateButton(onClick: () -> Unit) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp)
+            .clip(LegacyTheme.shapes.r4)
+            .background(LegacyTheme.colors.medium, LegacyTheme.shapes.r4)
+            .clickable(onClick = onClick)
+            .padding(vertical = 20.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Spacer(Modifier.width(16.dp))
+
+        IvyIcon(icon = R.drawable.ic_planned_payments)
+
+        Spacer(Modifier.width(8.dp))
+
+        Text(
+            text = stringResource(R.string.add_planned_date_payment),
+            style = LegacyTheme.typo.b2.style(
+                color = LegacyTheme.colors.pureInverse,
+                fontWeight = FontWeight.Bold
+            )
+        )
+    }
+}
 
 @Composable
 private fun PayOrGetPlannedButton(
