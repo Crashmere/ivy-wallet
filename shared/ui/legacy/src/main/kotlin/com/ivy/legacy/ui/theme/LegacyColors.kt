@@ -148,7 +148,7 @@ fun isDarkColor(color: Color): Boolean {
     return isDarkColor(color.toArgb())
 }
 
-fun isDarkColor(@ColorInt color: Int): Boolean {
+internal fun isDarkColor(@ColorInt color: Int): Boolean {
     return ColorUtils.calculateLuminance(color) <= 0.5
 }
 

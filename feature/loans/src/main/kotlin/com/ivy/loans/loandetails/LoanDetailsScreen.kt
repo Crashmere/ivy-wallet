@@ -520,7 +520,7 @@ private fun LoanInfoCard(
     onAddRecord: () -> Unit,
     onAccountClick: (UUID) -> Unit
 ) {
-    val backgroundColor = if (isDarkColor(loan.color)) {
+    val backgroundColor = if (isDarkColor(loan.color.toComposeColor())) {
         LoanCardDarkBackground.copy(alpha = 0.9f)
     } else {
         LoanCardLightBackground.copy(alpha = 0.9f)
@@ -800,7 +800,7 @@ private fun LoanRecordItem(
                 if (loanRecord.interest) {
                     // Spacer(modifier = Modifier.width(8.dp))
 
-                    val textIconColor = if (isDarkColor(loan.color)) {
+                    val textIconColor = if (isDarkColor(loan.color.toComposeColor())) {
                         LoanCardLightBackground
                     } else {
                         LoanCardDarkBackground
