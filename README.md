@@ -1255,6 +1255,7 @@ shared:ui:core
 - 交易列表页的账户详情状态也已收为账户 ID；页面状态继续向旧 UI 暴露推导后的 `LegacyAccount`，但 ViewModel 不再注入单账户 legacy 查询 use case。
 - CSV 导入器已去掉导入器实例上的 `lateinit` 账户/分类缓存；每次导入创建独立 `CsvImportContext` 保存账户、分类、基础货币和新建颜色游标，导入结果统计和保存逻辑不变。
 - 借贷交易同步核心已去掉实例级基础币种缓存和初始化协程；需要换算时直接读取当前基础币种，交易创建、删除和保存入口不变。
+- CSV 日期解析已删除从未写入成功值的文件级格式缓存；解析仍按原有日期格式列表逐项尝试。
 - app 仍保留文件选择、文件分享、Material 日期选择器、BuildInfo、Locale 设置、生物识别和窗口安全等真正依赖 Activity 或 Android app 壳层的装配。
 
 ## 高风险区域

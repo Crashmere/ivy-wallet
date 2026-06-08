@@ -85,7 +85,6 @@ internal fun parseTransactionType(
 }
 
 // region Parse Date
-private var lastSuccessfulFormat: String? = null
 
 internal fun parseDate(
     value: String,
@@ -96,17 +95,6 @@ internal fun parseDate(
     }
 
     val possibleFormats = possibleDateFormats(metadata)
-    if (lastSuccessfulFormat != null) {
-        try {
-            return@tryParse LocalDateTime.parse(
-                cleanedValue,
-                DateTimeFormatter.ofPattern(lastSuccessfulFormat)
-            )
-        } catch (e: DateTimeParseException) {
-            // Ignore and continue trying other formats
-            lastSuccessfulFormat = null
-        }
-    }
     for (format in possibleFormats) {
         try {
             return@tryParse LocalDateTime.parse(cleanedValue, DateTimeFormatter.ofPattern(format))
