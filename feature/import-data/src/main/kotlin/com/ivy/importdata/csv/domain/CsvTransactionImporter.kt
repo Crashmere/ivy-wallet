@@ -21,7 +21,6 @@ import com.ivy.importdata.csv.TransferFields
 import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.data.model.currency.IvyCurrency
 import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
-import com.ivy.domain.util.nextOrderNum
 import kotlinx.collections.immutable.toImmutableList
 import java.time.LocalDateTime
 import java.time.ZoneId
@@ -270,7 +269,7 @@ class CsvTransactionImporter @Inject constructor(
             ),
             color = colorArgb,
             icon = icon,
-            orderNum = orderNum ?: accounts.maxOfOrNull { it.orderNum }.nextOrderNum()
+            orderNum = orderNum ?: accounts.maxOfOrNull { it.orderNum }.nextImportOrderNum()
         )
         val accountSaved = saveLegacyAccountUseCase(newAccount, baseCurrency)
         if (!accountSaved) return null
@@ -322,7 +321,7 @@ class CsvTransactionImporter @Inject constructor(
             name = categoryName,
             color = ColorInt(colorArgb),
             icon = icon?.let(IconAsset::from)?.getOrNull(),
-            orderNum = orderNum ?: categories.maxOfOrNull { it.orderNum }.nextOrderNum(),
+            orderNum = orderNum ?: categories.maxOfOrNull { it.orderNum }.nextImportOrderNum(),
         )
 
         saveCategoryUseCase(newCategory)
@@ -333,4 +332,6 @@ class CsvTransactionImporter @Inject constructor(
 
     private fun LocalDateTime.toInstantInSystemZone() =
         atZone(ZoneId.systemDefault()).toInstant()
+
+    private fun Double?.nextImportOrderNum(): Double = this?.plus(1) ?: 0.0
 }
