@@ -45,8 +45,6 @@ import com.ivy.domain.usecase.transaction.SuggestTransactionTitlesUseCase
 import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.ui.navigation.EditTransactionScreen
 import com.ivy.ui.navigation.TransactionRouteType
-import com.ivy.ui.navigation.MainScreen
-import com.ivy.ui.navigation.Navigation
 import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.R
 import com.ivy.ui.time.DateTimePicker
@@ -69,6 +67,9 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
 import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.math.BigDecimal
@@ -90,7 +91,6 @@ class EditTransactionViewModel @Inject constructor(
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
     private val getCategoryUseCase: GetCategoryUseCase,
     private val getLoanUseCase: GetLoanUseCase,
-    private val nav: Navigation,
     private val getLastSelectedAccountId: GetLastSelectedAccountIdUseCase,
     private val setLastSelectedAccountId: SetLastSelectedAccountIdUseCase,
     private val exchangeRatesUseCase: LegacyExchangeRatesUseCase,
@@ -156,6 +156,8 @@ class EditTransactionViewModel @Inject constructor(
     private lateinit var baseUserCurrency: String
     private var tagSearchJob: Job? = null
     private val tagSearchDebounceTimeInMills: Long = 500
+    private val _uiEvents = MutableSharedFlow<EditTransactionUiEvent>()
+    val uiEvents: SharedFlow<EditTransactionUiEvent> = _uiEvents.asSharedFlow()
 
     fun start(screen: EditTransactionScreen) {
         viewModelScope.launch {
@@ -623,8 +625,8 @@ class EditTransactionViewModel @Inject constructor(
                 loadedTransaction?.let {
                     deleteTransactionUseCase(TransactionId(it.id))
                 }
-                closeScreen()
             }
+            closeScreen()
         }
     }
 
@@ -782,13 +784,8 @@ class EditTransactionViewModel @Inject constructor(
 
     private suspend fun baseCurrency(): String = getBaseCurrencyCode()
 
-    private fun closeScreen() {
-        if (nav.backStackEmpty()) {
-            nav.resetBackStack()
-            nav.navigateTo(MainScreen)
-        } else {
-            nav.back()
-        }
+    private suspend fun closeScreen() {
+        _uiEvents.emit(EditTransactionUiEvent.CloseScreen)
     }
 
     @Suppress("ReturnCount")

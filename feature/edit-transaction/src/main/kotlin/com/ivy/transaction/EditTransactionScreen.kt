@@ -45,6 +45,7 @@ import com.ivy.legacy.ui.component.tags.ShowTagModal
 import com.ivy.ui.navigation.onScreenStart
 import com.ivy.ui.navigation.EditPlannedScreen
 import com.ivy.ui.navigation.EditTransactionScreen
+import com.ivy.ui.navigation.MainScreen
 import com.ivy.ui.navigation.TransactionRouteType
 import com.ivy.ui.navigation.navigation
 import com.ivy.ui.navigation.screenScopedViewModel
@@ -84,7 +85,23 @@ import kotlin.math.roundToInt
 @Composable
 fun BoxWithConstraintsScope.EditTransactionScreen(screen: EditTransactionScreen) {
     val viewModel: EditTransactionViewModel = screenScopedViewModel()
+    val nav = navigation()
     val uiState = viewModel.uiState()
+
+    LaunchedEffect(viewModel) {
+        viewModel.uiEvents.collect { event ->
+            when (event) {
+                EditTransactionUiEvent.CloseScreen -> {
+                    if (nav.backStackEmpty()) {
+                        nav.resetBackStack()
+                        nav.navigateTo(MainScreen)
+                    } else {
+                        nav.back()
+                    }
+                }
+            }
+        }
+    }
 
     LaunchedEffect(Unit) {
         viewModel.start(screen)
