@@ -11,7 +11,6 @@ import com.ivy.data.model.FromToTimeRange
 import com.ivy.data.api.TransactionStore
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.domain.usecase.exchange.ExchangeAmountUseCase
-import com.ivy.domain.usecase.exchange.LegacyExchangeRatesUseCase
 import com.ivy.domain.mapper.legacy.toLegacyTransaction
 import com.ivy.domain.transaction.legacy.LegacyTransactionDateDividers
 import com.ivy.domain.transaction.legacy.filterOverdueLegacyTransactions
@@ -24,7 +23,6 @@ class GetCategoryTransactionsSummaryUseCase @Inject internal constructor(
     private val accountStore: AccountStore,
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
     private val exchangeAmountUseCase: ExchangeAmountUseCase,
-    private val exchangeRatesUseCase: LegacyExchangeRatesUseCase,
     private val transactionStore: TransactionStore,
 ) {
     suspend operator fun invoke(
@@ -148,9 +146,9 @@ class GetCategoryTransactionsSummaryUseCase @Inject internal constructor(
                 accountFilterSet = accountFilterSet,
                 transactions = transactions
             ).withDateDividers(
-                exchangeRatesUseCase = exchangeRatesUseCase,
+                exchangeAmountUseCase = exchangeAmountUseCase,
                 baseCurrencyCode = getBaseCurrencyCode(),
-                    accountStore = accountStore,
+                accountStore = accountStore,
             )
         }
     }

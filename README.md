@@ -247,10 +247,11 @@
 - 收窄报表页旧映射入口：报表页不再依赖 `MapTransactionsToLegacyTransactionsUseCase`；到期交易展示所需的正式模型到旧展示模型转换下沉为报表 ViewModel 文件私有适配，该 use case 已无调用方并删除。
 - 收窄饼图页输入缓存：饼图 ViewModel 不再长期保存由 route ID 还原出的旧交易对象，只保存交易 ID，并在重算图表时局部读取。
 - 收窄借贷详情关联交易缓存：借贷详情不再把贷款关联旧交易对象保存在 ViewModel 字段中，加载时只设置开关状态，编辑时局部读取。
-- 收窄编辑交易汇率边界：编辑交易页的转账目标金额和自定义汇率卡片改用正式 `ExchangeAmountUseCase`，并保留旧入口失败时返回原金额的行为；`LegacyExchangeRatesUseCase` 已收为 `shared:domain` 内部旧算法兼容实现。
+- 收窄编辑交易汇率边界：编辑交易页的转账目标金额和自定义汇率卡片改用正式 `ExchangeAmountUseCase`，并保留旧入口失败时返回原金额的行为。
 - 收窄计划付款统计汇率边界：计划付款列表汇总和区间金额统计改用正式 `ExchangeAmountUseCase`，不再为了基础币种折算把正式账户/交易转换成 `LegacyAccount` 或 `LegacyTransaction`。
 - 收窄借贷同步汇率边界：借贷记录同步里的跨币种金额转换改用正式 `ExchangeAmountUseCase`，继续保留汇率缺失时返回原金额的旧行为。
-- 收窄分类统计汇率边界：分类详情和未分类统计的收入、支出、余额、到期与逾期金额汇总改用正式 `ExchangeAmountUseCase`；`LegacyExchangeRatesUseCase` 删除旧模型基础币种金额重载，只暂时保留旧日期分组需要的跨币种转换。
+- 收窄分类统计汇率边界：分类详情和未分类统计的收入、支出、余额、到期与逾期金额汇总改用正式 `ExchangeAmountUseCase`；旧模型基础币种金额重载已删除。
+- 删除旧汇率 use case：旧交易日期分组也改为直接接收正式 `ExchangeAmountUseCase`，`LegacyExchangeRatesUseCase` 已无调用方并删除。
 
 当前仍保留：
 
@@ -799,7 +800,7 @@
    - 目标：改成普通 use case 或直接内联到 ViewModel/domain use case。
 3. 旧业务逻辑
    - `LoanTransactions*` 已迁到 `domain.usecase.loan`
-   - `ExchangeRatesLogic` 已迁到 `domain.usecase.exchange.LegacyExchangeRatesUseCase`
+   - `ExchangeRatesLogic` 曾迁到 `domain.usecase.exchange.LegacyExchangeRatesUseCase`，随后已整体迁到正式 `ExchangeAmountUseCase` 并删除旧 use case
    - 目标：继续压缩剩余 legacy 包，只保留真实兼容层。
 4. 旧 UI 组件和 modal
    - `AccountModal`
@@ -911,7 +912,7 @@
 - 借贷页数据边界已收敛：新增 `GetLoansUseCase`、`GetLoanUseCase`、`GetLoanRecordsUseCase`、`ReorderLoansUseCase`、`GetLoanTransactionUseCase` 和 `HasLoanRecordTransactionUseCase`，借贷列表和借贷详情不再直接注入 `LoanRecordDao`、`WriteLoanDao`、`TransactionRepository` 或 `TransactionMapper`；旧 `LoansAct/LoanByIdAct` 已删除，`:feature:loans` 已去掉对 `shared:data:core` 的直接依赖。
 - 借贷写入边界已收敛：新增 `CreateLoanUseCase`、`UpdateLoanUseCase`、`DeleteLoanUseCase`、`CreateLoanRecordUseCase`、`UpdateLoanRecordUseCase` 和 `DeleteLoanRecordUseCase`；借贷列表和详情页不再注入旧 `LoanCreator/LoanRecordCreator`，关联交易创建、编辑和删除仍保持原有调用顺序。
 - 借贷关联交易同步已从 `legacy.domain.logic.loantransactions` 迁到 `domain.usecase.loan`：新增 `LoanTransactionSyncUseCase`、`LoanRecordTransactionSyncUseCase`、`UpdateAssociatedLoanDataUseCase` 和内部 `LoanTransactionSyncCore`；借贷页和编辑交易页不再注入旧 `LoanTransactionsLogic` 聚合器。
-- 旧模型仍需使用的汇率换算入口已从 `legacy.domain.logic.currency.ExchangeRatesLogic` 迁到 `domain.usecase.exchange.LegacyExchangeRatesUseCase`；旧日期分组不再引用 legacy logic 包。编辑交易页、计划付款统计、借贷同步和分类统计后来已改用正式 `ExchangeAmountUseCase`。
+- 旧模型曾使用的汇率换算入口已从 `legacy.domain.logic.currency.ExchangeRatesLogic` 迁到 `domain.usecase.exchange.LegacyExchangeRatesUseCase`；随后编辑交易页、计划付款统计、借贷同步、分类统计和旧日期分组陆续改用正式 `ExchangeAmountUseCase`，`LegacyExchangeRatesUseCase` 已删除。
 - 计划付款编辑页数据边界已收敛：新增 `GetPlannedPaymentRuleUseCase`、`SavePlannedPaymentRuleUseCase`、`DeletePlannedPaymentRuleUseCase` 和 `GetCategoryUseCase`，计划付款保存仍会生成未来交易、删除仍会清理未发生的生成交易，`:feature:planned-payments` 已去掉对 `shared:data:core` 的直接依赖。
 - 计划付款未来交易生成器已从旧 `PlannedPaymentsGenerator` 迁到正式 `GeneratePlannedPaymentTransactionsUseCase`；一次性规则、循环规则、72 条生成上限和跳过已发生交易的规则保持不变。
 - 余额页的计划付款区间金额统计已从 `PlannedPaymentsLogic` 拆到 `CalculatePlannedPaymentsAmountForRangeUseCase`；收入计正、支出计负、转账忽略和基础币种折算规则保持不变。
@@ -1101,7 +1102,7 @@
 - 正式交易到旧交易的 mapper 已从泛化 `toLegacy()`/`toDomain()` 改名为 `toLegacyTransaction()`/`toTransaction()`；调用方现在能明确区分正式交易模型和旧交易兼容模型之间的转换，避免和 data-core 的实体 `toDomain()` 命名混在一起。
 - 交易列表、首页和报表使用的新旧交易批量转换 use case 已从 `MapTransactionsToLegacy*` 改名为 `MapTransactionsToLegacyTransactions*`，避免把 legacy 误读成整套旧 domain 边界。
 - 功能开关偏好门面已从 `PreferenceToggleRepository` 改名为 `PreferenceToggleService`：它只负责把 domain 层 `BoolPreference` 映射到底层 `PreferenceToggleStore`，不再用 repository 命名暗示数据仓库职责。
-- 旧 `Logic` 注入变量名已继续收敛：`LegacyExchangeRatesUseCase` 的调用方统一使用 `exchangeRatesUseCase`，首页客户旅程卡片也改用 `customerJourneyCardsProvider` 命名，避免把 provider/use case 误读成旧 logic 层。
+- 旧 `Logic` 注入变量名曾继续收敛：旧汇率 use case 调用方统一使用 `exchangeRatesUseCase`，首页客户旅程卡片也改用 `customerJourneyCardsProvider` 命名；当前旧汇率 use case 已删除。
 - 旧到期交易 UI 模型 `LegacyDueSection` 的 `trns` 字段已改为 `transactions`，legacy 交易列表内部私有 `trnItems/trnCount` 也改为完整命名；首页、报表和交易页调用方同步更新，展示行为不变。
 - CSV 导入页面的交易类型元数据已从 `TrnTypeMetadata` 展开为 `TransactionTypeMetadata`，对应事件 `TypeMetaChange/DataMetaChange` 也改为 `TypeMetadataChange/DateMetadataChange`；导入解析规则和 CSV 字段映射行为不变。
 - app 启动、首页到期交易加载、编辑交易删除弹窗、交易类型 lambda、客户旅程计数、账户统计和 CSV 导出中的局部 `trn/trans` 缩写已展开为 `transaction*` 命名；只改局部符号，不改业务计算。
