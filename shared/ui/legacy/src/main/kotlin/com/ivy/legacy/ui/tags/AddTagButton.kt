@@ -8,13 +8,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.TagId
-import com.ivy.legacy.ui.selection.IvyBorderButton
 import com.ivy.legacy.ui.theme.Gradient
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.legacy.ui.theme.Orange3
 import com.ivy.legacy.ui.theme.findContrastTextColor
 import com.ivy.ui.R
 import com.ivy.ui.compose.GradientButton
+import com.ivy.ui.compose.OutlinedPillButton
 import kotlinx.collections.immutable.ImmutableList
 
 @Composable
@@ -58,11 +58,19 @@ private fun ViewTagsButton(
 private fun AddTagsButton(
     onClick: () -> Unit,
 ) {
-    IvyBorderButton(
+    OutlinedPillButton(
         modifier = Modifier.padding(start = 24.dp),
         iconStart = R.drawable.ic_plus,
+        shape = LegacyTheme.shapes.rFull,
+        backgroundColor = LegacyTheme.colors.pure,
         iconTint = LegacyTheme.colors.pureInverse,
+        borderColor = LegacyTheme.colors.mediumInverse,
         text = stringResource(R.string.add_tags),
+        textStyle = LegacyTheme.typo.b2.copy(
+            color = LegacyTheme.colors.pureInverse,
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Start
+        ),
         onClick = onClick
     )
 }

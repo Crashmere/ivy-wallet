@@ -36,13 +36,13 @@ import com.ivy.legacy.ui.theme.Gradient
 import com.ivy.legacy.ui.theme.Ivy
 import com.ivy.ui.icon.ItemIconSDefaultIcon
 import com.ivy.legacy.ui.layout.WrapContentRow
-import com.ivy.legacy.ui.selection.IvyBorderButton
 import com.ivy.legacy.ui.theme.findContrastTextColor
 import com.ivy.legacy.ui.modal.IvyModal
 import com.ivy.legacy.ui.modal.ModalSkip
 import com.ivy.legacy.ui.modal.ModalTitle
 import com.ivy.legacy.ui.theme.toComposeColor
 import com.ivy.ui.compose.GradientIconButton
+import com.ivy.ui.compose.OutlinedPillButton
 import java.util.UUID
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
@@ -263,17 +263,19 @@ private fun AddNewButton(
     modifier: Modifier = Modifier,
     onClick: () -> Unit
 ) {
-    IvyBorderButton(
+    OutlinedPillButton(
         modifier = modifier,
         text = stringResource(R.string.add_new),
-        backgroundGradient = Gradient.solid(LegacyTheme.colors.mediumInverse),
         iconStart = R.drawable.ic_plus,
+        shape = LegacyTheme.shapes.rFull,
+        backgroundColor = LegacyTheme.colors.pure,
+        iconTint = LegacyTheme.colors.pureInverse,
+        borderColor = LegacyTheme.colors.mediumInverse,
         textStyle = LegacyTheme.typo.b2.copy(
             color = LegacyTheme.colors.pureInverse,
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Start
         ),
-        iconTint = LegacyTheme.colors.pureInverse,
         padding = 10.dp,
         onClick = onClick
     )
