@@ -20,7 +20,7 @@ val Black = Color(0xFF111114)
 // Primary
 val Ivy = Color(0xFF6B4DFF)
 
-val Blue = Color(0xFF4CC3FF)
+internal val Blue = Color(0xFF4CC3FF)
 
 val Green = Color(0xFF14CC9E)
 
@@ -33,20 +33,20 @@ val Red = Color(0xFFFF4060)
 internal val Red3 = Color(0xFFFF4CA6)
 
 // Light
-val IvyLight = Color(0xFFD5CCFF)
+internal val IvyLight = Color(0xFFD5CCFF)
 
 internal val BlueLight = Color(0xFFB3E6FF)
 
-val GreenLight = Color(0xFFAAF2E0)
+internal val GreenLight = Color(0xFFAAF2E0)
 
 internal val OrangeLight = Color(0xFFFFDEB3)
 
-val RedLight = Color(0xFFFFCCD5)
+internal val RedLight = Color(0xFFFFCCD5)
 
 internal val Red3Light = Color(0xFFFFCCE6)
 
 // Dark
-val IvyDark = Color(0xFF352680)
+internal val IvyDark = Color(0xFF352680)
 
 internal val Purple1Dark = Color(0xFF622680)
 

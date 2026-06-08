@@ -109,6 +109,7 @@
 - 收窄编辑交易 feature 公开面：只保留 `EditTransactionScreen` 作为 app 导航入口，编辑状态、事件、UI 事件、ViewModel 和页面展示模型改为模块内部实现。
 - 收窄导入 feature 公开面：只保留 `ImportCSVScreen` 与 `CSVScreen` 两个导航入口，备份恢复流程、CSV 状态/事件、解析模型、导入器和内部 flow UI 改为模块内部实现。
 - 收窄旧重排弹窗公开面：feature 层继续使用单类型 `ReorderModalSingleType` 和 `ReorderButton`，底层多类型 `ReorderModal` 收为旧 UI 内部实现。
+- 继续收窄旧主题色板公开面：外层旧主题门面中只被 `shared:ui:legacy` 内部使用的 `Blue`、`IvyLight`、`GreenLight`、`RedLight` 和 `IvyDark` 改为模块内部常量。
 
 当前仍保留：
 
@@ -1147,6 +1148,7 @@
 - 旧交易列表组件的交易点击事件也继续收窄：页面层只接收编辑页导航需要的交易 ID 和交易类型；完整 `LegacyTransaction` 继续限定在交易卡片渲染边界内。
 - 旧交易列表组件的账户和分类点击事件同样收窄为只传 ID；页面层筛选导航不再接收完整 `LegacyAccount/Category` 对象。
 - 旧重排弹窗的底层多类型 `ReorderModal` 已收为 `shared:ui:legacy` 私有实现；feature 层继续只通过 `ReorderModalSingleType`、`ReorderButton` 和 `ReorderableItem` 使用现有排序 UI。
+- 旧主题外层色板继续收窄：`Blue`、`IvyLight`、`GreenLight`、`RedLight` 和 `IvyDark` 没有模块外调用点，已改为 `shared:ui:legacy` 内部常量；feature 层继续通过 `LegacyTheme` 和仍公开的实际使用色板访问旧主题。
 
 ### 阶段 10：最终依赖方向
 
