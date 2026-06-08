@@ -6,7 +6,6 @@ import com.ivy.data.model.Category
 import com.ivy.data.model.CategoryId
 import com.ivy.data.model.Tag
 import com.ivy.data.model.TagId
-import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.data.model.CreateAccountData
 import com.ivy.data.model.CreateCategoryData
 import kotlinx.collections.immutable.ImmutableList
@@ -24,10 +23,10 @@ internal data class EditTransactionViewState(
     val description: String?,
     val dateTime: Instant?,
     val dueDate: Instant?,
-    val accounts: ImmutableList<LegacyAccount>,
+    val accounts: ImmutableList<EditTransactionAccount>,
     val categories: ImmutableList<Category>,
-    val account: LegacyAccount?,
-    val toAccount: LegacyAccount?,
+    val account: EditTransactionAccount?,
+    val toAccount: EditTransactionAccount?,
     val category: Category?,
     val amount: Double,
     val hasChanges: Boolean,

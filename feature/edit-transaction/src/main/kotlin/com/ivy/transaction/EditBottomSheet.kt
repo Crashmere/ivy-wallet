@@ -48,7 +48,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.platform.addKeyboardListener
 import com.ivy.ui.compose.clickableNoIndication
@@ -92,17 +91,17 @@ private const val SWIPE_UP_EXPANDED_THRESHOLD = 200
 internal fun BoxWithConstraintsScope.EditBottomSheet(
     initialTransactionId: UUID?,
     type: TransactionType,
-    accounts: List<LegacyAccount>,
-    selectedAccount: LegacyAccount?,
-    toAccount: LegacyAccount?,
+    accounts: List<EditTransactionAccount>,
+    selectedAccount: EditTransactionAccount?,
+    toAccount: EditTransactionAccount?,
     amount: Double,
     currency: String,
     amountModalShown: Boolean,
     setAmountModalShown: (Boolean) -> Unit,
     ActionButton: @Composable () -> Unit,
     onAmountChanged: (Double) -> Unit,
-    onSelectedAccountChanged: (LegacyAccount) -> Unit,
-    onToAccountChanged: (LegacyAccount) -> Unit,
+    onSelectedAccountChanged: (EditTransactionAccount) -> Unit,
+    onToAccountChanged: (EditTransactionAccount) -> Unit,
     onAddNewAccount: () -> Unit,
     convertedAmount: Double? = null,
     convertedAmountCurrencyCode: String? = null,
@@ -424,8 +423,8 @@ private fun CircleButton(
 @Suppress("ParameterNaming", "MultipleEmitters")
 private fun TransferRowMini(
     percentCollapsed: Float,
-    fromAccount: LegacyAccount?,
-    toAccount: LegacyAccount?,
+    fromAccount: EditTransactionAccount?,
+    toAccount: EditTransactionAccount?,
     onSetExpanded: () -> Unit
 ) {
     Row(
@@ -502,11 +501,11 @@ private fun SheetHeader(
     percentExpanded: Float,
     label: String,
     type: TransactionType,
-    accounts: List<LegacyAccount>,
-    selectedAccount: LegacyAccount?,
-    toAccount: LegacyAccount?,
-    onSelectedAccountChanged: (LegacyAccount) -> Unit,
-    onToAccountChanged: (LegacyAccount) -> Unit,
+    accounts: List<EditTransactionAccount>,
+    selectedAccount: EditTransactionAccount?,
+    toAccount: EditTransactionAccount?,
+    onSelectedAccountChanged: (EditTransactionAccount) -> Unit,
+    onToAccountChanged: (EditTransactionAccount) -> Unit,
     onAddNewAccount: () -> Unit,
 ) {
     if (percentExpanded > 0.01f) {
@@ -578,9 +577,9 @@ private fun SheetHeader(
 @Composable
 @Suppress("ParameterNaming")
 private fun AccountsRow(
-    accounts: List<LegacyAccount>,
-    selectedAccount: LegacyAccount?,
-    onSelectedAccountChanged: (LegacyAccount) -> Unit,
+    accounts: List<EditTransactionAccount>,
+    selectedAccount: EditTransactionAccount?,
+    onSelectedAccountChanged: (EditTransactionAccount) -> Unit,
     modifier: Modifier = Modifier,
     childrenTestTag: String? = null,
     onAddNewAccount: () -> Unit,
@@ -610,7 +609,7 @@ private fun AccountsRow(
         }
 
         itemsIndexed(accounts) { _, account ->
-            LegacyAccount(
+            AccountChip(
                 account = account,
                 selected = selectedAccount == account,
                 testTag = childrenTestTag ?: "account"
@@ -633,8 +632,8 @@ private fun AccountsRow(
 }
 
 @Composable
-private fun LegacyAccount(
-    account: LegacyAccount,
+private fun AccountChip(
+    account: EditTransactionAccount,
     selected: Boolean,
     testTag: String,
     onClick: () -> Unit
@@ -726,7 +725,7 @@ private fun Amount(
     currency: String,
     percentExpanded: Float,
     label: String,
-    account: LegacyAccount?,
+    account: EditTransactionAccount?,
     onShowAmountModal: () -> Unit,
     showConvertedAmountText: String? = null,
     onAccountMiniClick: () -> Unit
@@ -798,7 +797,7 @@ private fun Amount(
 private fun LabelAccountMini(
     percentExpanded: Float,
     label: String,
-    account: LegacyAccount?,
+    account: EditTransactionAccount?,
     onClick: () -> Unit
 ) {
     Column(

@@ -42,7 +42,6 @@ import com.ivy.domain.usecase.transaction.DeleteTransactionUseCase
 import com.ivy.domain.usecase.transaction.GetLegacyTransactionUseCase
 import com.ivy.domain.usecase.transaction.SaveLegacyTransactionUseCase
 import com.ivy.domain.usecase.transaction.SuggestTransactionTitlesUseCase
-import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.R
 import com.ivy.ui.time.DateTimePicker
@@ -125,12 +124,12 @@ internal class EditTransactionViewModel @Inject internal constructor(
     private var description by mutableStateOf<String?>(null)
     private var dateTime by mutableStateOf<Instant?>(null)
     private var dueDate by mutableStateOf<Instant?>(null)
-    private var accounts by mutableStateOf<ImmutableList<LegacyAccount>>(persistentListOf())
+    private var accounts by mutableStateOf<ImmutableList<EditTransactionAccount>>(persistentListOf())
     private var categories by mutableStateOf<ImmutableList<Category>>(persistentListOf())
     private var tags by mutableStateOf<ImmutableList<Tag>>(persistentListOf())
     private var transactionAssociatedTags by mutableStateOf<ImmutableList<TagId>>(persistentListOf())
-    private var account by mutableStateOf<LegacyAccount?>(null)
-    private var toAccount by mutableStateOf<LegacyAccount?>(null)
+    private var account by mutableStateOf<EditTransactionAccount?>(null)
+    private var toAccount by mutableStateOf<EditTransactionAccount?>(null)
     private var category by mutableStateOf<Category?>(null)
     private var amount by mutableDoubleStateOf(0.0)
     private var hasChanges by mutableStateOf(false)
@@ -170,12 +169,12 @@ internal class EditTransactionViewModel @Inject internal constructor(
 
             val tagList = async { getAllTags() }
 
-            val getAccounts = getLegacyAccountsUseCase()
-            if (getAccounts.isEmpty()) {
+            val loadedAccounts = loadAccounts()
+            if (loadedAccounts.isEmpty()) {
                 closeScreen()
                 return@launch
             }
-            accounts = getAccounts
+            accounts = loadedAccounts
 
             categories = sortCategories()
 
@@ -186,7 +185,7 @@ internal class EditTransactionViewModel @Inject internal constructor(
             } ?: LegacyTransaction(
                 accountId = defaultAccountId(
                     accountId = accountId,
-                    accounts = getAccounts
+                    accounts = loadedAccounts
                 ),
                 categoryId = categoryId,
                 type = type,
@@ -271,7 +270,7 @@ internal class EditTransactionViewModel @Inject internal constructor(
     }
 
     @Composable
-    private fun getAccounts(): ImmutableList<LegacyAccount> {
+    private fun getAccounts(): ImmutableList<EditTransactionAccount> {
         return accounts
     }
 
@@ -281,12 +280,12 @@ internal class EditTransactionViewModel @Inject internal constructor(
     }
 
     @Composable
-    private fun getAccount(): LegacyAccount? {
+    private fun getAccount(): EditTransactionAccount? {
         return account
     }
 
     @Composable
-    private fun getToAccount(): LegacyAccount? {
+    private fun getToAccount(): EditTransactionAccount? {
         return toAccount
     }
 
@@ -373,7 +372,7 @@ internal class EditTransactionViewModel @Inject internal constructor(
 
     private suspend fun defaultAccountId(
         accountId: UUID?,
-        accounts: List<LegacyAccount>,
+        accounts: List<EditTransactionAccount>,
     ): UUID {
         if (accountId != null) {
             return accountId
@@ -403,10 +402,11 @@ internal class EditTransactionViewModel @Inject internal constructor(
         dueDate = transaction.dueDate
         paidHistory = transaction.paidFor
         val selectedAccount = getLegacyAccountUseCase(transaction.accountId)!!
+            .toEditTransactionAccount()
         account = selectedAccount
         toAccount = transaction.toAccountId?.let {
             getLegacyAccountUseCase(it)
-        }
+        }?.toEditTransactionAccount()
         category = transaction.categoryId?.let {
             getCategoryUseCase(CategoryId(it))
         }
@@ -532,7 +532,7 @@ internal class EditTransactionViewModel @Inject internal constructor(
         }
     }
 
-    private suspend fun updateCurrency(account: LegacyAccount) {
+    private suspend fun updateCurrency(account: EditTransactionAccount) {
         currency = account.currency ?: baseCurrency()
     }
 
@@ -701,8 +701,14 @@ internal class EditTransactionViewModel @Inject internal constructor(
     private fun createAccount(data: CreateAccountData) {
         viewModelScope.launch {
             createAccountWithBalanceUseCase(data)
-            accounts = getLegacyAccountsUseCase()
+            accounts = loadAccounts()
         }
+    }
+
+    private suspend fun loadAccounts(): ImmutableList<EditTransactionAccount> {
+        return getLegacyAccountsUseCase()
+            .map { it.toEditTransactionAccount() }
+            .toImmutableList()
     }
 
     private fun save(closeScreen: Boolean = true) {
@@ -844,8 +850,8 @@ internal class EditTransactionViewModel @Inject internal constructor(
     }
 
     private suspend fun updateCustomExchangeRateState(
-        toAccountValue: LegacyAccount? = null,
-        fromAccount: LegacyAccount? = null,
+        toAccountValue: EditTransactionAccount? = null,
+        fromAccount: EditTransactionAccount? = null,
         amt: Double? = null,
         exchangeRate: Double? = null,
         resetRate: Boolean = false
