@@ -565,7 +565,7 @@ class ReportViewModel @Inject constructor(
         }
     }
 
-    private suspend fun payOrGetLegacy(transaction: com.ivy.data.model.legacy.LegacyTransaction) {
+    private suspend fun payOrGetLegacy(transaction: LegacyTransaction) {
         withContext(Dispatchers.Main) {
             if (payOrSkipLegacyPlannedTransactionUseCase(transaction) != null) {
                 start()
@@ -599,7 +599,7 @@ class ReportViewModel @Inject constructor(
         }
     }
 
-    private suspend fun skipTransactionLegacy(transaction: com.ivy.data.model.legacy.LegacyTransaction) {
+    private suspend fun skipTransactionLegacy(transaction: LegacyTransaction) {
         withContext(Dispatchers.Main) {
             val paidTransaction = payOrSkipLegacyPlannedTransactionUseCase(
                 transaction = transaction,
@@ -625,7 +625,7 @@ class ReportViewModel @Inject constructor(
         }
     }
 
-    private suspend fun skipTransactionsLegacy(transactions: List<com.ivy.data.model.legacy.LegacyTransaction>) {
+    private suspend fun skipTransactionsLegacy(transactions: List<LegacyTransaction>) {
         withContext(Dispatchers.Main) {
             val paidTransactions = payOrSkipLegacyPlannedTransactionsUseCase(
                 transactions = transactions,

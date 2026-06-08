@@ -1,4 +1,5 @@
 package com.ivy.domain.transaction.legacy
+import com.ivy.data.model.legacy.LegacyTransaction
 
 import arrow.core.Option
 import arrow.core.toOption
@@ -20,7 +21,7 @@ import java.util.UUID
 private fun LocalDateTime.toEpochSeconds() = toEpochSecond(ZoneOffset.UTC)
 
 object LegacyTransactionDateDividers {
-    suspend fun List<com.ivy.data.model.legacy.LegacyTransaction>.withDateDividers(
+    suspend fun List<LegacyTransaction>.withDateDividers(
         exchangeRatesUseCase: LegacyExchangeRatesUseCase,
         baseCurrencyCode: String,
         accountStore: AccountStore,
@@ -41,7 +42,7 @@ object LegacyTransactionDateDividers {
     }
 
     suspend fun transactionsWithDateDividers(
-        transactions: List<com.ivy.data.model.legacy.LegacyTransaction>,
+        transactions: List<LegacyTransaction>,
         baseCurrencyCode: String,
         getAccount: suspend (accountId: UUID) -> LegacyAccount?,
         exchange: suspend (ExchangeData, BigDecimal) -> Option<BigDecimal>

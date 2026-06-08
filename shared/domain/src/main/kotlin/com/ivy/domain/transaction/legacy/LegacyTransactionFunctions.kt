@@ -1,4 +1,5 @@
 package com.ivy.domain.transaction.legacy
+import com.ivy.data.model.legacy.LegacyTransaction
 
 import arrow.core.Option
 import arrow.core.toOption
@@ -7,14 +8,14 @@ import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.domain.account.legacy.legacyAccountCurrency
 
 object LegacyTransactionFunctions {
-    fun expenses(transactions: List<com.ivy.data.model.legacy.LegacyTransaction>): List<com.ivy.data.model.legacy.LegacyTransaction> {
+    fun expenses(transactions: List<LegacyTransaction>): List<LegacyTransaction> {
         return transactions.filter { it.type == TransactionType.EXPENSE }
     }
-    fun incomes(transactions: List<com.ivy.data.model.legacy.LegacyTransaction>): List<com.ivy.data.model.legacy.LegacyTransaction> {
+    fun incomes(transactions: List<LegacyTransaction>): List<LegacyTransaction> {
         return transactions.filter { it.type == TransactionType.INCOME }
     }
     fun transactionCurrency(
-        transaction: com.ivy.data.model.legacy.LegacyTransaction,
+        transaction: LegacyTransaction,
         accounts: List<LegacyAccount>,
         baseCurrency: String
     ): Option<String> {

@@ -1,4 +1,5 @@
 package com.ivy.domain.transaction.legacy
+import com.ivy.data.model.legacy.LegacyTransaction
 
 import com.ivy.data.model.TransactionType
 import com.ivy.data.model.legacy.LegacyAccount
@@ -13,7 +14,7 @@ object WalletValueFunctionsLegacy {
     )
 
     suspend fun income(
-        transaction: com.ivy.data.model.legacy.LegacyTransaction,
+        transaction: LegacyTransaction,
         arg: Argument
     ): BigDecimal = with(transaction) {
         when (type) {
@@ -29,7 +30,7 @@ object WalletValueFunctionsLegacy {
     }
 
     suspend fun transferIncome(
-        transaction: com.ivy.data.model.legacy.LegacyTransaction,
+        transaction: LegacyTransaction,
         arg: Argument
     ): BigDecimal = with(transaction) {
         val condition = arg.accounts.any { it.id == this.toAccountId }
@@ -50,7 +51,7 @@ object WalletValueFunctionsLegacy {
     }
 
     suspend fun expense(
-        transaction: com.ivy.data.model.legacy.LegacyTransaction,
+        transaction: LegacyTransaction,
         arg: Argument
     ): BigDecimal = with(transaction) {
         when (type) {
@@ -66,7 +67,7 @@ object WalletValueFunctionsLegacy {
     }
 
     suspend fun transferExpenses(
-        transaction: com.ivy.data.model.legacy.LegacyTransaction,
+        transaction: LegacyTransaction,
         arg: Argument
     ): BigDecimal = with(transaction) {
         val condition = arg.accounts.any { it.id == this.accountId }

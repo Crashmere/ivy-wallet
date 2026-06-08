@@ -833,6 +833,7 @@
 - feature 页面层的旧账户/旧交易类型已完成显式化：首页、交易列表、编辑交易、分类、预算、借贷、计划付款、饼图、报表、搜索和 CSV 导入页面不再引用 `com.ivy.data.model.legacy.Account/Transaction` 兼容别名，全部直接使用 `LegacyAccount/LegacyTransaction`。
 - `LegacyAccount.kt` 和 `LegacyTransaction.kt` 中暂留的 `typealias Account/Transaction` 已删除；旧模型现在只能通过真实类名访问，避免新代码继续无意写回旧兼容命名。
 - `LegacyAccount.toDomainAccount()` 已从 data model 类成员迁到 `com.ivy.domain.mapper.legacy` 扩展函数；旧账户模型本体现在只保留旧字段，正式账户转换由 domain mapper 负责。
+- 剩余旧模型全限定类型写法已收敛：报表页面状态/事件和 legacy 交易 helper 不再散落 `com.ivy.data.model.legacy.LegacyTransaction` FQN，而是统一通过 import 表达旧模型边界。
 - 功能开关偏好门面已从 `PreferenceToggleRepository` 改名为 `PreferenceToggleService`：它只负责把 domain 层 `BoolPreference` 映射到底层 `PreferenceToggleStore`，不再用 repository 命名暗示数据仓库职责。
 - 旧 `Logic` 注入变量名已继续收敛：`LegacyExchangeRatesUseCase` 的调用方统一使用 `exchangeRatesUseCase`，首页客户旅程卡片也改用 `customerJourneyCardsProvider` 命名，避免把 provider/use case 误读成旧 logic 层。
 - 旧到期交易 UI 模型 `LegacyDueSection` 的 `trns` 字段已改为 `transactions`，legacy 交易列表内部私有 `trnItems/trnCount` 也改为完整命名；首页、报表和交易页调用方同步更新，展示行为不变。
