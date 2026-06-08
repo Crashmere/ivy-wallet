@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.dp
 import com.ivy.legacy.ui.model.AppBaseData
 import com.ivy.legacy.ui.SearchInput
 import com.ivy.legacy.ui.component.transaction.transactions
-import com.ivy.legacy.ui.densityScope
+import com.ivy.ui.compose.densityScope
 import com.ivy.legacy.ui.keyboardOnlyWindowInsets
 import com.ivy.legacy.ui.keyboardVisibleState
 import com.ivy.legacy.ui.selectEndTextFieldValue

@@ -28,9 +28,9 @@ import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
 import com.ivy.legacy.ui.model.period.toDisplay
 import com.ivy.legacy.ui.component.BudgetBattery
-import com.ivy.legacy.ui.clickableNoIndication
+import com.ivy.ui.compose.clickableNoIndication
 import com.ivy.data.model.currency.format
-import com.ivy.legacy.ui.rememberInteractionSource
+import com.ivy.ui.compose.rememberInteractionSource
 import com.ivy.ui.navigation.BudgetScreen
 import com.ivy.ui.navigation.navigation
 import com.ivy.ui.navigation.screenScopedViewModel

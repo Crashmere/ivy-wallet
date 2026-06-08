@@ -1,8 +1,6 @@
 package com.ivy.legacy.ui
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
@@ -62,26 +60,6 @@ fun onScreenStart(
         latestStart()
         onDispose { latestCleanup() }
     }
-}
-
-@Composable
-fun rememberInteractionSource(): MutableInteractionSource = remember { MutableInteractionSource() }
-
-fun Modifier.consumeClicks(interactionSource: MutableInteractionSource) =
-    clickableNoIndication(interactionSource) {
-        // consume click
-    }
-
-fun Modifier.clickableNoIndication(
-    interactionSource: MutableInteractionSource,
-    onClick: () -> Unit
-): Modifier {
-    return this.clickable(
-        interactionSource = interactionSource,
-        onClick = onClick,
-        role = null,
-        indication = null
-    )
 }
 
 fun Modifier.drawColoredShadow(

@@ -47,11 +47,11 @@ import com.ivy.data.model.Theme
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
 import com.ivy.ui.compose.thenIf
-import com.ivy.legacy.ui.clickableNoIndication
+import com.ivy.ui.compose.clickableNoIndication
 import com.ivy.legacy.ui.colorLerp
 import com.ivy.legacy.ui.lerp
 import com.ivy.legacy.ui.navigationBarInset
-import com.ivy.legacy.ui.rememberInteractionSource
+import com.ivy.ui.compose.rememberInteractionSource
 import com.ivy.legacy.ui.rememberSwipeListenerState
 import com.ivy.legacy.ui.springBounce
 import com.ivy.legacy.ui.statusBarInset

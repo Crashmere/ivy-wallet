@@ -33,14 +33,14 @@ import com.ivy.ui.time.LocalTimeProvider
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
 import com.ivy.legacy.ui.addKeyboardListener
-import com.ivy.legacy.ui.clickableNoIndication
+import com.ivy.ui.compose.clickableNoIndication
 import com.ivy.legacy.ui.closeDay
 import com.ivy.legacy.ui.formatDateWeekDayLong
 import com.ivy.legacy.ui.formatNicely
 import com.ivy.legacy.ui.hideKeyboard
 import com.ivy.legacy.ui.onScreenStart
 import com.ivy.ui.compose.thenIf
-import com.ivy.legacy.ui.rememberInteractionSource
+import com.ivy.ui.compose.rememberInteractionSource
 import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.Gradient
 import com.ivy.legacy.ui.theme.GradientIvy

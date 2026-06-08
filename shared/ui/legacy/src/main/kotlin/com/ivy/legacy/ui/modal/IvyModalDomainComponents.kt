@@ -15,8 +15,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
-import com.ivy.legacy.ui.clickableNoIndication
-import com.ivy.legacy.ui.rememberInteractionSource
+import com.ivy.ui.compose.clickableNoIndication
+import com.ivy.ui.compose.rememberInteractionSource
 import com.ivy.legacy.ui.component.BalanceRow
 import com.ivy.legacy.ui.component.IvyDividerLine
 

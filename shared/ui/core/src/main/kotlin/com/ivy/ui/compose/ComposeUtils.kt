@@ -1,5 +1,6 @@
 package com.ivy.ui.compose
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -32,3 +33,20 @@ fun Modifier.thenWhen(
 
 @Composable
 fun rememberInteractionSource(): MutableInteractionSource = remember { MutableInteractionSource() }
+
+fun Modifier.consumeClicks(interactionSource: MutableInteractionSource) =
+    clickableNoIndication(interactionSource) {
+        // consume click
+    }
+
+fun Modifier.clickableNoIndication(
+    interactionSource: MutableInteractionSource,
+    onClick: () -> Unit
+): Modifier {
+    return this.clickable(
+        interactionSource = interactionSource,
+        onClick = onClick,
+        role = null,
+        indication = null
+    )
+}

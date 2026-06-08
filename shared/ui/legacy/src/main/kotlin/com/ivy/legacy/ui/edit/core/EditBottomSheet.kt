@@ -43,8 +43,8 @@ import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
 import com.ivy.legacy.ui.addKeyboardListener
-import com.ivy.legacy.ui.clickableNoIndication
-import com.ivy.legacy.ui.consumeClicks
+import com.ivy.ui.compose.clickableNoIndication
+import com.ivy.ui.compose.consumeClicks
 import com.ivy.ui.compose.densityScope
 import com.ivy.data.model.currency.format
 import com.ivy.legacy.ui.hideKeyboard
@@ -57,7 +57,7 @@ import com.ivy.legacy.ui.testing.TestingContext
 import com.ivy.ui.compose.thenIf
 import com.ivy.legacy.ui.verticalSwipeListener
 import com.ivy.data.model.TransactionType
-import com.ivy.legacy.ui.rememberInteractionSource
+import com.ivy.ui.compose.rememberInteractionSource
 import com.ivy.legacy.ui.rememberSwipeListenerState
 import com.ivy.ui.R
 import com.ivy.data.model.currency.IvyCurrency

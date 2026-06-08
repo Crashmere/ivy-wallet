@@ -31,8 +31,8 @@ import com.ivy.legacy.ui.model.LegacyDueSection
 import com.ivy.legacy.ui.component.IncomeExpensesCards
 import com.ivy.legacy.ui.component.transaction.TransactionsDividerLine
 import com.ivy.legacy.ui.component.transaction.transactions
-import com.ivy.legacy.ui.clickableNoIndication
-import com.ivy.legacy.ui.rememberInteractionSource
+import com.ivy.ui.compose.clickableNoIndication
+import com.ivy.ui.compose.rememberInteractionSource
 import com.ivy.ui.navigation.PieChartStatisticScreen
 import com.ivy.ui.navigation.ReportScreen
 import com.ivy.ui.navigation.navigation

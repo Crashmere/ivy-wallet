@@ -43,10 +43,10 @@ import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
 import com.ivy.ui.compose.thenIf
 import com.ivy.ui.navigation.MainTab
-import com.ivy.legacy.ui.clickableNoIndication
+import com.ivy.ui.compose.clickableNoIndication
 import com.ivy.legacy.ui.lerp
 import com.ivy.legacy.ui.navigationBarInset
-import com.ivy.legacy.ui.rememberInteractionSource
+import com.ivy.ui.compose.rememberInteractionSource
 import com.ivy.legacy.ui.springBounceFast
 import com.ivy.legacy.ui.toDensityDp
 import com.ivy.legacy.ui.toDensityPx

@@ -36,11 +36,11 @@ import com.ivy.legacy.ui.state.LocalPeriodState
 import com.ivy.legacy.ui.model.period.TimePeriod
 import com.ivy.legacy.ui.model.period.displayShort
 import com.ivy.legacy.ui.component.transaction.TransactionsDividerLine
-import com.ivy.legacy.ui.clickableNoIndication
+import com.ivy.ui.compose.clickableNoIndication
 import com.ivy.legacy.ui.drawColoredShadow
 import com.ivy.data.model.currency.format
 import com.ivy.legacy.ui.horizontalSwipeListener
-import com.ivy.legacy.ui.rememberInteractionSource
+import com.ivy.ui.compose.rememberInteractionSource
 import com.ivy.legacy.ui.rememberSwipeListenerState
 import com.ivy.legacy.ui.springBounce
 import com.ivy.legacy.ui.verticalSwipeListener

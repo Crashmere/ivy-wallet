@@ -40,7 +40,7 @@ import androidx.compose.ui.zIndex
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.ui.compose.rememberInteractionSource
 import com.ivy.legacy.ui.addKeyboardListener
-import com.ivy.legacy.ui.consumeClicks
+import com.ivy.ui.compose.consumeClicks
 import com.ivy.ui.compose.densityScope
 import com.ivy.legacy.ui.hideKeyboard
 import com.ivy.legacy.ui.keyboardOnlyWindowInsets
