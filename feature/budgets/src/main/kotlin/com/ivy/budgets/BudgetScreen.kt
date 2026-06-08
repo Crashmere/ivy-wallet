@@ -15,6 +15,10 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
@@ -23,6 +27,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ivy.budgets.model.DisplayBudget
+import com.ivy.data.model.Budget
 import com.ivy.ui.time.LocalTimeFormatter
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.period.toDisplay
@@ -53,6 +58,10 @@ private fun BoxWithConstraintsScope.UI(
     state: BudgetScreenState,
     onEvent: (BudgetScreenEvent) -> Unit = {}
 ) {
+    var budgetModalVisible by remember { mutableStateOf(false) }
+    var budgetModalBudget: Budget? by remember { mutableStateOf(null) }
+    var budgetModalAutoFocus by remember { mutableStateOf(true) }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -81,16 +90,9 @@ private fun BoxWithConstraintsScope.UI(
                 displayBudget = item,
                 baseCurrency = state.baseCurrency
             ) {
-                onEvent(
-                    BudgetScreenEvent.OnBudgetModalData(
-                        BudgetModalData(
-                            budget = item.budget,
-                            baseCurrency = state.baseCurrency,
-                            categories = state.categories,
-                            autoFocusKeyboard = false
-                        )
-                    )
-                )
+                budgetModalBudget = item.budget
+                budgetModalAutoFocus = false
+                budgetModalVisible = true
             }
         }
 
@@ -111,15 +113,9 @@ private fun BoxWithConstraintsScope.UI(
     val nav = navigation()
     BudgetBottomBar(
         onAdd = {
-            onEvent(
-                BudgetScreenEvent.OnBudgetModalData(
-                    BudgetModalData(
-                        budget = null,
-                        baseCurrency = state.baseCurrency,
-                        categories = state.categories
-                    )
-                )
-            )
+            budgetModalBudget = null
+            budgetModalAutoFocus = true
+            budgetModalVisible = true
         },
         onClose = {
             nav.back()
@@ -157,12 +153,16 @@ private fun BoxWithConstraintsScope.UI(
     }
 
     BudgetModal(
-        modal = state.budgetModalData,
+        visible = budgetModalVisible,
+        budget = budgetModalBudget,
+        baseCurrency = state.baseCurrency,
+        categories = state.categories,
+        autoFocusKeyboard = budgetModalAutoFocus,
         onCreate = { onEvent(BudgetScreenEvent.OnCreateBudget(it)) },
         onEdit = { onEvent(BudgetScreenEvent.OnEditBudget(it)) },
         onDelete = { onEvent(BudgetScreenEvent.OnDeleteBudget(it.id)) },
         dismiss = {
-            onEvent(BudgetScreenEvent.OnBudgetModalData(null))
+            budgetModalVisible = false
         }
     )
 }

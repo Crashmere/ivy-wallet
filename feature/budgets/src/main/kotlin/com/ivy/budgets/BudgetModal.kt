@@ -45,49 +45,46 @@ import com.ivy.ui.theme.colors.toComposeColor
 import com.ivy.ui.compose.thenIf
 import java.util.UUID
 
-internal data class BudgetModalData(
-    val budget: Budget?,
-
-    val baseCurrency: String,
-    val categories: List<Category>,
-
-    val id: UUID = UUID.randomUUID(),
-    val autoFocusKeyboard: Boolean = true,
-)
-
 @Composable
 internal fun BoxWithConstraintsScope.BudgetModal(
-    modal: BudgetModalData?,
+    visible: Boolean,
+    budget: Budget?,
+    baseCurrency: String,
+    categories: List<Category>,
+    autoFocusKeyboard: Boolean = true,
 
     onCreate: (CreateBudgetData) -> Unit,
     onEdit: (Budget) -> Unit,
     onDelete: (Budget) -> Unit,
     dismiss: () -> Unit
 ) {
-    val initialBudget = modal?.budget
-    var nameTextFieldValue by remember(modal) {
+    val initialBudget = budget
+    var nameTextFieldValue by remember(visible, initialBudget) {
         mutableStateOf(selectEndTextFieldValue(initialBudget?.name))
     }
-    var amount by remember(modal) {
+    var amount by remember(visible, initialBudget) {
         mutableDoubleStateOf(initialBudget?.amount ?: 0.0)
     }
-    var categoryIds by remember(modal) {
-        mutableStateOf(modal?.budget?.parseCategoryIds() ?: emptyList())
+    var categoryIds by remember(visible, initialBudget) {
+        mutableStateOf(initialBudget?.parseCategoryIds() ?: emptyList())
     }
-    var accountIds by remember(modal) {
-        mutableStateOf(modal?.budget?.parseAccountIds() ?: emptyList())
+    var accountIds by remember(visible, initialBudget) {
+        mutableStateOf(initialBudget?.parseAccountIds() ?: emptyList())
     }
 
-    var amountModalVisible by remember(modal) { mutableStateOf(false) }
-    var deleteModalVisible by remember(modal) { mutableStateOf(false) }
+    var amountModalVisible by remember(visible, initialBudget) { mutableStateOf(false) }
+    var deleteModalVisible by remember(visible, initialBudget) { mutableStateOf(false) }
+    val modalId = remember(visible, initialBudget) {
+        if (visible) UUID.randomUUID() else null
+    }
 
     IvyModal(
-        id = modal?.id,
-        visible = modal != null,
+        id = modalId,
+        visible = visible,
         dismiss = dismiss,
         PrimaryAction = {
             BudgetModalAddSave(
-                isEdit = modal?.budget != null,
+                isEdit = budget != null,
                 enabled = nameTextFieldValue.text.isNullOrBlank().not() && amount > 0.0
             ) {
                 if (initialBudget != null) {
@@ -120,7 +117,7 @@ internal fun BoxWithConstraintsScope.BudgetModal(
             verticalAlignment = Alignment.CenterVertically
         ) {
             ModalTitle(
-                text = if (modal?.budget != null) {
+                text = if (budget != null) {
                     stringResource(
                         R.string.edit_budget
                     )
@@ -144,7 +141,7 @@ internal fun BoxWithConstraintsScope.BudgetModal(
 
         BudgetNameInput(
             hint = stringResource(R.string.budget_name),
-            autoFocusKeyboard = modal?.autoFocusKeyboard ?: true,
+            autoFocusKeyboard = autoFocusKeyboard,
             textFieldValue = nameTextFieldValue,
             setTextFieldValue = {
                 nameTextFieldValue = it
@@ -154,7 +151,7 @@ internal fun BoxWithConstraintsScope.BudgetModal(
         Spacer(Modifier.height(24.dp))
 
         CategoriesRow(
-            categories = modal?.categories ?: emptyList(),
+            categories = categories,
             budgetCategoryIds = categoryIds,
             onSetBudgetCategoryIds = {
                 categoryIds = it
@@ -165,7 +162,7 @@ internal fun BoxWithConstraintsScope.BudgetModal(
 
         ModalAmountSection(
             label = stringResource(R.string.budget_amount_uppercase),
-            currency = modal?.baseCurrency ?: "",
+            currency = baseCurrency,
             amount = amount,
             amountPaddingTop = 24.dp,
             amountPaddingBottom = 0.dp
@@ -174,13 +171,13 @@ internal fun BoxWithConstraintsScope.BudgetModal(
         }
     }
 
-    val amountModalId = remember(modal, amount) {
+    val amountModalId = remember(visible, amount) {
         UUID.randomUUID()
     }
     AmountModal(
         id = amountModalId,
         visible = amountModalVisible,
-        currency = modal?.baseCurrency ?: "",
+        currency = baseCurrency,
         initialAmount = amount,
         dismiss = { amountModalVisible = false }
     ) {
