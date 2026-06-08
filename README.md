@@ -51,6 +51,7 @@
 - 收窄导入功能导航职责：备份恢复和手动 CSV 导入的 ViewModel 不再注入 `Navigation`，完成/跳过/结果页返回由 Screen 执行，ViewModel 只负责重置导入状态。
 - 收窄借贷详情导航职责：删除借贷成功后由 ViewModel 发出一次性 `CloseScreen` UI 事件，Screen 收集事件后执行返回；借贷详情 ViewModel 不再注入 `Navigation`。
 - 收窄计划付款编辑导航职责：无账户、保存完成和删除完成后的关闭页面动作改为 `CloseScreen` UI 事件；计划付款编辑 ViewModel 不再注入 `Navigation`。
+- 计划付款编辑页继续收窄内部导航职责：UI 主体不再直接调用 `navigation()`，工具栏关闭动作由 `EditPlannedScreen` 页面入口传入。
 - 收窄交易统计导航职责：删除账户或分类完成后的关闭页面动作改为 `CloseScreen` UI 事件；交易统计 ViewModel 不再注入 `Navigation`。
 - 收窄首页导航职责：余额卡片点击后的页面跳转改为 `OpenBalance/OpenAccountsTab` UI 事件；首页 ViewModel 不再注入 `Navigation` 或持有主 Tab 状态。
 - 收窄编辑交易导航职责：保存、删除、复制、计划交易支付和空账户退出后的关闭页面动作改为 `CloseScreen` UI 事件；编辑交易 ViewModel 不再注入 `Navigation`，原先无返回栈时回主界面的语义移到 Screen 执行。

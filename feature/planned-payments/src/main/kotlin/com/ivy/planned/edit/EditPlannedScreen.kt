@@ -76,7 +76,8 @@ fun BoxWithConstraintsScope.EditPlannedScreen(screen: EditPlannedScreen) {
     UI(
         screen = screen,
         state = uiState,
-        onEvent = viewModel::onEvent
+        onEvent = viewModel::onEvent,
+        onClose = nav::back,
     )
 }
 
@@ -91,8 +92,8 @@ private fun BoxWithConstraintsScope.UI(
     screen: EditPlannedScreen,
     state: EditPlannedScreenState,
     onEvent: (EditPlannedScreenEvent) -> Unit,
+    onClose: () -> Unit,
 ) {
-    val nav = navigation()
     var titleTextFieldValue by remember(state.initialTitle) {
         mutableStateOf(
             TextFieldValue(
@@ -126,9 +127,7 @@ private fun BoxWithConstraintsScope.UI(
         Toolbar(
             type = state.transactionType,
             initialTransactionId = screen.plannedPaymentRuleId,
-            onClose = {
-                nav.back()
-            },
+            onClose = onClose,
             onDeleteTransactionModal = {
                 onEvent(EditPlannedScreenEvent.OnDeleteTransactionModalVisible(true))
             },
