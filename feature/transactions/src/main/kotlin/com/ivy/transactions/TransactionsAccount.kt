@@ -2,7 +2,7 @@ package com.ivy.transactions
 
 import androidx.compose.runtime.Immutable
 import com.ivy.data.model.Account
-import com.ivy.legacy.ui.modal.AccountModalAccount
+import com.ivy.ui.modal.AccountModalAccount
 import java.util.UUID
 
 @Immutable

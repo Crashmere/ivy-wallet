@@ -1522,6 +1522,7 @@ shared:ui:core
 - 周期选择弹窗不再公开 `ChoosePeriodModalData` 状态对象；调用页面只保存 `TimePeriod?`，旧弹窗内部自行维护弹窗 id。
 - 分类编辑弹窗不再公开 `CategoryModalData` 状态对象；调用页面改用显式的可见性、初始分类和自动聚焦参数，分类创建/编辑行为不变。
 - 账户编辑弹窗不再公开 `AccountModalData` 状态对象；调用页面改用显式的可见性、初始账户、币种、余额和行为开关参数，轻量账户输入模型单独保留为 `AccountModalAccount`。
+- 账户编辑弹窗的轻量输入模型 `AccountModalAccount` 已迁入 `shared:ui:core`，交易页和旧账户弹窗继续使用同一个窄模型，但不再从 legacy modal 包暴露该数据契约。
 - 预算弹窗不再通过 `BudgetModalData` 进入 ViewModel/State/Event；预算页改用 Screen 本地状态控制弹窗，ViewModel 只处理预算创建、编辑、删除和重排事件。
 - 借贷列表页的新建借贷弹窗状态已从 ViewModel/State 移回 Screen 本地；ViewModel 继续负责账户加载、日期时间选择、借贷创建和列表刷新。
 - 旧主题系统新增 `LegacyColors`、`LegacyTypography` 和 `LegacyShapes` 作为外层门面类型；`theme.system` 下的 `IvyColors/IvyTypography/IvyShapes` 已收窄为 `shared:ui:legacy` 内部实现细节。
