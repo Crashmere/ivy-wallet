@@ -21,7 +21,7 @@ data class TransactionsScreen(
     val categoryId: UUID? = null,
     val unspecifiedCategory: Boolean = false,
     val accountIdFilterList: ImmutableList<UUID> = persistentListOf(),
-    val legacyTransactionIds: ImmutableList<UUID> = persistentListOf(),
+    val transactionIds: ImmutableList<UUID> = persistentListOf(),
     val containsTransferTransactions: Boolean = false
 ) : Screen
 
@@ -29,7 +29,7 @@ data class PieChartStatisticScreen(
     val type: TransactionRouteType,
     val filterExcluded: Boolean = true,
     val accountList: ImmutableList<UUID> = persistentListOf(),
-    val legacyTransactionIds: ImmutableList<UUID> = persistentListOf(),
+    val transactionIds: ImmutableList<UUID> = persistentListOf(),
     val treatTransfersAsIncomeExpense: Boolean = false
 ) : Screen
 

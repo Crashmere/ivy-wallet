@@ -86,7 +86,7 @@ fun BoxWithConstraintsScope.PieChartStatisticScreen(
             type = screen.type.toTransactionType(),
             accountIdFilterList = screen.accountList,
             filterExcluded = screen.filterExcluded,
-            inputTransactionIds = screen.legacyTransactionIds,
+            inputTransactionIds = screen.transactionIds,
             transfersAsIncomeExpense = screen.treatTransfersAsIncomeExpense
         )
     }
@@ -217,7 +217,7 @@ private fun BoxWithConstraintsScope.UI(
                             categoryId = item.category?.id?.value,
                             unspecifiedCategory = item.isCategoryUnspecified,
                             accountIdFilterList = state.accountIdFilterList,
-                            legacyTransactionIds = item.associatedTransactions.map { it.id }
+                            transactionIds = item.associatedTransactions.map { it.id }
                                 .toImmutableList(),
                             containsTransferTransactions = item.associatedTransactions.any {
                                 it.type == TransactionType.TRANSFER

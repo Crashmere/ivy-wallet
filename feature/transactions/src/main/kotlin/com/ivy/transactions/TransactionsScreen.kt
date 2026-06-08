@@ -873,5 +873,5 @@ private fun TransactionsScreen.toQuery() = TransactionsQuery(
     categoryId = categoryId,
     unspecifiedCategory = unspecifiedCategory,
     accountIdFilterList = accountIdFilterList,
-    transactionIds = legacyTransactionIds,
+    transactionIds = transactionIds,
 )

@@ -201,7 +201,7 @@
 
 现状：
 
-- `ivy.feature` 组合插件已删除，所有 feature 模块直接声明 `ivy.compose` 和 `ivy.hilt`。
+- `ivy.feature` 已收窄为只服务页面 feature 模块的组合插件，集中 Compose、Hilt 和 feature 共同 shared 依赖；shared/data/domain 模块不再套用它。
 - `shared:data:model`、`shared:data:api`、`shared:domain` 已收敛为 JVM/Kotlin 模块；`shared:data:core` 显式声明 Android library、Room、Hilt 和集成测试能力。
 - 大部分公共 bundle 已下放到实际使用方，但仍需要继续检查 Compose、Hilt、testing 等依赖是否还有可收窄空间。
 
@@ -214,7 +214,7 @@
 目标：
 
 - 保持 `ivy.android-library`、`ivy.kotlin-library`、`ivy.compose`、`ivy.hilt` 这类仍被多个模块复用的窄约定；只服务单个模块的配置优先内联。
-- 每个模块显式声明自己需要的能力，不再恢复 `ivy.feature` 这类组合入口。
+- `ivy.feature` 只表达“这是一个页面 feature 模块”的共同构建能力，不再扩展到 shared/data/domain 这类不同职责模块。
 
 ### 3. 测试 helper 已基本移出生产源码
 
@@ -420,7 +420,7 @@
 - CSV 反读 helper `ReadCsvUseCase` 已从 domain 主源码移到测试源集，OpenCSV 在 `shared:domain` 中收窄为测试依赖；导出 CSV 的字段转义改为本地实现，domain 主源码不再依赖 OpenCSV 或其传递依赖。
 - `ivy.module` 不再默认启用 kotlinx serialization；当前页面模块没有序列化源码引用，序列化能力只保留在 `shared:data:model` 和 `shared:data:core` 等实际需要的模块中。
 - app 模块已移除 Kotlin serialization 插件；应用壳本身没有序列化源码，序列化继续由 `shared:data:model` 和 `shared:data:core` 提供。
-- 空壳 `ivy.module` 约定插件已删除；`ivy.feature` 组合插件也已删除，页面模块直接声明 `ivy.compose` 和 `ivy.hilt`。
+- 空壳 `ivy.module` 约定插件已删除；旧的过宽 `ivy.feature` 用法已从 shared/data/domain 模块中清空，页面 feature 模块后续只通过窄 `ivy.feature` 组合公共构建能力。
 - app 与 `ivy.android-library` 已移除重复的旧式 `kotlin-android` 插件 ID，只保留正式 `org.jetbrains.kotlin.android` 插件；版本目录中仅包含 Android 协程运行时的依赖 bundle 已改名为 `kotlin-android-runtime`，避免和插件 ID 混淆。
 - app、`ivy.android-library` 和 `ivy.kotlin-library` 已把 Kotlin JVM target 配置从弃用的 `kotlinOptions` 迁到 `compilerOptions`；Java/Kotlin 目标仍保持 17，构建输出不再出现该弃用警告。
 - app 当前没有 `src/test` 或 `src/androidTest` 源码，已移除 app 模块中无消费方的通用测试 bundle 和 WorkManager 测试依赖；运行时 WorkManager 依赖保留。
@@ -951,7 +951,7 @@
 - `shared:ui:legacy` 显式声明 `androidx.core:core-ktx`，不再靠 Compose/ViewModel 传递依赖获得 `doOnLayout`。
 - `hilt-work` 已从公共 Hilt bundle 下放到 app；当前只有交易提醒 Worker 和 app 的 WorkManager 配置需要它。
 - `kotlinx-collections-immutable` 已从公共 Kotlin bundle 移除；它仍由 `shared:data:model` 以 `api` 暴露，因为导入结果和多处 UI 状态仍使用 immutable collection 类型。
-- `ivy.feature` 组合插件已删除；各 feature 模块现在显式声明 `ivy.compose` 和 `ivy.hilt`，模块需要的构建能力从 Gradle 文件即可直接看出。
+- 旧的过宽 `ivy.feature` 用法已删除；当前 `ivy.feature` 只组合 feature 页面模块共同需要的 Compose、Hilt 和 shared 依赖，非 feature 模块继续显式声明自己的构建能力。
 - `DateTimePicker` 接口已从 `com.ivy.ui.time.impl` 归位到 `com.ivy.ui.time`；`impl` 包只保留 Android/Material 日期时间选择器实现。
 - 生产源码中最后残留的 `Preview` 命名 spacer/helper 已删除；当前没有 Compose 预览专用函数继续留在主源码。
 - app 和 `shared:data:core` 已显式声明 `androidx.core:core-ktx`，不再靠 Activity/AppCompat/DataStore 等传递依赖获得 AndroidX Core API。
@@ -1237,7 +1237,7 @@ shared:ui:core
 - 对象路由页面入口已删除无用 `screen` 参数；仍携带 ID、筛选条件或初始值的 route 页面继续接收对应 `screen` 数据。
 - `EditPlannedScreen` route 已删除页面校验 helper；计划付款编辑页在本模块内判断初始金额和账户是否足够进入后续流程。
 - `TransactionsScreen.unspecifiedCategory` 已从 `Boolean?` 收为 `Boolean`，交易列表初始化分支不再携带不存在的 null 状态。
-- `TransactionsScreen.accountIdFilterList` 和 `legacyTransactionIds` 已收为 `ImmutableList<UUID>`，与饼图 route 的集合语义保持一致。
+- `TransactionsScreen.accountIdFilterList` 和 `transactionIds` 已收为 `ImmutableList<UUID>`，与饼图 route 的集合语义保持一致。
 - 旧收支汇总卡片不再接收完整交易历史，只接收页面已经算好的收入/支出交易数量；通用 UI 组件不再依赖 `LegacyTransaction` 或 `TransactionHistoryItem`。
 - 报表页内部支付/收取和跳过计划交易的事件名已去掉 `Legacy`，事件层继续只传交易 ID，旧模型查找限制在 ViewModel 私有实现内。
 - `DevicePreferences` 已收为 `shared:ui:core` 内部接口；模块外继续只注入公开的 `TimeFormatter`。
@@ -1266,6 +1266,7 @@ shared:ui:core
 - 编辑交易 ViewModel 不再接收 `EditTransactionScreen` 导航 route；页面入口负责拆出初始交易 ID、交易类型、账户和分类参数，已有交易编辑和新建交易默认账户选择逻辑不变。
 - 交易列表 ViewModel 完全脱离导航 route 类型；`TransactionsScreen` 到本地 `TransactionsQuery` 的转换下沉到页面入口，ViewModel 只复用查询参数执行加载、翻月和刷新。
 - 交易列表内部查询参数继续去 legacy 命名：本地 `TransactionsQuery` 使用 `transactionIds`，加载流程用 `inputTransactions` 表达从 ID 局部读取出的交易；编辑交易和报表的标签搜索 debounce 常量也修正为 `Millis` 命名。
+- 交易列表和饼图导航 route 的交易 ID 参数也已从 `legacyTransactionIds` 改为 `transactionIds`；route 只表达 ID 列表，不再暗示跨页面传递完整旧交易模型。
 - 报表导出事件不再携带 `FileSharer` 平台分享器；ViewModel 只生成 CSV 并发出 `ShareCsvFile` UI 事件，页面入口负责调用平台分享能力。
 - 设置页导出 CSV 和备份 zip 也不再通过事件传递 `FileSharer`；ViewModel 写入文件后发出分享 UI 事件，Screen 统一调用平台分享能力。
 - 报表页面事件统一为 `sealed interface`，与其他 feature 的事件定义风格保持一致，减少无意义的 `ReportScreenEvent()` 继承样板。

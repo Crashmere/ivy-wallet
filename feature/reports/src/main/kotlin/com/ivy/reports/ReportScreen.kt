@@ -172,7 +172,7 @@ private fun BoxWithConstraintsScope.UI(
                         nav.navigateTo(
                             PieChartStatisticScreen(
                                 type = TransactionRouteType.INCOME,
-                                legacyTransactionIds = transactionSummary.transactionIds,
+                                transactionIds = transactionSummary.transactionIds,
                                 accountList = state.accountIdFilters,
                                 treatTransfersAsIncomeExpense = state.treatTransfersAsIncExp
                             )
@@ -184,7 +184,7 @@ private fun BoxWithConstraintsScope.UI(
                         nav.navigateTo(
                             PieChartStatisticScreen(
                                 type = TransactionRouteType.EXPENSE,
-                                legacyTransactionIds = transactionSummary.transactionIds,
+                                transactionIds = transactionSummary.transactionIds,
                                 accountList = state.accountIdFilters,
                                 treatTransfersAsIncomeExpense = state.treatTransfersAsIncExp
                             )
