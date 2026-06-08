@@ -116,7 +116,7 @@ fun BoxWithConstraintsScope.TransactionsScreen(screen: TransactionsScreen) {
     }
 
     onScreenStart {
-        viewModel.start(screen)
+        viewModel.start(screen.toQuery())
     }
 
     UI(
@@ -867,3 +867,11 @@ private fun Item(
 private fun TransactionType.toRouteType(): TransactionRouteType {
     return TransactionRouteType.valueOf(name)
 }
+
+private fun TransactionsScreen.toQuery() = TransactionsQuery(
+    accountId = accountId,
+    categoryId = categoryId,
+    unspecifiedCategory = unspecifiedCategory,
+    accountIdFilterList = accountIdFilterList,
+    legacyTransactionIds = legacyTransactionIds,
+)

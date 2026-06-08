@@ -34,7 +34,6 @@ import com.ivy.ui.period.PeriodState
 import com.ivy.ui.period.TimePeriod
 import com.ivy.data.model.toCloseTimeRange
 import com.ivy.ui.compose.selectEndTextFieldValue
-import com.ivy.ui.navigation.TransactionsScreen
 import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.R
 import com.ivy.ui.preferences.asEnabledState
@@ -646,18 +645,6 @@ internal class TransactionsViewModel @Inject internal constructor(
     }
 
     fun start(
-        screen: TransactionsScreen,
-        timePeriod: TimePeriod? = periodState.selectedPeriod,
-        reset: Boolean = true,
-    ) {
-        start(
-            query = screen.toQuery(),
-            timePeriod = timePeriod,
-            reset = reset,
-        )
-    }
-
-    private fun start(
         query: TransactionsQuery,
         timePeriod: TimePeriod? = periodState.selectedPeriod,
         reset: Boolean = true,
@@ -741,18 +728,10 @@ private fun List<TransactionHistoryItem>.countTransactionType(type: TransactionT
     return filterIsInstance<LegacyTransaction>().count { it.type == type }
 }
 
-private data class TransactionsQuery(
+internal data class TransactionsQuery(
     val accountId: UUID?,
     val categoryId: UUID?,
     val unspecifiedCategory: Boolean,
     val accountIdFilterList: ImmutableList<UUID>,
     val legacyTransactionIds: ImmutableList<UUID>,
-)
-
-private fun TransactionsScreen.toQuery() = TransactionsQuery(
-    accountId = accountId,
-    categoryId = categoryId,
-    unspecifiedCategory = unspecifiedCategory,
-    accountIdFilterList = accountIdFilterList,
-    legacyTransactionIds = legacyTransactionIds,
 )
