@@ -10,7 +10,7 @@ import com.ivy.data.model.primitive.NotBlankTrimmedString
 import com.ivy.data.model.primitive.PositiveDouble
 import java.time.Instant
 
-data class IvyCsvRow(
+internal data class IvyCsvRow(
     val date: Instant?,
     val title: NotBlankTrimmedString?,
     val category: CategoryId?,

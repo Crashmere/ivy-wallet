@@ -5,7 +5,7 @@ import arrow.core.Option
 import arrow.core.toNonEmptyListOrNull
 import java.math.BigDecimal
 
-fun <T> NonEmptyList<T>.mapIndexedNel(
+internal fun <T> NonEmptyList<T>.mapIndexedNel(
     f: (Int, T) -> T
 ): NonEmptyList<T> {
     return requireNotNull(
@@ -14,7 +14,7 @@ fun <T> NonEmptyList<T>.mapIndexedNel(
     )
 }
 
-suspend fun <T> NonEmptyList<T>.mapIndexedNelSuspend(
+internal suspend fun <T> NonEmptyList<T>.mapIndexedNelSuspend(
     f: suspend (Int, T) -> T
 ): NonEmptyList<T> {
     val result = mutableListOf<T>()
@@ -24,13 +24,13 @@ suspend fun <T> NonEmptyList<T>.mapIndexedNelSuspend(
     return requireNotNull(result.toNonEmptyListOrNull())
 }
 
-fun nonEmptyListOfZeros(n: Int): NonEmptyList<BigDecimal> {
+internal fun nonEmptyListOfZeros(n: Int): NonEmptyList<BigDecimal> {
     return requireNotNull(
         List(n) { BigDecimal.ZERO }
             .toNonEmptyListOrNull()
     )
 }
 
-fun Option<BigDecimal>.orZero(): BigDecimal {
+internal fun Option<BigDecimal>.orZero(): BigDecimal {
     return this.getOrNull() ?: BigDecimal.ZERO
 }
