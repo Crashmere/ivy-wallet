@@ -11,8 +11,6 @@ import java.time.LocalDate
 import java.time.LocalTime
 import java.util.UUID
 
-typealias Transaction = LegacyTransaction
-
 @Suppress("DataClassDefaultValues")
 data class LegacyTransaction(
     // Default values are kept for legacy UI and tests that still construct partial transactions.
