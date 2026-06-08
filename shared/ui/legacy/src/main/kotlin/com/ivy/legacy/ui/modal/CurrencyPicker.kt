@@ -1,4 +1,4 @@
-package com.ivy.legacy.ui.component
+package com.ivy.legacy.ui.modal
 
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
@@ -49,6 +49,7 @@ import com.ivy.ui.compose.keyboardOnlyWindowInsets
 import com.ivy.ui.compose.onCompositionStart
 import com.ivy.ui.R
 import com.ivy.data.model.currency.IvyCurrency
+import com.ivy.legacy.ui.component.IvyIcon
 import com.ivy.legacy.ui.theme.GradientGreen
 import com.ivy.legacy.ui.theme.GradientIvy
 import com.ivy.legacy.ui.theme.Ivy

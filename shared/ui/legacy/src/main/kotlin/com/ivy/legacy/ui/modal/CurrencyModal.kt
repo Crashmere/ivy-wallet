@@ -20,7 +20,6 @@ import com.ivy.legacy.ui.theme.style
 import com.ivy.ui.R
 import com.ivy.data.model.currency.IvyCurrency
 import com.ivy.legacy.ui.theme.Gray
-import com.ivy.legacy.ui.component.CurrencyPicker
 import java.util.UUID
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
