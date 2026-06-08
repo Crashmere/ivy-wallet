@@ -17,7 +17,7 @@ import com.ivy.domain.usecase.loan.GetLoanRecordsUseCase
 import com.ivy.domain.usecase.loan.GetLoansUseCase
 import com.ivy.domain.usecase.loan.LoanTransactionSyncUseCase
 import com.ivy.domain.usecase.loan.ReorderLoansUseCase
-import com.ivy.data.model.legacy.Account
+import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.data.model.Loan
 import com.ivy.data.model.currency.format
 import com.ivy.data.model.currency.getDefaultFIATCurrency
@@ -62,8 +62,8 @@ class LoanViewModel @Inject constructor(
     private var baseCurrencyCode by mutableStateOf(getDefaultFIATCurrency().currencyCode)
     private var completedLoans by mutableStateOf<ImmutableList<DisplayLoan>>(persistentListOf())
     private var pendingLoans by mutableStateOf<ImmutableList<DisplayLoan>>(persistentListOf())
-    private var accounts by mutableStateOf<ImmutableList<Account>>(persistentListOf())
-    private var selectedAccount by mutableStateOf<Account?>(null)
+    private var accounts by mutableStateOf<ImmutableList<LegacyAccount>>(persistentListOf())
+    private var selectedAccount by mutableStateOf<LegacyAccount?>(null)
     private var loanModalData by mutableStateOf<LoanModalData?>(null)
     private var reorderModalVisible by mutableStateOf(false)
     private var dateTime by mutableStateOf<Instant>(nowUtc())
@@ -346,8 +346,8 @@ class LoanViewModel @Inject constructor(
     }
 
     private fun defaultAccountId(
-        accounts: List<Account>,
-    ): Account? {
+        accounts: List<LegacyAccount>,
+    ): LegacyAccount? {
         val lastSelectedId = getLastSelectedAccountId()
 
         lastSelectedId?.let { uuid ->
@@ -357,7 +357,7 @@ class LoanViewModel @Inject constructor(
         }
     }
 
-    private fun findCurrencyCode(accounts: List<Account>, accountId: UUID?): String {
+    private fun findCurrencyCode(accounts: List<LegacyAccount>, accountId: UUID?): String {
         return accountId?.let {
             accounts.find { account -> account.id == it }?.currency
         } ?: defaultCurrencyCode

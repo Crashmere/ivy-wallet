@@ -39,7 +39,7 @@ import com.ivy.domain.usecase.transaction.GetTransactionsByTagsUseCase
 import com.ivy.domain.usecase.transaction.GetTransactionsUseCase
 import com.ivy.domain.usecase.transaction.MapTransactionsToLegacyUseCase
 import com.ivy.legacy.ui.state.PeriodState
-import com.ivy.data.model.legacy.Account
+import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.R
 import com.ivy.ui.platform.FilePicker
@@ -126,7 +126,7 @@ class ReportViewModel @Inject constructor(
     mutableStateOf<ImmutableList<LegacyTransaction>>(persistentListOf())
     private var overdueTransactions by
     mutableStateOf<ImmutableList<LegacyTransaction>>(persistentListOf())
-    private var accounts by mutableStateOf<ImmutableList<Account>>(persistentListOf())
+    private var accounts by mutableStateOf<ImmutableList<LegacyAccount>>(persistentListOf())
     private var upcomingExpanded by mutableStateOf(false)
     private var overdueExpanded by mutableStateOf(false)
     private var loading by mutableStateOf(false)
@@ -348,7 +348,7 @@ class ReportViewModel @Inject constructor(
         history: ImmutableList<TransactionHistoryItem>,
         upcomingTransactions: ImmutableList<LegacyTransaction>,
         overdueTransactions: ImmutableList<LegacyTransaction>,
-        accounts: ImmutableList<Account>,
+        accounts: ImmutableList<LegacyAccount>,
         reportFilter: ReportFilter? = null,
         accountIdFilters: ImmutableList<UUID>,
         transactions: ImmutableList<LegacyTransaction>,
@@ -374,7 +374,7 @@ class ReportViewModel @Inject constructor(
 
     private suspend fun filterTransactions(
         baseCurrency: String,
-        accounts: List<Account>,
+        accounts: List<LegacyAccount>,
         filter: ReportFilter,
     ): ImmutableList<Transaction> {
         val filterAccountIds = filter.accounts.map { it.id }
@@ -481,7 +481,7 @@ class ReportViewModel @Inject constructor(
 
     private suspend fun List<Transaction>.filterByAmount(
         baseCurrency: String,
-        accounts: List<Account>,
+        accounts: List<LegacyAccount>,
         filter: ReportFilter
     ): List<Transaction> {
         val amountFilteredTransactions = mutableListOf<Transaction>()
@@ -565,7 +565,7 @@ class ReportViewModel @Inject constructor(
         }
     }
 
-    private suspend fun payOrGetLegacy(transaction: com.ivy.data.model.legacy.Transaction) {
+    private suspend fun payOrGetLegacy(transaction: com.ivy.data.model.legacy.LegacyTransaction) {
         withContext(Dispatchers.Main) {
             if (payOrSkipLegacyPlannedTransactionUseCase(transaction) != null) {
                 start()
@@ -599,7 +599,7 @@ class ReportViewModel @Inject constructor(
         }
     }
 
-    private suspend fun skipTransactionLegacy(transaction: com.ivy.data.model.legacy.Transaction) {
+    private suspend fun skipTransactionLegacy(transaction: com.ivy.data.model.legacy.LegacyTransaction) {
         withContext(Dispatchers.Main) {
             val paidTransaction = payOrSkipLegacyPlannedTransactionUseCase(
                 transaction = transaction,
@@ -625,7 +625,7 @@ class ReportViewModel @Inject constructor(
         }
     }
 
-    private suspend fun skipTransactionsLegacy(transactions: List<com.ivy.data.model.legacy.Transaction>) {
+    private suspend fun skipTransactionsLegacy(transactions: List<com.ivy.data.model.legacy.LegacyTransaction>) {
         withContext(Dispatchers.Main) {
             val paidTransactions = payOrSkipLegacyPlannedTransactionsUseCase(
                 transactions = transactions,

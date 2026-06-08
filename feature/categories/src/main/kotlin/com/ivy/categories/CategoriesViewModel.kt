@@ -6,7 +6,7 @@ import androidx.compose.runtime.Stable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.lifecycle.viewModelScope
-import com.ivy.data.model.legacy.Transaction
+import com.ivy.data.model.legacy.LegacyTransaction
 import com.ivy.domain.preferences.toggles.PreferenceToggleService
 import com.ivy.domain.preferences.toggles.PreferenceToggles
 import com.ivy.domain.usecase.category.GetCategoriesUseCase
@@ -14,7 +14,7 @@ import com.ivy.domain.usecase.category.SaveCategoryUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.domain.usecase.transaction.GetLegacyTransactionsForAccountsUseCase
 import com.ivy.legacy.ui.state.PeriodState
-import com.ivy.data.model.legacy.Account
+import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.preferences.asEnabledState
 import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
@@ -129,8 +129,8 @@ class CategoriesViewModel @Inject constructor(
         return sortModalVisible.value
     }
 
-    private var allAccounts = emptyList<Account>()
-    private var transactions = emptyList<Transaction>()
+    private var allAccounts = emptyList<LegacyAccount>()
+    private var transactions = emptyList<LegacyTransaction>()
 
     private fun start() {
         viewModelScope.launch(Dispatchers.IO) {

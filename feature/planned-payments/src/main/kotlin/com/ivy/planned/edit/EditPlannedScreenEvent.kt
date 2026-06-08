@@ -3,7 +3,7 @@ package com.ivy.planned.edit
 import com.ivy.data.model.TransactionType
 import com.ivy.data.model.Category
 import com.ivy.data.model.IntervalType
-import com.ivy.data.model.legacy.Account
+import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.data.model.CreateAccountData
 import com.ivy.data.model.CreateCategoryData
 import com.ivy.legacy.ui.modal.RecurringRuleModalData
@@ -23,7 +23,7 @@ sealed interface EditPlannedScreenEvent {
     data class OnTitleChanged(val newTitle: String?) : EditPlannedScreenEvent
     data class OnDescriptionChanged(val newDescription: String?) : EditPlannedScreenEvent
     data class OnCategoryChanged(val newCategory: Category?) : EditPlannedScreenEvent
-    data class OnAccountChanged(val newAccount: Account) : EditPlannedScreenEvent
+    data class OnAccountChanged(val newAccount: LegacyAccount) : EditPlannedScreenEvent
     data class OnSetTransactionType(val newTransactionType: TransactionType) :
         EditPlannedScreenEvent
 

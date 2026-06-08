@@ -13,7 +13,7 @@ import com.ivy.domain.preferences.toggles.PreferenceToggleService
 import com.ivy.domain.preferences.toggles.PreferenceToggles
 import com.ivy.domain.usecase.category.GetCategoriesUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
-import com.ivy.data.model.legacy.Account
+import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.data.model.currency.getDefaultFIATCurrency
 import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
 import com.ivy.domain.usecase.transaction.BuildTransactionHistoryItemsUseCase
@@ -43,7 +43,7 @@ class SearchViewModel @Inject constructor(
     private val transactions =
         mutableStateOf<ImmutableList<TransactionHistoryItem>>(persistentListOf())
     private val baseCurrency = mutableStateOf<String>(getDefaultFIATCurrency().currencyCode)
-    private val accounts = mutableStateOf<ImmutableList<Account>>(persistentListOf())
+    private val accounts = mutableStateOf<ImmutableList<LegacyAccount>>(persistentListOf())
     private val categories = mutableStateOf<ImmutableList<Category>>(persistentListOf())
     private val searchQuery = mutableStateOf("")
 

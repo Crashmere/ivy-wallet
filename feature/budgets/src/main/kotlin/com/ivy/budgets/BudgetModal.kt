@@ -25,7 +25,7 @@ import com.ivy.data.model.Category
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
 import com.ivy.legacy.ui.component.ListItem
-import com.ivy.data.model.legacy.Account
+import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.data.model.Budget
 import com.ivy.legacy.ui.modal.ModalNameInput
 import com.ivy.legacy.ui.selectEndTextFieldValue
@@ -46,7 +46,7 @@ data class BudgetModalData(
 
     val baseCurrency: String,
     val categories: List<Category>,
-    val accounts: List<Account>,
+    val accounts: List<LegacyAccount>,
 
     val id: UUID = UUID.randomUUID(),
     val autoFocusKeyboard: Boolean = true,

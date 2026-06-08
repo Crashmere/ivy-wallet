@@ -12,7 +12,7 @@ import com.ivy.ui.ComposeViewModel
 import com.ivy.data.model.Category
 import com.ivy.domain.usecase.category.GetCategoriesUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
-import com.ivy.data.model.legacy.Account
+import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.data.model.PlannedPaymentRule
 import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
 import com.ivy.domain.usecase.planned.GetPlannedPaymentsOverviewUseCase
@@ -34,7 +34,7 @@ class PlannedPaymentsViewModel @Inject constructor(
 
     private var currency by mutableStateOf("")
     private var categories by mutableStateOf<ImmutableList<Category>>(persistentListOf())
-    private var accounts by mutableStateOf<ImmutableList<Account>>(persistentListOf())
+    private var accounts by mutableStateOf<ImmutableList<LegacyAccount>>(persistentListOf())
     private var oneTimePlannedPayment by
         mutableStateOf<ImmutableList<PlannedPaymentRule>>(persistentListOf())
     private var recurringPlannedPayment by
@@ -78,7 +78,7 @@ class PlannedPaymentsViewModel @Inject constructor(
     }
 
     @Composable
-    private fun getAccounts(): ImmutableList<Account> {
+    private fun getAccounts(): ImmutableList<LegacyAccount> {
         return accounts
     }
 

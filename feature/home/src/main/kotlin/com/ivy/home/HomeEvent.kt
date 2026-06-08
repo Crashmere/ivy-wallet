@@ -1,6 +1,6 @@
 package com.ivy.home
 
-import com.ivy.data.model.legacy.Transaction
+import com.ivy.data.model.legacy.LegacyTransaction
 import com.ivy.home.customerjourney.CustomerJourneyCardModel
 import com.ivy.legacy.ui.model.period.TimePeriod
 
@@ -21,9 +21,9 @@ sealed interface HomeEvent {
 
     data class SetPeriod(val period: TimePeriod) : HomeEvent
 
-    data class PayOrGetPlanned(val transaction: Transaction) : HomeEvent
-    data class SkipPlanned(val transaction: Transaction) : HomeEvent
-    data class SkipAllPlanned(val transactions: List<Transaction>) : HomeEvent
+    data class PayOrGetPlanned(val transaction: LegacyTransaction) : HomeEvent
+    data class SkipPlanned(val transaction: LegacyTransaction) : HomeEvent
+    data class SkipAllPlanned(val transactions: List<LegacyTransaction>) : HomeEvent
 
     data class DismissCustomerJourneyCard(val card: CustomerJourneyCardModel) : HomeEvent
 

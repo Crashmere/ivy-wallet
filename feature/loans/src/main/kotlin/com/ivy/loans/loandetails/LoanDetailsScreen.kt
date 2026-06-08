@@ -36,7 +36,7 @@ import com.ivy.data.model.LoanType
 import com.ivy.ui.time.LocalTimeFormatter
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
-import com.ivy.data.model.legacy.Account
+import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.data.model.Loan
 import com.ivy.data.model.LoanRecord
 import com.ivy.loans.humanReadableType
@@ -259,7 +259,7 @@ private fun Header(
     onEditLoan: () -> Unit,
     onDeleteLoan: () -> Unit,
     loanAmountPaid: Double = 0.0,
-    selectedLoanAccount: Account? = null,
+    selectedLoanAccount: LegacyAccount? = null,
     onAddRecord: () -> Unit
 ) {
     val contrastColor = findContrastTextColor(itemColor)
@@ -383,7 +383,7 @@ private fun LoanInfoCard(
     loanTotalAmount: Double,
     amountPaid: Double,
     loanAmountPaid: Double = 0.0,
-    selectedLoanAccount: Account? = null,
+    selectedLoanAccount: LegacyAccount? = null,
 
     onAddRecord: () -> Unit
 ) {
@@ -630,7 +630,7 @@ private fun LoanRecordItem(
     loanRecord: LoanRecord,
     baseCurrency: String,
     loanBaseCurrency: String = "",
-    account: Account? = null,
+    account: LegacyAccount? = null,
     onClick: () -> Unit
 ) {
     val nav = navigation()

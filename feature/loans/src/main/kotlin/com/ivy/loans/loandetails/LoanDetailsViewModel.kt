@@ -6,7 +6,7 @@ import androidx.compose.runtime.Stable
 import androidx.compose.runtime.mutableDoubleStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.viewModelScope
-import com.ivy.data.model.legacy.Transaction
+import com.ivy.data.model.legacy.LegacyTransaction
 import com.ivy.data.model.LoanRecordType
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.domain.usecase.loan.CreateLoanRecordUseCase
@@ -21,7 +21,7 @@ import com.ivy.domain.usecase.loan.LoanTransactionSyncUseCase
 import com.ivy.domain.usecase.loan.UpdateLoanRecordUseCase
 import com.ivy.domain.usecase.loan.UpdateLoanUseCase
 import com.ivy.domain.usecase.account.CreateAccountWithBalanceUseCase
-import com.ivy.data.model.legacy.Account
+import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.data.model.Loan
 import com.ivy.data.model.LoanRecord
 import com.ivy.loans.loan.data.DisplayLoanRecord
@@ -84,10 +84,10 @@ class LoanDetailsViewModel @Inject constructor(
         mutableStateOf<ImmutableList<DisplayLoanRecord>>(persistentListOf())
     private val loanTotalAmount = mutableDoubleStateOf(0.0)
     private val amountPaid = mutableDoubleStateOf(0.0)
-    private val accounts = mutableStateOf<ImmutableList<Account>>(persistentListOf())
+    private val accounts = mutableStateOf<ImmutableList<LegacyAccount>>(persistentListOf())
     private val loanInterestAmountPaid = mutableDoubleStateOf(0.0)
-    private val selectedLoanAccount = mutableStateOf<Account?>(null)
-    private var associatedTransaction: Transaction? = null
+    private val selectedLoanAccount = mutableStateOf<LegacyAccount?>(null)
+    private var associatedTransaction: LegacyTransaction? = null
     private val createLoanTransaction = mutableStateOf(false)
     private var defaultCurrencyCode = ""
     private val loanModalData = mutableStateOf<LoanModalData?>(null)
@@ -553,9 +553,9 @@ class LoanDetailsViewModel @Inject constructor(
     }
 
     private fun findAccount(
-        accounts: List<Account>,
+        accounts: List<LegacyAccount>,
         accountId: UUID?,
-    ): Account? {
+    ): LegacyAccount? {
         return accountId?.let { uuid ->
             accounts.find { acc ->
                 acc.id == uuid

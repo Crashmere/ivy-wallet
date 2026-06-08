@@ -7,7 +7,7 @@ import androidx.compose.runtime.mutableDoubleStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
-import com.ivy.data.model.legacy.Transaction
+import com.ivy.data.model.legacy.LegacyTransaction
 import com.ivy.data.model.TransactionType
 import com.ivy.data.model.Category
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
@@ -46,7 +46,7 @@ class PieChartStatisticViewModel @Inject constructor(
     private var accountIdFilterList by mutableStateOf<ImmutableList<UUID>>(persistentListOf())
     private var showCloseButtonOnly by mutableStateOf(false)
     private var filterExcluded by mutableStateOf(false)
-    private var transactions by mutableStateOf<ImmutableList<Transaction>>(persistentListOf())
+    private var transactions by mutableStateOf<ImmutableList<LegacyTransaction>>(persistentListOf())
     private var choosePeriodModal by mutableStateOf<ChoosePeriodModalData?>(null)
 
     @Composable
@@ -112,7 +112,7 @@ class PieChartStatisticViewModel @Inject constructor(
     }
 
     @Composable
-    private fun getTransactions(): ImmutableList<Transaction> {
+    private fun getTransactions(): ImmutableList<LegacyTransaction> {
         return transactions
     }
 
@@ -154,7 +154,7 @@ class PieChartStatisticViewModel @Inject constructor(
         type: TransactionType,
         accountIdFilterList: ImmutableList<UUID>,
         filterExclude: Boolean,
-        transactions: ImmutableList<Transaction>,
+        transactions: ImmutableList<LegacyTransaction>,
         transfersAsIncomeExpenseValue: Boolean
     ) {
         initialise(period, type, accountIdFilterList, filterExclude, transactions)
@@ -167,7 +167,7 @@ class PieChartStatisticViewModel @Inject constructor(
         type: TransactionType,
         accountIdFilterListValue: ImmutableList<UUID>,
         filterExcludedValue: Boolean,
-        transactionsValue: ImmutableList<Transaction>
+        transactionsValue: ImmutableList<LegacyTransaction>
     ) {
         val baseCurrencyValue = getBaseCurrencyCode()
 

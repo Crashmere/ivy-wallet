@@ -17,7 +17,7 @@ import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.domain.usecase.planned.DeletePlannedPaymentRuleUseCase
 import com.ivy.domain.usecase.planned.GetPlannedPaymentRuleUseCase
 import com.ivy.domain.usecase.planned.SavePlannedPaymentRuleUseCase
-import com.ivy.data.model.legacy.Account
+import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.data.model.PlannedPaymentRule
 import com.ivy.ui.navigation.EditPlannedScreen
 import com.ivy.ui.navigation.Navigation
@@ -66,12 +66,12 @@ class EditPlannedViewModel @Inject constructor(
     private var oneTime by mutableStateOf(false)
     private var initialTitle by mutableStateOf<String?>(null)
     private var description by mutableStateOf<String?>(null)
-    private var account by mutableStateOf<Account?>(null)
+    private var account by mutableStateOf<LegacyAccount?>(null)
     private var category by mutableStateOf<Category?>(null)
     private var amount by mutableDoubleStateOf(0.0)
     private var currency by mutableStateOf("")
     private var categories by mutableStateOf<ImmutableList<Category>>(persistentListOf())
-    private var accounts by mutableStateOf<ImmutableList<Account>>(persistentListOf())
+    private var accounts by mutableStateOf<ImmutableList<LegacyAccount>>(persistentListOf())
     private var categoryModalVisible by mutableStateOf(false)
     private var descriptionModalVisible by mutableStateOf(false)
     private var deleteTransactionModalVisible by mutableStateOf(false)
@@ -123,7 +123,7 @@ class EditPlannedViewModel @Inject constructor(
     }
 
     @Composable
-    private fun getAccounts(): ImmutableList<Account> {
+    private fun getAccounts(): ImmutableList<LegacyAccount> {
         return accounts
     }
 
@@ -163,7 +163,7 @@ class EditPlannedViewModel @Inject constructor(
     }
 
     @Composable
-    private fun getAccount(): Account? {
+    private fun getAccount(): LegacyAccount? {
         return account
     }
 
@@ -317,7 +317,7 @@ class EditPlannedViewModel @Inject constructor(
         updateCurrency(account = selectedAccount)
     }
 
-    private suspend fun updateCurrency(account: Account) {
+    private suspend fun updateCurrency(account: LegacyAccount) {
         currency = account.currency ?: baseCurrency()
     }
 
@@ -379,7 +379,7 @@ class EditPlannedViewModel @Inject constructor(
         saveIfEditMode()
     }
 
-    private fun updateAccount(newAccount: Account) {
+    private fun updateAccount(newAccount: LegacyAccount) {
         loadedRule = loadedRule().copy(
             accountId = newAccount.id
         )

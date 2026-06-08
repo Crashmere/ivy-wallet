@@ -3,7 +3,7 @@ package com.ivy.planned.edit
 import com.ivy.data.model.TransactionType
 import com.ivy.data.model.Category
 import com.ivy.data.model.IntervalType
-import com.ivy.data.model.legacy.Account
+import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.legacy.ui.modal.RecurringRuleModalData
 import com.ivy.legacy.ui.modal.edit.AccountModalData
 import com.ivy.legacy.ui.modal.edit.CategoryModalData
@@ -22,8 +22,8 @@ data class EditPlannedScreenState(
     val initialTitle: String?,
     val description: String?,
     val categories: ImmutableList<Category>,
-    val accounts: ImmutableList<Account>,
-    val account: Account?,
+    val accounts: ImmutableList<LegacyAccount>,
+    val account: LegacyAccount?,
     val category: Category?,
     val amount: Double,
     val categoryModalVisible: Boolean,

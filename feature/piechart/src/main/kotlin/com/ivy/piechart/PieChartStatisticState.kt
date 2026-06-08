@@ -1,7 +1,7 @@
 package com.ivy.piechart
 
 import androidx.compose.runtime.Immutable
-import com.ivy.data.model.legacy.Transaction
+import com.ivy.data.model.legacy.LegacyTransaction
 import com.ivy.data.model.TransactionType
 import com.ivy.legacy.ui.model.period.TimePeriod
 import com.ivy.legacy.ui.modal.ChoosePeriodModalData
@@ -19,6 +19,6 @@ data class PieChartStatisticState(
     val accountIdFilterList: ImmutableList<UUID>,
     val showCloseButtonOnly: Boolean,
     val filterExcluded: Boolean,
-    val transactions: ImmutableList<Transaction>,
+    val transactions: ImmutableList<LegacyTransaction>,
     val choosePeriodModal: ChoosePeriodModalData?
 )

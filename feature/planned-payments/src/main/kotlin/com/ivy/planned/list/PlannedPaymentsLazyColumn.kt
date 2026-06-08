@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.dp
 import com.ivy.data.model.Category
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
-import com.ivy.data.model.legacy.Account
+import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.data.model.PlannedPaymentRule
 import com.ivy.legacy.ui.component.transaction.SectionDivider
 import com.ivy.ui.navigation.EditPlannedScreen
@@ -43,7 +43,7 @@ fun PlannedPaymentsLazyColumn(
     Header: @Composable () -> Unit,
     currency: String,
     categories: ImmutableList<Category>,
-    accounts: ImmutableList<Account>,
+    accounts: ImmutableList<LegacyAccount>,
     oneTime: ImmutableList<PlannedPaymentRule>,
     oneTimeIncome: Double,
     oneTimeExpenses: Double,
@@ -96,7 +96,7 @@ private fun LazyListScope.plannedPaymentItems(
     nav: Navigation,
     currency: String,
     categories: ImmutableList<Category>,
-    accounts: ImmutableList<Account>,
+    accounts: ImmutableList<LegacyAccount>,
     listState: LazyListState,
 
     oneTime: ImmutableList<PlannedPaymentRule>,

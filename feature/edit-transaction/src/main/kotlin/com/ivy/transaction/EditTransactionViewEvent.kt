@@ -6,7 +6,7 @@ import com.ivy.data.model.Category
 import com.ivy.data.model.Tag
 import com.ivy.data.model.TagId
 import com.ivy.legacy.ui.model.EditTransactionDisplayLoan
-import com.ivy.data.model.legacy.Account
+import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.data.model.CreateAccountData
 import com.ivy.data.model.CreateCategoryData
 import kotlinx.collections.immutable.ImmutableList
@@ -23,10 +23,10 @@ data class EditTransactionViewState(
     val description: String?,
     val dateTime: Instant?,
     val dueDate: Instant?,
-    val accounts: ImmutableList<Account>,
+    val accounts: ImmutableList<LegacyAccount>,
     val categories: ImmutableList<Category>,
-    val account: Account?,
-    val toAccount: Account?,
+    val account: LegacyAccount?,
+    val toAccount: LegacyAccount?,
     val category: Category?,
     val amount: Double,
     val hasChanges: Boolean,
@@ -42,8 +42,8 @@ sealed interface EditTransactionViewEvent {
     data class OnTitleChanged(val newTitle: String?) : EditTransactionViewEvent
     data class OnDescriptionChanged(val newDescription: String?) : EditTransactionViewEvent
     data class OnCategoryChanged(val newCategory: Category?) : EditTransactionViewEvent
-    data class OnAccountChanged(val newAccount: Account) : EditTransactionViewEvent
-    data class OnToAccountChanged(val newAccount: Account) : EditTransactionViewEvent
+    data class OnAccountChanged(val newAccount: LegacyAccount) : EditTransactionViewEvent
+    data class OnToAccountChanged(val newAccount: LegacyAccount) : EditTransactionViewEvent
     data class OnDueDateChanged(val newDueDate: LocalDateTime?) : EditTransactionViewEvent
     data object OnChangeDate : EditTransactionViewEvent
     data object OnChangeTime : EditTransactionViewEvent

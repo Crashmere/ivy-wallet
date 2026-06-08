@@ -44,7 +44,7 @@ import com.ivy.ui.platform.LocalDatePicker
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
 import com.ivy.legacy.ui.component.ListItem
-import com.ivy.data.model.legacy.Account
+import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.legacy.ui.model.period.displayLong
 import com.ivy.legacy.ui.state.LocalPeriodState
 import com.ivy.legacy.ui.component.tags.AddTagButton
@@ -84,7 +84,7 @@ fun BoxWithConstraintsScope.FilterOverlay(
     visible: Boolean,
 
     baseCurrency: String,
-    accounts: List<Account>,
+    accounts: List<LegacyAccount>,
     categories: List<Category>,
     allTags: ImmutableList<Tag>,
 
@@ -652,7 +652,7 @@ private fun PeriodFilter(
 @SuppressLint("ComposeContentEmitterReturningValues", "ComposeMultipleContentEmitters")
 @Composable
 private fun AccountsFilter(
-    allAccounts: List<Account>,
+    allAccounts: List<LegacyAccount>,
     filter: ReportFilter?,
     nonNullFilter: (ReportFilter?) -> ReportFilter,
     onSetFilter: (ReportFilter) -> Unit

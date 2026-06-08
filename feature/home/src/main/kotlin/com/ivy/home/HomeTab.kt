@@ -23,7 +23,7 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.ivy.data.model.legacy.Transaction
+import com.ivy.data.model.legacy.LegacyTransaction
 import com.ivy.data.model.TransactionHistoryItem
 import com.ivy.ui.platform.LocalDatePicker
 import com.ivy.home.Constants.SWIPE_HORIZONTAL_THRESHOLD
@@ -287,12 +287,12 @@ fun HomeLazyColumn(
     onOpenMoreMenu: () -> Unit,
     onBalanceClick: () -> Unit,
 
-    onPayOrGet: (Transaction) -> Unit,
+    onPayOrGet: (LegacyTransaction) -> Unit,
     onDismiss: (CustomerJourneyCardModel) -> Unit,
     onHiddenBalanceClick: () -> Unit,
     onHiddenIncomeClick: () -> Unit,
-    onSkipTransaction: (Transaction) -> Unit,
-    onSkipAllTransactions: (List<Transaction>) -> Unit,
+    onSkipTransaction: (LegacyTransaction) -> Unit,
+    onSkipAllTransactions: (List<LegacyTransaction>) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val periodState = LocalPeriodState.current

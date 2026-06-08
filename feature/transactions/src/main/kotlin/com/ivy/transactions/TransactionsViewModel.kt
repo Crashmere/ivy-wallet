@@ -6,7 +6,7 @@ import androidx.compose.runtime.mutableDoubleStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.graphics.toArgb
 import androidx.lifecycle.viewModelScope
-import com.ivy.data.model.legacy.Transaction
+import com.ivy.data.model.legacy.LegacyTransaction
 import com.ivy.data.model.TransactionHistoryItem
 import com.ivy.data.model.TransactionType
 import com.ivy.ui.resource.ResourceProvider
@@ -65,7 +65,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.UUID
 import javax.inject.Inject
-import com.ivy.data.model.legacy.Account as LegacyAccount
+import com.ivy.data.model.legacy.LegacyAccount
 
 @Stable
 @HiltViewModel
@@ -113,13 +113,13 @@ class TransactionsViewModel @Inject constructor(
     private val expenses = mutableDoubleStateOf(0.0)
 
     // Upcoming
-    private val upcoming = mutableStateOf<ImmutableList<Transaction>>(persistentListOf())
+    private val upcoming = mutableStateOf<ImmutableList<LegacyTransaction>>(persistentListOf())
     private val upcomingIncome = mutableDoubleStateOf(0.0)
     private val upcomingExpenses = mutableDoubleStateOf(0.0)
     private val upcomingExpanded = mutableStateOf(false)
 
     // Overdue
-    private val overdue = mutableStateOf<ImmutableList<Transaction>>(persistentListOf())
+    private val overdue = mutableStateOf<ImmutableList<LegacyTransaction>>(persistentListOf())
     private val overdueIncome = mutableDoubleStateOf(0.0)
     private val overdueExpenses = mutableDoubleStateOf(0.0)
     private val overdueExpanded = mutableStateOf(true)
@@ -249,7 +249,7 @@ class TransactionsViewModel @Inject constructor(
     }
 
     @Composable
-    private fun getUpcoming(): ImmutableList<Transaction> {
+    private fun getUpcoming(): ImmutableList<LegacyTransaction> {
         return upcoming.value
     }
 
@@ -269,7 +269,7 @@ class TransactionsViewModel @Inject constructor(
     }
 
     @Composable
-    private fun getOverdue(): ImmutableList<Transaction> {
+    private fun getOverdue(): ImmutableList<LegacyTransaction> {
         return overdue.value
     }
 
@@ -421,7 +421,7 @@ class TransactionsViewModel @Inject constructor(
     private suspend fun initForCategoryWithTransactions(
         categoryId: UUID,
         accountFilterList: List<UUID>,
-        transactions: List<Transaction>,
+        transactions: List<LegacyTransaction>,
     ) {
         withContext(Dispatchers.Default) {
             initWithTransactions.value = true
@@ -469,7 +469,7 @@ class TransactionsViewModel @Inject constructor(
 
     private suspend fun initForAccountTransfersCategory(
         accountFilterList: List<UUID>,
-        transactions: List<Transaction>,
+        transactions: List<LegacyTransaction>,
     ) {
         initWithTransactions.value = true
         val accountTransferCategory = Category(
@@ -615,7 +615,7 @@ class TransactionsViewModel @Inject constructor(
         }
     }
 
-    private fun payOrGet(screen: TransactionsScreen, transaction: Transaction) {
+    private fun payOrGet(screen: TransactionsScreen, transaction: LegacyTransaction) {
         viewModelScope.launch {
             if (payOrSkipLegacyPlannedTransactionUseCase(transaction) != null) {
                 start(
@@ -626,7 +626,7 @@ class TransactionsViewModel @Inject constructor(
         }
     }
 
-    private fun skipTransaction(screen: TransactionsScreen, transaction: Transaction) {
+    private fun skipTransaction(screen: TransactionsScreen, transaction: LegacyTransaction) {
         viewModelScope.launch {
             val paidTransaction = payOrSkipLegacyPlannedTransactionUseCase(
                 transaction = transaction,
@@ -641,7 +641,7 @@ class TransactionsViewModel @Inject constructor(
         }
     }
 
-    private fun skipTransactions(screen: TransactionsScreen, transactions: List<Transaction>) {
+    private fun skipTransactions(screen: TransactionsScreen, transactions: List<LegacyTransaction>) {
         viewModelScope.launch {
             val paidTransactions = payOrSkipLegacyPlannedTransactionsUseCase(
                 transactions = transactions,

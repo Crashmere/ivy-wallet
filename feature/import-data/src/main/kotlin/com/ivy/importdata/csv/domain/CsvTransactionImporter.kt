@@ -1,7 +1,7 @@
 package com.ivy.importdata.csv.domain
 
 import androidx.compose.ui.graphics.toArgb
-import com.ivy.data.model.legacy.Transaction
+import com.ivy.data.model.legacy.LegacyTransaction
 import com.ivy.data.model.TransactionType
 import com.ivy.data.model.Category
 import com.ivy.data.model.CategoryId
@@ -20,7 +20,7 @@ import com.ivy.legacy.ui.theme.IVY_COLOR_PICKER_COLORS_FREE
 import com.ivy.importdata.csv.ImportantFields
 import com.ivy.importdata.csv.OptionalFields
 import com.ivy.importdata.csv.TransferFields
-import com.ivy.data.model.legacy.Account
+import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.data.model.currency.IvyCurrency
 import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
 import com.ivy.domain.util.nextOrderNum
@@ -44,7 +44,7 @@ class CsvTransactionImporter @Inject constructor(
     private val saveLegacyTransactionUseCase: SaveLegacyTransactionUseCase,
 ) {
 
-    lateinit var accounts: List<Account>
+    lateinit var accounts: List<LegacyAccount>
     lateinit var categories: List<Category>
 
     private var newCategoryColorIndex = 0
@@ -125,7 +125,7 @@ class CsvTransactionImporter @Inject constructor(
         importantFields: ImportantFields,
         transferFields: TransferFields,
         optionalFields: OptionalFields,
-    ): Transaction? {
+    ): LegacyTransaction? {
         val type = parseTransactionType(
             value = row.extractValue(importantFields.type),
             metadata = importantFields.type.metadata,
@@ -218,7 +218,7 @@ class CsvTransactionImporter @Inject constructor(
             optionalFields.description.metadata
         )
 
-        return Transaction(
+        return LegacyTransaction(
             id = UUID.randomUUID(),
             type = type,
             amount = amount.toBigDecimal(),
@@ -240,7 +240,7 @@ class CsvTransactionImporter @Inject constructor(
         icon: String?,
         orderNum: Double?,
         currencyRawString: String?,
-    ): Account? {
+    ): LegacyAccount? {
         if (accountNameString == null || accountNameString.isBlank()) return null
 
         val existingAccount = accounts.firstOrNull {
@@ -266,7 +266,7 @@ class CsvTransactionImporter @Inject constructor(
             }
         }.toArgb()
 
-        val newAccount = Account(
+        val newAccount = LegacyAccount(
             name = accountNameString,
             currency = mapCurrency(
                 baseCurrency = baseCurrency.code,

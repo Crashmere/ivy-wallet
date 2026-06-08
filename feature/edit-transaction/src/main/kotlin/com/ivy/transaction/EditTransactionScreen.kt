@@ -38,7 +38,7 @@ import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
 import com.ivy.ui.platform.hideKeyboard
 import com.ivy.legacy.ui.model.EditTransactionDisplayLoan
-import com.ivy.data.model.legacy.Account
+import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.legacy.ui.component.edit.TransactionDateTime
 import com.ivy.legacy.ui.component.edit.core.Description
 import com.ivy.legacy.ui.component.tags.AddTagButton
@@ -190,22 +190,22 @@ private fun BoxWithConstraintsScope.UI(
     description: String?,
     category: Category?,
     dateTime: Instant?,
-    account: Account?,
-    toAccount: Account?,
+    account: LegacyAccount?,
+    toAccount: LegacyAccount?,
     dueDate: Instant?,
     amount: Double,
 
     customExchangeRateState: CustomExchangeRateState,
     categories: ImmutableList<Category>,
-    accounts: ImmutableList<Account>,
+    accounts: ImmutableList<LegacyAccount>,
     tags: ImmutableList<Tag>,
     transactionAssociatedTags: ImmutableList<TagId>,
     onTitleChange: (String?) -> Unit,
     onDescriptionChange: (String?) -> Unit,
     onAmountChange: (Double) -> Unit,
     onCategoryChange: (Category?) -> Unit,
-    onAccountChange: (Account) -> Unit,
-    onToAccountChange: (Account) -> Unit,
+    onAccountChange: (LegacyAccount) -> Unit,
+    onToAccountChange: (LegacyAccount) -> Unit,
     onDueDateChange: (LocalDateTime?) -> Unit,
     onSetDate: () -> Unit,
     onSetTime: () -> Unit,

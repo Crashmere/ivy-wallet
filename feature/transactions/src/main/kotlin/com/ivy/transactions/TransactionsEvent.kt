@@ -1,9 +1,9 @@
 package com.ivy.transactions
 
-import com.ivy.data.model.legacy.Transaction
+import com.ivy.data.model.legacy.LegacyTransaction
 import com.ivy.data.model.Category
 import com.ivy.legacy.ui.model.period.TimePeriod
-import com.ivy.data.model.legacy.Account
+import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.ui.navigation.TransactionsScreen
 import com.ivy.legacy.ui.modal.ChoosePeriodModalData
 
@@ -22,23 +22,23 @@ sealed interface TransactionsEvent {
     data class EditCategory(val updatedCategory: Category) : TransactionsEvent
     data class EditAccount(
         val screen: TransactionsScreen,
-        val account: Account,
+        val account: LegacyAccount,
         val newBalance: Double
     ) : TransactionsEvent
 
     data class PayOrGet(
         val screen: TransactionsScreen,
-        val transaction: Transaction
+        val transaction: LegacyTransaction
     ) : TransactionsEvent
 
     data class SkipTransaction(
         val screen: TransactionsScreen,
-        val transaction: Transaction
+        val transaction: LegacyTransaction
     ) : TransactionsEvent
 
     data class SkipTransactions(
         val screen: TransactionsScreen,
-        val transactions: List<Transaction>
+        val transactions: List<LegacyTransaction>
     ) : TransactionsEvent
 
     data class UpdateAccountDeletionState(val confirmationText: String) : TransactionsEvent

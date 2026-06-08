@@ -2,11 +2,11 @@ package com.ivy.piechart
 
 import androidx.compose.ui.graphics.toArgb
 import com.ivy.data.model.TransactionType
-import com.ivy.data.model.legacy.Transaction
+import com.ivy.data.model.legacy.LegacyTransaction
 import com.ivy.ui.resource.ResourceProvider
 import com.ivy.data.model.Category
 import com.ivy.data.model.CategoryId
-import com.ivy.data.model.legacy.Account
+import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.data.model.FromToTimeRange
 import com.ivy.data.model.IncomeExpenseTransferPair
 import com.ivy.data.model.primitive.ColorInt
@@ -50,7 +50,7 @@ class BuildPieChartDataUseCase @Inject constructor(
         accountIdFilterList: List<UUID>,
         treatTransferAsIncExp: Boolean = false,
         showAccountTransfersCategory: Boolean = treatTransferAsIncExp,
-        existingTransactions: List<Transaction> = emptyList(),
+        existingTransactions: List<LegacyTransaction> = emptyList(),
     ): PieChartData {
         val (accountsUsed, accountIdFilterSet) = getUsableAccounts(accountIdFilterList)
         val transactions = existingTransactions.ifEmpty {
@@ -95,7 +95,7 @@ class BuildPieChartDataUseCase @Inject constructor(
 
     private suspend fun getUsableAccounts(
         accountIdFilterList: List<UUID>,
-    ): Pair<List<Account>, Set<UUID>> {
+    ): Pair<List<LegacyAccount>, Set<UUID>> {
         val allAccounts = getLegacyAccountsUseCase()
         val accountsUsed = if (accountIdFilterList.isEmpty()) {
             includedLegacyAccounts(allAccounts)
@@ -110,8 +110,8 @@ class BuildPieChartDataUseCase @Inject constructor(
         baseCurrency: String,
         addAssociatedTransToCategoryAmt: Boolean = false,
         allCategories: List<Category?>,
-        transactions: List<Transaction>,
-        accountsUsed: List<Account>,
+        transactions: List<LegacyTransaction>,
+        accountsUsed: List<LegacyAccount>,
     ): List<CategoryAmount> {
         return allCategories.map { category ->
             val categoryTransactions = if (addAssociatedTransToCategoryAmt) {
@@ -178,7 +178,7 @@ class BuildPieChartDataUseCase @Inject constructor(
         type: TransactionType,
         accountTransfersCategory: Category,
         accountIdFilterSet: Set<UUID>,
-        transactions: List<Transaction>,
+        transactions: List<LegacyTransaction>,
         incomeExpenseTransfer: IncomeExpenseTransferPair,
         categoryAmounts: List<CategoryAmount>,
     ): List<CategoryAmount> {

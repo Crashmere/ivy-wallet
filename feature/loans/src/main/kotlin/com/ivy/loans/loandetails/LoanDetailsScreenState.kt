@@ -1,6 +1,6 @@
 package com.ivy.loans.loandetails
 
-import com.ivy.data.model.legacy.Account
+import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.data.model.Loan
 import com.ivy.loans.loan.data.DisplayLoanRecord
 import com.ivy.legacy.ui.modal.LoanModalData
@@ -15,8 +15,8 @@ data class LoanDetailsScreenState(
     val loanTotalAmount: Double,
     val amountPaid: Double,
     val loanAmountPaid: Double,
-    val accounts: ImmutableList<Account>,
-    val selectedLoanAccount: Account?,
+    val accounts: ImmutableList<LegacyAccount>,
+    val selectedLoanAccount: LegacyAccount?,
     val createLoanTransaction: Boolean,
     val loanModalData: LoanModalData?,
     val loanRecordModalData: LoanRecordModalData?,

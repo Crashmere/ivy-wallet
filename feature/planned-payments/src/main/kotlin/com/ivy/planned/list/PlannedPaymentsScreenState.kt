@@ -1,7 +1,7 @@
 package com.ivy.planned.list
 
 import com.ivy.data.model.Category
-import com.ivy.data.model.legacy.Account
+import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.data.model.PlannedPaymentRule
 import kotlinx.collections.immutable.ImmutableList
 import javax.annotation.concurrent.Immutable
@@ -10,7 +10,7 @@ import javax.annotation.concurrent.Immutable
 data class PlannedPaymentsScreenState(
     val currency: String,
     val categories: ImmutableList<Category>,
-    val accounts: ImmutableList<Account>,
+    val accounts: ImmutableList<LegacyAccount>,
     val oneTimePlannedPayment: ImmutableList<PlannedPaymentRule>,
     val oneTimeIncome: Double,
     val oneTimeExpenses: Double,

@@ -1,11 +1,11 @@
 package com.ivy.transactions
 
 import androidx.compose.runtime.Immutable
-import com.ivy.data.model.legacy.Transaction
+import com.ivy.data.model.legacy.LegacyTransaction
 import com.ivy.data.model.TransactionHistoryItem
 import com.ivy.data.model.Category
 import com.ivy.legacy.ui.model.period.TimePeriod
-import com.ivy.data.model.legacy.Account
+import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.legacy.ui.modal.ChoosePeriodModalData
 import kotlinx.collections.immutable.ImmutableList
 
@@ -15,8 +15,8 @@ data class TransactionsState(
     val baseCurrency: String,
     val currency: String,
     val categories: ImmutableList<Category>,
-    val accounts: ImmutableList<Account>,
-    val account: Account?,
+    val accounts: ImmutableList<LegacyAccount>,
+    val account: LegacyAccount?,
     val category: Category?,
     val balance: Double,
     val balanceBaseCurrency: Double?,
@@ -25,11 +25,11 @@ data class TransactionsState(
     val initWithTransactions: Boolean,
     val treatTransfersAsIncomeExpense: Boolean,
     val history: ImmutableList<TransactionHistoryItem>,
-    val upcoming: ImmutableList<Transaction>,
+    val upcoming: ImmutableList<LegacyTransaction>,
     val upcomingExpanded: Boolean,
     val upcomingIncome: Double,
     val upcomingExpenses: Double,
-    val overdue: ImmutableList<Transaction>,
+    val overdue: ImmutableList<LegacyTransaction>,
     val overdueExpanded: Boolean,
     val overdueIncome: Double,
     val overdueExpenses: Double,

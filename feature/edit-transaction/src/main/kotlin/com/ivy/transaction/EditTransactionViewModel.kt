@@ -7,7 +7,7 @@ import androidx.compose.runtime.mutableDoubleStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
-import com.ivy.data.model.legacy.Transaction
+import com.ivy.data.model.legacy.LegacyTransaction
 import com.ivy.data.model.TransactionType
 import com.ivy.ui.resource.ResourceProvider
 import com.ivy.data.model.Category
@@ -43,7 +43,7 @@ import com.ivy.domain.usecase.transaction.GetLegacyTransactionUseCase
 import com.ivy.domain.usecase.transaction.SaveLegacyTransactionUseCase
 import com.ivy.domain.usecase.transaction.SuggestTransactionTitlesUseCase
 import com.ivy.legacy.ui.model.EditTransactionDisplayLoan
-import com.ivy.data.model.legacy.Account
+import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.ui.navigation.EditTransactionScreen
 import com.ivy.ui.navigation.MainScreen
 import com.ivy.ui.navigation.Navigation
@@ -127,12 +127,12 @@ class EditTransactionViewModel @Inject constructor(
     private var description by mutableStateOf<String?>(null)
     private var dateTime by mutableStateOf<Instant?>(null)
     private var dueDate by mutableStateOf<Instant?>(null)
-    private var accounts by mutableStateOf<ImmutableList<Account>>(persistentListOf())
+    private var accounts by mutableStateOf<ImmutableList<LegacyAccount>>(persistentListOf())
     private var categories by mutableStateOf<ImmutableList<Category>>(persistentListOf())
     private var tags by mutableStateOf<ImmutableList<Tag>>(persistentListOf())
     private var transactionAssociatedTags by mutableStateOf<ImmutableList<TagId>>(persistentListOf())
-    private var account by mutableStateOf<Account?>(null)
-    private var toAccount by mutableStateOf<Account?>(null)
+    private var account by mutableStateOf<LegacyAccount?>(null)
+    private var toAccount by mutableStateOf<LegacyAccount?>(null)
     private var category by mutableStateOf<Category?>(null)
     private var amount by mutableDoubleStateOf(0.0)
     private var hasChanges by mutableStateOf(false)
@@ -146,7 +146,7 @@ class EditTransactionViewModel @Inject constructor(
 
     private var customExchangeRateState by mutableStateOf(CustomExchangeRateState())
 
-    private var loadedTransaction: Transaction? = null
+    private var loadedTransaction: LegacyTransaction? = null
     private var editMode = false
 
     // Used for optimising in updating all loan/loanRecords
@@ -178,7 +178,7 @@ class EditTransactionViewModel @Inject constructor(
 
             loadedTransaction = screen.initialTransactionId?.let {
                 getLegacyTransactionUseCase(it)
-            } ?: Transaction(
+            } ?: LegacyTransaction(
                 accountId = defaultAccountId(
                     screen = screen,
                     accounts = getAccounts
@@ -266,7 +266,7 @@ class EditTransactionViewModel @Inject constructor(
     }
 
     @Composable
-    private fun getAccounts(): ImmutableList<Account> {
+    private fun getAccounts(): ImmutableList<LegacyAccount> {
         return accounts
     }
 
@@ -276,12 +276,12 @@ class EditTransactionViewModel @Inject constructor(
     }
 
     @Composable
-    private fun getAccount(): Account? {
+    private fun getAccount(): LegacyAccount? {
         return account
     }
 
     @Composable
-    private fun getToAccount(): Account? {
+    private fun getToAccount(): LegacyAccount? {
         return toAccount
     }
 
@@ -368,7 +368,7 @@ class EditTransactionViewModel @Inject constructor(
 
     private suspend fun defaultAccountId(
         screen: EditTransactionScreen,
-        accounts: List<Account>,
+        accounts: List<LegacyAccount>,
     ): UUID {
         if (screen.accountId != null) {
             return screen.accountId!!
@@ -388,7 +388,7 @@ class EditTransactionViewModel @Inject constructor(
         return accounts.first().id
     }
 
-    private suspend fun display(transaction: Transaction) {
+    private suspend fun display(transaction: LegacyTransaction) {
         this.title = transaction.title
 
         transactionType = transaction.type
@@ -427,7 +427,7 @@ class EditTransactionViewModel @Inject constructor(
         displayLoanHelper = getDisplayLoanHelper(transaction = transaction)
     }
 
-    private suspend fun getDisplayLoanHelper(transaction: Transaction): EditTransactionDisplayLoan {
+    private suspend fun getDisplayLoanHelper(transaction: LegacyTransaction): EditTransactionDisplayLoan {
         if (transaction.loanId == null) {
             return EditTransactionDisplayLoan()
         }
@@ -501,7 +501,7 @@ class EditTransactionViewModel @Inject constructor(
         saveIfEditMode()
     }
 
-    private fun onAccountChanged(newAccount: Account) {
+    private fun onAccountChanged(newAccount: LegacyAccount) {
         viewModelScope.launch {
             loadedTransaction = loadedTransaction().copy(
                 accountId = newAccount.id
@@ -525,11 +525,11 @@ class EditTransactionViewModel @Inject constructor(
         }
     }
 
-    private suspend fun updateCurrency(account: Account) {
+    private suspend fun updateCurrency(account: LegacyAccount) {
         currency = account.currency ?: baseCurrency()
     }
 
-    private fun onToAccountChanged(newAccount: Account) {
+    private fun onToAccountChanged(newAccount: LegacyAccount) {
         viewModelScope.launch {
             loadedTransaction = loadedTransaction().copy(
                 toAccountId = newAccount.id
@@ -840,8 +840,8 @@ class EditTransactionViewModel @Inject constructor(
     }
 
     private suspend fun updateCustomExchangeRateState(
-        toAccountValue: Account? = null,
-        fromAccount: Account? = null,
+        toAccountValue: LegacyAccount? = null,
+        fromAccount: LegacyAccount? = null,
         amt: Double? = null,
         exchangeRate: Double? = null,
         resetRate: Boolean = false

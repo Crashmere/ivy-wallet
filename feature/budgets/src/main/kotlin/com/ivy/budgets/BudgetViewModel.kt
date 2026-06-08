@@ -16,7 +16,7 @@ import com.ivy.data.model.Transfer
 import com.ivy.legacy.ui.state.PeriodState
 import com.ivy.data.model.FromToTimeRange
 import com.ivy.data.model.toCloseTimeRange
-import com.ivy.data.model.legacy.Account
+import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.data.model.Budget
 import com.ivy.data.model.currency.format
 import com.ivy.domain.usecase.budget.CreateBudgetUseCase
@@ -66,7 +66,7 @@ class BudgetViewModel @Inject constructor(
     private val timeRange = mutableStateOf<FromToTimeRange?>(null)
     private val budgets = mutableStateOf<ImmutableList<DisplayBudget>>(persistentListOf())
     private val categories = mutableStateOf<ImmutableList<Category>>(persistentListOf())
-    private val accounts = mutableStateOf<ImmutableList<Account>>(persistentListOf())
+    private val accounts = mutableStateOf<ImmutableList<LegacyAccount>>(persistentListOf())
     private val categoryBudgetsTotal = mutableDoubleStateOf(0.0)
     private val appBudgetMax = mutableDoubleStateOf(0.0)
     private val totalRemainingBudget = mutableDoubleStateOf(0.0)
@@ -109,7 +109,7 @@ class BudgetViewModel @Inject constructor(
     }
 
     @Composable
-    private fun getAccounts(): ImmutableList<Account> {
+    private fun getAccounts(): ImmutableList<LegacyAccount> {
         return accounts.value
     }
 
@@ -223,7 +223,7 @@ class BudgetViewModel @Inject constructor(
         budget: Budget,
         transactions: List<Transaction>,
         baseCurrencyCode: String,
-        accounts: List<Account>
+        accounts: List<LegacyAccount>
     ): Double {
         val accountsFilter = budget.parseAccountIds()
         val categoryFilter = budget.parseCategoryIds()

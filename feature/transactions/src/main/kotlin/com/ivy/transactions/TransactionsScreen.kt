@@ -33,7 +33,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.Theme
-import com.ivy.data.model.legacy.Transaction
+import com.ivy.data.model.legacy.LegacyTransaction
 import com.ivy.data.model.TransactionHistoryItem
 import com.ivy.data.model.TransactionType
 import com.ivy.data.model.Category
@@ -47,7 +47,7 @@ import com.ivy.legacy.ui.model.LegacyDueSection
 import com.ivy.legacy.ui.model.period.Month
 import com.ivy.legacy.ui.model.period.TimePeriod
 import com.ivy.legacy.ui.model.period.displayLong
-import com.ivy.data.model.legacy.Account
+import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.legacy.ui.state.LocalPeriodState
 import com.ivy.legacy.ui.component.IncomeExpensesCards
 import com.ivy.legacy.ui.component.ItemStatisticToolbar
@@ -208,14 +208,14 @@ private fun BoxWithConstraintsScope.UI(
     skipAllModalVisible: Boolean,
     onSkipAllModalVisible: (Boolean) -> Unit,
 
-    account: Account?,
+    account: LegacyAccount?,
     category: Category?,
 
     updateAccountNameConfirmation: (String) -> Unit,
     enableDeletionButton: Boolean,
 
     categories: ImmutableList<Category>,
-    accounts: ImmutableList<Account>,
+    accounts: ImmutableList<LegacyAccount>,
 
     balance: Double,
     balanceBaseCurrency: Double?,
@@ -229,7 +229,7 @@ private fun BoxWithConstraintsScope.UI(
     onPreviousMonth: () -> Unit,
     onNextMonth: () -> Unit,
     onSetPeriod: (TimePeriod) -> Unit,
-    onEditAccount: (Account, Double) -> Unit,
+    onEditAccount: (LegacyAccount, Double) -> Unit,
     onEditCategory: (Category) -> Unit,
     onDelete: () -> Unit,
     deleteModal1Visible: Boolean,
@@ -241,17 +241,17 @@ private fun BoxWithConstraintsScope.UI(
     setUpcomingExpanded: (Boolean) -> Unit = {},
     upcomingIncome: Double = 0.0,
     upcomingExpenses: Double = 0.0,
-    upcoming: ImmutableList<Transaction> = persistentListOf(),
+    upcoming: ImmutableList<LegacyTransaction> = persistentListOf(),
 
     overdueExpanded: Boolean = true,
     setOverdueExpanded: (Boolean) -> Unit = {},
     overdueIncome: Double = 0.0,
     overdueExpenses: Double = 0.0,
-    overdue: ImmutableList<Transaction> = persistentListOf(),
+    overdue: ImmutableList<LegacyTransaction> = persistentListOf(),
 
-    onPayOrGet: (Transaction) -> Unit = {},
-    onSkipTransaction: (Transaction) -> Unit = {},
-    onSkipAllTransactions: (List<Transaction>) -> Unit = {},
+    onPayOrGet: (LegacyTransaction) -> Unit = {},
+    onSkipTransaction: (LegacyTransaction) -> Unit = {},
+    onSkipAllTransactions: (List<LegacyTransaction>) -> Unit = {},
     onChoosePeriodModal: (ChoosePeriodModalData?) -> Unit,
 ) {
     val periodState = LocalPeriodState.current
@@ -515,15 +515,15 @@ private fun LazyListScope.choosePeriodModal(
 private fun BoxWithConstraintsScope.DeleteModals(
     deleteModal1Visible: Boolean,
     setDeleteModal1Visible: (Boolean) -> Unit,
-    account: Account?,
+    account: LegacyAccount?,
     category: Category?,
     updateAccountNameConfirmation: (String) -> Unit,
     enableDeletionButton: Boolean,
     onDelete: () -> Unit,
     skipAllModalVisible: Boolean,
     onSkipAllModalVisible: (Boolean) -> Unit,
-    onSkipAllTransactions: (List<Transaction>) -> Unit,
-    overdue: ImmutableList<Transaction> = persistentListOf(),
+    onSkipAllTransactions: (List<LegacyTransaction>) -> Unit,
+    overdue: ImmutableList<LegacyTransaction> = persistentListOf(),
 ) {
     var deleteModal3Visible by remember { mutableStateOf(false) }
 
@@ -588,7 +588,7 @@ private fun Header(
     currency: String,
     baseCurrency: String,
     itemColor: Color,
-    account: Account?,
+    account: LegacyAccount?,
     category: Category?,
     balance: Double,
     balanceBaseCurrency: Double?,
@@ -728,7 +728,7 @@ private fun Header(
 @Composable
 private fun Item(
     contrastColor: Color,
-    account: Account?,
+    account: LegacyAccount?,
     category: Category?,
 
     showCategoryModal: () -> Unit,

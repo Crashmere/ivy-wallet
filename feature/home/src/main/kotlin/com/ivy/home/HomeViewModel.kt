@@ -8,7 +8,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
 import com.ivy.data.model.Theme
-import com.ivy.data.model.legacy.Transaction
+import com.ivy.data.model.legacy.LegacyTransaction
 import com.ivy.data.model.TransactionHistoryItem
 import com.ivy.data.model.primitive.AssetCode
 import com.ivy.domain.preferences.toggles.PreferenceToggleService
@@ -37,7 +37,7 @@ import com.ivy.legacy.ui.model.BufferInfo
 import com.ivy.legacy.ui.model.LegacyDueSection
 import com.ivy.legacy.ui.model.period.TimePeriod
 import com.ivy.data.model.toUTCCloseTimeRange
-import com.ivy.data.model.legacy.Account
+import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.ui.navigation.BalanceScreen
 import com.ivy.ui.navigation.MainTab
 import com.ivy.ui.navigation.MainScreen
@@ -302,7 +302,7 @@ class HomeViewModel @Inject constructor(
 
     private suspend fun loadAppBaseData(
         input: Pair<HomePreferences, ClosedTimeRange>
-    ): Triple<HomePreferences, ClosedTimeRange, List<Account>> {
+    ): Triple<HomePreferences, ClosedTimeRange, List<LegacyAccount>> {
         val (preferences, timeRange) = input
         val accounts = getLegacyAccountsUseCase()
         val categories = getCategoriesUseCase()
@@ -317,7 +317,7 @@ class HomeViewModel @Inject constructor(
     }
 
     private suspend fun loadIncomeExpenseBalance(
-        input: Triple<HomePreferences, ClosedTimeRange, List<Account>>
+        input: Triple<HomePreferences, ClosedTimeRange, List<LegacyAccount>>
     ): Triple<HomePreferences, ClosedTimeRange, BigDecimal> {
         val (preferences, timeRange, accounts) = input
 
@@ -455,7 +455,7 @@ class HomeViewModel @Inject constructor(
         reload()
     }
 
-    private suspend fun payOrGetPlanned(transaction: Transaction) {
+    private suspend fun payOrGetPlanned(transaction: LegacyTransaction) {
         val paidTransaction = payOrSkipLegacyPlannedTransactionUseCase(
             transaction = transaction,
             skipTransaction = false
@@ -465,7 +465,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    private suspend fun skipPlanned(transaction: Transaction) {
+    private suspend fun skipPlanned(transaction: LegacyTransaction) {
         val paidTransaction = payOrSkipLegacyPlannedTransactionUseCase(
             transaction = transaction,
             skipTransaction = true
@@ -475,7 +475,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    private suspend fun skipAllPlanned(transactions: List<Transaction>) {
+    private suspend fun skipAllPlanned(transactions: List<LegacyTransaction>) {
         val paidTransactions = payOrSkipLegacyPlannedTransactionsUseCase(
             transactions = transactions,
             skipTransaction = true

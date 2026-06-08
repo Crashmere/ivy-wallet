@@ -32,7 +32,7 @@ import com.ivy.data.model.primitive.ColorInt
 import com.ivy.data.model.primitive.NotBlankTrimmedString
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
-import com.ivy.data.model.legacy.Account
+import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.data.model.PlannedPaymentRule
 import com.ivy.legacy.ui.forDisplay
 import com.ivy.legacy.ui.component.transaction.TypeAmountCurrency
@@ -63,7 +63,7 @@ import java.util.UUID
 fun LazyItemScope.PlannedPaymentCard(
     baseCurrency: String,
     categories: ImmutableList<Category>,
-    accounts: ImmutableList<Account>,
+    accounts: ImmutableList<LegacyAccount>,
     plannedPayment: PlannedPaymentRule,
     onClick: (PlannedPaymentRule) -> Unit,
 ) {
@@ -134,7 +134,7 @@ private fun Instant.toLocalDateTimeInSystemZone() =
 private fun PlannedPaymentHeaderRow(
     plannedPayment: PlannedPaymentRule,
     categories: ImmutableList<Category>,
-    accounts: ImmutableList<Account>
+    accounts: ImmutableList<LegacyAccount>
 ) {
     val nav = navigation()
 
