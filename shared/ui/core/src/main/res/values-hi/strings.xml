@@ -162,8 +162,6 @@
     <string name="authentication_required_description">ऐप को अनलॉक करने के लिए अपनी पुष्टि करें</string>
     <string name="authentication_required">प्रमाणीकरण आवश्यक</string>
     <string name="adjust_balance">बैलेंस एडजस्ट करें</string>
-    <string name="make_a_report">रिपोर्ट बनाये</string>
-    <string name="share_with_friends">दोस्तों के साथ शेयर करें</string>
     <string name="expenses_piechart">व्यय पाई चार्ट</string>
     <string name="expenses_piechart_description">आप श्रेणियों के आधार पर अपने खर्चे की संरचना देख सकते हैं! इसे आज़माएं, अपनी शेष राशि के ठीक नीचे ग्रे/काले व्यय बटन पर टैप करें।</string>
     <string name="set_a_budget_description">आइवी वॉलेट न केवल आपको अपने खर्चों को निष्क्रिय रूप से ट्रैक करने में मदद करता है, बल्कि बजट निर्धारित करके और उन पर टिके रहकर आपके वित्तीय भविष्य को भी सक्रिय रूप से तैयार करता है।</string>
@@ -348,7 +346,6 @@
     <string name="invalid_filter_warning">रिपोर्ट जनरेट करने के लिए आपको पहले एक मान्य फ़िल्टर सेट करना होगा।</string>
     <string name="revoult">Revolut</string>
     <string name="adjust_initial_balance_description"><![CDATA[आइए आरंभ करें। \"खाते\" पर जाएं -> किसी खाते पर टैप करें -> उसके शेष पर टैप करें -> वर्तमान शेष राशि दर्ज करें। बस इतना ही!]]></string>
-    <string name="make_a_report_description">आप अपनी आय और खर्च के बारे में गहन जानकारी प्राप्त करने के लिए रिपोर्ट तैयार कर सकते हैं। अपने वित्त के बारे में बेहतर दृष्टिकोण प्राप्त करने के लिए अपने लेन-देन को प्रकार, समय अवधि, श्रेणी, खातों, राशि, कीवर्ड आदि के आधार पर फ़िल्टर करें।</string>
     <string name="transfers_as_income_expense_description">खाता स्थानान्तरण को खाता स्क्रीन में आय या व्यय के रूप में मानता है</string>
     <string name="switch_to_offline_mode">ऑफ़लाइन मोड में स्विच करें</string>
     <string name="experimental">Experimental</string>

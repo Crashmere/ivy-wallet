@@ -314,9 +314,6 @@
     <string name="set_a_budget_description">A Ivy Wallet ajuda você não apenas a monitorar passivamente suas despesas, mas também a gerenciar proativamente seu futuro financeiro, definindo e cumprindo orçamentos.</string>
     <string name="expenses_piechart_description">Você pode ver sua estrutura de despesas por categoria! Experimente tocando no botão cinza/preto de Despesas logo abaixo do seu saldo.</string>
     <string name="expenses_piechart">Gráfico circular de despesas</string>
-    <string name="share_with_friends">Compartilhar com amigos</string>
-    <string name="make_a_report_description">Você pode gerar relatórios para obter informações detalhadas sobre suas receitas e despesas. Filtre suas transações por tipo, período, categoria, contas, valor, palavras-chave e muito mais para controlar melhor suas finanças.</string>
-    <string name="make_a_report">Faça um relatório</string>
     <string name="adjust_balance">Ajustar saldo</string>
     <string name="authentication_required">Autenticação necessária</string>
     <string name="authentication_required_description">Autenticar para acessar o aplicativo</string>
@@ -384,10 +381,7 @@
     <string name="error">Erro</string>
     <string name="loading">Carregando…</string>
     <string name="try_again">Tente novamente</string>
-    <string name="one_contribution">1 contribuição</string>
-    <string name="contributions_number">%1$s contribuições</string>
     <string name="you_can_see_a_piechart">Veja um gráfico de pizza com suas receitas e despesas tocando no cartão apropriado acima!</string>
-    <string name="join_now">Inscreva-se agora</string>
     <string name="please_type_category_name">Por favor digite \"%1$s\" para excluir sua categoria.</string>
     <string name="your_data_will_be_saved_only_locally">Seus dados serão salvos apenas localmente no seu telefone. Você corre o risco de perder seus dados se desinstalar o aplicativo ou trocar de dispositivo. Para evitar a perda de dados, recomendamos exportar regularmente o backup das configurações.</string>
     <string name="you_owe">Você deve: %1$s</string>

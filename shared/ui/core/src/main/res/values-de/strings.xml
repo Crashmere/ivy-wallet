@@ -313,9 +313,6 @@
     <string name="set_a_budget_description">Ivy Wallet hilft dir nicht nur, deine Ausgaben passiv zu verfolgen, sondern auch proaktiv deine finanzielle Zukunft zu gestalten, indem du Budgets festlegst und dich an sie hältst.</string>
     <string name="expenses_piechart_description">Du kannst deine Ausgabenstruktur nach Kategorien sehen! Probiere es aus: Tippe auf die graue/schwarze Schaltfläche Ausgaben direkt unter deiner Bilanz.</string>
     <string name="expenses_piechart">Ausgaben Kreisdiagramm</string>
-    <string name="share_with_friends">Mit Freund*innen teilen</string>
-    <string name="make_a_report_description">Du kannst Berichte erstellen, um tiefe Einblicke in deine Einnahmen und Ausgaben zu erhalten. Filtere deine Transaktionen nach Art, Zeitraum, Kategorie, Konten, Betrag, Schlüsselwörtern und mehr, um einen besseren Überblick über deine Finanzen zu erhalten.</string>
-    <string name="make_a_report">Einen Bericht erstellen</string>
     <string name="adjust_balance">Bilanz anpassen</string>
     <string name="authentication_required">Authentifizierung erforderlich</string>
     <string name="authentication_required_description">Beweise, dass du Zugang zu diesem Gerät hast, um die App zu entsperren.</string>
@@ -379,9 +376,6 @@
     <string name="error">Fehler</string>
     <string name="loading">Lade…</string>
     <string name="try_again">Erneut versuchen</string>
-    <string name="one_contribution">1 Beitrag</string>
-    <string name="contributions_number">%1$s Beiträge</string>
-    <string name="join_now">Jetzt beitreten</string>
     <string name="your_data_will_be_saved_only_locally">Deine Daten werden nur lokal auf dem Gerät gespeichert. Die Daten können verloren gehen, wenn du die App löscht oder zu einem anderen Gerät wechselst. Um Datenverlust zu vermeiden, empfehlen wir eine regelmäßige Sicherung in den Einstellungen durchzuführen.</string>
     <string name="selected_text">Ausgewählt</string>
     <string name="this_transaction_is_associated_with_loan">* Diese Transaktion ist verbundenen mit Kredit : %1$s</string>

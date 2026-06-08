@@ -314,9 +314,6 @@
     <string name="set_a_budget_description">Ivy Wallet không chỉ giúp bạn theo dõi chi tiêu một cách chủ động mà còn giúp bạn quản lý tài chính trong tương lại bằng cách thiết lập và tuân thủ ngân sách.</string>
     <string name="expenses_piechart_description">Bạn có thể xem cơ cấu chi tiêu của mình theo danh mục! Hãy thử bằng cách nhấn vào nút Chi phí màu xám/đen ngay bên dưới số dư của bạn.</string>
     <string name="expenses_piechart">Biểu đồ chi phí</string>
-    <string name="share_with_friends">Chia sẻ với bạn bè</string>
-    <string name="make_a_report_description">Bạn có thể tạo báo cáo để hiểu sâu hơn về thu nhập và chi tiêu của mình. Phân loại các giao dịch của bạn theo loại, khoảng thời gian, danh mục, tài khoản, số tiền, từ khóa, v.v. để xử lý tốt hơn về tài chính của bạn.</string>
-    <string name="make_a_report">Tạo một báo cáo</string>
     <string name="adjust_balance">Điều chỉnh số dư</string>
     <string name="authentication_required">Yêu cầu xác thực</string>
     <string name="authentication_required_description">Xác thực để truy cập ứng dụng</string>
@@ -384,10 +381,7 @@
     <string name="error">Lỗi</string>
     <string name="loading">Đang tải…</string>
     <string name="try_again">Thử lại</string>
-    <string name="one_contribution">1 đóng góp</string>
-    <string name="contributions_number">%1$s đóng góp</string>
     <string name="you_can_see_a_piechart">Bạn có thể xem Biểu đồ tròn cho các chi phí của mình! Nhấp vào thẻ Chi phí ở đầu trang của bảng điều khiển.</string>
-    <string name="join_now">Tham gia ngay</string>
     <string name="please_type_category_name">Vui lòng nhập \"%1$s\" để xóa danh mục của bạn.</string>
     <string name="your_data_will_be_saved_only_locally">Dữ liệu của bạn sẽ chỉ được lưu trữ trên bộ nhớ điện thoại của bạn. Bạn có nguy cơ mất dữ liệu nếu gỡ bỏ ứng dụng hoặc thay đổi thiết bị. Để tránh mất dữ liệu, chúng tôi khuyên bạn nên xuất bản sao lưu từ cài đặt thường xuyên.</string>
     <string name="you_owe">Bạn nợ: %1$s</string>

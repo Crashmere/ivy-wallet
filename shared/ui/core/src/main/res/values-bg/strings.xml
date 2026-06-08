@@ -311,9 +311,6 @@
     <string name="set_a_budget_description">Ivy Wallet not only helps you to passively track your expenses but also proactively create your financial future by setting budgets and sticking to them.</string>
     <string name="expenses_piechart_description">You can see your expenses structure by categories! Try it, tap the gray/black Expenses button just below your balance.</string>
     <string name="expenses_piechart">Expenses PieChart</string>
-    <string name="share_with_friends">Share with friends</string>
-    <string name="make_a_report_description">You can generate reports to get deep insights about your income and spending. Filter your transactions by type, time period, category, accounts, amount, keywords and more to gain better view on your finances.</string>
-    <string name="make_a_report">Make a report</string>
     <string name="adjust_balance">Задай баланс</string>
     <string name="authentication_required">Authentication required</string>
     <string name="authentication_required_description">Prove that you have access to this device to unlock the app.</string>

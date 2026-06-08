@@ -311,9 +311,6 @@
     <string name="set_a_budget_description">Ivy Хэтэвч танд зөвхөн өөрийн санхүүгээ хянахад туслаад зогсохгүй, төсөв үүсгэж, түүнийгээ мөрдөхөд тусалдаг.</string>
     <string name="expenses_piechart_description">Зарлагуудаа ангиллаар нь задалж хараарай! Дансны үлдэгдлийн доор байгаа Зардлууд гэсэн саарал товчин дээр дараад туршаад үзээрэй.</string>
     <string name="expenses_piechart">Зарлагын PieChart</string>
-    <string name="share_with_friends">Найзууддаа түгээх</string>
-    <string name="make_a_report_description">Та өөрийн орлого зарлагын талаар дэлгэрэнгүй тайлан үүсгэх боломжтой. Гүйлгээний төрөл, хугацаа, ангилал, данс, дүн, түлхүүр үгс зэргээг шүүж өөрийн санхүүгийн нарийвчилсан мэдээллийг аваарай.</string>
-    <string name="make_a_report">Тайлан гаргах</string>
     <string name="adjust_balance">Үлдэгдэл өөрчлөх</string>
     <string name="authentication_required">Нэвтрэх шаардлагатай</string>
     <string name="authentication_required_description">Төхөөрөмжийн .</string>
