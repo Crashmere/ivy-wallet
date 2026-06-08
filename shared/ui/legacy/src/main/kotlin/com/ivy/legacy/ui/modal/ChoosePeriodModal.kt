@@ -42,7 +42,7 @@ import com.ivy.legacy.ui.model.period.TimePeriod
 import com.ivy.legacy.ui.model.period.displayName
 import com.ivy.legacy.ui.addKeyboardListener
 import com.ivy.legacy.ui.formatDateOnlyWithYear
-import com.ivy.legacy.ui.onScreenStart
+import com.ivy.ui.navigation.onScreenStart
 import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.Gradient
 import com.ivy.legacy.ui.theme.GradientIvy

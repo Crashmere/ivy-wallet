@@ -46,7 +46,7 @@ import com.ivy.legacy.ui.addKeyboardListener
 import com.ivy.ui.compose.densityScope
 import com.ivy.legacy.ui.hideKeyboard
 import com.ivy.ui.compose.keyboardOnlyWindowInsets
-import com.ivy.legacy.ui.onScreenStart
+import com.ivy.ui.navigation.onScreenStart
 import com.ivy.ui.R
 import com.ivy.data.model.currency.IvyCurrency
 import com.ivy.legacy.ui.theme.GradientGreen

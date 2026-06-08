@@ -36,7 +36,7 @@ import com.ivy.ui.compose.thenIf
 import com.ivy.legacy.ui.SearchInput
 import com.ivy.ui.compose.drawColoredShadow
 import com.ivy.legacy.ui.hideKeyboard
-import com.ivy.legacy.ui.onScreenStart
+import com.ivy.ui.navigation.onScreenStart
 import com.ivy.ui.compose.selectEndTextFieldValue
 import com.ivy.legacy.ui.theme.Gradient
 import com.ivy.legacy.ui.component.IvyBorderButton

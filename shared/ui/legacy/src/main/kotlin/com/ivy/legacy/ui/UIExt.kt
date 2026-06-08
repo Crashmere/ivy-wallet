@@ -21,6 +21,7 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.doOnLayout
+import com.ivy.ui.navigation.onScreenStart
 import kotlin.math.roundToInt
 
 @Composable

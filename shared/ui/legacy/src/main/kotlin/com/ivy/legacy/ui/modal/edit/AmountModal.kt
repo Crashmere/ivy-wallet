@@ -44,7 +44,7 @@ import com.ivy.data.model.currency.formatInputAmount
 import com.ivy.data.model.currency.formatInt
 import com.ivy.legacy.ui.hideKeyboard
 import com.ivy.data.model.currency.localDecimalSeparator
-import com.ivy.legacy.ui.onScreenStart
+import com.ivy.ui.navigation.onScreenStart
 import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.Red
 import com.ivy.legacy.ui.component.IvyIcon

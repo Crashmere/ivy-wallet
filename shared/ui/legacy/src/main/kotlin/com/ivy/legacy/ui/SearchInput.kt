@@ -18,7 +18,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import com.ivy.legacy.ui.theme.system.Gray
 import com.ivy.legacy.ui.theme.system.LegacyTheme
-import com.ivy.legacy.ui.onScreenStart
+import com.ivy.ui.navigation.onScreenStart
 import com.ivy.ui.compose.selectEndTextFieldValue
 import com.ivy.ui.R
 import com.ivy.legacy.ui.component.IvyBasicTextField

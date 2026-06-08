@@ -38,7 +38,7 @@ import com.ivy.legacy.ui.closeDay
 import com.ivy.legacy.ui.formatDateWeekDayLong
 import com.ivy.legacy.ui.formatNicely
 import com.ivy.legacy.ui.hideKeyboard
-import com.ivy.legacy.ui.onScreenStart
+import com.ivy.ui.navigation.onScreenStart
 import com.ivy.ui.compose.thenIf
 import com.ivy.ui.compose.rememberInteractionSource
 import com.ivy.ui.R

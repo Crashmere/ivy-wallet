@@ -45,7 +45,7 @@ import com.ivy.ui.compose.densityScope
 import com.ivy.legacy.ui.hideKeyboard
 import com.ivy.ui.compose.keyboardOnlyWindowInsets
 import com.ivy.ui.compose.navigationBarInsets
-import com.ivy.legacy.ui.onScreenStart
+import com.ivy.ui.navigation.onScreenStart
 import com.ivy.ui.compose.thenIf
 import com.ivy.ui.navigation.navigation
 import com.ivy.legacy.ui.component.ActionsRow

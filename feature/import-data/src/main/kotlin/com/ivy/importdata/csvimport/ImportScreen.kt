@@ -11,6 +11,7 @@ import com.ivy.importdata.csvimport.flow.ImportFrom
 import com.ivy.importdata.csvimport.flow.ImportProcessing
 import com.ivy.importdata.csvimport.flow.ImportResultUI
 import com.ivy.ui.navigation.ImportScreen
+import com.ivy.ui.navigation.onScreenStart
 
 @ExperimentalFoundationApi
 @Composable
@@ -21,7 +22,7 @@ fun BoxWithConstraintsScope.ImportCSVScreen() {
     val importProgressPercent by viewModel.importProgressPercent.collectAsState()
     val importResult by viewModel.importResult.collectAsState()
 
-    com.ivy.legacy.ui.onScreenStart {
+    onScreenStart {
         viewModel.start(ImportScreen)
     }
 

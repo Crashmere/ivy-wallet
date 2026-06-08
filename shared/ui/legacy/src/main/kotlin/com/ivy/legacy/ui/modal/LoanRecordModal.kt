@@ -39,7 +39,7 @@ import com.ivy.data.model.LoanRecord
 import com.ivy.legacy.ui.component.DateTimeRow
 import com.ivy.legacy.ui.modal.ModalNameInput
 import com.ivy.data.model.currency.getDefaultFIATCurrency
-import com.ivy.legacy.ui.onScreenStart
+import com.ivy.ui.navigation.onScreenStart
 import com.ivy.ui.compose.selectEndTextFieldValue
 import com.ivy.legacy.ui.testing.TestingContext
 import com.ivy.ui.R

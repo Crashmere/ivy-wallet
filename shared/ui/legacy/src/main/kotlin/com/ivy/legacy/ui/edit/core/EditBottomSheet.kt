@@ -51,7 +51,7 @@ import com.ivy.legacy.ui.hideKeyboard
 import com.ivy.ui.compose.keyboardOnlyWindowInsets
 import com.ivy.legacy.ui.lerp
 import com.ivy.ui.compose.navigationBarInsets
-import com.ivy.legacy.ui.onScreenStart
+import com.ivy.ui.navigation.onScreenStart
 import com.ivy.legacy.ui.springBounce
 import com.ivy.legacy.ui.testing.TestingContext
 import com.ivy.ui.compose.thenIf
