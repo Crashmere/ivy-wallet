@@ -30,6 +30,7 @@ import com.ivy.ui.platform.LocalDatePicker
 import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.ui.navigation.onScreenStart
 import com.ivy.ui.navigation.EditPlannedScreen
+import com.ivy.ui.navigation.TransactionRouteType
 import com.ivy.ui.navigation.navigation
 import com.ivy.ui.navigation.screenScopedViewModel
 import com.ivy.ui.R
@@ -69,7 +70,15 @@ fun BoxWithConstraintsScope.EditPlannedScreen(screen: EditPlannedScreen) {
     }
 
     LaunchedEffect(Unit) {
-        viewModel.start(screen)
+        viewModel.start(
+            plannedPaymentRuleId = screen.plannedPaymentRuleId,
+            type = screen.type.toTransactionType(),
+            amount = screen.amount,
+            accountId = screen.accountId,
+            categoryId = screen.categoryId,
+            title = screen.title,
+            description = screen.description
+        )
     }
 
     UI(
@@ -427,6 +436,10 @@ private fun EditPlannedScreen.hasMandatoryInitialData(): Boolean {
     val initialAmount = amount
     return initialAmount != null && initialAmount > 0.0 &&
             accountId != null
+}
+
+private fun TransactionRouteType.toTransactionType(): TransactionType {
+    return TransactionType.valueOf(name)
 }
 
 private fun shouldFocusTitle(
