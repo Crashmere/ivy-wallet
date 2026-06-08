@@ -1,9 +1,11 @@
 package com.ivy.domain.usecase.loan
 
-import com.ivy.data.model.legacy.LegacyTransaction
+import com.ivy.data.model.getFromAccount
+import com.ivy.data.model.getFromValue
 import com.ivy.data.model.LoanRecordType
 import com.ivy.data.model.Transaction
 import com.ivy.data.model.TransactionType
+import com.ivy.data.model.getTransactionType
 import com.ivy.data.model.LoanType
 import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.data.model.Loan
@@ -84,31 +86,36 @@ class LoanTransactionSyncUseCase @Inject internal constructor(
     }
 
     suspend fun updateAssociatedLoan(
-        transaction: LegacyTransaction?,
+        transaction: Transaction?,
         onBackgroundProcessingStart: suspend () -> Unit = {},
         onBackgroundProcessingEnd: suspend () -> Unit = {},
         accountsChanged: Boolean = true
     ) {
         withContext(Dispatchers.Default) {
-            transaction?.loanId ?: return@withContext
+            val loanId = transaction?.metadata?.loanId ?: return@withContext
 
             onBackgroundProcessingStart()
 
-            val loan = ltCore.fetchLoan(transaction.loanId!!) ?: return@withContext
+            val loan = ltCore.fetchLoan(loanId) ?: return@withContext
 
             if (accountsChanged) {
                 val newLoanRecords: List<LoanRecord> = calculateLoanRecords(
-                    loanId = transaction.loanId!!,
-                    newAccountId = transaction.accountId
+                    loanId = loanId,
+                    newAccountId = transaction.getFromAccount().value
                 )
                 ltCore.saveLoanRecords(newLoanRecords)
             }
 
+            val title = transaction.title?.value
             val modifiedLoan = loan.copy(
-                amount = transaction.amount.toDouble(),
-                name = if (transaction.title.isNullOrEmpty()) loan.name else transaction.title!!,
-                type = if (transaction.type == TransactionType.INCOME) LoanType.BORROW else LoanType.LEND,
-                accountId = transaction.accountId
+                amount = transaction.getFromValue().amount.value,
+                name = if (title.isNullOrEmpty()) loan.name else title,
+                type = if (transaction.getTransactionType() == TransactionType.INCOME) {
+                    LoanType.BORROW
+                } else {
+                    LoanType.LEND
+                },
+                accountId = transaction.getFromAccount().value
             )
 
             ltCore.saveLoan(modifiedLoan)

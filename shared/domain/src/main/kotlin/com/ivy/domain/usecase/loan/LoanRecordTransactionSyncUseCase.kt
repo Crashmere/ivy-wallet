@@ -1,9 +1,11 @@
 package com.ivy.domain.usecase.loan
 
-import com.ivy.data.model.legacy.LegacyTransaction
 import com.ivy.data.model.Loan
 import com.ivy.data.model.LoanRecord
 import com.ivy.data.model.CreateLoanRecordData
+import com.ivy.data.model.Transaction
+import com.ivy.data.model.getFromAccount
+import com.ivy.data.model.getFromValue
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.util.UUID
@@ -61,34 +63,34 @@ class LoanRecordTransactionSyncUseCase @Inject internal constructor(
     }
 
     suspend fun updateAssociatedLoanRecord(
-        transaction: LegacyTransaction?,
+        transaction: Transaction?,
         onBackgroundProcessingStart: suspend () -> Unit = {},
         onBackgroundProcessingEnd: suspend () -> Unit = {},
     ) {
-        transaction?.loanId ?: return
-        transaction.loanRecordId ?: return
+        val loanId = transaction?.metadata?.loanId ?: return
+        val loanRecordId = transaction.metadata.loanRecordId ?: return
         withContext(Dispatchers.Default) {
             onBackgroundProcessingStart()
 
             val loanRecord =
-                ltCore.fetchLoanRecord(transaction.loanRecordId!!) ?: return@withContext
-            val loan = ltCore.fetchLoan(transaction.loanId!!) ?: return@withContext
+                ltCore.fetchLoanRecord(loanRecordId) ?: return@withContext
+            val loan = ltCore.fetchLoan(loanId) ?: return@withContext
 
             val convertedAmount = ltCore.computeConvertedAmount(
                 oldLoanRecordAccountId = loanRecord.accountId,
                 oldLoanRecordConvertedAmount = loanRecord.convertedAmount,
                 oldLoanRecordAmount = loanRecord.amount,
-                newLoanRecordAccountId = transaction.accountId,
-                newLoanRecordAmount = transaction.amount.toDouble(),
+                newLoanRecordAccountId = transaction.getFromAccount().value,
+                newLoanRecordAmount = transaction.getFromValue().amount.value,
                 loanAccountId = loan.accountId,
                 accounts = ltCore.fetchAccounts()
             )
 
             val modifiedLoanRecord = loanRecord.copy(
-                amount = transaction.amount.toDouble(),
-                note = transaction.title,
-                dateTime = transaction.dateTime ?: loanRecord.dateTime,
-                accountId = transaction.accountId,
+                amount = transaction.getFromValue().amount.value,
+                note = transaction.title?.value,
+                dateTime = transaction.time,
+                accountId = transaction.getFromAccount().value,
                 convertedAmount = convertedAmount
             )
             ltCore.saveLoanRecords(modifiedLoanRecord)

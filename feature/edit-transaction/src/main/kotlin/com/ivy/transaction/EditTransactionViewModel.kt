@@ -763,9 +763,11 @@ internal class EditTransactionViewModel @Inject internal constructor(
                     categoryId = category?.id?.value
                 )
 
-                if (loadedTransaction?.loanId != null) {
+                val transactionToSave = loadedTransaction().toTransaction()
+
+                if (transactionToSave?.metadata?.loanId != null) {
                     updateAssociatedLoanDataUseCase(
-                        loadedTransaction!!.copy(),
+                        transactionToSave,
                         onBackgroundProcessingStart = {
                             backgroundProcessingStarted = true
                         },
@@ -779,7 +781,7 @@ internal class EditTransactionViewModel @Inject internal constructor(
                     accountsChanged = false
                 }
 
-                loadedTransaction().toTransaction()?.let {
+                transactionToSave?.let {
                     saveTransactionUseCase(it)
                 }
 
