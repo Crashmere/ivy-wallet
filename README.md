@@ -90,6 +90,7 @@
 - 精简 data-core 日志依赖：备份导入失败继续按原逻辑返回空导入结果并发布数据变更事件，但不再为了这一条错误日志依赖 Timber。
 - 移除 Timber 运行时依赖：app 不再初始化 DebugTree，通知展示失败继续按原有吞异常策略处理，版本目录和 app 依赖中删除 Timber。
 - 收窄饼图页旧交易泄漏：`CategoryAmount` 只向 UI 暴露关联交易的 `id/type` 轻量引用，`PieChartStatisticState` 不再携带完整 `LegacyTransaction` 列表；统计计算内部仍沿用现有旧交易算法。
+- 删除无调用方的新模型计划付款付/跳过 use case；当前实际 UI 路径继续使用 legacy 计划付款处理用例。
 
 当前仍保留：
 
@@ -738,7 +739,7 @@
 - 继续清理 feature 的 Gradle 依赖：`:feature:search`、`:feature:piechart`、`:feature:main` 和 `:feature:settings` 已去掉对 `shared:data:core` 的直接依赖；其中 search/main/settings 只补充实际需要的 `shared:data:model` 或 DataStore 依赖，settings 的 ZIP 备份导出改走 `ExportBackupUseCase`。
 - 汇率页的数据边界已收敛：新增 `ObserveExchangeRatesUseCase`、`SaveExchangeRateUseCase` 和 `DeleteExchangeRateUseCase`，`:feature:exchange-rates` 不再直接注入 `ExchangeRatesRepository`，并已去掉对 `shared:data:core` 的直接依赖。
 - 汇率金额换算入口已收敛到 `ExchangeAmountUseCase`，预算、账户、交易、报表、钱包汇总和首页到期交易统计不再依赖旧 `ExchangeAct`；底层仍复用现有 `ExchangeData` 与换算纯函数，行为保持不变。
-- 旧交易桥接函数已从 `shared:data:core` 移到 domain 旧交易纯逻辑包：`getValue/getAccountId/getTransactionType/settleNow` 不再作为数据实现层 API 暴露，预算、报表和旧 domain 逻辑改为从 `com.ivy.domain.transaction.legacy` 使用这些扩展。
+- 旧交易桥接函数已从 `shared:data:core` 移到 domain 旧交易纯逻辑包：`getValue/getAccountId/getTransactionType` 不再作为数据实现层 API 暴露，预算、报表和旧 domain 逻辑改为从 `com.ivy.domain.transaction.legacy` 使用这些扩展。
 - 预算页数据边界已收敛：新增 `GetBudgetsUseCase` 和 `ReorderBudgetsUseCase` 封装预算列表读取与排序保存，旧 `BudgetsAct` 已删除；`:feature:budgets` 不再直接注入 `WriteBudgetDao`，并已去掉对 `shared:data:core` 的直接依赖。
 - 预算创建、编辑和删除已从旧 `BudgetCreator` 拆成 `CreateBudgetUseCase`、`UpdateBudgetUseCase` 和 `DeleteBudgetUseCase`；预算页只依赖正式 use case，旧 `BudgetCreator` 已删除。
 - 账户创建和编辑已从旧 `AccountCreator` 拆成 `CreateAccountWithBalanceUseCase` 和 `UpdateAccountWithBalanceUseCase`；主页面、编辑交易、计划付款、借贷和交易详情页不再注入旧 creator，账户保存后自动生成余额调平交易的行为保持不变。
@@ -755,7 +756,7 @@
 - 余额页的计划付款区间金额统计已从 `PlannedPaymentsLogic` 拆到 `CalculatePlannedPaymentsAmountForRangeUseCase`；收入计正、支出计负、转账忽略和基础币种折算规则保持不变。
 - 计划付款列表页的规则列表和收入/支出汇总已从 `PlannedPaymentsLogic` 拆到 `GetPlannedPaymentsOverviewUseCase`；一次性、循环、月均折算和基础币种换算规则保持不变。
 - legacy 交易模型的计划付款支付/跳过处理已从 `PlannedPaymentsLogic` 拆到 `PayOrSkipLegacyPlannedTransactionUseCase` 和 `PayOrSkipLegacyPlannedTransactionsUseCase`；首页、交易详情、编辑交易和报表页不再为了 legacy 交易处理注入旧逻辑。
-- 新交易模型的计划付款支付/跳过处理已从 `PlannedPaymentsLogic` 拆到 `PayOrSkipPlannedTransactionUseCase` 和 `PayOrSkipPlannedTransactionsUseCase`；报表页不再注入旧逻辑，`PlannedPaymentsLogic` 已删除。
+- 新交易模型的计划付款支付/跳过处理曾从 `PlannedPaymentsLogic` 拆出，但后续 UI 路径已全部回到 legacy 计划付款处理边界；无调用方的 `PayOrSkipPlannedTransactionUseCase` 和 `PayOrSkipPlannedTransactionsUseCase` 已删除，`PlannedPaymentsLogic` 也已删除。
 - 编辑交易页数据边界已收敛：新增 `SaveLegacyTransactionUseCase`、`DeleteTransactionUseCase`、`GetLoanUseCase` 和一组标签读写/关联用例，交易保存、删除、复制、标签创建、标签编辑、标签删除和标签关联不再直接调用数据层 repository/mapper，`:feature:edit-transaction` 已去掉对 `shared:data:core` 的直接依赖。
 - 交易详情页数据边界已收敛：新增 `GetAccountUseCase`、`DeleteAccountUseCase`、`DeleteCategoryUseCase` 和 `MapTransactionsToLegacyTransactionsWithTagsUseCase`，账户详情、分类详情、账户删除、分类删除和带标签历史列表不再直接注入数据层 repository/DAO/mapper，`:feature:transactions` 已去掉对 `shared:data:core` 的直接依赖。
 - 报表页数据边界已收敛：新增 `GetTransactionsUseCase` 和 `GetTransactionsByTagsUseCase`，报表筛选不再直接读取 `TransactionRepository/TagRepository`，新旧交易模型转换改走 `MapTransactionsToLegacyTransactionsUseCase`；`ExportCsvUseCase` 的自定义导出回调不再暴露 `TransactionRepository` receiver，默认全量导出也改走 `GetTransactionsUseCase`，`:feature:reports` 已去掉对 `shared:data:core` 的直接依赖。
@@ -1088,6 +1089,7 @@
 - 首页计划付款付/跳过事件已从传递完整 `LegacyTransaction` 收窄为传递交易 ID；旧交易对象仍只保留在列表展示状态和 ViewModel 内部执行边界。
 - 交易列表页计划付款付/跳过事件也已收窄为传递交易 ID；跳过全部弹窗只保存待确认的交易 ID 列表，ViewModel 在执行前从当前 due 状态解析旧交易对象。
 - 报表页计划付款付/跳过事件同样收窄为传递交易 ID，并删除未被 UI 触发的新模型计划交易事件分支及对应 use case 注入。
+- 无调用方的新模型计划付款付/跳过 use case 已删除；后续如果正式 `Transaction` 路径重新接管 UI，再按真实调用点重建用例。
 
 ### 阶段 10：最终依赖方向
 
