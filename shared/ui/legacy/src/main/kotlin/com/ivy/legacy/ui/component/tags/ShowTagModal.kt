@@ -39,8 +39,8 @@ import com.ivy.ui.platform.hideKeyboard
 import com.ivy.ui.compose.onCompositionStart
 import com.ivy.ui.compose.selectEndTextFieldValue
 import com.ivy.legacy.ui.theme.Gradient
-import com.ivy.legacy.ui.component.IvyBorderButton
 import com.ivy.legacy.ui.component.IvyCircleButton
+import com.ivy.legacy.ui.selection.IvyBorderButton
 import com.ivy.legacy.ui.theme.findContrastTextColor
 import com.ivy.legacy.ui.modal.DeleteModal
 import com.ivy.legacy.ui.modal.IvyModal

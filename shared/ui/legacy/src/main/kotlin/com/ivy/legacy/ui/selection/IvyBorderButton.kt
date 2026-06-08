@@ -1,4 +1,4 @@
-package com.ivy.legacy.ui.component
+package com.ivy.legacy.ui.selection
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.border
@@ -23,7 +23,6 @@ import androidx.compose.ui.unit.dp
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.legacy.ui.theme.style
 import com.ivy.legacy.ui.theme.Gradient
-import com.ivy.ui.R
 
 @Composable
 internal fun IvyBorderButton(
