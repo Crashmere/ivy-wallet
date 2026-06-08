@@ -62,7 +62,7 @@ import com.ivy.data.model.currency.IvyCurrency
 import com.ivy.ui.theme.colors.Gradient
 import com.ivy.ui.theme.colors.IvyGradients
 import com.ivy.ui.theme.colors.IvyFixedColors.White
-import com.ivy.legacy.ui.modal.CurrencyModal
+import com.ivy.ui.modal.CurrencyModal
 import com.ivy.ui.modal.DeleteModal
 import com.ivy.ui.modal.ProgressModal
 import java.util.Locale

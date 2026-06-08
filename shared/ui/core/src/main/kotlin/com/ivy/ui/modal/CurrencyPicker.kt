@@ -1,4 +1,4 @@
-package com.ivy.legacy.ui.modal
+package com.ivy.ui.modal
 
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
@@ -21,8 +21,10 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -40,23 +42,16 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.ui.platform.addKeyboardListener
-import com.ivy.ui.compose.densityScope
-import com.ivy.ui.platform.hideKeyboard
-import com.ivy.ui.compose.keyboardOnlyWindowInsets
-import com.ivy.ui.compose.onCompositionStart
-import com.ivy.ui.R
 import com.ivy.data.model.currency.IvyCurrency
-import com.ivy.legacy.ui.theme.GradientGreen
-import com.ivy.legacy.ui.theme.GradientIvy
-import com.ivy.legacy.ui.theme.Ivy
-import com.ivy.legacy.ui.theme.White
+import com.ivy.ui.R
 import com.ivy.ui.animation.DURATION_MODAL_ANIM
 import com.ivy.ui.compose.ResourceIcon
+import com.ivy.ui.compose.densityScope
+import com.ivy.ui.compose.keyboardOnlyWindowInsets
+import com.ivy.ui.compose.onCompositionStart
+import com.ivy.ui.platform.addKeyboardListener
+import com.ivy.ui.platform.hideKeyboard
 import java.util.Locale
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
 
 @Suppress("ParameterNaming")
 @Composable
@@ -138,13 +133,15 @@ private fun SearchInput(
     onSetSearchTextFieldValue: (TextFieldValue) -> Unit
 ) {
     val inputFocus = FocusRequester()
+    val theme = CurrencyModalTheme
+    val colors = theme.colors
 
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp)
-            .clip(LegacyTheme.shapes.rFull)
-            .border(2.dp, LegacyTheme.colors.mediumInverse, LegacyTheme.shapes.rFull)
+            .clip(theme.shapes.rFull)
+            .border(2.dp, colors.mediumInverse, theme.shapes.rFull)
             .clickable {
                 inputFocus.requestFocus()
             },
@@ -155,7 +152,7 @@ private fun SearchInput(
         ResourceIcon(
             modifier = Modifier.padding(vertical = 8.dp),
             icon = R.drawable.ic_search,
-            tint = LegacyTheme.colors.pureInverse
+            tint = colors.pureInverse
         )
 
         Spacer(Modifier.width(8.dp))
@@ -164,11 +161,10 @@ private fun SearchInput(
             contentAlignment = Alignment.CenterStart
         ) {
             if (searchTextFieldValue.text.isEmpty()) {
-                // Hint
                 Text(
                     text = stringResource(R.string.search_currency),
-                    style = LegacyTheme.typo.c.copy(
-                        color = LegacyTheme.colors.pureInverse,
+                    style = theme.typo.c.copy(
+                        color = colors.pureInverse,
                         fontWeight = FontWeight.Bold,
                         textAlign = TextAlign.Start
                     )
@@ -186,13 +182,13 @@ private fun SearchInput(
                 onValueChange = {
                     onSetSearchTextFieldValue(it.copy(it.text.trim()))
                 },
-                textStyle = LegacyTheme.typo.b2.copy(
-                    color = LegacyTheme.colors.pureInverse,
+                textStyle = theme.typo.b2.copy(
+                    color = colors.pureInverse,
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Start
                 ),
                 singleLine = true,
-                cursorBrush = SolidColor(LegacyTheme.colors.pureInverse),
+                cursorBrush = SolidColor(colors.pureInverse),
                 keyboardActions = KeyboardActions(
                     onDone = {
                         view.hideKeyboard()
@@ -213,14 +209,17 @@ private fun SelectedCurrencyCard(
     currency: IvyCurrency,
     preselected: Boolean,
 ) {
+    val theme = CurrencyModalTheme
+    val colors = theme.colors
+
     Row(
         modifier = Modifier
             .padding(horizontal = 16.dp)
             .fillMaxWidth()
-            .clip(LegacyTheme.shapes.r3)
+            .clip(theme.shapes.r3)
             .background(
-                brush = (if (preselected) GradientGreen else GradientIvy).asHorizontalBrush(),
-                shape = LegacyTheme.shapes.r3
+                brush = (if (preselected) CurrencyGradientGreen else CurrencyGradientIvy).asHorizontalBrush(),
+                shape = theme.shapes.r3
             )
             .padding(vertical = 20.dp),
         verticalAlignment = Alignment.CenterVertically
@@ -230,8 +229,8 @@ private fun SelectedCurrencyCard(
         Column {
             Text(
                 text = currency.name,
-                style = LegacyTheme.typo.b2.copy(
-                    color = White,
+                style = theme.typo.b2.copy(
+                    color = colors.white,
                     fontWeight = FontWeight.SemiBold,
                     textAlign = TextAlign.Start
                 )
@@ -241,8 +240,8 @@ private fun SelectedCurrencyCard(
 
             Text(
                 text = currency.code,
-                style = LegacyTheme.typo.b1.copy(
-                    color = White,
+                style = theme.typo.b1.copy(
+                    color = colors.white,
                     fontWeight = FontWeight.ExtraBold,
                     textAlign = TextAlign.Start
                 )
@@ -253,13 +252,13 @@ private fun SelectedCurrencyCard(
 
         ResourceIcon(
             icon = R.drawable.ic_check,
-            tint = White
+            tint = colors.white
         )
 
         Text(
             text = if (preselected) stringResource(R.string.pre_selected) else stringResource(R.string.selected_text),
-            style = LegacyTheme.typo.b2.copy(
-                color = White,
+            style = theme.typo.b2.copy(
+                color = colors.white,
                 fontWeight = FontWeight.SemiBold,
                 textAlign = TextAlign.Start
             )
@@ -280,8 +279,8 @@ private fun CurrencyList(
     val currencies = IvyCurrency.getAvailable()
         .filter {
             searchQueryLowercase.isBlank() ||
-                it.code.lowercase(Locale.getDefault()).startsWith(searchQueryLowercase) ||
-                it.name.lowercase(Locale.getDefault()).startsWith(searchQueryLowercase)
+                    it.code.lowercase(Locale.getDefault()).startsWith(searchQueryLowercase) ||
+                    it.name.lowercase(Locale.getDefault()).startsWith(searchQueryLowercase)
         }
         .sortedBy { it.code }
         .sortedBy { it.isCrypto }
@@ -347,16 +346,19 @@ private fun CurrencyItemCard(
 
     onClick: () -> Unit,
 ) {
+    val theme = CurrencyModalTheme
+    val colors = theme.colors
+
     Spacer(Modifier.height(12.dp))
 
     Row(
         modifier = Modifier
             .padding(horizontal = 16.dp)
             .fillMaxWidth()
-            .clip(LegacyTheme.shapes.r4)
+            .clip(theme.shapes.r4)
             .background(
-                color = if (selected) Ivy else LegacyTheme.colors.medium,
-                shape = LegacyTheme.shapes.r4
+                color = if (selected) colors.ivy else colors.medium,
+                shape = theme.shapes.r4
             )
             .clickable {
                 onClick()
@@ -368,8 +370,8 @@ private fun CurrencyItemCard(
 
         Text(
             text = currency.code,
-            style = LegacyTheme.typo.b1.copy(
-                color = if (selected) White else LegacyTheme.colors.pureInverse,
+            style = theme.typo.b1.copy(
+                color = if (selected) colors.white else colors.pureInverse,
                 fontWeight = FontWeight.ExtraBold,
                 textAlign = TextAlign.Start
             )
@@ -379,8 +381,8 @@ private fun CurrencyItemCard(
 
         Text(
             text = currency.name.take(20),
-            style = LegacyTheme.typo.b2.copy(
-                color = if (selected) White else LegacyTheme.colors.pureInverse,
+            style = theme.typo.b2.copy(
+                color = if (selected) colors.white else colors.pureInverse,
                 fontWeight = FontWeight.SemiBold,
                 textAlign = TextAlign.Start
             )
@@ -395,6 +397,8 @@ private fun LetterDividerItem(
     spacerTop: Dp,
     letterDivider: LetterDivider
 ) {
+    val theme = CurrencyModalTheme
+
     if (spacerTop > 0.dp) {
         Spacer(Modifier.height(spacerTop))
     }
@@ -402,8 +406,8 @@ private fun LetterDividerItem(
     Text(
         modifier = Modifier.padding(start = 32.dp),
         text = letterDivider.letter,
-        style = LegacyTheme.typo.c.copy(
-            color = LegacyTheme.colors.pureInverse,
+        style = theme.typo.c.copy(
+            color = theme.colors.pureInverse,
             fontWeight = FontWeight.SemiBold,
             textAlign = TextAlign.Start
         )

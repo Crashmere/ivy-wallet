@@ -38,7 +38,7 @@ import com.ivy.ui.compose.clickableNoIndication
 import com.ivy.legacy.ui.theme.Gray
 import com.ivy.legacy.ui.theme.Ivy
 import com.ivy.legacy.ui.modal.ChooseIconModal
-import com.ivy.legacy.ui.modal.CurrencyModal
+import com.ivy.ui.modal.CurrencyModal
 import com.ivy.ui.modal.IvyModal
 import com.ivy.legacy.ui.modal.ModalAddSave
 import com.ivy.ui.modal.ModalAmountSection

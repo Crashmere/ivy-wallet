@@ -1,4 +1,4 @@
-package com.ivy.legacy.ui.modal
+package com.ivy.ui.modal
 
 import androidx.compose.foundation.layout.BoxWithConstraintsScope
 import androidx.compose.foundation.layout.Row
@@ -7,8 +7,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
@@ -16,16 +18,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.ui.R
 import com.ivy.data.model.currency.IvyCurrency
-import com.ivy.legacy.ui.theme.Gray
+import com.ivy.ui.R
 import java.util.UUID
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
-import com.ivy.ui.modal.IvyModal
-import com.ivy.ui.modal.ModalSave
-import com.ivy.ui.modal.ModalTitle
 
 @Composable
 fun BoxWithConstraintsScope.CurrencyModal(
@@ -59,6 +54,8 @@ fun BoxWithConstraintsScope.CurrencyModal(
         var keyboardVisible by remember {
             mutableStateOf(false)
         }
+        val theme = CurrencyModalTheme
+        val colors = theme.colors
 
         if (!keyboardVisible) {
             Spacer(Modifier.height(32.dp))
@@ -72,9 +69,9 @@ fun BoxWithConstraintsScope.CurrencyModal(
 
                 Text(
                     text = stringResource(R.string.supports_crypto),
-                    style = LegacyTheme.typo.c.copy(
+                    style = theme.typo.c.copy(
                         fontWeight = FontWeight.ExtraBold,
-                        color = Gray,
+                        color = colors.gray,
                         textAlign = TextAlign.Start
                     )
                 )

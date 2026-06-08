@@ -52,7 +52,7 @@ import com.ivy.ui.theme.colors.IvyGradients
 import com.ivy.ui.theme.colors.IvyFixedColors.Ivy
 import com.ivy.ui.theme.colors.IvyFixedColors.White
 import com.ivy.legacy.ui.modal.ChooseIconModal
-import com.ivy.legacy.ui.modal.CurrencyModal
+import com.ivy.ui.modal.CurrencyModal
 import com.ivy.ui.modal.DeleteModal
 import com.ivy.ui.modal.IvyModal
 import com.ivy.ui.modal.ModalAmountSection
