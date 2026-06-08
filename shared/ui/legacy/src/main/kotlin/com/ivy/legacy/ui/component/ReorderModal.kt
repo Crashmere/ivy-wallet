@@ -352,19 +352,6 @@ private fun <T> itemTouchHelper(
 private fun <T> RecyclerView.adapter() = adapter as? Adapter<T>
     ?: error("Adapter not set or wrong adapter set to recyclerview.")
 
-@Composable
-fun ReorderButton(
-    modifier: Modifier = Modifier,
-    onClick: () -> Unit
-) {
-    CircleButtonFilled(
-        modifier = modifier
-            .testTag("reorder_button"),
-        icon = R.drawable.ic_reorder,
-        onClick = onClick
-    )
-}
-
 private fun <T> calculateOrderNum(
     itemsInNewOrder: List<T>,
     to: Int,
