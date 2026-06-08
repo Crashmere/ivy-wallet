@@ -17,11 +17,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.legacy.ui.icon.IvyIcon
-import com.ivy.legacy.ui.theme.style
 import com.ivy.ui.compose.thenIf
 
 @Composable
@@ -69,9 +69,10 @@ fun IvyOutlinedButton(
         Text(
             modifier = Modifier.padding(vertical = padding, horizontal = 4.dp),
             text = text,
-            style = LegacyTheme.typo.b2.style(
+            style = LegacyTheme.typo.b2.copy(
                 fontWeight = FontWeight.Bold,
                 color = textColor,
+                textAlign = TextAlign.Start,
             ),
         )
 

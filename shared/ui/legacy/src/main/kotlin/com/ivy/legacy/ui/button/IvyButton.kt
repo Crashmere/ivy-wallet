@@ -18,10 +18,10 @@ import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.legacy.ui.theme.style
 import com.ivy.ui.compose.drawColoredShadow
 import com.ivy.ui.compose.thenIf
 import com.ivy.legacy.ui.theme.Gradient
@@ -37,9 +37,10 @@ fun IvyButton(
     modifier: Modifier = Modifier,
     text: String,
     backgroundGradient: Gradient = GradientIvy,
-    textStyle: TextStyle = LegacyTheme.typo.b2.style(
+    textStyle: TextStyle = LegacyTheme.typo.b2.copy(
         color = White,
-        fontWeight = FontWeight.Bold
+        fontWeight = FontWeight.Bold,
+        textAlign = TextAlign.Start
     ),
     @DrawableRes iconStart: Int? = null,
     @DrawableRes iconEnd: Int? = null,

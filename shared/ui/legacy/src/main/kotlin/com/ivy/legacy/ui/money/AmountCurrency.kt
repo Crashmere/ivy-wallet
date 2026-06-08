@@ -9,9 +9,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.legacy.ui.theme.style
 import com.ivy.data.model.currency.format
 import com.ivy.data.model.currency.shortenAmount
 import com.ivy.data.model.currency.shouldShortAmount
@@ -34,17 +34,19 @@ fun AmountCurrencyB1(
     Text(
         modifier = Modifier.testTag("amount_currency_b1"),
         text = text,
-        style = LegacyTheme.typo.nB1.style(
+        style = LegacyTheme.typo.nB1.copy(
             fontWeight = amountFontWeight,
-            color = textColor
+            color = textColor,
+            textAlign = TextAlign.Start
         )
     )
     Spacer(modifier = Modifier.width(4.dp))
     Text(
         text = currency,
-        style = LegacyTheme.typo.nB1.style(
+        style = LegacyTheme.typo.nB1.copy(
             fontWeight = FontWeight.Normal,
-            color = textColor
+            color = textColor,
+            textAlign = TextAlign.Start
         )
     )
 }

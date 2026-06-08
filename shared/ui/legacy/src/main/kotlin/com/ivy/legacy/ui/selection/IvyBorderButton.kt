@@ -18,19 +18,20 @@ import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.legacy.ui.theme.style
 import com.ivy.legacy.ui.theme.Gradient
 
 @Composable
 internal fun IvyBorderButton(
     modifier: Modifier = Modifier,
     text: String,
-    textStyle: TextStyle = LegacyTheme.typo.b2.style(
+    textStyle: TextStyle = LegacyTheme.typo.b2.copy(
         color = LegacyTheme.colors.pureInverse,
-        fontWeight = FontWeight.Bold
+        fontWeight = FontWeight.Bold,
+        textAlign = TextAlign.Start
     ),
     backgroundGradient: Gradient = Gradient.solid(LegacyTheme.colors.mediumInverse),
     @DrawableRes iconStart: Int? = null,

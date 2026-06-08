@@ -11,12 +11,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.legacy.ui.theme.style
 import com.ivy.data.model.currency.format
 import com.ivy.data.model.currency.shortenAmount
 import com.ivy.data.model.currency.shouldShortAmount
@@ -76,15 +76,18 @@ fun BalanceRow(
                 Text(
                     text = balanceCurrencyText,
                     style = if (balanceFontSize == null) {
-                        LegacyTheme.typo.nH1.style(
+                        LegacyTheme.typo.nH1.copy(
                             fontWeight = FontWeight.ExtraBold,
-                            color = textColor
+                            color = textColor,
+                            textAlign = TextAlign.Start
                         )
                     } else {
-                        LegacyTheme.typo.nH1.style(
+                        LegacyTheme.typo.nH1.copy(
                             fontWeight = FontWeight.ExtraBold,
-                            color = textColor
-                        ).copy(fontSize = balanceFontSize)
+                            color = textColor,
+                            textAlign = TextAlign.Start,
+                            fontSize = balanceFontSize
+                        )
                     }
                 )
             }
@@ -102,15 +105,18 @@ fun BalanceRow(
                         else -> integerPartFormatted
                     },
                     style = if (balanceFontSize == null) {
-                        LegacyTheme.typo.nH1.style(
+                        LegacyTheme.typo.nH1.copy(
                             fontWeight = FontWeight.ExtraBold,
-                            color = textColor
+                            color = textColor,
+                            textAlign = TextAlign.Start
                         )
                     } else {
-                        LegacyTheme.typo.nH1.style(
+                        LegacyTheme.typo.nH1.copy(
                             fontWeight = FontWeight.ExtraBold,
-                            color = textColor
-                        ).copy(fontSize = balanceFontSize)
+                            color = textColor,
+                            textAlign = TextAlign.Start,
+                            fontSize = balanceFontSize
+                        )
                     }
                 )
             }
@@ -127,15 +133,18 @@ private fun Currency(
     Text(
         text = currency,
         style = if (currencyFontSize == null) {
-            LegacyTheme.typo.h1.style(
+            LegacyTheme.typo.h1.copy(
                 fontWeight = FontWeight.Light,
-                color = textColor
+                color = textColor,
+                textAlign = TextAlign.Start
             )
         } else {
-            LegacyTheme.typo.h1.style(
+            LegacyTheme.typo.h1.copy(
                 fontWeight = FontWeight.Light,
-                color = textColor
-            ).copy(fontSize = currencyFontSize)
+                color = textColor,
+                textAlign = TextAlign.Start,
+                fontSize = currencyFontSize
+            )
         }
     )
 }
