@@ -25,6 +25,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -53,10 +54,11 @@ import com.ivy.ui.platform.fileSharer
 import com.ivy.ui.rememberScrollPositionListState
 import com.ivy.data.model.IncomeExpensePair
 import com.ivy.legacy.ui.money.BalanceRow
-import com.ivy.legacy.ui.button.IvyButton
-import com.ivy.legacy.ui.button.IvyOutlinedButton
 import com.ivy.ui.compose.FilledIconButton
+import com.ivy.ui.compose.GradientButton
+import com.ivy.ui.compose.OutlinedPillButton
 import com.ivy.ui.compose.ResourceIcon
+import com.ivy.ui.theme.colors.IvyGradients
 import kotlinx.collections.immutable.toImmutableList
 
 @ExperimentalFoundationApi
@@ -397,9 +399,18 @@ private fun NoFilterEmptyState(
 
         Spacer(Modifier.height(32.dp))
 
-        IvyButton(
+        GradientButton(
             iconStart = R.drawable.ic_filter_xs,
-            text = stringResource(R.string.set_filter)
+            text = stringResource(R.string.set_filter),
+            backgroundGradient = IvyGradients.Ivy,
+            disabledBackgroundColor = LegacyTheme.colors.gray,
+            shape = LegacyTheme.shapes.rFull,
+            textStyle = LegacyTheme.typo.b2.copy(
+                color = Color(0xFFFAFAFA),
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Start
+            ),
+            iconTint = Color(0xFFFAFAFA),
         ) {
             setFilterOverlayVisible(true)
         }
@@ -443,13 +454,20 @@ private fun Toolbar(
         Spacer(Modifier.weight(1f))
 
         // Export CSV
-        IvyOutlinedButton(
+        OutlinedPillButton(
             text = stringResource(R.string.export),
-            iconTint = LegacyTheme.colors.green,
-            textColor = LegacyTheme.colors.green,
+            iconStart = R.drawable.ic_export_csv,
+            shape = LegacyTheme.shapes.rFull,
             solidBackground = true,
+            backgroundColor = LegacyTheme.colors.pure,
+            iconTint = LegacyTheme.colors.green,
+            borderColor = LegacyTheme.colors.medium,
+            textStyle = LegacyTheme.typo.b2.copy(
+                fontWeight = FontWeight.Bold,
+                color = LegacyTheme.colors.green,
+                textAlign = TextAlign.Start,
+            ),
             padding = 8.dp,
-            iconStart = R.drawable.ic_export_csv
         ) {
             onExport()
         }

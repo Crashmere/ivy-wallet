@@ -57,8 +57,6 @@ import com.ivy.ui.animation.springBounce
 import com.ivy.ui.R
 import com.ivy.ui.theme.colors.IvyGradients
 import com.ivy.ui.icon.ItemIconSDefaultIcon
-import com.ivy.legacy.ui.button.IvyButton
-import com.ivy.legacy.ui.button.IvyOutlinedButton
 import com.ivy.legacy.ui.modal.ChoosePeriodModal
 import com.ivy.legacy.ui.modal.edit.AmountModal
 import com.ivy.ui.period.TimePeriod
@@ -67,6 +65,8 @@ import com.ivy.ui.theme.colors.toComposeColor
 import com.ivy.legacy.ui.money.AmountCurrencyB1
 import com.ivy.ui.compose.BackPressHandler
 import com.ivy.ui.compose.CloseIconButton
+import com.ivy.ui.compose.GradientButton
+import com.ivy.ui.compose.OutlinedPillButton
 import com.ivy.ui.compose.ResourceIcon
 import com.ivy.ui.compose.thenIf
 import kotlinx.collections.immutable.ImmutableList
@@ -291,10 +291,18 @@ internal fun BoxWithConstraintsScope.FilterOverlay(
 
         Spacer(Modifier.weight(1f))
 
-        IvyButton(
+        GradientButton(
             text = stringResource(R.string.apply_filter),
             iconStart = R.drawable.ic_filter_xs,
             backgroundGradient = IvyGradients.Green,
+            disabledBackgroundColor = LegacyTheme.colors.gray,
+            shape = LegacyTheme.shapes.rFull,
+            textStyle = LegacyTheme.typo.b2.copy(
+                color = Color(0xFFFAFAFA),
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Start
+            ),
+            iconTint = Color(0xFFFAFAFA),
             padding = 10.dp,
         ) {
             if (localFilter != null) {
@@ -1205,11 +1213,18 @@ private fun Keyword(
     borderColor: Color,
     onClick: () -> Unit,
 ) {
-    IvyOutlinedButton(
+    OutlinedPillButton(
         text = keyword,
         iconStart = R.drawable.ic_remove,
+        shape = LegacyTheme.shapes.rFull,
+        backgroundColor = LegacyTheme.colors.pure,
         iconTint = LegacyTheme.colors.red,
         borderColor = borderColor,
+        textStyle = LegacyTheme.typo.b2.copy(
+            fontWeight = FontWeight.Bold,
+            color = LegacyTheme.colors.pureInverse,
+            textAlign = TextAlign.Start,
+        ),
         padding = 10.dp,
     ) {
         onClick()
@@ -1218,10 +1233,19 @@ private fun Keyword(
 
 @Composable
 private fun AddKeywordButton(text: String, modifier: Modifier = Modifier, onClick: () -> Unit) {
-    IvyOutlinedButton(
+    OutlinedPillButton(
         modifier = modifier,
         text = text,
         iconStart = R.drawable.ic_plus,
+        shape = LegacyTheme.shapes.rFull,
+        backgroundColor = LegacyTheme.colors.pure,
+        iconTint = LegacyTheme.colors.pureInverse,
+        borderColor = LegacyTheme.colors.medium,
+        textStyle = LegacyTheme.typo.b2.copy(
+            fontWeight = FontWeight.Bold,
+            color = LegacyTheme.colors.pureInverse,
+            textAlign = TextAlign.Start,
+        ),
         padding = 10.dp,
     ) {
         onClick()
