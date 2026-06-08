@@ -110,7 +110,7 @@ internal class LoanDetailsViewModel @Inject internal constructor(
             amountPaid = amountPaid.doubleValue,
             loanAmountPaid = loanInterestAmountPaid.doubleValue,
             accounts = accounts.value,
-            selectedLoanAccount = selectedLoanAccount(),
+            selectedLoanAccountId = selectedLoanAccountId.value,
             createLoanTransaction = createLoanTransaction.value,
             loanModalData = loanModalData.value,
             loanRecordModalData = loanRecordModalData.value,

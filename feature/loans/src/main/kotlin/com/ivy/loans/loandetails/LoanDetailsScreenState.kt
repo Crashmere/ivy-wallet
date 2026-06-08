@@ -7,6 +7,7 @@ import com.ivy.loans.modal.LoanModalData
 import com.ivy.loans.modal.LoanRecordModalData
 import kotlinx.collections.immutable.ImmutableList
 import java.time.Instant
+import java.util.UUID
 
 internal data class LoanDetailsScreenState(
     val baseCurrency: String,
@@ -16,7 +17,7 @@ internal data class LoanDetailsScreenState(
     val amountPaid: Double,
     val loanAmountPaid: Double,
     val accounts: ImmutableList<LegacyAccount>,
-    val selectedLoanAccount: LegacyAccount?,
+    val selectedLoanAccountId: UUID?,
     val createLoanTransaction: Boolean,
     val loanModalData: LoanModalData?,
     val loanRecordModalData: LoanRecordModalData?,

@@ -1350,6 +1350,7 @@ shared:ui:core
 - 旧名称输入框文件名已从误导性的 `IvyNameTextFieldValue.kt` 改为 `IvyNameTextField.kt`，与实际保留的内部组件名一致。
 - 借贷弹窗改用 `feature:loans` 私有颜色选择器；`shared:ui:legacy` 的 `IvyColorPicker` 收窄为旧账户/分类弹窗内部实现。
 - 借贷创建弹窗和借贷记录弹窗复用 `feature:loans` 私有账户选择行，删除两处重复实现；旧账户 chip 渲染仍集中在借贷 feature 内部。
+- 借贷详情页状态中的选中账户已从完整 `LegacyAccount` 收窄为账户 ID；页面用当前账户列表推导展示对象，ViewModel 不再额外向 UI state 暴露一份旧账户对象。
 - app 仍保留文件选择、文件分享、Material 日期选择器、BuildInfo、Locale 设置、生物识别和窗口安全等真正依赖 Activity 或 Android app 壳层的装配。
 
 ## 高风险区域

@@ -125,6 +125,9 @@ private fun BoxWithConstraintsScope.UI(
     onEventHandler: (LoanDetailsScreenEvent) -> Unit = {}
 ) {
     val itemColor = state.loan?.color?.toComposeColor() ?: Gray
+    val selectedLoanAccount = state.accounts.firstOrNull { account ->
+        account.id == state.selectedLoanAccountId
+    }
 
     Column(
         modifier = Modifier
@@ -151,7 +154,7 @@ private fun BoxWithConstraintsScope.UI(
                         amountPaid = state.amountPaid,
                         loanAmountPaid = state.loanAmountPaid,
                         itemColor = itemColor,
-                        selectedLoanAccount = state.selectedLoanAccount,
+                        selectedLoanAccount = selectedLoanAccount,
                         onAmountClick = {
                             onEventHandler.invoke(LoanDetailsScreenEvent.OnAmountClick)
                         },
