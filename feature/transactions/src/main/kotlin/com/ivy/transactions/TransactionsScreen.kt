@@ -54,9 +54,9 @@ import com.ivy.legacy.ui.component.ItemStatisticToolbar
 import com.ivy.legacy.ui.component.transaction.transactions
 import com.ivy.ui.money.balancePrefix
 import com.ivy.ui.compose.clickableNoIndication
-import com.ivy.legacy.ui.horizontalSwipeListener
+import com.ivy.ui.compose.horizontalSwipeListener
 import com.ivy.ui.compose.rememberInteractionSource
-import com.ivy.legacy.ui.rememberSwipeListenerState
+import com.ivy.ui.compose.rememberSwipeListenerState
 import com.ivy.ui.platform.setStatusBarDarkTextCompat
 import com.ivy.ui.navigation.EditTransactionScreen
 import com.ivy.ui.navigation.PieChartStatisticScreen

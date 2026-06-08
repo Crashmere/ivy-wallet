@@ -101,8 +101,8 @@ private class PieChartView(context: Context) : View(context) {
     val rectangle = RectF(
         0f,
         0f,
-        com.ivy.legacy.ui.convertDpToPixel(context, 2 * RADIUS_DP),
-        com.ivy.legacy.ui.convertDpToPixel(context, 2 * RADIUS_DP)
+        com.ivy.ui.platform.convertDpToPixel(context, 2 * RADIUS_DP),
+        com.ivy.ui.platform.convertDpToPixel(context, 2 * RADIUS_DP)
     )
 
     var onCategoryClicked: (Category?) -> Unit = {}
@@ -145,7 +145,7 @@ private class PieChartView(context: Context) : View(context) {
     private fun paintFor(color: Color): Paint {
         return Paint().apply {
             this.color = color.toArgb()
-            this.strokeWidth = com.ivy.legacy.ui.convertDpToPixel(context, 2f)
+            this.strokeWidth = com.ivy.ui.platform.convertDpToPixel(context, 2f)
             this.strokeCap = Paint.Cap.ROUND
             this.strokeJoin = Paint.Join.ROUND
             this.isAntiAlias = true

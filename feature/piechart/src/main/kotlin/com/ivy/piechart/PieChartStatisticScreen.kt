@@ -45,8 +45,8 @@ import com.ivy.legacy.ui.model.period.TimePeriod
 import com.ivy.legacy.ui.model.period.displayShort
 import com.ivy.ui.compose.drawColoredShadow
 import com.ivy.data.model.currency.format
-import com.ivy.legacy.ui.horizontalSwipeListener
-import com.ivy.legacy.ui.rememberSwipeListenerState
+import com.ivy.ui.compose.horizontalSwipeListener
+import com.ivy.ui.compose.rememberSwipeListenerState
 import com.ivy.ui.navigation.EditTransactionScreen
 import com.ivy.ui.navigation.PieChartStatisticScreen
 import com.ivy.ui.navigation.TransactionsScreen
@@ -104,7 +104,7 @@ private fun BoxWithConstraintsScope.UI(
     val expanded = lazyState.firstVisibleItemIndex < 1
     val percentExpanded by animateFloatAsState(
         targetValue = if (expanded) 1f else 0f,
-        animationSpec = com.ivy.legacy.ui.springBounce(),
+        animationSpec = com.ivy.ui.animation.springBounce(),
         label = "percent expanded"
     )
 
@@ -318,7 +318,7 @@ private fun Header(
                             drawColoredShadow(backgroundGradient.startColor)
                         }
                         .alpha(percentExpanded)
-                        .size(com.ivy.legacy.ui.lerp(1, 40, percentExpanded).dp),
+                        .size(com.ivy.ui.animation.lerp(1, 40, percentExpanded).dp),
                     iconPadding = 4.dp,
                     icon = R.drawable.ic_plus,
                     backgroundGradient = backgroundGradient,

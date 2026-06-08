@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.dp
 import com.ivy.data.model.IntervalType
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
-import com.ivy.legacy.ui.forDisplay
+import com.ivy.ui.time.forDisplay
 import com.ivy.ui.time.formatDateOnly
 import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.Orange

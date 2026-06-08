@@ -1,4 +1,4 @@
-package com.ivy.legacy.ui
+package com.ivy.ui.compose
 
 import androidx.compose.foundation.gestures.detectHorizontalDragGestures
 import androidx.compose.foundation.gestures.detectVerticalDragGestures
@@ -39,13 +39,11 @@ fun Modifier.verticalSwipeListener(
                 )
             },
             onVerticalDrag = { _, dragAmount ->
-                // dragAmount: positive when scrolling down; negative when scrolling up
                 val swipeOffset = state.value.swipeOffset + dragAmount
                 var gestureConsumed = state.value.gestureConsumed
 
                 when {
                     swipeOffset > sensitivity -> {
-                        // offset > 0 when swipe down
                         if (!gestureConsumed) {
                             onSwipeDown()
                             gestureConsumed = true
@@ -53,7 +51,6 @@ fun Modifier.verticalSwipeListener(
                     }
 
                     swipeOffset < -sensitivity -> {
-                        // offset < 0 when swipe up
                         if (!gestureConsumed) {
                             onSwipeUp()
                             gestureConsumed = true
@@ -84,13 +81,11 @@ fun Modifier.horizontalSwipeListener(
                 )
             },
             onHorizontalDrag = { _, dragAmount ->
-                // dragAmount: positive when scrolling down; negative when scrolling up
                 val swipeOffset = state.value.swipeOffset + dragAmount
                 var gestureConsumed = state.value.gestureConsumed
 
                 when {
                     swipeOffset > sensitivity -> {
-                        // offset > 0 when swipe right
                         if (!gestureConsumed) {
                             onSwipeRight()
                             gestureConsumed = true
@@ -98,7 +93,6 @@ fun Modifier.horizontalSwipeListener(
                     }
 
                     swipeOffset < -sensitivity -> {
-                        // offset < 0 when swipe left
                         if (!gestureConsumed) {
                             onSwipeLeft()
                             gestureConsumed = true

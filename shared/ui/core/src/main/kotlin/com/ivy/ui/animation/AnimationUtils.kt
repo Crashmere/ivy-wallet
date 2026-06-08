@@ -1,20 +1,22 @@
-package com.ivy.legacy.ui
+package com.ivy.ui.animation
 
 import android.animation.ArgbEvaluator
-import android.content.Context
-import android.util.DisplayMetrics
 import androidx.annotation.FloatRange
+import androidx.compose.animation.core.spring
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import kotlin.math.roundToInt
 
-fun convertDpToPixel(context: Context, dp: Float): Float {
-    return dp * (context.resources.displayMetrics.densityDpi.toFloat() / DisplayMetrics.DENSITY_DEFAULT)
-}
+fun <T> springBounce(
+    stiffness: Float = 500f,
+) = spring<T>(
+    dampingRatio = 0.75f,
+    stiffness = stiffness,
+)
 
-fun convertDpToPixel(context: Context, dp: Int): Int {
-    return convertDpToPixel(context, dp.toFloat()).roundToInt()
-}
+fun <T> springBounceFast() = springBounce<T>(
+    stiffness = 2000f
+)
 
 fun lerp(start: Int, end: Int, @FloatRange(from = 0.0, to = 1.0) fraction: Float): Int {
     return ((start + fraction * (end - start)).roundToInt())

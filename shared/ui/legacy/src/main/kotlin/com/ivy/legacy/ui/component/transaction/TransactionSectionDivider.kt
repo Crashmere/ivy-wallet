@@ -30,7 +30,7 @@ import com.ivy.legacy.ui.theme.system.style
 import com.ivy.ui.R
 import com.ivy.ui.compose.clickableNoIndication
 import com.ivy.ui.compose.rememberInteractionSource
-import com.ivy.legacy.ui.springBounce
+import com.ivy.ui.animation.springBounce
 
 @Composable
 fun SectionDivider(

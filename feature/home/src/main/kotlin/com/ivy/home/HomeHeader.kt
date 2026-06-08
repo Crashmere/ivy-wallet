@@ -39,11 +39,11 @@ import com.ivy.legacy.ui.component.transaction.TransactionsDividerLine
 import com.ivy.ui.compose.clickableNoIndication
 import com.ivy.ui.compose.drawColoredShadow
 import com.ivy.data.model.currency.format
-import com.ivy.legacy.ui.horizontalSwipeListener
+import com.ivy.ui.compose.horizontalSwipeListener
 import com.ivy.ui.compose.rememberInteractionSource
-import com.ivy.legacy.ui.rememberSwipeListenerState
-import com.ivy.legacy.ui.springBounce
-import com.ivy.legacy.ui.verticalSwipeListener
+import com.ivy.ui.compose.rememberSwipeListenerState
+import com.ivy.ui.animation.springBounce
+import com.ivy.ui.compose.verticalSwipeListener
 import com.ivy.ui.navigation.PieChartStatisticScreen
 import com.ivy.ui.navigation.navigation
 import com.ivy.ui.R

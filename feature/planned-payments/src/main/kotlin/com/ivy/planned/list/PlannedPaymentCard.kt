@@ -34,7 +34,7 @@ import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
 import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.data.model.PlannedPaymentRule
-import com.ivy.legacy.ui.forDisplay
+import com.ivy.ui.time.forDisplay
 import com.ivy.legacy.ui.component.transaction.TypeAmountCurrency
 import com.ivy.ui.time.formatDateOnly
 import com.ivy.ui.time.formatDateOnlyWithYear

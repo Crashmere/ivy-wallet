@@ -30,9 +30,9 @@ import androidx.compose.ui.unit.sp
 import com.ivy.legacy.ui.theme.system.LegacyTheme
 import com.ivy.legacy.ui.theme.system.style
 import com.ivy.ui.compose.clickableNoIndication
-import com.ivy.legacy.ui.horizontalSwipeListener
+import com.ivy.ui.compose.horizontalSwipeListener
 import com.ivy.ui.compose.rememberInteractionSource
-import com.ivy.legacy.ui.rememberSwipeListenerState
+import com.ivy.ui.compose.rememberSwipeListenerState
 import com.ivy.ui.navigation.LocalMainTabState
 import com.ivy.ui.navigation.MainTab
 import com.ivy.ui.navigation.TransactionsScreen

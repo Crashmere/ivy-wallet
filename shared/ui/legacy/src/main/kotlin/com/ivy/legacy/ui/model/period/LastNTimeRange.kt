@@ -4,7 +4,7 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.Composable
 import com.ivy.data.model.IntervalType
 import com.ivy.data.model.incrementDate
-import com.ivy.legacy.ui.forDisplay
+import com.ivy.ui.time.forDisplay
 import com.ivy.ui.time.TimeProvider
 import java.time.Instant
 
