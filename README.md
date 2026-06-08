@@ -1049,6 +1049,7 @@
 - 根导航装配 `IvyNavGraph` 从顶层 `com.ivy` 包移动到 `app` 的 `com.ivy.wallet.navigation` 边界，并改为 app 模块内部函数；`RootContent` 仍以同一导航状态渲染各 feature 页面。
 - app 内部 Hilt 绑定模块、平台适配器、启动默认数据编排、应用锁控制器和提醒调度器继续收为 app 模块内部实现；`RootViewModel` 的注入构造和启动事件流也只在 app 根部可见，Activity/Worker 等 Android 入口保持原有入口职责。
 - `RootViewModel`、交易提醒 `TransactionReminderWorker` 和 `NotificationService` 也收为 app 模块内部类；外部仍只通过 Android 入口、WorkManager 调度和 feature 级窄接口触达这些能力。
+- Android Manifest 删除无源码调用的旧权限和旧外部存储兼容标记；当前只保留通知、开机后恢复提醒和网络访问所需权限，文件导入/导出继续走系统文档选择器。
 
 ### 阶段 9：feature 模块收敛
 
