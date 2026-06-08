@@ -143,7 +143,7 @@ class PieChartStatisticViewModel @Inject constructor(
                 type = screen.type,
                 accountIdFilterList = screen.accountList,
                 filterExclude = screen.filterExcluded,
-                transactions = screen.transactions,
+                transactions = screen.legacyTransactions,
                 transfersAsIncomeExpenseValue = screen.treatTransfersAsIncomeExpense
             )
         }

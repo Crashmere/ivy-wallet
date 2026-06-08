@@ -613,7 +613,7 @@ private fun Header(
         Spacer(Modifier.height(20.dp))
 
         val hideEditAndDeleteButtonForAccountTransfer =
-            screen.transactions.none { it.type == TransactionType.TRANSFER }
+            screen.legacyTransactions.none { it.type == TransactionType.TRANSFER }
 
         ItemStatisticToolbar(
             contrastColor = contrastColor,
