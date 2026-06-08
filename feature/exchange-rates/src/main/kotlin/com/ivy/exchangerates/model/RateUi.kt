@@ -1,4 +1,4 @@
-package com.ivy.exchangerates.data
+package com.ivy.exchangerates.model
 
 import androidx.compose.runtime.Immutable
 

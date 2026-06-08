@@ -1258,7 +1258,7 @@ shared:ui:core
 - CSV 日期解析已删除从未写入成功值的文件级格式缓存；解析仍按原有日期格式列表逐项尝试。
 - 借贷详情 ViewModel 不再通过 `lateinit screen` 保存整个导航 route；页面入口显式传入 `loanId` 启动加载，详情展示和编辑流程不变。
 - 交易列表 ViewModel 不再长期保存完整 `TransactionsScreen` route；翻月、删除和刷新只复用本地 `TransactionsQuery` 中的账户、分类、未分类标记和交易 ID 筛选参数。
-- 借贷 feature 内部展示模型已从列表页子包 `loans.loan.data` 归位到 `loans.data`，列表和详情页共享的展示模型不再挂在单个页面包下。
+- feature 内部展示模型包名继续统一：借贷展示模型已从列表页子包 `loans.loan.data` 归位到 `loans.model`，汇率页 `RateUi` 也从 `exchangerates.data` 归位到 `exchangerates.model`，避免和真正数据层命名混淆。
 - app 仍保留文件选择、文件分享、Material 日期选择器、BuildInfo、Locale 设置、生物识别和窗口安全等真正依赖 Activity 或 Android app 壳层的装配。
 
 ## 高风险区域

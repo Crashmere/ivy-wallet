@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.dp
 import com.ivy.data.model.currency.format
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.legacy.ui.theme.style
-import com.ivy.exchangerates.data.RateUi
+import com.ivy.exchangerates.model.RateUi
 import com.ivy.legacy.ui.component.DeleteButton
 
 @Composable

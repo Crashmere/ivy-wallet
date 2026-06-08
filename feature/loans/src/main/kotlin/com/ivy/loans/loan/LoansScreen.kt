@@ -37,7 +37,7 @@ import com.ivy.data.model.currency.getDefaultFIATCurrency
 import com.ivy.ui.compose.horizontalSwipeListener
 import com.ivy.ui.compose.rememberSwipeListenerState
 import com.ivy.loans.loan.Constants.SWIPE_HORIZONTAL_THRESHOLD
-import com.ivy.loans.data.DisplayLoan
+import com.ivy.loans.model.DisplayLoan
 import com.ivy.ui.navigation.LoanDetailsScreen
 import com.ivy.ui.navigation.navigation
 import com.ivy.ui.R

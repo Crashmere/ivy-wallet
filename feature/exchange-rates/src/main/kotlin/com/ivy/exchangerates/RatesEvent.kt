@@ -1,6 +1,6 @@
 package com.ivy.exchangerates
 
-import com.ivy.exchangerates.data.RateUi
+import com.ivy.exchangerates.model.RateUi
 
 internal sealed interface RatesEvent {
     data class Search(val query: String) : RatesEvent

@@ -21,7 +21,7 @@ import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.data.model.Loan
 import com.ivy.data.model.currency.format
 import com.ivy.data.model.currency.getDefaultFIATCurrency
-import com.ivy.loans.data.DisplayLoan
+import com.ivy.loans.model.DisplayLoan
 import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.time.DateTimePicker
 import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase

@@ -17,7 +17,7 @@ import com.ivy.domain.usecase.exchange.DeleteExchangeRateUseCase
 import com.ivy.domain.usecase.exchange.ObserveExchangeRatesUseCase
 import com.ivy.domain.usecase.exchange.SaveExchangeRateUseCase
 import com.ivy.domain.usecase.exchange.SyncExchangeRatesUseCase
-import com.ivy.exchangerates.data.RateUi
+import com.ivy.exchangerates.model.RateUi
 import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.platform.Toaster
 import dagger.hilt.android.lifecycle.HiltViewModel
