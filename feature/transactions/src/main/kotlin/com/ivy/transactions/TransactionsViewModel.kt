@@ -7,6 +7,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.viewModelScope
 import com.ivy.data.model.legacy.LegacyTransaction
 import com.ivy.data.model.TransactionHistoryItem
+import com.ivy.data.model.TransactionHistoryTransaction
 import com.ivy.data.model.TransactionType
 import com.ivy.data.model.Transaction
 import com.ivy.data.model.Expense
@@ -694,7 +695,8 @@ internal class TransactionsViewModel @Inject internal constructor(
 }
 
 private fun List<TransactionHistoryItem>.countTransactionType(type: TransactionType): Int {
-    return filterIsInstance<LegacyTransaction>().count { it.type == type }
+    return filterIsInstance<TransactionHistoryTransaction>()
+        .count { it.transaction.getTransactionType() == type }
 }
 
 private fun Account.toTransactionListAccount() = TransactionListAccount(

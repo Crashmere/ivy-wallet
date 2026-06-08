@@ -258,6 +258,7 @@
 - 清空借贷 use case 包的 legacy 模型依赖：借贷同步内部的账户币种判断改用正式 `Account.asset`，`shared:domain` 的 loan use case 包不再依赖 `LegacyTransaction`、`LegacyAccount` 或 legacy mapper。
 - 收窄正式交易统计账户边界：交易金额换算、收入/支出/转账汇总、预算已花金额、首页到期汇总、分类月度统计、报表筛选和饼图统计改用正式 `Account`，不再为了读取账户币种临时转换 `LegacyAccount`。
 - 删除无调用方的 domain 旧账户/旧交易算法：`LegacyAccountMapper` 和 `transaction/legacy` 旧折叠、旧汇率、旧收支统计 helper 已移除；`shared:domain` 只剩正式交易转旧展示模型的兼容 mapper。
+- 清空 `shared:domain` 的 legacy 模型依赖：历史列表新增正式 `TransactionHistoryTransaction`，domain 构建历史项时返回正式交易和正式标签；旧交易卡片需要的 `LegacyTransaction` 适配已下沉到 `shared:ui:legacy`，`LegacyTransaction` 不再实现 `TransactionHistoryItem`。
 
 当前仍保留：
 

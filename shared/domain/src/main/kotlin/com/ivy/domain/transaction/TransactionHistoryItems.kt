@@ -7,12 +7,12 @@ import com.ivy.data.model.TagId
 import com.ivy.data.model.Transaction
 import com.ivy.data.model.TransactionHistoryDateDivider
 import com.ivy.data.model.TransactionHistoryItem
+import com.ivy.data.model.TransactionHistoryTransaction
 import com.ivy.domain.exchange.ExchangeData
 import com.ivy.domain.exchange.ExchangeTransactionArgument
 import com.ivy.domain.exchange.exchangeInBaseCurrency
-import com.ivy.domain.mapper.legacy.toImmutableLegacyTags
-import com.ivy.domain.mapper.legacy.toLegacyTransaction
 import com.ivy.domain.time.convertToLocal
+import kotlinx.collections.immutable.toImmutableList
 import java.math.BigDecimal
 import java.time.LocalDateTime
 import java.time.ZoneOffset
@@ -42,9 +42,11 @@ internal suspend fun transactionsWithDateDividers(
                 exchange = exchange
             )
 
-            // Required to be interoperable with [TransactionHistoryItem]
-            val legacyTransactionsForDate = transactionsForDate.map {
-                it.toLegacyTransaction(tags = getTags(it.tags).toImmutableLegacyTags())
+            val transactionHistoryItems = transactionsForDate.map {
+                TransactionHistoryTransaction(
+                    transaction = it,
+                    tags = getTags(it.tags).toImmutableList()
+                )
             }
             listOf<TransactionHistoryItem>(
                 TransactionHistoryDateDivider(
@@ -60,6 +62,6 @@ internal suspend fun transactionsWithDateDividers(
                         arg
                     ).toDouble()
                 ),
-            ).plus(legacyTransactionsForDate)
+            ).plus(transactionHistoryItems)
         }
 }

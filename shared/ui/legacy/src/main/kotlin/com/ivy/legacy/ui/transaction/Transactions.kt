@@ -21,6 +21,15 @@ import com.ivy.data.model.TransactionType
 import com.ivy.data.model.legacy.LegacyTransaction
 import com.ivy.data.model.TransactionHistoryDateDivider
 import com.ivy.data.model.TransactionHistoryItem
+import com.ivy.data.model.TransactionHistoryTransaction
+import com.ivy.data.model.Expense
+import com.ivy.data.model.Income
+import com.ivy.data.model.LegacyTag
+import com.ivy.data.model.Tag
+import com.ivy.data.model.Transaction
+import com.ivy.data.model.Transfer
+import com.ivy.data.model.getFromAccount
+import com.ivy.data.model.getFromValue
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.R
 import com.ivy.legacy.ui.theme.Black
@@ -31,6 +40,9 @@ import com.ivy.legacy.ui.theme.Red
 import com.ivy.legacy.ui.theme.White
 import com.ivy.legacy.ui.button.IvyButton
 import com.ivy.legacy.ui.icon.IvyIcon
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toImmutableList
 import java.util.UUID
 
 fun LazyListScope.transactions(
@@ -275,18 +287,18 @@ private fun LazyListScope.historySection(
             items = history,
             key = {
                 when (it) {
-                    is LegacyTransaction -> it.id.toString()
+                    is TransactionHistoryTransaction -> it.transaction.id.value.toString()
                     is TransactionHistoryDateDivider -> it.date.toString()
                     else -> "unknown"
                 }
             }
         ) {
             when (it) {
-                is LegacyTransaction -> {
+                is TransactionHistoryTransaction -> {
                     TransactionCard(
                         baseData = baseData,
 
-                        transaction = it,
+                        transaction = it.toLegacyTransaction(),
                         shouldShowAccountSpecificColorInTransactions = shouldShowAccountSpecificColorInTransactions,
                         onPayOrGet = onPayOrGet,
                         onAccountClick = onAccountClick,
@@ -309,6 +321,44 @@ private fun LazyListScope.historySection(
         }
     }
 }
+
+private fun TransactionHistoryTransaction.toLegacyTransaction(): LegacyTransaction {
+    return transaction.toLegacyTransaction(tags = tags.toImmutableLegacyTags())
+}
+
+private fun Transaction.toLegacyTransaction(
+    tags: ImmutableList<LegacyTag> = persistentListOf()
+): LegacyTransaction {
+    val amount = getFromValue().amount.value.toBigDecimal()
+    return LegacyTransaction(
+        accountId = getFromAccount().value,
+        type = when (this) {
+            is Expense -> TransactionType.EXPENSE
+            is Income -> TransactionType.INCOME
+            is Transfer -> TransactionType.TRANSFER
+        },
+        amount = amount,
+        toAccountId = if (this is Transfer) toAccount.value else null,
+        toAmount = if (this is Transfer) toValue.amount.value.toBigDecimal() else amount,
+        title = title?.value,
+        description = description?.value,
+        dateTime = time.takeIf { settled },
+        categoryId = category?.value,
+        dueDate = time.takeIf { !settled },
+        recurringRuleId = metadata.recurringRuleId,
+        paidFor = metadata.paidForDateTime,
+        attachmentUrl = null,
+        loanId = metadata.loanId,
+        loanRecordId = metadata.loanRecordId,
+        id = id.value,
+        tags = tags
+    )
+}
+
+private fun Tag.toLegacyTag(): LegacyTag = LegacyTag(id.value, name.value)
+
+private fun List<Tag>.toImmutableLegacyTags(): ImmutableList<LegacyTag> =
+    map { it.toLegacyTag() }.toImmutableList()
 
 @Composable
 private fun LazyItemScope.NoTransactionsEmptyState(
