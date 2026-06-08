@@ -243,6 +243,7 @@
 - 收窄饼图分类金额边界：分类金额统计用例改为接收正式交易列表，饼图构建和分类月度统计不再为了分类金额计算批量转换旧交易模型；无调用方的 `CalculateLegacyTransactionsIncomeExpenseUseCase` 已删除。
 - 收窄首页到期交易展示边界：首页 ViewModel 和状态不再保存旧交易展示模型，到期交易数据保留正式 `Transaction`；仅在 `HomeTab` 调用旧交易列表组件前做页面私有适配，首页不再依赖 `MapTransactionsToLegacyTransactionsUseCase`。
 - 收窄编辑交易旧状态入口：编辑交易页读取正式交易后不再通过 domain 旧映射 use case 转换，而是在页面内部用文件私有适配函数生成当前旧编辑 UI 仍需要的 `LegacyTransaction` 状态。
+- 收窄交易列表旧映射入口：交易列表页不再依赖 `MapTransactionsToLegacyTransactionsUseCase`；账户到期交易和 route 输入交易的正式模型到旧展示模型转换下沉为页面 ViewModel 文件私有适配，分类汇总路径返回的旧模型暂时保留。
 - 收窄饼图页输入缓存：饼图 ViewModel 不再长期保存由 route ID 还原出的旧交易对象，只保存交易 ID，并在重算图表时局部读取。
 - 收窄借贷详情关联交易缓存：借贷详情不再把贷款关联旧交易对象保存在 ViewModel 字段中，加载时只设置开关状态，编辑时局部读取。
 

@@ -9,7 +9,11 @@ import com.ivy.data.model.legacy.LegacyTransaction
 import com.ivy.data.model.TransactionHistoryItem
 import com.ivy.data.model.TransactionType
 import com.ivy.data.model.Transaction
+import com.ivy.data.model.Expense
+import com.ivy.data.model.Income
+import com.ivy.data.model.Transfer
 import com.ivy.data.model.getFromAccount
+import com.ivy.data.model.getFromValue
 import com.ivy.data.model.getToAccount
 import com.ivy.data.model.getTransactionType
 import com.ivy.ui.resource.ResourceProvider
@@ -30,7 +34,6 @@ import com.ivy.domain.usecase.category.GetUnspecifiedCategoryTransactionsSummary
 import com.ivy.domain.usecase.category.UpdateCategoryUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.domain.usecase.exchange.ExchangeAmountUseCase
-import com.ivy.domain.usecase.transaction.MapTransactionsToLegacyTransactionsUseCase
 import com.ivy.domain.preferences.toggles.PreferenceToggleService
 import com.ivy.domain.preferences.toggles.PreferenceToggleCatalog
 import com.ivy.ui.period.PeriodState
@@ -56,8 +59,8 @@ import com.ivy.domain.usecase.transaction.CalculateTransactionsIncomeExpenseUseC
 import com.ivy.domain.usecase.transaction.GetTransactionsByIdsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -96,7 +99,6 @@ internal class TransactionsViewModel @Inject internal constructor(
     private val calculateTransactionsIncomeExpenseUseCase: CalculateTransactionsIncomeExpenseUseCase,
     private val getTransactionsByIdsUseCase: GetTransactionsByIdsUseCase,
     private val exchangeAmountUseCase: ExchangeAmountUseCase,
-    private val mapTransactionsToLegacyTransactionsUseCase: MapTransactionsToLegacyTransactionsUseCase,
     private val resourceProvider: ResourceProvider,
     private val preferenceToggleService: PreferenceToggleService,
     private val preferenceToggles: PreferenceToggleCatalog
@@ -357,7 +359,7 @@ internal class TransactionsViewModel @Inject internal constructor(
             getAccountUpcomingTransactionsSummaryUseCase(initialAccount.id, range)
         }
         upcoming.value = upcoming.value.copy(
-            transactions = mapTransactionsToLegacyTransactionsUseCase(upcomingSummary.transactions)
+            transactions = upcomingSummary.transactions.map { it.toLegacyTransaction() }
                 .toImmutableList(),
             income = upcomingSummary.income,
             expenses = upcomingSummary.expenses,
@@ -367,7 +369,7 @@ internal class TransactionsViewModel @Inject internal constructor(
             getAccountOverdueTransactionsSummaryUseCase(initialAccount.id, range)
         }
         overdue.value = overdue.value.copy(
-            transactions = mapTransactionsToLegacyTransactionsUseCase(overdueSummary.transactions)
+            transactions = overdueSummary.transactions.map { it.toLegacyTransaction() }
                 .toImmutableList(),
             income = overdueSummary.income,
             expenses = overdueSummary.expenses,
@@ -635,7 +637,7 @@ internal class TransactionsViewModel @Inject internal constructor(
                 getTransfersAsIncomeExpensePreference()
             val inputTransactions = getTransactionsByIdsUseCase(query.transactionIds)
             val legacyInputTransactions by lazy {
-                mapTransactionsToLegacyTransactionsUseCase(inputTransactions)
+                inputTransactions.map { it.toLegacyTransaction() }
             }
 
             when {
@@ -713,6 +715,33 @@ private fun Account.toLegacyAccount() = LegacyAccount(
     includeInBalance = includeInBalance,
     orderNum = orderNum,
 )
+
+private fun Transaction.toLegacyTransaction(): LegacyTransaction {
+    val amount = getFromValue().amount.value.toBigDecimal()
+    return LegacyTransaction(
+        accountId = getFromAccount().value,
+        type = when (this) {
+            is Expense -> TransactionType.EXPENSE
+            is Income -> TransactionType.INCOME
+            is Transfer -> TransactionType.TRANSFER
+        },
+        amount = amount,
+        toAccountId = if (this is Transfer) toAccount.value else null,
+        toAmount = if (this is Transfer) toValue.amount.value.toBigDecimal() else amount,
+        title = title?.value,
+        description = description?.value,
+        dateTime = time.takeIf { settled },
+        categoryId = category?.value,
+        dueDate = time.takeIf { !settled },
+        recurringRuleId = metadata.recurringRuleId,
+        paidFor = metadata.paidForDateTime,
+        attachmentUrl = null,
+        loanId = metadata.loanId,
+        loanRecordId = metadata.loanRecordId,
+        id = id.value,
+        tags = persistentListOf(),
+    )
+}
 
 internal data class TransactionsQuery(
     val accountId: UUID?,
