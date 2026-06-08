@@ -49,7 +49,6 @@ import com.ivy.legacy.ui.theme.Orange
 import com.ivy.legacy.ui.component.BalanceRow
 import com.ivy.legacy.ui.component.CircleButtonFilled
 import com.ivy.legacy.ui.component.IvyButton
-import com.ivy.legacy.ui.component.IvyCheckboxWithText
 import com.ivy.legacy.ui.component.IvyIcon
 import com.ivy.legacy.ui.component.IvyOutlinedButton
 import com.ivy.legacy.ui.component.IvyToolbar
@@ -194,7 +193,7 @@ private fun BoxWithConstraintsScope.UI(
             )
 
             if (state.showTransfersAsIncExpCheckbox) {
-                IvyCheckboxWithText(
+                ReportCheckboxWithText(
                     modifier = Modifier
                         .padding(16.dp),
                     text = stringResource(R.string.transfers_as_income_expense),

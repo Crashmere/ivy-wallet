@@ -1,4 +1,4 @@
-package com.ivy.legacy.ui.component
+package com.ivy.reports
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
@@ -19,35 +19,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.legacy.ui.theme.style
+import com.ivy.ui.R
 import com.ivy.ui.compose.clickableNoIndication
 import com.ivy.ui.compose.rememberInteractionSource
-import com.ivy.ui.R
 
 @Composable
-private fun IvyCheckbox(
-    modifier: Modifier = Modifier,
-    checked: Boolean,
-    onCheckedChange: (checked: Boolean) -> Unit
-) {
-    Icon(
-        modifier = modifier
-            .size(48.dp)
-            .clip(CircleShape)
-            .clickable(onClick = {
-                onCheckedChange(!checked)
-            })
-            .padding(all = 12.dp),
-
-        painter = painterResource(
-            id = if (checked) R.drawable.ic_checkbox_checked else R.drawable.ic_checkbox_unchecked
-        ),
-        contentDescription = null,
-        tint = if (checked) Color.Unspecified else LegacyTheme.colors.gray
-    )
-}
-
-@Composable
-internal fun IvyCheckboxWithText(
+internal fun ReportCheckboxWithText(
     modifier: Modifier = Modifier,
     text: String,
     checked: Boolean,
@@ -60,7 +37,7 @@ internal fun IvyCheckboxWithText(
             },
         verticalAlignment = Alignment.CenterVertically
     ) {
-        IvyCheckbox(
+        ReportCheckbox(
             checked = checked,
             onCheckedChange = onCheckedChange
         )
@@ -75,4 +52,26 @@ internal fun IvyCheckboxWithText(
             )
         )
     }
+}
+
+@Composable
+private fun ReportCheckbox(
+    modifier: Modifier = Modifier,
+    checked: Boolean,
+    onCheckedChange: (checked: Boolean) -> Unit
+) {
+    Icon(
+        modifier = modifier
+            .size(48.dp)
+            .clip(CircleShape)
+            .clickable {
+                onCheckedChange(!checked)
+            }
+            .padding(all = 12.dp),
+        painter = painterResource(
+            id = if (checked) R.drawable.ic_checkbox_checked else R.drawable.ic_checkbox_unchecked
+        ),
+        contentDescription = null,
+        tint = if (checked) Color.Unspecified else LegacyTheme.colors.gray
+    )
 }

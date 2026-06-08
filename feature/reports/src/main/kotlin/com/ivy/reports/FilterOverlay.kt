@@ -62,7 +62,6 @@ import com.ivy.legacy.ui.theme.Red
 import com.ivy.legacy.ui.component.CloseButton
 import com.ivy.legacy.ui.component.ItemIconSDefaultIcon
 import com.ivy.legacy.ui.component.IvyButton
-import com.ivy.legacy.ui.component.IvyCheckboxWithText
 import com.ivy.legacy.ui.component.IvyDividerLine
 import com.ivy.legacy.ui.component.IvyIcon
 import com.ivy.legacy.ui.component.IvyOutlinedButton
@@ -675,7 +674,7 @@ private fun TypeFilterCheckbox(
     nonFilter: (ReportFilter?) -> ReportFilter,
     onSetFilter: (ReportFilter) -> Unit
 ) {
-    IvyCheckboxWithText(
+    ReportCheckboxWithText(
         modifier = modifier,
         text = when (transactionType) {
             TransactionType.INCOME -> stringResource(R.string.incomes)
