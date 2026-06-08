@@ -1,5 +1,6 @@
 package com.ivy.data.api.file
 
+import com.ivy.data.model.ExternalFile
 import java.nio.charset.Charset
 
 interface TextFileStore {

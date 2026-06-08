@@ -7,7 +7,7 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.viewModelScope
 import com.ivy.data.model.Theme
-import com.ivy.data.api.file.ExternalFile
+import com.ivy.data.model.ExternalFile
 import com.ivy.data.model.primitive.AssetCode
 import com.ivy.domain.preferences.toggles.BoolPreference
 import com.ivy.domain.preferences.toggles.PreferenceToggleService

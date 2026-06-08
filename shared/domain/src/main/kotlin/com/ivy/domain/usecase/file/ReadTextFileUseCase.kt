@@ -1,6 +1,6 @@
 package com.ivy.domain.usecase.file
 
-import com.ivy.data.api.file.ExternalFile
+import com.ivy.data.model.ExternalFile
 import com.ivy.data.api.file.TextFileStore
 import java.nio.charset.Charset
 import javax.inject.Inject

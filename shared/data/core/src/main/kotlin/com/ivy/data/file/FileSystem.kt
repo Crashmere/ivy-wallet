@@ -4,7 +4,7 @@ import android.content.Context
 import android.net.Uri
 import androidx.core.net.toUri
 import arrow.core.Either
-import com.ivy.data.api.file.ExternalFile
+import com.ivy.data.model.ExternalFile
 import com.ivy.data.api.file.TextFileStore
 import dagger.hilt.android.qualifiers.ApplicationContext
 import java.io.BufferedReader

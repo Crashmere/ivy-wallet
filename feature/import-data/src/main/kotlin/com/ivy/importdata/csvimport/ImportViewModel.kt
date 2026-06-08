@@ -2,7 +2,7 @@ package com.ivy.importdata.csvimport
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ivy.data.api.file.ExternalFile
+import com.ivy.data.model.ExternalFile
 import com.ivy.data.model.importing.ImportResult
 import com.ivy.domain.usecase.backup.ImportBackupUseCase
 import com.ivy.ui.platform.FilePicker

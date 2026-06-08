@@ -809,7 +809,7 @@
 - 旧 `AppPreferences` 具体类已拆成多个窄 data-api 端口和 `SharedPrefsPreferenceStore` 实现；domain 用例只依赖各自需要的偏好能力，SharedPrefs 读写细节下沉到 data-core。
 - 备份恢复中的偏好读写已改走备份专用偏好端口；备份 JSON 仍保留原 sharedPrefs key 字符串以兼容旧备份文件，但 `DefaultBackupStore` 不再直接读写通用 `PreferenceStore`。
 - 旧 `PreferenceStore/SharedPrefs` 基础层抽象已删除；`SharedPrefsPreferenceStore` 在 data-core 内部直接持有 Android SharedPreferences，base 不再暴露偏好存储绑定。
-- 文件读写和备份恢复端口已用 `ExternalFile` 包装外部文件引用；domain 和 data-api 不再公开 Android `Uri`，UI/platform 仍负责文件选择与分享，data-core 实现边界再转换回 Android `Uri`。因为 `ExternalFile` 已进入部分 domain 用例公开签名，`shared:domain` 对 `shared:data:api` 的依赖继续使用 `api` 暴露；同时，直接引用 `ExternalFile` 的 `feature:import-data`、`feature:reports` 和 `feature:settings` 已显式声明 `shared:data:api` 依赖，不再靠 domain 的传递依赖获得数据端口类型。
+- 文件读写和备份恢复端口已用 `ExternalFile` 包装外部文件引用；domain 和 data-api 不再公开 Android `Uri`，UI/platform 仍负责文件选择与分享，data-core 实现边界再转换回 Android `Uri`。`ExternalFile` 已从 data-api 下沉到 `shared:data:model`，直接引用文件句柄的 `feature:import-data`、`feature:reports` 和 `feature:settings` 不再依赖数据端口模块。
 - App 启动接口 `AppStarter` 已从 domain 下沉到 app 模块；它返回 Android `Intent`，实际只服务通知点击和 app 内启动流程，不再作为共享业务端口暴露。`PreferenceToggles` 的 Hilt 绑定也已迁到 app 装配层，domain 不再持有 Hilt module。
 - 币种模型和本地币种默认值读取已从 Android ICU `Currency` 切到 JDK `java.util.Currency`；`shared:data:model` 与 `shared:data:api` 主源码当前不再直接引用 Android API，并已改成更轻的 JVM/Kotlin 模块。
 - `AndroidResourceProvider` 已从 base 移到 app 平台层并由 app Hilt 模块绑定；`ResourceProvider` 抽象也已从 base 迁到 `shared:ui:core` 的 `com.ivy.ui.resource` 包。

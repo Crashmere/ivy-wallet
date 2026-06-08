@@ -8,7 +8,6 @@ android {
 }
 
 dependencies {
-    implementation(projects.shared.data.api)
     implementation(projects.shared.data.model)
     implementation(projects.shared.domain)
     implementation(projects.shared.ui.core)

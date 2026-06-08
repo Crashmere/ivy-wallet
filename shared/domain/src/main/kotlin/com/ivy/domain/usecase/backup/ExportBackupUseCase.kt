@@ -1,7 +1,7 @@
 package com.ivy.domain.usecase.backup
 
 import com.ivy.data.api.backup.BackupStore
-import com.ivy.data.api.file.ExternalFile
+import com.ivy.data.model.ExternalFile
 import javax.inject.Inject
 
 class ExportBackupUseCase @Inject constructor(

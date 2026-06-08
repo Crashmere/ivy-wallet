@@ -1,6 +1,6 @@
 package com.ivy.data.api.backup
 
-import com.ivy.data.api.file.ExternalFile
+import com.ivy.data.model.ExternalFile
 import com.ivy.data.model.importing.ImportResult
 
 interface BackupStore {

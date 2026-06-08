@@ -9,7 +9,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ivy.data.api.file.ExternalFile
+import com.ivy.data.model.ExternalFile
 import com.ivy.importdata.csv.domain.CsvTransactionImporter
 import com.ivy.importdata.csv.domain.SAMPLE_SIZE
 import com.ivy.importdata.csv.domain.parseAccount

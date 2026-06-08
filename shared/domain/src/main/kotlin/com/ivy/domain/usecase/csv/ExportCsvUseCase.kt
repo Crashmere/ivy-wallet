@@ -1,6 +1,6 @@
 package com.ivy.domain.usecase.csv
 
-import com.ivy.data.api.file.ExternalFile
+import com.ivy.data.model.ExternalFile
 import com.ivy.data.api.file.TextFileStore
 import com.ivy.data.model.Account
 import com.ivy.data.model.AccountId

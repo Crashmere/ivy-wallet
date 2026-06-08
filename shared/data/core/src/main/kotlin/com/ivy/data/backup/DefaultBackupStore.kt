@@ -9,7 +9,7 @@ import com.ivy.data.api.DataChangePublisher
 import com.ivy.data.api.DataWriteEvent
 import com.ivy.data.api.SharedPreferenceKeys
 import com.ivy.data.api.backup.BackupStore
-import com.ivy.data.api.file.ExternalFile
+import com.ivy.data.model.ExternalFile
 import com.ivy.data.db.dao.read.AccountDao
 import com.ivy.data.db.dao.read.BudgetDao
 import com.ivy.data.db.dao.read.CategoryDao
