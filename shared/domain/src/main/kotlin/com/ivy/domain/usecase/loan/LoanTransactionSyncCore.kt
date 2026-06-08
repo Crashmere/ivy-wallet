@@ -10,6 +10,7 @@ import com.ivy.data.api.CategoryStore
 import com.ivy.data.api.LoanRecordStore
 import com.ivy.data.api.LoanStore
 import com.ivy.data.api.TransactionStore
+import com.ivy.data.model.Account
 import com.ivy.data.model.Category
 import com.ivy.data.model.CategoryId
 import com.ivy.data.model.LoanType
@@ -23,10 +24,8 @@ import com.ivy.data.model.primitive.NotBlankTrimmedString
 import com.ivy.data.model.primitive.PositiveDouble
 import com.ivy.domain.usecase.category.GetCategoriesUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
-import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.data.model.Loan
 import com.ivy.data.model.LoanRecord
-import com.ivy.domain.mapper.legacy.toLegacyAccount
 import com.ivy.domain.time.nowUtc
 import com.ivy.domain.usecase.exchange.ExchangeAmountUseCase
 import kotlinx.coroutines.Dispatchers
@@ -73,12 +72,12 @@ internal class LoanTransactionSyncCore @Inject internal constructor(
     }
 
     fun findAccount(
-        accounts: List<LegacyAccount>,
+        accounts: List<Account>,
         accountId: UUID?,
-    ): LegacyAccount? {
+    ): Account? {
         return accountId?.let { uuid ->
             accounts.find { acc ->
-                acc.id == uuid
+                acc.id.value == uuid
             }
         }
     }
@@ -292,7 +291,7 @@ internal class LoanTransactionSyncCore @Inject internal constructor(
         newLoanRecordAccountId: UUID?,
         newLoanRecordAmount: Double,
         loanAccountId: UUID?,
-        accounts: List<LegacyAccount>,
+        accounts: List<Account>,
         reCalculateLoanAmount: Boolean = false,
     ): Double? {
         return withContext(Dispatchers.Default) {
@@ -349,12 +348,12 @@ internal class LoanTransactionSyncCore @Inject internal constructor(
         ).getOrNull()?.toDouble() ?: amount
     }
 
-    private suspend fun UUID?.fetchAssociatedCurrencyCode(accountsList: List<LegacyAccount>): String {
-        return findAccount(accountsList, this)?.currency ?: baseCurrency()
+    private suspend fun UUID?.fetchAssociatedCurrencyCode(accountsList: List<Account>): String {
+        return findAccount(accountsList, this)?.asset?.code ?: baseCurrency()
     }
 
     suspend fun fetchAccounts() = withContext(Dispatchers.IO) {
-        accountStore.findAll().map { it.toLegacyAccount() }
+        accountStore.findAll()
     }
 
     suspend fun saveLoanRecords(loanRecords: List<LoanRecord>) = withContext(Dispatchers.IO) {

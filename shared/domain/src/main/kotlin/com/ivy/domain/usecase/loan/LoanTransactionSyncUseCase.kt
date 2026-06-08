@@ -7,7 +7,7 @@ import com.ivy.data.model.Transaction
 import com.ivy.data.model.TransactionType
 import com.ivy.data.model.getTransactionType
 import com.ivy.data.model.LoanType
-import com.ivy.data.model.legacy.LegacyAccount
+import com.ivy.data.model.Account
 import com.ivy.data.model.Loan
 import com.ivy.data.model.LoanRecord
 import com.ivy.data.model.CreateLoanData
@@ -149,7 +149,7 @@ class LoanTransactionSyncUseCase @Inject internal constructor(
         }
     }
 
-    private suspend fun UUID?.fetchAssociatedCurrencyCode(accountsList: List<LegacyAccount>): String {
-        return ltCore.findAccount(accountsList, this)?.currency ?: ltCore.baseCurrency()
+    private suspend fun UUID?.fetchAssociatedCurrencyCode(accountsList: List<Account>): String {
+        return ltCore.findAccount(accountsList, this)?.asset?.code ?: ltCore.baseCurrency()
     }
 }
