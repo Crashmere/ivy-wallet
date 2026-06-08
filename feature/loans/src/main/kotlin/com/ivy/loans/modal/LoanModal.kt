@@ -1,4 +1,4 @@
-package com.ivy.legacy.ui.modal
+package com.ivy.loans.modal
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -18,8 +18,10 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -34,12 +36,9 @@ import androidx.compose.ui.unit.dp
 import com.ivy.data.model.LoanType
 import com.ivy.data.model.primitive.NotBlankTrimmedString
 import com.ivy.ui.time.LocalTimeConverter
-import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.legacy.ui.theme.style
 import com.ivy.legacy.ui.component.IvyColorPicker
 import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.data.model.Loan
-import com.ivy.legacy.ui.component.DateTimeRow
 import com.ivy.data.model.currency.getDefaultFIATCurrency
 import com.ivy.ui.compose.onCompositionStart
 import com.ivy.ui.compose.selectEndTextFieldValue
@@ -53,23 +52,29 @@ import com.ivy.legacy.ui.theme.Gray
 import com.ivy.legacy.ui.theme.Ivy
 import com.ivy.legacy.ui.theme.White
 import com.ivy.legacy.ui.component.ItemIconSDefaultIcon
-import com.ivy.legacy.ui.component.IvyCheckboxWithText
 import com.ivy.legacy.ui.component.IvyIcon
 import com.ivy.legacy.ui.theme.findContrastTextColor
+import com.ivy.legacy.ui.modal.AccountModalData
+import com.ivy.legacy.ui.modal.ChooseIconModal
+import com.ivy.legacy.ui.modal.CurrencyModal
+import com.ivy.legacy.ui.modal.DeleteModal
+import com.ivy.legacy.ui.modal.IvyModal
+import com.ivy.legacy.ui.modal.ModalAddSave
+import com.ivy.legacy.ui.modal.ModalAmountSection
+import com.ivy.legacy.ui.modal.ModalTitle
 import com.ivy.legacy.ui.modal.edit.AccountModal
 import com.ivy.legacy.ui.modal.edit.AmountModal
-import com.ivy.legacy.ui.modal.edit.IconNameRow
+import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.legacy.ui.theme.toComposeColor
+import com.ivy.legacy.ui.theme.style
 import kotlinx.coroutines.launch
 import java.time.Instant
 import java.time.LocalDateTime
 import java.util.UUID
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
 
 @Suppress("CyclomaticComplexMethod", "LongMethod")
 @Composable
-fun BoxWithConstraintsScope.LoanModal(
+internal fun BoxWithConstraintsScope.LoanModal(
     modal: LoanModalData?,
     dateTime: Instant,
     onSetDate: () -> Unit,
@@ -187,7 +192,7 @@ fun BoxWithConstraintsScope.LoanModal(
 
         Spacer(Modifier.height(24.dp))
 
-        IconNameRow(
+        LoanIconNameRow(
             hint = stringResource(R.string.loan_name),
             defaultIcon = R.drawable.ic_custom_loan_m,
             color = color,
@@ -204,7 +209,7 @@ fun BoxWithConstraintsScope.LoanModal(
 
         Spacer(Modifier.height(24.dp))
 
-        DateTimeRow(
+        LoanDateTimeRow(
             dateTime = dateTime,
             onEditDate = onSetDate,
             onEditTime = onSetTime
@@ -237,7 +242,7 @@ fun BoxWithConstraintsScope.LoanModal(
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        ModalNameInput(
+        LoanModalNameInput(
             hint = stringResource(R.string.description_text_field_hint),
             autoFocusKeyboard = false,
             textFieldValue = noteTextFieldValue,
@@ -278,7 +283,7 @@ fun BoxWithConstraintsScope.LoanModal(
 
         Spacer(Modifier.height(16.dp))
 
-        IvyCheckboxWithText(
+        LoanCheckboxWithText(
             modifier = Modifier
                 .padding(start = 16.dp)
                 .align(Alignment.Start),

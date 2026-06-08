@@ -46,7 +46,7 @@ private const val ICON_PICKER_ICONS_PER_ROW = 5
 
 @Suppress("ParameterNaming")
 @Composable
-internal fun BoxWithConstraintsScope.ChooseIconModal(
+fun BoxWithConstraintsScope.ChooseIconModal(
     visible: Boolean,
     initialIcon: String?,
     color: Color,

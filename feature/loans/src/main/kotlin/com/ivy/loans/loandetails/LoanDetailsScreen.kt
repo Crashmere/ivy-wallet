@@ -85,8 +85,8 @@ import com.ivy.legacy.ui.theme.dynamicContrast
 import com.ivy.legacy.ui.theme.findContrastTextColor
 import com.ivy.legacy.ui.theme.isDarkColor
 import com.ivy.legacy.ui.modal.DeleteModal
-import com.ivy.legacy.ui.modal.LoanModal
-import com.ivy.legacy.ui.modal.LoanRecordModal
+import com.ivy.loans.modal.LoanModal
+import com.ivy.loans.modal.LoanRecordModal
 import com.ivy.legacy.ui.modal.ProgressModal
 import com.ivy.legacy.ui.theme.toComposeColor
 import com.ivy.loans.LoanProgressBar

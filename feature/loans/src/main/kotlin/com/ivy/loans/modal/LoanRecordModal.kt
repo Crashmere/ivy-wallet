@@ -1,4 +1,4 @@
-package com.ivy.legacy.ui.modal
+package com.ivy.loans.modal
 
 import android.annotation.SuppressLint
 import androidx.compose.animation.AnimatedVisibility
@@ -18,8 +18,10 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -36,7 +38,6 @@ import com.ivy.legacy.ui.theme.style
 import com.ivy.ui.compose.thenIf
 import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.data.model.LoanRecord
-import com.ivy.legacy.ui.component.DateTimeRow
 import com.ivy.data.model.currency.getDefaultFIATCurrency
 import com.ivy.ui.compose.onCompositionStart
 import com.ivy.ui.compose.selectEndTextFieldValue
@@ -45,22 +46,25 @@ import com.ivy.data.model.CreateAccountData
 import com.ivy.data.model.CreateLoanRecordData
 import com.ivy.data.model.EditLoanRecordData
 import com.ivy.legacy.ui.component.ItemIconSDefaultIcon
-import com.ivy.legacy.ui.component.IvyCheckboxWithText
 import com.ivy.legacy.ui.component.IvyIcon
 import com.ivy.legacy.ui.theme.findContrastTextColor
+import com.ivy.legacy.ui.modal.AccountModalData
+import com.ivy.legacy.ui.modal.DeleteModal
+import com.ivy.legacy.ui.modal.IvyModal
+import com.ivy.legacy.ui.modal.ModalAddSave
+import com.ivy.legacy.ui.modal.ModalAmountSection
+import com.ivy.legacy.ui.modal.ModalTitle
 import com.ivy.legacy.ui.modal.edit.AccountModal
 import com.ivy.legacy.ui.modal.edit.AmountModal
 import com.ivy.legacy.ui.theme.toComposeColor
 import kotlinx.coroutines.launch
 import java.time.Instant
 import java.util.UUID
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
 
 @Suppress("CyclomaticComplexMethod", "LongMethod")
 @SuppressLint("ComposeModifierMissing")
 @Composable
-fun BoxWithConstraintsScope.LoanRecordModal(
+internal fun BoxWithConstraintsScope.LoanRecordModal(
     modal: LoanRecordModalData?,
     dateTime: Instant,
     onSetDate: () -> Unit,
@@ -177,7 +181,7 @@ fun BoxWithConstraintsScope.LoanRecordModal(
             if (initialRecord != null) {
                 Spacer(Modifier.weight(1f))
 
-                ModalDelete {
+                LoanModalDelete {
                     deleteModalVisible = true
                 }
 
@@ -187,7 +191,7 @@ fun BoxWithConstraintsScope.LoanRecordModal(
 
         Spacer(Modifier.height(24.dp))
 
-        ModalNameInput(
+        LoanModalNameInput(
             hint = stringResource(R.string.note),
             autoFocusKeyboard = false,
             textFieldValue = noteTextFieldValue,
@@ -199,7 +203,7 @@ fun BoxWithConstraintsScope.LoanRecordModal(
         Spacer(Modifier.height(24.dp))
 
         val timeConverter = LocalTimeConverter.current
-        DateTimeRow(
+        LoanDateTimeRow(
             dateTime = with(timeConverter) { dateTime.toLocalDateTime() },
             onEditDate = onSetDate,
             onEditTime = onSetTime,
@@ -260,7 +264,7 @@ fun BoxWithConstraintsScope.LoanRecordModal(
 
         Spacer(Modifier.height(16.dp))
 
-        IvyCheckboxWithText(
+        LoanCheckboxWithText(
             modifier = Modifier
                 .padding(start = 16.dp)
                 .align(Alignment.Start),
@@ -271,7 +275,7 @@ fun BoxWithConstraintsScope.LoanRecordModal(
         }
 
         AnimatedVisibility(visible = loanRecordType == LoanRecordType.DECREASE) {
-            IvyCheckboxWithText(
+            LoanCheckboxWithText(
                 modifier = Modifier
                     .padding(start = 16.dp)
                     .align(Alignment.Start),
@@ -283,7 +287,7 @@ fun BoxWithConstraintsScope.LoanRecordModal(
         }
 
         if (reCalculateVisible) {
-            IvyCheckboxWithText(
+            LoanCheckboxWithText(
                 modifier = Modifier
                     .padding(start = 16.dp, end = 8.dp)
                     .align(Alignment.Start),

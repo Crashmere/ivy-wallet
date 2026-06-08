@@ -33,8 +33,8 @@ import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
 import com.ivy.data.model.CreateAccountData
 import com.ivy.data.model.CreateLoanRecordData
 import com.ivy.data.model.EditLoanRecordData
-import com.ivy.legacy.ui.modal.LoanModalData
-import com.ivy.legacy.ui.modal.LoanRecordModalData
+import com.ivy.loans.modal.LoanModalData
+import com.ivy.loans.modal.LoanRecordModalData
 import com.ivy.loans.nowLocalDate
 import com.ivy.loans.nowLocalTime
 import com.ivy.loans.nowUtc

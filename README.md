@@ -1331,13 +1331,14 @@ shared:ui:core
 - 账户页和分类页的月度统计范围已用 `monthlyRange` 直接表达，不再保留迁移期解释性注释；行为仍是按当前月加载统计。
 - 饼图页的选中分类状态已从完整 `Category` 收为分类 ID；图表和列表仍通过 `CategoryAmount` 渲染分类名称、图标和颜色，选中高亮只比较 ID。
 - 导入恢复 flow 子组件不再直接调用 `navigation()` 或引用手动 CSV route；`ImportCSVScreen` 和 `CSVScreen` 入口负责把返回、完成和进入手动 CSV 导入翻译为导航行为。
-- 报表页和报表筛选浮层改用报表模块私有复选行；`shared:ui:legacy` 的 `IvyCheckboxWithText` 收窄为旧账户/借贷弹窗内部实现。
+- 报表页和报表筛选浮层改用报表模块私有复选行；`shared:ui:legacy` 的 `IvyCheckboxWithText` 收窄为旧账户弹窗内部实现，借贷弹窗迁回 feature 后使用借贷模块私有复选行。
 - 借贷列表和借贷详情页改用借贷模块私有进度条；`shared:ui:legacy` 删除不再被复用的 `ProgressBar`。
 - 计划付款底栏和饼图统计底栏改用各自模块私有操作行；`shared:ui:legacy` 的 `ActionsRow` 收窄为旧弹窗/旧编辑底栏内部构件。
 - 分类、预算和汇率页底部返回栏改用各自模块私有实现；`shared:ui:legacy` 删除不再被复用的 `BackBottomBar`。
 - data-core 的 UTC 毫秒和 `LocalDateTime` 转换扩展收窄为模块内部实现；外部继续通过 Room converter、serializer 和 Store API 间接使用对应数据格式。
 - 交易筛选页和借贷详情页顶部统计工具栏改用各自模块私有实现；`shared:ui:legacy` 删除不再被复用的 `ItemStatisticToolbar`。
 - 计划付款卡片和借贷记录改用各自模块私有金额行；`shared:ui:legacy` 的 `TypeAmountCurrency` 收窄为旧交易卡片内部实现，保留到期/逾期交易样式逻辑。
+- 借贷弹窗、借贷记录弹窗和对应 modal data 已迁回 `feature:loans` 私有边界；借贷 feature 继续复用 legacy 的公开基础弹窗/按钮/金额输入能力，但不再通过 `shared:ui:legacy` 导出借贷业务弹窗。
 - app 仍保留文件选择、文件分享、Material 日期选择器、BuildInfo、Locale 设置、生物识别和窗口安全等真正依赖 Activity 或 Android app 壳层的装配。
 
 ## 高风险区域

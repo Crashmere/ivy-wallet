@@ -2,7 +2,7 @@ package com.ivy.loans.loan
 
 import com.ivy.data.model.legacy.LegacyAccount
 import com.ivy.loans.model.DisplayLoan
-import com.ivy.legacy.ui.modal.LoanModalData
+import com.ivy.loans.modal.LoanModalData
 import kotlinx.collections.immutable.ImmutableList
 import java.time.Instant
 

@@ -51,7 +51,7 @@ import com.ivy.legacy.ui.component.ReorderButton
 import com.ivy.legacy.ui.component.ReorderModalSingleType
 import com.ivy.legacy.ui.theme.dynamicContrast
 import com.ivy.legacy.ui.theme.findContrastTextColor
-import com.ivy.legacy.ui.modal.LoanModal
+import com.ivy.loans.modal.LoanModal
 import com.ivy.legacy.ui.theme.toComposeColor
 import com.ivy.loans.LoanProgressBar
 

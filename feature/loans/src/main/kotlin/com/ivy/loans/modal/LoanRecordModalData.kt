@@ -1,9 +1,9 @@
-package com.ivy.legacy.ui.modal
+package com.ivy.loans.modal
 
 import com.ivy.data.model.LoanRecord
 import java.util.UUID
 
-data class LoanRecordModalData(
+internal data class LoanRecordModalData(
     val loanRecord: LoanRecord?,
     val baseCurrency: String,
     val loanAccountCurrencyCode: String? = null,
