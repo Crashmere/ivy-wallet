@@ -9,6 +9,7 @@ android {
 dependencies {
     implementation(projects.feature.accounts)
     implementation(projects.feature.home)
+    implementation(projects.shared.ui.legacy)
 
     implementation(libs.compose.activity)
 }

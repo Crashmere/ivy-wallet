@@ -1277,6 +1277,7 @@ shared:ui:core
 - 交易列表 ViewModel 不再长期保存完整 `TransactionsScreen` route；翻月、删除和刷新只复用本地 `TransactionsQuery` 中的账户、分类、未分类标记和交易 ID 筛选参数。
 - feature 内部展示模型包名继续统一：借贷展示模型已从列表页子包 `loans.loan.data` 归位到 `loans.model`，汇率页 `RateUi` 也从 `exchangerates.data` 归位到 `exchangerates.model`，避免和真正数据层命名混淆。
 - UI core 删除通用 `Modifier.thenWhen` helper；唯一遗留调用点已改为 `ItemIcon` 私有 padding helper，保留仍被页面和 legacy 组件使用的 `thenIf`、点击、阴影和密度转换工具。
+- `ivy.feature` 约定插件不再隐式给所有 feature 注入 `shared:ui:legacy`；当前仍使用旧 UI 的 feature 已在各自 `build.gradle.kts` 中显式声明 legacy 依赖，依赖图不变但边界来源更清楚。
 - 饼图统计 ViewModel 不再接收导航 route；页面入口负责把 `PieChartStatisticScreen` 拆成交易类型、账户筛选、交易 ID 和偏好参数，ViewModel 只处理统计加载。
 - 计划付款编辑 ViewModel 不再接收 `EditPlannedScreen` 导航 route；页面入口负责拆出计划规则 ID、交易类型、金额、账户、分类、标题和描述，编辑/新建行为不变。
 - 编辑交易 ViewModel 不再接收 `EditTransactionScreen` 导航 route；页面入口负责拆出初始交易 ID、交易类型、账户和分类参数，已有交易编辑和新建交易默认账户选择逻辑不变。

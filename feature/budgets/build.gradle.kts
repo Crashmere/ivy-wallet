@@ -5,3 +5,7 @@ plugins {
 android {
     namespace = "com.ivy.budgets"
 }
+
+dependencies {
+    implementation(projects.shared.ui.legacy)
+}

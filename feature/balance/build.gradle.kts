@@ -5,3 +5,7 @@ plugins {
 android {
     namespace = "com.ivy.balance"
 }
+
+dependencies {
+    implementation(projects.shared.ui.legacy)
+}

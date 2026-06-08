@@ -7,5 +7,7 @@ android {
 }
 
 dependencies {
+    implementation(projects.shared.ui.legacy)
+
     implementation(libs.compose.activity)
 }

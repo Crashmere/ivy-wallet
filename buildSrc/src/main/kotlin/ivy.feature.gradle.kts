@@ -7,6 +7,5 @@ dependencies {
     implementation(project(":shared:data:model"))
     implementation(project(":shared:domain"))
     implementation(project(":shared:ui:core"))
-    implementation(project(":shared:ui:legacy"))
     implementation(project(":shared:ui:navigation"))
 }
