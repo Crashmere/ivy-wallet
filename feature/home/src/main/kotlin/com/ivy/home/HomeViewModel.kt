@@ -37,11 +37,6 @@ import com.ivy.legacy.ui.component.transaction.TransactionListData
 import com.ivy.ui.period.TimePeriod
 import com.ivy.data.model.toUTCCloseTimeRange
 import com.ivy.data.model.legacy.LegacyAccount
-import com.ivy.ui.navigation.BalanceScreen
-import com.ivy.ui.main.MainTab
-import com.ivy.ui.navigation.MainScreen
-import com.ivy.ui.main.MainTabState
-import com.ivy.ui.navigation.Navigation
 import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.preferences.asEnabledState
 import com.ivy.domain.usecase.account.GetLegacyAccountsUseCase
@@ -58,6 +53,9 @@ import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.math.BigDecimal
@@ -67,7 +65,6 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val themeState: ThemeState,
-    private val nav: Navigation,
     private val payOrSkipLegacyPlannedTransactionUseCase: PayOrSkipLegacyPlannedTransactionUseCase,
     private val payOrSkipLegacyPlannedTransactionsUseCase: PayOrSkipLegacyPlannedTransactionsUseCase,
     private val customerJourneyCardsProvider: CustomerJourneyCardsProvider,
@@ -92,8 +89,7 @@ class HomeViewModel @Inject constructor(
     private val mapTransactionsToLegacyTransactionsUseCase: MapTransactionsToLegacyTransactionsUseCase,
     private val preferenceToggles: PreferenceToggles,
     private val preferenceToggleService: PreferenceToggleService,
-    private val periodState: PeriodState,
-    private val mainTabState: MainTabState
+    private val periodState: PeriodState
 ) : ComposeViewModel<HomeState, HomeEvent>() {
     private var currentTheme by mutableStateOf(Theme.AUTO)
     private var period by mutableStateOf(periodState.selectedPeriod)
@@ -132,6 +128,8 @@ class HomeViewModel @Inject constructor(
     private var hideBalance by mutableStateOf(false)
     private var hideIncome by mutableStateOf(false)
     private var expanded by mutableStateOf(true)
+    private val _uiEvents = MutableSharedFlow<HomeUiEvent>()
+    val uiEvents: SharedFlow<HomeUiEvent> = _uiEvents.asSharedFlow()
 
     private data class HomePreferences(
         val theme: Theme,
@@ -405,12 +403,9 @@ class HomeViewModel @Inject constructor(
     private suspend fun onBalanceClick() {
         val hasTransactions = hasTransactionsUseCase()
         if (hasTransactions) {
-            // has transactions show him "Balance" screen
-            nav.navigateTo(BalanceScreen)
+            _uiEvents.emit(HomeUiEvent.OpenBalance)
         } else {
-            // doesn't have transactions lead him to adjust balance
-            mainTabState.select(MainTab.ACCOUNTS)
-            nav.navigateTo(MainScreen)
+            _uiEvents.emit(HomeUiEvent.OpenAccountsTab)
         }
     }
 

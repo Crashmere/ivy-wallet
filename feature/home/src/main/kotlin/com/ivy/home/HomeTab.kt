@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -41,9 +42,11 @@ import com.ivy.legacy.ui.component.transaction.transactions
 import com.ivy.ui.compose.horizontalSwipeListener
 import com.ivy.ui.compose.rememberSwipeListenerState
 import com.ivy.ui.compose.verticalSwipeListener
+import com.ivy.ui.navigation.BalanceScreen
 import com.ivy.ui.navigation.EditTransactionScreen
 import com.ivy.ui.main.LocalMainTabState
 import com.ivy.ui.main.MainTab
+import com.ivy.ui.navigation.MainScreen
 import com.ivy.ui.navigation.TransactionRouteType
 import com.ivy.ui.navigation.TransactionsScreen
 import com.ivy.ui.navigation.navigation
@@ -66,7 +69,21 @@ import java.math.BigDecimal
 @Composable
 fun BoxWithConstraintsScope.HomeTab() {
     val viewModel: HomeViewModel = screenScopedViewModel()
+    val nav = navigation()
+    val mainTabState = LocalMainTabState.current
     val uiState = viewModel.uiState()
+
+    LaunchedEffect(viewModel) {
+        viewModel.uiEvents.collect { event ->
+            when (event) {
+                HomeUiEvent.OpenBalance -> nav.navigateTo(BalanceScreen)
+                HomeUiEvent.OpenAccountsTab -> {
+                    mainTabState.select(MainTab.ACCOUNTS)
+                    nav.navigateTo(MainScreen)
+                }
+            }
+        }
+    }
 
     HomeUi(uiState, viewModel::onEvent)
 }
