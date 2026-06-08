@@ -51,7 +51,6 @@ import com.ivy.legacy.ui.theme.Green
 import com.ivy.legacy.ui.theme.White
 import com.ivy.legacy.ui.component.CircleButtonFilled
 import com.ivy.legacy.ui.component.IntervalPickerRow
-import com.ivy.legacy.ui.component.IvyDividerLine
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime

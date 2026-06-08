@@ -17,7 +17,6 @@ import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.legacy.ui.theme.style
 import com.ivy.ui.compose.clickableNoIndication
 import com.ivy.ui.compose.rememberInteractionSource
-import com.ivy.legacy.ui.component.IvyDividerLine
 import com.ivy.legacy.ui.component.BalanceRow
 
 @Composable
