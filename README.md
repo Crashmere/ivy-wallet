@@ -1048,6 +1048,7 @@
 - 清空钱包的 app 层实现从泛化 `ResetWalletDataUseCaseImpl` 改名为 `AppResetWalletDataUseCase`；接口继续作为设置 feature 到 app 编排层的边界，行为不变。
 - 根导航装配 `IvyNavGraph` 从顶层 `com.ivy` 包移动到 `app` 的 `com.ivy.wallet.navigation` 边界，并改为 app 模块内部函数；`RootContent` 仍以同一导航状态渲染各 feature 页面。
 - app 内部 Hilt 绑定模块、平台适配器、启动默认数据编排、应用锁控制器和提醒调度器继续收为 app 模块内部实现；`RootViewModel` 的注入构造和启动事件流也只在 app 根部可见，Activity/Worker 等 Android 入口保持原有入口职责。
+- `RootViewModel`、交易提醒 `TransactionReminderWorker` 和 `NotificationService` 也收为 app 模块内部类；外部仍只通过 Android 入口、WorkManager 调度和 feature 级窄接口触达这些能力。
 
 ### 阶段 9：feature 模块收敛
 

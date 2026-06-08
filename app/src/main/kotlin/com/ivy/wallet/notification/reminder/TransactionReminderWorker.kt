@@ -19,7 +19,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 @HiltWorker
-class TransactionReminderWorker @AssistedInject constructor(
+internal class TransactionReminderWorker @AssistedInject constructor(
     @Assisted appContext: Context,
     @Assisted params: WorkerParameters,
     private val countTodayTransactionsUseCase: CountTodayTransactionsUseCase,

@@ -8,7 +8,7 @@ import com.ivy.ui.R
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
-class NotificationService @Inject constructor(
+internal class NotificationService @Inject constructor(
     @ApplicationContext
     private val context: Context
 ) {
