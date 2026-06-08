@@ -17,11 +17,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ivy.data.model.TransactionType
 import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.legacy.ui.theme.style
 import com.ivy.ui.compose.drawColoredShadow
 import com.ivy.data.model.currency.format
 import com.ivy.ui.R
@@ -129,9 +129,10 @@ private fun RowScope.HeaderCard(
         Text(
             modifier = Modifier.padding(horizontal = 24.dp),
             text = title,
-            style = LegacyTheme.typo.c.style(
+            style = LegacyTheme.typo.c.copy(
                 color = contrastColor,
-                fontWeight = FontWeight.ExtraBold
+                fontWeight = FontWeight.ExtraBold,
+                textAlign = TextAlign.Start
             )
         )
 
@@ -140,17 +141,19 @@ private fun RowScope.HeaderCard(
         Text(
             modifier = Modifier.padding(horizontal = 24.dp),
             text = amount.format(currencyCode),
-            style = LegacyTheme.typo.nB1.style(
+            style = LegacyTheme.typo.nB1.copy(
                 color = contrastColor,
-                fontWeight = FontWeight.ExtraBold
+                fontWeight = FontWeight.ExtraBold,
+                textAlign = TextAlign.Start
             )
         )
         Text(
             modifier = Modifier.padding(horizontal = 24.dp),
             text = IvyCurrency.fromCode(currencyCode)?.name ?: "",
-            style = LegacyTheme.typo.b2.style(
+            style = LegacyTheme.typo.b2.copy(
                 color = contrastColor,
-                fontWeight = FontWeight.Normal
+                fontWeight = FontWeight.Normal,
+                textAlign = TextAlign.Start
             )
         )
 
@@ -159,17 +162,19 @@ private fun RowScope.HeaderCard(
         Text(
             modifier = Modifier.padding(horizontal = 24.dp),
             text = transactionCount.toString(),
-            style = LegacyTheme.typo.nB1.style(
+            style = LegacyTheme.typo.nB1.copy(
                 color = contrastColor,
-                fontWeight = FontWeight.ExtraBold
+                fontWeight = FontWeight.ExtraBold,
+                textAlign = TextAlign.Start
             )
         )
         Text(
             modifier = Modifier.padding(horizontal = 24.dp),
             text = stringResource(R.string.transactions),
-            style = LegacyTheme.typo.b2.style(
+            style = LegacyTheme.typo.b2.copy(
                 color = contrastColor,
-                fontWeight = FontWeight.Normal
+                fontWeight = FontWeight.Normal,
+                textAlign = TextAlign.Start
             )
         )
 
@@ -185,10 +190,12 @@ private fun RowScope.HeaderCard(
                 text = addButtonText,
                 shadowAlpha = 0.1f,
                 backgroundGradient = Gradient.solid(addButtonBackground),
-                textStyle = LegacyTheme.typo.b2.style(
+                textStyle = LegacyTheme.typo.b2.copy(
                     color = findContrastTextColor(addButtonBackground),
-                    fontWeight = FontWeight.Bold
-                ).copy(fontSize = 12.sp),
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Start,
+                    fontSize = 12.sp
+                ),
                 wrapContentMode = false
             ) {
                 onAddClick()

@@ -28,12 +28,12 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.IntervalType
 import com.ivy.ui.time.LocalTimeConverter
 import com.ivy.ui.time.LocalTimeProvider
 import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.legacy.ui.theme.style
 import com.ivy.data.model.FromToTimeRange
 import com.ivy.ui.period.LastNTimeRange
 import com.ivy.ui.period.Month.Companion.fromMonthValue
@@ -165,9 +165,10 @@ private fun ColumnScope.ChooseMonth(
         modifier = Modifier
             .padding(start = 32.dp),
         text = stringResource(R.string.choose_month),
-        style = LegacyTheme.typo.b1.style(
+        style = LegacyTheme.typo.b1.copy(
             color = if (selectedMonthYear != null) LegacyTheme.colors.pureInverse else Gray,
-            fontWeight = FontWeight.ExtraBold
+            fontWeight = FontWeight.ExtraBold,
+            textAlign = TextAlign.Start
         )
     )
 
@@ -276,9 +277,10 @@ private fun MonthButton(
                 vertical = 12.dp,
             ),
         text = text,
-        style = LegacyTheme.typo.b2.style(
+        style = LegacyTheme.typo.b2.copy(
             fontWeight = FontWeight.Bold,
-            color = if (selected) White else Gray
+            color = if (selected) White else Gray,
+            textAlign = TextAlign.Start
         )
     )
 }
@@ -299,9 +301,10 @@ private fun ColumnScope.FromToRange(
         modifier = Modifier
             .padding(start = 32.dp),
         text = stringResource(R.string.or_custom_range),
-        style = LegacyTheme.typo.b1.style(
+        style = LegacyTheme.typo.b1.copy(
             color = if (timeRange != null) LegacyTheme.colors.pureInverse else Gray,
-            fontWeight = FontWeight.ExtraBold
+            fontWeight = FontWeight.ExtraBold,
+            textAlign = TextAlign.Start
         )
     )
 
@@ -408,9 +411,10 @@ private fun IntervalFromToDate(
                     R.string.to
                 )
             },
-            style = LegacyTheme.typo.b2.style(
+            style = LegacyTheme.typo.b2.copy(
                 fontWeight = FontWeight.ExtraBold,
-                color = if (dateTime != null) Green else LegacyTheme.colors.pureInverse
+                color = if (dateTime != null) Green else LegacyTheme.colors.pureInverse,
+                textAlign = TextAlign.Start
             )
         )
 
@@ -423,9 +427,10 @@ private fun IntervalFromToDate(
         Text(
             text = dateTime?.toLocalDate()?.formatDateOnlyWithYear()
                 ?: stringResource(R.string.add_date),
-            style = LegacyTheme.typo.nB2.style(
+            style = LegacyTheme.typo.nB2.copy(
                 fontWeight = FontWeight.Bold,
-                color = if (dateTime != null) LegacyTheme.colors.pureInverse else Gray
+                color = if (dateTime != null) LegacyTheme.colors.pureInverse else Gray,
+                textAlign = TextAlign.Start
             )
         )
 
@@ -475,9 +480,10 @@ private fun ColumnScope.LastNPeriod(
         modifier = Modifier
             .padding(start = 32.dp),
         text = stringResource(R.string.or_in_the_last),
-        style = LegacyTheme.typo.b1.style(
+        style = LegacyTheme.typo.b1.copy(
             color = if (lastNTimeRange != null) LegacyTheme.colors.pureInverse else Gray,
-            fontWeight = FontWeight.ExtraBold
+            fontWeight = FontWeight.ExtraBold,
+            textAlign = TextAlign.Start
         )
     )
 
@@ -523,9 +529,10 @@ private fun ColumnScope.AllTime(
         modifier = Modifier
             .padding(start = 32.dp),
         text = stringResource(R.string.or_all_time),
-        style = LegacyTheme.typo.b1.style(
+        style = LegacyTheme.typo.b1.copy(
             color = if (active) LegacyTheme.colors.pureInverse else Gray,
-            fontWeight = FontWeight.ExtraBold
+            fontWeight = FontWeight.ExtraBold,
+            textAlign = TextAlign.Start
         )
     )
 

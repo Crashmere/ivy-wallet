@@ -41,7 +41,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.legacy.ui.theme.style
 import com.ivy.ui.platform.addKeyboardListener
 import com.ivy.ui.compose.densityScope
 import com.ivy.ui.platform.hideKeyboard
@@ -167,8 +166,10 @@ private fun SearchInput(
                 // Hint
                 Text(
                     text = stringResource(R.string.search_currency),
-                    style = LegacyTheme.typo.c.style(
-                        fontWeight = FontWeight.Bold
+                    style = LegacyTheme.typo.c.copy(
+                        color = LegacyTheme.colors.pureInverse,
+                        fontWeight = FontWeight.Bold,
+                        textAlign = TextAlign.Start
                     )
                 )
             }
@@ -184,7 +185,8 @@ private fun SearchInput(
                 onValueChange = {
                     onSetSearchTextFieldValue(it.copy(it.text.trim()))
                 },
-                textStyle = LegacyTheme.typo.b2.style(
+                textStyle = LegacyTheme.typo.b2.copy(
+                    color = LegacyTheme.colors.pureInverse,
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Start
                 ),
@@ -227,9 +229,10 @@ private fun SelectedCurrencyCard(
         Column {
             Text(
                 text = currency.name,
-                style = LegacyTheme.typo.b2.style(
+                style = LegacyTheme.typo.b2.copy(
                     color = White,
-                    fontWeight = FontWeight.SemiBold
+                    fontWeight = FontWeight.SemiBold,
+                    textAlign = TextAlign.Start
                 )
             )
 
@@ -237,9 +240,10 @@ private fun SelectedCurrencyCard(
 
             Text(
                 text = currency.code,
-                style = LegacyTheme.typo.b1.style(
+                style = LegacyTheme.typo.b1.copy(
                     color = White,
-                    fontWeight = FontWeight.ExtraBold
+                    fontWeight = FontWeight.ExtraBold,
+                    textAlign = TextAlign.Start
                 )
             )
         }
@@ -253,9 +257,10 @@ private fun SelectedCurrencyCard(
 
         Text(
             text = if (preselected) stringResource(R.string.pre_selected) else stringResource(R.string.selected_text),
-            style = LegacyTheme.typo.b2.style(
+            style = LegacyTheme.typo.b2.copy(
                 color = White,
-                fontWeight = FontWeight.SemiBold
+                fontWeight = FontWeight.SemiBold,
+                textAlign = TextAlign.Start
             )
         )
 
@@ -362,9 +367,10 @@ private fun CurrencyItemCard(
 
         Text(
             text = currency.code,
-            style = LegacyTheme.typo.b1.style(
+            style = LegacyTheme.typo.b1.copy(
                 color = if (selected) White else LegacyTheme.colors.pureInverse,
-                fontWeight = FontWeight.ExtraBold
+                fontWeight = FontWeight.ExtraBold,
+                textAlign = TextAlign.Start
             )
         )
 
@@ -372,9 +378,10 @@ private fun CurrencyItemCard(
 
         Text(
             text = currency.name.take(20),
-            style = LegacyTheme.typo.b2.style(
+            style = LegacyTheme.typo.b2.copy(
                 color = if (selected) White else LegacyTheme.colors.pureInverse,
-                fontWeight = FontWeight.SemiBold
+                fontWeight = FontWeight.SemiBold,
+                textAlign = TextAlign.Start
             )
         )
 
@@ -394,9 +401,10 @@ private fun LetterDividerItem(
     Text(
         modifier = Modifier.padding(start = 32.dp),
         text = letterDivider.letter,
-        style = LegacyTheme.typo.c.style(
+        style = LegacyTheme.typo.c.copy(
             color = LegacyTheme.colors.pureInverse,
-            fontWeight = FontWeight.SemiBold
+            fontWeight = FontWeight.SemiBold,
+            textAlign = TextAlign.Start
         )
     )
 
