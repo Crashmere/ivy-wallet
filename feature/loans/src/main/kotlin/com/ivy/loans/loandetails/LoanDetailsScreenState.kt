@@ -3,7 +3,6 @@ package com.ivy.loans.loandetails
 import com.ivy.data.model.Loan
 import com.ivy.loans.model.DisplayLoanRecord
 import com.ivy.loans.model.LoanAccount
-import com.ivy.loans.modal.LoanModalData
 import com.ivy.loans.modal.LoanRecordModalData
 import kotlinx.collections.immutable.ImmutableList
 import java.time.Instant
@@ -19,7 +18,10 @@ internal data class LoanDetailsScreenState(
     val accounts: ImmutableList<LoanAccount>,
     val selectedLoanAccountId: UUID?,
     val createLoanTransaction: Boolean,
-    val loanModalData: LoanModalData?,
+    val loanModalVisible: Boolean,
+    val loanModalLoan: Loan?,
+    val loanModalAutoFocusKeyboard: Boolean,
+    val loanModalAutoOpenAmountModal: Boolean,
     val loanRecordModalData: LoanRecordModalData?,
     val waitModalVisible: Boolean,
     val isDeleteModalVisible: Boolean,
