@@ -161,28 +161,28 @@ class LoanTransactionSyncCore @Inject constructor(
             return
         }
 
-        val transType = if (isLoanRecord && loanRecordType != LoanRecordType.INCREASE) {
+        val transactionType = if (isLoanRecord && loanRecordType != LoanRecordType.INCREASE) {
             if (loanType == LoanType.BORROW) TransactionType.EXPENSE else TransactionType.INCOME
         } else if (loanType == LoanType.BORROW) TransactionType.INCOME else TransactionType.EXPENSE
 
-        val transCategoryId: UUID? = getCategoryId(existingCategoryId = categoryId)
+        val transactionCategoryId: UUID? = getCategoryId(existingCategoryId = categoryId)
 
         val modifiedTransaction: LegacyTransaction = transaction?.copy(
             loanId = loanId,
             loanRecordId = if (isLoanRecord) loanRecordId else null,
             amount = amount.toBigDecimal(),
-            type = transType,
+            type = transactionType,
             accountId = selectedAccountId,
             title = title,
-            categoryId = transCategoryId,
+            categoryId = transactionCategoryId,
             dateTime = time
         )
             ?: LegacyTransaction(
                 accountId = selectedAccountId,
-                type = transType,
+                type = transactionType,
                 amount = amount.toBigDecimal(),
                 dateTime = time,
-                categoryId = transCategoryId,
+                categoryId = transactionCategoryId,
                 title = title,
                 loanId = loanId,
                 loanRecordId = if (isLoanRecord) loanRecordId else null

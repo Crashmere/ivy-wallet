@@ -827,6 +827,7 @@
 - 交易汇率换算相关旧缩写继续收敛：`ExchangeTrns.kt` 已改为 `ExchangeTransactions.kt`，`ExchangeTrnArgument`/`LegacyExchangeTrns`/`trnCurrency` 改为完整的 `ExchangeTransactionArgument`/`LegacyExchangeTransactions`/`transactionCurrency` 命名；行为不变。
 - 旧账户模型 helper 已从泛化 `com.ivy.domain.account.AccountFunctions` 迁到 `com.ivy.domain.account.legacy.LegacyAccountFunctions`，并改名为 `includedLegacyAccounts`/`legacyAccountCurrency`；调用方现在能明确看出这些函数仍依赖 legacy 账户模型。
 - 旧交易 due date 筛选已从 `com.ivy.domain.time.TransactionDateFilters` 拆到 `com.ivy.domain.transaction.legacy.LegacyTransactionDateFilters`；`domain.time` 只保留新版交易日期筛选和通用时间转换。
+- 旧交易 due/overdue 筛选函数已从 `filterUpcomingLegacy()/filterOverdueLegacy()` 改为 `filterUpcomingLegacyTransactions()/filterOverdueLegacyTransactions()`，名称直接表达处理对象是旧交易列表。
 - 核心汇率换算函数已从 legacy `ExchangeRate` 对象依赖改成只接收 `BigDecimal` 汇率值，`ExchangeRateExt.toLegacyDomain()` 随之删除；汇率数据模型到算法的边界更窄。
 - 旧交易汇率换算重载和 `LegacyExchangeTransactions` 已从正式 `domain.exchange.ExchangeTransactions` 迁到 `domain.transaction.legacy.LegacyExchangeTransactions`；exchange 包继续保留通用换算与新版交易入口。
 - `shared:domain` 内部旧账户/旧交易兼容别名已显式化：domain helper、use case、汇率换算和旧历史列表桥接代码不再从 `com.ivy.data.model.legacy.Account/Transaction` 兼容别名导入，而是直接使用 `LegacyAccount/LegacyTransaction`；这一步只改变类型命名，不改业务计算和数据结构。
@@ -845,6 +846,7 @@
 - app 启动、首页到期交易加载、编辑交易删除弹窗、交易类型 lambda、客户旅程计数、账户统计和 CSV 导出中的局部 `trn/trans` 缩写已展开为 `transaction*` 命名；只改局部符号，不改业务计算。
 - 报表筛选模型中的 `trnTypes/trnType/trnAmountBaseCurrency` 已展开为 `transactionTypes/transactionType/transactionAmountBaseCurrency`；筛选规则和 UI 行为不变。
 - 生产代码中剩余的交易缩写已继续收尾：`StatSummary.trnCount` 改为 `transactionCount`，`RoomTransactionStore.retrieveTrns()` 改为 `retrieveTransactions()`，旧迁移类 `Migration105to106_TrnRecurringRules` 改为完整命名；对应测试局部变量同步展开。
+- 借贷交易同步中的局部 `transType/transCategoryId` 已展开为 `transactionType/transactionCategoryId`；报表页计划付款事件也从 `...Legacy` 后缀改为明确的 `...LegacyTransaction(s)` 命名。
 - domain use case 中注入的 `TransactionStore` 不再命名为 `transactionRepository`，统一改为 `transactionStore`；这是命名层面的边界收敛，读写行为不变。
 - `RoomTransactionStoreTest` 的被测对象也从 `repository/newRepository` 改为 `store/newStore`，避免测试代码继续传播旧仓库命名。
 - data-core 里的备份实现已从 `BackupDataUseCase` 改名为 `DefaultBackupStore`，并继续通过 `BackupStore` 暴露给 domain；ZIP/JSON 备份格式和导入导出行为不变。

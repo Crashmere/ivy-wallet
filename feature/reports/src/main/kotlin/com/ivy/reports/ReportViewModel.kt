@@ -189,9 +189,9 @@ class ReportViewModel @Inject constructor(
                 is ReportScreenEvent.OnPayOrGet -> payOrGet(event.transaction)
                 is ReportScreenEvent.SkipTransaction -> skipTransaction(event.transaction)
                 is ReportScreenEvent.SkipTransactions -> skipTransactions(event.transactions)
-                is ReportScreenEvent.OnPayOrGetLegacy -> payOrGetLegacy(event.transaction)
-                is ReportScreenEvent.SkipTransactionLegacy -> skipTransactionLegacy(event.transaction)
-                is ReportScreenEvent.SkipTransactionsLegacy -> skipTransactionsLegacy(event.transactions)
+                is ReportScreenEvent.OnPayOrGetLegacyTransaction -> payOrGetLegacyTransaction(event.transaction)
+                is ReportScreenEvent.SkipLegacyTransaction -> skipLegacyTransaction(event.transaction)
+                is ReportScreenEvent.SkipLegacyTransactions -> skipLegacyTransactions(event.transactions)
                 is ReportScreenEvent.OnOverdueExpanded -> setOverdueExpandedValue(event.overdueExpanded)
                 is ReportScreenEvent.OnUpcomingExpanded -> setUpcomingExpandedValue(event.upcomingExpanded)
                 is ReportScreenEvent.OnFilterOverlayVisible -> setFilterOverlayVisibleValue(event.filterOverlayVisible)
@@ -565,7 +565,7 @@ class ReportViewModel @Inject constructor(
         }
     }
 
-    private suspend fun payOrGetLegacy(transaction: LegacyTransaction) {
+    private suspend fun payOrGetLegacyTransaction(transaction: LegacyTransaction) {
         withContext(Dispatchers.Main) {
             if (payOrSkipLegacyPlannedTransactionUseCase(transaction) != null) {
                 start()
@@ -599,7 +599,7 @@ class ReportViewModel @Inject constructor(
         }
     }
 
-    private suspend fun skipTransactionLegacy(transaction: LegacyTransaction) {
+    private suspend fun skipLegacyTransaction(transaction: LegacyTransaction) {
         withContext(Dispatchers.Main) {
             val paidTransaction = payOrSkipLegacyPlannedTransactionUseCase(
                 transaction = transaction,
@@ -625,7 +625,7 @@ class ReportViewModel @Inject constructor(
         }
     }
 
-    private suspend fun skipTransactionsLegacy(transactions: List<LegacyTransaction>) {
+    private suspend fun skipLegacyTransactions(transactions: List<LegacyTransaction>) {
         withContext(Dispatchers.Main) {
             val paidTransactions = payOrSkipLegacyPlannedTransactionsUseCase(
                 transactions = transactions,

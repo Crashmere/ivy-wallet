@@ -11,8 +11,8 @@ import com.ivy.domain.usecase.exchange.LegacyExchangeRatesUseCase
 import com.ivy.domain.usecase.exchange.sumInBaseCurrency
 import com.ivy.domain.mapper.legacy.toLegacyTransaction
 import com.ivy.domain.transaction.legacy.LegacyTransactionDateDividers
-import com.ivy.domain.transaction.legacy.filterOverdueLegacy
-import com.ivy.domain.transaction.legacy.filterUpcomingLegacy
+import com.ivy.domain.transaction.legacy.filterOverdueLegacyTransactions
+import com.ivy.domain.transaction.legacy.filterUpcomingLegacyTransactions
 import com.ivy.domain.time.nowUtc
 import javax.inject.Inject
 
@@ -76,7 +76,7 @@ class GetUnspecifiedCategoryTransactionsSummaryUseCase @Inject constructor(
             endDate = range.to()
         ).map {
             it.toLegacyTransaction()
-        }.filterUpcomingLegacy()
+        }.filterUpcomingLegacyTransactions()
 
         return CategoryDueTransactionsSummary(
             income = transactions.incomeInBaseCurrency(),
@@ -91,7 +91,7 @@ class GetUnspecifiedCategoryTransactionsSummaryUseCase @Inject constructor(
             endDate = range.overdueTo(nowUtc())
         ).map {
             it.toLegacyTransaction()
-        }.filterOverdueLegacy()
+        }.filterOverdueLegacyTransactions()
 
         return CategoryDueTransactionsSummary(
             income = transactions.incomeInBaseCurrency(),

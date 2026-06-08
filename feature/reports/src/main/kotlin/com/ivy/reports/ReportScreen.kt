@@ -247,16 +247,16 @@ private fun BoxWithConstraintsScope.UI(
                 lastItemSpacer = 48.dp,
 
                 onPayOrGet = {
-                    onEventHandler.invoke(ReportScreenEvent.OnPayOrGetLegacy(transaction = it))
+                    onEventHandler.invoke(ReportScreenEvent.OnPayOrGetLegacyTransaction(transaction = it))
                 },
                 emptyStateTitle = noTransactionsTitle,
                 emptyStateText = noTransactionsForFilter,
                 shouldShowAccountSpecificColorInTransactions = state.showAccountColorsInTransactions,
                 onSkipTransaction = {
-                    onEventHandler.invoke(ReportScreenEvent.SkipTransactionLegacy(transaction = it))
+                    onEventHandler.invoke(ReportScreenEvent.SkipLegacyTransaction(transaction = it))
                 },
                 onSkipAllTransactions = {
-                    onEventHandler.invoke(ReportScreenEvent.SkipTransactionsLegacy(transactions = it))
+                    onEventHandler.invoke(ReportScreenEvent.SkipLegacyTransactions(transactions = it))
                 }
             )
         } else {

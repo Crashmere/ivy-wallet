@@ -1,7 +1,7 @@
 package com.ivy.reports
-import com.ivy.data.model.legacy.LegacyTransaction
 
 import com.ivy.data.model.Transaction
+import com.ivy.data.model.legacy.LegacyTransaction
 import com.ivy.ui.platform.FileSharer
 
 sealed class ReportScreenEvent {
@@ -17,12 +17,12 @@ sealed class ReportScreenEvent {
     data class OnTreatTransfersAsIncomeExpense(val transfersAsIncomeExpense: Boolean) :
         ReportScreenEvent()
 
-        data class SkipTransactionsLegacy(val transactions: List<LegacyTransaction>) :
+    data class SkipLegacyTransactions(val transactions: List<LegacyTransaction>) :
         ReportScreenEvent()
 
-        data class SkipTransactionLegacy(val transaction: LegacyTransaction) :
+    data class SkipLegacyTransaction(val transaction: LegacyTransaction) :
         ReportScreenEvent()
 
-        data class OnPayOrGetLegacy(val transaction: LegacyTransaction) :
+    data class OnPayOrGetLegacyTransaction(val transaction: LegacyTransaction) :
         ReportScreenEvent()
 }
