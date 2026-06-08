@@ -43,7 +43,6 @@ import com.ivy.legacy.ui.component.DateTimeRow
 import com.ivy.data.model.currency.getDefaultFIATCurrency
 import com.ivy.ui.navigation.onScreenStart
 import com.ivy.ui.compose.selectEndTextFieldValue
-import com.ivy.legacy.ui.testing.TestingContext
 import com.ivy.ui.compose.thenIf
 import com.ivy.legacy.ui.modal.ModalNameInput
 import com.ivy.ui.R
@@ -394,8 +393,6 @@ private fun AccountsRow(
             val selectedIndex = accounts.indexOf(selectedAccount)
             if (selectedIndex != -1) {
                 launch {
-                    if (TestingContext.inTest) return@launch // breaks UI tests
-
                     lazyState.scrollToItem(
                         index = selectedIndex, // +1 because Spacer width 24.dp
                     )

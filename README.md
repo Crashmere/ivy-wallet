@@ -497,7 +497,7 @@
 - 已把 `shared:domain` 中旧业务逻辑从早期 deprecated/legacy logic 包继续迁出：计划付款、账户统计、分类统计、借贷交易联动和旧汇率换算已进入正式 use case 包；当前不再保留 `com.ivy.legacy.domain.logic` 源码。
 - 已把旧 FPAction/use-case 与 pure helper 从 `com.ivy.wallet.domain.action/pure` 迁到 `com.ivy.legacy.domain.action/pure`；`ClosedTimeRange`、`FromToTimeRange`、`IncomeExpensePair`、`IncomeExpenseTransferPair` 已进一步归位到正式 data model。旧 action/helper 仍是 domain 兼容层，但不再占用正式 Wallet 产品包名。
 - 已把旧 FRP/action helper 从 `shared:base` 物理下沉到 `shared:domain`，仍保留 `com.ivy.legacy.frp` 包名以避免大面积调用方 import churn；`shared:base` 不再承载这批旧 action 组合工具。
-- 旧 UI 专用的 `TestingContext` 已从 `shared:base` 的 FRP 包下沉到 `shared:ui:legacy` 的 `com.ivy.legacy.ui.testing`，基础层不再承载这段只服务旧 Compose UI 测试规避逻辑的全局开关。
+- 旧 UI 专用的 `TestingContext` 全局测试开关已删除；它在生产源码中没有写入点，相关分支运行时恒为 false，旧组件直接执行原本的正常滚动逻辑。
 - 旧 FRP 组合 helper 已精简为只保留实际使用的重载，删除历史推导注释和“迁到 FP/FPAction”的过时 TODO；业务含义明确的 TODO 继续保留。
 - 旧 `Res.tryOp()` 已移除没有收益的 `inline/noinline` 组合，避免迁移后 domain 编译持续产生无意义的 inline 性能警告。
 - 旧 domain 逻辑和旧交易模型不再用大面积 `@Deprecated` 注解制造编译噪音；当前仍保留这些实现以支撑报表、交易列表、计划付款和旧统计流程，迁移状态通过 `legacy` 包名和 README 计划追踪。

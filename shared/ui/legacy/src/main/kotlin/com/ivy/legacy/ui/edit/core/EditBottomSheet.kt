@@ -53,7 +53,6 @@ import com.ivy.ui.animation.lerp
 import com.ivy.ui.compose.navigationBarInsets
 import com.ivy.ui.navigation.onScreenStart
 import com.ivy.ui.animation.springBounce
-import com.ivy.legacy.ui.testing.TestingContext
 import com.ivy.ui.compose.thenIf
 import com.ivy.ui.compose.verticalSwipeListener
 import com.ivy.data.model.TransactionType
@@ -537,8 +536,6 @@ private fun AccountsRow(
             val selectedIndex = accounts.indexOf(selectedAccount)
             if (selectedIndex != -1) {
                 launch {
-                    if (TestingContext.inTest) return@launch // breaks UI tests
-
                     lazyState.scrollToItem(
                         index = selectedIndex, // +1 because Spacer width 24.dp
                     )

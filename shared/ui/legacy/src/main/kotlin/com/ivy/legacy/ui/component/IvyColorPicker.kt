@@ -33,7 +33,6 @@ import com.ivy.legacy.ui.theme.system.style
 import com.ivy.ui.compose.densityScope
 import com.ivy.ui.compose.thenIf
 import com.ivy.ui.navigation.onScreenStart
-import com.ivy.legacy.ui.testing.TestingContext
 import com.ivy.ui.R
 import kotlinx.coroutines.launch
 
@@ -79,9 +78,6 @@ fun ColumnScope.IvyColorPicker(
 
     densityScope {
         onScreenStart {
-            if (TestingContext.inTest) return@onScreenStart // listState.scrollToItem breaks the tests
-            // java.lang.IllegalStateException: pending composition has not been applied
-
             val selectedColorIndex = ivyColors.indexOfFirst { it.color == selectedColor }
             if (selectedColorIndex != -1) {
                 coroutineScope.launch {
