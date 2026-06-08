@@ -50,10 +50,10 @@ import com.ivy.ui.compose.keyboardOnlyWindowInsets
 import com.ivy.ui.compose.navigationBarInsets
 import com.ivy.ui.animation.DURATION_MODAL_ANIM
 import com.ivy.ui.compose.BackPressHandler
+import com.ivy.ui.compose.CloseIconButton
 import com.ivy.ui.compose.gradientCutBackgroundTop
 import com.ivy.ui.compose.onCompositionStart
 import com.ivy.ui.compose.thenIf
-import com.ivy.legacy.ui.button.CloseButton
 import com.ivy.legacy.ui.theme.mediumBlur
 import java.util.UUID
 import kotlin.math.roundToInt
@@ -279,8 +279,11 @@ private fun ModalActionsRow(
         ) {
             Spacer(Modifier.width(24.dp))
 
-            CloseButton(
+            CloseIconButton(
                 modifier = Modifier.testTag("modal_close_button"),
+                backgroundColor = LegacyTheme.colors.pure,
+                borderColor = LegacyTheme.colors.medium,
+                tint = LegacyTheme.colors.pureInverse,
                 onClick = onClose
             )
 
