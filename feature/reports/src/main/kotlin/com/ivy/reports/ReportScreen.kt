@@ -46,7 +46,6 @@ import com.ivy.data.model.IncomeExpensePair
 import com.ivy.legacy.ui.theme.Gray
 import com.ivy.legacy.ui.theme.Green
 import com.ivy.legacy.ui.theme.Orange
-import com.ivy.legacy.ui.component.BackButtonType
 import com.ivy.legacy.ui.component.BalanceRow
 import com.ivy.legacy.ui.component.CircleButtonFilled
 import com.ivy.legacy.ui.component.IvyButton
@@ -391,7 +390,7 @@ private fun Toolbar(
     onFilter: () -> Unit
 ) {
     IvyToolbar(
-        backButtonType = BackButtonType.CLOSE,
+        showCloseButton = true,
         onBack = onBack
     ) {
         Spacer(Modifier.weight(1f))

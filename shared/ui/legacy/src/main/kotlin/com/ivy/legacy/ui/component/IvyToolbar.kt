@@ -10,14 +10,10 @@ import androidx.compose.ui.unit.dp
 import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.legacy.ui.theme.gradientCutBackgroundBottom
 
-enum class BackButtonType {
-    BACK, CLOSE
-}
-
 @Composable
 fun IvyToolbar(
     onBack: () -> Unit,
-    backButtonType: BackButtonType = BackButtonType.BACK,
+    showCloseButton: Boolean = false,
     paddingTop: Dp = 16.dp,
     paddingBottom: Dp = 16.dp,
     Content: @Composable RowScope.() -> Unit = { }
@@ -31,8 +27,8 @@ fun IvyToolbar(
     ) {
         Spacer(Modifier.width(20.dp))
 
-        when (backButtonType) {
-            BackButtonType.BACK -> {
+        when (showCloseButton) {
+            false -> {
                 BackButton(
                     modifier = Modifier.testTag("toolbar_back")
                 ) {
@@ -40,7 +36,7 @@ fun IvyToolbar(
                 }
             }
 
-            BackButtonType.CLOSE -> {
+            true -> {
                 CloseButton(
                     modifier = Modifier.testTag("toolbar_close")
                 ) {
