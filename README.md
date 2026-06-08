@@ -1576,6 +1576,7 @@ shared:ui:core
 - 搜索页已脱离 `shared:ui:legacy` 模块依赖；搜索结果继续复用迁入 UI core 的交易列表组件，搜索输入、交易点击、账户/分类筛选和标签展示行为不变。
 - 账户编辑弹窗迁出 legacy：`AccountModal`、`AccountModalSaveData` 和账户弹窗主题 token 已迁入 `shared:ui:core` 的 `com.ivy.ui.modal` 包；编辑交易、计划付款、借贷和交易列表页继续保留原新增账户、编辑账户和调整余额行为，但不再从 legacy modal 包导入账户弹窗。
 - 分类编辑/选择弹窗迁出 legacy：`CategoryModal`、`ChooseCategoryModal`、`CategoryModalCategory` 和 `CategoryModalSaveData` 已迁入 `shared:ui:core` 的 `com.ivy.ui.modal` 包；编辑交易、计划付款和交易列表页继续保留原分类创建、编辑、选择和取消选择行为，但不再从 legacy modal 包导入分类弹窗。
+- 标签选择/编辑弹窗迁出 legacy：`ShowTagModal`、`TagModalTag` 和内部新增/编辑标签弹窗已迁入 `shared:ui:core` 的 `com.ivy.ui.tags` 包；编辑交易和报表筛选继续保留原标签新增、编辑、删除、搜索、选择和取消选择行为。
 - app 仍保留文件选择、文件分享、Material 日期选择器、BuildInfo、Locale 设置、生物识别和窗口安全等真正依赖 Activity 或 Android app 壳层的装配。
 
 ## 高风险区域

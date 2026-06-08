@@ -1,4 +1,4 @@
-package com.ivy.legacy.ui.tags
+package com.ivy.ui.tags
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -39,7 +39,6 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.modal.IvyModal
 import com.ivy.ui.modal.ModalPositiveButton
 import com.ivy.ui.modal.ModalTitle
@@ -177,7 +176,7 @@ private fun IvyTitleTextField(
     modifier: Modifier = Modifier,
     dividerModifier: Modifier = Modifier,
     value: TextFieldValue,
-    textColor: Color = LegacyTheme.colors.pureInverse,
+    textColor: Color = TagModalTheme.colors.pureInverse,
     hint: String?,
     visualTransformation: VisualTransformation = VisualTransformation.None,
     keyboardOptions: KeyboardOptions = KeyboardOptions(
@@ -198,8 +197,8 @@ private fun IvyTitleTextField(
         if (isEmpty && hint.isNullOrBlank().not()) {
             Text(
                 text = hint!!,
-                style = LegacyTheme.typo.h2.copy(
-                    color = LegacyTheme.colors.gray,
+                style = TagModalTheme.typo.h2.copy(
+                    color = TagModalTheme.colors.gray,
                     fontWeight = FontWeight.Black,
                     textAlign = TextAlign.Start
                 ),
@@ -213,13 +212,13 @@ private fun IvyTitleTextField(
                 .testTag("input_field"),
             value = value,
             onValueChange = onValueChanged,
-            textStyle = LegacyTheme.typo.h2.copy(
+            textStyle = TagModalTheme.typo.h2.copy(
                 color = textColor,
                 fontWeight = FontWeight.Black,
                 textAlign = TextAlign.Start
             ),
             singleLine = false,
-            cursorBrush = SolidColor(LegacyTheme.colors.pureInverse),
+            cursorBrush = SolidColor(TagModalTheme.colors.pureInverse),
             visualTransformation = visualTransformation,
             keyboardOptions = keyboardOptions,
             keyboardActions = keyboardActions ?: KeyboardActions(
@@ -236,6 +235,6 @@ private fun IvyTitleTextField(
         modifier = dividerModifier
             .fillMaxWidth()
             .height(2.dp)
-            .background(LegacyTheme.colors.medium, LegacyTheme.shapes.rFull),
+            .background(TagModalTheme.colors.medium, TagModalTheme.shapes.rFull),
     )
 }

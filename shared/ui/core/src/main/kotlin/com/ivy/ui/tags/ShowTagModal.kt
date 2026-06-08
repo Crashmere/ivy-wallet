@@ -1,4 +1,4 @@
-package com.ivy.legacy.ui.tags
+package com.ivy.ui.tags
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -34,7 +34,6 @@ import com.ivy.ui.modal.ModalPositiveButton
 import com.ivy.ui.modal.ModalTitle
 import com.ivy.ui.search.SearchInput
 import com.ivy.ui.theme.colors.Gradient
-import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.compose.GradientIconButton
 import com.ivy.ui.compose.OutlinedPillButton
 import com.ivy.ui.compose.WrapContentRow
@@ -241,22 +240,22 @@ private fun ExistingTag(
     onDeselect: () -> Unit,
 ) {
     val tagColor = IvyFixedColors.Blue2Dark
-    val rFull = LegacyTheme.shapes.rFull
+    val rFull = TagModalTheme.shapes.rFull
 
     Row(
         modifier = Modifier
             .thenIf(selected) {
                 drawColoredShadow(tagColor)
             }
-            .clip(LegacyTheme.shapes.rFull)
+            .clip(TagModalTheme.shapes.rFull)
             .combinedClickable(
                 onClick = onClick,
                 onLongClick = onLongClick
             )
             .border(
                 width = 2.dp,
-                color = if (selected) LegacyTheme.colors.pureInverse else LegacyTheme.colors.medium,
-                shape = LegacyTheme.shapes.rFull
+                color = if (selected) TagModalTheme.colors.pureInverse else TagModalTheme.colors.medium,
+                shape = TagModalTheme.shapes.rFull
             )
             .thenIf(selected) {
                 background(tagColor, rFull)
@@ -283,8 +282,8 @@ private fun ExistingTag(
                 )
                 .weight(1f, fill = false),
             text = "#${tag.name}",
-            style = LegacyTheme.typo.b2.copy(
-                color = if (selected) findContrastTextColor(tagColor) else LegacyTheme.colors.pureInverse,
+            style = TagModalTheme.typo.b2.copy(
+                color = if (selected) findContrastTextColor(tagColor) else TagModalTheme.colors.pureInverse,
                 fontWeight = FontWeight.SemiBold,
                 textAlign = TextAlign.Start
             ),
@@ -323,12 +322,12 @@ private fun AddNewTagButton(
         modifier = modifier,
         text = stringResource(R.string.add_new),
         iconStart = R.drawable.ic_plus,
-        shape = LegacyTheme.shapes.rFull,
-        backgroundColor = LegacyTheme.colors.pure,
-        iconTint = LegacyTheme.colors.pureInverse,
-        borderColor = LegacyTheme.colors.mediumInverse,
-        textStyle = LegacyTheme.typo.b2.copy(
-            color = LegacyTheme.colors.pureInverse,
+        shape = TagModalTheme.shapes.rFull,
+        backgroundColor = TagModalTheme.colors.pure,
+        iconTint = TagModalTheme.colors.pureInverse,
+        borderColor = TagModalTheme.colors.mediumInverse,
+        textStyle = TagModalTheme.typo.b2.copy(
+            color = TagModalTheme.colors.pureInverse,
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Start
         ),
