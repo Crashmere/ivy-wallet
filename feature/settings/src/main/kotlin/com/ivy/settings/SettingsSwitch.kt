@@ -1,24 +1,29 @@
-package com.ivy.legacy.ui.component
+package com.ivy.settings
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
-import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.ui.animation.springBounce
 import com.ivy.legacy.ui.theme.Gray
 import com.ivy.legacy.ui.theme.Green
+import com.ivy.legacy.ui.theme.LegacyTheme
+import com.ivy.ui.animation.springBounce
 
 @Composable
-fun IvySwitch(
+internal fun SettingsSwitch(
     modifier: Modifier = Modifier,
     enabled: Boolean,
     onEnabledChange: (checked: Boolean) -> Unit
@@ -50,7 +55,6 @@ fun IvySwitch(
             Spacer(Modifier.weight(weightStart))
         }
 
-        // Circle
         Spacer(
             modifier = Modifier
                 .size(16.dp)

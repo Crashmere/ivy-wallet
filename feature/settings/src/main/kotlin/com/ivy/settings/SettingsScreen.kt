@@ -62,7 +62,6 @@ import com.ivy.legacy.ui.theme.GradientGreen
 import com.ivy.legacy.ui.theme.Gray
 import com.ivy.legacy.ui.theme.Red
 import com.ivy.legacy.ui.theme.White
-import com.ivy.legacy.ui.component.IvySwitch
 import com.ivy.legacy.ui.component.IvyToolbar
 import com.ivy.legacy.ui.modal.ChooseStartDateOfMonthModal
 import com.ivy.legacy.ui.modal.CurrencyModal
@@ -844,7 +843,7 @@ private fun AppSwitch(
 
         // Spacer(Modifier.weight(1f))
 
-        IvySwitch(enabled = lockApp) {
+        SettingsSwitch(enabled = lockApp) {
             onSetLockApp(it)
         }
 
