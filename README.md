@@ -13,19 +13,17 @@
 - 删除失去实现意义的云端删除入口：设置页不再显示“删除云端数据”链路，`ResetWalletDataUseCase` 不再保留空的 cloud reset 方法。
 - 整顿设置页：合并原高级特性页，改成个人偏好设置；重排设置分组；删除匿名账户入口和首页问候语。
 - 精简测试和预览基础设施：删除 Paparazzi 截图测试、快照图片、仅服务 IDE 的 Compose `@Preview` 示例函数和预览 helper。
-- `:temp:*` Gradle 模块已经删除；后续工作集中在继续收窄 `shared:ui:legacy` 中保留下来的旧 UI/旧模型兼容边界。
+- `:temp:*` 和 `:shared:ui:legacy` Gradle 模块已经删除；旧 UI 组件、弹窗、交易列表和主题 token 已按实际用途迁入 `shared:ui:core` 或各 feature 私有边界。
 - 删除空的 `:shared:data:core-testing` 模块，并把测试专用 `FakeRepositoryMemo` 从生产源码移入测试源集。
 - 删除未引用的第三方导入 logo、widget 预览/图标、推广/分享/捐赠图片，以及 `help_us_grow` 多语言推广文案。
 - 删除无代码引用的 `data_synced_to_cloud` 多语言云同步完成文案。
-- 删除 `:temp:old-design` 模块；旧设计 API 先迁入 `shared:ui:core` 作为兼容层，随后已逐步归位到更明确的 `legacy.ui.theme`/`legacy.ui.theme.system` 包名。
-- 删除 `:temp:legacy-code` 模块；剩余旧全局上下文暂时收敛在 `shared:ui:legacy`，并已把周期状态、文件选择、日期选择、主 Tab 状态等职责逐步拆出。
+- 删除 `:temp:old-design` 模块；旧设计 API 已逐步改写为 UI core 的正式基础组件或页面私有主题 token。
+- 删除 `:temp:legacy-code` 模块；旧全局上下文、周期状态、文件选择、日期选择、主 Tab 状态等职责已拆分到 app、UI core、navigation 或 feature 本地状态。
 - 整理部分 Gradle 约定插件：基础 shared 模块、数据核心模块和 domain 模块已经开始脱离面向页面的 `ivy.feature` 配置。
 - 开始拆分 `RootActivity` 平台能力：文件创建/打开、Material 日期选择器、生物识别弹窗和 CSV/zip 分享已经移入 `app` 的 platform 边界；`RootScreen` 大接口已删除，feature 改为依赖更窄的 UI platform 接口。
-- 继续清理历史包名：旧 Room migration 和 type converter 已从 `com.ivy.domain.db` 归位到 `com.ivy.data.db`，旧 UI 组件中误挂到 domain 包名下的 `ListItem/IvyColorPicker` 已归位到 `com.ivy.legacy.ui.component`。
+- 继续清理历史包名：旧 Room migration 和 type converter 已从 `com.ivy.domain.db` 归位到 `com.ivy.data.db`，旧 UI 组件已陆续改写或迁到实际所属的 UI core / feature 边界。
 - 清理非业务路径上的旧调试输出：预算 ID 解析、币种代码解析、键盘可见性判断、金额输入确认和 CSV 初次解析失败不再打印堆栈，继续按原有空值/无操作策略处理。
-- 收窄 UI core 职责：旧交易列表专用的 `DueSection` 已从 `shared:ui:core` 迁回 `shared:ui:legacy` 的交易组件包。
-- 继续收窄 UI core 职责：旧交易列表基础入参 `AppBaseData` 已改名为 `TransactionListData`，并迁入 `shared:ui:legacy` 的交易组件包。
-- 继续迁移旧 UI 状态：账户、分类、借贷、借贷记录、缓冲金额、循环规则和周期选择弹窗状态已从 `shared:ui:core` 迁入 `shared:ui:legacy`。
+- 继续收窄 UI core 职责：旧交易列表、账户/分类/标签/金额/周期/重排弹窗等仍被复用的 UI 已整理为 UI core 正式入口；只服务单个页面的展示和状态已迁回各 feature。
 - 精简 Compose 构建约定：删除 Compose compiler metrics/reports 输出配置，减少个人开发构建产物噪音。
 - 精简根目录忽略规则：`.gitignore` 已移除 Fastlane、Freeline、Google Services、Android Studio 细项等历史噪音，只保留当前 Android/Gradle/VS Code 本地开发会产生的文件规则。
 - 精简本地构建配置：删除 release 签名 keystore/环境变量接线，release/demo 都使用本地 debug 签名；`gradle.properties` 只保留当前构建需要的设置。
@@ -44,7 +42,7 @@
 - 收窄导航模块职责：主界面 tab 状态 `MainTab/MainTabState/LocalMainTabState` 已从 `shared:ui:navigation` 迁到 `shared:ui:core` 的 `com.ivy.ui.main` 包，navigation 模块继续聚焦 route、栈和返回处理。
 - 收窄主界面 Tab 状态职责：`MainTabState` 不再作为 app Hilt 单例提供，改由 `MainViewModel` 作为主页面状态持有，再通过 `LocalMainTabState` 提供给首页和账户页。
 - 收回主界面 Tab 状态边界：`MainTab` 和选中状态已归入 `feature:main`，首页/账户页通过普通回调请求切换 tab，`shared:ui:core` 不再提供 `LocalMainTabState` 全局入口。
-- 删除无效 legacy screen 标记：当前所有页面统一走 `LegacyUiRoot` surface，`Screen` 不再暴露 `isLegacy`，`NavigationRoot` 删除只服务非 legacy 分支的 ViewModelStore 清理逻辑。
+- 删除无效 legacy screen 标记：当前所有页面统一走 app 私有 `AppUiRoot` surface，`Screen` 不再暴露 `isLegacy`，`NavigationRoot` 删除只服务非 legacy 分支的 ViewModelStore 清理逻辑。
 - 收回旧弹窗状态职责：账户、分类、缓冲金额、周期、借贷、借贷记录和计划付款重复规则的 `*ModalData` 曾归回 `shared:ui:legacy` 的 modal 包；后续已继续把账户、分类和周期弹窗改为显式参数，`shared:ui:core` 不再保留旧弹窗状态包。
 - 收窄导航返回职责：旧弹窗返回键处理改用 Compose `BackHandler`，`Navigation` 删除 modal back handler 栈，只继续处理页面级返回和根返回栈。
 - 收窄页面级返回职责：主界面、CSV 恢复页和交易统计页的返回回调改为随 `onScreenStart` 注册/注销；ViewModel 只保留返回行为判断，不再负责把回调长期挂到导航对象上。
@@ -1583,6 +1581,7 @@ shared:ui:core
 - 借贷页样式依赖继续收窄：`feature:loans` 增加本模块私有 `LoansTheme` 承接借贷列表、详情页、借贷/还款记录弹窗、账户选择和进度条所需 token；借贷模块已移除对 `shared:ui:legacy` 的直接依赖。
 - 计划付款样式依赖继续收窄：`feature:planned-payments` 增加本模块私有 `PlannedTheme` 承接计划付款列表、编辑页、底部表单、标题/描述弹窗和重复规则弹窗所需 token；计划付款模块已移除对 `shared:ui:legacy` 的直接依赖。
 - 编辑交易页样式依赖继续收窄：`feature:edit-transaction` 增加本模块私有 `EditTransactionTheme` 承接编辑交易页、底部表单、标题/描述弹窗、日期/到期日、交易类型切换和自定义汇率卡片所需 token；编辑交易模块已移除对 `shared:ui:legacy` 的直接依赖。
+- `shared:ui:legacy` 模块已删除；最后只剩的 `LegacyUiRoot` / `LegacyThemeProvider` root 装配已收回 app 私有 `AppUiRoot`，继续提供主题、时间、日期、状态栏和页面 surface 行为。
 - app 仍保留文件选择、文件分享、Material 日期选择器、BuildInfo、Locale 设置、生物识别和窗口安全等真正依赖 Activity 或 Android app 壳层的装配。
 
 ## 高风险区域
@@ -1613,10 +1612,10 @@ shared:ui:core
    - fake DAO 继续留在 data-core 测试源集；后续只在出现新的跨模块复用需求时再移动。
 4. **收尾旧设计兼容层**
    - `:temp:old-design` 已删除。
-   - 后续替换或收窄 `LegacyTheme`、旧颜色常量和旧组件。
-5. **收窄 `shared:ui:legacy`**
-   - 优先继续缩小旧交易列表、旧弹窗和旧主题对 feature 暴露的模型。
-   - 只在页面调用点已经只需要 ID、枚举或小展示模型时，再把完整旧模型收回组件内部。
+   - `shared:ui:legacy` 已删除；后续只清理 README 历史记录、包名、注释和少量仍使用 legacy 命名但不再依赖旧模块的业务代码。
+5. **继续收窄 shared/feature 依赖**
+   - 优先处理 feature 直接引用 domain 内部算法、过宽 use case 或历史兼容命名的位置。
+   - 只在能保持行为不变且调用点边界清楚时，才继续下沉 helper 或改窄公开 API。
 6. **偏好设置重构**
    - 继续保持 feature 不直接访问 `SharedPrefs`。
    - 后续只在确实需要迁移数据格式时再评估 `SettingsEntity`、SharedPrefs 和 DataStore 的归并。
@@ -1626,7 +1625,7 @@ shared:ui:core
 8. **数据库遗留迁移**
    - 用户表、同步字段、旧设置表单独处理。
 9. **feature 模块合并**
-   - 在 `shared:ui:legacy` 边界继续收窄后再做，避免只是把旧耦合搬进更大的 feature 模块。
+   - 在 shared/feature 依赖边界继续收窄后再做，避免只是把旧耦合搬进更大的 feature 模块。
 
 ## 每轮提交建议
 
@@ -1653,8 +1652,8 @@ shared:ui:core
 
 下一步建议执行：
 
-1. 继续审计 `LegacyTransaction` / `LegacyAccount` 在 UI/统计路径中的真实必要性；优先从只做展示、筛选或参数传递的页面状态开始，评估是否能接收正式模型 ID 或更小的展示模型。
-2. 继续检查 shared/feature 模块依赖，优先处理 feature 仍直接引用 domain 内部算法模型、legacy 兼容模型或过宽 use case 的位置。
+1. 继续检查代码中的历史命名和注释，优先处理只剩命名误导、但已经没有 legacy 模块依赖的 `legacy*` 标识。
+2. 继续检查 shared/feature 模块依赖，优先处理 feature 仍直接引用 domain 内部算法模型、历史兼容模型或过宽 use case 的位置。
 3. 偏好设置代码边界已基本收窄，短期不再为清理而迁移存储格式；若后续要处理 `SettingsEntity`、SharedPrefs 或 DataStore 归并，必须单独规划 schema/备份兼容迁移。
 4. 继续数据库只读审计：`isDeleted` 目前先保留为本地软删除语义；不再把业务表里的 `isDeleted` 当作纯云同步字段批量删除。
 5. feature 模块合并属于较大结构调整，短期只在实际修改某个功能时收敛依赖；真正合并模块前需要先确认导航、资源和 Hilt 边界。
