@@ -41,7 +41,7 @@ fun ItemIconMDefaultIcon(
 }
 
 @Composable
-fun ItemIconM(
+private fun ItemIconM(
     modifier: Modifier = Modifier,
     iconName: String?,
     tint: Color,
