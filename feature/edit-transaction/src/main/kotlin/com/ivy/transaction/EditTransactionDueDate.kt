@@ -16,7 +16,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.R
 import com.ivy.ui.compose.ResourceIcon
 import com.ivy.ui.time.LocalTimeFormatter
@@ -32,8 +31,8 @@ internal fun EditTransactionDueDate(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp)
-            .clip(LegacyTheme.shapes.r4)
-            .background(LegacyTheme.colors.medium, LegacyTheme.shapes.r4)
+            .clip(EditTransactionTheme.shapes.r4)
+            .background(EditTransactionTheme.colors.medium, EditTransactionTheme.shapes.r4)
             .clickable(onClick = onPickDueDate)
             .padding(vertical = 20.dp),
         verticalAlignment = Alignment.CenterVertically
@@ -42,16 +41,16 @@ internal fun EditTransactionDueDate(
 
         ResourceIcon(
             icon = R.drawable.ic_planned_payments,
-            tint = LegacyTheme.colors.pureInverse
+            tint = EditTransactionTheme.colors.pureInverse
         )
 
         Spacer(Modifier.width(8.dp))
 
         Text(
             text = stringResource(R.string.planned_for),
-            style = LegacyTheme.typo.b2.copy(
+            style = EditTransactionTheme.typo.b2.copy(
                 fontWeight = FontWeight.ExtraBold,
-                color = LegacyTheme.colors.pureInverse,
+                color = EditTransactionTheme.colors.pureInverse,
                 textAlign = TextAlign.Start
             )
         )
@@ -62,8 +61,8 @@ internal fun EditTransactionDueDate(
             text = with(LocalTimeFormatter.current) {
                 dueDate.formatLocal(TimeFormatter.Style.DateOnly(includeWeekDay = false))
             },
-            style = LegacyTheme.typo.nB2.copy(
-                color = LegacyTheme.colors.pureInverse,
+            style = EditTransactionTheme.typo.nB2.copy(
+                color = EditTransactionTheme.colors.pureInverse,
                 fontWeight = FontWeight.ExtraBold,
                 textAlign = TextAlign.Start
             )

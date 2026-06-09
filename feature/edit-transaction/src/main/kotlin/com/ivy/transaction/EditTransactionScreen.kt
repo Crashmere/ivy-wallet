@@ -46,7 +46,6 @@ import com.ivy.data.model.primitive.ColorInt
 import com.ivy.data.model.primitive.IconAsset
 import com.ivy.data.model.primitive.NotBlankTrimmedString
 import com.ivy.ui.platform.LocalDatePicker
-import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.platform.hideKeyboard
 import com.ivy.ui.tags.ShowTagModal
 import com.ivy.ui.tags.TagModalTag
@@ -369,8 +368,8 @@ private fun BoxWithConstraintsScope.UI(
             Text(
                 modifier = Modifier.padding(horizontal = 24.dp),
                 text = loanData.loanCaption!!,
-                style = LegacyTheme.typo.nB2.copy(
-                    color = LegacyTheme.colors.mediumInverse,
+                style = EditTransactionTheme.typo.nB2.copy(
+                    color = EditTransactionTheme.colors.mediumInverse,
                     fontWeight = FontWeight.Normal,
                     textAlign = TextAlign.Start
                 )
@@ -748,8 +747,8 @@ private fun EditTransactionAddPlannedDateButton(onClick: () -> Unit) {
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp)
-            .clip(LegacyTheme.shapes.r4)
-            .background(LegacyTheme.colors.medium, LegacyTheme.shapes.r4)
+            .clip(EditTransactionTheme.shapes.r4)
+            .background(EditTransactionTheme.colors.medium, EditTransactionTheme.shapes.r4)
             .clickable(onClick = onClick)
             .padding(vertical = 20.dp),
         verticalAlignment = Alignment.CenterVertically
@@ -758,15 +757,15 @@ private fun EditTransactionAddPlannedDateButton(onClick: () -> Unit) {
 
         ResourceIcon(
             icon = R.drawable.ic_planned_payments,
-            tint = LegacyTheme.colors.pureInverse
+            tint = EditTransactionTheme.colors.pureInverse
         )
 
         Spacer(Modifier.width(8.dp))
 
         Text(
             text = stringResource(R.string.add_planned_date_payment),
-            style = LegacyTheme.typo.b2.copy(
-                color = LegacyTheme.colors.pureInverse,
+            style = EditTransactionTheme.typo.b2.copy(
+                color = EditTransactionTheme.colors.pureInverse,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Start
             )
@@ -782,9 +781,9 @@ private fun PayOrGetPlannedButton(
     GradientButton(
         text = label,
         backgroundGradient = IvyGradients.Green,
-        disabledBackgroundColor = LegacyTheme.colors.gray,
-        shape = LegacyTheme.shapes.rFull,
-        textStyle = LegacyTheme.typo.b2.copy(
+        disabledBackgroundColor = EditTransactionTheme.colors.gray,
+        shape = EditTransactionTheme.shapes.rFull,
+        textStyle = EditTransactionTheme.typo.b2.copy(
             color = Color(0xFFFAFAFA),
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Start

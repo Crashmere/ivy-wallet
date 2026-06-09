@@ -26,7 +26,6 @@ import com.ivy.data.model.TransactionType
 import com.ivy.ui.compose.GradientIconButton
 import com.ivy.ui.compose.OutlinedPillButton
 import com.ivy.ui.theme.colors.Gradient
-import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.theme.colors.IvyFixedColors.White
 import com.ivy.ui.R
 import com.ivy.ui.compose.CloseIconButton
@@ -54,13 +53,13 @@ internal fun Toolbar(
                 OutlinedPillButton(
                     text = stringResource(R.string.income),
                     iconStart = R.drawable.ic_income,
-                    shape = LegacyTheme.shapes.rFull,
-                    backgroundColor = LegacyTheme.colors.pure,
-                    iconTint = LegacyTheme.colors.pureInverse,
-                    borderColor = LegacyTheme.colors.medium,
-                    textStyle = LegacyTheme.typo.b2.copy(
+                    shape = EditTransactionTheme.shapes.rFull,
+                    backgroundColor = EditTransactionTheme.colors.pure,
+                    iconTint = EditTransactionTheme.colors.pureInverse,
+                    borderColor = EditTransactionTheme.colors.medium,
+                    textStyle = EditTransactionTheme.typo.b2.copy(
                         fontWeight = FontWeight.Bold,
-                        color = LegacyTheme.colors.pureInverse,
+                        color = EditTransactionTheme.colors.pureInverse,
                         textAlign = TextAlign.Start,
                     ),
                     onClick = onChangeTransactionTypeModal
@@ -73,13 +72,13 @@ internal fun Toolbar(
                 OutlinedPillButton(
                     text = stringResource(R.string.expense),
                     iconStart = R.drawable.ic_expense,
-                    shape = LegacyTheme.shapes.rFull,
-                    backgroundColor = LegacyTheme.colors.pure,
-                    iconTint = LegacyTheme.colors.pureInverse,
-                    borderColor = LegacyTheme.colors.medium,
-                    textStyle = LegacyTheme.typo.b2.copy(
+                    shape = EditTransactionTheme.shapes.rFull,
+                    backgroundColor = EditTransactionTheme.colors.pure,
+                    iconTint = EditTransactionTheme.colors.pureInverse,
+                    borderColor = EditTransactionTheme.colors.medium,
+                    textStyle = EditTransactionTheme.typo.b2.copy(
                         fontWeight = FontWeight.Bold,
-                        color = LegacyTheme.colors.pureInverse,
+                        color = EditTransactionTheme.colors.pureInverse,
                         textAlign = TextAlign.Start,
                     ),
                     onClick = onChangeTransactionTypeModal
@@ -113,15 +112,15 @@ private fun DuplicateButton(onClick: () -> Unit) {
             .testTag("duplicate_button"),
         shape = CircleShape,
         colors = IconButtonDefaults.outlinedIconButtonColors()
-            .copy(contentColor = LegacyTheme.colors.medium),
-        border = BorderStroke(width = 2.dp, color = LegacyTheme.colors.medium),
+            .copy(contentColor = EditTransactionTheme.colors.medium),
+        border = BorderStroke(width = 2.dp, color = EditTransactionTheme.colors.medium),
         onClick = onClick
     ) {
         Icon(
             modifier = Modifier.padding(6.dp),
             imageVector = Icons.Sharp.CopyAll,
             contentDescription = "duplicate_button",
-            tint = LegacyTheme.colors.pureInverse
+            tint = EditTransactionTheme.colors.pureInverse
         )
     }
 }
@@ -134,7 +133,7 @@ private fun DeleteToolbarButton(onClick: () -> Unit) {
             .testTag("delete_button"),
         backgroundPadding = 6.dp,
         icon = R.drawable.ic_delete,
-        backgroundGradient = Gradient(LegacyTheme.colors.red, Color(0xFFFF99AB)),
+        backgroundGradient = Gradient(EditTransactionTheme.colors.red, Color(0xFFFF99AB)),
         enabled = true,
         hasShadow = false,
         tint = White,
@@ -149,9 +148,9 @@ private fun CloseButton(
 ) {
     CloseIconButton(
         modifier = modifier,
-        backgroundColor = LegacyTheme.colors.pure,
-        borderColor = LegacyTheme.colors.medium,
-        tint = LegacyTheme.colors.pureInverse,
+        backgroundColor = EditTransactionTheme.colors.pure,
+        borderColor = EditTransactionTheme.colors.medium,
+        tint = EditTransactionTheme.colors.pureInverse,
         onClick = onClick,
     )
 }

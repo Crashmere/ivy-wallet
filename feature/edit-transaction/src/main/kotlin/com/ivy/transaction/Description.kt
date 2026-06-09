@@ -23,7 +23,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.R
 import com.ivy.ui.compose.ResourceIcon
 import com.ivy.ui.compose.clickableNoIndication
@@ -68,8 +67,8 @@ private fun DescriptionText(
                 .padding(horizontal = 24.dp)
                 .testTag("trn_description"),
             text = description,
-            style = LegacyTheme.typo.nB2.copy(
-                color = LegacyTheme.colors.pureInverse,
+            style = EditTransactionTheme.typo.nB2.copy(
+                color = EditTransactionTheme.colors.pureInverse,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Left
             ),
@@ -89,8 +88,8 @@ private fun AddPrimaryAttributeButton(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp)
-            .clip(LegacyTheme.shapes.r4)
-            .background(LegacyTheme.colors.medium, LegacyTheme.shapes.r4)
+            .clip(EditTransactionTheme.shapes.r4)
+            .background(EditTransactionTheme.colors.medium, EditTransactionTheme.shapes.r4)
             .clickable(onClick = onClick)
             .padding(vertical = 20.dp),
         verticalAlignment = Alignment.CenterVertically
@@ -99,15 +98,15 @@ private fun AddPrimaryAttributeButton(
 
         ResourceIcon(
             icon = icon,
-            tint = LegacyTheme.colors.pureInverse
+            tint = EditTransactionTheme.colors.pureInverse
         )
 
         Spacer(Modifier.width(8.dp))
 
         Text(
             text = text,
-            style = LegacyTheme.typo.b2.copy(
-                color = LegacyTheme.colors.pureInverse,
+            style = EditTransactionTheme.typo.b2.copy(
+                color = EditTransactionTheme.colors.pureInverse,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Start
             )
@@ -127,8 +126,8 @@ private fun PrimaryAttributeColumn(
         modifier = Modifier
             .padding(horizontal = 16.dp)
             .fillMaxWidth()
-            .clip(LegacyTheme.shapes.r4)
-            .border(2.dp, LegacyTheme.colors.medium, LegacyTheme.shapes.r4)
+            .clip(EditTransactionTheme.shapes.r4)
+            .border(2.dp, EditTransactionTheme.colors.medium, EditTransactionTheme.shapes.r4)
             .clickableNoIndication(rememberInteractionSource(), onClick = onClick),
     ) {
         Spacer(modifier = Modifier.height(12.dp))
@@ -139,15 +138,15 @@ private fun PrimaryAttributeColumn(
         ) {
             ResourceIcon(
                 icon = icon,
-                tint = LegacyTheme.colors.pureInverse
+                tint = EditTransactionTheme.colors.pureInverse
             )
 
             Spacer(Modifier.width(8.dp))
 
             Text(
                 text = title,
-                style = LegacyTheme.typo.b2.copy(
-                    color = LegacyTheme.colors.pureInverse,
+                style = EditTransactionTheme.typo.b2.copy(
+                    color = EditTransactionTheme.colors.pureInverse,
                     fontWeight = FontWeight.ExtraBold,
                     textAlign = TextAlign.Start
                 )

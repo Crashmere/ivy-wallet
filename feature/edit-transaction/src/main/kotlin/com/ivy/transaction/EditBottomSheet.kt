@@ -48,7 +48,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.platform.addKeyboardListener
 import com.ivy.ui.compose.clickableNoIndication
 import com.ivy.ui.compose.consumeClicks
@@ -162,17 +161,17 @@ internal fun BoxWithConstraintsScope.EditBottomSheet(
             .statusBarsPadding()
             .padding(top = 24.dp)
 //            .drawColoredShadow(
-//                color = LegacyTheme.colors.mediumInverse,
-//                alpha = if (LegacyTheme.colors.isLight) 0.3f else 0.2f,
+//                color = EditTransactionTheme.colors.mediumInverse,
+//                alpha = if (EditTransactionTheme.colors.isLight) 0.3f else 0.2f,
 //                borderRadius = 24.dp,
 //                shadowRadius = 24.dp
 //            )
             .border(
                 width = 2.dp,
-                color = LegacyTheme.colors.medium,
-                shape = LegacyTheme.shapes.r2Top
+                color = EditTransactionTheme.colors.medium,
+                shape = EditTransactionTheme.shapes.r2Top
             )
-            .background(LegacyTheme.colors.pure, LegacyTheme.shapes.r2Top)
+            .background(EditTransactionTheme.colors.pure, EditTransactionTheme.shapes.r2Top)
             .verticalSwipeListener(
                 sensitivity = SWIPE_UP_EXPANDED_THRESHOLD,
                 state = rememberSwipeListenerState(),
@@ -278,8 +277,8 @@ internal fun BoxWithConstraintsScope.EditBottomSheet(
             Text(
                 modifier = Modifier.padding(start = 32.dp),
                 text = stringResource(R.string.account),
-                style = LegacyTheme.typo.b1.copy(
-                    color = LegacyTheme.colors.pureInverse,
+                style = EditTransactionTheme.typo.b1.copy(
+                    color = EditTransactionTheme.colors.pureInverse,
                     fontWeight = FontWeight.ExtraBold,
                     textAlign = TextAlign.Start
                 )
@@ -338,7 +337,7 @@ private fun BottomBar(
 //            .gradientCutBackground()
             .padding(bottom = 12.dp)
             .padding(bottom = navBarPadding),
-        lineColor = LegacyTheme.colors.medium
+        lineColor = EditTransactionTheme.colors.medium
     ) {
         Spacer(Modifier.width(24.dp))
 
@@ -367,7 +366,7 @@ private fun BottomBar(
 @Composable
 private fun ActionsRow(
     modifier: Modifier = Modifier,
-    lineColor: Color = LegacyTheme.colors.medium,
+    lineColor: Color = EditTransactionTheme.colors.medium,
     Content: @Composable RowScope.() -> Unit
 ) {
     Row(
@@ -401,9 +400,9 @@ private fun CircleButton(
     modifier: Modifier = Modifier,
     @DrawableRes icon: Int,
     contentDescription: String = "icon",
-    backgroundColor: Color = LegacyTheme.colors.pure,
-    borderColor: Color = LegacyTheme.colors.medium,
-    tint: Color? = LegacyTheme.colors.pureInverse,
+    backgroundColor: Color = EditTransactionTheme.colors.pure,
+    borderColor: Color = EditTransactionTheme.colors.medium,
+    tint: Color? = EditTransactionTheme.colors.pureInverse,
     onClick: () -> Unit,
 ) {
     Icon(
@@ -455,10 +454,10 @@ private fun TransferRowMini(
             text = fromAccount?.name ?: "Null",
             iconStart = R.drawable.ic_accounts,
             backgroundGradient = Gradient.solid(fromColor),
-            disabledBackgroundColor = LegacyTheme.colors.gray,
-            shape = LegacyTheme.shapes.rFull,
+            disabledBackgroundColor = EditTransactionTheme.colors.gray,
+            shape = EditTransactionTheme.shapes.rFull,
             iconTint = fromContrastColor,
-            textStyle = LegacyTheme.typo.b2.copy(
+            textStyle = EditTransactionTheme.typo.b2.copy(
                 color = fromContrastColor,
                 fontWeight = FontWeight.ExtraBold,
                 textAlign = TextAlign.Start
@@ -470,7 +469,7 @@ private fun TransferRowMini(
 
         ResourceIcon(
             icon = R.drawable.ic_arrow_right,
-            tint = LegacyTheme.colors.pureInverse
+            tint = EditTransactionTheme.colors.pureInverse
         )
 
         val toColor = toAccount?.color?.toComposeColor() ?: Ivy
@@ -479,10 +478,10 @@ private fun TransferRowMini(
             text = toAccount?.name ?: "Null",
             iconStart = R.drawable.ic_accounts,
             backgroundGradient = Gradient.solid(toColor),
-            disabledBackgroundColor = LegacyTheme.colors.gray,
-            shape = LegacyTheme.shapes.rFull,
+            disabledBackgroundColor = EditTransactionTheme.colors.gray,
+            shape = EditTransactionTheme.shapes.rFull,
             iconTint = toContrastColor,
-            textStyle = LegacyTheme.typo.b2.copy(
+            textStyle = EditTransactionTheme.typo.b2.copy(
                 color = toContrastColor,
                 fontWeight = FontWeight.ExtraBold,
                 textAlign = TextAlign.Start
@@ -534,8 +533,8 @@ private fun SheetHeader(
             Text(
                 modifier = Modifier.padding(start = 32.dp),
                 text = label,
-                style = LegacyTheme.typo.b1.copy(
-                    color = LegacyTheme.colors.pureInverse,
+                style = EditTransactionTheme.typo.b1.copy(
+                    color = EditTransactionTheme.colors.pureInverse,
                     fontWeight = FontWeight.ExtraBold,
                     textAlign = TextAlign.Start
                 )
@@ -557,8 +556,8 @@ private fun SheetHeader(
                 Text(
                     modifier = Modifier.padding(start = 32.dp),
                     text = stringResource(R.string.to),
-                    style = LegacyTheme.typo.b1.copy(
-                        color = LegacyTheme.colors.pureInverse,
+                    style = EditTransactionTheme.typo.b1.copy(
+                        color = EditTransactionTheme.colors.pureInverse,
                         fontWeight = FontWeight.ExtraBold,
                         textAlign = TextAlign.Start
                     )
@@ -644,14 +643,14 @@ private fun AccountChip(
 ) {
     val accountColor = account.color.toComposeColor()
     val textColor =
-        if (selected) findContrastTextColor(accountColor) else LegacyTheme.colors.pureInverse
+        if (selected) findContrastTextColor(accountColor) else EditTransactionTheme.colors.pureInverse
 
-    val medium = LegacyTheme.colors.medium
-    val rFull = LegacyTheme.shapes.rFull
+    val medium = EditTransactionTheme.colors.medium
+    val rFull = EditTransactionTheme.shapes.rFull
 
     Row(
         modifier = Modifier
-            .clip(LegacyTheme.shapes.rFull)
+            .clip(EditTransactionTheme.shapes.rFull)
             .thenIf(!selected) {
                 border(2.dp, medium, rFull)
             }
@@ -676,7 +675,7 @@ private fun AccountChip(
         Text(
             modifier = Modifier.padding(vertical = 10.dp),
             text = account.name,
-            style = LegacyTheme.typo.b2.copy(
+            style = EditTransactionTheme.typo.b2.copy(
                 color = textColor,
                 fontWeight = FontWeight.ExtraBold,
                 textAlign = TextAlign.Start
@@ -693,8 +692,8 @@ private fun AddAccount(
 ) {
     Row(
         modifier = Modifier
-            .clip(LegacyTheme.shapes.rFull)
-            .border(2.dp, LegacyTheme.colors.medium, LegacyTheme.shapes.rFull)
+            .clip(EditTransactionTheme.shapes.rFull)
+            .border(2.dp, EditTransactionTheme.colors.medium, EditTransactionTheme.shapes.rFull)
             .clickable(onClick = onClick)
             .padding(8.dp),
         verticalAlignment = Alignment.CenterVertically
@@ -703,7 +702,7 @@ private fun AddAccount(
 
         ResourceIcon(
             icon = R.drawable.ic_plus,
-            tint = LegacyTheme.colors.pureInverse
+            tint = EditTransactionTheme.colors.pureInverse
         )
 
         Spacer(Modifier.width(4.dp))
@@ -711,8 +710,8 @@ private fun AddAccount(
         Text(
             modifier = Modifier.padding(vertical = 10.dp),
             text = stringResource(R.string.add_account),
-            style = LegacyTheme.typo.b2.copy(
-                color = LegacyTheme.colors.pureInverse,
+            style = EditTransactionTheme.typo.b2.copy(
+                color = EditTransactionTheme.colors.pureInverse,
                 fontWeight = FontWeight.ExtraBold,
                 textAlign = TextAlign.Start
             )
@@ -773,8 +772,8 @@ private fun Amount(
             if (showConvertedAmountText != null) {
                 Text(
                     text = showConvertedAmountText,
-                    style = LegacyTheme.typo.nB2.copy(
-                        color = LegacyTheme.colors.pureInverse,
+                    style = EditTransactionTheme.typo.nB2.copy(
+                        color = EditTransactionTheme.colors.pureInverse,
                         fontWeight = FontWeight.SemiBold,
                         textAlign = TextAlign.Start
                     )
@@ -827,8 +826,8 @@ private fun LabelAccountMini(
     ) {
         Text(
             text = label,
-            style = LegacyTheme.typo.nC.copy(
-                color = LegacyTheme.colors.mediumInverse,
+            style = EditTransactionTheme.typo.nC.copy(
+                color = EditTransactionTheme.colors.mediumInverse,
                 fontWeight = FontWeight.Medium,
                 textAlign = TextAlign.Start
             )
@@ -838,8 +837,8 @@ private fun LabelAccountMini(
 
         Text(
             text = account?.name?.uppercase(Locale.getDefault()) ?: "",
-            style = LegacyTheme.typo.nB2.copy(
-                color = LegacyTheme.colors.pureInverse,
+            style = EditTransactionTheme.typo.nB2.copy(
+                color = EditTransactionTheme.colors.pureInverse,
                 fontWeight = FontWeight.ExtraBold,
                 textAlign = TextAlign.Start
             )

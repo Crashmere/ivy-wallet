@@ -21,7 +21,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.currency.IvyCurrency
 import com.ivy.data.model.currency.format
-import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.R
 import com.ivy.ui.compose.ResourceIcon
 
@@ -39,8 +38,8 @@ internal fun CustomExchangeRateCard(
         modifier = modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp)
-            .clip(LegacyTheme.shapes.r4)
-            .background(LegacyTheme.colors.medium, LegacyTheme.shapes.r4)
+            .clip(EditTransactionTheme.shapes.r4)
+            .background(EditTransactionTheme.colors.medium, EditTransactionTheme.shapes.r4)
             .clickable(onClick = onClick)
             .padding(vertical = 20.dp),
         verticalAlignment = Alignment.CenterVertically,
@@ -50,7 +49,7 @@ internal fun CustomExchangeRateCard(
 
         ResourceIcon(
             icon = R.drawable.ic_currency,
-            tint = LegacyTheme.colors.pureInverse
+            tint = EditTransactionTheme.colors.pureInverse
         )
 
         Spacer(Modifier.width(8.dp))
@@ -61,9 +60,9 @@ internal fun CustomExchangeRateCard(
         ) {
             Text(
                 text = title,
-                style = LegacyTheme.typo.b2.copy(
+                style = EditTransactionTheme.typo.b2.copy(
                     fontWeight = FontWeight.ExtraBold,
-                    color = LegacyTheme.colors.pureInverse,
+                    color = EditTransactionTheme.colors.pureInverse,
                     textAlign = TextAlign.Start
                 )
             )
@@ -75,21 +74,21 @@ internal fun CustomExchangeRateCard(
             ) {
                 Text(
                     text = fromCurrencyCode,
-                    style = LegacyTheme.typo.b2.copy(
+                    style = EditTransactionTheme.typo.b2.copy(
                         fontWeight = FontWeight.ExtraBold,
-                        color = LegacyTheme.colors.orange,
+                        color = EditTransactionTheme.colors.orange,
                         textAlign = TextAlign.Start
                     )
                 )
                 ResourceIcon(
                     icon = R.drawable.ic_arrow_right,
-                    tint = LegacyTheme.colors.orange
+                    tint = EditTransactionTheme.colors.orange
                 )
                 Text(
                     text = toCurrencyCode,
-                    style = LegacyTheme.typo.nB2.copy(
+                    style = EditTransactionTheme.typo.nB2.copy(
                         fontWeight = FontWeight.ExtraBold,
-                        color = LegacyTheme.colors.orange,
+                        color = EditTransactionTheme.colors.orange,
                         textAlign = TextAlign.Start
                     )
                 )
@@ -102,21 +101,21 @@ internal fun CustomExchangeRateCard(
             ) {
                 Text(
                     text = "1",
-                    style = LegacyTheme.typo.nB2.copy(
+                    style = EditTransactionTheme.typo.nB2.copy(
                         fontWeight = FontWeight.ExtraBold,
-                        color = LegacyTheme.colors.orange,
+                        color = EditTransactionTheme.colors.orange,
                         textAlign = TextAlign.Start
                     )
                 )
                 ResourceIcon(
                     icon = R.drawable.ic_arrow_right,
-                    tint = LegacyTheme.colors.orange
+                    tint = EditTransactionTheme.colors.orange
                 )
                 Text(
                     text = exchangeRate.format(IvyCurrency.getDecimalPlaces(toCurrencyCode)),
-                    style = LegacyTheme.typo.nB2.copy(
+                    style = EditTransactionTheme.typo.nB2.copy(
                         fontWeight = FontWeight.ExtraBold,
-                        color = LegacyTheme.colors.orange,
+                        color = EditTransactionTheme.colors.orange,
                         textAlign = TextAlign.Start
                     )
                 )
@@ -124,7 +123,7 @@ internal fun CustomExchangeRateCard(
         }
         ResourceIcon(
             icon = R.drawable.ic_refresh,
-            tint = LegacyTheme.colors.pureInverse,
+            tint = EditTransactionTheme.colors.pureInverse,
             modifier = Modifier
                 .padding(end = 16.dp)
                 .clickable {

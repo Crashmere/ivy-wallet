@@ -34,7 +34,6 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.TransactionType
-import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.R
 import com.ivy.ui.compose.selectEndTextFieldValue
 import com.ivy.ui.platform.hideKeyboard
@@ -101,7 +100,7 @@ private fun ColumnScope.TitleTextField(
     modifier: Modifier = Modifier,
     dividerModifier: Modifier = Modifier,
     value: TextFieldValue,
-    textColor: Color = LegacyTheme.colors.pureInverse,
+    textColor: Color = EditTransactionTheme.colors.pureInverse,
     hint: String?,
     visualTransformation: VisualTransformation = VisualTransformation.None,
     keyboardOptions: KeyboardOptions,
@@ -115,8 +114,8 @@ private fun ColumnScope.TitleTextField(
         if (value.text.isBlank() && !hint.isNullOrBlank()) {
             Text(
                 text = hint,
-                style = LegacyTheme.typo.h2.copy(
-                    color = LegacyTheme.colors.gray,
+                style = EditTransactionTheme.typo.h2.copy(
+                    color = EditTransactionTheme.colors.gray,
                     fontWeight = FontWeight.Black,
                     textAlign = TextAlign.Start
                 ),
@@ -130,13 +129,13 @@ private fun ColumnScope.TitleTextField(
                 .testTag("input_field"),
             value = value,
             onValueChange = onValueChanged,
-            textStyle = LegacyTheme.typo.h2.copy(
+            textStyle = EditTransactionTheme.typo.h2.copy(
                 color = textColor,
                 fontWeight = FontWeight.Black,
                 textAlign = TextAlign.Start
             ),
             singleLine = false,
-            cursorBrush = SolidColor(LegacyTheme.colors.pureInverse),
+            cursorBrush = SolidColor(EditTransactionTheme.colors.pureInverse),
             visualTransformation = visualTransformation,
             keyboardOptions = keyboardOptions,
             keyboardActions = keyboardActions ?: KeyboardActions(
@@ -153,7 +152,7 @@ private fun ColumnScope.TitleTextField(
         modifier = dividerModifier
             .fillMaxWidth()
             .height(2.dp)
-            .background(LegacyTheme.colors.medium, LegacyTheme.shapes.rFull),
+            .background(EditTransactionTheme.colors.medium, EditTransactionTheme.shapes.rFull),
     )
 }
 
@@ -184,8 +183,8 @@ private fun Suggestion(
             .padding(horizontal = 24.dp)
             .padding(vertical = 12.dp),
         text = suggestion,
-        style = LegacyTheme.typo.b2.copy(
-            color = LegacyTheme.colors.pureInverse,
+        style = EditTransactionTheme.typo.b2.copy(
+            color = EditTransactionTheme.colors.pureInverse,
             fontWeight = FontWeight.Medium,
             textAlign = TextAlign.Start
         )

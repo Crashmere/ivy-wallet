@@ -24,7 +24,6 @@ import androidx.compose.ui.unit.dp
 import com.ivy.data.model.Category
 import com.ivy.ui.compose.GradientButton
 import com.ivy.ui.theme.colors.Gradient
-import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.theme.colors.findContrastTextColor
 import com.ivy.ui.theme.colors.toComposeColor
 import com.ivy.ui.R
@@ -41,7 +40,7 @@ internal fun Category(
         AddCategoryButton(
             modifier = Modifier.padding(start = 24.dp),
             iconStart = R.drawable.ic_plus,
-            iconTint = LegacyTheme.colors.pureInverse,
+            iconTint = EditTransactionTheme.colors.pureInverse,
             text = stringResource(R.string.add_category),
             onClick = onChooseCategory
         )
@@ -63,9 +62,9 @@ private fun CategoryButton(
             defaultIcon = R.drawable.ic_custom_category_s
         ),
         backgroundGradient = Gradient.solid(categoryColor),
-        disabledBackgroundColor = LegacyTheme.colors.gray,
-        shape = LegacyTheme.shapes.rFull,
-        textStyle = LegacyTheme.typo.b2.copy(
+        disabledBackgroundColor = EditTransactionTheme.colors.gray,
+        shape = EditTransactionTheme.shapes.rFull,
+        textStyle = EditTransactionTheme.typo.b2.copy(
             color = contrastColor,
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Start
@@ -82,8 +81,8 @@ private fun CategoryButton(
 private fun AddCategoryButton(
     modifier: Modifier = Modifier,
     text: String,
-    textStyle: TextStyle = LegacyTheme.typo.b2.copy(
-        color = LegacyTheme.colors.pureInverse,
+    textStyle: TextStyle = EditTransactionTheme.typo.b2.copy(
+        color = EditTransactionTheme.colors.pureInverse,
         fontWeight = FontWeight.Bold,
         textAlign = TextAlign.Start
     ),
@@ -94,11 +93,11 @@ private fun AddCategoryButton(
 ) {
     Row(
         modifier = modifier
-            .clip(LegacyTheme.shapes.rFull)
+            .clip(EditTransactionTheme.shapes.rFull)
             .border(
                 width = 2.dp,
-                brush = Gradient.solid(LegacyTheme.colors.mediumInverse).asHorizontalBrush(),
-                shape = LegacyTheme.shapes.rFull
+                brush = Gradient.solid(EditTransactionTheme.colors.mediumInverse).asHorizontalBrush(),
+                shape = EditTransactionTheme.shapes.rFull
             )
             .clickable(onClick = onClick),
         verticalAlignment = Alignment.CenterVertically
