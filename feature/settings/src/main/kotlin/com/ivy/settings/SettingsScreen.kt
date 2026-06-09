@@ -2,7 +2,7 @@ package com.ivy.settings
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import androidx.activity.compose.BackHandler
+import com.ivy.ui.compose.BackPressHandler
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -242,7 +242,7 @@ private fun BoxWithConstraintsScope.UI(
         SettingsPage.DisplayPreferences -> displayPreferencesListState
         SettingsPage.InputAndLists -> inputAndListsListState
     }
-    BackHandler(enabled = settingsPage != SettingsPage.Main) {
+    BackPressHandler(enabled = settingsPage != SettingsPage.Main) {
         settingsPage = SettingsPage.Main
     }
 

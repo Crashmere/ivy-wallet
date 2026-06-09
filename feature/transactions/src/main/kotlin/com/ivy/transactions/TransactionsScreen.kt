@@ -1,6 +1,6 @@
 package com.ivy.transactions
 
-import androidx.activity.compose.BackHandler
+import com.ivy.ui.compose.BackPressHandler
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -131,7 +131,7 @@ fun BoxWithConstraintsScope.TransactionsScreen(screen: TransactionsScreen) {
     }
 
     val view = LocalView.current
-    BackHandler(enabled = !nav.backStackEmpty()) {
+    BackPressHandler(enabled = !nav.backStackEmpty()) {
         setStatusBarDarkTextCompat(
             view = view,
             darkText = themeState.theme == Theme.LIGHT

@@ -1,6 +1,6 @@
 package com.ivy.importdata.csvimport
 
-import androidx.activity.compose.BackHandler
+import com.ivy.ui.compose.BackPressHandler
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.BoxWithConstraintsScope
 import androidx.compose.runtime.Composable
@@ -24,7 +24,7 @@ fun BoxWithConstraintsScope.ImportCSVScreen() {
     val importProgressPercent by viewModel.importProgressPercent.collectAsState()
     val importResult by viewModel.importResult.collectAsState()
 
-    BackHandler(enabled = importStep != ImportStep.IMPORT_FROM) {
+    BackPressHandler(enabled = importStep != ImportStep.IMPORT_FROM) {
         viewModel.handleInternalBack()
     }
 

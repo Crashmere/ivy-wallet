@@ -7,6 +7,5 @@ android {
 }
 
 dependencies {
-    implementation(libs.compose.activity)
     implementation(libs.bundles.opencsv)
 }

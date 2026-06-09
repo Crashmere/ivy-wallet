@@ -5,7 +5,3 @@ plugins {
 android {
     namespace = "com.ivy.settings"
 }
-
-dependencies {
-    implementation(libs.compose.activity)
-}

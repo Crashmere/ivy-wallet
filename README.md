@@ -30,6 +30,7 @@
 - 精简 app lint 配置：删除强制生成根目录 lint HTML/XML 报告和跨依赖 lint 扫描的配置，只保留当前项目仍需要的 lint 抑制与 release 检查策略。
 - 清理生产代码中的裸异常堆栈输出：编辑交易、计划付款以及预算/分类/借贷保存用例不再调用 `printStackTrace()`，继续按原有失败返回值处理。
 - 收窄 feature 内部 Compose helper：分类排序弹窗和报表标签筛选不再保留未使用的 `modifier` 参数，减少无意义 suppress。
+- 收窄返回键依赖：交易页、设置页、导入页和主页面改用 `shared:ui:core` 的 `BackPressHandler`，这些 feature 不再直接声明 `activity-compose` 依赖。
 - 补齐 `buildSrc` 根项目名，消除 Gradle type-safe project accessors 针对 buildSrc checkout 路径的缓存警告。
 - 收窄 Gradle 仓库配置：普通依赖解析不再使用 Gradle Plugin Portal，`buildSrc` 普通依赖也不再保留 JitPack；插件解析入口继续保留 Gradle Plugin Portal。
 - 删除根工程 JitPack 仓库：当前剩余第三方依赖均可从 Google/Maven Central 解析，项目不再依赖额外的 JitPack 仓库入口。
@@ -1088,7 +1089,7 @@
 - 版本目录中未被任何 Gradle 文件或源码使用的 `mockk-android` 与 `androidx-security` 依赖别名已删除。
 - Ktor 依赖继续收缩：数据层当前使用 `ContentNegotiation` 与 `ktor-serialization-kotlinx-json`，版本目录已删除旧 `ktor-client-serialization` 依赖别名和 bundle 条目。
 - Compose bundle 继续收缩：源码中已无 `@Preview`、Coil Compose 或 WindowSizeClass 使用，版本目录已删除 `compose-tooling`、`compose-coil` 和 `compose-material3-windowsize`。
-- `activity-compose` 已从公共 Compose bundle 下放到实际使用方；当前只有 app 的 `setContent`、设置页二级菜单和 legacy 弹窗返回键显式依赖它。
+- `activity-compose` 已从公共 Compose bundle 下放到实际使用方；页面返回键统一通过 `shared:ui:core` 的 `BackPressHandler` 使用，当前由 app 和 UI core 显式声明该依赖。
 - `lifecycle-viewmodel-compose` 已从公共 Compose bundle 下放到实际使用方；只有需要 `viewModel()` 或 `LocalViewModelStoreOwner` 的 feature/navigation 模块显式依赖它。
 - `shared:ui:legacy` 显式声明 `androidx.core:core-ktx`，不再靠 Compose/ViewModel 传递依赖获得 `doOnLayout`。
 - `hilt-work` 已从公共 Hilt bundle 下放到 app；当前只有交易提醒 Worker 和 app 的 WorkManager 配置需要它。

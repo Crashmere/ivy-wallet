@@ -1,6 +1,6 @@
 package com.ivy.main
 
-import androidx.activity.compose.BackHandler
+import com.ivy.ui.compose.BackPressHandler
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.BoxWithConstraintsScope
@@ -33,7 +33,7 @@ fun BoxWithConstraintsScope.MainScreen() {
         viewModel.start()
     }
 
-    BackHandler(enabled = viewModel.selectedTab == MainTab.ACCOUNTS) {
+    BackPressHandler(enabled = viewModel.selectedTab == MainTab.ACCOUNTS) {
         viewModel.selectTab(MainTab.HOME)
     }
 
