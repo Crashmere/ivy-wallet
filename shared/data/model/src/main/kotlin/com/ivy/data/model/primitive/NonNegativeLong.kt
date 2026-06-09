@@ -13,8 +13,6 @@ value class NonNegativeLong private constructor(val value: Long) {
             ensure(raw >= 0) { "$raw is not >= 0" }
             return NonNegativeLong(raw)
         }
-
-        val Zero = NonNegativeLong.unsafe(0L)
     }
 }
 
