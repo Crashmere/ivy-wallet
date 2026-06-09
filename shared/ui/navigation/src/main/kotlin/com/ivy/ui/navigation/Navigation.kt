@@ -24,10 +24,6 @@ class Navigation {
 
   fun backStackEmpty() = backStack.isEmpty()
 
-  private fun popBackStack() {
-    backStack.removeLast()
-  }
-
   fun handleRootBack(): Boolean {
     return back()
   }
@@ -46,9 +42,7 @@ class Navigation {
   }
 
   fun resetBackStack() {
-    while (!backStackEmpty()) {
-      popBackStack()
-    }
+    backStack.clear()
     lastScreen = null
   }
 }
