@@ -1,5 +1,6 @@
 package com.ivy.home
 
+import android.animation.ArgbEvaluator
 import androidx.annotation.DrawableRes
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.Canvas
@@ -35,6 +36,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.layout.layout
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
@@ -47,7 +49,6 @@ import com.ivy.data.model.Theme
 import com.ivy.ui.compose.BackPressHandler
 import com.ivy.ui.compose.thenIf
 import com.ivy.ui.compose.clickableNoIndication
-import com.ivy.ui.animation.colorLerp
 import com.ivy.ui.animation.lerp
 import com.ivy.ui.compose.navigationBarInset
 import com.ivy.ui.compose.rememberInteractionSource
@@ -63,6 +64,10 @@ import com.ivy.ui.compose.ResourceIcon
 import kotlin.math.roundToInt
 
 private const val SWIPE_UP_THRESHOLD_CLOSE_MORE_MENU = 300
+
+private fun colorLerp(start: Color, end: Color, fraction: Float): Color {
+    return Color(ArgbEvaluator().evaluate(fraction, start.toArgb(), end.toArgb()) as Int)
+}
 
 internal enum class MoreMenuDestination {
     Search,
