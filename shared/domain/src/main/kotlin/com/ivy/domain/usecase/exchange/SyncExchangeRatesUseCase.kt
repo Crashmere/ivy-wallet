@@ -55,7 +55,7 @@ class SyncExchangeRatesUseCase @Inject internal constructor(
         currency = currency
     )
 
-    data class AssetCodeId(
+    private data class AssetCodeId(
         val baseCurrency: AssetCode,
         val currency: AssetCode,
     )

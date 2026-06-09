@@ -200,7 +200,7 @@ class ExportCsvUseCase @Inject internal constructor(
         decimalFormatSymbols = DecimalFormatSymbols.getInstance(Locale.ENGLISH)
     }.format(this)
 
-    interface CsvRowScope {
+    private interface CsvRowScope {
         fun csvAppend(value: String?)
     }
 
