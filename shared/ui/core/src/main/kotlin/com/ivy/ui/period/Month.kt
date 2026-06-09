@@ -45,9 +45,6 @@ data class Month(
         )
     }
 
-    fun toTimePeriod(): TimePeriod = TimePeriod(
-        month = this
-    )
 }
 
 @Composable

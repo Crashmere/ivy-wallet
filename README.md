@@ -49,6 +49,7 @@
 - domain use case 仍作为 feature 注入入口保留，但构造函数、内部算法 helper、mapper、汇率换算细节、时间 helper 等已尽量收窄为模块内部实现。
 - data-core 的 Room Store、偏好 Store、mapper、文件系统和远程汇率源等实现类继续留在 data-core 内部，外部通过 data-api 端口和 domain use case 使用。
 - data-model 金额、时间范围和 primitive 工具已继续清理无调用方公开扩展和常量，基础模型层不再暴露没有业务入口的 helper。
+- CSV 导入、借贷详情和周期工具里继续删除无调用方 helper，保留现有导入、借贷交易同步和周期选择行为。
 
 ### 交易模型和 legacy 命名
 

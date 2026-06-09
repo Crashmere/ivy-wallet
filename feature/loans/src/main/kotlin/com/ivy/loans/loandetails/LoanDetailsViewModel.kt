@@ -590,10 +590,6 @@ internal class LoanDetailsViewModel @Inject internal constructor(
         }
     }
 
-    fun onLoanTransactionChecked(boolean: Boolean) {
-        createLoanTransaction.value = boolean
-    }
-
     private fun createAccount(data: CreateAccountData) {
         viewModelScope.launch {
             createAccountWithBalanceUseCase(data)
