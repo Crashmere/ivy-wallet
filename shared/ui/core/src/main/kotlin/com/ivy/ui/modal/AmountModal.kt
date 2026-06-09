@@ -48,7 +48,6 @@ import com.ivy.ui.money.parseAmountOrNull
 import com.ivy.ui.theme.colors.IvyFixedColors
 import java.util.UUID
 import kotlin.math.truncate
-import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 

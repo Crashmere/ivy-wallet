@@ -51,7 +51,6 @@ import com.ivy.ui.transaction.TransactionListHistoryTransaction
 import com.ivy.ui.transaction.TransactionListTag
 import com.ivy.ui.transaction.TransactionListTransaction
 import com.ivy.ui.transaction.TransactionListTransactionType
-import com.ivy.ui.period.Month
 import com.ivy.ui.period.TimePeriod
 import com.ivy.ui.period.displayLong
 import com.ivy.ui.period.LocalPeriodState

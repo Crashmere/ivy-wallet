@@ -24,7 +24,6 @@ import com.ivy.data.model.currency.format
 import com.ivy.ui.R
 import com.ivy.ui.theme.colors.IvyGradients
 import com.ivy.ui.theme.colors.IvyFixedColors.White
-import kotlinx.collections.immutable.persistentListOf
 
 @SuppressLint("ComposeModifierMissing")
 @Composable

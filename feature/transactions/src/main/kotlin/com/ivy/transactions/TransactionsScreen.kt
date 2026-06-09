@@ -32,7 +32,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.platform.testTag
@@ -70,7 +69,6 @@ import com.ivy.ui.transaction.TransactionListHistoryTransaction
 import com.ivy.ui.transaction.TransactionListTag
 import com.ivy.ui.transaction.TransactionListTransaction
 import com.ivy.ui.transaction.TransactionListTransactionType
-import com.ivy.ui.period.Month
 import com.ivy.ui.period.TimePeriod
 import com.ivy.ui.period.displayLong
 import com.ivy.ui.period.LocalPeriodState
