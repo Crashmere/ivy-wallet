@@ -45,7 +45,7 @@ import com.ivy.data.db.migration.Migration129to130_LoanIncludeNote
 import com.ivy.data.db.migration.Migration130to131_DropUsers
 import com.ivy.data.db.migration.Migration131to132_DropTagSyncTime
 import com.ivy.data.db.migration.Migration132to133_DropIsSynced
-import com.ivy.data.db.migration.Migration133to134_DropSettingsLegacyFields
+import com.ivy.data.db.migration.Migration133to134_DropUnusedSettingsFields
 import com.ivy.data.db.migration.Migration105to106_TransactionRecurringRules
 import com.ivy.data.db.migration.Migration106to107_Wishlist
 import com.ivy.data.db.migration.Migration107to108_Sync
@@ -139,7 +139,7 @@ internal abstract class IvyRoomDatabase : RoomDatabase() {
             Migration130to131_DropUsers(),
             Migration131to132_DropTagSyncTime(),
             Migration132to133_DropIsSynced(),
-            Migration133to134_DropSettingsLegacyFields()
+            Migration133to134_DropUnusedSettingsFields()
         )
 
         @Suppress("SpreadOperator")

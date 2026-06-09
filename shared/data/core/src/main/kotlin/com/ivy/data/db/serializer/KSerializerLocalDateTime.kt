@@ -10,7 +10,7 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 import java.time.LocalDateTime
 
-// Kept for legacy Room entities and backup JSON that still encode LocalDateTime as UTC epoch millis.
+// Kept for Room entities and backup JSON that encode LocalDateTime as UTC epoch millis.
 @Keep
 internal object KSerializerLocalDateTime : KSerializer<LocalDateTime> {
     override val descriptor = PrimitiveSerialDescriptor(

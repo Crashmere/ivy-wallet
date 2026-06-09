@@ -156,7 +156,7 @@ fun Arb.Companion.assetCode(): Arb<AssetCode> = Arb.notBlankTrimmedString().map 
 private suspend fun ArbitraryBuilderContext.arbInstant(
     time: Option<ArbTime>
 ): Instant {
-    // Because of legacy timezone conversions
+    // Keep generated instants away from platform conversion overflow edges.
     val safeOffset = TimeUnit.SECONDS.toDays(365 * 4)
     val safeMaxValue = Instant.MAX.minusSeconds(safeOffset)
     val safeMinValue = Instant.MIN.plusSeconds(safeOffset)

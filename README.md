@@ -1582,6 +1582,7 @@ shared:ui:core
 - 计划付款样式依赖继续收窄：`feature:planned-payments` 增加本模块私有 `PlannedTheme` 承接计划付款列表、编辑页、底部表单、标题/描述弹窗和重复规则弹窗所需 token；计划付款模块已移除对 `shared:ui:legacy` 的直接依赖。
 - 编辑交易页样式依赖继续收窄：`feature:edit-transaction` 增加本模块私有 `EditTransactionTheme` 承接编辑交易页、底部表单、标题/描述弹窗、日期/到期日、交易类型切换和自定义汇率卡片所需 token；编辑交易模块已移除对 `shared:ui:legacy` 的直接依赖。
 - `shared:ui:legacy` 模块已删除；最后只剩的 `LegacyUiRoot` / `LegacyThemeProvider` root 装配已收回 app 私有 `AppUiRoot`，继续提供主题、时间、日期、状态栏和页面 surface 行为。
+- 继续清理误导性 legacy 命名：借贷详情局部变量、测试时间生成注释、设置表注释、LocalDateTime 序列化注释和 `133 -> 134` 设置迁移类名已改成当前语义，不再把仍保留的正式兼容逻辑称为 legacy。
 - app 仍保留文件选择、文件分享、Material 日期选择器、BuildInfo、Locale 设置、生物识别和窗口安全等真正依赖 Activity 或 Android app 壳层的装配。
 
 ## 高风险区域

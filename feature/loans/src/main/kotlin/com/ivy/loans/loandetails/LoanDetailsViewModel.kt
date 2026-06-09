@@ -338,11 +338,11 @@ internal class LoanDetailsViewModel @Inject internal constructor(
 
                         DisplayLoanRecord(
                             it,
-                            account = account?.let { legacyAccount ->
+                            account = account?.let { accountData ->
                                 DisplayLoanAccount(
-                                    id = legacyAccount.id,
-                                    name = legacyAccount.name,
-                                    icon = legacyAccount.icon
+                                    id = accountData.id,
+                                    name = accountData.name,
+                                    icon = accountData.icon
                                 )
                             },
                             loanRecordTransaction = hasTransaction,
