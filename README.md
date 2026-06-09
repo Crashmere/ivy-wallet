@@ -71,6 +71,7 @@
 - 继续删除旧弹窗、侧边菜单和控件状态遗留的未引用 drawable。
 - 继续删除旧页面尺寸变体和旧功能入口遗留的未引用 drawable，例如无内边距入口图标、旧预算/统计小图标和旧标签/到期日图标。
 - 继续删除 `shared:ui:core` 中无引用的旧 logo、旧 launcher drawable 和空账户插画；实际启动图标保留在 `app/src/main/res/mipmap*`。
+- 继续删除没有 `R.font` / `@font` 静态引用的 italic、thin、extralight 等字体文件，保留当前主题实际使用的 OpenSans/Raleway 字重。
 - 继续删除默认资源和多语言资源中已经没有调用方的孤立字符串。
 - 继续清理已确认无使用点的 Kotlin import，减少页面文件顶部噪音。
 - 继续收窄 `shared:ui:core` 的公共面，删除未使用动画 helper，并把中号图标的内部包装实现收回文件私有。
