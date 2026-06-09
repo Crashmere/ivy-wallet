@@ -17,5 +17,3 @@ value class NonNegativeInt private constructor(val value: Int) {
         val Zero = NonNegativeInt.unsafe(0)
     }
 }
-
-fun PositiveInt.toNonNegative(): NonNegativeInt = NonNegativeInt.unsafe(value)

@@ -32,7 +32,7 @@ import com.ivy.home.customerjourney.CustomerJourneyCardsProvider
 import com.ivy.ui.theme.ThemeState
 import com.ivy.ui.period.PeriodState
 import com.ivy.ui.period.TimePeriod
-import com.ivy.data.model.toUTCCloseTimeRange
+import com.ivy.data.model.toCloseTimeRange
 import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.preferences.asEnabledState
 import com.ivy.domain.usecase.account.GetAccountsUseCase
@@ -297,7 +297,7 @@ internal class HomeViewModel @Inject internal constructor(
         // This restores the runtime theme when the user imports a local backup.
         themeState.update(theme = preferences.theme)
 
-        val timeRange = periodState.rangeOf(period).toUTCCloseTimeRange()
+        val timeRange = periodState.rangeOf(period).toCloseTimeRange()
 
         val transactionListInput = loadTransactionListData(
             HomeRangeInput(

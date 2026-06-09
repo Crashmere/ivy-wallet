@@ -35,10 +35,3 @@ fun FromToTimeRange.toCloseTimeRange(): ClosedTimeRange {
         to = to ?: safeMaxTime()
     )
 }
-
-fun FromToTimeRange.toUTCCloseTimeRange(): ClosedTimeRange {
-    return ClosedTimeRange(
-        from = from ?: safeMinTime(),
-        to = to ?: safeMaxTime()
-    )
-}
