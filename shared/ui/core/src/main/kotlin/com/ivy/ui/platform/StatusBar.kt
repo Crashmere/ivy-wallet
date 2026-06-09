@@ -23,7 +23,7 @@ fun setStatusBarDarkTextCompat(view: View, darkText: Boolean) {
         view.windowInsetsController?.setStatusBarDarkText(darkText)
     } else {
         val window = view.context.findActivity()?.window ?: return
-        setStatusBarDarkTextOld(window, darkText)
+        setStatusBarDarkTextBeforeAndroidR(window, darkText)
     }
 }
 
@@ -36,7 +36,7 @@ private fun WindowInsetsController.setStatusBarDarkText(darkText: Boolean) {
 }
 
 @Suppress("DEPRECATION")
-private fun setStatusBarDarkTextOld(window: Window, darkText: Boolean) {
+private fun setStatusBarDarkTextBeforeAndroidR(window: Window, darkText: Boolean) {
     window.decorView.systemUiVisibility = if (darkText) {
         window.decorView.systemUiVisibility or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
     } else {

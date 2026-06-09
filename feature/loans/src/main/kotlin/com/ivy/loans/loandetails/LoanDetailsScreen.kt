@@ -602,7 +602,7 @@ private fun LoanInfoCard(
             }
         }
 
-        // Support UI for Old Versions where
+        // Preserve spacing for loans created before account association was required.
         if (selectedLoanAccount == null) {
             Spacer(Modifier.height(12.dp))
         }
