@@ -3,6 +3,7 @@ package com.ivy.main
 import androidx.annotation.DrawableRes
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.spring
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectDragGestures
@@ -45,7 +46,6 @@ import com.ivy.ui.compose.clickableNoIndication
 import com.ivy.ui.animation.lerp
 import com.ivy.ui.compose.navigationBarInset
 import com.ivy.ui.compose.rememberInteractionSource
-import com.ivy.ui.animation.springBounceFast
 import com.ivy.ui.compose.toDensityDp
 import com.ivy.ui.compose.toDensityPx
 import com.ivy.ui.R
@@ -61,6 +61,11 @@ import kotlin.math.roundToInt
 
 private val TransactionButtonClickAreaHeight = 150.dp
 private val FabButtonSize = 56.dp
+
+private fun <T> springBounceFast() = spring<T>(
+    dampingRatio = 0.75f,
+    stiffness = 2000f
+)
 
 @Composable
 internal fun BoxWithConstraintsScope.BottomBar(

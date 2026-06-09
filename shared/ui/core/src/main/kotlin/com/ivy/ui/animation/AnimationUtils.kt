@@ -13,10 +13,6 @@ fun <T> springBounce(
     stiffness = stiffness,
 )
 
-fun <T> springBounceFast() = springBounce<T>(
-    stiffness = 2000f
-)
-
 fun lerp(start: Int, end: Int, @FloatRange(from = 0.0, to = 1.0) fraction: Float): Int {
     return ((start + fraction * (end - start)).roundToInt())
 }
