@@ -14,7 +14,7 @@ import com.ivy.data.model.Theme
 import com.ivy.ui.R
 import com.ivy.ui.theme.LocalThemeState
 
-object MoneyDisplayTheme {
+internal object MoneyDisplayTheme {
     val colors: MoneyDisplayColors
         @Composable
         @ReadOnlyComposable
@@ -26,11 +26,11 @@ object MoneyDisplayTheme {
     val typo: MoneyDisplayTypography = moneyDisplayTypography()
 }
 
-interface MoneyDisplayColors {
+internal interface MoneyDisplayColors {
     val pureInverse: Color
 }
 
-interface MoneyDisplayTypography {
+internal interface MoneyDisplayTypography {
     val h1: TextStyle
     val nH1: TextStyle
     val nB1: TextStyle
