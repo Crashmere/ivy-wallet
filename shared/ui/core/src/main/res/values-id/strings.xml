@@ -25,7 +25,6 @@
     <string name="add_manual_exchange_rate">Add rate</string>
     <string name="expenses">Pengeluaran</string>
     <string name="income">Pendapatan</string>
-    <string name="balance">SALDO %1$s</string>
     <string name="categories">Kategori</string>
     <string name="please_wait">Harap tunggu</string>
     <string name="importing_the_csv_file">Mengimpor file CSV</string>
@@ -216,7 +215,6 @@
     <string name="delete">Hapus</string>
     <string name="save">Simpan</string>
     <string name="add">Tambahkan</string>
-    <string name="create">Buat</string>
     <string name="edit_loan">Edit pinjaman</string>
     <string name="new_loan">Pinjaman baru</string>
     <string name="loan_name">Nama pinjaman</string>

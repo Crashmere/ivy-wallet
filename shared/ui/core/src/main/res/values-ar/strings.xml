@@ -25,7 +25,6 @@
     <string name="add_manual_exchange_rate">Add rate</string>
     <string name="expenses">الإنفاق</string>
     <string name="income">الدخل</string>
-    <string name="balance">الرصيد %1$s</string>
     <string name="categories">الفئات</string>
     <string name="please_wait">الرجاء الإنتظار</string>
     <string name="importing_the_csv_file">يتم استيراد ملف الcsv</string>
@@ -213,7 +212,6 @@
     <string name="delete">حذف</string>
     <string name="save">حفظ</string>
     <string name="add">أضافة</string>
-    <string name="create">إنشاء</string>
     <string name="edit_loan">تعديل القرض</string>
     <string name="new_loan">قرض جديد</string>
     <string name="loan_name">اسم القرض</string>

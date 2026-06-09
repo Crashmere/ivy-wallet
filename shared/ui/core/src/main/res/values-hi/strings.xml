@@ -25,7 +25,6 @@
     <string name="add_manual_exchange_rate">Add rate</string>
     <string name="expenses">खर्च</string>
     <string name="income">आय</string>
-    <string name="balance">बैलेंस %1$s</string>
     <string name="categories">श्रेणियाँ</string>
     <string name="please_wait">कृपया प्रतीक्षा करें</string>
     <string name="importing_the_csv_file">CSV फ़ाइल इम्पोर्ट किया जा रहा हैं</string>
@@ -188,7 +187,6 @@
     <string name="loan_name">लोन का नाम</string>
     <string name="new_loan">नया लोन</string>
     <string name="edit_loan">लोन एडिट करें</string>
-    <string name="create">क्रिएट करें</string>
     <string name="add">जोड़ें</string>
     <string name="save">सेव करें</string>
     <string name="delete">मिटाये</string>

@@ -25,7 +25,6 @@
     <string name="add_manual_exchange_rate">Add rate</string>
     <string name="expenses">Wydatki</string>
     <string name="income">Wpływy</string>
-    <string name="balance">SALDO %1$s</string>
     <string name="categories">Kategorie</string>
     <string name="please_wait">Proszę czekać</string>
     <string name="importing_the_csv_file">Importowanie pliku CSV</string>
@@ -216,7 +215,6 @@
     <string name="delete">Usuń</string>
     <string name="save">Zapisz</string>
     <string name="add">Dodaj</string>
-    <string name="create">Utwórz</string>
     <string name="edit_loan">Edytuj pożyczkę</string>
     <string name="new_loan">Nowa pożyczka</string>
     <string name="loan_name">Nazwa pożyczki</string>

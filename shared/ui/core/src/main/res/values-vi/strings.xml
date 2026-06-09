@@ -25,7 +25,6 @@
     <string name="add_manual_exchange_rate">Add rate</string>
     <string name="expenses">Khoản chi</string>
     <string name="income">Khoản thu</string>
-    <string name="balance">SỐ DƯ %1$s</string>
     <string name="categories">Danh mục</string>
     <string name="please_wait">Vui lòng chờ</string>
     <string name="importing_the_csv_file">Đang tải lên tệp CSV</string>
@@ -216,7 +215,6 @@
     <string name="delete">Xóa</string>
     <string name="save">Lưu</string>
     <string name="add">Thêm</string>
-    <string name="create">Tạo</string>
     <string name="edit_loan">Chỉnh sửa khoản vay</string>
     <string name="new_loan">Khoản vay mới</string>
     <string name="loan_name">Tên khoản vay</string>

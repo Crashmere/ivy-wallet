@@ -26,7 +26,6 @@
     <string name="add_manual_exchange_rate">新增匯率</string>
     <string name="expenses">支出</string>
     <string name="income">收入</string>
-    <string name="balance">餘額%1$s</string>
     <string name="categories">類別</string>
     <string name="please_wait">請稍候</string>
     <string name="importing_the_csv_file">導入 CSV 檔案</string>
@@ -220,7 +219,6 @@
     <string name="delete">刪除</string>
     <string name="save">保存</string>
     <string name="add">新增</string>
-    <string name="create">建立</string>
     <string name="edit_loan">編輯借貸</string>
     <string name="new_loan">新借貸</string>
     <string name="loan_name">借貸名稱</string>

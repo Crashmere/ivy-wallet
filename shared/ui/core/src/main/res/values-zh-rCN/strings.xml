@@ -25,7 +25,6 @@
     <string name="add_manual_exchange_rate">Add rate</string>
     <string name="expenses">支出</string>
     <string name="income">收入</string>
-    <string name="balance">余额 %1$s</string>
     <string name="categories">类别</string>
     <string name="please_wait">请稍候</string>
     <string name="importing_the_csv_file">正在导入CSV文件</string>
@@ -239,7 +238,6 @@
     <string name="delete">删除</string>
     <string name="save">保存</string>
     <string name="add">添加</string>
-    <string name="create">创建</string>
     <string name="edit_loan">编辑贷款</string>
     <string name="new_loan">新建贷款</string>
     <string name="loan_name">贷款名称</string>

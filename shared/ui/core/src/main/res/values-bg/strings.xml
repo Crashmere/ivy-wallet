@@ -25,7 +25,6 @@
     <string name="add_manual_exchange_rate">Add rate</string>
     <string name="expenses">Разходи</string>
     <string name="income">Приход</string>
-    <string name="balance">БАЛАНС %1$s</string>
     <string name="categories">Категории</string>
     <string name="please_wait">Моля изчакайте</string>
     <string name="importing_the_csv_file">Импортиране на CSV файл</string>
@@ -213,7 +212,6 @@
     <string name="delete">Изтрий</string>
     <string name="save">Запази</string>
     <string name="add">Добави</string>
-    <string name="create">Създай</string>
     <string name="edit_loan">Редакция</string>
     <string name="new_loan">Нов заем</string>
     <string name="loan_name">Име на заем</string>

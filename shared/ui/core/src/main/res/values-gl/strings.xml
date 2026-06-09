@@ -26,7 +26,6 @@
     <string name="add_manual_exchange_rate">Engadir tarifa</string>
     <string name="expenses">Gastos</string>
     <string name="income">Ingresos</string>
-    <string name="balance">BALANCE %1$s</string>
     <string name="categories">Categorías</string>
     <string name="please_wait">Por favor, agarda</string>
     <string name="importing_the_csv_file">Importando o ficheiro CSV</string>
@@ -218,7 +217,6 @@
     <string name="delete">Eliminar</string>
     <string name="save">Gardar</string>
     <string name="add">Engadir</string>
-    <string name="create">Crear</string>
     <string name="edit_loan">Editar préstamo</string>
     <string name="new_loan">Novo préstamo</string>
     <string name="loan_name">Nome do préstamo</string>

@@ -25,7 +25,6 @@
     <string name="add_manual_exchange_rate">Add rate</string>
     <string name="expenses">ಖರ್ಚು</string>
     <string name="income">ಆದಾಯ</string>
-    <string name="balance">ಮೊತ್ತ %1$s</string>
     <string name="categories">ವರ್ಗಗಳು</string>
     <string name="please_wait">ದಯವಿಟ್ಟು ಸ್ವಲ್ಪ ನಿರೀಕ್ಷಿಸಿ</string>
     <string name="importing_the_csv_file">CSV ಫೈಲ್ ಅನ್ನು ಆಮದು ಮಾಡಲಾಗುತ್ತಿದೆ</string>
@@ -213,7 +212,6 @@
     <string name="delete">ಅಳಿಸಿ</string>
     <string name="save">ಉಳಿಸಿ</string>
     <string name="add">ಸೇರಿಸಿ</string>
-    <string name="create">ರಚಿಸಿ</string>
     <string name="edit_loan">ಸಾಲವನ್ನು ಎಡಿಟ್ ಮಾಡಿ</string>
     <string name="new_loan">ಹೊಸ ಸಾಲ</string>
     <string name="loan_name">ಸಾಲದ ಹೆಸರು</string>

@@ -26,7 +26,6 @@
     <string name="add_manual_exchange_rate">Add rate</string>
     <string name="expenses">Expenses</string>
     <string name="income">Income</string>
-    <string name="balance">BALANCE %1$s</string>
     <string name="categories">Categories</string>
     <string name="please_wait">Please wait</string>
     <string name="importing_the_csv_file">Importing the CSV file</string>
@@ -241,7 +240,6 @@
     <string name="delete">Delete</string>
     <string name="save">Save</string>
     <string name="add">Add</string>
-    <string name="create">Create</string>
     <string name="edit_loan">Edit loan</string>
     <string name="new_loan">New loan</string>
     <string name="loan_name">Loan name</string>

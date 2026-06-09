@@ -25,7 +25,6 @@
     <string name="add_manual_exchange_rate">Add rate</string>
     <string name="expenses">Зарлага</string>
     <string name="income">Орлого</string>
-    <string name="balance">ҮЛДЭГДЭЛ %1$s</string>
     <string name="categories">Ангиллууд</string>
     <string name="please_wait">Түр хүлээнэ үү</string>
     <string name="importing_the_csv_file">CSV файлаас сэргээж байна</string>
@@ -213,7 +212,6 @@
     <string name="delete">Устгах</string>
     <string name="save">Хадгалах</string>
     <string name="add">Нэмэх</string>
-    <string name="create">Үүсгэх</string>
     <string name="edit_loan">Зээл өөрчлөх</string>
     <string name="new_loan">Шинэ зээл</string>
     <string name="loan_name">Зээлийн гарчиг</string>
