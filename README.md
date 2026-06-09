@@ -219,6 +219,7 @@
 - 收窄 data-core 实现构造边界：Room Store、偏好 Store、mapper、文件系统和远程汇率源等实现类继续留在 `shared:data:core` 内部，注入构造函数也统一收为内部细节。
 - 收窄 app/feature 内部注入构造边界：ViewModel、页面内部 helper 和平台适配器仍由 Hilt 创建，但手动构造入口不再作为跨模块可见细节暴露。
 - 收窄金额显示主题公开面：`MoneyDisplayTheme`、颜色 token 和字号 token 只服务 `shared:ui:core` 内部金额展示组件，外部继续通过 `BalanceRow` 和 `AmountCurrencyB1` 使用金额 UI。
+- 收窄金额输入内部 helper：金额表达式规范化、本地小数分隔符、整数金额格式化和金额输入偏好状态转换改为 `shared:ui:core` 内部 API，外部继续使用正式格式化函数、金额弹窗和偏好模型。
 - 归位 legacy 根 UI 包名：`LegacyUiRoot` 仍作为 app 装配旧 UI 的入口保留，但包名已从 `com.ivy.ui` 调整到 `com.ivy.legacy.ui`，与所在 `shared:ui:legacy` 模块一致。
 - 删除 Android 系统自动备份规则：manifest 已保持 `allowBackup=false`，不再保留无实际作用的 `dataExtractionRules/fullBackupContent` 资源；应用内 zip 备份、恢复和 CSV 导入导出不受影响。
 - 收窄 Android manifest 平台配置：远程汇率接口全部使用 HTTPS，app 不再允许明文流量；`INTERNET` 权限只由 app 壳层声明，data-core 不再通过库 manifest 暗中合并权限。

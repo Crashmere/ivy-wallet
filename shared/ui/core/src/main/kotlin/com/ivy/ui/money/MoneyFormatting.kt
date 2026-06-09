@@ -17,11 +17,11 @@ fun parseAmountOrNull(amount: String): Double? {
     return amount.amountToDoubleOrNull()
 }
 
-fun normalizeMoneyExpression(expression: String): String {
+internal fun normalizeMoneyExpression(expression: String): String {
     return expression.normalizeExpression()
 }
 
-fun localMoneyDecimalSeparator(): String {
+internal fun localMoneyDecimalSeparator(): String {
     return localDecimalSeparator()
 }
 
@@ -33,7 +33,7 @@ fun formatAmount(amount: Double, decimalPlaces: Int): String {
     return amount.format(decimalPlaces)
 }
 
-fun formatIntegerAmount(number: Int): String {
+internal fun formatIntegerAmount(number: Int): String {
     return formatInt(number)
 }
 

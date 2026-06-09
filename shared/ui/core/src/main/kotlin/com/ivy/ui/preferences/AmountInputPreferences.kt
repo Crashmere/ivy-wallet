@@ -20,6 +20,6 @@ val LocalAmountInputPreferences = compositionLocalOf<AmountInputPreferences> {
 }
 
 @Composable
-fun UiBoolPreference.asEnabledState(): Boolean {
+internal fun UiBoolPreference.asEnabledState(): Boolean {
     return enabledFlow.collectAsState(defaultValue).value ?: defaultValue
 }
