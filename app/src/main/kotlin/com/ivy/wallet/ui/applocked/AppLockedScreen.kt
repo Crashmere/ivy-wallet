@@ -33,7 +33,7 @@ import com.ivy.ui.R
 @SuppressLint("ComposeModifierMissing")
 @Composable
 @Suppress("LongMethod", "FunctionNaming")
-fun BoxWithConstraintsScope.AppLockedScreen(
+internal fun BoxWithConstraintsScope.AppLockedScreen(
     hasLockScreen: () -> Boolean,
     onShowOSBiometricsModal: () -> Unit,
     onContinueWithoutAuthentication: () -> Unit

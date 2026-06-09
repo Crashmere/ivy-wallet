@@ -46,6 +46,7 @@
 - `shared:ui:navigation` 继续聚焦 route、页面栈、返回栈和 screen scoped ViewModel。
 - `shared:ui:core` 承接真正跨页面复用的 UI 基础能力：主题 root 所需状态、时间服务、弹窗、金额展示、交易列表、按钮、图标、搜索框、周期选择、标签入口等。
 - feature 模块只保留 app 导航图或主页面需要调用的页面入口；状态、事件、ViewModel、展示模型和内部 UI helper 已大量改为模块内部实现。
+- app 壳层也继续收窄公开面，应用锁屏 UI 等只由根内容调用的 Compose 入口已改为模块内部实现；Android framework 需要实例化的 Activity、Application、Service 保持公开。
 - domain use case 仍作为 feature 注入入口保留，但构造函数、内部算法 helper、mapper、汇率换算细节、时间 helper 等已尽量收窄为模块内部实现。
 - domain 中 CSV 行构建作用域、汇率同步识别键等嵌套实现类型已继续收窄为私有，use case 对外只暴露实际调用入口和结果模型。
 - data-core 的 Room Store、偏好 Store、mapper、文件系统和远程汇率源等实现类继续留在 data-core 内部，外部通过 data-api 端口和 domain use case 使用。
