@@ -30,7 +30,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.compose.thenIf
 import com.ivy.ui.period.LocalPeriodState
 import com.ivy.ui.period.TimePeriod
@@ -166,14 +165,14 @@ private fun HeaderStickyRow(
             ),
             iconStart = R.drawable.ic_calendar,
             text = period.displayShort(periodState.startDayOfMonth),
-            shape = LegacyTheme.shapes.rFull,
-            backgroundColor = LegacyTheme.colors.pure,
+            shape = HomeTheme.shapes.rFull,
+            backgroundColor = HomeTheme.colors.pure,
             minWidth = 130.dp,
-            iconTint = LegacyTheme.colors.pureInverse,
-            borderColor = LegacyTheme.colors.medium,
-            textStyle = LegacyTheme.typo.b2.copy(
+            iconTint = HomeTheme.colors.pureInverse,
+            borderColor = HomeTheme.colors.medium,
+            textStyle = HomeTheme.typo.b2.copy(
                 fontWeight = FontWeight.Bold,
-                color = LegacyTheme.colors.pureInverse,
+                color = HomeTheme.colors.pureInverse,
                 textAlign = TextAlign.Start,
             ),
         ) {
@@ -258,8 +257,8 @@ internal fun CashFlowInfo(
                     cashflow.format(currency),
                     currency,
                 ),
-                style = LegacyTheme.typo.nB2.copy(
-                    color = if (cashflow < 0) LegacyTheme.colors.gray else LegacyTheme.colors.green,
+                style = HomeTheme.typo.nB2.copy(
+                    color = if (cashflow < 0) HomeTheme.colors.gray else HomeTheme.colors.green,
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Start
                 ),
@@ -311,8 +310,8 @@ private fun IncomeExpenses(
         HeaderCard(
             percentVisible = percentExpanded,
             icon = R.drawable.ic_expense,
-            backgroundGradient = Gradient(LegacyTheme.colors.pureInverse, LegacyTheme.colors.gray),
-            textColor = LegacyTheme.colors.pure,
+            backgroundGradient = Gradient(HomeTheme.colors.pureInverse, HomeTheme.colors.gray),
+            textColor = HomeTheme.colors.pure,
             label = stringResource(R.string.expenses),
             currency = currency,
             amount = monthlyExpenses.absoluteValue,
@@ -343,7 +342,7 @@ private fun RowScope.HeaderCard(
             .thenIf(percentVisible == 1f) {
                 drawColoredShadow(backgroundGradient.startColor)
             }
-            .clip(LegacyTheme.shapes.r4)
+            .clip(HomeTheme.shapes.r4)
             .background(backgroundGradient.asHorizontalBrush())
             .testTag(testTag)
             .clickable(
@@ -366,7 +365,7 @@ private fun RowScope.HeaderCard(
 
             Text(
                 text = label,
-                style = LegacyTheme.typo.c.copy(
+                style = HomeTheme.typo.c.copy(
                     color = textColor,
                     fontWeight = FontWeight.ExtraBold,
                     textAlign = TextAlign.Start

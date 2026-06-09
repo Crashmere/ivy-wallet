@@ -21,7 +21,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.currency.format
-import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.R
 import com.ivy.ui.compose.ResourceIcon
 import com.ivy.ui.compose.thenIf
@@ -35,7 +34,7 @@ internal fun HomeBufferBattery(
     buffer: Double,
     balance: Double,
     currency: String,
-    backgroundNotFilled: Color = LegacyTheme.colors.pure,
+    backgroundNotFilled: Color = HomeTheme.colors.pure,
     onClick: (() -> Unit)? = null,
 ) {
     val bufferExceeded = balance < buffer
@@ -48,19 +47,19 @@ internal fun HomeBufferBattery(
     }
 
     val textColor = when {
-        bufferExceededPercent <= 0.25 -> LegacyTheme.colors.pureInverse
+        bufferExceededPercent <= 0.25 -> HomeTheme.colors.pureInverse
         bufferExceededPercent <= 0.50 -> White
         bufferExceededPercent <= 0.75 -> White
         else -> White
     }
-    val green = LegacyTheme.colors.green
-    val orange = LegacyTheme.colors.orange
-    val red = LegacyTheme.colors.red
+    val green = HomeTheme.colors.green
+    val orange = HomeTheme.colors.orange
+    val red = HomeTheme.colors.red
 
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .clip(LegacyTheme.shapes.r4)
+            .clip(HomeTheme.shapes.r4)
             .background(backgroundNotFilled)
             .drawBehind {
                 drawRect(
@@ -99,7 +98,7 @@ internal fun HomeBufferBattery(
                 } else {
                     stringResource(R.string.left_to_spend)
                 },
-                style = LegacyTheme.typo.c.copy(
+                style = HomeTheme.typo.c.copy(
                     color = textColor,
                     fontWeight = FontWeight.ExtraBold,
                     textAlign = TextAlign.Start
@@ -121,14 +120,14 @@ internal fun HomeBufferBattery(
 private fun HomeBufferAmountCurrencyRow(
     amount: Double,
     currency: String,
-    textColor: Color = LegacyTheme.colors.pureInverse
+    textColor: Color = HomeTheme.colors.pureInverse
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
             text = amount.format(currency),
-            style = LegacyTheme.typo.nB2.copy(
+            style = HomeTheme.typo.nB2.copy(
                 fontWeight = FontWeight.ExtraBold,
                 color = textColor,
                 textAlign = TextAlign.Start
@@ -137,7 +136,7 @@ private fun HomeBufferAmountCurrencyRow(
         Spacer(modifier = Modifier.width(4.dp))
         Text(
             text = currency,
-            style = LegacyTheme.typo.nB2.copy(
+            style = HomeTheme.typo.nB2.copy(
                 fontWeight = FontWeight.Normal,
                 color = textColor,
                 textAlign = TextAlign.Start

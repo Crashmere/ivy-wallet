@@ -44,7 +44,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import com.ivy.data.model.Theme
-import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.compose.BackPressHandler
 import com.ivy.ui.compose.thenIf
 import com.ivy.ui.compose.clickableNoIndication
@@ -117,7 +116,7 @@ internal fun BoxWithConstraintsScope.MoreMenu(
     )
 
     // Background
-    val colorMedium = LegacyTheme.colors.medium
+    val colorMedium = HomeTheme.colors.medium
     if (percentExpanded > 0.01f) {
         Canvas(
             modifier = modifier
@@ -199,8 +198,8 @@ internal fun BoxWithConstraintsScope.MoreMenu(
                 zIndex(520f)
             }
             .testTag("home_more_menu_arrow"),
-        backgroundColor = colorLerp(LegacyTheme.colors.medium, LegacyTheme.colors.pure, percentExpanded),
-        tint = LegacyTheme.colors.pureInverse,
+        backgroundColor = colorLerp(HomeTheme.colors.medium, HomeTheme.colors.pure, percentExpanded),
+        tint = HomeTheme.colors.pureInverse,
         icon = R.drawable.ic_expandarrow
     ) {
         setExpanded(!expanded)
@@ -255,9 +254,9 @@ private fun SearchButton(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp)
-            .clip(LegacyTheme.shapes.rFull)
-            .background(LegacyTheme.colors.pure)
-            .border(1.dp, LegacyTheme.colors.gray, LegacyTheme.shapes.rFull)
+            .clip(HomeTheme.shapes.rFull)
+            .background(HomeTheme.colors.pure)
+            .border(1.dp, HomeTheme.colors.gray, HomeTheme.shapes.rFull)
             .clickable {
                 onClick()
             },
@@ -267,7 +266,7 @@ private fun SearchButton(
 
         ResourceIcon(
             icon = R.drawable.ic_search,
-            tint = LegacyTheme.colors.pureInverse
+            tint = HomeTheme.colors.pureInverse
         )
 
         Spacer(Modifier.width(12.dp))
@@ -277,9 +276,9 @@ private fun SearchButton(
                 vertical = 12.dp,
             ),
             text = stringResource(R.string.search_transactions),
-            style = LegacyTheme.typo.b2.copy(
+            style = HomeTheme.typo.b2.copy(
                 fontWeight = FontWeight.SemiBold,
-                color = LegacyTheme.colors.pureInverse,
+                color = HomeTheme.colors.pureInverse,
                 textAlign = TextAlign.Start
             )
         )
@@ -308,8 +307,8 @@ private fun ColumnScope.Buffer(
 
         Text(
             text = stringResource(R.string.savings_goal),
-            style = LegacyTheme.typo.b1.copy(
-                color = LegacyTheme.colors.pureInverse,
+            style = HomeTheme.typo.b1.copy(
+                color = HomeTheme.colors.pureInverse,
                 fontWeight = FontWeight.ExtraBold,
                 textAlign = TextAlign.Start
             )
@@ -348,8 +347,8 @@ private fun QuickAccess(
         Text(
             modifier = Modifier.padding(start = 24.dp),
             text = stringResource(R.string.quick_access),
-            style = LegacyTheme.typo.b2.copy(
-                color = LegacyTheme.colors.pureInverse,
+            style = HomeTheme.typo.b2.copy(
+                color = HomeTheme.colors.pureInverse,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Start
             )
@@ -396,16 +395,16 @@ private fun QuickAccess(
                     Theme.AUTO -> stringResource(R.string.auto_mode)
                 },
                 backgroundColor = when (theme) {
-                    Theme.LIGHT -> LegacyTheme.colors.pure
-                    Theme.DARK -> LegacyTheme.colors.pureInverse
-                    Theme.AMOLED_DARK -> LegacyTheme.colors.pureInverse
-                    Theme.AUTO -> LegacyTheme.colors.pure
+                    Theme.LIGHT -> HomeTheme.colors.pure
+                    Theme.DARK -> HomeTheme.colors.pureInverse
+                    Theme.AMOLED_DARK -> HomeTheme.colors.pureInverse
+                    Theme.AUTO -> HomeTheme.colors.pure
                 },
                 tint = when (theme) {
-                    Theme.LIGHT -> LegacyTheme.colors.pureInverse
-                    Theme.DARK -> LegacyTheme.colors.pure
-                    Theme.AMOLED_DARK -> LegacyTheme.colors.pure
-                    Theme.AUTO -> LegacyTheme.colors.pureInverse
+                    Theme.LIGHT -> HomeTheme.colors.pureInverse
+                    Theme.DARK -> HomeTheme.colors.pure
+                    Theme.AMOLED_DARK -> HomeTheme.colors.pure
+                    Theme.AUTO -> HomeTheme.colors.pureInverse
                 }
             ) {
                 onSwitchTheme()
@@ -468,8 +467,8 @@ private fun MoreMenuButton(
     @DrawableRes icon: Int,
     label: String,
 
-    backgroundColor: Color = LegacyTheme.colors.pure,
-    tint: Color = LegacyTheme.colors.pureInverse,
+    backgroundColor: Color = HomeTheme.colors.pure,
+    tint: Color = HomeTheme.colors.pureInverse,
     expandPadding: Dp = 14.dp,
 
     onClick: () -> Unit
@@ -494,8 +493,8 @@ private fun MoreMenuButton(
                     onClick()
                 },
             text = label,
-            style = LegacyTheme.typo.c.copy(
-                color = LegacyTheme.colors.pureInverse,
+            style = HomeTheme.typo.c.copy(
+                color = HomeTheme.colors.pureInverse,
                 fontWeight = FontWeight.ExtraBold,
                 textAlign = TextAlign.Center
             )

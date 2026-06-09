@@ -16,7 +16,6 @@ import com.ivy.ui.modal.IvyModal
 import com.ivy.ui.modal.ModalAmountSection
 import com.ivy.ui.modal.ModalSave
 import com.ivy.ui.modal.AmountModal
-import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.R
 import java.util.UUID
 
@@ -56,7 +55,7 @@ internal fun BoxWithConstraintsScope.HomeBufferModal(
             buffer = newBufferAmount,
             balance = balance,
             currency = currency,
-            backgroundNotFilled = LegacyTheme.colors.medium,
+            backgroundNotFilled = HomeTheme.colors.medium,
         )
 
         Spacer(Modifier.height(24.dp))

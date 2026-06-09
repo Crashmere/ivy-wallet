@@ -19,12 +19,12 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.ivy.legacy.ui.theme.LegacyTheme
-import com.ivy.ui.compose.drawColoredShadow
+import com.ivy.home.HomeTheme
 import com.ivy.ui.R
-import com.ivy.ui.theme.colors.Gradient
 import com.ivy.ui.compose.GradientButton
 import com.ivy.ui.compose.ResourceIcon
+import com.ivy.ui.compose.drawColoredShadow
+import com.ivy.ui.theme.colors.Gradient
 import com.ivy.ui.theme.colors.dynamicContrast
 import com.ivy.ui.theme.colors.findContrastTextColor
 import kotlinx.collections.immutable.ImmutableList
@@ -70,8 +70,8 @@ internal fun CustomerJourneyCard(
             .fillMaxWidth()
             .padding(horizontal = 16.dp)
             .drawColoredShadow(backgroundColor)
-            .background(backgroundGradient.asHorizontalBrush(), LegacyTheme.shapes.r3)
-            .clip(LegacyTheme.shapes.r3)
+            .background(backgroundGradient.asHorizontalBrush(), HomeTheme.shapes.r3)
+            .clip(HomeTheme.shapes.r3)
             .clickable {
                 onCTA()
             }
@@ -86,7 +86,7 @@ internal fun CustomerJourneyCard(
                     .weight(1f)
                     .padding(start = 24.dp, end = 16.dp),
                 text = cardData.title,
-                style = LegacyTheme.typo.b1.copy(
+                style = HomeTheme.typo.b1.copy(
                     fontWeight = FontWeight.ExtraBold,
                     color = findContrastTextColor(backgroundColor),
                     textAlign = TextAlign.Start
@@ -116,7 +116,7 @@ internal fun CustomerJourneyCard(
                 .fillMaxWidth()
                 .padding(start = 24.dp, end = 32.dp),
             text = cardData.description,
-            style = LegacyTheme.typo.b2.copy(
+            style = HomeTheme.typo.b2.copy(
                 fontWeight = FontWeight.Medium,
                 color = findContrastTextColor(backgroundColor),
                 textAlign = TextAlign.Start
@@ -135,9 +135,9 @@ internal fun CustomerJourneyCard(
                 shadowAlpha = 0f,
                 iconStart = cardData.ctaIcon,
                 iconTint = backgroundColor,
-                disabledBackgroundColor = LegacyTheme.colors.gray,
-                shape = LegacyTheme.shapes.rFull,
-                textStyle = LegacyTheme.typo.b2.copy(
+                disabledBackgroundColor = HomeTheme.colors.gray,
+                shape = HomeTheme.shapes.rFull,
+                textStyle = HomeTheme.typo.b2.copy(
                     color = backgroundColor,
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Start

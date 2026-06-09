@@ -7,7 +7,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.ivy.legacy.ui.theme.LegacyTheme
 
 @Composable
 internal fun HomeTransactionsDividerLine(
@@ -18,7 +17,7 @@ internal fun HomeTransactionsDividerLine(
         modifier = modifier
             .fillMaxWidth()
             .padding(horizontal = paddingHorizontal),
-        color = LegacyTheme.colors.medium,
+        color = HomeTheme.colors.medium,
         thickness = 2.dp
     )
 }
