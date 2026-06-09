@@ -98,7 +98,7 @@ fun LocalDate.closeDay(): String? {
     }
 }
 
-fun LocalDateTime.formatLocal(
+internal fun LocalDateTime.formatLocal(
     pattern: String = "dd MMM yyyy, HH:mm",
     zone: ZoneId = ZoneOffset.systemDefault()
 ): String {
@@ -111,7 +111,7 @@ fun LocalDateTime.formatLocal(
     }
 }
 
-fun LocalDate.formatLocal(
+internal fun LocalDate.formatLocal(
     pattern: String = "dd MMM yyyy",
     zone: ZoneId = ZoneOffset.systemDefault()
 ): String {

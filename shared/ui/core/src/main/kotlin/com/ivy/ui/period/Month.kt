@@ -11,7 +11,7 @@ data class Month(
     val monthValue: Int,
 ) {
     companion object {
-        fun monthsList(): MutableList<Month> = mutableListOf(
+        internal fun monthsList(): MutableList<Month> = mutableListOf(
             Month(1),
             Month(2),
             Month(3),
@@ -26,14 +26,14 @@ data class Month(
             Month(12),
         )
 
-        fun fromMonthValue(code: Int): Month =
+        internal fun fromMonthValue(code: Int): Month =
             monthsList().first { it.monthValue == code }
     }
 
-    fun toDate(referenceDate: LocalDate): LocalDate =
+    internal fun toDate(referenceDate: LocalDate): LocalDate =
         referenceDate.withMonth(monthValue)
 
-    fun incrementMonthPeriod(
+    internal fun incrementMonthPeriod(
         increment: Long,
         year: Int,
         referenceDate: LocalDate,
@@ -48,7 +48,7 @@ data class Month(
 }
 
 @Composable
-fun Month.displayName(): String = when (monthValue) {
+internal fun Month.displayName(): String = when (monthValue) {
     1 -> stringResource(R.string.january)
     2 -> stringResource(R.string.february)
     3 -> stringResource(R.string.march)
