@@ -69,6 +69,7 @@
 - 当前代码中仍可能出现 `legacy` 字样的地方，应优先判断它是不是数据库历史迁移、测试临时文件名或真正的兼容语义；不再新增旧模块式的 legacy 包和 API。
 - 已继续清理误导性历史命名：状态栏兼容函数按 Android R 前后命名，借贷详情里的旧版本兼容注释改为明确说明账户关联兼容语义。
 - 借贷同步里的 `oldLoanRecord*`、`oldLoanAccountId` 命名已改为 `originalLoanRecord*`、`originalLoanAccountId`，避免把“原始值”误读成旧架构兼容层。
+- Gradle 版本目录中仍服务当前功能的 Keval 计算器和 OpenCSV 导入/测试依赖不再归到 `Legacy` 分类，避免把实际功能依赖误读成旧架构残留。
 
 ### 资源和文案
 
