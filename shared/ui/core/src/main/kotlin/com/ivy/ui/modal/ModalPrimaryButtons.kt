@@ -1,17 +1,14 @@
 package com.ivy.ui.modal
 
 import androidx.annotation.DrawableRes
-import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import com.ivy.ui.R
 import com.ivy.ui.compose.GradientButton
-import com.ivy.ui.compose.GradientIconButton
 import com.ivy.ui.compose.OutlinedPillButton
 import com.ivy.ui.theme.colors.IvyGradients
 
@@ -46,7 +43,7 @@ fun ModalAdd(
 }
 
 @Composable
-fun ModalSet(
+internal fun ModalSet(
     modifier: Modifier = Modifier,
     label: String = stringResource(R.string.set),
     enabled: Boolean = true,
@@ -79,27 +76,7 @@ fun ModalPositiveButton(
 }
 
 @Composable
-fun ModalDelete(
-    enabled: Boolean = true,
-    testTag: String = "modal_delete",
-    onClick: () -> Unit
-) {
-    val buttonTheme = ModalPrimaryButtonTheme
-    GradientIconButton(
-        modifier = Modifier
-            .size(40.dp)
-            .testTag(testTag),
-        icon = R.drawable.ic_delete,
-        backgroundGradient = IvyGradients.Red,
-        enabled = enabled,
-        disabledBackgroundColor = buttonTheme.colors.gray,
-        tint = buttonTheme.colors.white,
-        onClick = onClick
-    )
-}
-
-@Composable
-fun ModalSkip(
+internal fun ModalSkip(
     text: String = stringResource(R.string.skip),
     onClick: () -> Unit
 ) {
