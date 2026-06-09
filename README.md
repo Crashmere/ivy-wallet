@@ -46,7 +46,7 @@
 - `shared:ui:navigation` 继续聚焦 route、页面栈、返回栈和 screen scoped ViewModel。
 - `shared:ui:navigation` 的返回栈清理继续简化为直接清空内部栈，减少只服务实现细节的私有跳转 helper。
 - `shared:ui:core` 承接真正跨页面复用的 UI 基础能力：主题 root 所需状态、时间服务、弹窗、金额展示、交易列表、按钮、图标、搜索框、周期选择、标签入口等。
-- `shared:ui:core` 的主题渐变 API 继续收窄，feature 侧只暴露实际使用的水平渐变能力，垂直渐变保留为内部按钮实现细节。
+- `shared:ui:core` 的主题渐变 API 继续收窄，feature 侧只暴露实际使用的绿色/Ivy 色和水平渐变能力，红色/反向橙色等交易卡片内部 token 保留为内部实现细节。
 - feature 模块只保留 app 导航图或主页面需要调用的页面入口；状态、事件、ViewModel、展示模型和内部 UI helper 已大量改为模块内部实现。
 - app 壳层也继续收窄公开面，应用锁屏 UI 等只由根内容调用的 Compose 入口已改为模块内部实现；Android framework 需要实例化的 Activity、Application、Service 保持公开。
 - domain use case 仍作为 feature 注入入口保留，但构造函数、内部算法 helper、mapper、汇率换算细节、时间 helper 等已尽量收窄为模块内部实现。
