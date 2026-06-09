@@ -50,6 +50,7 @@
 - `shared:ui:core` 的 Material3 内部色表继续删除无调用方色阶，只保留当前主题实际使用的紫、绿、红和中性色。
 - 只服务首页更多菜单的颜色插值 helper 已移回 `feature:home` 私有实现，`shared:ui:core` 不再暴露该页面细节。
 - 只服务主导航底部栏的快速弹簧动画 helper 已移回 `feature:main` 私有实现，`shared:ui:core` 只保留跨页面复用的通用动画 helper。
+- `shared:ui:core` 的金额 API 继续收窄，金额输入解析、输入格式化和币种小数位 helper 只保留为 UI core 内部实现；feature 侧继续使用实际需要的金额展示和币种名称入口。
 - feature 模块只保留 app 导航图或主页面需要调用的页面入口；状态、事件、ViewModel、展示模型和内部 UI helper 已大量改为模块内部实现。
 - app 壳层也继续收窄公开面，应用锁屏 UI 等只由根内容调用的 Compose 入口已改为模块内部实现；Android framework 需要实例化的 Activity、Application、Service 保持公开。
 - domain use case 仍作为 feature 注入入口保留，但构造函数、内部算法 helper、mapper、汇率换算细节、时间 helper 等已尽量收窄为模块内部实现。

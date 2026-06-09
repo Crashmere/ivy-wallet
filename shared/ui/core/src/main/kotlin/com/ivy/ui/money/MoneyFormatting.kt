@@ -9,11 +9,11 @@ import com.ivy.data.model.currency.formatInt
 import com.ivy.data.model.currency.localDecimalSeparator
 import com.ivy.data.model.currency.normalizeExpression
 
-fun parseAmount(amount: String): Double {
+internal fun parseAmount(amount: String): Double {
     return amount.amountToDouble()
 }
 
-fun parseAmountOrNull(amount: String): Double? {
+internal fun parseAmountOrNull(amount: String): Double? {
     return amount.amountToDoubleOrNull()
 }
 
@@ -37,7 +37,7 @@ internal fun formatIntegerAmount(number: Int): String {
     return formatInt(number)
 }
 
-fun formatAmountInput(
+internal fun formatAmountInput(
     currencyCode: String,
     amount: String,
     newSymbol: String,
@@ -55,6 +55,6 @@ fun currencyName(currencyCode: String): String {
     return IvyCurrency.fromCode(currencyCode)?.name ?: ""
 }
 
-fun decimalPlacesForCurrency(currencyCode: String): Int {
+internal fun decimalPlacesForCurrency(currencyCode: String): Int {
     return IvyCurrency.getDecimalPlaces(currencyCode)
 }
