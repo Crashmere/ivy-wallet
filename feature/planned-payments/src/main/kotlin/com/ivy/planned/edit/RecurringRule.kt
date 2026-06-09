@@ -1,5 +1,7 @@
 package com.ivy.planned.edit
 
+import com.ivy.planned.PlannedTheme
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -19,7 +21,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.IntervalType
-import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.time.forDisplay
 import com.ivy.ui.time.formatDateOnly
 import com.ivy.ui.R
@@ -73,8 +74,8 @@ private fun AddRecurringRuleButton(onClick: () -> Unit) {
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp)
-            .clip(LegacyTheme.shapes.r4)
-            .background(LegacyTheme.colors.medium, LegacyTheme.shapes.r4)
+            .clip(PlannedTheme.shapes.r4)
+            .background(PlannedTheme.colors.medium, PlannedTheme.shapes.r4)
             .clickable(onClick = onClick)
             .padding(vertical = 20.dp),
         verticalAlignment = Alignment.CenterVertically
@@ -83,15 +84,15 @@ private fun AddRecurringRuleButton(onClick: () -> Unit) {
 
         ResourceIcon(
             icon = R.drawable.ic_planned_payments,
-            tint = LegacyTheme.colors.pureInverse
+            tint = PlannedTheme.colors.pureInverse
         )
 
         Spacer(Modifier.width(8.dp))
 
         Text(
             text = stringResource(R.string.add_planned_date_payment),
-            style = LegacyTheme.typo.b2.copy(
-                color = LegacyTheme.colors.pureInverse,
+            style = PlannedTheme.typo.b2.copy(
+                color = PlannedTheme.colors.pureInverse,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Start
             )
@@ -111,8 +112,8 @@ private fun RecurringRuleCard(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp)
-            .clip(LegacyTheme.shapes.r4)
-            .background(LegacyTheme.colors.medium, LegacyTheme.shapes.r4)
+            .clip(PlannedTheme.shapes.r4)
+            .background(PlannedTheme.colors.medium, PlannedTheme.shapes.r4)
             .clickable(onClick = onClick)
             .padding(vertical = 20.dp),
         verticalAlignment = Alignment.CenterVertically
@@ -121,7 +122,7 @@ private fun RecurringRuleCard(
 
         ResourceIcon(
             icon = R.drawable.ic_planned_payments,
-            tint = LegacyTheme.colors.pureInverse
+            tint = PlannedTheme.colors.pureInverse
         )
 
         Spacer(Modifier.width(8.dp))
@@ -129,9 +130,9 @@ private fun RecurringRuleCard(
         Column {
             Text(
                 text = if (oneTime) stringResource(R.string.planned_for) else stringResource(R.string.planned_start_at),
-                style = LegacyTheme.typo.b2.copy(
+                style = PlannedTheme.typo.b2.copy(
                     fontWeight = FontWeight.ExtraBold,
-                    color = LegacyTheme.colors.pureInverse,
+                    color = PlannedTheme.colors.pureInverse,
                     textAlign = TextAlign.Start
                 )
             )
@@ -142,9 +143,9 @@ private fun RecurringRuleCard(
                 val intervalTypeLabel = intervalType.forDisplay(intervalN).uppercase(Locale.getDefault())
                 Text(
                     text = stringResource(R.string.repeats_every, intervalN, intervalTypeLabel),
-                    style = LegacyTheme.typo.c.copy(
+                    style = PlannedTheme.typo.c.copy(
                         fontWeight = FontWeight.ExtraBold,
-                        color = LegacyTheme.colors.orange,
+                        color = PlannedTheme.colors.orange,
                         textAlign = TextAlign.Start
                     )
                 )
@@ -155,8 +156,8 @@ private fun RecurringRuleCard(
 
         Text(
             text = startDate.toLocalDate().formatDateOnly(),
-            style = LegacyTheme.typo.nB2.copy(
-                color = LegacyTheme.colors.pureInverse,
+            style = PlannedTheme.typo.nB2.copy(
+                color = PlannedTheme.colors.pureInverse,
                 fontWeight = FontWeight.ExtraBold,
                 textAlign = TextAlign.Start
             )

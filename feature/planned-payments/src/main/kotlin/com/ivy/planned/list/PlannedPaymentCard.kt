@@ -1,5 +1,7 @@
 package com.ivy.planned.list
 
+import com.ivy.planned.PlannedTheme
+
 import android.annotation.SuppressLint
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
@@ -28,7 +30,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.TransactionType
 import com.ivy.data.model.IntervalType
-import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.data.model.PlannedPaymentRule
 import com.ivy.ui.time.forDisplay
 import com.ivy.ui.time.formatDateOnly
@@ -68,13 +69,13 @@ internal fun LazyItemScope.PlannedPaymentCard(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp)
-            .clip(LegacyTheme.shapes.r4)
+            .clip(PlannedTheme.shapes.r4)
             .clickable {
                 if (accounts.find { it.id == plannedPayment.accountId } != null) {
                     onClick(plannedPayment)
                 }
             }
-            .background(LegacyTheme.colors.medium, LegacyTheme.shapes.r4)
+            .background(PlannedTheme.colors.medium, PlannedTheme.shapes.r4)
             .testTag("planned_payment_card")
     ) {
         val currency = accounts.find { it.id == plannedPayment.accountId }?.currency ?: baseCurrency
@@ -104,9 +105,9 @@ internal fun LazyItemScope.PlannedPaymentCard(
             Text(
                 modifier = Modifier.padding(horizontal = 24.dp),
                 text = plannedPayment.title!!,
-                style = LegacyTheme.typo.b1.copy(
+                style = PlannedTheme.typo.b1.copy(
                     fontWeight = FontWeight.ExtraBold,
-                    color = LegacyTheme.colors.pureInverse,
+                    color = PlannedTheme.colors.pureInverse,
                     textAlign = TextAlign.Start
                 )
             )
@@ -142,14 +143,14 @@ private fun PlannedPaymentAmountRow(
                 icon = R.drawable.ic_income,
                 gradient = IvyGradients.Green,
                 iconTint = White,
-                textColor = LegacyTheme.colors.green
+                textColor = PlannedTheme.colors.green
             )
 
             TransactionType.EXPENSE -> PlannedAmountTypeStyle(
                 icon = R.drawable.ic_expense,
-                gradient = Gradient(LegacyTheme.colors.gray, LegacyTheme.colors.pureInverse),
+                gradient = Gradient(PlannedTheme.colors.gray, PlannedTheme.colors.pureInverse),
                 iconTint = White,
-                textColor = LegacyTheme.colors.pureInverse
+                textColor = PlannedTheme.colors.pureInverse
             )
 
             TransactionType.TRANSFER -> PlannedAmountTypeStyle(
@@ -205,9 +206,9 @@ private fun PlannedPaymentHeaderRow(
 
             ResourceIcon(
                 modifier = Modifier
-                    .background(LegacyTheme.colors.pure, CircleShape),
+                    .background(PlannedTheme.colors.pure, CircleShape),
                 icon = R.drawable.ic_planned_payments,
-                tint = LegacyTheme.colors.pureInverse
+                tint = PlannedTheme.colors.pureInverse
             )
 
             Spacer(Modifier.width(12.dp))
@@ -223,9 +224,9 @@ private fun PlannedPaymentHeaderRow(
                     ),
                     text = category.name,
                     backgroundGradient = Gradient.solid(category.color.toComposeColor()),
-                    disabledBackgroundColor = LegacyTheme.colors.gray,
-                    shape = LegacyTheme.shapes.rFull,
-                    textStyle = LegacyTheme.typo.c.copy(
+                    disabledBackgroundColor = PlannedTheme.colors.gray,
+                    shape = PlannedTheme.shapes.rFull,
+                    textStyle = PlannedTheme.typo.c.copy(
                         color = findContrastTextColor(category.color.toComposeColor()),
                         fontWeight = FontWeight.ExtraBold,
                         textAlign = TextAlign.Start
@@ -241,14 +242,14 @@ private fun PlannedPaymentHeaderRow(
 
             val account = accounts.find { it.id == plannedPayment.accountId }
             GradientButton(
-                backgroundGradient = Gradient.solid(LegacyTheme.colors.pure),
-                disabledBackgroundColor = LegacyTheme.colors.gray,
-                shape = LegacyTheme.shapes.rFull,
+                backgroundGradient = Gradient.solid(PlannedTheme.colors.pure),
+                disabledBackgroundColor = PlannedTheme.colors.gray,
+                shape = PlannedTheme.shapes.rFull,
                 text = account?.name ?: stringResource(R.string.deleted),
-                iconTint = LegacyTheme.colors.pureInverse,
+                iconTint = PlannedTheme.colors.pureInverse,
                 iconStart = getCustomIconIdS(account?.icon, R.drawable.ic_custom_account_s),
-                textStyle = LegacyTheme.typo.c.copy(
-                    color = LegacyTheme.colors.pureInverse,
+                textStyle = PlannedTheme.typo.c.copy(
+                    color = PlannedTheme.colors.pureInverse,
                     fontWeight = FontWeight.ExtraBold,
                     textAlign = TextAlign.Start
                 ),
@@ -279,8 +280,8 @@ private fun RuleTextRow(
         if (oneTime) {
             Text(
                 text = stringResource(R.string.planned_for_uppercase),
-                style = LegacyTheme.typo.nC.copy(
-                    color = LegacyTheme.colors.orange,
+                style = PlannedTheme.typo.nC.copy(
+                    color = PlannedTheme.colors.orange,
                     fontWeight = FontWeight.SemiBold,
                     textAlign = TextAlign.Start
                 )
@@ -289,8 +290,8 @@ private fun RuleTextRow(
                 modifier = Modifier.padding(bottom = 1.dp),
                 text = startDate?.toLocalDate()?.formatDateOnlyWithYear()?.uppercase(Locale.getDefault())
                     ?: stringResource(R.string.null_text),
-                style = LegacyTheme.typo.nC.copy(
-                    color = LegacyTheme.colors.orange,
+                style = PlannedTheme.typo.nC.copy(
+                    color = PlannedTheme.colors.orange,
                     fontWeight = FontWeight.ExtraBold,
                     textAlign = TextAlign.Start
                 )
@@ -299,8 +300,8 @@ private fun RuleTextRow(
             val startDateFormatted = startDate?.toLocalDate()?.formatDateOnly()?.uppercase(Locale.getDefault())
             Text(
                 text = stringResource(R.string.starts_date, startDateFormatted ?: ""),
-                style = LegacyTheme.typo.nC.copy(
-                    color = LegacyTheme.colors.orange,
+                style = PlannedTheme.typo.nC.copy(
+                    color = PlannedTheme.colors.orange,
                     fontWeight = FontWeight.SemiBold,
                     textAlign = TextAlign.Start
                 )
@@ -313,8 +314,8 @@ private fun RuleTextRow(
                     intervalN ?: 0,
                     intervalTypeFormatted ?: ""
                 ),
-                style = LegacyTheme.typo.nC.copy(
-                    color = LegacyTheme.colors.orange,
+                style = PlannedTheme.typo.nC.copy(
+                    color = PlannedTheme.colors.orange,
                     fontWeight = FontWeight.ExtraBold,
                     textAlign = TextAlign.Start
                 )

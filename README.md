@@ -1581,6 +1581,7 @@ shared:ui:core
 - 报表页样式依赖继续收窄：`feature:reports` 增加本模块私有 `ReportsTheme` 承接原报表页、筛选浮层、关键词弹窗和勾选控件所需 token；报表模块已移除对 `shared:ui:legacy` 的直接依赖。
 - 首页样式依赖继续收窄：`feature:home` 增加本模块私有 `HomeTheme` 承接首页头部、缓冲金额、更多菜单、客户旅程卡片和交易分隔线所需 token；首页模块已移除对 `shared:ui:legacy` 的直接依赖。
 - 借贷页样式依赖继续收窄：`feature:loans` 增加本模块私有 `LoansTheme` 承接借贷列表、详情页、借贷/还款记录弹窗、账户选择和进度条所需 token；借贷模块已移除对 `shared:ui:legacy` 的直接依赖。
+- 计划付款样式依赖继续收窄：`feature:planned-payments` 增加本模块私有 `PlannedTheme` 承接计划付款列表、编辑页、底部表单、标题/描述弹窗和重复规则弹窗所需 token；计划付款模块已移除对 `shared:ui:legacy` 的直接依赖。
 - app 仍保留文件选择、文件分享、Material 日期选择器、BuildInfo、Locale 设置、生物识别和窗口安全等真正依赖 Activity 或 Android app 壳层的装配。
 
 ## 高风险区域

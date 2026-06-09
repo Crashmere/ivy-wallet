@@ -1,5 +1,7 @@
 package com.ivy.planned.edit
 
+import com.ivy.planned.PlannedTheme
+
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraintsScope
@@ -39,7 +41,6 @@ import com.ivy.ui.compose.GradientIconButton
 import com.ivy.ui.modal.IvyModal
 import com.ivy.ui.theme.colors.Gradient
 import com.ivy.ui.theme.colors.IvyGradients
-import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.theme.colors.IvyFixedColors.White
 import com.ivy.ui.R
 import com.ivy.ui.compose.clickableNoIndication
@@ -88,8 +89,8 @@ internal fun BoxWithConstraintsScope.DescriptionModal(
         Text(
             modifier = Modifier.padding(start = 32.dp),
             text = stringResource(R.string.description),
-            style = LegacyTheme.typo.b1.copy(
-                color = LegacyTheme.colors.pureInverse,
+            style = PlannedTheme.typo.b1.copy(
+                color = PlannedTheme.colors.pureInverse,
                 fontWeight = FontWeight.ExtraBold,
                 textAlign = TextAlign.Start
             )
@@ -189,9 +190,9 @@ private fun DescriptionModalPositiveButton(
         modifier = if (testTag != null) modifier.testTag(testTag) else modifier,
         text = text,
         backgroundGradient = IvyGradients.Green,
-        disabledBackgroundColor = LegacyTheme.colors.gray,
-        shape = LegacyTheme.shapes.rFull,
-        textStyle = LegacyTheme.typo.b2.copy(
+        disabledBackgroundColor = PlannedTheme.colors.gray,
+        shape = PlannedTheme.shapes.rFull,
+        textStyle = PlannedTheme.typo.b2.copy(
             color = Color(0xFFFAFAFA),
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Start
@@ -212,7 +213,7 @@ private fun DescriptionModalDeleteButton(
             .size(40.dp)
             .testTag(testTag),
         icon = R.drawable.ic_delete,
-        backgroundGradient = Gradient(LegacyTheme.colors.red, Color(0xFFFF99AB)),
+        backgroundGradient = Gradient(PlannedTheme.colors.red, Color(0xFFFF99AB)),
         tint = White,
         onClick = onClick
     )
@@ -236,8 +237,8 @@ private fun DescriptionTextField(
             Text(
                 text = hint,
                 textAlign = TextAlign.Start,
-                style = LegacyTheme.typo.b2.copy(
-                    color = LegacyTheme.colors.mediumInverse,
+                style = PlannedTheme.typo.b2.copy(
+                    color = PlannedTheme.colors.mediumInverse,
                     fontWeight = FontWeight.Medium,
                     textAlign = TextAlign.Start
                 )
@@ -248,13 +249,13 @@ private fun DescriptionTextField(
             modifier = Modifier.testTag(testTag),
             value = value,
             onValueChange = onValueChanged,
-            textStyle = LegacyTheme.typo.nB2.copy(
-                color = LegacyTheme.colors.pureInverse,
+            textStyle = PlannedTheme.typo.nB2.copy(
+                color = PlannedTheme.colors.pureInverse,
                 fontWeight = FontWeight.Medium,
                 textAlign = TextAlign.Start
             ),
             singleLine = false,
-            cursorBrush = SolidColor(LegacyTheme.colors.pureInverse),
+            cursorBrush = SolidColor(PlannedTheme.colors.pureInverse),
             keyboardOptions = keyboardOptions,
             keyboardActions = keyboardActions
         )

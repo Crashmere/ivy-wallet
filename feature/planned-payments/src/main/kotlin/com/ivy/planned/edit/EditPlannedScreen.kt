@@ -1,5 +1,7 @@
 package com.ivy.planned.edit
 
+import com.ivy.planned.PlannedTheme
+
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.BoxWithConstraintsScope
 import androidx.compose.foundation.layout.Column
@@ -49,7 +51,6 @@ import com.ivy.ui.modal.CategoryModal
 import com.ivy.ui.modal.CategoryModalCategory
 import com.ivy.ui.modal.CategoryModalSaveData
 import com.ivy.ui.modal.ChooseCategoryModal
-import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.compose.GradientButton
 import com.ivy.ui.theme.colors.IvyGradients
 import kotlinx.collections.immutable.persistentListOf
@@ -403,9 +404,9 @@ private fun EditPlannedSetButton(
         modifier = modifier,
         text = stringResource(R.string.set),
         backgroundGradient = IvyGradients.Green,
-        disabledBackgroundColor = LegacyTheme.colors.gray,
-        shape = LegacyTheme.shapes.rFull,
-        textStyle = LegacyTheme.typo.b2.copy(
+        disabledBackgroundColor = PlannedTheme.colors.gray,
+        shape = PlannedTheme.shapes.rFull,
+        textStyle = PlannedTheme.typo.b2.copy(
             color = Color(0xFFFAFAFA),
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Start

@@ -1,5 +1,7 @@
 package com.ivy.planned.list
 
+import com.ivy.planned.PlannedTheme
+
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -22,7 +24,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.data.model.PlannedPaymentRule
 import com.ivy.ui.R
 import com.ivy.ui.compose.ResourceIcon
@@ -113,7 +114,7 @@ private fun LazyListScope.plannedPaymentItems(
                 expanded = oneTimeExpanded,
                 setExpanded = setOneTimeExpanded,
                 title = stringResource(R.string.one_time_payments),
-                titleColor = LegacyTheme.colors.pureInverse,
+                titleColor = PlannedTheme.colors.pureInverse,
                 baseCurrency = currency,
                 income = oneTimeIncome,
                 expenses = oneTimeExpenses.absoluteValue
@@ -141,7 +142,7 @@ private fun LazyListScope.plannedPaymentItems(
                 expanded = recurringExpanded,
                 setExpanded = setRecurringExpanded,
                 title = stringResource(R.string.recurring_payments),
-                titleColor = LegacyTheme.colors.pureInverse,
+                titleColor = PlannedTheme.colors.pureInverse,
                 baseCurrency = currency,
                 income = recurringIncome,
                 expenses = recurringExpenses.absoluteValue
@@ -187,15 +188,15 @@ private fun LazyItemScope.NoPlannedPaymentsEmptyState() {
 
         ResourceIcon(
             icon = R.drawable.ic_planned_payments,
-            tint = LegacyTheme.colors.gray
+            tint = PlannedTheme.colors.gray
         )
 
         Spacer(Modifier.height(24.dp))
 
         Text(
             text = stringResource(R.string.no_planned_payments),
-            style = LegacyTheme.typo.b1.copy(
-                color = LegacyTheme.colors.gray,
+            style = PlannedTheme.typo.b1.copy(
+                color = PlannedTheme.colors.gray,
                 fontWeight = FontWeight.ExtraBold,
                 textAlign = TextAlign.Start
             ),
@@ -206,8 +207,8 @@ private fun LazyItemScope.NoPlannedPaymentsEmptyState() {
 
         Text(
             text = stringResource(R.string.no_planned_payments_description),
-            style = LegacyTheme.typo.b2.copy(
-                color = LegacyTheme.colors.gray,
+            style = PlannedTheme.typo.b2.copy(
+                color = PlannedTheme.colors.gray,
                 fontWeight = FontWeight.Medium,
                 textAlign = TextAlign.Center
             )

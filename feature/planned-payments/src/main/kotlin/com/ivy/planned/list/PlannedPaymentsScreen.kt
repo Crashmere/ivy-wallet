@@ -1,5 +1,7 @@
 package com.ivy.planned.list
 
+import com.ivy.planned.PlannedTheme
+
 import androidx.compose.foundation.layout.BoxWithConstraintsScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
@@ -13,7 +15,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.PlannedPaymentRule
 import com.ivy.data.model.TransactionType
-import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.navigation.EditPlannedScreen
 import com.ivy.ui.navigation.TransactionRouteType
 import com.ivy.ui.navigation.TransactionsScreen
@@ -47,9 +48,9 @@ private fun BoxWithConstraintsScope.UI(
             Text(
                 modifier = Modifier.padding(start = 24.dp),
                 text = stringResource(R.string.planned_payments_inline),
-                style = LegacyTheme.typo.h2.copy(
+                style = PlannedTheme.typo.h2.copy(
                     fontWeight = FontWeight.ExtraBold,
-                    color = LegacyTheme.colors.pureInverse,
+                    color = PlannedTheme.colors.pureInverse,
                     textAlign = TextAlign.Start
                 )
             )

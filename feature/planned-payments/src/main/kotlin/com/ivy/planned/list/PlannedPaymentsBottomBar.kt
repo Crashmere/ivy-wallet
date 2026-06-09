@@ -1,5 +1,7 @@
 package com.ivy.planned.list
 
+import com.ivy.planned.PlannedTheme
+
 import androidx.compose.foundation.layout.BoxWithConstraintsScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
@@ -19,7 +21,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.compose.navigationBarInset
 import com.ivy.ui.compose.toDensityDp
 import com.ivy.ui.R
@@ -36,7 +37,7 @@ internal fun BoxWithConstraintsScope.PlannedPaymentsBottomBar(
     PlannedPaymentsActionsRow(
         modifier = Modifier
             .align(Alignment.BottomCenter)
-            .gradientCutBackgroundTop(LegacyTheme.colors.pure, LocalDensity.current)
+            .gradientCutBackgroundTop(PlannedTheme.colors.pure, LocalDensity.current)
             .padding(bottom = bottomInset)
             .padding(bottom = 24.dp)
     ) {
@@ -51,14 +52,14 @@ internal fun BoxWithConstraintsScope.PlannedPaymentsBottomBar(
         OutlinedPillButton(
             iconStart = R.drawable.ic_planned_payments,
             text = stringResource(R.string.add_payment),
-            shape = LegacyTheme.shapes.rFull,
+            shape = PlannedTheme.shapes.rFull,
             solidBackground = true,
-            backgroundColor = LegacyTheme.colors.pure,
-            iconTint = LegacyTheme.colors.pureInverse,
-            borderColor = LegacyTheme.colors.medium,
-            textStyle = LegacyTheme.typo.b2.copy(
+            backgroundColor = PlannedTheme.colors.pure,
+            iconTint = PlannedTheme.colors.pureInverse,
+            borderColor = PlannedTheme.colors.medium,
+            textStyle = PlannedTheme.typo.b2.copy(
                 fontWeight = FontWeight.Bold,
-                color = LegacyTheme.colors.pureInverse,
+                color = PlannedTheme.colors.pureInverse,
                 textAlign = TextAlign.Start,
             ),
         ) {
@@ -72,7 +73,7 @@ internal fun BoxWithConstraintsScope.PlannedPaymentsBottomBar(
 @Composable
 private fun PlannedPaymentsActionsRow(
     modifier: Modifier = Modifier,
-    lineColor: Color = LegacyTheme.colors.medium,
+    lineColor: Color = PlannedTheme.colors.medium,
     content: @Composable RowScope.() -> Unit
 ) {
     Row(
@@ -105,9 +106,9 @@ private fun CloseButton(
 ) {
     CloseIconButton(
         modifier = modifier,
-        backgroundColor = LegacyTheme.colors.pure,
-        borderColor = LegacyTheme.colors.medium,
-        tint = LegacyTheme.colors.pureInverse,
+        backgroundColor = PlannedTheme.colors.pure,
+        borderColor = PlannedTheme.colors.medium,
+        tint = PlannedTheme.colors.pureInverse,
         onClick = onClick,
     )
 }

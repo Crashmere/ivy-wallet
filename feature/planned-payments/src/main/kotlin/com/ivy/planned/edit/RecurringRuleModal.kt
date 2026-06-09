@@ -1,5 +1,7 @@
 package com.ivy.planned.edit
 
+import com.ivy.planned.PlannedTheme
+
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -51,7 +53,6 @@ import com.ivy.ui.modal.IvyModal
 import com.ivy.ui.modal.ModalTitle
 import com.ivy.ui.theme.colors.Gradient
 import com.ivy.ui.theme.colors.IvyGradients
-import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.theme.colors.IvyFixedColors.White
 import com.ivy.ui.R
 import com.ivy.ui.compose.clickableNoIndication
@@ -188,9 +189,9 @@ private fun RecurringRuleSetButton(
         modifier = modifier,
         text = stringResource(R.string.set),
         backgroundGradient = IvyGradients.Green,
-        disabledBackgroundColor = LegacyTheme.colors.gray,
-        shape = LegacyTheme.shapes.rFull,
-        textStyle = LegacyTheme.typo.b2.copy(
+        disabledBackgroundColor = PlannedTheme.colors.gray,
+        shape = PlannedTheme.shapes.rFull,
+        textStyle = PlannedTheme.typo.b2.copy(
             color = Color(0xFFFAFAFA),
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Start
@@ -211,7 +212,7 @@ private fun TimesSelector(
         modifier = Modifier
             .padding(horizontal = 24.dp)
             .fillMaxWidth()
-            .background(LegacyTheme.colors.medium, LegacyTheme.shapes.r2),
+            .background(PlannedTheme.colors.medium, PlannedTheme.shapes.r2),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Spacer(Modifier.width(8.dp))
@@ -242,12 +243,12 @@ private fun RowScope.TimesSelectorButton(
     label: String,
     onClick: () -> Unit
 ) {
-    val rFull = LegacyTheme.shapes.rFull
+    val rFull = PlannedTheme.shapes.rFull
 
     Text(
         modifier = Modifier
             .weight(1f)
-            .clip(LegacyTheme.shapes.rFull)
+            .clip(PlannedTheme.shapes.rFull)
             .clickable {
                 onClick()
             }
@@ -257,8 +258,8 @@ private fun RowScope.TimesSelectorButton(
             }
             .padding(vertical = 8.dp),
         text = label,
-        style = LegacyTheme.typo.b2.copy(
-            color = if (selected) White else LegacyTheme.colors.gray,
+        style = PlannedTheme.typo.b2.copy(
+            color = if (selected) White else PlannedTheme.colors.gray,
             fontWeight = FontWeight.ExtraBold,
             textAlign = TextAlign.Center
         )
@@ -300,8 +301,8 @@ private fun MultipleTimes(
     Text(
         modifier = Modifier.padding(start = 32.dp),
         text = stringResource(R.string.starts_on),
-        style = LegacyTheme.typo.b2.copy(
-            color = LegacyTheme.colors.pureInverse,
+        style = PlannedTheme.typo.b2.copy(
+            color = PlannedTheme.colors.pureInverse,
             fontWeight = FontWeight.ExtraBold,
             textAlign = TextAlign.Start
         )
@@ -327,9 +328,9 @@ private fun MultipleTimes(
     Text(
         modifier = Modifier.padding(start = 32.dp),
         text = stringResource(R.string.repeats_every_text),
-        style = LegacyTheme.typo.b2.copy(
+        style = PlannedTheme.typo.b2.copy(
             fontWeight = FontWeight.ExtraBold,
-            color = LegacyTheme.colors.pureInverse,
+            color = PlannedTheme.colors.pureInverse,
             textAlign = TextAlign.Start
         )
     )
@@ -368,7 +369,7 @@ private fun RecurringRuleDividerLine(
         modifier = modifier
             .fillMaxWidth()
             .height(2.dp)
-            .background(LegacyTheme.colors.medium)
+            .background(PlannedTheme.colors.medium)
     )
 }
 
@@ -397,9 +398,9 @@ private fun DateRow(
                 text = closeDay ?: date.formatNicely(
                     pattern = "EEEE, dd MMM"
                 ),
-                style = LegacyTheme.typo.h2.copy(
+                style = PlannedTheme.typo.h2.copy(
                     fontWeight = FontWeight.Normal,
-                    color = LegacyTheme.colors.pureInverse,
+                    color = PlannedTheme.colors.pureInverse,
                     textAlign = TextAlign.Start
                 )
             )
@@ -409,9 +410,9 @@ private fun DateRow(
 
                 Text(
                     text = date.formatDateWeekDayLong(),
-                    style = LegacyTheme.typo.b2.copy(
+                    style = PlannedTheme.typo.b2.copy(
                         fontWeight = FontWeight.SemiBold,
-                        color = LegacyTheme.colors.gray,
+                        color = PlannedTheme.colors.gray,
                         textAlign = TextAlign.Start
                     )
                 )
@@ -427,8 +428,8 @@ private fun DateRow(
                 .testTag("recurring_modal_pick_date"),
             backgroundPadding = 4.dp,
             icon = R.drawable.ic_calendar,
-            backgroundGradient = Gradient.solid(LegacyTheme.colors.pureInverse),
-            tint = LegacyTheme.colors.pure
+            backgroundGradient = Gradient.solid(PlannedTheme.colors.pureInverse),
+            tint = PlannedTheme.colors.pure
         ) {
             pickDate(dateTime.toLocalDate(), onDatePicked)
         }
@@ -461,13 +462,13 @@ private fun RepeatIntervalPickerRow(
                     brush = if (validInput) {
                         IvyGradients.Ivy.asHorizontalBrush()
                     } else {
-                        Gradient.solid(LegacyTheme.colors.medium).asHorizontalBrush()
+                        Gradient.solid(PlannedTheme.colors.medium).asHorizontalBrush()
                     },
-                    shape = LegacyTheme.shapes.rFull
+                    shape = PlannedTheme.shapes.rFull
                 )
                 .padding(vertical = 12.dp),
             value = intervalTextFieldValue,
-            textColor = if (validInput) White else LegacyTheme.colors.pureInverse,
+            textColor = if (validInput) White else PlannedTheme.colors.pureInverse,
             hint = "0"
         ) {
             val filteredText = it.text.take(RepeatIntervalCharLimit)
@@ -508,7 +509,7 @@ private fun RepeatIntervalNumberInput(
             Text(
                 text = hint,
                 textAlign = TextAlign.Start,
-                style = LegacyTheme.typo.nB2.copy(
+                style = PlannedTheme.typo.nB2.copy(
                     color = androidx.compose.ui.graphics.Color.Gray,
                     fontWeight = FontWeight.ExtraBold,
                     textAlign = TextAlign.Center
@@ -521,13 +522,13 @@ private fun RepeatIntervalNumberInput(
             modifier = Modifier.testTag("base_number_input"),
             value = value,
             onValueChange = onValueChanged,
-            textStyle = LegacyTheme.typo.nB2.copy(
+            textStyle = PlannedTheme.typo.nB2.copy(
                 color = textColor,
                 fontWeight = FontWeight.ExtraBold,
                 textAlign = TextAlign.Center
             ),
             singleLine = true,
-            cursorBrush = SolidColor(LegacyTheme.colors.pureInverse),
+            cursorBrush = SolidColor(PlannedTheme.colors.pureInverse),
             keyboardOptions = KeyboardOptions(
                 capitalization = KeyboardCapitalization.Characters,
                 imeAction = ImeAction.Done,
@@ -560,7 +561,7 @@ private fun RowScope.IntervalTypeSelector(
     Row(
         modifier = Modifier
             .weight(1f)
-            .border(2.dp, LegacyTheme.colors.medium, LegacyTheme.shapes.rFull),
+            .border(2.dp, PlannedTheme.colors.medium, PlannedTheme.shapes.rFull),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Spacer(Modifier.width(20.dp))
@@ -582,7 +583,7 @@ private fun RowScope.IntervalTypeSelector(
                 .padding(all = 8.dp)
                 .rotate(-180f),
             icon = R.drawable.ic_arrow_right,
-            tint = LegacyTheme.colors.pureInverse,
+            tint = PlannedTheme.colors.pureInverse,
             contentDescription = "interval_type_arrow_left"
         )
 
@@ -590,8 +591,8 @@ private fun RowScope.IntervalTypeSelector(
 
         Text(
             text = intervalType.forDisplay(intervalN).capitalizeLocal(),
-            style = LegacyTheme.typo.b2.copy(
-                color = LegacyTheme.colors.pureInverse,
+            style = PlannedTheme.typo.b2.copy(
+                color = PlannedTheme.colors.pureInverse,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Start
             )
@@ -615,7 +616,7 @@ private fun RowScope.IntervalTypeSelector(
                 }
                 .padding(all = 8.dp),
             icon = R.drawable.ic_arrow_right,
-            tint = LegacyTheme.colors.pureInverse,
+            tint = PlannedTheme.colors.pureInverse,
             contentDescription = "interval_type_arrow_right"
         )
 

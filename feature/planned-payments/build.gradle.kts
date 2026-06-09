@@ -5,7 +5,3 @@ plugins {
 android {
     namespace = "com.ivy.planned"
 }
-
-dependencies {
-    implementation(projects.shared.ui.legacy)
-}

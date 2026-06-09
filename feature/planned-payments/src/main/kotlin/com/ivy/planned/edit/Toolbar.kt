@@ -1,5 +1,7 @@
 package com.ivy.planned.edit
 
+import com.ivy.planned.PlannedTheme
+
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
@@ -26,7 +28,6 @@ import com.ivy.data.model.TransactionType
 import com.ivy.ui.compose.GradientIconButton
 import com.ivy.ui.compose.OutlinedPillButton
 import com.ivy.ui.theme.colors.Gradient
-import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.theme.colors.IvyFixedColors.White
 import com.ivy.ui.R
 import com.ivy.ui.compose.CloseIconButton
@@ -54,13 +55,13 @@ internal fun Toolbar(
                 OutlinedPillButton(
                     text = stringResource(R.string.income),
                     iconStart = R.drawable.ic_income,
-                    shape = LegacyTheme.shapes.rFull,
-                    backgroundColor = LegacyTheme.colors.pure,
-                    iconTint = LegacyTheme.colors.pureInverse,
-                    borderColor = LegacyTheme.colors.medium,
-                    textStyle = LegacyTheme.typo.b2.copy(
+                    shape = PlannedTheme.shapes.rFull,
+                    backgroundColor = PlannedTheme.colors.pure,
+                    iconTint = PlannedTheme.colors.pureInverse,
+                    borderColor = PlannedTheme.colors.medium,
+                    textStyle = PlannedTheme.typo.b2.copy(
                         fontWeight = FontWeight.Bold,
-                        color = LegacyTheme.colors.pureInverse,
+                        color = PlannedTheme.colors.pureInverse,
                         textAlign = TextAlign.Start,
                     ),
                     onClick = onChangeTransactionTypeModal
@@ -73,13 +74,13 @@ internal fun Toolbar(
                 OutlinedPillButton(
                     text = stringResource(R.string.expense),
                     iconStart = R.drawable.ic_expense,
-                    shape = LegacyTheme.shapes.rFull,
-                    backgroundColor = LegacyTheme.colors.pure,
-                    iconTint = LegacyTheme.colors.pureInverse,
-                    borderColor = LegacyTheme.colors.medium,
-                    textStyle = LegacyTheme.typo.b2.copy(
+                    shape = PlannedTheme.shapes.rFull,
+                    backgroundColor = PlannedTheme.colors.pure,
+                    iconTint = PlannedTheme.colors.pureInverse,
+                    borderColor = PlannedTheme.colors.medium,
+                    textStyle = PlannedTheme.typo.b2.copy(
                         fontWeight = FontWeight.Bold,
-                        color = LegacyTheme.colors.pureInverse,
+                        color = PlannedTheme.colors.pureInverse,
                         textAlign = TextAlign.Start,
                     ),
                     onClick = onChangeTransactionTypeModal
@@ -113,15 +114,15 @@ private fun DuplicateButton(onClick: () -> Unit) {
             .testTag("duplicate_button"),
         shape = CircleShape,
         colors = IconButtonDefaults.outlinedIconButtonColors()
-            .copy(contentColor = LegacyTheme.colors.medium),
-        border = BorderStroke(width = 2.dp, color = LegacyTheme.colors.medium),
+            .copy(contentColor = PlannedTheme.colors.medium),
+        border = BorderStroke(width = 2.dp, color = PlannedTheme.colors.medium),
         onClick = onClick
     ) {
         Icon(
             modifier = Modifier.padding(6.dp),
             imageVector = Icons.Sharp.CopyAll,
             contentDescription = "duplicate_button",
-            tint = LegacyTheme.colors.pureInverse
+            tint = PlannedTheme.colors.pureInverse
         )
     }
 }
@@ -134,7 +135,7 @@ private fun DeleteToolbarButton(onClick: () -> Unit) {
             .testTag("delete_button"),
         backgroundPadding = 6.dp,
         icon = R.drawable.ic_delete,
-        backgroundGradient = Gradient(LegacyTheme.colors.red, Color(0xFFFF99AB)),
+        backgroundGradient = Gradient(PlannedTheme.colors.red, Color(0xFFFF99AB)),
         enabled = true,
         hasShadow = false,
         tint = White,
@@ -149,9 +150,9 @@ private fun CloseButton(
 ) {
     CloseIconButton(
         modifier = modifier,
-        backgroundColor = LegacyTheme.colors.pure,
-        borderColor = LegacyTheme.colors.medium,
-        tint = LegacyTheme.colors.pureInverse,
+        backgroundColor = PlannedTheme.colors.pure,
+        borderColor = PlannedTheme.colors.medium,
+        tint = PlannedTheme.colors.pureInverse,
         onClick = onClick,
     )
 }

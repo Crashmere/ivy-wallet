@@ -1,5 +1,7 @@
 package com.ivy.planned.edit
 
+import com.ivy.planned.PlannedTheme
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.BoxWithConstraintsScope
@@ -32,7 +34,6 @@ import com.ivy.ui.compose.GradientButton
 import com.ivy.ui.compose.ResourceIcon
 import com.ivy.ui.theme.colors.Gradient
 import com.ivy.ui.theme.colors.IvyGradients
-import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.theme.colors.IvyFixedColors.White
 import com.ivy.ui.R
 import java.util.UUID
@@ -87,8 +88,8 @@ internal fun BoxWithConstraintsScope.ChangeTransactionTypeModal(
         TransactionTypeButton(
             transactionType = TransactionType.EXPENSE,
             selected = transactionType == TransactionType.EXPENSE,
-            selectedGradient = Gradient(LegacyTheme.colors.pureInverse, LegacyTheme.colors.gray),
-            textSelectedColor = LegacyTheme.colors.pure
+            selectedGradient = Gradient(PlannedTheme.colors.pureInverse, PlannedTheme.colors.gray),
+            textSelectedColor = PlannedTheme.colors.pure
         ) {
             transactionType = TransactionType.EXPENSE
             save(transactionType, onTransactionTypeChanged, dismiss)
@@ -126,9 +127,9 @@ private fun TransactionTypeModalSetButton(onClick: () -> Unit) {
     GradientButton(
         text = stringResource(R.string.set),
         backgroundGradient = IvyGradients.Green,
-        disabledBackgroundColor = LegacyTheme.colors.gray,
-        shape = LegacyTheme.shapes.rFull,
-        textStyle = LegacyTheme.typo.b2.copy(
+        disabledBackgroundColor = PlannedTheme.colors.gray,
+        shape = PlannedTheme.shapes.rFull,
+        textStyle = PlannedTheme.typo.b2.copy(
             color = Color(0xFFFAFAFA),
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Start
@@ -151,10 +152,10 @@ private fun TransactionTypeButton(
         modifier = Modifier
             .padding(horizontal = 16.dp)
             .fillMaxWidth()
-            .clip(LegacyTheme.shapes.r4)
+            .clip(PlannedTheme.shapes.r4)
             .background(
-                brush = if (selected) selectedGradient.asHorizontalBrush() else SolidColor(LegacyTheme.colors.medium),
-                shape = LegacyTheme.shapes.r4
+                brush = if (selected) selectedGradient.asHorizontalBrush() else SolidColor(PlannedTheme.colors.medium),
+                shape = PlannedTheme.shapes.r4
             )
             .clickable {
                 onClick()
@@ -165,7 +166,7 @@ private fun TransactionTypeButton(
     ) {
         Spacer(Modifier.width(16.dp))
 
-        val textColor = if (selected) textSelectedColor else LegacyTheme.colors.pureInverse
+        val textColor = if (selected) textSelectedColor else PlannedTheme.colors.pureInverse
 
         ResourceIcon(
             icon = when (transactionType) {
@@ -184,7 +185,7 @@ private fun TransactionTypeButton(
                 TransactionType.EXPENSE -> stringResource(R.string.expense)
                 TransactionType.TRANSFER -> stringResource(R.string.transfer)
             },
-            style = LegacyTheme.typo.b1.copy(
+            style = PlannedTheme.typo.b1.copy(
                 color = textColor,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Start
@@ -201,7 +202,7 @@ private fun TransactionTypeButton(
 
             Text(
                 text = stringResource(R.string.selected_text),
-                style = LegacyTheme.typo.b2.copy(
+                style = PlannedTheme.typo.b2.copy(
                     fontWeight = FontWeight.SemiBold,
                     color = textSelectedColor,
                     textAlign = TextAlign.Start
