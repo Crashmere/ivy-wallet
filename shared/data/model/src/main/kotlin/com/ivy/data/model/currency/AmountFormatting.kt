@@ -3,7 +3,6 @@ package com.ivy.data.model.currency
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
 import kotlin.math.abs
-import kotlin.math.log10
 import kotlin.math.truncate
 
 private const val MILLION = 1000000
@@ -131,11 +130,6 @@ fun shouldShortAmount(amount: Double): Boolean {
 
 fun formatInt(number: Int): String {
     return DecimalFormat("#,###,###,###").format(number)
-}
-
-fun Long.length() = when (this) {
-    0L -> 1
-    else -> log10(abs(toDouble())).toInt() + 1
 }
 
 fun formatInputAmount(
