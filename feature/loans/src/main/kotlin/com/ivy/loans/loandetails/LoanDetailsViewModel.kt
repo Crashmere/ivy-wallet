@@ -471,7 +471,7 @@ internal class LoanDetailsViewModel @Inject internal constructor(
             val convertedAmount = loanRecordTransactionSyncUseCase.calculateConvertedAmount(
                 loanAccountId = localLoan.accountId,
                 newLoanRecord = editLoanRecordData.newLoanRecord,
-                oldLoanRecord = editLoanRecordData.originalLoanRecord,
+                originalLoanRecord = editLoanRecordData.originalLoanRecord,
                 reCalculateLoanAmount = editLoanRecordData.reCalculateLoanAmount
             )
 

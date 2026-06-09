@@ -77,9 +77,9 @@ class LoanRecordTransactionSyncUseCase @Inject internal constructor(
             val loan = ltCore.fetchLoan(loanId) ?: return@withContext
 
             val convertedAmount = ltCore.computeConvertedAmount(
-                oldLoanRecordAccountId = loanRecord.accountId,
-                oldLoanRecordConvertedAmount = loanRecord.convertedAmount,
-                oldLoanRecordAmount = loanRecord.amount,
+                originalLoanRecordAccountId = loanRecord.accountId,
+                originalLoanRecordConvertedAmount = loanRecord.convertedAmount,
+                originalLoanRecordAmount = loanRecord.amount,
                 newLoanRecordAccountId = transaction.getFromAccount().value,
                 newLoanRecordAmount = transaction.getFromValue().amount.value,
                 loanAccountId = loan.accountId,
@@ -101,13 +101,13 @@ class LoanRecordTransactionSyncUseCase @Inject internal constructor(
     suspend fun calculateConvertedAmount(
         loanAccountId: UUID?,
         newLoanRecord: LoanRecord,
-        oldLoanRecord: LoanRecord,
+        originalLoanRecord: LoanRecord,
         reCalculateLoanAmount: Boolean = false,
     ): Double? {
         return ltCore.computeConvertedAmount(
-            oldLoanRecordAccountId = oldLoanRecord.accountId,
-            oldLoanRecordConvertedAmount = oldLoanRecord.convertedAmount,
-            oldLoanRecordAmount = oldLoanRecord.amount,
+            originalLoanRecordAccountId = originalLoanRecord.accountId,
+            originalLoanRecordConvertedAmount = originalLoanRecord.convertedAmount,
+            originalLoanRecordAmount = originalLoanRecord.amount,
             newLoanRecordAccountId = newLoanRecord.accountId,
             newLoanRecordAmount = newLoanRecord.amount,
             loanAccountId = loanAccountId,
@@ -121,9 +121,9 @@ class LoanRecordTransactionSyncUseCase @Inject internal constructor(
         loanAccountId: UUID?,
     ): Double? {
         return ltCore.computeConvertedAmount(
-            oldLoanRecordAccountId = null,
-            oldLoanRecordConvertedAmount = null,
-            oldLoanRecordAmount = 0.0,
+            originalLoanRecordAccountId = null,
+            originalLoanRecordConvertedAmount = null,
+            originalLoanRecordAmount = 0.0,
             newLoanRecordAccountId = data.accountId,
             newLoanRecordAmount = data.amount,
             loanAccountId = loanAccountId,

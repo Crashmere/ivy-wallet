@@ -61,16 +61,4 @@ class PreferenceToggleCatalog @Inject internal constructor() {
         description = "Display account-specific colors in transactions",
         defaultValue = false
     )
-
-    val allPreferences: List<BoolPreference>
-        get() = listOf(
-            sortCategoriesAscending,
-            compactAccountsMode,
-            compactCategoriesMode,
-            showTitleSuggestions,
-            showCategorySearchBar,
-            hideTotalBalance,
-            standardKeypadLayout,
-            showAccountColorsInTransactions
-        )
 }

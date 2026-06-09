@@ -52,6 +52,7 @@
 - app 壳层也继续收窄公开面，应用锁屏 UI 等只由根内容调用的 Compose 入口已改为模块内部实现；Android framework 需要实例化的 Activity、Application、Service 保持公开。
 - domain use case 仍作为 feature 注入入口保留，但构造函数、内部算法 helper、mapper、汇率换算细节、时间 helper 等已尽量收窄为模块内部实现。
 - domain 中 CSV 行构建作用域、汇率同步识别键等嵌套实现类型已继续收窄为私有，use case 对外只暴露实际调用入口和结果模型。
+- domain 中偏好开关目录删除无调用方的聚合列表，设置页继续使用显式分组后的具体偏好项。
 - data-core 的 Room Store、偏好 Store、mapper、文件系统和远程汇率源等实现类继续留在 data-core 内部，外部通过 data-api 端口和 domain use case 使用。
 - data-model 金额、时间范围和 primitive 工具已继续清理无调用方公开扩展和常量，基础模型层不再暴露没有业务入口的 helper。
 - CSV 导入、借贷详情和周期工具里继续删除无调用方 helper，保留现有导入、借贷交易同步和周期选择行为。
@@ -63,6 +64,7 @@
 - 首页、交易列表、报表、饼图、预算、分类、CSV 导入、计划付款、账户余额调整等路径已逐步改为正式 `Transaction` / `Account` / `Category` 模型，只在必要的统计兼容算法内部做局部适配。
 - 当前代码中仍可能出现 `legacy` 字样的地方，应优先判断它是不是数据库历史迁移、测试临时文件名或真正的兼容语义；不再新增旧模块式的 legacy 包和 API。
 - 已继续清理误导性历史命名：状态栏兼容函数按 Android R 前后命名，借贷详情里的旧版本兼容注释改为明确说明账户关联兼容语义。
+- 借贷同步里的 `oldLoanRecord*` 命名已改为 `originalLoanRecord*`，避免把“原始记录”误读成旧架构兼容层。
 
 ### 资源和文案
 

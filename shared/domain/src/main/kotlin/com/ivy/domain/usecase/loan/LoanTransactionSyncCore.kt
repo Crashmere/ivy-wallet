@@ -285,9 +285,9 @@ internal class LoanTransactionSyncCore @Inject internal constructor(
     }
 
     suspend fun computeConvertedAmount(
-        oldLoanRecordAccountId: UUID?,
-        oldLoanRecordConvertedAmount: Double?,
-        oldLoanRecordAmount: Double,
+        originalLoanRecordAccountId: UUID?,
+        originalLoanRecordConvertedAmount: Double?,
+        originalLoanRecordAmount: Double,
         newLoanRecordAccountId: UUID?,
         newLoanRecordAmount: Double,
         loanAccountId: UUID?,
@@ -298,12 +298,12 @@ internal class LoanTransactionSyncCore @Inject internal constructor(
             val newLoanRecordCurrency =
                 newLoanRecordAccountId.fetchAssociatedCurrencyCode(accountsList = accounts)
 
-            val oldLoanRecordCurrency =
-                oldLoanRecordAccountId.fetchAssociatedCurrencyCode(accountsList = accounts)
+            val originalLoanRecordCurrency =
+                originalLoanRecordAccountId.fetchAssociatedCurrencyCode(accountsList = accounts)
 
             val loanCurrency = loanAccountId.fetchAssociatedCurrencyCode(accountsList = accounts)
 
-            val loanRecordCurrenciesChanged = oldLoanRecordCurrency != newLoanRecordCurrency
+            val loanRecordCurrenciesChanged = originalLoanRecordCurrency != newLoanRecordCurrency
 
             val newConverted: Double? = when {
                 newLoanRecordCurrency == loanCurrency -> {
@@ -311,7 +311,7 @@ internal class LoanTransactionSyncCore @Inject internal constructor(
                 }
 
                 reCalculateLoanAmount || loanRecordCurrenciesChanged ||
-                        oldLoanRecordConvertedAmount == null -> {
+                        originalLoanRecordConvertedAmount == null -> {
                     withContext(Dispatchers.IO) {
                         convertAmount(
                             baseCurrency = baseCurrency(),
@@ -322,12 +322,12 @@ internal class LoanTransactionSyncCore @Inject internal constructor(
                     }
                 }
 
-                oldLoanRecordAmount != newLoanRecordAmount -> {
-                    newLoanRecordAmount * (oldLoanRecordConvertedAmount / oldLoanRecordAmount)
+                originalLoanRecordAmount != newLoanRecordAmount -> {
+                    newLoanRecordAmount * (originalLoanRecordConvertedAmount / originalLoanRecordAmount)
                 }
 
                 else -> {
-                    oldLoanRecordConvertedAmount
+                    originalLoanRecordConvertedAmount
                 }
             }
             newConverted
