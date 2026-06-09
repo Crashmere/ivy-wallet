@@ -63,13 +63,13 @@ class LoanTransactionSyncUseCase @Inject internal constructor(
     }
 
     suspend fun recalculateLoanRecords(
-        oldLoanAccountId: UUID?,
+        originalLoanAccountId: UUID?,
         newLoanAccountId: UUID?,
         loanId: UUID
     ) {
         val accounts = ltCore.fetchAccounts()
         withContext(Dispatchers.Default) {
-            if (oldLoanAccountId == newLoanAccountId || oldLoanAccountId.fetchAssociatedCurrencyCode(
+            if (originalLoanAccountId == newLoanAccountId || originalLoanAccountId.fetchAssociatedCurrencyCode(
                     accounts
                 ) == newLoanAccountId.fetchAssociatedCurrencyCode(accounts)
             ) {

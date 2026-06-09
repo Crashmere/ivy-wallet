@@ -398,7 +398,7 @@ internal class LoanDetailsViewModel @Inject internal constructor(
 
             this@LoanDetailsViewModel.loan.value?.let {
                 loanTransactionSyncUseCase.recalculateLoanRecords(
-                    oldLoanAccountId = it.accountId,
+                    originalLoanAccountId = it.accountId,
                     newLoanAccountId = loan.accountId,
                     loanId = loan.id
                 )

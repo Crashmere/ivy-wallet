@@ -64,7 +64,7 @@
 - 首页、交易列表、报表、饼图、预算、分类、CSV 导入、计划付款、账户余额调整等路径已逐步改为正式 `Transaction` / `Account` / `Category` 模型，只在必要的统计兼容算法内部做局部适配。
 - 当前代码中仍可能出现 `legacy` 字样的地方，应优先判断它是不是数据库历史迁移、测试临时文件名或真正的兼容语义；不再新增旧模块式的 legacy 包和 API。
 - 已继续清理误导性历史命名：状态栏兼容函数按 Android R 前后命名，借贷详情里的旧版本兼容注释改为明确说明账户关联兼容语义。
-- 借贷同步里的 `oldLoanRecord*` 命名已改为 `originalLoanRecord*`，避免把“原始记录”误读成旧架构兼容层。
+- 借贷同步里的 `oldLoanRecord*`、`oldLoanAccountId` 命名已改为 `originalLoanRecord*`、`originalLoanAccountId`，避免把“原始值”误读成旧架构兼容层。
 
 ### 资源和文案
 
