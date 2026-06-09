@@ -1,5 +1,7 @@
 package com.ivy.loans.modal
 
+import com.ivy.loans.LoansTheme
+
 import android.annotation.SuppressLint
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
@@ -30,7 +32,6 @@ import androidx.compose.ui.unit.dp
 import com.ivy.data.model.LoanRecordType
 import com.ivy.data.model.primitive.NotBlankTrimmedString
 import com.ivy.ui.time.LocalTimeConverter
-import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.compose.thenIf
 import com.ivy.data.model.LoanRecord
 import com.ivy.data.model.currency.getDefaultFIATCurrency
@@ -213,8 +214,8 @@ internal fun BoxWithConstraintsScope.LoanRecordModal(
         Text(
             modifier = Modifier.padding(horizontal = 32.dp),
             text = stringResource(R.string.associated_account),
-            style = LegacyTheme.typo.b2.copy(
-                color = LegacyTheme.colors.pureInverse,
+            style = LoansTheme.typo.b2.copy(
+                color = LoansTheme.colors.pureInverse,
                 fontWeight = FontWeight.ExtraBold,
                 textAlign = TextAlign.Start
             )
@@ -246,8 +247,8 @@ internal fun BoxWithConstraintsScope.LoanRecordModal(
         Text(
             modifier = Modifier.padding(horizontal = 32.dp),
             text = stringResource(R.string.loan_record_type),
-            style = LegacyTheme.typo.b2.copy(
-                color = LegacyTheme.colors.pureInverse,
+            style = LoansTheme.typo.b2.copy(
+                color = LoansTheme.colors.pureInverse,
                 fontWeight = FontWeight.ExtraBold,
                 textAlign = TextAlign.Start
             )
@@ -481,12 +482,12 @@ private fun LoanRecordType(
             stringResource(id = R.string.decrease_loan) to R.drawable.ic_donate_minus
         }
     val selected = selectedRecordType == loanRecordType
-    val medium = LegacyTheme.colors.medium
-    val rFull = LegacyTheme.shapes.rFull
-    val selectedColor = LegacyTheme.colors.green1
+    val medium = LoansTheme.colors.medium
+    val rFull = LoansTheme.shapes.rFull
+    val selectedColor = LoansTheme.colors.green1
     Row(
         modifier = modifier
-            .clip(LegacyTheme.shapes.rFull)
+            .clip(LoansTheme.shapes.rFull)
             .thenIf(!selected) {
                 border(2.dp, medium, rFull)
             }
@@ -501,7 +502,7 @@ private fun LoanRecordType(
         ItemIconSDefaultIcon(
             defaultIcon = iconDrawable,
             iconName = null,
-            tint = LegacyTheme.colors.pureInverse
+            tint = LoansTheme.colors.pureInverse
         )
 
         Spacer(Modifier.width(4.dp))
@@ -509,8 +510,8 @@ private fun LoanRecordType(
         Text(
             modifier = Modifier.padding(vertical = 10.dp),
             text = text,
-            style = LegacyTheme.typo.b2.copy(
-                color = LegacyTheme.colors.pureInverse,
+            style = LoansTheme.typo.b2.copy(
+                color = LoansTheme.colors.pureInverse,
                 fontWeight = FontWeight.ExtraBold,
                 textAlign = TextAlign.Start
             )

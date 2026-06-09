@@ -1,5 +1,7 @@
 package com.ivy.loans.modal
 
+import com.ivy.loans.LoansTheme
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -60,7 +62,6 @@ import com.ivy.ui.modal.ModalTitle
 import com.ivy.ui.modal.AccountModal
 import com.ivy.ui.modal.AccountModalSaveData
 import com.ivy.ui.modal.AmountModal
-import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.theme.colors.dynamicContrast
 import java.time.Instant
 import java.time.LocalDateTime
@@ -236,8 +237,8 @@ internal fun BoxWithConstraintsScope.LoanModal(
         Text(
             modifier = Modifier.padding(horizontal = 32.dp),
             text = stringResource(R.string.note),
-            style = LegacyTheme.typo.b2.copy(
-                color = LegacyTheme.colors.pureInverse,
+            style = LoansTheme.typo.b2.copy(
+                color = LoansTheme.colors.pureInverse,
                 fontWeight = FontWeight.ExtraBold,
                 textAlign = TextAlign.Start
             )
@@ -259,8 +260,8 @@ internal fun BoxWithConstraintsScope.LoanModal(
         Text(
             modifier = Modifier.padding(horizontal = 32.dp),
             text = stringResource(R.string.associated_account),
-            style = LegacyTheme.typo.b2.copy(
-                color = LegacyTheme.colors.pureInverse,
+            style = LoansTheme.typo.b2.copy(
+                color = LoansTheme.colors.pureInverse,
                 fontWeight = FontWeight.ExtraBold,
                 textAlign = TextAlign.Start
             )
@@ -391,8 +392,8 @@ private fun ColumnScope.LoanTypePicker(
     Text(
         modifier = Modifier.padding(horizontal = 32.dp),
         text = stringResource(R.string.loan_type),
-        style = LegacyTheme.typo.b2.copy(
-            color = LegacyTheme.colors.pureInverse,
+        style = LoansTheme.typo.b2.copy(
+            color = LoansTheme.colors.pureInverse,
             fontWeight = FontWeight.ExtraBold,
             textAlign = TextAlign.Start
         )
@@ -404,7 +405,7 @@ private fun ColumnScope.LoanTypePicker(
         modifier = Modifier
             .padding(horizontal = 24.dp)
             .fillMaxWidth()
-            .background(LegacyTheme.colors.medium, LegacyTheme.shapes.r2),
+            .background(LoansTheme.colors.medium, LoansTheme.shapes.r2),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Spacer(Modifier.width(8.dp))
@@ -461,8 +462,8 @@ private fun ColumnScope.LoanColorPicker(
     Text(
         modifier = Modifier.padding(horizontal = 32.dp),
         text = stringResource(R.string.choose_color),
-        style = LegacyTheme.typo.b2.copy(
-            color = LegacyTheme.colors.pureInverse,
+        style = LoansTheme.typo.b2.copy(
+            color = LoansTheme.colors.pureInverse,
             fontWeight = FontWeight.ExtraBold,
             textAlign = TextAlign.Start
         )
@@ -529,11 +530,11 @@ private fun RowScope.SelectorButton(
     label: String,
     onClick: () -> Unit
 ) {
-    val rFull = LegacyTheme.shapes.rFull
+    val rFull = LoansTheme.shapes.rFull
     Text(
         modifier = Modifier
             .weight(1f)
-            .clip(LegacyTheme.shapes.rFull)
+            .clip(LoansTheme.shapes.rFull)
             .clickable {
                 onClick()
             }
@@ -543,8 +544,8 @@ private fun RowScope.SelectorButton(
             }
             .padding(vertical = 8.dp),
         text = label,
-        style = LegacyTheme.typo.b2.copy(
-            color = if (selected) White else LegacyTheme.colors.gray,
+        style = LoansTheme.typo.b2.copy(
+            color = if (selected) White else LoansTheme.colors.gray,
             fontWeight = FontWeight.ExtraBold,
             textAlign = TextAlign.Center
         )

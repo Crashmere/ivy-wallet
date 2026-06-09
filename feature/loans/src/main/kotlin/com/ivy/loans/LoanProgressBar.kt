@@ -8,22 +8,21 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
 import com.ivy.ui.theme.colors.IvyFixedColors.Ivy
-import com.ivy.legacy.ui.theme.LegacyTheme
 
 @Composable
 internal fun LoanProgressBar(
     modifier: Modifier = Modifier,
-    notFilledColor: Color = LegacyTheme.colors.pure,
+    notFilledColor: Color = LoansTheme.colors.pure,
     positiveProgress: Boolean = true,
     percent: Double
 ) {
-    val green = LegacyTheme.colors.green
-    val orange = LegacyTheme.colors.orange
-    val red = LegacyTheme.colors.red
+    val green = LoansTheme.colors.green
+    val orange = LoansTheme.colors.orange
+    val red = LoansTheme.colors.red
 
     Spacer(
         modifier = modifier
-            .clip(LegacyTheme.shapes.r4)
+            .clip(LoansTheme.shapes.r4)
             .background(notFilledColor)
             .drawBehind {
                 drawRect(

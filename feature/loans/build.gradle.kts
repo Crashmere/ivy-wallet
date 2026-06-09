@@ -5,7 +5,3 @@ plugins {
 android {
     namespace = "com.ivy.loans"
 }
-
-dependencies {
-    implementation(projects.shared.ui.legacy)
-}

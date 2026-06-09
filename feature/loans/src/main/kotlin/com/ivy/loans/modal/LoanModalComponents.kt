@@ -1,5 +1,7 @@
 package com.ivy.loans.modal
 
+import com.ivy.loans.LoansTheme
+
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -40,7 +42,6 @@ import com.ivy.ui.icon.ItemIconMDefaultIcon
 import com.ivy.ui.modal.ModalAdd
 import com.ivy.ui.modal.ModalSave
 import com.ivy.ui.theme.colors.Gradient
-import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.theme.colors.IvyFixedColors.White
 import com.ivy.ui.theme.colors.dynamicContrast
 import com.ivy.ui.R
@@ -87,13 +88,13 @@ internal fun LoanDateTimeRow(
         OutlinedPillButton(
             text = dateTime.formatNicely(),
             iconStart = R.drawable.ic_date,
-            shape = LegacyTheme.shapes.rFull,
-            backgroundColor = LegacyTheme.colors.pure,
-            iconTint = LegacyTheme.colors.pureInverse,
-            borderColor = LegacyTheme.colors.medium,
-            textStyle = LegacyTheme.typo.b2.copy(
+            shape = LoansTheme.shapes.rFull,
+            backgroundColor = LoansTheme.colors.pure,
+            iconTint = LoansTheme.colors.pureInverse,
+            borderColor = LoansTheme.colors.medium,
+            textStyle = LoansTheme.typo.b2.copy(
                 fontWeight = FontWeight.Bold,
-                color = LegacyTheme.colors.pureInverse,
+                color = LoansTheme.colors.pureInverse,
                 textAlign = TextAlign.Start,
             ),
             onClick = onEditDate
@@ -106,13 +107,13 @@ internal fun LoanDateTimeRow(
                 dateTime.toLocalTime().format()
             },
             iconStart = R.drawable.ic_date,
-            shape = LegacyTheme.shapes.rFull,
-            backgroundColor = LegacyTheme.colors.pure,
-            iconTint = LegacyTheme.colors.pureInverse,
-            borderColor = LegacyTheme.colors.medium,
-            textStyle = LegacyTheme.typo.b2.copy(
+            shape = LoansTheme.shapes.rFull,
+            backgroundColor = LoansTheme.colors.pure,
+            iconTint = LoansTheme.colors.pureInverse,
+            borderColor = LoansTheme.colors.medium,
+            textStyle = LoansTheme.typo.b2.copy(
                 fontWeight = FontWeight.Bold,
-                color = LegacyTheme.colors.pureInverse,
+                color = LoansTheme.colors.pureInverse,
                 textAlign = TextAlign.Start,
             ),
             onClick = onEditTime
@@ -170,8 +171,8 @@ internal fun LoanIconNameRow(
                 if (nameTextFieldValue.text.isBlank()) {
                     Text(
                         text = hint,
-                        style = LegacyTheme.typo.b2.copy(
-                            color = LegacyTheme.colors.gray,
+                        style = LoansTheme.typo.b2.copy(
+                            color = LoansTheme.colors.gray,
                             fontWeight = FontWeight.SemiBold,
                             textAlign = TextAlign.Start
                         ),
@@ -184,13 +185,13 @@ internal fun LoanIconNameRow(
                         .focusRequester(nameFocus),
                     value = nameTextFieldValue,
                     onValueChange = setNameTextFieldValue,
-                    textStyle = LegacyTheme.typo.b1.copy(
-                        color = LegacyTheme.colors.pureInverse,
+                    textStyle = LoansTheme.typo.b1.copy(
+                        color = LoansTheme.colors.pureInverse,
                         fontWeight = FontWeight.ExtraBold,
                         textAlign = TextAlign.Start
                     ),
                     singleLine = false,
-                    cursorBrush = SolidColor(LegacyTheme.colors.pureInverse),
+                    cursorBrush = SolidColor(LoansTheme.colors.pureInverse),
                     keyboardOptions = KeyboardOptions(
                         capitalization = KeyboardCapitalization.Words,
                         imeAction = ImeAction.Done,
@@ -211,7 +212,7 @@ internal fun LoanIconNameRow(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(2.dp)
-                    .background(LegacyTheme.colors.medium, LegacyTheme.shapes.rFull)
+                    .background(LoansTheme.colors.medium, LoansTheme.shapes.rFull)
             )
         }
     }
@@ -242,8 +243,8 @@ internal fun LoanModalNameInput(
         if (textFieldValue.text.isBlank()) {
             Text(
                 text = hint,
-                style = LegacyTheme.typo.b2.copy(
-                    color = LegacyTheme.colors.gray,
+                style = LoansTheme.typo.b2.copy(
+                    color = LoansTheme.colors.gray,
                     fontWeight = FontWeight.SemiBold,
                     textAlign = TextAlign.Start
                 )
@@ -256,13 +257,13 @@ internal fun LoanModalNameInput(
                 .focusRequester(nameFocus),
             value = textFieldValue,
             onValueChange = setTextFieldValue,
-            textStyle = LegacyTheme.typo.b1.copy(
-                color = LegacyTheme.colors.pureInverse,
+            textStyle = LoansTheme.typo.b1.copy(
+                color = LoansTheme.colors.pureInverse,
                 fontWeight = FontWeight.ExtraBold,
                 textAlign = TextAlign.Start
             ),
             singleLine = false,
-            cursorBrush = SolidColor(LegacyTheme.colors.pureInverse),
+            cursorBrush = SolidColor(LoansTheme.colors.pureInverse),
             keyboardOptions = KeyboardOptions(
                 capitalization = KeyboardCapitalization.Words,
                 imeAction = ImeAction.Done,
@@ -284,7 +285,7 @@ internal fun LoanModalNameInput(
             .padding(start = 32.dp, end = 32.dp)
             .fillMaxWidth()
             .height(2.dp)
-            .background(LegacyTheme.colors.medium, LegacyTheme.shapes.rFull)
+            .background(LoansTheme.colors.medium, LoansTheme.shapes.rFull)
     )
 }
 
@@ -300,9 +301,9 @@ internal fun LoanModalDelete(
             .size(40.dp)
             .testTag(testTag),
         icon = icon,
-        backgroundGradient = Gradient(LegacyTheme.colors.red, Color(0xFFFF99AB)),
+        backgroundGradient = Gradient(LoansTheme.colors.red, Color(0xFFFF99AB)),
         enabled = enabled,
-        disabledBackgroundColor = LegacyTheme.colors.gray,
+        disabledBackgroundColor = LoansTheme.colors.gray,
         tint = White,
         onClick = onClick
     )

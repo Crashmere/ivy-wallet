@@ -1,5 +1,7 @@
 package com.ivy.loans.modal
 
+import com.ivy.loans.LoansTheme
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -23,7 +25,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ivy.ui.icon.ItemIconSDefaultIcon
-import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.loans.model.LoanAccount
 import com.ivy.ui.compose.ResourceIcon
 import com.ivy.ui.theme.colors.findContrastTextColor
@@ -93,11 +94,11 @@ private fun LoanAccountChip(
     val textColor = if (selected) {
         findContrastTextColor(accountColor)
     } else {
-        LegacyTheme.colors.pureInverse
+        LoansTheme.colors.pureInverse
     }
 
-    val medium = LegacyTheme.colors.medium
-    val rFull = LegacyTheme.shapes.rFull
+    val medium = LoansTheme.colors.medium
+    val rFull = LoansTheme.shapes.rFull
 
     Row(
         modifier = Modifier
@@ -125,7 +126,7 @@ private fun LoanAccountChip(
         Text(
             modifier = Modifier.padding(vertical = 10.dp),
             text = account.name,
-            style = LegacyTheme.typo.b2.copy(
+            style = LoansTheme.typo.b2.copy(
                 color = textColor,
                 fontWeight = FontWeight.ExtraBold,
                 textAlign = TextAlign.Start
@@ -144,8 +145,8 @@ private fun AddLoanAccountChip(
 ) {
     Row(
         modifier = Modifier
-            .clip(LegacyTheme.shapes.rFull)
-            .border(2.dp, LegacyTheme.colors.medium, LegacyTheme.shapes.rFull)
+            .clip(LoansTheme.shapes.rFull)
+            .border(2.dp, LoansTheme.colors.medium, LoansTheme.shapes.rFull)
             .clickable(onClick = onClick),
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -153,7 +154,7 @@ private fun AddLoanAccountChip(
 
         ResourceIcon(
             icon = R.drawable.ic_plus,
-            tint = LegacyTheme.colors.pureInverse
+            tint = LoansTheme.colors.pureInverse
         )
 
         Spacer(Modifier.width(4.dp))
@@ -161,8 +162,8 @@ private fun AddLoanAccountChip(
         Text(
             modifier = Modifier.padding(vertical = 10.dp),
             text = stringResource(R.string.add_account),
-            style = LegacyTheme.typo.b2.copy(
-                color = LegacyTheme.colors.pureInverse,
+            style = LoansTheme.typo.b2.copy(
+                color = LoansTheme.colors.pureInverse,
                 fontWeight = FontWeight.ExtraBold,
                 textAlign = TextAlign.Start
             )

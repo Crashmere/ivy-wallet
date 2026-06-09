@@ -1,5 +1,7 @@
 package com.ivy.loans.loan
 
+import com.ivy.loans.LoansTheme
+
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -25,7 +27,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
-import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.compose.navigationBarInset
 import com.ivy.ui.compose.toDensityPx
 import com.ivy.ui.R
@@ -50,7 +51,7 @@ internal fun BoxWithConstraintsScope.LoanBottomBar(
         modifier = Modifier
             .fillMaxWidth()
             .align(Alignment.BottomCenter)
-            .background(LegacyTheme.colors.pure.copy(alpha = 0.95f))
+            .background(LoansTheme.colors.pure.copy(alpha = 0.95f))
             .navigationBarsPadding(),
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -69,7 +70,7 @@ internal fun BoxWithConstraintsScope.LoanBottomBar(
             icon = R.drawable.ic_custom_loan_s,
             name = "Completed",
             selected = tab == LoanTab.COMPLETED,
-            selectedColor = LegacyTheme.colors.green
+            selectedColor = LoansTheme.colors.green
         ) {
             selectTab(LoanTab.COMPLETED)
         }
@@ -114,7 +115,7 @@ private fun RowScope.Tab(
     Row(
         modifier = Modifier
             .weight(1f)
-            .clip(LegacyTheme.shapes.rFull)
+            .clip(LoansTheme.shapes.rFull)
             .clickable(onClick = onClick)
             .padding(top = 12.dp, bottom = 16.dp)
             .testTag(name.lowercase()),
@@ -123,7 +124,7 @@ private fun RowScope.Tab(
     ) {
         ResourceIcon(
             icon = icon,
-            tint = if (selected) selectedColor else LegacyTheme.colors.pureInverse
+            tint = if (selected) selectedColor else LoansTheme.colors.pureInverse
         )
 
         if (selected) {
@@ -131,7 +132,7 @@ private fun RowScope.Tab(
 
             Text(
                 text = name,
-                style = LegacyTheme.typo.c.copy(
+                style = LoansTheme.typo.c.copy(
                     fontWeight = FontWeight.Bold,
                     color = selectedColor,
                     textAlign = TextAlign.Start

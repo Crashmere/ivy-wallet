@@ -1,5 +1,7 @@
 package com.ivy.loans.modal
 
+import com.ivy.loans.LoansTheme
+
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -18,7 +20,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.ivy.legacy.ui.theme.LegacyTheme
 import com.ivy.ui.R
 import com.ivy.ui.compose.clickableNoIndication
 import com.ivy.ui.compose.rememberInteractionSource
@@ -41,7 +42,7 @@ private fun LoanCheckbox(
             id = if (checked) R.drawable.ic_checkbox_checked else R.drawable.ic_checkbox_unchecked
         ),
         contentDescription = null,
-        tint = if (checked) Color.Unspecified else LegacyTheme.colors.gray
+        tint = if (checked) Color.Unspecified else LoansTheme.colors.gray
     )
 }
 
@@ -68,8 +69,8 @@ internal fun LoanCheckboxWithText(
 
         Text(
             text = text,
-            style = LegacyTheme.typo.b2.copy(
-                color = LegacyTheme.colors.pureInverse,
+            style = LoansTheme.typo.b2.copy(
+                color = LoansTheme.colors.pureInverse,
                 fontWeight = FontWeight.SemiBold,
                 textAlign = TextAlign.Start
             )
