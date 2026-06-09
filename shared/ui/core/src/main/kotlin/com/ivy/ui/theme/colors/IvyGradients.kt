@@ -13,7 +13,7 @@ data class Gradient(
 
     fun asHorizontalBrush() = Brush.horizontalGradient(colors = listOf(startColor, endColor))
 
-    fun asVerticalBrush() = Brush.verticalGradient(colors = listOf(startColor, endColor))
+    internal fun asVerticalBrush() = Brush.verticalGradient(colors = listOf(startColor, endColor))
 }
 
 object IvyGradients {
