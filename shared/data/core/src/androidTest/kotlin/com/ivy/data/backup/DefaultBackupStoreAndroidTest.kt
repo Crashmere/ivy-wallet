@@ -9,10 +9,10 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.ivy.data.DataWriteEventBus
 import com.ivy.data.db.IvyRoomDatabase
+import com.ivy.data.datastore.DataStorePreferenceStore
 import com.ivy.data.di.SerializationModule
 import com.ivy.data.file.FileSystem
 import com.ivy.data.model.importing.ImportResult
-import com.ivy.data.preferences.SharedPrefsPreferenceStore
 import com.ivy.data.store.RoomAccountStore
 import com.ivy.data.store.RoomCurrencyStore
 import com.ivy.data.store.SettingsTable
@@ -56,7 +56,7 @@ class DefaultBackupStoreAndroidTest {
             settingsDao = db.settingsDao,
             transactionDao = db.transactionDao,
             transactionWriter = db.writeTransactionDao,
-            settingsPreferenceStore = SharedPrefsPreferenceStore(appContext),
+            settingsPreferenceStore = DataStorePreferenceStore(appContext),
             accountStore = RoomAccountStore(
                 accountDao = db.accountDao,
                 writeAccountDao = db.writeAccountDao,

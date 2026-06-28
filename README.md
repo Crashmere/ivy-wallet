@@ -97,7 +97,7 @@
 - `feature/analytics`：统计分析页面——余额、报表、饼图。
 - `feature/settings`：设置与数据管理页面——设置、CSV 导入。
 - `shared:data:api`：数据端口，只暴露 Store 接口和数据变更事件。
-- `shared:data:core`：Room、SharedPreferences、备份恢复、CSV/zip 文件、远程汇率、Store 实现和数据 mapper。
+- `shared:data:core`：Room、DataStore、备份恢复、CSV/zip 文件、远程汇率、Store 实现和数据 mapper。
 - `shared:data:model`：跨层使用的正式业务模型、ID、金额、币种、时间范围和基础模型工具。
 - `shared:domain`：用例层，承接 feature 和 data 之间的业务编排、统计、汇率换算、重排、导入导出、重置和偏好读取。
 - `shared:ui:core`：跨 feature 复用的 Compose UI、平台 UI 端口、主题状态、时间服务、弹窗、金额展示、交易列表和基础组件。
@@ -192,8 +192,8 @@
 
 目标是减少历史字段，但不破坏已有数据。
 
-- 偏好设置暂时继续使用现有 Store/use case 边界。
-- `SettingsEntity`、SharedPreferences、DataStore 或 Room 字段变化必须单独规划迁移。
+- 偏好端口（`data-api` 的 Store 接口）和 use case 边界保持不变；偏好的存储后端已从 SharedPreferences 收敛到 DataStore（见第 7 节）。
+- `SettingsEntity`（主题、币种、缓冲金额）仍留在 Room，字段变化必须单独规划迁移，避免影响备份格式。
 - `isDeleted` 目前先保留为本地软删除语义，不把所有业务表里的 `isDeleted` 直接当作云同步残留删除。
 
 ### 6. feature 模块合并（已完成：16 → 3）
@@ -205,6 +205,16 @@
 - `feature:settings`：设置与数据管理（原 settings、import-data）。
 
 合并时所有源文件保留原 Kotlin 包名，导航图与调用方无需改动；这些 feature 模块无资源/manifest/额外依赖，合并零资源冲突，`feature:main` 对 accounts/home 的内部依赖随合并自然消除。
+
+### 7. 偏好存储后端收敛（已完成：SharedPreferences → DataStore）
+
+应用偏好原本分散在三种存储机制：SharedPreferences（应用锁、隐藏余额、每月起始日等同步标量）、DataStore（feature 开关）、Room `SettingsEntity`（主题/币种/缓冲金额）。本步将 SharedPreferences 后端整体迁移到 DataStore，存储机制从 3 种降为 2 种。
+
+- 偏好端口仍是同步 API，`AppLockController`、`SecureWindowController` 等生命周期/窗口代码无需改造；新实现 `DataStorePreferenceStore` 用一次性内存快照 + 写穿透在 DataStore 之上保留同步语义。
+- 旧 `ivy_wallet_prefs` 的数据通过 DataStore 的 `SharedPreferencesMigration` 在首次访问时自动导入新文件 `ivy_wallet_preferences_v1` 并清理旧文件，老用户偏好零丢失。
+- 偏好 DataStore 与 feature 开关 DataStore 分文件存放，`clearAll()` 只清偏好、不动开关，保持原重置语义。
+- `SettingsEntity` 仍留在 Room（涉及备份格式与 Room 迁移，单独规划）。
+- 已在真机验证：种入 10 项旧偏好（布尔/整型/字符串/动态键）→ 安装新包 → 全部按原值迁移（隐藏余额、每月起始日等行为在 UI 正确生效），旧文件被消费删除。
 
 ## 提交习惯
 

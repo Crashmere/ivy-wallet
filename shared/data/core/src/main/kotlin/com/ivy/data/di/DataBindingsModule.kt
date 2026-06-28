@@ -31,9 +31,9 @@ import com.ivy.data.api.ThemeStore
 import com.ivy.data.api.TransactionStore
 import com.ivy.data.api.TransferBehaviorPreferenceStore
 import com.ivy.data.backup.DefaultBackupStore
+import com.ivy.data.datastore.DataStorePreferenceStore
 import com.ivy.data.datastore.DataStorePreferenceToggleStore
 import com.ivy.data.file.FileSystem
-import com.ivy.data.preferences.SharedPrefsPreferenceStore
 import com.ivy.data.store.DefaultExchangeRateStore
 import com.ivy.data.store.RoomAccountStore
 import com.ivy.data.store.RoomBudgetStore
@@ -61,55 +61,55 @@ internal abstract class DataBindingsModule {
 
     @Binds
     abstract fun bindAppLockPreferenceStore(
-        store: SharedPrefsPreferenceStore
+        store: DataStorePreferenceStore
     ): AppLockPreferenceStore
 
     @Binds
     abstract fun bindNotificationPreferenceStore(
-        store: SharedPrefsPreferenceStore
+        store: DataStorePreferenceStore
     ): NotificationPreferenceStore
 
     @Binds
     abstract fun bindBalancePrivacyPreferenceStore(
-        store: SharedPrefsPreferenceStore
+        store: DataStorePreferenceStore
     ): BalancePrivacyPreferenceStore
 
     @Binds
     abstract fun bindStartDayOfMonthStore(
-        store: SharedPrefsPreferenceStore
+        store: DataStorePreferenceStore
     ): StartDayOfMonthStore
 
     @Binds
     abstract fun bindTransferBehaviorPreferenceStore(
-        store: SharedPrefsPreferenceStore
+        store: DataStorePreferenceStore
     ): TransferBehaviorPreferenceStore
 
     @Binds
     abstract fun bindBackupSettingsPreferenceStore(
-        store: SharedPrefsPreferenceStore
+        store: DataStorePreferenceStore
     ): BackupSettingsPreferenceStore
 
     @Binds
     abstract fun bindLocalPreferenceResetStore(
-        store: SharedPrefsPreferenceStore
+        store: DataStorePreferenceStore
     ): LocalPreferenceResetStore
 
     @Binds
-    abstract fun bindInitialSetupStore(store: SharedPrefsPreferenceStore): InitialSetupStore
+    abstract fun bindInitialSetupStore(store: DataStorePreferenceStore): InitialSetupStore
 
     @Binds
     abstract fun bindLastSelectedAccountStore(
-        store: SharedPrefsPreferenceStore
+        store: DataStorePreferenceStore
     ): LastSelectedAccountStore
 
     @Binds
     abstract fun bindCategorySortOrderStore(
-        store: SharedPrefsPreferenceStore
+        store: DataStorePreferenceStore
     ): CategorySortOrderStore
 
     @Binds
     abstract fun bindCustomerJourneyCardStore(
-        store: SharedPrefsPreferenceStore
+        store: DataStorePreferenceStore
     ): CustomerJourneyCardStore
 
     @Binds
