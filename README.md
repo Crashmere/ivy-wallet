@@ -93,7 +93,9 @@
 根目录下主要模块按职责理解：
 
 - `app`：Android 应用壳层，负责 Activity、Hilt 装配、导航图、平台能力适配、通知、启动和根 UI。
-- `feature/*`：具体功能页面，例如首页、账户、分类、预算、交易列表、编辑交易、计划付款、借贷、报表、饼图、搜索、设置、导入和汇率。
+- `feature/wallet`：核心记账与编辑页面——首页、主导航、账户、分类、预算、交易列表、编辑交易、计划付款、借贷、搜索、汇率。
+- `feature/analytics`：统计分析页面——余额、报表、饼图。
+- `feature/settings`：设置与数据管理页面——设置、CSV 导入。
 - `shared:data:api`：数据端口，只暴露 Store 接口和数据变更事件。
 - `shared:data:core`：Room、SharedPreferences、备份恢复、CSV/zip 文件、远程汇率、Store 实现和数据 mapper。
 - `shared:data:model`：跨层使用的正式业务模型、ID、金额、币种、时间范围和基础模型工具。
@@ -194,12 +196,15 @@
 - `SettingsEntity`、SharedPreferences、DataStore 或 Room 字段变化必须单独规划迁移。
 - `isDeleted` 目前先保留为本地软删除语义，不把所有业务表里的 `isDeleted` 直接当作云同步残留删除。
 
-### 6. 暂缓 feature 模块合并
+### 6. feature 模块合并（已完成：16 → 3）
 
-模块合并不是当前优先事项。
+原先 16 个 feature 模块已按职责合并为 3 个：
 
-- 只有当 shared/feature 边界继续收窄后，某些 feature 仍然因为实际业务强耦合而难以维护，再考虑合并。
-- 合并前必须先确认导航、资源、Hilt、测试和包名边界。
+- `feature:wallet`：核心记账与编辑（原 home、main、accounts、transactions、edit-transaction、search、categories、budgets、loans、planned-payments、exchange-rates）。
+- `feature:analytics`：统计分析（原 balance、reports、piechart）。
+- `feature:settings`：设置与数据管理（原 settings、import-data）。
+
+合并时所有源文件保留原 Kotlin 包名，导航图与调用方无需改动；这些 feature 模块无资源/manifest/额外依赖，合并零资源冲突，`feature:main` 对 accounts/home 的内部依赖随合并自然消除。
 
 ## 提交习惯
 
