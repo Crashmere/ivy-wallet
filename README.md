@@ -235,12 +235,22 @@
 - 是否安装。
 - 是否跑测试。
 
+## 清理审计（已完成）
+
+对上述低优先级清理项做了一轮数据化审计，结论：项目已基本干净，不为清理而清理。
+
+- 历史命名/注释（legacy/temp/old/TODO/FIXME）：无残留（仅偏好迁移代码中对“旧 SharedPreferences”的准确描述）。
+- 死代码：全量重编译 0 警告，无未使用的 private/internal 符号、参数或变量。
+- 无引用资源：lint 未报 UnusedResources；`shared:ui:core` 的数百个 `ic_custom_*`/`ic_vue_*` 图标由 `DynamicIconLookup` 经 `getIdentifier` 按名动态加载，属“在用”，不可删（也是 lint 唯一一条 DiscouragedApi 的来源，刻意保留）。
+- Gradle 依赖：3 个 feature 模块依赖已最小化；app 依赖逐项核实均在用（WorkManager 用于提醒、Material 用于日期选择、opencsv 用于 CSV 导入）。
+- 未使用的公开 API：133 个 use case 全部有注入方（仅测试类为单点引用），29 个 data-api 端口均被使用（最少 7 处引用），无死端口。
+- lint 余下 75 项 GradleDependency + 3 项 AGP 版本提示，均为“有更新版本可升级”，属独立升级任务而非清理。
+
 ## 当前下一步
 
 优先级从高到低：
 
-1. 继续检查代码中的历史命名和注释，处理不再准确的 `legacy/temp/old` 标识。
-2. 继续检查 `shared:ui:core`、`shared:domain`、`shared:data:core` 中只在模块内部使用但仍公开的 API。
-3. 继续检查 feature 的 Gradle 依赖，删除已经通过 core/domain 门面替代的直接依赖。
-4. 继续做无引用资源清理，但避开数据库、备份、CSV、默认数据和统计逻辑。
-5. 需要设备确认 UI 行为时再编译安装；普通文档和纯可见性收窄不必每次安装。
+1. 依赖与 AGP/Compose/Kotlin/Room 版本升级（lint 提示有较多新版本）——属独立任务，需逐项验证编译与运行，单独规划。
+2. `SettingsEntity`（主题/币种/缓冲金额）从 Room 收敛的可行性评估——牵涉备份格式与 Room 迁移，高风险，按需再做。
+3. 新增代码时保持既有约定：实现类用 internal、仅端口与 use case 公开；feature 依赖最小化。
+4. 需要设备确认 UI 行为时再编译安装；普通文档和纯可见性收窄不必每次安装。
