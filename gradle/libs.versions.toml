@@ -16,8 +16,8 @@ kotlinx-collections = "0.3.7"
 # Android
 min-sdk = "28"
 compile-sdk = "34"
-version-name = "2025.07.17"
-version-code = "206"
+version-name = "2026.06.28"
+version-code = "207"
 jvm-target = "17"
 
 [libraries]
