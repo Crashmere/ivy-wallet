@@ -3,5 +3,5 @@ plugins {
 }
 
 android {
-    namespace = "com.ivy.reports"
+    namespace = "com.ivy.analytics"
 }

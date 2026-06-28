@@ -109,7 +109,7 @@ kotlin {
 }
 
 dependencies {
-    implementation(projects.feature.balance)
+    implementation(projects.feature.analytics)
     implementation(projects.feature.budgets)
     implementation(projects.feature.categories)
     implementation(projects.feature.editTransaction)
@@ -118,9 +118,7 @@ dependencies {
     implementation(projects.feature.importData)
     implementation(projects.feature.loans)
     implementation(projects.feature.main)
-    implementation(projects.feature.piechart)
     implementation(projects.feature.plannedPayments)
-    implementation(projects.feature.reports)
     implementation(projects.feature.search)
     implementation(projects.feature.settings)
     implementation(projects.feature.transactions)
