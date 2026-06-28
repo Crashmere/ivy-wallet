@@ -84,6 +84,25 @@ android {
             applicationIdSuffix = ".debug"
             resValue("string", "app_name", "Ivy Wallet")
         }
+
+        create("fork") {
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+
+            matchingFallbacks.add("release")
+
+            isDebuggable = false
+            isDefault = false
+
+            signingConfig = signingConfigs.getByName("debug")
+
+            applicationIdSuffix = ".fork"
+            resValue("string", "app_name", "Ivy Wallet")
+        }
     }
 
     compileOptions {
