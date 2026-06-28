@@ -27,6 +27,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
+import javax.inject.Singleton
 
 /**
  * DataStore-backed implementation of the app's preference ports.
@@ -38,7 +39,13 @@ import javax.inject.Inject
  * migration) and then updated on every write, while the durable write is dispatched off the
  * main thread. This mirrors the previous SharedPreferences semantics (synchronous first load +
  * deferred disk write) without keeping a second key-value backend around.
+ *
+ * Because the in-memory [snapshot] is the single source of truth for synchronous reads, this store
+ * MUST be a process-wide [Singleton]: otherwise each injection site (e.g. the separate read/write
+ * use cases for the last-selected account) would cache its own snapshot and never observe each
+ * other's writes within a session.
  */
+@Singleton
 internal class DataStorePreferenceStore @Inject internal constructor(
     @ApplicationContext context: Context,
 ) : AppLockPreferenceStore,
