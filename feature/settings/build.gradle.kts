@@ -5,3 +5,7 @@ plugins {
 android {
     namespace = "com.ivy.settings"
 }
+
+dependencies {
+    implementation(libs.bundles.opencsv)
+}
