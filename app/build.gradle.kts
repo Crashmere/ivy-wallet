@@ -110,17 +110,8 @@ kotlin {
 
 dependencies {
     implementation(projects.feature.analytics)
-    implementation(projects.feature.budgets)
-    implementation(projects.feature.categories)
-    implementation(projects.feature.editTransaction)
-    implementation(projects.feature.exchangeRates)
-    implementation(projects.feature.home)
-    implementation(projects.feature.loans)
-    implementation(projects.feature.main)
-    implementation(projects.feature.plannedPayments)
-    implementation(projects.feature.search)
     implementation(projects.feature.settings)
-    implementation(projects.feature.transactions)
+    implementation(projects.feature.wallet)
     implementation(projects.shared.data.core)
     implementation(projects.shared.data.model)
     implementation(projects.shared.domain)
