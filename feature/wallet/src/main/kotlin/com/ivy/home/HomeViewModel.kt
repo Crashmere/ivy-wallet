@@ -24,7 +24,6 @@ import com.ivy.domain.usecase.settings.GetHideIncomePreferenceUseCase
 import com.ivy.domain.usecase.settings.GetStartDayOfMonthUseCase
 import com.ivy.domain.usecase.settings.GetThemeUseCase
 import com.ivy.domain.usecase.settings.SetBufferAmountUseCase
-import com.ivy.domain.usecase.settings.SwitchThemeUseCase
 import com.ivy.domain.usecase.wallet.CalculateWalletBalanceUseCase
 import com.ivy.domain.usecase.wallet.CalculateWalletIncomeExpenseUseCase
 import com.ivy.home.customerjourney.CustomerJourneyCardModel
@@ -71,7 +70,6 @@ internal class HomeViewModel @Inject internal constructor(
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
     private val setBaseCurrency: SetBaseCurrencyUseCase,
     private val getThemeUseCase: GetThemeUseCase,
-    private val switchThemeUseCase: SwitchThemeUseCase,
     private val getBufferAmountUseCase: GetBufferAmountUseCase,
     private val setBufferAmountUseCase: SetBufferAmountUseCase,
     private val getStartDayOfMonth: GetStartDayOfMonthUseCase,
@@ -267,7 +265,6 @@ internal class HomeViewModel @Inject internal constructor(
                 is HomeEvent.SetOverdueExpanded -> setOverdueExpanded(event.expanded)
                 is HomeEvent.SetBuffer -> setBuffer(event.buffer)
                 is HomeEvent.SetCurrency -> setCurrency(event.currency)
-                HomeEvent.SwitchTheme -> switchTheme()
                 is HomeEvent.DismissCustomerJourneyCard -> dismissCustomerJourneyCard(event.card)
                 is HomeEvent.SetExpanded -> setExpanded(event.expanded)
             }
@@ -458,14 +455,6 @@ internal class HomeViewModel @Inject internal constructor(
         delay(5000)
 
         hideIncome = true
-    }
-
-    private fun switchTheme() {
-        viewModelScope.launch {
-            val newTheme = switchThemeUseCase()
-            themeState.update(newTheme)
-            currentTheme = newTheme
-        }
     }
 
     private fun setBuffer(newBuffer: Double) {

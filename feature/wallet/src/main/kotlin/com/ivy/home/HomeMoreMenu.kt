@@ -45,7 +45,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
-import com.ivy.data.model.Theme
 import com.ivy.ui.compose.BackPressHandler
 import com.ivy.ui.compose.thenIf
 import com.ivy.ui.compose.clickableNoIndication
@@ -86,10 +85,8 @@ internal fun BoxWithConstraintsScope.MoreMenu(
     balance: Double,
     buffer: Double,
     currency: String,
-    theme: Theme,
 
     setExpanded: (Boolean) -> Unit,
-    onSwitchTheme: () -> Unit,
     onBufferClick: () -> Unit,
     onCurrencyClick: () -> Unit,
     onDestinationClick: (MoreMenuDestination) -> Unit,
@@ -174,8 +171,6 @@ internal fun BoxWithConstraintsScope.MoreMenu(
             }
 
             Content(
-                theme = theme,
-                onSwitchTheme = onSwitchTheme,
                 balance = balance,
                 buffer = buffer,
                 currency = currency,
@@ -216,9 +211,7 @@ private fun ColumnScope.Content(
     balance: Double,
     buffer: Double,
     currency: String,
-    theme: Theme,
 
-    onSwitchTheme: () -> Unit,
     onBufferClick: () -> Unit,
     onCurrencyClick: () -> Unit,
     onDestinationClick: (MoreMenuDestination) -> Unit,
@@ -232,8 +225,6 @@ private fun ColumnScope.Content(
     Spacer(Modifier.height(16.dp))
 
     QuickAccess(
-        theme = theme,
-        onSwitchTheme = onSwitchTheme,
         onDestinationClick = onDestinationClick
     )
 
@@ -344,8 +335,6 @@ private fun ColumnScope.Buffer(
 
 @Composable
 private fun QuickAccess(
-    theme: Theme,
-    onSwitchTheme: () -> Unit,
     onDestinationClick: (MoreMenuDestination) -> Unit
 ) {
     Column {
@@ -387,41 +376,10 @@ private fun QuickAccess(
             Spacer(Modifier.weight(1f))
 
             MoreMenuButton(
-                icon = when (theme) {
-                    Theme.LIGHT -> R.drawable.home_more_menu_light_mode
-                    Theme.DARK -> R.drawable.home_more_menu_dark_mode
-                    Theme.AMOLED_DARK -> R.drawable.home_more_menu_amoled_dark_mode
-                    Theme.AUTO -> R.drawable.home_more_menu_auto_mode
-                },
-                label = when (theme) {
-                    Theme.LIGHT -> stringResource(R.string.light_mode)
-                    Theme.DARK -> stringResource(R.string.dark_mode)
-                    Theme.AMOLED_DARK -> stringResource(R.string.amoled_mode)
-                    Theme.AUTO -> stringResource(R.string.auto_mode)
-                },
-                backgroundColor = when (theme) {
-                    Theme.LIGHT -> HomeTheme.colors.pure
-                    Theme.DARK -> HomeTheme.colors.pureInverse
-                    Theme.AMOLED_DARK -> HomeTheme.colors.pureInverse
-                    Theme.AUTO -> HomeTheme.colors.pure
-                },
-                tint = when (theme) {
-                    Theme.LIGHT -> HomeTheme.colors.pureInverse
-                    Theme.DARK -> HomeTheme.colors.pure
-                    Theme.AMOLED_DARK -> HomeTheme.colors.pure
-                    Theme.AUTO -> HomeTheme.colors.pureInverse
-                }
+                icon = R.drawable.home_more_menu_reports,
+                label = stringResource(R.string.reports),
             ) {
-                onSwitchTheme()
-            }
-
-            Spacer(Modifier.weight(1f))
-
-            MoreMenuButton(
-                icon = R.drawable.home_more_menu_planned_payments,
-                label = stringResource(R.string.planned_payments)
-            ) {
-                onDestinationClick(MoreMenuDestination.PlannedPayments)
+                onDestinationClick(MoreMenuDestination.Reports)
             }
 
             Spacer(Modifier.weight(1f))
@@ -438,10 +396,10 @@ private fun QuickAccess(
             Spacer(Modifier.weight(1f))
 
             MoreMenuButton(
-                icon = R.drawable.home_more_menu_reports,
-                label = stringResource(R.string.reports),
+                icon = R.drawable.home_more_menu_planned_payments,
+                label = stringResource(R.string.planned_payments)
             ) {
-                onDestinationClick(MoreMenuDestination.Reports)
+                onDestinationClick(MoreMenuDestination.PlannedPayments)
             }
 
             Spacer(Modifier.weight(1f))

@@ -13,8 +13,6 @@ internal sealed interface HomeEvent {
     data object HiddenIncomeClick : HomeEvent
     data class SetExpanded(val expanded: Boolean) : HomeEvent
 
-    data object SwitchTheme : HomeEvent
-
     data class SetBuffer(val buffer: Double) : HomeEvent
 
     data class SetCurrency(val currency: String) : HomeEvent

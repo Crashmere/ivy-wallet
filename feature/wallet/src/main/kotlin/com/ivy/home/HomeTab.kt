@@ -301,13 +301,9 @@ internal fun BoxWithConstraintsScope.HomeUi(
 
     MoreMenu(
         expanded = moreMenuExpanded,
-        theme = uiState.theme,
         balance = uiState.balance.toDouble(),
         currency = baseCurrency,
         buffer = uiState.buffer.amount.toDouble(),
-        onSwitchTheme = {
-            onEvent(HomeEvent.SwitchTheme)
-        },
         setExpanded = setMoreMenuExpanded,
         onBufferClick = {
             bufferModalVisible = true
