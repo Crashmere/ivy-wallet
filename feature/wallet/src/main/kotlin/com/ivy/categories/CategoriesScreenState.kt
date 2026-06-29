@@ -1,5 +1,6 @@
 package com.ivy.categories
 
+import com.ivy.ui.period.TimePeriod
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
@@ -13,5 +14,5 @@ internal data class CategoriesScreenState(
     val sortOrder: SortOrder = SortOrder.DEFAULT,
     val compactCategoriesModeEnabled: Boolean,
     val showCategorySearchBar: Boolean,
-
+    val period: TimePeriod = TimePeriod(),
 )

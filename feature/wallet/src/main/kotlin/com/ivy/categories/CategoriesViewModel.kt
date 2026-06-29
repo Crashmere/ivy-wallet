@@ -11,6 +11,7 @@ import com.ivy.domain.preferences.toggles.PreferenceToggleCatalog
 import com.ivy.domain.usecase.category.SaveCategoryUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.ui.period.PeriodState
+import com.ivy.ui.period.TimePeriod
 import com.ivy.ui.ComposeViewModel
 import com.ivy.ui.preferences.asEnabledState
 import com.ivy.domain.usecase.category.CreateCategoryUseCase
@@ -49,6 +50,10 @@ internal class CategoriesViewModel @Inject internal constructor(
     private val sortModalVisible = mutableStateOf(false)
     private val sortOrder = mutableStateOf(SortOrder.DEFAULT)
 
+    // Local to this screen: defaults to the current month and is switched via the
+    // month selector. Kept independent from the global/home period on purpose.
+    private val selectedPeriod = mutableStateOf(periodState.currentMonth())
+
     @Composable
     override fun uiState(): CategoriesScreenState {
         LaunchedEffect(Unit) {
@@ -62,8 +67,14 @@ internal class CategoriesViewModel @Inject internal constructor(
             sortOrder = getSortOrder(),
             sortModalVisible = getSortModalVisible(),
             compactCategoriesModeEnabled = getCompactCategoriesMode(),
-            showCategorySearchBar = getShowCategorySearchBar()
+            showCategorySearchBar = getShowCategorySearchBar(),
+            period = getPeriod()
         )
+    }
+
+    @Composable
+    private fun getPeriod(): TimePeriod {
+        return selectedPeriod.value
     }
 
     @Composable
@@ -131,7 +142,7 @@ internal class CategoriesViewModel @Inject internal constructor(
 
     private suspend fun loadCategories() {
         withContext(Dispatchers.IO) {
-            val monthlyRange = periodState.rangeOf(periodState.currentMonth())
+            val monthlyRange = periodState.rangeOf(selectedPeriod.value)
             val categories = getCategoryMonthlyStatsUseCase(
                 range = monthlyRange,
                 baseCurrency = baseCurrency.value
@@ -220,7 +231,21 @@ internal class CategoriesViewModel @Inject internal constructor(
                 }
 
                 is CategoriesScreenEvent.OnSearchQueryUpdate -> updateSearchQuery(event.queryString)
+                is CategoriesScreenEvent.OnNextMonth -> shiftSelectedMonth(increment = 1L)
+                is CategoriesScreenEvent.OnPreviousMonth -> shiftSelectedMonth(increment = -1L)
+                is CategoriesScreenEvent.OnSelectPeriod -> selectPeriod(event.period)
             }
         }
+    }
+
+    private suspend fun shiftSelectedMonth(increment: Long) {
+        val shifted = periodState.shiftMonth(selectedPeriod.value, increment) ?: return
+        selectedPeriod.value = shifted
+        loadCategories()
+    }
+
+    private suspend fun selectPeriod(period: TimePeriod) {
+        selectedPeriod.value = period
+        loadCategories()
     }
 }

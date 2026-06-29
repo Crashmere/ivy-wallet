@@ -48,6 +48,10 @@ import com.ivy.ui.compose.selectEndTextFieldValue
 import com.ivy.ui.navigation.TransactionsScreen
 import com.ivy.ui.navigation.navigation
 import com.ivy.ui.navigation.screenScopedViewModel
+import com.ivy.ui.period.LocalPeriodState
+import com.ivy.ui.period.TimePeriod
+import com.ivy.ui.period.displayShort
+import com.ivy.ui.platform.LocalDatePicker
 import com.ivy.ui.R
 import com.ivy.ui.rememberScrollPositionListState
 import com.ivy.ui.theme.colors.Gradient
@@ -55,9 +59,11 @@ import com.ivy.ui.theme.colors.IvyGradients
 import com.ivy.ui.theme.colors.IvyFixedColors.White
 import com.ivy.ui.money.BalanceRow
 import com.ivy.ui.icon.ItemIconSDefaultIcon
+import com.ivy.ui.modal.ChoosePeriodModal
 import com.ivy.ui.modal.ReorderModalSingleType
 import com.ivy.ui.compose.FilledIconButton
 import com.ivy.ui.compose.GradientButton
+import com.ivy.ui.compose.OutlinedPillButton
 import com.ivy.ui.compose.ResourceIcon
 import com.ivy.ui.theme.colors.findContrastTextColor
 import com.ivy.ui.modal.IvyModal
@@ -87,10 +93,12 @@ private fun BoxWithConstraintsScope.UI(
     onEvent: (CategoriesScreenEvent) -> Unit = {}
 ) {
     val nav = navigation()
+    val datePicker = LocalDatePicker.current
     val listState = rememberScrollPositionListState(
         key = "categories_lazy_column"
     )
     var categoryModalVisible by remember { mutableStateOf(false) }
+    var periodModal: TimePeriod? by remember { mutableStateOf(null) }
 
     LazyColumn(
         modifier = Modifier
@@ -108,13 +116,11 @@ private fun BoxWithConstraintsScope.UI(
             ) {
                 Spacer(Modifier.width(24.dp))
 
-                Text(
-                    text = stringResource(R.string.categories),
-                    style = CategoriesTheme.typo.h2.copy(
-                        color = CategoriesTheme.colors.pureInverse,
-                        fontWeight = FontWeight.ExtraBold,
-                        textAlign = TextAlign.Start
-                    )
+                MonthSelector(
+                    period = state.period,
+                    onPrevious = { onEvent(CategoriesScreenEvent.OnPreviousMonth) },
+                    onNext = { onEvent(CategoriesScreenEvent.OnNextMonth) },
+                    onClick = { periodModal = state.period }
                 )
 
                 Spacer(Modifier.weight(1f))
@@ -234,6 +240,89 @@ private fun BoxWithConstraintsScope.UI(
             onEvent(CategoriesScreenEvent.OnReorder(state.categories, it))
         }
     )
+
+    ChoosePeriodModal(
+        modal = periodModal,
+        dismiss = { periodModal = null },
+        saveSelectedPeriod = {}, // keep this screen's period independent from the global/home period
+        pickDate = { minDate, maxDate, initialDate, onDatePicked ->
+            datePicker.pickDate(
+                minDate = minDate,
+                maxDate = maxDate,
+                initialDate = initialDate,
+                onDatePicked = onDatePicked
+            )
+        },
+        onPeriodSelected = { onEvent(CategoriesScreenEvent.OnSelectPeriod(it)) }
+    )
+}
+
+@Composable
+private fun MonthSelector(
+    period: TimePeriod,
+    onPrevious: () -> Unit,
+    onNext: () -> Unit,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    val periodState = LocalPeriodState.current
+
+    Row(
+        modifier = modifier,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        MonthNavArrow(
+            icon = R.drawable.ic_back,
+            contentDescription = "Previous month",
+            onClick = onPrevious
+        )
+
+        Spacer(Modifier.width(4.dp))
+
+        OutlinedPillButton(
+            text = period.displayShort(periodState.startDayOfMonth),
+            iconStart = R.drawable.ic_calendar,
+            shape = CategoriesTheme.shapes.rFull,
+            backgroundColor = CategoriesTheme.colors.pure,
+            iconTint = CategoriesTheme.colors.pureInverse,
+            borderColor = CategoriesTheme.colors.medium,
+            textStyle = CategoriesTheme.typo.b2.copy(
+                fontWeight = FontWeight.Bold,
+                color = CategoriesTheme.colors.pureInverse,
+                textAlign = TextAlign.Start
+            ),
+            onClick = onClick
+        )
+
+        Spacer(Modifier.width(4.dp))
+
+        MonthNavArrow(
+            icon = R.drawable.ic_arrow_right,
+            contentDescription = "Next month",
+            onClick = onNext
+        )
+    }
+}
+
+@Composable
+private fun MonthNavArrow(
+    @DrawableRes icon: Int,
+    contentDescription: String,
+    onClick: () -> Unit
+) {
+    Box(
+        modifier = Modifier
+            .clip(CircleShape)
+            .clickable(onClick = onClick)
+            .padding(6.dp),
+        contentAlignment = Alignment.Center
+    ) {
+        ResourceIcon(
+            icon = icon,
+            tint = CategoriesTheme.colors.pureInverse,
+            contentDescription = contentDescription
+        )
+    }
 }
 
 @Composable
