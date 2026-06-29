@@ -1,6 +1,7 @@
 package com.ivy.transactions
 
 import com.ivy.data.model.Category
+import com.ivy.ui.modal.AccountModalSaveData
 import com.ivy.ui.period.TimePeriod
 import java.util.UUID
 
@@ -18,7 +19,7 @@ internal sealed interface TransactionsEvent {
     data class EditCategory(val updatedCategory: Category) : TransactionsEvent
     data class EditAccount(
         val accountId: UUID,
-        val newBalance: Double
+        val data: AccountModalSaveData
     ) : TransactionsEvent
 
     data class PayOrGet(

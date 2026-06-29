@@ -100,6 +100,7 @@ import com.ivy.ui.theme.colors.findContrastTextColor
 import com.ivy.ui.theme.colors.isDarkColor
 import com.ivy.ui.modal.ChoosePeriodModal
 import com.ivy.ui.modal.AccountModalAccount
+import com.ivy.ui.modal.AccountModalSaveData
 import com.ivy.ui.modal.DeleteModal
 import com.ivy.ui.modal.AccountModal
 import com.ivy.ui.modal.CategoryModal
@@ -195,8 +196,8 @@ fun BoxWithConstraintsScope.TransactionsScreen(screen: TransactionsScreen) {
         onEditCategory = {
             viewModel.onEvent(TransactionsEvent.EditCategory(it))
         },
-        onEditAccount = { accountId, newBalance ->
-            viewModel.onEvent(TransactionsEvent.EditAccount(accountId, newBalance))
+        onEditAccount = { accountId, data ->
+            viewModel.onEvent(TransactionsEvent.EditAccount(accountId, data))
         },
         onPayOrGet = { transactionId ->
             viewModel.onEvent(TransactionsEvent.PayOrGet(transactionId))
@@ -299,7 +300,7 @@ private fun BoxWithConstraintsScope.UI(
     onPreviousMonth: () -> Unit,
     onNextMonth: () -> Unit,
     onSetPeriod: (TimePeriod) -> Unit,
-    onEditAccount: (UUID, Double) -> Unit,
+    onEditAccount: (UUID, AccountModalSaveData) -> Unit,
     onEditCategory: (Category) -> Unit,
     onDelete: () -> Unit,
     deleteModal1Visible: Boolean,
@@ -559,7 +560,7 @@ private fun BoxWithConstraintsScope.UI(
         autoFocusKeyboard = accountModalAutoFocus,
         onCreateAccount = { _ -> },
         onEditAccount = { accountId, data ->
-            onEditAccount(accountId, data.balance)
+            onEditAccount(accountId, data)
         },
         dismiss = {
             accountModalVisible = false

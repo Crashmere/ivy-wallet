@@ -17,6 +17,7 @@ import com.ivy.data.model.Account
 import com.ivy.data.model.AccountId
 import com.ivy.data.model.Category
 import com.ivy.data.model.CategoryId
+import com.ivy.data.model.primitive.AssetCode
 import com.ivy.data.model.primitive.ColorInt
 import com.ivy.data.model.primitive.IconAsset
 import com.ivy.data.model.primitive.NotBlankTrimmedString
@@ -37,6 +38,7 @@ import com.ivy.ui.period.TimePeriod
 import com.ivy.data.model.toCloseTimeRange
 import com.ivy.ui.compose.selectEndTextFieldValue
 import com.ivy.ui.ComposeViewModel
+import com.ivy.ui.modal.AccountModalSaveData
 import com.ivy.ui.R
 import com.ivy.ui.preferences.asEnabledState
 import com.ivy.domain.usecase.account.CalculateAccountBalanceUseCase
@@ -290,7 +292,7 @@ internal class TransactionsViewModel @Inject internal constructor(
             TransactionsEvent.Delete -> delete()
             is TransactionsEvent.EditAccount -> editAccount(
                 event.accountId,
-                event.newBalance
+                event.data
             )
 
             is TransactionsEvent.EditCategory -> editCategory(event.updatedCategory)
@@ -556,11 +558,19 @@ internal class TransactionsViewModel @Inject internal constructor(
         }
     }
 
-    private fun editAccount(accountId: UUID, newBalance: Double) {
+    private fun editAccount(accountId: UUID, data: AccountModalSaveData) {
         val account = loadedAccounts.firstOrNull { it.id.value == accountId } ?: return
 
+        val updatedAccount = account.copy(
+            name = NotBlankTrimmedString.from(data.name).getOrNull() ?: account.name,
+            asset = AssetCode.from(data.currency).getOrNull() ?: account.asset,
+            color = ColorInt(data.color),
+            icon = data.icon?.let(IconAsset::from)?.getOrNull(),
+            includeInBalance = data.includeInBalance,
+        )
+
         viewModelScope.launch {
-            updateAccountWithBalanceUseCase(account, newBalance)
+            updateAccountWithBalanceUseCase(updatedAccount, data.balance)
             restartCurrentScreen(timePeriod = period.value)
         }
     }
