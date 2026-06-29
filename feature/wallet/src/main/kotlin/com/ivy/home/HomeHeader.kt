@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -29,7 +30,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.ivy.ui.compose.thenIf
 import com.ivy.ui.period.LocalPeriodState
 import com.ivy.ui.period.TimePeriod
@@ -57,13 +57,8 @@ import kotlin.math.absoluteValue
 internal fun HomeHeader(
     expanded: Boolean,
     period: TimePeriod,
-    currency: String,
-    balance: Double,
     onShowMonthModal: () -> Unit,
-    onBalanceClick: () -> Unit,
     onSelectNextMonth: () -> Unit,
-    hideBalance: Boolean,
-    onHiddenBalanceClick: () -> Unit,
     onSelectPreviousMonth: () -> Unit,
 ) {
     Column {
@@ -78,15 +73,8 @@ internal fun HomeHeader(
         Spacer(Modifier.height(20.dp))
 
         HeaderStickyRow(
-            percentExpanded = percentExpanded,
             period = period,
-            currency = currency,
-            balance = balance,
-            hideBalance = hideBalance,
-
             onShowMonthModal = onShowMonthModal,
-            onBalanceClick = onBalanceClick,
-            onHiddenBalanceClick = onHiddenBalanceClick,
             onSelectNextMonth = onSelectNextMonth,
             onSelectPreviousMonth = onSelectPreviousMonth,
         )
@@ -104,15 +92,9 @@ internal fun HomeHeader(
 
 @Composable
 private fun HeaderStickyRow(
-    percentExpanded: Float,
     period: TimePeriod,
-    currency: String,
-    balance: Double,
     onShowMonthModal: () -> Unit,
-    onBalanceClick: () -> Unit,
     onSelectNextMonth: () -> Unit,
-    hideBalance: Boolean,
-    onHiddenBalanceClick: () -> Unit,
     onSelectPreviousMonth: () -> Unit,
 ) {
     val periodState = LocalPeriodState.current
@@ -124,33 +106,13 @@ private fun HeaderStickyRow(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.End,
     ) {
-        Box(
-            modifier = Modifier.weight(1f),
-            contentAlignment = Alignment.CenterStart,
-        ) {
-            // Balance mini row
-            if (percentExpanded < 1f) {
-                BalanceRow(
-                    modifier = Modifier
-                        .alpha(alpha = 1f - percentExpanded)
-                        .clickableNoIndication(rememberInteractionSource()) {
-                            if (hideBalance) {
-                                onHiddenBalanceClick()
-                            } else {
-                                onBalanceClick()
-                            }
-                        },
-                    currency = currency,
-                    balance = balance,
-                    spacerCurrency = 8.dp,
-                    currencyFontSize = 20.sp,
-                    balanceFontSize = 22.sp,
-                    shortenBigNumbers = true,
-                    hiddenMode = hideBalance,
-                    doubleRowDisplay = true,
-                )
-            }
-        }
+        Spacer(Modifier.weight(1f))
+
+        MonthArrowButton(
+            icon = R.drawable.ic_back,
+            contentDescription = "Previous month",
+            onClick = onSelectPreviousMonth,
+        )
 
         OutlinedPillButton(
             modifier = Modifier.horizontalSwipeListener(
@@ -167,7 +129,7 @@ private fun HeaderStickyRow(
             text = period.displayShort(periodState.startDayOfMonth),
             shape = HomeTheme.shapes.rFull,
             backgroundColor = HomeTheme.colors.pure,
-            minWidth = 130.dp,
+            minWidth = 112.dp,
             iconTint = HomeTheme.colors.pureInverse,
             borderColor = HomeTheme.colors.medium,
             textStyle = HomeTheme.typo.b2.copy(
@@ -179,9 +141,36 @@ private fun HeaderStickyRow(
             onShowMonthModal()
         }
 
+        MonthArrowButton(
+            icon = R.drawable.ic_arrow_right,
+            contentDescription = "Next month",
+            onClick = onSelectNextMonth,
+        )
+
         Spacer(Modifier.width(12.dp))
 
         Spacer(Modifier.width(40.dp)) // settings menu button spacer
+    }
+}
+
+@Composable
+private fun MonthArrowButton(
+    @DrawableRes icon: Int,
+    contentDescription: String,
+    onClick: () -> Unit,
+) {
+    Box(
+        modifier = Modifier
+            .clip(CircleShape)
+            .clickable(onClick = onClick)
+            .padding(6.dp),
+        contentAlignment = Alignment.Center,
+    ) {
+        ResourceIcon(
+            icon = icon,
+            tint = HomeTheme.colors.pureInverse,
+            contentDescription = contentDescription,
+        )
     }
 }
 
