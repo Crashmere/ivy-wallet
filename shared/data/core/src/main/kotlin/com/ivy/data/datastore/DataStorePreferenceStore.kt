@@ -6,18 +6,21 @@ import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.core.intPreferencesKey
+import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import com.ivy.data.api.AppLockPreferenceStore
 import com.ivy.data.api.BackupSettingsPreferenceStore
 import com.ivy.data.api.BalancePrivacyPreferenceStore
 import com.ivy.data.api.CategorySortOrderStore
 import com.ivy.data.api.CustomerJourneyCardStore
+import com.ivy.data.api.GitHubBackupConfigStore
 import com.ivy.data.api.InitialSetupStore
 import com.ivy.data.api.LastSelectedAccountStore
 import com.ivy.data.api.LocalPreferenceResetStore
 import com.ivy.data.api.NotificationPreferenceStore
 import com.ivy.data.api.StartDayOfMonthStore
 import com.ivy.data.api.TransferBehaviorPreferenceStore
+import com.ivy.data.model.GitHubBackupConfig
 import com.ivy.data.preferences.SharedPreferenceKeys
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineScope
@@ -58,6 +61,7 @@ internal class DataStorePreferenceStore @Inject internal constructor(
     LastSelectedAccountStore,
     CategorySortOrderStore,
     CustomerJourneyCardStore,
+    GitHubBackupConfigStore,
     LocalPreferenceResetStore {
 
     private val dataStore = context.appPreferencesDataStore
@@ -79,6 +83,13 @@ internal class DataStorePreferenceStore @Inject internal constructor(
     private val categorySortOrderKey = intPreferencesKey(SharedPreferenceKeys.CATEGORY_SORT_ORDER)
     private val lastSelectedAccountIdKey =
         stringPreferencesKey(SharedPreferenceKeys.LAST_SELECTED_ACCOUNT_ID)
+    private val gitHubTokenKey = stringPreferencesKey(SharedPreferenceKeys.GITHUB_BACKUP_TOKEN)
+    private val gitHubOwnerKey = stringPreferencesKey(SharedPreferenceKeys.GITHUB_BACKUP_OWNER)
+    private val gitHubRepoKey = stringPreferencesKey(SharedPreferenceKeys.GITHUB_BACKUP_REPO)
+    private val gitHubBranchKey = stringPreferencesKey(SharedPreferenceKeys.GITHUB_BACKUP_BRANCH)
+    private val gitHubPathKey = stringPreferencesKey(SharedPreferenceKeys.GITHUB_BACKUP_PATH)
+    private val gitHubLastBackupKey =
+        longPreferencesKey(SharedPreferenceKeys.GITHUB_BACKUP_LAST_EPOCH_SEC)
 
     override var initialSetupCompleted: Boolean
         get() = snapshot[initialSetupCompletedKey] ?: false
@@ -125,6 +136,44 @@ internal class DataStorePreferenceStore @Inject internal constructor(
     override fun dismissCustomerJourneyCard(cardId: String) {
         put(booleanPreferencesKey(customerJourneyCardDismissedKey(cardId)), true)
     }
+
+    override fun getGitHubBackupConfig(): GitHubBackupConfig? {
+        val token = snapshot[gitHubTokenKey]?.takeIf { it.isNotBlank() } ?: return null
+        val owner = snapshot[gitHubOwnerKey]?.takeIf { it.isNotBlank() } ?: return null
+        val repo = snapshot[gitHubRepoKey]?.takeIf { it.isNotBlank() } ?: return null
+        return GitHubBackupConfig(
+            token = token,
+            owner = owner,
+            repo = repo,
+            branch = snapshot[gitHubBranchKey]?.takeIf { it.isNotBlank() }
+                ?: GitHubBackupConfig.DEFAULT_BRANCH,
+            path = snapshot[gitHubPathKey]?.takeIf { it.isNotBlank() }
+                ?: GitHubBackupConfig.DEFAULT_PATH,
+        )
+    }
+
+    override fun saveGitHubBackupConfig(config: GitHubBackupConfig) {
+        put(gitHubTokenKey, config.token)
+        put(gitHubOwnerKey, config.owner)
+        put(gitHubRepoKey, config.repo)
+        put(gitHubBranchKey, config.branch)
+        put(gitHubPathKey, config.path)
+    }
+
+    override fun clearGitHubBackupConfig() {
+        remove(gitHubTokenKey)
+        remove(gitHubOwnerKey)
+        remove(gitHubRepoKey)
+        remove(gitHubBranchKey)
+        remove(gitHubPathKey)
+        remove(gitHubLastBackupKey)
+    }
+
+    override var gitHubLastBackupEpochSec: Long?
+        get() = snapshot[gitHubLastBackupKey]
+        set(value) {
+            if (value == null) remove(gitHubLastBackupKey) else put(gitHubLastBackupKey, value)
+        }
 
     override fun clearAll() {
         snapshot = emptyPreferences()

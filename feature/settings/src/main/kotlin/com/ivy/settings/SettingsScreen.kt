@@ -1,5 +1,6 @@
 package com.ivy.settings
 
+import android.widget.Toast
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import com.ivy.ui.compose.BackPressHandler
@@ -38,6 +39,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -46,6 +48,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.ivy.data.model.GitHubBackupConfig
 import com.ivy.data.model.Theme
 import com.ivy.ui.compose.thenIf
 import com.ivy.ui.compose.drawColoredShadow
@@ -64,6 +67,9 @@ import com.ivy.ui.theme.colors.IvyFixedColors.White
 import com.ivy.ui.modal.CurrencyModal
 import com.ivy.ui.modal.DeleteModal
 import com.ivy.ui.modal.ProgressModal
+import java.time.Instant
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 import java.util.Locale
 
 private enum class SettingsPage(@StringRes val title: Int) {
@@ -79,6 +85,7 @@ fun BoxWithConstraintsScope.SettingsScreen() {
     val uiState = viewModel.uiState()
     val fileSharer = fileSharer()
     val nav = navigation()
+    val context = LocalContext.current
 
     LaunchedEffect(viewModel) {
         viewModel.uiEvents.collect { event ->
@@ -90,6 +97,13 @@ fun BoxWithConstraintsScope.SettingsScreen() {
 
                 is SettingsUiEvent.ShareCsvFile -> fileSharer.shareCSVFile(event.fileUri)
                 is SettingsUiEvent.ShareZipFile -> fileSharer.shareZipFile(event.fileUri)
+                is SettingsUiEvent.ShowMessage ->
+                    Toast.makeText(context, event.message, Toast.LENGTH_LONG).show()
+
+                SettingsUiEvent.DataRestored -> {
+                    nav.resetBackStack()
+                    nav.navigateTo(MainScreen)
+                }
             }
         }
     }
@@ -121,6 +135,23 @@ fun BoxWithConstraintsScope.SettingsScreen() {
         },
         onBackupData = {
             viewModel.onEvent(SettingsEvent.BackupData)
+        },
+        gitHubConfig = uiState.gitHubBackupConfig,
+        gitHubLastBackupEpochSec = uiState.gitHubLastBackupEpochSec,
+        onSaveGitHubConfig = {
+            viewModel.onEvent(SettingsEvent.SaveGitHubBackupConfig(it))
+        },
+        onClearGitHubConfig = {
+            viewModel.onEvent(SettingsEvent.ClearGitHubBackupConfig)
+        },
+        onTestGitHubConnection = {
+            viewModel.onEvent(SettingsEvent.TestGitHubConnection(it))
+        },
+        onBackupToGitHub = {
+            viewModel.onEvent(SettingsEvent.BackupToGitHub)
+        },
+        onRestoreFromGitHub = {
+            viewModel.onEvent(SettingsEvent.RestoreFromGitHub)
         },
         onExportToCSV = {
             viewModel.onEvent(SettingsEvent.ExportToCsv)
@@ -207,7 +238,14 @@ private fun BoxWithConstraintsScope.UI(
     standardKeypadLayout: Boolean = false,
     showCategorySearchBar: Boolean = true,
     sortCategoriesAscending: Boolean = false,
+    gitHubConfig: GitHubBackupConfig? = null,
+    gitHubLastBackupEpochSec: Long? = null,
     onBackupData: () -> Unit = {},
+    onSaveGitHubConfig: (GitHubBackupConfig) -> Unit = {},
+    onClearGitHubConfig: () -> Unit = {},
+    onTestGitHubConnection: (GitHubBackupConfig) -> Unit = {},
+    onBackupToGitHub: () -> Unit = {},
+    onRestoreFromGitHub: () -> Unit = {},
     onExportToCSV: () -> Unit = {},
     onSetLockApp: (Boolean) -> Unit = {},
     onSetShowNotifications: (Boolean) -> Unit = {},
@@ -233,6 +271,8 @@ private fun BoxWithConstraintsScope.UI(
     var chooseStartDateOfMonthVisible by remember { mutableStateOf(false) }
     var deleteAllDataModalVisible by remember { mutableStateOf(false) }
     var deleteAllDataModalFinalVisible by remember { mutableStateOf(false) }
+    var gitHubBackupModalVisible by remember { mutableStateOf(false) }
+    var restoreFromGitHubConfirmVisible by remember { mutableStateOf(false) }
     var settingsPage by remember { mutableStateOf(SettingsPage.Main) }
     val mainListState = rememberLazyListState()
     val displayPreferencesListState = rememberLazyListState()
@@ -304,6 +344,16 @@ private fun BoxWithConstraintsScope.UI(
                         onExportToCSV = onExportToCSV,
                         onBackupData = onBackupData,
                         onImportData = onOpenImport
+                    )
+                }
+
+                item {
+                    CloudBackupSection(
+                        configured = gitHubConfig != null,
+                        subtitle = gitHubBackupSubtitle(gitHubConfig, gitHubLastBackupEpochSec),
+                        onConfigure = { gitHubBackupModalVisible = true },
+                        onBackup = onBackupToGitHub,
+                        onRestore = { restoreFromGitHubConfirmVisible = true }
                     )
                 }
 
@@ -452,6 +502,28 @@ private fun BoxWithConstraintsScope.UI(
         description = stringResource(R.string.exporting_data_description),
         visible = progressState
     )
+
+    GitHubBackupModal(
+        visible = gitHubBackupModalVisible,
+        initialConfig = gitHubConfig,
+        onSave = onSaveGitHubConfig,
+        onClear = onClearGitHubConfig,
+        onTest = onTestGitHubConnection,
+        dismiss = { gitHubBackupModalVisible = false }
+    )
+
+    DeleteModal(
+        title = "从 GitHub 恢复？",
+        description = "将用云端最新备份覆盖并合并到本地数据，建议先备份当前数据。",
+        visible = restoreFromGitHubConfirmVisible,
+        buttonText = "恢复",
+        iconStart = R.drawable.ic_export_csv,
+        dismiss = { restoreFromGitHubConfirmVisible = false },
+        onDelete = {
+            restoreFromGitHubConfirmVisible = false
+            onRestoreFromGitHub()
+        }
+    )
 }
 
 @Composable
@@ -517,6 +589,65 @@ private fun DataManagementSection(
         backgroundGradient = IvyGradients.Green
     ) {
         onImportData()
+    }
+}
+
+private fun gitHubBackupSubtitle(
+    config: GitHubBackupConfig?,
+    lastBackupEpochSec: Long?
+): String {
+    if (config == null) {
+        return "未配置，点击设置 Token 与仓库"
+    }
+    val repo = "${config.owner}/${config.repo}"
+    val last = lastBackupEpochSec?.let {
+        val formatter = DateTimeFormatter
+            .ofPattern("yyyy-MM-dd HH:mm")
+            .withZone(ZoneId.systemDefault())
+        "上次备份 ${formatter.format(Instant.ofEpochSecond(it))}"
+    } ?: "尚未备份"
+    return "$repo · $last"
+}
+
+@Composable
+private fun CloudBackupSection(
+    configured: Boolean,
+    subtitle: String,
+    onConfigure: () -> Unit,
+    onBackup: () -> Unit,
+    onRestore: () -> Unit
+) {
+    SettingsSectionDivider(text = "云备份")
+
+    Spacer(Modifier.height(16.dp))
+
+    SettingsDefaultButton(
+        icon = R.drawable.ic_vue_security_shield,
+        text = "GitHub 云备份",
+        iconPadding = 8.dp,
+        description = subtitle
+    ) {
+        onConfigure()
+    }
+
+    if (configured) {
+        Spacer(Modifier.height(12.dp))
+
+        SettingsDefaultButton(
+            icon = R.drawable.ic_custom_document_m,
+            text = "立即备份到 GitHub"
+        ) {
+            onBackup()
+        }
+
+        Spacer(Modifier.height(12.dp))
+
+        SettingsDefaultButton(
+            icon = R.drawable.ic_export_csv,
+            text = "从 GitHub 恢复"
+        ) {
+            onRestore()
+        }
     }
 }
 

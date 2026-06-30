@@ -15,6 +15,8 @@ import com.ivy.data.api.CustomerJourneyCardStore
 import com.ivy.data.api.DataChangePublisher
 import com.ivy.data.api.ExchangeRateStore
 import com.ivy.data.api.file.TextFileStore
+import com.ivy.data.api.GitHubBackupConfigStore
+import com.ivy.data.api.backup.GitHubBackupStore
 import com.ivy.data.api.InitialSetupStore
 import com.ivy.data.api.LastSelectedAccountStore
 import com.ivy.data.api.LoanRecordStore
@@ -31,6 +33,7 @@ import com.ivy.data.api.ThemeStore
 import com.ivy.data.api.TransactionStore
 import com.ivy.data.api.TransferBehaviorPreferenceStore
 import com.ivy.data.backup.DefaultBackupStore
+import com.ivy.data.backup.DefaultGitHubBackupStore
 import com.ivy.data.datastore.DataStorePreferenceStore
 import com.ivy.data.datastore.DataStorePreferenceToggleStore
 import com.ivy.data.file.FileSystem
@@ -114,6 +117,14 @@ internal abstract class DataBindingsModule {
 
     @Binds
     abstract fun bindBackupStore(defaultBackupStore: DefaultBackupStore): BackupStore
+
+    @Binds
+    abstract fun bindGitHubBackupConfigStore(
+        store: DataStorePreferenceStore
+    ): GitHubBackupConfigStore
+
+    @Binds
+    abstract fun bindGitHubBackupStore(store: DefaultGitHubBackupStore): GitHubBackupStore
 
     @Binds
     abstract fun bindBudgetStore(store: RoomBudgetStore): BudgetStore

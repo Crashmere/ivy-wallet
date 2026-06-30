@@ -88,6 +88,21 @@ internal class DefaultBackupStore @Inject internal constructor(
         )
     }
 
+    override suspend fun exportBackupJson(): String {
+        return generateJsonBackup()
+    }
+
+    override suspend fun importBackupJson(
+        jsonString: String,
+        onProgress: suspend (Double) -> Unit,
+    ): ImportResult = withContext(Dispatchers.IO) {
+        try {
+            importJson(jsonString, onProgress, clearCacheDir = false)
+        } finally {
+            dataChangePublisher.post(DataWriteEvent.AllDataChange)
+        }
+    }
+
     suspend fun exportToFile(
         zipFileUri: Uri
     ) {

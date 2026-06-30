@@ -1,9 +1,16 @@
 package com.ivy.settings
 
+import com.ivy.data.model.GitHubBackupConfig
+
 internal sealed interface SettingsEvent {
     data class SetCurrency(val newCurrency: String) : SettingsEvent
     data object ExportToCsv : SettingsEvent
     data object BackupData : SettingsEvent
+    data class SaveGitHubBackupConfig(val config: GitHubBackupConfig) : SettingsEvent
+    data object ClearGitHubBackupConfig : SettingsEvent
+    data class TestGitHubConnection(val config: GitHubBackupConfig) : SettingsEvent
+    data object BackupToGitHub : SettingsEvent
+    data object RestoreFromGitHub : SettingsEvent
     data object SwitchTheme : SettingsEvent
     data class SetLockApp(val lockApp: Boolean) : SettingsEvent
     data class SetShowNotifications(val showNotifications: Boolean) : SettingsEvent

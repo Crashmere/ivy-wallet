@@ -8,12 +8,19 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.viewModelScope
 import com.ivy.data.model.Theme
 import com.ivy.data.model.ExternalFile
+import com.ivy.data.model.GitHubBackupConfig
 import com.ivy.data.model.primitive.AssetCode
 import com.ivy.domain.preferences.toggles.BoolPreference
 import com.ivy.domain.preferences.toggles.PreferenceToggleService
 import com.ivy.domain.preferences.toggles.PreferenceToggleCatalog
 import com.ivy.domain.usecase.reset.ResetWalletDataUseCase
 import com.ivy.domain.usecase.backup.ExportBackupUseCase
+import com.ivy.domain.usecase.backup.github.GetGitHubBackupConfigUseCase
+import com.ivy.domain.usecase.backup.github.GetGitHubLastBackupUseCase
+import com.ivy.domain.usecase.backup.github.RestoreBackupFromGitHubUseCase
+import com.ivy.domain.usecase.backup.github.SaveGitHubBackupConfigUseCase
+import com.ivy.domain.usecase.backup.github.TestGitHubConnectionUseCase
+import com.ivy.domain.usecase.backup.github.UploadBackupToGitHubUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.domain.usecase.currency.SetBaseCurrencyUseCase
 import com.ivy.domain.usecase.csv.ExportCsvUseCase
@@ -62,6 +69,12 @@ internal class SettingsViewModel @Inject internal constructor(
     private val switchThemeUseCase: SwitchThemeUseCase,
     private val resetWalletDataUseCase: ResetWalletDataUseCase,
     private val exportBackupUseCase: ExportBackupUseCase,
+    private val getGitHubBackupConfigUseCase: GetGitHubBackupConfigUseCase,
+    private val saveGitHubBackupConfigUseCase: SaveGitHubBackupConfigUseCase,
+    private val getGitHubLastBackupUseCase: GetGitHubLastBackupUseCase,
+    private val testGitHubConnectionUseCase: TestGitHubConnectionUseCase,
+    private val uploadBackupToGitHubUseCase: UploadBackupToGitHubUseCase,
+    private val restoreBackupFromGitHubUseCase: RestoreBackupFromGitHubUseCase,
     private val getStartDayOfMonth: GetStartDayOfMonthUseCase,
     private val setStartDayOfMonth: SetStartDayOfMonthUseCase,
     private val getAppLockEnabledPreference: GetAppLockEnabledPreferenceUseCase,
@@ -99,6 +112,8 @@ internal class SettingsViewModel @Inject internal constructor(
     private val sortCategoriesAscending = mutableStateOf(false)
     private val startDateOfMonth = mutableIntStateOf(1)
     private val progressState = mutableStateOf(false)
+    private val gitHubBackupConfig = mutableStateOf<GitHubBackupConfig?>(null)
+    private val gitHubLastBackupEpochSec = mutableStateOf<Long?>(null)
     private val _uiEvents = MutableSharedFlow<SettingsUiEvent>()
     val uiEvents: SharedFlow<SettingsUiEvent> = _uiEvents.asSharedFlow()
 
@@ -111,6 +126,8 @@ internal class SettingsViewModel @Inject internal constructor(
         return SettingsState(
             currencyCode = getCurrencyCode(),
             currentTheme = getCurrentTheme(),
+            gitHubBackupConfig = gitHubBackupConfig.value,
+            gitHubLastBackupEpochSec = gitHubLastBackupEpochSec.value,
             lockApp = getLockApp(),
             showNotifications = getShowNotifications(),
             hideCurrentBalance = getHideCurrentBalance(),
@@ -140,6 +157,12 @@ internal class SettingsViewModel @Inject internal constructor(
         initializeTransfersAsIncomeExpense()
         initializeTogglePreferences()
         initializeStartDateOfMonth()
+        initializeGitHubBackup()
+    }
+
+    private fun initializeGitHubBackup() {
+        gitHubBackupConfig.value = getGitHubBackupConfigUseCase()
+        gitHubLastBackupEpochSec.value = getGitHubLastBackupUseCase()
     }
 
     private suspend fun initializeCurrency() {
@@ -282,6 +305,11 @@ internal class SettingsViewModel @Inject internal constructor(
             is SettingsEvent.SetCurrency -> setCurrency(event.newCurrency)
             SettingsEvent.ExportToCsv -> exportToCSV()
             SettingsEvent.BackupData -> exportToZip()
+            is SettingsEvent.SaveGitHubBackupConfig -> saveGitHubBackupConfig(event.config)
+            SettingsEvent.ClearGitHubBackupConfig -> clearGitHubBackupConfig()
+            is SettingsEvent.TestGitHubConnection -> testGitHubConnection(event.config)
+            SettingsEvent.BackupToGitHub -> backupToGitHub()
+            SettingsEvent.RestoreFromGitHub -> restoreFromGitHub()
             SettingsEvent.SwitchTheme -> switchTheme()
             is SettingsEvent.SetLockApp -> setLockApp(event.lockApp)
             is SettingsEvent.SetShowNotifications -> setShowNotifications(event.showNotifications)
@@ -389,6 +417,71 @@ internal class SettingsViewModel @Inject internal constructor(
                     _uiEvents.emit(SettingsUiEvent.ShareZipFile(fileUri))
                 }
             }
+        }
+    }
+
+    private fun saveGitHubBackupConfig(config: GitHubBackupConfig) {
+        saveGitHubBackupConfigUseCase(config)
+        gitHubBackupConfig.value = getGitHubBackupConfigUseCase()
+        viewModelScope.launch {
+            _uiEvents.emit(SettingsUiEvent.ShowMessage("已保存 GitHub 云备份配置"))
+        }
+    }
+
+    private fun clearGitHubBackupConfig() {
+        saveGitHubBackupConfigUseCase.clear()
+        gitHubBackupConfig.value = null
+        gitHubLastBackupEpochSec.value = null
+        viewModelScope.launch {
+            _uiEvents.emit(SettingsUiEvent.ShowMessage("已清除 GitHub 云备份配置"))
+        }
+    }
+
+    private fun testGitHubConnection(config: GitHubBackupConfig) {
+        viewModelScope.launch {
+            progressState.value = true
+            val result = testGitHubConnectionUseCase(config)
+            progressState.value = false
+            val message = result.fold(
+                onSuccess = { "连接成功，仓库可访问" },
+                onFailure = { it.message ?: "连接失败" }
+            )
+            _uiEvents.emit(SettingsUiEvent.ShowMessage(message))
+        }
+    }
+
+    private fun backupToGitHub() {
+        viewModelScope.launch {
+            progressState.value = true
+            val result = uploadBackupToGitHubUseCase()
+            progressState.value = false
+            val message = result.fold(
+                onSuccess = {
+                    gitHubLastBackupEpochSec.value = getGitHubLastBackupUseCase()
+                    "已备份到 GitHub"
+                },
+                onFailure = { it.message ?: "备份失败" }
+            )
+            _uiEvents.emit(SettingsUiEvent.ShowMessage(message))
+        }
+    }
+
+    private fun restoreFromGitHub() {
+        viewModelScope.launch {
+            progressState.value = true
+            val result = restoreBackupFromGitHubUseCase()
+            progressState.value = false
+            result.fold(
+                onSuccess = {
+                    _uiEvents.emit(
+                        SettingsUiEvent.ShowMessage("已从 GitHub 恢复 ${it.transactionsImported} 笔交易")
+                    )
+                    _uiEvents.emit(SettingsUiEvent.DataRestored)
+                },
+                onFailure = {
+                    _uiEvents.emit(SettingsUiEvent.ShowMessage(it.message ?: "恢复失败"))
+                }
+            )
         }
     }
 

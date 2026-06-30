@@ -15,4 +15,11 @@ internal object SharedPreferenceKeys {
     const val CUSTOMER_JOURNEY_CARD_DISMISSED_SUFFIX = "_cj_dismissed"
 
     const val CATEGORY_SORT_ORDER = "categorySortOrder"
+
+    const val GITHUB_BACKUP_TOKEN = "github_backup_token"
+    const val GITHUB_BACKUP_OWNER = "github_backup_owner"
+    const val GITHUB_BACKUP_REPO = "github_backup_repo"
+    const val GITHUB_BACKUP_BRANCH = "github_backup_branch"
+    const val GITHUB_BACKUP_PATH = "github_backup_path"
+    const val GITHUB_BACKUP_LAST_EPOCH_SEC = "github_backup_last_epoch_sec"
 }
