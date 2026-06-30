@@ -61,6 +61,8 @@ data object LoansScreen : Screen
 
 data object SearchScreen : Screen
 
+data object BulkEditScreen : Screen
+
 data class LoanDetailsScreen(
     val loanId: UUID
 ) : Screen

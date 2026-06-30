@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.BoxWithConstraintsScope
 import androidx.compose.runtime.Composable
 import com.ivy.balance.BalanceScreen
 import com.ivy.budgets.BudgetScreen
+import com.ivy.bulkedit.BulkEditScreen
 import com.ivy.categories.CategoriesScreen
 import com.ivy.exchangerates.ExchangeRatesScreen
 import com.ivy.importdata.csv.CSVScreen as CSVImportScreen
@@ -15,6 +16,7 @@ import com.ivy.loans.loandetails.LoanDetailsScreen
 import com.ivy.main.MainScreen
 import com.ivy.ui.navigation.BalanceScreen
 import com.ivy.ui.navigation.BudgetScreen
+import com.ivy.ui.navigation.BulkEditScreen
 import com.ivy.ui.navigation.CSVScreen
 import com.ivy.ui.navigation.CategoriesScreen
 import com.ivy.ui.navigation.EditPlannedScreen
@@ -66,6 +68,7 @@ internal fun BoxWithConstraintsScope.IvyNavGraph(screen: Screen?) {
         is LoansScreen -> LoansScreen()
         is LoanDetailsScreen -> LoanDetailsScreen(screen = screen)
         is SearchScreen -> SearchScreen()
+        is BulkEditScreen -> BulkEditScreen()
         CSVScreen -> CSVImportScreen()
     }
 }

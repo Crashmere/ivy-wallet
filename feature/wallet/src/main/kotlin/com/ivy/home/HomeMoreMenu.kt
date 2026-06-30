@@ -75,7 +75,8 @@ internal enum class MoreMenuDestination {
     PlannedPayments,
     Reports,
     Budgets,
-    Loans
+    Loans,
+    BulkEdit
 }
 
 @Composable
@@ -222,6 +223,12 @@ private fun ColumnScope.Content(
         onDestinationClick(MoreMenuDestination.Search)
     }
 
+    Spacer(Modifier.height(12.dp))
+
+    BulkEditButton {
+        onDestinationClick(MoreMenuDestination.BulkEdit)
+    }
+
     Spacer(Modifier.height(16.dp))
 
     QuickAccess(
@@ -277,6 +284,54 @@ private fun SearchButton(
                 color = HomeTheme.colors.pureInverse,
                 textAlign = TextAlign.Start
             )
+        )
+
+        Spacer(Modifier.width(16.dp))
+    }
+}
+
+@Composable
+private fun BulkEditButton(
+    onClick: () -> Unit
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp)
+            .clip(HomeTheme.shapes.rFull)
+            .background(HomeTheme.colors.pure)
+            .border(1.dp, HomeTheme.colors.gray, HomeTheme.shapes.rFull)
+            .clickable {
+                onClick()
+            },
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Spacer(Modifier.width(12.dp))
+
+        ResourceIcon(
+            icon = R.drawable.ic_edit,
+            tint = HomeTheme.colors.pureInverse
+        )
+
+        Spacer(Modifier.width(12.dp))
+
+        Text(
+            modifier = Modifier.padding(
+                vertical = 12.dp,
+            ),
+            text = "批量修改交易",
+            style = HomeTheme.typo.b2.copy(
+                fontWeight = FontWeight.SemiBold,
+                color = HomeTheme.colors.pureInverse,
+                textAlign = TextAlign.Start
+            )
+        )
+
+        Spacer(Modifier.weight(1f))
+
+        ResourceIcon(
+            icon = R.drawable.ic_arrow_right,
+            tint = HomeTheme.colors.pureInverse
         )
 
         Spacer(Modifier.width(16.dp))
