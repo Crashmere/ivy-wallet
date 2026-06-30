@@ -89,14 +89,11 @@ internal class RoomTransactionStore @Inject internal constructor(
     override suspend fun findAllBetween(
         startDate: Instant,
         endDate: Instant
-    ): List<Transaction> = withContext(Dispatchers.IO) {
-        val transactions = transactionDao.findAllBetween(startDate, endDate)
-        val tagAssociationMap = getTagsForTransactionIds(transactions)
-        transactions.mapNotNull {
-            val tags = tagAssociationMap[it.id] ?: emptyList()
-            with(mapper) { it.toDomain(tags = tags) }.getOrNull()
+    ): List<Transaction> = retrieveTransactionsWithTags(
+        dbCall = {
+            transactionDao.findAllBetween(startDate, endDate)
         }
-    }
+    )
 
     override suspend fun countBetween(
         startDate: Instant,
@@ -152,7 +149,7 @@ internal class RoomTransactionStore @Inject internal constructor(
         accountId: AccountId,
         startDate: Instant,
         endDate: Instant
-    ): List<Transaction> = retrieveTransactions(
+    ): List<Transaction> = retrieveTransactionsWithTags(
         dbCall = {
             transactionDao.findAllByAccountAndBetween(
                 accountId = accountId.value,
@@ -166,7 +163,7 @@ internal class RoomTransactionStore @Inject internal constructor(
         toAccountId: AccountId,
         startDate: Instant,
         endDate: Instant
-    ): List<Transaction> = retrieveTransactions(
+    ): List<Transaction> = retrieveTransactionsWithTags(
         dbCall = {
             transactionDao.findAllToAccountAndBetween(
                 toAccountId = toAccountId.value,
@@ -382,6 +379,17 @@ internal class RoomTransactionStore @Inject internal constructor(
     ): List<Transaction> = withContext(Dispatchers.IO) {
         dbCall().mapNotNull {
             with(mapper) { it.toDomain(tags = retrieveTags(it)) }.getOrNull()
+        }
+    }
+
+    private suspend fun retrieveTransactionsWithTags(
+        dbCall: suspend () -> List<TransactionEntity>,
+    ): List<Transaction> = withContext(Dispatchers.IO) {
+        val transactions = dbCall()
+        val tagAssociationMap = getTagsForTransactionIds(transactions)
+        transactions.mapNotNull {
+            val tags = tagAssociationMap[it.id] ?: emptyList()
+            with(mapper) { it.toDomain(tags = tags) }.getOrNull()
         }
     }
 
