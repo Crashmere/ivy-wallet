@@ -17,6 +17,7 @@ import com.ivy.data.model.Account
 import com.ivy.data.model.AccountId
 import com.ivy.data.model.Category
 import com.ivy.data.model.CategoryId
+import com.ivy.data.model.Tag
 import com.ivy.data.model.primitive.AssetCode
 import com.ivy.data.model.primitive.ColorInt
 import com.ivy.data.model.primitive.IconAsset
@@ -56,7 +57,9 @@ import com.ivy.domain.usecase.transaction.CalculateTransactionsIncomeExpenseUseC
 import com.ivy.domain.usecase.transaction.GetTransactionsByIdsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.ImmutableSet
 import kotlinx.collections.immutable.toImmutableList
+import kotlinx.collections.immutable.toImmutableSet
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -135,6 +138,16 @@ internal class TransactionsViewModel @Inject internal constructor(
     private val history =
         mutableStateOf<ImmutableList<TransactionHistoryItem>>(persistentListOf())
 
+    // Account transaction filter (by category / tag)
+    private var accountTransactions: List<Transaction> = emptyList()
+    private var accountIncludeTransfers = false
+    private val filterCategories = mutableStateOf<ImmutableList<Category>>(persistentListOf())
+    private val filterHasUncategorized = mutableStateOf(false)
+    private val filterTags = mutableStateOf<ImmutableList<Tag>>(persistentListOf())
+    private val selectedCategoryIds = mutableStateOf<Set<UUID>>(emptySet())
+    private val uncategorizedSelected = mutableStateOf(false)
+    private val selectedTagIds = mutableStateOf<Set<UUID>>(emptySet())
+
     private val accountId = mutableStateOf<UUID?>(null)
     private val category = mutableStateOf<Category?>(null)
     private val initWithTransactions = mutableStateOf(false)
@@ -171,7 +184,8 @@ internal class TransactionsViewModel @Inject internal constructor(
             enableDeletionButton = getEnableDeletionButton(),
             skipAllModalVisible = getSkipAllModalVisible(),
             deleteModal1Visible = getDeleteModal1Visible(),
-            showAccountColorsInTransactions = getShouldShowAccountSpecificColorInTransactions()
+            showAccountColorsInTransactions = getShouldShowAccountSpecificColorInTransactions(),
+            accountFilter = getAccountFilter()
         )
     }
 
@@ -268,6 +282,25 @@ internal class TransactionsViewModel @Inject internal constructor(
     }
 
     @Composable
+    private fun getAccountFilter(): AccountTransactionFilter? {
+        if (accountId.value == null) return null
+        val availableCategories = filterCategories.value
+        val availableTags = filterTags.value
+        val hasUncategorized = filterHasUncategorized.value
+        if (availableCategories.isEmpty() && availableTags.isEmpty() && !hasUncategorized) {
+            return null
+        }
+        return AccountTransactionFilter(
+            availableCategories = availableCategories,
+            hasUncategorized = hasUncategorized,
+            availableTags = availableTags,
+            selectedCategoryIds = selectedCategoryIds.value.toImmutableSet(),
+            uncategorizedSelected = uncategorizedSelected.value,
+            selectedTagIds = selectedTagIds.value.toImmutableSet(),
+        )
+    }
+
+    @Composable
     private fun getOverdue(): TransactionsDueSection {
         return overdue.value
     }
@@ -313,6 +346,10 @@ internal class TransactionsViewModel @Inject internal constructor(
             is TransactionsEvent.SetUpcomingExpanded -> setUpcomingExpanded(event.expanded)
             is TransactionsEvent.SetSkipAllModalVisible -> setSkipAllModalVisible(event.visible)
             is TransactionsEvent.OnDeleteModal1Visible -> setDeleteModal1Visible(event.delete)
+            is TransactionsEvent.ToggleCategoryFilter -> toggleCategoryFilter(event.categoryId)
+            TransactionsEvent.ToggleUncategorizedFilter -> toggleUncategorizedFilter()
+            is TransactionsEvent.ToggleTagFilter -> toggleTagFilter(event.tagId)
+            TransactionsEvent.ClearFilters -> clearFilters()
         }
     }
 
@@ -335,21 +372,29 @@ internal class TransactionsViewModel @Inject internal constructor(
 
         val includeTransfersInCalc = getTransfersAsIncomeExpensePreference()
 
+        accountIncludeTransfers = includeTransfersInCalc
+        val accountTransactionList = getAccountTransactionsUseCase(
+            accountId = initialAccount.id,
+            range = range.toCloseTimeRange()
+        )
+        accountTransactions = accountTransactionList
+        resetAccountFilterSelection()
+
         val incomeExpensePair = calculateAccountIncomeExpenseUseCase(
             account = initialAccount,
-            range = range.toCloseTimeRange(),
+            transactions = accountTransactionList,
             includeTransfersInCalc = includeTransfersInCalc
         )
         income.doubleValue = incomeExpensePair.income.toDouble()
         expenses.doubleValue = incomeExpensePair.expense.toDouble()
 
-        history.value = buildTransactionHistoryItemsUseCase(
+        val accountHistory = buildTransactionHistoryItemsUseCase(
             baseCurrency = baseCurrency.value,
-            transactions = getAccountTransactionsUseCase(
-                accountId = initialAccount.id,
-                range = range.toCloseTimeRange()
-            )
+            transactions = accountTransactionList
         ).toImmutableList()
+        history.value = accountHistory
+
+        buildAccountFilterOptions(accountTransactionList, accountHistory)
 
         val upcomingSummary = withContext(Dispatchers.IO) {
             getAccountUpcomingTransactionsSummaryUseCase(initialAccount.id, range)
@@ -483,6 +528,12 @@ internal class TransactionsViewModel @Inject internal constructor(
     private fun reset() {
         accountId.value = null
         category.value = null
+        accountTransactions = emptyList()
+        accountIncludeTransfers = false
+        filterCategories.value = persistentListOf()
+        filterTags.value = persistentListOf()
+        filterHasUncategorized.value = false
+        resetAccountFilterSelection()
     }
 
     private fun setUpcomingExpanded(expanded: Boolean) {
@@ -687,11 +738,97 @@ internal class TransactionsViewModel @Inject internal constructor(
         }
     }
 
+    private fun toggleCategoryFilter(categoryId: UUID) {
+        selectedCategoryIds.value = selectedCategoryIds.value.toggleElement(categoryId)
+        applyAccountFilter()
+    }
+
+    private fun toggleUncategorizedFilter() {
+        uncategorizedSelected.value = !uncategorizedSelected.value
+        applyAccountFilter()
+    }
+
+    private fun toggleTagFilter(tagId: UUID) {
+        selectedTagIds.value = selectedTagIds.value.toggleElement(tagId)
+        applyAccountFilter()
+    }
+
+    private fun clearFilters() {
+        resetAccountFilterSelection()
+        applyAccountFilter()
+    }
+
+    private fun resetAccountFilterSelection() {
+        selectedCategoryIds.value = emptySet()
+        uncategorizedSelected.value = false
+        selectedTagIds.value = emptySet()
+    }
+
+    private fun buildAccountFilterOptions(
+        transactions: List<Transaction>,
+        historyItems: List<TransactionHistoryItem>,
+    ) {
+        val usedCategoryIds = transactions.mapNotNull { it.category?.value }.toHashSet()
+        filterCategories.value = categories.value
+            .filter { it.id.value in usedCategoryIds }
+            .toImmutableList()
+        filterHasUncategorized.value = transactions.any { it.category == null }
+
+        val tagsById = LinkedHashMap<UUID, Tag>()
+        historyItems.forEach { item ->
+            if (item is TransactionHistoryTransaction) {
+                item.tags.forEach { tag -> tagsById.putIfAbsent(tag.id.value, tag) }
+            }
+        }
+        filterTags.value = tagsById.values.toImmutableList()
+    }
+
+    private fun applyAccountFilter() {
+        val account = selectedAccount() ?: return
+        viewModelScope.launch {
+            val filtered = filterAccountTransactions(accountTransactions)
+            val incomeExpensePair = calculateAccountIncomeExpenseUseCase(
+                account = account,
+                transactions = filtered,
+                includeTransfersInCalc = accountIncludeTransfers
+            )
+            income.doubleValue = incomeExpensePair.income.toDouble()
+            expenses.doubleValue = incomeExpensePair.expense.toDouble()
+            history.value = buildTransactionHistoryItemsUseCase(
+                baseCurrency = baseCurrency.value,
+                transactions = filtered
+            ).toImmutableList()
+        }
+    }
+
+    private fun filterAccountTransactions(
+        transactions: List<Transaction>
+    ): List<Transaction> {
+        val categoryIds = selectedCategoryIds.value
+        val includeUncategorized = uncategorizedSelected.value
+        val tagIds = selectedTagIds.value
+        val categoryFilterActive = categoryIds.isNotEmpty() || includeUncategorized
+        val tagFilterActive = tagIds.isNotEmpty()
+        if (!categoryFilterActive && !tagFilterActive) return transactions
+        return transactions.filter { transaction ->
+            val categoryMatches = !categoryFilterActive || run {
+                val txCategoryId = transaction.category?.value
+                if (txCategoryId == null) includeUncategorized else txCategoryId in categoryIds
+            }
+            val tagMatches = !tagFilterActive ||
+                    transaction.tags.any { it.value in tagIds }
+            categoryMatches && tagMatches
+        }
+    }
+
     private fun selectedAccount(): Account? {
         val id = accountId.value ?: return null
         return loadedAccounts.firstOrNull { it.id.value == id }
     }
 }
+
+private fun <T> Set<T>.toggleElement(element: T): Set<T> =
+    if (contains(element)) this - element else this + element
 
 private fun List<TransactionHistoryItem>.countTransactionType(type: TransactionType): Int {
     return filterIsInstance<TransactionHistoryTransaction>()

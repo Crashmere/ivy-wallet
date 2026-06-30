@@ -37,4 +37,9 @@ internal sealed interface TransactionsEvent {
     data class UpdateAccountDeletionState(val confirmationText: String) : TransactionsEvent
     data class SetSkipAllModalVisible(val visible: Boolean) : TransactionsEvent
     data class OnDeleteModal1Visible(val delete: Boolean) : TransactionsEvent
+
+    data class ToggleCategoryFilter(val categoryId: UUID) : TransactionsEvent
+    data object ToggleUncategorizedFilter : TransactionsEvent
+    data class ToggleTagFilter(val tagId: UUID) : TransactionsEvent
+    data object ClearFilters : TransactionsEvent
 }

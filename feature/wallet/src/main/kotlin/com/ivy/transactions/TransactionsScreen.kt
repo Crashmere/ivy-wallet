@@ -264,6 +264,19 @@ fun BoxWithConstraintsScope.TransactionsScreen(screen: TransactionsScreen) {
         deleteModal1Visible = uiState.deleteModal1Visible,
         onDeleteModal1Visible = {
             viewModel.onEvent(TransactionsEvent.OnDeleteModal1Visible(it))
+        },
+        accountFilter = uiState.accountFilter,
+        onToggleCategoryFilter = {
+            viewModel.onEvent(TransactionsEvent.ToggleCategoryFilter(it))
+        },
+        onToggleUncategorizedFilter = {
+            viewModel.onEvent(TransactionsEvent.ToggleUncategorizedFilter)
+        },
+        onToggleTagFilter = {
+            viewModel.onEvent(TransactionsEvent.ToggleTagFilter(it))
+        },
+        onClearFilters = {
+            viewModel.onEvent(TransactionsEvent.ClearFilters)
         }
     )
 }
@@ -333,6 +346,11 @@ private fun BoxWithConstraintsScope.UI(
     onClose: () -> Unit,
     onOpenPieChart: (TransactionType, UUID, Boolean) -> Unit,
     onAddTransaction: (TransactionType, UUID?, UUID?) -> Unit,
+    accountFilter: AccountTransactionFilter? = null,
+    onToggleCategoryFilter: (UUID) -> Unit = {},
+    onToggleUncategorizedFilter: () -> Unit = {},
+    onToggleTagFilter: (UUID) -> Unit = {},
+    onClearFilters: () -> Unit = {},
 ) {
     val periodState = LocalPeriodState.current
     val datePicker = LocalDatePicker.current
@@ -351,6 +369,7 @@ private fun BoxWithConstraintsScope.UI(
     var accountModalAutoFocus by remember { mutableStateOf(true) }
     var choosePeriodModal: TimePeriod? by remember { mutableStateOf(null) }
     var skipAllTransactionIds by remember { mutableStateOf<List<UUID>>(emptyList()) }
+    var filterModalVisible by remember { mutableStateOf(false) }
     fun showAccountModal(
         modalAccount: AccountModalAccount?,
         modalBaseCurrency: String,
@@ -471,7 +490,10 @@ private fun BoxWithConstraintsScope.UI(
                     },
                     onClose = onClose,
                     onOpenPieChart = onOpenPieChart,
-                    onAddTransaction = onAddTransaction
+                    onAddTransaction = onAddTransaction,
+                    showFilter = accountFilter != null,
+                    isFilterActive = accountFilter?.isActive == true,
+                    onFilterClick = { filterModalVisible = true }
                 )
             }
 
@@ -565,6 +587,16 @@ private fun BoxWithConstraintsScope.UI(
         dismiss = {
             accountModalVisible = false
         }
+    )
+
+    TransactionsFilterModal(
+        visible = filterModalVisible,
+        filter = accountFilter,
+        onToggleCategory = onToggleCategoryFilter,
+        onToggleUncategorized = onToggleUncategorizedFilter,
+        onToggleTag = onToggleTagFilter,
+        onClear = onClearFilters,
+        dismiss = { filterModalVisible = false }
     )
 
     ChoosePeriodModal(
@@ -789,6 +821,9 @@ private fun Header(
     onOpenPieChart: (TransactionType, UUID, Boolean) -> Unit,
     onAddTransaction: (TransactionType, UUID?, UUID?) -> Unit,
     treatTransfersAsIncomeExpense: Boolean = false,
+    showFilter: Boolean = false,
+    isFilterActive: Boolean = false,
+    onFilterClick: () -> Unit = {},
 ) {
     val contrastColor = findContrastTextColor(itemColor)
 
@@ -819,7 +854,10 @@ private fun Header(
             account = account,
             category = category,
             showAccountModal = showAccountModal,
-            showCategoryModal = showCategoryModal
+            showCategoryModal = showCategoryModal,
+            showFilter = showFilter,
+            isFilterActive = isFilterActive,
+            onFilterClick = onFilterClick
         )
 
         BalanceRow(
@@ -1005,6 +1043,31 @@ private fun StatisticToolbarDeleteButton(
 }
 
 @Composable
+private fun FilterIconButton(
+    active: Boolean,
+    contrastColor: Color,
+    onClick: () -> Unit,
+) {
+    Icon(
+        modifier = Modifier
+            .testTag("transactions_filter")
+            .clip(CircleShape)
+            .then(
+                if (active) {
+                    Modifier.background(contrastColor.copy(alpha = 0.25f), CircleShape)
+                } else {
+                    Modifier.border(2.dp, contrastColor, CircleShape)
+                }
+            )
+            .clickable(onClick = onClick)
+            .padding(6.dp),
+        painter = painterResource(id = R.drawable.ic_filter_xs),
+        contentDescription = "filter",
+        tint = contrastColor,
+    )
+}
+
+@Composable
 private fun Item(
     contrastColor: Color,
     account: TransactionsAccount?,
@@ -1012,10 +1075,14 @@ private fun Item(
 
     showCategoryModal: () -> Unit,
     showAccountModal: () -> Unit,
+    showFilter: Boolean = false,
+    isFilterActive: Boolean = false,
+    onFilterClick: () -> Unit = {},
 ) {
     Row(
         modifier = Modifier
-            .padding(start = 22.dp)
+            .fillMaxWidth()
+            .padding(start = 22.dp, end = 16.dp)
             .clickableNoIndication(rememberInteractionSource()) {
                 when {
                     account != null -> {
@@ -1058,6 +1125,16 @@ private fun Item(
                             fontWeight = FontWeight.Bold,
                             textAlign = TextAlign.Start
                         )
+                    )
+                }
+
+                if (showFilter) {
+                    Spacer(Modifier.weight(1f))
+
+                    FilterIconButton(
+                        active = isFilterActive,
+                        contrastColor = contrastColor,
+                        onClick = onFilterClick
                     )
                 }
             }

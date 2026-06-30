@@ -4,8 +4,10 @@ import androidx.compose.runtime.Immutable
 import com.ivy.data.model.Transaction
 import com.ivy.data.model.TransactionHistoryItem
 import com.ivy.data.model.Category
+import com.ivy.data.model.Tag
 import com.ivy.ui.period.TimePeriod
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.ImmutableSet
 import java.util.UUID
 
 @Immutable
@@ -31,8 +33,24 @@ internal data class TransactionsState(
     val enableDeletionButton: Boolean,
     val skipAllModalVisible: Boolean,
     val deleteModal1Visible: Boolean,
-    val showAccountColorsInTransactions: Boolean
+    val showAccountColorsInTransactions: Boolean,
+    val accountFilter: AccountTransactionFilter?
 )
+
+@Immutable
+internal data class AccountTransactionFilter(
+    val availableCategories: ImmutableList<Category>,
+    val hasUncategorized: Boolean,
+    val availableTags: ImmutableList<Tag>,
+    val selectedCategoryIds: ImmutableSet<UUID>,
+    val uncategorizedSelected: Boolean,
+    val selectedTagIds: ImmutableSet<UUID>,
+) {
+    val isActive: Boolean
+        get() = selectedCategoryIds.isNotEmpty() ||
+                uncategorizedSelected ||
+                selectedTagIds.isNotEmpty()
+}
 
 @Immutable
 internal data class TransactionsListAccount(

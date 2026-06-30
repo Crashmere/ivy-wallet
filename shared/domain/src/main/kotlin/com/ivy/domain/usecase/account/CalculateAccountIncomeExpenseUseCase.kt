@@ -4,6 +4,7 @@ import arrow.core.nonEmptyListOf
 import com.ivy.data.model.Account
 import com.ivy.data.model.ClosedTimeRange
 import com.ivy.data.model.IncomeExpensePair
+import com.ivy.data.model.Transaction
 import com.ivy.domain.transaction.AccountValueFunctions
 import com.ivy.domain.transaction.foldTransactions
 import com.ivy.domain.time.nowUtc
@@ -22,6 +23,18 @@ class CalculateAccountIncomeExpenseUseCase @Inject internal constructor(
             accountId = account.id,
             range = range ?: ClosedTimeRange.allTimeIvy(nowUtc())
         )
+        return invoke(
+            account = account,
+            transactions = transactions,
+            includeTransfersInCalc = includeTransfersInCalc
+        )
+    }
+
+    operator fun invoke(
+        account: Account,
+        transactions: List<Transaction>,
+        includeTransfersInCalc: Boolean = false
+    ): IncomeExpensePair {
         val values = foldTransactions(
             transactions = transactions,
             arg = account.id.value,
