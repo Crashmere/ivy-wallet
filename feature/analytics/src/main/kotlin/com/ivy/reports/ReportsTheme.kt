@@ -11,6 +11,7 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.BaselineShift
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ivy.data.model.Theme
 import com.ivy.ui.R
@@ -34,6 +35,7 @@ internal interface ReportsColors {
     val pureInverse: Color
     val gray: Color
     val medium: Color
+    val mediumInverse: Color
     val green: Color
     val orange: Color
     val red: Color
@@ -43,9 +45,12 @@ internal interface ReportsTypography {
     val h2: TextStyle
     val b1: TextStyle
     val b2: TextStyle
+    val c: TextStyle
+    val nB1: TextStyle
 }
 
 internal interface ReportsShapes {
+    val r4: CornerBasedShape
     val rFull: CornerBasedShape
 }
 
@@ -69,6 +74,7 @@ private fun reportsColors(
             override val pureInverse = Black
             override val gray = Gray
             override val medium = MediumWhite
+            override val mediumInverse = MediumBlack
             override val green = Green
             override val orange = Orange
             override val red = Red
@@ -79,6 +85,7 @@ private fun reportsColors(
             override val pureInverse = White
             override val gray = Gray
             override val medium = MediumBlack
+            override val mediumInverse = MediumWhite
             override val green = Green
             override val orange = Orange
             override val red = Red
@@ -89,6 +96,7 @@ private fun reportsColors(
             override val pureInverse = White
             override val gray = Gray
             override val medium = MediumBlack
+            override val mediumInverse = MediumWhite
             override val green = Green
             override val orange = Orange
             override val red = Red
@@ -103,6 +111,15 @@ private fun reportsColors(
 }
 
 private fun reportsTypography(): ReportsTypography {
+    val openSans = FontFamily(
+        Font(R.font.opensans_regular, FontWeight.Normal),
+        Font(R.font.opensans_regular, FontWeight.Medium),
+        Font(R.font.opensans_bold, FontWeight.Black),
+        Font(R.font.opensans_semibold, FontWeight.SemiBold),
+        Font(R.font.opensans_bold, FontWeight.Bold),
+        Font(R.font.opensans_extrabold, FontWeight.ExtraBold),
+    )
+
     val raleWay = FontFamily(
         Font(R.font.raleway_regular, FontWeight.Normal),
         Font(R.font.raleway_medium, FontWeight.Medium),
@@ -132,11 +149,24 @@ private fun reportsTypography(): ReportsTypography {
             fontSize = 16.sp,
             baselineShift = BaselineShift(0.2f),
         )
+        override val c = TextStyle(
+            fontFamily = raleWay,
+            fontWeight = FontWeight.ExtraBold,
+            fontSize = 12.sp,
+            baselineShift = BaselineShift(0.2f),
+        )
+        override val nB1 = TextStyle(
+            fontFamily = openSans,
+            fontWeight = FontWeight.Bold,
+            fontSize = 20.sp,
+            baselineShift = BaselineShift(0.075f),
+        )
     }
 }
 
 private fun reportsShapes(): ReportsShapes {
     return object : ReportsShapes {
+        override val r4 = RoundedCornerShape(16.dp)
         override val rFull = RoundedCornerShape(percent = 50)
     }
 }

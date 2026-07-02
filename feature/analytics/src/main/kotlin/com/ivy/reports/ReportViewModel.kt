@@ -3,56 +3,46 @@ package com.ivy.reports
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Stable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableDoubleStateOf
+import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
 import com.ivy.data.model.Account
-import com.ivy.data.model.ExternalFile
-import com.ivy.data.model.TransactionHistoryItem
-import com.ivy.data.model.TransactionType
-import com.ivy.ui.resource.ResourceProvider
 import com.ivy.data.model.Category
-import com.ivy.data.model.CategoryId
+import com.ivy.data.model.ExternalFile
 import com.ivy.data.model.Expense
 import com.ivy.data.model.Income
 import com.ivy.data.model.Tag
 import com.ivy.data.model.Transaction
+import com.ivy.data.model.TransactionHistoryDateDivider
+import com.ivy.data.model.TransactionHistoryItem
+import com.ivy.data.model.TransactionHistoryTransaction
+import com.ivy.data.model.TransactionType
 import com.ivy.data.model.Transfer
+import com.ivy.data.model.getFromValue
 import com.ivy.data.model.getTransactionType
-import com.ivy.data.model.primitive.ColorInt
-import com.ivy.data.model.primitive.NotBlankTrimmedString
-import com.ivy.domain.preferences.toggles.PreferenceToggleService
 import com.ivy.domain.preferences.toggles.PreferenceToggleCatalog
+import com.ivy.domain.preferences.toggles.PreferenceToggleService
+import com.ivy.domain.usecase.account.GetAccountsUseCase
 import com.ivy.domain.usecase.category.GetCategoriesUseCase
 import com.ivy.domain.usecase.csv.ExportCsvUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.domain.usecase.exchange.ExchangeTransactionAmountUseCase
 import com.ivy.domain.usecase.tag.GetTagsUseCase
-import com.ivy.domain.usecase.tag.SearchTagsUseCase
-import com.ivy.domain.usecase.planned.PayOrSkipPlannedTransactionByIdUseCase
-import com.ivy.domain.usecase.planned.PayOrSkipPlannedTransactionsByIdsUseCase
-import com.ivy.domain.usecase.transaction.GetTransactionsByTagsUseCase
+import com.ivy.domain.usecase.transaction.BuildTransactionHistoryItemsUseCase
 import com.ivy.domain.usecase.transaction.GetTransactionsUseCase
-import com.ivy.ui.period.PeriodState
 import com.ivy.ui.ComposeViewModel
-import com.ivy.ui.R
+import com.ivy.ui.period.PeriodState
+import com.ivy.ui.period.TimePeriod
 import com.ivy.ui.platform.FilePicker
 import com.ivy.ui.preferences.asEnabledState
-import com.ivy.domain.usecase.account.GetAccountsUseCase
-import com.ivy.domain.usecase.transaction.BuildTransactionHistoryItemsUseCase
-import com.ivy.domain.usecase.transaction.CalculateTransactionsIncomeExpenseUseCase
-import com.ivy.data.model.IncomeExpenseTransferPair
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
+import kotlinx.collections.immutable.toImmutableSet
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.async
-import kotlinx.coroutines.cancelAndJoin
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -60,554 +50,491 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.math.BigDecimal
 import java.time.Instant
-import java.time.ZoneId
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
-import java.util.Locale
 import java.util.UUID
 import javax.inject.Inject
 
 private val exportTimestampFormatter = DateTimeFormatter.ofPattern("yyyyMMdd-HHmm")
-private val UnspecifiedCategoryColorArgb = 0xFF939199.toInt()
 
 @Stable
 @HiltViewModel
 internal class ReportViewModel @Inject internal constructor(
-    private val payOrSkipPlannedTransactionByIdUseCase: PayOrSkipPlannedTransactionByIdUseCase,
-    private val payOrSkipPlannedTransactionsByIdsUseCase: PayOrSkipPlannedTransactionsByIdsUseCase,
     private val periodState: PeriodState,
     private val exchangeTransactionAmountUseCase: ExchangeTransactionAmountUseCase,
     private val getAccountsUseCase: GetAccountsUseCase,
     private val getCategoriesUseCase: GetCategoriesUseCase,
     private val buildTransactionHistoryItemsUseCase: BuildTransactionHistoryItemsUseCase,
-    private val calculateTransactionsIncomeExpenseUseCase: CalculateTransactionsIncomeExpenseUseCase,
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
     private val getTransactionsUseCase: GetTransactionsUseCase,
-    private val getTransactionsByTagsUseCase: GetTransactionsByTagsUseCase,
     private val getTagsUseCase: GetTagsUseCase,
-    private val searchTagsUseCase: SearchTagsUseCase,
     private val exportCsvUseCase: ExportCsvUseCase,
-    private val resourceProvider: ResourceProvider,
     private val preferenceToggles: PreferenceToggleCatalog,
     private val preferenceToggleService: PreferenceToggleService,
-    private val filePicker: FilePicker
-) : ComposeViewModel<ReportScreenState, ReportScreenEvent>() {
-    private val unspecifiedCategory =
-        Category(
-            name = NotBlankTrimmedString.unsafe(resourceProvider.getString(R.string.unspecified)),
-            color = ColorInt(UnspecifiedCategoryColorArgb),
-            icon = null,
-            id = CategoryId(UUID.randomUUID()),
-            orderNum = 0.0,
-        )
-    private var baseCurrency by mutableStateOf("")
-    private var categories by mutableStateOf<ImmutableList<Category>>(persistentListOf())
-    private var historyIncomeExpense by mutableStateOf(IncomeExpenseTransferPair.zero())
-    private var filter by mutableStateOf<ReportFilter?>(null)
-    private var balance by mutableDoubleStateOf(0.0)
-    private var income by mutableDoubleStateOf(0.0)
-    private var expenses by mutableDoubleStateOf(0.0)
-    private var history by mutableStateOf<ImmutableList<TransactionHistoryItem>>(persistentListOf())
-    private var upcoming by mutableStateOf(
-        ReportDueSection(
-            transactions = persistentListOf(),
-            expanded = false,
-            income = 0.0,
-            expenses = 0.0,
-        )
-    )
-    private var overdue by mutableStateOf(
-        ReportDueSection(
-            transactions = persistentListOf(),
-            expanded = false,
-            income = 0.0,
-            expenses = 0.0,
-        )
-    )
-    private var accountModels: ImmutableList<Account> = persistentListOf()
-    private var accounts by mutableStateOf<ImmutableList<ReportAccount>>(persistentListOf())
-    private var loading by mutableStateOf(false)
-    private var accountIdFilters by mutableStateOf<ImmutableList<UUID>>(persistentListOf())
-    private var transactionSummary by mutableStateOf(ReportTransactionSummary())
-    private var filterOverlayVisible by mutableStateOf(false)
-    private var showTransfersAsIncExpCheckbox by mutableStateOf(false)
-    private var treatTransfersAsIncExp by mutableStateOf(false)
-    private var allTags by mutableStateOf<ImmutableList<Tag>>(persistentListOf())
+    private val filePicker: FilePicker,
+) : ComposeViewModel<ReportState, ReportEvent>() {
 
-    private var tagSearchJob: Job? = null
-    private val tagSearchDebounceTimeInMillis: Long = 500
+    private val baseCurrency = mutableStateOf("")
+    private val selectedPeriod = mutableStateOf(periodState.currentMonth())
+    private val sortOrder = mutableStateOf(SortOrder.TIME)
+
+    private val includeIncome = mutableStateOf(true)
+    private val includeExpense = mutableStateOf(true)
+    private val includeTransfer = mutableStateOf(false)
+
+    private val allCategories = mutableStateOf<ImmutableList<Category>>(persistentListOf())
+    private val allAccounts = mutableStateOf<ImmutableList<Account>>(persistentListOf())
+    private val allTags = mutableStateOf<ImmutableList<Tag>>(persistentListOf())
+
+    private val filterCategories = mutableStateOf<ImmutableList<Category>>(persistentListOf())
+    private val filterHasUncategorized = mutableStateOf(false)
+    private val filterAccounts = mutableStateOf<ImmutableList<Account>>(persistentListOf())
+    private val filterTags = mutableStateOf<ImmutableList<Tag>>(persistentListOf())
+
+    private val selectedCategoryIds = mutableStateOf<Set<UUID>>(emptySet())
+    private val uncategorizedSelected = mutableStateOf(false)
+    private val selectedAccountIds = mutableStateOf<Set<UUID>>(emptySet())
+    private val selectedTagIds = mutableStateOf<Set<UUID>>(emptySet())
+
+    private val includeKeywords = mutableStateOf<List<String>>(emptyList())
+    private val excludeKeywords = mutableStateOf<List<String>>(emptyList())
+    private val amountMin = mutableStateOf<Float?>(null)
+    private val amountMax = mutableStateOf<Float?>(null)
+    private val amountRangeMin = mutableFloatStateOf(0f)
+    private val amountRangeMax = mutableFloatStateOf(10000f)
+
+    private val matchingTransactions =
+        mutableStateOf<ImmutableList<TransactionHistoryItem>>(persistentListOf())
+    private val matchingCount = mutableIntStateOf(0)
+    private val income = mutableDoubleStateOf(0.0)
+    private val expenses = mutableDoubleStateOf(0.0)
+    private val loading = mutableStateOf(false)
+    private val advancedExpanded = mutableStateOf(false)
+
+    private var inRangeRaw: List<Transaction> = emptyList()
+    private var matchingRaw: List<Transaction> = emptyList()
+    private var accountModels: List<Account> = emptyList()
+
     private val _uiEvents = MutableSharedFlow<ReportUiEvent>()
     val uiEvents: SharedFlow<ReportUiEvent> = _uiEvents.asSharedFlow()
 
-    private data class ReportValues(
-        val income: Double,
-        val expense: Double,
-        val upcomingIncomeExpense: IncomeExpenseTransferPair,
-        val overdueIncomeExpense: IncomeExpenseTransferPair,
-        val history: ImmutableList<TransactionHistoryItem>,
-        val upcomingTransactions: ImmutableList<Transaction>,
-        val overdueTransactions: ImmutableList<Transaction>,
-        val accounts: ImmutableList<Account>,
-        val reportFilter: ReportFilter?,
-        val accountIdFilters: ImmutableList<UUID>,
-        val transactionSummary: ReportTransactionSummary,
-        val balance: Double,
-    )
-
     @Composable
-    fun getShouldShowAccountSpecificColorInTransactions(): Boolean {
+    private fun getShouldShowAccountColors(): Boolean {
         val preference = preferenceToggles.showAccountColorsInTransactions
         return preferenceToggleService.enabledFlow(preference)
             .asEnabledState(preference.defaultValue)
     }
 
     @Composable
-    override fun uiState(): ReportScreenState {
+    override fun uiState(): ReportState {
         LaunchedEffect(Unit) {
             start()
         }
 
-        return ReportScreenState(
-            categories = categories,
-            accounts = accounts,
-            accountIdFilters = accountIdFilters,
-            balance = balance,
-            baseCurrency = baseCurrency,
-            expenses = expenses,
-            filter = filter,
-            filterOverlayVisible = filterOverlayVisible,
-            history = history,
-            income = income,
-            loading = loading,
-            overdue = overdue,
-            showTransfersAsIncExpCheckbox = showTransfersAsIncExpCheckbox,
-            transactionSummary = transactionSummary,
-            treatTransfersAsIncExp = treatTransfersAsIncExp,
-            upcoming = upcoming,
-            allTags = allTags,
-            showAccountColorsInTransactions = getShouldShowAccountSpecificColorInTransactions()
+        return ReportState(
+            baseCurrency = baseCurrency.value,
+            period = selectedPeriod.value,
+            sortOrder = sortOrder.value,
+            includeIncome = includeIncome.value,
+            includeExpense = includeExpense.value,
+            includeTransfer = includeTransfer.value,
+            filterCategories = filterCategories.value,
+            filterHasUncategorized = filterHasUncategorized.value,
+            filterAccounts = filterAccounts.value,
+            filterTags = filterTags.value,
+            selectedCategoryIds = selectedCategoryIds.value.toImmutableSet(),
+            uncategorizedSelected = uncategorizedSelected.value,
+            selectedAccountIds = selectedAccountIds.value.toImmutableSet(),
+            selectedTagIds = selectedTagIds.value.toImmutableSet(),
+            includeKeywords = includeKeywords.value,
+            excludeKeywords = excludeKeywords.value,
+            amountMin = amountMin.value,
+            amountMax = amountMax.value,
+            amountRangeMin = amountRangeMin.floatValue,
+            amountRangeMax = amountRangeMax.floatValue,
+            matchingTransactions = matchingTransactions.value,
+            matchingCount = matchingCount.intValue,
+            income = income.doubleValue,
+            expenses = expenses.doubleValue,
+            allCategories = allCategories.value,
+            allAccounts = allAccounts.value,
+            allTags = allTags.value,
+            shouldShowAccountColorsInTransactions = getShouldShowAccountColors(),
+            loading = loading.value,
+            advancedExpanded = advancedExpanded.value,
         )
     }
 
-    override fun onEvent(event: ReportScreenEvent) {
-        viewModelScope.launch(Dispatchers.Default) {
-            when (event) {
-                is ReportScreenEvent.OnFilter -> setFilter(event.filter)
-                ReportScreenEvent.OnExport -> export()
-                is ReportScreenEvent.OnPayOrGetTransaction -> payOrGetTransaction(event.transactionId)
-                is ReportScreenEvent.SkipTransaction -> skipTransaction(event.transactionId)
-                is ReportScreenEvent.SkipTransactions -> skipTransactions(event.transactionIds)
-                is ReportScreenEvent.OnOverdueExpanded -> setOverdueExpandedValue(event.overdueExpanded)
-                is ReportScreenEvent.OnUpcomingExpanded -> setUpcomingExpandedValue(event.upcomingExpanded)
-                is ReportScreenEvent.OnFilterOverlayVisible -> setFilterOverlayVisibleValue(event.filterOverlayVisible)
-                is ReportScreenEvent.OnTreatTransfersAsIncomeExpense -> onTreatTransfersAsIncomeExpense(
-                    event.transfersAsIncomeExpense
-                )
-
-                is ReportScreenEvent.OnTagSearch -> onTagSearch(event.data)
+    override fun onEvent(event: ReportEvent) {
+        when (event) {
+            ReportEvent.OnPreviousMonth -> shiftMonth(-1L)
+            ReportEvent.OnNextMonth -> shiftMonth(1L)
+            is ReportEvent.OnSelectPeriod -> selectPeriod(event.period)
+            ReportEvent.ToggleIncome -> {
+                includeIncome.value = !includeIncome.value; refilter()
             }
-        }
-    }
-
-    private suspend fun onTagSearch(query: String) {
-        withContext(Dispatchers.IO) {
-            tagSearchJob?.cancelAndJoin()
-            delay(tagSearchDebounceTimeInMillis)
-            tagSearchJob = launch(Dispatchers.IO) {
-                NotBlankTrimmedString.from(query.lowercase(Locale.getDefault()))
-                    .fold(
-                        ifRight = {
-                            allTags =
-                                searchTagsUseCase(it).toImmutableList()
-                        },
-                        ifLeft = {
-                            allTags = getTagsUseCase().toImmutableList()
-                        }
-                    )
+            ReportEvent.ToggleExpense -> {
+                includeExpense.value = !includeExpense.value; refilter()
             }
+            ReportEvent.ToggleTransfer -> {
+                includeTransfer.value = !includeTransfer.value; refilter()
+            }
+            is ReportEvent.ToggleCategoryFilter -> toggleCategory(event.categoryId)
+            ReportEvent.ToggleUncategorizedFilter -> toggleUncategorized()
+            is ReportEvent.ToggleAccountFilter -> toggleAccount(event.accountId)
+            is ReportEvent.ToggleTagFilter -> toggleTag(event.tagId)
+            ReportEvent.ClearFilters -> clearFilters()
+            ReportEvent.SelectAllTypes -> selectAllTypes()
+            ReportEvent.SelectAllCategories -> selectAllCategories()
+            ReportEvent.SelectAllAccounts -> selectAllAccounts()
+            ReportEvent.SelectAllTags -> selectAllTags()
+            is ReportEvent.AddIncludeKeyword -> {
+                includeKeywords.value = includeKeywords.value + event.keyword; refilter()
+            }
+            is ReportEvent.RemoveIncludeKeyword -> {
+                includeKeywords.value = includeKeywords.value - event.keyword; refilter()
+            }
+            is ReportEvent.AddExcludeKeyword -> {
+                excludeKeywords.value = excludeKeywords.value + event.keyword; refilter()
+            }
+            is ReportEvent.RemoveExcludeKeyword -> {
+                excludeKeywords.value = excludeKeywords.value - event.keyword; refilter()
+            }
+            is ReportEvent.SetAmountRange -> {
+                amountMin.value = event.min; amountMax.value = event.max; refilter()
+            }
+            ReportEvent.ToggleSortOrder -> {
+                sortOrder.value = if (sortOrder.value == SortOrder.TIME) {
+                    SortOrder.AMOUNT
+                } else {
+                    SortOrder.TIME
+                }
+                refilter()
+            }
+            ReportEvent.ToggleAdvanced -> {
+                advancedExpanded.value = !advancedExpanded.value
+            }
+            ReportEvent.OnExport -> export()
         }
     }
 
     private fun start() {
         viewModelScope.launch(Dispatchers.IO) {
-            baseCurrency = getBaseCurrencyCode()
-            accountModels = getAccountsUseCase().toImmutableList()
-            accounts = accountModels.map { it.toReportAccount() }.toImmutableList()
-            categories =
-                (listOf(unspecifiedCategory) + getCategoriesUseCase()).toImmutableList()
-            allTags = getTagsUseCase().toImmutableList()
+            baseCurrency.value = getBaseCurrencyCode()
+            allCategories.value = getCategoriesUseCase().toImmutableList()
+            accountModels = getAccountsUseCase()
+            allAccounts.value = accountModels.toImmutableList()
+            allTags.value = getTagsUseCase().toImmutableList()
+            reload()
         }
     }
 
-    private suspend fun setFilter(reportFilter: ReportFilter?) {
-        withContext(Dispatchers.IO) {
-            val scope = this
-            if (reportFilter == null) {
-                setReportValues(
-                    ReportValues(
-                        income = 0.00,
-                        expense = 0.00,
-                        upcomingIncomeExpense = IncomeExpenseTransferPair.zero(),
-                        overdueIncomeExpense = IncomeExpenseTransferPair.zero(),
-                        history = persistentListOf(),
-                        upcomingTransactions = persistentListOf(),
-                        overdueTransactions = persistentListOf(),
-                        accounts = getAccountsUseCase().toImmutableList(),
-                        reportFilter = filter,
-                        accountIdFilters = persistentListOf(),
-                        transactionSummary = ReportTransactionSummary(),
-                        balance = 0.00
-                    )
-                )
-                return@withContext
+    private suspend fun reload() {
+        loading.value = true
+        val range = periodState.rangeOf(selectedPeriod.value)
+        inRangeRaw = getTransactionsUseCase()
+            .filter { it.settled }
+            .filter { range.includes(it.time) }
+        buildFilterOptions(inRangeRaw)
+        recompute()
+        loading.value = false
+    }
+
+    private fun buildFilterOptions(transactions: List<Transaction>) {
+        val usedCatIds = transactions.mapNotNull { it.category?.value }.toHashSet()
+        val visibleCatIds = usedCatIds + selectedCategoryIds.value
+        filterCategories.value = allCategories.value
+            .filter { it.id.value in visibleCatIds }
+            .toImmutableList()
+        filterHasUncategorized.value =
+            transactions.any { it.category == null } || uncategorizedSelected.value
+
+        val usedAccIds = transactions.map {
+            when (it) {
+                is Expense -> it.account.value
+                is Income -> it.account.value
+                is Transfer -> it.fromAccount.value
             }
+        }.toHashSet()
+        val visibleAccIds = usedAccIds + selectedAccountIds.value
+        filterAccounts.value = allAccounts.value
+            .filter { it.id.value in visibleAccIds }
+            .toImmutableList()
 
-            if (!reportFilter.validate()) return@withContext
-            val allAccounts = getAccountsUseCase().toImmutableList()
-            val selectedAccounts = allAccounts.filter { it.id.value in reportFilter.accountIds }
-            if (selectedAccounts.isEmpty()) return@withContext
-            val baseCurrency = baseCurrency
-            loading = true
+        val usedTagIds = transactions.flatMap { it.tags }.map { it.value }.toHashSet()
+        val visibleTagIds = usedTagIds + selectedTagIds.value
+        filterTags.value = allTags.value
+            .filter { it.id.value in visibleTagIds }
+            .toImmutableList()
+    }
 
-            val transactionsList = filterTransactions(
-                baseCurrency = baseCurrency,
-                accounts = allAccounts,
-                filter = reportFilter
-            )
+    private suspend fun recompute() {
+        val filtered = applyFilter(inRangeRaw)
+        matchingRaw = filtered
 
-            val historyTransactions = transactionsList
-                .sortedByDescending { it.time }
+        updateAmountRange(filtered)
 
-            val historyWithDateDividers = scope.async {
-                buildTransactionHistoryItemsUseCase(
-                    baseCurrency = baseCurrency,
-                    transactions = historyTransactions
-                )
-            }
+        val bc = baseCurrency.value
+        if (sortOrder.value == SortOrder.TIME) {
+            val history = buildTransactionHistoryItemsUseCase(
+                baseCurrency = bc,
+                transactions = filtered.sortedByDescending { it.time }
+            ).toImmutableList()
+            matchingTransactions.value = history
+            matchingCount.intValue = filtered.size
 
-            historyIncomeExpense = calculateTransactionsIncomeExpenseUseCase(
-                transactions = historyTransactions,
-                accounts = allAccounts,
-                baseCurrency = baseCurrency
-            )
-
-            val displayIncome = historyIncomeExpense.income.toDouble() +
-                    if (treatTransfersAsIncExp) historyIncomeExpense.transferIncome.toDouble() else 0.0
-
-            val displayExpenses = historyIncomeExpense.expense.toDouble() +
-                    if (treatTransfersAsIncExp) historyIncomeExpense.transferExpense.toDouble() else 0.0
-
-            val displayBalance = calculateBalance(historyIncomeExpense).toDouble()
-
-            val accountFilterIdList = scope.async { selectedAccounts.map { it.id.value } }
-
-            val timeNowUTC = utcNow()
-
-            // Upcoming
-            val upcomingTransactionsList = transactionsList
-                .filter {
-                    !it.settled && it.time.atZone(ZoneId.systemDefault()).toLocalDateTime()
-                        .isAfter(timeNowUTC)
+            var inc = 0.0
+            var exp = 0.0
+            history.forEach {
+                if (it is TransactionHistoryDateDivider) {
+                    inc += it.income
+                    exp += it.expenses
                 }
-                .sortedBy { it.time }
-                .toImmutableList()
-
-            val upcomingIncomeExpense = calculateTransactionsIncomeExpenseUseCase(
-                transactions = upcomingTransactionsList,
-                accounts = allAccounts,
-                baseCurrency = baseCurrency
-            )
-            // Overdue
-            val overdue = transactionsList.filter {
-                !it.settled && it.time.atZone(ZoneId.systemDefault()).toLocalDateTime()
-                    .isBefore(timeNowUTC)
-            }.sortedByDescending {
-                it.time
-            }.toImmutableList()
-            val overdueIncomeExpense = calculateTransactionsIncomeExpenseUseCase(
-                transactions = overdue,
-                accounts = allAccounts,
-                baseCurrency = baseCurrency
-            )
-
-            setReportValues(
-                ReportValues(
-                    income = displayIncome,
-                    expense = displayExpenses,
-                    upcomingIncomeExpense = upcomingIncomeExpense,
-                    overdueIncomeExpense = overdueIncomeExpense,
-                    history = historyWithDateDividers.await().toImmutableList(),
-                    upcomingTransactions = upcomingTransactionsList,
-                    overdueTransactions = overdue,
-                    accounts = allAccounts,
-                    reportFilter = reportFilter,
-                    accountIdFilters = accountFilterIdList.await().toImmutableList(),
-                    transactionSummary = transactionsList.toReportTransactionSummary(),
-                    balance = displayBalance
-                )
-            )
-
-            loading = false
-        }
-    }
-
-    private fun setReportValues(values: ReportValues) {
-        this.income = values.income
-        this.expenses = values.expense
-        this.history = values.history
-        this.upcoming = upcoming.copy(
-            transactions = values.upcomingTransactions,
-            income = values.upcomingIncomeExpense.income.toDouble(),
-            expenses = values.upcomingIncomeExpense.expense.toDouble(),
-        )
-        this.overdue = overdue.copy(
-            transactions = values.overdueTransactions,
-            income = values.overdueIncomeExpense.income.toDouble(),
-            expenses = values.overdueIncomeExpense.expense.toDouble(),
-        )
-        this.accountModels = values.accounts
-        this.accounts = values.accounts.map { it.toReportAccount() }.toImmutableList()
-        this.filter = values.reportFilter
-        this.accountIdFilters = values.accountIdFilters
-        this.transactionSummary = values.transactionSummary
-        this.balance = values.balance
-        this.showTransfersAsIncExpCheckbox =
-            values.reportFilter?.transactionTypes?.contains(TransactionType.TRANSFER) ?: false
-    }
-
-    private suspend fun filterTransactions(
-        baseCurrency: String,
-        accounts: List<Account>,
-        filter: ReportFilter,
-    ): ImmutableList<Transaction> {
-        val filterAccountIds = filter.accountIds.toSet()
-        val filterCategoryIds = filter.categoryIds
-            .map { it.takeUnless { categoryId -> categoryId == unspecifiedCategory.id } }
-            .toSet()
-        val filterRange =
-            filter.period?.let(periodState::rangeOf)
-
-        val transactions = if (filter.includedTags.isNotEmpty()) {
-            getTransactionsByTagsUseCase(filter.includedTags)
+            }
+            income.doubleValue = inc
+            expenses.doubleValue = exp
         } else {
-            getTransactionsUseCase()
-        }
+            val withAmounts = filtered.map { tx ->
+                val exchanged = exchangeTransactionAmountUseCase(
+                    transaction = tx,
+                    accounts = accountModels,
+                    baseCurrency = bc,
+                )
+                tx to exchanged
+            }.sortedByDescending { it.second }
 
-        val excludeableByTagTransactionsIds = if (filter.excludedTags.isNotEmpty()) {
-            getTransactionsByTagsUseCase(filter.excludedTags).map { it.id }
+            var inc = 0.0
+            var exp = 0.0
+            val historyItems = withAmounts.map { (tx, _) ->
+                when (tx.getTransactionType()) {
+                    TransactionType.INCOME -> inc += tx.getFromValue().amount.value.toDouble()
+                    TransactionType.EXPENSE -> exp += tx.getFromValue().amount.value.toDouble()
+                    TransactionType.TRANSFER -> {}
+                }
+                TransactionHistoryTransaction(
+                    transaction = tx,
+                    tags = persistentListOf(),
+                )
+            }
+            matchingTransactions.value = historyItems.toImmutableList()
+            matchingCount.intValue = filtered.size
+            income.doubleValue = inc
+            expenses.doubleValue = exp
+        }
+    }
+
+    private suspend fun updateAmountRange(transactions: List<Transaction>) {
+        if (transactions.isEmpty()) {
+            amountRangeMin.floatValue = 0f
+            amountRangeMax.floatValue = 0f
+            return
+        }
+        val bc = baseCurrency.value
+        var min = Float.MAX_VALUE
+        var max = 0f
+        for (tx in transactions) {
+            val amount = exchangeTransactionAmountUseCase(
+                transaction = tx,
+                accounts = accountModels,
+                baseCurrency = bc,
+            ).toFloat()
+            if (amount < min) min = amount
+            if (amount > max) max = amount
+        }
+        amountRangeMin.floatValue = min
+        amountRangeMax.floatValue = if (max > min) max else min + 1f
+    }
+
+    private suspend fun applyFilter(transactions: List<Transaction>): List<Transaction> {
+        val categoryIds = selectedCategoryIds.value
+        val includeUncategorized = uncategorizedSelected.value
+        val accountIds = selectedAccountIds.value
+        val tagIds = selectedTagIds.value
+        val categoryFilterActive = categoryIds.isNotEmpty() || includeUncategorized
+        val accountFilterActive = accountIds.isNotEmpty()
+        val tagFilterActive = tagIds.isNotEmpty()
+        val incKws = includeKeywords.value
+        val excKws = excludeKeywords.value
+        val minAmt = amountMin.value
+        val maxAmt = amountMax.value
+        val bc = baseCurrency.value
+
+        return transactions.filter { tx ->
+            val txType = tx.getTransactionType()
+            when (txType) {
+                TransactionType.INCOME -> includeIncome.value
+                TransactionType.EXPENSE -> includeExpense.value
+                TransactionType.TRANSFER -> includeTransfer.value
+            }
+        }.filter { tx ->
+            if (!categoryFilterActive) return@filter true
+            val txCatId = tx.category?.value
+            if (txCatId == null) includeUncategorized else txCatId in categoryIds
+        }.filter { tx ->
+            if (!accountFilterActive) return@filter true
+            when (tx) {
+                is Expense -> tx.account.value in accountIds
+                is Income -> tx.account.value in accountIds
+                is Transfer -> tx.fromAccount.value in accountIds ||
+                        tx.toAccount.value in accountIds
+            }
+        }.filter { tx ->
+            if (!tagFilterActive) return@filter true
+            tx.tags.any { it.value in tagIds }
+        }.filter { tx ->
+            if (incKws.isEmpty()) return@filter true
+            val title = tx.title?.value ?: ""
+            val desc = tx.description?.value ?: ""
+            incKws.any {
+                title.contains(it, ignoreCase = true) ||
+                        desc.contains(it, ignoreCase = true)
+            }
+        }.filter { tx ->
+            if (excKws.isEmpty()) return@filter true
+            val title = tx.title?.value ?: ""
+            val desc = tx.description?.value ?: ""
+            excKws.none {
+                title.contains(it, ignoreCase = true) ||
+                        desc.contains(it, ignoreCase = true)
+            }
+        }.let { list ->
+            if (minAmt == null && maxAmt == null) return@let list
+            val result = mutableListOf<Transaction>()
+            for (tx in list) {
+                val amount = exchangeTransactionAmountUseCase(
+                    transaction = tx,
+                    accounts = accountModels,
+                    baseCurrency = bc,
+                ).toFloat()
+                val passMin = minAmt == null || amount >= minAmt
+                val passMax = maxAmt == null || amount <= maxAmt
+                if (passMin && passMax) result += tx
+            }
+            result
+        }
+    }
+
+    private fun shiftMonth(increment: Long) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val shifted = periodState.shiftMonth(selectedPeriod.value, increment) ?: return@launch
+            selectedPeriod.value = shifted
+            reload()
+        }
+    }
+
+    private fun selectPeriod(period: TimePeriod) {
+        viewModelScope.launch(Dispatchers.IO) {
+            selectedPeriod.value = period
+            reload()
+        }
+    }
+
+    private fun toggleCategory(categoryId: UUID) {
+        selectedCategoryIds.value = selectedCategoryIds.value.toggle(categoryId)
+        refilter()
+    }
+
+    private fun toggleUncategorized() {
+        uncategorizedSelected.value = !uncategorizedSelected.value
+        refilter()
+    }
+
+    private fun toggleAccount(accountId: UUID) {
+        selectedAccountIds.value = selectedAccountIds.value.toggle(accountId)
+        refilter()
+    }
+
+    private fun toggleTag(tagId: UUID) {
+        selectedTagIds.value = selectedTagIds.value.toggle(tagId)
+        refilter()
+    }
+
+    private fun selectAllTypes() {
+        val allSelected = includeIncome.value && includeExpense.value && includeTransfer.value
+        if (allSelected) {
+            includeIncome.value = true
+            includeExpense.value = true
+            includeTransfer.value = false
         } else {
-            emptyList()
+            includeIncome.value = true
+            includeExpense.value = true
+            includeTransfer.value = true
         }
-
-        return transactions
-            .filter { !excludeableByTagTransactionsIds.contains(it.id) }
-            .filter {
-                filter.transactionTypes.contains(it.getTransactionType())
-            }
-            .filter {
-                // Filter by Time Period
-
-                filterRange ?: return@filter false
-
-                filterRange.includes(it.time)
-            }
-            .filter { transaction ->
-                // Filter by Accounts
-                when (transaction) {
-                    is Transfer -> {
-                        filterAccountIds.contains(transaction.fromAccount.value) || // Transfers Out
-                                (filterAccountIds.contains(transaction.toAccount.value)) // Transfers In
-                    }
-
-                    is Expense -> {
-                        filterAccountIds.contains(transaction.account.value)
-                    }
-
-                    is Income -> {
-                        filterAccountIds.contains(transaction.account.value)
-                    }
-                }
-            }
-            .filter { transaction ->
-                // Filter by Categories
-
-                filterCategoryIds.contains(transaction.category) ||
-                        transaction.getTransactionType() == TransactionType.TRANSFER
-            }
-            .filterByAmount(baseCurrency, accounts, filter)
-            .filter {
-                // Filter by Included Keywords
-
-                val includeKeywords = filter.includeKeywords
-                if (includeKeywords.isEmpty()) return@filter true
-
-                it.title?.let { title ->
-                    includeKeywords.forEach { keyword ->
-                        if (title.value.containsLowercase(keyword)) {
-                            return@filter true
-                        }
-                    }
-                }
-
-                it.description?.let { description ->
-                    includeKeywords.forEach { keyword ->
-                        if (description.value.containsLowercase(keyword)) {
-                            return@filter true
-                        }
-                    }
-                }
-
-                false
-            }
-            .filter {
-                // Filter by Excluded Keywords
-
-                val excludedKeywords = filter.excludeKeywords
-                if (excludedKeywords.isEmpty()) return@filter true
-
-                it.title?.let { title ->
-                    excludedKeywords.forEach { keyword ->
-                        if (title.value.containsLowercase(keyword)) {
-                            return@filter false
-                        }
-                    }
-                }
-                it.description?.let { description ->
-                    excludedKeywords.forEach { keyword ->
-                        if (description.value.containsLowercase(keyword)) {
-                            return@filter false
-                        }
-                    }
-                }
-                true
-            }.toImmutableList()
+        refilter()
     }
 
-    private suspend fun List<Transaction>.filterByAmount(
-        baseCurrency: String,
-        accounts: List<Account>,
-        filter: ReportFilter
-    ): List<Transaction> {
-        val amountFilteredTransactions = mutableListOf<Transaction>()
-        for (transaction in this) {
-            val transactionAmountBaseCurrency = exchangeTransactionAmountUseCase(
-                transaction = transaction,
-                accounts = accounts,
-                baseCurrency = baseCurrency,
-            ).toDouble()
-
-            if ((filter.minAmount == null || transactionAmountBaseCurrency >= filter.minAmount) &&
-                (filter.maxAmount == null || transactionAmountBaseCurrency <= filter.maxAmount)
-            ) {
-                amountFilteredTransactions += transaction
-            }
+    private fun selectAllCategories() {
+        val allCatIds = filterCategories.value.map { it.id.value }.toSet()
+        val hasUncat = filterHasUncategorized.value
+        val allSelected = selectedCategoryIds.value.containsAll(allCatIds) &&
+                (!hasUncat || uncategorizedSelected.value)
+        if (allSelected) {
+            selectedCategoryIds.value = emptySet()
+            uncategorizedSelected.value = false
+        } else {
+            selectedCategoryIds.value = allCatIds
+            if (hasUncat) uncategorizedSelected.value = true
         }
-        return amountFilteredTransactions
+        refilter()
     }
 
-    private fun List<Transaction>.toReportTransactionSummary(): ReportTransactionSummary {
-        return ReportTransactionSummary(
-            transactionIds = map { it.id.value }.toImmutableList(),
-            incomeTransactionCount = count { it.getTransactionType() == TransactionType.INCOME },
-            expenseTransactionCount = count { it.getTransactionType() == TransactionType.EXPENSE },
-        )
+    private fun selectAllAccounts() {
+        val allAccIds = filterAccounts.value.map { it.id.value }.toSet()
+        val allSelected = selectedAccountIds.value.containsAll(allAccIds)
+        selectedAccountIds.value = if (allSelected) emptySet() else allAccIds
+        refilter()
     }
 
-    private fun String.containsLowercase(anotherString: String): Boolean {
-        return this.lowercase(Locale.getDefault()).contains(anotherString.lowercase(Locale.getDefault()))
+    private fun selectAllTags() {
+        val allTagIdSet = filterTags.value.map { it.id.value }.toSet()
+        val allSelected = selectedTagIds.value.containsAll(allTagIdSet)
+        selectedTagIds.value = if (allSelected) emptySet() else allTagIdSet
+        refilter()
     }
 
-    private fun calculateBalance(incomeExpenseTransferPair: IncomeExpenseTransferPair): BigDecimal {
-        return incomeExpenseTransferPair.income + incomeExpenseTransferPair.transferIncome - incomeExpenseTransferPair.expense - incomeExpenseTransferPair.transferExpense
+    private fun clearFilters() {
+        includeIncome.value = true
+        includeExpense.value = true
+        includeTransfer.value = false
+        selectedCategoryIds.value = emptySet()
+        uncategorizedSelected.value = false
+        selectedAccountIds.value = emptySet()
+        selectedTagIds.value = emptySet()
+        includeKeywords.value = emptyList()
+        excludeKeywords.value = emptyList()
+        amountMin.value = null
+        amountMax.value = null
+        refilter()
     }
 
-    private suspend fun export() {
-        val filter = filter ?: return
-        if (!filter.validate()) return
+    private fun refilter() {
+        viewModelScope.launch(Dispatchers.IO) {
+            recompute()
+        }
+    }
+
+    private fun export() {
+        val matched = matchingRaw
+        if (matched.isEmpty()) return
 
         filePicker.createFile(
             "IvyWalletReport-${utcTimestamp()}.csv"
         ) { fileUri ->
             viewModelScope.launch {
-                loading = true
-
+                loading.value = true
                 exportCsvUseCase.exportToFile(
                     outputFile = ExternalFile(fileUri.toString()),
-                    exportScope = {
-                        filterTransactions(
-                            baseCurrency = baseCurrency,
-                            accounts = accountModels,
-                            filter = filter
-                        )
-                    }
+                    exportScope = { matched }
                 )
-
                 _uiEvents.emit(ReportUiEvent.ShareCsvFile(fileUri))
-
-                loading = false
+                loading.value = false
             }
         }
     }
 
-    private fun setUpcomingExpandedValue(expanded: Boolean) {
-        upcoming = upcoming.copy(expanded = expanded)
-    }
-
-    private fun utcNow() =
-        Instant.now()
-            .atZone(ZoneOffset.UTC)
-            .toLocalDateTime()
-
-    private fun utcTimestamp(): String = utcNow().format(exportTimestampFormatter)
-
-    private fun setOverdueExpandedValue(expanded: Boolean) {
-        overdue = overdue.copy(expanded = expanded)
-    }
-
-    private suspend fun payOrGetTransaction(transactionId: UUID) {
-        withContext(Dispatchers.Main) {
-            if (payOrSkipPlannedTransactionByIdUseCase(transactionId)) {
-                start()
-                setFilter(filter)
-            }
-        }
-    }
-
-    private fun setFilterOverlayVisibleValue(visible: Boolean) {
-        filterOverlayVisible = visible
-    }
-
-    private fun onTreatTransfersAsIncomeExpense(transfersAsIncExp: Boolean) {
-        income = historyIncomeExpense.income.toDouble() +
-                if (transfersAsIncExp) historyIncomeExpense.transferIncome.toDouble() else 0.0
-        expenses = historyIncomeExpense.expense.toDouble() +
-                if (transfersAsIncExp) historyIncomeExpense.transferExpense.toDouble() else 0.0
-        treatTransfersAsIncExp = transfersAsIncExp
-    }
-
-    private suspend fun skipTransaction(transactionId: UUID) {
-        withContext(Dispatchers.Main) {
-            val paidTransaction = payOrSkipPlannedTransactionByIdUseCase(
-                transactionId = transactionId,
-                skipTransaction = true
-            )
-            if (paidTransaction) {
-                start()
-                setFilter(filter)
-            }
-        }
-    }
-
-    private suspend fun skipTransactions(transactionIds: List<UUID>) {
-        withContext(Dispatchers.Main) {
-            val paidTransactions = payOrSkipPlannedTransactionsByIdsUseCase(
-                transactionIds = transactionIds,
-                skipTransaction = true
-            )
-            if (paidTransactions > 0) {
-                start()
-                setFilter(filter)
-            }
-        }
-    }
+    private fun utcTimestamp(): String =
+        Instant.now().atZone(ZoneOffset.UTC).toLocalDateTime().format(exportTimestampFormatter)
 }
+
+private fun Set<UUID>.toggle(id: UUID): Set<UUID> =
+    if (contains(id)) this - id else this + id
