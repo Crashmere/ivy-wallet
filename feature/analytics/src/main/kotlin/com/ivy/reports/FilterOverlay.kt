@@ -325,7 +325,7 @@ internal fun BoxWithConstraintsScope.FilterOverlay(
     ChoosePeriodModal(
         modal = choosePeriodModal,
         dismiss = { choosePeriodModal = null },
-        saveSelectedPeriod = periodState::select,
+        saveSelectedPeriod = {},
         pickDate = { minDate, maxDate, initialDate, onDatePicked ->
             datePicker.pickDate(
                 minDate = minDate,
