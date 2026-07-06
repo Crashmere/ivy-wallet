@@ -258,7 +258,7 @@ internal class RoomTransactionStore @Inject internal constructor(
     override suspend fun findAllUnspecifiedAndBetween(
         startDate: Instant,
         endDate: Instant
-    ): List<Transaction> = retrieveTransactions(
+    ): List<Transaction> = retrieveTransactionsWithTags(
         dbCall = {
             transactionDao.findAllUnspecifiedAndBetween(
                 startDate = startDate,
@@ -271,7 +271,7 @@ internal class RoomTransactionStore @Inject internal constructor(
         categoryId: UUID,
         startDate: Instant,
         endDate: Instant
-    ): List<Transaction> = retrieveTransactions(
+    ): List<Transaction> = retrieveTransactionsWithTags(
         dbCall = {
             transactionDao.findAllByCategoryAndBetween(
                 categoryId = categoryId,
