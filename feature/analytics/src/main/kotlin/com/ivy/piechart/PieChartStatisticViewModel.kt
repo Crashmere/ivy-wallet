@@ -45,6 +45,7 @@ internal class PieChartStatisticViewModel @Inject internal constructor(
     private var showCloseButtonOnly by mutableStateOf(false)
     private var filterExcluded by mutableStateOf(false)
     private var inputTransactionIds by mutableStateOf<ImmutableList<UUID>>(persistentListOf())
+    private var grouping by mutableStateOf(PieChartGrouping.CATEGORY)
 
     @Composable
     override fun uiState(): PieChartStatisticState {
@@ -57,7 +58,8 @@ internal class PieChartStatisticViewModel @Inject internal constructor(
             selectedCategory = getSelectedCategory(),
             accountIdFilterList = getAccountIdFilterList(),
             showCloseButtonOnly = getShowCloseButtonOnly(),
-            filterExcluded = getFilterExcluded()
+            filterExcluded = getFilterExcluded(),
+            grouping = getGrouping()
         )
     }
 
@@ -106,6 +108,11 @@ internal class PieChartStatisticViewModel @Inject internal constructor(
         return filterExcluded
     }
 
+    @Composable
+    private fun getGrouping(): PieChartGrouping {
+        return grouping
+    }
+
     override fun onEvent(event: PieChartStatisticEvent) {
         viewModelScope.launch(Dispatchers.Default) {
             when (event) {
@@ -113,6 +120,7 @@ internal class PieChartStatisticViewModel @Inject internal constructor(
                 is PieChartStatisticEvent.OnSelectPreviousMonth -> previousMonth()
                 is PieChartStatisticEvent.OnSetPeriod -> onSetPeriod(event.timePeriod)
                 is PieChartStatisticEvent.OnCategoryClicked -> onCategoryClicked(event.categoryId)
+                is PieChartStatisticEvent.OnGroupingSelected -> onGroupingSelected(event.grouping)
             }
         }
     }
@@ -165,6 +173,15 @@ internal class PieChartStatisticViewModel @Inject internal constructor(
         inputTransactionIds = inputTransactionIdsValue
         showCloseButtonOnly = inputTransactionIdsValue.isNotEmpty()
         baseCurrency = baseCurrencyValue
+        grouping = defaultGroupingFor(type)
+    }
+
+    private fun defaultGroupingFor(type: TransactionType): PieChartGrouping {
+        return if (type == TransactionType.INCOME) {
+            PieChartGrouping.ACCOUNT
+        } else {
+            PieChartGrouping.CATEGORY
+        }
     }
 
     private suspend fun load(
@@ -194,7 +211,8 @@ internal class PieChartStatisticViewModel @Inject internal constructor(
                 accountIdFilterList = accountIdFilterList,
                 treatTransferAsIncExp = treatTransferAsIncExp,
                 existingTransactions = inputTransactions,
-                showAccountTransfersCategory = accountIdFilterList.isNotEmpty()
+                showAccountTransfersCategory = accountIdFilterList.isNotEmpty(),
+                grouping = grouping
             )
         }
 
@@ -211,6 +229,14 @@ internal class PieChartStatisticViewModel @Inject internal constructor(
         periodState.select(periodValue)
         load(
             periodValue = periodValue
+        )
+    }
+
+    private suspend fun onGroupingSelected(newGrouping: PieChartGrouping) {
+        if (newGrouping == grouping) return
+        grouping = newGrouping
+        load(
+            periodValue = period
         )
     }
 

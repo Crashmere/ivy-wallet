@@ -58,6 +58,7 @@ internal class BuildPieChartDataUseCase @Inject internal constructor(
         treatTransferAsIncExp: Boolean = false,
         showAccountTransfersCategory: Boolean = treatTransferAsIncExp,
         existingTransactions: List<Transaction> = emptyList(),
+        grouping: PieChartGrouping = PieChartGrouping.CATEGORY,
     ): PieChartData {
         val usableAccounts = getUsableAccounts(accountIdFilterList)
         val transactions = existingTransactions.ifEmpty {
@@ -71,23 +72,35 @@ internal class BuildPieChartDataUseCase @Inject internal constructor(
             accounts = usableAccounts.accounts,
             baseCurrency = baseCurrency
         )
-        val categoryAmounts = calculateCategoryAmounts(
-            type = type,
-            baseCurrency = baseCurrency,
-            allCategories = getCategoriesUseCase().plus(null),
-            transactions = transactions,
-            accountsUsed = usableAccounts.accounts,
-            addAssociatedTransToCategoryAmt = existingTransactions.isNotEmpty()
-        )
-        val categoryAmountsWithTransfers = addAccountTransfersCategory(
-            showAccountTransfersCategory = showAccountTransfersCategory,
-            type = type,
-            accountTransfersCategory = accountTransfersCategory,
-            accountIdFilterSet = accountIdFilterList.toHashSet(),
-            incomeExpenseTransfer = incomeExpenseTransfer,
-            categoryAmounts = categoryAmounts,
-            transactions = transactions
-        )
+        val slices = when (grouping) {
+            PieChartGrouping.CATEGORY -> {
+                val categoryAmounts = calculateCategoryAmounts(
+                    type = type,
+                    baseCurrency = baseCurrency,
+                    allCategories = getCategoriesUseCase().plus(null),
+                    transactions = transactions,
+                    accountsUsed = usableAccounts.accounts,
+                    addAssociatedTransToCategoryAmt = existingTransactions.isNotEmpty()
+                )
+                addAccountTransfersCategory(
+                    showAccountTransfersCategory = showAccountTransfersCategory,
+                    type = type,
+                    accountTransfersCategory = accountTransfersCategory,
+                    accountIdFilterSet = accountIdFilterList.toHashSet(),
+                    incomeExpenseTransfer = incomeExpenseTransfer,
+                    categoryAmounts = categoryAmounts,
+                    transactions = transactions
+                )
+            }
+
+            PieChartGrouping.ACCOUNT -> calculateAccountAmounts(
+                type = type,
+                baseCurrency = baseCurrency,
+                transactions = transactions,
+                accountsUsed = usableAccounts.accounts,
+                addAssociatedTransToCategoryAmt = existingTransactions.isNotEmpty()
+            )
+        }
         val totalAmount = calculateTotalAmount(
             type = type,
             treatTransferAsIncExp = treatTransferAsIncExp,
@@ -96,7 +109,7 @@ internal class BuildPieChartDataUseCase @Inject internal constructor(
 
         return PieChartData(
             totalAmount = totalAmount.toDouble(),
-            categoryAmounts = categoryAmountsWithTransfers.toImmutableList()
+            categoryAmounts = slices.toImmutableList()
         )
     }
 
@@ -147,6 +160,46 @@ internal class BuildPieChartDataUseCase @Inject internal constructor(
                 },
                 associatedTransactions = categoryTransactions,
                 isCategoryUnspecified = category == null
+            )
+        }.filter {
+            it.amount != 0.0
+        }.sortedByDescending {
+            it.amount
+        }
+    }
+
+    private suspend fun calculateAccountAmounts(
+        type: TransactionType,
+        baseCurrency: String,
+        transactions: List<Transaction>,
+        accountsUsed: List<Account>,
+        addAssociatedTransToCategoryAmt: Boolean,
+    ): List<CategoryAmount> {
+        return accountsUsed.map { account ->
+            val accountTransactions = transactions.filter {
+                it.getTransactionType() == type && it.getFromAccount().value == account.id.value
+            }
+            val incomeExpense = calculateTransactionsIncomeExpenseUseCase(
+                transactions = accountTransactions,
+                accounts = accountsUsed,
+                baseCurrency = baseCurrency
+            )
+            val associatedTransactions = if (addAssociatedTransToCategoryAmt) {
+                accountTransactions.map { it.toAssociatedTransaction() }
+            } else {
+                emptyList()
+            }
+
+            CategoryAmount(
+                category = account.toSyntheticCategory(),
+                amount = when (type) {
+                    TransactionType.INCOME -> incomeExpense.income.toDouble()
+                    TransactionType.EXPENSE -> incomeExpense.expense.toDouble()
+                    else -> error("not supported transactionType - $type")
+                },
+                associatedTransactions = associatedTransactions,
+                isCategoryUnspecified = false,
+                account = account,
             )
         }.filter {
             it.amount != 0.0
@@ -232,6 +285,18 @@ private fun Transaction.toAssociatedTransaction(): AssociatedTransaction {
     return AssociatedTransaction(
         id = id.value,
         type = getTransactionType(),
+    )
+}
+
+// Reuses the account's UUID as the synthetic category id so slice selection (keyed by
+// UUID) keeps working; the real [Account] is carried separately for navigation.
+private fun Account.toSyntheticCategory(): Category {
+    return Category(
+        name = name,
+        color = color,
+        icon = icon,
+        id = CategoryId(id.value),
+        orderNum = orderNum,
     )
 }
 

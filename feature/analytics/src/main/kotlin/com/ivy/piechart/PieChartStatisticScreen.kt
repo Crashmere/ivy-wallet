@@ -2,9 +2,12 @@ package com.ivy.piechart
 
 import androidx.annotation.DrawableRes
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.BoxWithConstraintsScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -187,7 +190,16 @@ private fun BoxWithConstraintsScope.UI(
         }
 
         item {
-            Spacer(Modifier.height(40.dp))
+            Spacer(Modifier.height(24.dp))
+
+            GroupingToggle(
+                grouping = state.grouping,
+                onGroupingSelected = { grouping ->
+                    onEvent(PieChartStatisticEvent.OnGroupingSelected(grouping))
+                }
+            )
+
+            Spacer(Modifier.height(24.dp))
 
             PieChart(
                 type = state.transactionType,
@@ -215,18 +227,32 @@ private fun BoxWithConstraintsScope.UI(
                     totalAmount = state.totalAmount,
                     selectedCategory = state.selectedCategory
                 ) {
-                    nav.navigateTo(
-                        TransactionsScreen(
-                            categoryId = item.category?.id?.value,
-                            unspecifiedCategory = item.isCategoryUnspecified,
-                            accountIdFilterList = state.accountIdFilterList,
-                            transactionIds = item.associatedTransactions.map { it.id }
-                                .toImmutableList(),
-                            containsTransferTransactions = item.associatedTransactions.any {
-                                it.type == TransactionType.TRANSFER
-                            }
+                    val account = item.account
+                    if (account != null) {
+                        nav.navigateTo(
+                            TransactionsScreen(
+                                accountId = account.id.value,
+                                transactionIds = item.associatedTransactions.map { it.id }
+                                    .toImmutableList(),
+                                containsTransferTransactions = item.associatedTransactions.any {
+                                    it.type == TransactionType.TRANSFER
+                                }
+                            )
                         )
-                    )
+                    } else {
+                        nav.navigateTo(
+                            TransactionsScreen(
+                                categoryId = item.category?.id?.value,
+                                unspecifiedCategory = item.isCategoryUnspecified,
+                                accountIdFilterList = state.accountIdFilterList,
+                                transactionIds = item.associatedTransactions.map { it.id }
+                                    .toImmutableList(),
+                                containsTransferTransactions = item.associatedTransactions.any {
+                                    it.type == TransactionType.TRANSFER
+                                }
+                            )
+                        )
+                    }
                 }
             }
         }
@@ -405,6 +431,70 @@ private fun CloseButton(
         borderColor = PieChartTheme.colors.medium,
         tint = PieChartTheme.colors.pureInverse,
         onClick = onClick,
+    )
+}
+
+@Composable
+private fun GroupingToggle(
+    grouping: PieChartGrouping,
+    onGroupingSelected: (PieChartGrouping) -> Unit,
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 24.dp),
+        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        GroupingChip(
+            text = stringResource(R.string.categories),
+            selected = grouping == PieChartGrouping.CATEGORY,
+            onClick = { onGroupingSelected(PieChartGrouping.CATEGORY) }
+        )
+
+        Spacer(Modifier.width(12.dp))
+
+        GroupingChip(
+            text = stringResource(R.string.accounts),
+            selected = grouping == PieChartGrouping.ACCOUNT,
+            onClick = { onGroupingSelected(PieChartGrouping.ACCOUNT) }
+        )
+    }
+}
+
+@Composable
+private fun GroupingChip(
+    text: String,
+    selected: Boolean,
+    onClick: () -> Unit,
+) {
+    val borderColor = PieChartTheme.colors.medium
+    val shape = PieChartTheme.shapes.rFull
+    val backgroundColor = if (selected) {
+        PieChartTheme.colors.pureInverse
+    } else {
+        Color.Transparent
+    }
+    val textColor = if (selected) {
+        PieChartTheme.colors.pure
+    } else {
+        PieChartTheme.colors.pureInverse
+    }
+    Text(
+        modifier = Modifier
+            .clip(shape)
+            .background(backgroundColor, shape)
+            .thenIf(!selected) {
+                border(BorderStroke(1.dp, borderColor), shape)
+            }
+            .clickable(onClick = onClick)
+            .padding(horizontal = 20.dp, vertical = 8.dp),
+        text = text,
+        style = PieChartTheme.typo.b2.copy(
+            color = textColor,
+            fontWeight = FontWeight.SemiBold,
+            textAlign = TextAlign.Center
+        )
     )
 }
 
