@@ -11,6 +11,7 @@ import com.ivy.data.model.Account
 import com.ivy.data.model.Theme
 import com.ivy.data.model.TransactionHistoryItem
 import com.ivy.data.model.primitive.AssetCode
+import com.ivy.domain.preferences.toggles.BoolPreference
 import com.ivy.domain.preferences.toggles.PreferenceToggleService
 import com.ivy.domain.preferences.toggles.PreferenceToggleCatalog
 import com.ivy.domain.usecase.category.GetCategoriesUseCase
@@ -173,13 +174,22 @@ internal class HomeViewModel @Inject internal constructor(
             hideBalance = getHideBalance(),
             expanded = getExpanded(),
             hideIncome = getHideIncome(),
-            shouldShowAccountSpecificColorInTransactions = getShouldShowAccountSpecificColorInTransactions()
+            shouldShowAccountSpecificColorInTransactions = getShouldShowAccountSpecificColorInTransactions(),
+            showPlannedPaymentsQuickAccess = getQuickAccessEnabled(preferenceToggles.showPlannedPaymentsQuickAccess),
+            showBudgetsQuickAccess = getQuickAccessEnabled(preferenceToggles.showBudgetsQuickAccess),
+            showLoansQuickAccess = getQuickAccessEnabled(preferenceToggles.showLoansQuickAccess)
         )
     }
 
     @Composable
     fun getShouldShowAccountSpecificColorInTransactions(): Boolean {
         val preference = preferenceToggles.showAccountColorsInTransactions
+        return preferenceToggleService.enabledFlow(preference)
+            .asEnabledState(preference.defaultValue)
+    }
+
+    @Composable
+    private fun getQuickAccessEnabled(preference: BoolPreference): Boolean {
         return preferenceToggleService.enabledFlow(preference)
             .asEnabledState(preference.defaultValue)
     }

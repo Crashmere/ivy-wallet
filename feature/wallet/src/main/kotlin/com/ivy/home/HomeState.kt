@@ -33,7 +33,10 @@ internal data class HomeState(
     val hideBalance: Boolean,
     val hideIncome: Boolean,
     val expanded: Boolean,
-    val shouldShowAccountSpecificColorInTransactions: Boolean
+    val shouldShowAccountSpecificColorInTransactions: Boolean,
+    val showPlannedPaymentsQuickAccess: Boolean,
+    val showBudgetsQuickAccess: Boolean,
+    val showLoansQuickAccess: Boolean
 )
 
 @Immutable

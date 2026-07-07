@@ -61,4 +61,25 @@ class PreferenceToggleCatalog @Inject internal constructor() {
         description = "Display account-specific colors in transactions",
         defaultValue = false
     )
+
+    val showPlannedPaymentsQuickAccess = BoolPreference(
+        key = "quick_access_planned_payments",
+        name = "Planned payments in quick access",
+        description = "Show the Planned payments shortcut in the home quick access menu",
+        defaultValue = false
+    )
+
+    val showBudgetsQuickAccess = BoolPreference(
+        key = "quick_access_budgets",
+        name = "Budgets in quick access",
+        description = "Show the Budgets shortcut in the home quick access menu",
+        defaultValue = false
+    )
+
+    val showLoansQuickAccess = BoolPreference(
+        key = "quick_access_loans",
+        name = "Loans in quick access",
+        description = "Show the Loans shortcut in the home quick access menu",
+        defaultValue = false
+    )
 }

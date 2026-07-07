@@ -87,6 +87,10 @@ internal fun BoxWithConstraintsScope.MoreMenu(
     buffer: Double,
     currency: String,
 
+    showPlannedPaymentsQuickAccess: Boolean,
+    showBudgetsQuickAccess: Boolean,
+    showLoansQuickAccess: Boolean,
+
     setExpanded: (Boolean) -> Unit,
     onBufferClick: () -> Unit,
     onCurrencyClick: () -> Unit,
@@ -175,6 +179,9 @@ internal fun BoxWithConstraintsScope.MoreMenu(
                 balance = balance,
                 buffer = buffer,
                 currency = currency,
+                showPlannedPaymentsQuickAccess = showPlannedPaymentsQuickAccess,
+                showBudgetsQuickAccess = showBudgetsQuickAccess,
+                showLoansQuickAccess = showLoansQuickAccess,
                 onBufferClick = onBufferClick,
                 onCurrencyClick = onCurrencyClick,
                 onDestinationClick = onDestinationClick
@@ -213,6 +220,10 @@ private fun ColumnScope.Content(
     buffer: Double,
     currency: String,
 
+    showPlannedPaymentsQuickAccess: Boolean,
+    showBudgetsQuickAccess: Boolean,
+    showLoansQuickAccess: Boolean,
+
     onBufferClick: () -> Unit,
     onCurrencyClick: () -> Unit,
     onDestinationClick: (MoreMenuDestination) -> Unit,
@@ -223,15 +234,12 @@ private fun ColumnScope.Content(
         onDestinationClick(MoreMenuDestination.Search)
     }
 
-    Spacer(Modifier.height(12.dp))
-
-    BulkEditButton {
-        onDestinationClick(MoreMenuDestination.BulkEdit)
-    }
-
     Spacer(Modifier.height(16.dp))
 
     QuickAccess(
+        showPlannedPayments = showPlannedPaymentsQuickAccess,
+        showBudgets = showBudgetsQuickAccess,
+        showLoans = showLoansQuickAccess,
         onDestinationClick = onDestinationClick
     )
 
@@ -291,54 +299,6 @@ private fun SearchButton(
 }
 
 @Composable
-private fun BulkEditButton(
-    onClick: () -> Unit
-) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp)
-            .clip(HomeTheme.shapes.rFull)
-            .background(HomeTheme.colors.pure)
-            .border(1.dp, HomeTheme.colors.gray, HomeTheme.shapes.rFull)
-            .clickable {
-                onClick()
-            },
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Spacer(Modifier.width(12.dp))
-
-        ResourceIcon(
-            icon = R.drawable.ic_edit,
-            tint = HomeTheme.colors.pureInverse
-        )
-
-        Spacer(Modifier.width(12.dp))
-
-        Text(
-            modifier = Modifier.padding(
-                vertical = 12.dp,
-            ),
-            text = "批量修改交易",
-            style = HomeTheme.typo.b2.copy(
-                fontWeight = FontWeight.SemiBold,
-                color = HomeTheme.colors.pureInverse,
-                textAlign = TextAlign.Start
-            )
-        )
-
-        Spacer(Modifier.weight(1f))
-
-        ResourceIcon(
-            icon = R.drawable.ic_arrow_right,
-            tint = HomeTheme.colors.pureInverse
-        )
-
-        Spacer(Modifier.width(16.dp))
-    }
-}
-
-@Composable
 private fun ColumnScope.Buffer(
     buffer: Double,
     currency: String,
@@ -388,10 +348,48 @@ private fun ColumnScope.Buffer(
     }
 }
 
+private data class QuickAccessItem(
+    @DrawableRes val icon: Int,
+    val label: String,
+    val destination: MoreMenuDestination,
+)
+
 @Composable
 private fun QuickAccess(
+    showPlannedPayments: Boolean,
+    showBudgets: Boolean,
+    showLoans: Boolean,
     onDestinationClick: (MoreMenuDestination) -> Unit
 ) {
+    val settingsLabel = stringResource(R.string.settings)
+    val categoriesLabel = stringResource(R.string.categories)
+    val reportsLabel = stringResource(R.string.reports)
+    val plannedPaymentsLabel = stringResource(R.string.planned_payments)
+    val budgetsLabel = stringResource(R.string.budgets)
+    val loansLabel = stringResource(R.string.loans)
+
+    val items = buildList {
+        add(QuickAccessItem(R.drawable.home_more_menu_settings, settingsLabel, MoreMenuDestination.Settings))
+        add(QuickAccessItem(R.drawable.home_more_menu_categories, categoriesLabel, MoreMenuDestination.Categories))
+        add(QuickAccessItem(R.drawable.home_more_menu_reports, reportsLabel, MoreMenuDestination.Reports))
+        add(QuickAccessItem(R.drawable.ic_edit, "批量修改", MoreMenuDestination.BulkEdit))
+        if (showPlannedPayments) {
+            add(
+                QuickAccessItem(
+                    R.drawable.home_more_menu_planned_payments,
+                    plannedPaymentsLabel,
+                    MoreMenuDestination.PlannedPayments
+                )
+            )
+        }
+        if (showBudgets) {
+            add(QuickAccessItem(R.drawable.home_more_menu_budgets, budgetsLabel, MoreMenuDestination.Budgets))
+        }
+        if (showLoans) {
+            add(QuickAccessItem(R.drawable.home_more_menu_loans, loansLabel, MoreMenuDestination.Loans))
+        }
+    }
+
     Column {
         Text(
             modifier = Modifier.padding(start = 24.dp),
@@ -403,79 +401,27 @@ private fun QuickAccess(
             )
         )
 
-        Spacer(Modifier.height(16.dp))
+        items.chunked(4).forEach { rowItems ->
+            Spacer(Modifier.height(16.dp))
 
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.Start,
-            verticalAlignment = Alignment.Top
-        ) {
-            Spacer(Modifier.weight(1f))
-
-            MoreMenuButton(
-                icon = R.drawable.home_more_menu_settings,
-                label = stringResource(R.string.settings)
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Start,
+                verticalAlignment = Alignment.Top
             ) {
-                onDestinationClick(MoreMenuDestination.Settings)
+                Spacer(Modifier.weight(1f))
+
+                rowItems.forEach { item ->
+                    MoreMenuButton(
+                        icon = item.icon,
+                        label = item.label
+                    ) {
+                        onDestinationClick(item.destination)
+                    }
+
+                    Spacer(Modifier.weight(1f))
+                }
             }
-
-            Spacer(Modifier.weight(1f))
-
-            MoreMenuButton(
-                icon = R.drawable.home_more_menu_categories,
-                label = stringResource(R.string.categories)
-            ) {
-                onDestinationClick(MoreMenuDestination.Categories)
-            }
-
-            Spacer(Modifier.weight(1f))
-
-            MoreMenuButton(
-                icon = R.drawable.home_more_menu_reports,
-                label = stringResource(R.string.reports),
-            ) {
-                onDestinationClick(MoreMenuDestination.Reports)
-            }
-
-            Spacer(Modifier.weight(1f))
-        }
-
-        Spacer(Modifier.height(16.dp))
-
-        // Second Row
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.Start,
-            verticalAlignment = Alignment.Top
-        ) {
-            Spacer(Modifier.weight(1f))
-
-            MoreMenuButton(
-                icon = R.drawable.home_more_menu_planned_payments,
-                label = stringResource(R.string.planned_payments)
-            ) {
-                onDestinationClick(MoreMenuDestination.PlannedPayments)
-            }
-
-            Spacer(Modifier.weight(1f))
-
-            MoreMenuButton(
-                icon = R.drawable.home_more_menu_budgets,
-                label = stringResource(R.string.budgets),
-            ) {
-                onDestinationClick(MoreMenuDestination.Budgets)
-            }
-
-            Spacer(Modifier.weight(1f))
-
-            MoreMenuButton(
-                icon = R.drawable.home_more_menu_loans,
-                label = stringResource(R.string.loans),
-            ) {
-                onDestinationClick(MoreMenuDestination.Loans)
-            }
-
-            Spacer(Modifier.weight(1f))
         }
     }
 }

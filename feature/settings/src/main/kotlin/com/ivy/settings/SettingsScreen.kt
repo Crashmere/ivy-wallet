@@ -75,7 +75,8 @@ import java.util.Locale
 private enum class SettingsPage(@StringRes val title: Int) {
     Main(R.string.settings),
     DisplayPreferences(R.string.display_preferences),
-    InputAndLists(R.string.input_and_lists)
+    InputAndLists(R.string.input_and_lists),
+    QuickAccess(R.string.quick_access)
 }
 
 @ExperimentalFoundationApi
@@ -128,6 +129,9 @@ fun BoxWithConstraintsScope.SettingsScreen() {
         standardKeypadLayout = uiState.standardKeypadLayout,
         showCategorySearchBar = uiState.showCategorySearchBar,
         sortCategoriesAscending = uiState.sortCategoriesAscending,
+        showPlannedPaymentsQuickAccess = uiState.showPlannedPaymentsQuickAccess,
+        showBudgetsQuickAccess = uiState.showBudgetsQuickAccess,
+        showLoansQuickAccess = uiState.showLoansQuickAccess,
         startDateOfMonth = uiState.startDateOfMonth.toInt(),
         languageOptionVisible = uiState.languageOptionVisible,
         onSetCurrency = {
@@ -198,6 +202,15 @@ fun BoxWithConstraintsScope.SettingsScreen() {
         onSetSortCategoriesAscending = {
             viewModel.onEvent(SettingsEvent.SetSortCategoriesAscending(it))
         },
+        onSetShowPlannedPaymentsQuickAccess = {
+            viewModel.onEvent(SettingsEvent.SetShowPlannedPaymentsQuickAccess(it))
+        },
+        onSetShowBudgetsQuickAccess = {
+            viewModel.onEvent(SettingsEvent.SetShowBudgetsQuickAccess(it))
+        },
+        onSetShowLoansQuickAccess = {
+            viewModel.onEvent(SettingsEvent.SetShowLoansQuickAccess(it))
+        },
         onDeleteAllUserData = {
             viewModel.onEvent(SettingsEvent.DeleteAllUserData)
         },
@@ -238,6 +251,9 @@ private fun BoxWithConstraintsScope.UI(
     standardKeypadLayout: Boolean = false,
     showCategorySearchBar: Boolean = true,
     sortCategoriesAscending: Boolean = false,
+    showPlannedPaymentsQuickAccess: Boolean = false,
+    showBudgetsQuickAccess: Boolean = false,
+    showLoansQuickAccess: Boolean = false,
     gitHubConfig: GitHubBackupConfig? = null,
     gitHubLastBackupEpochSec: Long? = null,
     onBackupData: () -> Unit = {},
@@ -260,6 +276,9 @@ private fun BoxWithConstraintsScope.UI(
     onSetStandardKeypadLayout: (Boolean) -> Unit = {},
     onSetShowCategorySearchBar: (Boolean) -> Unit = {},
     onSetSortCategoriesAscending: (Boolean) -> Unit = {},
+    onSetShowPlannedPaymentsQuickAccess: (Boolean) -> Unit = {},
+    onSetShowBudgetsQuickAccess: (Boolean) -> Unit = {},
+    onSetShowLoansQuickAccess: (Boolean) -> Unit = {},
     onSetStartDateOfMonth: (Int) -> Unit = {},
     onDeleteAllUserData: () -> Unit = {},
     onSwitchLanguage: () -> Unit = {},
@@ -277,10 +296,12 @@ private fun BoxWithConstraintsScope.UI(
     val mainListState = rememberLazyListState()
     val displayPreferencesListState = rememberLazyListState()
     val inputAndListsListState = rememberLazyListState()
+    val quickAccessListState = rememberLazyListState()
     val currentListState = when (settingsPage) {
         SettingsPage.Main -> mainListState
         SettingsPage.DisplayPreferences -> displayPreferencesListState
         SettingsPage.InputAndLists -> inputAndListsListState
+        SettingsPage.QuickAccess -> quickAccessListState
     }
     BackPressHandler(enabled = settingsPage != SettingsPage.Main) {
         settingsPage = SettingsPage.Main
@@ -402,6 +423,15 @@ private fun BoxWithConstraintsScope.UI(
                     ) {
                         settingsPage = SettingsPage.InputAndLists
                     }
+
+                    Spacer(Modifier.height(12.dp))
+
+                    SettingsSubMenuButton(
+                        icon = R.drawable.ic_custom_rocket_m,
+                        text = stringResource(R.string.quick_access)
+                    ) {
+                        settingsPage = SettingsPage.QuickAccess
+                    }
                 }
 
                 item {
@@ -443,6 +473,19 @@ private fun BoxWithConstraintsScope.UI(
                         onSetStandardKeypadLayout = onSetStandardKeypadLayout,
                         onSetShowCategorySearchBar = onSetShowCategorySearchBar,
                         onSetSortCategoriesAscending = onSetSortCategoriesAscending
+                    )
+                }
+            }
+
+            SettingsPage.QuickAccess -> {
+                item {
+                    QuickAccessSection(
+                        showPlannedPayments = showPlannedPaymentsQuickAccess,
+                        showBudgets = showBudgetsQuickAccess,
+                        showLoans = showLoansQuickAccess,
+                        onSetShowPlannedPayments = onSetShowPlannedPaymentsQuickAccess,
+                        onSetShowBudgets = onSetShowBudgetsQuickAccess,
+                        onSetShowLoans = onSetShowLoansQuickAccess
                     )
                 }
             }
@@ -882,6 +925,56 @@ private fun InputAndListsSection(
         text = stringResource(R.string.sort_categories_list),
         description = stringResource(R.string.sort_categories_list_description),
         icon = R.drawable.ic_sort_by_alpha_24
+    )
+}
+
+@Composable
+private fun QuickAccessSection(
+    showPlannedPayments: Boolean,
+    showBudgets: Boolean,
+    showLoans: Boolean,
+    onSetShowPlannedPayments: (Boolean) -> Unit,
+    onSetShowBudgets: (Boolean) -> Unit,
+    onSetShowLoans: (Boolean) -> Unit
+) {
+    Text(
+        modifier = Modifier.padding(horizontal = 32.dp),
+        text = "选择在首页「快速访问」中额外显示的入口。默认仅保留设置、类别、报告、批量修改。",
+        style = SettingsTheme.typo.nC.copy(
+            color = SettingsTheme.colors.gray,
+            fontWeight = FontWeight.SemiBold,
+            textAlign = TextAlign.Start
+        )
+    )
+
+    Spacer(Modifier.height(16.dp))
+
+    AppSwitch(
+        lockApp = showPlannedPayments,
+        onSetLockApp = onSetShowPlannedPayments,
+        text = stringResource(R.string.planned_payments),
+        description = "在首页「快速访问」中显示计划支付入口",
+        icon = R.drawable.ic_custom_calendar_m
+    )
+
+    Spacer(Modifier.height(12.dp))
+
+    AppSwitch(
+        lockApp = showBudgets,
+        onSetLockApp = onSetShowBudgets,
+        text = stringResource(R.string.budgets),
+        description = "在首页「快速访问」中显示预算入口",
+        icon = R.drawable.ic_custom_safe_m
+    )
+
+    Spacer(Modifier.height(12.dp))
+
+    AppSwitch(
+        lockApp = showLoans,
+        onSetLockApp = onSetShowLoans,
+        text = stringResource(R.string.loans),
+        description = "在首页「快速访问」中显示贷款入口",
+        icon = R.drawable.ic_custom_loan_m
     )
 }
 

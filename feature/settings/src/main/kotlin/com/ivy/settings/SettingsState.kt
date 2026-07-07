@@ -21,6 +21,9 @@ internal data class SettingsState(
     val standardKeypadLayout: Boolean,
     val showCategorySearchBar: Boolean,
     val sortCategoriesAscending: Boolean,
+    val showPlannedPaymentsQuickAccess: Boolean,
+    val showBudgetsQuickAccess: Boolean,
+    val showLoansQuickAccess: Boolean,
     val startDateOfMonth: String,
     val progressState: Boolean,
     val languageOptionVisible: Boolean

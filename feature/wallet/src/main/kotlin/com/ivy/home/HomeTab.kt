@@ -296,6 +296,9 @@ internal fun BoxWithConstraintsScope.HomeUi(
         balance = uiState.balance.toDouble(),
         currency = baseCurrency,
         buffer = uiState.buffer.amount.toDouble(),
+        showPlannedPaymentsQuickAccess = uiState.showPlannedPaymentsQuickAccess,
+        showBudgetsQuickAccess = uiState.showBudgetsQuickAccess,
+        showLoansQuickAccess = uiState.showLoansQuickAccess,
         setExpanded = setMoreMenuExpanded,
         onBufferClick = {
             bufferModalVisible = true
