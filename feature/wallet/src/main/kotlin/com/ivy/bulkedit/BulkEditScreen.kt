@@ -51,7 +51,8 @@ import com.ivy.data.model.Transfer
 import com.ivy.data.model.getFromAccount
 import com.ivy.data.model.getFromValue
 import com.ivy.ui.R
-import com.ivy.ui.compose.FilledIconButton
+import com.ivy.ui.compose.BackActionBottomBar
+import com.ivy.ui.compose.GradientButton
 import com.ivy.ui.compose.OutlinedPillButton
 import com.ivy.ui.compose.ResourceIcon
 import com.ivy.ui.modal.ChoosePeriodModal
@@ -65,6 +66,7 @@ import com.ivy.ui.period.TimePeriod
 import com.ivy.ui.period.displayShort
 import com.ivy.ui.platform.LocalDatePicker
 import com.ivy.ui.theme.colors.IvyFixedColors
+import com.ivy.ui.theme.colors.IvyGradients
 import com.ivy.ui.transaction.TransactionListAccount
 import com.ivy.ui.transaction.TransactionListCategory
 import com.ivy.ui.transaction.TransactionListData
@@ -118,20 +120,15 @@ private fun BoxWithConstraintsScope.UI(
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Spacer(Modifier.width(24.dp))
-
                 MonthSelector(
                     period = uiState.period,
                     onPrevious = { onEvent(BulkEditEvent.OnPreviousMonth) },
                     onNext = { onEvent(BulkEditEvent.OnNextMonth) },
                     onClick = { periodModal = uiState.period }
                 )
-
-                Spacer(Modifier.weight(1f))
-
-                Spacer(Modifier.width(24.dp))
             }
 
             Spacer(Modifier.height(20.dp))
@@ -533,53 +530,27 @@ private fun BoxWithConstraintsScope.BulkEditBottomBar(
     onClose: () -> Unit,
     onBulkEdit: () -> Unit,
 ) {
-    Row(
-        modifier = Modifier
-            .align(Alignment.BottomCenter)
-            .fillMaxWidth()
-            .background(BulkEditTheme.colors.pure)
-            .navigationBarsPadding()
-            .padding(horizontal = 24.dp, vertical = 12.dp),
-        verticalAlignment = Alignment.CenterVertically
+    BackActionBottomBar(
+        pure = BulkEditTheme.colors.pure,
+        medium = BulkEditTheme.colors.medium,
+        pureInverse = BulkEditTheme.colors.pureInverse,
+        onBack = onClose,
     ) {
-        FilledIconButton(
-            icon = R.drawable.ic_back,
-            backgroundColor = BulkEditTheme.colors.medium,
-            tint = BulkEditTheme.colors.pureInverse,
-            onClick = onClose,
-            clickAreaPadding = 12.dp
-        )
-
-        Spacer(Modifier.weight(1f))
-
-        val enabled = count > 0
-        Row(
-            modifier = Modifier
-                .clip(BulkEditTheme.shapes.rFull)
-                .background(
-                    if (enabled) {
-                        BulkEditTheme.colors.pureInverse
-                    } else {
-                        BulkEditTheme.colors.medium
-                    }
-                )
-                .clickable(enabled = enabled, onClick = onBulkEdit)
-                .padding(horizontal = 24.dp, vertical = 14.dp),
-            verticalAlignment = Alignment.CenterVertically
+        GradientButton(
+            text = "批量修改 ($count)",
+            backgroundGradient = IvyGradients.Ivy,
+            disabledBackgroundColor = BulkEditTheme.colors.medium,
+            shape = BulkEditTheme.shapes.rFull,
+            textStyle = BulkEditTheme.typo.b2.copy(
+                color = Color(0xFFFAFAFA),
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Start
+            ),
+            iconStart = R.drawable.ic_edit,
+            iconTint = Color(0xFFFAFAFA),
+            enabled = count > 0,
         ) {
-            ResourceIcon(
-                icon = R.drawable.ic_edit,
-                tint = if (enabled) BulkEditTheme.colors.pure else BulkEditTheme.colors.gray
-            )
-            Spacer(Modifier.width(8.dp))
-            Text(
-                text = "批量修改 ($count)",
-                style = BulkEditTheme.typo.b2.copy(
-                    color = if (enabled) BulkEditTheme.colors.pure else BulkEditTheme.colors.gray,
-                    fontWeight = FontWeight.Bold,
-                    textAlign = TextAlign.Start
-                )
-            )
+            onBulkEdit()
         }
     }
 }

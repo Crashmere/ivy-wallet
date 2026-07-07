@@ -58,7 +58,8 @@ import com.ivy.data.model.Transfer
 import com.ivy.data.model.getFromAccount
 import com.ivy.data.model.getFromValue
 import com.ivy.ui.R
-import com.ivy.ui.compose.FilledIconButton
+import com.ivy.ui.compose.BackActionBottomBar
+import com.ivy.ui.compose.GradientButton
 import com.ivy.ui.compose.OutlinedPillButton
 import com.ivy.ui.compose.ResourceIcon
 import com.ivy.ui.modal.ChoosePeriodModal
@@ -73,6 +74,7 @@ import com.ivy.ui.period.displayShort
 import com.ivy.ui.platform.LocalDatePicker
 import com.ivy.ui.platform.fileSharer
 import com.ivy.ui.theme.colors.IvyFixedColors
+import com.ivy.ui.theme.colors.IvyGradients
 import com.ivy.ui.transaction.TransactionListAccount
 import com.ivy.ui.transaction.TransactionListCategory
 import com.ivy.ui.transaction.TransactionListData
@@ -138,31 +140,20 @@ private fun BoxWithConstraintsScope.UI(
             .navigationBarsPadding(),
         state = listState
     ) {
-        stickyHeader {
-            Toolbar(
-                sortOrder = state.sortOrder,
-                onBack = { nav.back() },
-                onExport = { onEvent(ReportEvent.OnExport) },
-                onToggleSort = { onEvent(ReportEvent.ToggleSortOrder) },
-            )
-        }
-
         item {
-            Spacer(Modifier.height(8.dp))
+            Spacer(Modifier.height(24.dp))
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Spacer(Modifier.width(24.dp))
                 MonthSelector(
                     period = state.period,
                     onPrevious = { onEvent(ReportEvent.OnPreviousMonth) },
                     onNext = { onEvent(ReportEvent.OnNextMonth) },
                     onClick = { periodModal = state.period }
                 )
-                Spacer(Modifier.weight(1f))
-                Spacer(Modifier.width(24.dp))
             }
 
             Spacer(Modifier.height(20.dp))
@@ -211,7 +202,30 @@ private fun BoxWithConstraintsScope.UI(
         )
 
         item {
-            Spacer(Modifier.height(96.dp))
+            Spacer(Modifier.height(140.dp))
+        }
+    }
+
+    BackActionBottomBar(
+        pure = ReportsTheme.colors.pure,
+        medium = ReportsTheme.colors.medium,
+        pureInverse = ReportsTheme.colors.pureInverse,
+        onBack = { nav.back() },
+    ) {
+        GradientButton(
+            text = stringResource(R.string.export),
+            backgroundGradient = IvyGradients.Green,
+            disabledBackgroundColor = ReportsTheme.colors.gray,
+            shape = ReportsTheme.shapes.rFull,
+            textStyle = ReportsTheme.typo.b2.copy(
+                color = Color(0xFFFAFAFA),
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Start
+            ),
+            iconStart = R.drawable.ic_export_csv,
+            iconTint = Color(0xFFFAFAFA),
+        ) {
+            onEvent(ReportEvent.OnExport)
         }
     }
 
@@ -231,71 +245,28 @@ private fun BoxWithConstraintsScope.UI(
     )
 }
 
-// ─── Toolbar ─────────────────────────────────────────────────
+// ─── Sort Toggle ─────────────────────────────────────────────
 
 @Composable
-private fun Toolbar(
+private fun SortToggleButton(
     sortOrder: SortOrder,
-    onBack: () -> Unit,
-    onExport: () -> Unit,
-    onToggleSort: () -> Unit,
+    onToggle: () -> Unit,
 ) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(ReportsTheme.colors.pure)
-            .padding(top = 16.dp, bottom = 12.dp),
-        verticalAlignment = Alignment.CenterVertically
+    OutlinedPillButton(
+        text = if (sortOrder == SortOrder.TIME) "时间" else "金额",
+        iconStart = R.drawable.ic_sort_by_alpha_24,
+        shape = ReportsTheme.shapes.rFull,
+        solidBackground = true,
+        backgroundColor = ReportsTheme.colors.pure,
+        iconTint = ReportsTheme.colors.pureInverse,
+        borderColor = ReportsTheme.colors.medium,
+        textStyle = ReportsTheme.typo.b2.copy(
+            fontWeight = FontWeight.Bold,
+            color = ReportsTheme.colors.pureInverse,
+        ),
+        padding = 8.dp,
     ) {
-        Spacer(Modifier.width(20.dp))
-
-        FilledIconButton(
-            icon = R.drawable.ic_dismiss,
-            backgroundColor = ReportsTheme.colors.pure,
-            tint = ReportsTheme.colors.pureInverse,
-            onClick = onBack,
-            clickAreaPadding = 12.dp,
-        )
-
-        Spacer(Modifier.weight(1f))
-
-        OutlinedPillButton(
-            text = stringResource(R.string.export),
-            iconStart = R.drawable.ic_export_csv,
-            shape = ReportsTheme.shapes.rFull,
-            solidBackground = true,
-            backgroundColor = ReportsTheme.colors.pure,
-            iconTint = ReportsTheme.colors.green,
-            borderColor = ReportsTheme.colors.medium,
-            textStyle = ReportsTheme.typo.b2.copy(
-                fontWeight = FontWeight.Bold,
-                color = ReportsTheme.colors.green,
-            ),
-            padding = 8.dp,
-        ) {
-            onExport()
-        }
-
-        Spacer(Modifier.width(12.dp))
-
-        OutlinedPillButton(
-            text = if (sortOrder == SortOrder.TIME) "时间" else "金额",
-            iconStart = R.drawable.ic_sort_by_alpha_24,
-            shape = ReportsTheme.shapes.rFull,
-            solidBackground = true,
-            backgroundColor = ReportsTheme.colors.pure,
-            iconTint = ReportsTheme.colors.pureInverse,
-            borderColor = ReportsTheme.colors.medium,
-            textStyle = ReportsTheme.typo.b2.copy(
-                fontWeight = FontWeight.Bold,
-                color = ReportsTheme.colors.pureInverse,
-            ),
-            padding = 8.dp,
-        ) {
-            onToggleSort()
-        }
-
-        Spacer(Modifier.width(24.dp))
+        onToggle()
     }
 }
 
@@ -513,10 +484,22 @@ private fun FilterSection(
         }
 
         Spacer(Modifier.height(12.dp))
-        AdvancedFilterToggle(
-            expanded = state.advancedExpanded,
-            onToggle = { onEvent(ReportEvent.ToggleAdvanced) }
-        )
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 24.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            AdvancedFilterToggle(
+                expanded = state.advancedExpanded,
+                onToggle = { onEvent(ReportEvent.ToggleAdvanced) }
+            )
+            Spacer(Modifier.weight(1f))
+            SortToggleButton(
+                sortOrder = state.sortOrder,
+                onToggle = { onEvent(ReportEvent.ToggleSortOrder) }
+            )
+        }
 
         AnimatedVisibility(
             visible = state.advancedExpanded,
@@ -535,7 +518,6 @@ private fun AdvancedFilterToggle(
 ) {
     Row(
         modifier = Modifier
-            .padding(horizontal = 24.dp)
             .clip(ReportsTheme.shapes.rFull)
             .border(1.dp, ReportsTheme.colors.medium, ReportsTheme.shapes.rFull)
             .clickable(onClick = onToggle)

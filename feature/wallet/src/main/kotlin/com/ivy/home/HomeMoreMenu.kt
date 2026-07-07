@@ -372,7 +372,7 @@ private fun QuickAccess(
         add(QuickAccessItem(R.drawable.home_more_menu_settings, settingsLabel, MoreMenuDestination.Settings))
         add(QuickAccessItem(R.drawable.home_more_menu_categories, categoriesLabel, MoreMenuDestination.Categories))
         add(QuickAccessItem(R.drawable.home_more_menu_reports, reportsLabel, MoreMenuDestination.Reports))
-        add(QuickAccessItem(R.drawable.ic_edit, "批量修改", MoreMenuDestination.BulkEdit))
+        add(QuickAccessItem(R.drawable.home_more_menu_bulk_edit, "批量修改", MoreMenuDestination.BulkEdit))
         if (showPlannedPayments) {
             add(
                 QuickAccessItem(
