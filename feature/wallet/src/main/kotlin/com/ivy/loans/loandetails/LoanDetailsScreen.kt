@@ -328,7 +328,7 @@ private fun Header(
     Column(
         modifier = Modifier.background(itemColor)
     ) {
-        Spacer(Modifier.height(20.dp))
+        Spacer(Modifier.height(16.dp))
 
         LoanStatisticToolbar(
             contrastColor = contrastColor,
@@ -337,7 +337,7 @@ private fun Header(
             onDelete = onDeleteLoan
         )
 
-        Spacer(Modifier.height(24.dp))
+        Spacer(Modifier.height(16.dp))
 
         LoanItem(
             loan = loan,
@@ -358,7 +358,7 @@ private fun Header(
             balance = loanTotalAmount,
         )
 
-        Spacer(Modifier.height(20.dp))
+        Spacer(Modifier.height(12.dp))
 
         LoanInfoCard(
             loan = loan,
@@ -371,7 +371,7 @@ private fun Header(
             onAccountClick = onAccountClick
         )
 
-        Spacer(Modifier.height(20.dp))
+        Spacer(Modifier.height(16.dp))
     }
 }
 
@@ -785,7 +785,7 @@ internal fun LazyListScope.loanRecords(
             onClick(displayLoanRecord.loanRecord.id)
         }
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(12.dp))
     }
 }
 
@@ -1024,7 +1024,9 @@ private fun LoanRecordAmountRow(
     modifier: Modifier = Modifier
 ) {
     Row(
-        modifier = modifier.testTag("type_amount_currency"),
+        modifier = modifier
+            .fillMaxWidth()
+            .testTag("type_amount_currency"),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Spacer(Modifier.width(24.dp))
@@ -1060,6 +1062,8 @@ private fun LoanRecordAmountRow(
         )
 
         Spacer(Modifier.width(12.dp))
+
+        Spacer(Modifier.weight(1f))
 
         AmountCurrencyB1(
             amount = amount,

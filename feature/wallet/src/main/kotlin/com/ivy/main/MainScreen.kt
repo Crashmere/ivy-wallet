@@ -13,11 +13,11 @@ import androidx.compose.runtime.setValue
 import com.ivy.ui.navigation.screenScopedViewModel
 import com.ivy.accounts.AccountsTab
 import com.ivy.home.HomeTab
+import com.ivy.reports.ReportTab
+import com.ivy.settings.SettingsTab
 import com.ivy.ui.navigation.onScreenStart
 import com.ivy.ui.navigation.EditPlannedScreen
 import com.ivy.ui.navigation.EditTransactionScreen
-import com.ivy.ui.navigation.ReportScreen
-import com.ivy.ui.navigation.SettingsScreen
 import com.ivy.ui.navigation.TransactionRouteType
 import com.ivy.ui.navigation.navigation
 import com.ivy.data.model.CreateAccountData
@@ -35,7 +35,7 @@ fun BoxWithConstraintsScope.MainScreen() {
         viewModel.start()
     }
 
-    BackPressHandler(enabled = viewModel.selectedTab == MainTab.ACCOUNTS) {
+    BackPressHandler(enabled = viewModel.selectedTab != MainTab.HOME) {
         viewModel.selectTab(MainTab.HOME)
     }
 
@@ -75,6 +75,10 @@ private fun BoxWithConstraintsScope.UI(
                 accountModalVisible = true
             }
         )
+
+        MainTab.REPORTS -> ReportTab()
+
+        MainTab.MINE -> SettingsTab()
     }
 
     val nav = navigation()
@@ -113,13 +117,6 @@ private fun BoxWithConstraintsScope.UI(
                     plannedPaymentRuleId = null
                 )
             )
-        },
-
-        onOpenReports = {
-            nav.navigateTo(ReportScreen)
-        },
-        onOpenProfile = {
-            nav.navigateTo(SettingsScreen)
         },
 
         showAddAccountModal = {

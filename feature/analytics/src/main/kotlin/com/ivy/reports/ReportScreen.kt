@@ -67,8 +67,6 @@ import com.ivy.data.model.currency.format
 import com.ivy.data.model.getFromAccount
 import com.ivy.data.model.getFromValue
 import com.ivy.ui.R
-import com.ivy.ui.compose.BackActionBottomBar
-import com.ivy.ui.compose.GradientButton
 import com.ivy.ui.compose.OutlinedPillButton
 import com.ivy.ui.compose.ResourceIcon
 import com.ivy.ui.modal.ChoosePeriodModal
@@ -83,7 +81,6 @@ import com.ivy.ui.period.displayShort
 import com.ivy.ui.platform.LocalDatePicker
 import com.ivy.ui.platform.fileSharer
 import com.ivy.ui.theme.colors.IvyFixedColors
-import com.ivy.ui.theme.colors.IvyGradients
 import com.ivy.ui.theme.colors.toComposeColor
 import com.ivy.ui.transaction.TransactionListAccount
 import com.ivy.ui.transaction.TransactionListCategory
@@ -100,6 +97,18 @@ import kotlin.math.roundToInt
 @ExperimentalFoundationApi
 @Composable
 fun BoxWithConstraintsScope.ReportScreen() {
+    ReportScreenContent(embedded = false)
+}
+
+@ExperimentalFoundationApi
+@Composable
+fun BoxWithConstraintsScope.ReportTab() {
+    ReportScreenContent(embedded = true)
+}
+
+@ExperimentalFoundationApi
+@Composable
+private fun BoxWithConstraintsScope.ReportScreenContent(embedded: Boolean) {
     val viewModel: ReportViewModel = screenScopedViewModel()
     val state = viewModel.uiState()
     val platformFileSharer = fileSharer()
@@ -112,7 +121,7 @@ fun BoxWithConstraintsScope.ReportScreen() {
         }
     }
 
-    UI(state = state, onEvent = viewModel::onEvent)
+    UI(state = state, onEvent = viewModel::onEvent, embedded = embedded)
 }
 
 @OptIn(ExperimentalLayoutApi::class)
@@ -121,11 +130,24 @@ fun BoxWithConstraintsScope.ReportScreen() {
 private fun BoxWithConstraintsScope.UI(
     state: ReportState,
     onEvent: (ReportEvent) -> Unit,
+    embedded: Boolean,
 ) {
     val nav = navigation()
     val datePicker = LocalDatePicker.current
     val listState = rememberLazyListState()
     var periodModal: TimePeriod? by remember { mutableStateOf(null) }
+    var filtersExpanded by remember { mutableStateOf(false) }
+
+    val activeFilterCount = state.selectedCategoryIds.size +
+            state.selectedAccountIds.size +
+            state.selectedTagIds.size +
+            (if (state.uncategorizedSelected) 1 else 0) +
+            (if (!state.includeIncome) 1 else 0) +
+            (if (!state.includeExpense) 1 else 0) +
+            (if (state.includeTransfer) 1 else 0) +
+            state.includeKeywords.size +
+            state.excludeKeywords.size +
+            (if (state.amountMin != null || state.amountMax != null) 1 else 0)
 
     if (state.loading) {
         Box(
@@ -152,7 +174,15 @@ private fun BoxWithConstraintsScope.UI(
         state = listState
     ) {
         item {
-            Spacer(Modifier.height(24.dp))
+            Spacer(Modifier.height(if (embedded) 8.dp else 16.dp))
+
+            ReportHeaderRow(
+                embedded = embedded,
+                onBack = { nav.back() },
+                onExport = { onEvent(ReportEvent.OnExport) },
+            )
+
+            Spacer(Modifier.height(8.dp))
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -167,11 +197,29 @@ private fun BoxWithConstraintsScope.UI(
                 )
             }
 
-            Spacer(Modifier.height(20.dp))
+            Spacer(Modifier.height(12.dp))
 
-            FilterSection(state = state, onEvent = onEvent)
+            FilterBar(
+                activeCount = activeFilterCount,
+                expanded = filtersExpanded,
+                sortOrder = state.sortOrder,
+                onToggleExpand = { filtersExpanded = !filtersExpanded },
+                onClear = { onEvent(ReportEvent.ClearFilters) },
+                onToggleSort = { onEvent(ReportEvent.ToggleSortOrder) },
+            )
 
-            Spacer(Modifier.height(20.dp))
+            AnimatedVisibility(
+                visible = filtersExpanded,
+                enter = expandVertically(),
+                exit = shrinkVertically()
+            ) {
+                Column {
+                    Spacer(Modifier.height(12.dp))
+                    FilterSection(state = state, onEvent = onEvent)
+                }
+            }
+
+            Spacer(Modifier.height(16.dp))
 
             SummaryStrip(
                 count = state.matchingCount,
@@ -223,29 +271,6 @@ private fun BoxWithConstraintsScope.UI(
         }
     }
 
-    BackActionBottomBar(
-        pure = ReportsTheme.colors.pure,
-        medium = ReportsTheme.colors.medium,
-        pureInverse = ReportsTheme.colors.pureInverse,
-        onBack = { nav.back() },
-    ) {
-        GradientButton(
-            text = stringResource(R.string.export),
-            backgroundGradient = IvyGradients.Green,
-            disabledBackgroundColor = ReportsTheme.colors.gray,
-            shape = ReportsTheme.shapes.rFull,
-            textStyle = ReportsTheme.typo.b2.copy(
-                color = Color(0xFFFAFAFA),
-                fontWeight = FontWeight.Bold,
-                textAlign = TextAlign.Start
-            ),
-            iconStart = R.drawable.ic_export_csv,
-            iconTint = Color(0xFFFAFAFA),
-        ) {
-            onEvent(ReportEvent.OnExport)
-        }
-    }
-
     ChoosePeriodModal(
         modal = periodModal,
         dismiss = { periodModal = null },
@@ -260,6 +285,66 @@ private fun BoxWithConstraintsScope.UI(
         },
         onPeriodSelected = { onEvent(ReportEvent.OnSelectPeriod(it)) }
     )
+}
+
+// ─── Header ──────────────────────────────────────────────────
+
+@Composable
+private fun ReportHeaderRow(
+    embedded: Boolean,
+    onBack: () -> Unit,
+    onExport: () -> Unit,
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = if (embedded) 16.dp else 8.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        if (!embedded) {
+            HeaderIconButton(
+                icon = R.drawable.ic_back,
+                contentDescription = "Back",
+                onClick = onBack
+            )
+            Spacer(Modifier.width(4.dp))
+        }
+        Text(
+            text = stringResource(R.string.reports),
+            style = ReportsTheme.typo.h2.copy(
+                color = ReportsTheme.colors.pureInverse,
+                fontWeight = FontWeight.ExtraBold,
+                textAlign = TextAlign.Start,
+            )
+        )
+        Spacer(Modifier.weight(1f))
+        HeaderIconButton(
+            icon = R.drawable.ic_export_csv,
+            contentDescription = "Export",
+            onClick = onExport
+        )
+    }
+}
+
+@Composable
+private fun HeaderIconButton(
+    @DrawableRes icon: Int,
+    contentDescription: String,
+    onClick: () -> Unit,
+) {
+    Box(
+        modifier = Modifier
+            .clip(CircleShape)
+            .clickable(onClick = onClick)
+            .padding(8.dp),
+        contentAlignment = Alignment.Center
+    ) {
+        ResourceIcon(
+            icon = icon,
+            tint = ReportsTheme.colors.pureInverse,
+            contentDescription = contentDescription
+        )
+    }
 }
 
 // ─── Sort Toggle ─────────────────────────────────────────────
@@ -361,33 +446,6 @@ private fun FilterSection(
     onEvent: (ReportEvent) -> Unit,
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 24.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(
-                text = "筛选条件",
-                style = ReportsTheme.typo.b2.copy(
-                    color = ReportsTheme.colors.pureInverse,
-                    fontWeight = FontWeight.Bold,
-                )
-            )
-            Spacer(Modifier.weight(1f))
-            if (state.isFilterActive) {
-                Text(
-                    modifier = Modifier
-                        .clip(ReportsTheme.shapes.rFull)
-                        .clickable { onEvent(ReportEvent.ClearFilters) }
-                        .padding(horizontal = 8.dp, vertical = 4.dp),
-                    text = "清除",
-                    style = ReportsTheme.typo.c.copy(color = ReportsTheme.colors.gray)
-                )
-            }
-        }
-
-        Spacer(Modifier.height(12.dp))
         SubLabelWithSelectAll(
             label = "类型",
             onSelectAll = { onEvent(ReportEvent.SelectAllTypes) }
@@ -511,11 +569,6 @@ private fun FilterSection(
                 expanded = state.advancedExpanded,
                 onToggle = { onEvent(ReportEvent.ToggleAdvanced) }
             )
-            Spacer(Modifier.weight(1f))
-            SortToggleButton(
-                sortOrder = state.sortOrder,
-                onToggle = { onEvent(ReportEvent.ToggleSortOrder) }
-            )
         }
 
         AnimatedVisibility(
@@ -525,6 +578,73 @@ private fun FilterSection(
         ) {
             AdvancedFilterContent(state = state, onEvent = onEvent)
         }
+    }
+}
+
+@Composable
+private fun FilterBar(
+    activeCount: Int,
+    expanded: Boolean,
+    sortOrder: SortOrder,
+    onToggleExpand: () -> Unit,
+    onClear: () -> Unit,
+    onToggleSort: () -> Unit,
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        val active = expanded || activeCount > 0
+        Row(
+            modifier = Modifier
+                .clip(ReportsTheme.shapes.rFull)
+                .background(
+                    color = if (expanded) ReportsTheme.colors.pureInverse else Color.Transparent,
+                    shape = ReportsTheme.shapes.rFull
+                )
+                .border(
+                    width = if (active) 2.dp else 1.dp,
+                    color = if (active) ReportsTheme.colors.pureInverse else ReportsTheme.colors.medium,
+                    shape = ReportsTheme.shapes.rFull
+                )
+                .clickable(onClick = onToggleExpand)
+                .padding(horizontal = 14.dp, vertical = 8.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            ResourceIcon(
+                icon = R.drawable.ic_filter_xs,
+                tint = if (expanded) ReportsTheme.colors.pure else ReportsTheme.colors.pureInverse,
+            )
+            Spacer(Modifier.width(6.dp))
+            Text(
+                text = if (activeCount > 0) "筛选 · $activeCount" else "筛选",
+                style = ReportsTheme.typo.c.copy(
+                    color = if (expanded) ReportsTheme.colors.pure else ReportsTheme.colors.pureInverse,
+                    fontWeight = FontWeight.Bold,
+                )
+            )
+        }
+
+        if (activeCount > 0) {
+            Spacer(Modifier.width(8.dp))
+            Text(
+                modifier = Modifier
+                    .clip(ReportsTheme.shapes.rFull)
+                    .clickable(onClick = onClear)
+                    .padding(horizontal = 8.dp, vertical = 6.dp),
+                text = "清除",
+                style = ReportsTheme.typo.c.copy(color = ReportsTheme.colors.gray)
+            )
+        }
+
+        Spacer(Modifier.weight(1f))
+
+        SortToggleButton(
+            sortOrder = sortOrder,
+            onToggle = onToggleSort
+        )
     }
 }
 
@@ -1085,7 +1205,7 @@ private fun DonutChartSection(state: ReportState) {
         items
     }
 
-    Spacer(Modifier.height(20.dp))
+    Spacer(Modifier.height(12.dp))
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -1224,7 +1344,7 @@ private fun DailyTrendSection(state: ReportState) {
     val maxAmount = bars.maxOf { it.amount }
     if (maxAmount <= 0.0) return
 
-    Spacer(Modifier.height(20.dp))
+    Spacer(Modifier.height(12.dp))
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -1313,7 +1433,7 @@ private fun CategoryBreakdownSection(state: ReportState) {
     val total = items.sumOf { it.amount }
     if (items.isEmpty() || total <= 0.0) return
 
-    Spacer(Modifier.height(20.dp))
+    Spacer(Modifier.height(12.dp))
     Column(
         modifier = Modifier
             .fillMaxWidth()

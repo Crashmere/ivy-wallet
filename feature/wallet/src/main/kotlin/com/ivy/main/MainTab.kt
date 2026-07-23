@@ -5,5 +5,7 @@ import androidx.compose.runtime.Immutable
 @Immutable
 internal enum class MainTab {
     HOME,
-    ACCOUNTS
+    ACCOUNTS,
+    REPORTS,
+    MINE
 }

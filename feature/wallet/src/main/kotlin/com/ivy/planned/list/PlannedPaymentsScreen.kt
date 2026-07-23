@@ -21,6 +21,8 @@ import com.ivy.ui.navigation.TransactionsScreen
 import com.ivy.ui.navigation.navigation
 import com.ivy.ui.navigation.screenScopedViewModel
 import com.ivy.ui.R
+import com.ivy.ui.compose.BackActionBottomBar
+import com.ivy.ui.compose.OutlinedPillButton
 import com.ivy.ui.rememberScrollPositionListState
 
 @Composable
@@ -43,7 +45,7 @@ private fun BoxWithConstraintsScope.UI(
 
     PlannedPaymentsLazyColumn(
         Header = {
-            Spacer(Modifier.height(32.dp))
+            Spacer(Modifier.height(20.dp))
 
             Text(
                 modifier = Modifier.padding(start = 24.dp),
@@ -55,7 +57,7 @@ private fun BoxWithConstraintsScope.UI(
                 )
             )
 
-            Spacer(Modifier.height(24.dp))
+            Spacer(Modifier.height(8.dp))
         },
         currency = state.currency,
         categories = state.categories,
@@ -96,11 +98,26 @@ private fun BoxWithConstraintsScope.UI(
         listState = rememberScrollPositionListState(key = "plannedPayments")
     )
 
-    PlannedPaymentsBottomBar(
-        onClose = {
-            nav.back()
-        },
-        onAdd = {
+    BackActionBottomBar(
+        pure = PlannedTheme.colors.pure,
+        medium = PlannedTheme.colors.medium,
+        pureInverse = PlannedTheme.colors.pureInverse,
+        onBack = { nav.back() },
+    ) {
+        OutlinedPillButton(
+            iconStart = R.drawable.ic_planned_payments,
+            text = stringResource(R.string.add_payment),
+            shape = PlannedTheme.shapes.rFull,
+            solidBackground = true,
+            backgroundColor = PlannedTheme.colors.pure,
+            iconTint = PlannedTheme.colors.pureInverse,
+            borderColor = PlannedTheme.colors.medium,
+            textStyle = PlannedTheme.typo.b2.copy(
+                fontWeight = FontWeight.Bold,
+                color = PlannedTheme.colors.pureInverse,
+                textAlign = TextAlign.Start,
+            ),
+        ) {
             nav.navigateTo(
                 EditPlannedScreen(
                     type = TransactionRouteType.EXPENSE,
@@ -108,7 +125,7 @@ private fun BoxWithConstraintsScope.UI(
                 )
             )
         }
-    )
+    }
 }
 
 private fun PlannedPaymentRule.toEditPlannedScreen(): EditPlannedScreen {

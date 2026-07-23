@@ -43,7 +43,7 @@ internal fun PlannedPaymentSectionDivider(
     expenses: Double,
     setExpanded: (Boolean) -> Unit
 ) {
-    Spacer(Modifier.height(24.dp))
+    Spacer(Modifier.height(16.dp))
 
     Row(
         modifier = Modifier

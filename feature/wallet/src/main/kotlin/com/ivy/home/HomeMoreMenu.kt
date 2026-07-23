@@ -361,17 +361,13 @@ private fun QuickAccess(
     showLoans: Boolean,
     onDestinationClick: (MoreMenuDestination) -> Unit
 ) {
-    val settingsLabel = stringResource(R.string.settings)
     val categoriesLabel = stringResource(R.string.categories)
-    val reportsLabel = stringResource(R.string.reports)
     val plannedPaymentsLabel = stringResource(R.string.planned_payments)
     val budgetsLabel = stringResource(R.string.budgets)
     val loansLabel = stringResource(R.string.loans)
 
     val items = buildList {
-        add(QuickAccessItem(R.drawable.home_more_menu_settings, settingsLabel, MoreMenuDestination.Settings))
         add(QuickAccessItem(R.drawable.home_more_menu_categories, categoriesLabel, MoreMenuDestination.Categories))
-        add(QuickAccessItem(R.drawable.home_more_menu_reports, reportsLabel, MoreMenuDestination.Reports))
         add(QuickAccessItem(R.drawable.home_more_menu_bulk_edit, "批量修改", MoreMenuDestination.BulkEdit))
         if (showPlannedPayments) {
             add(

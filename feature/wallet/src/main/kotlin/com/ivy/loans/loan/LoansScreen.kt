@@ -5,17 +5,19 @@ import com.ivy.loans.LoansTheme
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraintsScope
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
@@ -28,13 +30,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.ivy.ui.navigation.screenScopedViewModel
 import com.ivy.loans.humanReadableType
 import com.ivy.data.model.currency.getDefaultFIATCurrency
@@ -46,16 +47,16 @@ import com.ivy.ui.navigation.LoanDetailsScreen
 import com.ivy.ui.navigation.navigation
 import com.ivy.ui.R
 import com.ivy.ui.rememberScrollPositionListState
-import com.ivy.ui.money.BalanceRow
+import com.ivy.ui.money.formatAmount
 import com.ivy.ui.icon.ItemIconSDefaultIcon
 import com.ivy.ui.modal.ReorderModalSingleType
 import com.ivy.ui.compose.FilledIconButton
 import com.ivy.ui.compose.ResourceIcon
-import com.ivy.ui.theme.colors.dynamicContrast
 import com.ivy.ui.theme.colors.findContrastTextColor
 import com.ivy.loans.modal.LoanModal
 import com.ivy.ui.theme.colors.toComposeColor
 import com.ivy.loans.LoanProgressBar
+import kotlin.math.roundToInt
 
 @Composable
 fun BoxWithConstraintsScope.LoansScreen() {
@@ -90,7 +91,7 @@ private fun BoxWithConstraintsScope.UI(
                 }
             )
     ) {
-        Spacer(Modifier.height(32.dp))
+        Spacer(Modifier.height(20.dp))
 
         Toolbar(
             onDismiss = { nav.back() },
@@ -113,7 +114,7 @@ private fun BoxWithConstraintsScope.UI(
 
         LazyColumn(state = scrollState) {
             items(loans) { item ->
-                Spacer(Modifier.height(16.dp))
+                Spacer(Modifier.height(12.dp))
 
                 LoanItem(
                     displayLoan = item
@@ -283,7 +284,10 @@ private fun LoanItem(
     onClick: () -> Unit
 ) {
     val loan = displayLoan.loan
-    val contrastColor = findContrastTextColor(loan.color.toComposeColor())
+    val loanColor = loan.color.toComposeColor()
+    val currency = displayLoan.currencyCode ?: getDefaultFIATCurrency().currencyCode
+    val leftToPay = displayLoan.loanTotalAmount - displayLoan.amountPaid
+    val percent = displayLoan.percentPaid
 
     Column(
         modifier = Modifier
@@ -292,118 +296,94 @@ private fun LoanItem(
             .clip(LoansTheme.shapes.r4)
             .border(2.dp, LoansTheme.colors.medium, LoansTheme.shapes.r4)
             .testTag("loan_item")
-            .clickable(
-                onClick = onClick
-            )
+            .clickable(onClick = onClick)
+            .padding(horizontal = 16.dp, vertical = 14.dp)
     ) {
-        LoanHeader(
-            displayLoan = displayLoan,
-            contrastColor = contrastColor,
-        )
-
-        Spacer(Modifier.height(12.dp))
-
-        LoanInfo(
-            displayLoan = displayLoan
-        )
-
-        Spacer(Modifier.height(24.dp))
-    }
-}
-
-@Composable
-private fun LoanHeader(
-    displayLoan: DisplayLoan,
-    contrastColor: Color,
-) {
-    val loan = displayLoan.loan
-
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(loan.color.toComposeColor(), LoansTheme.shapes.r4Top)
-    ) {
-        Spacer(Modifier.height(16.dp))
-
         Row(
+            modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Spacer(Modifier.width(20.dp))
+            Box(
+                modifier = Modifier
+                    .size(44.dp)
+                    .clip(CircleShape)
+                    .background(loanColor),
+                contentAlignment = Alignment.Center
+            ) {
+                ItemIconSDefaultIcon(
+                    iconName = loan.icon,
+                    defaultIcon = R.drawable.ic_custom_loan_s,
+                    tint = findContrastTextColor(loanColor)
+                )
+            }
 
-            ItemIconSDefaultIcon(
-                iconName = loan.icon,
-                defaultIcon = R.drawable.ic_custom_loan_s,
-                tint = contrastColor
-            )
+            Spacer(Modifier.width(14.dp))
 
-            Spacer(Modifier.width(8.dp))
+            Column(modifier = Modifier.weight(1f)) {
+                Text(
+                    text = loan.name,
+                    style = LoansTheme.typo.b2.copy(
+                        color = LoansTheme.colors.pureInverse,
+                        fontWeight = FontWeight.ExtraBold,
+                        textAlign = TextAlign.Start
+                    ),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
+
+                Spacer(Modifier.height(2.dp))
+
+                Text(
+                    text = loan.humanReadableType(),
+                    style = LoansTheme.typo.nC.copy(
+                        color = LoansTheme.colors.gray,
+                        fontWeight = FontWeight.SemiBold,
+                        textAlign = TextAlign.Start
+                    ),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
+            }
+
+            Spacer(Modifier.width(12.dp))
 
             Text(
-                text = loan.name,
-                style = LoansTheme.typo.b1.copy(
-                    color = contrastColor,
+                text = "${formatAmount(leftToPay, currency)} $currency",
+                style = LoansTheme.typo.nB2.copy(
+                    color = LoansTheme.colors.pureInverse,
                     fontWeight = FontWeight.ExtraBold,
-                    textAlign = TextAlign.Start
-                )
-            )
-            Spacer(Modifier.width(8.dp))
-
-            Text(
-                text = loan.humanReadableType(),
-                style = LoansTheme.typo.c.copy(
-                    color = loan.color.toComposeColor().dynamicContrast(),
-                    fontWeight = FontWeight.Bold,
-                    textAlign = TextAlign.Start
-                )
+                    textAlign = TextAlign.End
+                ),
+                maxLines = 1
             )
         }
 
-        Spacer(Modifier.height(4.dp))
+        Spacer(Modifier.height(12.dp))
 
-        val leftToPay = displayLoan.loanTotalAmount - displayLoan.amountPaid
-        BalanceRow(
-            modifier = Modifier
-                .align(Alignment.CenterHorizontally),
-            textColor = contrastColor,
-            currency = displayLoan.currencyCode ?: getDefaultFIATCurrency().currencyCode,
-            balance = leftToPay,
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            LoanProgressBar(
+                modifier = Modifier
+                    .weight(1f)
+                    .height(8.dp),
+                notFilledColor = LoansTheme.colors.medium,
+                percent = percent
+            )
 
-            balanceFontSize = 30.sp,
-            currencyFontSize = 30.sp,
+            Spacer(Modifier.width(10.dp))
 
-            currencyUpfront = false
-        )
-
-        Spacer(Modifier.height(16.dp))
+            Text(
+                text = "${(percent * 100).roundToInt()}%",
+                style = LoansTheme.typo.nC.copy(
+                    color = LoansTheme.colors.gray,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.End
+                )
+            )
+        }
     }
-}
-
-@Composable
-private fun ColumnScope.LoanInfo(
-    displayLoan: DisplayLoan
-) {
-    Text(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 24.dp),
-        text = displayLoan.formattedDisplayText,
-        style = LoansTheme.typo.nB2.copy(
-            color = LoansTheme.colors.pureInverse,
-            fontWeight = FontWeight.Bold,
-            textAlign = TextAlign.Center
-        )
-    )
-
-    Spacer(Modifier.height(12.dp))
-
-    LoanProgressBar(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(24.dp)
-            .padding(horizontal = 24.dp),
-        notFilledColor = LoansTheme.colors.medium,
-        percent = displayLoan.percentPaid
-    )
 }
 
 @Composable

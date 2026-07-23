@@ -83,6 +83,18 @@ private enum class SettingsPage(@StringRes val title: Int) {
 @ExperimentalFoundationApi
 @Composable
 fun BoxWithConstraintsScope.SettingsScreen() {
+    SettingsScreenContent(embedded = false)
+}
+
+@ExperimentalFoundationApi
+@Composable
+fun BoxWithConstraintsScope.SettingsTab() {
+    SettingsScreenContent(embedded = true)
+}
+
+@ExperimentalFoundationApi
+@Composable
+private fun BoxWithConstraintsScope.SettingsScreenContent(embedded: Boolean) {
     val viewModel: SettingsViewModel = screenScopedViewModel()
     val uiState = viewModel.uiState()
     val fileSharer = fileSharer()
@@ -226,6 +238,7 @@ fun BoxWithConstraintsScope.SettingsScreen() {
         onOpenExchangeRates = {
             nav.navigateTo(ExchangeRatesScreen)
         },
+        embedded = embedded,
     )
 }
 
@@ -288,6 +301,7 @@ private fun BoxWithConstraintsScope.UI(
     onBack: () -> Unit = {},
     onOpenImport: () -> Unit = {},
     onOpenExchangeRates: () -> Unit = {},
+    embedded: Boolean = false,
 ) {
     var currencyModalVisible by remember { mutableStateOf(false) }
     var chooseStartDateOfMonthVisible by remember { mutableStateOf(false) }
@@ -316,16 +330,18 @@ private fun BoxWithConstraintsScope.UI(
             .navigationBarsPadding()
             .testTag("settings_lazy_column")
     ) {
-        stickyHeader {
-            SettingsToolbarFrame(
-                onBack = {
-                    if (settingsPage == SettingsPage.Main) {
-                        onBack()
-                    } else {
-                        settingsPage = SettingsPage.Main
-                    }
-                },
-            )
+        if (!embedded || settingsPage != SettingsPage.Main) {
+            stickyHeader {
+                SettingsToolbarFrame(
+                    onBack = {
+                        if (settingsPage == SettingsPage.Main) {
+                            onBack()
+                        } else {
+                            settingsPage = SettingsPage.Main
+                        }
+                    },
+                )
+            }
         }
 
         item {
@@ -343,7 +359,7 @@ private fun BoxWithConstraintsScope.UI(
                 )
             )
 
-            Spacer(Modifier.height(24.dp))
+            Spacer(Modifier.height(16.dp))
         }
 
         when (settingsPage) {
@@ -630,7 +646,7 @@ private fun CloudBackupHeroCard(
             .clip(SettingsTheme.shapes.r4)
             .background(IvyGradients.Ivy.asHorizontalBrush(), SettingsTheme.shapes.r4)
             .clickable(onClick = onConfigure)
-            .padding(20.dp),
+            .padding(16.dp),
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             SettingsIcon(
@@ -666,7 +682,7 @@ private fun CloudBackupHeroCard(
             BackupStatusPill(configured = configured)
         }
 
-        Spacer(Modifier.height(18.dp))
+        Spacer(Modifier.height(14.dp))
 
         if (configured) {
             Row(verticalAlignment = Alignment.CenterVertically) {
@@ -729,7 +745,7 @@ private fun HeroActionButton(
                 }
             )
             .clickable(onClick = onClick)
-            .padding(vertical = 13.dp),
+            .padding(vertical = 11.dp),
         contentAlignment = Alignment.Center,
     ) {
         Text(
@@ -753,18 +769,18 @@ private fun ProfileHeroCard(
             .fillMaxWidth()
             .clip(SettingsTheme.shapes.r4)
             .background(SettingsTheme.colors.medium, SettingsTheme.shapes.r4)
-            .padding(16.dp),
+            .padding(14.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Box(
             modifier = Modifier
-                .size(56.dp)
+                .size(48.dp)
                 .clip(CircleShape)
                 .background(IvyGradients.Ivy.asHorizontalBrush()),
             contentAlignment = Alignment.Center,
         ) {
             Icon(
-                modifier = Modifier.size(28.dp),
+                modifier = Modifier.size(24.dp),
                 painter = painterResource(id = R.drawable.ic_custom_account_m),
                 contentDescription = "wallet",
                 tint = White,
@@ -965,7 +981,7 @@ private fun AboutSection() {
         Spacer(Modifier.width(8.dp))
 
         Text(
-            modifier = Modifier.padding(vertical = 20.dp),
+            modifier = Modifier.padding(vertical = 14.dp),
             text = stringResource(R.string.version),
             style = SettingsTheme.typo.b2.copy(
                 color = SettingsTheme.colors.pureInverse,
@@ -1173,7 +1189,7 @@ private fun StartDateOfMonth(
         Spacer(Modifier.width(8.dp))
 
         Text(
-            modifier = Modifier.padding(vertical = 20.dp),
+            modifier = Modifier.padding(vertical = 14.dp),
             text = stringResource(R.string.start_date_of_month),
             style = SettingsTheme.typo.b2.copy(
                 color = SettingsTheme.colors.pureInverse,
@@ -1240,7 +1256,7 @@ private fun AppSwitch(
         Column(
             Modifier
                 .weight(1f)
-                .padding(top = 20.dp, bottom = 20.dp, end = 8.dp)
+                .padding(top = 14.dp, bottom = 14.dp, end = 8.dp)
         ) {
             Text(
                 text = text,
@@ -1316,7 +1332,7 @@ private fun SettingsPrimaryButton(
         Column(
             Modifier
                 .weight(1f)
-                .padding(top = 20.dp, bottom = 20.dp, end = 8.dp)
+                .padding(top = 14.dp, bottom = 14.dp, end = 8.dp)
         ) {
             Text(
                 text = text,
@@ -1394,7 +1410,7 @@ private fun CurrencyButton(
         Spacer(Modifier.width(8.dp))
 
         Text(
-            modifier = Modifier.padding(vertical = 20.dp),
+            modifier = Modifier.padding(vertical = 14.dp),
             text = stringResource(R.string.set_currency),
             style = SettingsTheme.typo.b2.copy(
                 color = SettingsTheme.colors.pureInverse,
@@ -1432,7 +1448,7 @@ private fun SettingsSectionDivider(
     val dividerColor = color ?: SettingsTheme.colors.gray
 
     Column {
-        Spacer(Modifier.height(32.dp))
+        Spacer(Modifier.height(20.dp))
 
         Text(
             modifier = Modifier.padding(start = 32.dp),
@@ -1468,7 +1484,7 @@ private fun SettingsSubMenuButton(
         Text(
             modifier = Modifier
                 .weight(1f)
-                .padding(top = 20.dp, bottom = 20.dp, end = 8.dp),
+                .padding(top = 14.dp, bottom = 14.dp, end = 8.dp),
             text = text,
             style = SettingsTheme.typo.b2.copy(
                 color = SettingsTheme.colors.pureInverse,
@@ -1513,7 +1529,7 @@ private fun SettingsIcon(
 ) {
     Image(
         modifier = Modifier
-            .size(48.dp)
+            .size(40.dp)
             .padding(all = padding),
         painter = painterResource(id = icon),
         colorFilter = ColorFilter.tint(tint),

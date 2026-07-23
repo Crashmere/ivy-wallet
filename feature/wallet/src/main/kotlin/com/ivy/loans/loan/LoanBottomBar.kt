@@ -117,7 +117,7 @@ private fun RowScope.Tab(
             .weight(1f)
             .clip(LoansTheme.shapes.rFull)
             .clickable(onClick = onClick)
-            .padding(top = 12.dp, bottom = 16.dp)
+            .padding(top = 10.dp, bottom = 12.dp)
             .testTag(name.lowercase()),
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically

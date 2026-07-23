@@ -78,9 +78,6 @@ internal fun BoxWithConstraintsScope.BottomBar(
     onAddTransfer: () -> Unit,
     onAddPlannedPayment: () -> Unit,
 
-    onOpenReports: () -> Unit,
-    onOpenProfile: () -> Unit,
-
     showAddAccountModal: () -> Unit,
 ) {
     var expanded by remember { mutableStateOf(false) }
@@ -142,19 +139,19 @@ internal fun BoxWithConstraintsScope.BottomBar(
         Tab(
             icon = R.drawable.home_more_menu_reports,
             name = stringResource(R.string.reports),
-            selected = false,
+            selected = tab == MainTab.REPORTS,
             selectedColor = Ivy
         ) {
-            onOpenReports()
+            selectTab(MainTab.REPORTS)
         }
 
         Tab(
             icon = R.drawable.ic_settings,
             name = stringResource(R.string.mine),
-            selected = false,
+            selected = tab == MainTab.MINE,
             selectedColor = Ivy
         ) {
-            onOpenProfile()
+            selectTab(MainTab.MINE)
         }
     }
 
@@ -252,28 +249,15 @@ internal fun BoxWithConstraintsScope.BottomBar(
         backgroundPadding = 8.dp,
         icon = R.drawable.ic_add,
         backgroundGradient = when (tab) {
-            MainTab.HOME -> {
-                if (!expanded) IvyGradients.Ivy else Gradient.solid(MainTheme.colors.gray)
-            }
-
-            MainTab.ACCOUNTS -> {
-                IvyGradients.Green
-            }
+            MainTab.ACCOUNTS -> IvyGradients.Green
+            else -> if (!expanded) IvyGradients.Ivy else Gradient.solid(MainTheme.colors.gray)
         },
         hasShadow = !expanded,
-        tint = when (tab) {
-            MainTab.HOME -> White
-            MainTab.ACCOUNTS -> White
-        }
+        tint = White
     ) {
         when (tab) {
-            MainTab.HOME -> {
-                expanded = !expanded
-            }
-
-            MainTab.ACCOUNTS -> {
-                showAddAccountModal()
-            }
+            MainTab.ACCOUNTS -> showAddAccountModal()
+            else -> expanded = !expanded
         }
     }
 }

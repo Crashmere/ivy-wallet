@@ -6,12 +6,14 @@ import android.annotation.SuppressLint
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyItemScope
 import androidx.compose.foundation.shape.CircleShape
@@ -25,29 +27,23 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.TransactionType
-import com.ivy.data.model.IntervalType
 import com.ivy.data.model.PlannedPaymentRule
 import com.ivy.ui.time.forDisplay
-import com.ivy.ui.time.formatDateOnly
 import com.ivy.ui.time.formatDateOnlyWithYear
 import com.ivy.ui.R
-import com.ivy.ui.money.AmountCurrencyB1
-import com.ivy.ui.theme.colors.Gradient
-import com.ivy.ui.theme.colors.IvyGradients
+import com.ivy.ui.icon.ItemIconSDefaultIcon
+import com.ivy.ui.money.formatAmount
+import com.ivy.ui.theme.colors.IvyFixedColors.Gray
+import com.ivy.ui.theme.colors.IvyFixedColors.Green
 import com.ivy.ui.theme.colors.IvyFixedColors.Ivy
-import com.ivy.ui.theme.colors.IvyFixedColors.White
-import com.ivy.ui.compose.GradientButton
-import com.ivy.ui.compose.ResourceIcon
-import com.ivy.ui.icon.getCustomIconIdS
 import com.ivy.ui.theme.colors.findContrastTextColor
 import com.ivy.ui.theme.colors.toComposeColor
 import kotlinx.collections.immutable.ImmutableList
 import java.time.Instant
-import java.time.LocalDateTime
 import java.time.ZoneId
-import java.util.Locale
 import java.util.UUID
 
 @SuppressLint("ComposeModifierMissing")
@@ -61,265 +57,197 @@ internal fun LazyItemScope.PlannedPaymentCard(
     onCategoryClick: (UUID) -> Unit,
     onAccountClick: (UUID) -> Unit,
 ) {
-    Spacer(Modifier.height(12.dp))
+    val account = accounts.find { it.id == plannedPayment.accountId }
+    val currency = account?.currency ?: baseCurrency
+    val category = plannedPayment.categoryId?.let { targetId ->
+        categories.find { it.id == targetId }
+    }
 
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp)
-            .clip(PlannedTheme.shapes.r4)
             .clickable {
-                if (accounts.find { it.id == plannedPayment.accountId } != null) {
+                if (account != null) {
                     onClick(plannedPayment)
                 }
             }
-            .background(PlannedTheme.colors.medium, PlannedTheme.shapes.r4)
             .testTag("planned_payment_card")
     ) {
-        val currency = accounts.find { it.id == plannedPayment.accountId }?.currency ?: baseCurrency
-
-        Spacer(Modifier.height(20.dp))
-
-        PlannedPaymentHeaderRow(
-            plannedPayment = plannedPayment,
-            categories = categories,
-            accounts = accounts,
-            onCategoryClick = onCategoryClick,
-            onAccountClick = onAccountClick
-        )
-
-        Spacer(Modifier.height(16.dp))
-
-        RuleTextRow(
-            oneTime = plannedPayment.oneTime,
-            startDate = plannedPayment.startDate?.toLocalDateTimeInSystemZone(),
-            intervalN = plannedPayment.intervalN,
-            intervalType = plannedPayment.intervalType
-        )
-
-        if (plannedPayment.title.isNullOrBlank().not()) {
-            Spacer(Modifier.height(8.dp))
-
-            Text(
-                modifier = Modifier.padding(horizontal = 24.dp),
-                text = plannedPayment.title!!,
-                style = PlannedTheme.typo.b1.copy(
-                    fontWeight = FontWeight.ExtraBold,
-                    color = PlannedTheme.colors.pureInverse,
-                    textAlign = TextAlign.Start
-                )
-            )
-        }
-
-        Spacer(Modifier.height(20.dp))
-
-        PlannedPaymentAmountRow(
-            transactionType = plannedPayment.type,
-            currency = currency,
-            amount = plannedPayment.amount
-        )
-
-        Spacer(Modifier.height(24.dp))
-    }
-}
-
-@Composable
-private fun PlannedPaymentAmountRow(
-    transactionType: TransactionType,
-    currency: String,
-    amount: Double,
-    modifier: Modifier = Modifier
-) {
-    Row(
-        modifier = modifier.testTag("type_amount_currency"),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Spacer(Modifier.width(24.dp))
-
-        val style = when (transactionType) {
-            TransactionType.INCOME -> PlannedAmountTypeStyle(
-                icon = R.drawable.ic_income,
-                gradient = IvyGradients.Green,
-                iconTint = White,
-                textColor = PlannedTheme.colors.green
-            )
-
-            TransactionType.EXPENSE -> PlannedAmountTypeStyle(
-                icon = R.drawable.ic_expense,
-                gradient = Gradient(PlannedTheme.colors.gray, PlannedTheme.colors.pureInverse),
-                iconTint = White,
-                textColor = PlannedTheme.colors.pureInverse
-            )
-
-            TransactionType.TRANSFER -> PlannedAmountTypeStyle(
-                icon = R.drawable.ic_transfer,
-                gradient = IvyGradients.Ivy,
-                iconTint = White,
-                textColor = Ivy
-            )
-        }
-
-        ResourceIcon(
-            modifier = Modifier
-                .background(style.gradient.asHorizontalBrush(), CircleShape),
-            icon = style.icon,
-            tint = style.iconTint
-        )
-
-        Spacer(Modifier.width(12.dp))
-
-        AmountCurrencyB1(
-            amount = amount,
-            currency = currency,
-            textColor = style.textColor
-        )
-
-        Spacer(Modifier.width(24.dp))
-    }
-}
-
-private data class PlannedAmountTypeStyle(
-    @DrawableRes val icon: Int,
-    val gradient: Gradient,
-    val iconTint: Color,
-    val textColor: Color
-)
-
-private fun Instant.toLocalDateTimeInSystemZone() =
-    atZone(ZoneId.systemDefault()).toLocalDateTime()
-
-@Composable
-private fun PlannedPaymentHeaderRow(
-    plannedPayment: PlannedPaymentRule,
-    categories: ImmutableList<PlannedPaymentCategory>,
-    accounts: ImmutableList<PlannedPaymentAccount>,
-    onCategoryClick: (UUID) -> Unit,
-    onAccountClick: (UUID) -> Unit,
-) {
-    if (plannedPayment.type != TransactionType.TRANSFER) {
         Row(
-            verticalAlignment = Alignment.CenterVertically
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 20.dp, vertical = 12.dp),
+            verticalAlignment = Alignment.CenterVertically,
         ) {
-            Spacer(Modifier.width(20.dp))
-
-            ResourceIcon(
-                modifier = Modifier
-                    .background(PlannedTheme.colors.pure, CircleShape),
-                icon = R.drawable.ic_planned_payments,
-                tint = PlannedTheme.colors.pureInverse
+            PlannedIcon(
+                type = plannedPayment.type,
+                categoryColor = category?.color,
+                categoryIcon = category?.icon,
             )
+
+            Spacer(Modifier.width(14.dp))
+
+            Column(modifier = Modifier.weight(1f)) {
+                Text(
+                    text = plannedTitle(plannedPayment, category, account),
+                    style = PlannedTheme.typo.b2.copy(
+                        fontWeight = FontWeight.ExtraBold,
+                        color = PlannedTheme.colors.pureInverse,
+                        textAlign = TextAlign.Start,
+                    ),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                )
+
+                val subtitle = plannedSubtitle(plannedPayment, account)
+                if (subtitle.isNotBlank()) {
+                    Spacer(Modifier.height(3.dp))
+                    Text(
+                        text = subtitle,
+                        style = PlannedTheme.typo.nC.copy(
+                            color = PlannedTheme.colors.gray,
+                            fontWeight = FontWeight.SemiBold,
+                            textAlign = TextAlign.Start,
+                        ),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                    )
+                }
+            }
 
             Spacer(Modifier.width(12.dp))
 
-            val category =
-                plannedPayment.categoryId?.let { targetId -> categories.find { it.id == targetId } }
-            if (category != null) {
-                GradientButton(
-                    iconTint = findContrastTextColor(category.color.toComposeColor()),
-                    iconStart = getCustomIconIdS(
-                        category.icon,
-                        R.drawable.ic_custom_category_s
-                    ),
-                    text = category.name,
-                    backgroundGradient = Gradient.solid(category.color.toComposeColor()),
-                    disabledBackgroundColor = PlannedTheme.colors.gray,
-                    shape = PlannedTheme.shapes.rFull,
-                    textStyle = PlannedTheme.typo.c.copy(
-                        color = findContrastTextColor(category.color.toComposeColor()),
-                        fontWeight = FontWeight.ExtraBold,
-                        textAlign = TextAlign.Start
-                    ),
-                    padding = 8.dp,
-                    iconEdgePadding = 10.dp
-                ) {
-                    onCategoryClick(category.id)
-                }
-
-                Spacer(Modifier.width(12.dp))
-            }
-
-            val account = accounts.find { it.id == plannedPayment.accountId }
-            GradientButton(
-                backgroundGradient = Gradient.solid(PlannedTheme.colors.pure),
-                disabledBackgroundColor = PlannedTheme.colors.gray,
-                shape = PlannedTheme.shapes.rFull,
-                text = account?.name ?: stringResource(R.string.deleted),
-                iconTint = PlannedTheme.colors.pureInverse,
-                iconStart = getCustomIconIdS(account?.icon, R.drawable.ic_custom_account_s),
-                textStyle = PlannedTheme.typo.c.copy(
-                    color = PlannedTheme.colors.pureInverse,
-                    fontWeight = FontWeight.ExtraBold,
-                    textAlign = TextAlign.Start
-                ),
-                padding = 8.dp,
-                iconEdgePadding = 10.dp
-            ) {
-                account?.let {
-                    onAccountClick(account.id)
-                }
-            }
+            PlannedAmount(
+                type = plannedPayment.type,
+                amount = plannedPayment.amount,
+                currency = currency,
+            )
         }
+
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 20.dp)
+                .height(1.dp)
+                .background(PlannedTheme.colors.medium)
+        )
     }
 }
 
 @Composable
-private fun RuleTextRow(
-    oneTime: Boolean,
-    startDate: LocalDateTime?,
-    intervalN: Int?,
-    intervalType: IntervalType?
+private fun PlannedIcon(
+    type: TransactionType,
+    categoryColor: Int?,
+    categoryIcon: String?,
 ) {
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Spacer(Modifier.width(24.dp))
+    val backgroundColor: Color
+    val iconName: String?
+    @DrawableRes val defaultIcon: Int
 
-        if (oneTime) {
-            Text(
-                text = stringResource(R.string.planned_for_uppercase),
-                style = PlannedTheme.typo.nC.copy(
-                    color = PlannedTheme.colors.orange,
-                    fontWeight = FontWeight.SemiBold,
-                    textAlign = TextAlign.Start
-                )
-            )
-            Text(
-                modifier = Modifier.padding(bottom = 1.dp),
-                text = startDate?.toLocalDate()?.formatDateOnlyWithYear()?.uppercase(Locale.getDefault())
-                    ?: stringResource(R.string.null_text),
-                style = PlannedTheme.typo.nC.copy(
-                    color = PlannedTheme.colors.orange,
-                    fontWeight = FontWeight.ExtraBold,
-                    textAlign = TextAlign.Start
-                )
-            )
-        } else {
-            val startDateFormatted = startDate?.toLocalDate()?.formatDateOnly()?.uppercase(Locale.getDefault())
-            Text(
-                text = stringResource(R.string.starts_date, startDateFormatted ?: ""),
-                style = PlannedTheme.typo.nC.copy(
-                    color = PlannedTheme.colors.orange,
-                    fontWeight = FontWeight.SemiBold,
-                    textAlign = TextAlign.Start
-                )
-            )
-            val intervalTypeFormatted = intervalType?.forDisplay(intervalN ?: 0)?.uppercase(Locale.getDefault())
-            Text(
-                modifier = Modifier.padding(bottom = 1.dp),
-                text = stringResource(
-                    R.string.repeats_every,
-                    intervalN ?: 0,
-                    intervalTypeFormatted ?: ""
-                ),
-                style = PlannedTheme.typo.nC.copy(
-                    color = PlannedTheme.colors.orange,
-                    fontWeight = FontWeight.ExtraBold,
-                    textAlign = TextAlign.Start
-                )
-            )
+    when {
+        type == TransactionType.TRANSFER -> {
+            backgroundColor = Ivy
+            iconName = null
+            defaultIcon = R.drawable.ic_transfer
         }
 
-        Spacer(Modifier.width(24.dp))
+        categoryColor != null -> {
+            backgroundColor = categoryColor.toComposeColor()
+            iconName = categoryIcon
+            defaultIcon = R.drawable.ic_custom_category_s
+        }
+
+        type == TransactionType.INCOME -> {
+            backgroundColor = Green
+            iconName = null
+            defaultIcon = R.drawable.ic_income
+        }
+
+        else -> {
+            backgroundColor = Gray
+            iconName = null
+            defaultIcon = R.drawable.ic_expense
+        }
+    }
+
+    Box(
+        modifier = Modifier
+            .size(44.dp)
+            .clip(CircleShape)
+            .background(backgroundColor),
+        contentAlignment = Alignment.Center,
+    ) {
+        ItemIconSDefaultIcon(
+            iconName = iconName,
+            defaultIcon = defaultIcon,
+            tint = findContrastTextColor(backgroundColor),
+        )
     }
 }
+
+@Composable
+private fun PlannedAmount(
+    type: TransactionType,
+    amount: Double,
+    currency: String,
+) {
+    val color = when (type) {
+        TransactionType.INCOME -> Green
+        TransactionType.TRANSFER -> Ivy
+        TransactionType.EXPENSE -> PlannedTheme.colors.pureInverse
+    }
+    val sign = when (type) {
+        TransactionType.INCOME -> "+"
+        TransactionType.EXPENSE -> "-"
+        TransactionType.TRANSFER -> ""
+    }
+
+    Text(
+        text = "$sign${formatAmount(amount, currency)} $currency",
+        style = PlannedTheme.typo.nB2.copy(
+            fontWeight = FontWeight.ExtraBold,
+            color = color,
+            textAlign = TextAlign.End,
+        ),
+        maxLines = 1,
+    )
+}
+
+@Composable
+private fun plannedTitle(
+    rule: PlannedPaymentRule,
+    category: PlannedPaymentCategory?,
+    account: PlannedPaymentAccount?,
+): String = when {
+    !rule.title.isNullOrBlank() -> rule.title!!
+    rule.type == TransactionType.TRANSFER -> stringResource(R.string.transfer)
+    category != null -> category.name
+    account != null -> account.name
+    else -> stringResource(R.string.deleted)
+}
+
+@Composable
+private fun plannedSubtitle(
+    rule: PlannedPaymentRule,
+    account: PlannedPaymentAccount?,
+): String {
+    val parts = buildList {
+        add(scheduleText(rule))
+        account?.let { add(it.name) }
+    }
+    return parts.filter { it.isNotBlank() }.joinToString(" · ")
+}
+
+@Composable
+private fun scheduleText(rule: PlannedPaymentRule): String {
+    val startDate = rule.startDate?.toLocalDateTimeInSystemZone()?.toLocalDate()
+    return if (rule.oneTime) {
+        startDate?.formatDateOnlyWithYear() ?: stringResource(R.string.null_text)
+    } else {
+        val intervalType = rule.intervalType?.forDisplay(rule.intervalN ?: 0) ?: ""
+        stringResource(R.string.repeats_every, rule.intervalN ?: 0, intervalType)
+    }
+}
+
+private fun Instant.toLocalDateTimeInSystemZone() =
+    atZone(ZoneId.systemDefault()).toLocalDateTime()

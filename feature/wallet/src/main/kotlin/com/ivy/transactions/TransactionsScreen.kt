@@ -354,7 +354,6 @@ private fun BoxWithConstraintsScope.UI(
 ) {
     val periodState = LocalPeriodState.current
     val datePicker = LocalDatePicker.current
-    val screenHeight = maxHeight
     val itemColor = (account?.color ?: category?.color?.value)?.toComposeColor()
         ?: TransactionsTheme.colors.gray
 
@@ -521,7 +520,7 @@ private fun BoxWithConstraintsScope.UI(
                 setOverdueExpanded = setOverdueExpanded,
 
                 history = history.map { it.toTransactionListHistoryItem() },
-                lastItemSpacer = screenHeight * 0.7f,
+                lastItemSpacer = 120.dp,
 
                 onPayOrGet = onPayOrGet,
                 onTransactionClick = { transactionId, transactionType ->
@@ -833,7 +832,7 @@ private fun Header(
     Column(
         modifier = Modifier.background(itemColor)
     ) {
-        Spacer(Modifier.height(20.dp))
+        Spacer(Modifier.height(12.dp))
 
         val hideEditAndDeleteButtonForAccountTransfer =
             !screen.containsTransferTransactions
@@ -847,7 +846,7 @@ private fun Header(
             showDeleteButton = hideEditAndDeleteButtonForAccountTransfer,
         )
 
-        Spacer(Modifier.height(24.dp))
+        Spacer(Modifier.height(16.dp))
 
         Item(
             contrastColor = contrastColor,
@@ -904,7 +903,7 @@ private fun Header(
             )
         }
 
-        Spacer(Modifier.height(20.dp))
+        Spacer(Modifier.height(12.dp))
 
         IncomeExpensesCards(
             currency = currency,
@@ -950,7 +949,7 @@ private fun Header(
             }
         )
 
-        Spacer(Modifier.height(20.dp))
+        Spacer(Modifier.height(12.dp))
     }
 }
 
