@@ -87,9 +87,6 @@ private fun BoxWithConstraintsScope.UI(
         key = "accounts_lazy_column"
     )
 
-    val includedAccounts = state.accountsData.filter { it.account.includeInBalance }
-    val excludedAccounts = state.accountsData.filter { !it.account.includeInBalance }
-
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -120,59 +117,26 @@ private fun BoxWithConstraintsScope.UI(
 
             NetWorthCard(
                 currency = state.baseCurrency,
-                netWorth = state.totalBalanceWithoutExcluded.toDoubleOrNull() ?: 0.00,
+                netWorth = state.netWorth,
                 change = state.netWorthChange,
                 hideBalance = state.hideTotalBalance,
             )
+
+            Spacer(Modifier.height(6.dp))
         }
 
-        if (includedAccounts.isNotEmpty()) {
-            item {
-                AccountGroupHeader(
-                    label = stringResource(R.string.frequently_used),
-                    total = includedAccounts.sumOf { it.balanceBaseCurrency ?: it.balance },
-                    currency = state.baseCurrency,
-                    hideBalance = state.hideTotalBalance,
-                )
-            }
-            items(includedAccounts) {
-                Spacer(Modifier.height(10.dp))
-                AccountCard(
-                    baseCurrency = state.baseCurrency,
-                    accountData = it,
-                ) {
-                    nav.navigateTo(
-                        TransactionsScreen(
-                            accountId = it.account.id.value,
-                            categoryId = null
-                        )
+        items(state.accountsData) {
+            Spacer(Modifier.height(10.dp))
+            AccountCard(
+                baseCurrency = state.baseCurrency,
+                accountData = it,
+            ) {
+                nav.navigateTo(
+                    TransactionsScreen(
+                        accountId = it.account.id.value,
+                        categoryId = null
                     )
-                }
-            }
-        }
-
-        if (excludedAccounts.isNotEmpty()) {
-            item {
-                AccountGroupHeader(
-                    label = stringResource(R.string.others),
-                    total = excludedAccounts.sumOf { it.balanceBaseCurrency ?: it.balance },
-                    currency = state.baseCurrency,
-                    hideBalance = state.hideTotalBalance,
                 )
-            }
-            items(excludedAccounts) {
-                Spacer(Modifier.height(10.dp))
-                AccountCard(
-                    baseCurrency = state.baseCurrency,
-                    accountData = it,
-                ) {
-                    nav.navigateTo(
-                        TransactionsScreen(
-                            accountId = it.account.id.value,
-                            categoryId = null
-                        )
-                    )
-                }
             }
         }
 
@@ -317,42 +281,6 @@ private fun NetWorthCard(
 }
 
 @Composable
-private fun AccountGroupHeader(
-    label: String,
-    total: Double,
-    currency: String,
-    hideBalance: Boolean,
-) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 24.dp)
-            .padding(top = 22.dp, bottom = 2.dp),
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        Text(
-            text = label,
-            style = AccountsTheme.typo.c.copy(
-                color = AccountsTheme.colors.pureInverse.copy(alpha = 0.5f),
-                fontWeight = FontWeight.Bold,
-                textAlign = TextAlign.Start,
-            ),
-        )
-
-        Spacer(Modifier.weight(1f))
-
-        Text(
-            text = if (hideBalance) "****" else "${total.format(currency)} $currency",
-            style = AccountsTheme.typo.c.copy(
-                color = AccountsTheme.colors.pureInverse.copy(alpha = 0.5f),
-                fontWeight = FontWeight.Bold,
-                textAlign = TextAlign.End,
-            ),
-        )
-    }
-}
-
-@Composable
 private fun AccountCard(
     baseCurrency: String,
     accountData: AccountData,
@@ -404,26 +332,16 @@ private fun AccountCard(
                 .weight(1f)
                 .padding(vertical = 12.dp),
         ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    modifier = Modifier.weight(1f, fill = false),
-                    text = account.name.value,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                    style = AccountsTheme.typo.b2.copy(
-                        color = AccountsTheme.colors.pureInverse,
-                        fontWeight = FontWeight.ExtraBold,
-                        textAlign = TextAlign.Start
-                    )
+            Text(
+                text = account.name.value,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                style = AccountsTheme.typo.b2.copy(
+                    color = AccountsTheme.colors.pureInverse,
+                    fontWeight = FontWeight.ExtraBold,
+                    textAlign = TextAlign.Start
                 )
-
-                if (!account.includeInBalance) {
-                    Spacer(Modifier.width(8.dp))
-                    ExcludedTag()
-                }
-            }
+            )
 
             Spacer(Modifier.height(3.dp))
 
@@ -475,24 +393,6 @@ private fun AccountCard(
             }
         }
     }
-}
-
-@Composable
-private fun ExcludedTag() {
-    Text(
-        modifier = Modifier
-            .clip(AccountsTheme.shapes.rFull)
-            .background(AccountsTheme.colors.medium)
-            .padding(horizontal = 8.dp, vertical = 2.dp),
-        text = stringResource(R.string.excluded).trim('（', '）', '(', ')', ' '),
-        maxLines = 1,
-        softWrap = false,
-        style = AccountsTheme.typo.c.copy(
-            color = AccountsTheme.colors.pureInverse.copy(alpha = 0.6f),
-            fontWeight = FontWeight.Bold,
-            textAlign = TextAlign.Start
-        )
-    )
 }
 
 @Composable

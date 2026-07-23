@@ -21,7 +21,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -39,7 +38,6 @@ import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
@@ -51,9 +49,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.CreateAccountData
 import com.ivy.ui.R
-import com.ivy.ui.compose.clickableNoIndication
 import com.ivy.ui.compose.onCompositionStart
-import com.ivy.ui.compose.rememberInteractionSource
 import com.ivy.ui.compose.selectEndTextFieldValue
 import com.ivy.ui.compose.thenIf
 import com.ivy.ui.icon.ItemIconMDefaultIcon
@@ -96,9 +92,6 @@ internal fun BoxWithConstraintsScope.CreateAccountModal(
     var icon by remember(visible) {
         mutableStateOf<String?>(null)
     }
-    var includeInBalance by remember(visible) {
-        mutableStateOf(true)
-    }
     var amountModalVisible by remember { mutableStateOf(false) }
     var currencyModalVisible by remember { mutableStateOf(false) }
     var chooseIconModalVisible by remember(visible) {
@@ -124,7 +117,7 @@ internal fun BoxWithConstraintsScope.CreateAccountModal(
                             color = color.toArgb(),
                             icon = icon,
                             balance = amount,
-                            includeBalance = includeInBalance,
+                            includeBalance = true,
                         )
                     )
                     dismiss()
@@ -169,18 +162,6 @@ internal fun BoxWithConstraintsScope.CreateAccountModal(
                 ) {
                     currencyModalVisible = true
                 }
-
-                Spacer(modifier = Modifier.height(16.dp))
-
-                AccountCheckboxWithText(
-                    modifier = Modifier
-                        .padding(start = 16.dp)
-                        .align(Alignment.Start),
-                    text = stringResource(R.string.include_account),
-                    checked = includeInBalance
-                ) {
-                    includeInBalance = it
-                }
             },
             label = stringResource(R.string.enter_account_balance).uppercase(),
             currency = currencyCode,
@@ -223,60 +204,6 @@ internal fun BoxWithConstraintsScope.CreateAccountModal(
     ) {
         icon = it
     }
-}
-
-@Composable
-private fun AccountCheckboxWithText(
-    modifier: Modifier = Modifier,
-    text: String,
-    checked: Boolean,
-    onCheckedChange: (checked: Boolean) -> Unit
-) {
-    Row(
-        modifier = modifier
-            .clickableNoIndication(rememberInteractionSource()) {
-                onCheckedChange(!checked)
-            },
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        AccountCheckbox(
-            checked = checked,
-            onCheckedChange = onCheckedChange
-        )
-
-        Spacer(modifier = Modifier.width(4.dp))
-
-        Text(
-            text = text,
-            style = AccountsTheme.typo.b2.copy(
-                color = AccountsTheme.colors.pureInverse,
-                fontWeight = FontWeight.SemiBold,
-                textAlign = TextAlign.Start
-            )
-        )
-    }
-}
-
-@Composable
-private fun AccountCheckbox(
-    modifier: Modifier = Modifier,
-    checked: Boolean,
-    onCheckedChange: (checked: Boolean) -> Unit
-) {
-    Icon(
-        modifier = modifier
-            .size(48.dp)
-            .clip(CircleShape)
-            .clickable {
-                onCheckedChange(!checked)
-            }
-            .padding(all = 12.dp),
-        painter = painterResource(
-            id = if (checked) R.drawable.ic_checkbox_checked else R.drawable.ic_checkbox_unchecked
-        ),
-        contentDescription = null,
-        tint = if (checked) Color.Unspecified else AccountsTheme.colors.gray
-    )
 }
 
 @Composable

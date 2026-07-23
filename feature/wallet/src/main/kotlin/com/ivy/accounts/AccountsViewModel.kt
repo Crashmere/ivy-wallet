@@ -7,7 +7,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
-import com.ivy.ui.resource.ResourceProvider
 import com.ivy.data.model.AccountId
 import com.ivy.domain.preferences.toggles.PreferenceToggleService
 import com.ivy.domain.preferences.toggles.PreferenceToggleCatalog
@@ -19,9 +18,7 @@ import com.ivy.domain.usecase.settings.GetTransfersAsIncomeExpensePreferenceUseC
 import com.ivy.ui.period.PeriodState
 import com.ivy.data.model.ClosedTimeRange
 import com.ivy.data.model.toCloseTimeRange
-import com.ivy.data.model.currency.format
 import com.ivy.ui.ComposeViewModel
-import com.ivy.ui.R
 import com.ivy.ui.preferences.asEnabledState
 import com.ivy.domain.usecase.wallet.CalculateWalletBalanceUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -36,7 +33,6 @@ import javax.inject.Inject
 @Stable
 @HiltViewModel
 internal class AccountsViewModel @Inject internal constructor(
-    private val resourceProvider: ResourceProvider,
     private val periodState: PeriodState,
     private val getTransfersAsIncomeExpensePreference: GetTransfersAsIncomeExpensePreferenceUseCase,
     private val calculateWalletBalanceUseCase: CalculateWalletBalanceUseCase,
@@ -50,10 +46,7 @@ internal class AccountsViewModel @Inject internal constructor(
 ) : ComposeViewModel<AccountsState, AccountsEvent>() {
     private var baseCurrency by mutableStateOf("")
     private var accountsData by mutableStateOf(listOf<AccountData>())
-    private var totalBalanceWithExcluded by mutableStateOf("")
-    private var totalBalanceWithExcludedText by mutableStateOf("")
-    private var totalBalanceWithoutExcluded by mutableStateOf("")
-    private var totalBalanceWithoutExcludedText by mutableStateOf("")
+    private var netWorth by mutableStateOf(0.0)
     private var netWorthChange by mutableStateOf(0.0)
     private var reorderVisible by mutableStateOf(false)
 
@@ -74,10 +67,7 @@ internal class AccountsViewModel @Inject internal constructor(
         return AccountsState(
             baseCurrency = getBaseCurrency(),
             accountsData = getAccountsData(),
-            totalBalanceWithExcluded = getTotalBalanceWithExcluded(),
-            totalBalanceWithExcludedText = getTotalBalanceWithExcludedText(),
-            totalBalanceWithoutExcluded = getTotalBalanceWithoutExcluded(),
-            totalBalanceWithoutExcludedText = getTotalBalanceWithoutExcludedText(),
+            netWorth = getNetWorth(),
             netWorthChange = netWorthChange,
             reorderVisible = getReorderVisible(),
             compactAccountsModeEnabled = getCompactAccountsMode(),
@@ -103,23 +93,8 @@ internal class AccountsViewModel @Inject internal constructor(
     }
 
     @Composable
-    private fun getTotalBalanceWithExcluded(): String {
-        return totalBalanceWithExcluded
-    }
-
-    @Composable
-    private fun getTotalBalanceWithExcludedText(): String {
-        return totalBalanceWithExcludedText
-    }
-
-    @Composable
-    private fun getTotalBalanceWithoutExcluded(): String {
-        return totalBalanceWithoutExcluded
-    }
-
-    @Composable
-    private fun getTotalBalanceWithoutExcludedText(): String {
-        return totalBalanceWithoutExcludedText
+    private fun getNetWorth(): Double {
+        return netWorth
     }
 
     @Composable
@@ -177,12 +152,7 @@ internal class AccountsViewModel @Inject internal constructor(
             includeTransfersInCalc = includeTransfersInCalc
         )
 
-        val totalBalanceWithExcludedAccounts = calculateWalletBalanceUseCase(
-            baseCurrency = baseCurrencyCode,
-            withExcluded = true
-        ).toDouble()
-
-        val totalBalanceWithoutExcludedAccounts = calculateWalletBalanceUseCase(
+        val totalBalance = calculateWalletBalanceUseCase(
             baseCurrency = baseCurrencyCode
         ).toDouble()
 
@@ -193,24 +163,9 @@ internal class AccountsViewModel @Inject internal constructor(
         ).toDouble()
 
         baseCurrency = baseCurrencyCode
-        netWorthChange = totalBalanceWithoutExcludedAccounts - netWorthLastMonth
+        netWorth = totalBalance
+        netWorthChange = totalBalance - netWorthLastMonth
         accountsData = accountsDataList
-        totalBalanceWithExcluded = totalBalanceWithExcludedAccounts.toString()
-        totalBalanceWithExcludedText = resourceProvider.getString(
-            R.string.total,
-            baseCurrencyCode,
-            totalBalanceWithExcludedAccounts.format(
-                baseCurrencyCode
-            )
-        )
-        totalBalanceWithoutExcluded = totalBalanceWithoutExcludedAccounts.toString()
-        totalBalanceWithoutExcludedText = resourceProvider.getString(
-            R.string.total_exclusive,
-            baseCurrencyCode,
-            totalBalanceWithoutExcludedAccounts.format(
-                baseCurrencyCode
-            )
-        )
     }
 
     private fun reorderModalVisible(visible: Boolean) {

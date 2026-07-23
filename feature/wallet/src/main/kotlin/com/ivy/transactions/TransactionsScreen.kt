@@ -1114,19 +1114,6 @@ private fun Item(
                     )
                 )
 
-                if (!account.includeInBalance) {
-                    Spacer(Modifier.width(8.dp))
-
-                    Text(
-                        text = stringResource(R.string.excluded),
-                        style = TransactionsTheme.typo.c.copy(
-                            color = account.color.toComposeColor().dynamicContrast(),
-                            fontWeight = FontWeight.Bold,
-                            textAlign = TextAlign.Start
-                        )
-                    )
-                }
-
                 if (showFilter) {
                     Spacer(Modifier.weight(1f))
 

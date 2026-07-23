@@ -7,10 +7,7 @@ import kotlinx.collections.immutable.ImmutableList
 internal data class AccountsState(
     val baseCurrency: String,
     val accountsData: ImmutableList<AccountData>,
-    val totalBalanceWithExcluded: String,
-    val totalBalanceWithExcludedText: String,
-    val totalBalanceWithoutExcluded: String,
-    val totalBalanceWithoutExcludedText: String,
+    val netWorth: Double,
     val netWorthChange: Double,
     val reorderVisible: Boolean,
     val compactAccountsModeEnabled: Boolean,

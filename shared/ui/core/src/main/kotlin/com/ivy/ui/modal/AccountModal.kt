@@ -20,7 +20,6 @@ import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -36,7 +35,6 @@ import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
@@ -50,13 +48,11 @@ import com.ivy.ui.icon.ItemIconMDefaultIcon
 import com.ivy.ui.compose.onCompositionStart
 import com.ivy.ui.compose.selectEndTextFieldValue
 import com.ivy.ui.R
-import com.ivy.ui.compose.clickableNoIndication
 import com.ivy.ui.compose.thenIf
 import java.util.Locale
 import java.util.UUID
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
-import com.ivy.ui.compose.rememberInteractionSource
 import com.ivy.ui.money.currencyName
 import com.ivy.ui.platform.hideKeyboard
 import com.ivy.ui.theme.colors.IvyFixedColors
@@ -100,9 +96,6 @@ fun BoxWithConstraintsScope.AccountModal(
     var icon by remember(visible, account) {
         mutableStateOf(account?.icon)
     }
-    var includeInBalance by remember(visible, account) {
-        mutableStateOf(account?.includeInBalance ?: true)
-    }
 
     var amountModalVisible by remember { mutableStateOf(false) }
     var currencyModalVisible by remember { mutableStateOf(false) }
@@ -129,7 +122,6 @@ fun BoxWithConstraintsScope.AccountModal(
                     color = color,
                     icon = icon,
                     amount = amount,
-                    includeInBalance = includeInBalance,
 
                     onCreateAccount = onCreateAccount,
                     onEditAccount = onEditAccount,
@@ -202,18 +194,6 @@ fun BoxWithConstraintsScope.AccountModal(
                 ) {
                     currencyModalVisible = true
                 }
-
-                Spacer(modifier = Modifier.height(16.dp))
-
-                IvyCheckboxWithText(
-                    modifier = Modifier
-                        .padding(start = 16.dp)
-                        .align(Alignment.Start),
-                    text = stringResource(R.string.include_account),
-                    checked = includeInBalance
-                ) {
-                    includeInBalance = it
-                }
             },
             label = stringResource(R.string.enter_account_balance).uppercase(),
             currency = currencyCode,
@@ -246,7 +226,6 @@ fun BoxWithConstraintsScope.AccountModal(
                 color = color,
                 icon = icon,
                 amount = newAmount,
-                includeInBalance = includeInBalance,
 
                 onCreateAccount = onCreateAccount,
                 onEditAccount = onEditAccount,
@@ -274,60 +253,6 @@ fun BoxWithConstraintsScope.AccountModal(
     }
 }
 
-@Composable
-private fun IvyCheckboxWithText(
-    modifier: Modifier = Modifier,
-    text: String,
-    checked: Boolean,
-    onCheckedChange: (checked: Boolean) -> Unit
-) {
-    Row(
-        modifier = modifier
-            .clickableNoIndication(rememberInteractionSource()) {
-                onCheckedChange(!checked)
-            },
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        IvyCheckbox(
-            checked = checked,
-            onCheckedChange = onCheckedChange
-        )
-
-        Spacer(modifier = Modifier.width(4.dp))
-
-        Text(
-            text = text,
-            style = AccountModalTheme.typo.b2.copy(
-                color = AccountModalTheme.colors.pureInverse,
-                fontWeight = FontWeight.SemiBold,
-                textAlign = TextAlign.Start
-            )
-        )
-    }
-}
-
-@Composable
-private fun IvyCheckbox(
-    modifier: Modifier = Modifier,
-    checked: Boolean,
-    onCheckedChange: (checked: Boolean) -> Unit
-) {
-    Icon(
-        modifier = modifier
-            .size(48.dp)
-            .clip(CircleShape)
-            .clickable {
-                onCheckedChange(!checked)
-            }
-            .padding(all = 12.dp),
-        painter = painterResource(
-            id = if (checked) R.drawable.ic_checkbox_checked else R.drawable.ic_checkbox_unchecked
-        ),
-        contentDescription = null,
-        tint = if (checked) Color.Unspecified else AccountModalTheme.colors.gray
-    )
-}
-
 private fun save(
     account: AccountModalAccount?,
     nameTextFieldValue: TextFieldValue,
@@ -335,7 +260,6 @@ private fun save(
     color: Color,
     icon: String?,
     amount: Double,
-    includeInBalance: Boolean,
 
     onCreateAccount: (AccountModalSaveData) -> Unit,
     onEditAccount: (accountId: UUID, data: AccountModalSaveData) -> Unit,
@@ -347,7 +271,7 @@ private fun save(
         color = color.toArgb(),
         icon = icon,
         balance = amount,
-        includeInBalance = includeInBalance,
+        includeInBalance = true,
     )
     if (account != null) {
         onEditAccount(account.id, data)
