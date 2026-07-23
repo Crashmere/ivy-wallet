@@ -20,6 +20,12 @@ internal data class CategoryBreakdownItem(
 )
 
 @Immutable
+internal data class DailyBar(
+    val label: String,
+    val amount: Double,
+)
+
+@Immutable
 internal data class ReportState(
     val baseCurrency: String,
     val period: TimePeriod,
@@ -53,6 +59,9 @@ internal data class ReportState(
 
     val expenseByCategory: ImmutableList<CategoryBreakdownItem>,
     val incomeByCategory: ImmutableList<CategoryBreakdownItem>,
+
+    val expenseByDay: ImmutableList<DailyBar>,
+    val incomeByDay: ImmutableList<DailyBar>,
 
     val allCategories: ImmutableList<Category>,
     val allAccounts: ImmutableList<Account>,

@@ -77,8 +77,7 @@ import java.util.Locale
 private enum class SettingsPage(@StringRes val title: Int) {
     Main(R.string.settings),
     DisplayPreferences(R.string.display_preferences),
-    InputAndLists(R.string.input_and_lists),
-    QuickAccess(R.string.quick_access)
+    InputAndLists(R.string.input_and_lists)
 }
 
 @ExperimentalFoundationApi
@@ -113,6 +112,7 @@ fun BoxWithConstraintsScope.SettingsScreen() {
 
     UI(
         currencyCode = uiState.currencyCode,
+        accountsCount = uiState.accountsCount,
         theme = uiState.currentTheme,
         onSwitchTheme = {
             viewModel.onEvent(SettingsEvent.SwitchTheme)
@@ -234,6 +234,7 @@ fun BoxWithConstraintsScope.SettingsScreen() {
 @Suppress("LongMethod")
 private fun BoxWithConstraintsScope.UI(
     currencyCode: String,
+    accountsCount: Int = 0,
     theme: Theme,
     onSwitchTheme: () -> Unit,
     lockApp: Boolean,
@@ -298,12 +299,10 @@ private fun BoxWithConstraintsScope.UI(
     val mainListState = rememberLazyListState()
     val displayPreferencesListState = rememberLazyListState()
     val inputAndListsListState = rememberLazyListState()
-    val quickAccessListState = rememberLazyListState()
     val currentListState = when (settingsPage) {
         SettingsPage.Main -> mainListState
         SettingsPage.DisplayPreferences -> displayPreferencesListState
         SettingsPage.InputAndLists -> inputAndListsListState
-        SettingsPage.QuickAccess -> quickAccessListState
     }
     BackPressHandler(enabled = settingsPage != SettingsPage.Main) {
         settingsPage = SettingsPage.Main
@@ -326,22 +325,7 @@ private fun BoxWithConstraintsScope.UI(
                         settingsPage = SettingsPage.Main
                     }
                 },
-            ) {
-                Spacer(Modifier.weight(1f))
-
-                val buildInfoProvider = buildInfoProvider()
-                Text(
-                    modifier = Modifier,
-                    text = "${buildInfoProvider.buildVersionName} (${buildInfoProvider.buildVersionCode})",
-                    style = SettingsTheme.typo.nC.copy(
-                        color = SettingsTheme.colors.gray,
-                        fontWeight = FontWeight.Bold,
-                        textAlign = TextAlign.Start
-                    )
-                )
-
-                Spacer(Modifier.width(32.dp))
-            }
+            )
         }
 
         item {
@@ -365,12 +349,51 @@ private fun BoxWithConstraintsScope.UI(
         when (settingsPage) {
             SettingsPage.Main -> {
                 item {
+                    ProfileHeroCard(
+                        accountsCount = accountsCount,
+                    )
+                }
+
+                item {
+                    Spacer(Modifier.height(16.dp))
+
                     CloudBackupHeroCard(
                         configured = gitHubConfig != null,
                         subtitle = gitHubBackupSubtitle(gitHubConfig, gitHubLastBackupEpochSec),
                         onConfigure = { gitHubBackupModalVisible = true },
                         onBackup = onBackupToGitHub,
                         onRestore = { restoreFromGitHubConfirmVisible = true }
+                    )
+                }
+
+                item {
+                    GeneralSection(
+                        currencyCode = currencyCode,
+                        startDateOfMonth = startDateOfMonth,
+                        lockApp = lockApp,
+                        showNotifications = showNotifications,
+                        languageOptionVisible = languageOptionVisible,
+                        onCurrencyClick = { currencyModalVisible = true },
+                        onStartDateClick = { chooseStartDateOfMonthVisible = true },
+                        onSetLockApp = onSetLockApp,
+                        onSetShowNotifications = onSetShowNotifications,
+                        onSwitchLanguage = onSwitchLanguage,
+                        onExchangeRatesClick = onOpenExchangeRates,
+                        onOpenDisplayPreferences = { settingsPage = SettingsPage.DisplayPreferences },
+                        onOpenInputAndLists = { settingsPage = SettingsPage.InputAndLists },
+                    )
+                }
+
+                item {
+                    FeaturesSection(
+                        treatTransfersAsIncomeExpense = treatTransfersAsIncomeExpense,
+                        showPlannedPayments = showPlannedPaymentsQuickAccess,
+                        showBudgets = showBudgetsQuickAccess,
+                        showLoans = showLoansQuickAccess,
+                        onSetTreatTransfersAsIncExp = onSetTreatTransfersAsIncExp,
+                        onSetShowPlannedPayments = onSetShowPlannedPaymentsQuickAccess,
+                        onSetShowBudgets = onSetShowBudgetsQuickAccess,
+                        onSetShowLoans = onSetShowLoansQuickAccess,
                     )
                 }
 
@@ -383,59 +406,7 @@ private fun BoxWithConstraintsScope.UI(
                 }
 
                 item {
-                    AccountingRulesSection(
-                        currencyCode = currencyCode,
-                        startDateOfMonth = startDateOfMonth,
-                        treatTransfersAsIncomeExpense = treatTransfersAsIncomeExpense,
-                        onSetTreatTransfersAsIncExp = onSetTreatTransfersAsIncExp,
-                        onCurrencyClick = {
-                            currencyModalVisible = true
-                        },
-                        onStartDateClick = {
-                            chooseStartDateOfMonthVisible = true
-                        }
-                    )
-                }
-
-                item {
-                    SystemBehaviorSection(
-                        lockApp = lockApp,
-                        showNotifications = showNotifications,
-                        languageOptionVisible = languageOptionVisible,
-                        onSetLockApp = onSetLockApp,
-                        onSetShowNotifications = onSetShowNotifications,
-                        onSwitchLanguage = onSwitchLanguage,
-                        onExchangeRatesClick = onOpenExchangeRates
-                    )
-                }
-
-                item {
-                    Spacer(Modifier.height(32.dp))
-
-                    SettingsSubMenuButton(
-                        icon = R.drawable.ic_custom_palette_m,
-                        text = stringResource(R.string.display_preferences)
-                    ) {
-                        settingsPage = SettingsPage.DisplayPreferences
-                    }
-
-                    Spacer(Modifier.height(12.dp))
-
-                    SettingsSubMenuButton(
-                        icon = R.drawable.ic_custom_document_m,
-                        text = stringResource(R.string.input_and_lists)
-                    ) {
-                        settingsPage = SettingsPage.InputAndLists
-                    }
-
-                    Spacer(Modifier.height(12.dp))
-
-                    SettingsSubMenuButton(
-                        icon = R.drawable.ic_custom_rocket_m,
-                        text = stringResource(R.string.quick_access)
-                    ) {
-                        settingsPage = SettingsPage.QuickAccess
-                    }
+                    AboutSection()
                 }
 
                 item {
@@ -477,19 +448,6 @@ private fun BoxWithConstraintsScope.UI(
                         onSetStandardKeypadLayout = onSetStandardKeypadLayout,
                         onSetShowCategorySearchBar = onSetShowCategorySearchBar,
                         onSetSortCategoriesAscending = onSetSortCategoriesAscending
-                    )
-                }
-            }
-
-            SettingsPage.QuickAccess -> {
-                item {
-                    QuickAccessSection(
-                        showPlannedPayments = showPlannedPaymentsQuickAccess,
-                        showBudgets = showBudgetsQuickAccess,
-                        showLoans = showLoansQuickAccess,
-                        onSetShowPlannedPayments = onSetShowPlannedPaymentsQuickAccess,
-                        onSetShowBudgets = onSetShowBudgetsQuickAccess,
-                        onSetShowLoans = onSetShowLoansQuickAccess
                     )
                 }
             }
@@ -786,15 +744,76 @@ private fun HeroActionButton(
 }
 
 @Composable
-private fun AccountingRulesSection(
+private fun ProfileHeroCard(
+    accountsCount: Int,
+) {
+    Row(
+        modifier = Modifier
+            .padding(horizontal = 16.dp)
+            .fillMaxWidth()
+            .clip(SettingsTheme.shapes.r4)
+            .background(SettingsTheme.colors.medium, SettingsTheme.shapes.r4)
+            .padding(16.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Box(
+            modifier = Modifier
+                .size(56.dp)
+                .clip(CircleShape)
+                .background(IvyGradients.Ivy.asHorizontalBrush()),
+            contentAlignment = Alignment.Center,
+        ) {
+            Icon(
+                modifier = Modifier.size(28.dp),
+                painter = painterResource(id = R.drawable.ic_custom_account_m),
+                contentDescription = "wallet",
+                tint = White,
+            )
+        }
+
+        Spacer(Modifier.width(14.dp))
+
+        Column(Modifier.weight(1f)) {
+            Text(
+                text = stringResource(R.string.my_wallet),
+                style = SettingsTheme.typo.b1.copy(
+                    color = SettingsTheme.colors.pureInverse,
+                    fontWeight = FontWeight.ExtraBold,
+                    textAlign = TextAlign.Start
+                )
+            )
+
+            Spacer(Modifier.height(4.dp))
+
+            Text(
+                text = stringResource(R.string.local_ledger_accounts, accountsCount),
+                style = SettingsTheme.typo.nB2.copy(
+                    color = SettingsTheme.colors.gray,
+                    fontWeight = FontWeight.SemiBold,
+                    textAlign = TextAlign.Start
+                ).copy(fontSize = 13.sp)
+            )
+        }
+    }
+}
+
+@Composable
+private fun GeneralSection(
     currencyCode: String,
     startDateOfMonth: Int,
-    treatTransfersAsIncomeExpense: Boolean,
-    onSetTreatTransfersAsIncExp: (Boolean) -> Unit,
+    lockApp: Boolean,
+    showNotifications: Boolean,
+    languageOptionVisible: Boolean,
     onCurrencyClick: () -> Unit,
-    onStartDateClick: () -> Unit
+    onStartDateClick: () -> Unit,
+    onSetLockApp: (Boolean) -> Unit,
+    onSetShowNotifications: (Boolean) -> Unit,
+    onSwitchLanguage: () -> Unit,
+    onExchangeRatesClick: () -> Unit,
+    onOpenDisplayPreferences: () -> Unit,
+    onOpenInputAndLists: () -> Unit,
 ) {
-    SettingsSectionDivider(text = stringResource(R.string.accounting_rules))
+    SettingsSectionDivider(text = stringResource(R.string.general))
 
     Spacer(Modifier.height(16.dp))
 
@@ -804,52 +823,9 @@ private fun AccountingRulesSection(
 
     Spacer(Modifier.height(12.dp))
 
-    StartDateOfMonth(
-        startDateOfMonth = startDateOfMonth
-    ) {
+    StartDateOfMonth(startDateOfMonth = startDateOfMonth) {
         onStartDateClick()
     }
-
-    Spacer(Modifier.height(12.dp))
-
-    AppSwitch(
-        lockApp = treatTransfersAsIncomeExpense,
-        onSetLockApp = onSetTreatTransfersAsIncExp,
-        text = stringResource(R.string.transfers_as_income_expense),
-        description = stringResource(R.string.transfers_as_income_expense_description),
-        icon = R.drawable.ic_custom_transfer_m
-    )
-}
-
-@Composable
-private fun SystemBehaviorSection(
-    lockApp: Boolean,
-    showNotifications: Boolean,
-    languageOptionVisible: Boolean,
-    onSetLockApp: (Boolean) -> Unit,
-    onSetShowNotifications: (Boolean) -> Unit,
-    onSwitchLanguage: () -> Unit,
-    onExchangeRatesClick: () -> Unit
-) {
-    SettingsSectionDivider(text = stringResource(R.string.system_behavior))
-
-    Spacer(Modifier.height(16.dp))
-
-    AppSwitch(
-        lockApp = lockApp,
-        onSetLockApp = onSetLockApp,
-        text = stringResource(R.string.lock_app),
-        icon = R.drawable.ic_custom_fingerprint_m
-    )
-
-    Spacer(Modifier.height(12.dp))
-
-    AppSwitch(
-        lockApp = showNotifications,
-        onSetLockApp = onSetShowNotifications,
-        text = stringResource(R.string.show_notifications),
-        icon = R.drawable.ic_notification_m
-    )
 
     Spacer(Modifier.height(12.dp))
 
@@ -871,6 +847,145 @@ private fun SystemBehaviorSection(
         text = stringResource(R.string.exchange_rates),
     ) {
         onExchangeRatesClick()
+    }
+
+    Spacer(Modifier.height(12.dp))
+
+    SettingsSubMenuButton(
+        icon = R.drawable.ic_custom_palette_m,
+        text = stringResource(R.string.display_preferences)
+    ) {
+        onOpenDisplayPreferences()
+    }
+
+    Spacer(Modifier.height(12.dp))
+
+    SettingsSubMenuButton(
+        icon = R.drawable.ic_custom_document_m,
+        text = stringResource(R.string.input_and_lists)
+    ) {
+        onOpenInputAndLists()
+    }
+
+    Spacer(Modifier.height(12.dp))
+
+    AppSwitch(
+        lockApp = lockApp,
+        onSetLockApp = onSetLockApp,
+        text = stringResource(R.string.lock_app),
+        icon = R.drawable.ic_custom_fingerprint_m
+    )
+
+    Spacer(Modifier.height(12.dp))
+
+    AppSwitch(
+        lockApp = showNotifications,
+        onSetLockApp = onSetShowNotifications,
+        text = stringResource(R.string.show_notifications),
+        icon = R.drawable.ic_notification_m
+    )
+}
+
+@Composable
+private fun FeaturesSection(
+    treatTransfersAsIncomeExpense: Boolean,
+    showPlannedPayments: Boolean,
+    showBudgets: Boolean,
+    showLoans: Boolean,
+    onSetTreatTransfersAsIncExp: (Boolean) -> Unit,
+    onSetShowPlannedPayments: (Boolean) -> Unit,
+    onSetShowBudgets: (Boolean) -> Unit,
+    onSetShowLoans: (Boolean) -> Unit,
+) {
+    SettingsSectionDivider(text = stringResource(R.string.features))
+
+    Spacer(Modifier.height(16.dp))
+
+    AppSwitch(
+        lockApp = treatTransfersAsIncomeExpense,
+        onSetLockApp = onSetTreatTransfersAsIncExp,
+        text = stringResource(R.string.transfers_as_income_expense),
+        description = stringResource(R.string.transfers_as_income_expense_description),
+        icon = R.drawable.ic_custom_transfer_m
+    )
+
+    Spacer(Modifier.height(12.dp))
+
+    AppSwitch(
+        lockApp = showPlannedPayments,
+        onSetLockApp = onSetShowPlannedPayments,
+        text = stringResource(R.string.planned_payments).replace("\n", " "),
+        description = "在首页「快速访问」中显示计划支付入口",
+        icon = R.drawable.ic_custom_calendar_m
+    )
+
+    Spacer(Modifier.height(12.dp))
+
+    AppSwitch(
+        lockApp = showBudgets,
+        onSetLockApp = onSetShowBudgets,
+        text = stringResource(R.string.budgets),
+        description = "在首页「快速访问」中显示预算入口",
+        icon = R.drawable.ic_custom_safe_m
+    )
+
+    Spacer(Modifier.height(12.dp))
+
+    AppSwitch(
+        lockApp = showLoans,
+        onSetLockApp = onSetShowLoans,
+        text = stringResource(R.string.loans),
+        description = "在首页「快速访问」中显示贷款入口",
+        icon = R.drawable.ic_custom_loan_m
+    )
+}
+
+@Composable
+private fun AboutSection() {
+    SettingsSectionDivider(text = stringResource(R.string.about))
+
+    Spacer(Modifier.height(16.dp))
+
+    val buildInfoProvider = buildInfoProvider()
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp)
+            .clip(SettingsTheme.shapes.r4)
+            .border(2.dp, SettingsTheme.colors.medium, SettingsTheme.shapes.r4),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Spacer(Modifier.width(12.dp))
+
+        SettingsIcon(
+            icon = R.drawable.ic_custom_document_m,
+            padding = 0.dp
+        )
+
+        Spacer(Modifier.width(8.dp))
+
+        Text(
+            modifier = Modifier.padding(vertical = 20.dp),
+            text = stringResource(R.string.version),
+            style = SettingsTheme.typo.b2.copy(
+                color = SettingsTheme.colors.pureInverse,
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Start
+            )
+        )
+
+        Spacer(Modifier.weight(1f))
+
+        Text(
+            text = "${buildInfoProvider.buildVersionName} (${buildInfoProvider.buildVersionCode})",
+            style = SettingsTheme.typo.nB2.copy(
+                color = SettingsTheme.colors.gray,
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.End
+            )
+        )
+
+        Spacer(Modifier.width(24.dp))
     }
 }
 
@@ -1016,56 +1131,6 @@ private fun InputAndListsSection(
         text = stringResource(R.string.sort_categories_list),
         description = stringResource(R.string.sort_categories_list_description),
         icon = R.drawable.ic_sort_by_alpha_24
-    )
-}
-
-@Composable
-private fun QuickAccessSection(
-    showPlannedPayments: Boolean,
-    showBudgets: Boolean,
-    showLoans: Boolean,
-    onSetShowPlannedPayments: (Boolean) -> Unit,
-    onSetShowBudgets: (Boolean) -> Unit,
-    onSetShowLoans: (Boolean) -> Unit
-) {
-    Text(
-        modifier = Modifier.padding(horizontal = 32.dp),
-        text = "选择在首页「快速访问」中额外显示的入口。默认仅保留设置、类别、报告、批量修改。",
-        style = SettingsTheme.typo.nC.copy(
-            color = SettingsTheme.colors.gray,
-            fontWeight = FontWeight.SemiBold,
-            textAlign = TextAlign.Start
-        )
-    )
-
-    Spacer(Modifier.height(16.dp))
-
-    AppSwitch(
-        lockApp = showPlannedPayments,
-        onSetLockApp = onSetShowPlannedPayments,
-        text = stringResource(R.string.planned_payments),
-        description = "在首页「快速访问」中显示计划支付入口",
-        icon = R.drawable.ic_custom_calendar_m
-    )
-
-    Spacer(Modifier.height(12.dp))
-
-    AppSwitch(
-        lockApp = showBudgets,
-        onSetLockApp = onSetShowBudgets,
-        text = stringResource(R.string.budgets),
-        description = "在首页「快速访问」中显示预算入口",
-        icon = R.drawable.ic_custom_safe_m
-    )
-
-    Spacer(Modifier.height(12.dp))
-
-    AppSwitch(
-        lockApp = showLoans,
-        onSetLockApp = onSetShowLoans,
-        text = stringResource(R.string.loans),
-        description = "在首页「快速访问」中显示贷款入口",
-        icon = R.drawable.ic_custom_loan_m
     )
 }
 

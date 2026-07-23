@@ -17,6 +17,7 @@ import com.ivy.domain.usecase.account.SaveAccountUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.domain.usecase.settings.GetTransfersAsIncomeExpensePreferenceUseCase
 import com.ivy.ui.period.PeriodState
+import com.ivy.data.model.ClosedTimeRange
 import com.ivy.data.model.toCloseTimeRange
 import com.ivy.data.model.currency.format
 import com.ivy.ui.ComposeViewModel
@@ -53,6 +54,7 @@ internal class AccountsViewModel @Inject internal constructor(
     private var totalBalanceWithExcludedText by mutableStateOf("")
     private var totalBalanceWithoutExcluded by mutableStateOf("")
     private var totalBalanceWithoutExcludedText by mutableStateOf("")
+    private var netWorthChange by mutableStateOf(0.0)
     private var reorderVisible by mutableStateOf(false)
 
     init {
@@ -76,6 +78,7 @@ internal class AccountsViewModel @Inject internal constructor(
             totalBalanceWithExcludedText = getTotalBalanceWithExcludedText(),
             totalBalanceWithoutExcluded = getTotalBalanceWithoutExcluded(),
             totalBalanceWithoutExcludedText = getTotalBalanceWithoutExcludedText(),
+            netWorthChange = netWorthChange,
             reorderVisible = getReorderVisible(),
             compactAccountsModeEnabled = getCompactAccountsMode(),
             hideTotalBalance = getHideTotalBalance()
@@ -183,7 +186,14 @@ internal class AccountsViewModel @Inject internal constructor(
             baseCurrency = baseCurrencyCode
         ).toDouble()
 
+        val startOfMonth = monthlyRange.toCloseTimeRange().from
+        val netWorthLastMonth = calculateWalletBalanceUseCase(
+            baseCurrency = baseCurrencyCode,
+            range = ClosedTimeRange.to(startOfMonth)
+        ).toDouble()
+
         baseCurrency = baseCurrencyCode
+        netWorthChange = totalBalanceWithoutExcludedAccounts - netWorthLastMonth
         accountsData = accountsDataList
         totalBalanceWithExcluded = totalBalanceWithExcludedAccounts.toString()
         totalBalanceWithExcludedText = resourceProvider.getString(

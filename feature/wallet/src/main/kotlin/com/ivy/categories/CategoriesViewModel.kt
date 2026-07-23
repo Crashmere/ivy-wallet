@@ -151,7 +151,8 @@ internal class CategoriesViewModel @Inject internal constructor(
                     category = it.category,
                     monthlyBalance = it.balance,
                     monthlyIncome = it.income,
-                    monthlyExpenses = it.expenses
+                    monthlyExpenses = it.expenses,
+                    monthlyCount = it.count
                 )
             }
 

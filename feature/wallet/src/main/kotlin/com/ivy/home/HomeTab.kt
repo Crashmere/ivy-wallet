@@ -2,27 +2,40 @@ package com.ivy.home
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.BoxWithConstraintsScope
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.Category
 import com.ivy.data.model.Expense
@@ -432,6 +445,34 @@ internal fun HomeLazyColumn(
             .drop(1)
             .toImmutableList()
     }
+    var typeFilter by remember { mutableStateOf(HomeTypeFilter.ALL) }
+    val filteredHistory = remember(history, typeFilter) {
+        if (typeFilter == HomeTypeFilter.ALL) {
+            history
+        } else {
+            val mapped = history.mapNotNull { item ->
+                when (item) {
+                    is TransactionHistoryTransaction ->
+                        item.takeIf { matchesType(it.transaction, typeFilter) }
+
+                    is TransactionHistoryDateDivider -> when (typeFilter) {
+                        HomeTypeFilter.EXPENSE -> item.copy(income = 0.0)
+                        HomeTypeFilter.INCOME -> item.copy(expenses = 0.0)
+                        HomeTypeFilter.ALL -> item
+                    }
+
+                    else -> item
+                }
+            }
+            mapped.filterIndexed { index, item ->
+                if (item is TransactionHistoryDateDivider) {
+                    mapped.getOrNull(index + 1) is TransactionHistoryTransaction
+                } else {
+                    true
+                }
+            }.toImmutableList()
+        }
+    }
     LazyColumn(
         modifier = modifier
             .fillMaxSize()
@@ -462,6 +503,13 @@ internal fun HomeLazyColumn(
         }
         item {
             Spacer(Modifier.height(16.dp))
+
+            HomeTypeFilterRow(
+                selected = typeFilter,
+                onSelect = { typeFilter = it },
+            )
+
+            Spacer(Modifier.height(4.dp))
 
             HomeTransactionsDividerLine()
         }
@@ -494,7 +542,7 @@ internal fun HomeLazyColumn(
             setUpcomingExpanded = setUpcomingExpanded,
             overdue = overdue.toTransactionListDueSection(),
             setOverdueExpanded = setOverdueExpanded,
-            history = history.map { it.toTransactionListHistoryItem() },
+            history = filteredHistory.map { it.toTransactionListHistoryItem() },
             onPayOrGet = onPayOrGet,
             onTransactionClick = { transactionId, transactionType ->
                 onTransactionClick(transactionId, transactionType.toTransactionType())
@@ -508,6 +556,77 @@ internal fun HomeLazyColumn(
             onSkipAllTransactions = onSkipAllTransactions
         )
     }
+}
+
+private enum class HomeTypeFilter { ALL, EXPENSE, INCOME }
+
+private fun matchesType(transaction: Transaction, filter: HomeTypeFilter): Boolean = when (filter) {
+    HomeTypeFilter.ALL -> true
+    HomeTypeFilter.EXPENSE -> transaction is Expense
+    HomeTypeFilter.INCOME -> transaction is Income
+}
+
+@Composable
+private fun HomeTypeFilterRow(
+    selected: HomeTypeFilter,
+    onSelect: (HomeTypeFilter) -> Unit,
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 20.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        HomeFilterChip(
+            text = stringResource(R.string.all),
+            selected = selected == HomeTypeFilter.ALL,
+            onClick = { onSelect(HomeTypeFilter.ALL) },
+        )
+
+        Spacer(Modifier.width(10.dp))
+
+        HomeFilterChip(
+            text = stringResource(R.string.expense),
+            selected = selected == HomeTypeFilter.EXPENSE,
+            onClick = { onSelect(HomeTypeFilter.EXPENSE) },
+        )
+
+        Spacer(Modifier.width(10.dp))
+
+        HomeFilterChip(
+            text = stringResource(R.string.income),
+            selected = selected == HomeTypeFilter.INCOME,
+            onClick = { onSelect(HomeTypeFilter.INCOME) },
+        )
+    }
+}
+
+@Composable
+private fun HomeFilterChip(
+    text: String,
+    selected: Boolean,
+    onClick: () -> Unit,
+) {
+    val shape = RoundedCornerShape(percent = 50)
+    Text(
+        modifier = Modifier
+            .clip(shape)
+            .then(
+                if (selected) {
+                    Modifier.background(HomeTheme.colors.pureInverse, shape)
+                } else {
+                    Modifier.border(1.dp, HomeTheme.colors.medium, shape)
+                }
+            )
+            .clickable(onClick = onClick)
+            .padding(horizontal = 20.dp, vertical = 8.dp),
+        text = text,
+        style = HomeTheme.typo.b2.copy(
+            fontWeight = FontWeight.Bold,
+            color = if (selected) HomeTheme.colors.pure else HomeTheme.colors.pureInverse,
+            textAlign = TextAlign.Start,
+        ),
+    )
 }
 
 private fun HomeTransactionListData.toTransactionListData(): TransactionListData {

@@ -25,6 +25,11 @@
     <string name="add_manual_exchange_rate">Add rate</string>
     <string name="expenses">支出</string>
     <string name="income">收入</string>
+    <string name="all">全部</string>
+    <string name="frequently_used">常用</string>
+    <string name="others">其他</string>
+    <string name="net_worth">净资产</string>
+    <string name="vs_last_month">较上月</string>
     <string name="categories">类别</string>
     <string name="please_wait">请稍候</string>
     <string name="importing_the_csv_file">正在导入CSV文件</string>
@@ -70,6 +75,12 @@
     <string name="planned_payments">计划支付</string>
     <string name="reports">报告</string>
     <string name="mine">我的</string>
+    <string name="general">常规</string>
+    <string name="features">功能</string>
+    <string name="about">关于</string>
+    <string name="my_wallet">我的钱包</string>
+    <string name="local_ledger_accounts">本地账本 · %1$d 个账户</string>
+    <string name="version">版本</string>
     <string name="month_net">本月结余</string>
     <string name="loans">贷款</string>
     <string name="set_currency">设置货币</string>

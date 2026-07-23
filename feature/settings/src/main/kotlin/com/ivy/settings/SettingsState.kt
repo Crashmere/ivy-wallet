@@ -5,6 +5,7 @@ import com.ivy.data.model.Theme
 
 internal data class SettingsState(
     val currencyCode: String,
+    val accountsCount: Int,
     val currentTheme: Theme,
     val gitHubBackupConfig: GitHubBackupConfig?,
     val gitHubLastBackupEpochSec: Long?,

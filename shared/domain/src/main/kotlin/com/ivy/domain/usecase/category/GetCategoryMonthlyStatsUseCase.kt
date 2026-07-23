@@ -34,11 +34,16 @@ class GetCategoryMonthlyStatsUseCase @Inject internal constructor(
                         baseCurrency = baseCurrency
                     )
 
+                    val count = transactions.count {
+                        it.category?.value == category.id.value
+                    }
+
                     CategoryMonthlyStats(
                         category = category,
                         balance = (incomeExpense.income - incomeExpense.expense).toDouble(),
                         income = incomeExpense.income.toDouble(),
-                        expenses = incomeExpense.expense.toDouble()
+                        expenses = incomeExpense.expense.toDouble(),
+                        count = count
                     )
                 }
             }.awaitAll()

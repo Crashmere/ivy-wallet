@@ -26,6 +26,11 @@
     <string name="add_manual_exchange_rate">Add rate</string>
     <string name="expenses">Expenses</string>
     <string name="income">Income</string>
+    <string name="all">All</string>
+    <string name="frequently_used">Frequently used</string>
+    <string name="others">Others</string>
+    <string name="net_worth">Net worth</string>
+    <string name="vs_last_month">vs last month</string>
     <string name="categories">Categories</string>
     <string name="please_wait">Please wait</string>
     <string name="importing_the_csv_file">Importing the CSV file</string>
@@ -72,6 +77,12 @@
     <string name="planned_payments">Planned\nPayments</string>
     <string name="reports">Reports</string>
     <string name="mine">Mine</string>
+    <string name="general">General</string>
+    <string name="features">Features</string>
+    <string name="about">About</string>
+    <string name="my_wallet">My Wallet</string>
+    <string name="local_ledger_accounts">Local ledger · %1$d accounts</string>
+    <string name="version">Version</string>
     <string name="month_net">Net</string>
     <string name="loans">Loans</string>
     <string name="set_currency">Set currency</string>

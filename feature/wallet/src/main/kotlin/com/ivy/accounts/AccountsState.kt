@@ -11,6 +11,7 @@ internal data class AccountsState(
     val totalBalanceWithExcludedText: String,
     val totalBalanceWithoutExcluded: String,
     val totalBalanceWithoutExcludedText: String,
+    val netWorthChange: Double,
     val reorderVisible: Boolean,
     val compactAccountsModeEnabled: Boolean,
     val hideTotalBalance: Boolean,

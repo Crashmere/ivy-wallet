@@ -21,6 +21,7 @@ import com.ivy.domain.usecase.backup.github.RestoreBackupFromGitHubUseCase
 import com.ivy.domain.usecase.backup.github.SaveGitHubBackupConfigUseCase
 import com.ivy.domain.usecase.backup.github.TestGitHubConnectionUseCase
 import com.ivy.domain.usecase.backup.github.UploadBackupToGitHubUseCase
+import com.ivy.domain.usecase.account.GetAccountsUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.domain.usecase.currency.SetBaseCurrencyUseCase
 import com.ivy.domain.usecase.csv.ExportCsvUseCase
@@ -65,6 +66,7 @@ internal class SettingsViewModel @Inject internal constructor(
     private val periodState: PeriodState,
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
     private val setBaseCurrency: SetBaseCurrencyUseCase,
+    private val getAccountsUseCase: GetAccountsUseCase,
     private val getTheme: GetThemeUseCase,
     private val switchThemeUseCase: SwitchThemeUseCase,
     private val resetWalletDataUseCase: ResetWalletDataUseCase,
@@ -96,6 +98,7 @@ internal class SettingsViewModel @Inject internal constructor(
 ) : ComposeViewModel<SettingsState, SettingsEvent>() {
 
     private val currencyCode = mutableStateOf("")
+    private val accountsCount = mutableIntStateOf(0)
     private val currentTheme = mutableStateOf<Theme>(Theme.AUTO)
     private val lockApp = mutableStateOf(false)
     private val showNotifications = mutableStateOf(true)
@@ -128,6 +131,7 @@ internal class SettingsViewModel @Inject internal constructor(
 
         return SettingsState(
             currencyCode = getCurrencyCode(),
+            accountsCount = accountsCount.intValue,
             currentTheme = getCurrentTheme(),
             gitHubBackupConfig = gitHubBackupConfig.value,
             gitHubLastBackupEpochSec = gitHubLastBackupEpochSec.value,
@@ -155,6 +159,7 @@ internal class SettingsViewModel @Inject internal constructor(
 
     private suspend fun onStart() {
         initializeCurrency()
+        initializeAccountsCount()
         initializeCurrentTheme()
         initializeLockApp()
         initializeShowNotifications()
@@ -173,6 +178,10 @@ internal class SettingsViewModel @Inject internal constructor(
 
     private suspend fun initializeCurrency() {
         currencyCode.value = getBaseCurrencyCode()
+    }
+
+    private suspend fun initializeAccountsCount() {
+        accountsCount.intValue = getAccountsUseCase().size
     }
 
     private suspend fun initializeCurrentTheme() {

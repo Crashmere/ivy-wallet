@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Text
@@ -24,8 +25,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.StrokeJoin
 import androidx.compose.ui.graphics.drawscope.Stroke
@@ -33,6 +37,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ivy.ui.period.LocalPeriodState
@@ -41,6 +46,8 @@ import com.ivy.ui.period.displayShort
 import com.ivy.ui.compose.clickableNoIndication
 import com.ivy.ui.compose.drawColoredShadow
 import com.ivy.data.model.currency.format
+import com.ivy.data.model.currency.shortenAmount
+import com.ivy.data.model.currency.shouldShortAmount
 import com.ivy.ui.compose.horizontalSwipeListener
 import com.ivy.ui.compose.rememberInteractionSource
 import com.ivy.ui.compose.rememberSwipeListenerState
@@ -50,7 +57,6 @@ import com.ivy.ui.R
 import com.ivy.ui.theme.colors.IvyGradients
 import com.ivy.ui.theme.colors.IvyFixedColors.White
 import com.ivy.ui.money.BalanceRow
-import com.ivy.ui.money.AmountCurrencyB1
 import com.ivy.ui.compose.OutlinedPillButton
 import com.ivy.ui.compose.ResourceIcon
 import kotlinx.collections.immutable.ImmutableList
@@ -219,9 +225,9 @@ internal fun CashFlowInfo(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
-                text = stringResource(R.string.total_balance),
+                text = stringResource(R.string.month_net),
                 style = HomeTheme.typo.c.copy(
-                    color = White.copy(alpha = 0.7f),
+                    color = White.copy(alpha = 0.8f),
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Start,
                 ),
@@ -229,17 +235,21 @@ internal fun CashFlowInfo(
 
             Spacer(Modifier.weight(1f))
 
-            if (!hideBalance && net != 0.0) {
-                Text(
-                    text = "${stringResource(R.string.month_net)} " +
-                        "${if (net > 0) "+" else ""}${net.format(currency)} $currency",
-                    style = HomeTheme.typo.c.copy(
-                        color = White.copy(alpha = 0.85f),
-                        fontWeight = FontWeight.Bold,
-                        textAlign = TextAlign.End,
-                    ),
-                )
-            }
+            Text(
+                modifier = Modifier.clickableNoIndication(rememberInteractionSource()) {
+                    if (hideBalance) onHiddenBalanceClick() else onBalanceClick()
+                },
+                text = if (hideBalance) {
+                    "${stringResource(R.string.total_balance)} ****"
+                } else {
+                    "${stringResource(R.string.total_balance)} ${balance.format(currency)} $currency"
+                },
+                style = HomeTheme.typo.c.copy(
+                    color = White.copy(alpha = 0.85f),
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.End,
+                ),
+            )
         }
 
         Spacer(Modifier.height(8.dp))
@@ -255,11 +265,12 @@ internal fun CashFlowInfo(
                 }
                 .testTag("home_balance"),
             currency = currency,
-            balance = balance,
+            balance = net,
             textColor = White,
             balanceFontSize = 34.sp,
             shortenBigNumbers = true,
             hiddenMode = hideBalance,
+            balanceAmountPrefix = if (net > 0) "+" else null,
         )
 
         Spacer(Modifier.height(12.dp))
@@ -267,10 +278,10 @@ internal fun CashFlowInfo(
         if (trend.size >= 2) {
             Sparkline(
                 points = trend,
-                color = White.copy(alpha = 0.9f),
+                lineColor = White,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(40.dp),
+                    .height(48.dp),
             )
 
             Spacer(Modifier.height(14.dp))
@@ -280,35 +291,33 @@ internal fun CashFlowInfo(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            HeroStat(
+            InlineStat(
                 modifier = Modifier.weight(1f),
-                icon = R.drawable.ic_income,
                 label = stringResource(R.string.income),
                 amount = monthlyIncome,
                 currency = currency,
+                arrowIcon = R.drawable.ic_trend_up,
                 hidden = hideIncome,
                 onClick = {
                     if (hideIncome) onHiddenIncomeClick() else onOpenIncomePieChart()
                 },
             )
 
-            Spacer(Modifier.width(12.dp))
-
             Box(
                 modifier = Modifier
                     .width(1.dp)
-                    .height(36.dp)
-                    .background(White.copy(alpha = 0.2f))
+                    .height(28.dp)
+                    .background(White.copy(alpha = 0.25f))
             )
 
-            Spacer(Modifier.width(12.dp))
-
-            HeroStat(
-                modifier = Modifier.weight(1f),
-                icon = R.drawable.ic_expense,
+            InlineStat(
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(start = 16.dp),
                 label = stringResource(R.string.expenses),
                 amount = monthlyExpenses.absoluteValue,
                 currency = currency,
+                arrowIcon = R.drawable.ic_trend_down,
                 hidden = false,
                 onClick = onOpenExpensePieChart,
             )
@@ -317,71 +326,64 @@ internal fun CashFlowInfo(
 }
 
 @Composable
-private fun HeroStat(
-    @DrawableRes icon: Int,
+private fun InlineStat(
     label: String,
     amount: Double,
     currency: String,
+    @DrawableRes arrowIcon: Int,
     hidden: Boolean,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Column(
+    Row(
         modifier = modifier
-            .clip(HomeTheme.shapes.r4)
-            .clickable(onClick = onClick)
-            .padding(vertical = 4.dp),
+            .clip(HomeTheme.shapes.rFull)
+            .clickable(onClick = onClick),
+        verticalAlignment = Alignment.CenterVertically,
     ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            ResourceIcon(
-                icon = icon,
-                tint = White.copy(alpha = 0.85f),
-            )
+        Text(
+            text = label,
+            style = HomeTheme.typo.c.copy(
+                color = White.copy(alpha = 0.85f),
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Start,
+            ),
+        )
 
-            Spacer(Modifier.width(6.dp))
+        Spacer(Modifier.width(6.dp))
 
-            Text(
-                text = label,
-                style = HomeTheme.typo.c.copy(
-                    color = White.copy(alpha = 0.85f),
-                    fontWeight = FontWeight.Bold,
-                    textAlign = TextAlign.Start,
-                ),
-            )
-        }
+        Text(
+            modifier = Modifier.weight(1f, fill = false),
+            text = if (hidden) {
+                "****"
+            } else if (shouldShortAmount(amount)) {
+                shortenAmount(amount)
+            } else {
+                amount.format(currency)
+            },
+            style = HomeTheme.typo.b2.copy(
+                color = White,
+                fontWeight = FontWeight.ExtraBold,
+                textAlign = TextAlign.Start,
+            ),
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+        )
 
-        Spacer(Modifier.height(6.dp))
+        Spacer(Modifier.width(4.dp))
 
-        if (hidden) {
-            Text(
-                text = "****",
-                style = HomeTheme.typo.nB2.copy(
-                    color = White,
-                    fontWeight = FontWeight.ExtraBold,
-                    textAlign = TextAlign.Start,
-                ),
-            )
-        } else {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                AmountCurrencyB1(
-                    amount = amount,
-                    currency = currency,
-                    textColor = White,
-                    shortenBigNumbers = true,
-                )
-            }
-        }
+        ResourceIcon(
+            modifier = Modifier.size(16.dp),
+            icon = arrowIcon,
+            tint = White.copy(alpha = 0.85f),
+        )
     }
 }
 
 @Composable
 private fun Sparkline(
     points: ImmutableList<Float>,
-    color: Color,
+    lineColor: Color,
     modifier: Modifier = Modifier,
 ) {
     val minValue = points.min()
@@ -391,25 +393,60 @@ private fun Sparkline(
     Canvas(modifier = modifier) {
         val width = size.width
         val height = size.height
+        val topPad = 8.dp.toPx()
+        val usable = height - topPad
         val stepX = if (points.size > 1) width / (points.size - 1) else width
-        val path = Path()
+
+        fun yFor(value: Float) = topPad + (1f - (value - minValue) / range) * usable
+
+        val linePath = Path()
         points.forEachIndexed { index, value ->
             val x = index * stepX
-            val y = height - ((value - minValue) / range) * height
+            val y = yFor(value)
             if (index == 0) {
-                path.moveTo(x, y)
+                linePath.moveTo(x, y)
             } else {
-                path.lineTo(x, y)
+                linePath.lineTo(x, y)
             }
         }
+
+        val lastX = (points.size - 1) * stepX
+        val fillPath = Path().apply {
+            addPath(linePath)
+            lineTo(lastX, height)
+            lineTo(0f, height)
+            close()
+        }
         drawPath(
-            path = path,
-            color = color,
+            path = fillPath,
+            brush = Brush.verticalGradient(
+                colors = listOf(
+                    lineColor.copy(alpha = 0.3f),
+                    lineColor.copy(alpha = 0f),
+                ),
+            ),
+        )
+
+        drawLine(
+            color = lineColor.copy(alpha = 0.35f),
+            start = Offset(0f, height),
+            end = Offset(width, height),
+            strokeWidth = 1.dp.toPx(),
+            pathEffect = PathEffect.dashPathEffect(floatArrayOf(8f, 8f)),
+        )
+
+        drawPath(
+            path = linePath,
+            color = lineColor,
             style = Stroke(
-                width = 2.dp.toPx(),
+                width = 2.5.dp.toPx(),
                 cap = StrokeCap.Round,
                 join = StrokeJoin.Round,
             ),
         )
+
+        val lastY = yFor(points.last())
+        drawCircle(color = lineColor, radius = 4.dp.toPx(), center = Offset(lastX, lastY))
+        drawCircle(color = White, radius = 2.dp.toPx(), center = Offset(lastX, lastY))
     }
 }

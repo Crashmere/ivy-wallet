@@ -50,8 +50,11 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.math.BigDecimal
 import java.time.Instant
+import java.time.LocalDate
+import java.time.ZoneId
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
+import java.time.temporal.ChronoUnit
 import java.util.UUID
 import javax.inject.Inject
 
@@ -112,6 +115,8 @@ internal class ReportViewModel @Inject internal constructor(
         mutableStateOf<ImmutableList<CategoryBreakdownItem>>(persistentListOf())
     private val incomeByCategory =
         mutableStateOf<ImmutableList<CategoryBreakdownItem>>(persistentListOf())
+    private val expenseByDay = mutableStateOf<ImmutableList<DailyBar>>(persistentListOf())
+    private val incomeByDay = mutableStateOf<ImmutableList<DailyBar>>(persistentListOf())
     private val loading = mutableStateOf(false)
     private val advancedExpanded = mutableStateOf(false)
 
@@ -162,6 +167,8 @@ internal class ReportViewModel @Inject internal constructor(
             expenses = expenses.doubleValue,
             expenseByCategory = expenseByCategory.value,
             incomeByCategory = incomeByCategory.value,
+            expenseByDay = expenseByDay.value,
+            incomeByDay = incomeByDay.value,
             allCategories = allCategories.value,
             allAccounts = allAccounts.value,
             allTags = allTags.value,
@@ -280,6 +287,7 @@ internal class ReportViewModel @Inject internal constructor(
 
         updateAmountRange(filtered)
         computeBreakdowns(filtered)
+        computeDailyTrends(filtered)
 
         val bc = baseCurrency.value
         if (sortOrder.value == SortOrder.TIME) {
@@ -376,6 +384,54 @@ internal class ReportViewModel @Inject internal constructor(
         }
         expenseByCategory.value = expenseMap.toBreakdownItems(catById)
         incomeByCategory.value = incomeMap.toBreakdownItems(catById)
+    }
+
+    private suspend fun computeDailyTrends(transactions: List<Transaction>) {
+        val bc = baseCurrency.value
+        val zone = ZoneId.systemDefault()
+        val expenseByDate = HashMap<LocalDate, Double>()
+        val incomeByDate = HashMap<LocalDate, Double>()
+        for (tx in transactions) {
+            val type = tx.getTransactionType()
+            if (type == TransactionType.TRANSFER) continue
+            val amount = exchangeTransactionAmountUseCase(
+                transaction = tx,
+                accounts = accountModels,
+                baseCurrency = bc,
+            ).toDouble()
+            val date = tx.time.atZone(zone).toLocalDate()
+            when (type) {
+                TransactionType.EXPENSE ->
+                    expenseByDate[date] = (expenseByDate[date] ?: 0.0) + amount
+                TransactionType.INCOME ->
+                    incomeByDate[date] = (incomeByDate[date] ?: 0.0) + amount
+                TransactionType.TRANSFER -> {}
+            }
+        }
+
+        val allDates = (expenseByDate.keys + incomeByDate.keys)
+        if (allDates.isEmpty()) {
+            expenseByDay.value = persistentListOf()
+            incomeByDay.value = persistentListOf()
+            return
+        }
+        val minDate = allDates.min()
+        val maxDate = allDates.max()
+        val span = ChronoUnit.DAYS.between(minDate, maxDate) + 1
+        val dates = if (span in 1..62) {
+            generateSequence(minDate) { it.plusDays(1) }
+                .takeWhile { !it.isAfter(maxDate) }
+                .toList()
+        } else {
+            allDates.sorted()
+        }
+
+        expenseByDay.value = dates.map {
+            DailyBar(label = it.dayOfMonth.toString(), amount = expenseByDate[it] ?: 0.0)
+        }.toImmutableList()
+        incomeByDay.value = dates.map {
+            DailyBar(label = it.dayOfMonth.toString(), amount = incomeByDate[it] ?: 0.0)
+        }.toImmutableList()
     }
 
     private fun Map<UUID?, Double>.toBreakdownItems(

@@ -3,19 +3,15 @@ package com.ivy.ui.transaction
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ColumnScope
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -23,7 +19,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
@@ -31,21 +26,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.ivy.ui.time.LocalTimeConverter
-import com.ivy.ui.time.LocalTimeFormatter
-import com.ivy.ui.time.LocalTimeProvider
 import com.ivy.ui.R
-import com.ivy.ui.time.TimeFormatter
-import com.ivy.ui.icon.ItemIconSDefaultIcon
-import com.ivy.ui.money.AmountCurrencyB1
 import com.ivy.ui.compose.GradientButton
-import com.ivy.ui.compose.ResourceIcon
-import com.ivy.ui.money.decimalPlacesForCurrency
+import com.ivy.ui.icon.ItemIconSDefaultIcon
 import com.ivy.ui.money.formatAmount
 import com.ivy.ui.theme.colors.Gradient
 import com.ivy.ui.theme.colors.findContrastTextColor
 import com.ivy.ui.theme.colors.toComposeColor
-import com.ivy.ui.theme.colors.IvyFixedColors.BlueLight
 import com.ivy.ui.theme.colors.IvyFixedColors.Gray
 import com.ivy.ui.theme.colors.IvyFixedColors.Green
 import com.ivy.ui.theme.colors.IvyFixedColors.Ivy
@@ -53,14 +40,13 @@ import com.ivy.ui.theme.colors.IvyFixedColors.Orange
 import com.ivy.ui.theme.colors.IvyFixedColors.Red
 import com.ivy.ui.theme.colors.IvyFixedColors.White
 import com.ivy.ui.theme.colors.IvyGradients.Green as GradientGreen
-import com.ivy.ui.theme.colors.IvyGradients.Ivy as GradientIvy
-import com.ivy.ui.theme.colors.IvyGradients.OrangeRevert as GradientOrangeRevert
-import com.ivy.ui.theme.colors.IvyGradients.Red as GradientRed
-import java.time.LocalDateTime
-import java.util.Locale
+import com.ivy.ui.time.LocalTimeConverter
+import com.ivy.ui.time.LocalTimeFormatter
+import com.ivy.ui.time.LocalTimeProvider
+import com.ivy.ui.time.TimeFormatter
 import java.util.UUID
 
-@Suppress("CyclomaticComplexMethod", "LongMethod")
+@Suppress("CyclomaticComplexMethod", "LongMethod", "UnusedParameter")
 @Composable
 internal fun TransactionCard(
     baseData: TransactionListData,
@@ -81,590 +67,342 @@ internal fun TransactionCard(
     val targetAccount = remember(baseData.accounts, card.toAccountId) {
         baseData.accounts.find { it.id == card.toAccountId }
     }
+    val category = remember(baseData.categories, card.categoryId) {
+        card.categoryId?.let { id -> baseData.categories.find { it.id == id } }
+    }
+
+    val transactionCurrency = sourceAccount?.currency ?: baseData.baseCurrency
+    val toAccountCurrency = targetAccount?.currency ?: baseData.baseCurrency
 
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp)
-            .padding(top = 12.dp)
-            .clip(TransactionListTheme.shapes.r4)
             .clickable {
                 if (sourceAccount != null) {
                     onClick(card.id, card.type)
                 }
             }
-            .background(TransactionListTheme.colors.medium, TransactionListTheme.shapes.r4)
             .testTag("transaction_card")
     ) {
-        val transactionCurrency = sourceAccount?.currency ?: baseData.baseCurrency
-        val toAccountCurrency = targetAccount?.currency ?: baseData.baseCurrency
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 20.dp, vertical = 12.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            TransactionIcon(
+                type = card.type,
+                categoryColor = category?.color,
+                categoryIcon = category?.icon,
+                accountColor = sourceAccount?.color,
+                accountIcon = sourceAccount?.icon,
+            )
 
-        Spacer(Modifier.height(20.dp))
+            Spacer(Modifier.width(14.dp))
 
-        TransactionHeaderRow(
-            transaction = card,
-            categories = baseData.categories,
-            accounts = baseData.accounts,
-            shouldShowAccountSpecificColorInTransactions = shouldShowAccountSpecificColorInTransactions,
-            onAccountClick = onAccountClick,
-            onCategoryClick = onCategoryClick
-        )
-
-        if (card.dueDate != null) {
-            Spacer(Modifier.height(12.dp))
-            val timeFormatter = LocalTimeFormatter.current
-            val timeProvider = LocalTimeProvider.current
-            Text(
-                modifier = Modifier.padding(horizontal = 24.dp),
-                text = stringResource(
-                    R.string.due_on,
-                    with(timeFormatter) {
-                        card.dueDate!!.formatLocal(
-                            TimeFormatter.Style.DateOnly(
-                                includeWeekDay = true
-                            )
-                        )
-                    }
-                ).uppercase(),
-                style = TransactionListTheme.typo.nC.copy(
-                    color = if (card.dueDate!!.isAfter(timeProvider.utcNow())) {
-                        Orange
-                    } else {
-                        TransactionListTheme.colors.gray
-                    },
-                    fontWeight = FontWeight.Bold,
-                    textAlign = TextAlign.Start
+            Column(modifier = Modifier.weight(1f)) {
+                Text(
+                    text = primaryText(card, category, sourceAccount),
+                    style = TransactionListTheme.typo.b2.copy(
+                        fontWeight = FontWeight.ExtraBold,
+                        color = TransactionListTheme.colors.pureInverse,
+                        textAlign = TextAlign.Start,
+                    ),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
                 )
-            )
-        }
 
-        if (card.title.isNullOrBlank().not()) {
-            Spacer(
-                Modifier.height(
-                    if (card.dueDate != null) 8.dp else 12.dp
-                )
-            )
-            Text(
-                modifier = Modifier.padding(horizontal = 24.dp),
-                text = card.title!!,
-                style = TransactionListTheme.typo.b1.copy(
-                    fontWeight = FontWeight.ExtraBold,
-                    color = TransactionListTheme.colors.pureInverse,
-                    textAlign = TextAlign.Start
-                )
-            )
-        }
-
-        val description = getTransactionDescription(card)
-        if (!description.isNullOrBlank()) {
-            Spacer(Modifier.height(if (card.title.isNullOrBlank().not()) 4.dp else 8.dp))
-            Text(
-                text = description,
-                modifier = Modifier.padding(horizontal = 24.dp),
-                style = TransactionListTheme.typo.nC.copy(
-                    color = TransactionListTheme.colors.gray,
-                    fontWeight = FontWeight.Bold,
-                    textAlign = TextAlign.Start
-                ),
-                maxLines = 3,
-                overflow = TextOverflow.Ellipsis
-            )
-        }
-
-        if (card.dueDate != null) {
-            Spacer(Modifier.height(12.dp))
-        } else {
-            Spacer(Modifier.height(16.dp))
-        }
-
-        TypeAmountCurrency(
-            transactionType = card.type,
-            dueDate = with(LocalTimeConverter.current) {
-                card.dueDate?.toLocalDateTime()
-            },
-            currency = transactionCurrency,
-            amount = card.amount.toDouble()
-        )
-
-        if (card.type == TransactionListTransactionType.TRANSFER && toAccountCurrency != transactionCurrency) {
-            Text(
-                modifier = Modifier.padding(start = 68.dp),
-                text = "${
-                    formatAmount(
-                        amount = card.toAmount.toDouble(),
-                        decimalPlaces = decimalPlacesForCurrency(toAccountCurrency)
+                val subtitle = subtitleText(card, category, sourceAccount, targetAccount, tags)
+                if (subtitle.isNotBlank()) {
+                    Spacer(Modifier.height(3.dp))
+                    Text(
+                        text = subtitle,
+                        style = TransactionListTheme.typo.nC.copy(
+                            color = TransactionListTheme.colors.gray,
+                            fontWeight = FontWeight.SemiBold,
+                            textAlign = TextAlign.Start,
+                        ),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
                     )
-                } $toAccountCurrency",
-                style = TransactionListTheme.typo.nB2.copy(
-                    color = Gray,
-                    fontWeight = FontWeight.Normal,
-                    textAlign = TextAlign.Start
-                )
+                }
+            }
+
+            Spacer(Modifier.width(12.dp))
+
+            AmountColumn(
+                type = card.type,
+                amount = card.amount.toDouble(),
+                currency = transactionCurrency,
+                dueDate = card.dueDate,
+                showToAmount = card.type == TransactionListTransactionType.TRANSFER &&
+                    toAccountCurrency != transactionCurrency,
+                toAmount = card.toAmount.toDouble(),
+                toCurrency = toAccountCurrency,
             )
+        }
+
+        if (card.dueDate != null) {
+            DueDateLabel(card = card)
         }
 
         if (card.dueDate != null && card.dateTime == null) {
-            // Pay/Get button
-            Spacer(Modifier.height(16.dp))
-            val isExpense = card.type == TransactionListTransactionType.EXPENSE
-            Row {
-                GradientButton(
-                    modifier = Modifier
-                        .weight(1f)
-                        .padding(start = 24.dp),
-                    text = stringResource(R.string.skip),
-                    wrapContentMode = false,
-                    backgroundGradient = Gradient.solid(TransactionListTheme.colors.pure),
-                    disabledBackgroundColor = TransactionListTheme.colors.gray,
-                    shape = TransactionListTheme.shapes.rFull,
-                    textStyle = TransactionListTheme.typo.b2.copy(
-                        color = TransactionListTheme.colors.pureInverse,
-                        fontWeight = FontWeight.Bold,
-                        textAlign = TextAlign.Start
-                    ),
-                    iconTint = White,
-                ) {
-                    onSkipTransaction(card.id)
-                }
-
-                Spacer(Modifier.width(8.dp))
-
-                GradientButton(
-                    modifier = Modifier
-                        .weight(1f)
-                        .padding(end = 24.dp),
-                    text = if (isExpense) stringResource(R.string.pay) else stringResource(R.string.get),
-                    wrapContentMode = false,
-                    backgroundGradient = if (isExpense) {
-                        Gradient(TransactionListTheme.colors.pureInverse, TransactionListTheme.colors.gray)
-                    } else {
-                        GradientGreen
-                    },
-                    disabledBackgroundColor = TransactionListTheme.colors.gray,
-                    shape = TransactionListTheme.shapes.rFull,
-                    textStyle = TransactionListTheme.typo.b2.copy(
-                        color = if (isExpense) TransactionListTheme.colors.pure else White,
-                        fontWeight = FontWeight.Bold,
-                        textAlign = TextAlign.Start
-                    ),
-                    iconTint = White,
-                ) {
-                    onPayOrGet(card.id)
-                }
-            }
+            PayGetSkipRow(
+                type = card.type,
+                onSkip = { onSkipTransaction(card.id) },
+                onPayOrGet = { onPayOrGet(card.id) },
+            )
         }
 
-        if (tags.isNotEmpty()) {
-            TransactionTags(tags)
-        }
-
-        Spacer(Modifier.height(20.dp))
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 20.dp)
+                .height(1.dp)
+                .background(TransactionListTheme.colors.medium)
+        )
     }
 }
 
 @Composable
-private fun ColumnScope.TransactionTags(tags: List<TransactionListTag>) {
-    Spacer(Modifier.height(12.dp))
-
-    LazyRow(
-        modifier = Modifier.padding(horizontal = 24.dp)
-    ) {
-        item {
-            // Tag Text
-            Text(
-                text = "Tags:",
-                style = TransactionListTheme.typo.nC.copy(
-                    color = TransactionListTheme.colors.gray,
-                    fontWeight = FontWeight.Normal,
-                    textAlign = TextAlign.Start
-                )
-            )
-
-            Spacer(modifier = Modifier.width(8.dp))
-        }
-
-        items(tags, key = { it.id }) { tag ->
-            Text(
-                text = "#${tag.name}",
-                style = TransactionListTheme.typo.nC.copy(
-                    color = BlueLight,
-                    fontWeight = FontWeight.Normal,
-                    textAlign = TextAlign.Start
-                )
-            )
-            Spacer(modifier = Modifier.width(6.dp))
-        }
-    }
-}
-
-@OptIn(ExperimentalLayoutApi::class)
-@Composable
-private fun TransactionHeaderRow(
-    transaction: TransactionListTransaction,
-    categories: List<TransactionListCategory>,
-    accounts: List<TransactionListAccount>,
-    shouldShowAccountSpecificColorInTransactions: Boolean,
-    onAccountClick: (UUID) -> Unit,
-    onCategoryClick: (UUID) -> Unit,
+private fun TransactionIcon(
+    type: TransactionListTransactionType,
+    categoryColor: Int?,
+    categoryIcon: String?,
+    accountColor: Int?,
+    accountIcon: String?,
 ) {
-    val category = findCategory(
-        categoryId = transaction.categoryId,
-        categories = categories
-    )
+    val backgroundColor: Color
+    val iconName: String?
+    @DrawableRes val defaultIcon: Int
 
-    if (transaction.type == TransactionListTransactionType.TRANSFER) {
-        Column(
-            modifier = Modifier.padding(horizontal = 20.dp),
-        ) {
-            if (category != null) {
-                CategoryBadgeDisplay(category, onCategoryClick)
-                Spacer(modifier = Modifier.height(8.dp))
-            }
-            TransferHeader(
-                accounts = accounts,
-                transaction = transaction,
-                shouldShowAccountSpecificColorInTransactions = shouldShowAccountSpecificColorInTransactions
-            )
-        }
-    } else {
-        FlowRow(
-            horizontalArrangement = Arrangement.spacedBy(12.dp),
-            modifier = Modifier.padding(horizontal = 20.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            if (category != null) {
-                CategoryBadgeDisplay(category, onCategoryClick)
-            }
-
-            val account = findAccount(
-                accountId = transaction.accountId,
-                accounts = accounts
-            )
-
-            val accountBackgroundColor = if (shouldShowAccountSpecificColorInTransactions) {
-                account?.color?.toComposeColor() ?: TransactionListTheme.colors.pure
-            } else {
-                TransactionListTheme.colors.pure
-            }
-
-            TransactionBadge(
-                text = account?.name ?: stringResource(R.string.deleted),
-                backgroundColor = accountBackgroundColor,
-                icon = account?.icon,
-                defaultIcon = R.drawable.ic_custom_account_s
-            ) {
-                account?.let {
-                    onAccountClick(account.id)
-                }
-            }
-        }
-    }
-}
-
-private fun findCategory(
-    categoryId: UUID?,
-    categories: List<TransactionListCategory>
-): TransactionListCategory? {
-    val targetId = categoryId ?: return null
-    return categories.find { it.id == targetId }
-}
-
-private fun findAccount(
-    accountId: UUID?,
-    accounts: List<TransactionListAccount>
-): TransactionListAccount? {
-    val targetId = accountId ?: return null
-    return accounts.find { it.id == targetId }
-}
-
-@Composable
-private fun CategoryBadgeDisplay(
-    category: TransactionListCategory,
-    onCategoryClick: (UUID) -> Unit,
-) {
-    TransactionBadge(
-        text = category.name,
-        backgroundColor = category.color.toComposeColor(),
-        icon = category.icon,
-        defaultIcon = R.drawable.ic_custom_category_s
-    ) {
-        onCategoryClick(category.id)
-    }
-}
-
-@Composable
-private fun getTransactionDescription(transaction: TransactionListTransaction): String? {
-    val paidFor = with(LocalTimeConverter.current) {
-        transaction.paidFor?.toLocalDateTime()
-    }
-    return when {
-        transaction.description.isNullOrBlank().not() -> transaction.description!!
-        transaction.recurringRuleId != null &&
-                transaction.dueDate == null &&
-                paidFor != null -> {
-            stringResource(
-                R.string.bill_paid,
-                paidFor.month.name.lowercase().capitalizeLocal(),
-                paidFor.year.toString()
-            )
+    when {
+        type == TransactionListTransactionType.TRANSFER -> {
+            backgroundColor = Ivy
+            iconName = null
+            defaultIcon = R.drawable.ic_transfer
         }
 
-        else -> null
+        categoryColor != null -> {
+            backgroundColor = categoryColor.toComposeColor()
+            iconName = categoryIcon
+            defaultIcon = R.drawable.ic_custom_category_s
+        }
+
+        accountColor != null -> {
+            backgroundColor = accountColor.toComposeColor()
+            iconName = accountIcon
+            defaultIcon = R.drawable.ic_custom_account_s
+        }
+
+        else -> {
+            backgroundColor = Gray
+            iconName = null
+            defaultIcon = R.drawable.ic_custom_category_s
+        }
     }
-}
 
-@Composable
-private fun TransactionBadge(
-    text: String,
-    backgroundColor: Color,
-    icon: String?,
-    @DrawableRes
-    defaultIcon: Int,
-
-    onClick: () -> Unit
-) {
-    Row(
+    Box(
         modifier = Modifier
-            .clip(TransactionListTheme.shapes.rFull)
-            .background(backgroundColor, TransactionListTheme.shapes.rFull)
-            .clickable {
-                onClick()
-            }
-            .padding(end = 10.dp),
-        verticalAlignment = Alignment.CenterVertically
+            .size(44.dp)
+            .clip(CircleShape)
+            .background(backgroundColor),
+        contentAlignment = Alignment.Center,
     ) {
-        Spacer(Modifier.width(8.dp))
-
-        val contrastColor = findContrastTextColor(backgroundColor)
-
         ItemIconSDefaultIcon(
-            iconName = icon,
+            iconName = iconName,
             defaultIcon = defaultIcon,
-            tint = contrastColor
+            tint = findContrastTextColor(backgroundColor),
         )
-
-        Spacer(Modifier.width(4.dp))
-
-        Text(
-            text = text,
-            style = TransactionListTheme.typo.c.copy(
-                color = contrastColor,
-                fontWeight = FontWeight.ExtraBold,
-                textAlign = TextAlign.Start
-            )
-        )
-
-        Spacer(Modifier.width(20.dp))
-    }
-}
-
-private const val TransferHeaderGradientThreshold = 0.35f
-
-@Composable
-private fun TransferHeader(
-    accounts: List<TransactionListAccount>,
-    transaction: TransactionListTransaction,
-    shouldShowAccountSpecificColorInTransactions: Boolean
-) {
-    val account = remember(accounts, transaction) {
-        accounts.find { transaction.accountId == it.id }
-    }
-    val toAccount = remember(accounts, transaction) {
-        accounts.find { transaction.toAccountId == it.id }
-    }
-
-    Row(
-        modifier = Modifier
-            .then(
-                if (shouldShowAccountSpecificColorInTransactions && account != null && toAccount != null) {
-                    Modifier
-                        .background(
-                            brush = Brush.horizontalGradient(
-                                0f to account.color.toComposeColor(),
-                                (TransferHeaderGradientThreshold) to account.color.toComposeColor(),
-                                (1f - TransferHeaderGradientThreshold) to toAccount.color.toComposeColor(),
-                                1f to toAccount.color.toComposeColor()
-                            ),
-                            shape = TransactionListTheme.shapes.rFull
-                        )
-                } else {
-                    Modifier.background(TransactionListTheme.colors.pure, TransactionListTheme.shapes.rFull)
-                }
-            ),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Spacer(Modifier.width(8.dp))
-
-        val accountContrastColor =
-            if (shouldShowAccountSpecificColorInTransactions && account != null) {
-                findContrastTextColor(account.color.toComposeColor())
-            } else {
-                TransactionListTheme.colors.pureInverse
-            }
-
-        ItemIconSDefaultIcon(
-            iconName = account?.icon,
-            defaultIcon = R.drawable.ic_custom_account_s,
-            tint = accountContrastColor
-        )
-
-        Spacer(Modifier.width(4.dp))
-
-        Text(
-            modifier = Modifier
-                .padding(vertical = 8.dp),
-            // used toString() in case of null
-            text = account?.name.toString(),
-            style = TransactionListTheme.typo.c.copy(
-                fontWeight = FontWeight.ExtraBold,
-                color = accountContrastColor,
-                textAlign = TextAlign.Start
-            )
-        )
-
-        Spacer(Modifier.width(12.dp))
-
-        ResourceIcon(icon = R.drawable.ic_arrow_right, tint = accountContrastColor)
-
-        Spacer(Modifier.width(12.dp))
-
-        val toAccountContrastColor =
-            if (shouldShowAccountSpecificColorInTransactions && toAccount != null) {
-                findContrastTextColor(toAccount.color.toComposeColor())
-            } else {
-                TransactionListTheme.colors.pureInverse
-            }
-
-        ItemIconSDefaultIcon(
-            iconName = toAccount?.icon,
-            defaultIcon = R.drawable.ic_custom_account_s,
-            tint = toAccountContrastColor
-        )
-
-        Spacer(Modifier.width(4.dp))
-
-        Text(
-            modifier = Modifier
-                .padding(vertical = 8.dp),
-            // used toString() in case of null
-            text = toAccount?.name.toString(),
-            style = TransactionListTheme.typo.c.copy(
-                fontWeight = FontWeight.ExtraBold,
-                color = toAccountContrastColor,
-                textAlign = TextAlign.Start
-            )
-        )
-
-        Spacer(Modifier.width(20.dp))
     }
 }
 
 @Composable
-private fun TypeAmountCurrency(
-    transactionType: TransactionListTransactionType,
-    dueDate: LocalDateTime?,
-    currency: String,
+private fun AmountColumn(
+    type: TransactionListTransactionType,
     amount: Double,
-    modifier: Modifier = Modifier
+    currency: String,
+    dueDate: java.time.Instant?,
+    showToAmount: Boolean,
+    toAmount: Double,
+    toCurrency: String,
 ) {
     val timeProvider = LocalTimeProvider.current
     val now = with(LocalTimeConverter.current) { timeProvider.utcNow().toLocalDateTime() }
     val todayStart = timeProvider.localDateNow().atStartOfDay()
+    val dueLocal = with(LocalTimeConverter.current) { dueDate?.toLocalDateTime() }
 
-    Row(
-        modifier = modifier.testTag("type_amount_currency"),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Spacer(Modifier.width(24.dp))
-
-        val style = when (transactionType) {
-            TransactionListTransactionType.INCOME -> {
-                AmountTypeStyle(
-                    icon = R.drawable.ic_income,
-                    gradient = GradientGreen,
-                    iconTint = White,
-                    textColor = Green
-                )
-            }
-
-            TransactionListTransactionType.EXPENSE -> {
-                when {
-                    dueDate != null && dueDate.isAfter(now) -> {
-                        // Upcoming Expense
-                        AmountTypeStyle(
-                            icon = R.drawable.ic_expense,
-                            gradient = GradientOrangeRevert,
-                            iconTint = White,
-                            textColor = Orange
-                        )
-                    }
-
-                    dueDate != null && dueDate.isBefore(todayStart) -> {
-                        // Overdue Expense
-                        AmountTypeStyle(
-                            icon = R.drawable.ic_overdue,
-                            gradient = GradientRed,
-                            iconTint = White,
-                            textColor = Red
-                        )
-                    }
-
-                    else -> {
-                        // Normal Expense
-                        AmountTypeStyle(
-                            icon = R.drawable.ic_expense,
-                            gradient = Gradient(
-                                TransactionListTheme.colors.gray,
-                                TransactionListTheme.colors.pureInverse
-                            ),
-                            iconTint = White,
-                            textColor = TransactionListTheme.colors.pureInverse
-                        )
-                    }
-                }
-            }
-
-            TransactionListTransactionType.TRANSFER -> {
-                // Transfer
-                AmountTypeStyle(
-                    icon = R.drawable.ic_transfer,
-                    gradient = GradientIvy,
-                    iconTint = White,
-                    textColor = Ivy
-                )
-            }
+    val amountColor = when (type) {
+        TransactionListTransactionType.INCOME -> Green
+        TransactionListTransactionType.TRANSFER -> Ivy
+        TransactionListTransactionType.EXPENSE -> when {
+            dueLocal != null && dueLocal.isAfter(now) -> Orange
+            dueLocal != null && dueLocal.isBefore(todayStart) -> Red
+            else -> TransactionListTheme.colors.pureInverse
         }
+    }
+    val sign = when (type) {
+        TransactionListTransactionType.INCOME -> "+"
+        TransactionListTransactionType.EXPENSE -> "-"
+        TransactionListTransactionType.TRANSFER -> ""
+    }
 
-        ResourceIcon(
-            modifier = Modifier
-                .background(style.gradient.asHorizontalBrush(), CircleShape),
-            icon = style.icon,
-            tint = style.iconTint
+    Column(horizontalAlignment = Alignment.End) {
+        Text(
+            text = "$sign${formatAmount(amount, currency)} $currency",
+            style = TransactionListTheme.typo.nB2.copy(
+                fontWeight = FontWeight.ExtraBold,
+                color = amountColor,
+                textAlign = TextAlign.End,
+            ),
+            maxLines = 1,
         )
 
-        Spacer(Modifier.width(12.dp))
-
-        AmountCurrencyB1(
-            amount = amount,
-            currency = currency,
-            textColor = style.textColor
-        )
-
-        Spacer(Modifier.width(24.dp))
+        if (showToAmount) {
+            Spacer(Modifier.height(2.dp))
+            Text(
+                text = "${formatAmount(toAmount, toCurrency)} $toCurrency",
+                style = TransactionListTheme.typo.nC.copy(
+                    color = Gray,
+                    fontWeight = FontWeight.Normal,
+                    textAlign = TextAlign.End,
+                ),
+                maxLines = 1,
+            )
+        }
     }
 }
 
-private data class AmountTypeStyle(
-    @DrawableRes val icon: Int,
-    val gradient: Gradient,
-    val iconTint: Color,
-    val textColor: Color
-)
+@Composable
+private fun DueDateLabel(card: TransactionListTransaction) {
+    val dueDate = card.dueDate ?: return
+    val timeFormatter = LocalTimeFormatter.current
+    val timeProvider = LocalTimeProvider.current
 
-private fun String.capitalizeLocal(): String = replaceFirstChar {
-    if (it.isLowerCase()) {
-        it.titlecase(Locale.getDefault())
-    } else {
-        it.toString()
+    Text(
+        modifier = Modifier.padding(start = 78.dp, end = 20.dp, bottom = 12.dp),
+        text = stringResource(
+            R.string.due_on,
+            with(timeFormatter) {
+                dueDate.formatLocal(
+                    TimeFormatter.Style.DateOnly(includeWeekDay = true)
+                )
+            }
+        ).uppercase(),
+        style = TransactionListTheme.typo.nC.copy(
+            color = if (dueDate.isAfter(timeProvider.utcNow())) {
+                Orange
+            } else {
+                TransactionListTheme.colors.gray
+            },
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Start,
+        ),
+    )
+}
+
+@Composable
+private fun PayGetSkipRow(
+    type: TransactionListTransactionType,
+    onSkip: () -> Unit,
+    onPayOrGet: () -> Unit,
+) {
+    val isExpense = type == TransactionListTransactionType.EXPENSE
+
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(start = 20.dp, end = 20.dp, bottom = 14.dp),
+    ) {
+        GradientButton(
+            modifier = Modifier.weight(1f),
+            text = stringResource(R.string.skip),
+            wrapContentMode = false,
+            backgroundGradient = Gradient.solid(TransactionListTheme.colors.pure),
+            disabledBackgroundColor = TransactionListTheme.colors.gray,
+            shape = TransactionListTheme.shapes.rFull,
+            textStyle = TransactionListTheme.typo.b2.copy(
+                color = TransactionListTheme.colors.pureInverse,
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Start,
+            ),
+            iconTint = White,
+        ) {
+            onSkip()
+        }
+
+        Spacer(Modifier.width(8.dp))
+
+        GradientButton(
+            modifier = Modifier.weight(1f),
+            text = if (isExpense) stringResource(R.string.pay) else stringResource(R.string.get),
+            wrapContentMode = false,
+            backgroundGradient = if (isExpense) {
+                Gradient(TransactionListTheme.colors.pureInverse, TransactionListTheme.colors.gray)
+            } else {
+                GradientGreen
+            },
+            disabledBackgroundColor = TransactionListTheme.colors.gray,
+            shape = TransactionListTheme.shapes.rFull,
+            textStyle = TransactionListTheme.typo.b2.copy(
+                color = if (isExpense) TransactionListTheme.colors.pure else White,
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Start,
+            ),
+            iconTint = White,
+        ) {
+            onPayOrGet()
+        }
     }
+}
+
+@Composable
+private fun primaryText(
+    card: TransactionListTransaction,
+    category: TransactionListCategory?,
+    account: TransactionListAccount?,
+): String = when {
+    !card.title.isNullOrBlank() -> card.title!!
+    card.type == TransactionListTransactionType.TRANSFER -> stringResource(R.string.transfer)
+    category != null -> category.name
+    account != null -> account.name
+    else -> stringResource(R.string.deleted)
+}
+
+@Composable
+private fun subtitleText(
+    card: TransactionListTransaction,
+    category: TransactionListCategory?,
+    sourceAccount: TransactionListAccount?,
+    targetAccount: TransactionListAccount?,
+    tags: List<TransactionListTag>,
+): String {
+    val parts = buildList {
+        if (card.type == TransactionListTransactionType.TRANSFER) {
+            val from = sourceAccount?.name
+            val to = targetAccount?.name
+            when {
+                from != null && to != null -> add("$from → $to")
+                from != null -> add(from)
+            }
+        } else {
+            val titleShown = !card.title.isNullOrBlank()
+            when {
+                titleShown -> {
+                    category?.let { add(it.name) }
+                    sourceAccount?.let { add(it.name) }
+                }
+
+                category != null -> {
+                    sourceAccount?.let { add(it.name) }
+                }
+
+                else -> {
+                    // account already used as the primary line
+                }
+            }
+        }
+        tags.forEach { add("#${it.name}") }
+    }
+    return parts.joinToString(" · ")
 }

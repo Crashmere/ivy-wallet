@@ -1,12 +1,18 @@
 package com.ivy.search
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.FlowRowScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -17,6 +23,8 @@ import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -137,6 +145,18 @@ private fun SearchUi(
             )
         }
 
+        Spacer(Modifier.height(12.dp))
+
+        var expandedFilter by remember { mutableStateOf<SearchFilterDim?>(null) }
+        SearchFilterBar(
+            uiState = uiState,
+            expanded = expandedFilter,
+            onToggleExpand = { dim ->
+                expandedFilter = if (expandedFilter == dim) null else dim
+            },
+            onEvent = onEvent,
+        )
+
         val resultCount = remember(uiState.transactions) {
             uiState.transactions.count { it is TransactionHistoryTransaction }
         }
@@ -225,6 +245,218 @@ private fun SearchUi(
             }
         }
     }
+}
+
+private enum class SearchFilterDim { CATEGORY, ACCOUNT, TAG, TIME }
+
+private val searchTimeFilterOptions = listOf(
+    "全部时间" to SearchTimeFilter.ALL,
+    "本月" to SearchTimeFilter.THIS_MONTH,
+    "上月" to SearchTimeFilter.LAST_MONTH,
+    "近3个月" to SearchTimeFilter.LAST_3_MONTHS,
+    "今年" to SearchTimeFilter.THIS_YEAR,
+)
+
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+private fun SearchFilterBar(
+    uiState: SearchState,
+    expanded: SearchFilterDim?,
+    onToggleExpand: (SearchFilterDim) -> Unit,
+    onEvent: (SearchEvent) -> Unit,
+) {
+    val categoryCount = uiState.selectedCategoryIds.size +
+            if (uiState.uncategorizedSelected) 1 else 0
+    val accountCount = uiState.selectedAccountIds.size
+    val tagCount = uiState.selectedTagIds.size
+    val timeActive = uiState.timeFilter != SearchTimeFilter.ALL
+    val anyActive = categoryCount > 0 || accountCount > 0 || tagCount > 0 || timeActive
+
+    Column(modifier = Modifier.fillMaxWidth()) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .horizontalScroll(rememberScrollState())
+                .padding(horizontal = 16.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            FilterEntryChip(
+                label = stringResource(R.string.categories),
+                count = categoryCount,
+                expanded = expanded == SearchFilterDim.CATEGORY,
+                onClick = { onToggleExpand(SearchFilterDim.CATEGORY) },
+            )
+            Spacer(Modifier.width(8.dp))
+            FilterEntryChip(
+                label = stringResource(R.string.accounts),
+                count = accountCount,
+                expanded = expanded == SearchFilterDim.ACCOUNT,
+                onClick = { onToggleExpand(SearchFilterDim.ACCOUNT) },
+            )
+            Spacer(Modifier.width(8.dp))
+            FilterEntryChip(
+                label = "标签",
+                count = tagCount,
+                expanded = expanded == SearchFilterDim.TAG,
+                onClick = { onToggleExpand(SearchFilterDim.TAG) },
+            )
+            Spacer(Modifier.width(8.dp))
+            FilterEntryChip(
+                label = "时间",
+                count = if (timeActive) 1 else 0,
+                expanded = expanded == SearchFilterDim.TIME,
+                onClick = { onToggleExpand(SearchFilterDim.TIME) },
+            )
+            if (anyActive) {
+                Spacer(Modifier.width(8.dp))
+                Text(
+                    modifier = Modifier
+                        .clip(CircleShape)
+                        .clickable { onEvent(SearchEvent.ClearFilters) }
+                        .padding(horizontal = 10.dp, vertical = 8.dp),
+                    text = "清除",
+                    style = SearchTheme.typo.c.copy(color = SearchTheme.colors.gray)
+                )
+            }
+        }
+
+        AnimatedVisibility(visible = expanded == SearchFilterDim.CATEGORY) {
+            FilterPanel {
+                uiState.categories.forEach { category ->
+                    FilterChip(
+                        text = category.name.value,
+                        selected = category.id.value in uiState.selectedCategoryIds,
+                        onClick = { onEvent(SearchEvent.ToggleCategory(category.id.value)) }
+                    )
+                }
+                FilterChip(
+                    text = "无类别",
+                    selected = uiState.uncategorizedSelected,
+                    onClick = { onEvent(SearchEvent.ToggleUncategorized) }
+                )
+            }
+        }
+
+        AnimatedVisibility(visible = expanded == SearchFilterDim.ACCOUNT) {
+            FilterPanel {
+                uiState.accounts.forEach { account ->
+                    FilterChip(
+                        text = account.name,
+                        selected = account.id in uiState.selectedAccountIds,
+                        onClick = { onEvent(SearchEvent.ToggleAccount(account.id)) }
+                    )
+                }
+            }
+        }
+
+        AnimatedVisibility(visible = expanded == SearchFilterDim.TAG) {
+            if (uiState.tags.isEmpty()) {
+                Text(
+                    modifier = Modifier.padding(horizontal = 20.dp, vertical = 12.dp),
+                    text = "暂无标签",
+                    style = SearchTheme.typo.c.copy(color = SearchTheme.colors.gray)
+                )
+            } else {
+                FilterPanel {
+                    uiState.tags.forEach { tag ->
+                        FilterChip(
+                            text = "#${tag.name.value}",
+                            selected = tag.id.value in uiState.selectedTagIds,
+                            onClick = { onEvent(SearchEvent.ToggleTag(tag.id.value)) }
+                        )
+                    }
+                }
+            }
+        }
+
+        AnimatedVisibility(visible = expanded == SearchFilterDim.TIME) {
+            FilterPanel {
+                searchTimeFilterOptions.forEach { (label, filter) ->
+                    FilterChip(
+                        text = label,
+                        selected = uiState.timeFilter == filter,
+                        onClick = { onEvent(SearchEvent.SetTimeFilter(filter)) }
+                    )
+                }
+            }
+        }
+    }
+}
+
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+private fun FilterPanel(content: @Composable FlowRowScope.() -> Unit) {
+    FlowRow(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp)
+            .padding(top = 10.dp),
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+        content = content,
+    )
+}
+
+@Composable
+private fun FilterEntryChip(
+    label: String,
+    count: Int,
+    expanded: Boolean,
+    onClick: () -> Unit,
+) {
+    val active = count > 0
+    val caret = if (expanded) " ▲" else " ▼"
+    val text = if (count > 0) "$label · $count$caret" else "$label$caret"
+    Text(
+        modifier = Modifier
+            .clip(CircleShape)
+            .background(
+                color = if (active) SearchTheme.colors.pureInverse.copy(alpha = 0.08f) else Color.Transparent,
+                shape = CircleShape
+            )
+            .border(
+                width = if (active || expanded) 2.dp else 1.dp,
+                color = if (active || expanded) SearchTheme.colors.pureInverse else SearchTheme.colors.medium,
+                shape = CircleShape
+            )
+            .clickable(onClick = onClick)
+            .padding(horizontal = 14.dp, vertical = 8.dp),
+        text = text,
+        maxLines = 1,
+        style = SearchTheme.typo.c.copy(
+            color = SearchTheme.colors.pureInverse,
+            fontWeight = FontWeight.SemiBold,
+        )
+    )
+}
+
+@Composable
+private fun FilterChip(
+    text: String,
+    selected: Boolean,
+    onClick: () -> Unit,
+) {
+    Text(
+        modifier = Modifier
+            .clip(CircleShape)
+            .background(
+                color = if (selected) SearchTheme.colors.pureInverse else Color.Transparent,
+                shape = CircleShape
+            )
+            .border(
+                width = 2.dp,
+                color = if (selected) SearchTheme.colors.pureInverse else SearchTheme.colors.medium,
+                shape = CircleShape
+            )
+            .clickable(onClick = onClick)
+            .padding(horizontal = 16.dp, vertical = 8.dp),
+        text = text,
+        maxLines = 1,
+        style = SearchTheme.typo.c.copy(
+            color = if (selected) SearchTheme.colors.pure else SearchTheme.colors.pureInverse,
+            fontWeight = FontWeight.SemiBold,
+        )
+    )
 }
 
 @Composable

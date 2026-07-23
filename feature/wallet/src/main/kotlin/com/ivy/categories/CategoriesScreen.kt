@@ -4,6 +4,7 @@ import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraintsScope
 import androidx.compose.foundation.layout.Column
@@ -11,7 +12,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
@@ -21,7 +21,6 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -32,8 +31,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -41,8 +44,9 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ivy.ui.search.SearchInput
-import com.ivy.ui.money.balancePrefix
+import com.ivy.data.model.currency.format
 import com.ivy.data.model.currency.shortenAmount
+import com.ivy.data.model.currency.shouldShortAmount
 import com.ivy.ui.compose.selectEndTextFieldValue
 import com.ivy.ui.navigation.TransactionsScreen
 import com.ivy.ui.navigation.navigation
@@ -56,7 +60,6 @@ import com.ivy.ui.rememberScrollPositionListState
 import com.ivy.ui.theme.colors.Gradient
 import com.ivy.ui.theme.colors.IvyGradients
 import com.ivy.ui.theme.colors.IvyFixedColors.White
-import com.ivy.ui.money.BalanceRow
 import com.ivy.ui.icon.ItemIconSDefaultIcon
 import com.ivy.ui.modal.ChoosePeriodModal
 import com.ivy.ui.modal.ReorderModalSingleType
@@ -106,19 +109,30 @@ private fun BoxWithConstraintsScope.UI(
         state = listState
     ) {
         item {
-            Spacer(Modifier.height(32.dp))
+            Spacer(Modifier.height(20.dp))
 
             Row(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 12.dp, end = 24.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Spacer(Modifier.width(24.dp))
+                CategoryIconButton(
+                    icon = R.drawable.ic_back,
+                    contentDescription = "back",
+                    onClick = { nav.back() },
+                )
 
-                MonthSelector(
-                    period = state.period,
-                    onPrevious = { onEvent(CategoriesScreenEvent.OnPreviousMonth) },
-                    onNext = { onEvent(CategoriesScreenEvent.OnNextMonth) },
-                    onClick = { periodModal = state.period }
+                Spacer(Modifier.width(4.dp))
+
+                Text(
+                    text = stringResource(R.string.categories),
+                    style = CategoriesTheme.typo.b1.copy(
+                        color = CategoriesTheme.colors.pureInverse,
+                        fontWeight = FontWeight.ExtraBold,
+                        textAlign = TextAlign.Start,
+                        fontSize = 24.sp,
+                    ),
                 )
 
                 Spacer(Modifier.weight(1f))
@@ -132,19 +146,21 @@ private fun BoxWithConstraintsScope.UI(
                     },
                     clickAreaPadding = 12.dp
                 )
+            }
 
-                Spacer(modifier = Modifier.width(16.dp))
+            Spacer(Modifier.height(12.dp))
 
-                FilledIconButton(
-                    icon = R.drawable.ic_drag_handle,
-                    contentDescription = "reorder",
-                    backgroundColor = CategoriesTheme.colors.medium,
-                    tint = CategoriesTheme.colors.pureInverse,
-                ) {
-                    onEvent(CategoriesScreenEvent.OnReorderModalVisible(true))
-                }
-
-                Spacer(Modifier.width(24.dp))
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                MonthSelector(
+                    period = state.period,
+                    onPrevious = { onEvent(CategoriesScreenEvent.OnPreviousMonth) },
+                    onNext = { onEvent(CategoriesScreenEvent.OnNextMonth) },
+                    onClick = { periodModal = state.period }
+                )
             }
 
             if (state.showCategorySearchBar) {
@@ -154,36 +170,28 @@ private fun BoxWithConstraintsScope.UI(
             Spacer(Modifier.height(16.dp))
         }
 
-        items(state.categories, key = { it.category.id.value }) { categoryData ->
-            CategoryCard(
-                currency = state.baseCurrency,
-                categoryData = categoryData,
-                compactModeEnabled = state.compactCategoriesModeEnabled,
-                onLongClick = {
-                    onEvent(CategoriesScreenEvent.OnReorderModalVisible(true))
-                }
-            ) {
-                nav.navigateTo(
-                    TransactionsScreen(
-                        accountId = null,
-                        categoryId = categoryData.category.id.value
-                    )
-                )
-            }
-        }
-
         item {
+            GroupedCategoriesCard(
+                categories = state.categories,
+                currency = state.baseCurrency,
+                onCategoryClick = { categoryData ->
+                    nav.navigateTo(
+                        TransactionsScreen(
+                            accountId = null,
+                            categoryId = categoryData.category.id.value
+                        )
+                    )
+                },
+                onReorder = { onEvent(CategoriesScreenEvent.OnReorderModalVisible(true)) }
+            )
+
+            Spacer(Modifier.height(16.dp))
+
+            DashedAddCategoryButton(onClick = { categoryModalVisible = true })
+
             Spacer(Modifier.height(150.dp)) // scroll hack
         }
     }
-    CategoriesBottomBar(
-        onAddCategory = {
-            categoryModalVisible = true
-        },
-        onClose = {
-            nav.back()
-        },
-    )
 
     ReorderModalSingleType(
         visible = state.reorderModalVisible,
@@ -324,28 +332,69 @@ private fun MonthNavArrow(
 }
 
 @Composable
-private fun CategoryCard(
-    currency: String,
-    categoryData: CategoryData,
-    compactModeEnabled: Boolean,
-    onLongClick: () -> Unit,
+private fun CategoryIconButton(
+    @DrawableRes icon: Int,
+    contentDescription: String,
     onClick: () -> Unit
 ) {
-    Spacer(Modifier.height(if (compactModeEnabled) 8.dp else 12.dp))
-    CategoryRowCard(
-        categoryData = categoryData,
-        currency = currency,
-        compactModeEnabled = compactModeEnabled,
-        onClick = onClick,
-    )
+    Box(
+        modifier = Modifier
+            .clip(CircleShape)
+            .clickable(onClick = onClick)
+            .padding(10.dp),
+        contentAlignment = Alignment.Center
+    ) {
+        ResourceIcon(
+            icon = icon,
+            tint = CategoriesTheme.colors.pureInverse,
+            contentDescription = contentDescription
+        )
+    }
 }
 
 @Composable
-private fun CategoryRowCard(
+private fun GroupedCategoriesCard(
+    categories: ImmutableList<CategoryData>,
+    currency: String,
+    onCategoryClick: (CategoryData) -> Unit,
+    onReorder: () -> Unit,
+) {
+    if (categories.isEmpty()) return
+
+    Column(
+        modifier = Modifier
+            .padding(horizontal = 16.dp)
+            .fillMaxWidth()
+            .clip(CategoriesTheme.shapes.r4)
+            .background(CategoriesTheme.colors.pure)
+            .border(1.dp, CategoriesTheme.colors.medium, CategoriesTheme.shapes.r4),
+    ) {
+        categories.forEachIndexed { index, categoryData ->
+            if (index > 0) {
+                Box(
+                    modifier = Modifier
+                        .padding(start = 16.dp, end = 16.dp)
+                        .fillMaxWidth()
+                        .height(1.dp)
+                        .background(CategoriesTheme.colors.medium)
+                )
+            }
+            CategoryGroupedRow(
+                categoryData = categoryData,
+                currency = currency,
+                onClick = { onCategoryClick(categoryData) },
+                onReorder = onReorder,
+            )
+        }
+    }
+}
+
+@Composable
+private fun CategoryGroupedRow(
     categoryData: CategoryData,
     currency: String,
-    compactModeEnabled: Boolean,
     onClick: () -> Unit,
+    onReorder: () -> Unit,
 ) {
     val category = categoryData.category
     val categoryColor = category.color.value.toComposeColor()
@@ -353,23 +402,26 @@ private fun CategoryRowCard(
 
     Row(
         modifier = Modifier
-            .padding(horizontal = 16.dp)
             .fillMaxWidth()
-            .clip(CategoriesTheme.shapes.r4)
-            .background(CategoriesTheme.colors.pure)
-            .border(1.dp, CategoriesTheme.colors.medium, CategoriesTheme.shapes.r4)
             .clickable(onClick = onClick)
-            .height(IntrinsicSize.Min),
+            .padding(start = 8.dp, end = 12.dp, top = 12.dp, bottom = 12.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Box(
             modifier = Modifier
-                .width(5.dp)
-                .fillMaxHeight()
-                .background(categoryColor)
-        )
+                .clip(CircleShape)
+                .clickable(onClick = onReorder)
+                .padding(6.dp),
+            contentAlignment = Alignment.Center,
+        ) {
+            ResourceIcon(
+                icon = R.drawable.ic_drag_handle,
+                tint = secondaryColor,
+                contentDescription = "reorder",
+            )
+        }
 
-        Spacer(Modifier.width(14.dp))
+        Spacer(Modifier.width(6.dp))
 
         Box(
             modifier = Modifier
@@ -387,11 +439,7 @@ private fun CategoryRowCard(
 
         Spacer(Modifier.width(12.dp))
 
-        Column(
-            modifier = Modifier
-                .weight(1f)
-                .padding(vertical = 14.dp),
-        ) {
+        Column(modifier = Modifier.weight(1f)) {
             Text(
                 text = category.name.value,
                 maxLines = 1,
@@ -403,39 +451,85 @@ private fun CategoryRowCard(
                 )
             )
 
-            if (!compactModeEnabled &&
-                (categoryData.monthlyIncome != 0.0 || categoryData.monthlyExpenses != 0.0)
-            ) {
-                Spacer(Modifier.height(4.dp))
-                Text(
-                    text = "支 ${shortenAmount(abs(categoryData.monthlyExpenses))}  ·  " +
-                        "收 ${shortenAmount(abs(categoryData.monthlyIncome))}",
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                    style = CategoriesTheme.typo.c.copy(
-                        color = secondaryColor,
-                        fontWeight = FontWeight.Medium,
-                        textAlign = TextAlign.Start
-                    )
+            Spacer(Modifier.height(3.dp))
+
+            Text(
+                text = categorySubtitle(categoryData, currency),
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                style = CategoriesTheme.typo.c.copy(
+                    color = secondaryColor,
+                    fontWeight = FontWeight.Medium,
+                    textAlign = TextAlign.Start
                 )
-            }
+            )
         }
 
-        Spacer(Modifier.width(12.dp))
+        Spacer(Modifier.width(8.dp))
 
-        BalanceRow(
-            modifier = Modifier.padding(end = 16.dp),
-            currency = currency,
-            balance = categoryData.monthlyBalance,
-            textColor = CategoriesTheme.colors.pureInverse,
-            balanceFontSize = 17.sp,
-            currencyFontSize = 17.sp,
-            currencyUpfront = false,
-            balanceAmountPrefix = balancePrefix(
-                income = categoryData.monthlyIncome,
-                expenses = categoryData.monthlyExpenses
-            ),
-            shortenBigNumbers = true,
+        ResourceIcon(
+            icon = R.drawable.ic_arrow_right,
+            tint = CategoriesTheme.colors.pureInverse.copy(alpha = 0.3f),
+        )
+    }
+}
+
+private fun categorySubtitle(categoryData: CategoryData, currency: String): String {
+    val count = categoryData.monthlyCount
+    if (count == 0) return "本月无记录"
+
+    val net = categoryData.monthlyBalance
+    val prefix = when {
+        net > 0.0 -> "+"
+        net < 0.0 -> "-"
+        else -> ""
+    }
+    val absNet = abs(net)
+    val amountStr = if (shouldShortAmount(absNet)) {
+        shortenAmount(absNet)
+    } else {
+        absNet.format(currency)
+    }
+    return "本月 $prefix$amountStr $currency · $count 笔"
+}
+
+@Composable
+private fun DashedAddCategoryButton(onClick: () -> Unit) {
+    val borderColor = CategoriesTheme.colors.medium
+    Row(
+        modifier = Modifier
+            .padding(horizontal = 16.dp)
+            .fillMaxWidth()
+            .clip(CategoriesTheme.shapes.r4)
+            .clickable(onClick = onClick)
+            .drawBehind {
+                drawRoundRect(
+                    color = borderColor,
+                    style = Stroke(
+                        width = 1.5.dp.toPx(),
+                        pathEffect = PathEffect.dashPathEffect(floatArrayOf(14f, 10f)),
+                    ),
+                    cornerRadius = CornerRadius(24.dp.toPx()),
+                )
+            }
+            .padding(vertical = 18.dp),
+        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        ResourceIcon(
+            icon = R.drawable.ic_plus,
+            tint = CategoriesTheme.colors.pureInverse,
+        )
+
+        Spacer(Modifier.width(8.dp))
+
+        Text(
+            text = stringResource(R.string.add_category),
+            style = CategoriesTheme.typo.b2.copy(
+                color = CategoriesTheme.colors.pureInverse,
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Start
+            )
         )
     }
 }

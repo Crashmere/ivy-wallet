@@ -40,7 +40,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ivy.data.model.currency.format
 import com.ivy.data.model.currency.shortenAmount
-import com.ivy.ui.compose.FilledIconButton
+import com.ivy.data.model.currency.shouldShortAmount
 import com.ivy.ui.compose.ResourceIcon
 import com.ivy.ui.compose.horizontalSwipeListener
 import com.ivy.ui.compose.rememberSwipeListenerState
@@ -53,8 +53,11 @@ import com.ivy.ui.money.BalanceRow
 import com.ivy.ui.icon.ItemIconSDefaultIcon
 import com.ivy.ui.modal.ReorderModalSingleType
 import com.ivy.ui.theme.colors.IvyGradients
+import com.ivy.ui.theme.colors.IvyFixedColors.Green
+import com.ivy.ui.theme.colors.IvyFixedColors.Red
 import com.ivy.ui.theme.colors.IvyFixedColors.White
 import com.ivy.ui.theme.colors.toComposeColor
+import kotlin.math.absoluteValue
 
 @Composable
 fun BoxWithConstraintsScope.AccountsTab(
@@ -83,6 +86,10 @@ private fun BoxWithConstraintsScope.UI(
     val listState = rememberScrollPositionListState(
         key = "accounts_lazy_column"
     )
+
+    val includedAccounts = state.accountsData.filter { it.account.includeInBalance }
+    val excludedAccounts = state.accountsData.filter { !it.account.includeInBalance }
+
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -101,31 +108,71 @@ private fun BoxWithConstraintsScope.UI(
         state = listState
     ) {
         item {
-            Spacer(Modifier.height(24.dp))
+            Spacer(Modifier.height(20.dp))
+
+            AccountsHeaderRow(
+                onEdit = {
+                    onEvent(AccountsEvent.OnReorderModalVisible(reorderVisible = true))
+                },
+            )
+
+            Spacer(Modifier.height(16.dp))
 
             NetWorthCard(
                 currency = state.baseCurrency,
                 netWorth = state.totalBalanceWithoutExcluded.toDoubleOrNull() ?: 0.00,
-                withExcluded = state.totalBalanceWithExcluded.toDoubleOrNull() ?: 0.00,
+                change = state.netWorthChange,
                 hideBalance = state.hideTotalBalance,
-                onReorder = {
-                    onEvent(AccountsEvent.OnReorderModalVisible(reorderVisible = true))
-                },
             )
         }
-        items(state.accountsData) {
-            Spacer(Modifier.height(12.dp))
-            AccountCard(
-                baseCurrency = state.baseCurrency,
-                accountData = it,
-                compactModeEnabled = state.compactAccountsModeEnabled,
-            ) {
-                nav.navigateTo(
-                    TransactionsScreen(
-                        accountId = it.account.id.value,
-                        categoryId = null
-                    )
+
+        if (includedAccounts.isNotEmpty()) {
+            item {
+                AccountGroupHeader(
+                    label = stringResource(R.string.frequently_used),
+                    total = includedAccounts.sumOf { it.balanceBaseCurrency ?: it.balance },
+                    currency = state.baseCurrency,
+                    hideBalance = state.hideTotalBalance,
                 )
+            }
+            items(includedAccounts) {
+                Spacer(Modifier.height(10.dp))
+                AccountCard(
+                    baseCurrency = state.baseCurrency,
+                    accountData = it,
+                ) {
+                    nav.navigateTo(
+                        TransactionsScreen(
+                            accountId = it.account.id.value,
+                            categoryId = null
+                        )
+                    )
+                }
+            }
+        }
+
+        if (excludedAccounts.isNotEmpty()) {
+            item {
+                AccountGroupHeader(
+                    label = stringResource(R.string.others),
+                    total = excludedAccounts.sumOf { it.balanceBaseCurrency ?: it.balance },
+                    currency = state.baseCurrency,
+                    hideBalance = state.hideTotalBalance,
+                )
+            }
+            items(excludedAccounts) {
+                Spacer(Modifier.height(10.dp))
+                AccountCard(
+                    baseCurrency = state.baseCurrency,
+                    accountData = it,
+                ) {
+                    nav.navigateTo(
+                        TransactionsScreen(
+                            accountId = it.account.id.value,
+                            categoryId = null
+                        )
+                    )
+                }
             }
         }
 
@@ -170,12 +217,48 @@ private fun BoxWithConstraintsScope.UI(
 }
 
 @Composable
+private fun AccountsHeaderRow(
+    onEdit: () -> Unit,
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 24.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Text(
+            text = stringResource(R.string.accounts),
+            style = AccountsTheme.typo.b1.copy(
+                color = AccountsTheme.colors.pureInverse,
+                fontWeight = FontWeight.ExtraBold,
+                textAlign = TextAlign.Start,
+                fontSize = 24.sp,
+            ),
+        )
+
+        Spacer(Modifier.weight(1f))
+
+        Text(
+            modifier = Modifier
+                .clip(AccountsTheme.shapes.rFull)
+                .clickable(onClick = onEdit)
+                .padding(horizontal = 12.dp, vertical = 6.dp),
+            text = stringResource(R.string.edit),
+            style = AccountsTheme.typo.b2.copy(
+                color = Green,
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.End,
+            ),
+        )
+    }
+}
+
+@Composable
 private fun NetWorthCard(
     currency: String,
     netWorth: Double,
-    withExcluded: Double,
+    change: Double,
     hideBalance: Boolean,
-    onReorder: () -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -185,30 +268,14 @@ private fun NetWorthCard(
             .background(IvyGradients.Dark.asHorizontalBrush())
             .padding(20.dp),
     ) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Text(
-                text = stringResource(R.string.total_balance),
-                style = AccountsTheme.typo.c.copy(
-                    color = White.copy(alpha = 0.7f),
-                    fontWeight = FontWeight.Bold,
-                    textAlign = TextAlign.Start,
-                ),
-            )
-
-            Spacer(Modifier.weight(1f))
-
-            FilledIconButton(
-                icon = R.drawable.ic_drag_handle,
-                contentDescription = "reorder",
-                backgroundColor = White.copy(alpha = 0.15f),
-                tint = White,
-            ) {
-                onReorder()
-            }
-        }
+        Text(
+            text = stringResource(R.string.net_worth),
+            style = AccountsTheme.typo.c.copy(
+                color = White.copy(alpha = 0.7f),
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Start,
+            ),
+        )
 
         Spacer(Modifier.height(10.dp))
 
@@ -221,19 +288,67 @@ private fun NetWorthCard(
             shortenBigNumbers = true,
         )
 
-        if (!hideBalance && withExcluded != netWorth) {
-            Spacer(Modifier.height(8.dp))
+        if (!hideBalance && change.absoluteValue >= 0.005) {
+            Spacer(Modifier.height(10.dp))
 
-            Text(
-                text = "${stringResource(R.string.total_balance_excluded)}: " +
-                    "${withExcluded.format(currency)} $currency",
-                style = AccountsTheme.typo.c.copy(
-                    color = White.copy(alpha = 0.6f),
-                    fontWeight = FontWeight.Medium,
-                    textAlign = TextAlign.Start,
-                ),
-            )
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Text(
+                    text = stringResource(R.string.vs_last_month),
+                    style = AccountsTheme.typo.c.copy(
+                        color = White.copy(alpha = 0.6f),
+                        fontWeight = FontWeight.Medium,
+                        textAlign = TextAlign.Start,
+                    ),
+                )
+
+                Spacer(Modifier.width(8.dp))
+
+                Text(
+                    text = "${if (change >= 0) "▲" else "▼"} ${change.absoluteValue.format(currency)} $currency",
+                    style = AccountsTheme.typo.c.copy(
+                        color = if (change >= 0) Green else Red,
+                        fontWeight = FontWeight.Bold,
+                        textAlign = TextAlign.Start,
+                    ),
+                )
+            }
         }
+    }
+}
+
+@Composable
+private fun AccountGroupHeader(
+    label: String,
+    total: Double,
+    currency: String,
+    hideBalance: Boolean,
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 24.dp)
+            .padding(top = 22.dp, bottom = 2.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Text(
+            text = label,
+            style = AccountsTheme.typo.c.copy(
+                color = AccountsTheme.colors.pureInverse.copy(alpha = 0.5f),
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Start,
+            ),
+        )
+
+        Spacer(Modifier.weight(1f))
+
+        Text(
+            text = if (hideBalance) "****" else "${total.format(currency)} $currency",
+            style = AccountsTheme.typo.c.copy(
+                color = AccountsTheme.colors.pureInverse.copy(alpha = 0.5f),
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.End,
+            ),
+        )
     }
 }
 
@@ -241,7 +356,6 @@ private fun NetWorthCard(
 private fun AccountCard(
     baseCurrency: String,
     accountData: AccountData,
-    compactModeEnabled: Boolean,
     onClick: () -> Unit
 ) {
     val account = accountData.account
@@ -311,23 +425,17 @@ private fun AccountCard(
                 }
             }
 
-            if (!compactModeEnabled &&
-                (accountData.monthlyIncome != 0.0 || accountData.monthlyExpenses != 0.0)
-            ) {
-                Spacer(Modifier.height(4.dp))
+            Spacer(Modifier.height(3.dp))
 
-                Text(
-                    text = "支 ${shortenAmount(accountData.monthlyExpenses)}  ·  " +
-                        "收 ${shortenAmount(accountData.monthlyIncome)}",
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                    style = AccountsTheme.typo.c.copy(
-                        color = secondaryColor,
-                        fontWeight = FontWeight.Medium,
-                        textAlign = TextAlign.Start
-                    )
+            Text(
+                text = currency,
+                maxLines = 1,
+                style = AccountsTheme.typo.c.copy(
+                    color = secondaryColor,
+                    fontWeight = FontWeight.SemiBold,
+                    textAlign = TextAlign.Start
                 )
-            }
+            )
         }
 
         Spacer(Modifier.width(12.dp))
@@ -336,14 +444,19 @@ private fun AccountCard(
             modifier = Modifier.padding(end = 16.dp, top = 12.dp, bottom = 12.dp),
             horizontalAlignment = Alignment.End,
         ) {
-            BalanceRow(
-                currency = currency,
-                balance = accountData.balance,
-                textColor = AccountsTheme.colors.pureInverse,
-                balanceFontSize = 17.sp,
-                currencyFontSize = 17.sp,
-                currencyUpfront = false,
-                shortenBigNumbers = true,
+            Text(
+                text = if (shouldShortAmount(accountData.balance)) {
+                    shortenAmount(accountData.balance)
+                } else {
+                    accountData.balance.format(currency)
+                },
+                maxLines = 1,
+                style = AccountsTheme.typo.b1.copy(
+                    color = AccountsTheme.colors.pureInverse,
+                    fontWeight = FontWeight.ExtraBold,
+                    textAlign = TextAlign.End,
+                    fontSize = 18.sp,
+                ),
             )
 
             if (currency != baseCurrency && accountData.balanceBaseCurrency != null) {

@@ -5,6 +5,7 @@ import androidx.annotation.DrawableRes
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -40,7 +41,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.CornerRadius
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -173,6 +179,10 @@ private fun BoxWithConstraintsScope.UI(
                 expenses = state.expenses,
                 baseCurrency = state.baseCurrency
             )
+
+            DonutChartSection(state = state)
+
+            DailyTrendSection(state = state)
 
             CategoryBreakdownSection(state = state)
 
@@ -1057,6 +1067,243 @@ private fun SummaryAmount(
     }
 }
 
+// ─── Donut Chart ─────────────────────────────────────────────
+
+@Composable
+private fun DonutChartSection(state: ReportState) {
+    val showExpense = state.expenseByCategory.isNotEmpty()
+    val items = if (showExpense) state.expenseByCategory else state.incomeByCategory
+    val total = items.sumOf { it.amount }
+    if (items.isEmpty() || total <= 0.0) return
+
+    val maxSlices = 6
+    val slices: List<CategoryBreakdownItem> = if (items.size > maxSlices) {
+        val top = items.take(maxSlices - 1)
+        val restAmount = items.drop(maxSlices - 1).sumOf { it.amount }
+        top + CategoryBreakdownItem(name = "其他", colorArgb = null, amount = restAmount)
+    } else {
+        items
+    }
+
+    Spacer(Modifier.height(20.dp))
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp)
+            .clip(ReportsTheme.shapes.r4)
+            .border(1.dp, ReportsTheme.colors.medium, ReportsTheme.shapes.r4)
+            .padding(16.dp),
+    ) {
+        Text(
+            text = if (showExpense) "支出构成" else "收入构成",
+            style = ReportsTheme.typo.b2.copy(
+                color = ReportsTheme.colors.pureInverse,
+                fontWeight = FontWeight.Bold,
+            )
+        )
+
+        Spacer(Modifier.height(16.dp))
+
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Box(
+                modifier = Modifier.size(136.dp),
+                contentAlignment = Alignment.Center,
+            ) {
+                DonutCanvas(
+                    slices = slices,
+                    total = total,
+                    modifier = Modifier.size(136.dp),
+                )
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Text(
+                        text = if (showExpense) "总支出" else "总收入",
+                        style = ReportsTheme.typo.c.copy(color = ReportsTheme.colors.gray)
+                    )
+                    Spacer(Modifier.height(2.dp))
+                    Text(
+                        text = total.format(state.baseCurrency),
+                        style = ReportsTheme.typo.b2.copy(
+                            color = ReportsTheme.colors.pureInverse,
+                            fontWeight = FontWeight.ExtraBold,
+                        ),
+                        maxLines = 1,
+                    )
+                }
+            }
+
+            Spacer(Modifier.width(20.dp))
+
+            Column(modifier = Modifier.weight(1f)) {
+                slices.forEachIndexed { index, item ->
+                    if (index > 0) Spacer(Modifier.height(10.dp))
+                    val color = item.colorArgb?.toComposeColor() ?: ReportsTheme.colors.gray
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Box(
+                            modifier = Modifier
+                                .size(10.dp)
+                                .clip(CircleShape)
+                                .background(color)
+                        )
+                        Spacer(Modifier.width(8.dp))
+                        Text(
+                            modifier = Modifier.weight(1f),
+                            text = item.name,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                            style = ReportsTheme.typo.c.copy(
+                                color = ReportsTheme.colors.pureInverse,
+                                fontWeight = FontWeight.SemiBold,
+                            )
+                        )
+                        Spacer(Modifier.width(8.dp))
+                        Text(
+                            text = "${(item.amount / total * 100).roundToInt()}%",
+                            style = ReportsTheme.typo.c.copy(
+                                color = ReportsTheme.colors.gray,
+                                fontWeight = FontWeight.Bold,
+                            )
+                        )
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun DonutCanvas(
+    slices: List<CategoryBreakdownItem>,
+    total: Double,
+    modifier: Modifier = Modifier,
+) {
+    val colors = slices.map { it.colorArgb?.toComposeColor() ?: ReportsTheme.colors.gray }
+    val fractions = slices.map { (it.amount / total).toFloat() }
+    val trackColor = ReportsTheme.colors.medium
+
+    Canvas(modifier = modifier) {
+        val strokeWidth = 26.dp.toPx()
+        val inset = strokeWidth / 2f
+        val arcSize = Size(size.width - strokeWidth, size.height - strokeWidth)
+        val topLeft = Offset(inset, inset)
+
+        drawArc(
+            color = trackColor,
+            startAngle = -90f,
+            sweepAngle = 360f,
+            useCenter = false,
+            topLeft = topLeft,
+            size = arcSize,
+            style = Stroke(width = strokeWidth),
+        )
+
+        var start = -90f
+        val gap = 3f
+        fractions.forEachIndexed { index, fraction ->
+            val sweep = fraction * 360f
+            drawArc(
+                color = colors[index],
+                startAngle = start,
+                sweepAngle = (sweep - gap).coerceAtLeast(0.5f),
+                useCenter = false,
+                topLeft = topLeft,
+                size = arcSize,
+                style = Stroke(width = strokeWidth, cap = StrokeCap.Butt),
+            )
+            start += sweep
+        }
+    }
+}
+
+// ─── Daily Trend ─────────────────────────────────────────────
+
+@Composable
+private fun DailyTrendSection(state: ReportState) {
+    val showExpense = state.expenseByCategory.isNotEmpty()
+    val bars = if (showExpense) state.expenseByDay else state.incomeByDay
+    if (bars.isEmpty()) return
+    val maxAmount = bars.maxOf { it.amount }
+    if (maxAmount <= 0.0) return
+
+    Spacer(Modifier.height(20.dp))
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp)
+            .clip(ReportsTheme.shapes.r4)
+            .border(1.dp, ReportsTheme.colors.medium, ReportsTheme.shapes.r4)
+            .padding(16.dp),
+    ) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Text(
+                text = if (showExpense) "每日支出趋势" else "每日收入趋势",
+                style = ReportsTheme.typo.b2.copy(
+                    color = ReportsTheme.colors.pureInverse,
+                    fontWeight = FontWeight.Bold,
+                )
+            )
+            Spacer(Modifier.weight(1f))
+            Text(
+                text = "峰值 ${maxAmount.format(state.baseCurrency)}",
+                style = ReportsTheme.typo.c.copy(color = ReportsTheme.colors.gray)
+            )
+        }
+
+        Spacer(Modifier.height(14.dp))
+
+        DailyBarChart(
+            bars = bars,
+            maxAmount = maxAmount,
+            barColor = if (showExpense) ReportsTheme.colors.pureInverse else IvyFixedColors.Green,
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(120.dp),
+        )
+
+        Spacer(Modifier.height(6.dp))
+
+        Row(modifier = Modifier.fillMaxWidth()) {
+            Text(
+                text = "${bars.first().label}日",
+                style = ReportsTheme.typo.c.copy(color = ReportsTheme.colors.gray)
+            )
+            Spacer(Modifier.weight(1f))
+            Text(
+                text = "${bars.last().label}日",
+                style = ReportsTheme.typo.c.copy(color = ReportsTheme.colors.gray)
+            )
+        }
+    }
+}
+
+@Composable
+private fun DailyBarChart(
+    bars: List<DailyBar>,
+    maxAmount: Double,
+    barColor: Color,
+    modifier: Modifier = Modifier,
+) {
+    Canvas(modifier = modifier) {
+        val count = bars.size
+        if (count == 0) return@Canvas
+        val gap = if (count > 1) 3.dp.toPx() else 0f
+        val barWidth = ((size.width - gap * (count - 1)) / count).coerceAtLeast(1f)
+        val chartHeight = size.height
+
+        bars.forEachIndexed { index, bar ->
+            val barHeight = ((bar.amount / maxAmount).toFloat() * chartHeight)
+                .coerceIn(0f, chartHeight)
+            val x = index * (barWidth + gap)
+            val y = chartHeight - barHeight
+            drawRoundRect(
+                color = if (bar.amount > 0.0) barColor else barColor.copy(alpha = 0.12f),
+                topLeft = Offset(x, if (bar.amount > 0.0) y else chartHeight - 2.dp.toPx()),
+                size = Size(barWidth, if (bar.amount > 0.0) barHeight else 2.dp.toPx()),
+                cornerRadius = CornerRadius(barWidth / 3f, barWidth / 3f),
+            )
+        }
+    }
+}
+
 // ─── Category Breakdown ──────────────────────────────────────
 
 @Composable
@@ -1077,7 +1324,7 @@ private fun CategoryBreakdownSection(state: ReportState) {
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(
-                text = if (showExpense) "支出构成" else "收入构成",
+                text = if (showExpense) "支出排行" else "收入排行",
                 style = ReportsTheme.typo.b2.copy(
                     color = ReportsTheme.colors.pureInverse,
                     fontWeight = FontWeight.Bold,

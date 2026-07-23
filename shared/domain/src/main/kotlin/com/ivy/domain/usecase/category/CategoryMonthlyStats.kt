@@ -7,4 +7,5 @@ data class CategoryMonthlyStats(
     val balance: Double,
     val income: Double,
     val expenses: Double,
+    val count: Int,
 )

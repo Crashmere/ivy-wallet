@@ -31,8 +31,10 @@ internal object SearchTheme {
 }
 
 internal interface SearchColors {
+    val pure: Color
     val pureInverse: Color
     val gray: Color
+    val medium: Color
 }
 
 internal interface SearchTypography {
@@ -46,7 +48,10 @@ internal interface SearchShapes {
 
 private val White = Color(0xFFFAFAFA)
 private val Black = Color(0xFF111114)
+private val TrueBlack = Color(0xFF000000)
 private val Gray = Color(0xFF939199)
+private val MediumBlack = Color(0xFF2B2C2D)
+private val MediumWhite = Color(0xFFEFEEF0)
 
 private fun searchColors(
     theme: Theme,
@@ -54,13 +59,24 @@ private fun searchColors(
 ): SearchColors {
     return when (theme) {
         Theme.LIGHT -> object : SearchColors {
+            override val pure = White
             override val pureInverse = Black
             override val gray = Gray
+            override val medium = MediumWhite
         }
 
-        Theme.DARK, Theme.AMOLED_DARK -> object : SearchColors {
+        Theme.DARK -> object : SearchColors {
+            override val pure = Black
             override val pureInverse = White
             override val gray = Gray
+            override val medium = MediumBlack
+        }
+
+        Theme.AMOLED_DARK -> object : SearchColors {
+            override val pure = TrueBlack
+            override val pureInverse = White
+            override val gray = Gray
+            override val medium = MediumBlack
         }
 
         Theme.AUTO -> if (isDarkModeEnabled) {

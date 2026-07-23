@@ -6,5 +6,6 @@ internal data class CategoryData(
     val category: Category,
     val monthlyBalance: Double,
     val monthlyExpenses: Double,
-    val monthlyIncome: Double
+    val monthlyIncome: Double,
+    val monthlyCount: Int
 )
