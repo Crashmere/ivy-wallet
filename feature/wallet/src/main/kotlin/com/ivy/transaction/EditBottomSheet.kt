@@ -38,7 +38,6 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.layout
 import androidx.compose.ui.layout.onSizeChanged
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
@@ -246,7 +245,7 @@ internal fun BoxWithConstraintsScope.EditBottomSheet(
     }
 
     BottomBar(
-        screenHeight = LocalConfiguration.current.screenHeightDp.dp,
+        screenHeight = maxHeight,
         keyboardShown = keyboardShown,
         expanded = expanded,
         internalExpanded = internalExpanded,
