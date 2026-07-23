@@ -16,6 +16,8 @@ import com.ivy.home.HomeTab
 import com.ivy.ui.navigation.onScreenStart
 import com.ivy.ui.navigation.EditPlannedScreen
 import com.ivy.ui.navigation.EditTransactionScreen
+import com.ivy.ui.navigation.ReportScreen
+import com.ivy.ui.navigation.SettingsScreen
 import com.ivy.ui.navigation.TransactionRouteType
 import com.ivy.ui.navigation.navigation
 import com.ivy.data.model.CreateAccountData
@@ -56,6 +58,8 @@ private fun BoxWithConstraintsScope.UI(
     selectTab: (MainTab) -> Unit,
     onCreateAccount: (CreateAccountData) -> Unit,
 ) {
+    var accountModalVisible by remember { mutableStateOf(false) }
+
     when (tab) {
         MainTab.HOME -> HomeTab(
             onOpenAccountsTab = {
@@ -66,11 +70,12 @@ private fun BoxWithConstraintsScope.UI(
         MainTab.ACCOUNTS -> AccountsTab(
             onOpenHomeTab = {
                 selectTab(MainTab.HOME)
+            },
+            onAddAccount = {
+                accountModalVisible = true
             }
         )
     }
-
-    var accountModalVisible by remember { mutableStateOf(false) }
 
     val nav = navigation()
     BottomBar(
@@ -108,6 +113,13 @@ private fun BoxWithConstraintsScope.UI(
                     plannedPaymentRuleId = null
                 )
             )
+        },
+
+        onOpenReports = {
+            nav.navigateTo(ReportScreen)
+        },
+        onOpenProfile = {
+            nav.navigateTo(SettingsScreen)
         },
 
         showAddAccountModal = {

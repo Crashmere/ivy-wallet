@@ -71,6 +71,8 @@
     <string name="auto_mode">Auto mode</string>
     <string name="planned_payments">Planned\nPayments</string>
     <string name="reports">Reports</string>
+    <string name="mine">Mine</string>
+    <string name="month_net">Net</string>
     <string name="loans">Loans</string>
     <string name="set_currency">Set currency</string>
     <string name="no_transactions">No transactions</string>

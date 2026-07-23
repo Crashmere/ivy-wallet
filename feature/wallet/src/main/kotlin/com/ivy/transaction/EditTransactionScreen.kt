@@ -1,8 +1,12 @@
 package com.ivy.transaction
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraintsScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -10,12 +14,21 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.sharp.CopyAll
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -32,11 +45,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.layout.positionInParent
 import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.ivy.data.model.TransactionType
 import com.ivy.data.model.Category
 import com.ivy.data.model.Tag
@@ -61,8 +77,6 @@ import com.ivy.data.model.currency.IvyCurrency
 import com.ivy.data.model.CreateAccountData
 import com.ivy.data.model.CreateCategoryData
 import com.ivy.ui.modal.DeleteModal
-import com.ivy.ui.modal.ModalAdd
-import com.ivy.ui.modal.ModalSave
 import com.ivy.ui.modal.ProgressModal
 import com.ivy.ui.modal.AccountModal
 import com.ivy.ui.modal.AccountModalSaveData
@@ -70,13 +84,21 @@ import com.ivy.ui.modal.AmountModal
 import com.ivy.ui.modal.CategoryModal
 import com.ivy.ui.modal.CategoryModalCategory
 import com.ivy.ui.modal.CategoryModalSaveData
-import com.ivy.ui.modal.ChooseCategoryModal
 import com.ivy.ui.compose.GradientButton
 import com.ivy.ui.compose.ResourceIcon
+import com.ivy.ui.compose.clickableNoIndication
+import com.ivy.ui.compose.rememberInteractionSource
+import com.ivy.ui.compose.thenIf
+import com.ivy.ui.icon.ItemIconSDefaultIcon
+import com.ivy.ui.money.BalanceRow
+import com.ivy.ui.theme.colors.Gradient
 import com.ivy.ui.theme.colors.IvyGradients
+import com.ivy.ui.theme.colors.findContrastTextColor
+import com.ivy.ui.theme.colors.toComposeColor
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.ImmutableSet
 import kotlinx.collections.immutable.toImmutableList
+import kotlinx.coroutines.launch
 import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneId
@@ -181,6 +203,18 @@ fun BoxWithConstraintsScope.EditTransactionScreen(screen: EditTransactionScreen)
             view.hideKeyboard()
             viewModel.onEvent(EditTransactionViewEvent.Save(it))
         },
+        onSaveAndNew = {
+            view.hideKeyboard()
+            viewModel.onEvent(EditTransactionViewEvent.Save(closeScreen = false))
+            nav.navigateTo(
+                EditTransactionScreen(
+                    initialTransactionId = null,
+                    type = uiState.transactionType.toRouteType(),
+                    accountId = uiState.account?.id,
+                    categoryId = uiState.category?.id?.value,
+                )
+            )
+        },
         onSetHasChanges = {
             viewModel.onEvent(EditTransactionViewEvent.SetHasChanges(it))
         },
@@ -254,6 +288,7 @@ private fun BoxWithConstraintsScope.UI(
     onEditCategory: (Category) -> Unit,
     onPayPlannedPayment: () -> Unit,
     onSave: (closeScreen: Boolean) -> Unit,
+    onSaveAndNew: () -> Unit,
     onSetHasChanges: (hasChanges: Boolean) -> Unit,
     onDelete: () -> Unit,
     onDuplicate: () -> Unit,
@@ -267,7 +302,6 @@ private fun BoxWithConstraintsScope.UI(
     hasChanges: Boolean = false,
 
     ) {
-    var chooseCategoryModalVisible by remember { mutableStateOf(false) }
     var tagModelVisible by remember { mutableStateOf(false) }
     var categoryModalVisible by remember { mutableStateOf(false) }
     var categoryModalCategory: Category? by remember { mutableStateOf(null) }
@@ -308,45 +342,133 @@ private fun BoxWithConstraintsScope.UI(
         scrollState.animateScrollTo(scrollInt)
     }
 
+    val isTransfer = transactionType == TransactionType.TRANSFER
+    val fromLabel = when (transactionType) {
+        TransactionType.INCOME -> stringResource(R.string.add_money_to)
+        TransactionType.EXPENSE -> stringResource(R.string.pay_with)
+        TransactionType.TRANSFER -> stringResource(R.string.from)
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .background(EditTransactionTheme.colors.pure)
             .statusBarsPadding()
-            .navigationBarsPadding()
             .verticalScroll(scrollState)
+            .navigationBarsPadding()
+            .imePadding()
     ) {
-        Spacer(Modifier.height(16.dp))
+        Spacer(Modifier.height(8.dp))
 
-        Toolbar(
-            // Setting the transaction type to TransactionType.TRANSFER for transactions associated
-            // with loan record to hide the ChangeTransactionType Button
-            type = if (loanData.isLoanRecord) TransactionType.TRANSFER else transactionType,
-            initialTransactionId = screen.initialTransactionId,
+        TransactionTopBar(
+            title = if (screen.initialTransactionId == null) "记一笔" else "编辑交易",
+            showEditActions = screen.initialTransactionId != null,
             onClose = onClose,
-            onDeleteTransactionModal = {
-                deleteTransactionModalVisible = true
-            },
-            onChangeTransactionTypeModal = {
-                changeTransactionTypeModalVisible = true
-            },
-            showDuplicateButton = true,
-            onDuplicate = onDuplicate
+            onDelete = { deleteTransactionModalVisible = true },
+            onDuplicate = onDuplicate,
         )
 
-        Spacer(Modifier.height(32.dp))
+        Spacer(Modifier.height(20.dp))
+
+        if (!loanData.isLoanRecord) {
+            TransactionTypeSelector(
+                selected = transactionType,
+                onSelect = { onSetTransactionType(it) },
+            )
+
+            Spacer(Modifier.height(24.dp))
+        }
+
+        AmountHeader(
+            amount = amount,
+            currency = baseCurrency,
+            onClick = { amountModalShown = true },
+        )
+
+        Spacer(Modifier.height(20.dp))
+
+        AccountSection(
+            label = fromLabel,
+            accounts = accounts,
+            selected = account,
+            onSelect = {
+                if (loanData.isLoan && account?.currency != it.currency) {
+                    selectedAcc = it
+                    accountChangeModal = true
+                } else {
+                    onAccountChange(it)
+                }
+            },
+            onAddNewAccount = { accountModalVisible = true },
+        )
+
+        if (isTransfer) {
+            Spacer(Modifier.height(16.dp))
+
+            AccountSection(
+                label = stringResource(R.string.to),
+                accounts = accounts,
+                selected = toAccount,
+                onSelect = onToAccountChange,
+                onAddNewAccount = { accountModalVisible = true },
+            )
+
+            if (customExchangeRateState.showCard) {
+                Spacer(Modifier.height(16.dp))
+                CustomExchangeRateCard(
+                    fromCurrencyCode = baseCurrency,
+                    toCurrencyCode = customExchangeRateState.toCurrencyCode ?: baseCurrency,
+                    exchangeRate = customExchangeRateState.exchangeRate,
+                    onRefresh = {
+                        onExchangeRateChange(null)
+                    },
+                    modifier = Modifier.onGloballyPositioned { coordinates ->
+                        customExchangeRatePosition = coordinates.positionInParent().y * 0.3f
+                    }
+                ) {
+                    exchangeRateAmountModalShown = true
+                }
+            }
+        }
+
+        if (!isTransfer) {
+            Spacer(Modifier.height(24.dp))
+
+            Text(
+                modifier = Modifier.padding(start = 20.dp),
+                text = stringResource(R.string.categories),
+                style = EditTransactionTheme.typo.nC.copy(
+                    color = EditTransactionTheme.colors.mediumInverse,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Start,
+                ),
+            )
+
+            Spacer(Modifier.height(12.dp))
+
+            CategoryGrid(
+                categories = categories,
+                selected = category,
+                onSelect = { onCategoryChange(it) },
+                onAddNew = {
+                    categoryModalCategory = null
+                    categoryModalVisible = true
+                },
+            )
+        }
+
+        Spacer(Modifier.height(24.dp))
 
         Title(
             type = transactionType,
             titleFocus = titleFocus,
             initialTransactionId = screen.initialTransactionId,
-
             titleTextFieldValue = titleTextFieldValue,
             setTitleTextFieldValue = {
                 titleTextFieldValue = it
             },
             suggestions = titleSuggestions,
             scrollState = scrollState,
-
             onTitleChanged = onTitleChange,
             onNext = {
                 when {
@@ -375,19 +497,13 @@ private fun BoxWithConstraintsScope.UI(
             )
         }
 
-        Spacer(Modifier.height(32.dp))
-
-        Category(category = category, onChooseCategory = {
-            chooseCategoryModalVisible = true
-        })
-
         Spacer(Modifier.height(16.dp))
 
         AddTagButton(tagCount = transactionAssociatedTags.size, onClick = {
             tagModelVisible = true
         })
 
-        Spacer(Modifier.height(32.dp))
+        Spacer(Modifier.height(16.dp))
 
         val datePicker = LocalDatePicker.current
         if (dueDate != null) {
@@ -416,25 +532,7 @@ private fun BoxWithConstraintsScope.UI(
             onEditTime = onSetTime,
         )
 
-        if (transactionType == TransactionType.TRANSFER && customExchangeRateState.showCard) {
-            Spacer(Modifier.height(12.dp))
-            CustomExchangeRateCard(
-                fromCurrencyCode = baseCurrency,
-                toCurrencyCode = customExchangeRateState.toCurrencyCode ?: baseCurrency,
-                exchangeRate = customExchangeRateState.exchangeRate,
-                onRefresh = {
-                    // Set exchangeRate to null to reset
-                    onExchangeRateChange(null)
-                },
-                modifier = Modifier.onGloballyPositioned { coordinates ->
-                    customExchangeRatePosition = coordinates.positionInParent().y * 0.3f
-                }
-            ) {
-                exchangeRateAmountModalShown = true
-            }
-        }
-
-        if (dueDate == null && transactionType != TransactionType.TRANSFER && dateTime == null) {
+        if (dueDate == null && !isTransfer && dateTime == null) {
             Spacer(Modifier.height(12.dp))
 
             EditTransactionAddPlannedDateButton {
@@ -449,7 +547,20 @@ private fun BoxWithConstraintsScope.UI(
             }
         }
 
-        Spacer(Modifier.height(600.dp)) // scroll hack
+        Spacer(Modifier.height(28.dp))
+
+        SaveActions(
+            initialTransactionId = screen.initialTransactionId,
+            transactionType = transactionType,
+            dueDate = dueDate,
+            hasChanges = hasChanges,
+            onSave = onSave,
+            onSetHasChanges = onSetHasChanges,
+            onPayPlannedPayment = onPayPlannedPayment,
+            onSaveAndNew = onSaveAndNew,
+        )
+
+        Spacer(Modifier.height(24.dp))
     }
 
     onScreenStart {
@@ -458,111 +569,30 @@ private fun BoxWithConstraintsScope.UI(
         }
     }
 
-    EditBottomSheet(
-        initialTransactionId = screen.initialTransactionId,
-        type = transactionType,
-        accounts = accounts,
-        selectedAccount = account,
-        toAccount = toAccount,
-        amount = amount,
+    val mainAmountModalId =
+        remember(screen.initialTransactionId, customExchangeRateState.exchangeRate) {
+            UUID.randomUUID()
+        }
+    AmountModal(
+        id = mainAmountModalId,
+        visible = amountModalShown,
         currency = baseCurrency,
-        convertedAmount = customExchangeRateState.convertedAmount,
-        convertedAmountCurrencyCode = customExchangeRateState.toCurrencyCode,
-
-        ActionButton = {
-            if (screen.initialTransactionId != null) {
-                // Edit mode
-                if (dueDate != null) {
-                    // due date stuff
-                    if (hasChanges) {
-                        // has changes
-                        ModalSave {
-                            onSave(false)
-                            onSetHasChanges(false)
-                        }
-                    } else {
-                        // no changes, pay
-                        PayOrGetPlannedButton(
-                            label = if (transactionType == TransactionType.EXPENSE) {
-                                stringResource(
-                                    R.string.pay
-                                )
-                            } else {
-                                stringResource(R.string.get)
-                            }
-                        ) {
-                            onPayPlannedPayment()
-                        }
-                    }
-                } else {
-                    // normal transaction
-                    ModalSave {
-                        onSave(true)
-                    }
-                }
-            } else {
-                // create new mode
-                ModalAdd {
-                    onSave(true)
-                }
-            }
-        },
-
-        amountModalShown = amountModalShown,
-        setAmountModalShown = {
-            amountModalShown = it
-        },
-
+        initialAmount = amount.takeIf { it > 0 },
+        dismiss = { amountModalShown = false },
         onAmountChanged = {
             onAmountChange(it)
-            if (shouldFocusCategory(category)) {
-                chooseCategoryModalVisible = true
-            } else if (shouldFocusTitle(titleTextFieldValue, transactionType)) {
+            if (shouldFocusTitle(titleTextFieldValue, transactionType)) {
                 titleFocus.requestFocus()
             }
-        },
-        onSelectedAccountChanged = {
-            if (loanData.isLoan && account?.currency != it.currency) {
-                selectedAcc = it
-                accountChangeModal = true
-            } else {
-                onAccountChange(it)
-            }
-        },
-        onToAccountChanged = onToAccountChange,
-        onAddNewAccount = {
-            accountModalVisible = true
         }
     )
 
     // Modals
-    ChooseCategoryModal(
-        visible = chooseCategoryModalVisible,
-        initialCategoryId = category?.id?.value,
-        categories = categories.map { it.toCategoryModalCategory() },
-        showCategoryModal = { categoryId ->
-            categoryModalCategory = categories.firstOrNull { it.id.value == categoryId }
-            categoryModalVisible = true
-        },
-        onCategoryChanged = { categoryId ->
-            onCategoryChange(categories.firstOrNull { it.id.value == categoryId })
-            if (shouldFocusTitle(titleTextFieldValue, transactionType)) {
-                titleFocus.requestFocus()
-            } else if (shouldFocusAmount(amount = amount)) {
-                amountModalShown = true
-            }
-        },
-        dismiss = {
-            chooseCategoryModalVisible = false
-        }
-    )
-
     CategoryModal(
         visible = categoryModalVisible,
         category = categoryModalCategory?.toCategoryModalCategory(),
         onCreateCategory = { createData ->
             onCreateCategory(createData.toCreateCategoryData())
-            chooseCategoryModalVisible = false
         },
         onEditCategory = { _, data ->
             val editedCategory = categoryModalCategory?.withModalSaveData(data)
@@ -680,10 +710,6 @@ private fun BoxWithConstraintsScope.UI(
     )
 }
 
-private fun shouldFocusCategory(
-    category: Category?,
-): Boolean = category == null
-
 private fun shouldFocusTitle(
     titleTextFieldValue: TextFieldValue,
     type: TransactionType
@@ -768,22 +794,522 @@ private fun EditTransactionAddPlannedDateButton(onClick: () -> Unit) {
 }
 
 @Composable
-private fun PayOrGetPlannedButton(
+private fun TransactionTopBar(
+    title: String,
+    showEditActions: Boolean,
+    onClose: () -> Unit,
+    onDelete: () -> Unit,
+    onDuplicate: () -> Unit,
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 12.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Icon(
+            modifier = Modifier
+                .clip(CircleShape)
+                .clickable(onClick = onClose)
+                .padding(8.dp),
+            painter = painterResource(R.drawable.ic_back),
+            contentDescription = "back",
+            tint = EditTransactionTheme.colors.pureInverse,
+        )
+
+        Spacer(Modifier.weight(1f))
+
+        Text(
+            text = title,
+            style = EditTransactionTheme.typo.b1.copy(
+                color = EditTransactionTheme.colors.pureInverse,
+                fontWeight = FontWeight.ExtraBold,
+                textAlign = TextAlign.Center,
+            ),
+        )
+
+        Spacer(Modifier.weight(1f))
+
+        if (showEditActions) {
+            Icon(
+                modifier = Modifier
+                    .clip(CircleShape)
+                    .clickable(onClick = onDuplicate)
+                    .padding(8.dp)
+                    .size(22.dp),
+                imageVector = Icons.Sharp.CopyAll,
+                contentDescription = "duplicate",
+                tint = EditTransactionTheme.colors.pureInverse,
+            )
+
+            Icon(
+                modifier = Modifier
+                    .clip(CircleShape)
+                    .clickable(onClick = onDelete)
+                    .padding(8.dp)
+                    .size(22.dp),
+                painter = painterResource(R.drawable.ic_delete),
+                contentDescription = "delete",
+                tint = EditTransactionTheme.colors.red,
+            )
+        } else {
+            Spacer(Modifier.width(40.dp))
+        }
+    }
+}
+
+@Composable
+private fun TransactionTypeSelector(
+    selected: TransactionType,
+    onSelect: (TransactionType) -> Unit,
+) {
+    val options = listOf(
+        TransactionType.EXPENSE to stringResource(R.string.expense),
+        TransactionType.INCOME to stringResource(R.string.income),
+        TransactionType.TRANSFER to stringResource(R.string.transfer),
+    )
+    Row(
+        modifier = Modifier
+            .padding(horizontal = 16.dp)
+            .fillMaxWidth()
+            .clip(EditTransactionTheme.shapes.rFull)
+            .background(EditTransactionTheme.colors.medium)
+            .padding(4.dp),
+        horizontalArrangement = Arrangement.spacedBy(4.dp),
+    ) {
+        options.forEach { (type, label) ->
+            val isSel = type == selected
+            Box(
+                modifier = Modifier
+                    .weight(1f)
+                    .clip(EditTransactionTheme.shapes.rFull)
+                    .background(
+                        if (isSel) EditTransactionTheme.colors.pureInverse else Color.Transparent
+                    )
+                    .clickable { if (!isSel) onSelect(type) }
+                    .padding(vertical = 10.dp),
+                contentAlignment = Alignment.Center,
+            ) {
+                Text(
+                    text = label,
+                    style = EditTransactionTheme.typo.b2.copy(
+                        color = if (isSel) {
+                            EditTransactionTheme.colors.pure
+                        } else {
+                            EditTransactionTheme.colors.pureInverse
+                        },
+                        fontWeight = FontWeight.Bold,
+                        textAlign = TextAlign.Center,
+                    ),
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun AmountHeader(
+    amount: Double,
+    currency: String,
+    onClick: () -> Unit,
+) {
+    Box(
+        modifier = Modifier.fillMaxWidth(),
+        contentAlignment = Alignment.Center,
+    ) {
+        BalanceRow(
+            modifier = Modifier
+                .clickableNoIndication(rememberInteractionSource()) { onClick() }
+                .testTag("edit_amount_balance_row"),
+            currency = currency,
+            balance = amount,
+            spacerCurrency = 8.dp,
+            balanceFontSize = 44.sp,
+            currencyFontSize = 22.sp,
+            currencyUpfront = false,
+        )
+    }
+}
+
+@Composable
+private fun AccountSection(
     label: String,
+    accounts: ImmutableList<EditTransactionAccount>,
+    selected: EditTransactionAccount?,
+    onSelect: (EditTransactionAccount) -> Unit,
+    onAddNewAccount: () -> Unit,
+) {
+    Column {
+        Text(
+            modifier = Modifier.padding(start = 20.dp),
+            text = label,
+            style = EditTransactionTheme.typo.nC.copy(
+                color = EditTransactionTheme.colors.mediumInverse,
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Start,
+            ),
+        )
+
+        Spacer(Modifier.height(8.dp))
+
+        AccountsRow(
+            accounts = accounts,
+            selectedAccount = selected,
+            onSelectedAccountChanged = onSelect,
+            onAddNewAccount = onAddNewAccount,
+        )
+    }
+}
+
+@Composable
+private fun AccountsRow(
+    accounts: List<EditTransactionAccount>,
+    selectedAccount: EditTransactionAccount?,
+    onSelectedAccountChanged: (EditTransactionAccount) -> Unit,
+    onAddNewAccount: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val lazyState = rememberLazyListState()
+
+    LaunchedEffect(accounts, selectedAccount) {
+        if (selectedAccount != null) {
+            val selectedIndex = accounts.indexOf(selectedAccount)
+            if (selectedIndex != -1) {
+                launch {
+                    lazyState.scrollToItem(index = selectedIndex)
+                }
+            }
+        }
+    }
+
+    LazyRow(
+        modifier = modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically,
+        state = lazyState
+    ) {
+        item {
+            Spacer(Modifier.width(16.dp))
+        }
+
+        itemsIndexed(accounts) { _, account ->
+            AccountChip(
+                account = account,
+                selected = selectedAccount == account,
+            ) {
+                onSelectedAccountChanged(account)
+            }
+            Spacer(Modifier.width(8.dp))
+        }
+
+        item {
+            AddAccount {
+                onAddNewAccount()
+            }
+        }
+
+        item {
+            Spacer(Modifier.width(16.dp))
+        }
+    }
+}
+
+@Composable
+private fun AccountChip(
+    account: EditTransactionAccount,
+    selected: Boolean,
+    onClick: () -> Unit
+) {
+    val accountColor = account.color.toComposeColor()
+    val textColor =
+        if (selected) findContrastTextColor(accountColor) else EditTransactionTheme.colors.pureInverse
+
+    val medium = EditTransactionTheme.colors.medium
+    val rFull = EditTransactionTheme.shapes.rFull
+
+    Row(
+        modifier = Modifier
+            .clip(rFull)
+            .thenIf(!selected) {
+                border(2.dp, medium, rFull)
+            }
+            .thenIf(selected) {
+                background(accountColor, rFull)
+            }
+            .clickable(onClick = onClick)
+            .testTag("account")
+            .padding(vertical = 8.dp, horizontal = 12.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        ItemIconSDefaultIcon(
+            iconName = account.icon,
+            defaultIcon = R.drawable.ic_custom_account_s,
+            tint = textColor
+        )
+
+        Spacer(Modifier.width(6.dp))
+
+        Text(
+            text = account.name,
+            style = EditTransactionTheme.typo.b2.copy(
+                color = textColor,
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Start
+            )
+        )
+    }
+}
+
+@Composable
+private fun AddAccount(
+    onClick: () -> Unit
+) {
+    Row(
+        modifier = Modifier
+            .clip(EditTransactionTheme.shapes.rFull)
+            .border(2.dp, EditTransactionTheme.colors.medium, EditTransactionTheme.shapes.rFull)
+            .clickable(onClick = onClick)
+            .padding(vertical = 8.dp, horizontal = 12.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        ResourceIcon(
+            icon = R.drawable.ic_plus,
+            tint = EditTransactionTheme.colors.pureInverse
+        )
+
+        Spacer(Modifier.width(6.dp))
+
+        Text(
+            text = stringResource(R.string.add_account),
+            style = EditTransactionTheme.typo.b2.copy(
+                color = EditTransactionTheme.colors.pureInverse,
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Start
+            )
+        )
+    }
+}
+
+@Composable
+private fun CategoryGrid(
+    categories: ImmutableList<Category>,
+    selected: Category?,
+    onSelect: (Category?) -> Unit,
+    onAddNew: () -> Unit,
+) {
+    Column(modifier = Modifier.padding(horizontal = 8.dp)) {
+        val cells: List<Category?> = categories + listOf<Category?>(null)
+        cells.chunked(4).forEach { rowItems ->
+            Row(modifier = Modifier.fillMaxWidth()) {
+                rowItems.forEach { cat ->
+                    if (cat == null) {
+                        AddCategoryCell(
+                            modifier = Modifier.weight(1f),
+                            onClick = onAddNew,
+                        )
+                    } else {
+                        CategoryCell(
+                            modifier = Modifier.weight(1f),
+                            category = cat,
+                            selected = selected?.id == cat.id,
+                            onClick = {
+                                onSelect(if (selected?.id == cat.id) null else cat)
+                            },
+                        )
+                    }
+                }
+                repeat(4 - rowItems.size) {
+                    Spacer(Modifier.weight(1f))
+                }
+            }
+            Spacer(Modifier.height(16.dp))
+        }
+    }
+}
+
+@Composable
+private fun CategoryCell(
+    category: Category,
+    selected: Boolean,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val categoryColor = category.color.value.toComposeColor()
+    Column(
+        modifier = modifier
+            .clip(EditTransactionTheme.shapes.r4)
+            .clickable(onClick = onClick)
+            .padding(vertical = 8.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        Box(
+            modifier = Modifier
+                .size(52.dp)
+                .clip(CircleShape)
+                .background(categoryColor.copy(alpha = if (selected) 0.25f else 0.12f))
+                .thenIf(selected) {
+                    border(2.dp, categoryColor, CircleShape)
+                },
+            contentAlignment = Alignment.Center,
+        ) {
+            ItemIconSDefaultIcon(
+                iconName = category.icon?.id,
+                defaultIcon = R.drawable.ic_custom_category_s,
+                tint = categoryColor,
+            )
+        }
+
+        Spacer(Modifier.height(6.dp))
+
+        Text(
+            modifier = Modifier.padding(horizontal = 2.dp),
+            text = category.name.value,
+            maxLines = 1,
+            style = EditTransactionTheme.typo.nC.copy(
+                color = if (selected) categoryColor else EditTransactionTheme.colors.pureInverse,
+                fontWeight = if (selected) FontWeight.Bold else FontWeight.Medium,
+                textAlign = TextAlign.Center,
+            ),
+        )
+    }
+}
+
+@Composable
+private fun AddCategoryCell(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Column(
+        modifier = modifier
+            .clip(EditTransactionTheme.shapes.r4)
+            .clickable(onClick = onClick)
+            .padding(vertical = 8.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        Box(
+            modifier = Modifier
+                .size(52.dp)
+                .clip(CircleShape)
+                .border(2.dp, EditTransactionTheme.colors.medium, CircleShape),
+            contentAlignment = Alignment.Center,
+        ) {
+            ResourceIcon(
+                icon = R.drawable.ic_plus,
+                tint = EditTransactionTheme.colors.mediumInverse,
+            )
+        }
+
+        Spacer(Modifier.height(6.dp))
+
+        Text(
+            text = stringResource(R.string.add_category),
+            maxLines = 1,
+            style = EditTransactionTheme.typo.nC.copy(
+                color = EditTransactionTheme.colors.mediumInverse,
+                fontWeight = FontWeight.Medium,
+                textAlign = TextAlign.Center,
+            ),
+        )
+    }
+}
+
+@Composable
+private fun SaveActions(
+    initialTransactionId: UUID?,
+    transactionType: TransactionType,
+    dueDate: Instant?,
+    hasChanges: Boolean,
+    onSave: (Boolean) -> Unit,
+    onSetHasChanges: (Boolean) -> Unit,
+    onPayPlannedPayment: () -> Unit,
+    onSaveAndNew: () -> Unit,
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp)
+    ) {
+        when {
+            initialTransactionId == null -> {
+                PrimaryActionButton(text = stringResource(R.string.save)) { onSave(true) }
+                Spacer(Modifier.height(12.dp))
+                SecondaryActionButton(text = "保存并再记一笔") { onSaveAndNew() }
+            }
+
+            dueDate != null && !hasChanges -> {
+                PrimaryActionButton(
+                    text = if (transactionType == TransactionType.EXPENSE) {
+                        stringResource(R.string.pay)
+                    } else {
+                        stringResource(R.string.get)
+                    },
+                    iconStart = R.drawable.ic_check,
+                    gradient = IvyGradients.Green,
+                ) { onPayPlannedPayment() }
+            }
+
+            dueDate != null && hasChanges -> {
+                PrimaryActionButton(text = stringResource(R.string.save)) {
+                    onSave(false)
+                    onSetHasChanges(false)
+                }
+            }
+
+            else -> {
+                PrimaryActionButton(text = stringResource(R.string.save)) { onSave(true) }
+            }
+        }
+    }
+}
+
+@Composable
+private fun PrimaryActionButton(
+    text: String,
+    modifier: Modifier = Modifier,
+    @DrawableRes iconStart: Int? = null,
+    gradient: Gradient = IvyGradients.Mint,
     onClick: () -> Unit,
 ) {
     GradientButton(
-        text = label,
-        backgroundGradient = IvyGradients.Green,
+        modifier = modifier.fillMaxWidth(),
+        text = text,
+        iconStart = iconStart,
+        backgroundGradient = gradient,
         disabledBackgroundColor = EditTransactionTheme.colors.gray,
         shape = EditTransactionTheme.shapes.rFull,
-        textStyle = EditTransactionTheme.typo.b2.copy(
+        textStyle = EditTransactionTheme.typo.b1.copy(
             color = Color(0xFFFAFAFA),
             fontWeight = FontWeight.Bold,
-            textAlign = TextAlign.Start
+            textAlign = TextAlign.Center
         ),
-        iconStart = R.drawable.ic_check,
         iconTint = Color(0xFFFAFAFA),
-        onClick = onClick
+        wrapContentMode = false,
+        hasGlow = false,
+        padding = 16.dp,
+        onClick = onClick,
     )
+}
+
+@Composable
+private fun SecondaryActionButton(
+    text: String,
+    onClick: () -> Unit,
+) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(EditTransactionTheme.shapes.rFull)
+            .border(2.dp, EditTransactionTheme.colors.medium, EditTransactionTheme.shapes.rFull)
+            .clickable(onClick = onClick)
+            .padding(vertical = 16.dp),
+        contentAlignment = Alignment.Center,
+    ) {
+        Text(
+            text = text,
+            style = EditTransactionTheme.typo.b2.copy(
+                color = IvyGradients.Mint.startColor,
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Center,
+            ),
+        )
+    }
 }

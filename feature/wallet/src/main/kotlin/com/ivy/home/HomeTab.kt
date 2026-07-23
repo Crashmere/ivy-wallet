@@ -422,6 +422,16 @@ internal fun HomeLazyColumn(
         R.string.no_transactions_description,
         period.displayLong(periodState.startDayOfMonth)
     )
+    val balanceTrend = remember(history) {
+        history
+            .filterIsInstance<TransactionHistoryDateDivider>()
+            .sortedBy { it.date }
+            .runningFold(0f) { acc, divider ->
+                acc + (divider.income - divider.expenses).toFloat()
+            }
+            .drop(1)
+            .toImmutableList()
+    }
     LazyColumn(
         modifier = modifier
             .fillMaxSize()
@@ -446,7 +456,8 @@ internal fun HomeLazyColumn(
                 hideIncome = hideIncome,
                 onHiddenIncomeClick = onHiddenIncomeClick,
                 onOpenIncomePieChart = onOpenIncomePieChart,
-                onOpenExpensePieChart = onOpenExpensePieChart
+                onOpenExpensePieChart = onOpenExpensePieChart,
+                trend = balanceTrend
             )
         }
         item {

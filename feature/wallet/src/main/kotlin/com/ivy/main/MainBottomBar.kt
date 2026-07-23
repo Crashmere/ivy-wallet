@@ -7,13 +7,14 @@ import androidx.compose.animation.core.spring
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectDragGestures
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.BoxWithConstraintsScope
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
@@ -77,6 +78,9 @@ internal fun BoxWithConstraintsScope.BottomBar(
     onAddTransfer: () -> Unit,
     onAddPlannedPayment: () -> Unit,
 
+    onOpenReports: () -> Unit,
+    onOpenProfile: () -> Unit,
+
     showAddAccountModal: () -> Unit,
 ) {
     var expanded by remember { mutableStateOf(false) }
@@ -124,8 +128,6 @@ internal fun BoxWithConstraintsScope.BottomBar(
             selectTab(MainTab.HOME)
         }
 
-        Spacer(Modifier.width(FabButtonSize))
-
         Tab(
             icon = R.drawable.ic_accounts,
             name = stringResource(R.string.accounts),
@@ -133,6 +135,26 @@ internal fun BoxWithConstraintsScope.BottomBar(
             selectedColor = MainTheme.colors.green
         ) {
             selectTab(MainTab.ACCOUNTS)
+        }
+
+        Spacer(Modifier.width(FabButtonSize))
+
+        Tab(
+            icon = R.drawable.home_more_menu_reports,
+            name = stringResource(R.string.reports),
+            selected = false,
+            selectedColor = Ivy
+        ) {
+            onOpenReports()
+        }
+
+        Tab(
+            icon = R.drawable.ic_settings,
+            name = stringResource(R.string.mine),
+            selected = false,
+            selectedColor = Ivy
+        ) {
+            onOpenProfile()
         }
     }
 
@@ -615,32 +637,32 @@ private fun RowScope.Tab(
     selectedColor: Color,
     onClick: () -> Unit,
 ) {
-    Row(
+    val contentColor =
+        if (selected) selectedColor else MainTheme.colors.pureInverse.copy(alpha = 0.4f)
+
+    Column(
         modifier = Modifier
             .weight(1f)
             .clip(MainTheme.shapes.rFull)
             .clickable(onClick = onClick)
-            .padding(top = 12.dp, bottom = 16.dp)
+            .padding(top = 10.dp, bottom = 12.dp)
             .testTag(name.lowercase()),
-        horizontalArrangement = Arrangement.Center,
-        verticalAlignment = Alignment.CenterVertically
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         ResourceIcon(
             icon = icon,
-            tint = if (selected) selectedColor else MainTheme.colors.pureInverse
+            tint = contentColor
         )
 
-        if (selected) {
-            Spacer(modifier = Modifier.width(4.dp))
+        Spacer(modifier = Modifier.height(2.dp))
 
-            Text(
-                text = name,
-                style = MainTheme.typo.c.copy(
-                    fontWeight = FontWeight.Bold,
-                    color = selectedColor,
-                    textAlign = TextAlign.Start
-                )
+        Text(
+            text = name,
+            style = MainTheme.typo.c.copy(
+                fontWeight = if (selected) FontWeight.Bold else FontWeight.Medium,
+                color = contentColor,
+                textAlign = TextAlign.Center
             )
-        }
+        )
     }
 }

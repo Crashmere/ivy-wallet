@@ -4,13 +4,13 @@ import androidx.annotation.DrawableRes
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -25,12 +25,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.graphics.StrokeJoin
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.ivy.ui.compose.thenIf
+import androidx.compose.ui.unit.sp
 import com.ivy.ui.period.LocalPeriodState
 import com.ivy.ui.period.TimePeriod
 import com.ivy.ui.period.displayShort
@@ -43,13 +47,13 @@ import com.ivy.ui.compose.rememberSwipeListenerState
 import com.ivy.ui.animation.springBounce
 import com.ivy.ui.compose.verticalSwipeListener
 import com.ivy.ui.R
-import com.ivy.ui.theme.colors.Gradient
 import com.ivy.ui.theme.colors.IvyGradients
 import com.ivy.ui.theme.colors.IvyFixedColors.White
 import com.ivy.ui.money.BalanceRow
 import com.ivy.ui.money.AmountCurrencyB1
 import com.ivy.ui.compose.OutlinedPillButton
 import com.ivy.ui.compose.ResourceIcon
+import kotlinx.collections.immutable.ImmutableList
 import kotlin.math.absoluteValue
 
 @ExperimentalAnimationApi
@@ -190,21 +194,58 @@ internal fun CashFlowInfo(
     onHiddenBalanceClick: () -> Unit,
     onOpenIncomePieChart: () -> Unit,
     onOpenExpensePieChart: () -> Unit,
+    trend: ImmutableList<Float>,
     modifier: Modifier = Modifier
 ) {
+    val net = monthlyIncome - monthlyExpenses
+
     Column(
         modifier = modifier
+            .padding(horizontal = 16.dp)
+            .drawColoredShadow(IvyGradients.Mint.startColor)
+            .clip(HomeTheme.shapes.r4)
+            .background(IvyGradients.Mint.asHorizontalBrush())
             .verticalSwipeListener(
                 sensitivity = Constants.SWIPE_DOWN_THRESHOLD_OPEN_MORE_MENU,
                 state = rememberSwipeListenerState(),
                 onSwipeDown = {
                     onOpenMoreMenu()
                 },
-            ),
+            )
+            .padding(horizontal = 20.dp, vertical = 18.dp),
     ) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Text(
+                text = stringResource(R.string.total_balance),
+                style = HomeTheme.typo.c.copy(
+                    color = White.copy(alpha = 0.7f),
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Start,
+                ),
+            )
+
+            Spacer(Modifier.weight(1f))
+
+            if (!hideBalance && net != 0.0) {
+                Text(
+                    text = "${stringResource(R.string.month_net)} " +
+                        "${if (net > 0) "+" else ""}${net.format(currency)} $currency",
+                    style = HomeTheme.typo.c.copy(
+                        color = White.copy(alpha = 0.85f),
+                        fontWeight = FontWeight.Bold,
+                        textAlign = TextAlign.End,
+                    ),
+                )
+            }
+        }
+
+        Spacer(Modifier.height(8.dp))
+
         BalanceRow(
             modifier = Modifier
-                .padding(horizontal = 20.dp)
                 .clickableNoIndication(rememberInteractionSource()) {
                     if (hideBalance) {
                         onHiddenBalanceClick()
@@ -215,173 +256,160 @@ internal fun CashFlowInfo(
                 .testTag("home_balance"),
             currency = currency,
             balance = balance,
-            shortenBigNumbers = true,
-            hiddenMode = hideBalance
-        )
-
-        Spacer(modifier = Modifier.height(24.dp))
-
-        IncomeExpenses(
-            percentExpanded = percentExpanded,
-            currency = currency,
-            monthlyIncome = monthlyIncome,
-            monthlyExpenses = monthlyExpenses,
-            hideIncome = hideIncome,
-            onHiddenIncomeClick = onHiddenIncomeClick,
-            onOpenIncomePieChart = onOpenIncomePieChart,
-            onOpenExpensePieChart = onOpenExpensePieChart
-        )
-
-        val cashflow = monthlyIncome - monthlyExpenses
-        if (cashflow != 0.0 && !hideBalance) {
-            Spacer(Modifier.height(12.dp))
-
-            Text(
-                modifier = Modifier.padding(
-                    start = 24.dp,
-                ),
-                text = stringResource(
-                    R.string.cashflow,
-                    (if (cashflow > 0) "+" else ""),
-                    cashflow.format(currency),
-                    currency,
-                ),
-                style = HomeTheme.typo.nB2.copy(
-                    color = if (cashflow < 0) HomeTheme.colors.gray else HomeTheme.colors.green,
-                    fontWeight = FontWeight.Bold,
-                    textAlign = TextAlign.Start
-                ),
-            )
-
-            Spacer(Modifier.height(4.dp))
-        } else {
-            Spacer(Modifier.height(16.dp))
-        }
-    }
-}
-
-@Composable
-private fun IncomeExpenses(
-    percentExpanded: Float,
-    currency: String,
-    monthlyIncome: Double,
-    monthlyExpenses: Double,
-    hideIncome: Boolean,
-    onHiddenIncomeClick: () -> Unit,
-    onOpenIncomePieChart: () -> Unit,
-    onOpenExpensePieChart: () -> Unit,
-) {
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        Spacer(Modifier.width(16.dp))
-
-        HeaderCard(
-            percentVisible = percentExpanded,
-            icon = R.drawable.ic_income,
-            backgroundGradient = IvyGradients.Green,
             textColor = White,
-            label = stringResource(R.string.income),
-            currency = currency,
-            amount = monthlyIncome,
-            testTag = "home_card_income"
-        ) {
-            if (hideIncome) {
-                onHiddenIncomeClick()
-            } else {
-                onOpenIncomePieChart()
-            }
-        }
+            balanceFontSize = 34.sp,
+            shortenBigNumbers = true,
+            hiddenMode = hideBalance,
+        )
 
-        Spacer(Modifier.width(12.dp))
-
-        HeaderCard(
-            percentVisible = percentExpanded,
-            icon = R.drawable.ic_expense,
-            backgroundGradient = Gradient(HomeTheme.colors.pureInverse, HomeTheme.colors.gray),
-            textColor = HomeTheme.colors.pure,
-            label = stringResource(R.string.expenses),
-            currency = currency,
-            amount = monthlyExpenses.absoluteValue,
-            testTag = "home_card_expense",
-        ) {
-            onOpenExpensePieChart()
-        }
-
-        Spacer(Modifier.width(16.dp))
-    }
-}
-
-@Composable
-private fun RowScope.HeaderCard(
-    @DrawableRes icon: Int,
-    backgroundGradient: Gradient,
-    percentVisible: Float,
-    textColor: Color,
-    label: String,
-    currency: String,
-    amount: Double,
-    testTag: String,
-    onClick: () -> Unit,
-) {
-    Column(
-        modifier = Modifier
-            .weight(1f)
-            .thenIf(percentVisible == 1f) {
-                drawColoredShadow(backgroundGradient.startColor)
-            }
-            .clip(HomeTheme.shapes.r4)
-            .background(backgroundGradient.asHorizontalBrush())
-            .testTag(testTag)
-            .clickable(
-                onClick = onClick,
-            ),
-    ) {
         Spacer(Modifier.height(12.dp))
 
+        if (trend.size >= 2) {
+            Sparkline(
+                points = trend,
+                color = White.copy(alpha = 0.9f),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(40.dp),
+            )
+
+            Spacer(Modifier.height(14.dp))
+        }
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            HeroStat(
+                modifier = Modifier.weight(1f),
+                icon = R.drawable.ic_income,
+                label = stringResource(R.string.income),
+                amount = monthlyIncome,
+                currency = currency,
+                hidden = hideIncome,
+                onClick = {
+                    if (hideIncome) onHiddenIncomeClick() else onOpenIncomePieChart()
+                },
+            )
+
+            Spacer(Modifier.width(12.dp))
+
+            Box(
+                modifier = Modifier
+                    .width(1.dp)
+                    .height(36.dp)
+                    .background(White.copy(alpha = 0.2f))
+            )
+
+            Spacer(Modifier.width(12.dp))
+
+            HeroStat(
+                modifier = Modifier.weight(1f),
+                icon = R.drawable.ic_expense,
+                label = stringResource(R.string.expenses),
+                amount = monthlyExpenses.absoluteValue,
+                currency = currency,
+                hidden = false,
+                onClick = onOpenExpensePieChart,
+            )
+        }
+    }
+}
+
+@Composable
+private fun HeroStat(
+    @DrawableRes icon: Int,
+    label: String,
+    amount: Double,
+    currency: String,
+    hidden: Boolean,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Column(
+        modifier = modifier
+            .clip(HomeTheme.shapes.r4)
+            .clickable(onClick = onClick)
+            .padding(vertical = 4.dp),
+    ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Spacer(Modifier.width(16.dp))
-
             ResourceIcon(
                 icon = icon,
-                tint = textColor,
+                tint = White.copy(alpha = 0.85f),
             )
 
-            Spacer(Modifier.width(4.dp))
+            Spacer(Modifier.width(6.dp))
 
             Text(
                 text = label,
                 style = HomeTheme.typo.c.copy(
-                    color = textColor,
-                    fontWeight = FontWeight.ExtraBold,
-                    textAlign = TextAlign.Start
+                    color = White.copy(alpha = 0.85f),
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Start,
                 ),
             )
         }
 
-        Spacer(Modifier.height(4.dp))
+        Spacer(Modifier.height(6.dp))
 
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .align(Alignment.CenterHorizontally),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Spacer(Modifier.width(20.dp))
-
-            AmountCurrencyB1(
-                amount = amount,
-                currency = currency,
-                textColor = textColor,
-                shortenBigNumbers = true,
+        if (hidden) {
+            Text(
+                text = "****",
+                style = HomeTheme.typo.nB2.copy(
+                    color = White,
+                    fontWeight = FontWeight.ExtraBold,
+                    textAlign = TextAlign.Start,
+                ),
             )
-
-            Spacer(Modifier.width(4.dp))
+        } else {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                AmountCurrencyB1(
+                    amount = amount,
+                    currency = currency,
+                    textColor = White,
+                    shortenBigNumbers = true,
+                )
+            }
         }
+    }
+}
 
-        Spacer(Modifier.height(20.dp))
+@Composable
+private fun Sparkline(
+    points: ImmutableList<Float>,
+    color: Color,
+    modifier: Modifier = Modifier,
+) {
+    val minValue = points.min()
+    val maxValue = points.max()
+    val range = (maxValue - minValue).takeIf { it != 0f } ?: 1f
+
+    Canvas(modifier = modifier) {
+        val width = size.width
+        val height = size.height
+        val stepX = if (points.size > 1) width / (points.size - 1) else width
+        val path = Path()
+        points.forEachIndexed { index, value ->
+            val x = index * stepX
+            val y = height - ((value - minValue) / range) * height
+            if (index == 0) {
+                path.moveTo(x, y)
+            } else {
+                path.lineTo(x, y)
+            }
+        }
+        drawPath(
+            path = path,
+            color = color,
+            style = Stroke(
+                width = 2.dp.toPx(),
+                cap = StrokeCap.Round,
+                join = StrokeJoin.Round,
+            ),
+        )
     }
 }

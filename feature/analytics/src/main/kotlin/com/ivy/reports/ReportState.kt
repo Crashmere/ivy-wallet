@@ -13,6 +13,13 @@ import java.util.UUID
 internal enum class SortOrder { TIME, AMOUNT }
 
 @Immutable
+internal data class CategoryBreakdownItem(
+    val name: String,
+    val colorArgb: Int?,
+    val amount: Double,
+)
+
+@Immutable
 internal data class ReportState(
     val baseCurrency: String,
     val period: TimePeriod,
@@ -43,6 +50,9 @@ internal data class ReportState(
     val matchingCount: Int,
     val income: Double,
     val expenses: Double,
+
+    val expenseByCategory: ImmutableList<CategoryBreakdownItem>,
+    val incomeByCategory: ImmutableList<CategoryBreakdownItem>,
 
     val allCategories: ImmutableList<Category>,
     val allAccounts: ImmutableList<Account>,

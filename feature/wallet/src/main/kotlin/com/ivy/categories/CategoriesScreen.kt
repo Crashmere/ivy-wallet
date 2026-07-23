@@ -4,7 +4,6 @@ import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraintsScope
 import androidx.compose.foundation.layout.Column
@@ -12,6 +11,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
@@ -37,13 +37,12 @@ import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ivy.ui.search.SearchInput
 import com.ivy.ui.money.balancePrefix
-import com.ivy.ui.money.compactBalancePrefix
-import com.ivy.data.model.currency.format
+import com.ivy.data.model.currency.shortenAmount
 import com.ivy.ui.compose.selectEndTextFieldValue
 import com.ivy.ui.navigation.TransactionsScreen
 import com.ivy.ui.navigation.navigation
@@ -65,13 +64,12 @@ import com.ivy.ui.compose.FilledIconButton
 import com.ivy.ui.compose.GradientButton
 import com.ivy.ui.compose.OutlinedPillButton
 import com.ivy.ui.compose.ResourceIcon
-import com.ivy.ui.theme.colors.findContrastTextColor
 import com.ivy.ui.modal.IvyModal
 import com.ivy.ui.modal.ModalTitle
 import com.ivy.ui.theme.colors.toComposeColor
-import com.ivy.ui.money.AmountCurrencyB1
 import kotlinx.collections.immutable.ImmutableList
 import java.util.UUID
+import kotlin.math.abs
 
 @Composable
 fun BoxWithConstraintsScope.CategoriesScreen() {
@@ -333,306 +331,112 @@ private fun CategoryCard(
     onLongClick: () -> Unit,
     onClick: () -> Unit
 ) {
-    val contrastColor = findContrastTextColor(categoryData.category.color.value.toComposeColor())
-
-    if (!compactModeEnabled) {
-        Spacer(Modifier.height(16.dp))
-        DefaultCategoryCard(onClick, categoryData, currency)
-    } else {
-        Spacer(Modifier.height(8.dp))
-        CompactCategoryCard(
-            categoryData = categoryData,
-            contrastColor = contrastColor,
-            currency = currency,
-            onClick = onClick
-        )
-    }
+    Spacer(Modifier.height(if (compactModeEnabled) 8.dp else 12.dp))
+    CategoryRowCard(
+        categoryData = categoryData,
+        currency = currency,
+        compactModeEnabled = compactModeEnabled,
+        onClick = onClick,
+    )
 }
 
 @Composable
-private fun DefaultCategoryCard(
-    onClick: () -> Unit,
+private fun CategoryRowCard(
     categoryData: CategoryData,
-    currency: String
+    currency: String,
+    compactModeEnabled: Boolean,
+    onClick: () -> Unit,
 ) {
-    Column(
+    val category = categoryData.category
+    val categoryColor = category.color.value.toComposeColor()
+    val secondaryColor = CategoriesTheme.colors.pureInverse.copy(alpha = 0.5f)
+
+    Row(
         modifier = Modifier
             .padding(horizontal = 16.dp)
             .fillMaxWidth()
             .clip(CategoriesTheme.shapes.r4)
-            .border(2.dp, CategoriesTheme.colors.medium, CategoriesTheme.shapes.r4)
-            .clickable(
-                onClick = onClick
-            )
+            .background(CategoriesTheme.colors.pure)
+            .border(1.dp, CategoriesTheme.colors.medium, CategoriesTheme.shapes.r4)
+            .clickable(onClick = onClick)
+            .height(IntrinsicSize.Min),
+        verticalAlignment = Alignment.CenterVertically,
     ) {
-        CategoryHeader(
-            categoryData = categoryData,
-            currency = currency,
-            contrastColor = findContrastTextColor(categoryData.category.color.value.toComposeColor())
-        )
-
-        Spacer(Modifier.height(12.dp))
-
-        // Emitting content
-        AddedSpent(
-            currency = currency,
-            monthlyIncome = categoryData.monthlyIncome,
-            monthlyExpenses = categoryData.monthlyExpenses
-        )
-
-        Spacer(Modifier.height(12.dp))
-    }
-}
-
-@Composable
-private fun CompactCategoryCard(
-    categoryData: CategoryData,
-    contrastColor: Color,
-    currency: String,
-    onClick: () -> Unit
-) {
-    val category = categoryData.category
-    val balancePrefixValue = compactBalancePrefix(
-        income = categoryData.monthlyIncome,
-        expenses = categoryData.monthlyExpenses
-    )
-
-    Box(
-        modifier = Modifier
-            .padding(horizontal = 16.dp)
-            .border(2.dp, CategoriesTheme.colors.medium, CategoriesTheme.shapes.r4)
-            .clickable(
-                onClick = onClick
-            ),
-    ) {
-        Row(
+        Box(
             modifier = Modifier
-                .padding(all = 10.dp),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Box(
-                modifier = Modifier
-                    .size(40.dp)
-                    .clip(CircleShape)
-                    .background(category.color.value.toComposeColor()),
-                contentAlignment = Alignment.Center,
-            ) {
-                ItemIconSDefaultIcon(
-                    iconName = category.icon?.id,
-                    defaultIcon = R.drawable.ic_custom_account_s,
-                    tint = contrastColor
-                )
-            }
-
-            Row(
-                modifier =
-                Modifier
-                    .padding(horizontal = 8.dp)
-                    .fillMaxWidth()
-                    .fillMaxHeight(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    text = category.name.value,
-                    style = CategoriesTheme.typo.b2.copy(
-                        color = CategoriesTheme.colors.pureInverse,
-                        fontWeight = FontWeight.Bold,
-                        textAlign = TextAlign.Start
-                    )
-                )
-
-                Row(
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    // Format the monthly balance according to the currency format and remove
-                    // any '+' or '-' signs that might be included from the prefix to ensure
-                    // a clean and consistent representation.
-                    val currencyFormatted =
-                        categoryData.monthlyBalance.format(currency).replace(Regex("[+-]"), "")
-
-                    Text(
-                        text = "$balancePrefixValue$currencyFormatted",
-                        style = CategoriesTheme.typo.nB1.copy(
-                            color = CategoriesTheme.colors.pureInverse,
-                            fontWeight = FontWeight.Bold,
-                            textAlign = TextAlign.Start
-                        )
-                    )
-                    Spacer(modifier = Modifier.width(4.dp))
-                    Text(
-                        text = currency,
-                        style = CategoriesTheme.typo.nB2.copy(
-                            color = CategoriesTheme.colors.pureInverse,
-                            fontWeight = FontWeight.Medium,
-                            textAlign = TextAlign.Start
-                        )
-                    )
-                }
-            }
-        }
-    }
-}
-
-@Composable
-internal fun AddedSpent(
-    monthlyIncome: Double,
-    monthlyExpenses: Double,
-    currency: String,
-    modifier: Modifier = Modifier,
-    textColor: Color = CategoriesTheme.colors.pureInverse,
-    dividerColor: Color = CategoriesTheme.colors.medium,
-    center: Boolean = true,
-    dividerSpacer: Dp? = null,
-
-    ) {
-    Row(
-        modifier = modifier.fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        if (center) {
-            Spacer(Modifier.weight(1f))
-        }
-
-        LabelAmount(
-            textColor = textColor,
-            label = stringResource(R.string.month_expenses),
-            amount = monthlyExpenses,
-            currency = currency,
-            center = center
+                .width(5.dp)
+                .fillMaxHeight()
+                .background(categoryColor)
         )
 
-        if (center) {
-            Spacer(Modifier.weight(1f))
-        }
+        Spacer(Modifier.width(14.dp))
 
-        if (dividerSpacer != null) {
-            Spacer(modifier = Modifier.width(dividerSpacer))
-        }
-
-        // Divider
-        Spacer(
+        Box(
             modifier = Modifier
-                .width(2.dp)
-                .height(48.dp)
-                .background(dividerColor, CategoriesTheme.shapes.rFull)
-        )
-
-        if (center) {
-            Spacer(Modifier.weight(1f))
-        }
-
-        if (dividerSpacer != null) {
-            Spacer(modifier = Modifier.width(dividerSpacer))
-        }
-
-        LabelAmount(
-            textColor = textColor,
-            label = stringResource(R.string.month_income),
-            amount = monthlyIncome,
-            currency = currency,
-            center = center
-        )
-
-        if (center) {
-            Spacer(Modifier.weight(1f))
-        }
-    }
-}
-
-@Composable
-private fun LabelAmount(
-    label: String,
-    amount: Double,
-    currency: String,
-    textColor: Color,
-    center: Boolean
-) {
-    Column(
-        horizontalAlignment = if (center) Alignment.CenterHorizontally else Alignment.Start
-    ) {
-        Text(
-            text = label,
-            style = CategoriesTheme.typo.c.copy(
-                color = textColor,
-                fontWeight = FontWeight.ExtraBold,
-                textAlign = TextAlign.Start
-            )
-        )
-
-        Spacer(Modifier.height(4.dp))
-
-        Row(
-            verticalAlignment = Alignment.CenterVertically
+                .size(40.dp)
+                .clip(CircleShape)
+                .background(categoryColor.copy(alpha = 0.15f)),
+            contentAlignment = Alignment.Center,
         ) {
-            AmountCurrencyB1(
-                textColor = textColor,
-                amount = amount,
-                currency = currency
-            )
-        }
-    }
-}
-
-@Composable
-private fun CategoryHeader(
-    categoryData: CategoryData,
-    currency: String,
-    contrastColor: Color,
-) {
-    val category = categoryData.category
-    val balancePrefixValue = balancePrefix(
-        income = categoryData.monthlyIncome,
-        expenses = categoryData.monthlyExpenses
-    )
-
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(category.color.value.toComposeColor(), CategoriesTheme.shapes.r4Top)
-    ) {
-        Spacer(Modifier.height(16.dp))
-
-        Row(
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Spacer(Modifier.width(20.dp))
-
             ItemIconSDefaultIcon(
                 iconName = category.icon?.id,
                 defaultIcon = R.drawable.ic_custom_category_s,
-                tint = contrastColor
+                tint = categoryColor
             )
+        }
 
-            Spacer(Modifier.width(8.dp))
+        Spacer(Modifier.width(12.dp))
 
+        Column(
+            modifier = Modifier
+                .weight(1f)
+                .padding(vertical = 14.dp),
+        ) {
             Text(
                 text = category.name.value,
-                style = CategoriesTheme.typo.b1.copy(
-                    color = contrastColor,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                style = CategoriesTheme.typo.b2.copy(
+                    color = CategoriesTheme.colors.pureInverse,
                     fontWeight = FontWeight.ExtraBold,
                     textAlign = TextAlign.Start
                 )
             )
+
+            if (!compactModeEnabled &&
+                (categoryData.monthlyIncome != 0.0 || categoryData.monthlyExpenses != 0.0)
+            ) {
+                Spacer(Modifier.height(4.dp))
+                Text(
+                    text = "支 ${shortenAmount(abs(categoryData.monthlyExpenses))}  ·  " +
+                        "收 ${shortenAmount(abs(categoryData.monthlyIncome))}",
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    style = CategoriesTheme.typo.c.copy(
+                        color = secondaryColor,
+                        fontWeight = FontWeight.Medium,
+                        textAlign = TextAlign.Start
+                    )
+                )
+            }
         }
 
-        Spacer(Modifier.height(4.dp))
+        Spacer(Modifier.width(12.dp))
 
         BalanceRow(
-            modifier = Modifier.align(Alignment.CenterHorizontally),
-
-            textColor = contrastColor,
+            modifier = Modifier.padding(end = 16.dp),
             currency = currency,
             balance = categoryData.monthlyBalance,
-
-            balanceFontSize = 30.sp,
-            currencyFontSize = 30.sp,
-
+            textColor = CategoriesTheme.colors.pureInverse,
+            balanceFontSize = 17.sp,
+            currencyFontSize = 17.sp,
             currencyUpfront = false,
-            balanceAmountPrefix = balancePrefixValue
+            balanceAmountPrefix = balancePrefix(
+                income = categoryData.monthlyIncome,
+                expenses = categoryData.monthlyExpenses
+            ),
+            shortenBigNumbers = true,
         )
-
-        Spacer(Modifier.height(16.dp))
     }
 }
 

@@ -37,6 +37,7 @@ internal interface SearchColors {
 
 internal interface SearchTypography {
     val c: TextStyle
+    val b2: TextStyle
 }
 
 internal interface SearchShapes {
@@ -84,6 +85,12 @@ private fun searchTypography(): SearchTypography {
             fontFamily = raleWay,
             fontWeight = FontWeight.ExtraBold,
             fontSize = 12.sp,
+            baselineShift = BaselineShift(0.2f),
+        )
+        override val b2 = TextStyle(
+            fontFamily = raleWay,
+            fontWeight = FontWeight.Bold,
+            fontSize = 16.sp,
             baselineShift = BaselineShift(0.2f),
         )
     }

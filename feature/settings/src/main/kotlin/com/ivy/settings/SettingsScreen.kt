@@ -9,6 +9,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraintsScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -63,6 +64,7 @@ import com.ivy.ui.R
 import com.ivy.data.model.currency.IvyCurrency
 import com.ivy.ui.theme.colors.Gradient
 import com.ivy.ui.theme.colors.IvyGradients
+import com.ivy.ui.theme.colors.IvyFixedColors
 import com.ivy.ui.theme.colors.IvyFixedColors.White
 import com.ivy.ui.modal.CurrencyModal
 import com.ivy.ui.modal.DeleteModal
@@ -347,7 +349,9 @@ private fun BoxWithConstraintsScope.UI(
 
             Text(
                 modifier = Modifier.padding(start = 32.dp),
-                text = stringResource(settingsPage.title),
+                text = stringResource(
+                    if (settingsPage == SettingsPage.Main) R.string.mine else settingsPage.title
+                ),
                 style = SettingsTheme.typo.h2.copy(
                     color = SettingsTheme.colors.pureInverse,
                     fontWeight = FontWeight.Black,
@@ -361,20 +365,20 @@ private fun BoxWithConstraintsScope.UI(
         when (settingsPage) {
             SettingsPage.Main -> {
                 item {
-                    DataManagementSection(
-                        onExportToCSV = onExportToCSV,
-                        onBackupData = onBackupData,
-                        onImportData = onOpenImport
-                    )
-                }
-
-                item {
-                    CloudBackupSection(
+                    CloudBackupHeroCard(
                         configured = gitHubConfig != null,
                         subtitle = gitHubBackupSubtitle(gitHubConfig, gitHubLastBackupEpochSec),
                         onConfigure = { gitHubBackupModalVisible = true },
                         onBackup = onBackupToGitHub,
                         onRestore = { restoreFromGitHubConfirmVisible = true }
+                    )
+                }
+
+                item {
+                    DataManagementSection(
+                        onExportToCSV = onExportToCSV,
+                        onBackupData = onBackupData,
+                        onImportData = onOpenImport
                     )
                 }
 
@@ -653,44 +657,131 @@ private fun gitHubBackupSubtitle(
 }
 
 @Composable
-private fun CloudBackupSection(
+private fun CloudBackupHeroCard(
     configured: Boolean,
     subtitle: String,
     onConfigure: () -> Unit,
     onBackup: () -> Unit,
     onRestore: () -> Unit
 ) {
-    SettingsSectionDivider(text = "云备份")
-
-    Spacer(Modifier.height(16.dp))
-
-    SettingsDefaultButton(
-        icon = R.drawable.ic_vue_security_shield,
-        text = "GitHub 云备份",
-        iconPadding = 8.dp,
-        description = subtitle
+    Column(
+        modifier = Modifier
+            .padding(horizontal = 16.dp)
+            .fillMaxWidth()
+            .drawColoredShadow(color = IvyGradients.Ivy.startColor)
+            .clip(SettingsTheme.shapes.r4)
+            .background(IvyGradients.Ivy.asHorizontalBrush(), SettingsTheme.shapes.r4)
+            .clickable(onClick = onConfigure)
+            .padding(20.dp),
     ) {
-        onConfigure()
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            SettingsIcon(
+                icon = R.drawable.ic_vue_security_shield,
+                tint = White,
+                padding = 8.dp,
+            )
+
+            Spacer(Modifier.width(8.dp))
+
+            Column(Modifier.weight(1f)) {
+                Text(
+                    text = "GitHub 云备份",
+                    style = SettingsTheme.typo.b1.copy(
+                        color = White,
+                        fontWeight = FontWeight.ExtraBold,
+                        textAlign = TextAlign.Start
+                    )
+                )
+                Spacer(Modifier.height(4.dp))
+                Text(
+                    text = subtitle,
+                    style = SettingsTheme.typo.nB2.copy(
+                        color = White.copy(alpha = 0.85f),
+                        fontWeight = FontWeight.Normal,
+                        textAlign = TextAlign.Start
+                    ).copy(fontSize = 13.sp)
+                )
+            }
+
+            Spacer(Modifier.width(8.dp))
+
+            BackupStatusPill(configured = configured)
+        }
+
+        Spacer(Modifier.height(18.dp))
+
+        if (configured) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                HeroActionButton(
+                    text = "立即备份",
+                    filled = true,
+                    modifier = Modifier.weight(1f),
+                    onClick = onBackup,
+                )
+                Spacer(Modifier.width(12.dp))
+                HeroActionButton(
+                    text = "恢复",
+                    filled = false,
+                    modifier = Modifier.weight(1f),
+                    onClick = onRestore,
+                )
+            }
+        } else {
+            HeroActionButton(
+                text = "配置 GitHub 备份",
+                filled = true,
+                modifier = Modifier.fillMaxWidth(),
+                onClick = onConfigure,
+            )
+        }
     }
+}
 
-    if (configured) {
-        Spacer(Modifier.height(12.dp))
+@Composable
+private fun BackupStatusPill(configured: Boolean) {
+    Text(
+        modifier = Modifier
+            .clip(CircleShape)
+            .background(White.copy(alpha = 0.18f))
+            .padding(horizontal = 12.dp, vertical = 5.dp),
+        text = if (configured) "已配置" else "未配置",
+        style = SettingsTheme.typo.nC.copy(
+            color = White,
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Start
+        )
+    )
+}
 
-        SettingsDefaultButton(
-            icon = R.drawable.ic_custom_document_m,
-            text = "立即备份到 GitHub"
-        ) {
-            onBackup()
-        }
-
-        Spacer(Modifier.height(12.dp))
-
-        SettingsDefaultButton(
-            icon = R.drawable.ic_export_csv,
-            text = "从 GitHub 恢复"
-        ) {
-            onRestore()
-        }
+@Composable
+private fun HeroActionButton(
+    text: String,
+    filled: Boolean,
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit,
+) {
+    Box(
+        modifier = modifier
+            .clip(CircleShape)
+            .then(
+                if (filled) {
+                    Modifier.background(White)
+                } else {
+                    Modifier.border(1.5.dp, White.copy(alpha = 0.55f), CircleShape)
+                }
+            )
+            .clickable(onClick = onClick)
+            .padding(vertical = 13.dp),
+        contentAlignment = Alignment.Center,
+    ) {
+        Text(
+            text = text,
+            style = SettingsTheme.typo.b2.copy(
+                color = if (filled) IvyFixedColors.Ivy else White,
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Center
+            )
+        )
     }
 }
 

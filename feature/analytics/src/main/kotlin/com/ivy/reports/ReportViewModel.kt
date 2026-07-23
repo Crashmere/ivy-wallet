@@ -108,6 +108,10 @@ internal class ReportViewModel @Inject internal constructor(
     private val matchingCount = mutableIntStateOf(0)
     private val income = mutableDoubleStateOf(0.0)
     private val expenses = mutableDoubleStateOf(0.0)
+    private val expenseByCategory =
+        mutableStateOf<ImmutableList<CategoryBreakdownItem>>(persistentListOf())
+    private val incomeByCategory =
+        mutableStateOf<ImmutableList<CategoryBreakdownItem>>(persistentListOf())
     private val loading = mutableStateOf(false)
     private val advancedExpanded = mutableStateOf(false)
 
@@ -156,6 +160,8 @@ internal class ReportViewModel @Inject internal constructor(
             matchingCount = matchingCount.intValue,
             income = income.doubleValue,
             expenses = expenses.doubleValue,
+            expenseByCategory = expenseByCategory.value,
+            incomeByCategory = incomeByCategory.value,
             allCategories = allCategories.value,
             allAccounts = allAccounts.value,
             allTags = allTags.value,
@@ -273,6 +279,7 @@ internal class ReportViewModel @Inject internal constructor(
         matchingRaw = filtered
 
         updateAmountRange(filtered)
+        computeBreakdowns(filtered)
 
         val bc = baseCurrency.value
         if (sortOrder.value == SortOrder.TIME) {
@@ -344,6 +351,46 @@ internal class ReportViewModel @Inject internal constructor(
         amountRangeMin.floatValue = min
         amountRangeMax.floatValue = if (max > min) max else min + 1f
     }
+
+    private suspend fun computeBreakdowns(transactions: List<Transaction>) {
+        val bc = baseCurrency.value
+        val catById = allCategories.value.associateBy { it.id.value }
+        val expenseMap = LinkedHashMap<UUID?, Double>()
+        val incomeMap = LinkedHashMap<UUID?, Double>()
+        for (tx in transactions) {
+            val type = tx.getTransactionType()
+            if (type == TransactionType.TRANSFER) continue
+            val amount = exchangeTransactionAmountUseCase(
+                transaction = tx,
+                accounts = accountModels,
+                baseCurrency = bc,
+            ).toDouble()
+            val catId = tx.category?.value
+            when (type) {
+                TransactionType.EXPENSE ->
+                    expenseMap[catId] = (expenseMap[catId] ?: 0.0) + amount
+                TransactionType.INCOME ->
+                    incomeMap[catId] = (incomeMap[catId] ?: 0.0) + amount
+                TransactionType.TRANSFER -> {}
+            }
+        }
+        expenseByCategory.value = expenseMap.toBreakdownItems(catById)
+        incomeByCategory.value = incomeMap.toBreakdownItems(catById)
+    }
+
+    private fun Map<UUID?, Double>.toBreakdownItems(
+        catById: Map<UUID, Category>,
+    ): ImmutableList<CategoryBreakdownItem> =
+        map { (catId, amount) ->
+            val cat = catId?.let { catById[it] }
+            CategoryBreakdownItem(
+                name = cat?.name?.value ?: "无类别",
+                colorArgb = cat?.color?.value,
+                amount = amount,
+            )
+        }.filter { it.amount > 0.0 }
+            .sortedByDescending { it.amount }
+            .toImmutableList()
 
     private suspend fun applyFilter(transactions: List<Transaction>): List<Transaction> {
         val categoryIds = selectedCategoryIds.value

@@ -69,6 +69,8 @@
     <string name="auto_mode">自动模式</string>
     <string name="planned_payments">计划支付</string>
     <string name="reports">报告</string>
+    <string name="mine">我的</string>
+    <string name="month_net">本月结余</string>
     <string name="loans">贷款</string>
     <string name="set_currency">设置货币</string>
     <string name="no_transactions">无交易</string>

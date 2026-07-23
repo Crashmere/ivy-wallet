@@ -21,6 +21,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.width
@@ -44,6 +45,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.ivy.data.model.Account
 import com.ivy.data.model.Category
@@ -55,6 +57,7 @@ import com.ivy.data.model.TransactionHistoryDateDivider
 import com.ivy.data.model.TransactionHistoryItem
 import com.ivy.data.model.TransactionHistoryTransaction
 import com.ivy.data.model.Transfer
+import com.ivy.data.model.currency.format
 import com.ivy.data.model.getFromAccount
 import com.ivy.data.model.getFromValue
 import com.ivy.ui.R
@@ -75,6 +78,7 @@ import com.ivy.ui.platform.LocalDatePicker
 import com.ivy.ui.platform.fileSharer
 import com.ivy.ui.theme.colors.IvyFixedColors
 import com.ivy.ui.theme.colors.IvyGradients
+import com.ivy.ui.theme.colors.toComposeColor
 import com.ivy.ui.transaction.TransactionListAccount
 import com.ivy.ui.transaction.TransactionListCategory
 import com.ivy.ui.transaction.TransactionListData
@@ -85,6 +89,7 @@ import com.ivy.ui.transaction.TransactionListTag
 import com.ivy.ui.transaction.TransactionListTransaction
 import com.ivy.ui.transaction.TransactionListTransactionType
 import com.ivy.ui.transaction.transactions
+import kotlin.math.roundToInt
 
 @ExperimentalFoundationApi
 @Composable
@@ -168,6 +173,8 @@ private fun BoxWithConstraintsScope.UI(
                 expenses = state.expenses,
                 baseCurrency = state.baseCurrency
             )
+
+            CategoryBreakdownSection(state = state)
 
             Spacer(Modifier.height(16.dp))
         }
@@ -1047,6 +1054,109 @@ private fun SummaryAmount(
             currency = currency,
             textColor = amountColor
         )
+    }
+}
+
+// ─── Category Breakdown ──────────────────────────────────────
+
+@Composable
+private fun CategoryBreakdownSection(state: ReportState) {
+    val showExpense = state.expenseByCategory.isNotEmpty()
+    val items = if (showExpense) state.expenseByCategory else state.incomeByCategory
+    val total = items.sumOf { it.amount }
+    if (items.isEmpty() || total <= 0.0) return
+
+    Spacer(Modifier.height(20.dp))
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp)
+            .clip(ReportsTheme.shapes.r4)
+            .border(1.dp, ReportsTheme.colors.medium, ReportsTheme.shapes.r4)
+            .padding(16.dp),
+    ) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Text(
+                text = if (showExpense) "支出构成" else "收入构成",
+                style = ReportsTheme.typo.b2.copy(
+                    color = ReportsTheme.colors.pureInverse,
+                    fontWeight = FontWeight.Bold,
+                )
+            )
+            Spacer(Modifier.weight(1f))
+            Text(
+                text = "${items.size} 类",
+                style = ReportsTheme.typo.c.copy(color = ReportsTheme.colors.gray)
+            )
+        }
+
+        items.forEach { item ->
+            Spacer(Modifier.height(12.dp))
+            BreakdownRow(
+                item = item,
+                fraction = (item.amount / total).toFloat(),
+                baseCurrency = state.baseCurrency,
+            )
+        }
+    }
+}
+
+@Composable
+private fun BreakdownRow(
+    item: CategoryBreakdownItem,
+    fraction: Float,
+    baseCurrency: String,
+) {
+    val color = item.colorArgb?.toComposeColor() ?: ReportsTheme.colors.gray
+    Column(modifier = Modifier.fillMaxWidth()) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Box(
+                modifier = Modifier
+                    .size(10.dp)
+                    .clip(CircleShape)
+                    .background(color)
+            )
+            Spacer(Modifier.width(8.dp))
+            Text(
+                modifier = Modifier.weight(1f),
+                text = item.name,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                style = ReportsTheme.typo.c.copy(
+                    color = ReportsTheme.colors.pureInverse,
+                    fontWeight = FontWeight.SemiBold,
+                )
+            )
+            Spacer(Modifier.width(8.dp))
+            Text(
+                text = "${(fraction * 100).roundToInt()}%",
+                style = ReportsTheme.typo.c.copy(color = ReportsTheme.colors.gray)
+            )
+            Spacer(Modifier.width(10.dp))
+            Text(
+                text = "${item.amount.format(baseCurrency)} $baseCurrency",
+                style = ReportsTheme.typo.c.copy(
+                    color = ReportsTheme.colors.pureInverse,
+                    fontWeight = FontWeight.Bold,
+                )
+            )
+        }
+        Spacer(Modifier.height(6.dp))
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(6.dp)
+                .clip(ReportsTheme.shapes.rFull)
+                .background(ReportsTheme.colors.medium)
+        ) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth(fraction.coerceIn(0.02f, 1f))
+                    .height(6.dp)
+                    .clip(ReportsTheme.shapes.rFull)
+                    .background(color)
+            )
+        }
     }
 }
 

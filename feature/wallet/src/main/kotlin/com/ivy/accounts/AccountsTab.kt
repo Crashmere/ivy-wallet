@@ -3,34 +3,46 @@ package com.ivy.accounts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraintsScope
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.CornerRadius
+import androidx.compose.ui.graphics.PathEffect
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.ivy.ui.compose.clickableNoIndication
+import com.ivy.data.model.currency.format
+import com.ivy.data.model.currency.shortenAmount
+import com.ivy.ui.compose.FilledIconButton
+import com.ivy.ui.compose.ResourceIcon
 import com.ivy.ui.compose.horizontalSwipeListener
-import com.ivy.ui.compose.rememberInteractionSource
 import com.ivy.ui.compose.rememberSwipeListenerState
 import com.ivy.ui.navigation.TransactionsScreen
 import com.ivy.ui.navigation.navigation
@@ -40,14 +52,14 @@ import com.ivy.ui.rememberScrollPositionListState
 import com.ivy.ui.money.BalanceRow
 import com.ivy.ui.icon.ItemIconSDefaultIcon
 import com.ivy.ui.modal.ReorderModalSingleType
-import com.ivy.ui.compose.FilledIconButton
-import com.ivy.ui.theme.colors.dynamicContrast
-import com.ivy.ui.theme.colors.findContrastTextColor
+import com.ivy.ui.theme.colors.IvyGradients
+import com.ivy.ui.theme.colors.IvyFixedColors.White
 import com.ivy.ui.theme.colors.toComposeColor
 
 @Composable
 fun BoxWithConstraintsScope.AccountsTab(
     onOpenHomeTab: () -> Unit,
+    onAddAccount: () -> Unit,
 ) {
     val viewModel: AccountsViewModel = screenScopedViewModel()
     val uiState = viewModel.uiState()
@@ -56,6 +68,7 @@ fun BoxWithConstraintsScope.AccountsTab(
         state = uiState,
         onEvent = viewModel::onEvent,
         onOpenHomeTab = onOpenHomeTab,
+        onAddAccount = onAddAccount,
     )
 }
 
@@ -64,6 +77,7 @@ private fun BoxWithConstraintsScope.UI(
     state: AccountsState,
     onEvent: (AccountsEvent) -> Unit = {},
     onOpenHomeTab: () -> Unit,
+    onAddAccount: () -> Unit = {},
 ) {
     val nav = navigation()
     val listState = rememberScrollPositionListState(
@@ -87,67 +101,24 @@ private fun BoxWithConstraintsScope.UI(
         state = listState
     ) {
         item {
-            Spacer(Modifier.height(32.dp))
+            Spacer(Modifier.height(24.dp))
 
-            Row(
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Spacer(Modifier.width(24.dp))
-
-                Column {
-                    Text(
-                        text = stringResource(R.string.accounts),
-                        style = AccountsTheme.typo.b1.copy(
-                            color = AccountsTheme.colors.pureInverse,
-                            fontWeight = FontWeight.ExtraBold,
-                            textAlign = TextAlign.Start
-                        )
-                    )
-                }
-
-                Spacer(Modifier.weight(1f))
-
-                FilledIconButton(
-                    icon = R.drawable.ic_drag_handle,
-                    contentDescription = "reorder",
-                    backgroundColor = AccountsTheme.colors.medium,
-                    tint = AccountsTheme.colors.pureInverse,
-                ) {
-                    onEvent(
-                        AccountsEvent.OnReorderModalVisible(reorderVisible = true)
-                    )
-                }
-
-                Spacer(Modifier.width(24.dp))
-            }
-            if (!state.hideTotalBalance) {
-                Column {
-                    Spacer(Modifier.height(16.dp))
-                    IncomeExpensesRow(
-                        currency = state.baseCurrency,
-                        incomeLabel = stringResource(id = R.string.total_balance),
-                        income = state.totalBalanceWithoutExcluded.toDoubleOrNull() ?: 0.00,
-                        expensesLabel = stringResource(id = R.string.total_balance_excluded),
-                        expenses = state.totalBalanceWithExcluded.toDoubleOrNull() ?: 0.00
-                    )
-                }
-                Spacer(Modifier.height(16.dp))
-            }
+            NetWorthCard(
+                currency = state.baseCurrency,
+                netWorth = state.totalBalanceWithoutExcluded.toDoubleOrNull() ?: 0.00,
+                withExcluded = state.totalBalanceWithExcluded.toDoubleOrNull() ?: 0.00,
+                hideBalance = state.hideTotalBalance,
+                onReorder = {
+                    onEvent(AccountsEvent.OnReorderModalVisible(reorderVisible = true))
+                },
+            )
         }
         items(state.accountsData) {
-            Spacer(Modifier.height(16.dp))
+            Spacer(Modifier.height(12.dp))
             AccountCard(
                 baseCurrency = state.baseCurrency,
                 accountData = it,
                 compactModeEnabled = state.compactAccountsModeEnabled,
-                onBalanceClick = {
-                    nav.navigateTo(
-                        TransactionsScreen(
-                            accountId = it.account.id.value,
-                            categoryId = null
-                        )
-                    )
-                }
             ) {
                 nav.navigateTo(
                     TransactionsScreen(
@@ -159,6 +130,8 @@ private fun BoxWithConstraintsScope.UI(
         }
 
         item {
+            Spacer(Modifier.height(16.dp))
+            DashedAddAccountButton(onClick = onAddAccount)
             Spacer(Modifier.height(150.dp)) // scroll hack
         }
     }
@@ -197,140 +170,255 @@ private fun BoxWithConstraintsScope.UI(
 }
 
 @Composable
-private fun AccountCard(
-    baseCurrency: String,
-    accountData: AccountData,
-    compactModeEnabled: Boolean,
-    onBalanceClick: () -> Unit,
-    onClick: () -> Unit
+private fun NetWorthCard(
+    currency: String,
+    netWorth: Double,
+    withExcluded: Double,
+    hideBalance: Boolean,
+    onReorder: () -> Unit,
 ) {
     Column(
         modifier = Modifier
             .padding(horizontal = 16.dp)
             .fillMaxWidth()
             .clip(AccountsTheme.shapes.r4)
-            .border(2.dp, AccountsTheme.colors.medium, AccountsTheme.shapes.r4)
-            .clickable(
-                onClick = onClick
-            )
+            .background(IvyGradients.Dark.asHorizontalBrush())
+            .padding(20.dp),
     ) {
-        val account = accountData.account
-        val contrastColor = findContrastTextColor(account.color.value.toComposeColor())
-        val currency = account.asset.code
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Text(
+                text = stringResource(R.string.total_balance),
+                style = AccountsTheme.typo.c.copy(
+                    color = White.copy(alpha = 0.7f),
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Start,
+                ),
+            )
 
-        AccountHeader(
-            accountData = accountData,
+            Spacer(Modifier.weight(1f))
+
+            FilledIconButton(
+                icon = R.drawable.ic_drag_handle,
+                contentDescription = "reorder",
+                backgroundColor = White.copy(alpha = 0.15f),
+                tint = White,
+            ) {
+                onReorder()
+            }
+        }
+
+        Spacer(Modifier.height(10.dp))
+
+        BalanceRow(
             currency = currency,
-            baseCurrency = baseCurrency,
-            contrastColor = contrastColor,
-            onBalanceClick = onBalanceClick
+            balance = netWorth,
+            textColor = White,
+            hiddenMode = hideBalance,
+            balanceFontSize = 32.sp,
+            shortenBigNumbers = true,
         )
 
-        if (!compactModeEnabled) {
-            Spacer(Modifier.height(12.dp))
+        if (!hideBalance && withExcluded != netWorth) {
+            Spacer(Modifier.height(8.dp))
 
-            IncomeExpensesRow(
-                currency = currency,
-                incomeLabel = stringResource(R.string.month_income),
-                income = accountData.monthlyIncome,
-                expensesLabel = stringResource(R.string.month_expenses),
-                expenses = accountData.monthlyExpenses
+            Text(
+                text = "${stringResource(R.string.total_balance_excluded)}: " +
+                    "${withExcluded.format(currency)} $currency",
+                style = AccountsTheme.typo.c.copy(
+                    color = White.copy(alpha = 0.6f),
+                    fontWeight = FontWeight.Medium,
+                    textAlign = TextAlign.Start,
+                ),
             )
-
-            Spacer(Modifier.height(12.dp))
         }
     }
 }
 
 @Composable
-private fun AccountHeader(
-    accountData: AccountData,
-    currency: String,
+private fun AccountCard(
     baseCurrency: String,
-    contrastColor: Color,
-    onBalanceClick: () -> Unit
+    accountData: AccountData,
+    compactModeEnabled: Boolean,
+    onClick: () -> Unit
 ) {
     val account = accountData.account
+    val accountColor = account.color.value.toComposeColor()
+    val currency = account.asset.code
+    val secondaryColor = AccountsTheme.colors.pureInverse.copy(alpha = 0.5f)
 
-    Column(
+    Row(
         modifier = Modifier
+            .padding(horizontal = 16.dp)
             .fillMaxWidth()
-            .background(account.color.value.toComposeColor(), AccountsTheme.shapes.r4Top)
+            .clip(AccountsTheme.shapes.r4)
+            .background(AccountsTheme.colors.pure)
+            .border(1.dp, AccountsTheme.colors.medium, AccountsTheme.shapes.r4)
+            .clickable(onClick = onClick)
+            .height(IntrinsicSize.Min),
+        verticalAlignment = Alignment.CenterVertically,
     ) {
-        Spacer(Modifier.height(16.dp))
+        Box(
+            modifier = Modifier
+                .width(5.dp)
+                .fillMaxHeight()
+                .background(accountColor)
+        )
 
-        Row(
-            verticalAlignment = Alignment.CenterVertically
+        Spacer(Modifier.width(14.dp))
+
+        Box(
+            modifier = Modifier
+                .size(40.dp)
+                .clip(CircleShape)
+                .background(accountColor.copy(alpha = 0.15f)),
+            contentAlignment = Alignment.Center,
         ) {
-            Spacer(Modifier.width(20.dp))
-
             ItemIconSDefaultIcon(
                 iconName = account.icon?.id,
                 defaultIcon = R.drawable.ic_custom_account_s,
-                tint = contrastColor
+                tint = accountColor
             )
+        }
 
-            Spacer(Modifier.width(8.dp))
+        Spacer(Modifier.width(12.dp))
 
-            Text(
-                text = account.name.value,
-                style = AccountsTheme.typo.b1.copy(
-                    color = contrastColor,
-                    fontWeight = FontWeight.ExtraBold,
-                    textAlign = TextAlign.Start
+        Column(
+            modifier = Modifier
+                .weight(1f)
+                .padding(vertical = 12.dp),
+        ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    modifier = Modifier.weight(1f, fill = false),
+                    text = account.name.value,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    style = AccountsTheme.typo.b2.copy(
+                        color = AccountsTheme.colors.pureInverse,
+                        fontWeight = FontWeight.ExtraBold,
+                        textAlign = TextAlign.Start
+                    )
                 )
-            )
 
-            if (!account.includeInBalance) {
-                Spacer(Modifier.width(8.dp))
+                if (!account.includeInBalance) {
+                    Spacer(Modifier.width(8.dp))
+                    ExcludedTag()
+                }
+            }
+
+            if (!compactModeEnabled &&
+                (accountData.monthlyIncome != 0.0 || accountData.monthlyExpenses != 0.0)
+            ) {
+                Spacer(Modifier.height(4.dp))
 
                 Text(
-                    text = stringResource(R.string.excluded),
+                    text = "支 ${shortenAmount(accountData.monthlyExpenses)}  ·  " +
+                        "收 ${shortenAmount(accountData.monthlyIncome)}",
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
                     style = AccountsTheme.typo.c.copy(
-                        color = account.color.value.toComposeColor().dynamicContrast(),
-                        fontWeight = FontWeight.Bold,
+                        color = secondaryColor,
+                        fontWeight = FontWeight.Medium,
                         textAlign = TextAlign.Start
                     )
                 )
             }
         }
 
-        Spacer(Modifier.height(4.dp))
+        Spacer(Modifier.width(12.dp))
 
-        BalanceRow(
-            modifier = Modifier
-                .align(Alignment.CenterHorizontally)
-                .clickableNoIndication(rememberInteractionSource()) {
-                    onBalanceClick()
-                },
-            textColor = contrastColor,
-            currency = currency,
-            balance = accountData.balance,
+        Column(
+            modifier = Modifier.padding(end = 16.dp, top = 12.dp, bottom = 12.dp),
+            horizontalAlignment = Alignment.End,
+        ) {
+            BalanceRow(
+                currency = currency,
+                balance = accountData.balance,
+                textColor = AccountsTheme.colors.pureInverse,
+                balanceFontSize = 17.sp,
+                currencyFontSize = 17.sp,
+                currencyUpfront = false,
+                shortenBigNumbers = true,
+            )
 
-            balanceFontSize = 30.sp,
-            currencyFontSize = 30.sp,
+            if (currency != baseCurrency && accountData.balanceBaseCurrency != null) {
+                Spacer(Modifier.height(2.dp))
 
-            currencyUpfront = false
+                BalanceRow(
+                    modifier = Modifier.testTag("baseCurrencyEquivalent"),
+                    currency = baseCurrency,
+                    balance = accountData.balanceBaseCurrency!!,
+                    textColor = secondaryColor,
+                    balanceFontSize = 13.sp,
+                    currencyFontSize = 13.sp,
+                    currencyUpfront = false,
+                    shortenBigNumbers = true,
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun ExcludedTag() {
+    Text(
+        modifier = Modifier
+            .clip(AccountsTheme.shapes.rFull)
+            .background(AccountsTheme.colors.medium)
+            .padding(horizontal = 8.dp, vertical = 2.dp),
+        text = stringResource(R.string.excluded).trim('（', '）', '(', ')', ' '),
+        maxLines = 1,
+        softWrap = false,
+        style = AccountsTheme.typo.c.copy(
+            color = AccountsTheme.colors.pureInverse.copy(alpha = 0.6f),
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Start
+        )
+    )
+}
+
+@Composable
+private fun DashedAddAccountButton(onClick: () -> Unit) {
+    val borderColor = AccountsTheme.colors.medium
+    Row(
+        modifier = Modifier
+            .padding(horizontal = 16.dp)
+            .fillMaxWidth()
+            .clip(AccountsTheme.shapes.r4)
+            .clickable(onClick = onClick)
+            .drawBehind {
+                drawRoundRect(
+                    color = borderColor,
+                    style = Stroke(
+                        width = 1.5.dp.toPx(),
+                        pathEffect = PathEffect.dashPathEffect(floatArrayOf(14f, 10f)),
+                    ),
+                    cornerRadius = CornerRadius(24.dp.toPx()),
+                )
+            }
+            .padding(vertical = 18.dp),
+        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        ResourceIcon(
+            icon = R.drawable.ic_plus,
+            tint = AccountsTheme.colors.pureInverse,
         )
 
-        if (currency != baseCurrency && accountData.balanceBaseCurrency != null) {
-            BalanceRow(
-                modifier = Modifier
-                    .align(Alignment.CenterHorizontally)
-                    .clickableNoIndication(rememberInteractionSource()) {
-                        onBalanceClick()
-                    }
-                    .testTag("baseCurrencyEquivalent"),
-                textColor = account.color.value.toComposeColor().dynamicContrast(),
-                currency = baseCurrency,
-                balance = accountData.balanceBaseCurrency!!,
-                spacerCurrency = 8.dp,
-                currencyFontSize = 20.sp,
-                balanceFontSize = 22.sp,
-                currencyUpfront = false
-            )
-        }
+        Spacer(Modifier.width(8.dp))
 
-        Spacer(Modifier.height(16.dp))
+        Text(
+            text = stringResource(R.string.add_account),
+            style = AccountsTheme.typo.b2.copy(
+                color = AccountsTheme.colors.pureInverse,
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Start
+            )
+        )
     }
 }
