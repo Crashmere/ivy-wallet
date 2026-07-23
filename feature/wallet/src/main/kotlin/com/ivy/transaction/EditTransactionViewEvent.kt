@@ -65,7 +65,6 @@ internal sealed interface EditTransactionViewEvent {
         data class OnTagSelect(val tagId: TagId) : TagEvent
         data class OnTagDeSelect(val tagId: TagId) : TagEvent
         data class OnTagDelete(val tagId: TagId) : TagEvent
-        data class OnTagSearch(val query: String) : TagEvent
         data class OnTagEdit(val updatedTag: Tag) : TagEvent
     }
 }

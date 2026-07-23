@@ -45,7 +45,6 @@ import com.ivy.ui.platform.Toaster
 import com.ivy.ui.preferences.asEnabledState
 import com.ivy.domain.usecase.tag.RemoveTagFromTransactionUseCase
 import com.ivy.domain.usecase.tag.SaveTagUseCase
-import com.ivy.domain.usecase.tag.SearchTagsUseCase
 import com.ivy.domain.usecase.account.CreateAccountWithBalanceUseCase
 import com.ivy.domain.usecase.account.GetLastSelectedAccountIdUseCase
 import com.ivy.domain.usecase.transaction.DeleteTransactionUseCase
@@ -69,10 +68,7 @@ import kotlinx.collections.immutable.persistentSetOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.collections.immutable.toPersistentSet
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
-import kotlinx.coroutines.cancelAndJoin
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -119,7 +115,6 @@ internal class EditTransactionViewModel @Inject internal constructor(
     private val removeTagFromTransactionUseCase: RemoveTagFromTransactionUseCase,
     private val copyTagsToTransactionUseCase: CopyTagsToTransactionUseCase,
     private val getTagsUseCase: GetTagsUseCase,
-    private val searchTagsUseCase: SearchTagsUseCase,
     private val preferenceToggles: PreferenceToggleCatalog,
     private val preferenceToggleService: PreferenceToggleService,
     private val dateTimePicker: DateTimePicker,
@@ -159,8 +154,6 @@ internal class EditTransactionViewModel @Inject internal constructor(
 
     private var title: String? = null
     private var startedBaseCurrency: String? = null
-    private var tagSearchJob: Job? = null
-    private val tagSearchDebounceTimeInMillis: Long = 500
     private val _uiEvents = MutableSharedFlow<EditTransactionUiEvent>()
     val uiEvents: SharedFlow<EditTransactionUiEvent> = _uiEvents.asSharedFlow()
 
@@ -374,7 +367,6 @@ internal class EditTransactionViewModel @Inject internal constructor(
             is EditTransactionViewEvent.TagEvent.SaveTag -> onTagSaved(event.name)
             is EditTransactionViewEvent.TagEvent.OnTagSelect -> associateTagToTransaction(event.tagId)
             is EditTransactionViewEvent.TagEvent.OnTagDeSelect -> removeTagAssociation(event.tagId)
-            is EditTransactionViewEvent.TagEvent.OnTagSearch -> searchTag(event.query)
             is EditTransactionViewEvent.TagEvent.OnTagDelete -> deleteTag(event.tagId)
             is EditTransactionViewEvent.TagEvent.OnTagEdit -> updateTagInformation(event.updatedTag)
         }
@@ -1061,23 +1053,6 @@ internal class EditTransactionViewModel @Inject internal constructor(
             removeTagFromTransactionUseCase(loadedTransaction().id, tagId)
             transactionAssociatedTags =
                 getTransactionTagIdsUseCase(loadedTransaction().id).toImmutableList()
-        }
-    }
-
-    private fun searchTag(query: String) {
-        viewModelScope.launch(Dispatchers.IO) {
-            tagSearchJob?.cancelAndJoin()
-            delay(tagSearchDebounceTimeInMillis)
-            tagSearchJob = launch(Dispatchers.IO) {
-                NotBlankTrimmedString.from(query.lowercase(Locale.getDefault()))
-                    .onRight {
-                        tags =
-                            searchTagsUseCase(it).toImmutableList()
-                    }
-                    .onLeft {
-                        tags = getTagsUseCase().toImmutableList()
-                    }
-            }
         }
     }
 

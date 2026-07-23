@@ -32,7 +32,6 @@ import com.ivy.ui.modal.DeleteModal
 import com.ivy.ui.modal.IvyModal
 import com.ivy.ui.modal.ModalPositiveButton
 import com.ivy.ui.modal.ModalTitle
-import com.ivy.ui.search.SearchInput
 import com.ivy.ui.theme.colors.Gradient
 import com.ivy.ui.compose.GradientIconButton
 import com.ivy.ui.compose.OutlinedPillButton
@@ -40,7 +39,6 @@ import com.ivy.ui.compose.WrapContentRow
 import com.ivy.ui.compose.thenIf
 import com.ivy.ui.compose.drawColoredShadow
 import com.ivy.ui.compose.onCompositionStart
-import com.ivy.ui.compose.selectEndTextFieldValue
 import com.ivy.ui.R
 import com.ivy.ui.platform.hideKeyboard
 import com.ivy.ui.theme.colors.IvyFixedColors
@@ -68,7 +66,6 @@ fun BoxWithConstraintsScope.ShowTagModal(
     id: UUID = UUID.randomUUID(),
     visible: Boolean = false,
     selectOnlyMode: Boolean = false,
-    onTagSearch: (String) -> Unit
 ) {
     var showTagAddModal by remember {
         mutableStateOf(false)
@@ -86,10 +83,6 @@ fun BoxWithConstraintsScope.ShowTagModal(
         mutableStateOf(selectedTag?.id ?: UUID.randomUUID())
     }
 
-    var searchQueryTextFieldValue by remember(visible) {
-        mutableStateOf(selectEndTextFieldValue(""))
-    }
-
     IvyModal(
         id = id,
         visible = visible,
@@ -100,25 +93,13 @@ fun BoxWithConstraintsScope.ShowTagModal(
                 text = stringResource(R.string.done),
                 iconStart = R.drawable.ic_custom_document_s
             )
-        },
-        scrollState = null
+        }
     ) {
         HideKeyboard()
 
         Spacer(Modifier.height(32.dp))
 
         ModalTitle(text = stringResource(R.string.tags))
-
-        Spacer(Modifier.height(24.dp))
-
-        SearchInput(
-            searchQueryTextFieldValue = searchQueryTextFieldValue,
-            hint = stringResource(id = R.string.search_tags),
-            onSetSearchQueryTextField = {
-                searchQueryTextFieldValue = it
-                onTagSearch(it.text)
-            }
-        )
 
         Spacer(Modifier.height(24.dp))
 
@@ -142,6 +123,8 @@ fun BoxWithConstraintsScope.ShowTagModal(
                 }
             }
         )
+
+        Spacer(Modifier.height(24.dp))
     }
 
     val view = LocalView.current

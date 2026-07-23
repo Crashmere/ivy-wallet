@@ -654,8 +654,6 @@ private fun BoxWithConstraintsScope.UI(
         visible = tagModelVisible,
         onDismiss = {
             tagModelVisible = false
-            // Reset TagList, avoids showing incorrect tag list when user has searched for a tag
-            onTagOperation(EditTransactionViewEvent.TagEvent.OnTagSearch(""))
         },
         allTagList = tags.map { it.toTagModalTag() }.toImmutableList(),
         selectedTagList = transactionAssociatedTags.map { it.value }.toImmutableList(),
@@ -678,9 +676,6 @@ private fun BoxWithConstraintsScope.UI(
         },
         onTagDeSelected = {
             onTagOperation(EditTransactionViewEvent.TagEvent.OnTagDeSelect(TagId(it)))
-        },
-        onTagSearch = {
-            onTagOperation(EditTransactionViewEvent.TagEvent.OnTagSearch(it))
         }
     )
 }
