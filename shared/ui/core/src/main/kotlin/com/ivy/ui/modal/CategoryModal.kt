@@ -54,7 +54,7 @@ import com.ivy.ui.icon.ItemIconMDefaultIcon
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import com.ivy.ui.theme.colors.dynamicContrast
-import com.ivy.ui.theme.colors.IvyFixedColors
+import com.ivy.ui.theme.colors.suggestUniqueColor
 import kotlinx.coroutines.launch
 import java.util.UUID
 
@@ -76,6 +76,7 @@ fun BoxWithConstraintsScope.CategoryModal(
     visible: Boolean,
     category: CategoryModalCategory?,
     autoFocusKeyboard: Boolean = true,
+    usedColors: List<Int> = emptyList(),
     onCreateCategory: (CategoryModalSaveData) -> Unit,
     onEditCategory: (categoryId: UUID, data: CategoryModalSaveData) -> Unit,
     dismiss: () -> Unit,
@@ -85,7 +86,7 @@ fun BoxWithConstraintsScope.CategoryModal(
         mutableStateOf(selectEndTextFieldValue(initialCategory?.name))
     }
     var color by remember(visible, initialCategory) {
-        mutableStateOf(initialCategory?.color?.let { Color(it) } ?: IvyFixedColors.Ivy)
+        mutableStateOf(initialCategory?.color?.let { Color(it) } ?: suggestUniqueColor(usedColors))
     }
     var icon by remember(visible, initialCategory) {
         mutableStateOf(initialCategory?.icon)
@@ -342,7 +343,10 @@ private fun ColumnScope.CategoryModalColorPicker(
 
     Spacer(Modifier.height(16.dp))
 
-    val categoryColors = CategoryBaseColors + CategoryVariantColors
+    val categoryColors = remember(selectedColor) {
+        val palette = CategoryBaseColors + CategoryVariantColors
+        if (selectedColor in palette) palette else listOf(selectedColor) + palette
+    }
     val listState = rememberLazyListState()
     val coroutineScope = rememberCoroutineScope()
 

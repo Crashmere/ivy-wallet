@@ -8,6 +8,7 @@ import com.ivy.data.model.CreateAccountData
 fun BoxWithConstraintsScope.AccountCreationModal(
     visible: Boolean,
     baseCurrency: String,
+    usedColors: List<Int> = emptyList(),
     onCreateAccount: (CreateAccountData) -> Unit,
     dismiss: () -> Unit,
 ) {
@@ -15,6 +16,7 @@ fun BoxWithConstraintsScope.AccountCreationModal(
         visible = visible,
         baseCurrency = baseCurrency,
         balance = 0.0,
+        usedColors = usedColors,
         onCreateAccount = onCreateAccount,
         dismiss = dismiss,
     )

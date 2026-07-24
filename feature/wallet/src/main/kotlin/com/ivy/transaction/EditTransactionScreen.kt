@@ -591,6 +591,7 @@ private fun BoxWithConstraintsScope.UI(
     CategoryModal(
         visible = categoryModalVisible,
         category = categoryModalCategory?.toCategoryModalCategory(),
+        usedColors = categories.map { it.color.value },
         onCreateCategory = { createData ->
             onCreateCategory(createData.toCreateCategoryData())
         },
@@ -610,6 +611,7 @@ private fun BoxWithConstraintsScope.UI(
         account = null,
         baseCurrency = baseCurrency,
         balance = 0.0,
+        usedColors = accounts.map { it.color },
         onCreateAccount = { onCreateAccount(it.toCreateAccountData()) },
         onEditAccount = { _, _ -> },
         dismiss = {

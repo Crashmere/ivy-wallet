@@ -335,6 +335,7 @@ internal fun BoxWithConstraintsScope.LoanModal(
         account = null,
         baseCurrency = accountModalBaseCurrency,
         balance = 0.0,
+        usedColors = accounts.map { it.color },
         onCreateAccount = { onCreateAccount(it.toCreateAccountData()) },
         onEditAccount = { _, _ -> },
         dismiss = {

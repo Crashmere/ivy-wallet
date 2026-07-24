@@ -53,7 +53,7 @@ import java.util.UUID
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import com.ivy.ui.platform.hideKeyboard
-import com.ivy.ui.theme.colors.IvyFixedColors
+import com.ivy.ui.theme.colors.suggestUniqueColor
 import com.ivy.ui.theme.colors.dynamicContrast
 import kotlinx.coroutines.launch
 
@@ -75,6 +75,7 @@ fun BoxWithConstraintsScope.AccountModal(
     adjustBalanceMode: Boolean = false,
     forceNonZeroBalance: Boolean = false,
     autoFocusKeyboard: Boolean = true,
+    usedColors: List<Int> = emptyList(),
     onCreateAccount: (AccountModalSaveData) -> Unit,
     onEditAccount: (accountId: UUID, data: AccountModalSaveData) -> Unit,
     dismiss: () -> Unit,
@@ -83,7 +84,7 @@ fun BoxWithConstraintsScope.AccountModal(
         mutableStateOf(selectEndTextFieldValue(account?.name))
     }
     var color by remember(visible, account) {
-        mutableStateOf(account?.color?.let { Color(it) } ?: IvyFixedColors.Ivy)
+        mutableStateOf(account?.color?.let { Color(it) } ?: suggestUniqueColor(usedColors))
     }
     var amount by remember(visible, balance) {
         mutableStateOf(balance)
@@ -411,7 +412,10 @@ private fun ColumnScope.AccountModalColorPicker(
 
     Spacer(Modifier.height(16.dp))
 
-    val accountColors = AccountBaseColors + AccountVariantColors
+    val accountColors = remember(selectedColor) {
+        val palette = AccountBaseColors + AccountVariantColors
+        if (selectedColor in palette) palette else listOf(selectedColor) + palette
+    }
     val listState = rememberLazyListState()
     val coroutineScope = rememberCoroutineScope()
 

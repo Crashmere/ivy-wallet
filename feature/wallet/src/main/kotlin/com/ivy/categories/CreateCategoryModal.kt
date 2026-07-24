@@ -58,8 +58,8 @@ import com.ivy.ui.modal.IvyModal
 import com.ivy.ui.modal.ModalAdd
 import com.ivy.ui.modal.ModalTitle
 import com.ivy.ui.platform.hideKeyboard
-import com.ivy.ui.theme.colors.IvyFixedColors
 import com.ivy.ui.theme.colors.dynamicContrast
+import com.ivy.ui.theme.colors.suggestUniqueColor
 import kotlinx.coroutines.launch
 import java.util.UUID
 
@@ -67,6 +67,7 @@ import java.util.UUID
 internal fun BoxWithConstraintsScope.CreateCategoryModal(
     visible: Boolean,
     autoFocusKeyboard: Boolean = true,
+    usedColors: List<Int> = emptyList(),
     onCreateCategory: (CreateCategoryData) -> Unit,
     dismiss: () -> Unit,
 ) {
@@ -74,7 +75,7 @@ internal fun BoxWithConstraintsScope.CreateCategoryModal(
         mutableStateOf(selectEndTextFieldValue(""))
     }
     var color by remember(visible) {
-        mutableStateOf(IvyFixedColors.Ivy)
+        mutableStateOf(suggestUniqueColor(usedColors))
     }
     var icon by remember(visible) {
         mutableStateOf<String?>(null)
@@ -295,7 +296,10 @@ private fun ColumnScope.CategoryColorPicker(
 
     Spacer(Modifier.height(16.dp))
 
-    val categoryColors = CategoryBaseColors + CategoryVariantColors
+    val categoryColors = remember(selectedColor) {
+        val palette = CategoryBaseColors + CategoryVariantColors
+        if (selectedColor in palette) palette else listOf(selectedColor) + palette
+    }
     val listState = rememberLazyListState()
     val coroutineScope = rememberCoroutineScope()
 

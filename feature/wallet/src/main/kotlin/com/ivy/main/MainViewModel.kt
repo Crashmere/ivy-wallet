@@ -6,6 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ivy.domain.usecase.account.CreateAccountWithBalanceUseCase
+import com.ivy.domain.usecase.account.GetAccountsUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyUseCase
 import com.ivy.data.model.CreateAccountData
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,6 +19,7 @@ import javax.inject.Inject
 @HiltViewModel
 internal class MainViewModel @Inject internal constructor(
     private val createAccountWithBalanceUseCase: CreateAccountWithBalanceUseCase,
+    private val getAccountsUseCase: GetAccountsUseCase,
     private val getBaseCurrency: GetBaseCurrencyUseCase,
 ) : ViewModel() {
 
@@ -27,10 +29,14 @@ internal class MainViewModel @Inject internal constructor(
     private val _currency = MutableStateFlow("")
     val currency: StateFlow<String> = _currency.asStateFlow()
 
+    private val _accountColors = MutableStateFlow<List<Int>>(emptyList())
+    val accountColors: StateFlow<List<Int>> = _accountColors.asStateFlow()
+
     fun start() {
         viewModelScope.launch {
             val baseCurrency = getBaseCurrency()
             _currency.value = baseCurrency.code
+            loadAccountColors()
         }
     }
 
@@ -41,6 +47,11 @@ internal class MainViewModel @Inject internal constructor(
     fun createAccount(data: CreateAccountData) {
         viewModelScope.launch {
             createAccountWithBalanceUseCase(data)
+            loadAccountColors()
         }
+    }
+
+    private suspend fun loadAccountColors() {
+        _accountColors.value = getAccountsUseCase().map { it.color.value }
     }
 }

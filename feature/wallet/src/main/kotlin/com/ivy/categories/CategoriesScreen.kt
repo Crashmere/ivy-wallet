@@ -227,6 +227,7 @@ private fun BoxWithConstraintsScope.UI(
 
     CreateCategoryModal(
         visible = categoryModalVisible,
+        usedColors = state.categories.map { it.category.color.value },
         onCreateCategory = {
             onEvent(CategoriesScreenEvent.OnCreateCategory(it))
         },

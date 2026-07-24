@@ -292,6 +292,7 @@ private fun BoxWithConstraintsScope.UI(
     CategoryModal(
         visible = categoryModalVisible,
         category = categoryModalCategory?.toCategoryModalCategory(),
+        usedColors = state.categories.map { it.color.value },
         onCreateCategory = {
             onEvent(EditPlannedScreenEvent.OnCreateCategory(it.toCreateCategoryData()))
         },
@@ -311,6 +312,7 @@ private fun BoxWithConstraintsScope.UI(
         account = null,
         baseCurrency = state.currency,
         balance = 0.0,
+        usedColors = state.accounts.map { it.color },
         onCreateAccount = {
             onEvent(EditPlannedScreenEvent.OnCreateAccount(it.toCreateAccountData()))
         },

@@ -30,6 +30,7 @@ fun BoxWithConstraintsScope.MainScreen() {
     val viewModel: MainViewModel = screenScopedViewModel()
 
     val currency by viewModel.currency.collectAsState()
+    val accountColors by viewModel.accountColors.collectAsState()
 
     onScreenStart {
         viewModel.start()
@@ -42,6 +43,7 @@ fun BoxWithConstraintsScope.MainScreen() {
     UI(
         tab = viewModel.selectedTab,
         baseCurrency = currency,
+        usedAccountColors = accountColors,
         selectTab = viewModel::selectTab,
         onCreateAccount = viewModel::createAccount
     )
@@ -54,6 +56,7 @@ private fun BoxWithConstraintsScope.UI(
     tab: MainTab,
 
     baseCurrency: String,
+    usedAccountColors: List<Int>,
 
     selectTab: (MainTab) -> Unit,
     onCreateAccount: (CreateAccountData) -> Unit,
@@ -127,6 +130,7 @@ private fun BoxWithConstraintsScope.UI(
     AccountCreationModal(
         visible = accountModalVisible,
         baseCurrency = baseCurrency,
+        usedColors = usedAccountColors,
         onCreateAccount = onCreateAccount,
         dismiss = {
             accountModalVisible = false
