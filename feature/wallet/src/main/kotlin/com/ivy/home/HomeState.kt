@@ -4,7 +4,6 @@ import androidx.compose.runtime.Immutable
 import com.ivy.data.model.Category
 import com.ivy.data.model.IncomeExpensePair
 import com.ivy.data.model.Theme
-import com.ivy.data.model.Transaction
 import com.ivy.data.model.TransactionHistoryItem
 import com.ivy.home.customerjourney.CustomerJourneyCardModel
 import com.ivy.ui.period.TimePeriod
@@ -24,19 +23,11 @@ internal data class HomeState(
 
     val balance: BigDecimal,
 
-    val buffer: BufferInfo,
-
-    val upcoming: HomeDueSection,
-    val overdue: HomeDueSection,
-
     val customerJourneyCards: ImmutableList<CustomerJourneyCardModel>,
     val hideBalance: Boolean,
     val hideIncome: Boolean,
     val expanded: Boolean,
     val shouldShowAccountSpecificColorInTransactions: Boolean,
-    val showPlannedPaymentsQuickAccess: Boolean,
-    val showBudgetsQuickAccess: Boolean,
-    val showLoansQuickAccess: Boolean
 )
 
 @Immutable
@@ -53,11 +44,4 @@ internal data class HomeTransactionListAccount(
     val color: Int,
     val icon: String?,
     val currency: String?,
-)
-
-@Immutable
-internal data class HomeDueSection(
-    val transactions: ImmutableList<Transaction>,
-    val expanded: Boolean,
-    val stats: IncomeExpensePair
 )

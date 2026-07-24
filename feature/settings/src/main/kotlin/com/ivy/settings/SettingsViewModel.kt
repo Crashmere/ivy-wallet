@@ -111,9 +111,6 @@ internal class SettingsViewModel @Inject internal constructor(
     private val standardKeypadLayout = mutableStateOf(false)
     private val showCategorySearchBar = mutableStateOf(true)
     private val sortCategoriesAscending = mutableStateOf(false)
-    private val showPlannedPaymentsQuickAccess = mutableStateOf(false)
-    private val showBudgetsQuickAccess = mutableStateOf(false)
-    private val showLoansQuickAccess = mutableStateOf(false)
     private val startDateOfMonth = mutableIntStateOf(1)
     private val progressState = mutableStateOf(false)
     private val gitHubBackupConfig = mutableStateOf<GitHubBackupConfig?>(null)
@@ -145,9 +142,6 @@ internal class SettingsViewModel @Inject internal constructor(
             standardKeypadLayout = getStandardKeypadLayout(),
             showCategorySearchBar = getShowCategorySearchBar(),
             sortCategoriesAscending = getSortCategoriesAscending(),
-            showPlannedPaymentsQuickAccess = showPlannedPaymentsQuickAccess.value,
-            showBudgetsQuickAccess = showBudgetsQuickAccess.value,
-            showLoansQuickAccess = showLoansQuickAccess.value,
             startDateOfMonth = getStartDateOfMonth(),
             progressState = getProgressState(),
             hideIncome = getHideIncome(),
@@ -216,12 +210,6 @@ internal class SettingsViewModel @Inject internal constructor(
         standardKeypadLayout.value = preferenceToggleService.isEnabled(preferenceToggles.standardKeypadLayout)
         showCategorySearchBar.value = preferenceToggleService.isEnabled(preferenceToggles.showCategorySearchBar)
         sortCategoriesAscending.value = preferenceToggleService.isEnabled(preferenceToggles.sortCategoriesAscending)
-        showPlannedPaymentsQuickAccess.value =
-            preferenceToggleService.isEnabled(preferenceToggles.showPlannedPaymentsQuickAccess)
-        showBudgetsQuickAccess.value =
-            preferenceToggleService.isEnabled(preferenceToggles.showBudgetsQuickAccess)
-        showLoansQuickAccess.value =
-            preferenceToggleService.isEnabled(preferenceToggles.showLoansQuickAccess)
     }
 
     private fun initializeStartDateOfMonth() {
@@ -389,24 +377,6 @@ internal class SettingsViewModel @Inject internal constructor(
             is SettingsEvent.SetSortCategoriesAscending -> setBoolPreference(
                 preference = preferenceToggles.sortCategoriesAscending,
                 state = sortCategoriesAscending,
-                enabled = event.enabled
-            )
-
-            is SettingsEvent.SetShowPlannedPaymentsQuickAccess -> setBoolPreference(
-                preference = preferenceToggles.showPlannedPaymentsQuickAccess,
-                state = showPlannedPaymentsQuickAccess,
-                enabled = event.enabled
-            )
-
-            is SettingsEvent.SetShowBudgetsQuickAccess -> setBoolPreference(
-                preference = preferenceToggles.showBudgetsQuickAccess,
-                state = showBudgetsQuickAccess,
-                enabled = event.enabled
-            )
-
-            is SettingsEvent.SetShowLoansQuickAccess -> setBoolPreference(
-                preference = preferenceToggles.showLoansQuickAccess,
-                state = showLoansQuickAccess,
                 enabled = event.enabled
             )
 

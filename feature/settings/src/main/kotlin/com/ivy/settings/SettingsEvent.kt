@@ -27,9 +27,6 @@ internal sealed interface SettingsEvent {
     data class SetStandardKeypadLayout(val enabled: Boolean) : SettingsEvent
     data class SetShowCategorySearchBar(val enabled: Boolean) : SettingsEvent
     data class SetSortCategoriesAscending(val enabled: Boolean) : SettingsEvent
-    data class SetShowPlannedPaymentsQuickAccess(val enabled: Boolean) : SettingsEvent
-    data class SetShowBudgetsQuickAccess(val enabled: Boolean) : SettingsEvent
-    data class SetShowLoansQuickAccess(val enabled: Boolean) : SettingsEvent
     data class SetStartDateOfMonth(val startDate: Int) : SettingsEvent
     data object DeleteAllUserData : SettingsEvent
     data object SwitchLanguage : SettingsEvent

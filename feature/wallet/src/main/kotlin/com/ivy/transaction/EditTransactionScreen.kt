@@ -67,7 +67,6 @@ import com.ivy.ui.tags.ShowTagModal
 import com.ivy.ui.tags.TagModalTag
 import com.ivy.ui.tags.AddTagButton
 import com.ivy.ui.navigation.onScreenStart
-import com.ivy.ui.navigation.EditPlannedScreen
 import com.ivy.ui.navigation.EditTransactionScreen
 import com.ivy.ui.navigation.MainScreen
 import com.ivy.ui.navigation.TransactionRouteType
@@ -235,20 +234,6 @@ fun BoxWithConstraintsScope.EditTransactionScreen(screen: EditTransactionScreen)
             viewModel.onEvent(it)
         },
         onClose = nav::back,
-        onAddPlannedPayment = { transactionType, amount, accountId, categoryId, title, description ->
-            nav.back()
-            nav.navigateTo(
-                EditPlannedScreen(
-                    plannedPaymentRuleId = null,
-                    type = transactionType.toRouteType(),
-                    amount = amount,
-                    accountId = accountId,
-                    categoryId = categoryId,
-                    title = title,
-                    description = description,
-                )
-            )
-        },
     )
 }
 
@@ -297,7 +282,6 @@ private fun BoxWithConstraintsScope.UI(
     onExchangeRateChange: (Double?) -> Unit = { },
     onTagOperation: (EditTransactionViewEvent.TagEvent) -> Unit = {},
     onClose: () -> Unit,
-    onAddPlannedPayment: (TransactionType, Double, UUID?, UUID?, String, String?) -> Unit,
     loanData: EditTransactionDisplayLoan = EditTransactionDisplayLoan(),
     backgroundProcessing: Boolean = false,
     hasChanges: Boolean = false,
@@ -534,21 +518,6 @@ private fun BoxWithConstraintsScope.UI(
             onEditTime = onSetTime,
         )
 
-        if (dueDate == null && !isTransfer && dateTime == null) {
-            Spacer(Modifier.height(12.dp))
-
-            EditTransactionAddPlannedDateButton {
-                onAddPlannedPayment(
-                    transactionType,
-                    amount,
-                    account?.id,
-                    category?.id?.value,
-                    titleTextFieldValue.text,
-                    description
-                )
-            }
-        }
-
         Spacer(Modifier.height(28.dp))
 
         SaveActions(
@@ -764,38 +733,6 @@ private fun Category.withModalSaveData(data: CategoryModalSaveData) = copy(
 
 private fun Instant.toLocalDateInSystemZone() =
     atZone(ZoneId.systemDefault()).toLocalDate()
-
-@Composable
-private fun EditTransactionAddPlannedDateButton(onClick: () -> Unit) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp)
-            .clip(EditTransactionTheme.shapes.r4)
-            .background(EditTransactionTheme.colors.medium, EditTransactionTheme.shapes.r4)
-            .clickable(onClick = onClick)
-            .padding(vertical = 20.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Spacer(Modifier.width(16.dp))
-
-        ResourceIcon(
-            icon = R.drawable.ic_planned_payments,
-            tint = EditTransactionTheme.colors.pureInverse
-        )
-
-        Spacer(Modifier.width(8.dp))
-
-        Text(
-            text = stringResource(R.string.add_planned_date_payment),
-            style = EditTransactionTheme.typo.b2.copy(
-                color = EditTransactionTheme.colors.pureInverse,
-                fontWeight = FontWeight.Bold,
-                textAlign = TextAlign.Start
-            )
-        )
-    }
-}
 
 @Composable
 private fun TransactionTopBar(

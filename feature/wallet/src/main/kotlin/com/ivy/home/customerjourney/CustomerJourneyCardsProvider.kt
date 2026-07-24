@@ -36,7 +36,6 @@ internal class CustomerJourneyCardsProvider @Inject internal constructor(
 
     private fun activeCards() = listOf(
         adjustBalanceCard(),
-        addPlannedPaymentCard(),
         expensesPieChartCard()
     )
 
@@ -52,20 +51,6 @@ internal class CustomerJourneyCardsProvider @Inject internal constructor(
         backgroundColorArgb = CustomerJourneyIvy,
         hasDismiss = false,
         action = CustomerJourneyAction.OpenAccountsTab
-    )
-
-    private fun addPlannedPaymentCard() = CustomerJourneyCardModel(
-        id = "add_planned_payment",
-        condition = { transactionCount, plannedPaymentCount ->
-            transactionCount >= 1 && plannedPaymentCount == 0L
-        },
-        title = resourceProvider.getString(R.string.create_first_planned_payment),
-        description = resourceProvider.getString(R.string.create_first_planned_payment_description),
-        cta = resourceProvider.getString(R.string.add_planned_payment),
-        ctaIcon = R.drawable.ic_planned_payments,
-        backgroundColorArgb = CustomerJourneyOrange,
-        hasDismiss = true,
-        action = CustomerJourneyAction.AddPlannedPayment
     )
 
     private fun expensesPieChartCard() = CustomerJourneyCardModel(
@@ -84,7 +69,6 @@ internal class CustomerJourneyCardsProvider @Inject internal constructor(
 
     private companion object {
         val CustomerJourneyIvy = 0xFF6B4DFF.toInt()
-        val CustomerJourneyOrange = 0xFFF29F30.toInt()
         val CustomerJourneyRed = 0xFFFF4060.toInt()
     }
 }

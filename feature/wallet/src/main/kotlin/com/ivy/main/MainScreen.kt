@@ -16,7 +16,6 @@ import com.ivy.home.HomeTab
 import com.ivy.reports.ReportTab
 import com.ivy.settings.SettingsTab
 import com.ivy.ui.navigation.onScreenStart
-import com.ivy.ui.navigation.EditPlannedScreen
 import com.ivy.ui.navigation.EditTransactionScreen
 import com.ivy.ui.navigation.TransactionRouteType
 import com.ivy.ui.navigation.navigation
@@ -110,14 +109,6 @@ private fun BoxWithConstraintsScope.UI(
                 EditTransactionScreen(
                     initialTransactionId = null,
                     type = TransactionRouteType.TRANSFER
-                )
-            )
-        },
-        onAddPlannedPayment = {
-            nav.navigateTo(
-                EditPlannedScreen(
-                    type = TransactionRouteType.EXPENSE,
-                    plannedPaymentRuleId = null
                 )
             )
         },

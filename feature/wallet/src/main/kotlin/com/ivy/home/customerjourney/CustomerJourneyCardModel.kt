@@ -5,7 +5,6 @@ import androidx.compose.runtime.Immutable
 
 internal sealed interface CustomerJourneyAction {
     data object OpenAccountsTab : CustomerJourneyAction
-    data object AddPlannedPayment : CustomerJourneyAction
     data object OpenExpensePieChart : CustomerJourneyAction
 }
 

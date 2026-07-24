@@ -33,19 +33,7 @@ data class PieChartStatisticScreen(
     val treatTransfersAsIncomeExpense: Boolean = false
 ) : Screen
 
-data class EditPlannedScreen(
-    val plannedPaymentRuleId: UUID?,
-    val type: TransactionRouteType,
-    val amount: Double? = null,
-    val accountId: UUID? = null,
-    val categoryId: UUID? = null,
-    val title: String? = null,
-    val description: String? = null,
-) : Screen
-
 data object BalanceScreen : Screen
-
-data object PlannedPaymentsScreen : Screen
 
 data object CategoriesScreen : Screen
 
@@ -55,16 +43,8 @@ data object ImportScreen : Screen
 
 data object ReportScreen : Screen
 
-data object BudgetScreen : Screen
-
-data object LoansScreen : Screen
-
 data object SearchScreen : Screen
 
 data object BulkEditScreen : Screen
-
-data class LoanDetailsScreen(
-    val loanId: UUID
-) : Screen
 
 data object ExchangeRatesScreen : Screen

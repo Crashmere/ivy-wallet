@@ -6,8 +6,8 @@ import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -52,7 +53,6 @@ import com.ivy.ui.compose.horizontalSwipeListener
 import com.ivy.ui.compose.rememberInteractionSource
 import com.ivy.ui.compose.rememberSwipeListenerState
 import com.ivy.ui.animation.springBounce
-import com.ivy.ui.compose.verticalSwipeListener
 import com.ivy.ui.R
 import com.ivy.ui.theme.colors.IvyGradients
 import com.ivy.ui.theme.colors.IvyFixedColors.White
@@ -70,6 +70,8 @@ internal fun HomeHeader(
     onShowMonthModal: () -> Unit,
     onSelectNextMonth: () -> Unit,
     onSelectPreviousMonth: () -> Unit,
+    onOpenSearch: () -> Unit,
+    onOpenBulkEdit: () -> Unit,
 ) {
     Column {
         val percentExpanded by animateFloatAsState(
@@ -80,16 +82,18 @@ internal fun HomeHeader(
             label = "Home Header Expand Collapse"
         )
 
-        Spacer(Modifier.height(20.dp))
+        Spacer(Modifier.height(16.dp))
 
         HeaderStickyRow(
             period = period,
             onShowMonthModal = onShowMonthModal,
             onSelectNextMonth = onSelectNextMonth,
             onSelectPreviousMonth = onSelectPreviousMonth,
+            onOpenSearch = onOpenSearch,
+            onOpenBulkEdit = onOpenBulkEdit,
         )
 
-        Spacer(Modifier.height(16.dp))
+        Spacer(Modifier.height(14.dp))
 
         if (percentExpanded < 0.5f) {
             HomeTransactionsDividerLine(
@@ -106,18 +110,17 @@ private fun HeaderStickyRow(
     onShowMonthModal: () -> Unit,
     onSelectNextMonth: () -> Unit,
     onSelectPreviousMonth: () -> Unit,
+    onOpenSearch: () -> Unit,
+    onOpenBulkEdit: () -> Unit,
 ) {
     val periodState = LocalPeriodState.current
 
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 24.dp),
+            .padding(start = 16.dp, end = 16.dp),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.End,
     ) {
-        Spacer(Modifier.weight(1f))
-
         MonthArrowButton(
             icon = R.drawable.ic_back,
             contentDescription = "Previous month",
@@ -139,7 +142,7 @@ private fun HeaderStickyRow(
             text = period.displayShort(periodState.startDayOfMonth),
             shape = HomeTheme.shapes.rFull,
             backgroundColor = HomeTheme.colors.pure,
-            minWidth = 112.dp,
+            minWidth = 108.dp,
             iconTint = HomeTheme.colors.pureInverse,
             borderColor = HomeTheme.colors.medium,
             textStyle = HomeTheme.typo.b2.copy(
@@ -157,9 +160,21 @@ private fun HeaderStickyRow(
             onClick = onSelectNextMonth,
         )
 
-        Spacer(Modifier.width(12.dp))
+        Spacer(Modifier.weight(1f))
 
-        Spacer(Modifier.width(40.dp)) // settings menu button spacer
+        HeaderActionIcon(
+            icon = R.drawable.ic_search,
+            contentDescription = stringResource(R.string.search_transactions),
+            onClick = onOpenSearch,
+        )
+
+        Spacer(Modifier.width(10.dp))
+
+        HeaderActionIcon(
+            icon = R.drawable.home_more_menu_bulk_edit,
+            contentDescription = "批量修改",
+            onClick = onOpenBulkEdit,
+        )
     }
 }
 
@@ -184,6 +199,29 @@ private fun MonthArrowButton(
     }
 }
 
+@Composable
+private fun HeaderActionIcon(
+    @DrawableRes icon: Int,
+    contentDescription: String,
+    onClick: () -> Unit,
+) {
+    Box(
+        modifier = Modifier
+            .size(42.dp)
+            .clip(CircleShape)
+            .background(HomeTheme.colors.pure)
+            .border(1.dp, HomeTheme.colors.medium, CircleShape)
+            .clickable(onClick = onClick),
+        contentAlignment = Alignment.Center,
+    ) {
+        ResourceIcon(
+            icon = icon,
+            tint = HomeTheme.colors.pureInverse,
+            contentDescription = contentDescription,
+        )
+    }
+}
+
 @ExperimentalAnimationApi
 @Composable
 internal fun CashFlowInfo(
@@ -194,9 +232,7 @@ internal fun CashFlowInfo(
     hideBalance: Boolean,
     hideIncome: Boolean,
     onHiddenIncomeClick: () -> Unit,
-    onOpenMoreMenu: () -> Unit,
     onBalanceClick: () -> Unit,
-    percentExpanded: Float,
     onHiddenBalanceClick: () -> Unit,
     onOpenIncomePieChart: () -> Unit,
     onOpenExpensePieChart: () -> Unit,
@@ -211,13 +247,6 @@ internal fun CashFlowInfo(
             .drawColoredShadow(IvyGradients.Mint.startColor)
             .clip(HomeTheme.shapes.r4)
             .background(IvyGradients.Mint.asHorizontalBrush())
-            .verticalSwipeListener(
-                sensitivity = Constants.SWIPE_DOWN_THRESHOLD_OPEN_MORE_MENU,
-                state = rememberSwipeListenerState(),
-                onSwipeDown = {
-                    onOpenMoreMenu()
-                },
-            )
             .padding(horizontal = 20.dp, vertical = 18.dp),
     ) {
         Row(
@@ -235,24 +264,17 @@ internal fun CashFlowInfo(
 
             Spacer(Modifier.weight(1f))
 
-            Text(
-                modifier = Modifier.clickableNoIndication(rememberInteractionSource()) {
+            TotalBalanceChip(
+                currency = currency,
+                balance = balance,
+                hideBalance = hideBalance,
+                onClick = {
                     if (hideBalance) onHiddenBalanceClick() else onBalanceClick()
                 },
-                text = if (hideBalance) {
-                    "${stringResource(R.string.total_balance)} ****"
-                } else {
-                    "${stringResource(R.string.total_balance)} ${balance.format(currency)}"
-                },
-                style = HomeTheme.typo.c.copy(
-                    color = White.copy(alpha = 0.85f),
-                    fontWeight = FontWeight.Bold,
-                    textAlign = TextAlign.End,
-                ),
             )
         }
 
-        Spacer(Modifier.height(8.dp))
+        Spacer(Modifier.height(10.dp))
 
         BalanceRow(
             modifier = Modifier
@@ -267,31 +289,31 @@ internal fun CashFlowInfo(
             currency = currency,
             balance = net,
             textColor = White,
-            balanceFontSize = 34.sp,
+            balanceFontSize = 36.sp,
             shortenBigNumbers = true,
             hiddenMode = hideBalance,
             balanceAmountPrefix = if (net > 0) "+" else null,
         )
 
-        Spacer(Modifier.height(12.dp))
-
         if (trend.size >= 2) {
+            Spacer(Modifier.height(12.dp))
+
             Sparkline(
                 points = trend,
                 lineColor = White,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(48.dp),
+                    .height(44.dp),
             )
-
-            Spacer(Modifier.height(14.dp))
         }
+
+        Spacer(Modifier.height(16.dp))
 
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            InlineStat(
+            CashFlowStatCard(
                 modifier = Modifier.weight(1f),
                 label = stringResource(R.string.income),
                 amount = monthlyIncome,
@@ -303,17 +325,10 @@ internal fun CashFlowInfo(
                 },
             )
 
-            Box(
-                modifier = Modifier
-                    .width(1.dp)
-                    .height(28.dp)
-                    .background(White.copy(alpha = 0.25f))
-            )
+            Spacer(Modifier.width(12.dp))
 
-            InlineStat(
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(start = 16.dp),
+            CashFlowStatCard(
+                modifier = Modifier.weight(1f),
                 label = stringResource(R.string.expenses),
                 amount = monthlyExpenses.absoluteValue,
                 currency = currency,
@@ -326,7 +341,48 @@ internal fun CashFlowInfo(
 }
 
 @Composable
-private fun InlineStat(
+private fun TotalBalanceChip(
+    currency: String,
+    balance: Double,
+    hideBalance: Boolean,
+    onClick: () -> Unit,
+) {
+    Row(
+        modifier = Modifier
+            .clip(HomeTheme.shapes.rFull)
+            .background(White.copy(alpha = 0.15f))
+            .clickableNoIndication(rememberInteractionSource()) {
+                onClick()
+            }
+            .padding(horizontal = 12.dp, vertical = 6.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Text(
+            text = stringResource(R.string.total_balance),
+            style = HomeTheme.typo.c.copy(
+                color = White.copy(alpha = 0.8f),
+                fontWeight = FontWeight.SemiBold,
+                textAlign = TextAlign.Start,
+            ),
+        )
+
+        Spacer(Modifier.width(6.dp))
+
+        Text(
+            text = if (hideBalance) "****" else balance.format(currency),
+            style = HomeTheme.typo.c.copy(
+                color = White,
+                fontWeight = FontWeight.ExtraBold,
+                textAlign = TextAlign.Start,
+            ),
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+        )
+    }
+}
+
+@Composable
+private fun CashFlowStatCard(
     label: String,
     amount: Double,
     currency: String,
@@ -337,46 +393,49 @@ private fun InlineStat(
 ) {
     Row(
         modifier = modifier
-            .clip(HomeTheme.shapes.rFull)
-            .clickable(onClick = onClick),
+            .clip(RoundedCornerShape(14.dp))
+            .background(White.copy(alpha = 0.12f))
+            .clickable(onClick = onClick)
+            .padding(horizontal = 14.dp, vertical = 12.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        Text(
-            text = label,
-            style = HomeTheme.typo.c.copy(
-                color = White.copy(alpha = 0.85f),
-                fontWeight = FontWeight.Bold,
-                textAlign = TextAlign.Start,
-            ),
-        )
-
-        Spacer(Modifier.width(6.dp))
-
-        Text(
-            modifier = Modifier.weight(1f, fill = false),
-            text = if (hidden) {
-                "****"
-            } else if (shouldShortAmount(amount)) {
-                shortenAmount(amount)
-            } else {
-                amount.format(currency)
-            },
-            style = HomeTheme.typo.b2.copy(
-                color = White,
-                fontWeight = FontWeight.ExtraBold,
-                textAlign = TextAlign.Start,
-            ),
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
-        )
-
-        Spacer(Modifier.width(4.dp))
-
         ResourceIcon(
-            modifier = Modifier.size(16.dp),
+            modifier = Modifier.size(18.dp),
             icon = arrowIcon,
-            tint = White.copy(alpha = 0.85f),
+            tint = White,
         )
+
+        Spacer(Modifier.width(8.dp))
+
+        Column(modifier = Modifier.weight(1f)) {
+            Text(
+                text = label,
+                style = HomeTheme.typo.c.copy(
+                    color = White.copy(alpha = 0.8f),
+                    fontWeight = FontWeight.SemiBold,
+                    textAlign = TextAlign.Start,
+                ),
+            )
+
+            Spacer(Modifier.height(2.dp))
+
+            Text(
+                text = if (hidden) {
+                    "****"
+                } else if (shouldShortAmount(amount)) {
+                    shortenAmount(amount)
+                } else {
+                    amount.format(currency)
+                },
+                style = HomeTheme.typo.b2.copy(
+                    color = White,
+                    fontWeight = FontWeight.ExtraBold,
+                    textAlign = TextAlign.Start,
+                ),
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+            )
+        }
     }
 }
 

@@ -57,7 +57,6 @@ import com.ivy.home.customerjourney.CustomerJourneyCardModel
 import com.ivy.ui.transaction.TransactionListAccount
 import com.ivy.ui.transaction.TransactionListCategory
 import com.ivy.ui.transaction.TransactionListData
-import com.ivy.ui.transaction.TransactionListDueSection
 import com.ivy.ui.transaction.TransactionListHistoryDateDivider
 import com.ivy.ui.transaction.TransactionListHistoryItem
 import com.ivy.ui.transaction.TransactionListHistoryTransaction
@@ -70,30 +69,20 @@ import com.ivy.ui.period.LocalPeriodState
 import com.ivy.ui.transaction.transactions
 import com.ivy.ui.compose.horizontalSwipeListener
 import com.ivy.ui.compose.rememberSwipeListenerState
-import com.ivy.ui.compose.verticalSwipeListener
 import com.ivy.ui.navigation.BalanceScreen
-import com.ivy.ui.navigation.BudgetScreen
 import com.ivy.ui.navigation.BulkEditScreen
-import com.ivy.ui.navigation.EditPlannedScreen
 import com.ivy.ui.navigation.EditTransactionScreen
-import com.ivy.ui.navigation.LoansScreen
 import com.ivy.ui.navigation.MainScreen
 import com.ivy.ui.navigation.PieChartStatisticScreen
-import com.ivy.ui.navigation.PlannedPaymentsScreen
-import com.ivy.ui.navigation.ReportScreen
 import com.ivy.ui.navigation.SearchScreen
-import com.ivy.ui.navigation.SettingsScreen
 import com.ivy.ui.navigation.TransactionRouteType
 import com.ivy.ui.navigation.TransactionsScreen
 import com.ivy.ui.navigation.navigation
 import com.ivy.ui.navigation.screenScopedViewModel
 import com.ivy.ui.R
 import com.ivy.ui.rememberScrollPositionListState
-import com.ivy.data.model.currency.IvyCurrency
 import com.ivy.data.model.IncomeExpensePair
 import com.ivy.ui.modal.ChoosePeriodModal
-import com.ivy.ui.modal.CurrencyModal
-import com.ivy.ui.modal.DeleteModal
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 import java.math.BigDecimal
@@ -125,19 +114,17 @@ fun BoxWithConstraintsScope.HomeTab(
         uiState = uiState,
         onEvent = viewModel::onEvent,
         onOpenAccountsTab = onOpenAccountsTab,
+        onOpenSearch = {
+            nav.navigateTo(SearchScreen)
+        },
+        onOpenBulkEdit = {
+            nav.navigateTo(BulkEditScreen)
+        },
         onOpenIncomePieChart = {
             nav.navigateTo(PieChartStatisticScreen(type = TransactionRouteType.INCOME))
         },
         onOpenExpensePieChart = {
             nav.navigateTo(PieChartStatisticScreen(type = TransactionRouteType.EXPENSE))
-        },
-        onAddPlannedPayment = {
-            nav.navigateTo(
-                EditPlannedScreen(
-                    type = TransactionRouteType.EXPENSE,
-                    plannedPaymentRuleId = null
-                )
-            )
         },
         onTransactionClick = { transactionId, transactionType ->
             nav.navigateTo(
@@ -163,17 +150,6 @@ fun BoxWithConstraintsScope.HomeTab(
                 )
             )
         },
-        onMoreMenuDestinationClick = { destination ->
-            when (destination) {
-                MoreMenuDestination.Search -> nav.navigateTo(SearchScreen)
-                MoreMenuDestination.Settings -> nav.navigateTo(SettingsScreen)
-                MoreMenuDestination.PlannedPayments -> nav.navigateTo(PlannedPaymentsScreen)
-                MoreMenuDestination.Reports -> nav.navigateTo(ReportScreen)
-                MoreMenuDestination.Budgets -> nav.navigateTo(BudgetScreen)
-                MoreMenuDestination.Loans -> nav.navigateTo(LoansScreen)
-                MoreMenuDestination.BulkEdit -> nav.navigateTo(BulkEditScreen)
-            }
-        },
     )
 }
 
@@ -185,42 +161,26 @@ internal fun BoxWithConstraintsScope.HomeUi(
     uiState: HomeState,
     onEvent: (HomeEvent) -> Unit,
     onOpenAccountsTab: () -> Unit,
+    onOpenSearch: () -> Unit,
+    onOpenBulkEdit: () -> Unit,
     onOpenIncomePieChart: () -> Unit,
     onOpenExpensePieChart: () -> Unit,
-    onAddPlannedPayment: () -> Unit,
     onTransactionClick: (UUID, TransactionType) -> Unit,
     onAccountClick: (UUID) -> Unit,
     onCategoryClick: (UUID) -> Unit,
-    onMoreMenuDestinationClick: (MoreMenuDestination) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val periodState = LocalPeriodState.current
     val datePicker = LocalDatePicker.current
 
-    var bufferModalVisible by remember { mutableStateOf(false) }
-    var currencyModalVisible by remember { mutableStateOf(false) }
     var choosePeriodModal: TimePeriod? by remember {
         mutableStateOf(null)
     }
-    var moreMenuExpanded by remember { mutableStateOf(false) }
-    var skipAllModalVisible by remember { mutableStateOf(false) }
-    val setMoreMenuExpanded = { expanded: Boolean ->
-        moreMenuExpanded = expanded
-    }
-
-    val baseCurrency = uiState.baseData.baseCurrency
 
     Column(
         modifier = modifier
             .fillMaxSize()
             .systemBarsPadding()
-            .verticalSwipeListener(
-                sensitivity = Constants.SWIPE_DOWN_THRESHOLD_OPEN_MORE_MENU,
-                state = rememberSwipeListenerState(),
-                onSwipeDown = {
-                    setMoreMenuExpanded(true)
-                }
-            )
             .horizontalSwipeListener(
                 sensitivity = SWIPE_HORIZONTAL_THRESHOLD,
                 state = rememberSwipeListenerState(),
@@ -247,7 +207,9 @@ internal fun BoxWithConstraintsScope.HomeUi(
             },
             onSelectPreviousMonth = {
                 onEvent(HomeEvent.SelectPreviousMonth)
-            }
+            },
+            onOpenSearch = onOpenSearch,
+            onOpenBulkEdit = onOpenBulkEdit,
         )
 
         HomeLazyColumn(
@@ -257,9 +219,6 @@ internal fun BoxWithConstraintsScope.HomeUi(
                 onEvent(HomeEvent.SetExpanded(it))
             },
             balance = uiState.balance,
-            onOpenMoreMenu = {
-                setMoreMenuExpanded(true)
-            },
             onBalanceClick = {
                 onEvent(HomeEvent.BalanceClick)
             },
@@ -275,71 +234,21 @@ internal fun BoxWithConstraintsScope.HomeUi(
 
             baseData = uiState.baseData,
 
-            upcoming = uiState.upcoming,
-            overdue = uiState.overdue,
-
             stats = uiState.stats,
             history = uiState.history,
 
             customerJourneyCards = uiState.customerJourneyCards,
             shouldShowAccountSpecificColorInTransactions = uiState.shouldShowAccountSpecificColorInTransactions,
 
-            onPayOrGet = { onEvent(HomeEvent.PayOrGetPlanned(it)) },
             onDismiss = { onEvent(HomeEvent.DismissCustomerJourneyCard(it)) },
-            onSkipTransaction = { onEvent(HomeEvent.SkipPlanned(it)) },
-            setUpcomingExpanded = { onEvent(HomeEvent.SetUpcomingExpanded(it)) },
-            setOverdueExpanded = { onEvent(HomeEvent.SetOverdueExpanded(it)) },
             onOpenAccountsTab = onOpenAccountsTab,
             onOpenIncomePieChart = onOpenIncomePieChart,
             onOpenExpensePieChart = onOpenExpensePieChart,
-            onAddPlannedPayment = onAddPlannedPayment,
             onTransactionClick = onTransactionClick,
             onAccountClick = onAccountClick,
             onCategoryClick = onCategoryClick,
-            onSkipAllTransactions = {
-                skipAllModalVisible = true
-            }
         )
     }
-
-    MoreMenu(
-        expanded = moreMenuExpanded,
-        balance = uiState.balance.toDouble(),
-        currency = baseCurrency,
-        buffer = uiState.buffer.amount.toDouble(),
-        showPlannedPaymentsQuickAccess = uiState.showPlannedPaymentsQuickAccess,
-        showBudgetsQuickAccess = uiState.showBudgetsQuickAccess,
-        showLoansQuickAccess = uiState.showLoansQuickAccess,
-        setExpanded = setMoreMenuExpanded,
-        onBufferClick = {
-            bufferModalVisible = true
-        },
-        onCurrencyClick = {
-            currencyModalVisible = true
-        },
-        onDestinationClick = onMoreMenuDestinationClick
-    )
-
-    HomeBufferModal(
-        visible = bufferModalVisible,
-        balance = uiState.balance.toDouble(),
-        currency = baseCurrency,
-        buffer = uiState.buffer.amount.toDouble(),
-        dismiss = {
-            bufferModalVisible = false
-        },
-        onBufferChanged = { onEvent(HomeEvent.SetBuffer(it)) }
-    )
-
-    CurrencyModal(
-        title = stringResource(R.string.set_currency),
-        initialCurrency = IvyCurrency.fromCode(baseCurrency),
-        visible = currencyModalVisible,
-        dismiss = {
-            currencyModalVisible = false
-        },
-        onSetCurrency = { onEvent(HomeEvent.SetCurrency(it)) }
-    )
 
     ChoosePeriodModal(
         modal = choosePeriodModal,
@@ -357,18 +266,6 @@ internal fun BoxWithConstraintsScope.HomeUi(
         },
         onPeriodSelected = { onEvent(HomeEvent.SetPeriod(it)) }
     )
-
-    DeleteModal(
-        visible = skipAllModalVisible,
-        title = stringResource(R.string.confirm_skip_all),
-        description = stringResource(R.string.confirm_skip_all_description),
-        dismiss = {
-            skipAllModalVisible = false
-        }
-    ) {
-        onEvent(HomeEvent.SkipAllPlanned(uiState.overdue.transactions.map { it.id.value }))
-        skipAllModalVisible = false
-    }
 }
 
 @Suppress("LongParameterList")
@@ -384,30 +281,20 @@ internal fun HomeLazyColumn(
     baseData: HomeTransactionListData,
     shouldShowAccountSpecificColorInTransactions: Boolean,
 
-    upcoming: HomeDueSection,
-    overdue: HomeDueSection,
     balance: BigDecimal,
     stats: IncomeExpensePair,
     history: ImmutableList<TransactionHistoryItem>,
 
     customerJourneyCards: ImmutableList<CustomerJourneyCardModel>,
 
-    setUpcomingExpanded: (Boolean) -> Unit,
-    setOverdueExpanded: (Boolean) -> Unit,
-
-    onOpenMoreMenu: () -> Unit,
     onBalanceClick: () -> Unit,
 
-    onPayOrGet: (UUID) -> Unit,
     onDismiss: (CustomerJourneyCardModel) -> Unit,
     onHiddenBalanceClick: () -> Unit,
     onHiddenIncomeClick: () -> Unit,
-    onSkipTransaction: (UUID) -> Unit,
-    onSkipAllTransactions: (List<UUID>) -> Unit,
     onOpenAccountsTab: () -> Unit,
     onOpenIncomePieChart: () -> Unit,
     onOpenExpensePieChart: () -> Unit,
-    onAddPlannedPayment: () -> Unit,
     onTransactionClick: (UUID, TransactionType) -> Unit,
     onAccountClick: (UUID) -> Unit,
     onCategoryClick: (UUID) -> Unit,
@@ -488,10 +375,8 @@ internal fun HomeLazyColumn(
                 monthlyIncome = stats.income.toDouble(),
                 monthlyExpenses = stats.expense.toDouble(),
 
-                onOpenMoreMenu = onOpenMoreMenu,
                 onBalanceClick = onBalanceClick,
                 onHiddenBalanceClick = onHiddenBalanceClick,
-                percentExpanded = 1f,
                 hideIncome = hideIncome,
                 onHiddenIncomeClick = onHiddenIncomeClick,
                 onOpenIncomePieChart = onOpenIncomePieChart,
@@ -522,10 +407,6 @@ internal fun HomeLazyColumn(
                             onOpenAccountsTab()
                         }
 
-                        CustomerJourneyAction.AddPlannedPayment -> {
-                            onAddPlannedPayment()
-                        }
-
                         CustomerJourneyAction.OpenExpensePieChart -> {
                             onOpenExpensePieChart()
                         }
@@ -536,12 +417,12 @@ internal fun HomeLazyColumn(
 
         transactions(
             baseData = baseData.toTransactionListData(),
-            upcoming = upcoming.toTransactionListDueSection(),
-            setUpcomingExpanded = setUpcomingExpanded,
-            overdue = overdue.toTransactionListDueSection(),
-            setOverdueExpanded = setOverdueExpanded,
+            upcoming = null,
+            setUpcomingExpanded = {},
+            overdue = null,
+            setOverdueExpanded = {},
             history = filteredHistory.map { it.toTransactionListHistoryItem() },
-            onPayOrGet = onPayOrGet,
+            onPayOrGet = {},
             onTransactionClick = { transactionId, transactionType ->
                 onTransactionClick(transactionId, transactionType.toTransactionType())
             },
@@ -550,8 +431,6 @@ internal fun HomeLazyColumn(
             emptyStateTitle = noTransactionsTitle,
             emptyStateText = noTransactionsText,
             shouldShowAccountSpecificColorInTransactions = shouldShowAccountSpecificColorInTransactions,
-            onSkipTransaction = onSkipTransaction,
-            onSkipAllTransactions = onSkipAllTransactions
         )
     }
 }
@@ -650,15 +529,6 @@ private fun Category.toTransactionListCategory() = TransactionListCategory(
     color = color.value,
     icon = icon?.id,
 )
-
-private fun HomeDueSection.toTransactionListDueSection(): TransactionListDueSection {
-    return TransactionListDueSection(
-        transactions = transactions.map { it.toTransactionListTransaction() },
-        expanded = expanded,
-        income = stats.income.toDouble(),
-        expenses = stats.expense.abs().toDouble(),
-    )
-}
 
 private fun TransactionHistoryItem.toTransactionListHistoryItem(): TransactionListHistoryItem {
     return when (this) {

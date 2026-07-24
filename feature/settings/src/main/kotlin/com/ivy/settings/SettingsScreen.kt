@@ -138,9 +138,6 @@ private fun BoxWithConstraintsScope.SettingsScreenContent(embedded: Boolean) {
         standardKeypadLayout = uiState.standardKeypadLayout,
         showCategorySearchBar = uiState.showCategorySearchBar,
         sortCategoriesAscending = uiState.sortCategoriesAscending,
-        showPlannedPaymentsQuickAccess = uiState.showPlannedPaymentsQuickAccess,
-        showBudgetsQuickAccess = uiState.showBudgetsQuickAccess,
-        showLoansQuickAccess = uiState.showLoansQuickAccess,
         startDateOfMonth = uiState.startDateOfMonth.toInt(),
         onBackupData = {
             viewModel.onEvent(SettingsEvent.BackupData)
@@ -207,15 +204,6 @@ private fun BoxWithConstraintsScope.SettingsScreenContent(embedded: Boolean) {
         onSetSortCategoriesAscending = {
             viewModel.onEvent(SettingsEvent.SetSortCategoriesAscending(it))
         },
-        onSetShowPlannedPaymentsQuickAccess = {
-            viewModel.onEvent(SettingsEvent.SetShowPlannedPaymentsQuickAccess(it))
-        },
-        onSetShowBudgetsQuickAccess = {
-            viewModel.onEvent(SettingsEvent.SetShowBudgetsQuickAccess(it))
-        },
-        onSetShowLoansQuickAccess = {
-            viewModel.onEvent(SettingsEvent.SetShowLoansQuickAccess(it))
-        },
         onDeleteAllUserData = {
             viewModel.onEvent(SettingsEvent.DeleteAllUserData)
         },
@@ -249,9 +237,6 @@ private fun BoxWithConstraintsScope.UI(
     standardKeypadLayout: Boolean = false,
     showCategorySearchBar: Boolean = true,
     sortCategoriesAscending: Boolean = false,
-    showPlannedPaymentsQuickAccess: Boolean = false,
-    showBudgetsQuickAccess: Boolean = false,
-    showLoansQuickAccess: Boolean = false,
     gitHubConfig: GitHubBackupConfig? = null,
     gitHubLastBackupEpochSec: Long? = null,
     onBackupData: () -> Unit = {},
@@ -274,9 +259,6 @@ private fun BoxWithConstraintsScope.UI(
     onSetStandardKeypadLayout: (Boolean) -> Unit = {},
     onSetShowCategorySearchBar: (Boolean) -> Unit = {},
     onSetSortCategoriesAscending: (Boolean) -> Unit = {},
-    onSetShowPlannedPaymentsQuickAccess: (Boolean) -> Unit = {},
-    onSetShowBudgetsQuickAccess: (Boolean) -> Unit = {},
-    onSetShowLoansQuickAccess: (Boolean) -> Unit = {},
     onSetStartDateOfMonth: (Int) -> Unit = {},
     onDeleteAllUserData: () -> Unit = {},
     onBack: () -> Unit = {},
@@ -377,13 +359,7 @@ private fun BoxWithConstraintsScope.UI(
                 item {
                     FeaturesSection(
                         treatTransfersAsIncomeExpense = treatTransfersAsIncomeExpense,
-                        showPlannedPayments = showPlannedPaymentsQuickAccess,
-                        showBudgets = showBudgetsQuickAccess,
-                        showLoans = showLoansQuickAccess,
                         onSetTreatTransfersAsIncExp = onSetTreatTransfersAsIncExp,
-                        onSetShowPlannedPayments = onSetShowPlannedPaymentsQuickAccess,
-                        onSetShowBudgets = onSetShowBudgetsQuickAccess,
-                        onSetShowLoans = onSetShowLoansQuickAccess,
                     )
                 }
 
@@ -837,13 +813,7 @@ private fun GeneralSection(
 @Composable
 private fun FeaturesSection(
     treatTransfersAsIncomeExpense: Boolean,
-    showPlannedPayments: Boolean,
-    showBudgets: Boolean,
-    showLoans: Boolean,
     onSetTreatTransfersAsIncExp: (Boolean) -> Unit,
-    onSetShowPlannedPayments: (Boolean) -> Unit,
-    onSetShowBudgets: (Boolean) -> Unit,
-    onSetShowLoans: (Boolean) -> Unit,
 ) {
     SettingsSectionDivider(text = stringResource(R.string.features))
 
@@ -855,36 +825,6 @@ private fun FeaturesSection(
         text = stringResource(R.string.transfers_as_income_expense),
         description = stringResource(R.string.transfers_as_income_expense_description),
         icon = R.drawable.ic_custom_transfer_m
-    )
-
-    Spacer(Modifier.height(12.dp))
-
-    AppSwitch(
-        lockApp = showPlannedPayments,
-        onSetLockApp = onSetShowPlannedPayments,
-        text = stringResource(R.string.planned_payments).replace("\n", " "),
-        description = "在首页「快速访问」中显示计划支付入口",
-        icon = R.drawable.ic_custom_calendar_m
-    )
-
-    Spacer(Modifier.height(12.dp))
-
-    AppSwitch(
-        lockApp = showBudgets,
-        onSetLockApp = onSetShowBudgets,
-        text = stringResource(R.string.budgets),
-        description = "在首页「快速访问」中显示预算入口",
-        icon = R.drawable.ic_custom_safe_m
-    )
-
-    Spacer(Modifier.height(12.dp))
-
-    AppSwitch(
-        lockApp = showLoans,
-        onSetLockApp = onSetShowLoans,
-        text = stringResource(R.string.loans),
-        description = "在首页「快速访问」中显示贷款入口",
-        icon = R.drawable.ic_custom_loan_m
     )
 }
 

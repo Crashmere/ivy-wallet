@@ -55,7 +55,6 @@ import com.ivy.ui.theme.colors.IvyGradients
 import com.ivy.ui.theme.colors.IvyFixedColors.Ivy
 import com.ivy.ui.theme.colors.IvyFixedColors.White
 import com.ivy.ui.compose.GradientIconButton
-import com.ivy.ui.compose.OutlinedPillButton
 import com.ivy.ui.compose.ResourceIcon
 import kotlin.math.abs
 import kotlin.math.roundToInt
@@ -76,7 +75,6 @@ internal fun BoxWithConstraintsScope.BottomBar(
     onAddIncome: () -> Unit,
     onAddExpense: () -> Unit,
     onAddTransfer: () -> Unit,
-    onAddPlannedPayment: () -> Unit,
 
     showAddAccountModal: () -> Unit,
 ) {
@@ -183,7 +181,6 @@ internal fun BoxWithConstraintsScope.BottomBar(
         onAddIncome = onAddIncome,
         onAddExpense = onAddExpense,
         onAddTransfer = onAddTransfer,
-        onAddPlannedPayment = onAddPlannedPayment
     )
 
     var dragOffset by remember {
@@ -273,7 +270,6 @@ private fun TransactionButtons(
     onAddIncome: () -> Unit,
     onAddExpense: () -> Unit,
     onAddTransfer: () -> Unit,
-    onAddPlannedPayment: () -> Unit,
 ) {
     val bH = 48.dp
     val bV = 20.dp // 24.dp
@@ -287,36 +283,6 @@ private fun TransactionButtons(
         val buttonCenterY = fabStartY - bCenterV.toDensityPx() - FabButtonSize.toDensityPx()
 
         val clickAreaWidth = (screenWidthPx / 3).roundToInt()
-
-        OutlinedPillButton(
-            modifier = Modifier
-                .layout { measurable, constraints ->
-                    val placealbe = measurable.measure(constraints)
-                    layout(placealbe.width, placealbe.height) {
-                        placealbe.place(
-                            x = (screenWidthPx / 2 - placealbe.width / 2).roundToInt(),
-                            y = buttonCenterY.roundToInt() - 48.dp.roundToPx() - placealbe.height - FabButtonSize.roundToPx()
-                        )
-                    }
-                }
-                .padding(horizontal = 8.dp)
-                .alpha(buttonsShownPercent)
-                .zIndex(200f),
-            iconStart = R.drawable.ic_planned_payments,
-            text = stringResource(R.string.add_planned_payment),
-            shape = MainTheme.shapes.rFull,
-            solidBackground = true,
-            backgroundColor = MainTheme.colors.pure,
-            iconTint = MainTheme.colors.pureInverse,
-            borderColor = MainTheme.colors.medium,
-            textStyle = MainTheme.typo.b2.copy(
-                fontWeight = FontWeight.Bold,
-                color = MainTheme.colors.pureInverse,
-                textAlign = TextAlign.Start,
-            ),
-        ) {
-            onAddPlannedPayment()
-        }
 
         // Add INCOME ------------------------------------------------------------------------------
         AddIncomeButton(
