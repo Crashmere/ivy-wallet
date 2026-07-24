@@ -147,7 +147,7 @@ internal fun BoxWithConstraintsScope.BottomBar(
 
         Tab(
             icon = R.drawable.ic_settings,
-            name = stringResource(R.string.mine),
+            name = stringResource(R.string.settings),
             selected = tab == MainTab.MINE,
             selectedColor = Ivy
         ) {

@@ -329,7 +329,7 @@ private fun BoxWithConstraintsScope.UI(
             Text(
                 modifier = Modifier.padding(start = 32.dp),
                 text = stringResource(
-                    if (settingsPage == SettingsPage.Main) R.string.mine else settingsPage.title
+                    if (settingsPage == SettingsPage.Main) R.string.settings else settingsPage.title
                 ),
                 style = SettingsTheme.typo.h2.copy(
                     color = SettingsTheme.colors.pureInverse,
