@@ -171,19 +171,33 @@ private fun BoxWithConstraintsScope.UI(
         }
 
         item {
-            GroupedCategoriesCard(
-                categories = state.categories,
-                currency = state.baseCurrency,
-                onCategoryClick = { categoryData ->
-                    nav.navigateTo(
-                        TransactionsScreen(
-                            accountId = null,
-                            categoryId = categoryData.category.id.value
+            val groups = remember(state.categories, state.accounts) {
+                buildCategoryGroups(state.categories, state.accounts)
+            }
+
+            groups.forEachIndexed { index, group ->
+                if (index > 0) {
+                    Spacer(Modifier.height(20.dp))
+                }
+
+                CategoryGroupHeader(group = group)
+
+                Spacer(Modifier.height(8.dp))
+
+                GroupedCategoriesCard(
+                    categories = group.categories,
+                    currency = state.baseCurrency,
+                    onCategoryClick = { categoryData ->
+                        nav.navigateTo(
+                            TransactionsScreen(
+                                accountId = null,
+                                categoryId = categoryData.category.id.value
+                            )
                         )
-                    )
-                },
-                onReorder = { onEvent(CategoriesScreenEvent.OnReorderModalVisible(true)) }
-            )
+                    },
+                    onReorder = { onEvent(CategoriesScreenEvent.OnReorderModalVisible(true)) }
+                )
+            }
 
             Spacer(Modifier.height(16.dp))
 
@@ -353,9 +367,87 @@ private fun CategoryIconButton(
     }
 }
 
+private data class CategoryGroupUi(
+    val header: CategoryAccountHeader?,
+    val categories: List<CategoryData>,
+)
+
+/**
+ * Groups categories under the account(s) that own them (a category may appear under more than
+ * one account). Categories not assigned to any account fall into a trailing "未分配" group.
+ * Order within a group follows the already-sorted [categories] list.
+ */
+private fun buildCategoryGroups(
+    categories: List<CategoryData>,
+    accounts: List<CategoryAccountHeader>,
+): List<CategoryGroupUi> {
+    if (categories.isEmpty()) return emptyList()
+
+    val assignedIds = accounts.flatMapTo(HashSet()) { it.categoryIds }
+    val groups = mutableListOf<CategoryGroupUi>()
+
+    accounts.forEach { account ->
+        val cats = categories.filter { it.category.id.value in account.categoryIds }
+        if (cats.isNotEmpty()) {
+            groups += CategoryGroupUi(header = account, categories = cats)
+        }
+    }
+
+    val unassigned = categories.filter { it.category.id.value !in assignedIds }
+    if (unassigned.isNotEmpty()) {
+        groups += CategoryGroupUi(header = null, categories = unassigned)
+    }
+
+    return groups
+}
+
+@Composable
+private fun CategoryGroupHeader(group: CategoryGroupUi) {
+    val accountColor = group.header?.color?.toComposeColor()
+        ?: CategoriesTheme.colors.pureInverse.copy(alpha = 0.4f)
+
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 24.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Box(
+            modifier = Modifier
+                .size(10.dp)
+                .clip(CircleShape)
+                .background(accountColor)
+        )
+
+        Spacer(Modifier.width(8.dp))
+
+        Text(
+            text = group.header?.name ?: "未分配",
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+            style = CategoriesTheme.typo.b2.copy(
+                color = CategoriesTheme.colors.pureInverse,
+                fontWeight = FontWeight.ExtraBold,
+                textAlign = TextAlign.Start
+            )
+        )
+
+        Spacer(Modifier.weight(1f))
+
+        Text(
+            text = "${group.categories.size}",
+            style = CategoriesTheme.typo.c.copy(
+                color = CategoriesTheme.colors.pureInverse.copy(alpha = 0.5f),
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.End
+            )
+        )
+    }
+}
+
 @Composable
 private fun GroupedCategoriesCard(
-    categories: ImmutableList<CategoryData>,
+    categories: List<CategoryData>,
     currency: String,
     onCategoryClick: (CategoryData) -> Unit,
     onReorder: () -> Unit,

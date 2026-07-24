@@ -19,4 +19,6 @@ data class Account(
     val icon: IconAsset?,
     val includeInBalance: Boolean,
     val orderNum: Double,
+    // Categories that belong to this account (its own list). Empty => none assigned yet.
+    val visibleCategories: List<CategoryId> = emptyList(),
 ) : Identifiable<AccountId>

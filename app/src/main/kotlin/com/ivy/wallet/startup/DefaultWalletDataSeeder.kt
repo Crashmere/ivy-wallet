@@ -7,6 +7,7 @@ import com.ivy.data.model.CategoryId
 import com.ivy.data.model.primitive.ColorInt
 import com.ivy.data.model.primitive.IconAsset
 import com.ivy.data.model.primitive.NotBlankTrimmedString
+import com.ivy.domain.usecase.account.GetAccountsUseCase
 import com.ivy.domain.usecase.account.SaveAccountUseCase
 import com.ivy.domain.usecase.category.SaveCategoryUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyUseCase
@@ -18,6 +19,7 @@ import javax.inject.Inject
 internal class DefaultWalletDataSeeder @Inject internal constructor(
     private val saveCategoryUseCase: SaveCategoryUseCase,
     private val saveAccountUseCase: SaveAccountUseCase,
+    private val getAccountsUseCase: GetAccountsUseCase,
     private val getBaseCurrency: GetBaseCurrencyUseCase,
     private val resourceProvider: ResourceProvider,
 ) {
@@ -52,10 +54,18 @@ internal class DefaultWalletDataSeeder @Inject internal constructor(
     suspend fun seedCategories() {
         categoryOrderNum = 0.0
 
-        val categoriesToPreload = defaultCategories()
+        val createdIds = defaultCategories().map { seedCategory(it) }
 
-        for (createData in categoriesToPreload) {
-            seedCategory(createData)
+        // Fresh installs: make every default category belong to each default account so the
+        // transaction category picker isn't empty on first use. Only runs during first setup
+        // (categories were empty), so it never clobbers a user's curated per-account lists.
+        assignCategoriesToAllAccounts(createdIds)
+    }
+
+    private suspend fun assignCategoriesToAllAccounts(categoryIds: List<CategoryId>) {
+        if (categoryIds.isEmpty()) return
+        getAccountsUseCase().forEach { account ->
+            saveAccountUseCase(account.copy(visibleCategories = categoryIds))
         }
     }
 
@@ -123,16 +133,18 @@ internal class DefaultWalletDataSeeder @Inject internal constructor(
 
     private suspend fun seedCategory(
         data: DefaultCategory,
-    ) {
+    ): CategoryId {
+        val id = CategoryId(UUID.randomUUID())
         saveCategoryUseCase(
             Category(
                 name = NotBlankTrimmedString.unsafe(data.name),
                 color = ColorInt(data.color),
                 icon = IconAsset.unsafe(data.icon),
                 orderNum = categoryOrderNum++,
-                id = CategoryId(UUID.randomUUID()),
+                id = id,
             )
         )
+        return id
     }
 }
 

@@ -40,6 +40,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onGloballyPositioned
@@ -448,6 +449,7 @@ private fun BoxWithConstraintsScope.UI(
 
             CategoryGrid(
                 categories = categories,
+                accountVisibleCategoryIds = account?.visibleCategoryIds ?: emptySet(),
                 selected = category,
                 onSelect = { onCategoryChange(it) },
                 onAddNew = {
@@ -1094,37 +1096,121 @@ private fun AddAccount(
 @Composable
 private fun CategoryGrid(
     categories: ImmutableList<Category>,
+    accountVisibleCategoryIds: Set<UUID>,
     selected: Category?,
     onSelect: (Category?) -> Unit,
     onAddNew: () -> Unit,
 ) {
+    // The account's own categories (plus whatever is currently selected, so editing an old
+    // transaction never hides its category). Everything else is tucked behind "全部类别".
+    val belonging = remember(categories, accountVisibleCategoryIds, selected) {
+        categories.filter {
+            it.id.value in accountVisibleCategoryIds || it.id == selected?.id
+        }
+    }
+    val others = remember(categories, belonging) {
+        val belongingIds = belonging.mapTo(HashSet()) { it.id }
+        categories.filter { it.id !in belongingIds }
+    }
+    var showAll by remember { mutableStateOf(false) }
+
     Column(modifier = Modifier.padding(horizontal = 8.dp)) {
-        val cells: List<Category?> = categories + listOf<Category?>(null)
-        cells.chunked(4).forEach { rowItems ->
-            Row(modifier = Modifier.fillMaxWidth()) {
-                rowItems.forEach { cat ->
-                    if (cat == null) {
-                        AddCategoryCell(
-                            modifier = Modifier.weight(1f),
-                            onClick = onAddNew,
-                        )
-                    } else {
-                        CategoryCell(
-                            modifier = Modifier.weight(1f),
-                            category = cat,
-                            selected = selected?.id == cat.id,
-                            onClick = {
-                                onSelect(if (selected?.id == cat.id) null else cat)
-                            },
-                        )
-                    }
-                }
-                repeat(4 - rowItems.size) {
-                    Spacer(Modifier.weight(1f))
+        CategoryCellRows(
+            items = belonging,
+            includeAddCell = true,
+            selected = selected,
+            onSelect = onSelect,
+            onAddNew = onAddNew,
+        )
+
+        if (others.isNotEmpty()) {
+            ShowAllCategoriesToggle(
+                expanded = showAll,
+                onToggle = { showAll = !showAll },
+            )
+
+            if (showAll) {
+                Spacer(Modifier.height(12.dp))
+                CategoryCellRows(
+                    items = others,
+                    includeAddCell = false,
+                    selected = selected,
+                    onSelect = onSelect,
+                    onAddNew = onAddNew,
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun CategoryCellRows(
+    items: List<Category>,
+    includeAddCell: Boolean,
+    selected: Category?,
+    onSelect: (Category?) -> Unit,
+    onAddNew: () -> Unit,
+) {
+    val cells: List<Category?> = if (includeAddCell) items + listOf<Category?>(null) else items
+    if (cells.isEmpty()) return
+    cells.chunked(4).forEach { rowItems ->
+        Row(modifier = Modifier.fillMaxWidth()) {
+            rowItems.forEach { cat ->
+                if (cat == null) {
+                    AddCategoryCell(
+                        modifier = Modifier.weight(1f),
+                        onClick = onAddNew,
+                    )
+                } else {
+                    CategoryCell(
+                        modifier = Modifier.weight(1f),
+                        category = cat,
+                        selected = selected?.id == cat.id,
+                        onClick = {
+                            onSelect(if (selected?.id == cat.id) null else cat)
+                        },
+                    )
                 }
             }
-            Spacer(Modifier.height(16.dp))
+            repeat(4 - rowItems.size) {
+                Spacer(Modifier.weight(1f))
+            }
         }
+        Spacer(Modifier.height(16.dp))
+    }
+}
+
+@Composable
+private fun ShowAllCategoriesToggle(
+    expanded: Boolean,
+    onToggle: () -> Unit,
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(EditTransactionTheme.shapes.r4)
+            .clickable(onClick = onToggle)
+            .padding(vertical = 10.dp, horizontal = 8.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Text(
+            text = if (expanded) "收起其他类别" else "全部类别",
+            style = EditTransactionTheme.typo.nC.copy(
+                color = EditTransactionTheme.colors.mediumInverse,
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Start,
+            ),
+        )
+
+        Spacer(Modifier.width(6.dp))
+
+        ResourceIcon(
+            modifier = Modifier
+                .size(16.dp)
+                .rotate(if (expanded) 180f else 0f),
+            icon = R.drawable.ic_expandarrow,
+            tint = EditTransactionTheme.colors.mediumInverse,
+        )
     }
 }
 

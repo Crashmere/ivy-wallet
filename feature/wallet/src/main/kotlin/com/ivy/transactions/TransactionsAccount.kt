@@ -13,6 +13,7 @@ internal data class TransactionsAccount(
     val currency: String?,
     val icon: String?,
     val includeInBalance: Boolean,
+    val visibleCategoryIds: Set<UUID> = emptySet(),
 )
 
 internal fun Account.toTransactionsAccount() = TransactionsAccount(
@@ -22,6 +23,7 @@ internal fun Account.toTransactionsAccount() = TransactionsAccount(
     currency = asset.code,
     icon = icon?.id,
     includeInBalance = includeInBalance,
+    visibleCategoryIds = visibleCategories.mapTo(mutableSetOf()) { it.value },
 )
 
 internal fun TransactionsAccount.toAccountModalAccount() = AccountModalAccount(
@@ -31,4 +33,5 @@ internal fun TransactionsAccount.toAccountModalAccount() = AccountModalAccount(
     currency = currency,
     icon = icon,
     includeInBalance = includeInBalance,
+    visibleCategoryIds = visibleCategoryIds,
 )

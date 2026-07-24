@@ -26,6 +26,11 @@ internal data class AccountEntity(
     @SerialName("includeInBalance")
     val includeInBalance: Boolean = true,
 
+    // Comma-separated CategoryId UUIDs that make up this account's own category list.
+    // null/empty => the account has no categories assigned yet (picker shows none by default).
+    @SerialName("visibleCategoryIdsSerialized")
+    val visibleCategoryIdsSerialized: String? = null,
+
     @SerialName("isDeleted")
     val isDeleted: Boolean = false,
 

@@ -11,6 +11,8 @@ internal data class EditTransactionAccount(
     val color: Int,
     val icon: String?,
     val currency: String?,
+    // Categories that belong to this account (its own list). Drives the category picker filtering.
+    val visibleCategoryIds: Set<UUID>,
 )
 
 internal fun Account.toEditTransactionAccount() = EditTransactionAccount(
@@ -19,4 +21,5 @@ internal fun Account.toEditTransactionAccount() = EditTransactionAccount(
     color = color.value,
     icon = icon?.id,
     currency = asset.code,
+    visibleCategoryIds = visibleCategories.mapTo(mutableSetOf()) { it.value },
 )

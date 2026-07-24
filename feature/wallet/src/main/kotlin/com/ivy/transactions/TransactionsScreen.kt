@@ -579,6 +579,7 @@ private fun BoxWithConstraintsScope.UI(
         balance = accountModalBalance,
         adjustBalanceMode = accountModalAdjustBalanceMode,
         autoFocusKeyboard = accountModalAutoFocus,
+        categories = categories.map { it.toCategoryModalCategory() },
         onCreateAccount = { _ -> },
         onEditAccount = { accountId, data ->
             onEditAccount(accountId, data)

@@ -618,6 +618,9 @@ internal class TransactionsViewModel @Inject internal constructor(
             color = ColorInt(data.color),
             icon = data.icon?.let(IconAsset::from)?.getOrNull(),
             includeInBalance = data.includeInBalance,
+            visibleCategories = data.visibleCategoryIds
+                ?.map { CategoryId(it) }
+                ?: account.visibleCategories,
         )
 
         viewModelScope.launch {

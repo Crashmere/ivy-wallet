@@ -3,10 +3,13 @@ package com.ivy.ui.modal
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraintsScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -44,6 +47,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.ivy.ui.icon.ItemIconMDefaultIcon
 import com.ivy.ui.compose.onCompositionStart
 import com.ivy.ui.compose.selectEndTextFieldValue
@@ -64,6 +68,9 @@ data class AccountModalSaveData(
     val icon: String?,
     val balance: Double,
     val includeInBalance: Boolean,
+    // The account's own category list, edited from the modal. null => leave unchanged
+    // (e.g. account creation, where the list starts empty).
+    val visibleCategoryIds: Set<UUID>? = null,
 )
 
 @Composable
@@ -76,6 +83,7 @@ fun BoxWithConstraintsScope.AccountModal(
     forceNonZeroBalance: Boolean = false,
     autoFocusKeyboard: Boolean = true,
     usedColors: List<Int> = emptyList(),
+    categories: List<CategoryModalCategory> = emptyList(),
     onCreateAccount: (AccountModalSaveData) -> Unit,
     onEditAccount: (accountId: UUID, data: AccountModalSaveData) -> Unit,
     dismiss: () -> Unit,
@@ -94,6 +102,9 @@ fun BoxWithConstraintsScope.AccountModal(
     }
     var icon by remember(visible, account) {
         mutableStateOf(account?.icon)
+    }
+    var selectedCategoryIds by remember(visible, account) {
+        mutableStateOf(account?.visibleCategoryIds ?: emptySet())
     }
 
     var amountModalVisible by remember { mutableStateOf(false) }
@@ -120,6 +131,7 @@ fun BoxWithConstraintsScope.AccountModal(
                     color = color,
                     icon = icon,
                     amount = amount,
+                    visibleCategoryIds = selectedCategoryIds.takeIf { account != null },
 
                     onCreateAccount = onCreateAccount,
                     onEditAccount = onEditAccount,
@@ -192,6 +204,22 @@ fun BoxWithConstraintsScope.AccountModal(
         ) {
             amountModalVisible = true
         }
+
+        if (account != null && categories.isNotEmpty()) {
+            Spacer(Modifier.height(16.dp))
+            AccountCategoriesSection(
+                categories = categories,
+                selectedIds = selectedCategoryIds,
+                onToggle = { id ->
+                    selectedCategoryIds = if (id in selectedCategoryIds) {
+                        selectedCategoryIds - id
+                    } else {
+                        selectedCategoryIds + id
+                    }
+                },
+            )
+            Spacer(Modifier.height(24.dp))
+        }
     }
 
     val amountModalId = remember(visible, amount) {
@@ -215,6 +243,7 @@ fun BoxWithConstraintsScope.AccountModal(
                 color = color,
                 icon = icon,
                 amount = newAmount,
+                visibleCategoryIds = selectedCategoryIds.takeIf { account != null },
 
                 onCreateAccount = onCreateAccount,
                 onEditAccount = onEditAccount,
@@ -240,6 +269,7 @@ private fun save(
     color: Color,
     icon: String?,
     amount: Double,
+    visibleCategoryIds: Set<UUID>?,
 
     onCreateAccount: (AccountModalSaveData) -> Unit,
     onEditAccount: (accountId: UUID, data: AccountModalSaveData) -> Unit,
@@ -252,6 +282,7 @@ private fun save(
         icon = icon,
         balance = amount,
         includeInBalance = true,
+        visibleCategoryIds = visibleCategoryIds,
     )
     if (account != null) {
         onEditAccount(account.id, data)
@@ -479,6 +510,100 @@ private fun AccountColorItem(
     }
 
     Spacer(Modifier.width(if (selected) 16.dp else 24.dp))
+}
+
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+private fun ColumnScope.AccountCategoriesSection(
+    categories: List<CategoryModalCategory>,
+    selectedIds: Set<UUID>,
+    onToggle: (UUID) -> Unit,
+) {
+    Text(
+        modifier = Modifier.padding(horizontal = 32.dp),
+        text = "该账户可用类别",
+        style = AccountModalTheme.typo.b2.copy(
+            color = AccountModalTheme.colors.pureInverse,
+            fontWeight = FontWeight.ExtraBold,
+            textAlign = TextAlign.Start
+        )
+    )
+
+    Spacer(Modifier.height(4.dp))
+
+    Text(
+        modifier = Modifier.padding(horizontal = 32.dp),
+        text = "勾选的类别会在该账户记账时默认显示，其余收在“全部类别”里",
+        style = AccountModalTheme.typo.b2.copy(
+            color = AccountModalTheme.colors.gray,
+            fontWeight = FontWeight.Normal,
+            fontSize = 12.sp,
+            textAlign = TextAlign.Start
+        )
+    )
+
+    Spacer(Modifier.height(16.dp))
+
+    FlowRow(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 32.dp),
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+    ) {
+        categories.forEach { category ->
+            CategoryToggleChip(
+                category = category,
+                selected = category.id in selectedIds,
+                onClick = { onToggle(category.id) },
+            )
+        }
+    }
+}
+
+@Composable
+private fun CategoryToggleChip(
+    category: CategoryModalCategory,
+    selected: Boolean,
+    onClick: () -> Unit,
+) {
+    val categoryColor = Color(category.color)
+    val textColor = if (selected) categoryColor.dynamicContrast() else AccountModalTheme.colors.pureInverse
+    val medium = AccountModalTheme.colors.medium
+    val rFull = AccountModalTheme.shapes.rFull
+
+    Row(
+        modifier = Modifier
+            .clip(rFull)
+            .thenIf(selected) {
+                background(categoryColor, rFull)
+            }
+            .thenIf(!selected) {
+                border(2.dp, medium, rFull)
+            }
+            .clickable(onClick = onClick)
+            .padding(vertical = 8.dp, horizontal = 14.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        if (!selected) {
+            Box(
+                modifier = Modifier
+                    .size(10.dp)
+                    .clip(CircleShape)
+                    .background(categoryColor, CircleShape)
+            )
+            Spacer(Modifier.width(8.dp))
+        }
+        Text(
+            text = category.name,
+            style = AccountModalTheme.typo.b2.copy(
+                color = textColor,
+                fontWeight = FontWeight.SemiBold,
+                fontSize = 13.sp,
+                textAlign = TextAlign.Start,
+            ),
+        )
+    }
 }
 
 private val Ivy = Color(0xFF6B4DFF)

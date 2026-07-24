@@ -45,6 +45,7 @@ import com.ivy.ui.platform.Toaster
 import com.ivy.ui.preferences.asEnabledState
 import com.ivy.domain.usecase.tag.RemoveTagFromTransactionUseCase
 import com.ivy.domain.usecase.tag.SaveTagUseCase
+import com.ivy.domain.usecase.account.AddCategoryToAccountUseCase
 import com.ivy.domain.usecase.account.CreateAccountWithBalanceUseCase
 import com.ivy.domain.usecase.account.GetLastSelectedAccountIdUseCase
 import com.ivy.domain.usecase.transaction.DeleteTransactionUseCase
@@ -99,6 +100,7 @@ internal class EditTransactionViewModel @Inject internal constructor(
     private val createCategoryUseCase: CreateCategoryUseCase,
     private val updateCategoryUseCase: UpdateCategoryUseCase,
     private val createAccountWithBalanceUseCase: CreateAccountWithBalanceUseCase,
+    private val addCategoryToAccountUseCase: AddCategoryToAccountUseCase,
     private val payOrSkipPlannedTransactionByIdUseCase: PayOrSkipPlannedTransactionByIdUseCase,
     private val suggestTransactionTitlesUseCase: SuggestTransactionTitlesUseCase,
     private val updateAssociatedLoanDataUseCase: UpdateAssociatedLoanDataUseCase,
@@ -673,9 +675,31 @@ internal class EditTransactionViewModel @Inject internal constructor(
         )
         category = newCategory
 
+        // Picking (or creating) a category on this account means it now belongs to it, so it
+        // shows up by default next time. Global category analytics are unaffected.
+        if (categoryId != null) {
+            addCategoryToCurrentAccount(categoryId)
+        }
+
         saveIfEditMode()
 
         updateTitleSuggestions()
+    }
+
+    private fun addCategoryToCurrentAccount(categoryId: CategoryId) {
+        val currentAccount = account ?: return
+        if (currentAccount.visibleCategoryIds.contains(categoryId.value)) return
+
+        val updatedAccount = currentAccount.copy(
+            visibleCategoryIds = currentAccount.visibleCategoryIds + categoryId.value
+        )
+        account = updatedAccount
+        accounts = accounts.map { if (it.id == updatedAccount.id) updatedAccount else it }
+            .toImmutableList()
+
+        viewModelScope.launch(Dispatchers.IO) {
+            addCategoryToAccountUseCase(AccountId(currentAccount.id), categoryId)
+        }
     }
 
     private fun updateTitleSuggestions(title: String? = loadedTransaction().title) {

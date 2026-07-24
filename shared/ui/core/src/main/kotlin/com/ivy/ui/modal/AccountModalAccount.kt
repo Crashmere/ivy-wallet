@@ -9,4 +9,5 @@ data class AccountModalAccount(
     val currency: String?,
     val icon: String?,
     val includeInBalance: Boolean,
+    val visibleCategoryIds: Set<UUID> = emptySet(),
 )

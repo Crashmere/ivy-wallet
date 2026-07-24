@@ -7,10 +7,12 @@ import com.ivy.data.api.CurrencyStore
 import com.ivy.data.db.entity.AccountEntity
 import com.ivy.data.model.Account
 import com.ivy.data.model.AccountId
+import com.ivy.data.model.CategoryId
 import com.ivy.data.model.primitive.AssetCode
 import com.ivy.data.model.primitive.ColorInt
 import com.ivy.data.model.primitive.IconAsset
 import com.ivy.data.model.primitive.NotBlankTrimmedString
+import java.util.UUID
 import javax.inject.Inject
 
 internal class AccountMapper @Inject internal constructor(
@@ -28,6 +30,7 @@ internal class AccountMapper @Inject internal constructor(
             icon = icon?.let(IconAsset::from)?.getOrNull(),
             includeInBalance = includeInBalance,
             orderNum = orderNum,
+            visibleCategories = parseCategoryIds(visibleCategoryIdsSerialized),
         )
     }
 
@@ -39,7 +42,17 @@ internal class AccountMapper @Inject internal constructor(
             icon = icon?.id,
             orderNum = orderNum,
             includeInBalance = includeInBalance,
+            visibleCategoryIdsSerialized = visibleCategories
+                .takeIf { it.isNotEmpty() }
+                ?.joinToString(separator = ",") { it.value.toString() },
             id = id.value,
         )
+    }
+
+    private fun parseCategoryIds(serialized: String?): List<CategoryId> {
+        if (serialized.isNullOrBlank()) return emptyList()
+        return serialized.split(",").mapNotNull { raw ->
+            runCatching { CategoryId(UUID.fromString(raw.trim())) }.getOrNull()
+        }
     }
 }

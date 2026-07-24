@@ -18,6 +18,7 @@ import com.ivy.domain.usecase.category.CreateCategoryUseCase
 import com.ivy.domain.usecase.category.GetCategorySortOrderPreferenceUseCase
 import com.ivy.domain.usecase.category.GetCategoryMonthlyStatsUseCase
 import com.ivy.domain.usecase.category.SetCategorySortOrderPreferenceUseCase
+import com.ivy.domain.usecase.account.GetAccountsUseCase
 import com.ivy.data.model.CreateCategoryData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
@@ -38,6 +39,7 @@ internal class CategoriesViewModel @Inject internal constructor(
     private val setCategorySortOrderPreference: SetCategorySortOrderPreferenceUseCase,
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
     private val getCategoryMonthlyStatsUseCase: GetCategoryMonthlyStatsUseCase,
+    private val getAccountsUseCase: GetAccountsUseCase,
     private val preferenceToggles: PreferenceToggleCatalog,
     private val preferenceToggleService: PreferenceToggleService,
 ) : ComposeViewModel<CategoriesScreenState, CategoriesScreenEvent>() {
@@ -45,6 +47,8 @@ internal class CategoriesViewModel @Inject internal constructor(
     private val baseCurrency = mutableStateOf("")
     private val categories =
         mutableStateOf<ImmutableList<CategoryData>>(persistentListOf<CategoryData>())
+    private val accounts =
+        mutableStateOf<ImmutableList<CategoryAccountHeader>>(persistentListOf())
     private val searchQuery = mutableStateOf("")
     private val reorderModalVisible = mutableStateOf(false)
     private val sortModalVisible = mutableStateOf(false)
@@ -63,6 +67,7 @@ internal class CategoriesViewModel @Inject internal constructor(
         return CategoriesScreenState(
             baseCurrency = getBaseCurrency(),
             categories = getCategories(),
+            accounts = getAccounts(),
             reorderModalVisible = getReorderModalVisible(),
             sortOrder = getSortOrder(),
             sortModalVisible = getSortModalVisible(),
@@ -104,6 +109,11 @@ internal class CategoriesViewModel @Inject internal constructor(
                 searchQuery.value.lowercase().trim() in it.category.name.toString().lowercase()
             }.toImmutableList()
         }
+    }
+
+    @Composable
+    private fun getAccounts(): ImmutableList<CategoryAccountHeader> {
+        return accounts.value
     }
 
     @Composable
@@ -158,7 +168,24 @@ internal class CategoriesViewModel @Inject internal constructor(
 
             val sortedList = sortList(categories, sortOrder.value).toImmutableList()
             this@CategoriesViewModel.categories.value = sortedList
+            loadAccounts()
         }
+    }
+
+    private suspend fun loadAccounts() {
+        accounts.value = getAccountsUseCase()
+            .sortedBy { it.orderNum }
+            .map { account ->
+                CategoryAccountHeader(
+                    id = account.id.value,
+                    name = account.name.value,
+                    color = account.color.value,
+                    icon = account.icon?.id,
+                    orderNum = account.orderNum,
+                    categoryIds = account.visibleCategories.mapTo(mutableSetOf()) { it.value },
+                )
+            }
+            .toImmutableList()
     }
 
     private fun updateSearchQuery(queryString: String) {
