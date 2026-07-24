@@ -47,6 +47,7 @@ import com.ivy.data.db.migration.Migration131to132_DropTagSyncTime
 import com.ivy.data.db.migration.Migration132to133_DropIsSynced
 import com.ivy.data.db.migration.Migration133to134_DropUnusedSettingsFields
 import com.ivy.data.db.migration.Migration134to135_AccountVisibleCategories
+import com.ivy.data.db.migration.Migration135to136_CategoryColorContrast
 import com.ivy.data.db.migration.Migration105to106_TransactionRecurringRules
 import com.ivy.data.db.migration.Migration106to107_Wishlist
 import com.ivy.data.db.migration.Migration107to108_Sync
@@ -80,7 +81,7 @@ import com.ivy.data.db.migration.Migration125to126_Tags
             spec = IvyRoomDatabase.DeleteSEMigration::class
         )
     ],
-    version = 135,
+    version = 136,
     exportSchema = true
 )
 @TypeConverters(RoomTypeConverters::class)
@@ -141,7 +142,8 @@ internal abstract class IvyRoomDatabase : RoomDatabase() {
             Migration131to132_DropTagSyncTime(),
             Migration132to133_DropIsSynced(),
             Migration133to134_DropUnusedSettingsFields(),
-            Migration134to135_AccountVisibleCategories()
+            Migration134to135_AccountVisibleCategories(),
+            Migration135to136_CategoryColorContrast()
         )
 
         @Suppress("SpreadOperator")
