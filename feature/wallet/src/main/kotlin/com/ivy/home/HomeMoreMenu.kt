@@ -71,7 +71,6 @@ private fun colorLerp(start: Color, end: Color, fraction: Float): Color {
 internal enum class MoreMenuDestination {
     Search,
     Settings,
-    Categories,
     PlannedPayments,
     Reports,
     Budgets,
@@ -361,13 +360,11 @@ private fun QuickAccess(
     showLoans: Boolean,
     onDestinationClick: (MoreMenuDestination) -> Unit
 ) {
-    val categoriesLabel = stringResource(R.string.categories)
     val plannedPaymentsLabel = stringResource(R.string.planned_payments)
     val budgetsLabel = stringResource(R.string.budgets)
     val loansLabel = stringResource(R.string.loans)
 
     val items = buildList {
-        add(QuickAccessItem(R.drawable.home_more_menu_categories, categoriesLabel, MoreMenuDestination.Categories))
         add(QuickAccessItem(R.drawable.home_more_menu_bulk_edit, "批量修改", MoreMenuDestination.BulkEdit))
         if (showPlannedPayments) {
             add(

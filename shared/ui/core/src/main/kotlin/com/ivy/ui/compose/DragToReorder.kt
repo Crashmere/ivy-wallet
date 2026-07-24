@@ -178,12 +178,16 @@ fun LazyItemScope.DraggableItem(
 ) {
     val currentIndex by rememberUpdatedState(index)
     val dragging = index == dragDropState.draggingItemIndex
-    val draggingModifier = if (dragging) {
-        Modifier
+    val draggingModifier = when {
+        dragging -> Modifier
             .zIndex(1f)
             .graphicsLayer { translationY = dragDropState.draggingItemOffset }
-    } else {
-        Modifier.animateItemPlacement()
+        // Only reflow-animate siblings while a drag is actually in progress. Otherwise a plain
+        // content-size change elsewhere in the list (e.g. an expandable row collapsing) makes some
+        // rows animate their placement while freshly-composed rows snap into place — looking janky.
+        // When idle we let the list re-lay-out naturally so the whole column moves together.
+        dragDropState.draggingItemIndex != null -> Modifier.animateItemPlacement()
+        else -> Modifier
     }
     Column(
         modifier = modifier

@@ -74,7 +74,6 @@ import com.ivy.ui.compose.verticalSwipeListener
 import com.ivy.ui.navigation.BalanceScreen
 import com.ivy.ui.navigation.BudgetScreen
 import com.ivy.ui.navigation.BulkEditScreen
-import com.ivy.ui.navigation.CategoriesScreen
 import com.ivy.ui.navigation.EditPlannedScreen
 import com.ivy.ui.navigation.EditTransactionScreen
 import com.ivy.ui.navigation.LoansScreen
@@ -168,7 +167,6 @@ fun BoxWithConstraintsScope.HomeTab(
             when (destination) {
                 MoreMenuDestination.Search -> nav.navigateTo(SearchScreen)
                 MoreMenuDestination.Settings -> nav.navigateTo(SettingsScreen)
-                MoreMenuDestination.Categories -> nav.navigateTo(CategoriesScreen)
                 MoreMenuDestination.PlannedPayments -> nav.navigateTo(PlannedPaymentsScreen)
                 MoreMenuDestination.Reports -> nav.navigateTo(ReportScreen)
                 MoreMenuDestination.Budgets -> nav.navigateTo(BudgetScreen)

@@ -19,12 +19,14 @@ import com.ivy.domain.usecase.category.GetCategorySortOrderPreferenceUseCase
 import com.ivy.domain.usecase.category.GetCategoryMonthlyStatsUseCase
 import com.ivy.domain.usecase.category.SetCategorySortOrderPreferenceUseCase
 import com.ivy.domain.usecase.account.GetAccountsUseCase
+import com.ivy.domain.usecase.account.ObserveAccountChangesUseCase
 import com.ivy.data.model.CreateCategoryData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -40,9 +42,21 @@ internal class CategoriesViewModel @Inject internal constructor(
     private val getBaseCurrencyCode: GetBaseCurrencyCodeUseCase,
     private val getCategoryMonthlyStatsUseCase: GetCategoryMonthlyStatsUseCase,
     private val getAccountsUseCase: GetAccountsUseCase,
+    private val observeAccountChangesUseCase: ObserveAccountChangesUseCase,
     private val preferenceToggles: PreferenceToggleCatalog,
     private val preferenceToggleService: PreferenceToggleService,
 ) : ComposeViewModel<CategoriesScreenState, CategoriesScreenEvent>() {
+
+    init {
+        // Keep the (now account-grouped) list fresh when accounts or their category
+        // assignments change while this VM is alive — e.g. from the merged Accounts tab.
+        viewModelScope.launch {
+            observeAccountChangesUseCase().collectLatest {
+                initialise()
+                loadCategories()
+            }
+        }
+    }
 
     private val baseCurrency = mutableStateOf("")
     private val categories =
