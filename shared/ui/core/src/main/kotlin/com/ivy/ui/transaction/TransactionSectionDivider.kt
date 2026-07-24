@@ -110,7 +110,7 @@ private fun SectionDividerIncomeExpenseRow(
         if (expenses > 0) {
             Text(
                 modifier = Modifier.testTag("upcoming_expense"),
-                text = "${formatAmount(expenses, baseCurrency)} $baseCurrency",
+                text = formatAmount(expenses, baseCurrency),
                 style = TransactionListTheme.typo.nC.copy(
                     fontWeight = FontWeight.ExtraBold,
                     color = TransactionListTheme.colors.pureInverse,
@@ -139,7 +139,7 @@ private fun SectionDividerIncomeExpenseRow(
         if (income > 0) {
             Text(
                 modifier = Modifier.testTag("upcoming_income"),
-                text = "${formatAmount(income, baseCurrency)} $baseCurrency",
+                text = formatAmount(income, baseCurrency),
                 style = TransactionListTheme.typo.nC.copy(
                     fontWeight = FontWeight.ExtraBold,
                     color = TransactionListTheme.colors.green,

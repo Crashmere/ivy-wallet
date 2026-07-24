@@ -25,7 +25,6 @@ import com.ivy.domain.usecase.account.GetAccountsUseCase
 import com.ivy.domain.usecase.currency.GetBaseCurrencyCodeUseCase
 import com.ivy.domain.usecase.currency.SetBaseCurrencyUseCase
 import com.ivy.domain.usecase.csv.ExportCsvUseCase
-import com.ivy.domain.usecase.exchange.SyncExchangeRatesUseCase
 import com.ivy.domain.usecase.settings.GetAppLockEnabledPreferenceUseCase
 import com.ivy.domain.usecase.settings.GetHideCurrentBalancePreferenceUseCase
 import com.ivy.domain.usecase.settings.GetHideIncomePreferenceUseCase
@@ -89,7 +88,6 @@ internal class SettingsViewModel @Inject internal constructor(
     private val setShowNotificationsPreference: SetShowNotificationsPreferenceUseCase,
     private val getTransfersAsIncomeExpensePreference: GetTransfersAsIncomeExpensePreferenceUseCase,
     private val setTransfersAsIncomeExpensePreference: SetTransfersAsIncomeExpensePreferenceUseCase,
-    private val syncExchangeRatesUseCase: SyncExchangeRatesUseCase,
     private val preferenceToggles: PreferenceToggleCatalog,
     private val preferenceToggleService: PreferenceToggleService,
     private val filePicker: FilePicker,
@@ -425,7 +423,6 @@ internal class SettingsViewModel @Inject internal constructor(
         viewModelScope.launch {
             val assetCode = AssetCode.from(newCurrency).getOrNull() ?: return@launch
             setBaseCurrency(assetCode)
-            syncExchangeRatesUseCase.sync(assetCode)
         }
     }
 

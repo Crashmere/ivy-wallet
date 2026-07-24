@@ -105,7 +105,7 @@ private fun PlannedPaymentIncomeExpenseRow(
         if (expenses > 0) {
             Text(
                 modifier = Modifier.testTag("planned_payment_section_expense"),
-                text = "${expenses.format(baseCurrency)} $baseCurrency",
+                text = expenses.format(baseCurrency),
                 style = PlannedTheme.typo.nC.copy(
                     fontWeight = FontWeight.ExtraBold,
                     color = PlannedTheme.colors.pureInverse,
@@ -134,7 +134,7 @@ private fun PlannedPaymentIncomeExpenseRow(
         if (income > 0) {
             Text(
                 modifier = Modifier.testTag("planned_payment_section_income"),
-                text = "${income.format(baseCurrency)} $baseCurrency",
+                text = income.format(baseCurrency),
                 style = PlannedTheme.typo.nC.copy(
                     fontWeight = FontWeight.ExtraBold,
                     color = PlannedTheme.colors.green,

@@ -116,7 +116,7 @@ internal fun BudgetBattery(
             Spacer(Modifier.height(2.dp))
 
             Text(
-                text = "${expenses.format(currency)}/${budget.format(currency)} $currency",
+                text = "${expenses.format(currency)}/${budget.format(currency)}",
                 style = BudgetsTheme.typo.nC.copy(
                     fontWeight = FontWeight.ExtraBold,
                     color = captionTextColor,
@@ -140,15 +140,6 @@ private fun BudgetAmountCurrencyRow(
             text = amount.format(currency),
             style = BudgetsTheme.typo.nB2.copy(
                 fontWeight = FontWeight.ExtraBold,
-                color = textColor,
-                textAlign = TextAlign.Start
-            )
-        )
-        Spacer(modifier = Modifier.width(4.dp))
-        Text(
-            text = currency,
-            style = BudgetsTheme.typo.nB2.copy(
-                fontWeight = FontWeight.Normal,
                 color = textColor,
                 textAlign = TextAlign.Start
             )

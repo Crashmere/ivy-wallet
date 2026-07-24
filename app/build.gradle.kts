@@ -23,7 +23,9 @@ android {
     }
 
     androidResources {
-        generateLocaleConfig = true
+        // No in-app / system language switching in this build; the app is
+        // pinned to Simplified Chinese in code (see RootActivity/IvyAndroidApp).
+        generateLocaleConfig = false
     }
 
     signingConfigs {

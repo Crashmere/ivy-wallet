@@ -133,14 +133,5 @@ private fun HomeBufferAmountCurrencyRow(
                 textAlign = TextAlign.Start
             )
         )
-        Spacer(modifier = Modifier.width(4.dp))
-        Text(
-            text = currency,
-            style = HomeTheme.typo.nB2.copy(
-                fontWeight = FontWeight.Normal,
-                color = textColor,
-                textAlign = TextAlign.Start
-            )
-        )
     }
 }

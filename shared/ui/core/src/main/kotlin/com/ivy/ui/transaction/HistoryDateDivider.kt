@@ -65,7 +65,7 @@ internal fun HistoryDateDivider(
         val cashflow = income - expenses
         val sign = if (cashflow >= 0) "+" else "-"
         Text(
-            text = "$sign${formatAmount(cashflow.absoluteValue, baseCurrency)} $baseCurrency",
+            text = "$sign${formatAmount(cashflow.absoluteValue, baseCurrency)}",
             style = TransactionListTheme.typo.nC.copy(
                 fontWeight = FontWeight.Bold,
                 color = when {

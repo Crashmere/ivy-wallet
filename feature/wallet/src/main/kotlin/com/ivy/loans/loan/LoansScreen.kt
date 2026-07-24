@@ -348,7 +348,7 @@ private fun LoanItem(
             Spacer(Modifier.width(12.dp))
 
             Text(
-                text = "${formatAmount(leftToPay, currency)} $currency",
+                text = formatAmount(leftToPay, currency),
                 style = LoansTheme.typo.nB2.copy(
                     color = LoansTheme.colors.pureInverse,
                     fontWeight = FontWeight.ExtraBold,

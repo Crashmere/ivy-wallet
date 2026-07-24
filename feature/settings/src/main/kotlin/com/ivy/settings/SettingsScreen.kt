@@ -53,7 +53,6 @@ import com.ivy.data.model.GitHubBackupConfig
 import com.ivy.data.model.Theme
 import com.ivy.ui.compose.thenIf
 import com.ivy.ui.compose.drawColoredShadow
-import com.ivy.ui.navigation.ExchangeRatesScreen
 import com.ivy.ui.navigation.ImportScreen
 import com.ivy.ui.navigation.MainScreen
 import com.ivy.ui.navigation.navigation
@@ -61,18 +60,15 @@ import com.ivy.ui.navigation.screenScopedViewModel
 import com.ivy.ui.platform.buildInfoProvider
 import com.ivy.ui.platform.fileSharer
 import com.ivy.ui.R
-import com.ivy.data.model.currency.IvyCurrency
 import com.ivy.ui.theme.colors.Gradient
 import com.ivy.ui.theme.colors.IvyGradients
 import com.ivy.ui.theme.colors.IvyFixedColors
 import com.ivy.ui.theme.colors.IvyFixedColors.White
-import com.ivy.ui.modal.CurrencyModal
 import com.ivy.ui.modal.DeleteModal
 import com.ivy.ui.modal.ProgressModal
 import java.time.Instant
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
-import java.util.Locale
 
 private enum class SettingsPage(@StringRes val title: Int) {
     Main(R.string.settings),
@@ -123,7 +119,6 @@ private fun BoxWithConstraintsScope.SettingsScreenContent(embedded: Boolean) {
     }
 
     UI(
-        currencyCode = uiState.currencyCode,
         accountsCount = uiState.accountsCount,
         theme = uiState.currentTheme,
         onSwitchTheme = {
@@ -147,10 +142,6 @@ private fun BoxWithConstraintsScope.SettingsScreenContent(embedded: Boolean) {
         showBudgetsQuickAccess = uiState.showBudgetsQuickAccess,
         showLoansQuickAccess = uiState.showLoansQuickAccess,
         startDateOfMonth = uiState.startDateOfMonth.toInt(),
-        languageOptionVisible = uiState.languageOptionVisible,
-        onSetCurrency = {
-            viewModel.onEvent(SettingsEvent.SetCurrency(it))
-        },
         onBackupData = {
             viewModel.onEvent(SettingsEvent.BackupData)
         },
@@ -228,15 +219,9 @@ private fun BoxWithConstraintsScope.SettingsScreenContent(embedded: Boolean) {
         onDeleteAllUserData = {
             viewModel.onEvent(SettingsEvent.DeleteAllUserData)
         },
-        onSwitchLanguage = {
-            viewModel.onEvent(SettingsEvent.SwitchLanguage)
-        },
         onBack = nav::back,
         onOpenImport = {
             nav.navigateTo(ImportScreen)
-        },
-        onOpenExchangeRates = {
-            nav.navigateTo(ExchangeRatesScreen)
         },
         embedded = embedded,
     )
@@ -246,13 +231,10 @@ private fun BoxWithConstraintsScope.SettingsScreenContent(embedded: Boolean) {
 @Composable
 @Suppress("LongMethod")
 private fun BoxWithConstraintsScope.UI(
-    currencyCode: String,
     accountsCount: Int = 0,
     theme: Theme,
     onSwitchTheme: () -> Unit,
     lockApp: Boolean,
-    languageOptionVisible: Boolean,
-    onSetCurrency: (String) -> Unit,
     startDateOfMonth: Int = 1,
     showNotifications: Boolean = true,
     hideCurrentBalance: Boolean = false,
@@ -297,13 +279,10 @@ private fun BoxWithConstraintsScope.UI(
     onSetShowLoansQuickAccess: (Boolean) -> Unit = {},
     onSetStartDateOfMonth: (Int) -> Unit = {},
     onDeleteAllUserData: () -> Unit = {},
-    onSwitchLanguage: () -> Unit = {},
     onBack: () -> Unit = {},
     onOpenImport: () -> Unit = {},
-    onOpenExchangeRates: () -> Unit = {},
     embedded: Boolean = false,
 ) {
-    var currencyModalVisible by remember { mutableStateOf(false) }
     var chooseStartDateOfMonthVisible by remember { mutableStateOf(false) }
     var deleteAllDataModalVisible by remember { mutableStateOf(false) }
     var deleteAllDataModalFinalVisible by remember { mutableStateOf(false) }
@@ -384,17 +363,12 @@ private fun BoxWithConstraintsScope.UI(
 
                 item {
                     GeneralSection(
-                        currencyCode = currencyCode,
                         startDateOfMonth = startDateOfMonth,
                         lockApp = lockApp,
                         showNotifications = showNotifications,
-                        languageOptionVisible = languageOptionVisible,
-                        onCurrencyClick = { currencyModalVisible = true },
                         onStartDateClick = { chooseStartDateOfMonthVisible = true },
                         onSetLockApp = onSetLockApp,
                         onSetShowNotifications = onSetShowNotifications,
-                        onSwitchLanguage = onSwitchLanguage,
-                        onExchangeRatesClick = onOpenExchangeRates,
                         onOpenDisplayPreferences = { settingsPage = SettingsPage.DisplayPreferences },
                         onOpenInputAndLists = { settingsPage = SettingsPage.InputAndLists },
                     )
@@ -472,15 +446,6 @@ private fun BoxWithConstraintsScope.UI(
         item {
             Spacer(modifier = Modifier.height(120.dp)) // last item spacer
         }
-    }
-
-    CurrencyModal(
-        title = stringResource(R.string.set_currency),
-        initialCurrency = IvyCurrency.fromCode(currencyCode),
-        visible = currencyModalVisible,
-        dismiss = { currencyModalVisible = false }
-    ) {
-        onSetCurrency(it)
     }
 
     SettingsStartDateOfMonthModal(
@@ -815,17 +780,12 @@ private fun ProfileHeroCard(
 
 @Composable
 private fun GeneralSection(
-    currencyCode: String,
     startDateOfMonth: Int,
     lockApp: Boolean,
     showNotifications: Boolean,
-    languageOptionVisible: Boolean,
-    onCurrencyClick: () -> Unit,
     onStartDateClick: () -> Unit,
     onSetLockApp: (Boolean) -> Unit,
     onSetShowNotifications: (Boolean) -> Unit,
-    onSwitchLanguage: () -> Unit,
-    onExchangeRatesClick: () -> Unit,
     onOpenDisplayPreferences: () -> Unit,
     onOpenInputAndLists: () -> Unit,
 ) {
@@ -833,36 +793,8 @@ private fun GeneralSection(
 
     Spacer(Modifier.height(16.dp))
 
-    CurrencyButton(currency = currencyCode) {
-        onCurrencyClick()
-    }
-
-    Spacer(Modifier.height(12.dp))
-
     StartDateOfMonth(startDateOfMonth = startDateOfMonth) {
         onStartDateClick()
-    }
-
-    Spacer(Modifier.height(12.dp))
-
-    if (languageOptionVisible) {
-        SettingsDefaultButton(
-            icon = R.drawable.ic_vue_location_global,
-            iconPadding = 6.dp,
-            text = stringResource(R.string.language),
-            description = Locale.getDefault().displayName
-        ) {
-            onSwitchLanguage()
-        }
-
-        Spacer(Modifier.height(12.dp))
-    }
-
-    SettingsDefaultButton(
-        icon = R.drawable.ic_currency,
-        text = stringResource(R.string.exchange_rates),
-    ) {
-        onExchangeRatesClick()
     }
 
     Spacer(Modifier.height(12.dp))
@@ -1381,62 +1313,6 @@ private fun SettingsButtonRow(
         verticalAlignment = Alignment.CenterVertically
     ) {
         content()
-    }
-}
-
-@Composable
-private fun CurrencyButton(
-    currency: String,
-    onClick: () -> Unit
-) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp)
-            .clip(SettingsTheme.shapes.r4)
-            .border(2.dp, SettingsTheme.colors.medium, SettingsTheme.shapes.r4)
-            .clickable {
-                onClick()
-            },
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Spacer(Modifier.width(12.dp))
-
-        SettingsIcon(
-            icon = R.drawable.ic_currency,
-            padding = 0.dp
-        )
-
-        Spacer(Modifier.width(8.dp))
-
-        Text(
-            modifier = Modifier.padding(vertical = 14.dp),
-            text = stringResource(R.string.set_currency),
-            style = SettingsTheme.typo.b2.copy(
-                color = SettingsTheme.colors.pureInverse,
-                fontWeight = FontWeight.Bold,
-                textAlign = TextAlign.Start
-            )
-        )
-
-        Spacer(Modifier.weight(1f))
-
-        Text(
-            text = currency,
-            style = SettingsTheme.typo.b1.copy(
-                color = SettingsTheme.colors.pureInverse,
-                fontWeight = FontWeight.ExtraBold,
-                textAlign = TextAlign.Start
-            )
-        )
-
-        Spacer(Modifier.height(4.dp))
-
-        SettingsIcon(
-            icon = R.drawable.ic_arrow_right,
-        )
-
-        Spacer(Modifier.width(24.dp))
     }
 }
 

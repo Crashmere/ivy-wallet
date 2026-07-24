@@ -1501,7 +1501,7 @@ private fun BreakdownRow(
             )
             Spacer(Modifier.width(10.dp))
             Text(
-                text = "${item.amount.format(baseCurrency)} $baseCurrency",
+                text = item.amount.format(baseCurrency),
                 style = ReportsTheme.typo.c.copy(
                     color = ReportsTheme.colors.pureInverse,
                     fontWeight = FontWeight.Bold,

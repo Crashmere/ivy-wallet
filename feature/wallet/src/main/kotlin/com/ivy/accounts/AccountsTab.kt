@@ -268,7 +268,7 @@ private fun NetWorthCard(
                 Spacer(Modifier.width(8.dp))
 
                 Text(
-                    text = "${if (change >= 0) "▲" else "▼"} ${change.absoluteValue.format(currency)} $currency",
+                    text = "${if (change >= 0) "▲" else "▼"} ${change.absoluteValue.format(currency)}",
                     style = AccountsTheme.typo.c.copy(
                         color = if (change >= 0) Green else Red,
                         fontWeight = FontWeight.Bold,
@@ -339,18 +339,6 @@ private fun AccountCard(
                 style = AccountsTheme.typo.b2.copy(
                     color = AccountsTheme.colors.pureInverse,
                     fontWeight = FontWeight.ExtraBold,
-                    textAlign = TextAlign.Start
-                )
-            )
-
-            Spacer(Modifier.height(3.dp))
-
-            Text(
-                text = currency,
-                maxLines = 1,
-                style = AccountsTheme.typo.c.copy(
-                    color = secondaryColor,
-                    fontWeight = FontWeight.SemiBold,
                     textAlign = TextAlign.Start
                 )
             )

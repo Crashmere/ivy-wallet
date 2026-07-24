@@ -249,7 +249,7 @@ private fun AmountColumn(
 
     Column(horizontalAlignment = Alignment.End) {
         Text(
-            text = "$sign${formatAmount(amount, currency)} $currency",
+            text = "$sign${formatAmount(amount, currency)}",
             style = TransactionListTheme.typo.nB2.copy(
                 fontWeight = FontWeight.ExtraBold,
                 color = amountColor,
@@ -261,7 +261,7 @@ private fun AmountColumn(
         if (showToAmount) {
             Spacer(Modifier.height(2.dp))
             Text(
-                text = "${formatAmount(toAmount, toCurrency)} $toCurrency",
+                text = formatAmount(toAmount, toCurrency),
                 style = TransactionListTheme.typo.nC.copy(
                     color = Gray,
                     fontWeight = FontWeight.Normal,

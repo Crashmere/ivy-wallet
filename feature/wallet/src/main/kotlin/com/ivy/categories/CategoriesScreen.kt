@@ -490,7 +490,7 @@ private fun categorySubtitle(categoryData: CategoryData, currency: String): Stri
     } else {
         absNet.format(currency)
     }
-    return "本月 $prefix$amountStr $currency · $count 笔"
+    return "本月 $prefix$amountStr · $count 笔"
 }
 
 @Composable

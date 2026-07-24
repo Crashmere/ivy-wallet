@@ -618,15 +618,6 @@ private fun LoanInfoCard(
                 textAlign = TextAlign.Start
             )
         )
-        Text(
-            modifier = Modifier.padding(horizontal = 24.dp),
-            text = IvyCurrency.fromCode(baseCurrency)?.name ?: "",
-            style = LoansTheme.typo.b2.copy(
-                color = contrastColor,
-                fontWeight = FontWeight.Normal,
-                textAlign = TextAlign.Start
-            )
-        )
 
         Spacer(Modifier.height(12.dp))
 

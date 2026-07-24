@@ -242,7 +242,7 @@ internal fun CashFlowInfo(
                 text = if (hideBalance) {
                     "${stringResource(R.string.total_balance)} ****"
                 } else {
-                    "${stringResource(R.string.total_balance)} ${balance.format(currency)} $currency"
+                    "${stringResource(R.string.total_balance)} ${balance.format(currency)}"
                 },
                 style = HomeTheme.typo.c.copy(
                     color = White.copy(alpha = 0.85f),

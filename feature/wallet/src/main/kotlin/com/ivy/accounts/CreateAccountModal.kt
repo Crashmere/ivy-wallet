@@ -55,17 +55,14 @@ import com.ivy.ui.compose.thenIf
 import com.ivy.ui.icon.ItemIconMDefaultIcon
 import com.ivy.ui.modal.AmountModal
 import com.ivy.ui.modal.ChooseIconModal
-import com.ivy.ui.modal.CurrencyModal
 import com.ivy.ui.modal.IvyModal
 import com.ivy.ui.modal.ModalAdd
 import com.ivy.ui.modal.ModalAmountSection
 import com.ivy.ui.modal.ModalTitle
-import com.ivy.ui.money.currencyName
 import com.ivy.ui.platform.hideKeyboard
 import com.ivy.ui.theme.colors.IvyFixedColors
 import com.ivy.ui.theme.colors.dynamicContrast
 import kotlinx.coroutines.launch
-import java.util.Locale
 import java.util.UUID
 
 @Composable
@@ -93,7 +90,6 @@ internal fun BoxWithConstraintsScope.CreateAccountModal(
         mutableStateOf<String?>(null)
     }
     var amountModalVisible by remember { mutableStateOf(false) }
-    var currencyModalVisible by remember { mutableStateOf(false) }
     var chooseIconModalVisible by remember(visible) {
         mutableStateOf(false)
     }
@@ -154,15 +150,6 @@ internal fun BoxWithConstraintsScope.CreateAccountModal(
         Spacer(modifier = Modifier.height(40.dp))
 
         ModalAmountSection(
-            Header = {
-                Spacer(Modifier.height(16.dp))
-
-                AccountCurrency(
-                    currencyCode = currencyCode
-                ) {
-                    currencyModalVisible = true
-                }
-            },
             label = stringResource(R.string.enter_account_balance).uppercase(),
             currency = currencyCode,
             amount = amount,
@@ -187,15 +174,6 @@ internal fun BoxWithConstraintsScope.CreateAccountModal(
         amount = newAmount
     }
 
-    CurrencyModal(
-        title = stringResource(R.string.choose_currency),
-        initialCurrencyCode = currencyCode,
-        visible = currencyModalVisible,
-        dismiss = { currencyModalVisible = false }
-    ) {
-        currencyCode = it
-    }
-
     ChooseIconModal(
         visible = chooseIconModalVisible,
         initialIcon = icon ?: "account",
@@ -203,49 +181,6 @@ internal fun BoxWithConstraintsScope.CreateAccountModal(
         dismiss = { chooseIconModalVisible = false }
     ) {
         icon = it
-    }
-}
-
-@Composable
-private fun AccountCurrency(
-    currencyCode: String,
-    onClick: () -> Unit
-) {
-    Row(
-        modifier = Modifier
-            .padding(horizontal = 16.dp)
-            .background(AccountsTheme.colors.medium, AccountsTheme.shapes.r4)
-            .clip(AccountsTheme.shapes.r4)
-            .clickable {
-                onClick()
-            }
-            .padding(vertical = 24.dp)
-            .testTag("account_modal_currency"),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Spacer(Modifier.width(32.dp))
-
-        Text(
-            text = currencyCode.uppercase(Locale.getDefault()),
-            style = AccountsTheme.typo.b1.copy(
-                color = AccountsTheme.colors.pureInverse,
-                fontWeight = FontWeight.ExtraBold,
-                textAlign = TextAlign.Start
-            )
-        )
-
-        Spacer(Modifier.weight(1f))
-
-        Text(
-            text = "-${currencyName(currencyCode)}".lowercase(Locale.getDefault()),
-            style = AccountsTheme.typo.b2.copy(
-                fontWeight = FontWeight.SemiBold,
-                color = IvyFixedColors.Gray,
-                textAlign = TextAlign.Start
-            )
-        )
-
-        Spacer(Modifier.width(24.dp))
     }
 }
 

@@ -49,11 +49,9 @@ import com.ivy.ui.compose.onCompositionStart
 import com.ivy.ui.compose.selectEndTextFieldValue
 import com.ivy.ui.R
 import com.ivy.ui.compose.thenIf
-import java.util.Locale
 import java.util.UUID
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
-import com.ivy.ui.money.currencyName
 import com.ivy.ui.platform.hideKeyboard
 import com.ivy.ui.theme.colors.IvyFixedColors
 import com.ivy.ui.theme.colors.dynamicContrast
@@ -98,7 +96,6 @@ fun BoxWithConstraintsScope.AccountModal(
     }
 
     var amountModalVisible by remember { mutableStateOf(false) }
-    var currencyModalVisible by remember { mutableStateOf(false) }
     var chooseIconModalVisible by remember(visible, account) {
         mutableStateOf(false)
     }
@@ -186,15 +183,6 @@ fun BoxWithConstraintsScope.AccountModal(
         Spacer(modifier = Modifier.height(40.dp))
 
         ModalAmountSection(
-            Header = {
-                Spacer(Modifier.height(16.dp))
-
-                AccountCurrency(
-                    currencyCode = currencyCode
-                ) {
-                    currencyModalVisible = true
-                }
-            },
             label = stringResource(R.string.enter_account_balance).uppercase(),
             currency = currencyCode,
             amount = amount,
@@ -234,15 +222,6 @@ fun BoxWithConstraintsScope.AccountModal(
         }
     }
 
-    CurrencyModal(
-        title = stringResource(R.string.choose_currency),
-        initialCurrencyCode = currencyCode,
-        visible = currencyModalVisible,
-        dismiss = { currencyModalVisible = false }
-    ) {
-        currencyCode = it
-    }
-
     ChooseIconModal(
         visible = chooseIconModalVisible,
         initialIcon = icon ?: "account",
@@ -280,50 +259,6 @@ private fun save(
     }
 
     dismiss()
-}
-
-@Composable
-private fun AccountCurrency(
-    currencyCode: String,
-
-    onClick: () -> Unit
-) {
-    Row(
-        modifier = Modifier
-            .padding(horizontal = 16.dp)
-            .background(AccountModalTheme.colors.medium, AccountModalTheme.shapes.r4)
-            .clip(AccountModalTheme.shapes.r4)
-            .clickable {
-                onClick()
-            }
-            .padding(vertical = 24.dp)
-            .testTag("account_modal_currency"),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Spacer(Modifier.width(32.dp))
-
-        Text(
-            text = currencyCode.uppercase(Locale.getDefault()),
-            style = AccountModalTheme.typo.b1.copy(
-                color = AccountModalTheme.colors.pureInverse,
-                fontWeight = FontWeight.ExtraBold,
-                textAlign = TextAlign.Start
-            )
-        )
-
-        Spacer(Modifier.weight(1f))
-
-        Text(
-            text = "-${currencyName(currencyCode)}".lowercase(Locale.getDefault()),
-            style = AccountModalTheme.typo.b2.copy(
-                fontWeight = FontWeight.SemiBold,
-                color = IvyFixedColors.Gray,
-                textAlign = TextAlign.Start
-            )
-        )
-
-        Spacer(Modifier.width(24.dp))
-    }
 }
 
 @Composable

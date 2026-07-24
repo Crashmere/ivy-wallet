@@ -202,15 +202,6 @@ private fun AmountCurrency(
                 textAlign = TextAlign.Start
             )
         )
-        Spacer(Modifier.width(4.dp))
-        Text(
-            text = currency,
-            style = AmountModalTheme.typo.nH2.copy(
-                fontWeight = FontWeight.Normal,
-                color = AmountModalTheme.colors.pureInverse,
-                textAlign = TextAlign.Start
-            )
-        )
 
         Spacer(Modifier.weight(1f))
     }

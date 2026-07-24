@@ -203,7 +203,7 @@ private fun PlannedAmount(
     }
 
     Text(
-        text = "$sign${formatAmount(amount, currency)} $currency",
+        text = "$sign${formatAmount(amount, currency)}",
         style = PlannedTheme.typo.nB2.copy(
             fontWeight = FontWeight.ExtraBold,
             color = color,

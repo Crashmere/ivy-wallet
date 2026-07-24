@@ -1,5 +1,7 @@
 package com.ivy.wallet
 
+import android.content.Context
+import android.content.res.Configuration
 import android.os.Bundle
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.compose.setContent
@@ -27,6 +29,7 @@ import com.ivy.wallet.platform.registerActivityResultLaunchers
 import com.ivy.wallet.platform.registerMaterialDatePicker
 import com.ivy.wallet.security.RootAppLockHost
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.Locale
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -77,6 +80,17 @@ class RootActivity : AppCompatActivity() {
         override fun handleOnBackPressed() {
             handleRootBackPressed()
         }
+    }
+
+    override fun attachBaseContext(newBase: Context) {
+        // Single-language build: force the whole UI to Simplified Chinese
+        // regardless of the system language, so there is no way to switch.
+        val locale = Locale.SIMPLIFIED_CHINESE
+        Locale.setDefault(locale)
+        val config = Configuration(newBase.resources.configuration).apply {
+            setLocale(locale)
+        }
+        super.attachBaseContext(newBase.createConfigurationContext(config))
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
