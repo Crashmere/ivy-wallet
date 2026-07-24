@@ -1405,20 +1405,32 @@ private fun DailyBarChart(
     Canvas(modifier = modifier) {
         val count = bars.size
         if (count == 0) return@Canvas
-        val gap = if (count > 1) 3.dp.toPx() else 0f
-        val barWidth = ((size.width - gap * (count - 1)) / count).coerceAtLeast(1f)
         val chartHeight = size.height
+        val slotWidth = size.width / count
+        // Cap the bar width (and corner radius) and centre each bar in its day slot, so a filter
+        // that leaves only a few days can't inflate a single bar into a giant rounded blob.
+        val gap = 2.dp.toPx()
+        val maxBarWidth = 20.dp.toPx()
+        val barWidth = (slotWidth - gap).coerceIn(1f, maxBarWidth)
+        val radius = minOf(barWidth / 2f, 3.dp.toPx())
+        val minPositiveHeight = 3.dp.toPx()
+        val zeroBaseline = 2.dp.toPx()
 
         bars.forEachIndexed { index, bar ->
-            val barHeight = ((bar.amount / maxAmount).toFloat() * chartHeight)
-                .coerceIn(0f, chartHeight)
-            val x = index * (barWidth + gap)
+            val hasValue = bar.amount > 0.0
+            val barHeight = if (hasValue) {
+                ((bar.amount / maxAmount).toFloat() * chartHeight)
+                    .coerceIn(minPositiveHeight, chartHeight)
+            } else {
+                zeroBaseline
+            }
+            val x = index * slotWidth + (slotWidth - barWidth) / 2f
             val y = chartHeight - barHeight
             drawRoundRect(
-                color = if (bar.amount > 0.0) barColor else barColor.copy(alpha = 0.12f),
-                topLeft = Offset(x, if (bar.amount > 0.0) y else chartHeight - 2.dp.toPx()),
-                size = Size(barWidth, if (bar.amount > 0.0) barHeight else 2.dp.toPx()),
-                cornerRadius = CornerRadius(barWidth / 3f, barWidth / 3f),
+                color = if (hasValue) barColor else barColor.copy(alpha = 0.12f),
+                topLeft = Offset(x, y),
+                size = Size(barWidth, barHeight),
+                cornerRadius = CornerRadius(radius, radius),
             )
         }
     }

@@ -415,16 +415,19 @@ internal class ReportViewModel @Inject internal constructor(
             incomeByDay.value = persistentListOf()
             return
         }
-        val minDate = allDates.min()
-        val maxDate = allDates.max()
-        val span = ChronoUnit.DAYS.between(minDate, maxDate) + 1
-        val dates = if (span in 1..62) {
-            generateSequence(minDate) { it.plusDays(1) }
-                .takeWhile { !it.isAfter(maxDate) }
-                .toList()
-        } else {
-            allDates.sorted()
-        }
+        // Draw the trend across the whole selected period (not only the days that match the
+        // current filter), so applying a filter can't collapse the axis to a couple of huge
+        // bars. The end is clamped to today so an ongoing month doesn't trail into empty future
+        // days. Very large spans (e.g. all-time) fall back to the actual data range.
+        val today = LocalDate.now(zone)
+        val range = periodState.rangeOf(selectedPeriod.value)
+        val periodStart = range.from().atZone(zone).toLocalDate()
+        val periodEnd = minOf(range.to().atZone(zone).toLocalDate(), today)
+        val dataMin = allDates.min()
+        val dataMax = allDates.max()
+        val dates = daySequenceOrNull(minOf(periodStart, dataMin), maxOf(periodEnd, dataMax))
+            ?: daySequenceOrNull(dataMin, dataMax)
+            ?: allDates.sorted()
 
         expenseByDay.value = dates.map {
             DailyBar(label = it.dayOfMonth.toString(), amount = expenseByDate[it] ?: 0.0)
@@ -432,6 +435,19 @@ internal class ReportViewModel @Inject internal constructor(
         incomeByDay.value = dates.map {
             DailyBar(label = it.dayOfMonth.toString(), amount = incomeByDate[it] ?: 0.0)
         }.toImmutableList()
+    }
+
+    /**
+     * A day-by-day list from [start] to [end] inclusive, or null when the range is invalid or
+     * too wide to be a useful daily chart (callers then fall back to a narrower range).
+     */
+    private fun daySequenceOrNull(start: LocalDate, end: LocalDate): List<LocalDate>? {
+        if (end.isBefore(start)) return null
+        val span = ChronoUnit.DAYS.between(start, end) + 1
+        if (span !in 1..62) return null
+        return generateSequence(start) { it.plusDays(1) }
+            .takeWhile { !it.isAfter(end) }
+            .toList()
     }
 
     private fun Map<UUID?, Double>.toBreakdownItems(
