@@ -9,7 +9,6 @@ internal data class AccountsState(
     val accountsData: ImmutableList<AccountData>,
     val netWorth: Double,
     val netWorthChange: Double,
-    val reorderVisible: Boolean,
     val compactAccountsModeEnabled: Boolean,
     val hideTotalBalance: Boolean,
 )

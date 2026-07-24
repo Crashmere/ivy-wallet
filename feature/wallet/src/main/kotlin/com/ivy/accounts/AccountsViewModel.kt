@@ -48,7 +48,6 @@ internal class AccountsViewModel @Inject internal constructor(
     private var accountsData by mutableStateOf(listOf<AccountData>())
     private var netWorth by mutableStateOf(0.0)
     private var netWorthChange by mutableStateOf(0.0)
-    private var reorderVisible by mutableStateOf(false)
 
     init {
         viewModelScope.launch {
@@ -69,7 +68,6 @@ internal class AccountsViewModel @Inject internal constructor(
             accountsData = getAccountsData(),
             netWorth = getNetWorth(),
             netWorthChange = netWorthChange,
-            reorderVisible = getReorderVisible(),
             compactAccountsModeEnabled = getCompactAccountsMode(),
             hideTotalBalance = getHideTotalBalance()
         )
@@ -98,11 +96,6 @@ internal class AccountsViewModel @Inject internal constructor(
     }
 
     @Composable
-    private fun getReorderVisible(): Boolean {
-        return reorderVisible
-    }
-
-    @Composable
     private fun getCompactAccountsMode(): Boolean {
         val preference = preferenceToggles.compactAccountsMode
         return preferenceToggleService.enabledFlow(preference)
@@ -113,7 +106,6 @@ internal class AccountsViewModel @Inject internal constructor(
         viewModelScope.launch(Dispatchers.Default) {
             when (event) {
                 is AccountsEvent.OnReorder -> reorder(event.accountIds)
-                is AccountsEvent.OnReorderModalVisible -> reorderModalVisible(event.reorderVisible)
             }
         }
     }
@@ -166,9 +158,5 @@ internal class AccountsViewModel @Inject internal constructor(
         netWorth = totalBalance
         netWorthChange = totalBalance - netWorthLastMonth
         accountsData = accountsDataList
-    }
-
-    private fun reorderModalVisible(visible: Boolean) {
-        reorderVisible = visible
     }
 }

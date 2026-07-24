@@ -20,14 +20,18 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.drawscope.Stroke
@@ -41,9 +45,12 @@ import androidx.compose.ui.unit.sp
 import com.ivy.data.model.currency.format
 import com.ivy.data.model.currency.shortenAmount
 import com.ivy.data.model.currency.shouldShortAmount
+import com.ivy.ui.compose.DraggableItem
 import com.ivy.ui.compose.ResourceIcon
 import com.ivy.ui.compose.horizontalSwipeListener
+import com.ivy.ui.compose.rememberDragDropState
 import com.ivy.ui.compose.rememberSwipeListenerState
+import com.ivy.ui.compose.thenIf
 import com.ivy.ui.navigation.TransactionsScreen
 import com.ivy.ui.navigation.navigation
 import com.ivy.ui.navigation.screenScopedViewModel
@@ -51,7 +58,6 @@ import com.ivy.ui.R
 import com.ivy.ui.rememberScrollPositionListState
 import com.ivy.ui.money.BalanceRow
 import com.ivy.ui.icon.ItemIconSDefaultIcon
-import com.ivy.ui.modal.ReorderModalSingleType
 import com.ivy.ui.theme.colors.IvyGradients
 import com.ivy.ui.theme.colors.IvyFixedColors.Green
 import com.ivy.ui.theme.colors.IvyFixedColors.Red
@@ -87,6 +93,40 @@ private fun BoxWithConstraintsScope.UI(
         key = "accounts_lazy_column"
     )
 
+    // Local, mutable mirror of the accounts so a drag can rearrange rows live and only
+    // commit the final order on release. Kept in sync with the ViewModel while idle.
+    val accountList = remember { mutableStateListOf<AccountData>() }
+    val dragDropState = rememberDragDropState(
+        lazyListState = listState,
+        // Item 0 is the header block, the last item is the "add account" footer;
+        // only the account cards in between (indices 1..size) are reorderable.
+        draggable = { index -> index in 1..accountList.size },
+        onMove = { fromIndex, toIndex ->
+            val from = fromIndex - HEADER_ITEMS_COUNT
+            val to = toIndex - HEADER_ITEMS_COUNT
+            if (from in accountList.indices && to in accountList.indices) {
+                accountList.add(to, accountList.removeAt(from))
+            }
+        },
+    )
+
+    LaunchedEffect(state.accountsData) {
+        // While a drag/settle is in progress the local list is the source of truth; don't let a
+        // (possibly stale) ViewModel emission overwrite it and revert the reorder.
+        if (dragDropState.draggingItemIndex != null) return@LaunchedEffect
+        val incoming = state.accountsData
+        val sameOrder = incoming.size == accountList.size &&
+            incoming.indices.all { incoming[it].account.id == accountList[it].account.id }
+        if (sameOrder) {
+            // Order unchanged (e.g. right after committing a drag): refresh row data in place so
+            // the list structure isn't disturbed and nothing animates/flashes.
+            incoming.forEachIndexed { i, data -> accountList[i] = data }
+        } else {
+            accountList.clear()
+            accountList.addAll(incoming)
+        }
+    }
+
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -107,11 +147,7 @@ private fun BoxWithConstraintsScope.UI(
         item {
             Spacer(Modifier.height(20.dp))
 
-            AccountsHeaderRow(
-                onEdit = {
-                    onEvent(AccountsEvent.OnReorderModalVisible(reorderVisible = true))
-                },
-            )
+            AccountsHeaderRow()
 
             Spacer(Modifier.height(16.dp))
 
@@ -125,18 +161,35 @@ private fun BoxWithConstraintsScope.UI(
             Spacer(Modifier.height(6.dp))
         }
 
-        items(state.accountsData) {
-            Spacer(Modifier.height(10.dp))
-            AccountCard(
-                baseCurrency = state.baseCurrency,
-                accountData = it,
-            ) {
-                nav.navigateTo(
-                    TransactionsScreen(
-                        accountId = it.account.id.value,
-                        categoryId = null
+        itemsIndexed(
+            items = accountList,
+            key = { _, item -> item.account.id.value },
+        ) { index, accountData ->
+            DraggableItem(
+                dragDropState = dragDropState,
+                index = index + HEADER_ITEMS_COUNT,
+                key = accountData.account.id.value,
+                onDragFinished = {
+                    onEvent(
+                        AccountsEvent.OnReorder(
+                            accountIds = accountList.map { it.account.id }
+                        )
                     )
-                )
+                },
+            ) { isDragging ->
+                Spacer(Modifier.height(10.dp))
+                AccountCard(
+                    baseCurrency = state.baseCurrency,
+                    accountData = accountData,
+                    isDragging = isDragging,
+                ) {
+                    nav.navigateTo(
+                        TransactionsScreen(
+                            accountId = accountData.account.id.value,
+                            categoryId = null
+                        )
+                    )
+                }
             }
         }
 
@@ -146,44 +199,12 @@ private fun BoxWithConstraintsScope.UI(
             Spacer(Modifier.height(150.dp)) // scroll hack
         }
     }
-
-    ReorderModalSingleType(
-        visible = state.reorderVisible,
-        initialItems = state.accountsData,
-        itemOrderNum = { it.account.orderNum },
-        withNewOrderNum = { item, newOrderNum ->
-            item.copy(
-                account = item.account.copy(
-                    orderNum = newOrderNum
-                )
-            )
-        },
-        dismiss = {
-            onEvent(AccountsEvent.OnReorderModalVisible(reorderVisible = false))
-        },
-        onReordered = {
-            onEvent(AccountsEvent.OnReorder(accountIds = it.map { item -> item.account.id }))
-        }
-    ) { _, item ->
-        Text(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(end = 24.dp)
-                .padding(vertical = 8.dp),
-            text = item.account.name.value,
-            style = AccountsTheme.typo.b1.copy(
-                color = item.account.color.value.toComposeColor(),
-                fontWeight = FontWeight.Bold,
-                textAlign = TextAlign.Start
-            )
-        )
-    }
 }
 
+private const val HEADER_ITEMS_COUNT = 1
+
 @Composable
-private fun AccountsHeaderRow(
-    onEdit: () -> Unit,
-) {
+private fun AccountsHeaderRow() {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -197,21 +218,6 @@ private fun AccountsHeaderRow(
                 fontWeight = FontWeight.ExtraBold,
                 textAlign = TextAlign.Start,
                 fontSize = 24.sp,
-            ),
-        )
-
-        Spacer(Modifier.weight(1f))
-
-        Text(
-            modifier = Modifier
-                .clip(AccountsTheme.shapes.rFull)
-                .clickable(onClick = onEdit)
-                .padding(horizontal = 12.dp, vertical = 6.dp),
-            text = stringResource(R.string.edit),
-            style = AccountsTheme.typo.b2.copy(
-                color = Green,
-                fontWeight = FontWeight.Bold,
-                textAlign = TextAlign.End,
             ),
         )
     }
@@ -284,6 +290,7 @@ private fun NetWorthCard(
 private fun AccountCard(
     baseCurrency: String,
     accountData: AccountData,
+    isDragging: Boolean = false,
     onClick: () -> Unit
 ) {
     val account = accountData.account
@@ -295,9 +302,16 @@ private fun AccountCard(
         modifier = Modifier
             .padding(horizontal = 16.dp)
             .fillMaxWidth()
+            .thenIf(isDragging) {
+                shadow(elevation = 12.dp, shape = AccountsTheme.shapes.r4)
+            }
             .clip(AccountsTheme.shapes.r4)
             .background(AccountsTheme.colors.pure)
-            .border(1.dp, AccountsTheme.colors.medium, AccountsTheme.shapes.r4)
+            .border(
+                width = if (isDragging) 1.5.dp else 1.dp,
+                color = if (isDragging) accountColor else AccountsTheme.colors.medium,
+                shape = AccountsTheme.shapes.r4,
+            )
             .clickable(onClick = onClick)
             .height(IntrinsicSize.Min),
         verticalAlignment = Alignment.CenterVertically,
